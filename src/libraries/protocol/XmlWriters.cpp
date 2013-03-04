@@ -603,12 +603,28 @@ namespace
 
 namespace
 {
-    std::string GetType( const Value& src )
+    bool CheckAll( const MissionParameter& src, const T_Has& has )
     {
-        if( src.has_phaseline() )
-            return "phaseline";
-        if( src.has_plannedwork() )
-            return "plannedwork";
+        const auto& list = src.value();
+        for( auto it = list.begin(); it != list.end(); ++it )
+            if( !CALL( *it, has )() )
+                return false;
+        return true;
+    }
+
+    std::string GetType( const MissionParameter& src )
+    {
+        const auto& first = src.value( 0 );
+        if( first.has_phaseline() )                 return "phaseline";
+        if( first.has_plannedwork() )               return "plannedwork";
+        if( first.has_automat() )                   return "automat";
+        if( first.has_objectknowledge() )           return "objectknowledge";
+        if( first.has_agentknowledge() )            return "agentknowledge";
+        if( first.has_agent() )                     return "agent";
+        if( CheckAll( src, &Value::has_location ) ) return "location";
+        if( CheckAll( src, &Value::has_path ) )     return "path";
+        if( CheckAll( src, &Value::has_point ) )    return "point";
+        if( CheckAll( src, &Value::has_area ) )     return "polygon";
         return "locationcomposite";
     }
 }
@@ -620,7 +636,7 @@ void protocol::Write( xml::xostream& xos, const Writer_ABC& writer, const Missio
         return;
     if( size == 1 )
         return WriteValue( xos, writer, src.value( 0 ) );
-    xos << xml::attribute( "type", GetType( src.value( 0 ) ) );
+    xos << xml::attribute( "type", GetType( src ) );
     const auto& list = src.value();
     for( auto it = list.begin(); it != list.end(); ++it )
         WriteValue( xml::xosubstream( xos ) << xml::start( "parameter" ), writer, *it );

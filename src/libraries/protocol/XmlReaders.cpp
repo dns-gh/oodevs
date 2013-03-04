@@ -266,7 +266,7 @@ namespace
             *dst.add_value()->mutable_limit()->mutable_location() = *loc;
     }
 
-    void ReadLocation( const Reader_ABC& reader, PhaseLineOrder& dst, xml::xistream& xis )
+    void ReadLimaLocation( const Reader_ABC& reader, PhaseLineOrder& dst, xml::xistream& xis )
     {
         if( const auto loc = TryReadLocation( reader, xis ) )
             *dst.mutable_line()->mutable_location() = *loc;
@@ -284,7 +284,7 @@ namespace
         if( !type )
             return;
         if( *type == "location" )
-            return ReadLocation( reader, dst, xis );
+            return ReadLimaLocation( reader, dst, xis );
         if( *type == "datetime" )
             return ReadDatetime( dst, xis );
     }
@@ -333,104 +333,6 @@ namespace
         return check == type;
     }
 
-    typedef boost::function< void( Value&, xml::xistream& ) > T_ListOperand;
-
-    template< typename T >
-    void ReadList( MissionParameter& dst, xml::xistream& xis, const T& operand )
-    {
-        dst.set_null_value( false );
-        const auto adder = boost::bind( operand, boost::ref( *dst.add_value() ), _1 );
-        xis >> xml::list( "parameter", adder );
-    }
-
-    void AddUnit( Value& dst, xml::xistream& xis )
-    {
-        if( const auto opt = TestAttribute< uint32_t >( xis, "value" ) )
-            dst.mutable_unitlist()->add_elem()->set_id( *opt );
-    }
-
-    void ReadUnitList( const Reader_ABC&, MissionParameter& dst, xml::xistream& xis )
-    {
-        ReadList( dst, xis, &AddUnit );
-    }
-
-    void AddAutomat( Value& dst, xml::xistream& xis )
-    {
-        if( const auto opt = TestAttribute< uint32_t >( xis, "value" ) )
-            dst.mutable_automatlist()->add_elem()->set_id( *opt );
-    }
-
-    void ReadAutomatList( const Reader_ABC&, MissionParameter& dst, xml::xistream& xis )
-    {
-        ReadList( dst, xis, &AddAutomat );
-    }
-
-    void AddPoint( const Reader_ABC& reader, Value& dst, xml::xistream& xis )
-    {
-        if( const auto loc = TryReadLocation( reader, xis ) )
-            *dst.mutable_pointlist()->add_elem()->mutable_location() = *loc;
-    }
-
-    void ReadPointList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
-    {
-        ReadList( dst, xis, boost::bind( &AddPoint, boost::cref( reader ), _1, _2 ) );
-    }
-
-    void AddPolygon( const Reader_ABC& reader, Value& dst, xml::xistream& xis )
-    {
-        if( const auto loc = TryReadLocation( reader, xis ) )
-            *dst.mutable_polygonlist()->add_elem()->mutable_location() = *loc;
-    }
-
-    void ReadPolygonList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
-    {
-        ReadList( dst, xis, boost::bind( &AddPolygon, boost::cref( reader ), _1, _2 ) );
-    }
-
-    void AddLocation( const Reader_ABC& reader, Value& dst, xml::xistream& xis )
-    {
-        if( const auto loc = TryReadLocation( reader, xis ) )
-            *dst.mutable_locationlist()->add_elem() = *loc;
-    }
-
-    void ReadLocationList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
-    {
-        ReadList( dst, xis, boost::bind( &AddLocation, boost::cref( reader ), _1, _2 ) );
-    }
-
-    void AddPathPoint( const Reader_ABC& reader, Value& dst, xml::xistream& xis )
-    {
-        if( const auto opt = TryReadPathPoint( reader, xis ) )
-            *dst.mutable_pathlist()->add_elem()->mutable_location() = *opt;
-    }
-
-    void ReadPathList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
-    {
-        ReadList( dst, xis, boost::bind( &AddPathPoint, boost::cref( reader ), _1, _2 ) );
-    }
-
-    void AddObjectKnowledge( Value& dst, xml::xistream& xis )
-    {
-        if( const auto opt = TestAttribute< uint32_t >( xis, "value" ) )
-            dst.mutable_objectknowledgelist()->add_elem()->set_id( *opt );
-    }
-
-    void ReadObjectKnowledgeList( const Reader_ABC&, MissionParameter& dst, xml::xistream& xis )
-    {
-        ReadList( dst, xis, &AddObjectKnowledge );
-    }
-
-    void AddUnitKnowledge( Value& dst, xml::xistream& xis )
-    {
-        if( const auto opt = TestAttribute< uint32_t >( xis, "value" ) )
-            dst.mutable_unitknowledgelist()->add_elem()->set_id( *opt );
-    }
-
-    void ReadUnitKnowledgeList( const Reader_ABC&, MissionParameter& dst, xml::xistream& xis )
-    {
-        ReadList( dst, xis, &AddUnitKnowledge );
-    }
-
     template< typename T >
     void ReadId( MissionParameter& dst, xml::xistream& xis, const T& Mutate )
     {
@@ -466,6 +368,56 @@ namespace
     void ReadUrbanKnowledgeId( MissionParameter& dst, xml::xistream& xis )
     {
         ReadId( dst, xis, &Value::mutable_urbanknowledge );
+    }
+
+    typedef boost::function< void( Value&, xml::xistream& ) > T_ListOperand;
+
+    template< typename T >
+    void ReadList( MissionParameter& dst, xml::xistream& xis, const T& operand )
+    {
+        dst.set_null_value( false );
+        const auto adder = boost::bind( operand, boost::ref( dst ), _1 );
+        xis >> xml::list( "parameter", adder );
+    }
+
+    void ReadUnitList( const Reader_ABC&, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, &ReadUnitId );
+    }
+
+    void ReadAutomatList( const Reader_ABC&, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, &ReadAutomatId );
+    }
+
+    void ReadPointList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, boost::bind( &ReadPoint, boost::cref( reader ), _1, _2 ) );
+    }
+
+    void ReadPolygonList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, boost::bind( &ReadPolygon, boost::cref( reader ), _1, _2 ) );
+    }
+
+    void ReadLocationList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, boost::bind( &ReadLocation, boost::cref( reader ), _1, _2 ) );
+    }
+
+    void ReadPathList( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, boost::bind( &ReadPath, boost::cref( reader ), _1, _2 ) );
+    }
+
+    void ReadObjectKnowledgeList( const Reader_ABC&, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, &ReadObjectKnowledgeId );
+    }
+
+    void ReadUnitKnowledgeList( const Reader_ABC&, MissionParameter& dst, xml::xistream& xis )
+    {
+        ReadList( dst, xis, &ReadUnitKnowledgeId );
     }
 
     void ReadLocation( const Reader_ABC& reader, PlannedWork& dst, xml::xistream& xis )
