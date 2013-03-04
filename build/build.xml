@@ -38,6 +38,12 @@
         <echo message="test.port=${test.port}"/>
         <go cmd="vet"/>
         <go cmd="test">
+            <!-- We currently need this to avoid port collisions in tests
+                 belonging to the same module. Note that it does not prevent
+                 tests belonging to different modules to run concurrently. We
+                 need a port allocation solution instead.
+            -->
+            <arg value="-test.parallel=1"/>
             <arg value="--application=${run.dir}/simulation_app.exe"/>
             <arg value="--root-dir=${data.dir}"/>
             <arg value="--test-port=${test.port}"/>
