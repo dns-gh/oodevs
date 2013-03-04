@@ -56,7 +56,8 @@ public:
         , dispatcher_      ( facadeCreator_( argc, argv, maxConnections ) )
     {
         if( !dispatcher_ )
-            throw MASA_EXCEPTION( "failed to create dispatcher" );
+            throw MASA_EXCEPTION(
+                "failed to create dispatcher, check dispatcher.log for details" );
     }
     virtual ~DispatcherLoader()
     {
