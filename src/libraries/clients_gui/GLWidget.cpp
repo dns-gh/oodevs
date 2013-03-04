@@ -35,21 +35,17 @@ bool GlWidget::passLess::operator()( GlRenderPass_ABC* lhs, GlRenderPass_ABC* rh
 
 namespace
 {
-    void vertexCallback( GLvoid* vertex )
+    void CALLBACK vertexCallback( GLvoid* vertex )
     {
         glVertex3dv( (GLdouble*) vertex );
     }
-    void beginCallback( GLenum which )
+    void CALLBACK beginCallback( GLenum which )
     {
         glBegin( which );
     }
-    void endCallback()
+    void CALLBACK endCallback()
     {
         glEnd();
-    }
-    void errorCallback( GLenum /*errno*/ )
-    {
-        // NOTHING
     }
 }
 
@@ -616,6 +612,9 @@ namespace
 void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor,
                                      const std::string& name, unsigned int fontHeight, bool selected )
 {
+    if( !tesselator_ )
+        return;
+
     // TODO renommer en DrawUrbanBlock?
     const T_PointVector& vertices = polygon.Vertices();
     const std::size_t size = vertices.size();
