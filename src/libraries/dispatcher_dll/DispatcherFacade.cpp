@@ -36,7 +36,25 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
     config_.reset( new dispatcher::Config( *observer_ ) );
     console_.reset( new MT_ConsoleLogger() );
     MT_LOG_REGISTER_LOGGER( *console_ );
-    config_->Parse( argc, argv );
+    try
+    {
+        config_->Parse( argc, argv );
+    }
+    catch( const std::exception& e )
+    {
+        // We expect most of failures here to come from XML misconfigurations
+        // rather than invalid paths generation, therefore exercises/sessions
+        // paths, required to open a log file, are likely to be valid. Just
+        // do that and log the error, in append mode.
+        MT_FileLogger logger(
+            config_->BuildSessionChildFile( "Dispatcher.log" ).c_str(),
+            1, -1, MT_Logger_ABC::eLogLevel_All, false, MT_Logger_ABC::eDispatcher,
+            false );
+        MT_LOG_REGISTER_LOGGER( logger );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
+        MT_LOG_UNREGISTER_LOGGER( logger );
+        throw;
+    }
     bool bClearPreviousLog = !config_->HasCheckpoint();
 
     file_.reset( new MT_FileLogger( config_->BuildSessionChildFile( "Dispatcher.log" ).c_str(),
