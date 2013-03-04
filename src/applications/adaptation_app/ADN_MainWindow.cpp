@@ -527,7 +527,7 @@ void ADN_MainWindow::ConfigureDataTest()
 void ADN_MainWindow::About()
 {
     QMessageBox::about( this , tr( "Sword Adaptation Tool" ),
-        QString( "Sword Adaptation Tool\n%1\nCopyright (c) MASA Group 2011" ).arg( tools::AppProjectVersion() ) );
+        QString( "Sword Adaptation Tool\n%1\nCopyright (c) MASA Group %2" ).arg( tools::AppProjectVersion() ).arg( QDateTime::currentDateTime().date().year() ) );
 }
 
 //-----------------------------------------------------------------------------

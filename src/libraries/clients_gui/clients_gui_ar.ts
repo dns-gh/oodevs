@@ -48,10 +48,6 @@
         <translation>السيف</translation>
     </message>
     <message>
-        <source>© 2013 MASA Group</source>
-        <translation>© 2013 مجموعة ماسا</translation>
-    </message>
-    <message>
         <source>www.masagroup.net</source>
         <translation>www.masagroup.net</translation>
     </message>
@@ -66,6 +62,10 @@
     <message>
         <source>Warning</source>
         <translation type="unfinished">تحذير</translation>
+    </message>
+    <message>
+        <source>© %1 MASA Group</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

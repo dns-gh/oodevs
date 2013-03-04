@@ -48,10 +48,6 @@
         <translation>www.masagroup.net</translation>
     </message>
     <message>
-        <source>© 2013 MASA Group</source>
-        <translation>© 2013 MASA Group</translation>
-    </message>
-    <message>
         <source>images/gui/splash_swordot.png</source>
         <translation type="unfinished"></translation>
     </message>
@@ -65,6 +61,10 @@
     </message>
     <message>
         <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>© %1 MASA Group</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
