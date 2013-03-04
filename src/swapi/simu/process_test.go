@@ -47,6 +47,9 @@ func TestSuccess(t *testing.T) {
 		t.Fatalf("simulation failed to start: %v", err)
 	}
 	sim.Wait(60 * time.Second)
+	if !sim.Success() {
+		t.Fatal("simulation should have terminated successfully")
+	}
 }
 
 // Test SimProcess fails fast when started with an invalid configuration and
@@ -90,6 +93,9 @@ func TestDelayedStartupFailure(t *testing.T) {
 	}
 	if !strings.Contains(err.Error(), "failed to start simulation") {
 		t.Fatalf("unexpected failure: %v", err)
+	}
+	if sim.Success() {
+		t.Fatal("simulation should have exited on error")
 	}
 }
 

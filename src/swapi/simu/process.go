@@ -43,6 +43,14 @@ type SimProcess struct {
 	quitAll    sync.WaitGroup
 }
 
+// Return true if the process exited on success, false otherwise
+func (sim *SimProcess) Success() bool {
+	if sim != nil && sim.cmd != nil && sim.cmd.ProcessState != nil {
+		return sim.cmd.ProcessState.Success()
+	}
+	return false
+}
+
 func (sim *SimProcess) Kill() {
 	if sim != nil {
 		sim.tailch <- 1
