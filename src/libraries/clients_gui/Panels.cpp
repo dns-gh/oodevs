@@ -257,3 +257,16 @@ Panels::IT_SelectedWidgets Panels::FindSelectedSet()
         ++it;
     return it;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Panels::LockPanel
+// Created: NPT 2013-02-28
+// -----------------------------------------------------------------------------
+void Panels::SelectAndLockPanel( int index, bool lock )
+{
+    Select( index );
+    combo_->setVisible( !lock );
+    previous_->setVisible( !lock );
+    next_->setVisible( !lock );
+}
+

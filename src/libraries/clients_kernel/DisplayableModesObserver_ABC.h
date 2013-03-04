@@ -11,6 +11,7 @@
 #define __DisplayableModesObserver_ABC_h_
 
 #include "ENT/ENT_Enums_Gen.h"
+#include "ReadOnlyModable.h"
 
 namespace kernel
 {
@@ -21,7 +22,7 @@ namespace kernel
 */
 // Created: ABR 2012-05-09
 // =============================================================================
-class DisplayableModesObserver_ABC
+class DisplayableModesObserver_ABC : public kernel::ReadOnlyModable
 {
 
 public:
@@ -88,6 +89,7 @@ public:
                 SetVisible( visible_ );
         }
         currentMode_ = newMode;
+        SetReadOnly( IsReadOnly() );
     }
     //@}
 

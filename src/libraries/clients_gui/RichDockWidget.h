@@ -47,6 +47,7 @@ public:
     virtual bool IsVisible() const;
     virtual void SetMenuVisibility( bool windowMenuVisibility );
     virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
+    virtual void SetReadOnly( bool readOnly );
     //@}
 
 protected:

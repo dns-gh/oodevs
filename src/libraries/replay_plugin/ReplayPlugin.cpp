@@ -70,6 +70,7 @@ void ReplayPlugin::Update()
     {
         SkipToFrame( skipToFrame_ );
         skipToFrame_ = -1;
+        SendReplayInfo( clients_ );
     }
     manager_.Update();
 }

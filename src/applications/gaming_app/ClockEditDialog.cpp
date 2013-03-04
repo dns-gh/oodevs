@@ -11,6 +11,7 @@
 #include "ClockEditDialog.h"
 #include "moc_ClockEditDialog.cpp"
 #include "gaming/ActionsScheduler.h"
+#include "gaming/Simulation.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 
@@ -61,7 +62,10 @@ ClockEditDialog::~ClockEditDialog()
 // -----------------------------------------------------------------------------
 void ClockEditDialog::OnCommit()
 {
-    scheduler_.SetDate( editor_->dateTime() );
+    if( controllers_.GetCurrentMode() == eModes_Replay )
+        scheduler_.SkipToDate( editor_->dateTime() );
+    else
+        scheduler_.SetDate( editor_->dateTime() );
     accept();
 }
 

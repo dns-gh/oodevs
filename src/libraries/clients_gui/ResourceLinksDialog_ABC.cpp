@@ -94,9 +94,9 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     table_->horizontalHeader()->setStretchLastSection( false );
     groupBox_->setEnabled( false );
     connect( table_, SIGNAL( cellChanged( int, int ) ), SLOT( OnValueChanged() ) );
-    QPushButton* okBtn = new QPushButton( tools::translate( "gui::ResourceLinksDialog_ABC", "Validate" ), pMainLayout_ );
-    okBtn->setDefault( true );
-    connect( okBtn, SIGNAL( clicked() ), SLOT( Validate() ) );
+    okButton_ = new QPushButton( tools::translate( "gui::ResourceLinksDialog_ABC", "Validate" ), pMainLayout_ );
+    okButton_->setDefault( true );
+    connect( okButton_, SIGNAL( clicked() ), SLOT( Validate() ) );
     controllers_.Update( *this );
     pMainLayout_->hide();
 }
@@ -172,6 +172,7 @@ void ResourceLinksDialog_ABC::Update()
 {
     if( selected_.size() != 1 )
         return;
+    okButton_->setVisible( !IsReadOnly() );
     QListWidgetItem* item = dotationList_->currentItem();
     if( !item )
     {
@@ -368,7 +369,7 @@ void ResourceLinksDialog_ABC::DoNotifyContextMenu( const kernel::Entity_ABC& ent
     if( resources_.Count() == 0 )
         return;
     const ResourceNetwork_ABC* node = entity.Retrieve< ResourceNetwork_ABC >();
-    if( !node || selected_.empty() )
+    if( !node || selected_.empty() || GetCurrentMode() == eModes_Replay )
         return;
     sourceNode_ = const_cast< kernel::Entity_ABC* >( &entity );
     ContextMenu* subMenu = menu.SubMenu( "Resource", tr( "Resource networks" ) );
@@ -400,6 +401,22 @@ void ResourceLinksDialog_ABC::DoNotifyContextMenu( const kernel::Entity_ABC& ent
             resourceMenu->insertItem( tr( "Add/Remove link" ), this , SLOT( OnChangeLink( int ) ), 0, resourceId++ );
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::SetReadOnly
+// Created: NPT 2013-02-28
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::SetReadOnly( bool readOnly ) const
+{
+    production_->setReadOnly( readOnly );
+    consumption_->setReadOnly( readOnly );
+    critical_->setEnabled( !readOnly );
+    maxStock_->setReadOnly( readOnly );
+    stock_->setReadOnly( readOnly );
+    table_->setEditTriggers( readOnly? QAbstractItemView::NoEditTriggers : QAbstractItemView::CurrentChanged );
+    generateProduction_->setEnabled( !readOnly );
+    okButton_->setEnabled( !readOnly );
 }
 
 // -----------------------------------------------------------------------------

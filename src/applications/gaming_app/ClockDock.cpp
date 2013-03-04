@@ -20,7 +20,8 @@ ClockDock::ClockDock( QWidget* parent, kernel::Controllers& controllers, const k
     : gui::RichDockWidget( controllers, parent, "clock" )
 {
     setObjectName( "clock" );
-    setWidget( new ClockWidget( this, controllers, simulation, scheduler ) );
+    clockWidget_ = new ClockWidget( this, controllers, simulation, scheduler );
+    setWidget( clockWidget_ );
     setCaption( tools::translate( "ClockDock","Clock" ) );
 }
 
@@ -31,4 +32,14 @@ ClockDock::ClockDock( QWidget* parent, kernel::Controllers& controllers, const k
 ClockDock::~ClockDock()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClockDock::NotifyModeChanged
+// Created: NPT 2013-02-28
+// -----------------------------------------------------------------------------
+void ClockDock::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
+{
+    RichDockWidget::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
+    clockWidget_->SetAlarmVisible( newMode != eModes_Replay );
 }

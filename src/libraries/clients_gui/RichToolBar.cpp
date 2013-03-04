@@ -100,3 +100,12 @@ void RichToolBar::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firs
     assert( action != 0 );
     action->setVisible( windowMenuVisibility_ && !( newMode & GetHiddenModes() || newMode & GetVisibleModes() ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: RichToolBar::SetReadOnly
+// Created: NPT 2013-02-27
+// -----------------------------------------------------------------------------
+void RichToolBar::SetReadOnly( bool readOnly )
+{
+    setEnabled( readOnly );
+}

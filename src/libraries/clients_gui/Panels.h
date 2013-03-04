@@ -39,6 +39,7 @@ public:
     void AddPanel( InfoPanel_ABC* panel );
     virtual void Add( QWidget* widget );
     virtual void Remove( QWidget* widget );
+    void SelectAndLockPanel( int index, bool lock );
     //@}
 
 private slots:

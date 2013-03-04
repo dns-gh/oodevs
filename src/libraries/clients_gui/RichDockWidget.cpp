@@ -104,3 +104,12 @@ void RichDockWidget::NotifyModeChanged( E_Modes newMode, bool useDefault, bool f
     assert( action != 0 );
     action->setVisible( windowMenuVisibility_ && !( newMode & GetHiddenModes() || newMode & GetVisibleModes() ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: RichDockWidget::SetReadOnly
+// Created: NPT 2013-02-27
+// -----------------------------------------------------------------------------
+void RichDockWidget::SetReadOnly( bool readOnly )
+{
+    setEnabled( readOnly );
+}

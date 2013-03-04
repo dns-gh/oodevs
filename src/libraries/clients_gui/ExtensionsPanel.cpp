@@ -98,7 +98,8 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
             if( attributes.size() )
             {
                 pGroupBox_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Enabled" ), pExtensionLayout_ );
-                pGroupBox_->setCheckable( true );
+                pGroupBox_->setCheckable( controllers_.GetCurrentMode() != eModes_Replay );
+                pGroupBox_->setEnabled( controllers_.GetCurrentMode() != eModes_Replay );
                 pGroupBox_->setMargin( 5 );
                 for( ExtensionType::RCIT_AttributesTypes it = attributes.rbegin(); it != attributes.rend(); ++it )
                     AddWidget( **it );
@@ -106,8 +107,8 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
                 const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
                 if( !ext )
                     return;
-                pGroupBox_->setChecked( ext->IsEnabled() );
                 pGroupBox_->show();
+                pGroupBox_->setEnabled( !IsReadOnly() );
                 connect( pGroupBox_, SIGNAL( toggled( bool ) ), this, SLOT( OnActivationChanged( bool ) ) );
                 return;
             }

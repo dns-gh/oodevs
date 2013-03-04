@@ -67,6 +67,7 @@ private:
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Services& services );
     virtual void NotifyUpdated( const Simulation::sCheckPoint& checkPoint );
+    virtual void NotifyModeChanged( E_Modes newMode );
 
     QToolButton* CreateToolButton( const QString label, const QPixmap& pixmap, const char* slot );
     void DoLoad( const std::string& filename );

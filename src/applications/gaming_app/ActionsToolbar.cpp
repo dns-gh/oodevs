@@ -314,6 +314,16 @@ void ActionsToolbar::NotifyUpdated( const Simulation::sCheckPoint& checkPoint )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsToolbar::NotifyModeChanged
+// Created: NPT 2013-02-27
+// -----------------------------------------------------------------------------
+void ActionsToolbar::NotifyModeChanged( E_Modes newMode )
+{
+    kernel::ModesObserver_ABC::NotifyModeChanged( newMode );
+    setVisible( newMode != eModes_Replay );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsToolbar::OnModeChanged
 // Created: ABR 2013-02-15
 // -----------------------------------------------------------------------------

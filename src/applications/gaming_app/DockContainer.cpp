@@ -76,12 +76,15 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     {
         gui::RichDockWidget* pResourceWnd = new ResourceLinksDialog( parent, controllers, model.actions_, staticModel, simulation );
         pResourceWnd->SetModes( eModes_Default );
+        pResourceWnd->SetReadOnlyModes( eModes_Replay );
+
         parent->addDockWidget( Qt::LeftDockWidgetArea, pResourceWnd );
     }
     // Extensions panel
     {
         ExtensionsPanel* pExtensionsPanel = new ExtensionsPanel( parent, controllers, model, staticModel, simulation );
         pExtensionsPanel->SetModes( eModes_Default );
+        pExtensionsPanel->SetReadOnlyModes( eModes_Replay );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel );
     }
     // Clock
@@ -130,7 +133,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // Profiles panel
     {
         ProfilesPanel* profilesPanel = new ProfilesPanel( parent, controllers, network, profile, model.teams_ );
-        profilesPanel->SetModes( eModes_Default );
+        profilesPanel->SetModes( eModes_Default | eModes_Replay );
         parent->addDockWidget( Qt::RightDockWidgetArea, profilesPanel );
     }
     // Inhabitant panel
@@ -184,7 +187,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     // Planification mode panel
     {
         PlanificationModePanel* pPlanificationModePanel = new PlanificationModePanel( parent, controllers );
-        pPlanificationModePanel->SetModes( eModes_Gaming | eModes_Default, eModes_Planning );
+        pPlanificationModePanel->SetModes( eModes_Gaming | eModes_Replay | eModes_Default, eModes_Planning );
         parent->addDockWidget( Qt::TopDockWidgetArea, pPlanificationModePanel );
     }
     // Actions panel

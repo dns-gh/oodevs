@@ -256,7 +256,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
 
     // Profiles
     menu = new gui::RichMenu( this, controllers_, tools::translate( "Menu", "Profiles..." ) );
-    menu->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
+    menu->SetModes( eModes_Default | eModes_Replay, eModes_All ^ ( eModes_Default | eModes_Replay ), true );
     menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "Profiles..." ), &profileDialog_, SLOT( exec() ) );
     profileMenu_ = insertItem( tools::translate( "Menu", "Profi&les" ), menu );
     setItemVisible( profileMenu_, false );
@@ -305,5 +305,6 @@ Menu::~Menu()
 // -----------------------------------------------------------------------------
 void Menu::NotifyUpdated( const Profile& profile )
 {
-    setItemVisible( profileMenu_, profileDialog_.CanBeShown( profile ) );
+    if( controllers_.GetCurrentMode() != eModes_Replay )
+        setItemVisible( profileMenu_, profileDialog_.CanBeShown( profile ) );
 }

@@ -250,7 +250,8 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::Automat_ABC& /*auto
 {
     if( !isVisible() )
         return;
-    menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+    if( controllers_.GetCurrentMode() != eModes_Replay )
+        menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -261,7 +262,8 @@ void CommunicationTreeView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC&
 {
     if( !isVisible() )
         return;
-    menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
+    if( controllers_.GetCurrentMode() != eModes_Replay )
+        menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
 }
 
 // -----------------------------------------------------------------------------

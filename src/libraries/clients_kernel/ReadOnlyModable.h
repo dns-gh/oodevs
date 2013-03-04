@@ -38,7 +38,9 @@ public:
         return ( readOnlyModes_ & GetCurrentMode() ) != 0;
     }
 
-    void SetReadOnlyModes( int modes )
+    virtual void SetReadOnly( bool /*readOnly*/ ) const {}
+
+    virtual void SetReadOnlyModes( int modes )
     {
         readOnlyModes_ = modes;
     }

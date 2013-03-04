@@ -75,13 +75,14 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
             connect( editButton, SIGNAL( clicked() ), editor, SLOT( show() ) );
         }
         {
-            QPushButton* alarmButton = new QPushButton( vBox );
-            alarmButton->setIconSet( QPixmap( QImage( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/clock_alarm.png" ).c_str() ) ) );
-            alarmButton->setFlat( true );
-            alarmButton->setFixedSize( 22, 22 );
-            alarmButton->setPaletteBackgroundColor( backgroundColor );
-            QToolTip::add( alarmButton, tools::translate( "ClockWidget", "Configure alarms" ) );
-            connect( alarmButton, SIGNAL( clicked() ), alarms, SLOT( show() ) );
+            alarmButton_ = new QPushButton( vBox );
+            alarmButton_->setIconSet( QPixmap( QImage( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/clock_alarm.png" ).c_str() ) ) );
+            alarmButton_->setFlat( true );
+            alarmButton_->setFixedSize( 22, 22 );
+            alarmButton_->setPaletteBackgroundColor( backgroundColor );
+            alarmButton_->setVisible( controllers_.GetCurrentMode() != eModes_Replay );
+            QToolTip::add( alarmButton_, tools::translate( "ClockWidget", "Configure alarms" ) );
+            connect( alarmButton_, SIGNAL( clicked() ), alarms, SLOT( show() ) );
         }
     }
     controllers_.Register( *this );
@@ -119,3 +120,13 @@ void ClockWidget::NotifyUpdated( const Simulation& simulation )
     day_ ->setText( simulation.GetDateAsString() );
     time_->setText( simulation.GetTimeAsString() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ClockWidget::SetAlarmVisible
+// Created: NPT 2013-02-28
+// -----------------------------------------------------------------------------
+void ClockWidget::SetAlarmVisible( bool visible )
+{
+    alarmButton_->setVisible( visible );
+}
+

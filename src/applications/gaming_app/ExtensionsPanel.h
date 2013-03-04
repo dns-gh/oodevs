@@ -63,6 +63,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void SetReadOnly( bool readOnly ) const;
     void UpdateBackUp();
     void Reset();
     void ChangeButtonsState( bool state );

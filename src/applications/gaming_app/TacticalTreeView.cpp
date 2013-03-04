@@ -65,7 +65,7 @@ void TacticalTreeView::NotifyContextMenu( const kernel::Entity_ABC& entity, kern
     if( !isVisible() || !profile_.IsVisible( entity ) )
         return;
     if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
-        if( hierarchies->GetSuperior() != 0 && dynamic_cast< const kernel::Object_ABC* >( &entity ) == 0 )
+        if( hierarchies->GetSuperior() != 0 && dynamic_cast< const kernel::Object_ABC* >( &entity ) == 0 && controllers_.GetCurrentMode() != eModes_Replay )
             menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ) );
 }
 

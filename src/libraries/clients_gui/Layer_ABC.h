@@ -14,6 +14,8 @@
 #include <boost/noncopyable.hpp>
 #include "ENT/ENT_Enums_Gen.h"
 #include "clients_kernel/GraphicalEntity_ABC.h"
+#include "clients_kernel/DisplayableModesObserver_ABC.h"
+#include "tools/Observer_ABC.h"
 
 namespace gui
 {
@@ -24,6 +26,8 @@ namespace gui
 // Created: AGE 2006-03-29
 // =============================================================================
 class Layer_ABC : public MapLayer_ABC
+                , public tools::Observer_ABC
+                , public kernel::DisplayableModesObserver_ABC
                 , public boost::noncopyable
 {
 public:

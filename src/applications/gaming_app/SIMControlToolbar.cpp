@@ -149,7 +149,6 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pCheckpointButton_->setIconSet( MAKE_ICON( checkpoint ) );
     pCheckpointButton_->setTextLabel( tr( "Save checkpoint" ) );
     pCheckpointButton_->setEnabled( false );
-
     {
         kernel::ContextMenu* popup = new AutoFitPopupMenu( pCheckpointButton_ );
         pCheckpointButton_->setPopup( popup );
@@ -411,7 +410,7 @@ void SIMControlToolbar::NotifyUpdated( const kernel::Profile_ABC& profile )
     pSpeedSpinBox_->setEnabled( super );
     pSpeedButton_->setEnabled( super );
     pCheckpointButton_->setEnabled( super );
-    pCheckpointAction_->setVisible( super );
+    pCheckpointAction_->setVisible( super && controllers_.GetCurrentMode() != eModes_Replay );
 }
 
 // -----------------------------------------------------------------------------
@@ -438,6 +437,16 @@ void SIMControlToolbar::NotifyUpdated( const Simulation::sEndTick& )
         }
         replayStepMode_ = false;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIMControlToolbar::NotifyModeChanged
+// Created: NPT 2013-02-28
+// -----------------------------------------------------------------------------
+void SIMControlToolbar::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
+{
+    RichToolBar::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
+    pCheckpointButton_->setVisible( newMode != eModes_Replay );
 }
 
 // -----------------------------------------------------------------------------

@@ -14,6 +14,7 @@
 #include "gaming/Simulation.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_gui/RichToolBar.h"
+#include "clients_gui/RichAction.h"
 
 #pragma warning( push, 0 )
 #include <QtGui/qicon.h>
@@ -88,6 +89,7 @@ private:
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
     virtual void NotifyUpdated( const Simulation::sStartTick& startTick );
     virtual void NotifyUpdated( const Simulation::sEndTick& endTick );
+    virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
     void RequestCheckpoint( const std::string& name );
     //@}
 

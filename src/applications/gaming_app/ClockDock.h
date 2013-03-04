@@ -11,6 +11,7 @@
 #define __ClockDock_h_
 
 #include "clients_gui/RichDockWidget.h"
+#include "ClockWidget.h"
 
 namespace kernel
 {
@@ -33,6 +34,16 @@ public:
     //@{
              ClockDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, ActionsScheduler& scheduler );
     virtual ~ClockDock();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
+    //@}
+
+    //! @name Members
+    //@{
+    ClockWidget* clockWidget_;
     //@}
 };
 

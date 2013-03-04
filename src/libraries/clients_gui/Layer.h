@@ -39,8 +39,6 @@ namespace gui
 // =============================================================================
 class Layer : public QObject
             , public Layer_ABC
-            , public tools::Observer_ABC
-            , public kernel::DisplayableModesObserver_ABC
 {
     Q_OBJECT
 
@@ -90,7 +88,8 @@ public:
     virtual bool IsPickable() const;
     //@}
 
-    //! @name ReadOnly management // $$$$ ABR 2012-05-24: Factorize this to tools::ReadOnlyModable and use it on HierarchyListView_ABC
+    //! @name ReadOnly management // $$$$ ABR 2012-05-24: Move tools::ReadOnlyModable from Sword::tools to Tools::tools
+                                  // 
     //@{
     virtual bool IsReadOnly() const;
     void SetReadOnlyModes( int modes );

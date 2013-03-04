@@ -40,6 +40,11 @@ public:
     virtual ~ClockWidget();
     //@}
 
+    //! @name Operations
+    //@{
+    void SetAlarmVisible( bool visible );
+    //@}
+
 private:
     //! @name Helpers
     //@{
@@ -53,6 +58,7 @@ private:
     kernel::Controllers& controllers_;
     QLabel* time_;
     QLabel* day_;
+    QPushButton* alarmButton_;
     //@}
 };
 

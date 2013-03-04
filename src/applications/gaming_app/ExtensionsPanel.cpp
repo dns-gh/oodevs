@@ -72,6 +72,22 @@ void ExtensionsPanel::NotifySelected( const kernel::Entity_ABC* element )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExtensionsPanel::SetReadOnly
+// Created: NPT 2013-02-28
+// -----------------------------------------------------------------------------
+void ExtensionsPanel::SetReadOnly( bool readOnly ) const
+{
+    validateButton_->setEnabled( !readOnly );
+    resetButton_->setEnabled( !readOnly );
+    diffusionDialog_->setEnabled( !readOnly );
+    if( pGroupBox_ )
+    {
+        pGroupBox_->setEnabled( !readOnly );
+        pGroupBox_->setCheckable( !readOnly );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExtensionsPanel::OnActivationChanged
 // Created: ABR 2011-05-16
 // -----------------------------------------------------------------------------
@@ -144,8 +160,8 @@ void ExtensionsPanel::Commit()
 void ExtensionsPanel::ChangeButtonsState( bool state )
 {
     hasChanged_ = state;
-    validateButton_->setEnabled( state );
-    resetButton_->setEnabled( state );
+    validateButton_->setEnabled( state && controllers_.GetCurrentMode() != eModes_Replay );
+    resetButton_->setEnabled( state && controllers_.GetCurrentMode() != eModes_Replay );
 }
 
 // -----------------------------------------------------------------------------

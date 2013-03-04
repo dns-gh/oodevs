@@ -15,6 +15,7 @@
 #include "actions/ActionTiming.h"
 #include "clients_kernel/Controllers.h"
 #include "protocol/SimulationSenders.h"
+#include "protocol/ReplaySenders.h"
 
 using namespace kernel;
 
@@ -114,4 +115,16 @@ void ActionsScheduler::SetDate( const QDateTime& dateTime )
     simulation::ControlDateTimeChange message;
     message().mutable_date_time()->set_data( MakeGDHString( dateTime ).c_str() );
     message.Send( publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsScheduler::SkipToDate
+// Created: NPT 2013-02-28
+// -----------------------------------------------------------------------------
+void ActionsScheduler::SkipToDate( const QDateTime& dateTime )
+{
+    replay::ControlSkipToTick skip;
+    unsigned int tick = dateTime < simulation_.GetInitialDateTime()? 1 : simulation_.GetInitialDateTime().secsTo( dateTime ) / simulation_.GetTickDuration();
+    skip().set_tick( tick < simulation_.GetTickCount()- 1 ? tick : simulation_.GetTickCount() - 1 );
+    skip.Send( publisher_ );
 }

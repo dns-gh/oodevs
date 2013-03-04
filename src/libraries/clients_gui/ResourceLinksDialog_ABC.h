@@ -86,6 +86,7 @@ private:
     virtual void NotifyDeleted( const kernel::Entity_ABC& element );
     virtual void NotifyContextMenu( const kernel::Object_ABC&, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::UrbanObject_ABC&, kernel::ContextMenu& menu );
+    virtual void SetReadOnly( bool readOnly ) const;
     virtual bool DoGenerateProduction() { return false; }
 
     void Show();
@@ -116,6 +117,7 @@ protected:
     QSpinBox* maxStock_;
     QSpinBox* stock_;
     QTableWidget* table_;
+    QPushButton* okButton_;
     //@}
 };
 
