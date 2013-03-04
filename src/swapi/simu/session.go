@@ -39,7 +39,7 @@ func (s *Session) syncSession(x *xmlSession) error {
 
 func (s *Session) syncXml(x *xmlSession) error {
 	x.GamingNetwork.Server = s.GamingServer
-	x.DispatcherNetwork.Server = s.GamingServer
+	x.Dispatcher.Network.Server = s.GamingServer
 	x.Sim.Time.EndTick = s.EndTick
 	x.Sim.Time.Paused = WriteBool(s.Paused)
 	return nil
@@ -52,6 +52,14 @@ type xmlGamingNetwork struct {
 type xmlDispatcherNetwork struct {
 	Client string `xml:"client,attr"`
 	Server string `xml:"server,attr"`
+}
+
+type xmlPlugins struct {
+}
+
+type xmlDispatcherConfig struct {
+	Network xmlDispatcherNetwork `xml:"network"`
+	Plugins xmlPlugins           `xml:"plugins"`
 }
 
 type xmlGarbageCollector struct {
@@ -144,11 +152,11 @@ type xmlMeta struct {
 }
 
 type xmlSession struct {
-	XMLName           xml.Name             `xml:"session"`
-	DispatcherNetwork xmlDispatcherNetwork `xml:"config>dispatcher>network"`
-	GamingNetwork     xmlGamingNetwork     `xml:"config>gaming>network"`
-	Sim               xmlSimulation        `xml:"config>simulation"`
-	Meta              xmlMeta              `xml:"meta"`
+	XMLName       xml.Name            `xml:"session"`
+	Dispatcher    xmlDispatcherConfig `xml:"config>dispatcher"`
+	GamingNetwork xmlGamingNetwork    `xml:"config>gaming>network"`
+	Sim           xmlSimulation       `xml:"config>simulation"`
+	Meta          xmlMeta             `xml:"meta"`
 }
 
 func ReadSession(data []byte) (*Session, error) {

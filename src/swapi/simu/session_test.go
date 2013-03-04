@@ -68,6 +68,7 @@ func TestWriteSession(t *testing.T) {
   <config>
     <dispatcher>
       <network client="localhost:10000" server="masagroup.net"></network>
+      <plugins></plugins>
     </dispatcher>
     <gaming>
       <network server="masagroup.net"></network>
