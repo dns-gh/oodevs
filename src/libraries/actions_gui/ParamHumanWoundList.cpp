@@ -51,7 +51,7 @@ QWidget* ParamHumanWoundList::BuildInterface( QWidget* parent )
     list_ = new QTreeView( parent );
     list_->setRootIsDecorated( false );
     list_->setEditTriggers( 0 );
-    model_.setColumnCount( 2 );
+    model_.setColumnCount( 1 );
     list_->setModel( &model_ );
     list_->setHeaderHidden( true );
     list_->setAllColumnsShowFocus( true );
@@ -122,10 +122,7 @@ void ParamHumanWoundList::OnDown()
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::OnAdd( int value )
 {
-    QList< QStandardItem* >itemList;
-    itemList.append( new QStandardItem( tools::ToString( E_HumanWound( value ) ) ) );
-    itemList.append( new QStandardItem( QString::number( value ) ) );
-    model_.appendRow( itemList );
+    model_.appendRow( new QStandardItem( tools::ToString( E_HumanWound( value ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
