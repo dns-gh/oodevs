@@ -47,7 +47,7 @@ public:
     const DEC_Model_ABC& GetModel() const;
     virtual void UpdateDecision( float duration );
     virtual void Reset( std::string groupName = "" );
-    virtual void Reload();
+    virtual void Reload( bool doInitBrain );
     virtual void IncDIARef();
     virtual void DecDIARef();
     virtual bool IsUsedByDIA() const;

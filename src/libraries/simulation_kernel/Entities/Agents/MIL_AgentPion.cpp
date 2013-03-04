@@ -1846,15 +1846,18 @@ bool MIL_AgentPion::CanEmitReports() const
 void MIL_AgentPion::OnReloadBrain( const sword::MissionParameters& msg )
 {
     CancelAllActions();
+    bool modelChanged = false;
     if( msg.elem_size() == 1 && msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value( 0 ).has_acharstr() )
     {
         const std::string model = msg.elem( 0 ).value( 0 ).acharstr();
         const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPion( model );
         if( !pModel )
             throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        GetRole< DEC_RolePion_Decision >().SetModel( *pModel );
+        modelChanged = ( &GetRole< DEC_RolePion_Decision >().GetModel() != pModel );
+        if( modelChanged )
+            GetRole< DEC_RolePion_Decision >().SetModel( *pModel );
     }
-    GetDecision().Reload();
+    GetDecision().Reload( !modelChanged );
     pOrderManager_->CancelMission();
 }
 

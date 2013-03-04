@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Reload();
+    virtual void Reload( bool doInitBrain );
     //@}
 
 private:

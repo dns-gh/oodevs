@@ -52,8 +52,8 @@ public:
 
     //! @name Operations
     //@{
-    void Clean          ();
-    virtual void Reload();
+    void Clean();
+    virtual void Reload( bool doInitBrain );
     bool HasStateChanged() const;
 
     void StartMissionMrtBehavior     ( const boost::shared_ptr< MIL_Mission_ABC > mission );

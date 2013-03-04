@@ -1123,9 +1123,10 @@ bool DEC_Decision< T >::IsDead() const
 // Created: LDC 2011-08-18
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::Reload()
+void DEC_Decision< T >::Reload( bool doInitBrain )
 {
-    InitBrain( model_->GetScriptFile(), model_->GetDIAType(), model_->GetIncludePath(), GetGroupName(), model_->IsMasalife(), true, model_->GetIntegrationDir() );
+    if( doInitBrain )
+        InitBrain( model_->GetScriptFile(), model_->GetDIAType(), model_->GetIncludePath(), GetGroupName(), model_->IsMasalife(), true, model_->GetIntegrationDir() );
     StartDefaultBehavior();
 }
 

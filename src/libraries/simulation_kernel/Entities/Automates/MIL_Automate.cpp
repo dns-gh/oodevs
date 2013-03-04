@@ -1505,14 +1505,17 @@ void MIL_Automate::NotifyQuotaExceeded( const PHY_DotationCategory& dotationCate
 void MIL_Automate::OnReloadBrain( const sword::MissionParameters& msg )
 {
     CancelAllActions();
+    bool modelChanged = false;
     if( msg.elem_size() == 1 && msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value( 0 ).has_acharstr() )
     {
         const std::string model = msg.elem( 0 ).value( 0 ).acharstr();
         const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelAutomate( model );
         if( !pModel )
             throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        GetRole< DEC_AutomateDecision >().SetModel( *pModel );
+        modelChanged = ( &GetRole< DEC_AutomateDecision >().GetModel() != pModel );
+        if( modelChanged )
+            GetRole< DEC_AutomateDecision >().SetModel( *pModel );
     }
-    GetDecision().Reload();
+    GetDecision().Reload( !modelChanged );
     pOrderManager_->CancelMission();
 }

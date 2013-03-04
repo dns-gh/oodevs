@@ -1133,9 +1133,9 @@ std::vector< DEC_Decision_ABC* > DEC_RolePion_Decision::GetPionsWithPC()
 // Name: DEC_RolePion_Decision::Reload
 // Created:AHC 2012-01-12
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::Reload()
+void DEC_RolePion_Decision::Reload( bool doInitBrain )
 {
-    DEC_Decision< MIL_AgentPion >::Reload();
+    DEC_Decision< MIL_AgentPion >::Reload( doInitBrain );
     NotifyHasChanged();
 }
 

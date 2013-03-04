@@ -878,9 +878,9 @@ bool DEC_AutomateDecision::PointIsReconnoiteredByMeOrNoOne( DEC_Decision_ABC* pP
 // Name: DEC_AutomateDecision::Reload
 // Created:AHC 2012-01-24
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::Reload()
+void DEC_AutomateDecision::Reload( bool doInitBrain )
 {
-    DEC_Decision< MIL_Automate >::Reload();
+    DEC_Decision< MIL_Automate >::Reload( doInitBrain );
     bStateHasChanged_ = true;
 }
 
