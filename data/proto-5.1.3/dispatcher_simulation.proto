@@ -1,0 +1,32 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+package sword;
+
+/** @internal
+ *  @addtogroup Internal
+ *  @{
+ */
+
+message CtrlClientAnnouncement {
+    optional bool announce = 1;
+}
+
+message CtrlDispatcherTickAck {}
+
+message DispatcherToSim {
+    message Content {
+        optional CtrlClientAnnouncement control_client_announcement = 1;
+        optional CtrlDispatcherTickAck control_tick_ack = 2;
+    }
+    optional int32   context = 1;
+    required Content message = 2;
+}
+
+/** @}*/

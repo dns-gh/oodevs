@@ -1,0 +1,37 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+package sword;
+
+/** @file
+ *  @brief Message containing the current protocol version
+ *  @{
+ */
+
+/** @struct ProtocolVersion
+    @brief Encapsulates the current protocol version.
+
+    This message is meant to be used when the client/server needs to 
+    send its current procotol version.
+
+    @see AuthenticationRequest AuthenticationResponse
+*/
+message ProtocolVersion {
+    /** @property value
+        @brief The current protocol version.
+
+        The version string follows the format X.Y.Z where:
+        @li X is the product version
+        @li Y is the major product version
+        @li Z is the minor product version
+    */
+    required string value = 1 [default = "5.0"];
+}
+
+/** @}*/

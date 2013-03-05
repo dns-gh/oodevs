@@ -1,0 +1,109 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "authentication_client.proto";
+import "version.proto";
+
+package sword;
+
+/** @file
+ *  @brief Messages from clients to the authentication module
+ *  @addtogroup Authentication
+ *  @{
+ */
+
+/** @struct ConnectedProfilesRequest
+    @brief A message sent to request list of connected profiles.
+*/
+message ConnectedProfilesRequest {
+}
+
+
+/** @struct AuthenticationRequest
+    @brief A message sent to request authentication.
+
+    @see AuthenticationResponse
+*/
+message AuthenticationRequest {
+    required string          login    = 1; //!< The login uniquely identifies a profile loaded from "exercise/profiles.xml" or dynamically created during the game. @note An error message is sent if login does not exist
+    required string          password = 2; //!< The password is checked the one associated with login in the profile loaded from "exercise/profiles.xml" or dynamically created during the game. @note An error message is sent if password does not match
+    required ProtocolVersion version  = 3; //!< The protocol version used by the client is compared to the server protocol version in order to determine if protocols are compatible. @note An error message is sent if there is a protocol mismatch
+}
+
+/** @struct ProfileCreationRequest
+    @brief Message sent to request profile creation.
+
+    This message is sent to request profile creation.
+    @li A ProfileCreationRequestAck message is sent only to sender to acknowledge the creation.
+    @li A ProfileCreation message is sent to every client to actually create the requested profile.
+
+    @warning This action is only allowed to profiles with supervisor rights.
+*/
+message ProfileCreationRequest {
+    required Profile profile = 1; //!< Describes the profile to be created. @note An error message is sent if login already exists
+}
+
+/** @struct ProfileUpdateRequest
+    @brief A message sent to request profile update.
+
+    This message is sent to request profile update.
+    @li A ProfileUpdateRequestAck message is sent only to sender to acknowledge the update.
+    @li A ProfileUpdate message is sent to every client to actually update the requested profile.
+
+    @warning This action is only allowed to profiles with supervisor rights.
+*/
+message ProfileUpdateRequest {
+    required string  login   = 1; //!< Identifies the profile to be updated. @note An error message is sent if login does not exist
+    required Profile profile = 2; //!< Describes the profile information to be updated. @note An error message is sent if login is changed to an existing one    
+}
+
+/** @struct ProfileDestructionRequest
+    @brief A message sent to request profile destruction
+
+    This message is sent to request profile destruction.
+    @li A ProfileDestructionRequestAck message is sent only to sender to acknowledge the destruction.
+    @li A ProfileDestruction message is sent to every client to actually destruction the requested profile.
+
+    @warning This action is only allowed to profiles with supervisor rights.
+*/
+message ProfileDestructionRequest {
+    required string login = 1; //!< Identifies the profile to be destroyed. @note An error message is sent if login does not exist
+}
+
+/** @struct ClientToAuthentication
+    @brief Wraps available messages going from client to authentication
+
+    This is the actual message sent over the network.
+*/
+message ClientToAuthentication {
+    /** @struct Content
+        @brief The possible messages contained in a client to authentication message
+        @warning Each Content message must contain exactly one of the possible messages.
+    */
+    message Content {
+       optional AuthenticationRequest     authentication_request      = 1; //!< An authentication request message
+       optional ProfileCreationRequest    profile_creation_request    = 2; //!< A profile creation request message
+       optional ProfileUpdateRequest      profile_update_request      = 3; //!< A profile update request message
+       optional ProfileDestructionRequest profile_destruction_request = 4; //!< A profile destruction request message
+       optional ConnectedProfilesRequest  connected_profiles_request  = 5; //!< Connected profiles request message
+    }
+    /** @property context
+        @brief Identifies the request matching the response.
+
+        This field is used to fill the "context" fields in the response messages.
+
+        This context allows the client application to put an unique identifier
+        (based for instance on MAC address), thus allowing to track response
+        message matching a specific request emitted by the client.
+    */
+    optional int32   context = 1;
+    required Content message = 2; //!< A field containing one of the messages to be sent
+}
+
+/** @}*/

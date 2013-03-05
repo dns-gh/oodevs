@@ -1,0 +1,284 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "common.proto";
+import "simulation_client.proto";
+import "authentication_client.proto";
+import "version.proto";
+
+package sword;
+
+/** @internal
+ *  @addtogroup Launcher
+ *  @{
+ */
+
+/** @struct ConnectionResponse
+    @brief response to connection request
+*/
+message ConnectionResponse {
+    enum ErrorCode {
+        success                       = 0; //!< connection successful
+        incompatible_protocol_version = 1; //!< connection failed because of incompatible protocol version
+    }
+    required ErrorCode                error_code     = 1 [ default = success ]; //!< operation return code
+    required ProtocolVersion          server_version = 2;                       //!< server protocol version
+}
+
+/** @struct ExerciseListResponse
+    @brief response to exercise list request, returns available exercises
+*/
+message ExerciseListResponse {
+    repeated string exercise = 1; //!< list of exercise names (with subdirectories if any)
+}
+
+/** @struct SessionListResponse
+    @brief response to session list request
+*/
+message SessionListResponse {
+    enum ErrorCode {
+        success                 = 0; //!< connected profiles successfully listed
+        invalid_exercise_name   = 1; //!< the specified exercise name could not be found
+    }
+    required ErrorCode error_code = 1 [ default = success ]; //!< operation return code
+    required string    exercise   = 2;                       //!< exercise from which sessions are listed
+    repeated string    session    = 3;                       //!< list of session names
+}
+
+/** @struct SessionStartResponse
+    @brief response to start session request
+*/
+message SessionStartResponse {
+    enum Type {
+        simulation = 0; //!< started a simulation. Started an embedded dispatcher if specified in session.
+        dispatch   = 1; //!< started a dispatcher.
+        replay     = 2; //!< started a replayer.
+    }
+    enum ErrorCode {
+        success                 = 0; //!< session successfully started
+        invalid_exercise_name   = 1; //!< the specified exercise name could not be found
+        invalid_checkpoint      = 2; //!< the specified checkpoint could not be found
+        session_already_running = 3; //!< an exercise is already started using the specified session
+    }
+    required ErrorCode error_code = 1 [ default = success ];    //!< operation return code
+    required string    exercise   = 2;                          //!< started exercise
+    required string    session    = 3;                          //!< started session
+    optional string    checkpoint = 4;                          //!< checkpoint started, if any
+    required Type      type       = 5;                          //!< type of exercise session started
+}
+
+/** @struct SessionStopResponse
+    @brief response to stop session request
+*/
+message SessionStopResponse {
+    enum ErrorCode {
+        success               = 0; //!< session successfully stopped
+        invalid_exercise_name = 1; //!< the specified exercise name could not be found
+        invalid_session_name  = 2; //!< the specified session name could not be found
+        session_not_running   = 3; //!< the specified session is not running
+    }
+    required ErrorCode error_code = 1 [ default = success ];   //!< operation return code
+    required string    exercise   = 2;                         //!< stopped exercise
+    required string    session    = 3;                         //!< stopped session
+}
+
+/** @struct ProfileListResponse
+    @brief response to profile list request
+*/
+message ProfileListResponse {
+    enum ErrorCode {
+        success               = 0; //!< profiles successfully listed
+        invalid_exercise_name = 1; //!< the specified exercise name could not be found
+    }
+    required ErrorCode         error_code = 1 [ default = success ]; //!< operation return code
+    required string            exercise   = 2;                       //!< exercise to list profile for
+    repeated Profile           profile    = 3;                       //!< list available profiles for specified exercise
+}
+
+/** @struct ConnectedProfileListResponse
+    @brief response to connect profile list request
+*/
+message ConnectedProfileListResponse {
+    enum ErrorCode {
+        success               = 0; //!< connected profiles successfully listed
+        invalid_exercise_name = 1; //!< the specified exercise name could not be found
+        invalid_session_name  = 2; //!< the specified session name could not be found
+        session_not_running   = 3; //!< the specified session is not running
+    }
+    required ErrorCode         error_code = 1 [ default = success ];   //!< operation return code
+    required string            exercise   = 2;                         //!< exercise to list connected profile for
+    required string            session    = 3;                         //!< session to list connected profile for
+    repeated Profile           profile    = 4;                         //!< list of connected profiles for specified exercise
+}
+
+/** @struct SessionStatus
+    @brief pushed session status
+*/
+message SessionStatus{
+    enum Status {
+        starting    = 0;
+        running     = 1;
+        paused      = 2;
+        not_running = 3;
+        breakdown   = 4;
+    }
+    required string     exercise              = 1;
+    required string     session               = 2;
+    required Status     status                = 3;
+    optional string     breakdown_information = 4;
+}
+
+/** @struct SessionParameterChangeResponse
+    @brief response to session parameter change request
+*/
+message SessionParameterChangeResponse {
+    enum ErrorCode {
+        success               = 0; //!< connected profiles successfully listed
+        invalid_exercise_name = 1; //!< the specified exercise name could not be found
+        invalid_session_name  = 2; //!< the specified session name could not be found
+        session_not_running   = 3; //!< the specified session is not running
+    }
+    required ErrorCode error_code           = 1 [ default = success ];   //!< operation return code
+    required string    exercise             = 2;                         //!< exercise to change parameter for
+    required string    session              = 3;                         //!< session to change parameter for
+    optional uint32    checkpoint_frequency = 4;                         //!< if changed, the new checkpoint frequency
+    optional uint32    acceleration_factor  = 5;                         //!< if changed, the new acceleration factor
+}
+
+/** @struct SessionCommandExecutionResponse
+    @brief response to session command execution request
+*/
+message SessionCommandExecutionResponse {
+    enum ErrorCode {
+        success                 = 0; //!< connected profiles successfully listed
+        invalid_exercise_name   = 1; //!< the specified exercise name could not be found
+        invalid_session_name    = 2; //!< the specified session name could not be found
+        session_not_running     = 3; //!< the specified session is not running
+        invalid_checkpoint      = 4; //!< the specified checkpoint to be created is not valid (already exists...)
+        session_already_paused  = 5; //!< trying to pause an already paused session
+        session_already_running = 6; //!< trying to resume an already running session
+        invalid_date_time       = 7; //!< invalid date time
+    }
+    required ErrorCode  error_code       = 1 [ default = success ];   //!< operation return code
+    required string     exercise         = 2;                         //!< exercise the command was sent to
+    required string     session          = 3;                         //!< session the command was sent to
+    optional string     saved_checkpoint = 4;                         //!< if set, contains the name of the saved checkpoint
+    optional bool       running          = 5;                         //!< paused/running status
+}
+
+/** @struct CheckpointListResponse
+    @brief reponse to checkpoint list request
+*/
+message CheckpointListResponse {
+    enum ErrorCode {
+        success                 = 0; //!< checkpoints successfully listed
+        invalid_exercise_name   = 1; //!< the specified exercise name could not be found
+        invalid_session_name    = 2; //!< the kspecified session name could not be found
+    }
+    required ErrorCode error_code = 1 [ default = success ];   //!< operation return code
+    required string    exercise   = 2;                         //!< exercise for which checkpoints are listed
+    required string    session    = 3 [ default = "default" ]; //!< session for which checkpoints are listed
+    repeated string    checkpoint = 4;                         //!< list of checkpoints for specified session
+}
+
+/** @struct CheckpointDeleteResponse
+    @brief delete checkpoint for a given exercise/session
+*/
+message CheckpointDeleteResponse {
+    enum ErrorCode {
+        success                 = 0; //!< checkpoints successfully listed
+        invalid_exercise_name   = 1; //!< the specified exercise name could not be found
+        invalid_session_name    = 2; //!< the specified session name could not be found
+    }
+    required ErrorCode error_code = 1 [ default = success ];   //!< operation return code
+    required string    exercise   = 2;                         //!< exercise for which checkpoints are to be deleted
+    required string    session    = 3;                         //!< session for which checkpoints are to be deleted
+    repeated string    checkpoint = 4;                         //!< list of deleted checkpoints for specified session
+}
+
+/** @struct SessionNotification
+    @brief notification from specified exercise/session
+*/
+message SessionNotification {
+    message UnitUpdate {
+       required UnitId    unit       = 1;
+       optional Extension extensions = 2;
+    }
+    message FormationUpdate {
+       required FormationId formation  = 1;
+       optional Extension   extensions = 2;
+    }
+    message ProfileCreation { 
+        required Profile profile = 1;
+    }
+    message ProfileUpdate { 
+        required Profile    profile = 1;
+    }
+    message Notification {
+        optional UnitUpdate      unit_update        = 1;
+        optional FormationUpdate formation_update   = 2;
+        optional ProfileCreation profile_creation     = 3;
+        optional ProfileUpdate   profile_update       = 4;
+    }
+    required string         exercise = 1; 
+    required string         session  = 2; 
+    required Notification   notification  = 3; 
+}
+
+/** @struct ClientConnectionNotification
+    @brief connection notification from client
+*/
+message ClientConnectionNotification {
+    message ClientConnection {
+       required string login = 1;
+       required bool   connected = 2;
+    }
+    required string           exercise   = 1;
+    required string           session    = 2;
+    repeated ClientConnection connection = 3;
+}
+
+/** @struct TickInformation
+    @brief tick information from client
+*/
+message TickInformation
+{
+   required int32 current_tick                   = 1;
+   required int32 tick_duration                  = 2;
+   required int32 time_factor                    = 3;
+   required int32 pathfind_request_number        = 4;
+   optional int32 last_checkpoint_build_duration = 5;
+}
+
+/** @struct LauncherToAdmin
+    @brief Lancher to admin protocol messages
+*/
+message LauncherToAdmin {
+    message Content {
+        optional ConnectionResponse              connection_response                = 1;
+        optional ExerciseListResponse            exercise_list_response             = 2;
+        optional SessionListResponse             session_list_response              = 3;
+        optional SessionStartResponse            session_start_response             = 4;
+        optional SessionStopResponse             session_stop_response              = 5;
+        optional ProfileListResponse             profile_list_response              = 6;
+        optional ConnectedProfileListResponse    connected_profile_list_response    = 7;
+        optional SessionStatus                   session_status                     = 9;
+        optional SessionParameterChangeResponse  session_parameter_change_response  = 10;
+        optional SessionCommandExecutionResponse session_command_execution_response = 11;
+        optional CheckpointListResponse          checkpoint_list_response           = 12;
+        optional CheckpointDeleteResponse        checkpoint_delete_response         = 13;
+        optional SessionNotification             session_notification               = 14; 
+        optional TickInformation                 tick_information                   = 15;
+        optional ClientConnectionNotification    connected_clients_update           = 16;
+    }
+    optional int32   context = 1;
+    required Content message = 2;
+}
+
+/** @}*/

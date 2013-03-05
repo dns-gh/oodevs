@@ -1,0 +1,2599 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "common.proto";
+
+package sword;
+
+/** @file
+ *  @brief Messages from the simulation to clients
+ *  @addtogroup Simulation
+ *  @{
+ */
+
+/** @struct OrderAck
+    @brief Defines order acknowledgement error codes
+    @see UnitOrder AutomatOrder CrowdOrder FragOrder
+*/
+message OrderAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of order/mission assignment
+        @todo Move long descriptions to the corresponding field in BlablaOrder and use @@see tags here
+    */
+    enum ErrorCode {
+        no_error                        = 0;  //!< Operation succeeded @todo As error codes are optional, no_error should not exist
+        error_invalid_unit              = 1;  //!< Operation failed because of an invalid tasker identifier e.g. an existing agent/automat/crowd identifier @todo rename to error_invalid_tasker
+        error_invalid_limit             = 2;  //!< Operation failed because of an invalid limit : limit parameters are required for automat missions @deprecated should be handled using invalid_mission_parameters
+        error_invalid_lima              = 3;  //!< Operation failed because of an invalid phase line : phase line parameters are required for some missions @deprecated should be handled using invalid_mission_parameters
+        error_invalid_mission           = 4;  //!< Operation failed because of an invalid mission identifier : the mission must exist and be available for the specified tasker unit
+        error_invalid_parameter         = 5;  //!< Operation failed because of an invalid mission parameter : parameters are defined in the file "Missions.xml"
+        error_unit_cannot_receive_order = 6;  //!< Operation failed because the unit is not in a state where it can execute the order : it must be alive and disengaged (for an agent) @todo rename to error_tasker_cannot_receive_order
+        error_invalid_frag_order        = 7;  //!< Operation failed because of an invalid fragmentary order identifier : valid identifiers can be found in the file "Missions.xml"
+        error_invalid_order_mission     = 8;  //!< Operation failed because of an invalid mission identifier : valid identifiers can be found in the file "Missions.xml"
+        error_unit_surrendered          = 11; //!< Operation failed because the unit is not in a state where it can execute the order : it must not have surrendered and be able to receive orders @todo rename to error_tasker_surrendered
+        error_invalid_lima_function     = 12; //!< Operation failed because of an invalid phase line function : phase line parameters are required for some missions, each phase line is assigned one or more functions in the context of the mission @deprecated should be handled using invalid_mission_parameters
+    }
+}
+
+/** @struct TaskCreationRequestAck
+    @brief Acknowledges an agent task creation request
+    @see UnitOrder
+    @todo gather UnitOrder, AutomatOrder and CrowdOrder into one message
+*/
+message TaskCreationRequestAck {
+    required Tasker             tasker     = 1; //!< Identifier of the agent, automat, crowd on which the order was issued
+    required OrderAck.ErrorCode error_code = 2; //!< Reason for the failure of an agent order execution operation
+}
+
+/** @struct FragOrderAck
+    @brief A fragmentary order execution request acknowledgement message
+    @see FragOrder
+    @todo gather with UnitOrder, AutomatOrder and CrowdOrder into one message ?
+*/
+message FragOrderAck {
+    required Tasker             tasker     = 1; //!< Identifier of the agent, automat or crowd on which the fragmentary order was issued
+    required OrderAck.ErrorCode error_code = 2; //!< Reason for the failure of a fragmentary order execution operation
+}
+
+/** @struct SetAutomatModeAck
+    @brief Acknowledges an automat mode change request
+    @see SetAutomatMode
+*/
+message SetAutomatModeAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of automat mode change
+    */
+    enum ErrorCode {
+        no_error           = 0; //!< Operation succeeded @todo make error_code field optional instead
+        error_invalid_unit = 1; //!< Operation failed because of an invalid automat identifier @todo rename to error_invalid_automat
+        error_not_allowed  = 2; //!< Operation failed because the parent automat is engaged @todo rename to error_parent_automat_engaged
+    }
+    required AutomatId automate   = 1; //!< Identifier of the automat for which to change mode @see AutomatId
+    required ErrorCode error_code = 2; //!< Reason for the failure of the automat mode changing operation @see ErrorCode
+}
+
+/** @struct UnitActionAck
+    @brief Acknowledges an agent action request
+    @todo rename to AgentActionAck
+*/
+message UnitActionAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of agent action operation
+    */
+    enum ErrorCode {
+        no_error                = 0; //!< Operation succeeded
+        error_invalid_unit      = 1; //!< Operation failed because of an invalid agent identifier @todo rename to error_invalid_agent
+        error_automat_engaged   = 2; //!< Operation failed because the target agent is currently controlled by its parent automat
+        error_invalid_parameter = 3; //!< Operation failed because the provided action parameters were invalid
+        error_unit_surrendered  = 4; //!< Operation failed because the agent is not in a state where it can execute the order : it must not have surrendered to be able to receive orders @todo rename to error_agent_surrendered
+    }
+}
+
+/** @struct UnitCreationRequestAck
+    @brief Acknowledges an agent creation request
+    @see UnitCreationRequest
+    @todo rename to AgentCreationRequestAck
+*/
+message UnitCreationRequestAck {
+    required UnitActionAck.ErrorCode error_code = 1; //!< Reason for the failure of the agent creation operation @see UnitActionAck.ErrorCode
+}
+
+/** @struct UnitMagicActionAck
+    @brief Acknowledges an agent magic action request
+    @see UnitMagicAction
+    @todo rename to AgentMagicActionRequestAck
+*/
+message UnitMagicActionAck {
+    required UnitId                  unit       = 1; //!< Identifier of the agent on which the magic action was requested to be executed @todo rename to agent
+    required UnitActionAck.ErrorCode error_code = 2; //!< Reason for the failure of the agent magic action execution operation. @see UnitActionAck.ErrorCode
+}
+
+/** @struct MagicActionAck
+    @brief Acknowledges a magic action request
+    @see MagicAction
+    @todo rename to MagicActionRequestAck
+*/
+message MagicActionAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the magic action operation
+    */
+    enum ErrorCode {
+        no_error                = 0; //!< Operation succeeded
+        error_invalid_parameter = 1; //!< Operation failed because the provided action parameters were invalid
+    }
+    required ErrorCode error_code = 1; //!< Reason for the failure of the magic action execution operation @see ErrorCode
+}
+
+/** @struct ObjectMagicActionAck
+    @brief Acknowledges an object magic action request
+    @see ObjectMagicAction
+    @todo rename to ObjectMagicActionRequestAck
+*/
+message ObjectMagicActionAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the object magic action operation
+    */
+    enum ErrorCode {
+        no_error                          = 0; //!< Operation succeeded
+        error_invalid_object              = 1; //!< Operation failed because the provided object identifier was invalid
+        error_invalid_party               = 3; //!< Operation failed because the provided party identifier was invalid
+        error_missing_specific_attributes = 5; //!< Operation failed because object specific attributes are missing : they must meet the requirements associated with the object type
+        error_invalid_specific_attributes = 6; //!< Operation failed because object specific attributes are invalid : they must meet the requirements associated with the object type
+    }
+    required ErrorCode error_code = 1; //!< Reason for the failure of the object magic action execution operation @see ErrorCode
+}
+
+/** @struct CrowdMagicActionAck
+    @brief Acknowledges a crowd magic action request
+    @see CrowdMagicAction
+    @todo rename to CrowdMagicActionRequestAck
+*/
+message CrowdMagicActionAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the crowd magic action operation
+    */
+    enum ErrorCode {
+        no_error                = 0; //!< Operation succeeded
+        error_invalid_unit      = 1; //!< Operation failed because the provided crowd identifier was invalid @todo rename to error_invalid_crowd
+        error_invalid_parameter = 2; //!< Operation failed because the provided action parameters were invalid
+    }
+    required CrowdId   crowd      = 1; //!< Identifier of the crowd on which the magic action was requested to be executed
+    required ErrorCode error_code = 2; //!< Reason for the failure of the crowd magic action execution operation @see ErrorCode
+}
+
+/** @struct ChangeDiplomacy
+    @brief Notifies of a change in diplomacy
+*/
+message ChangeDiplomacy {
+   required PartyId       party1    = 1; //!< Identifier of the party from which the diplomacy is defined
+   required PartyId       party2    = 2; //!< Identifier of the party to which the diplomacy is defined
+   required EnumDiplomacy diplomacy = 3; //!< Definition of the diplomacy between specified parties
+}
+
+/** @struct ChangeDiplomacyAck
+    @brief Acknowledges a diplomacy change magic action
+    @see MagicAction
+*/
+message ChangeDiplomacyAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the diplomacy change operation
+    */
+    enum ErrorCode {
+        no_error_diplomacy            = 0; //!< Operation succeeded @todo rename to no_error
+        error_invalid_party_diplomacy = 1; //!< Operation failed because the provided diplomacy is invalid
+    }
+    required PartyId       party1     = 1; //!< Identifier of the party from which the diplomacy is defined
+    required PartyId       party2     = 2; //!< Identifier of the party to which the diplomacy is defined
+    required EnumDiplomacy diplomacy  = 3; //!< Definition of the diplomacy between specified parties
+    required ErrorCode     error_code = 4; //!< Reason for the failure of the diplomacy change operation
+}
+
+/** @struct HierarchyModificationAck
+    @brief Factorizes hierarchy modification action acknowledgement errors
+    @todo split into different types
+*/
+message HierarchyModificationAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of a hierarchy modification operation
+    */
+    enum ErrorCode {
+        no_error_hierarchy            = 0;  //!< Operation succeeded @todo rename to no_error
+        error_invalid_agent           = 1;  //!< Operation failed because no existing agent with the provided identifier could be found
+        error_invalid_automate        = 2;  //!< Operation failed because no existing automat with the provided identifier could be found @todo rename to error_invalid_automat
+        error_invalid_formation       = 3;  //!< Operation failed because no existing formation with the provided identifier could be found
+        error_invalid_supply_automat  = 4;  //!< Operation failed because no existing supply automat with the provided identifier could be found
+        error_agent_surrendered       = 8;  //!< Operation failed because the unit is not in a state where it can execute the order : it must not have surrendered to be able to receive orders
+        error_invalid_party           = 9;  //!< Operation failed because no existing party with the provided identifier could be found
+        error_invalid_knowledge_group = 10; //!< Operation failed because no existing knowledge group with the provided identifier could be found
+        error_parties_mismatched      = 11; //!< Operation failed because an agent cannot be moved from a party to another
+    }
+}
+
+/** @struct AutomatChangeKnowledgeGroupAck
+    @brief Acknowledges an automat knowledge group change request
+    @see UnitMagicAction of type "change_knowledge_group"
+    @todo gather magic action acks
+*/
+message AutomatChangeKnowledgeGroupAck {
+    required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat knowledge group change operation @see HierarchyModificationAck.ErrorCode
+}
+
+/** @struct AutomatChangeKnowledgeGroup
+    @brief Notifies of an automat knowledge group change
+*/
+message AutomatChangeKnowledgeGroup {
+   required AutomatId        automat         = 1; //!< The automat identifier
+   required PartyId          party           = 2; //!< The party identifier
+   required KnowledgeGroupId knowledge_group = 3; //!< The knowledge group identifier
+}
+
+/** @struct ChangeLogisticLinksAck
+    @brief Acknowledges an automat logistic links change request
+    @see UnitMagicAction of type UnitMagiAction.Type.change_logistic_links
+    @todo gather magic action acks
+*/
+message ChangeLogisticLinksAck {
+    required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat logistic links change operation @see HierarchyModificationAck.ErrorCode
+}
+
+/** @struct ChangeLogisticLinks
+    @brief Notifies a change to the logistic links of an automat
+*/
+message ChangeLogisticLinks {
+   required ParentEntity requester = 1; //!< Identifier of the automat or formation concerned by the logistic links update
+   repeated ParentEntity superior = 2; //!< The new logistic superiors
+}
+
+/** @struct AutomatChangeSuperiorAck
+    @brief Acknowledges an automat superior change request
+    @see UnitMagicAction of UnitMagiAction.Type.change_automat_superior
+    @todo gather magic action acks
+*/
+message AutomatChangeSuperiorAck {
+    required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat superior change operation @see HierarchyModificationAck.ErrorCode
+}
+
+/** @struct UnitChangeSuperiorAck
+    @brief Acknowledges an agent superior change request
+    @see UnitMagicAction of UnitMagiAction.Type.unit_change_superior
+    @todo gather magic action acks
+*/
+message UnitChangeSuperiorAck {
+    required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the agent superior change operation @see HierarchyModificationAck.ErrorCode
+}
+
+/** @struct LogSupplyPushFlowAck
+    @brief Acknowledges a push flow request
+    @see UnitMagicAction of UnitMagiAction.Type.log_supply_push_flow
+    @todo gather magic action acks
+*/
+message LogSupplyPushFlowAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the pushed flow creation
+    */
+    enum ErrorCode {
+        no_error_pushflow      = 0; //!< Operation succeeded @todo As error codes are optional, no_error should not exist
+        error_invalid_supplier = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found
+        error_invalid_receiver = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found
+    }
+    optional ErrorCode error_code = 1; //!< Reason for the failure of the request @see ErrorCode
+}
+
+/** @struct LogSupplyPullFlowAck
+    @brief Acknowledges a pull flow request
+    @see UnitMagicAction of UnitMagiAction.Type.log_supply_pull_flow
+    @todo gather magic action acks
+*/
+message LogSupplyPullFlowAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the pulled flow creation
+    */
+    enum ErrorCode {
+        no_error_pullflow      = 0; //!< Operation succeeded @todo As error codes are optional, no_error should not exist
+        error_invalid_supplier = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found
+        error_invalid_receiver = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found
+    }
+    optional ErrorCode error_code = 1; //!< Reason for the failure of the request @see ErrorCode
+}
+
+/** @struct LogSupplyChangeQuotasAck
+    @brief Acknowledges a quota allocation change request
+    @see UnitMagicAction of UnitMagiAction.Type.log_supply_change_quotas
+    @todo gather magic action acks
+*/
+message LogSupplyChangeQuotasAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the quota allocation.
+    */
+    enum ErrorCode {
+        no_error_quotas        = 0; //!< Operation succeeded @todo rename to no_error @todo As error codes are optional, no_error should not exist
+        error_invalid_supplier = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found
+        error_invalid_receiver = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found
+        /** @brief Operation failed because of an dotation parameter.
+            An invalid (non existing) dotation was specified.
+            @todo rename to error_invalid_receiver
+        */
+        error_invalid_dotation = 3;
+    }
+    optional ErrorCode error_code = 1; //!< Reason for the failure of the request @see ErrorCode
+}
+
+/** @struct ActionCreateFireOrderAck
+    @brief Acknowledges a creation fire order request
+    @see ActionCreateFireOrder
+*/
+message ActionCreateFireOrderAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the create fire order.
+    */
+    enum ErrorCode {
+        no_error                     = 0; //!< Operation succeeded @todo make error_code optional and remove no_error
+        error_invalid_reporter       = 1; //!< Operation failed because no existing reporter with the provided identifier could be found
+        error_invalid_target         = 2; //!< Operation failed because no existing target with the provided identifier could be found
+        error_invalid_ammunition     = 3; //!< Operation failed because no existing ammunition with the provided identifier could be found
+        error_invalid_iteration      = 4; //!< Operation failed because iterations should be greater than 0
+        error_target_not_illuminated = 5; //!< Operation failed because of the target not being illuminated
+    }
+    required ErrorCode error_code = 2; //!< Reason for the failure of the request @see ErrorCode @todo change field index to 1
+}
+
+/** @struct BurningCellRequestAck
+    @brief An acknowledgement message to a burning cell request
+    @see BurningCellRequest
+*/
+message BurningCellRequestAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the burning cell request
+    */
+    enum ErrorCode {
+       no_error                  = 0;
+    }
+    required ErrorCode error_code = 1; //!< Reason for the failure of the request
+}
+
+/** @struct ControlInformation
+    @brief Provides various global informations
+    @todo Find when and why this is sent (probably when a client connects ?)
+*/
+message ControlInformation {
+   required int32               current_tick         = 1;  //!< The current tick number
+   required DateTime            initial_date_time    = 2;  //!< The initial date and time @see DateTime
+   required DateTime            date_time            = 3;  //!< The current date and time @see DateTime @see ControlDateTimeChange
+   required int32               tick_duration        = 4;  //!< The duration of a simulation tick in seconds
+   required int32               time_factor          = 5;  //!< The simulation time multiplier @see ControlChangeTimeFactor
+   required int32               checkpoint_frequency = 6;  //!< The number of seconds between automatic checkpoints saves @see ControlCheckPointSetFrequency @see ControlCheckPointSaveNow
+   required EnumSimulationState status               = 7;  //!< The current status of the simulation @see EnumSimulationState @see ControlStop ControlPause ControlResume
+   required bool                send_vision_cones    = 8;  //!< Whether the vision cones for units is currently being sent or not @see SimToClient::Content::unit_vision_cones
+   required bool                profiling_enabled    = 9;  //!< Whether the profiling information is currently being sent or not @see SimToClient::Content::control_profiling_information
+   optional DateTime            checkpoint_real_time = 10; //!< The local date when checkpoint saved
+}
+
+/** @struct ControlProfilingInformation
+    @brief Provides profiling information message
+    @deprecated The message seems to never be actually sent by the simulation
+*/
+message ControlProfilingInformation {
+   required float perception = 1; //!< The amount of time spent for computing perceptions @todo unit ?
+   required float decision   = 2; //!< The amount of time spent for computing decisions @todo unit ?
+   required float action     = 3; //!< The amount of time spent for performing actions @todo unit ?
+   required float main_loop  = 4; //!< The amount of time spent for the whole tick @todo unit ?
+}
+
+/** @struct ControlBeginTick
+    @brief A control begin tick message
+    @see ControlEndTick
+*/
+message ControlBeginTick {
+   required int32    current_tick = 1; //<! The current tick number
+   required DateTime date_time    = 2; //<! The current date and time @see DateTime
+}
+
+/** @struct ControlEndTick
+    @brief A control end tick message
+    @see ControlBeginTick
+*/
+message ControlEndTick {
+   required int32 current_tick    = 1; //<! The current tick number
+   required int32 tick_duration   = 2; //<! The current tick duration in seconds
+   required int32 long_pathfinds  = 3; //<! The number of pending long path finding requests @todo explain how and why is a path considered long
+   required int32 short_pathfinds = 4; //<! The number of pending short path finding requests @todo explain how and why is a path considered short
+   required int32 memory          = 5; //<! The memory size in use in bytes
+   required int32 virtual_memory  = 6; //<! The virtual memory size in use in bytes
+}
+
+/** @struct ControlAck
+    @brief A control acknowledgement message
+    @see ControlStop ControlPause ControlResume
+    @see ControlChangeTimeFactor
+    @see ControlDateTimeChange
+    @todo split into different acks
+*/
+message ControlAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the control request
+    */
+    enum ErrorCode {
+       no_error                  = 0; //<! Operation succeeded
+       error_already_started     = 1; //<! @deprecated never used
+       error_not_started         = 2; //<! Stop request failed because the simulation is already stopped
+       error_not_paused          = 3; //<! Resume request failed because the simulation is running
+       error_already_paused      = 4; //<! Pause request failed because the simulation is already paused
+       error_invalid_time_factor = 5; //<! The time factor must be strictly positive
+       error_invalid_date_time   = 6; //<! The new date/time must be after the current date/time
+    }
+}
+
+/** @struct ControlDateTimeChangeAck
+    @brief A data time change acknowledgement message
+    @see ControlDateTimeChange
+*/
+message ControlDateTimeChangeAck {
+    required ControlAck.ErrorCode error_code = 1; //!< Reason for the failure of the request
+}
+
+/** @struct ControlChangeTimeFactorAck
+    @brief A time factor change acknowledgement message
+    @see ControlChangeTimeFactor
+*/
+message ControlChangeTimeFactorAck {
+   required int32                time_factor = 1; //!< The simulation time multiplier
+   required ControlAck.ErrorCode error_code  = 2; //!< Reason for the failure of the request
+}
+
+/** @struct ControlStopAck
+    @brief A stop acknowledgement message
+    @see ControlStop
+*/
+message ControlStopAck {
+   required ControlAck.ErrorCode error_code = 1; //!< Reason for the failure of the request
+}
+
+/** @struct ControlPauseAck
+    @brief A pause acknowledgement message
+    @see ControlPause
+*/
+message ControlPauseAck {
+   required ControlAck.ErrorCode error_code = 1; //!< Reason for the failure of the request
+}
+
+/** @struct ControlResumeAck
+    @brief A resume acknowledgement message
+    @see ControlResume
+*/
+message ControlResumeAck {
+   required ControlAck.ErrorCode error_code = 1; //!< Reason for the failure of the request
+}
+
+/** @struct PartyCreation
+    @brief A party creation message
+*/
+message PartyCreation {
+   required PartyId       party     = 1; //!< The party identifier @see PartyId
+   required string        name      = 2; //!< The party name
+   required EnumDiplomacy type      = 3; //!< @todo Relation to what ?
+   optional Extension     extension = 4; //!< The extension fields
+   optional RgbColor      color     = 5; //!< The party color @see RgbColor
+}
+
+/** @enum EnumLogisticLevel
+    @brief Defines the different levels of logistic
+*/
+enum EnumLogisticLevel {
+    none          = 0; //!< No logistic @todo rename to no_logistic
+    logistic_base = 1; //!< Logistic base
+}
+
+/** @struct FormationCreation
+    @brief A formation creation message
+*/
+message FormationCreation {
+    required FormationId       formation             = 1;  //!< The formation identifier @see FormationId
+    required PartyId           party                 = 2;  //!< The party identifier @see PartyId
+    optional FormationId       parent                = 3;  //!< The parent formation identifier @see FormationId
+    required EnumNatureLevel   level                 = 4;  //!< @todo What's this ?
+    required string            name                  = 5;  //!< The formation name
+    required string            app6symbol            = 7;  //!< The formation APP-6 symbol
+    required EnumLogisticLevel logistic_level        = 8;  //!< @todo What's this ?
+    optional RgbColor          color                 = 9;  //!< The formation color @see RgbColor
+    optional string            symbol                = 10; //!< The overriden formation symbol
+}
+
+/** @struct FormationUpdate
+    @brief A formation update message
+*/
+message FormationUpdate {
+    required FormationId       formation             = 1;  //!< The formation identifier @see FormationId
+    optional Extension         extension             = 2;  //!< The extension fields
+}
+
+/** @struct FormationDestruction
+    @brief A formation destruction message
+*/
+message FormationDestruction {
+   required FormationId formation = 1;
+}
+
+/** @struct AutomatCreation
+    @brief An automat creation message
+*/
+message AutomatCreation {
+    required AutomatId         automat         = 1;  //!< The automat identifier @see AutomatId
+    required AutomatType       type            = 2;  //!< The automat type @see AutomatType
+    required string            name            = 3;  //!< The automat name
+    required ParentEntity      parent          = 4;  //!< The automat parent @see ParentEntity
+    required PartyId           party           = 5;  //!< The automat party @see PartyId
+    optional KnowledgeGroupId  knowledge_group = 6;  //!< The automat knowledge group @see KnowledgeGroupId
+    required string            app6symbol      = 7;  //!< The automat APP-6 symbol
+    required EnumLogisticLevel logistic_level  = 8;  //!< The automat logistic level @see EnumLogisticLevel
+    optional RgbColor          color           = 9;  //!< The automat color @see RgbColor
+    optional string            symbol          = 10; //!< The overriden automat symbol
+}
+
+/** @struct RulesOfEngagement
+    @brief A rules of engagement message
+*/
+message RulesOfEngagement {
+    /** @enum Value
+        @brief Value of the rules of engagement
+        @todo make RulesOfEngagement the enum or move the value field in this message
+    */
+    enum Value {
+       none             = 0; //!< No rule of engagement
+       free_fire        = 1; //!< Fire permitted
+       retaliation_only = 2; //!< Fire back permitted
+       fire_upon_order  = 3; //!< Fire forbidden
+    }
+}
+
+/** @struct ForceRatio
+    @brief A force ratio message
+*/
+message ForceRatio {
+    /** @enum Value
+        @brief Value of the force ratio
+        @todo make ForceRatio the enum
+    */
+    enum Value {
+        none        = 0; //!< No force ratio
+        neutral     = 1; //!< Neutral
+        favorable   = 2; //!< Favorable
+        unfavorable = 3; //!< Unfavorable
+    }
+}
+
+/** @enum EnumMeetingEngagementStatus
+    @brief Defines the states of a meeting engagement
+*/
+enum EnumMeetingEngagementStatus {
+    no_contact              = 0; //!< No engagement
+    avoiding                = 1; //!< Avoiding engagement
+    pinned_down             = 2; //!< Pinned down
+    proceeding_with_mission = 3; //!< Proceeding with the mission
+}
+
+/** @enum EnumOperationalStatus
+    @brief Defines the states of the operational status
+*/
+enum EnumOperationalStatus {
+    totally_destroyed    = 0; //!< Totally destroyed
+    tactically_destroyed = 1; //!< Tactically Destroyed
+    operational          = 2; //!< Operational
+}
+
+/** @struct AutomatAttributes
+    @brief An automat attributes update message
+*/
+message AutomatAttributes {
+   required AutomatId                   automat               = 1; //!< The automat identifier
+   optional EnumAutomatMode             mode                  = 2; //!< The automat mode
+   optional ForceRatio.Value            force_ratio           = 3; //!< The automat force ratio
+   optional EnumMeetingEngagementStatus meeting_engagement    = 4; //!< The meeting engagement status
+   optional EnumOperationalStatus       operational_state     = 5; //!< The automat operational state
+   optional RulesOfEngagement.Value     roe                   = 6; //!< The automat rules of engagement
+   optional Extension                   extension             = 9;  //!< The extension fields
+   optional string                      decisional_model      = 10; //!< The decisional model
+}
+
+/** @struct AutomatDestruction
+    @brief An automat destruction message
+*/
+message AutomatDestruction {
+   required AutomatId automat = 1; //!< The automat identifier @see AutomatId
+}
+
+/** @struct UnitCreation
+    @brief A unit creation message
+*/
+message UnitCreation {
+   required UnitId           unit        = 1; //!< The unit identifier @see UnitId
+   required UnitType         type        = 2; //!< The unit type @see UnitType
+   required string           name        = 3; //!< The unit name
+   required AutomatId        automat     = 4; //!< @todo What's this ?
+   required bool             pc          = 5; //!< @todo What's this ?
+   optional RgbColor         color       = 6; //!< The unit color @see RgbColor
+   optional HumanRepartition repartition = 7; //!< The unit human repartition @see HumanRepartition
+}
+
+/** @struct BorrowedEquipments
+    @brief A borrowed equipments message
+*/
+message BorrowedEquipments {
+    /** @struct BorrowedEquipment
+        @brief A borrowed equipment message
+    */
+    message BorrowedEquipment {
+        required UnitId        owner    = 1; //!< The owner identifier @see UnitId
+        required EquipmentType type     = 2; //!< The equipment type @see EquipmentType
+        required int32         quantity = 3; //!< The quantity of equipment
+    }
+    repeated BorrowedEquipment elem = 1; //!< The equipments @see BorrowedEquipment
+}
+
+/** @struct LentEquipments
+    @brief A lent equipments message
+*/
+message LentEquipments {
+    /** @struct LentEquipment
+        @brief A lent equipment message
+    */
+    message LentEquipment {
+        required UnitId        borrower = 1; //!< The borrower identifier @see UnitId
+        required EquipmentType type     = 2; //!< The equipment type @see EquipmentType
+        required int32         quantity = 3; //!< The quantity of equipment
+    }
+    repeated LentEquipment elem = 1; //!< The equipments @see LentEquipment
+}
+
+/** @struct ResourceDotations
+    @brief A resource dotations message
+*/
+message ResourceDotations {
+    /** @struct ResourceDotation
+        @brief A resource dotation message
+    */
+    message ResourceDotation {
+        required ResourceType type      = 1; //!< The resource type @see ResourceType
+        required int32        quantity  = 2; //!< The quantity available
+        optional float        threshold = 3; //!< The logistic threshold on the first tick, then if needed
+    }
+    repeated ResourceDotation elem = 1; //!< The resource dotations @see ResourceDotation
+}
+
+/** @struct EquipmentDotations
+    @brief An equipment dotations message
+*/
+message EquipmentDotations {
+    /** @struct EquipmentDotation
+        @brief An equipment dotation message
+    */
+    message EquipmentDotation {
+        required EquipmentType type            = 1; //!< The equipment type @see EquipmentType
+        required int32         available       = 2; //!< The amount of equipment available
+        required int32         unavailable     = 3; //!< The amount of equipment unavailable
+        required int32         repairable      = 4; //!< The amount of equipment fixable
+        required int32         on_site_fixable = 5; //!< The amount of equipment fixable on site
+        required int32         repairing       = 6; //!< The amount of equipment under maintenance
+        required int32         captured        = 7; //!< The amount of equipment captured
+        repeated int32         breakdowns      = 8; //!< The list of the breakdowns id/name. Must have EquipmentDotation.repairable elements.
+    }
+    repeated EquipmentDotation elem = 1; //!< The equipment dotations @see EquipmentDotation
+}
+
+/** @enum EnumHumanRank
+    @brief Defines the different ranks
+*/
+enum EnumHumanRank {
+    officer     = 0; //!< Commissioned Officer
+    sub_officer = 1; //!< Non-commissioned Officer
+    trooper     = 2; //!< Other Enlisted Rank
+}
+
+/** @enum EnumHumanState
+    @brief Defines the different health state
+*/
+enum EnumHumanState {
+    healthy = 0; //!< Healthy state
+    injured = 1; //!< Injured state
+    deadly  = 2; //!< Dead state // $$$$ ABR 2011-07-20: FIXME RENAME
+}
+
+/** @enum EnumHumanLocation
+    @brief Defines the different location
+*/
+enum EnumHumanLocation {
+    battlefield = 0; //!< Located on the battlefield
+    maintenance = 1; //!< Assigned to maintenance
+    medical     = 2; //!< In treatment
+}
+
+/** @enum EnumInjuriesSeriousness
+    @brief Defines the injuries seriousness
+*/
+enum EnumInjuriesSeriousness {
+    wounded_u1 = 0; //!< Wounded emergency level 1
+    wounded_u2 = 1; //!< Wounded emergency level 2
+    wounded_u3 = 2; //!< Wounded emergency level 3
+    wounded_ue = 3; //!< Wounded extrem emergency
+}
+
+/** @struct Injury
+    @brief A definition of an injury
+*/
+message Injury {
+    required int32                   id = 1;          //!< Define the type of the injury
+    required EnumInjuriesSeriousness seriousness = 2; //!< Define the seriousness of the injury
+}
+
+/** @struct HumanDotations
+    @brief A human dotations message
+*/
+message HumanDotations {
+    /** @struct HumanDotation
+        @brief A human dotation message
+    */
+    message HumanDotation {
+        required int32               quantity         = 1; //!< The amount of persons
+        required EnumHumanRank       rank             = 2; //!< The rank @see EnumHumanRank
+        required EnumHumanState      state            = 3; //!< The state @see EnumHumanState
+        required EnumHumanLocation   location         = 4; //!< The location @see EnumHumanLocation
+        repeated Injury              injuries         = 5; //!< The list of injuries @see Injuries
+        optional bool                mentally_wounded = 6; //!< Whether the group is mentally wounded or not
+        optional bool                contaminated     = 7; //!< Whether the group is NBC contaminated or not
+    }
+    repeated HumanDotation elem = 1; //!< The human dotations
+}
+
+/** @struct ContaminationState
+    @brief A contamination state message
+    @todo move into UnitAttributes
+*/
+message ContaminationState {
+   optional int32 percentage = 1; //!< @todo What's this ?
+   optional float quantity   = 2; //!< @todo What's this ?
+}
+
+/** @struct NBCAgents
+    @brief A NBC agents message
+    @todo rename to NbcAgents
+    @todo move into UnitAttributes
+*/
+message NBCAgents {
+    repeated NBCAgentType elem = 1; //!< The list of NBC agents @see NBCAgentType
+}
+
+/** @struct Communication
+    @brief A communication message
+    @todo move into UnitAttributes
+    @todo rename to Communications with an s
+*/
+message Communication {
+    optional bool              jammed          = 1; //!< Whether the communications are jammed or not
+    optional KnowledgeGroupId  knowledge_group = 2; //!< The knowledge group identifier @see KnowledgeGroupId
+}
+
+/** @struct UnitAttributes
+    @brief A unit attributes message
+*/
+message UnitAttributes {
+    /** @enum Posture
+        @brief Posture states
+    */
+    enum Posture {
+        moving                           = 0; //!< Moving
+        infiltrating                     = 1; //!< Infiltrating
+        stopping                         = 2; //!< Stopping
+        short_stopping                   = 3; //!< Short stopping
+        parked                           = 4; //!< Parked
+        parked_on_self_prepared_area     = 5; //!< Parked on self-prepared area
+        parked_on_engineer_prepared_area = 6; //!< Parked on engineer-prepared area
+    }
+    /** @enum FireAvailability
+        @brief Fire availability states
+    */
+    enum FireAvailability {
+        no_fire          = 0; //!< No fire
+        fire_ready       = 1; //!< Fire ready
+        fire_unavailable = 2; //!< Fire unavailable
+        engaged          = 3; //!< Engaged
+    }
+    /** @enum CrowdRoe
+        @brief Rules of engagement against crowds
+        @todo rename to RulesOfEngagementAgainstCrowds or something along
+    */
+    enum CrowdRoe {
+        no_rule          = 0; //!< No rule
+        no_force         = 1; //!< Use of force forbidden
+        non_lethal_force = 2; //!< Hold back civilians by the use of non lethal means
+        lethal_force     = 3; //!< Lethal weapons authorized for use
+    }
+    /** @enum EnumUnitTiredness
+        @brief Defines the different states of a unit's tiredness
+    */
+    enum EnumUnitTiredness {
+        rested     = 0; //!< Rested
+        tired      = 1; //!< Tired
+        exhausted  = 2; //!< Exhausted
+    }
+    /** @enum EnumUnitMorale
+        @brief Defines the different states of a unit's morale
+    */
+    enum EnumUnitMorale {
+        fanatical = 0; //!< Fanatical
+        high      = 1; //!< High
+        standard  = 2; //!< Standard
+        low       = 3; //!< Low
+    }
+    /** @enum EnumUnitExperience
+        @brief Defines the different states of a unit's experience
+    */
+    enum EnumUnitExperience {
+        veteran = 0; //!< Veteran
+        expert  = 1; //!< Expert
+        novice  = 2; //!< Novice
+    }
+    /** @enum EnumUnitStress
+        @brief Defines the different states of a unit' stress
+    */  
+    enum EnumUnitStress {
+       calm     = 0; //!< Calm
+       worried  = 1; //!< Worried
+       stressed = 2; //!< Stressed
+    }
+    message Satisfaction {
+        optional float safety                = 1;
+        optional float lodging               = 2;
+        optional float access_to_health_care = 3;
+    }
+    required UnitId                      unit                       = 1;  //!< The unit identifier @see UnitId
+    optional HumanDotations              human_dotations            = 2;  //!< The human dotations @see HumanDotations
+    optional EquipmentDotations          equipment_dotations        = 3;  //!< The equipment dotations @see EquipmentDotations
+    optional ResourceDotations           resource_dotations         = 4;  //!< The resource dotations @see ResourceDotations
+    optional LentEquipments              lent_equipments            = 5;  //!< The lent equipments @see LentEquipments
+    optional BorrowedEquipments          borrowed_equipments        = 6;  //!< The borrowed equipments @see BorrowedEquipments
+    optional CoordLatLong                position                   = 7;  //!< The current position @see CoordLatLong
+    optional Heading                     direction                  = 8;  //!< The current heading @see Heading @todo rename to heading
+    optional int32                       height                     = 9;  //!< The current height from the ground in meters
+    optional int32                       altitude                   = 10; //!< The current altitude on the geoid model of the earth in meters
+    optional int32                       speed                      = 11; //!< The current speed in kilometers per hour
+    optional int32                       raw_operational_state      = 12; //!< The operational state as a percentage
+    optional UnitIdList                  reinforcements             = 13; //!< The reinforcements @see UnitIdList
+    optional UnitId                      reinforced_unit            = 14; //!< The reinforced unit @see UnitId
+    optional bool                        dead                       = 15; //!< Whether the unit is dead or not
+    optional bool                        neutralized                = 16; //!< Whether the unit has been neutralized or not
+    optional bool                        stealth                    = 17; //!< Whether the unit is in stealth mode
+    optional bool                        underground                = 18; //!< Whether the unit is underground
+    optional bool                        embarked                   = 19; //!< Whether the unit has been embarked or not
+    optional bool                        transporters_available     = 20; //!< Whether the unit has transporters available or not
+    optional Posture                     old_posture                = 21; //!< The posture which the unit is transitioning from
+    optional Posture                     new_posture                = 22; //!< The posture which the unit is transitioning to
+    optional int32                       posture_transition         = 23; //!< The completion of the posture transition in percent
+    optional int32                       installation               = 24; //!< The completion of the installation in percent
+    optional bool                        protective_suits           = 25; //!< Whether the unit is wearing NBC protective suits or not
+    optional NBCAgents                   contamination_agents       = 26; //!< The NBC contamination agents @see NBCAgents
+    optional ContaminationState          contamination_state        = 27; //!< The NBC contamination state @see ContaminationState
+    optional Communication               communications             = 28; //!< The communication state @see Communication
+    optional bool                        radio_emitter_disabled     = 29; //!< Whether the radio emitter is disabled or not
+    optional bool                        radio_receiver_disabled    = 30; //!< Whether the radio receiver is disabled or not
+    optional bool                        radar_active               = 31; //!< Whether the radar is active or not
+    optional UnitIdList                  transported_units          = 32; //!< The transported units @see UnitIdList
+    optional UnitId                      transporting_unit          = 33; //!< The transporting unit @see UnitId
+    optional ForceRatio.Value            force_ratio                = 34; //!< The force ratio @see ForceRatio
+    optional EnumMeetingEngagementStatus meeting_engagement         = 35; //!< The meeting engagement status
+    optional EnumOperationalStatus       operational_state          = 36; //!< The operational state
+    optional FireAvailability            indirect_fire_availability = 37; //!< The indirect fire availability
+    optional RulesOfEngagement.Value     roe                        = 38; //!< The rules of engagement @see RulesOfEngagement @todo rename to rules_of_engagement
+    optional CrowdRoe                    roe_crowd                  = 39; //!< The rules of engagement against crowds @see CrowdRoe @todo rename to ?
+    optional EnumUnitTiredness           tiredness                  = 40; //!< The tiredness @see EnumUnitTiredness
+    optional EnumUnitMorale              morale                     = 41; //!< The morale @see EnumUnitMorale
+    optional EnumUnitExperience          experience                 = 42; //!< The experience @see EnumUnitExperience
+    optional UnitId                      surrendered_unit           = 43; //!< The unit to which this unit has surrendered @see UnitId
+    optional bool                        prisoner                   = 44; //!< Whether the unit has been made prisoner or not
+    optional bool                        refugees_managed           = 45; //!< Whether refugees are being handled by the unit or not
+    optional Satisfaction                satisfaction               = 46; //!< The satisfaction @see Satisfaction
+    optional string                      critical_intelligence      = 47; //!< The current critical intelligence
+    optional PartyAdhesions              adhesions                  = 48; //!< The party adhesions
+    optional Extension                   extension                  = 49; //!< The extension fields
+    optional EnumUnitStress              stress                     = 50; //!< The stress @see EnumUnitStress
+    optional int32                       transported_crowd          = 51; //!< The number of transported humans from a crowd
+    optional string                      decisional_model           = 52; //!< The decisional model
+}
+
+/** @struct UnitPathFind
+    @brief Notifies of a path change for a unit
+*/
+message UnitPathFind {
+   required UnitId unit = 1; //!< The unit identifier @see UnitId
+   required Path   path = 2; //!< The unit path @see Path
+}
+
+/** @struct UnitDestruction
+    @brief Notifies of the destruction a unit
+*/
+message UnitDestruction {
+    required UnitId unit = 1; //!< The unit identifier @see UnitId
+}
+
+/** @struct UnitEnvironmentType
+    @brief Notifies of a change in the environment for a given unit
+*/
+message UnitEnvironmentType {
+    required UnitId unit   = 1; //!< The unit identifier @see UnitId
+    required int32  area   = 2; //!< @todo What's this ?
+    required int32  left   = 3; //!< @todo What's this ?
+    required int32  right  = 4; //!< @todo What's this ?
+    required int32  linear = 5; //!< @todo What's this ?
+}
+
+/** @struct UnitKnowledgeCreation
+    @brief Notifies of the creation of a unit knowledge
+*/
+message UnitKnowledgeCreation {
+    required UnitKnowledgeId  knowledge       = 1; //!< The unit knowledge identifier @see UnitKnowledgeId
+    required KnowledgeGroupId knowledge_group = 2; //!< The knowledge group identifier @see KnowledgeGroupId
+    required UnitId           unit            = 3; //!< The unit identifier @see UnitId
+    required UnitType         type            = 4; //!< The unit type @see UnitType
+}
+
+/** @struct UnitIdentification
+    @brief Encapsulates the unit identification levels
+*/
+message UnitIdentification {
+    /** @enum Level
+        @brief Indicates the level of identification of a unit
+    */
+    enum Level {
+        identified = 0; //!< The unit has been identified
+        recognized = 1; //!< The unit has been recognized
+        detected   = 2; //!< The unit has been detected
+        unseen     = 3; //!< The unit has not been seen
+    }
+}
+
+/** @struct AutomatPerception
+    @brief Describes the perception of an automat
+*/
+message AutomatPerception {
+    required AutomatId                   automat              = 1; //!< The automat identifier @see AutomatId
+    required UnitIdentification.Level identification_level = 2; //!< The identification level @see UnitIdentification.Level
+}
+
+/** @struct SeqOfAutomatPerception
+    @brief Regroups the perceptions of several automats
+*/
+message SeqOfAutomatPerception {
+    repeated AutomatPerception elem = 1; //!< The perceptions @see AutomatPerception
+}
+
+/** @struct UnitKnowledgeUpdate
+    @brief Notifies of an update in the knowledge of a unit
+*/
+message UnitKnowledgeUpdate {
+    required UnitKnowledgeId          knowledge                = 1;  //!< The unit knowledge @see UnitKnowledgeId
+    required KnowledgeGroupId         knowledge_group          = 2;  //!< The knowledge group identifier @see KnowledgeGroupId
+    optional int32                    pertinence               = 3;  //!< The relevance of the knowledge in percent
+    optional UnitIdentification.Level identification_level     = 4;  //!< The identification level @see UnitIdentification.Level
+    optional UnitIdentification.Level max_identification_level = 5;  //!< The maximum identification level @see UnitIdentification.Level
+    optional int32                    operational_state        = 6;  //!< The operational state of the unit in percent
+    optional bool                     dead                     = 7;  //!< Whether the unit is dead or not
+    optional CoordLatLong             position                 = 8;  //!< The unit position @see CoordLatLong
+    optional Heading                  direction                = 9;  //!< The unit heading @see Heading
+    optional int32                    speed                    = 10; //!< The unit speed in kilometers per hour
+    optional PartyId                  party                    = 11; //!< The unit party identifier @see PartyId
+    optional bool                     command_post             = 12; //!< Whether the unit is a command post or not
+    optional SeqOfAutomatPerception   perceptions              = 13; //!< The perceptions for each automat
+    optional UnitId                   surrendered_unit         = 14; //!< The unit to which this unit has surrendered @see UnitId
+    optional bool                     prisoner                 = 15; //!< Whether the unit has been made prisoner or not
+    optional bool                     refugees_managed         = 16; //!< Whether refugees are being handled by the unit or not
+    optional string                   critical_intelligence    = 17; //!< The unit critical intelligence
+}
+
+/** @struct UnitKnowledgeDestruction
+    @brief Notifies of the destruction of a unit knowledge
+*/
+message UnitKnowledgeDestruction {
+    required UnitKnowledgeId  knowledge       = 1; //!< The unit knowledge
+    required KnowledgeGroupId knowledge_group = 2; //!< The knowledge group identifier
+}
+
+/** @struct StartUnitFire
+    @brief Notifies of the beginning of a unit firing
+*/
+message StartUnitFire {
+    /** @struct UnitFireTarget
+        @brief Defines the target
+    */
+    message UnitFireTarget {
+        optional UnitId       unit     = 1; //!< The target unit
+        optional CrowdId      crowd    = 2; //!< The target crowd
+        optional CoordLatLong position = 3; //!< The target position
+    }
+    /** @enum UnitFireType
+        @brief Defines the fire type
+    */
+    enum UnitFireType {
+       direct   = 0; //!< Direct fire
+       indirect = 1; //!< Indirect fire
+    }
+    required FireId         fire        = 1; //!< The fire identifier
+    required UnitId         firing_unit = 2; //!< The firing unit identifier
+    required UnitFireTarget target      = 3; //!< The target
+    required UnitFireType   type        = 4; //!< The fire type
+    optional ResourceType   ammunition  = 5; //!< The ammunition type
+}
+
+/** @struct UnitHumanFireDamage
+    @brief Defines the damage inflicted the humans of a unit
+*/
+message UnitHumanFireDamage {
+    required EnumHumanRank rank       = 1; //!< The unit rank
+    required int32         alive      = 2; //!< The number of alive humans
+    required int32         dead       = 3; //!< The number of dead humans
+    required int32         wounded_u1 = 4; //!< The number of wounded humans urgency level 1
+    required int32         wounded_u2 = 5; //!< The number of wounded humans urgency level 2
+    required int32         wounded_u3 = 6; //!< The number of wounded humans urgency level 3
+    required int32         wounded_ue = 7; //!< The number of wounded humans urgency level extreme
+}
+
+/** @struct SeqOfUnitHumanFireDamage
+    @brief Defines a list of damages inflicted the humans of a unit
+*/
+message SeqOfUnitHumanFireDamage {
+    repeated UnitHumanFireDamage elem = 1; //!< The list of human damages
+}
+
+/** @struct UnitEquipmentFireDamage
+    @brief Defines the damage inflicted the equipment of a unit
+*/
+message UnitEquipmentFireDamage {
+    required EquipmentType equipement  = 1; //!< The equipment
+    required uint32        available   = 2; //!< The number of available equipements
+    required uint32        unavailable = 3; //!< The number of unavailable equipements
+    required uint32        repairable  = 4; //!< The number of repairable equipements
+}
+
+/** @struct SeqOfUnitEquipmentFireDamage
+    @brief Defines a list of damages inflicted to the equipments of a unit
+*/
+message SeqOfUnitEquipmentFireDamage {
+    repeated UnitEquipmentFireDamage elem = 1; //!< The list of equipment damages
+}
+
+/** @struct UnitFireDamages
+    @brief Aggregates the damages to a unit
+*/
+message UnitFireDamages {
+    required UnitId                       target     = 1; //!< The unit identifier
+    required SeqOfUnitHumanFireDamage     humans     = 2; //!< The damages to the humans
+    required SeqOfUnitEquipmentFireDamage equipments = 3; //!< The damages to the equipments
+}
+
+/** @struct UnitsFireDamages
+    @brief Defines a list of damages to several units
+*/
+message UnitsFireDamages {
+    repeated UnitFireDamages elem = 1; //!< The list of damages
+}
+
+/** @struct CrowdFireDamages
+    @brief Defines the damage inflicted to a crowd
+*/               
+message CrowdFireDamages {
+    required CrowdId target    = 1; //!< The crowd identifier
+    required int32   dead      = 2; //!< The number of dead persons
+    required int32   wounded   = 3; //!< The number of wounded persons
+    required int32   scattered = 4; //!< The number of scattered persons
+}
+
+/** @struct CrowdsFireDamages
+    @brief Defines the damage inflicted to several crowds
+*/
+message CrowdsFireDamages {
+    repeated CrowdFireDamages elem = 1; //!< The list of damages
+}
+
+/** @struct StopUnitFire
+    @brief Notifies of the end of a unit firing
+*/
+message StopUnitFire {
+    required FireId            fire           = 1; //!< The fire identifier
+    optional UnitsFireDamages  units_damages  = 2; //!< The resulting damages dealt to units
+    optional CrowdsFireDamages crowds_damages = 3; //!< The resulting damages dealt to crowds
+}
+
+/** @struct StartCrowdFire
+    @brief Notifies of the beginning of a crowd firing
+*/
+message StartCrowdFire {
+   required FireId  fire         = 1; //!< The fire identifier
+   required CrowdId firing_crowd = 2; //!< The crowd identifier
+}
+
+/** @struct StopCrowdFire
+    @brief Notifies of the end of a crowd firing
+*/
+message StopCrowdFire {
+    required FireId           fire          = 1; //!< The fire identifier
+    required UnitsFireDamages units_damages = 2; //!< The resulting damages dealt to units
+}
+
+/** @struct Explosion
+    @brief Notifies of an explosion
+*/
+message Explosion {
+    required ObjectId          object         = 1; //!< The explosion object identifier
+    optional UnitsFireDamages  units_damages  = 2; //!< The resulting damages dealt to units
+    optional CrowdsFireDamages crowds_damages = 3; //!< The resulting damages dealt to crowds
+}
+
+message UnitDamagedByUnitFire
+{
+    required UnitId                       unit        = 1; //!< The target unit identifier
+    required PartyId                      party       = 2; //!< The target party identifier
+    required UnitId                       firer       = 3; //!< The firer unit identifier
+    required FireId                       fire        = 4; //!< The fire identifier
+    required bool                         direct_fire = 5; //!< Whether the fire is direct or not
+    required bool                         fratricide  = 6; //!< Whether the fire is fratricide or not
+    required SeqOfUnitHumanFireDamage     humans      = 7; //!< The damages to the humans
+    required SeqOfUnitEquipmentFireDamage equipments  = 8; //!< The damages to the equipments
+}
+
+message CrowdDamagedByUnitFire
+{
+    required CrowdId crowd       = 1; //!< The target crowd identifier
+    required PartyId party       = 2; //!< The target party identifier
+    required UnitId  firer       = 3; //!< The firer unit identifier
+    required FireId  fire        = 4; //!< The fire identifier
+    required bool    direct_fire = 5; //!< Whether the fire is direct or not
+    required bool    fratricide  = 6; //!< Whether the fire is fratricide or not
+    required int32   dead        = 7; //!< The number of dead persons
+    required int32   wounded     = 8; //!< The number of wounded persons
+    required int32   scattered   = 9; //!< The number of scattered persons
+}
+
+message UnitDamagedByCrowdFire
+{
+    required UnitId                       unit       = 1; //!< The target unit identifier
+    required PartyId                      party      = 2; //!< The target party identifier
+    required CrowdId                      firer      = 3; //!< The firer crowd identifier
+    required FireId                       fire       = 4; //!< The fire identifier
+    required bool                         fratricide = 5; //!< Whether the fire is fratricide or not
+    required SeqOfUnitHumanFireDamage     humans     = 6; //!< The damages to the humans
+    required SeqOfUnitEquipmentFireDamage equipments = 7; //!< The damages to the equipments
+}
+
+/** @struct StartFireEffect
+    @brief Notifies of a start fire effect
+*/
+message StartFireEffect {
+    /** @enum EnumFireEffectType
+        @brief Defines the fire type
+    */
+    enum EnumFireEffectType {
+       smoke          = 0; //!< Smoke effect
+       light          = 1; //!< Light effect
+       explosion      = 2; //!< Explosion effect
+       neutralization = 3; //!< Neutralization effect
+    }
+    required FireEffectId       fire_effect = 1; //!< The fire effect identifier
+    required Location           location    = 2; //!< The fire location
+    required EnumFireEffectType type        = 3; //!< The fire type
+}
+
+/** @struct StopFireEffect
+    @brief Notifies of a stop fire effect
+*/
+message StopFireEffect {
+    required FireEffectId fire_effect = 1; //!< The fire effect identifier
+}
+
+/** @struct Report
+    @brief Describes a report
+*/
+message Report {
+    /** @enum EnumReportType
+        @brief Defines the report category type
+    */
+    enum EnumReportType {
+        information       = 0; //!< Information
+        operational       = 1; //!< Operational
+        exceptional_event = 2; //!< Exceptional event
+        warning           = 3; //!< Warning
+    }
+    required ReportId          report     = 1; //!< The report identifier
+    required Tasker            source     = 2; //!< The report source
+    required ReportType        type       = 3; //!< The report type
+    required EnumReportType    category   = 4; //!< The report category type
+    required DateTime          time       = 5; //!< The report time
+    optional MissionParameters parameters = 6; //!< The report parameters
+}
+
+/** @struct InvalidateReport
+    @brief Notifies a report has become invalid
+*/
+message InvalidateReport {
+    required ReportId report = 1; //!< The report identifier
+    required Tasker   source = 2; //!< The report source
+}
+
+/** @struct Trace
+    @brief Describes a trace
+*/
+message Trace {
+    required Tasker source  = 1; //!< The trace source
+    required string message = 2; //!< The trace description
+}
+
+/** @struct DecisionalState
+    @brief Describes a decisional state
+*/
+message DecisionalState {
+    required Tasker source = 1; //!< The state source
+    required string key    = 2; //!< The state key
+    required string value  = 3; //!< The state value
+}
+
+/** @struct DebugPoints
+    @brief Defines debug points
+*/
+message DebugPoints {
+    required Tasker           source      = 1; //!< The source
+    required CoordLatLongList coordinates = 2; //!< The coordinates
+}
+
+/** @struct SeqOfHeading
+    @brief Defines a list of headings
+*/
+message SeqOfHeading {
+    repeated Heading elem = 1; //!< The headings
+}
+
+/** @struct VisionCone
+    @brief Defines a vision cone
+*/
+message VisionCone {
+    required CoordLatLong origin     = 1; //!< The origin
+    required int32        height     = 2; //!< The height
+    required string       sensor     = 3; //!< The sensor
+    required SeqOfHeading directions = 4; //!< The directions
+}
+
+/** @struct SeqOfVisionCone
+    @brief Defines a list of vision cones
+*/
+message SeqOfVisionCone {
+    repeated VisionCone elem = 1; //!< The cones
+}
+
+/** @struct UnitVisionCones
+    @brief Updates the vision cones of a unit
+*/
+message UnitVisionCones {
+    required UnitId          unit       = 1; //!< The unit identifier
+    required SeqOfVisionCone cones      = 2; //!< The vision cones
+    required float           elongation = 3; //!< The elongation
+}
+
+/** @struct UnitVisibility
+    @brief Defines the visibility levels for a unit
+*/
+message UnitVisibility {
+    /** @enum Level
+        @brief The visibility levels for a unit
+    */
+    enum Level {
+       invisible  = 0; //!< Invisible
+       detected   = 1; //!< Detected
+       recognized = 2; //!< Recognized
+       identified = 3; //!< Identified
+       recorded   = 4; //!< Recorded
+    }
+}
+
+/** @struct UnitDetection
+    @brief Notifies of the detection of a unit
+*/
+message UnitDetection {
+    required UnitId               observer           = 1; //!< The observer unit identifier
+    required UnitId               detected_unit      = 2; //!< The detected unit identifier @todo rename to unit
+    required UnitVisibility.Level current_visibility = 3; //!< The current visibility level @todo rename to visibility
+    required UnitVisibility.Level max_visibility     = 4; //!< The maximum visibility level
+}
+
+/** @struct ObjectDetection
+    @brief Notifies of the detection of an object
+*/
+message ObjectDetection {
+    required UnitId               observer        = 1; //!< The observer unit identifier
+    required ObjectId             detected_object = 2; //!< The detected object identifier @todo rename to object
+    required UnitVisibility.Level visibility      = 3; //!< The current visibility level
+}
+
+/** @struct CrowdConcentrationDetection
+    @brief Notifies of the detection of a crowd concentration
+*/
+message CrowdConcentrationDetection {
+    required UnitId               observer               = 1; //!< The observer unit identifier
+    required CrowdId              detected_crowd         = 2; //!< The detected crowd identifier @todo rename to crowd
+    required CrowdConcentrationId detected_concentration = 3; //!< The detected concentration @todo rename to concentration
+    required UnitVisibility.Level visibility             = 4; //!< The current visibility level
+}
+
+/** @struct CrowdFlowDetection
+    @brief Notifies of the detection of a crowd flow
+*/
+message CrowdFlowDetection {
+    required UnitId      observer       = 1; //!< The observer unit identifier
+    required CrowdId     detected_crowd = 2; //!< The detected crowd identifier @todo rename to crowd
+    required CrowdFlowId detected_flow  = 3; //!< The detected flow identifier @todo rename to flow
+    required Path        visible_flow   = 4; //!< The flow path @todo rename to path
+}
+
+/** @struct ObjectCreation
+    @brief Notifies of the creation of an object
+*/
+message ObjectCreation {
+    required ObjectId         object              = 1; //!< The object identifier
+    required ObjectType       type                = 2; //!< The object type
+    required string           name                = 3; //!< The object name
+    required PartyId          party               = 4; //!< The object party
+    required Location         location            = 5; //!< The object location
+    required ObjectAttributes attributes          = 6; //!< The object attributes
+    optional int32            external_identifier = 7; //!< The external identifier
+}
+
+/** @struct ObjectDestruction
+    @brief Notifies of the destruction of an object
+*/
+message ObjectDestruction {
+    required ObjectId object = 1; //!< The object identifier
+}
+
+/** @struct ObjectUpdate
+    @brief Notifies of the update of an object
+*/
+message ObjectUpdate {
+    required ObjectId         object     = 1; //!< The object identifier
+    optional Location         location   = 2; //!< The object location
+    required ObjectAttributes attributes = 3; //!< The object attributes
+}
+
+/** @struct ObjectUpdate
+    @brief Notifies of the creation of an object knowledge
+*/
+message ObjectKnowledgeCreation {
+    required ObjectKnowledgeId knowledge       = 1; //!< The knowledge identifier
+    required PartyId           party           = 2; //!< The party identifier
+    required ObjectId          object          = 3; //!< The object identifier
+    required ObjectType        type            = 4; //!< The object type
+    required ObjectAttributes  attributes      = 5; //!< The object attributes
+    optional KnowledgeGroupId  knowledge_group = 6; //!< The knowledge group identifier
+}
+
+/** @struct ObjectKnowledgeUpdate
+    @brief Notifies of the update of an object knowledge
+*/                 
+message ObjectKnowledgeUpdate {
+    required ObjectKnowledgeId knowledge           = 1; //!< The knowledge identifier
+    required PartyId           party               = 2; //!< The party identifier
+    optional ObjectId          object              = 3; //!< The object identifier
+    optional int32             relevance           = 4; //!< The percentage of relevance
+    optional Location          location            = 5; //!< The object location
+    optional ObjectAttributes  attributes          = 6; //!< The object attributes
+    optional bool              perceived           = 7; //!< Whether the object is currently perceived or not
+    optional AutomatIdList     perceiving_automats = 8; //!< The list of automats perceiving the object
+    optional KnowledgeGroupId  knowledge_group     = 9; //!< The knowledge group identifier
+}
+
+/** @struct ObjectKnowledgeDestruction
+    @brief Notifies of the destruction of an object knowledge
+*/                 
+message ObjectKnowledgeDestruction {
+    required ObjectKnowledgeId knowledge = 1; //!< The knowledge identifier
+    required PartyId           party     = 2; //!< The knowledge party identifier @deprecated to be maintained by the client if needed
+}
+
+/** @struct UrbanKnowledgeCreation
+    @brief Notifies of the creation of a urban knowledge
+*/                 
+message UrbanKnowledgeCreation {
+    required UrbanObjectKnowledgeId knowledge = 1; //!< The knowledge identifier
+    required PartyId                party     = 2; //!< The party identifier
+    required ObjectId               object    = 3; //!< The object identifier
+}
+
+/** @struct UrbanKnowledgeUpdate
+    @brief Notifies of the update of a urban knowledge
+*/                   
+message UrbanKnowledgeUpdate {
+    required UrbanObjectKnowledgeId knowledge           = 1; //!< The knowledge identifier
+    required PartyId                party               = 2; //!< The party identifier
+    required ObjectId               object              = 3; //!< The object identifier
+    optional int32                  progress            = 4; //!< The percentage of knowledge
+    optional int32                  max_progress        = 5; //!< The maximum percentage of knowledge ever reached
+    optional bool                   perceived           = 6; //!< Whether the object is currently perceived or not
+    optional AutomatIdList          automat_perceptions = 7; //!< The list of automats perceiving the object @todo rename along ObjectKnowledgeUpdate::perceiving_automats
+}
+
+/** @struct UrbanKnowledgeDestruction
+    @brief Notifies of the destruction of a urban knowledge
+*/                    
+message UrbanKnowledgeDestruction {
+    required UrbanObjectKnowledgeId knowledge = 1; //!< The knowledge identifier
+    required PartyId                party     = 2; //!< The party identifier
+}
+
+
+/** @struct LogFuneralHandlingCreation
+    @brief Notifies of the creation of a funeral handling
+*/                    
+message LogFuneralHandlingCreation {
+    required FuneralRequestId request          = 1; //!< The funeral request identifier
+    required UnitId           unit             = 2; //!< The requesting unit identifier
+    required int32            tick             = 3; //!< The creation tick number
+    required EnumHumanRank    rank             = 4; //!< The rank of the human associated to the request
+}
+
+/** @struct LogFuneralHandlingUpdate
+    @brief Notifies of the update of a funeral handling
+*/
+message LogFuneralHandlingUpdate {
+    /** @enum EnumLogFuneralHandlingStatus
+        @brief Defines the funeral handling states
+    */
+    enum EnumLogFuneralHandlingStatus {
+        waiting_for_handling     = 0; //!< Waiting to be handled by logistic superior
+        transporting_unpackaged  = 1; //!< Transporting the unpackaged body from the requesting unit to the first logistic base
+        waiting_for_packaging    = 2; //!< Waiting for packaging resource to be available
+        packaging                = 3; //!< Packaging the body
+        waiting_for_transporter  = 4; //!< Waiting for a transporter (supply logistic) to arrive to the current logistic base
+        transporting_packaged    = 5; //!< Transporting the packaged body between logistic bases
+        finished                 = 6; //!< Finished
+ 
+    }
+    required FuneralRequestId              request                = 1; //!< The request identifier
+    optional ParentEntity                  handling_unit          = 2; //!< The current logistic base handling the request
+    optional UnitId                        convoying_unit         = 3; //!< The current unit transporting the body
+    optional EnumLogFuneralHandlingStatus  state                  = 4; //!< The current status
+    optional int32                         current_state_end_tick = 5; //!< When set, the tick when the current state will be finished
+    optional ResourceType                  packaging_resource     = 6; //!< The packaging type    
+}
+
+/** @struct LogFuneralHandlingDestruction
+    @brief Notifies of the destruction of a funeral handling
+*/
+message LogFuneralHandlingDestruction {
+    required FuneralRequestId request = 1; //!< The request identifier
+}
+
+
+/** @struct LogMedicalHandlingCreation
+    @brief Notifies of the creation of a medical handling
+*/                    
+message LogMedicalHandlingCreation {
+    required MedicalRequestId request          = 1; //!< The medical request identifier
+    required UnitId           unit             = 2; //!< The unit identifier
+    required int32            tick             = 3; //!< The creation tick number
+    required EnumHumanRank    rank             = 4; //!< The rank
+    required EnumHumanWound   wound            = 5; //!< The type wound
+    optional bool             mental_wound     = 6; //!< Whether the unit is mentally wounded or not
+    optional bool             nbc_contaminated = 7; //!< Whether the unit is NBC contaminated or not
+}
+
+/** @struct LogMedicalHandlingUpdate
+    @brief Notifies of the update of a medical handling
+*/
+message LogMedicalHandlingUpdate {
+    /** @enum EnumLogMedicalHandlingStatus
+        @brief Defines the medical handling states
+    */
+    enum EnumLogMedicalHandlingStatus {
+       waiting_for_evacuation                    = 0;  //!< Waiting for evacuation
+       evacuation_ambulance_moving_in            = 1;  //!< Evacuation ambulance moving in
+       evacuation_ambulance_loading              = 2;  //!< Evacuation ambulance loading
+       waiting_for_evacuation_loading_completion = 3;  //!< Waiting for evacuation loading completion
+       evacuation_ambulance_moving_out           = 4;  //!< Evacuation ambulance moving out
+       evacuation_ambulance_unloading            = 5;  //!< Evacuation ambulance unloading
+       waiting_for_diagnostic                    = 6;  //!< Waiting for diagnostic
+       diagnosing                                = 7;  //!< Being diagnosed
+       looking_for_triage                        = 8;  //!< Looking for triage
+       waiting_for_triage                        = 9;  //!< Waiting for triage
+       triaging                                  = 10; //!< Being triaged
+       looking_for_medical_attention             = 11; //!< Looking for medical attention
+       waiting_for_medical_attention             = 12; //!< Waiting for medical attention
+       receiving_medical_attention               = 13; //!< Receiving medical attention
+       resting                                   = 14; //!< Resting
+       waiting_for_collection                    = 15; //!< Waiting for collection
+       collection_ambulance_loading              = 16; //!< Collection ambulance loading
+       waiting_for_collection_loading_completion = 17; //!< Waiting for collection loading completion
+       collection_ambulance_moving_in            = 18; //!< Collection ambulance moving in
+       collection_ambulance_unloading            = 19; //!< Collection ambulance unloading
+       finished                                  = 20; //!< Finished
+    }
+    required MedicalRequestId             request          = 1; //!< The request identifier
+    required UnitId                       unit             = 2; //!< The unit identifier
+    optional UnitId                       provider         = 3; //!< The provider identifier
+    optional EnumHumanWound               wound            = 4; //!< The type of wound
+    optional bool                         mental_wound     = 5; //!< Whether the unit is mentally wounded or not
+    optional bool                         nbc_contaminated = 6; //!< Whether the unit is NBC contaminated or not
+    optional EnumLogMedicalHandlingStatus state            = 7; //!< The current state
+    optional int32                        current_state_end_tick = 8; //!< When set, the tick when the current state will be finished
+    optional bool                         diagnosed        = 9; //!< Whether a diagnostic has been established or not
+}
+
+/** @struct LogMedicalHandlingDestruction
+    @brief Notifies of the destruction of a medical handling
+*/
+message LogMedicalHandlingDestruction {
+    required MedicalRequestId request = 1; //!< The request identifier
+    required UnitId           unit    = 2; //!< The unit identifier
+}
+
+/** @struct LogMedicalEquipmentAvailability
+    @brief Regroups the information about the availability of a medical equipment
+
+    @todo explain a bit what are the different amounts
+*/
+message LogMedicalEquipmentAvailability {
+    required EquipmentType equipment = 1; //!< The equipment type
+    required int32         total     = 2; //!< The total
+    required int32         available = 3; //!< The number of equipments available
+    required int32         working   = 4; //!< The number of equipments working
+    optional int32         lent      = 5; //!< The number of equipments lent
+    optional int32         resting   = 6; //!< The number of equipments resting
+}
+
+/** @struct SeqOfLogMedicalEquipmentAvailability
+    @brief Lists several medical equipment availabilities
+*/
+message SeqOfLogMedicalEquipmentAvailability {
+    repeated LogMedicalEquipmentAvailability elem = 1; //!< The equipment availabilities
+}
+
+/** @struct LogMedicalState
+    @brief Updates the medical state of a unit
+*/
+message LogMedicalState {
+    required UnitId                               unit                  = 1; //!< The unit identifier
+    optional bool                                 chain                 = 2; //!< Whether the supply chain is in place or not
+    optional LogMedicalPriorities                 priorities            = 3; //!< The medical priorities
+    optional AutomatIdList                        tactical_priorities   = 4; //!< The tactical priorities @todo What's this ?
+    optional SeqOfLogMedicalEquipmentAvailability evacuation_ambulances = 5; //!< The status of evacuation ambulances @todo explain the difference between evacuation and collection somewhere
+    optional SeqOfLogMedicalEquipmentAvailability collection_ambulances = 6; //!< The status of collection ambulances @todo explain the difference between evacuation and collection somewhere
+    optional SeqOfLogMedicalEquipmentAvailability doctors               = 7; //!< The status of doctors
+}
+
+/** @struct LogMaintenanceHandlingCreation
+    @brief Notifies of the creation of a maintenance handling
+*/
+message LogMaintenanceHandlingCreation {
+    required MaintenanceRequestId request    = 1; //!< The request identifier
+    required UnitId               unit       = 2; //!< The unit identifier
+    required int32                tick       = 3; //!< The creation tick number
+    required EquipmentType        equipement = 4; //!< The equipment type under maintenance
+    required BreakdownType        breakdown  = 5; //!< The breakdown type
+}
+
+/** @struct LogMaintenanceHandlingUpdate
+    @brief Notifies of the update of a maintenance handling
+*/
+message LogMaintenanceHandlingUpdate {
+    /** @enum EnumLogMaintenanceHandlingStatus
+        @brief Defines the maintenance handling states
+    */
+    enum EnumLogMaintenanceHandlingStatus {
+       moving_to_supply             = 0;  //!< Moving to supply
+       waiting_for_transporter      = 1;  //!< Waiting for transporter
+       transporter_moving_to_supply = 2;  //!< Transporter moving to supply
+       transporter_loading          = 3;  //!< Transporter loading
+       transporter_moving_back      = 4;  //!< Transporter moving back
+       transporter_unloading        = 5;  //!< Transporter unloading
+       diagnosing                   = 6;  //!< Being diagnosed
+       searching_upper_levels       = 7;  //!< Searching maintenance upper levels
+       waiting_for_parts            = 8;  //!< Waiting for parts
+       waiting_for_repairer         = 9;  //!< Waiting for a repairer
+       repairing                    = 10; //!< Being repaired
+       moving_back                  = 11; //!< Moving back
+       finished                     = 12; //!< Finished
+    }
+    required MaintenanceRequestId             request                = 1; //!< The request identifier
+    required UnitId                           unit                   = 2; //!< The unit identifier
+    required UnitId                           provider               = 3; //!< The maintenance provider identifier
+    optional EnumLogMaintenanceHandlingStatus state                  = 4; //!< The maintenance state
+    optional int32                            current_state_end_tick = 5; //!< When set, the tick when the current state will be finished
+    optional bool                             diagnosed              = 6; //!< Whether a diagnostic has been established or not
+}
+
+/** @struct LogMaintenanceHandlingDestruction
+    @brief Notifies of the destruction of a maintenance handling
+*/
+message LogMaintenanceHandlingDestruction {
+    required MaintenanceRequestId request = 1; //!< The request identifier
+    required UnitId               unit    = 2; //!< The unit identifier
+}
+
+/** @struct LogMaintenanceEquipmentAvailability
+    @brief Regroups the information about the availability of a maintenance equipment
+
+    @todo explain a bit what are the different amounts
+    @todo seems a copy-paste of LogMedicalEquipmentAvailability
+*/
+message LogMaintenanceEquipmentAvailability {
+    required EquipmentType equipment = 1; //!< The equipment type
+    required int32         total     = 2; //!< The total
+    required int32         available = 3; //!< The number of equipments available
+    required int32         working   = 4; //!< The number of equipments working
+    optional int32         lent      = 5; //!< The number of equipments lent
+    optional int32         resting   = 6; //!< The number of equipments resting
+}
+
+/** @struct SeqOfLogMaintenanceEquipmentAvailability
+    @brief Lists several maintenance equipment availabilities
+*/
+message SeqOfLogMaintenanceEquipmentAvailability {
+    repeated LogMaintenanceEquipmentAvailability elem = 1; //!< The equipment availabilities
+}
+
+/** @enum EnumLogMaintenanceWorkRate
+    @brief Defines the different work rates
+*/
+enum EnumLogMaintenanceWorkRate {
+    rate_1 = 0; //!< Rate 1
+    rate_2 = 1; //!< Rate 2
+    rate_3 = 2; //!< Rate 3
+    rate_4 = 3; //!< Rate 4
+}
+
+/** @struct LogMaintenanceState
+    @brief Notifies of the state of a maintenance
+*/
+message LogMaintenanceState {
+    required UnitId                                   unit                = 1; //!< The unit identifier
+    optional bool                                     chain               = 2; //!< Whether the supply chain is in place or not
+    optional EnumLogMaintenanceWorkRate               work_rate           = 3; //!< The work rate
+    optional LogMaintenancePriorities                 priorities          = 4; //!< The maintenance priorities
+    optional AutomatIdList                            tactical_priorities = 5; //!< The tactical priorities @todo What's this ?
+    optional SeqOfLogMaintenanceEquipmentAvailability haulers             = 6; //!< The haulers availabilities
+    optional SeqOfLogMaintenanceEquipmentAvailability repairers           = 7; //!< The repairers availabilities
+}
+
+/** @struct SupplyResourceRequest
+    @brief Queries a dotation
+*/
+message SupplyResourceRequest {
+    required ResourceType resource  = 1; //!< The type of the resource @see ResourceType
+    required int32        requested = 2; //!< The amount requested
+    required int32        granted   = 3; //!< The amount granted
+    required int32        convoyed  = 4; //!< The amount being convoyed
+}
+
+/** @struct SupplyFlowRecipient
+    @brief The recipient(receiver) of a supply flow
+    @todo What's this ?
+*/
+message SupplyRecipientResourcesRequest
+{
+    required AutomatId             recipient = 1; //!< The recipient of the supply flow
+    repeated SupplyResourceRequest resources = 2; //!< The resources requested/granted/convoyed
+}
+message SupplyRecipientResourceRequests
+{
+    repeated SupplyRecipientResourcesRequest requests = 1;
+}
+
+/** @struct LogSupplyHandlingCreation
+    @brief Notifies of the creation of a supply handling
+*/
+message LogSupplyHandlingCreation {
+    required SupplyRequestId request               = 1; //!< The request identifier
+    required int32           tick                  = 2; //!< The creation tick number
+    required ParentEntity    supplier              = 3; //!< The supplier
+    required ParentEntity    transporters_provider = 4; //!< The logistic base which provides the transporters for the convoy
+}
+
+/** @struct LogSupplyHandlingUpdate
+    @brief Notifies of the update of a log supply handling
+*/
+message LogSupplyHandlingUpdate {
+    /** @enum EnumLogSupplyHandlingStatus
+        @brief List of states a supply request can go through
+    */
+    enum EnumLogSupplyHandlingStatus {
+        convoy_waiting_for_transporters     = 0; //!< Convoy is waiting for transporters
+        convoy_setup                        = 1; //!< Convoy setup
+        convoy_moving_to_loading_point      = 2; //!< Convoy is moving to loading point
+        convoy_loading                      = 3; //!< Convoy is loading
+        convoy_moving_to_unloading_point    = 4; //!< Convoy is moving to unloading point
+        convoy_unloading                    = 5; //!< Convoy is unloading
+        convoy_moving_back_to_loading_point = 6; //!< Convoy is returning to forming point
+        convoy_finished                     = 7; //!< Convoying operation is finished
+    }
+    optional SupplyRequestId                 request                = 1; //!< The request identifier    
+    optional UnitId                          convoyer               = 2; //!< The convoyer
+    optional EnumLogSupplyHandlingStatus     state                  = 3; //!< The current state of the handling
+    optional int32                           current_state_end_tick = 4; //!< When set, the tick when the current state will be finished
+    optional SupplyRecipientResourceRequests requests               = 5; //!< The resources requested
+}
+
+/** @struct LogSupplyHandlingDestruction
+    @brief Notifies of the destruction of a log supply handling
+*/
+message LogSupplyHandlingDestruction {
+    required SupplyRequestId request  = 1; //!< The request identifier
+}
+
+/** @struct LogSupplyEquimentAvailability
+    @brief Provides the availability of supply equipments
+*/
+message LogSupplyEquimentAvailability {
+    optional EquipmentType equipment = 1; //!< The equipment type @bug not sure this is really meant to be optional
+    optional int32         total     = 2; //!< The total number of equipment
+    optional int32         available = 3; //!< The number of equipment available
+    optional int32         working   = 4; //!< The number of working equipment
+    optional int32         lent      = 5; //!< The number of lent equipment
+    optional int32         resting   = 6; //!< The number of resting equipment @todo What's this ?
+}
+
+/** @struct SeqOfLogSupplyEquimentAvailability
+    @brief Lists the availabilities of supply equipments
+*/
+message SeqOfLogSupplyEquimentAvailability {
+    repeated LogSupplyEquimentAvailability elem = 1; //!< The availabilities of supply equipments
+}
+
+/** @struct DotationStock
+    @brief Provides the stock of a dotation
+*/
+message DotationStock {
+   required ResourceType resource = 1; //!< The resource type
+   required int32        quantity = 2; //!< The quantity
+}
+
+/** @struct SeqOfDotationStock
+    @brief Lists the stocks of dotations
+*/
+message SeqOfDotationStock {
+   repeated DotationStock elem = 1; //!< The stocks of dotations
+}
+
+/** @struct LogSupplyState
+    @brief Notifies of the update of the supply state for a unit
+*/
+message LogSupplyState {
+    optional UnitId                             unit         = 1; //!< The unit identifier
+    optional bool                               chain        = 2; //!< Whether the supply chain is in place or not
+    optional SeqOfDotationStock                 stocks       = 3; //!< The dotation stocks
+    optional SeqOfLogSupplyEquimentAvailability transporters = 4; //!< The transporter availabilities
+}
+
+/** @struct DotationQuota
+    @brief Provides the quota of a dotation
+*/
+message DotationQuota {
+   required ResourceType resource = 1; //!< The resource type
+   required int32        quantity = 2; //!< The quantity
+}                               
+
+/** @struct SeqOfDotationQuota
+    @brief Lists the quotas of dotations
+*/
+message SeqOfDotationQuota {
+   repeated DotationQuota elem = 1; //!< The quotas of dotations
+}
+
+/** @struct LogSupplyQuotas
+    @brief Notifies of the update of the supply quotas for a unit
+*/
+message LogSupplyQuotas {
+    required ParentEntity       supplied = 1; //!< The parent entity
+    required ParentEntity       supplier = 2; //!< The supplier entity
+    required SeqOfDotationQuota quotas  = 3;  //!< The quotas
+}
+
+/** @struct CrowdCreation
+    @brief Notifies of the creation of a crowd
+*/
+message CrowdCreation {
+   required CrowdId          crowd       = 1; //!< The crowd identifier
+   required CrowdType        type        = 2; //!< The crowd type
+   optional string           name        = 3; //!< The crowd name
+   required PartyId          party       = 4; //!< The crowd party
+   required HumanRepartition repartition = 5; //!< The crowd repartition @see HumanRepartition
+}
+
+/** @struct CrowdUpdate
+    @brief Notifies of the update of a crowd
+*/
+message CrowdUpdate {
+   required CrowdId        crowd                 = 1; //!< The crowd identifier
+   optional int32          domination            = 2; //!< The crowd domination
+   optional PartyAdhesions adhesions             = 3; //!< The party adhesions
+   optional string         critical_intelligence = 4; //!< The crowd critical intelligence
+   optional float          armed_individuals     = 5; //!< The armed individuals proportion between 0 and 1
+   optional int32          healthy               = 6; //!< The number of healthy persons
+   optional int32          wounded               = 7; //!< The number of wounded persons
+   optional int32          contaminated          = 8; //!< The number of contaminated persons
+   optional int32          dead                  = 9; //!< The number of dead persons
+   optional Extension      extension             = 10; //!< The extension fields
+   optional string         decisional_model      = 11; //!< The decisional model
+}
+
+/** @struct CrowdDestruction
+    @brief Notifies of the destruction of a crowd
+*/
+message CrowdDestruction {
+   required CrowdId crowd = 1; //!< The crowd identifier
+}
+
+/** @struct CrowdConcentrationCreation
+    @brief Notifies of the creation of a crowd concentration
+*/
+message CrowdConcentrationCreation {
+   required CrowdConcentrationId concentration = 1; //!< The crowd concentration identifier
+   required CrowdId              crowd         = 2; //!< The crowd identifier
+   required CoordLatLong         position      = 3; //!< The crowd position
+}
+
+/** @struct CrowdConcentrationDestruction
+    @brief Notifies of the destruction of a crowd concentration
+*/
+message CrowdConcentrationDestruction {
+   required CrowdConcentrationId concentration = 1; //!< The crowd concentration identifier
+   required CrowdId              crowd         = 2; //!< The crowd identifier
+}
+
+/** @enum EnumCrowdAttitude
+    @brief Defines the different states of a crowd
+*/
+enum EnumCrowdAttitude {
+    peaceful  = 0; //!< Peaceful
+    agitated  = 1; //!< Agitated
+    excited   = 2; //!< Excited
+    agressive = 3; //!< Agressive
+}
+
+/** @struct CrowdConcentrationUpdate
+    @brief Notifies of the update of a crowd concentration
+*/
+message CrowdConcentrationUpdate {
+   required CrowdConcentrationId concentration = 1; //!< The crowd concentration identifier
+   required CrowdId              crowd         = 2; //!< The crowd identifier
+   optional int32                healthy       = 3; //!< The number of healthy persons
+   optional int32                wounded       = 4; //!< The number of wounded persons
+   optional int32                contaminated  = 5; //!< The number of contaminated persons
+   optional int32                dead          = 6; //!< The number of dead persons
+   optional EnumCrowdAttitude    attitude      = 7; //!< The crowd attitude
+}
+
+/** @struct CrowdFlowCreation
+    @brief Notifies of the creation of a crowd flow
+*/
+message CrowdFlowCreation {
+   required CrowdFlowId flow  = 1; //!< The crowd flow identifier
+   required CrowdId     crowd = 2; //!< The crowd identifier
+}
+
+/** @struct CrowdFlowDestruction
+    @brief Notifies of the destruction of a crowd flow
+*/
+message CrowdFlowDestruction {
+   required CrowdFlowId flow  = 1; //!< The crowd flow identifier
+   required CrowdId     crowd = 2; //!< The crowd identifier
+}
+
+/** @struct CrowdFlowUpdate
+    @brief Notifies of the update of a crowd flow
+*/
+message CrowdFlowUpdate {
+   required CrowdFlowId       flow         = 1;  //!< The crowd flow identifier
+   required CrowdId           crowd        = 2;  //!< The crowd identifier
+   optional Path              parts        = 3;  //!< The crowd shape
+   optional Path              path         = 4;  //!< The crowd path
+   optional Heading           direction    = 5;  //!< @todo What's this ?
+   optional int32             speed        = 6;  //!< The flow speed
+   optional int32             healthy      = 7;  //!< The number of healthy persons
+   optional int32             wounded      = 8;  //!< The number of wounded persons
+   optional int32             contaminated = 9;  //!< The number of contaminated persons
+   optional int32             dead         = 10;  //!< The number of dead persons
+   optional EnumCrowdAttitude attitude     = 11; //!< The crowd attitude
+}
+
+/** @struct CrowdKnowledgeCreation
+    @brief Notifies of the creation of a crowd knowledge
+*/
+message CrowdKnowledgeCreation {
+   required CrowdKnowledgeId knowledge       = 1; //!< The crowd knowledge identifier
+   required KnowledgeGroupId knowledge_group = 2; //!< The knowledge group identifier
+   optional CrowdId          crowd           = 3; //!< The crowd identifier
+   optional PartyId          party           = 4; //!< The party identifier
+}
+
+/** @struct CrowdKnowledgeUpdate
+    @brief Notifies of the update of a crowd knowledge
+*/
+message CrowdKnowledgeUpdate {
+   required CrowdKnowledgeId knowledge             = 1; //!< The crowd knowledge identifier
+   required KnowledgeGroupId knowledge_group       = 2; //!< The knowledge group identifier
+   optional int32            domination            = 3; //!< The crowd domination
+   optional string           critical_intelligence = 4; //!< The crowd critical intelligence
+}
+
+/** @struct CrowdKnowledgeDestruction
+    @brief Notifies of the destruction of a crowd knowledge
+*/
+message CrowdKnowledgeDestruction {
+   required CrowdKnowledgeId knowledge       = 1; //!< The crowd knowledge identifier
+   required KnowledgeGroupId knowledge_group = 2; //!< The knowledge group identifier
+}
+
+/** @struct CrowdConcentrationKnowledgeCreation
+    @brief Notifies of the creation of a crowd concentration knowledge
+*/
+message CrowdConcentrationKnowledgeCreation {
+    required CrowdConcentrationKnowledgeId knowledge       = 1; //!< The crowd concentration knowledge identifier
+    required CrowdKnowledgeId              crowd           = 2; //!< The crowd knowledge identifier
+    required KnowledgeGroupId              knowledge_group = 3; //!< The knowledge group identifier
+    required CrowdConcentrationId          concentration   = 4; //!< The crowd concentration identifier
+    optional CoordLatLong                  position        = 5; //!< The crowd position
+}
+
+/** @struct CrowdConcentrationKnowledgeUpdate
+    @brief Notifies of the update of a crowd concentration knowledge
+*/
+message CrowdConcentrationKnowledgeUpdate {
+    required CrowdConcentrationKnowledgeId knowledge       = 1; //!< The crowd concentration knowledge identifier
+    required CrowdKnowledgeId              crowd           = 2; //!< The crowd knowledge identifier
+    required KnowledgeGroupId              knowledge_group = 3; //!< The knowledge group identifier
+    optional CrowdConcentrationId          concentration   = 4; //!< The crowd concentration identifier
+    optional int32                         alive           = 5; //!< The number of persons alive
+    optional int32                         dead            = 6; //!< The number of dead persons
+    optional EnumCrowdAttitude             attitude        = 7; //!< The crowd attitude
+    optional int32                         pertinence      = 8; //!< The knowledge pertinence
+    optional bool                          perceived       = 9; //!< Whether the crowd concentration is currently perceived or not
+}
+
+/** @struct CrowdConcentrationKnowledgeDestruction
+    @brief Notifies of the destruction of a crowd concentration knowledge
+*/
+message CrowdConcentrationKnowledgeDestruction {
+    required CrowdConcentrationKnowledgeId knowledge       = 1; //!< The crowd concentration knowledge identifier
+    required CrowdKnowledgeId              crowd           = 2; //!< The crowd knowledge identifier
+    required KnowledgeGroupId              knowledge_group = 3; //!< The knowledge group identifier
+}
+
+/** @struct CrowdFlowKnowledgeCreation
+    @brief Notifies of the creation of a crowd flow knowledge
+*/
+message CrowdFlowKnowledgeCreation {
+    required CrowdFlowKnowledgeId knowledge       = 1; //!< The crowd flow knowledge identifier
+    required CrowdKnowledgeId     crowd           = 2; //!< The crowd knowledge identifier
+    required KnowledgeGroupId     knowledge_group = 3; //!< The knowledge group identifier
+    required CrowdFlowId          flow            = 4; //!< The crowd flow identifier
+}
+
+/** @struct FlowPart
+    @brief Defines the part of a flow
+*/
+message FlowPart {
+   required Path  shape      = 1; //!< The flow shape
+   required int32 pertinence = 2; //!< The pertinence
+}
+
+/** @struct SeqOfFlowPart
+    @brief Lists the parts of a flow
+*/
+message SeqOfFlowPart {
+   repeated FlowPart elem = 1; //!< The flow parts
+}
+
+/** @struct CrowdFlowKnowledgeUpdate
+    @brief Notifies of the update of a crowd flow knowledge
+*/
+message CrowdFlowKnowledgeUpdate {
+    required CrowdFlowKnowledgeId knowledge       = 1;  //!< The crowd flow knowledge identifier
+    required CrowdKnowledgeId     crowd           = 2;  //!< The crowd knowledge identifier
+    required KnowledgeGroupId     knowledge_group = 3;  //!< The crowd knowledge group identifier
+    optional CrowdFlowId          flow            = 4;  //!< The flow identifier
+    optional SeqOfFlowPart        parts           = 5;  //!< The flow parts
+    optional Heading              direction       = 6;  //!< The flow direction
+    optional int32                speed           = 7;  //!< The flow speed
+    optional int32                alive           = 8;  //!< The number of persons alive
+    optional int32                dead            = 9;  //!< The number of dead persons
+    optional EnumCrowdAttitude    attitude        = 10; //!< The crowd attitude
+    optional bool                 perceived       = 11; //!< Whether the flow is currently perceived or not
+}
+
+/** @struct CrowdFlowKnowledgeDestruction
+    @brief Notifies of the destruction of a crowd flow knowledge
+*/
+message CrowdFlowKnowledgeDestruction {
+    required CrowdFlowKnowledgeId knowledge       = 1; //!< The crowd flow knowledge identifier
+    required CrowdKnowledgeId     crowd           = 2; //!< The crowd knowledge identifier
+    required KnowledgeGroupId     knowledge_group = 3; //!< The knowledge group identifier
+}
+
+/** @struct FolkCreation
+    @brief Notifies of the creation of a folk
+*/
+message FolkCreation {
+    /** @struct Profiles
+        @brief Defines the profiles
+    */
+    message Profiles {
+       repeated string elem = 1; //!< The profiles
+    }
+    /** @struct Activities
+        @brief Defines the activities
+    */
+    message Activities {
+        repeated string elem = 1; //!< The activities
+    }
+    required Profiles   profiles       = 1; //!< @copybrief Profiles
+    required Activities activities     = 2; //!< @copybrief Activities
+    optional int32      container_size = 3; //!< The container size
+    optional int32      edge_number    = 4; //!< The number of edges
+}
+
+/** @struct FolkGraphEdgeUpdate
+    @brief Defines a folk graph edge
+*/
+message FolkGraphEdgeUpdate {
+   required int32 folk             = 1; //!< What's this ?
+   required int32 shape_id         = 2; //!< What's this ?
+   repeated int32 crowd_occupation = 3; //!< What's this ?
+}
+
+/** @struct FolkGraphUpdate
+    @brief Notifies of the update of a folk graph
+*/
+message FolkGraphUpdate {
+   repeated FolkGraphEdgeUpdate elem = 1; //!< The graph edges
+}
+
+/** @struct ControlCheckPointSetFrequencyAck
+    @brief Acknowledges a checkpoint frequency change request
+
+    @see ControlCheckPointSetFrequency
+*/
+message ControlCheckPointSetFrequencyAck {
+}
+
+/** @struct ControlCheckPointSaveNowAck
+    @brief Acknowledges a checkpoint save request
+
+    @see ControlCheckPointSaveNow
+*/
+message ControlCheckPointSaveNowAck {
+}
+
+/** @struct ControlCheckPointSaveBegin
+    @brief Notify of the beginning of a checkpoint save
+
+    @see ControlCheckPointSaveNow ControlCheckPointSaveEnd
+*/
+message ControlCheckPointSaveBegin {
+}
+
+message ControlCheckPointSaveBeginAck {
+}
+
+/** @struct ControlCheckPointSaveEnd
+    @brief Notify of the end of a checkpoint save
+
+    @see ControlCheckPointSaveNow ControlCheckPointSaveBegin
+*/
+message ControlCheckPointSaveEnd {
+    optional string name = 1; //!< The checkpoint name
+}
+
+/** @struct ControlCheckPointSaveDelete
+    @brief Notify that a checkpoint directory has been deleted on the simulation (due to max number of checkpoints attained)
+*/
+message ControlCheckPointSaveDelete {
+    required string name = 1; //!< The checkpoint directory name
+}
+
+message ControlCheckPointListAck {
+}
+
+message ControlCheckPointList {
+    repeated string checkpoint = 1;
+}
+
+message ControlCheckPointDeleteAck {
+}
+
+/** @struct ControlSendCurrentStateBegin
+    @brief Notify of the start of the sending of the simulation state
+
+    @see ControlSendCurrentStateEnd
+*/
+message ControlSendCurrentStateBegin {
+}
+
+/** @struct ControlSendCurrentStateEnd
+    @brief Notify of the end of the sending of the simulation state
+
+    @see ControlSendCurrentStateBegin
+*/
+message ControlSendCurrentStateEnd {
+}
+
+/** @struct RgbaColor
+    @brief Defines a color with alpha channel
+*/
+message RgbaColor
+{
+    required int32 red   = 1; //!< The red component between 0 and 255
+    required int32 green = 2; //!< The green component between 0 and 255
+    required int32 blue  = 3; //!< The blue component between 0 and 255
+    required float alpha = 4; //!< The alpha channel between 0 and 1
+}
+
+/** @struct UrbanAttributes
+    @brief Regroups the attributes of a urban object
+    @see UrbanCreation UrbanUpdate
+*/
+message UrbanAttributes {
+    /** @struct Architecture
+        @brief Defines the architecture of a urban object
+    */
+    message Architecture {
+        required float  height            = 1; //!< The height in meters
+        required int32  floor_number      = 2; //!< The floor number starting at 0 for the ground floor
+        required string roof_shape        = 3; //!< The roof shape
+        required string material          = 4; //!< The material
+        required float  occupation        = 5; //!< The occupation in percent
+        required float  trafficability    = 6; //!< The trafficability in tons used in path-finding
+        required int32  parking_floors    = 7; //!< The number of parking floors
+    }
+    /** @struct Structure
+        @brief Defines the structure of a urban object
+    */
+    message Structure {
+        required uint32 state = 1; //!< The structural state in percent
+    }
+    /** @struct Infrastructures
+        @brief Defines the infrastructures of a urban object
+    */
+    message Infrastructures {
+        /** @struct Infrastructure
+            @brief Defines the infrastructure of a urban object
+        */
+        message Infrastructure {
+          required string type      = 1; //!< The infrastructure type
+          required bool   active    = 2; //!< Whether the infrastructure is active or not
+          required float  threshold = 3; //!< The threshold in percent below which the infrastructure stops working
+        }
+        repeated ResourceNetwork resource_network = 1; //!< The resource networks
+        optional Infrastructure infrastructure    = 2; //!< The infrastructure
+    }
+    optional Architecture    architecture    = 1; //!< The architecture
+    optional Structure       structure       = 2; //!< The structure
+    optional RgbaColor       color           = 3; //!< The color
+    optional Infrastructures infrastructures = 4; //!< The infrastructures
+    repeated UrbanUsage      usages          = 5; //!< The usages
+}
+
+/** @struct UrbanCreation
+    @brief Notifies of the creation of a urban object
+*/
+message UrbanCreation {
+   required ObjectId        object       = 1; //!< The object identifier
+   required string          name         = 2; //!< The object name
+   required Location        location     = 3; //!< The object location
+   optional UrbanAttributes attributes   = 4; //!< The object attributes
+   optional ObjectId        parent       = 5; //!< The parent object
+}
+
+/** @struct UrbanDetection
+    @brief Notifies of the detection of a urban object
+*/
+message UrbanDetection {
+    required UnitId               observer     = 1; //!< The unit identifier
+    required ObjectId             object       = 2; //!< The object identifier
+    required UnitVisibility.Level visibility   = 3; //!< The visibility level
+}
+
+/** @struct UrbanUpdate
+    @brief Notifies of the update of a urban object
+*/
+message UrbanUpdate {
+   required ObjectId        object     = 1; //!< The object identifier
+   optional Location        location   = 2; //!< The object location
+   optional UrbanAttributes attributes = 3; //!< The object attributes
+}
+
+/** @struct KnowledgeGroupCreation
+    @brief Notifies of the creation of a knowledge group
+*/
+message KnowledgeGroupCreation {
+   required KnowledgeGroupId knowledge_group = 1; //!< The knowledge group identifier
+   required PartyId          party           = 2; //!< The party identifier
+   optional KnowledgeGroupId parent          = 3; //!< The parent group
+   required string           type            = 4; //!< The group type
+   optional bool             jam             = 5; //!< Whether the communication of the group is jammed or not
+   required string           name			 = 6 [default = ""]; //!< This particular knowledge group's name
+}
+
+/** @struct KnowledgeGroupUpdate
+    @brief Notifies of the update of a knowledge group
+*/
+message KnowledgeGroupUpdate {
+   required KnowledgeGroupId knowledge_group = 1; //!< The knowledge group identifier
+   optional PartyId          party           = 2; //!< The party identifier
+   optional KnowledgeGroupId parent          = 3; //!< The parent group
+   optional bool             enabled         = 4; //!< Whether the group is enabled or not
+   optional string           type            = 5; //!< The group type
+}
+
+/** @struct KnowledgeGroupDestruction
+    @brief Notifies of the destruction of a knowledge group
+*/
+message KnowledgeGroupDestruction {
+    required KnowledgeGroupId knowledge_group = 1; //!< The knowledge group identifier
+    required PartyId          party           = 2; //!< The party identifier
+}
+
+/** @struct KnowledgeGroupDestruction
+    @brief Factorizes knowledge group related magic action error codes
+    @todo This is pointless to factorize this...
+*/
+message KnowledgeGroupAck {
+    /** @enum ErrorCode
+        @brief Defines the error codes
+    */
+    enum ErrorCode {
+       no_error                     = 0; //!< No error
+       error_invalid_unit           = 1; //!< The unit identifier provided is invalid
+       error_invalid_superior       = 2; //!< The superior identifier provided is invalid
+       error_invalid_party          = 3; //!< The party identifier provided is invalid
+       error_invalid_knowledgegroup = 4; //!< The knowledge group identifier provided is invalid @todo rename to error_invalid_knowledge_group
+       error_invalid_type           = 5; //!< The type provided is invalid
+       error_invalid_perception     = 6; //!< The perception provided is invalid       
+    }
+}
+
+/** @struct KnowledgeGroupMagicActionAck
+    @brief Acknowledges a knowledge group magic action
+    @see KnowledgeMagicAction
+*/
+message KnowledgeGroupMagicActionAck {
+    required KnowledgeGroupId            knowledge_group = 1; //!< The knowledge group identifier
+    required KnowledgeGroupAck.ErrorCode error_code      = 2; //!< The error code
+}
+
+/** @struct KnowledgeGroupCreationAck
+    @brief Acknowledges a knowledge group creation magic action
+    @see MagicAction
+*/
+message KnowledgeGroupCreationAck {
+    required KnowledgeGroupId            knowledge_group = 1; //!< The knowledge group identifier
+    required KnowledgeGroupAck.ErrorCode error_code      = 2; //!< The error code
+}
+
+/** @struct KnowledgeGroupUpdateAck
+    @brief Acknowledges a knowledge group update magic action
+    @see KnowledgeMagicAction
+*/
+message KnowledgeGroupUpdateAck {
+    required KnowledgeGroupId            knowledge_group = 1; //!< The knowledge group identifier
+    required KnowledgeGroupAck.ErrorCode error_code      = 2; //!< The error code
+}
+
+/** @struct ControlGlobalWeatherAck
+    @brief Acknowledges a global weather magic action
+    @see MagicAction
+*/
+message ControlGlobalWeatherAck {
+}
+
+/** @struct ControlLocalWeatherAck
+    @brief Acknowledges a local weather magic action
+    @see MagicAction
+*/
+message ControlLocalWeatherAck {
+}
+
+/** @struct WeatherAttributes
+    @brief Defines the weather attributes
+*/
+message WeatherAttributes {
+    /** @enum EnumPrecipitationType
+        @brief Defines the different types of precipitation
+    */
+    enum EnumPrecipitationType {
+        dry        = 0; //!< Dry
+        sand_storm = 1; //!< Sand storm
+        fog        = 2; //!< Fog
+        drizzle    = 3; //!< Drizzle
+        rain       = 4; //!< Rain
+        snow       = 5; //!< Snow
+    }
+    /** @enum EnumLightingType
+        @brief Defines the different types of lighting
+    */
+    enum EnumLightingType {
+        clear_day               = 0;  //!< Clear day
+        slightly_cloudy_day     = 1;  //!< Slightly cloudy day
+        mildly_cloudy_day       = 2;  //!< Mildly cloudy day
+        fairly_cloudy_day       = 3;  //!< Fairly cloudy day
+        very_cloudy_day         = 4;  //!< Very cloudy day
+        full_moon_night         = 5;  //!< Full moon night
+        three_quater_moon_night = 6;  //!< Three quater moon night
+        half_quater_moon_night  = 7;  //!< Half quater moon night
+        quater_moon_night       = 8;  //!< Quater moon night
+        new_moon_night          = 9;  //!< New moon night
+        artificial_light        = 10; //!< Artificial light
+        global_weather          = 11; //!< Global weather
+    }
+    required int32                 temperature    = 1; //!< The temperatur in Celsius
+    required int32                 wind_speed     = 2; //!< The speed of wind in km/h
+    required Heading               wind_direction = 3; //!< The direction of wind
+    required int32                 cloud_floor    = 4; //!< The cloud floor altitude in meters
+    required int32                 cloud_ceiling  = 5; //!< The cloud ceiling altitude in meters
+    required int32                 cloud_density  = 6; //!< The cloud density in percent
+    required EnumPrecipitationType precipitation  = 7; //!< The precipiration type
+    required EnumLightingType      lighting       = 8; //!< The lighting type
+}
+
+/** @struct ControlGlobalWeather
+    @brief Notifies of the global weather
+*/
+message ControlGlobalWeather {
+    required WeatherId         weather    = 1; //!< The weather identifier
+    required WeatherAttributes attributes = 2; //!< The weather attributes
+}
+
+/** @struct ControlLocalWeatherCreation
+    @brief Notifies of the creation of a local weather
+*/
+message ControlLocalWeatherCreation {
+    required WeatherId         weather      = 1; //!< The weather identifier
+    optional CoordLatLong      top_left     = 2; //!< The top-left corner of the zone
+    optional CoordLatLong      bottom_right = 3; //!< The bottom-left corner of the zone
+    optional WeatherAttributes attributes   = 4; //!< The weather attributes
+}
+
+/** @struct ControlLocalWeatherDestruction
+    @brief Notifies of the destruction of a local weather
+*/
+message ControlLocalWeatherDestruction {
+    required WeatherId weather = 1; //!< The weather identifier
+}
+
+/** @struct PopulationCreation
+    @brief Notifies of the creation of a population
+*/
+message PopulationCreation {
+    required PopulationId   id        = 1; //!< The population identifier
+    required PartyId        party     = 2; //!< The party identifier
+    required PopulationType type      = 3; //!< The population type
+    required string         name      = 4; //!< The population name
+    required string         text      = 5; //!< @deprecated should be an extension entry
+    repeated ObjectId       objects   = 6; //!< The object identifiers of urban blocks where the population live
+}
+
+/** @struct PopulationUpdate
+    @brief Notifies of the update of a population
+*/
+message PopulationUpdate {
+    /** @struct MotivationSatisfaction
+        @brief Defines a motivation satisfaction
+    */
+    message MotivationSatisfaction {
+        required string motivation = 1; //!< The motivation type ("home", "office", ...) as listed in urban.xml
+        required float  percentage = 2; //!< The level of satisfaction for this motivation between 0 and 1
+    }
+    /** @struct ResourceSatisfaction
+        @brief Defines a resource satisfaction
+    */
+    message ResourceSatisfaction {
+        required ResourceType resource = 1; //!< The resource type
+        required float        value    = 2; //!< The level of satisfaction for this motivation between 0 and 1
+    }
+    /** @struct Satisfaction
+        @brief Defines the population satisfaction
+    */
+    message Satisfaction {
+        repeated ResourceSatisfaction   resources   = 1; //!< The resource satisfactions
+        repeated MotivationSatisfaction motivations = 2; //!< The motivation satisfactions
+        optional float                  lodging     = 3; //!< The level of satisfaction for vital space between 0 and 1
+        optional float                  health      = 4; //!< The level of satisfaction for health matters between 0 and 1
+        optional float                  safety      = 5; //!< The level of satisfaction for safety matters between 0 and 1
+    }
+    /** @struct BlockOccupation
+        @brief Defines a block occupation
+    */
+    message BlockOccupation {
+         /** @struct UsageOccupation
+             @brief Defines the number of persons by usage
+         */
+         message UsageOccupation {
+             required string usage  = 1; //!< The usage type ("home, "office", ...)
+             required int32  number = 2; //!< The number of persons for this usage
+         }
+         required ObjectId        object    = 1; //!< The block object identifier
+         repeated UsageOccupation persons   = 2; //!< The number of persons by usage
+         required bool            alerted   = 3; //!< Whether the population has been alerted or not
+         required bool            confined  = 4; //!< Whether the population is confined into this block or not
+         required bool            evacuated = 5; //!< Whether the population is evacuated into this block or not
+         required float           angriness = 6; //!< Angriness of persons in this block because of lack of resources.
+    }
+    required PopulationId    id           = 1; //!< The population identifier
+    optional int32           healthy      = 2; //!< The number of healthy persons
+    optional int32           wounded      = 3; //!< The number of wounded persons
+    optional int32           dead         = 4; //!< The number of dead persons
+    optional PartyAdhesions  adhesions    = 5; //!< The party adhesions
+    optional Satisfaction    satisfaction = 6; //!< The current satisfaction
+    optional string          motivation   = 7; //!< The current motivation @see MotivationSatisfaction
+    repeated BlockOccupation occupations  = 8; //!< The current block occupations
+    optional Extension       extension    = 9; //!< The extension fields
+}
+
+message SimToClient {
+    message Content {
+        optional TaskCreationRequestAck                 order_ack                                 = 1;   //!< @copybrief TaskCreationRequestAck
+        optional FragOrderAck                           frag_order_ack                            = 4;   //!< @copybrief FragOrderAck
+        optional SetAutomatModeAck                      set_automat_mode_ack                      = 5;   //!< @copybrief SetAutomatModeAck
+        optional UnitCreationRequestAck                 unit_creation_request_ack                 = 6;   //!< @copybrief UnitCreationRequestAck
+        optional MagicActionAck                         magic_action_ack                          = 7;   //!< @copybrief MagicActionAck
+        optional UnitMagicActionAck                     unit_magic_action_ack                     = 8;   //!< @copybrief UnitMagicActionAck
+        optional ObjectMagicActionAck                   object_magic_action_ack                   = 9;   //!< @copybrief ObjectMagicActionAck
+        optional CrowdMagicActionAck                    crowd_magic_action_ack                    = 10;  //!< @copybrief CrowdMagicActionAck
+        optional ChangeDiplomacyAck                     change_diplomacy_ack                      = 11;  //!< @copybrief ChangeDiplomacyAck
+        optional AutomatChangeKnowledgeGroupAck         automat_change_knowledge_group_ack        = 12;  //!< @copybrief AutomatChangeKnowledgeGroupAck
+        optional ChangeLogisticLinksAck                 automat_change_logistic_links_ack         = 13;  //!< @copybrief ChangeLogisticLinksAck
+        optional AutomatChangeSuperiorAck               automat_change_superior_ack               = 14;  //!< @copybrief AutomatChangeSuperiorAck
+        optional UnitChangeSuperiorAck                  unit_change_superior_ack                  = 15;  //!< @copybrief UnitChangeSuperiorAck
+        optional LogSupplyPushFlowAck                   log_supply_push_flow_ack                  = 16;  //!< @copybrief LogSupplyPushFlowAck
+        optional LogSupplyChangeQuotasAck               log_supply_change_quotas_ack              = 17;  //!< @copybrief LogSupplyChangeQuotasAck
+        optional ControlInformation                     control_information                       = 18;  //!< @copybrief ControlInformation
+        optional ControlProfilingInformation            control_profiling_information             = 19;  //!< @copybrief ControlProfilingInformation
+        optional ControlBeginTick                       control_begin_tick                        = 20;  //!< @copybrief ControlBeginTick
+        optional ControlEndTick                         control_end_tick                          = 21;  //!< @copybrief ControlEndTick
+        optional ControlStopAck                         control_stop_ack                          = 22;  //!< @copybrief ControlStopAck
+        optional ControlPauseAck                        control_pause_ack                         = 23;  //!< @copybrief ControlPauseAck
+        optional ControlResumeAck                       control_resume_ack                        = 24;  //!< @copybrief ControlResumeAck
+        optional ControlChangeTimeFactorAck             control_change_time_factor_ack            = 25;  //!< @copybrief ControlChangeTimeFactorAck
+        optional ControlDateTimeChangeAck               control_date_time_change_ack              = 26;  //!< @copybrief ControlDateTimeChangeAck
+        optional ControlCheckPointSaveEnd               control_checkpoint_save_end               = 27;  //!< @copybrief ControlCheckPointSaveEnd
+        optional FormationCreation                      formation_creation                        = 28;  //!< @copybrief FormationCreation
+        optional PartyCreation                          party_creation                            = 29;  //!< @copybrief PartyCreation
+        optional AutomatCreation                        automat_creation                          = 30;  //!< @copybrief AutomatCreation
+        optional AutomatAttributes                      automat_attributes                        = 31;  //!< @copybrief AutomatAttributes
+        optional UnitCreation                           unit_creation                             = 32;  //!< @copybrief UnitCreation
+        optional UnitAttributes                         unit_attributes                           = 33;  //!< @copybrief UnitAttributes
+        optional UnitPathFind                           unit_pathfind                             = 34;  //!< @copybrief UnitPathFind
+        optional UnitDestruction                        unit_destruction                          = 35;  //!< @copybrief UnitDestruction
+        optional UnitEnvironmentType                    unit_environment_type                     = 36;  //!< @copybrief UnitEnvironmentType
+        optional ChangeDiplomacy                        change_diplomacy                          = 37;  //!< @copybrief ChangeDiplomacy
+        optional UnitChangeSuperior                     unit_change_superior                      = 38;  //!< @copybrief UnitChangeSuperior
+        optional ChangeLogisticLinks                    automat_change_logistic_links             = 39;  //!< @copybrief ChangeLogisticLinks
+        optional AutomatChangeKnowledgeGroup            automat_change_knowledge_group            = 40;  //!< @copybrief AutomatChangeKnowledgeGroup
+        optional AutomatChangeSuperior                  automat_change_superior                   = 41;  //!< @copybrief AutomatChangeSuperior
+        optional UnitKnowledgeCreation                  unit_knowledge_creation                   = 42;  //!< @copybrief UnitKnowledgeCreation
+        optional UnitKnowledgeUpdate                    unit_knowledge_update                     = 43;  //!< @copybrief UnitKnowledgeUpdate
+        optional UnitKnowledgeDestruction               unit_knowledge_destruction                = 44;  //!< @copybrief UnitKnowledgeDestruction
+        optional StartUnitFire                          start_unit_fire                           = 45;  //!< @copybrief StartUnitFire
+        optional StopUnitFire                           stop_unit_fire                            = 46;  //!< @copybrief StopUnitFire
+        optional StartCrowdFire                         start_crowd_fire                          = 47;  //!< @copybrief StartCrowdFire
+        optional StopCrowdFire                          stop_crowd_fire                           = 48;  //!< @copybrief StopCrowdFire
+        optional Explosion                              explosion                                 = 49;  //!< @copybrief Explosion
+        optional UnitDamagedByUnitFire                  unit_damaged_by_unit_fire                 = 50;  //!< @copybrief UnitDamagedByUnitFire
+        optional CrowdDamagedByUnitFire                 crowd_damaged_by_unit_fire                = 51;  //!< @copybrief CrowdDamagedByUnitFire
+        optional UnitDamagedByCrowdFire                 unit_damaged_by_crowd_fire                = 52;  //!< @copybrief UnitDamagedByCrowdFire
+        optional StartFireEffect                        start_fire_effect                         = 53;  //!< @copybrief StartFireEffect
+        optional StopFireEffect                         stop_fire_effect                          = 54;  //!< @copybrief StopFireEffect
+        optional Report                                 report                                    = 55;  //!< @copybrief Report
+        optional InvalidateReport                       invalidate_report                         = 56;  //!< @copybrief InvalidateReport
+        optional Trace                                  trace                                     = 57;  //!< @copybrief Trace
+        optional DecisionalState                        decisional_state                          = 58;  //!< @copybrief DecisionalState
+        optional DebugPoints                            debug_points                              = 59;  //!< @copybrief DebugPoints
+        optional UnitVisionCones                        unit_vision_cones                         = 60;  //!< @copybrief UnitVisionCones
+        optional UnitDetection                          unit_detection                            = 61;  //!< @copybrief UnitDetection
+        optional ObjectDetection                        object_detection                          = 62;  //!< @copybrief ObjectDetection
+        optional CrowdConcentrationDetection            crowd_concentration_detection             = 63;  //!< @copybrief CrowdConcentrationDetection
+        optional CrowdFlowDetection                     crowd_flow_detection                      = 64;  //!< @copybrief CrowdFlowDetection
+        optional UnitOrder                              unit_order                                = 65;  //!< @copybrief UnitOrder
+        optional AutomatOrder                           automat_order                             = 66;  //!< @copybrief AutomatOrder
+        optional CrowdOrder                             crowd_order                               = 67;  //!< @copybrief CrowdOrder
+        optional ObjectCreation                         object_creation                           = 68;  //!< @copybrief ObjectCreation
+        optional ObjectDestruction                      object_destruction                        = 69;  //!< @copybrief ObjectDestruction
+        optional ObjectUpdate                           object_update                             = 70;  //!< @copybrief ObjectUpdate
+        optional ObjectKnowledgeCreation                object_knowledge_creation                 = 71;  //!< @copybrief ObjectKnowledgeCreation
+        optional ObjectKnowledgeUpdate                  object_knowledge_update                   = 72;  //!< @copybrief ObjectKnowledgeUpdate
+        optional ObjectKnowledgeDestruction             object_knowledge_destruction              = 73;  //!< @copybrief ObjectKnowledgeDestruction
+        optional LogMedicalHandlingCreation             log_medical_handling_creation             = 74;  //!< @copybrief LogMedicalHandlingCreation
+        optional LogMedicalHandlingUpdate               log_medical_handling_update               = 75;  //!< @copybrief LogMedicalHandlingUpdate
+        optional LogMedicalHandlingDestruction          log_medical_handling_destruction          = 76;  //!< @copybrief LogMedicalHandlingDestruction
+        optional LogMedicalState                        log_medical_state                         = 77;  //!< @copybrief LogMedicalState
+        optional LogMaintenanceHandlingCreation         log_maintenance_handling_creation         = 78;  //!< @copybrief LogMaintenanceHandlingCreation
+        optional LogMaintenanceHandlingUpdate           log_maintenance_handling_update           = 79;  //!< @copybrief LogMaintenanceHandlingUpdate
+        optional LogMaintenanceHandlingDestruction      log_maintenance_handling_destruction      = 80;  //!< @copybrief LogMaintenanceHandlingDestruction
+        optional LogMaintenanceState                    log_maintenance_state                     = 81;  //!< @copybrief LogMaintenanceState
+        optional LogSupplyHandlingCreation              log_supply_handling_creation              = 82;  //!< @copybrief LogSupplyHandlingCreation
+        optional LogSupplyHandlingUpdate                log_supply_handling_update                = 83;  //!< @copybrief LogSupplyHandlingUpdate
+        optional LogSupplyHandlingDestruction           log_supply_handling_destruction           = 84;  //!< @copybrief LogSupplyHandlingDestruction
+        optional LogSupplyState                         log_supply_state                          = 85;  //!< @copybrief LogSupplyState
+        optional LogSupplyQuotas                        log_supply_quotas                         = 86;  //!< @copybrief LogSupplyQuotas
+        optional CrowdCreation                          crowd_creation                            = 87;  //!< @copybrief CrowdCreation
+        optional CrowdUpdate                            crowd_update                              = 88;  //!< @copybrief CrowdUpdate
+        optional CrowdConcentrationCreation             crowd_concentration_creation              = 89;  //!< @copybrief CrowdConcentrationCreation
+        optional CrowdConcentrationDestruction          crowd_concentration_destruction           = 90;  //!< @copybrief CrowdConcentrationDestruction
+        optional CrowdConcentrationUpdate               crowd_concentration_update                = 91;  //!< @copybrief CrowdConcentrationUpdate
+        optional CrowdFlowCreation                      crowd_flow_creation                       = 92;  //!< @copybrief CrowdFlowCreation
+        optional CrowdFlowDestruction                   crowd_flow_destruction                    = 93;  //!< @copybrief CrowdFlowDestruction
+        optional CrowdFlowUpdate                        crowd_flow_update                         = 94;  //!< @copybrief CrowdFlowUpdate
+        optional CrowdKnowledgeCreation                 crowd_knowledge_creation                  = 95;  //!< @copybrief CrowdKnowledgeCreation
+        optional CrowdKnowledgeUpdate                   crowd_knowledge_update                    = 96;  //!< @copybrief CrowdKnowledgeUpdate
+        optional CrowdKnowledgeDestruction              crowd_knowledge_destruction               = 97;  //!< @copybrief CrowdKnowledgeDestruction
+        optional CrowdConcentrationKnowledgeCreation    crowd_concentration_knowledge_creation    = 98;  //!< @copybrief CrowdConcentrationKnowledgeCreation
+        optional CrowdConcentrationKnowledgeDestruction crowd_concentration_knowledge_destruction = 99;  //!< @copybrief CrowdConcentrationKnowledgeDestruction
+        optional CrowdConcentrationKnowledgeUpdate      crowd_concentration_knowledge_update      = 100; //!< @copybrief CrowdConcentrationKnowledgeUpdate
+        optional CrowdFlowKnowledgeCreation             crowd_flow_knowledge_creation             = 101; //!< @copybrief CrowdFlowKnowledgeCreation
+        optional CrowdFlowKnowledgeDestruction          crowd_flow_knowledge_destruction          = 102; //!< @copybrief CrowdFlowKnowledgeDestruction
+        optional CrowdFlowKnowledgeUpdate               crowd_flow_knowledge_update               = 103; //!< @copybrief CrowdFlowKnowledgeUpdate
+        optional FolkCreation                           folk_creation                             = 104; //!< @copybrief FolkCreation
+        optional FolkGraphUpdate                        folk_graph_update                         = 105; //!< @copybrief FolkGraphUpdate
+        optional ControlGlobalWeatherAck                control_global_weather_ack                = 106; //!< @copybrief ControlGlobalWeatherAck
+        optional ControlLocalWeatherAck                 control_local_weather_ack                 = 107; //!< @copybrief ControlLocalWeatherAck
+        optional ControlCheckPointSaveBegin             control_checkpoint_save_begin             = 108; //!< @copybrief ControlCheckPointSaveBegin
+        optional ControlCheckPointSetFrequencyAck       control_checkpoint_set_frequency_ack      = 109; //!< @copybrief ControlCheckPointSetFrequencyAck
+        optional ControlCheckPointSaveNowAck            control_checkpoint_save_now_ack           = 110; //!< @copybrief ControlCheckPointSaveNowAck
+        optional ControlSendCurrentStateBegin           control_send_current_state_begin          = 111; //!< @copybrief ControlSendCurrentStateBegin
+        optional ControlSendCurrentStateEnd             control_send_current_state_end            = 112; //!< @copybrief ControlSendCurrentStateEnd
+        optional UrbanCreation                          urban_creation                            = 113; //!< @copybrief UrbanCreation
+        optional UrbanUpdate                            urban_update                              = 114; //!< @copybrief UrbanUpdate
+        optional UrbanKnowledgeCreation                 urban_knowledge_creation                  = 115; //!< @copybrief UrbanKnowledgeCreation
+        optional UrbanKnowledgeUpdate                   urban_knowledge_update                    = 116; //!< @copybrief UrbanKnowledgeUpdate
+        optional UrbanKnowledgeDestruction              urban_knowledge_destruction               = 117; //!< @copybrief UrbanKnowledgeDestruction
+        optional StockResource                          stock_resource                            = 118; //!< @copybrief StockResource
+        optional UrbanDetection                         urban_detection                           = 119; //!< @copybrief UrbanDetection
+        optional KnowledgeGroupMagicActionAck           knowledge_group_magic_action_ack          = 120; //!< @copybrief KnowledgeGroupMagicActionAck
+        optional KnowledgeGroupCreation                 knowledge_group_creation                  = 121; //!< @copybrief KnowledgeGroupCreation
+        optional KnowledgeGroupUpdate                   knowledge_group_update                    = 122; //!< @copybrief KnowledgeGroupUpdate
+        optional KnowledgeGroupCreationAck              knowledge_group_creation_ack              = 123; //!< @copybrief KnowledgeGroupCreationAck
+        optional KnowledgeGroupUpdateAck                knowledge_group_update_ack                = 124; //!< @copybrief KnowledgeGroupUpdateAck
+        optional KnowledgeGroupDestruction              knowledge_group_destruction               = 125; //!< @copybrief KnowledgeGroupDestruction
+        optional ActionCreateFireOrderAck               action_create_fire_order_ack              = 126; //!< @copybrief ActionCreateFireOrderAck
+        optional ControlGlobalWeather                   control_global_weather                    = 127; //!< @copybrief ControlGlobalWeather
+        optional ControlLocalWeatherCreation            control_local_weather_creation            = 128; //!< @copybrief ControlLocalWeatherCreation
+        optional ControlLocalWeatherDestruction         control_local_weather_destruction         = 129; //!< @copybrief ControlLocalWeatherDestruction
+        optional ControlCheckPointListAck               control_checkpoint_list_ack               = 130; //!< @copybrief ControlCheckPointListAck
+        optional ControlCheckPointList                  control_checkpoint_list                   = 131; //!< @copybrief ControlCheckPointList
+        optional ControlCheckPointDeleteAck             control_checkpoint_delete_ack             = 132; //!< @copybrief ControlCheckPointDeleteAck
+        optional LogSupplyPullFlowAck                   log_supply_pull_flow_ack                  = 133; //!< @copybrief LogSupplyPullFlowAck
+        optional FormationDestruction                   formation_destruction                     = 134; //!< @copybrief FormationDestruction
+        optional AutomatDestruction                     automat_destruction                       = 135; //!< @copybrief AutomatDestruction
+        optional CrowdDestruction                       crowd_destruction                         = 136; //!< @copybrief CrowdDestruction
+        optional PopulationCreation                     population_creation                       = 137; //!< @copybrief PopulationCreation
+        optional PopulationUpdate                       population_update                         = 138; //!< @copybrief PopulationUpdate
+        optional FragOrder                              frag_order                                = 139; //!< @copybrief FragOrder
+        optional BurningCellRequestAck                  burning_cell_request_ack                  = 140; //!< @copybrief BurningCellRequestAck
+        optional FormationUpdate                        formation_update                          = 141; //!< @copybrief FormationUpdate
+        optional ControlCheckPointSaveDelete            control_checkpoint_save_delete            = 142; //!< @copybrief ControlCheckPointSaveDelete
+        optional LogFuneralHandlingCreation             log_funeral_handling_creation             = 143;  //!< @copybrief LogFuneralHandlingCreation
+        optional LogFuneralHandlingUpdate               log_funeral_handling_update               = 144;  //!< @copybrief LogLogFuneralHandlingUpdateMedicalHandlingUpdate
+        optional LogFuneralHandlingDestruction          log_funeral_handling_destruction          = 145;  //!< @copybrief LogFuneralHandlingDestruction
+    }
+    /** @property context
+        @brief Identifies the request matching the response
+
+        This field is used to fill the "context" fields in the response message
+        (from ClientToSim).
+
+        This context allows the client application to put an unique identifier
+        (based for instance on MAC address), thus allowing to track response
+        message matching a specific request emitted by the client.
+    */
+    optional int32   context = 1;
+    required Content message = 2; //!< The content od the message
+}
+
+/** @}*/

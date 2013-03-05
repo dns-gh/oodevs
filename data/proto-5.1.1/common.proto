@@ -1,0 +1,1852 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+package sword;
+
+/** @file
+ *  @brief Messages common to various modules
+ */
+
+/** @struct AutomatId
+    @brief Defines an automat identifier
+*/
+message AutomatId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct AutomatIdList
+    @brief Defines a list of automat identifiers
+*/
+message AutomatIdList {
+    //! The identifiers
+    repeated AutomatId elem = 1;
+}
+
+/** @struct FormationId
+    @brief Defines a formation identifier
+*/
+message FormationId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct FormationIdList
+    @brief Defines a list of formation identifiers
+*/
+message FormationIdList {
+    //! The identifiers
+    repeated FormationId elem = 1;
+}
+
+/** @struct KnowledgeGroupId
+    @brief Defines a knowledge group identifier
+*/
+message KnowledgeGroupId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct ObjectId
+    @brief Defines an object identifier
+*/
+message ObjectId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct ObjectKnowledgeId
+    @brief Defines an object knowledge identifier
+*/
+message ObjectKnowledgeId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct ObjectKnowledgeIdList
+    @brief Defines a list of object knowledge identifiers
+*/
+message ObjectKnowledgeIdList {
+    //! The identifiers
+    repeated ObjectKnowledgeId elem = 1;
+}
+
+/** @struct PartyId
+    @brief Defines a party identifier
+*/
+message PartyId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct PartyIdList
+    @brief Defines a list of party identifiers
+*/
+message PartyIdList {
+    //! The identifiers
+    repeated PartyId elem = 1;
+}
+
+/** @struct CrowdId
+    @brief Defines a crowd identifier
+*/
+message CrowdId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct CrowdElementId
+    @brief Defines a crowd element (flow or concentration) identifier
+*/
+message CrowdElementId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct CrowdIdList
+    @brief Defines a list of crowd identifiers
+*/
+message CrowdIdList {
+    //! The identifiers
+    repeated CrowdId elem = 1;
+}
+
+/** @struct CrowdKnowledgeId
+    @brief Defines a crowd knowledge identifier
+*/
+message CrowdKnowledgeId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct CrowdConcentrationId
+    @brief Defines a crowd concentration identifier
+*/
+message CrowdConcentrationId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct CrowdConcentrationKnowledgeId
+    @brief Defines a crowd concentration knowledge identifier
+*/
+message CrowdConcentrationKnowledgeId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct CrowdFlowId
+    @brief Defines a crowd flow identifier
+*/
+message CrowdFlowId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct CrowdFlowKnowledgeId
+    @brief Defines a crowd flow knowledge identifier
+*/
+message CrowdFlowKnowledgeId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct UnitId
+    @brief Defines a unit identifier
+*/
+message UnitId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct UnitIdList
+    @brief Defines a list of unit identifiers
+*/
+message UnitIdList {
+    //! The identifiers
+    repeated UnitId elem = 1;
+}
+
+/** @struct UnitKnowledgeId
+    @brief Defines a unit knowledge identifier
+*/
+message UnitKnowledgeId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct UnitKnowledgeIdList
+    @brief Defines a list of unit knowledge identifiers
+*/
+message UnitKnowledgeIdList {
+    //! The identifiers
+    repeated UnitKnowledgeId elem = 1;
+}
+
+/** @struct UrbanObjectKnowledgeId
+    @brief Defines a urban object knowledge identifier
+*/
+message UrbanObjectKnowledgeId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct ClientObjectId
+    @brief Defines a client object identifier
+*/
+message ClientObjectId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct PopulationId
+    @brief Defines a population identifier
+*/
+message PopulationId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct Tasker
+    @brief Encapsulates all possible actors
+*/
+message Tasker {
+    //! An automat
+    optional AutomatId    automat    = 1;
+    //! A formation
+    optional FormationId  formation  = 2;
+    //! A crowd
+    optional CrowdId      crowd      = 3;
+    //! A unit
+    optional UnitId       unit       = 4;
+    //! A party
+    optional PartyId      party      = 5;
+    //! A population
+    optional PopulationId population = 6;
+}
+
+/** @struct ParentEntity
+    @brief Defines a parent entity which can be either an automat or a
+           formation
+*/
+message ParentEntity {
+    //! An automat
+    optional AutomatId   automat   = 1;
+    //! A formation
+    optional FormationId formation = 2;
+}
+
+/** @struct DrawingId
+    @brief Defines a drawing identifier
+*/
+message DrawingId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct TacticalLineId
+    @brief Defines a tactical line identifier
+*/
+message TacticalLineId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct MarkerId
+    @brief Defines a marker identifier
+*/
+message MarkerId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct FireId
+    @brief Defines a fire identifier
+*/
+message FireId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct FireEffectId
+    @brief Defines a fire effect identifier
+*/
+message FireEffectId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct ReportId
+    @brief Defines a report identifier
+*/
+message ReportId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct WeatherId
+    @brief Defines a weather identifier
+*/
+message WeatherId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct MaintenanceRequestId
+    @brief Defines a maintenance request identifier
+*/
+message MaintenanceRequestId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct FuneralRequestId
+    @brief Defines a funeral request identifier
+*/
+message FuneralRequestId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct MedicalRequestId
+    @brief Defines a medical request identifier
+*/
+message MedicalRequestId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct SupplyRequestId
+    @brief Defines a supply request identifier
+*/
+message SupplyRequestId {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct AutomatType
+    @brief Defines an automat type
+
+    The Id refers to the type implemented in the physical database. See
+    the @ref automats_xsd.
+*/
+message AutomatType {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct BreakdownType
+    @brief Defines a breakdown type
+
+    The Id refers to the type implemented in the physical database. See
+    the @ref breakdowns_xsd.
+*/
+message BreakdownType {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct EquipmentType
+    @brief Defines an equipment type
+
+    The Id refers to the type implemented in the physical database. See
+    the @ref equipments_xsd.
+*/
+message EquipmentType {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct FragOrderType
+    @brief Defines a frag order type
+
+    The Id refers to the type implemented in the physical database. See
+    the @ref missions_xsd and the fragorder section.
+*/
+message FragOrderType {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct MissionType
+    @brief Defines a mission type
+
+    The Id refers to the type implemented in the physical database. See
+    the @ref missions_xsd and the mission section.
+*/
+message MissionType {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct NBCAgentType
+    @brief Defines a NBC agent type
+
+    The Id refers to the type implemented in the physical database. See
+    the @ref nbc_xsd.
+*/
+message NBCAgentType {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct ObjectType
+    @brief Defines an object type
+
+    The Id refers to the type implemented in the physical database. See
+    the @ref objects_xsd.
+*/
+message ObjectType {
+    //! The identifier @todo should be an integer
+    required string id = 1;
+}
+
+/** @struct CrowdType
+    @brief Defines a crowd type
+
+    The Id refers to the type implemented in the physical database. See
+    the @ref crowds_xsd.
+*/
+message CrowdType {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct ReportType
+    @brief Defines a report type
+
+    The Id refers to the type implemented in the physical database. See
+    the @ref reports_xsd.
+*/
+message ReportType {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct ResourceType
+    @brief Defines a resource type
+
+    The Id refers to the type implemented in the physical database. See
+    the @ref resources_xsd.
+*/
+message ResourceType {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct UnitType
+    @brief Defines a unit type
+
+    The Id refers to the type implemented in the physical database. See
+    the @ref units_xsd.
+*/
+message UnitType {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct ResourceNetworkType
+    @brief Defines a resource network type
+
+    The Id refers to the type implemented in the physical database. See
+    the @ref resource_networks_xsd.
+*/
+message ResourceNetworkType {
+    //! The identifier
+    required string name = 1;
+}
+
+/** @struct PopulationType
+    @brief Defines a population type
+
+    The Id refers to the type implemented in the physical database. See
+    the @ref units_xsd.
+*/
+message PopulationType {
+    //! The identifier
+    required uint32 id = 1;
+}
+
+/** @struct Heading
+    @brief Defines a heading
+*/
+message Heading {
+    //! The direction in degrees
+    required int32 heading = 1;
+}
+
+/** @struct DateTime
+    @brief Defines a date/time
+*/
+message DateTime {
+    //! The date-time formatted according to ISO 8601
+    required string data = 1;
+}
+
+/** @struct AutomatChangeSuperior
+    @brief Notifies of an automat changing superior
+*/
+message AutomatChangeSuperior {
+    /** @struct Superior
+        @brief Defines a superior
+        @todo why not use a ParentEntity ?
+    */
+    message Superior {
+        //! An automat
+        optional FormationId formation = 1;
+        //! A formation
+        optional AutomatId   automat   = 2;
+    }
+    //! The automat identifier
+    required AutomatId automat  = 1;
+    //! The superior
+    required Superior  superior = 2;
+}
+
+/** @struct UnitChangeSuperior
+    @brief Notifies of a unit changing superior
+*/
+message UnitChangeSuperior {
+    //! The unit identifier
+    required UnitId    unit   = 1;
+    //! The parent identifier
+    required AutomatId parent = 2;
+}
+
+/** @enum EnumSimulationState
+    @brief Defines the different states of the simulation
+*/
+enum EnumSimulationState {
+    //! Running
+    running = 0;
+    //! Paused
+    paused  = 1;
+    //! Stopped
+    stopped = 2;
+    //! Loading
+    loading = 3;
+}
+
+/** @enum EnumAutomatMode
+    @brief Defines the different states of an automat
+*/
+enum EnumAutomatMode {
+    //! Engaged
+    engaged    = 0;
+    //! Disengaged
+    disengaged = 1;
+}
+
+/** @enum EnumDiplomacy
+    @brief Defines the different states of a diplomacy
+*/
+enum EnumDiplomacy {
+    //! Unknown
+    unknown  = 0;
+    //! Friendly
+    friendly = 1;
+    //! Enemy
+    enemy    = 2;
+    //! Neutral
+    neutral  = 3;
+}
+
+/** @enum EnumHumanWound
+    @brief Defines the different types of wounds
+*/
+enum EnumHumanWound {
+    //! Unwounded
+    unwounded               = 0;
+    //! Dead
+    dead                    = 1;
+    //! Wounded urgency level 1
+    wounded_urgency_1       = 2;
+    //! Wounded urgency level 2
+    wounded_urgency_2       = 3;
+    //! Wounded urgency level 3
+    wounded_urgency_3       = 4;
+    //! Wounded extreme urgency
+    wounded_extreme_urgency = 5;
+}
+
+/** @enum EnumNatureLevel
+    @brief Defines the different nature levels using APP-6A symbols
+    @see http://en.wikipedia.org/wiki/Military_organization
+*/
+enum EnumNatureLevel {
+    //! No nature @todo rename to no_nature
+    none_naturelevel = 0;
+    //! Fire and maneuver team
+    b                = 1;
+    //! Fireteam
+    o                = 2;
+    //! Squad or crew
+    c                = 3;
+    //! Section or patrol
+    oo               = 4;
+    //! Platoon or Commonwealth troop
+    ooo              = 5;
+    //! Infantry company, artillery battery, U.S. Cavalry troop, or
+    //! Commonwealth armour or combat engineering squadron
+    i                = 6;
+    //! Infantry battalion, U.S. Cavalry squadron, or Commonwealth
+    //! armoured regiment
+    ii               = 7;
+    //! Regiment or group
+    iii              = 8;
+    //! Brigade
+    x                = 9;
+    //! Division
+    xx               = 10;
+    //! Corps
+    xxx              = 11;
+    //! Army
+    xxxx             = 12;
+    //! What's this ?
+    xxxxx            = 13;
+}
+
+/** @struct ControlStop
+    @brief Stops the simulation
+    @see ControlStopAck
+*/
+message ControlStop {
+}
+
+/** @struct ControlPause
+    @brief Pauses the simulation
+    @see ControlPauseAck
+*/
+message ControlPause {
+}
+
+/** @struct ControlResume
+    @brief Resumes the simulation
+    @see ControlResumeAck
+*/
+message ControlResume {
+    //! Resume for "tick" ticks before to pause again
+    optional uint32 tick = 1;
+}
+
+/** @struct ControlChangeTimeFactor
+    @brief Changes the simulation time factor
+*/
+message ControlChangeTimeFactor {
+    //! The new time multiplier
+    required int32 time_factor = 1;
+}
+
+// Color
+/** @struct RgbColor
+    @brief Defines a color
+*/
+message RgbColor {
+    //! The red component between 0 and 255
+    required int32 red   = 1;
+    //! The green component between 0 and 255
+    required int32 green = 2;
+    //! The blue component between 0 and 255
+    required int32 blue  = 3;
+}
+
+/** @struct CoordLatLong
+    @brief Defines coordinates
+*/
+message CoordLatLong {
+    //! The latitude
+    required double latitude  = 1;
+    //! The longitude
+    required double longitude = 2;
+}
+
+/** @struct CoordLatLongList
+    @brief Defines a list of coordinates
+*/
+message CoordLatLongList {
+    //! The coordinates
+    repeated CoordLatLong elem = 2;
+}
+
+/** @struct Location
+    @brief Defines a location as an area at given coordinates
+*/
+message Location {
+    /** @enum Geometry
+        @brief Defines the different geometries available
+    */
+    enum Geometry {
+        //! Circle
+        circle    = 0;
+        //! Ellipse
+        ellipse   = 1;
+        //! Line
+        line      = 2;
+        //! Rectangle
+        rectangle = 3;
+        //! Polygon
+        polygon   = 4;
+        //! Point
+        point     = 5;
+        //! Sector
+        sector    = 6;
+        //! None
+        none      = 7;
+    }
+    //! The type of geometry
+    required Geometry         type        = 1;
+    //! The coordinates associated to the geometry
+    optional CoordLatLongList coordinates = 2;
+}
+
+/** @struct LocationList
+    @brief Defines a list of locations
+*/
+message LocationList {
+    //! The locations
+    repeated Location elem = 1;
+}
+
+/** @struct Line
+    @brief Defines a line location
+    @todo Why is there a type in location ?
+*/
+message Line {
+    //! The location
+    required Location location = 1;
+}
+
+/** @struct Path
+    @brief Defines a path
+    @todo Why is there a type in location ?
+*/
+message Path {
+    //! The location
+    required Location location = 1;
+}
+
+/** @struct PathList
+    @brief Defines a list of paths
+*/
+message PathList {
+    //! The paths
+    repeated Path elem = 1;
+}
+
+/** @struct Point
+    @brief Defines a point location
+    @todo Why is there a type in location ?
+*/
+message Point {
+    //! The location
+    required Location location = 1;
+}
+
+/** @struct PointList
+    @brief Defines a list of points
+*/
+message PointList {
+    //! The points
+    repeated Point elem = 1;
+}
+
+/** @struct Polygon
+    @brief Defines a polygon location
+    @todo Why is there a type in location ?
+*/
+message Polygon {
+    //! The location
+    required Location location = 1;
+}
+
+/** @struct PointList
+    @brief Defines a list of polygons
+*/
+message PolygonList {
+    //! The polygons
+    repeated Polygon  elem = 1;
+}
+
+/** @struct LogMedicalPriorities
+    @brief Defines a list human wounds
+*/
+message LogMedicalPriorities {
+    //! The wounds
+    repeated EnumHumanWound elem = 1;
+}
+
+/** @struct ObstacleType
+    @brief Encapsulates an obstacle type
+*/
+message ObstacleType {
+    /** @enum DemolitionTargetType
+        @brief Defines an obstacle type
+    */
+    enum DemolitionTargetType {
+        //! The obstacle is already built and will always be active
+        preliminary = 0;
+        //! The obstacle can be activated or deactivated during the exercise
+        reserved    = 1;
+    }
+}
+
+/** @struct PlannedWork
+    @brief Defines a planned work
+*/
+message PlannedWork {
+    //! The work type
+    required string                            type              = 1;
+    //! The location of the work
+    required Location                          position          = 2;
+    //! The type of obstacle @todo rename to obstacle
+    optional ObstacleType.DemolitionTargetType type_obstacle     = 3;
+    //! The obstacle density (for instance density of mines) @todo unit ?
+    optional float                             density           = 4;
+    //! The combat train
+    optional AutomatId                         combat_train      = 5;
+    //! The obstacle life time in seconds
+    optional int32                             activity_time     = 6;
+    //! The time at which the obstacle is to be activated
+    optional int32                             activation_time   = 7;
+    //! The name to be given to the constructed object
+    optional string                            name              = 8;
+    //! The altitude modifier
+    optional int32                             altitude_modifier = 9;
+    //! The time limited object time
+    optional int32                             time_limit        = 10;
+    //! The mine improvement
+    optional bool                              mining            = 11;
+    //! The lodging capacity
+    optional int32                             lodging           = 12;
+}
+
+/** @struct PlannedWorkList
+  @brief Lists several planned works
+ */
+message PlannedWorkList {
+    //! The planned works
+    repeated PlannedWork elem = 1;
+}
+
+/** @struct LogMaintenancePriorities
+    @brief Lists maintenance priorities
+*/
+message LogMaintenancePriorities {
+    //! The maintenance priorities
+    repeated EquipmentType elem = 1;
+}
+
+/** @struct MissionObjective
+    @brief Defines a mission objective
+*/
+message MissionObjective {
+    //! The objective location
+    required Location location = 1;
+    //! The objective date and time
+    required DateTime time     = 2;
+}
+
+/** @struct MissionObjectiveList
+    @brief Lists several mission objectives
+*/
+message MissionObjectiveList {
+    //! The mission objectives
+    repeated MissionObjective elem = 1;
+}
+
+/** @struct PhaseLineOrder
+    @brief Defines a phase line order
+*/
+message PhaseLineOrder {
+    /** @enum Function
+        @brief Defines a phase line function
+    */
+    enum Function {
+        //! Line of departure
+        line_of_departure              = 0;
+        //! Attitude change line
+        attitude_change_line           = 1;
+        //! Coordination line
+        coordination_line              = 2;
+        //! Denial line
+        denial_line                    = 3;
+        //! Objective line
+        objective_line                 = 4;
+        //! Blocking line
+        blocking_line                  = 5;
+        //! Handover line
+        handover_line                  = 6;
+        //! Start of mission line
+        start_of_mission_line          = 7;
+        //! End of mission line
+        end_of_mission_line            = 8;
+        //! Recognition and reception line
+        recognition_and_reception_line = 9;
+    }
+    //! The phase line
+    required Line     line      = 1;
+    //! The date and time
+    required DateTime time      = 2;
+    //! The functions
+    repeated Function fonctions = 3;
+}
+
+/** @struct PhaseLinesOrder
+    @brief Lists several phase line orders
+*/
+message PhaseLinesOrder {
+    //! The phase line orders
+    repeated PhaseLineOrder elem = 1;
+}
+
+/** @struct Nature
+    @brief Encapsulates the nature flags
+*/
+message Nature {
+    /** @enum Flags
+        @brief Defines the nature flags
+    */
+    enum Flags {
+        //! Tank
+        tank             = 1;
+        //! Missile Launcher
+        missile_launcher = 2;
+        //! Command Post
+        command_post     = 4;
+        //! Logistics
+        logistics        = 8;
+        //! Mortar
+        mortar           = 16;
+        //! Rocket Launcher
+        rocket_launcher  = 32;
+        //! Vehicle
+        vehicle          = 64;
+        //! Infantry
+        infantry         = 128;
+        //! Helicopter
+        helicopter       = 256;
+        //! Anti Aircraft
+        anti_aircraft    = 1024;
+    }
+    //! The combination of flags
+    required int32 flags = 1;
+}
+
+/** @struct Extension
+    @brief An extension message
+    @todo What's this ?
+*/
+message Extension {
+    /** @struct Entry
+        @brief An extension entry message
+    */
+    message Entry {
+        //! The entry name
+        required string name  = 1;
+        //! The entry value
+        required string value = 2;
+    }
+    //! The extension entries @see Entry
+    repeated Entry entries = 1;
+}
+
+/** @struct ResourceNetworkElement
+    @brief A resource network element message
+*/
+message ResourceNetworkElement {
+    //! An object identifier
+    required ObjectId            object   = 1;
+    //! The resource network type
+    required ResourceNetworkType resource = 2;
+}
+
+/** @struct SupplyFlowResource
+    @brief The resource part of supply flow (push/pull) messages
+    @todo What's this ?
+*/
+message SupplyFlowResource {
+    //! The resource type that will be conveyed
+    required ResourceType resourceType = 1;
+    //! The quantity that will be conveyed
+    required uint32       quantity     = 2;
+}
+
+/** @struct SupplyFlowTransporter
+    @brief The transporters (conveyors) part of supply flow (push/pull)
+    messages
+*/
+message SupplyFlowTransporter {
+    //! The equipment (trucks ...) that will be used to convey the resources
+    required EquipmentType equipmentType = 1;
+    //! The previous equipment type quantity
+    required uint32        quantity      = 2;
+}
+
+/** @struct SupplyFlowRecipient
+    @brief The recipient(receiver) of a supply flow
+    @todo What's this ?
+*/
+message SupplyFlowRecipient {
+    //! The receiver of the supply flow
+    required AutomatId          receiver  = 1;
+    //! The resources conveyed  - must contain at least one element
+    repeated SupplyFlowResource resources = 2;
+    //! The optional way points the convey has to take to go to the receiver
+    optional PointList          path      = 3;
+}
+
+/** @struct PushFlowParameters
+    @brief The parameters of a supply push flow operation
+    @todo What's this ?
+*/
+message PushFlowParameters {
+    //! The recipients (and the associated path/resources) of the
+    //! supply - must contain at least one element
+    repeated SupplyFlowRecipient   recipients   = 1;
+    //! The optional explicit transporter to use for the supply
+    //! operation - If no transporters are specified, they are chosen
+    //! automatically
+    repeated SupplyFlowTransporter transporters = 2;
+    //! The optional way points the convey has to take when going back
+    //! to its logistic base
+    optional PointList             wayBackPath  = 3;
+}
+
+/** @struct PullFlowParameters
+    @brief The parameters of a supply pull flow operation
+    @todo What's this ?
+*/
+message PullFlowParameters {
+    //! The logistic base which will provide the resources
+    required ParentEntity          supplier     = 1;
+    //! The resources to supply - must contain at least one element
+    repeated SupplyFlowResource    resources    = 2;
+    //! The optional explicit transporter to use for the supply
+    //! operation - If no transporters are specified, they are chosen
+    //! automatically
+    repeated SupplyFlowTransporter transporters = 3;
+    //! The optional way points the convey has to take to go to the
+    //! logistic base
+    optional PointList             wayOutPath   = 4;
+    //! The optional way points the convey has to take to go back to
+    //! the 'requester'
+    optional PointList             wayBackPath  = 5;
+}
+
+/** @struct MissionParameter
+    @brief Defines a mission parameter
+*/
+message MissionParameter {
+    /** @struct Value
+        @brief Wraps the different possible values of a mission parameter
+    */
+    message Value {
+        //! A boolean
+        optional bool                     booleanValue             = 1;
+        //! An integer
+        optional int32                    intValue                 = 2;
+        //! A heading
+        optional Heading                  heading                  = 3;
+        //! @todo What's this ?
+        optional int32                    enumeration              = 4;
+        //! A date time
+        optional DateTime                 dateTime                 = 5;
+        //! A point
+        optional Point                    point                    = 6;
+        //! A polygon
+        optional Polygon                  area                     = 7;
+        //! A path
+        optional Path                     path                     = 8;
+        //! A limit
+        optional Line                     limit                    = 9;
+        //! A phase line list
+        optional PhaseLinesOrder          phaseLine                = 10;
+        //! An automat identifier
+        optional AutomatId                automat                  = 11;
+        //! An agent identifier
+        optional UnitId                   agent                    = 12;
+        //! An agent knowledge identifier
+        optional UnitKnowledgeId          agentKnowledge           = 13;
+        //! A crowd knowledge identifier
+        optional CrowdKnowledgeId         crowdKnowledge           = 14;
+        //! An object knowledge identifier
+        optional ObjectKnowledgeId        objectKnowledge          = 15;
+        //! A urban object knowledge identifier
+        optional UrbanObjectKnowledgeId   urbanKnowledge           = 16;
+        //! A planned work
+        optional PlannedWork              plannedWork              = 17;
+        //! A nature
+        optional Nature                   nature                   = 18;
+        //! A resource type
+        optional ResourceType             resourceType             = 19;
+        //! A maintenance priority list
+        optional LogMaintenancePriorities logMaintenancePriorities = 20;
+        //! A medical priority list
+        optional LogMedicalPriorities     logMedicalPriorities     = 21;
+        //! A resource network node element
+        optional ResourceNetworkElement   resourceNetworkNode      = 22;
+        //! A resource network type
+        optional ResourceNetworkType      resourceNetworkType      = 23;
+
+        //! A float
+        optional float                    aReal                    = 24;
+        //! A path list
+        optional PathList                 pathList                 = 25;
+        //! A point list
+        optional PointList                pointList                = 26;
+        //! A polygon list
+        optional PolygonList              polygonList              = 27;
+        //! A location
+        optional Location                 location                 = 28;
+        //! A location list
+        optional LocationList             locationList             = 29;
+        //! An agent identifier list
+        optional UnitIdList               unitList                 = 30;
+        //! An automat identifier list
+        optional AutomatIdList            automatList              = 31;
+        //! A unit knowledge list
+        optional UnitKnowledgeIdList      unitKnowledgeList        = 32;
+        //! An object knowledge list
+        optional ObjectKnowledgeIdList    objectKnowledgeList      = 33;
+        //! A planned work list
+        optional PlannedWorkList          plannedWorkList          = 34;
+        //! An equipment type
+        optional EquipmentType            equipmentType            = 35;
+        //! An indirect fire identifier
+        optional FireId                   indirectFire             = 36;
+        //! A string
+        optional string                   aCharStr                 = 37;
+        //! A mission objective
+        optional MissionObjective         missionObjective         = 38;
+        //! A mission objective list
+        optional MissionObjectiveList     missionObjectiveList     = 39;
+        //! An object identifier
+        optional ObjectId                 object                   = 40;
+        //! A party identifier
+        optional PartyId                  party                    = 41;
+        //! A formation identifier
+        optional FormationId              formation                = 42;
+        //! @todo What's this ?
+        optional uint32                   identifier               = 43;
+        //! A quantity
+        optional int32                    quantity                 = 44;
+        //! A knowledge group identifier
+        optional KnowledgeGroupId         knowledgeGroup           = 45;
+        //! An extension list
+        optional Extension                extensionList            = 46;
+        //! A list of values
+        repeated Value                    list                     = 47;
+        //! An external identifier
+        optional int32                    external_identifier      = 48;
+
+        // Magic action only
+        //! Parameter specific to push flow operation
+        optional PushFlowParameters     push_flow_parameters = 49;
+        //! Parameter specific to pull flow operation
+        optional PullFlowParameters     pull_flow_parameters = 50;
+    }
+    //! Whether the parameter is a null value or not
+    optional bool  null_value = 1;
+    //! The parameter
+    repeated Value value      = 2;
+}
+
+/** @struct MissionParameters
+    @brief Defines a list of mission parameters
+*/
+message MissionParameters {
+    //! A list of mission parameters
+    repeated MissionParameter elem = 1;
+}
+
+/** @struct UnitOrder
+    @brief Defines a unit order
+*/
+message UnitOrder {
+    //! The tasker
+    required UnitId            tasker         = 1;
+    //! The mission type
+    required MissionType       type           = 2;
+    //! The mission parameters
+    optional MissionParameters parameters     = 3;
+    //! The label
+    optional string            label          = 4;
+    //! The symbol location
+    optional Location          symbolLocation = 5;
+    //! The start date and time
+    optional DateTime          start_time     = 6;
+}
+
+/** @struct AutomatOrder
+    @brief Defines an automat order
+*/
+message AutomatOrder {
+    //! The tasker
+    required AutomatId         tasker         = 1;
+    //! The mission type
+    required MissionType       type           = 2;
+    //! The mission parameters
+    optional MissionParameters parameters     = 3;
+    //! The label
+    optional string            label          = 4;
+    //! The symbol location
+    optional Location          symbolLocation = 5;
+    //! The start date and time
+    optional DateTime          start_time     = 6;
+}
+
+/** @struct CrowdOrder
+    @brief Defines a crowd order
+*/
+message CrowdOrder {
+    //! The tasker
+    required CrowdId           tasker         = 1;
+    //! The mission type
+    required MissionType       type           = 2;
+    //! The mission parameters
+    optional MissionParameters parameters     = 3;
+    //! The label
+    optional string            label          = 4;
+    //! The symbol location
+    optional Location          symbolLocation = 5;
+    //! The start date and time
+    optional DateTime          start_time     = 6;
+}
+
+/** @struct FragOrder
+    @brief Defines a frag order
+*/
+message FragOrder {
+    //! The tasker
+    required Tasker            tasker         = 1;
+    //! The mission type
+    required FragOrderType     type           = 2;
+    //! The mission parameters
+    optional MissionParameters parameters     = 3;
+    //! The label
+    optional string            label          = 4;
+    //! The symbol location
+    optional Location          symbolLocation = 5;
+    //! The start date and time
+    optional DateTime          start_time     = 6;
+}
+
+/** @struct ClientObjectProperty
+    @brief Defines a client object property
+*/
+message ClientObjectProperty {
+    /** @struct Value
+        @brief Defines a client object property value
+    */
+    message Value {
+        //! A string
+        optional string string_value           = 1;
+        //! An integer
+        optional int32  integer_value          = 2;
+        //! An unsigned integer
+        optional uint32 unsigned_integer_value = 3;
+        //! A float
+        optional float  float_value            = 4;
+        //! A boolean
+        optional bool   bool_value             = 5;
+    }
+    //! The property name
+    required string name  = 1;
+    //! The property value
+    required Value  value = 2;
+}
+
+/** @struct Diffusion
+    @brief Defines the diffusion of a tactical line or a shape
+*/
+message Diffusion {
+    //! The automat identifier
+    optional AutomatId        automat         = 1;
+    //! The formation identifier
+    optional FormationId      formation       = 2;
+    //! The party identifier
+    repeated PartyId          party           = 3;
+    //! The knowledge group identifier
+    optional KnowledgeGroupId knowledge_group = 4;
+}
+
+/** @struct TacticalLine
+    @brief Defines a tactical line
+*/
+message TacticalLine {
+    //! The name
+    required string    name      = 1;
+    //! The geometry
+    required Location  geometry  = 2;
+    //! The diffusion
+    required Diffusion diffusion = 3;
+}
+
+/** @struct Shape
+    @brief Defines a shape
+*/
+message Shape {
+    //! The category
+    required string           category  = 1;
+    //! The color
+    required RgbColor         color     = 2;
+    //! The pattern
+    required string           pattern   = 3;
+    //! The coordinates
+    required CoordLatLongList points    = 4;
+    //! The Diffusion
+    optional Diffusion        diffusion = 5;
+}
+
+/** @struct ChatTarget
+    @brief Defines a chat target
+*/
+message ChatTarget {
+    //! The profile
+    required string profile = 1;
+}
+
+/** @struct TextMessage
+    @brief Defines a text message
+*/
+message TextMessage {
+    //! The source
+    required ChatTarget source  = 1;
+    //! The target
+    required ChatTarget target  = 2;
+    //! The message content
+    required string     message = 3;
+}
+
+/** @struct UrbanUsage
+    @brief Defines a urban usage
+*/
+message UrbanUsage {
+    //! The role
+    required string role       = 1;
+    //! The percentage
+    required uint32 percentage = 2;
+}
+
+/** @struct ResourceNetwork
+    @brief Defines a resource network
+*/
+message ResourceNetwork {
+    /** @struct Link
+        @brief Defines a resource link
+    */
+    message Link {
+        //! The target identifier
+        required ObjectId   object   = 1;
+        //! The capacity
+        required int32      capacity = 2;
+        //! The flow identifier
+        required uint32     flow     = 3;
+    }
+    //! The resource network type
+    required ResourceNetworkType resource            = 1;
+    //! The link
+    repeated Link                link                = 2;
+    //! Whether the network is enabled or not
+    required bool                enabled             = 3;
+    //! The maximum stock
+    optional uint32              max_stock           = 4;
+    //! The current stock
+    optional uint32              stock               = 5;
+    //! The current production
+    optional uint32              production          = 6;
+    //! The current consumption
+    optional uint32              consumption         = 7;
+    //! Whether the resource is critic for the block. If defined as
+    //! critical and no resource available, the block is disabled.
+    optional bool                critical            = 8;
+    //! The initial stock
+    optional uint32              initial_stock       = 9;
+    //! The maximum production
+    optional uint32              max_production      = 10;
+    //! The maximum consumption
+    optional uint32              max_consumption     = 11;
+    //! The current consumption
+    optional uint32              current_consumption = 12;
+    //! The functional state
+    optional float               functional_state    = 13;
+}
+
+/** @struct ObjectAttributeResourceNetwork
+    @brief Defines an object attribute resource network
+*/
+message ObjectAttributeResourceNetwork {
+    //! The resource network
+    repeated ResourceNetwork network = 1;
+}
+
+/** @struct ObjectAttributeConstruction
+    @brief Defines an object attribute construction
+*/
+message ObjectAttributeConstruction {
+    //! The resource type
+    optional ResourceType resource   = 1;
+    //! The dotation
+    optional int32        dotation   = 2;
+    //! The density
+    optional float        density    = 3;
+    //! The percentage of completion
+    optional int32        percentage = 4;
+}
+
+/** @struct ObjectAttributeMine
+    @brief Defines an object attribute mine
+*/
+message ObjectAttributeMine {
+    //! The resource type
+    optional ResourceType resource   = 1;
+    //! The dotation
+    optional int32        dotation   = 2;
+    //! The density
+    optional float        density    = 3;
+    //! The percentage of completion
+    optional int32        percentage = 4;
+}
+
+/** @struct ObjectAttributeLodging
+    @brief Defines an object attribute lodging
+*/
+message ObjectAttributeLodging {
+    //! The resource type
+    optional int32 capacity   = 1;
+}
+
+/** @struct ObjectAttributeLogistic
+    @brief Defines an object attribute logistic
+*/
+message ObjectAttributeLogistic {
+    //! The logistic superior identifier
+    required ParentEntity logistic_superior = 1;
+}
+
+/** @struct ObjectAttributeInteractionHeight
+    @brief Defines an object attribute interaction height
+*/
+message ObjectAttributeInteractionHeight {
+    //! The height @todo unit ?
+    required float height = 1;
+}
+
+/** @struct ObjectAttributeObstacle
+    @brief Defines an object attribute obstacle
+*/
+message ObjectAttributeObstacle {
+    //! The obstacle type
+    required ObstacleType.DemolitionTargetType type            = 1;
+    //! Whether the obstacle is activated or not
+    optional bool                              activated       = 2;
+    //! The activation time @todo unit ?
+    optional int32                             activation_time = 3;
+    //! The activity time @todo unit ?
+    optional int32                             activity_time   = 4;
+    //! The creation time
+    optional uint32                            creation_time   = 5;
+}
+
+/** @struct ObjectAttributeLifeTime
+    @brief Defines an object attribute life time
+*/
+message ObjectAttributeLifeTime {
+    //! The life time @todo unit ?
+    required int32 value = 1;
+}
+
+/** @struct ObjectAttributeBypass
+    @brief Defines an object attribute bypass
+*/
+message ObjectAttributeBypass {
+    //! The percentage of bypass
+    required int32 percentage = 1;
+}
+
+/** @struct ObjectAttributeEffectDelay
+    @brief Defines an object attribute effect delay
+*/
+message ObjectAttributeEffectDelay {
+    //! The delay @todo unit ?
+    required int32 value = 1;
+}
+
+/** @struct ObjectAttributeNBC
+    @brief Defines an object attribute NBC
+*/
+message ObjectAttributeNBC {
+    //! The danger level @todo unit ?
+    required int32        danger_level = 1;
+    //! The NBC agents
+    repeated NBCAgentType nbc_agents   = 2;
+}
+
+/** @struct StockResource
+    @brief Defines a stock resource
+*/
+message StockResource {
+    //! The resource type
+    required ResourceType resource = 1;
+    //! The current amount
+    required int32        current  = 2;
+    //! The maximum amount
+    optional int32        maximum  = 3;
+}
+
+/** @struct ObjectAttributeStock
+    @brief Defines an object attribute stock
+*/
+message ObjectAttributeStock {
+    //! The resources
+    repeated StockResource resources = 1;
+}
+
+/** @struct ObjectAttributeCrossingSite
+    @brief Defines an object attribute crossing site
+*/
+message ObjectAttributeCrossingSite {
+    //! The width @todo unit ?
+    required int32 width                 = 1;
+    //! The depth @todo unit ?
+    required int32 depth                 = 2;
+    //! The flow rate @todo unit ?
+    required int32 flow_rate             = 3;
+    //! Whether the banks require fitting or not
+    required bool  banks_require_fitting = 4;
+}
+
+/** @struct ObjectAttributeSupplyRoute
+    @brief Defines an object attribute supply route
+*/
+message ObjectAttributeSupplyRoute {
+    //! @todo What's this ?
+    required bool  equipped   = 1;
+    //! The maximum weight the route can handle @todo unit ?
+    required int32 max_weight = 2;
+    //! The width of the route @todo unit ?
+    required int32 width      = 3;
+    //! The length of the route @todo unit ?
+    required int32 length     = 4;
+    //! The flow rate for the route @todo unit ?
+    required int32 flow_rate  = 5;
+}
+
+/** @struct ObjectAttributeFlood
+    @brief Defines an object attribute flood
+*/
+message ObjectAttributeFlood {
+    //! The depth in meters
+    required int32 depth              = 1;
+    //! The flood maximum radius in meters
+    required int32 reference_distance = 2;
+}
+
+/** @struct LocatedQuantity
+    @brief Defines a located quantity
+*/
+message LocatedQuantity {
+    //! The coordinates
+    required CoordLatLong coordinate = 1;
+    //! The quantity
+    required float        quantity   = 2;
+}
+
+/** @struct LocatedQuantityList
+    @brief Lists several object attribute located quantities
+    @todo inline in ObjectAttributeToxicCloud
+*/
+message LocatedQuantityList {
+    //! The quantities
+    repeated LocatedQuantity elem = 1;
+}
+
+/** @struct ObjectAttributeToxicCloud
+    @brief Defines an object attribute toxic cloud
+*/
+message ObjectAttributeToxicCloud {
+    //! The located quantities
+    required LocatedQuantityList quantities = 1;
+}
+
+/** @struct ObjectAttributePropagation
+    @brief Defines an object attribute propagation
+*/
+message ObjectAttributePropagation {
+    //! The located quantities
+    required string model = 1;
+}
+
+/** @struct ObjectAttributeFire
+    @brief Defines an object attribute fire
+*/
+message ObjectAttributeFire {
+    //! @todo What's this ?
+    required string class_name            = 1;
+    //! The maximum energy required for combustion @todo unit ?
+    required int32  max_combustion_energy = 2;
+}
+
+/** @struct ObjectAttributeBurn
+    @brief Defines an object attribute burn
+*/
+message ObjectAttributeBurn {
+    //! The current heat @todo unit ?
+    required int32 current_heat      = 1;
+    //! The current energy required for combustion @todo unit ?
+    required int32 combustion_energy = 2;
+}
+
+/** @enum EnumBurningCellPhase
+    @brief Defines the phases of a burning cell
+*/
+enum EnumBurningCellPhase {
+    //! Pre-ignition
+    pre_ignition = 0;
+    //! Combustion
+    combustion   = 1;
+    //! Decline
+    decline      = 2;
+    //! Extinguished
+    extinguished = 3;
+}
+
+/** @struct ObjectAttributeBurnSurface
+    @brief Defines an object attribute burn surface
+*/
+message ObjectAttributeBurnSurface {
+    /** @struct BurningCell
+        @brief Defines a burning cell
+    */
+    message BurningCell {
+        /** @struct PreIgnition
+            @brief Defines a pre-ignition
+        */
+        message PreIgnition {
+            //! The ignition energy @todo unit ?
+            required int32 ignition_energy    = 1;
+            //! The ignition threshold above which the ignition is
+            //! complete @todo unit ?
+            required int32 ignition_threshold = 2;
+        }
+        /** @struct Combustion
+            @brief Defines an object combustion
+        */
+        message Combustion {
+            //! The current heat @todo unit ?
+            required int32 current_heat          = 1;
+            //! The combustion energy @todo unit ?
+            required int32 combustion_energy     = 2;
+            //! The maximum combustion energy @todo unit ?
+            required int32 max_combustion_energy = 3;
+        }
+        /** @struct ObjectAttributeBurn
+            @brief Defines an object attribute burn
+        */
+        message Decline {
+            //! The current heat @todo unit ?
+            required int32 current_heat = 1;
+        }
+        //! @todo What's this ? Why is it not using CoordLatLong ?
+        required int32                origin_x     = 1;
+        //! @todo What's this ? Why is it not using CoordLatLong ?
+        required int32                origin_y     = 2;
+        //! The current phase
+        required EnumBurningCellPhase phase        = 3;
+        //! The pre-ignition data
+        optional PreIgnition          pre_ignition = 4;
+        //! The combustion data
+        optional Combustion           combustion   = 5;
+        //! The decline data
+        optional Decline              decline      = 6;
+    }
+    //! The size of a cell @todo unit ?
+    required int32       cell_size     = 1;
+    //! The burning cells
+    repeated BurningCell burning_cells = 2;
+}
+
+/** @struct MedicalTreatmentBedCapacity
+    @brief Defines a medical treatment bed capacity
+*/
+message MedicalTreatmentBedCapacity {
+    //! The type identifier, see Data/MedicalTreatment.xml
+    required int32 type_id          = 1;
+    //! The baseline number of beds available
+    optional uint32 baseline_count  = 2;
+    //! The number of beds available
+    optional uint32 available_count = 3;
+    //! The number of beds available in case of emergency
+    optional uint32 emergency_count = 4;
+}
+
+/** @struct ObjectAttributeMedicalTreatment
+    @brief Defines an object attribute medical treatment
+*/
+message ObjectAttributeMedicalTreatment {
+    /** @enum EnumMedicalTreatmentStatus
+        @brief Defines the different states of a medical treatment
+    */
+    enum EnumMedicalTreatmentStatus {
+        //! Normal
+        normal    = 0;
+        //! @todo What's this ?
+        on_divert = 1;
+        //! Closed
+        closed    = 2;
+    }
+    //! @todo What's this ?
+    optional string                      external_reference_id = 1;
+    //! The bed capacities
+    repeated MedicalTreatmentBedCapacity bed_capacities        = 2;
+    //! The facility current status
+    optional EnumMedicalTreatmentStatus  facility_status       = 3;
+    //! The total number of doctors
+    optional uint32                      doctors               = 4;
+    //! The number of available doctors
+    optional uint32                      available_doctors     = 5;
+}
+
+/** @struct ObjectAttributeNBCType
+    @brief Defines an object attribute NBC type
+*/
+message ObjectAttributeNBCType {
+    //! The agent type
+    required NBCAgentType agent                = 1;
+    //! The concentration of the agent @todo unit ?
+    required int32        concentration        = 2;
+    //! The life duration of the source @todo unit ? @todo rename to duration
+    required int32        source_life_duration = 3;
+}
+
+/** @struct ObjectAttributeAltitudeModifier
+    @brief Defines an object attribute altitude modifier
+*/
+message ObjectAttributeAltitudeModifier {
+    //! The height in meters
+    required int32 height           = 1;
+}
+
+/** @struct ObjectAttributeUnderground
+    @brief Defines an object attribute underground
+*/
+message ObjectAttributeUnderground {
+    //! The underground network name
+    required string network_name = 1;
+    //! The activation state
+    required bool   available    = 2;
+}
+
+
+/** @struct ObjectAttributeTrafficability
+    @brief Defines an object attribute trafficability
+*/
+message ObjectAttributeTrafficability {
+    required float value = 1;
+}
+
+/** @struct ObjectAttributes
+    @brief Encapsulates an object attribute
+*/
+message ObjectAttributes {
+    //! @copybrief ObjectAttributeConstruction
+    optional ObjectAttributeConstruction      construction       = 1;
+    //! @copybrief ObjectAttributeObstacle
+    optional ObjectAttributeObstacle          obstacle           = 2;
+    //! @copybrief ObjectAttributeMine
+    optional ObjectAttributeMine              mine               = 3;
+    //! @copybrief ObjectAttributeLifeTime
+    optional ObjectAttributeLifeTime          life_time          = 4;
+    //! @copybrief ObjectAttributeBypass
+    optional ObjectAttributeBypass            bypass             = 5;
+    //! @copybrief ObjectAttributeLogistic
+    optional ObjectAttributeLogistic          logistic           = 6;
+    //! @copybrief ObjectAttributeNBC
+    optional ObjectAttributeNBC               nbc                = 7;
+    //! @copybrief ObjectAttributeCrossingSite
+    optional ObjectAttributeCrossingSite      crossing_site      = 8;
+    //! @copybrief ObjectAttributeSupplyRoute
+    optional ObjectAttributeSupplyRoute       supply_route       = 9;
+    //! @copybrief ObjectAttributeToxicCloud
+    optional ObjectAttributeToxicCloud        toxic_cloud        = 10;
+    //! @copybrief ObjectAttributeFire
+    optional ObjectAttributeFire              fire               = 11;
+    //! @copybrief ObjectAttributeMedicalTreatment
+    optional ObjectAttributeMedicalTreatment  medical_treatment  = 12;
+    //! @copybrief ObjectAttributeInteractionHeight
+    optional ObjectAttributeInteractionHeight interaction_height = 13;
+    //! @copybrief ObjectAttributeStock
+    optional ObjectAttributeStock             stock              = 14;
+    //! @copybrief ObjectAttributeNBCType
+    optional ObjectAttributeNBCType           nbc_agent          = 15;
+    //! @copybrief ObjectAttributeEffectDelay
+    optional ObjectAttributeEffectDelay       effect_delay       = 16;
+    //! @copybrief ObjectAttributeResourceNetwork
+    optional ObjectAttributeResourceNetwork   resource_networks  = 17;
+    //! @copybrief ObjectAttributeBurn
+    optional ObjectAttributeBurn              burn               = 18;
+    //! @copybrief ObjectAttributeFlood
+    optional ObjectAttributeFlood             flood              = 19;
+    //! @copybrief ObjectAttributeBurnSurface
+    optional ObjectAttributeBurnSurface       burn_surface       = 20;
+    //! @copybrief ObjectAttributeLodging
+    optional ObjectAttributeLodging           lodging            = 21;
+    //! @copybrief ObjectAttributeAltitudeModifier
+    optional ObjectAttributeAltitudeModifier  altitude_modifier  = 22;
+    //! @copybrief ObjectAttributeUnderground
+    optional ObjectAttributeUnderground       underground        = 23;
+    //! @copybrief ObjectAttributeTrafficability
+    optional ObjectAttributeTrafficability    trafficability     = 24;
+    //! @copybrief ObjectAttributePropagation
+    optional ObjectAttributePropagation       propagation        = 25;
+}
+
+/** @struct Marker
+    @brief Defines a marker
+*/
+message Marker {
+    //! The marker name
+    required string   name        = 1;
+    //! The marker description
+    required string   description = 2;
+    //! The marker parent
+    optional MarkerId parent      = 4;
+    //! The marker number
+    optional string   number      = 5;
+}
+
+/** @struct PartyAdhesion
+    @brief Defines a party adhesion
+*/
+message PartyAdhesion {
+    //! The party identifier
+    required PartyId party = 1;
+    //! @todo What's this ?
+    required float   value = 2;
+}
+
+/** @struct PartyAdhesion
+    @brief Defines an adhesion list
+*/
+message PartyAdhesions {
+    //! The adhesions
+    repeated PartyAdhesion adhesion = 1;
+}
+
+/** @struct HumanRepartition
+    @brief Defines a human repartition
+*/
+message HumanRepartition {
+    //! Male proportion between 0 and 1
+    required float     male      = 1;
+    //! Female proportion between 0 and 1
+    required float     female    = 2;
+    //! Children proportion between 0 and 1
+    required float     children  = 3;
+}

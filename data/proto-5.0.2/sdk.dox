@@ -1,0 +1,909 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+/** @mainpage
+
+    @section introduction Introduction
+
+    This document describes the technical details required to develop a SWORD client application. @n
+    This includes an overview of the system, a presentation of the data model and an in-depth view of the communication protocol.
+
+    The reader is expected to have basic knowledge of the SWORD applications and a global understanding of the elements involved into the training process (such as: what is an ORBAT? what is an effect-based aggregated simulation?...). @n
+    Reading the user documentation provided with any SWORD installation is strongly encouraged.
+
+    In order to fully understand this document, the reader must also have knowledge in software development and networking.
+
+    @section definitions Definitions
+
+    The following definitions are used throughout the document.
+
+    <table border="1" style="border-collapse: collapse; border:1px solid gray;">
+      <tr>
+        <th>Definition</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>SWORD</td>
+        <td>Simulation Wargaming for Operational Research on Doctrine : the system used to simulate the training environment</td>
+      </tr>
+      <tr>
+        <td>Protobuf</td>
+        <td><a href="http://code.google.com/p/protobuf">Google Protocol Buffer</a> : the binary protocol used for communicating with the simulation</td>
+      </tr>
+      <tr>
+        <td>ORBAT</td>
+        <td>ORder of BATtle : the description of the initial state of the simulation</td>
+      </tr>
+    </table>
+
+    @section contents Contents
+
+    The following sections provide further documentation about specific topics :
+    @li @ref interfacing : presents the prerequisites for developping a client application
+    @li @ref creating : provides a detailed explanation of how to write a client application
+    @li @ref initializing : describes what happens after connecting to the simulation
+
+    Moreover messages are grouped according to their role :
+    @li @ref orbat
+    @li @ref environment
+    @li @ref communications
+    @li @ref controlling
+    @li @ref orders
+
+    @page interfacing Interfacing with the simulation
+
+    @section system System overview
+
+    @subsection components Components overview
+
+    @subsection layout Directories layout
+
+    @section model Data model
+
+    @subsection terrain Terrain
+    @subsection physical Physical model
+    @subsection exercise Exercise model
+
+    @section communication Communication protocol
+
+    @subsection network Network protocol
+
+    SWORD client and server applications communicate using TCP/IP network. @n
+    The simulation server listens for connections from the Dispatcher which listens for connections from client applications (such as Gaming).
+
+    @subsection format Message format
+
+    Messages sent over the network contain 3 fields which are formatted in the following format :
+
+    <table border="1" style="border-collapse: collapse; border:1px solid gray;">
+      <tr>
+        <th>Header</th>
+        <th colspan="2">Body</th>
+      </tr>
+      <tr align="center">
+        <td>SIZE</td>
+        <td>TAG</td>
+        <td>CONTENT</td>
+      </tr>
+    </table>
+
+    Whereas :
+
+    <table border="1" style="border-collapse: collapse; border:1px solid gray;">
+      <tr>
+        <th>Field</th>
+        <th>Description</th>
+        <th>Size</th>
+      </tr>
+      <tr>
+        <td>SIZE</td>
+        <td>Contains the size of the Body in bytes</td>
+        <td>4 bytes in network by order</td>
+      </tr>
+      <tr>
+        <td>TAG</td>
+        <td>Contains the type of message in the CONTENT field (see list of tags below)</td>
+        <td>4 bytes in network by order</td>
+      </tr>
+      <tr>
+        <td>CONTENT</td>
+        <td>Contains the encoded Protobuf message</td>
+        <td>(SIZE - 4) bytes</td>
+      </tr>
+    </table>
+
+    The TAG field in messages indicates the type of message contained into the CONTENT field. @n
+    This tag is a constant which can take the following values :
+
+    <table border="1" style="border-collapse: collapse; border:1px solid gray;">
+      <tr>
+        <th>Message</th>
+        <th>Tag</th>
+      </tr>
+      <tr>
+        <td>sword::SimToClient</td>
+        <td>3540368649</td>
+      </tr>
+      <tr>
+        <td>sword::AuthenticationToClient</td>
+        <td>468259588</td>
+      </tr>
+      <tr>
+        <td>sword::ReplayToClient</td>
+        <td>2824568610</td>
+      </tr>
+      <tr>
+        <td>sword::AarToClient</td>
+        <td>3335378374</td>
+      </tr>
+      <tr>
+        <td>sword::MessengerToClient</td>
+        <td>4281023046</td>
+      </tr>
+      <tr>
+        <td>sword::DispatcherToClient</td>
+        <td>3012412245</td>
+      </tr>
+      <tr>
+        <td>sword::ClientToAuthentication</td>
+        <td>3393095543</td>
+      </tr>
+      <tr>
+        <td>sword::ClientToSim</td>
+        <td>496449857</td>
+      </tr>
+      <tr>
+        <td>sword::ClientToMessenger</td>
+        <td>2651046712</td>
+      </tr>
+    </table>
+
+    @subsection generation Code generation
+
+    The message protocol is defined using Protobuf. @n
+    This set of tools provides a way to define message content into a specific format (.proto files). @n
+    Those files are then compiled using a provided tool in order to generate code usable into the final application. @n
+
+    Currently, Protobuf supports generating C++, Java and Python code.
+
+    @section Prerequisites
+    @subsection installing Installing SWORD
+
+    Require Windows operating system, license...
+
+    @subsection development Development environment
+
+    Any language supported by Protobuf (C++, Java, Python...). @n
+    Any operating system with TCP/IP network support.
+    
+    @section Contents
+    @subsection Documentation
+
+    User manual, this document, protocol reference (generated documentation)
+
+    @subsection data Data model schemas
+
+    A file named "physical.xml" (see "physical.xsd" for detailed format) acts as the entry point to loading a physical database. It references every other files associated 
+    with different model features such as "automats", "agents", "weapon-systems"...
+
+    The physical model is described using the following XSD schemas:
+    @li @ref physical_xsd
+    
+    @li @ref active_protections_xsd
+    @li @ref armors_xsd
+    @li @ref automats_xsd
+    @li @ref breakdowns_xsd
+    @li @ref communications_xsd
+    @li @ref crowds_xsd
+    @li @ref decisional_xsd
+    @li @ref equipments_xsd
+    @li @ref extensions_xsd
+    @li @ref fire_xsd
+    @li @ref fires_xsd
+    @li @ref human_factors_xsd
+    @li @ref human_protections_xsd
+    @li @ref inhabitants_xsd
+    @li @ref knowledge_groups_xsd
+    @li @ref launchers_xsd
+    @li @ref maintenance_xsd
+    @li @ref medical_xsd
+    @li @ref medical_treatment_xsd
+    @li @ref missions_xsd
+    @li @ref models_xsd
+    @li @ref nbc_xsd
+    @li @ref object_names_xsd
+    @li @ref objects_xsd
+    @li @ref pathfind_xsd
+    @li @ref reports_xsd
+    @li @ref resource_natures_xsd
+    @li @ref resource_networks_xsd
+    @li @ref resources_xsd
+    @li @ref sensors_xsd
+    @li @ref supply_xsd
+    @li @ref units_xsd
+    @li @ref urban_types_xsd
+    @li @ref volumes_xsd
+    @li @ref weapon_systems_xsd
+    @li @ref tools_xsd
+    
+    @subsection protobuf Protobuf definition files
+
+    @li @ref aar_client.proto Messages from the after action review module to clients
+    @li @ref authentication_client.proto Messages from the authentication module to clients
+    @li @ref client_aar.proto Messages from clients to the after action review module
+    @li @ref client_authentication.proto Messages from clients to the authentication module
+    @li @ref client_messenger.proto Messages from clients to the messenger module
+    @li @ref client_replay.proto Messages from clients to the replay module
+    @li @ref client_simulation.proto Messages from clients to the simulation
+    @li @ref common.proto Messages common to various modules
+    @li @ref dispatcher_client.proto Messages from the dispatcher to clients
+    @li @ref messenger_client.proto Messages from the messenger module to clients
+    @li @ref replay_client.proto Messages from the replay module to clients
+    @li @ref simulation_client.proto Messages from the simulation to clients
+    @li @ref version.proto Message containing the current protocol version
+    
+    @subsection Samples
+
+    C++ sample applications:
+      
+    @page physical_xsd Physical model entry point (physical.xsd)
+    @include physical/physical.xsd
+    
+    @page active_protections_xsd Active protections definitions (ActiveProtections.xsd)
+    @include physical/ActiveProtections.xsd
+    
+    @page armors_xsd Armor definitions (Armors.xsd)
+    @include physical/Armors.xsd
+
+    @page automats_xsd Automat definitions (Automats.xsd)
+    @include physical/Automats.xsd
+    
+    @page breakdowns_xsd Breakdowns definitions (Breakdowns.xsd)
+    @include physical/Breakdowns.xsd
+
+    @page communications_xsd Communication model configuration (Communications.xsd)
+    @include physical/Communications.xsd
+    
+    @page crowds_xsd Crowd types definition (Crowds.xsd)
+    @include physical/Crowds.xsd
+
+    @page decisional_xsd Decisional model global configuration (Decisional.xsd)
+    @include physical/Decisional.xsd
+
+    @page equipments_xsd Equipments definitions (Equipments.xsd)
+    @include physical/Equipments.xsd
+
+    @page extensions_xsd Custom model extensions declarations (Extensions.xsd)
+    @include physical/Extensions.xsd
+    
+    @page fire_xsd Fire types definition (Fire.xsd)
+    @include physical/Fire.xsd
+    
+    @page fires_xsd Fire propagation models definition (Fires.xsd)
+    @include physical/Fires.xsd
+    
+    @page human_factors_xsd Human factors model configuration (HumanFactors.xsd)
+    @include physical/HumanFactors.xsd
+    
+    @page human_protections_xsd Personel protection types definition (HumanProtections.xsd)
+    @include physical/HumanProtections.xsd
+    
+    @page inhabitants_xsd Inhabitant types definition (Inhabitants.xsd)
+    @include physical/Inhabitants.xsd
+
+    @page knowledge_groups_xsd Knowledge group types definition (KnowledgeGroups.xsd)
+    @include physical/KnowledgeGroups.xsd
+    
+    @page launchers_xsd Weapon system launchers definitions (Launchers.xsd)
+    @include physical/Launchers.xsd
+    
+    @page maintenance_xsd Maintenance logistic systems configuration (Maintenance.xsd)
+    @include physical/Maintenance.xsd
+    
+    @page medical_xsd Medical logistic systems configuration (Medical.xsd)
+    @include physical/Medical.xsd
+
+    @page medical_treatment_xsd Medical treatments model configuration (MedicalTreatment.xsd)
+    @include physical/MedicalTreatment.xsd
+    
+    @page missions_xsd Unit missions and fragmentary orders descriptions (Missions.xsd)
+    @include physical/Missions.xsd
+    
+    @page models_xsd Decisional models capabilities description (Models.xsd)
+    @include physical/Models.xsd
+    
+    @page nbc_xsd Nuclear Bacteriological and Chemical model configuration (NBC.xsd)
+    @include physical/NBC.xsd
+    
+    @page object_names_xsd Object name localization file (ObjectNames.xsd)
+    @include physical/ObjectNames.xsd
+    
+    @page objects_xsd Object types definition (Objects.xsd)
+    @include physical/Objects.xsd
+    
+    @page pathfind_xsd Pathfind rules configuration (Pathfind.xsd)
+    @include physical/Pathfind.xsd
+    
+    @page reports_xsd Simulation report definitions (Reports.xsd)
+    @include physical/Reports.xsd
+    
+    @page resource_natures_xsd Resource natures definitions (ResourceNatures.xsd)
+    @include physical/ResourceNatures.xsd
+    
+    @page resource_networks_xsd Resource network type definitions (ResourceNetworks.xsd)
+    @include physical/ResourceNetworks.xsd
+    
+    @page resources_xsd Resource definitions (Resources.xsd)
+    @include physical/Resources.xsd
+
+    @page sensors_xsd Sensor types definitions (ArmorSensors.xsd)
+    @include physical/Sensors.xsd
+    
+    @page supply_xsd Supply logistic system configuration (Supply.xsd)
+    @include physical/Supply.xsd
+
+    @page units_xsd Agent definitions (Units.xsd)
+    @include physical/Units.xsd
+    
+    @page urban_types_xsd Urban block type definitions (UrbanTypes.xsd)
+    @include physical/UrbanTypes.xsd
+    
+    @page volumes_xsd Component size definitions (Volumes.xsd)
+    @include physical/Volumes.xsd
+    
+    @page weapon_systems_xsd Weapon system definitions (WeaponSystems.xsd)
+    @include physical/WeaponSystems.xsd
+    
+    @page tools_xsd Common type definitions (tools.xsd)
+    @include physical/tools.xsd
+    
+    @page creating Creating a client application
+
+    @section Concepts
+
+    The creation of a simple SWORD client application basically requires 3 features to be implemented :
+    @li Establish a TCP/IP connection with the Dispatcher
+    @li Send messages (such as an authentication message)
+    @li Receive and process incoming messages (such as authentication response)
+
+    @section Connecting
+
+    @subsection network Setting up the network
+
+    Client must first establish a TCP connection to a running Dispatcher. @n
+    The network port on which the Simulation and Dispatcher accept connections are defined for each exercise session into the session.xml file :
+    @code
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<session>
+  <config>
+    <dispatcher>
+      <network client="localhost:10000" server="10001"/>
+    </dispatcher>
+[...]
+    <simulation>
+[...]
+      <network port="10000"/>
+[...]
+    </simulation>
+  </config>
+</session>
+    @endcode
+
+    <table border="1" style="border-collapse: collapse; border:1px solid gray;">
+      <tr>
+        <th>Attribute</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>dispatcher/network/@@client</td>
+        <td>Defines the Simulation host and port the Dispatcher needs to connect to</td>
+      </tr>
+      <tr>
+        <td>dispatcher/network/@@server</td>
+        <td>Defines the port on which the Dispatcher is to accept client connections</td>
+      </tr>
+      <tr>
+        <td>server/network/@@port</td>
+        <td>Defines the port on which the Simulation is to accept Dispatcher connections</td>
+      </tr>
+    </table>
+
+    Once connected, the client application must listen for incoming data on the established connection.
+
+    @subsection decoding Message decoding
+
+    When receiving data from the wire, you first need to read the message body size from the message header. @n
+    To do so, you need to read the first 4 bytes and convert the read value back from network byte order (using a function such as ntohl in C). @n
+    Next, you need to read the next 4 bytes of the message TAG field in order to determine which type of message you are going to decode. @n
+    Next, you need to allocate a message from the type defined by the tag. This message will act as a container for the result of the decoding process. @n
+    Finally, call the decoding function of the Protobuf with the remaining buffer data to fill the result message with the decoded data. @n
+
+    Here is a short C++ example of message decoding :
+
+    @code
+void Decode( std::istream& input, MessageHandler& handler )
+{
+    // read header and tag
+    unsigned long size, tag;
+    input >> size >> tag;
+    size = ntohl( size );
+    tag = ntohl( size );
+    // read message content buffer
+    const unsigned long contentSize = size - sizeof( tag );
+    char* buffer = new char[ contentSize ];
+    input.read( buffer, contentSize ];
+    // check tag to determine the type of message
+    if( tag == MESSAGE_AUTHENTICATION_TO_CLIENT )
+    {
+        // allocate result container message
+        sword::AuthenticationToClient result;
+        // decode message buffer to result
+        if( !result.ParseFromString( std::string( buffer, contentSize ) ) )
+        {
+            delete[] buffer;
+            throw std::runtime_error( "message decoding failed" );
+        }
+        // notify result message reception
+        handler.NotifyMessage( result );
+    }
+    delete[] buffer;
+}
+@endcode
+
+    @subsection encoding Message encoding
+
+    Messages sent to the Dispatcher follow the same format as messages sent by the Dispatcher. @n
+    In order to send a message to the wire, you will need to fill the same fields : SIZE, TAG and CONTENT. @n
+    First, you need to create and fill the message you want to send using the Protobuf generated message wrappers. @n
+    Next, an encoding buffer of the necessary size must be allocated and then the encoding process is executed. @n
+    Finally, message SIZE and TAG fields are sent to the output with the encoded buffer.
+
+    Here is a short C++ example of message decoding:
+
+@code
+void Encode( std::ostream& output, const sword::ClientToSim& message )
+{
+    // allocate output buffer
+    google::protobuf::uint8* buffer = new google::protobuf::uint8[ message.ByteSize() ];
+    // serialize message to buffer
+    if( !message.SerializeWithCachedSizesToArray( buffer ) )
+        throw std::runtime_error( "message encoding failed" );
+    const unsigned long tag = MESSAGE_CLIENT_TO_AUTHENTICATION;
+    // write size and tag to output
+    output << htonl( message.GetCachedSize() + sizeof( tag ) ) << htonl( tag );
+    // write buffer to output
+    output.write( buffer, message.GetCachedSize() );
+}
+@endcode
+
+  @page initializing Initializing the situation
+
+  @section initialization Initialization sequence
+  
+  The following sequence diagram describes the initialization sequence which consists of three main steps:
+  @li The network connection where the physical link is established
+  @li The authentication where an user connects to the running exercise
+  @li The situation initialization where the current exercise state is sent to the client
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    C [label="Client"],S [label="Dispatcher"];
+    --- [label="Network connection",textcolor="#ff0000"];
+    C  -> S [label="Connect(host, port)"];
+    C  << S [label="ConnectionSucceeded()"];
+    --- [label="Authentication",textcolor="#ff0000"];
+    C  -> S [label="AuthenticationRequest(login, password)", URL="\ref sword::AuthenticationRequest"];
+    C  << S [label="AuthenticationResponse(response)", URL="\ref sword::AuthenticationResponse"];
+    --- [label="Situation initialization",textcolor="#ff0000"];
+    C  <- S [label="Begin current state", URL="\ref sword::ControlSendCurrentStateBegin"];
+    C  <- S [label="Announcement", URL="\ref sword::ControlInformation"];
+    C  <- S [label="Entity creations"];
+    ... [label="Initialization continues..."];
+    C  <- S [label="End current state", URL="\ref sword::ControlSendCurrentStateEnd"];
+  @endmsc
+  
+  @section Authentication
+
+  In order to receive and send exercise data, a client must authenticate to the Dispatcher. That is: provide a valid login and password to be allowed to join the exercise. These Profiles are defined using the SWORD Preparation application. @n
+  They are specific to an exercise and stored into the exercise folder usually into a file called "profiles.xml" (the name can be changed and is referenced from "exercise.xml" file).
+
+  The connecting client must send a sword::AuthenticationRequest containing login and password to the Dispatcher in order to request log-in. @n
+  A sword::AuthenticationReponse message is sent in response to the request. This response contains :
+  @li The full profile definition, if login and password match a valid profile, containing profile access rights over exercises entities and additional information (such as supervisors rights)
+  @li A list of existing profiles, if login and password do not match a valid profile, allowing the client application to prompt the user for a list of available profiles to choose from
+
+  @note Creating a special profile with access rights over the whole ORBAT and supervisor capabilities can sometimes be useful when an application needs to connect to the Dispatcher without any restrictions
+
+  @section state Current state
+
+  Once authenticated, the current simulation situation is sent to the client using a potentially large amount of messages. @n
+  Therefore, to ensure the consistency of the client state, the current state publication is bounded by two messages : sword::ControlSendCurrentStateBegin and sword::ControlSendCurrentStateEnd. @n
+  Between those two messages, the Dispatcher sends all messages needed to get the current simulation state into a client application. @n
+  This includes essentially entities and environment creation and update messages.
+
+  The client should be considered initialized after receiving the sword::ControlSendCurrentStateEnd message.
+
+  @section Announcement
+
+  In addition to the current state, upon authentication, some messages are sent to connecting clients :
+  @li A list of optional additional services provided by the dispatcher (such as for instance scores computation)
+  @li An announcement message depending on application running behind the dispatcher: live simulation (sword::ControlInformation) or replay (sword::ControlReplayInformation)
+
+  @page orbat Managing entities 
+
+  The simulation model of SWORD if constituted of different kind of entities:
+  @li Organizations: parties, formations. They are defined in SWORD Preparation.
+  @li "Intelligent" entities: automats, agents, crowds. Their capabilities are defined using SWORD Authoring tool. Instance of these entities are added to the order of battle using SWORD Preparation.
+  @li Environment entities: obstacles, inhabitants, terrain elements (urban areas, resource networks...). Their capabilities are defined using SWORD Authoring tool. Instance of these entities are added to the order of battle using SWORD Preparation or SWORD Terrain tools.
+  @li Simulation entities: perceptions, knowledge, logistic treatments... These entities are available at runtime and represent dynamic data generated by simulated entities (upon perception, shooting...).
+  
+  @section Parties
+  
+  Parties are organizational units used to gather entities. Alliances matrix are specified at party level and allows the definition of friendly, enemy and neutral relationships.
+  A party can contain @ref formations, @ref obstacles and @ref knowledge_groups.
+
+  @note Parties cannot be created during the game, they must be defined during the preparation phase.
+  
+  @subsection Initialization
+  
+  The following sequence diagram describes the party initialization process. Party creation messages are sent to a new user followed by their current diplomacies relationships and subordinate units.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    C [label="Client"],S [label="Dispatcher"];
+    --- [label="Situation initialization",textcolor="#ff0000"];
+    C  <- S [label="Begin current state", URL="\ref sword::ControlSendCurrentStateBegin"];
+    C  <- S [label="Party creation", URL="\ref sword::PartyCreation"];
+    C  <- S [label="Party diplomacies", URL="\ref sword::ChangeDiplomacy"];
+    ... [label="Initialization continues..."];
+    C  <- S [label="End current state", URL="\ref sword::ControlSendCurrentStateEnd"];
+  @endmsc
+  
+  @subsection diplomacy Diplomacies modifications
+  
+  Party diplomacies can be changed by a client using a sword::MagicAction message of type sword::MagicAction::change_diplomacy (see @ref magic "Magic actions").
+  The client requires supervision rights to be allowed to change the diplomacies of a party.
+  The client requesting the diplomacy change receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the updated diplomacy is sent to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    C  -> S [label="Request diplomacy change", URL="\ref sword::MagicAction"];
+    C <<= S [label="Acknowledge", URL="\ref sword::ChangeDiplomacyAck"];
+    A  <- S [label="Party diplomacy update", URL="\ref sword::ChangeDiplomacy"];
+  @endmsc
+  
+  @section formations Formations
+  
+  Formations are organizational units used to gather @ref formations and @ref automats.
+  
+  @subsection formation_init Initialization
+  
+  The following sequence diagram describes the formation initialization process. Formation creation messages are sent to a new user followed by their subordinate units.
+  Once created, some formation attributes can be updated, when this occurs, the simulation sends an update message to all clients connected.
+  When the exercise is stopped, the formation is destroyed and a message is sent to all clients connected after its subordinates.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    C [label="Client"],S [label="Dispatcher"];
+    --- [label="Situation initialization",textcolor="#ff0000"];
+    C  <- S [label="Begin current state", URL="\ref sword::ControlSendCurrentStateBegin"];
+    C  <- S [label="Formation creation", URL="\ref sword::FormationCreation"];
+    ... [label="Initialization continues..."];
+    C  <- S [label="End current state", URL="\ref sword::ControlSendCurrentStateEnd"];
+    --- [label="Running exercise",textcolor="#ff0000"];
+    C  <- S [label="Formation update", URL="\ref sword::FormationUpdate"];
+    --- [label="Finishing exercise",textcolor="#ff0000"];
+    C  <- S [label="Formation destruction", URL="\ref sword::FormationDestruction"];
+  @endmsc
+  
+  @subsection formation_creation Dynamic creation
+  
+  Formations can be created during the game using a sword::UnitMagicAction of type sword::UnitMagicAction::formation_creation (see @ref magic "Magic actions").
+  The client requires supervision rights to be allowed to create a formation.
+  The client requesting the formation creation receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the formation creation is sent to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    C  -> S [label="Request formation creation", URL="\ref sword::MagicAction"];
+    C <<= S [label="Acknowledge", URL="\ref sword::MagicActionAck"];
+    A  <- S [label="Formation creation", URL="\ref sword::FormationCreation"];
+  @endmsc
+  
+  @section automats Automats
+  
+  Automats represent company level units containing @ref agents. They are driven by a decisional model allowing the automated control of their subordinate units.
+  
+  @subsection automat_init Initialization
+  
+  The following sequence diagram describes the automat initialization process. Automat creation messages are sent to a new user followed by their subordinate units.
+  Once created, some automat attributes can be updated, when this occurs, the simulation sends an update message to all clients connected.
+  When the exercise is stopped, the automat is destroyed and a destruction notification message is sent to all clients connected after its subordinates destructions have been notified.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    C [label="Client"],S [label="Dispatcher"];
+    --- [label="Situation initialization",textcolor="#ff0000"];
+    C  <- S [label="Begin current state", URL="\ref sword::ControlSendCurrentStateBegin"];
+    C  <- S [label="Automat creation", URL="\ref sword::AutomatCreation"];
+    ... [label="Initialization continues..."];
+    C  <- S [label="End current state", URL="\ref sword::ControlSendCurrentStateEnd"];
+    --- [label="Running exercise",textcolor="#ff0000"];
+    C  <- S [label="Automat update", URL="\ref sword::AutomatAttributes"];
+    --- [label="Finishing exercise",textcolor="#ff0000"];
+    C  <- S [label="Automat destruction", URL="\ref sword::AutomatDestruction"];
+  @endmsc
+  
+  @subsection automat_creation Dynamic creation
+  
+  Automats can be created during the game using a sword::UnitMagicAction of type sword::UnitMagicAction::automat_creation (see @ref magic "Magic actions").
+  The client requires supervision rights to be allowed to create a automat.
+  The client requesting the automat creation receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the automat creation is sent to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    C  -> S [label="Request automat creation", URL="\ref sword::MagicAction"];
+    C <<= S [label="Acknowledge", URL="\ref sword::MagicActionAck"];
+    A  <- S [label="Automat creation", URL="\ref sword::AutomatCreation"];
+  @endmsc
+  
+  @subsection automat_change_superior Changing parent unit
+
+  The parent unit (@ref automats "automat" or @ref formations "formation") of an automat can be changed using a message sword::UnitMagicAction of type sword::UnitMagicAction::change_automat_superior 
+  or type sword::UnitMagicAction::change_formation_superior (see @ref magic "Magic actions"), depending on the kind of parent entity.
+  The client requesting the automat parent change receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the new automat superior is sent to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    C  -> S [label="Request automat parent change", URL="\ref sword::MagicAction"];
+    C <<= S [label="Acknowledge", URL="\ref sword::AutomatChangeSuperiorAck"];
+    A  <- S [label="Automat parent change notification", URL="\ref sword::AutomatChangeSuperior"];
+  @endmsc
+  
+  @subsection automat_change_knowledge_group Changing parent knowledge group
+  
+  The parent @ref knowledge_groups "knowledge group" of an automat can be changed using a message sword::UnitMagicAction of type sword::UnitMagicAction::change_knowledge_group (see @ref magic "Magic actions").
+  The client requesting the automat parent change receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the new automat superior is sent to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    C  -> S [label="Request automat parent change creation", URL="\ref sword::MagicAction"];
+    C <<= S [label="Acknowledge", URL="\ref sword::AutomatChangeSuperiorAck"];
+    A  <- S [label="Automat parent change notification", URL="\ref sword::AutomatChangeSuperior"];
+  @endmsc
+  
+  @section agents Agents
+
+  Agents represent platoon level units. They are driven by a decisional model allowing the automated execution of mission following military doctrine.
+    
+  @subsection agent_init Initialization
+  
+  The following sequence diagram describes the agent initialization process. Agent creation messages are sent to a new user followed by update messages containing additional agent states.
+  Once created, some agent attributes can be updated, when this occurs, the simulation sends an update message to all clients connected.
+  When an agent is destroyed (upon magic action or exercise shutdown), a destruction notification message is sent to all clients connected.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    C [label="Client"],S [label="Dispatcher"];
+    --- [label="Situation initialization",textcolor="#ff0000"];
+    C  <- S [label="Begin current state", URL="\ref sword::ControlSendCurrentStateBegin"];
+    C  <- S [label="Agent creation", URL="\ref sword::UnitCreation"];
+    ... [label="Initialization continues..."];
+    C  <- S [label="End current state", URL="\ref sword::ControlSendCurrentStateEnd"];
+    --- [label="Running exercise",textcolor="#ff0000"];
+    C  <- S [label="Agent update", URL="\ref sword::UnitAttributes"];
+    --- [label="Finishing exercise",textcolor="#ff0000"];
+    C  <- S [label="Agent destruction", URL="\ref sword::UnitDestruction"];
+  @endmsc
+  
+  @subsection agent_creation Dynamic creation
+  
+  Agents can be created during the game using a sword::MagicAction.
+  The client requires supervision rights to be allowed to create an agent.
+  The client requesting the agent creation receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the agent creation is sent to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    C  -> S [label="Request agent creation", URL="\ref sword::MagicAction"];
+    C <<= S [label="Acknowledge", URL="\ref sword::MagicActionAck"];
+    A  <- S [label="Agent creation", URL="\ref sword::UnitCreation"];
+  @endmsc
+  
+  @page environment Environment
+
+  @section obstacles Obstacles
+  @section populations Populations
+  @section weather Weather
+  
+  @page communications Communication model
+  
+  @section perceptions Perceptions
+  @section knowledge_groups Knowledge groups
+  @section agent_knowledge Agent knowledge
+  @section obstacle_knowledge Obstacle knowledge
+  @section crowd_knowledge Crowd knowledge
+    
+  @page controlling Controlling the simulation
+
+  @section pause Pause/Resume
+  
+  The simulation can be paused and resumed by any user with supervision rights using the messages sword::ControlPause and sword::ControlResume.
+  The client requesting the simulation to pause or resume receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the new simulation state is notified to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Pausing...",textcolor="#ff0000"];
+    C  -> S [label="Request pause", URL="\ref sword::ControlPause"];
+    C <<= S [label="Acknowledge", URL="\ref sword::ControlPauseAck"];
+    A  <- S [label="New simulation state notification", URL="\ref sword::ControlPause"];
+    --- [label="Resuming...",textcolor="#ff0000"];
+    C  -> S [label="Request resume", URL="\ref sword::ControlResume"];
+    C <<= S [label="Acknowledge", URL="\ref sword::ControlResumeAck"];
+    A  <- S [label="New simulation state notification", URL="\ref sword::ControlResume"];
+  @endmsc
+  
+  @section acceleration Acceleration factor
+  
+  The simulation acceleration factor can be changed by any user with supervision rights using the message sword::ControlChangeTimeFactor.
+  The client requesting the acceleration factor of the simulation to be changed receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the new simulation acceleration factor is notified to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Changing acceleration factor...",textcolor="#ff0000"];
+    C  -> S [label="Request acceleration factor change", URL="\ref sword::ControlChangeTimeFactor"];
+    C <<= S [label="Acknowledge", URL="\ref sword::ControlChangeTimeFactorAck"];
+    A  <- S [label="New acceleration factor notification", URL="\ref sword::ControlChangeTimeFactor"];
+  @endmsc
+  
+  @section Checkpoints
+
+  The simulation state can be saved into binary archives called checkpoints.
+  Checkpoint saving can be configured to automatically occur at a certain frequency, specified when starting the exercise.
+  A checkpoint saving can also be triggered by any user with supervision rights using the message sword::ControlCheckPointSaveNow.
+  
+  The client requesting the simulation to save the checkpoint receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the start and end of the checkpoint saving is notified to all connected clients.
+    
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Saving checkpoint...",textcolor="#ff0000"];
+    C  -> S [label="Request checkpoint saving", URL="\ref sword::ControlCheckPointSaveNow"];
+    C <<= S [label="Acknowledge", URL="\ref sword::ControlCheckPointSaveNowAck"];
+    A  <- S [label="Checkpoint saving start notification", URL="\ref sword::ControlCheckPointSaveBegin"];
+    ...;
+    A  <- S [label="Checkpoint saving end notification", URL="\ref sword::ControlCheckPointSaveEnd"];
+  @endmsc
+
+  @note The sword::ControlCheckPointSaveNow message contains an optional name field used to specify the name of the checkpoint. If not specified, the created checkpoint is named using the current date and time.
+  
+  @page orders Issuing orders
+  
+  Orders are requests sent to either units or commanding units (automats) to influence their behavior in the simulation.
+  @note The information used to implement order messages must strictly follow the parameter definition (@ref missions_xsd).
+  
+  For instance, given the following order definition:
+  @code
+  <mission id="133" name="move">
+      <parameter name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter name="Limit 1" optional="true" type="Limit"/>
+      <parameter name="Limit 2" optional="true" type="Limit"/>
+      <parameter name="Route" optional="false" type="Path"/>
+  </mission>
+  @endcode
+  instanciated as:
+  @code
+  <action id="133" name="Move Near Population" target="150" time="2008-08-04T12:56:50" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="16SEK6450906050"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  @endcode
+  can be implemented as the following:
+  @code
+  sword::UnitOrder order;
+  
+  order.mutable_tasker()->set_id( 150 );
+  order.mutable_type()->set_id( 133 );
+  
+  // Heading
+  order.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_heading()->set_heading( 360 );
+  
+  // PhaseLine
+  sword::PhaseLinesOrder& phaseline = *order.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_phaseline();
+  phaseline.add_elem()->add_fonctions( sword::PhaseLineOrder::line_of_departure ); // optional 
+  
+  // Limits
+  order.mutable_parameters()->add_elem(); // no boundary (Limit 1)
+  order.mutable_parameters()->add_elem(); // no boundary (Limit 2)
+  
+  // Path
+  sword::Location& location = *order.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_path()->mutable_location();
+  location.set_type( sword::Location::line );
+  
+  sword::CoordLatLong& destination = *location.mutable_coordinates()->add_elem();
+  destination->set_latitude( 39.80 ); // From MGRS coordinate 16SEK6450906050
+  destination->set_longitude( -86.24 ); // From MGRS coordinate 16SEK6450906050
+  @endcode
+
+  @section automat Automat missions
+  When a commanding unit (automat) is requested to perform a mission, it first analyses the received mission order and then issues mission order to subordinates automatically. 
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Mission order creation",textcolor="#ff0000"];
+    C  -> S [label="Automat Mission Request", URL="\ref sword::AutomatOrder"];
+    C <<= S [label="Acknowledge", URL="\ref sword::TaskCreationRequestAck"];
+    --- [label="Broadcast order information",textcolor="#ff0000"];
+    A  <- S [label="Automat received a mission order", URL="\ref sword::AutomatOrder"];
+    ...;
+    --- [label="Company automation",textcolor="#ff0000"];
+    A  <- S [label="Unit received a mission order", URL="\ref sword::UnitOrder"];
+  @endmsc
+  
+  @section agent Agent missions
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Mission order creation",textcolor="#ff0000"];
+    C  -> S [label="Unit Mission Request", URL="\ref sword::UnitOrder"];
+    C <<= S [label="Acknowledge", URL="\ref sword::TaskCreationRequestAck"];
+    --- [label="Broadcast order information",textcolor="#ff0000"];
+    A  <- S [label="Unit received a mission order", URL="\ref sword::UnitOrder"];
+  @endmsc
+  
+  @section crowd Crowd missions
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Mission order creation",textcolor="#ff0000"];
+    C  -> S [label="Crowd Mission Request", URL="\ref sword::CrowdOrder"];
+    C <<= S [label="Acknowledge", URL="\ref sword::OrderAck"];
+    --- [label="Broadcast order information",textcolor="#ff0000"];
+    A  <- S [label="Crowd received a mission order", URL="\ref sword::CrowdOrder"];
+  @endmsc
+  
+  
+  @section magic Magic orders
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Magic action creation",textcolor="#ff0000"];
+    C  -> S [label="Magic Request", URL="\ref sword::UnitMagicAction"];
+    C <<= S [label="Acknowledge", URL="\ref sword::UnitMagicActionAck"];
+    --- [label="Broadcast magic request results",textcolor="#ff0000"];
+    A  <- S [label="Unit status changed", URL="\ref sword::UnitMagicAction"];
+    A  <- S [label="Unit status changed", URL="\ref sword::UnitAttributes"];
+  @endmsc
+*/

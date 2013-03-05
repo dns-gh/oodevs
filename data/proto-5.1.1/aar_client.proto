@@ -1,0 +1,95 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+package sword;
+
+/** @file
+ *  @brief Messages from the after action review module to clients
+ *  @addtogroup aar After action review
+ *  @{
+ */
+
+/** @struct AarInformation
+    @brief Indicators computation module information message
+
+    This message is sent just after a client connexion to an indicator
+    computation module. It provides information about supported indicators.
+
+    @bug This message is not correctly filled by AarPlugin but is filled by
+    ScorePlugin. We should probably use different messages for both plugins.
+*/
+message AarInformation {
+    /** @property information
+        @brief Definition of indicators supported by After Action Review module
+
+        Value corresponds to XML data read from :
+        @li "exercise/Scores.xml" file (for score plugin)
+        @li "applications/functions.xml" file (for aar plugin)
+    */
+    required string information = 1;
+}
+
+/** @struct PlotResult
+    @brief Defines a plot result
+
+    This message is sent in response to a plot request.
+
+    @see PlotRequest
+*/
+message PlotResult {
+    //! An identifier for the request
+    required uint32 identifier = 1;
+    //! The result values
+    repeated float  values     = 2;
+    //! The description of an error
+    required string error      = 3;
+    //! The result values first tick
+    optional uint32 begin_tick = 4;
+}
+
+/** @struct Indicator
+*/
+message Indicator {
+    required string name  = 1;
+    required float  value = 2;
+}
+
+/** @struct AarToClient
+    @brief Wraps available messages going from AAR to client
+
+    This is the actual message sent over the network.
+*/
+message AarToClient {
+    /** @struct Content
+        @brief The possible messages contained in a AAR to client message
+        @warning Each Content message must contain exactly one of the possible
+        messages.
+    */
+    message Content {
+        //! An information message
+        optional AarInformation aar_information = 1;
+        //! A plot result message
+        optional PlotResult     plot_result     = 2;
+         //! An indicator message
+        optional Indicator      indicator       = 3;
+    }
+    /** @property context
+        @brief Identifies the request matching the response.
+
+        This field is used to fill the "context" fields in the response
+        messages. This context allows the client application to put an unique
+        identifier (based for instance on MAC address), thus allowing to track
+        response message matching a specific request emitted by the client.
+    */
+    optional int32   context = 1;
+    //! A field containing one of the messages to be sent
+    optional Content message = 2;
+}
+
+/** @}*/

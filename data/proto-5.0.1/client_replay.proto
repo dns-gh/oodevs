@@ -1,0 +1,76 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+import "common.proto";
+
+package sword;
+
+/** @file
+ *  @brief Messages from clients to the replay module
+ *  @addtogroup Replay
+ *  @{
+ */
+
+/** @struct ControlSkipToTick
+    @brief Skips to a given tick
+
+    @see ControlSkipToTickAck
+*/
+message ControlSkipToTick {
+   required int32 tick = 1; //!< The tick number
+}
+
+/** @struct TimeTableRequest
+    @brief Requests datetime information in a specified tick range
+
+    @see TimeTableRequestAck
+*/
+message TimeTableRequest {
+    /** @struct TimeRange
+        @brief A time range
+    */
+    message TimeRange {
+        required int32 begin_tick = 1; //!< The range first tick
+        required int32 end_tick   = 2; //!< The range last tick
+    }
+    required TimeRange tick_range = 1; //!< The time range
+}
+
+/** @struct ClientToReplay
+    @brief Wraps available messages going from client to replay
+
+    This is the actual message sent over the network.
+*/
+message ClientToReplay {
+    /** @struct Content
+        @brief The possible messages contained in a client to replay message
+        @warning Each Content message must contain exactly one of the possible messages.
+    */
+    message Content {
+       optional ControlSkipToTick       control_skip_to_tick       = 1; //!< A message to skip to a given tick
+       optional ControlChangeTimeFactor control_change_time_factor = 2; //!< A message to change the time factor of the replay
+       optional ControlStop             control_stop               = 3; //!< A message to stop the replay
+       optional ControlPause            control_pause              = 4; //!< A message to pause the replay
+       optional ControlResume           control_resume             = 5; //!< A message to resume the replay
+       optional TimeTableRequest        time_table_request         = 6; //!< A message to request datetime information
+    }
+    /** @property context
+        @brief Identifies the request matching the response.
+
+        This field is used to fill the "context" fields in the response messages.
+
+        This context allows the client application to put an unique identifier
+        (based for instance on MAC address), thus allowing to track response
+        message matching a specific request emitted by the client.
+    */
+    optional int32   context = 1;
+    required Content message = 2; //!< A field containing one of the messages to be sent
+}
+
+/** @}*/
