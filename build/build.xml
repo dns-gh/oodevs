@@ -716,7 +716,7 @@
         <delete dir="${out.dir}"/>
     </target>
 
-    <target name="cmake.msvc">
+    <target name="cmake.msvc" description="generate visual studio project files">
         <cmake_msvc input="${root.dir}/build"
             version="${version.version}"/>
         <python taskname="fixmsvc" failonerror="true">
@@ -725,7 +725,7 @@
         </python>
     </target>
 
-    <target name="cmake.configure">
+    <target name="cmake.configure" description="generate cmake build files">
         <cmake_configure input="${root.dir}/build"
             configuration="release"
             version="${version.version}"/>
@@ -735,7 +735,7 @@
         <cmake_build/>
     </target>
 
-    <target name="unit_test">
+    <target name="unit_test" description="build and run unit tests">
         <cmake_test/>
     </target>
 

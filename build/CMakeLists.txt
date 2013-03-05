@@ -102,10 +102,10 @@ function( add_target target group dir )
             masa_get_library_full_name( ${next} debug release )
             masa_set_target_output_name( ${target} ${debug} ${release} )
         endif()
-        set( rundir "${root_dir}/run/${platform}" )
+        set( rundir "${MASA_RUN}" )
         if( is_plugin )
             string( REGEX REPLACE "(.+)_plugin_dll" "\\1" next ${target} )
-            set( rundir "${root_dir}/run/${platform}/plugins/${next}" )
+            set( rundir "${MASA_RUN}/plugins/${next}" )
             file( MAKE_DIRECTORY "${rundir}" )
         endif()
         add_custom_command( TARGET ${target} POST_BUILD COMMAND
@@ -221,7 +221,7 @@ target_link_libraries( shield_app shield )
 # geostore
 add_target( geostore common "libraries/geostore" )
 # spatialite is stupid and has spatialite.h and spatialite/spatialite.h
-masa_add_target_include( geostore "${root_dir}/include/spatialite" )
+masa_add_target_include( geostore "${MASA_INCLUDE}/spatialite" )
 target_link_libraries( geostore
     libiconv
     ${GEOCOORD_LIBRARIES}
@@ -240,7 +240,7 @@ target_link_libraries( geostore
 
 # geostore_test
 add_target( geostore_test tests "tests/geostore_test" OPTIONS test )
-masa_add_target_include( geostore_test "${root_dir}/include/spatialite" )
+masa_add_target_include( geostore_test "${MASA_INCLUDE}/spatialite" )
 target_link_libraries( geostore_test geostore )
 
 # 3a_test
@@ -530,7 +530,7 @@ add_target( decisional_test tests "tests/integration_decisionnal_test" OPTIONS e
 target_link_libraries( decisional_test ${DIRECTIA_LIBRARIES} )
 masa_add_test_target( decisional_test decisional_test
     --temp_directory=${CMAKE_CURRENT_BINARY_DIR}/decisional_test.tmp
-    --data_directory=${root_dir}/run/${platform}/resources
+    --data_directory=${MASA_RUN}/resources
 )
 
 # client_proxy
