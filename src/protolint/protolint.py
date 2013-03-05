@@ -335,6 +335,7 @@ def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype, news
     oldscope = _makescope(oldscope, oldt)
     newscope = _makescope(newscope, newt)
     oldindexes = dict((f.index, f) for f in oldt.fields.itervalues())
+    newindexes = dict((f.index, f) for f in newt.fields.itervalues())
     for f in newt.fields.itervalues():
         if f.index not in oldindexes:
             if f.quantifier == 'required':
@@ -349,6 +350,13 @@ def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype, news
         oldn = oldname + '.' + oldtype
         ret += _comparemessages(ui, f.index, oldn, oldtype, oldscope,
                 newn, newtype, newscope, seen)
+    for f in oldt.fields.itervalues():
+        if f.index in newindexes:
+            continue
+        if f.quantifier == 'required':
+            ui.writeerr('error: required field removed:\n  %s\n'
+                % (oldname + '.' + f.name))
+            ret += 1
     seen.pop()
     return ret
 
