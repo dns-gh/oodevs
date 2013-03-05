@@ -298,7 +298,8 @@ def _isknowntype(t):
 def _ismessage(t):
     return not(_isknowntype(t) or _isenum(t))
 
-def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype, newscope, seen):
+def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype,
+        newscope, seen, exclude):
     def writeerr(msg):
         ui.writeerr('%s:\n  %s@%d -> %s\n  %s@%d -> %s\n'
             % (msg,
@@ -307,7 +308,7 @@ def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype, news
         return 1
 
     ret = 0
-    if (oldtype, newtype) in seen:
+    if (oldtype, newtype) in seen or exclude(oldname) or exclude(newname):
         return 0
     oldt = _findtype('old', oldscope, oldtype)
     newt = _findtype('new', newscope, newtype)
@@ -326,7 +327,7 @@ def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype, news
                 for v in sorted(delta):
                     name = [e for e in oldt.values if e.value == v][0].name
                     ui.writeerr('    %s = %s\n' % (name, v))
-                return 1
+                    ret += 1
         elif _isenum(newt):
             return writeerr('error: new field is an enum but not the old one')
 
@@ -349,7 +350,7 @@ def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype, news
         newn = newname + '.' + newtype
         oldn = oldname + '.' + oldtype
         ret += _comparemessages(ui, f.index, oldn, oldtype, oldscope,
-                newn, newtype, newscope, seen)
+                newn, newtype, newscope, seen, exclude)
     for f in oldt.fields.itervalues():
         if f.index in newindexes:
             continue
@@ -360,7 +361,22 @@ def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype, news
     seen.pop()
     return ret
 
+def makematcher(excluded):
+    if not excluded:
+        return lambda s: False
+    r = ['.*'.join(re.escape(s) for s in e.split('*')) for e in excluded]
+    r = '^(' + '|'.join(r) + ')$'
+    r = re.compile(r, re.I)
+    return r.search
+
 def cmdcompare(ui, args):
+    parser = optparse.OptionParser(
+        usage='compare [OPTIONS] OLDDIR NEWDIR')
+    parser.add_option("-X", "--exclude", action='append', default=[],
+        help="exclude field from analysis")
+    opts, args = parser.parse_args(args)
+    matcher = makematcher(opts.exclude)
+
     olddir, newdir = args
     ui.write('comparing:\n  %s\n  %s\n' % (olddir, newdir))
     oldmodules = parsemodules(ui, olddir)
@@ -376,7 +392,8 @@ def cmdcompare(ui, args):
             ui.writeerr('error: cannot find %s in old messages\n' % m)
             err = 1
             continue
-        ret += _comparemessages(ui, 0, m, m, oldtypes, m, m, newtypes, [])
+        ret += _comparemessages(ui, 0, m, m, oldtypes, m, m, newtypes,
+                [], matcher)
     return ret
 
 if __name__ == '__main__':
