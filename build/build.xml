@@ -21,7 +21,16 @@
         </sequential>
     </macrodef>
 
-    <target name="test">
+    <target name="unit-test">
+        <python failonerror="true">
+            <arg value="${src.dir}/protolint/protolexer.py"/>
+        </python>
+        <python failonerror="true">
+            <arg value="${src.dir}/protolint/protoparser.py"/>
+        </python>
+    </target>
+
+    <target name="check-proto">
         <compare-proto olddir="${data.dir}/proto-5.0.0" newdir="${data.dir}/proto-5.0.1"/>
         <compare-proto olddir="${data.dir}/proto-5.0.1" newdir="${data.dir}/proto-5.0.2"/>
         <compare-proto olddir="${data.dir}/proto-5.0.2" newdir="${data.dir}/proto-5.1.0"/>
@@ -29,6 +38,8 @@
         <compare-proto olddir="${data.dir}/proto-5.1.1" newdir="${data.dir}/proto-5.1.2"/>
         <compare-proto olddir="${data.dir}/proto-5.1.2" newdir="${data.dir}/proto-5.1.3"/>
     </target>
+
+    <target name="test" depends="unit-test,check-proto"/>
 
     <target name="all" depends="update,test"/>
 </project>
