@@ -44,7 +44,7 @@
     <target name="package">
         <safe-move file="${out.dir}/sword-protobuf.zip">
             <zip destfile="@{file}" duplicate="fail">
-                <fileset dir="${src.dir}" includes="protolint/**.py"/>
+                <fileset dir="${src.dir}" includes="protolint/**/*.py"/>
                 <zipfileset dir="${data.dir}" prefix="protolint/proto/"/>
                 <!-- package branch tips to avoid client scripts to have to
                      update referenced version upon releases -->
