@@ -17,18 +17,18 @@ class MIL_AgentPion_Remote : public MIL_AgentPion
 public:
     //! @name Constructors/Destructor
     //@{
-    MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
-    MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name );
-    MIL_AgentPion_Remote( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories );
+             MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
+             MIL_AgentPion_Remote( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name );
+             MIL_AgentPion_Remote( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories );
     virtual ~MIL_AgentPion_Remote();
     //@}
     //! @name CheckPoints
     //@{
     template<class Archive>
-    void serialize( Archive & ar, const unsigned int file_version )
+    void serialize( Archive & ar, const unsigned int version )
     {
-        boost::serialization::void_cast_register< MIL_AgentPion_Remote, MIL_AgentPion >( static_cast< MIL_AgentPion_Remote* >( NULL ), static_cast< MIL_AgentPion* >( NULL ) );
-        boost::serialization::split_member(ar, *this, file_version);
+        boost::serialization::void_cast_register< MIL_AgentPion_Remote, MIL_AgentPion >();
+        boost::serialization::split_member( ar, *this, version );
     }
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
