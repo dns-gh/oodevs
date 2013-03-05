@@ -316,19 +316,19 @@ def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype, news
             return writeerr('types differ')
         if _isenum(oldt):
             if not _isenum(newt):
-                return writeerr('old field is an enum but not the new one')
+                return writeerr('error: old field is an enum but not the new one')
             # Old enum values must exist in the new one
             oldvalues, newvalues = [set(v.value for v in t.values)
                 for t in (oldt, newt)]
             delta = oldvalues - newvalues
             if delta:
-                writeerr('old enumeration has values not in new one')
+                writeerr('error: old enumeration has values not in new one')
                 for v in sorted(delta):
                     name = [e for e in oldt.values if e.value == v][0].name
                     ui.writeerr('    %s = %s\n' % (name, v))
                 return 1
         elif _isenum(newt):
-            return writeerr('new field is an enum but not the old one')
+            return writeerr('error: new field is an enum but not the old one')
 
         return 0
     seen.append((oldtype, newtype))
@@ -338,7 +338,7 @@ def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype, news
     for f in newt.fields.itervalues():
         if f.index not in oldindexes:
             if f.quantifier == 'required':
-                ui.writeerr('required field added:\n  %s\n'
+                ui.writeerr('error: required field added:\n  %s\n'
                     % (newname + '.' + f.name))
                 ret += 1
             continue
@@ -364,8 +364,8 @@ def cmdcompare(ui, args):
     for m in newtypes:
         if m not in _roottypes:
             continue
-        if m not in oldtypes: 
-            ui.writeerr('cannot find %s in old messages\n' % m)
+        if m not in oldtypes:
+            ui.writeerr('error: cannot find %s in old messages\n' % m)
             err = 1
             continue
         ret += _comparemessages(ui, 0, m, m, oldtypes, m, m, newtypes, [])
