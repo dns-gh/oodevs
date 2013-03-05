@@ -41,7 +41,16 @@
         <compare-proto olddir="${data.dir}/proto-5.1.2" newdir="${data.dir}/proto-5.1.3"/>
     </target>
 
+    <target name="package">
+        <safe-move file="${out.dir}/sword-protobuf.zip">
+            <zip destfile="@{file}" duplicate="fail">
+                <fileset dir="${src.dir}" includes="protolint/**.py"/>
+                <zipfileset dir="${data.dir}" prefix="protolint/proto/"/>
+            </zip>
+        </safe-move>
+    </target>
+
     <target name="test" depends="unit-test,check-proto"/>
 
-    <target name="all" depends="update,test"/>
+    <target name="all" depends="update,test,package"/>
 </project>
