@@ -209,7 +209,7 @@ message baz {
 
   message foo.bar{
      repeated boolean field1 = 1;
-     };
+     }
   optional Message message = 3;
 }
 """
