@@ -33,8 +33,10 @@
     <target name="check-proto">
         <compare-proto olddir="${data.dir}/proto-5.0.0" newdir="${data.dir}/proto-5.0.1"/>
         <compare-proto olddir="${data.dir}/proto-5.0.1" newdir="${data.dir}/proto-5.0.2"/>
-        <compare-proto olddir="${data.dir}/proto-5.0.2" newdir="${data.dir}/proto-5.1.0"/>
-        <compare-proto olddir="${data.dir}/proto-5.1.0" newdir="${data.dir}/proto-5.1.1"/>
+        <!-- 5.1.0 was breaking compatibility with 5.0 line and was superseded
+             by 5.1.1 which fixed the issue. Ignore it.
+        -->
+        <compare-proto olddir="${data.dir}/proto-5.0.2" newdir="${data.dir}/proto-5.1.1"/>
         <compare-proto olddir="${data.dir}/proto-5.1.1" newdir="${data.dir}/proto-5.1.2"/>
         <compare-proto olddir="${data.dir}/proto-5.1.2" newdir="${data.dir}/proto-5.1.3"/>
     </target>
