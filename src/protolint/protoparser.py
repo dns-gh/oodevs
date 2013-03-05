@@ -160,6 +160,8 @@ def p_enum_statement(p):
 def p_error(p):
     assert False, p
 
+_parser = yacc.yacc()
+
 def parse(modulename, data, eof=True, debug=False):
     lexer = protolexer.Lexer(modulename)
     needmore, parsedtokens = lexer.adddata(data, eof)
@@ -176,8 +178,7 @@ def parse(modulename, data, eof=True, debug=False):
                 return None
             return self.tokens.pop()
 
-    parser = yacc.yacc(write_tables=0)
-    m = parser.parse(lexer=PlyLexer(parsedtokens), debug=debug)
+    m = _parser.parse(lexer=PlyLexer(parsedtokens), debug=debug)
     m = Module(modulename, m.package, m.imports, m.enums, m.messages)
     return m
 
