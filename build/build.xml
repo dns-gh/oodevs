@@ -46,6 +46,10 @@
             <zip destfile="@{file}" duplicate="fail">
                 <fileset dir="${src.dir}" includes="protolint/**.py"/>
                 <zipfileset dir="${data.dir}" prefix="protolint/proto/"/>
+                <!-- package branch tips to avoid client scripts to have to
+                     update referenced version upon releases -->
+                <zipfileset dir="${data.dir}/proto-5.1.3"
+                    prefix="protolint/proto/proto-5.1.x"/>
             </zip>
         </safe-move>
     </target>
