@@ -1,0 +1,3 @@
+\.pyc$
+^(bin|dist|include|out|run|lib)/
+parser\.out$

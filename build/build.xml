@@ -1,0 +1,34 @@
+<project name="sword-proto" default="all">
+
+    <property environment="env"/>
+    <property name="env.PONEY_HOME" value="//file1/masa/common/dev/common/poney"/>
+    <import file="${env.PONEY_HOME}/poney.xml"/>
+
+    <target name="update">
+        <update name="python"/>
+    </target>
+
+    <macrodef name="compare-proto">
+        <attribute name="olddir"/>
+        <attribute name="newdir"/>
+        <sequential>
+            <python taskname="protolint" failonerror="true">
+                <arg value="${src.dir}/protolint/protolint.py"/>
+                <arg value="compare"/>
+                <arg value="@{olddir}"/>
+                <arg value="@{newdir}"/>
+            </python>
+        </sequential>
+    </macrodef>
+
+    <target name="test">
+        <compare-proto olddir="${data.dir}/proto-5.0.0" newdir="${data.dir}/proto-5.0.1"/>
+        <compare-proto olddir="${data.dir}/proto-5.0.1" newdir="${data.dir}/proto-5.0.2"/>
+        <compare-proto olddir="${data.dir}/proto-5.0.2" newdir="${data.dir}/proto-5.1.0"/>
+        <compare-proto olddir="${data.dir}/proto-5.1.0" newdir="${data.dir}/proto-5.1.1"/>
+        <compare-proto olddir="${data.dir}/proto-5.1.1" newdir="${data.dir}/proto-5.1.2"/>
+        <compare-proto olddir="${data.dir}/proto-5.1.2" newdir="${data.dir}/proto-5.1.3"/>
+    </target>
+
+    <target name="all" depends="update,test"/>
+</project>
