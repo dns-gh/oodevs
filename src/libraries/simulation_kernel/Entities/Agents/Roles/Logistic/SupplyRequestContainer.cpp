@@ -96,6 +96,25 @@ void SupplyRequestContainer::ResetConsign()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SupplyRequestContainer::DeleteRequestsForRequester
+// Created: JSR 2013-03-01
+// -----------------------------------------------------------------------------
+void SupplyRequestContainer::DeleteRequestsForRequester( MIL_AgentPion& pion )
+{
+    for( auto it = requests_.begin(); it != requests_.end(); ++it )
+    {
+        auto requests = it->second;
+        for( auto it2 = requests.begin(); it2 != requests.end(); )
+        {
+            if( it2->second->HasRequester( pion ) )
+                it2 = requests.erase( it2 );
+            else
+                ++it2;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: SupplyRequestContainer::AddResource
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------

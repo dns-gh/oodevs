@@ -111,6 +111,7 @@ private:
     SupplyRecipient_ABC* GetCurrentSupplyRecipient() const;
     void SupplyAndProceedWithNextRecipient();
     void SupplyCurrentRecipient();
+    void UpdateRequestsIfUnitDestroyed();
     //@}
 
     //! @name FSM

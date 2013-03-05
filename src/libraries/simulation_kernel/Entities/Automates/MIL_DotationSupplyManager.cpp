@@ -140,6 +140,15 @@ void MIL_DotationSupplyManager::ResetAllConsigns()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::DeleteRequestsForRequester
+// Created: JSR 2013-03-01
+// -----------------------------------------------------------------------------
+void MIL_DotationSupplyManager::DeleteRequestsForRequester( MIL_AgentPion& pion )
+{
+    supplyRequests_->DeleteRequestsForRequester( pion );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::ResetConsignsForConvoyPion
 // Created: JSR 2013-02-20
 // -----------------------------------------------------------------------------

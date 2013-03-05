@@ -51,6 +51,7 @@ public:
     void Clean ();
     void ResetAllConsigns();
     void ResetConsignsForConvoyPion( const MIL_AgentPion& pion );
+    void DeleteRequestsForRequester( MIL_AgentPion& pion );
     //@}
 
     //! @name Network

@@ -151,6 +151,7 @@ public:
     void UpdateKnowledges( int currentTimeStep );
     void CleanKnowledges();
     void CleanDeletedAgentKnowledges();
+    void DeleteRequestsForRequester( MIL_AgentPion& pion );
     virtual void UpdateNetwork() const;
     virtual void UpdateState();
     virtual void Clean();

@@ -509,6 +509,15 @@ void MIL_Automate::CleanDeletedAgentKnowledges()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::DeleteRequestsForRequester
+// Created: JSR 2013-03-01
+// -----------------------------------------------------------------------------
+void MIL_Automate::DeleteRequestsForRequester( MIL_AgentPion& pion )
+{
+    pDotationSupplyManager_->DeleteRequestsForRequester( pion );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::UpdateNetwork
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------

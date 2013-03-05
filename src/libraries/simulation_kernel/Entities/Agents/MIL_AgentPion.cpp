@@ -841,7 +841,10 @@ void MIL_AgentPion::DeleteUnit()
     GetRole< transport::PHY_RoleAction_Transport >().Cancel();
 
     if( pAutomate_ )
+    {
+        pAutomate_->DeleteRequestsForRequester( *this );
         pAutomate_->UnregisterPion( *this );
+    }
 
     markedForDestruction_ = true;
 

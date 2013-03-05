@@ -136,6 +136,30 @@ bool SupplyRequest::AffectSupplier( SupplyRecipient_ABC& recipient, boost::share
 }
 
 // -----------------------------------------------------------------------------
+// Name: SupplyRequest::HasRequester
+// Created: JSR 2013-03-01
+// -----------------------------------------------------------------------------
+bool SupplyRequest::HasRequester( MIL_AgentPion& pion ) const
+{
+    for( auto it = requesters_.begin(); it != requesters_.end(); ++it )
+        if( *it == &pion )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyRequest::HasRequesterDestroyed
+// Created: JSR 2013-03-05
+// -----------------------------------------------------------------------------
+bool SupplyRequest::HasRequesterDestroyed() const
+{
+    for( auto it = requesters_.begin(); it != requesters_.end(); ++it )
+        if( ( *it )->IsMarkedForDestruction() )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SupplyRequest::UpdateRequestedQuantities
 // Created: MCO 2012-12-11
 // -----------------------------------------------------------------------------

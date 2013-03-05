@@ -165,6 +165,49 @@ void SupplyConsign::SupplyCurrentRecipient()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SupplyConsign::UpdateRequestsIfUnitDestroyed
+// Created: JSR 2013-03-05
+// -----------------------------------------------------------------------------
+void SupplyConsign::UpdateRequestsIfUnitDestroyed()
+{
+    bool resetConsign = false;
+    for( auto it = requestsQueued_.begin(); it != requestsQueued_.end(); )
+    {
+        bool hasRequesterDestroyed = false;
+        for( auto request = it->second.begin(); request != it->second.end(); )
+        {
+            if( request->second->HasRequesterDestroyed() )
+            {
+                request = it->second.erase( request );
+                currentRecipient_ = GetCurrentSupplyRecipient();
+                hasRequesterDestroyed = true;
+                requestsNeedNetworkUpdate_ = true;
+            }
+            else
+                ++request;
+        }
+        if( hasRequesterDestroyed && it->second.empty() )
+        {
+            resetConsign = true;
+            it->first->OnSupplyCanceled( shared_from_this() );
+            it = requestsQueued_.erase( it );
+        }
+        else
+            ++it;
+    }
+    if( resetConsign && requestsQueued_.empty() )
+    {
+        if( convoy_ )
+        {
+            convoy_->ResetConveyors( *this );
+            convoy_->Finish();
+        }
+        SetState( eFinished );
+        SendChangedState();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: SupplyConsign::IsSupplying
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
@@ -391,6 +434,8 @@ void SupplyConsign::DoConvoyMoveToTransportersProvider()
 // -----------------------------------------------------------------------------
 bool SupplyConsign::Update()
 {
+    UpdateRequestsIfUnitDestroyed();
+
     switch( state_ )
     {
         case eConvoyWaitingForTransporters  : DoConvoyReserveTransporters(); break;
@@ -459,7 +504,6 @@ void SupplyConsign::OnResourceRemovedFromConvoy( const PHY_DotationCategory& dot
         if( it != requests.end() )
             quantity -= it->second->RemoveFromConvoy( quantity );
     }
-    assert( quantity == 0 );
     requestsNeedNetworkUpdate_ = true;
 }
 
