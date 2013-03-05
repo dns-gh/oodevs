@@ -648,9 +648,9 @@
 
     <target name="checkproto" description="check protobuf definitions">
         <python failonerror="true">
-            <arg value="${src.dir}/libraries/protocol/protolint.py"/>
-            <arg value="${src.dir}/libraries/protocol/proto"/>
+            <arg value="${bin.dir}/protolint/protolint.py"/>
             <arg value="style"/>
+            <arg value="${src.dir}/libraries/protocol/proto"/>
         </python>
         <python failonerror="true">
             <arg value="${bin.dir}/protolint/protolint.py"/>
