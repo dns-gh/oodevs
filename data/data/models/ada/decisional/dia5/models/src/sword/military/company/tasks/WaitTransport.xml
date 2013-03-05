@@ -63,6 +63,11 @@
                             <parameter>defaultTask</parameter>
                         </value>
                     </parameter>
+                    <parameter name="disableWhenDone">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
                 </skill>
             </skills>
         </stage>

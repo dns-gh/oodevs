@@ -38,6 +38,11 @@
 							<string>france.military.platoon.combat.support.air.tasks.Suivre</string>
 						</value>
 					</parameter>
+					<parameter name="disableWhenDone">
+						<value>
+							<boolean>true</boolean>
+						</value>
+					</parameter>
 				</skill>
 			</skills>
 		</stage>
