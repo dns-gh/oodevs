@@ -22,6 +22,7 @@
 #include "simulation_kernel/Entities/Agents/MIL_AgentPion.h"
 #include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "CheckPoints/SerializationTools.h"
+#include <boost/make_shared.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Mission_ABC )
 
@@ -37,14 +38,13 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
     // No parameters $$$
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC constructor
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
 MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const boost::shared_ptr< MIL_Mission_ABC >& parent )
     : type_             ( type )
-    , context_          ( parent ? parent->context_ : MIL_OrderContext( true ))
+    , context_          ( parent ? parent->context_ : MIL_OrderContext( true ) )
     , knowledgeResolver_( knowledgeResolver )
 {
     if( parent )
@@ -149,7 +149,7 @@ void MIL_Mission_ABC::Serialize( sword::MissionParameters& asn ) const
         context_.Serialize( asn );
     else
     {
-        MT_LOG_ERROR_MSG( std::string( "Mission " ) + GetName() + " impossible to serialize parameters" );
+        MT_LOG_ERROR_MSG( "Mission " + GetName() + " impossible to serialize parameters" );
         throw MASA_EXCEPTION_ASN( sword::OrderAck::ErrorCode, sword::OrderAck::error_invalid_parameter );
     }
 }
@@ -190,18 +190,10 @@ void MIL_Mission_ABC::Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor )
 
 namespace
 {
-    void EnsureParameters( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters_, unsigned int index )
+    void EnsureParameters( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, unsigned int index )
     {
-        if( parameters_.size() <= index )
-        {
-            std::size_t currentSize = parameters_.size();
-            parameters_.resize( index + 1 );
-            for( std::size_t i = currentSize; i < index; ++i )
-            {
-                boost::shared_ptr< MIL_MissionParameter_ABC > dummy ( new MIL_NullParameter() );
-                parameters_[i] = dummy;
-            }
-        }
+        for( std::size_t i = parameters.size(); i < index; ++i )
+            parameters.push_back( boost::make_shared< MIL_NullParameter >() );
     }
 }
 
@@ -217,19 +209,25 @@ void MIL_Mission_ABC::SetParameter( const std::string& name, boost::shared_ptr< 
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC::MakeParameters
+// Created: MCO 2013-03-05
+// -----------------------------------------------------------------------------
+void MIL_Mission_ABC::MakeParameters( unsigned int index )
+{
+    if( parameters_.size() <= index || !parameters_[index] )
+        EnsureParameters( parameters_, index );
+    if( dynamic_cast< MIL_NullParameter* >( parameters_[index].get() ) )
+        parameters_[index] = boost::make_shared< MIL_ListParameter >( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC::AppendToParameter
 // Created: MGD 2009-12-01
 // -----------------------------------------------------------------------------
 void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_ptr< TER_Localisation > pLocation )
 {
     unsigned int index = type_.GetParameterIndex( name );
-    if( parameters_.size() <= index || !parameters_[index] )
-        EnsureParameters( parameters_, index );
-    if( dynamic_cast< MIL_NullParameter* >( parameters_[index].get() ) != 0 )
-    {
-        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >() ) );
-        parameters_[index] = param;
-    }
+    MakeParameters( index );
     parameters_[index]->Append( MIL_MissionParameterFactory::CreateLocation( pLocation ) );
 }
 
@@ -240,13 +238,7 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
 void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject )
 {
     unsigned int index = type_.GetParameterIndex( name );
-    if( parameters_.size() <= index || !parameters_[index] )
-        EnsureParameters( parameters_, index );
-    if( dynamic_cast< MIL_NullParameter* >( parameters_[index].get() ) != 0 )
-    {
-        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >() ) );
-        parameters_[index] = param;
-    }
+    MakeParameters( index );
     parameters_[index]->Append( MIL_MissionParameterFactory::CreateObjectKnowledge( pKnowledgeObject ) );
 }
 
@@ -257,13 +249,7 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
 void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_ptr< DEC_Gen_Object > pGenObject )
 {
     unsigned int index = type_.GetParameterIndex( name );
-    if( parameters_.size() <= index || !parameters_[index] )
-        EnsureParameters( parameters_, index );
-    if( dynamic_cast< MIL_NullParameter* >( parameters_[index].get() ) != 0 )
-    {
-        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >() ) );
-        parameters_[index] = param;
-    }
+    MakeParameters( index );
     parameters_[index]->Append(  MIL_MissionParameterFactory::CreateGenObject( pGenObject ) );
 }
 

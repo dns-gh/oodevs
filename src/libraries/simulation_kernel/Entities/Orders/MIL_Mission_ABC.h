@@ -116,6 +116,11 @@ private:
     template< typename Archive > friend void load_construct_data( Archive& archive, MIL_Mission_ABC* mission, const unsigned int version );
     //@}
 
+    //! @name Helpers
+    //@{
+    void MakeParameters( unsigned int index );
+    //@}
+
 private:
     //! @name Member data
     //@{
