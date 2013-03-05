@@ -272,33 +272,68 @@ def cmdnaming(ui, args):
 
 def _gettype(kind, scope, t):
     if t in scope or t in _knowntypes:
-        return t 
+        return t
     raise Exception('unknown %s type %s' % (kind, t))
 
-def makescope(scope, msg):
-    scope = dict(scope)
-    scope.update(msg.messages)
-    scope.update(msg.enums)
+def _findtype(kind, scope, t):
+    if t in _knowntypes:
+        return t
+    if t in scope:
+        return scope[t]
+    raise Exception('unknown %s type %s' % (kind, t))
+
+def _makescope(scope, msg):
+    if isinstance(msg, protoparser.Message):
+        scope = dict(scope)
+        scope.update(msg.messages)
+        scope.update(msg.enums)
     return scope
 
+def _isenum(t):
+    return isinstance(t, protoparser.Enum)
+
+def _isknowntype(t):
+    return isinstance(t, basestring) and t in _knowntypes
+
+def _ismessage(t):
+    return not(_isknowntype(t) or _isenum(t))
+
 def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype, newscope, seen):
+    def writeerr(msg):
+        ui.writeerr('%s:\n  %s@%d -> %s\n  %s@%d -> %s\n'
+            % (msg,
+               '.'.join(oldname.split('.')[:-1]), idx, oldtype,
+               '.'.join(newname.split('.')[:-1]), idx, newtype))
+        return 1
+
     ret = 0
     if (oldtype, newtype) in seen:
         return 0
-    if oldtype in _knowntypes or newtype in _knowntypes:
+    oldt = _findtype('old', oldscope, oldtype)
+    newt = _findtype('new', newscope, newtype)
+    if not _ismessage(oldt) or not _ismessage(newt):
         if oldtype != newtype:
-            ui.writeerr('types differ:\n  %s@%d -> %s\n  %s@%d -> %s\n'
-                % ('.'.join(oldname.split('.')[:-1]), idx, oldtype,
-                   '.'.join(newname.split('.')[:-1]), idx, newtype))
-            return 1
-        return 0
-    oldt = oldscope[oldtype]
-    newt = newscope[newtype]
-    if isinstance(oldt, protoparser.Enum) or isinstance(newtype, protoparser.Enum):
+            return writeerr('types differ')
+        if _isenum(oldt):
+            if not _isenum(newt):
+                return writeerr('old field is an enum but not the new one')
+            # Old enum values must exist in the new one
+            oldvalues, newvalues = [set(v.value for v in t.values)
+                for t in (oldt, newt)]
+            delta = oldvalues - newvalues
+            if delta:
+                writeerr('old enumeration has values not in new one')
+                for v in sorted(delta):
+                    name = [e for e in oldt.values if e.value == v][0].name
+                    ui.writeerr('    %s = %s\n' % (name, v))
+                return 1
+        elif _isenum(newt):
+            return writeerr('new field is an enum but not the old one')
+
         return 0
     seen.append((oldtype, newtype))
-    oldscope = makescope(oldscope, oldt)
-    newscope = makescope(newscope, newt)
+    oldscope = _makescope(oldscope, oldt)
+    newscope = _makescope(newscope, newt)
     oldindexes = dict((f.index, f) for f in oldt.fields.itervalues())
     for f in newt.fields.itervalues():
         if f.index not in oldindexes:
