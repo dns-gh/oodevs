@@ -337,6 +337,10 @@ def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype, news
     oldindexes = dict((f.index, f) for f in oldt.fields.itervalues())
     for f in newt.fields.itervalues():
         if f.index not in oldindexes:
+            if f.quantifier == 'required':
+                ui.writeerr('required field added:\n  %s\n'
+                    % (newname + '.' + f.name))
+                ret += 1
             continue
         oldf = oldindexes[f.index]
         oldtype = _gettype('old', oldscope, oldf.type)
