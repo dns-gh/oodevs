@@ -9,10 +9,11 @@ class Ui:
         self.errors = 0
 
     def write(self, s):
-        sys.stdout.write(s)
+        sys.stderr.write(s)
 
     def writeerr(self, s):
         sys.stderr.write(s)
+        sys.stderr.flush()
 
     def error(self, path, lineno, s, line=None):
         line = line and ('   ' + line.rstrip() + '\n') or ''
@@ -448,8 +449,9 @@ def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype, news
         return 0
     if oldtype in _knowntypes or newtype in _knowntypes:
         if oldtype != newtype:
-            ui.writeerr('types differ:\n  %s/%s@%d\n  %s/%s@%d\n'
-                    % (oldname, oldtype, idx, newname, newtype, idx))
+            ui.writeerr('types differ:\n  %s@%d -> %s\n  %s@%d -> %s\n'
+                % ('.'.join(oldname.split('.')[:-1]), idx, oldtype,
+                   '.'.join(newname.split('.')[:-1]), idx, newtype))
             return 1
         return 0
     oldt = oldscope[oldtype]
@@ -475,6 +477,7 @@ def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype, news
 
 def cmdcompare(ui, args):
     olddir, newdir = args
+    ui.write('comparing:\n  %s\n  %s\n' % (olddir, newdir))
     oldmodules = parsemodules(ui, olddir)
     oldtypes = listtypes(oldmodules)
     newmodules = parsemodules(ui, newdir)
