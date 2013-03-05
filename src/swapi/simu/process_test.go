@@ -33,6 +33,7 @@ func MakeOpts() *SimOpts {
 	opts.ExerciseName = "worldwide/Egypt"
 	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort)
 	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+1)
+	opts.ConnectTimeout = 600 * time.Second
 	return &opts
 }
 
@@ -65,7 +66,6 @@ func TestSuccess(t *testing.T) {
 // See the funcErr in Sim.log
 func TestDelayedStartupFailure(t *testing.T) {
 	opts := MakeOpts()
-	opts.ConnectTimeout = 20 * time.Second
 
 	exDir := opts.GetExerciseDir()
 	session := CreateDefaultSession()
