@@ -88,9 +88,9 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         }
         replayPaused_ = simulation.IsPaused();
         slider_->setMaxValue( maxTick_ );
+        slider_->setMinValue( simulation.GetFirstTick() );
         slider_->setTickInterval( slider_->maxValue() / 20 );
-        if( const unsigned int currentTick = simulation.GetCurrentTick() )
-            slider_->setValue( currentTick );
+        slider_->setValue( simulation.GetCurrentTick() );
     }
 }
 

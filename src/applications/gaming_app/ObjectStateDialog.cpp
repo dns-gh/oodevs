@@ -171,9 +171,10 @@ void ObjectStateDialog::Show()
 // -----------------------------------------------------------------------------
 void ObjectStateDialog::NotifyContextMenu( const kernel::Object_ABC& object, kernel::ContextMenu& menu )
 {
-    if( object.Retrieve< kernel::MineAttribute_ABC >()
+    if( (object.Retrieve< kernel::MineAttribute_ABC >()
      || object.Retrieve< kernel::ConstructionAttribute_ABC>()
      || object.Retrieve< kernel::BypassAttribute_ABC >() )
+     && controllers_.GetCurrentMode() != eModes_Replay )
     {
         selected_ = &object;
         kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
