@@ -417,6 +417,8 @@ void ResourceLinksDialog_ABC::SetReadOnly( bool readOnly ) const
     table_->setEditTriggers( readOnly? QAbstractItemView::NoEditTriggers : QAbstractItemView::CurrentChanged );
     generateProduction_->setEnabled( !readOnly );
     okButton_->setEnabled( !readOnly );
+    groupBox_->setCheckable( !readOnly );
+    groupBox_->setEnabled( !readOnly );
 }
 
 // -----------------------------------------------------------------------------

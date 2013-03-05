@@ -11,7 +11,8 @@
 #define __RichTreeView_h_
 
 #include <QtGui/qtreeview.h>
-#include "clients_kernel/ReadOnlyModable.h"
+#include "clients_kernel/ModesObserver_ABC.h"
+
 #include "DragAndDropObserver_ABC.h"
 #include "StandardModel.h"
 
@@ -32,7 +33,7 @@ namespace gui
 // Created: ABR 2012-08-10
 // =============================================================================
 class RichTreeView : public QTreeView
-                   , public kernel::ReadOnlyModable
+                   , public kernel::ModesObserver_ABC
                    , public DragAndDropObserver_ABC
 {
    Q_OBJECT

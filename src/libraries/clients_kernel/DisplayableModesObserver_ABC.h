@@ -10,7 +10,6 @@
 #ifndef __DisplayableModesObserver_ABC_h_
 #define __DisplayableModesObserver_ABC_h_
 
-#include "ENT/ENT_Enums_Gen.h"
 #include "ReadOnlyModable.h"
 
 namespace kernel
@@ -22,16 +21,16 @@ namespace kernel
 */
 // Created: ABR 2012-05-09
 // =============================================================================
-class DisplayableModesObserver_ABC : public kernel::ReadOnlyModable
+class DisplayableModesObserver_ABC : public ReadOnlyModable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              DisplayableModesObserver_ABC()
-                 : hiddenModes_( 0 ), visibleModes_( 0 ), currentMode_( -1 ), visible_( false ), visibleByDefault_( false ) {}
+                 : hiddenModes_( 0 ), visibleModes_( 0 ), currentMode_( eModes_None ), visible_( false ), visibleByDefault_( false ) {}
              DisplayableModesObserver_ABC( int hiddenModes, int visibleModes, bool visibleByDefault )
-                 : hiddenModes_( hiddenModes ), visibleModes_( visibleModes ), currentMode_( -1 ), visible_( false ), visibleByDefault_( visibleByDefault ) {}
+                 : hiddenModes_( hiddenModes ), visibleModes_( visibleModes ), currentMode_( eModes_None ), visible_( false ), visibleByDefault_( visibleByDefault ) {}
     virtual ~DisplayableModesObserver_ABC() {}
     //@}
 
@@ -45,7 +44,7 @@ public:
 
     //! @name Accessors
     //@{
-    int GetCurrentMode() const { return currentMode_; }
+    virtual E_Modes GetCurrentMode() const { return currentMode_; }
     void SetModes( int hiddenModes, int visibleModes = 0, bool visibleByDefault = false )
     {
         hiddenModes_ = hiddenModes;
@@ -102,9 +101,9 @@ private:
 private:
     //! @name Member data
     //@{
-    int  hiddenModes_;
-    int  visibleModes_;
-    int  currentMode_;
+    int hiddenModes_;
+    int visibleModes_;
+    E_Modes currentMode_;
     bool visible_;
     bool visibleByDefault_;
     //@}

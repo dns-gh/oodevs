@@ -10,7 +10,7 @@
 #ifndef __ReadOnlyModable_h_
 #define __ReadOnlyModable_h_
 
-#include "ModesObserver_ABC.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace kernel
 {
@@ -21,7 +21,7 @@ namespace kernel
 */
 // Created: ABR 2012-08-13
 // =============================================================================
-class ReadOnlyModable : public ModesObserver_ABC
+class ReadOnlyModable
 {
 
 public:
@@ -44,6 +44,8 @@ public:
     {
         readOnlyModes_ = modes;
     }
+
+    virtual E_Modes GetCurrentMode() const = 0;
     //@}
 
 private:
