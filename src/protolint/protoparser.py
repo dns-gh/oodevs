@@ -160,7 +160,7 @@ def p_enum_statement(p):
 def p_error(p):
     assert False, p
 
-_parser = yacc.yacc()
+_parser = yacc.yacc(write_tables=0)
 
 def parse(modulename, data, eof=True, debug=False):
     lexer = protolexer.Lexer(modulename)
