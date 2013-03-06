@@ -81,6 +81,7 @@ protected:
     //! @name QWidget
     //@{
     virtual void contextMenuEvent( QContextMenuEvent* event );
+    virtual bool CanShowContextMenu( const kernel::Entity_ABC& entity );
     //@}
 
     //! @name Operations

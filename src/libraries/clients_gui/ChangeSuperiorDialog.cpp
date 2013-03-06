@@ -14,6 +14,7 @@
 #include "tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "preparation/TacticalHierarchies.h"
 
 using namespace gui;
 

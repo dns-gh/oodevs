@@ -332,3 +332,12 @@ void CommunicationTreeView::keyPressEvent( QKeyEvent* event )
     else
         gui::HierarchyTreeView< kernel::CommunicationHierarchies >::keyPressEvent( event );
 }
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::CanShowContextMenu
+// Created: NPT 2013-03-06
+// -----------------------------------------------------------------------------
+bool CommunicationTreeView::CanShowContextMenu( const kernel::Entity_ABC& entity )
+{
+    return entity.GetTypeName() != kernel::Team_ABC::typeName_;
+}

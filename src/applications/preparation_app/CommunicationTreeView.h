@@ -79,6 +79,8 @@ private:
     void UpdateFonts( const kernel::KnowledgeGroup_ABC& kg, bool deleted );
     void UpdateLongName( const kernel::Entity_ABC& entity );
     virtual void keyPressEvent( QKeyEvent* event );
+    virtual bool CanShowContextMenu( const kernel::Entity_ABC& entity );
+
     //@}
 
 private:

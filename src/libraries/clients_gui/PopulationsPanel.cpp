@@ -16,6 +16,7 @@
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 
 using namespace gui;
@@ -92,7 +93,7 @@ void PopulationsPanel::Select( const kernel::Formation_ABC& /*element*/ )
 // Name: PopulationsPanel::Select
 // Created: LDC 2010-10-26
 // -----------------------------------------------------------------------------
-void PopulationsPanel::Select( const kernel::Team_ABC& /*element*/ )
+void PopulationsPanel::Select( const kernel::Team_ABC& element )
 {
-    list_->setDragEnabled( true );
+    list_->setDragEnabled( element.GetId() != 0 );
 }

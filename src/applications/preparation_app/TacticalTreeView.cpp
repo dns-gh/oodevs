@@ -119,12 +119,14 @@ namespace
 // -----------------------------------------------------------------------------
 bool TacticalTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
 {
+    if( !superior.Retrieve< TacticalHierarchies >() )
+        return false;
     if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
         return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0;
     if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
         return dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0;
     if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
-        return ( !IsSubordinateOf( entity, superior ) && dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0 ) || dynamic_cast< const kernel::Team_ABC* >( &superior ) != 0 ;
+        return ( !IsSubordinateOf( entity, superior ) && dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0 ) || dynamic_cast< const kernel::Team_ABC* >( &superior ) != 0;
     if( const kernel::Ghost_ABC* ghost = dynamic_cast< const kernel::Ghost_ABC* >( &entity ) )
         return ( ghost->GetGhostType() == eGhostType_Automat && dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0 ) ||
                ( ghost->GetGhostType() == eGhostType_Agent && dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0 );

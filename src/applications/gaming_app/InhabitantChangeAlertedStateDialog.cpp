@@ -121,7 +121,7 @@ void InhabitantChangeAlertedStateDialog::NotifyContextMenu( const kernel::Inhabi
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ) );
         subMenu->insertItem( tools::translate( "InhabitantChangeAlertedStateDialog", "Change alert state" ), this, SLOT( Show() ) );
     }
 }

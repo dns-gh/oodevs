@@ -122,3 +122,12 @@ bool ObjectTreeView::LessThan( const QModelIndex& left, const QModelIndex& right
     QString txt2 = dataModel_.data( right ).toString();
     return txt1.localeAwareCompare( txt2 ) > 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTreeView::CanShowContextMenu
+// Created: NPT 2013-03-06
+// -----------------------------------------------------------------------------
+bool ObjectTreeView::CanShowContextMenu( const kernel::Entity_ABC& entity )
+{
+    return entity.GetTypeName() != kernel::Team_ABC::typeName_;
+}

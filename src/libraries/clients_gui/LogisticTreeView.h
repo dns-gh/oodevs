@@ -68,6 +68,7 @@ private:
     //! @name Helpers
     //@{
     virtual void contextMenuEvent( QContextMenuEvent* event );
+    virtual bool CanShowContextMenu( const kernel::Entity_ABC& entity );
 
     void UpdateLongName( const kernel::Entity_ABC& entity );
     void NotifyDeletedInternal( const kernel::Entity_ABC& entity );

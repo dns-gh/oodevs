@@ -339,3 +339,12 @@ void CommunicationTreeView::Drop( const kernel::KnowledgeGroup_ABC& item, const 
         action->RegisterAndPublish( actionsModel_ );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationTreeView::CanShowContextMenu
+// Created: NPT 2013-03-06
+// -----------------------------------------------------------------------------
+bool CommunicationTreeView::CanShowContextMenu( const kernel::Entity_ABC& entity )
+{
+    return entity.GetTypeName() != kernel::Team_ABC::typeName_;
+}

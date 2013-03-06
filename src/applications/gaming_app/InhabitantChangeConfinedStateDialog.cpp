@@ -121,7 +121,7 @@ void InhabitantChangeConfinedStateDialog::NotifyContextMenu( const kernel::Inhab
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ) );
         subMenu->insertItem( tools::translate( "InhabitantChangeConfinedStateDialog", "Change confine state" ), this, SLOT( Show() ) );
     }
 }
