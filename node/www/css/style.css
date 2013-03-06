@@ -62,7 +62,7 @@ body{padding-top:60px;padding-bottom:40px;}
 .masa_header{text-align:center;}
 .sign_in,form.update_login{margin-left:180px;}
 .sign_in_action,.update_login_action{margin-left:180px;}
-.sign_in_action a{width:254px;}
+.sign_in_action a{width:244px;}
 .update_login_header{text-align:center;margin-bottom:24px;font-weight:bold;}
 .update_login_action .cancel{width:91px;}
 .checkbox,.radio{cursor:pointer;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:-moz-none;-o-user-select:none;user-select:none;}
