@@ -33,8 +33,8 @@ public:
 
     //! @name Operations
     //@{
-    template< typename Role >
-    void AddFactory( boost::function< Role*( MIL_AgentPion& ) > func )
+    template< typename Role, typename Function >
+    void AddFactory( const Function& func )
     {
         std::size_t idx = RoleExtender_ABC::Identificators::GetTypeId< typename Role::RoleInterface >();
         RoleExtender_ABC::T_RoleFactories::iterator it( roleFactories_.find( idx ) );
@@ -63,6 +63,13 @@ private:
     };
     //@}
 
+private:
+    //! @name Helpers
+    //@{
+    void RegisterRole( MIL_AgentPion& pion, std::size_t idx );
+    //@}
+
+private:
     //! @name Member data
     //@{
     RoleExtender_ABC* chain_;

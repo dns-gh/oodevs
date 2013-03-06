@@ -50,7 +50,7 @@ public:
     boost::shared_ptr< RoleFactory_ABC > GetFactory( )
     {
         boost::shared_ptr< RoleFactory_ABC > retval;
-        T_RoleFactories::iterator it( roleFactories_.find( Identificators::GetTypeId< typename Role::RoleInterface >() ) );
+        T_RoleFactories::iterator it = roleFactories_.find( Identificators::GetTypeId< typename Role::RoleInterface >() );
         if( it != roleFactories_.end() )
         {
             retval = it->second;

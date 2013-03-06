@@ -652,19 +652,19 @@ namespace
 // -----------------------------------------------------------------------------
 void Sink::CreateRoles( SinkRoleExtender& ext, const MT_Vector2D& position )
 {
-    ext.AddFactory( boost::function< sword::RolePion_Location*( MIL_AgentPion& ) >( boost::bind( &RoleLocationFactory, _1, this, position, boost::ref( *model_ ) ) ) );
-    ext.AddFactory( boost::function< sword::RolePion_Decision*( MIL_AgentPion& ) >(
-            boost::bind( boost::factory< sword::RolePion_Decision* >(), _1, boost::ref( *model_.get() ), gcPause_, gcMult_, decLogger_.get(), boost::ref( *this ) ) ) );
-    ext.AddFactory( boost::function< sword::RoleAction_Moving*( MIL_AgentPion& ) >(
-            boost::bind( boost::factory< RoleAction_Moving* >(), _1, boost::bind( &GetEntity, _1, boost::ref( *model_ ) ) ) ) );
-    ext.AddFactory( boost::function< sword::RolePion_Perceiver*( MIL_AgentPion& ) >(
-            boost::bind( boost::factory< sword::RolePion_Perceiver* >(), boost::ref( *this ), boost::ref( *model_ ), _1, boost::bind( &GetEntity, _1, boost::ref( *model_ ) ) ) ) );
-    ext.AddFactory( boost::function< sword::RolePion_Composantes*( MIL_AgentPion& ) >(
-            boost::bind( boost::factory< sword::RolePion_Composantes* >(), _1, boost::bind( &GetEntity, _1, boost::ref( *model_) ) ) ) );
-    ext.AddFactory( boost::function< transport::PHY_RoleAction_Loading*( MIL_AgentPion& ) >(
-            boost::bind( boost::factory< transport::PHY_RoleAction_Loading* >(), _1 ) ) ); // $$$$ _RC_ SLI 2012-11-09: must be created after RolePion_Composantes
-    ext.AddFactory( boost::function< sword::RoleAdapter*( MIL_AgentPion& ) >(
-            boost::bind( boost::factory< sword::RoleAdapter* >(), boost::ref( *this ), _1, boost::bind( &GetEntity, _1, boost::ref( *model_ ) ) ) ) );
+    ext.AddFactory< sword::RolePion_Location >( boost::bind( &RoleLocationFactory, _1, this, position, boost::ref( *model_ ) ) );
+    ext.AddFactory< sword::RolePion_Decision >(
+            boost::bind( boost::factory< sword::RolePion_Decision* >(), _1, boost::ref( *model_ ), gcPause_, gcMult_, decLogger_.get(), boost::ref( *this ) ) );
+    ext.AddFactory< sword::RoleAction_Moving >(
+            boost::bind( boost::factory< RoleAction_Moving* >(), _1, boost::bind( &GetEntity, _1, boost::ref( *model_ ) ) ) );
+    ext.AddFactory< sword::RolePion_Perceiver >(
+            boost::bind( boost::factory< sword::RolePion_Perceiver* >(), boost::ref( *this ), boost::ref( *model_ ), _1, boost::bind( &GetEntity, _1, boost::ref( *model_ ) ) ) );
+    ext.AddFactory< sword::RolePion_Composantes >(
+            boost::bind( boost::factory< sword::RolePion_Composantes* >(), _1, boost::bind( &GetEntity, _1, boost::ref( *model_) ) ) );
+    ext.AddFactory< transport::PHY_RoleAction_Loading >(
+            boost::bind( boost::factory< transport::PHY_RoleAction_Loading* >(), _1 ) ); // $$$$ _RC_ SLI 2012-11-09: must be created after RolePion_Composantes
+    ext.AddFactory< sword::RoleAdapter >(
+            boost::bind( boost::factory< sword::RoleAdapter* >(), boost::ref( *this ), _1, boost::bind( &GetEntity, _1, boost::ref( *model_ ) ) ) );
 }
 
 namespace
