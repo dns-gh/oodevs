@@ -277,6 +277,12 @@ endfunction()
 add_plugin( aar_plugin )
 add_plugin( dis_plugin )
 add_plugin( hla_plugin )
+target_link_libraries( hla_plugin
+    dispatcher
+    rpr
+    tic
+    ${HLA_LIBRARIES}
+)
 add_plugin( logger_plugin )
 add_plugin( logistic_plugin OPTIONS qt )
 add_plugin( messenger_plugin )
@@ -345,9 +351,10 @@ target_link_libraries( dispatcher
 # dispatcher_app
 add_target( dispatcher_app server "applications/dispatcher_app" OPTIONS win32 executable )
 target_link_libraries( dispatcher_app
-    dispatcher_dll
+    dispatcher
     license_gui
 )
+add_dependencies( dispatcher_app dispatcher_dll )
 
 # dispatcher_dll
 add_target( dispatcher_dll server "libraries/dispatcher_dll" OPTIONS shared )
@@ -373,17 +380,12 @@ target_link_libraries( dis_plugin_dll
 # hla_plugin_dll
 add_target( hla_plugin_dll plugins "libraries/hla_plugin_dll" OPTIONS plugin shared )
 masa_add_target_definition( hla_plugin_dll HLA_PLUGIN_DLL_EXPORTS )
-target_link_libraries( hla_plugin_dll
-    dispatcher
-    hla_plugin
-    rpr
-    tic
-    ${HLA_LIBRARIES}
-)
+target_link_libraries( hla_plugin_dll hla_plugin )
 
 # hla_plugin_test
 add_target( hla_plugin_test tests "tests/hla_plugin_test" OPTIONS protocol test )
-target_link_libraries( hla_plugin_test hla_plugin_dll )
+target_link_libraries( hla_plugin_test hla_plugin )
+add_dependencies( hla_plugin_test hla_plugin_dll )
 
 # logistic_plugin_dll
 add_target( logistic_plugin_dll plugins "libraries/logistic_plugin_dll" OPTIONS protocol plugin shared )
@@ -401,7 +403,8 @@ target_link_libraries( web_control_plugin_dll web_control_plugin )
 
 # web_control_plugin_test
 add_target( web_control_plugin_test tests "tests/web_control_plugin_test" OPTIONS protocol test )
-target_link_libraries( web_control_plugin_test web_control_plugin_dll )
+target_link_libraries( web_control_plugin_test web_control_plugin )
+add_dependencies( web_control_plugin_test web_control_plugin_dll )
 
 # timeline_plugin_dll
 add_target( timeline_plugin_dll plugins "libraries/timeline_plugin_dll" OPTIONS protocol plugin shared )
@@ -457,8 +460,11 @@ target_link_libraries( simulation_kernel_test
 # replayer_app
 add_target( replayer_app server "applications/replayer_app" OPTIONS win32 executable )
 target_link_libraries( replayer_app
-    dispatcher_dll
+    dispatcher
     license_gui
+)
+add_dependencies( replayer_app
+    dispatcher_dll
 )
 
 # wrapper
@@ -475,9 +481,10 @@ function( add_module target )
      )
     add_target( ${target}_test modules "tests/${target}_test" OPTIONS test )
     target_link_libraries( ${target}_test
-        ${target}_dll
+        ${target}
         ${CORE_LIBRARIES}
     )
+    add_dependencies( ${target}_test ${target}_dll )
 endfunction()
 
 # fire_module
@@ -515,10 +522,11 @@ masa_add_target_include( simulation_app "${root_dir}/src/libraries/simulation_ke
 set_property( TARGET simulation_app APPEND PROPERTY LINK_FLAGS "/LARGEADDRESSAWARE" )
 target_link_libraries( simulation_app
     simulation_kernel
-    dispatcher_dll
+    dispatcher
     license_gui
 )
 add_dependencies( simulation_app
+    dispatcher_dll
     fire_module_dll
     movement_module_dll
     perception_module_dll
