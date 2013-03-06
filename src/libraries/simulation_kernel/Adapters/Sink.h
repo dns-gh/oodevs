@@ -109,6 +109,9 @@ private:
     //@{
     void Initialize();
 
+    void StartInfiniteCommands( const MIL_AgentPion& pion );
+    void StopInfiniteCommands( const MIL_AgentPion& pion );
+
     MIL_AgentPion& Configure( MIL_AgentPion& pion, const MT_Vector2D& position );
     void CreateRoles( SinkRoleExtender& ext, const MT_Vector2D& position );
     //@}
@@ -127,6 +130,7 @@ private:
     std::auto_ptr< core::Model > model_;
     std::auto_ptr< core::Facade > facade_;
     boost::ptr_vector< core::EventListener_ABC > listeners_;
+    std::multimap< unsigned int, std::size_t > commands_;
     //@}
 };
 }

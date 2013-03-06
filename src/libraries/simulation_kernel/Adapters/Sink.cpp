@@ -82,6 +82,8 @@
 #include <core/EventListener_ABC.h>
 #include <boost/foreach.hpp>
 #include <boost/functional/factory.hpp>
+#include <boost/range/algorithm.hpp>
+#include <boost/range/adaptors.hpp>
 
 using namespace sword;
 
@@ -622,12 +624,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
 {
     tools::Resolver< MIL_AgentPion >::Register( pion.GetID(), pion );
     pion.CallRole( &PHY_RoleInterface_UrbanLocation::MagicMove, position );
-    {
-        core::Model parameters;
-        parameters[ "identifier" ] = pion.GetID();
-        facade_->StartCommand( "compute height", parameters );
-        facade_->StartCommand( "perception", parameters );
-    }
+    StartInfiniteCommands( pion );
     return pion;
 }
 
@@ -700,6 +697,7 @@ void Sink::Clean()
         pion->Clean();
         if( pion->IsMarkedForDestruction() && !pion->CallRole( &DEC_RolePion_Decision::IsUsedByDIA, false ) )
         {
+            StopInfiniteCommands( *pion );
             it = elements_.erase( it );
             delete pion;
         }
@@ -786,4 +784,30 @@ void Sink::Register( const core::Model& model, core::ModelListener_ABC& listener
 void Sink::Unregister( const core::Model& model, core::ModelListener_ABC& listener )
 {
     facade_->Unregister( model, listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::StartInfiniteCommands
+// Created: MCO 2013-03-05
+// -----------------------------------------------------------------------------
+void Sink::StartInfiniteCommands( const MIL_AgentPion& pion )
+{
+    const unsigned int id = pion.GetID();
+    core::Model parameters;
+    parameters[ "identifier" ] = id;
+    commands_.insert( std::make_pair( id, StartCommand( "compute height", parameters ) ) );
+    commands_.insert( std::make_pair( id, StartCommand( "perception", parameters ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::StopInfiniteCommands
+// Created: MCO 2013-03-05
+// -----------------------------------------------------------------------------
+void Sink::StopInfiniteCommands( const MIL_AgentPion& pion )
+{
+    const unsigned int id = pion.GetID();
+    boost::for_each(
+        commands_.equal_range( id ) | boost::adaptors::map_values,
+        boost::bind( &Sink::StopCommand, this, _1 ) );
+    commands_.erase( id );
 }
