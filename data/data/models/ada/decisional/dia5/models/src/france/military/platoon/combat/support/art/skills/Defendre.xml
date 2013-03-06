@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.art.skills.Defendre" source-version="1.0.0">
-	<parameters>
-		<parameter name="zone" nullable="true">
-			<type>
-				<class name="sword.military.knowledge.decisional.Positionable"/>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-		<parameter name="position" nullable="true">
-			<type>
-				<class name="sword.military.knowledge.decisional.Reachable"/>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-		<parameter name="typeDeploiement" nullable="true">
-			<type>
-				<simple name="numeric"/>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-		<parameter name="ph">
-			<type>
-				<simple name="numeric"/>
-			</type>
-		</parameter>
-		<parameter name="entities" nullable="true">
-			<type>
-				<list>
-					<class name="sword.military.knowledge.decisional.Reachable"/>
-				</list>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-	</parameters>
-	<modifiers/>
-	<links>
-		<link name="moveTo" skill="sword.military.platoon.skills.MoveToward"/>
-		<link name="intercepterMissile" skill="france.military.platoon.combat.support.art.skills.IntercepterMissile"/>
-	</links>
-	<resources>
-		<resource name="sword.military.platoon.resources.EngageCapacity" variable="engage"/>
-	</resources>
+    <parameters>
+        <parameter name="zone" nullable="true">
+            <type>
+                <class name="sword.military.knowledge.decisional.Positionable"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="position" nullable="true">
+            <type>
+                <class name="sword.military.knowledge.decisional.Reachable"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="typeDeploiement" nullable="true">
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="ph">
+            <type>
+                <simple name="numeric"/>
+            </type>
+        </parameter>
+        <parameter name="entities" nullable="true">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+    </parameters>
+    <modifiers/>
+    <links>
+        <link name="deploy" skill="sword.military.platoon.skills.Deploy"/>
+        <link name="intercepterMissile" skill="france.military.platoon.combat.support.art.skills.IntercepterMissile"/>
+    </links>
+    <resources>
+        <resource name="sword.military.platoon.resources.EngageCapacity" variable="engage"/>
+    </resources>
 </skill>

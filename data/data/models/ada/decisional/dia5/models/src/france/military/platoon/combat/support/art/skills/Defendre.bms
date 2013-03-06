@@ -1,9 +1,9 @@
 rootnode {
 
-    connections = { skill.links.intercepterMissile, skill.links.moveTo },
+    connections = { skill.links.intercepterMissile, skill.links.deploy },
     
     done = function(self) -- frome moveTo
-        self.arrived = true
+        self.deployed = true
     end,
 
     create = function (self )
@@ -18,12 +18,12 @@ rootnode {
             self.positions = {meKnowledge:getMyPosition()}
         end
         self.direction = sword.military.queries.miscellaneous.getMissionDirection[ "execute" ]()
-        self.arrived = false
+        self.deployed = false
     end,
 
     activate = function (self )
         local Activate = Activate
-        if self.arrived then
+        if self.deployed then
             self.ennemies = france.military.platoon.combat.support.art.queries.getFlyingEnemies[ "execute" ]()
             for i=1, #self.ennemies do
                 distance = integration.distance( meKnowledge, self.ennemies[i] )
@@ -42,8 +42,8 @@ rootnode {
                 end
             end
         end
-        Activate( skill.links.moveTo, 1, { entities = self.positions } )
-        self.arrived = false
+        Activate( skill.links.deploy, 1, { entities = self.positions } )
+        self.deployed = false
     end,
 
 }
