@@ -1,10 +1,6 @@
 import os
 import sys
-import optparse
 import xml.etree.ElementTree as xml
-
-parser = optparse.OptionParser(
-        usage="machin.py" )
 
 ns = "{http://schemas.microsoft.com/developer/msbuild/2003}"
 
@@ -18,7 +14,9 @@ def write_file(root, filename):
 def remove_cmakelists(root):
     for group in root.findall(ns + "ItemGroup"):
         for custom in group.findall(ns + "CustomBuild[@Include]"):
-            if custom.attrib["Include"].endswith("CMakeLists.txt"):
+            inc = custom.attrib["Include"]
+            if (inc.endswith("CMakeLists.txt") 
+            or  inc.endswith("generate.stamp.rule")):
                 root.remove(group)
 
 def merge_conditions(root, tag, include_end):
@@ -58,7 +56,10 @@ def remove_cmakelists_filter(root):
         single = len(sub) <= 1
         remove &= single
         for custom in sub:
-            if custom.attrib["Include"].endswith("CMakeLists.txt"):
+            inc = custom.attrib["Include"]
+            delete = (inc.endswith("CMakeLists.txt") 
+                   or inc.endswith("generate.stamp.rule"))
+            if delete:
                 if single:
                     root.remove(group)
                 else:
@@ -75,7 +76,7 @@ def fix_filters(filename):
     remove_cmakelists_filter(root)
     write_file(root, filename)
 
-def main(args, opts):
+def main(args):
     xml.register_namespace("", 'http://schemas.microsoft.com/developer/msbuild/2003')
     root, dirs, files = os.walk(args[0]).next()
     for filename in sorted(files):
@@ -87,5 +88,4 @@ def main(args, opts):
     return 0
 
 if __name__ == '__main__':
-    opts, args = parser.parse_args()
-    sys.exit(main(args, opts))
+    sys.exit(main(sys.argv[1:]))
