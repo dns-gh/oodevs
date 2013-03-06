@@ -15,7 +15,6 @@
 
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/UrbanColor_ABC.h"
 
 #include <graphics/Compass.h>
 #include <graphics/EventStrategy_ABC.h>
@@ -248,38 +247,9 @@ void Gl3dWidget::DrawPolygon( const T_PointVector& points ) const
 // Name: Gl3dWidget::DrawDecoratedPolygon
 // Created: SBO 2010-06-09
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& /*name*/, unsigned int height, bool /*selected*/ )
+void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& /*polygon*/, const std::string& /*name*/, unsigned int /*height*/ )
 {
-    const T_PointVector& footprint = polygon.Vertices();
-    if( footprint.empty() )
-        return;
-    const float visibleHeight = ( height + 2.f ) * 3.f * zRatio_;
-    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        float color[ 4 ];
-        color[ 0 ] = static_cast< float >( urbanColor.Red() ) / 255.f;
-        color[ 1 ] = static_cast< float >( urbanColor.Green() ) / 255.f;
-        color[ 2 ] = static_cast< float >( urbanColor.Blue() ) / 255.f;
-        color[ 3 ] = urbanColor.Alpha() * 0.6f;
-        glColor4fv( color );
-        glLineWidth( 1 );
-        const std::size_t count = footprint.size();
-        for( std::size_t i = 0 ; i < count; ++i )
-        {
-            const std::size_t next = ( i + 1 ) % count;
-            const float elevation = std::max( ElevationAt( footprint[next] ), ElevationAt( footprint[i] ) );
-            glBegin( GL_QUADS );
-                glVertex3f( footprint[i].X(), footprint[i].Y(), elevation );
-                glVertex3f( footprint[i].X(), footprint[i].Y(), elevation + visibleHeight );
-                glVertex3f( footprint[next].X(), footprint[next].Y(), elevation + visibleHeight );
-                glVertex3f( footprint[next].X(), footprint[next].Y(), elevation );
-            glEnd();
-        }
-        const float elevation = ElevationAt( footprint.front() );
-        glBegin( GL_TRIANGLE_FAN );
-        for( geometry::Polygon2f::CIT_Vertices it = footprint.begin(); it != footprint.end(); ++it )
-            glVertex3f( it->X(), it->Y(), elevation + visibleHeight );
-        glEnd();
-    glPopAttrib();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -287,15 +257,6 @@ void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const
 // Created: JSR 2012-05-14
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawSelectedPolygon( const T_PointVector& /*points*/ ) const
-{
-    // TODO
-}
-
-// -----------------------------------------------------------------------------
-// Name: Gl3dWidget::DrawConvexDecoratedPolygon
-// Created: JSR 2012-05-14
-// -----------------------------------------------------------------------------
-void Gl3dWidget::DrawConvexDecoratedPolygon( const geometry::Polygon2f& /*polygon*/, const kernel::UrbanColor_ABC& /*urbanColor*/, const std::string& /*name*/, unsigned int /*fontHeight*/, bool /*selected*/ ) const
 {
     // TODO
 }

@@ -13,10 +13,12 @@
 #include "ColorModifier_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "clients_kernel/MultipleSelectionObserver_ABC.h"
 
 namespace kernel
 {
     class Profile_ABC;
+    class UrbanObject_ABC;
 }
 
 namespace gui
@@ -35,6 +37,7 @@ namespace gui
 class SelectionColorModifier : public ColorModifier_ABC
                              , public tools::Observer_ABC
                              , public tools::SelectionObserver< kernel::Entity_ABC >
+                             , public kernel::MultipleSelectionObserver< kernel::UrbanObject_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -46,6 +49,7 @@ public:
     //! @name Operations
     //@{
     virtual QColor Apply( const kernel::Entity_ABC& entity, const QColor& base ) const;
+    virtual float Apply( const kernel::Entity_ABC& entity, float alpha ) const;
     //@}
 
     //! @name Static operations
@@ -58,6 +62,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifySelectionChanged( const T_Elements& elements );
     //@}
 
 private:
@@ -66,6 +71,7 @@ private:
     kernel::Controllers& controllers_;
     GlTools_ABC& tools_;
     const kernel::Profile_ABC& profile_;
+    T_Elements selectedElements_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     //@}
 };

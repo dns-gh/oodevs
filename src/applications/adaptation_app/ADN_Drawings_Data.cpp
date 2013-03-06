@@ -60,8 +60,7 @@ namespace
         virtual void DrawRectangle    ( const T_PointVector& ) const {}
         virtual void DrawPolygon      ( const T_PointVector& ) const {}
         virtual void DrawSelectedPolygon( const T_PointVector& ) const {}
-        virtual void DrawDecoratedPolygon( const geometry::Polygon2f&, const kernel::UrbanColor_ABC&, const std::string&, unsigned int, bool ) {}
-        virtual void DrawConvexDecoratedPolygon( const geometry::Polygon2f&, const kernel::UrbanColor_ABC&, const std::string&, unsigned int, bool ) const {}
+        virtual void DrawDecoratedPolygon( const geometry::Polygon2f&, const std::string&, unsigned int ) {}
         virtual void DrawArrow        ( const geometry::Point2f&, const geometry::Point2f&, float, E_Unit ) const {}
         virtual void DrawCurvedArrow  ( const geometry::Point2f&, const geometry::Point2f&, float, float, E_Unit ) const {}
         virtual void DrawArc          ( const geometry::Point2f&, const geometry::Point2f&, const geometry::Point2f& ) const {}

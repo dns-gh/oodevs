@@ -54,6 +54,15 @@ QColor HighlightColorModifier::Apply( const kernel::Entity_ABC& entity, const QC
 }
 
 // -----------------------------------------------------------------------------
+// Name: HighlightColorModifier::Apply
+// Created: LGY 2013-03-06
+// -----------------------------------------------------------------------------
+float HighlightColorModifier::Apply( const kernel::Entity_ABC& /*entity*/, float alpha ) const
+{
+    return alpha;
+}
+
+// -----------------------------------------------------------------------------
 // Name: HighlightColorModifier::NotifyContextMenu
 // Created: AGE 2008-05-15
 // -----------------------------------------------------------------------------

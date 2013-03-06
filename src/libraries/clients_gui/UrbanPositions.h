@@ -68,7 +68,6 @@ private:
     //! @name Helpers
     //@{
     void ComputeCachedValues( std::vector< geometry::Point2f >& points );
-    void ComputeConvexHull( std::vector< geometry::Point2f >& points ) const;
     void EliminateRedundantVertices( const T_PointVector& vertices, float epsilon );
     void ChopSpikes( float epsilon );
     //@}

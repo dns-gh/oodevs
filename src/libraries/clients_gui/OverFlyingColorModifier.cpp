@@ -51,3 +51,12 @@ void OverFlyingColorModifier::NotifyOverFlown( const kernel::Entity_ABC* element
 {
     overFlownEntity_ = element;
 }
+
+// -----------------------------------------------------------------------------
+// Name: OverFlyingColorModifier::Apply
+// Created: LGY 2013-03-06
+// -----------------------------------------------------------------------------
+float OverFlyingColorModifier::Apply( const kernel::Entity_ABC& /*entity*/, float alpha ) const
+{
+    return alpha;
+}

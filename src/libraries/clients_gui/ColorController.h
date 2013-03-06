@@ -43,6 +43,7 @@ public:
     //! @name Operations
     //@{
     virtual QColor Apply( const kernel::Entity_ABC& entity, const QColor& base ) const;
+    virtual float Apply( const kernel::Entity_ABC& entity, float alpha ) const;
 
     virtual void NotifyCreated( const kernel::Entity_ABC& entity );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );

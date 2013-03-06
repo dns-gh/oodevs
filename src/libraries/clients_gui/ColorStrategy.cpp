@@ -30,6 +30,7 @@
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/UrbanColor_ABC.h"
 
 #include <boost/bind.hpp>
 #include <numeric>
@@ -92,6 +93,19 @@ QColor ColorStrategy::ApplyModifiers( const kernel::Entity_ABC& entity, const QC
 }
 
 // -----------------------------------------------------------------------------
+// Name: ColorStrategy::ApplyModifiers
+// Created: LGY 2013-03-06
+// -----------------------------------------------------------------------------
+float ColorStrategy::ApplyModifiers( const kernel::Entity_ABC& entity, float alpha )
+{
+    size_t size = modifiers_.size();
+    float result = alpha;
+    for( size_t i = 0; i < size; ++i )
+        result = modifiers_[i].Apply( entity, result );
+    return result;
+}
+
+// ---------------------------------------------------------------------------
 // Name: ColorStrategy::Process
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
@@ -292,7 +306,11 @@ void ColorStrategy::SelectColor( const kernel::Drawing_ABC& drawing )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const UrbanObject_ABC& object )
 {
-    Process( object );
+    if( const kernel::UrbanColor_ABC* attribute = object.Retrieve< kernel::UrbanColor_ABC >() )
+    {
+        SetAlpha( ApplyModifiers( object,attribute->Alpha() ) );
+        ApplyColor( QColor( attribute->Red(), attribute->Green(), attribute->Blue() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -45,6 +45,15 @@ QColor ColorController::Apply( const kernel::Entity_ABC& entity, const QColor& b
 }
 
 // -----------------------------------------------------------------------------
+// Name: ColorController::Apply
+// Created: LGY 2013-03-06
+// -----------------------------------------------------------------------------
+float ColorController::Apply( const kernel::Entity_ABC& /*entity*/, float alpha ) const
+{
+    return alpha;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ColorController::ChangeColor
 // Created: LGY 2011-06-27
 // -----------------------------------------------------------------------------

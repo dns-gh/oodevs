@@ -83,7 +83,6 @@ namespace
 // -----------------------------------------------------------------------------
 void UrbanLayer::Paint( Viewport_ABC& viewport )
 {
-    gl::Initialize();
     // dessin des blocs urbains
     EntityLayer< kernel::UrbanObject_ABC >::Paint( viewport );
     // dessin des extensions(en deux temps pour les afficher par dessus les blocs)

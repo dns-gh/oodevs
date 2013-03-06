@@ -181,41 +181,9 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const Viewport_AB
             if( zoom <= 0.0007f )
                 nameSize = static_cast< unsigned int >( nameSize * zoom * 1600 );
         }
-        tools.DrawDecoratedPolygon( polygon_, object_.Get< kernel::UrbanColor_ABC >(), name, nameSize, selected_ );
-    }
-    else
-    {
-        if( polygon_.IsEmpty() )
-        {
-            std::vector< geometry::Point2f > points;
-            ComputeConvexHull( points );
-            const_cast< UrbanPositions* >( this )->ComputeCachedValues( points );
-            if( Entity_ABC* parent = const_cast< Entity_ABC* >( object_.Get< kernel::Hierarchies >().GetSuperior() ) )
-                parent->Get< UrbanPositions_ABC >().ResetConvexHull();
-        }
-        if( level_ == eUrbanLevelDistrict )
-        {
-            if( zoom > 0.00015f && zoom <= 0.00045f )
-            {
-                name = object_.GetName().toStdString();
-                if( zoom <= 0.0002f )
-                    nameSize = static_cast< unsigned int >( nameSize * zoom * 5600 );
-                else if( zoom <= 0.0003f )
-                    nameSize = static_cast< unsigned int >( nameSize * zoom * 5100 );
-                else if( zoom <= 0.00045f )
-                    nameSize = static_cast< unsigned int >( nameSize * zoom * 4300 );
-            }
-            tools.DrawConvexDecoratedPolygon( polygon_, object_.Get< kernel::UrbanColor_ABC >(), name, nameSize, selected_ );
-        }
-        else // EUrbanLevelCity
-        {
-            if( zoom <= 0.00015f )
-            {
-                name = object_.GetName().toStdString();
-                nameSize = static_cast< unsigned int >( nameSize * zoom * 11300 );
-            }
-            tools.DrawConvexDecoratedPolygon( polygon_, object_.Get< kernel::UrbanColor_ABC >(), name, nameSize, selected_ );
-        }
+        tools.DrawDecoratedPolygon( polygon_, name, nameSize );
+        if( selected_ )
+            tools.DrawSelectedPolygon( polygon_.Vertices() );
     }
 }
 
@@ -282,53 +250,6 @@ void UrbanPositions::ResetConvexHull()
 {
     if( level_ != eUrbanLevelBlock )
         polygon_ = geometry::Polygon2f();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanPositions::ComputeConvexHull
-// Created: JSR 2012-05-15
-// -----------------------------------------------------------------------------
-void UrbanPositions::ComputeConvexHull( std::vector< geometry::Point2f >& points ) const
-{
-    std::vector< geometry::Point2f > vertices;
-    const kernel::Hierarchies& hierarchies = object_.Get< kernel::Hierarchies >();
-    tools::Iterator< const kernel::Entity_ABC& > it = hierarchies.CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-    {
-        const kernel::Entity_ABC& child = it.NextElement();
-        const std::vector< geometry::Point2f >& pos = child.Get< kernel::UrbanPositions_ABC >().Vertices();
-        vertices.insert( vertices.end(), pos.begin(), pos.end() );
-    }
-    if( !vertices.empty() )
-    {
-        geometry::Point2f maxLeft = *vertices.begin();
-        geometry::Point2f maxRight = maxLeft;
-
-        for( auto it = vertices.begin(); it != vertices.end(); ++it )
-        {
-            if( it->X() < maxLeft.X() )
-                maxLeft = *it;
-            if( it->X() > maxRight.X() )
-                maxRight = *it;
-        }
-        points.push_back( maxLeft );
-        points.push_back( maxRight );
-        unsigned int nPoint = 0;
-        while( nPoint != points.size() )
-        {
-            unsigned int nFollowingPoint = ( nPoint + 1 ) % points.size();
-            geometry::Vector2f direction( points[ nPoint ], points[ nFollowingPoint ] );
-            direction.Normalize();
-            geometry::Point2f worst;
-            if( FindOuterPoint( vertices.begin(), vertices.end(), points[ nPoint ], direction, worst ) )
-            {
-                points.insert( points.begin() + nFollowingPoint, worst );
-                nPoint = 0;
-            }
-            else
-                ++nPoint;
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------

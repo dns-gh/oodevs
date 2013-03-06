@@ -15,6 +15,7 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 using namespace gui;
@@ -70,6 +71,19 @@ QColor SelectionColorModifier::Apply( const kernel::Entity_ABC& entity, const QC
 }
 
 // -----------------------------------------------------------------------------
+// Name: SelectionColorModifier::Apply
+// Created: LGY 2013-03-06
+// -----------------------------------------------------------------------------
+float SelectionColorModifier::Apply( const kernel::Entity_ABC& entity, float alpha ) const
+{
+    if( entity.GetTypeName() == kernel::UrbanObject_ABC::typeName_ )
+        if( selectedEntity_ == &entity ||
+            std::find( selectedElements_.begin(), selectedElements_.end(), &entity ) != selectedElements_.end() )
+            return alpha * 0.6f;
+    return alpha;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SelectionColorModifier::Select
 // Created: AGE 2008-05-14
 // -----------------------------------------------------------------------------
@@ -94,4 +108,13 @@ QColor SelectionColorModifier::SelectedColor( const QColor& base )
 QColor SelectionColorModifier::SuperiorSelectedColor( const QColor& base )
 {
     return base.light( 120 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SelectionColorModifier::MultipleSelect
+// Created: LGY 2013-03-06
+// -----------------------------------------------------------------------------
+void SelectionColorModifier::NotifySelectionChanged( const T_Elements& elements )
+{
+    selectedElements_ = elements;
 }
