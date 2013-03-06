@@ -72,8 +72,8 @@ private:
     //@{
     Handler_ABC& handler_;
     std::auto_ptr< tools::ThreadPool > pool_;
-    std::auto_ptr< boost::interprocess::message_queue > queue_;
     std::auto_ptr< Counter > counter_;
+    std::auto_ptr< boost::interprocess::message_queue > queue_;
     //@}
 };
 }

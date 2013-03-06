@@ -76,11 +76,11 @@ struct tools::ipc::Queue::Counter : public boost::noncopyable
 Queue::Queue( Handler_ABC& handler )
     : handler_( handler )
     , pool_   ( new tools::ThreadPool( 1 ) )
-    , queue_  ( MakeQueue() )
     , counter_( new Counter() )
 {
     if( counter_->value > 0 )
         throw MASA_EXCEPTION( "Unable to start multiple IPC queues" );
+    queue_.reset( MakeQueue() );
     pool_->Post( boost::bind( &Queue::Run, this ) );
 }
 
