@@ -18,6 +18,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "MT_Tools/MT_Logger.h"
 #include <core/ModelListener_ABC.h>
 #include <core/Model.h>
 #include <core/UserData.h>
@@ -123,7 +124,19 @@ RoleAdapter::RoleAdapter( Sink& sink, MIL_AgentPion& pion, core::Model& entity )
 // -----------------------------------------------------------------------------
 RoleAdapter::~RoleAdapter()
 {
-    // NOTHING
+    try
+    {
+        if( entity_ )
+            entity_->Remove();
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Entity removal failed : " << e.what() );
+    }
+    catch( ... )
+    {
+        MT_LOG_ERROR_MSG( "Entity removal failed for an unknown reason" );
+    }
 }
 
 namespace

@@ -117,7 +117,7 @@ void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante
 RolePion_Composantes::T_Dotations RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& composante )
 {
     auto it = components_.find( &composante );
-    it->second->Remove();
+    it->second->Remove(); // $$$$ MCO 2013-03-05: won't trigger listeners, post removal event instead ?
     components_.erase( it );
     return PHY_RolePion_Composantes::NotifyComposanteRemoved( composante );
 }
