@@ -54,10 +54,10 @@ namespace
             return devVersion;
         info = *reinterpret_cast< VS_FIXEDFILEINFO* >( buffer );
         std::stringstream stream;
-        stream << ( info.dwProductVersionMS >> 16  ) << "."
-               << ( info.dwProductVersionMS & 0xFF ) << "."
-               << ( info.dwProductVersionLS >> 16  ) << "."
-               << ( info.dwProductVersionLS & 0xFF );
+        stream << ( info.dwProductVersionMS >> 16    ) << "."
+               << ( info.dwProductVersionMS & 0xFFFF ) << "."
+               << ( info.dwProductVersionLS >> 16    ) << "."
+               << ( info.dwProductVersionLS & 0xFFFF );
         return stream.str();
     }
 
