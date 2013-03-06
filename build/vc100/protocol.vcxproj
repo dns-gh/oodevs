@@ -78,7 +78,7 @@
     <PreBuildEvent>
       <Message>
       </Message>
-      <Command>python $(SrcDir)/protolint.py  $(SrcDir)/proto style</Command>
+      <Command>python $(SrcDir)/../../../bin/protolint/protolint.py style $(SrcDir)/proto</Command>
     </PreBuildEvent>
     <ClCompile />
     <Lib />
@@ -90,7 +90,7 @@
     <PreBuildEvent>
       <Message>
       </Message>
-      <Command>python $(SrcDir)/protolint.py  $(SrcDir)/proto style</Command>
+      <Command>python $(SrcDir)/../../../bin/protolint/protolint.py style $(SrcDir)/proto</Command>
     </PreBuildEvent>
     <ClCompile />
     <Lib />
@@ -102,7 +102,7 @@
     <PreBuildEvent>
       <Message>
       </Message>
-      <Command>python $(SrcDir)/protolint.py  $(SrcDir)/proto style</Command>
+      <Command>python $(SrcDir)/../../../bin/protolint/protolint.py style $(SrcDir)/proto</Command>
     </PreBuildEvent>
     <ClCompile />
     <Lib />
@@ -114,7 +114,7 @@
     <PreBuildEvent>
       <Message>
       </Message>
-      <Command>python $(SrcDir)/protolint.py  $(SrcDir)/proto style</Command>
+      <Command>python $(SrcDir)/../../../bin/protolint/protolint.py style $(SrcDir)/proto</Command>
     </PreBuildEvent>
     <ClCompile />
     <Lib />
