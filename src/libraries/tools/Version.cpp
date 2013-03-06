@@ -13,11 +13,54 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/regex.hpp>
 #include <vector>
-
-#include "version_defines.h"
+#include <windows.h>
+#pragma comment(lib, "version.lib")
 
 namespace
 {
+    const std::string devVersion = "5.2.0.0";
+
+    std::wstring GetModuleFilename()
+    {
+        DWORD ret;
+        std::vector< wchar_t > buffer( 256 );
+        for(;;)
+        {
+            ret = ::GetModuleFileNameW( 0, &buffer[0], static_cast< DWORD >( buffer.size() ) );
+            if( ret < static_cast< DWORD >( buffer.size() ) || ::GetLastError() != ERROR_INSUFFICIENT_BUFFER )
+                break;
+            buffer.resize( buffer.size() * 2 );
+        }
+        return std::wstring( &buffer[0], ret );
+    }
+
+    std::string GetAppVersion()
+    {
+        const std::wstring module = GetModuleFilename();
+        DWORD dummy;
+        const DWORD size = GetFileVersionInfoSizeW( module.c_str(), &dummy );
+        if( !size )
+            return devVersion;
+        std::vector< uint8_t > data( size );
+        DWORD err = GetFileVersionInfoW( module.c_str(), NULL, size, &data[0] );
+        if( !err )
+            return devVersion;
+        void* buffer; UINT bufsize;
+        BOOL ret = VerQueryValueW( &data[0], L"\\", &buffer, &bufsize );
+        if( !ret )
+            return devVersion;
+        VS_FIXEDFILEINFO info;
+        if( bufsize != sizeof info )
+            return devVersion;
+        info = *reinterpret_cast< VS_FIXEDFILEINFO* >( buffer );
+        std::stringstream stream;
+        stream << ( info.dwProductVersionMS >> 16  ) << "."
+               << ( info.dwProductVersionMS & 0xFF ) << "."
+               << ( info.dwProductVersionLS >> 16  ) << "."
+               << ( info.dwProductVersionLS & 0xFF );
+        return stream.str();
+    }
+
     typedef std::vector< std::string > T_Tokens;
 
     T_Tokens Split( const std::string& value )
@@ -33,8 +76,8 @@ namespace
         return boost::algorithm::join( slice, "." );
     }
 
-    const std::string version = APP_VERSION;
-    const std::string model   = APP_MODEL;
+    const std::string version = GetAppVersion();
+    const std::string model   = "4.8.0";
     const T_Tokens    tokens  = Split( version );
     const std::string project = Splice( tokens, 2 );
     const std::string major   = Splice( tokens, 3 );
