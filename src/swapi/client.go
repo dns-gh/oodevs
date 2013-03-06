@@ -10,6 +10,7 @@ package swapi
 
 import (
 	"errors"
+	"io"
 	"net"
 	"time"
 )
@@ -63,6 +64,7 @@ type Client struct {
 	events      chan SwordMessage
 	errors      chan HandlerError
 	quit        chan bool
+	eof         bool
 }
 
 func NewClient(address string) (*Client, error) {
@@ -103,10 +105,11 @@ func Connect(host string) (*Client, error) {
 }
 
 func (c *Client) Close() {
+	c.eof = true
 	c.quit <- true
 	close(c.posts)
-	c.link.Close()
 	c.ticker.Stop()
+	c.link.Close()
 	for context, handler := range c.handlers {
 		handler(nil, context, ErrConnectionClosed)
 	}
@@ -202,6 +205,9 @@ func (c *Client) listen(errors chan<- error) {
 		msg := SwordMessage{}
 		err := reader.Decode(&msg)
 		if err != nil {
+			if c.eof {
+				err = io.EOF
+			}
 			errors <- err
 			return
 		}
