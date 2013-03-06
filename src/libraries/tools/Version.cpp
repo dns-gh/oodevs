@@ -77,7 +77,7 @@ namespace
     }
 
     const std::string version = GetAppVersion();
-    const std::string model   = "4.8.0";
+    const std::string model   = "4.8.2";
     const T_Tokens    tokens  = Split( version );
     const std::string project = Splice( tokens, 2 );
     const std::string major   = Splice( tokens, 3 );
