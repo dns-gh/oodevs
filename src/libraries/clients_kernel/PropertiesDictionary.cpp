@@ -39,9 +39,15 @@ PropertiesDictionary::~PropertiesDictionary()
 // -----------------------------------------------------------------------------
 void PropertiesDictionary::Remove( const QString& name )
 {
-    IT_Properties it = properties_.find( name );
-    if( it != properties_.end() )
-        properties_.erase( it );
+    for( IT_Properties it = properties_.begin(); it != properties_.end(); )
+    {
+        IT_Properties curIt = it++;
+        if( curIt->first.startsWith( name, Qt::CaseInsensitive ) )
+        {
+            controller_.Delete( kernel::DictionaryUpdated( curIt->second->GetOwner(), curIt->first ) );
+            properties_.erase( curIt );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

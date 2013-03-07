@@ -20,20 +20,20 @@ using namespace kernel;
 // Name: OccupantAttribute constructor
 // Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
-OccupantAttribute::OccupantAttribute( kernel::PropertiesDictionary& dictionary )
+OccupantAttribute::OccupantAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : iMaxSize_( 0 )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: OccupantAttribute constructor
 // Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
-OccupantAttribute::OccupantAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+OccupantAttribute::OccupantAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : iMaxSize_( xis.attribute< int >("max-size") )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ void OccupantAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: OccupantAttribute::CreateDictionary
 // Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
-void OccupantAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void OccupantAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "Object", "Info/Occupant attributes/Max Entities" ), iMaxSize_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "Object", "Info/Occupant attributes/Max Entities" ), iMaxSize_ );
 }

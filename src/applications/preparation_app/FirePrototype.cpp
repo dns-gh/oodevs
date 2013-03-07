@@ -46,7 +46,7 @@ void FirePrototype::Commit( const kernel::Team_ABC& )
     if( creation_ )
     {
         PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
-        FireAttribute* attribute = new FireAttribute( dictionary );
+        FireAttribute* attribute = new FireAttribute( dictionary, *creation_ );
         attribute->SetClass( *fireClass_->GetValue() );
         attribute->SetMaxCombustionEnergy( maxCombustionEnergy_->value() );
         creation_->Attach( *attribute );

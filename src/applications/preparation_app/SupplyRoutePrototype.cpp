@@ -47,7 +47,7 @@ void SupplyRoutePrototype::Commit( const kernel::Team_ABC& )
     if( creation_ )
     {
         PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
-        SupplyRouteAttribute* attribute = new SupplyRouteAttribute( dictionary );
+        SupplyRouteAttribute* attribute = new SupplyRouteAttribute( dictionary, *creation_ );
         {
             attribute->SetFlow( flow_->value() );
             attribute->SetWidth( width_->value() );

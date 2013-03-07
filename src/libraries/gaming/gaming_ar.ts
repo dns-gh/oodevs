@@ -248,13 +248,6 @@
     </message>
 </context>
 <context>
-    <name>AutomatHierarchies</name>
-    <message>
-        <source>Hierarchies/Superior</source>
-        <translation type="unfinished">التسلسلات الهرمية/سوبيريور</translation>
-    </message>
-</context>
-<context>
     <name>Block</name>
     <message>
         <source>Infrastructure/Enable</source>

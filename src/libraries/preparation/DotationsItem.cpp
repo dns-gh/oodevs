@@ -50,7 +50,6 @@ void DotationsItem::AddDotation( const Dotation& dotation )
 {
     const QString property = propertyName_ + "/" + dotation.type_.GetName().c_str();
     dico_.Register( owner_, property, const_cast< unsigned int& >( dotation.quantity_ ) );
-    controller_.Create( kernel::DictionaryUpdated( owner_, property ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +75,6 @@ void DotationsItem::RemoveDotation( const DotationType& type )
     {
         const QString property = propertyName_ + "/" + type.GetName().c_str();
         dico_.Remove( property );
-        controller_.Delete( kernel::DictionaryUpdated( owner_, property ) );
         dotations_.Remove( type.GetId() );
     }
 }
@@ -103,7 +101,6 @@ void DotationsItem::Clear()
         dico_.Remove( propertyName_ + "/" + dotation.type_.GetName().c_str() );
     }
     dotations_.DeleteAll();
-    controller_.Delete( kernel::DictionaryUpdated( owner_, propertyName_ ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -46,7 +46,7 @@ void UndergroundPrototype::Commit( const kernel::Team_ABC& )
     if( creation_ )
     {
         PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
-        UndergroundAttribute* attribute = new UndergroundAttribute( dictionary, controller_ );
+        UndergroundAttribute* attribute = new UndergroundAttribute( dictionary, controller_, *creation_ );
         attribute->SetNetwork( network_->currentText().toStdString() );
         creation_->Attach( *attribute );
     }

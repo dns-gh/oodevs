@@ -202,5 +202,6 @@ void PropertyModel::Update( QStandardItem* parent, QStandardItem* property )
         for( int i = 0; i < childCount; ++i )
             Update( property, property->child( i ) );
     else if( PropertyItem* item = static_cast< PropertyItem* >( parent->child( property->row(), 1 ) ) )
+        if( !item->text().isEmpty() )
             item->Update();
 }

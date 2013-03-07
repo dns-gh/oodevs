@@ -46,7 +46,7 @@ void TrafficabilityPrototype::Commit( const kernel::Team_ABC& )
     if( creation_ )
     {
         PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
-        TrafficabilityAttribute* attribute = new TrafficabilityAttribute( dictionary, maxWeight_->text().toDouble() );
+        TrafficabilityAttribute* attribute = new TrafficabilityAttribute( dictionary, maxWeight_->text().toDouble(), *creation_ );
         creation_->Attach( *attribute );
     }
 }

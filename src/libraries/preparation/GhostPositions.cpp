@@ -39,7 +39,7 @@ namespace
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
 GhostPositions::GhostPositions( const kernel::Ghost_ABC& ghost, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller,
-                                const geometry::Point2f& position, kernel::PropertiesDictionary& dictionary )
+                                const geometry::Point2f& position, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : ghost_     ( ghost )
     , converter_ ( converter )
     , controller_( controller )
@@ -48,14 +48,15 @@ GhostPositions::GhostPositions( const kernel::Ghost_ABC& ghost, const kernel::Co
     , height_    ( 0 )
     , aggregated_( false )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GhostPositions constructor
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
-GhostPositions::GhostPositions( xml::xistream& xis, const kernel::Ghost_ABC& ghost, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, kernel::PropertiesDictionary& dico )
+GhostPositions::GhostPositions( xml::xistream& xis, const kernel::Ghost_ABC& ghost, const kernel::CoordinateConverter_ABC& converter,
+                                kernel::Controller& controller, kernel::PropertiesDictionary& dico, const kernel::Entity_ABC& entity )
     : ghost_     ( ghost )
     , converter_ ( converter )
     , controller_( controller )
@@ -64,7 +65,7 @@ GhostPositions::GhostPositions( xml::xistream& xis, const kernel::Ghost_ABC& gho
     , height_    ( 0 )
     , aggregated_( false )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dico, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,9 +194,9 @@ void GhostPositions::Move( const geometry::Point2f& position )
 // Name: GhostPositions::CreateDictionary
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
-void GhostPositions::CreateDictionary( kernel::PropertiesDictionary& dico )
+void GhostPositions::CreateDictionary( kernel::PropertiesDictionary& dico, const kernel::Entity_ABC& entity )
 {
-    dico.Register( (const GhostPositions*)this, tools::translate( "GhostPositions", "Info/Position" ), moveable_ );
+    dico.RegisterExtension( entity, this, tools::translate( "GhostPositions", "Info/Position" ), moveable_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -85,7 +85,6 @@ void Affinities::Update( const T& message )
                 kernel::Team_ABC& team = teams_.GetTeam( it->first );
                 dico_.Remove(  baseName_ + QString( "/%1" ).arg( team.GetName() ) );
             }
-            controller_.Delete( kernel::DictionaryUpdated( entity_, baseName_ ) );
             affinities_.clear();
         }
         for( int i = 0; i < message.adhesions().adhesion_size(); ++i )
@@ -94,7 +93,7 @@ void Affinities::Update( const T& message )
             affinities_[ adhesion.party().id() ] = adhesion.value();
             kernel::Team_ABC& team = teams_.GetTeam( adhesion.party().id() );
             CIT_Affinities it = affinities_.find( adhesion.party().id() );
-            dico_.Register( *this, baseName_ + QString( "/%1" ).arg( team.GetName() ), it->second );
+            dico_.RegisterExtension( entity_, this, baseName_ + QString( "/%1" ).arg( team.GetName() ), it->second );
             controller_.Update( kernel::DictionaryUpdated( entity_, baseName_ ) );
         }
     }

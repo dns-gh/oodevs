@@ -37,6 +37,12 @@ public:
     QStandardItem* CreateItem( QStandardItem& parent, const QString& name, const QString& path );
     void Delete( const QString& category );
     //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void RemoveIfEmpty( QStandardItem& item );
+    //@}
 };
 
 }

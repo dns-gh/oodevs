@@ -20,19 +20,19 @@ using namespace kernel;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 InputToxicCloudAttribute::InputToxicCloudAttribute( kernel::PropertiesDictionary& dictionary, const QString& source,
-                                                    const QString& dataField, bool bExport )
+                                                    const QString& dataField, bool bExport, const kernel::Entity_ABC& entity )
     : source_   ( source )
     , dataField_( dataField )
     , bExport_  ( bExport )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InputToxicCloudAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : bExport_( true )
 {
     std::string source, dataField;
@@ -43,7 +43,7 @@ InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis, kernel::
     source_ = source.c_str();
     dataField_ = dataField.c_str();
 
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,9 +73,9 @@ void InputToxicCloudAttribute::SerializeObjectAttributes( xml::xostream& xos ) c
 // Name: InputToxicCloudAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void InputToxicCloudAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data source" ), source_, true );
-    dictionary.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data field" ), dataField_, true );
-    dictionary.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data export" ), bExport_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data source" ), source_, true );
+    dictionary.RegisterExtension( entity, this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data field" ), dataField_, true );
+    dictionary.RegisterExtension( entity, this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data export" ), bExport_ );
 }

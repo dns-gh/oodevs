@@ -43,7 +43,7 @@ void ConstructionPrototype::Commit( const kernel::Team_ABC& )
     if( creation_ )
     {
         kernel::PropertiesDictionary& dictionary = creation_->Get< kernel::PropertiesDictionary >();
-        ConstructionAttribute* attribute = new ConstructionAttribute( dictionary );
+        ConstructionAttribute* attribute = new ConstructionAttribute( dictionary, *creation_ );
         attribute->SetCompletion( completion_->value() );
         creation_->Attach( *attribute );
     }

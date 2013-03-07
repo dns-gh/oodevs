@@ -20,20 +20,20 @@ using namespace kernel;
 // Name: MineAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( kernel::PropertiesDictionary& dictionary )
+MineAttribute::MineAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : density_( 0, Units::percentage )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MineAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+MineAttribute::MineAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : density_( xis.attribute< float >( "density", 0. ) * 100., Units::percentage )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ void MineAttribute::SetDensity( float density )
 // Name: MineAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void MineAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void MineAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "MineAttribute", "Info/Improvable/Value" ), density_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "MineAttribute", "Info/Improvable/Value" ), density_ );
 }

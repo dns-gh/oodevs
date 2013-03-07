@@ -214,10 +214,6 @@
         <translation>Threshold:</translation>
     </message>
     <message>
-        <source>Info/Infrastructure</source>
-        <translation>Info/Infrastructure</translation>
-    </message>
-    <message>
         <source>Info/Infrastructure/Type</source>
         <translation>Info/Infrastructure/Type</translation>
     </message>

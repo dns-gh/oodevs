@@ -22,19 +22,19 @@ using namespace kernel;
 // Name: StockAttribute constructor
 // Created: BCI 2011-02-04
 // -----------------------------------------------------------------------------
-StockAttribute::StockAttribute( kernel::PropertiesDictionary& dictionary )
+StockAttribute::StockAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: StockAttribute constructor
 // Created: BCI 2011-02-04
 // -----------------------------------------------------------------------------
-StockAttribute::StockAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dictionary )
+StockAttribute::StockAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     xis >> xml::list( "resource", *this, &StockAttribute::ReadResource, boost::cref( resolver ) );
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,12 +82,12 @@ void StockAttribute::ReadResource( xml::xistream& xis, const tools::Resolver_ABC
 // Name: StockAttribute::CreateDictionary
 // Created: BCI 2011-02-04
 // -----------------------------------------------------------------------------
-void StockAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void StockAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     for( StockDotations::const_iterator it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
     {
-        dictionary.Register( *this, tools::translate( "StockAttribute", std::string( "Info/Stock attributes/" + it->first->GetName() + "/Current" ).c_str() ), it->second.stock_ );
-        dictionary.Register( *this, tools::translate( "StockAttribute", std::string( "Info/Stock attributes/" + it->first->GetName() + "/Max" ).c_str() ), it->second.maxStock_ );
+        dictionary.RegisterExtension( entity, this, tools::translate( "StockAttribute", std::string( "Info/Stock attributes/" + it->first->GetName() + "/Current" ).c_str() ), it->second.stock_ );
+        dictionary.RegisterExtension( entity, this, tools::translate( "StockAttribute", std::string( "Info/Stock attributes/" + it->first->GetName() + "/Max" ).c_str() ), it->second.maxStock_ );
     }
 }
 

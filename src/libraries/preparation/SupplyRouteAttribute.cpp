@@ -20,21 +20,21 @@ using namespace kernel;
 // Name: SupplyRouteAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-SupplyRouteAttribute::SupplyRouteAttribute( kernel::PropertiesDictionary& dictionary )
+SupplyRouteAttribute::SupplyRouteAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : flow_     ( 0, Units::vehiclesPerHour )
     , width_    ( 0, Units::meters )
     , length_   ( 0, Units::meters )
     , maxWeight_( 0, Units::tons )
     , equipped_ ( false )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-SupplyRouteAttribute::SupplyRouteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+SupplyRouteAttribute::SupplyRouteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : flow_     ( 0, Units::vehiclesPerHour )
     , width_    ( 0, Units::meters )
     , length_   ( 0, Units::meters )
@@ -46,7 +46,7 @@ SupplyRouteAttribute::SupplyRouteAttribute( xml::xistream& xis, kernel::Properti
         >> xml::content( "length", (int&)(length_.value_) )
         >> xml::content( "max-weight", (int&)(maxWeight_.value_) )
         >> xml::content( "equipped", equipped_ );
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,11 +136,11 @@ void SupplyRouteAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: SupplyRouteAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void SupplyRouteAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Flow" ), flow_ );
-    dictionary.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Width" ), width_ );
-    dictionary.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Length" ), length_ );
-    dictionary.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Maximum weight" ), maxWeight_ );
-    dictionary.Register( *this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Equipped" ), equipped_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Flow" ), flow_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Width" ), width_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Length" ), length_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Maximum weight" ), maxWeight_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Equipped" ), equipped_ );
 }

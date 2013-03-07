@@ -93,32 +93,32 @@ Attributes::~Attributes()
 void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
 {
     // $$$$ AGE 2006-06-22: unité !
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Operational state" ),               nRawOpState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Dead" ),                            bDead_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Neutralized" ),                     bNeutralized_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Speed" ),                           nSpeed_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Heading" ),                         nDirection_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Underground" ),                     bUnderground_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Neutralized" ),                     bNeutralized_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Troops on board" ),                 bLoadingState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Human transportation available" ),  bHumanTransportersReady_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Stances/Current stance" ),               nCurrentPosture_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Stances/Setup state" ),                  nInstallationState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Communications/Jammed" ),                bCommJammed_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Communications/Radio Emitter silence" ), bRadioEmitterSilence_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Communications/Radio Receiver silence" ),bRadioReceiverSilence_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Operational state" ),   nOpState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Rules of engagement" ), nRulesOfEngagementState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Crowd RoE" ),           nRulesOfEngagementPopulationState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Intention" ),           nCloseCombatState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Force ratio" ),         nFightRateState_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Decisional state/Indirect fire availability" ), nIndirectFireAvailability_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Military state/Prisoner" ),              bPrisoner_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Military state/Surrender" ),             surrenderedTo_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Military state/Refugees picked up" ),    bRefugeesManaged_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Lodging" ),                 fLodgingSatisfactionPercent_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Security" ),                fSecuritySatisfactionPercent_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Health" ),                  fHealthSatisfactionPercent_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Info/Operational state" ),               nRawOpState_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Info/Dead" ),                            bDead_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Info/Neutralized" ),                     bNeutralized_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Info/Speed" ),                           nSpeed_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Info/Heading" ),                         nDirection_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Info/Underground" ),                     bUnderground_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Info/Neutralized" ),                     bNeutralized_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Info/Troops on board" ),                 bLoadingState_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Info/Human transportation available" ),  bHumanTransportersReady_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Stances/Current stance" ),               nCurrentPosture_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Stances/Setup state" ),                  nInstallationState_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Communications/Jammed" ),                bCommJammed_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Communications/Radio Emitter silence" ), bRadioEmitterSilence_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Communications/Radio Receiver silence" ),bRadioReceiverSilence_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Decisional state/Operational state" ),   nOpState_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Decisional state/Rules of engagement" ), nRulesOfEngagementState_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Decisional state/Crowd RoE" ),           nRulesOfEngagementPopulationState_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Decisional state/Intention" ),           nCloseCombatState_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Decisional state/Force ratio" ),         nFightRateState_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Decisional state/Indirect fire availability" ), nIndirectFireAvailability_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Military state/Prisoner" ),              bPrisoner_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Military state/Surrender" ),             surrenderedTo_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Military state/Refugees picked up" ),    bRefugeesManaged_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Satisfaction/Lodging" ),                 fLodgingSatisfactionPercent_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Satisfaction/Security" ),                fSecuritySatisfactionPercent_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Satisfaction/Health" ),                  fHealthSatisfactionPercent_ );
 }
 
 // -----------------------------------------------------------------------------

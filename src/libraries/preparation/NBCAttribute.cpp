@@ -23,22 +23,23 @@ using namespace kernel;
 // Name: NBCAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-NBCAttribute::NBCAttribute( kernel::PropertiesDictionary& dictionary )
+NBCAttribute::NBCAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : state_ ( "gaseous" )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-NBCAttribute::NBCAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents, kernel::PropertiesDictionary& dictionary )
+NBCAttribute::NBCAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents,
+                            kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : state_ ( xis.attribute< std::string >( "state", "gaseous" ) )
     , danger_( xis.attribute< int >( "danger", 0 ) )
 {
     xis >> xml::list( "nbc-agent", *this, &NBCAttribute::ReadNbcAgent, nbcAgents );
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,9 +122,9 @@ void NBCAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: NBCAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void NBCAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void NBCAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "NBCAttribute", "Info/NBC attributes/NBC state" ), state_ );
-    dictionary.Register( *this, tools::translate( "NBCAttribute", "Info/NBC attributes/Danger" ), danger_ );
-    dictionary.Register( *this, tools::translate( "NBCAttribute", "Info/NBC attributes/NBC agents" ), agents_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "NBCAttribute", "Info/NBC attributes/NBC state" ), state_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "NBCAttribute", "Info/NBC attributes/Danger" ), danger_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "NBCAttribute", "Info/NBC attributes/NBC agents" ), agents_ );
 }

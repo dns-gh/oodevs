@@ -155,7 +155,7 @@ void Equipments::Update( const std::vector< Equipment >& differences )
             *equipment = *equipment + *it;
             if( equipment->Total() == 0 )
             {
-                controller_.Delete( kernel::DictionaryUpdated( entity_, property_ + "/" + it->GetName() )  );
+                RemoveFromDictionary( *equipment );
                 Remove( it->type_.GetId() );
             }
         }
@@ -185,6 +185,15 @@ void Equipments::SetSuperior( const kernel::Entity_ABC& automat )
             std::transform( differences.begin(), differences.end(), differences.begin(), std::negate< Equipment >() );
             equipments->Update( differences );
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Equipments::RemoveFromDictionary
+// Created: AGE 2013-03-06
+// -----------------------------------------------------------------------------
+void Equipments::RemoveFromDictionary( const Equipment& equipment )
+{
+    dico_.Remove( property_ + "/" + equipment.GetName() );
 }
 
 // -----------------------------------------------------------------------------

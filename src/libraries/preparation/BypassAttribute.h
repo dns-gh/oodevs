@@ -19,6 +19,7 @@ namespace kernel
     class Displayer_ABC;
     class NBCAgent;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -38,8 +39,8 @@ class BypassAttribute : public kernel::BypassAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit BypassAttribute( kernel::PropertiesDictionary& dictionary );
-             BypassAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
+    explicit BypassAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             BypassAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~BypassAttribute();
     //@}
 
@@ -64,7 +65,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dico, const kernel::Entity_ABC& entity );
     //@}
 
 private:

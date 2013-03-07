@@ -43,7 +43,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PhysicalAttribute( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
-                                gui::UrbanObject& urbanObject, const kernel::ObjectTypes& objectTypes, kernel::Controller& controller );
+                                gui::UrbanObject& urbanObject, const kernel::ObjectTypes& objectTypes );
     virtual ~PhysicalAttribute();
     //@}
 };

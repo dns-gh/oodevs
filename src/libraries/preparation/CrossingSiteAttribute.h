@@ -18,6 +18,7 @@ namespace kernel
 {
     class Displayer_ABC;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -37,8 +38,8 @@ class CrossingSiteAttribute : public kernel::CrossingSiteAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CrossingSiteAttribute( kernel::PropertiesDictionary& dictionary );
-             CrossingSiteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
+    explicit CrossingSiteAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             CrossingSiteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~CrossingSiteAttribute();
     //@}
 
@@ -65,7 +66,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 public:

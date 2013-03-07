@@ -30,6 +30,7 @@ namespace kernel
     class DetectionMap;
     class Positions;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -54,8 +55,8 @@ class FloodAttribute : public kernel::FloodAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FloodAttribute( kernel::PropertiesDictionary& dico, const kernel::DetectionMap& detection, const kernel::Positions& positions, kernel::Controllers& controllers );
-             FloodAttribute( xml::xistream& xis, const kernel::DetectionMap& detection, const kernel::Positions& positions, kernel::PropertiesDictionary& dico, kernel::Controllers& controllers );
+    explicit FloodAttribute( kernel::PropertiesDictionary& dico, const kernel::DetectionMap& detection, const kernel::Positions& positions, kernel::Controllers& controllers, const kernel::Entity_ABC& entity );
+             FloodAttribute( xml::xistream& xis, const kernel::DetectionMap& detection, const kernel::Positions& positions, kernel::PropertiesDictionary& dico, kernel::Controllers& controllers, const kernel::Entity_ABC& entity );
     virtual ~FloodAttribute();
     //@}
 
@@ -78,7 +79,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dico, const kernel::Entity_ABC& entity );
     //@}
 
 private:

@@ -48,7 +48,7 @@ void AltitudeModifierPrototype::Commit( const kernel::Team_ABC& )
     if( creation_ )
     {
         PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
-        AltitudeModifierAttribute* attribute = new AltitudeModifierAttribute( dictionary, detection_, *creation_, controllers_ );
+        AltitudeModifierAttribute* attribute = new AltitudeModifierAttribute( dictionary, detection_, *creation_, controllers_, *creation_ );
         attribute->SetHeight( height_->value() );
         creation_->Attach( *attribute );
     }

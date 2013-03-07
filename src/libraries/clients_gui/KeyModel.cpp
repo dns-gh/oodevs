@@ -100,16 +100,55 @@ QStandardItem* KeyModel::CreateItem( QStandardItem& parent, const QString& name,
 }
 
 // -----------------------------------------------------------------------------
+// Name: KeyModel::RemoveIfEmpty
+// Created: MMC 2013-03-06
+// -----------------------------------------------------------------------------
+void KeyModel::RemoveIfEmpty( QStandardItem& item )
+{
+    if( &item == invisibleRootItem() )
+        return;
+    if( item.hasChildren() )
+        return;
+    QStandardItem* pParent = FindParent( &item );
+    if( !pParent )
+        return;
+    QStandardItem* pValueItem = pParent->child( item.row(), 1 );
+    if( !pValueItem || ( pValueItem && pValueItem->text().isEmpty() ) )
+    {
+        pParent->removeRow( item.row() );
+        RemoveIfEmpty( *pParent );
+    }
+}
+
+namespace
+{
+    void RemoveChildren( QStandardItem& item )
+    {
+        while( item.rowCount() > 0 )
+        {
+            RemoveChildren( *item.child( 0 ) );
+            item.removeRow( 0 );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: KeyModel::Delete
 // Created: LGY 2012-10-01
 // -----------------------------------------------------------------------------
 void KeyModel::Delete( const QString& category )
 {
     QStandardItem* item = FindItem( category );
-    if( item )
-    {
-        QList< QStandardItem* > rowItems = FindParent( item )->takeRow( item->row() );
-        for( QList< QStandardItem *>::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
-            delete *it;
-    }
+    if( !item )
+        return;
+    QStandardItem* pParent = FindParent( item );
+    if( !pParent )
+        return;
+    int curRow = item->row();
+    QStandardItem* pRowItem = pParent->child( curRow );
+    if( !pRowItem )
+        return;
+    RemoveChildren( *pRowItem );
+    pParent->removeRow( curRow );
+    RemoveIfEmpty( *pParent );
 }

@@ -41,7 +41,10 @@ InputPropagationPrototype::~InputPropagationPrototype()
 // -----------------------------------------------------------------------------
 void InputPropagationPrototype::Commit( const kernel::Team_ABC& )
 {
-    PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
-    creation_->Attach( *new InputToxicCloudAttribute( dictionary, propagationFiles_->currentText(),
-                        dataField_->GetValue().c_str(), exportData_->isChecked() ) );
+    if( creation_ )
+    {
+        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        creation_->Attach( *new InputToxicCloudAttribute( dictionary, propagationFiles_->currentText(),
+                            dataField_->GetValue().c_str(), exportData_->isChecked(), *creation_ ) );
+    }
 }

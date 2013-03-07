@@ -61,6 +61,6 @@ void DisasterPrototype::Commit( const kernel::Team_ABC& )
         QDateTime date;
         if( checkbox_->isChecked() )
             date = date_->dateTime();
-        creation_->Attach( *new DisasterAttribute( dictionary, propagationFiles_->currentText(), date ) );
+        creation_->Attach( *new DisasterAttribute( dictionary, propagationFiles_->currentText(), date, *creation_ ) );
     }
 }

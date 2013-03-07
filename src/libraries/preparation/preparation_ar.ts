@@ -214,10 +214,6 @@
         <translation type="unfinished">العتبة:</translation>
     </message>
     <message>
-        <source>Info/Infrastructure</source>
-        <translation type="unfinished">معلومات/البنية التحتية</translation>
-    </message>
-    <message>
         <source>Info/Infrastructure/Type</source>
         <translation type="unfinished">نوع/معلومات/البنية التحتية</translation>
     </message>

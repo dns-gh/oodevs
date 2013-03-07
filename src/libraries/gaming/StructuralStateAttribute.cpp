@@ -55,7 +55,7 @@ unsigned int StructuralStateAttribute::GetValue() const
 // -----------------------------------------------------------------------------
 void StructuralStateAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary ) const
 {
-    dictionary.Register( *this, property_, structuralState_ );
+    dictionary.RegisterExtension( entity_, this, property_, structuralState_ );
 }
 
 // -----------------------------------------------------------------------------

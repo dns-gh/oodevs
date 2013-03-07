@@ -57,7 +57,7 @@ LogisticBaseStates::~LogisticBaseStates()
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& entity )
 {
-    dico.Register( *(const LogisticHierarchiesBase*)this, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetLogisticSuperior );
+    dico.RegisterExtension( entity, static_cast< const LogisticHierarchiesBase* >( this ), tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetLogisticSuperior );
     if( canHaveQuotas_ )
     {
         item_ = new DotationsItem( controller_, entity, dico, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), *static_cast< Resolver< Dotation >* >( this ), false );

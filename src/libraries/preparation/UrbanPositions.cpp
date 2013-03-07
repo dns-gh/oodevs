@@ -73,7 +73,7 @@ UrbanPositions::UrbanPositions( xml::xistream& xis, kernel::PropertiesDictionary
     , converter_( converter )
     , level_( level )
 {
-    dictionary.Register( *this, tools::translate( "UrbanPositions", "Info/Area" ), area_, true );
+    dictionary.RegisterExtension( object, this, tools::translate( "UrbanPositions", "Info/Area" ), area_, true );
 }
 
 // -----------------------------------------------------------------------------

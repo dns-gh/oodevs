@@ -97,31 +97,31 @@ namespace
         template< typename T >
         static void Attach( Object_ABC& result, PropertiesDictionary& dico, xml::xistream& xis )
         {
-            result.Attach( *new T( xis, dico ) );
+            result.Attach( *new T( xis, dico, result ) );
         }
 
         template< typename T >
         static void Attach( Object_ABC& result, PropertiesDictionary& dico, kernel::Controller& controller, xml::xistream& xis )
         {
-            result.Attach( *new T( xis, controller, dico ) );
+            result.Attach( *new T( xis, controller, dico, result ) );
         }
 
         template< typename T, typename Helper >
         static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis )
         {
-            result.Attach( *new T( xis, helper, dico ) );
+            result.Attach( *new T( xis, helper, dico, result ) );
         }
 
         template< typename T, typename Helper >
         static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis, Controllers& controllers )
         {
-            result.Attach( *new T( xis, helper, dico, controllers ) );
+            result.Attach( *new T( xis, helper, dico, controllers, result ) );
         }
 
         template< typename T, typename Helper1, typename Helper2 >
         static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper1& helper1, const Helper2& helper2, xml::xistream& xis, Controllers& controllers )
         {
-            result.Attach( *new T( xis, helper1, helper2, dico, controllers ) );
+            result.Attach( *new T( xis, helper1, helper2, dico, controllers, result ) );
         }
     };
 
@@ -131,7 +131,7 @@ namespace
         template< typename T, typename Helper >
         static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis, Controllers& controllers )
         {
-            result.Attach( *new T( xis, helper, result.Get< Positions >(), dico, controllers ) );
+            result.Attach( *new T( xis, helper, result.Get< Positions >(), dico, controllers, result ) );
         }
     };
 
@@ -141,7 +141,7 @@ namespace
         template< typename T, typename Helper >
         static void Attach( Object_ABC& result, PropertiesDictionary& dico, Helper& helper, xml::xistream& xis, Controllers& controllers )
         {
-            result.Attach( *new T( xis, helper, result, dico, controllers ) );
+            result.Attach( *new T( xis, helper, result, dico, controllers, result ) );
         }
     };
 
@@ -167,6 +167,16 @@ namespace
                                               , xml::xistream& xis, Controllers& controllers )
         {
             result.Attach< gui::ResourceNetwork_ABC >( *new T( controllers, xis, false, result.Get< Positions >().GetPosition(), urbans, objects, resources ) );
+        }
+    };
+
+    template<>
+    struct AttributeBuilder< MedicalTreatmentAttribute_ABC >
+    {
+        template< typename T, typename Helper >
+        static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis )
+        {
+            result.Attach( *new T( xis, helper, dico, result ) );
         }
     };
 }

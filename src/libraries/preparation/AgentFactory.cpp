@@ -158,7 +158,7 @@ kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
     result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< kernel::Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
-    result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary ) );
+    result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary, *result ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( Populations* popus = top->Retrieve< Populations >() )
         popus->AddPopulation( *result );
@@ -191,7 +191,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
     result->Attach( *new kernel::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( positions );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, top ) );
-    result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary ) );
+    result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary, *result ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( Inhabitants* inhabs = top->Retrieve< Inhabitants >() )
         inhabs->AddInhabitant( *result );
@@ -290,7 +290,7 @@ kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_A
     const geometry::Point2f position = model_.ReadPosition( xis, result );
     result->Attach< kernel::Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
-    result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary ) );
+    result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary, *result ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     if( Populations* popus = parent.Retrieve< Populations >() )
         popus->AddPopulation( *result );
@@ -309,7 +309,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_A
     result->Attach( *new kernel::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( *new InhabitantPositions( xis, controllers_.controller_, static_.coordinateConverter_, model_.urban_, *result, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
-    result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary ) );
+    result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary, *result ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     if( Inhabitants* popus = parent.Retrieve< Inhabitants >() )
         popus->AddInhabitant( *result );

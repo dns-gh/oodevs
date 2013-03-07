@@ -21,6 +21,8 @@
 namespace kernel
 {
     class Displayer_ABC;
+    class Property_ABC;
+    class Entity_ABC;
 
     enum E_Category
     {
@@ -52,6 +54,7 @@ public:
     virtual const QString& GetName() const = 0;
     virtual E_Category GetCategory() const = 0;
     virtual void AddSubProperty( Property_ABC* property ) = 0;
+    virtual const kernel::Entity_ABC& GetOwner() const = 0;
     //@}
 
 private:
@@ -62,12 +65,12 @@ private:
     //@}
 };
 
-template< typename T, typename Owner, typename Setter >
+template< typename T, typename Setter, typename SpecificOwner >
 class Property : public Property_ABC
 {
 public:
-    Property( Controller& controller, const Owner& owner, T& value, const Setter& setter,
-              const QString& name, bool readOnly, E_Category category )
+    Property( Controller& controller, const kernel::Entity_ABC& owner, T& value, const Setter& setter,
+              const QString& name, bool readOnly, E_Category category, const SpecificOwner* pSpecificOwner = nullptr )
         : controller_( controller )
         , owner_     ( owner )
         , data_      ( &value )
@@ -75,6 +78,7 @@ public:
         , name_      ( name )
         , category_  ( category )
         , readOnly_  ( readOnly )
+        , specificOwner_( pSpecificOwner )
     {
         // NOTHING
     }
@@ -101,7 +105,10 @@ public:
         if( ed )
         {
             setter_( data_, ed->GetValue() );
-            controller_.Update( owner_ );
+            if( specificOwner_ )
+                controller_.Update( *specificOwner_ );
+            else
+                controller_.Update( owner_ );
         }
     }
 
@@ -120,9 +127,15 @@ public:
         // NOTHING
     }
 
+    virtual const kernel::Entity_ABC& GetOwner() const
+    {
+        return owner_;
+    }
+
 private:
     Controller& controller_;
-    const Owner& owner_;
+    const kernel::Entity_ABC& owner_;
+    const SpecificOwner* specificOwner_;
     T* data_;
     Setter setter_;
     bool readOnly_;

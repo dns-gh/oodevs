@@ -42,9 +42,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              MedicalTreatmentAttribute( const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes,
-                                        kernel::PropertiesDictionary& dictionary, kernel::Controllers* controllers = 0, const kernel::Entity_ABC* owner = 0 );
+                                        kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& owner, bool bUrban = false, kernel::Controllers* controllers = 0 );
              MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes,
-                                        kernel::PropertiesDictionary& dictionary, kernel::Controllers* controllers = 0, const kernel::Entity_ABC* owner = 0 );
+                                        kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& owner, bool bUrban = false, kernel::Controllers* controllers = 0 );
     virtual ~MedicalTreatmentAttribute();
     //@}
 
@@ -76,7 +76,7 @@ private:
     //@{
     bool IsSet() const;
     void ReadBedCapacity( xml::xistream& xis );
-    void UpdateDictionary( bool changed = false );
+    void UpdateDictionary();
     //@}
 
 private:
@@ -91,11 +91,12 @@ public:
     const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver_;
     const kernel::Controllers*      controllers_;
     kernel::PropertiesDictionary&   dictionary_;
-    const kernel::Entity_ABC*       owner_;
+    const kernel::Entity_ABC&       owner_;
     int                             serializableModes_;
     int                             doctors_;
     std::string                     referenceID_;
     T_TreatmentCapacities           capacities_;
+    bool                            bUrban_;
     //@}
 };
 

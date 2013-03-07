@@ -45,7 +45,7 @@ void DelayPrototype::Commit( const kernel::Team_ABC& )
     if( creation_ )
     {
         PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
-        DelayAttribute* attribute = new DelayAttribute( dictionary );
+        DelayAttribute* attribute = new DelayAttribute( dictionary, *creation_ );
         attribute->SetDelay( 3600 * delayTime_->time().hour() +
                                60 * delayTime_->time().minute() +
                                     delayTime_->time().second() );

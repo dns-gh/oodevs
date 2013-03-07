@@ -20,6 +20,7 @@ namespace kernel
     class NBCAgent;
     class PropertiesDictionary;
     class DotationType;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -39,8 +40,8 @@ class ConstructionAttribute : public kernel::ConstructionAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ConstructionAttribute( kernel::PropertiesDictionary& dictionary );
-             ConstructionAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
+    explicit ConstructionAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             ConstructionAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~ConstructionAttribute();
     //@}
 
@@ -65,7 +66,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 private:

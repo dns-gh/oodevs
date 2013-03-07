@@ -82,7 +82,6 @@ void AgentAffinities::Clear()
 {
     BOOST_FOREACH( const T_Affinities::value_type& value, affinities_ )
         dictionary_.Remove( propertyName_ + "/" + teams_[ value.first ].c_str() );
-    controllers_.controller_.Delete( kernel::DictionaryUpdated( agent_, propertyName_ ) );
     affinities_.clear();
 }
 

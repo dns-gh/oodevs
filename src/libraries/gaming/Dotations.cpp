@@ -54,7 +54,7 @@ Dotations::~Dotations()
 // -----------------------------------------------------------------------------
 void Dotations::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "Dotations", "Resources/Out of gas" ), bEmptyGasTank_ );
+    dico.RegisterExtension( entity_, this, tools::translate( "Dotations", "Resources/Out of gas" ), bEmptyGasTank_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ void Dotations::Update( const std::vector< Dotation >& differences )
         {
             dotation = new Dotation( *it );
             Register( it->type_->GetId(), *dotation );
-            dictionary_.Register( *this, property_ + "/" + it->type_->GetName().c_str(), ( ( const Dotation& ) *dotation ).quantity_ ); // $$$$ AGE 2006-06-22:
+            dictionary_.RegisterExtension( entity_, this, property_ + "/" + it->type_->GetName().c_str(), ( ( const Dotation& ) *dotation ).quantity_ ); // $$$$ AGE 2006-06-22:
         }
         else
             *dotation = *dotation + *it;

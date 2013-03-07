@@ -17,18 +17,18 @@
 // Name: DisasterAttribute constructor
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-DisasterAttribute::DisasterAttribute( kernel::PropertiesDictionary& dictionary, const QString& source, const QDateTime& date )
+DisasterAttribute::DisasterAttribute( kernel::PropertiesDictionary& dictionary, const QString& source, const QDateTime& date, const kernel::Entity_ABC& entity )
     : source_( source )
     , date_  ( date )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DisasterAttribute constructor
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-DisasterAttribute::DisasterAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+DisasterAttribute::DisasterAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     std::string source, date;
     xis >> xml::attribute( "source", source )
@@ -39,7 +39,7 @@ DisasterAttribute::DisasterAttribute( xml::xistream& xis, kernel::PropertiesDict
         date_ = QDateTime::fromString( date.c_str(), "yyyyMMddThhmmss" );
 
     source_ = source.c_str();
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,11 +55,11 @@ DisasterAttribute::~DisasterAttribute()
 // Name: DisasterAttribute::CreateDictionary
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-void DisasterAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void DisasterAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "DisasterAttribute", "Info/Data source" ), source_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "DisasterAttribute", "Info/Data source" ), source_ );
     if( !date_.isNull() )
-        dictionary.Register( *this, tools::translate( "DisasterAttribute", "Info/Start date" ), date_ );
+        dictionary.RegisterExtension( entity, this, tools::translate( "DisasterAttribute", "Info/Start date" ), date_ );
 }
 
 // -----------------------------------------------------------------------------

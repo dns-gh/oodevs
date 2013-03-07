@@ -21,18 +21,18 @@ using namespace kernel;
 // Name: FireAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( kernel::PropertiesDictionary& dictionary )
+FireAttribute::FireAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : fireClass_          ( 0 )
     , maxCombustionEnergy_( 0 )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dictionary )
+FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     std::string className;
     xis >> xml::attribute( "class", className )
@@ -40,7 +40,7 @@ FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< ker
     fireClass_ = FireClasses.Find( className );
     if( !fireClass_ )
         xis.error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,8 +97,8 @@ void FireAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: FireAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void FireAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void FireAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "FireAttribute", "Info/Fire attributes/Fire class" ), fireClass_ );
-    dictionary.Register( *this, tools::translate( "FireAttribute", "Info/Fire attributes/Max combustion energy" ), maxCombustionEnergy_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "FireAttribute", "Info/Fire attributes/Fire class" ), fireClass_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "FireAttribute", "Info/Fire attributes/Max combustion energy" ), maxCombustionEnergy_ );
 }

@@ -18,6 +18,7 @@ namespace kernel
 {
     class Displayer_ABC;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -37,8 +38,8 @@ class DelayAttribute : public kernel::DelayAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DelayAttribute( kernel::PropertiesDictionary& dictionary );
-             DelayAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
+    explicit DelayAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             DelayAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~DelayAttribute();
     //@}
 
@@ -62,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 private:

@@ -18,6 +18,7 @@ namespace kernel
     class Controller;
     class Displayer_ABC;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -37,8 +38,8 @@ class UndergroundAttribute : public kernel::UndergroundAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UndergroundAttribute( kernel::PropertiesDictionary& dictionary, kernel::Controller& controller );
-             UndergroundAttribute( xml::xistream& xis, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary );
+    explicit UndergroundAttribute( kernel::PropertiesDictionary& dictionary, kernel::Controller& controller, kernel::Entity_ABC& entity );
+             UndergroundAttribute( xml::xistream& xis, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary, kernel::Entity_ABC& entity );
     virtual ~UndergroundAttribute();
     //@}
 
@@ -60,7 +61,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary, kernel::Entity_ABC& entity );
     //@}
 
 private:

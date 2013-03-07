@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Usages( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
-                     float livingSpace, kernel::Entity_ABC& owner, kernel::Controller& controller );
+                     float livingSpace, kernel::Entity_ABC& owner );
     virtual ~Usages();
     //@}
 };

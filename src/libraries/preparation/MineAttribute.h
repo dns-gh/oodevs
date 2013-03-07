@@ -19,6 +19,7 @@ namespace kernel
     class Displayer_ABC;
     class PropertiesDictionary;
     class DotationType;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -38,8 +39,8 @@ class MineAttribute : public kernel::MineAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MineAttribute( kernel::PropertiesDictionary& dictionary );
-             MineAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
+    explicit MineAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             MineAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~MineAttribute();
     //@}
 
@@ -63,7 +64,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 private:

@@ -19,6 +19,7 @@
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/InfrastructureType.h"
+#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"

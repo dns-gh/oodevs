@@ -19,6 +19,7 @@ namespace kernel
     class Displayer_ABC;
     class FireClass;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -38,8 +39,8 @@ class FireAttribute : public kernel::FireAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FireAttribute( kernel::PropertiesDictionary& dictionary );
-             FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dictionary );
+    explicit FireAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~FireAttribute();
     //@}
 
@@ -64,7 +65,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 public:

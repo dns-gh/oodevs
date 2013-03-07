@@ -22,6 +22,7 @@ namespace kernel
     class Ghost_ABC;
     class PropertiesDictionary;
     class Controller;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -46,9 +47,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              GhostPositions( const kernel::Ghost_ABC& ghost, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller,
-                             const geometry::Point2f& position, kernel::PropertiesDictionary& dictionary );
+                             const geometry::Point2f& position, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
              GhostPositions( xml::xistream& xis, const kernel::Ghost_ABC& ghost, const kernel::CoordinateConverter_ABC& converter,
-                             kernel::Controller& controller, kernel::PropertiesDictionary& dictionary );
+                             kernel::Controller& controller, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~GhostPositions();
     //@}
 
@@ -74,7 +75,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    virtual void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual void Aggregate( const bool& );
     //@}
 

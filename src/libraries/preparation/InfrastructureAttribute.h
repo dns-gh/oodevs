@@ -73,7 +73,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void UpdateDictionnary( bool changed = false );
+    void UpdateDictionnary();
     //@}
 
 public:

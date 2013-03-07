@@ -28,7 +28,7 @@ using namespace kernel;
 // Created: JSR 2010-12-07
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute( PropertiesDictionary& dictionary, const kernel::DetectionMap& detection,
-                                const kernel::Positions& positions, kernel::Controllers& controllers )
+                                const kernel::Positions& positions, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
     : detection_  ( detection )
     , positions_  ( positions )
     , controllers_( controllers )
@@ -38,7 +38,7 @@ FloodAttribute::FloodAttribute( PropertiesDictionary& dictionary, const kernel::
     , floodDrawer_( new propagation::FloodDrawer() )
 {
     controllers_.Register( *this );
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ FloodAttribute::FloodAttribute( PropertiesDictionary& dictionary, const kernel::
 // Created: JSR 2010-12-07
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute( xml::xistream& xis, const kernel::DetectionMap& detection,
-                                const kernel::Positions& positions, PropertiesDictionary& dictionary, kernel::Controllers& controllers )
+                                const kernel::Positions& positions, PropertiesDictionary& dictionary, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
     : detection_  ( detection )
     , positions_  ( positions )
     , controllers_( controllers )
@@ -57,7 +57,7 @@ FloodAttribute::FloodAttribute( xml::xistream& xis, const kernel::DetectionMap& 
     controllers_.Register( *this );
     xis >> xml::attribute( "depth", depth_.value_ )
         >> xml::attribute( "reference-distance", refDist_.value_ );
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 
     floodDrawer_.reset( new propagation::FloodDrawer( *floodModel_, positions.GetPosition(), depth_.value_, refDist_.value_ ) );
 }
@@ -162,8 +162,8 @@ void FloodAttribute::EndDrag() const
 // Name: FloodAttribute::CreateDictionary
 // Created: JSR 2010-12-07
 // -----------------------------------------------------------------------------
-void FloodAttribute::CreateDictionary( PropertiesDictionary& dictionary )
+void FloodAttribute::CreateDictionary( PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "FloodAttribute", "Info/Flood parameters/Depth" ), depth_ );
-    dictionary.Register( *this, tools::translate( "FloodAttribute", "Info/Flood parameters/Reference distance" ), refDist_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "FloodAttribute", "Info/Flood parameters/Depth" ), depth_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "FloodAttribute", "Info/Flood parameters/Reference distance" ), refDist_ );
 }

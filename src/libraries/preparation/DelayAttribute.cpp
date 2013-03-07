@@ -20,21 +20,21 @@ using namespace kernel;
 // Name: DelayAttribute constructor
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( PropertiesDictionary& dictionary )
+DelayAttribute::DelayAttribute( PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : delay_( 0, Units::hours )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DelayAttribute constructor
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( xml::xistream& xis, PropertiesDictionary& dictionary )
+DelayAttribute::DelayAttribute( xml::xistream& xis, PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : delay_( 0, Units::hours )
 {
     xis >> xml::attribute( "value", delay_.value_ );
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void DelayAttribute::SetDelay( unsigned int time )
 // Name: DelayAttribute::CreateDictionary
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::CreateDictionary( PropertiesDictionary& dictionary )
+void DelayAttribute::CreateDictionary( PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "DelayAttribute", "Info/Delay parameters/Delay" ), delay_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "DelayAttribute", "Info/Delay parameters/Delay" ), delay_ );
 }

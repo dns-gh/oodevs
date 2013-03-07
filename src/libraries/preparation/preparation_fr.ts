@@ -225,10 +225,6 @@
         <source>Info/Infrastructure/Threshold</source>
         <translation>Info/Infrastructure/Seuil</translation>
     </message>
-    <message>
-        <source>Info/Infrastructure</source>
-        <translation>Info/Infrastructure</translation>
-    </message>
 </context>
 <context>
     <name>KnowledgeGroup</name>

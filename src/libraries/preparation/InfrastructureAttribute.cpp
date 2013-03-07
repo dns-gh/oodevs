@@ -220,28 +220,8 @@ void InfrastructureAttribute::SetType( kernel::InfrastructureType* infrastructur
     {
         type_ = infrastructure;
         object_.Get< kernel::UrbanPositions_ABC >().SetInfrastructurePresent( type_ != 0 );
-        UpdateDictionnary( true );
+        UpdateDictionnary();
         controllers_.controller_.Update( object_ );
-    }
-}
-
-namespace
-{
-    template< typename T, typename Setter >
-    void CreateProperties( kernel::Entity_ABC& entity, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary,
-        const QString& name, T& value, const Setter& setter, bool changed )
-    {
-        dictionary.Register( entity, name, value, setter );
-        if( changed )
-            controller.Create( kernel::DictionaryUpdated( entity, name ) );
-    }
-    template< typename T >
-    void CreateProperties( kernel::Entity_ABC& entity, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary,
-                           const QString& name, T& value, bool changed, bool readOnly = false )
-    {
-        dictionary.Register( entity, name, value, readOnly );
-        if( changed )
-            controller.Create( kernel::DictionaryUpdated( entity, name ) );
     }
 }
 
@@ -249,20 +229,19 @@ namespace
 // Name: InfrastructureAttribute::UpdateDictionnary
 // Created: JSR 2012-06-11
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::UpdateDictionnary( bool changed )
+void InfrastructureAttribute::UpdateDictionnary()
 {
     if( type_ )
     {
-        CreateProperties( object_, controllers_.controller_, dictionary_, typeProperty_, type_, changed, true );
-        CreateProperties( object_, controllers_.controller_, dictionary_, enableProperty_, enabled_, changed );
-        CreateProperties( object_, controllers_.controller_, dictionary_, thresholdProperty_, threshold_, ThresholdSetter(), changed );
+        dictionary_.Register( object_, typeProperty_, type_, true );
+        dictionary_.Register( object_, enableProperty_, enabled_ );
+        dictionary_.Register( object_, thresholdProperty_, threshold_, ThresholdSetter() );
     }
     else
     {
         dictionary_.Remove( typeProperty_ );
         dictionary_.Remove( enableProperty_ );
         dictionary_.Remove( thresholdProperty_ );
-        controllers_.controller_.Delete( kernel::DictionaryUpdated( object_, tools::translate( "Infrastructure", "Info/Infrastructure" ) ) );
     }
 }
 

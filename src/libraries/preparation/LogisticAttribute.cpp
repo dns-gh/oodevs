@@ -152,5 +152,5 @@ void LogisticAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void LogisticAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
-    dictionary.Register( *this, tools::translate( "LogisticAttribute", "Info/Camp attributes/Logistic base" ), logisticBase_ );
+    dictionary.RegisterExtension( object_, this, tools::translate( "LogisticAttribute", "Info/Camp attributes/Logistic base" ), logisticBase_ );
 }

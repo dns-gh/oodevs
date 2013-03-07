@@ -50,7 +50,7 @@ void MedicalTreatmentPrototype::Commit( const kernel::Team_ABC& )
     if( creation_ )
     {
         PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
-        MedicalTreatmentAttribute* attribute = new MedicalTreatmentAttribute( resolver_, dictionary );
+        MedicalTreatmentAttribute* attribute = new MedicalTreatmentAttribute( resolver_, dictionary, *creation_ );
         attribute->SetDoctors( doctors_->value() );
         attribute->SetReferenceID( std::string( referenceID_->text().toStdString() ) );
         for( auto it = capacities_.begin(); it != capacities_.end(); ++it )

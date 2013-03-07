@@ -20,22 +20,22 @@ using namespace kernel;
 // Name: TimeLimitedAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-TimeLimitedAttribute::TimeLimitedAttribute( PropertiesDictionary& dictionary )
+TimeLimitedAttribute::TimeLimitedAttribute( PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : activityTime_( 0, 0 )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimeLimitedAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis, PropertiesDictionary& dictionary )
+TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis, PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : activityTime_( 0, 0 )
 {
     QTime activityTime;
     activityTime_ = activityTime.addSecs( xis.attribute< unsigned int >( "value" ) );
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ void TimeLimitedAttribute::SetActivityTime( unsigned int time )
 // Name: TimeLimitedAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::CreateDictionary( PropertiesDictionary& dictionary )
+void TimeLimitedAttribute::CreateDictionary( PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "TimeLimitedAttribute", "Info/Mine parameters/Activity time" ), activityTime_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "TimeLimitedAttribute", "Info/Mine parameters/Activity time" ), activityTime_ );
 }

@@ -20,20 +20,20 @@ using namespace kernel;
 // Name: TrafficabilityAttribute constructor
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
-TrafficabilityAttribute::TrafficabilityAttribute( kernel::PropertiesDictionary& dictionary, double value )
+TrafficabilityAttribute::TrafficabilityAttribute( kernel::PropertiesDictionary& dictionary, double value, const kernel::Entity_ABC& entity )
     : max_( value, Units::tons )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TrafficabilityAttribute constructor
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
-TrafficabilityAttribute::TrafficabilityAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+TrafficabilityAttribute::TrafficabilityAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : max_( xis.attribute< double >( "max" ), Units::tons )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +70,7 @@ void TrafficabilityAttribute::SerializeObjectAttributes( xml::xostream& xos ) co
 // Name: TrafficabilityAttribute::CreateDictionary
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
-void TrafficabilityAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void TrafficabilityAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "TrafficabilityAttribute", "Info/Trafficability/Max:" ), double( max_.value_ ) );
+    dictionary.RegisterExtension( entity, this, tools::translate( "TrafficabilityAttribute", "Info/Trafficability/Max:" ), double( max_.value_ ) );
 }

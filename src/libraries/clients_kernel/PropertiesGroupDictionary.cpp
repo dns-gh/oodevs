@@ -50,7 +50,7 @@ void PropertiesGroupDictionary::Fill( const std::vector< const kernel::UrbanObje
             {
                 IT_Properties propertyGroup = properties_.find( property.first );
                 if( propertyGroup == properties_.end() )
-                    properties_[ property.first ] = new kernel::PropertiesGroup( comparator_ );
+                    properties_[ property.first ] = new kernel::PropertiesGroup( comparator_ , *block );
                  properties_[ property.first ]->AddSubProperty( property.second );
             }
 }

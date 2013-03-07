@@ -55,15 +55,6 @@ void AutomatHierarchies::DoUpdate( const sword::AutomatChangeKnowledgeGroup& mes
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatHierarchies::AddSuperiorToDictionary
-// Created: SBO 2006-10-25
-// -----------------------------------------------------------------------------
-void AutomatHierarchies::AddSuperiorToDictionary( PropertiesDictionary& dico, Entity_ABC* const& superior ) const
-{
-    dico.Register( *(const CommunicationHierarchies*)this, tools::translate( "AutomatHierarchies", "Hierarchies/Superior" ), superior );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AutomatHierarchies::CanCommunicate
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------

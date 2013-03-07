@@ -18,6 +18,7 @@ namespace kernel
 {
     class Displayer_ABC;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -37,8 +38,8 @@ class OccupantAttribute : public kernel::OccupantAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit OccupantAttribute( kernel::PropertiesDictionary& dictionary );
-             OccupantAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
+    explicit OccupantAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             OccupantAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~OccupantAttribute();
     //@}
 
@@ -63,7 +64,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 private:

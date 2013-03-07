@@ -14,7 +14,6 @@
 #include "DictionaryUpdated.h"
 #include "PropertiesDictionary.h"
 #include "Tools.h"
-#include "Controller.h"
 
 using namespace kernel;
 
@@ -24,9 +23,8 @@ const std::string Usages::defaultStr_ = "default";
 // Name: Usages constructor
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-Usages::Usages( PropertiesDictionary& dictionary, const AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner, kernel::Controller& controller  )
-    : controller_        ( controller )
-    , dictionary_        ( dictionary )
+Usages::Usages( PropertiesDictionary& dictionary, const AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner )
+    : dictionary_        ( dictionary )
     , accommodationTypes_( accommodationTypes)
     , livingSpace_       ( livingSpace )
     , owner_             ( owner )
@@ -46,11 +44,9 @@ Usages::~Usages()
 namespace
 {
     template< typename T >
-    void CreateProperties( kernel::Entity_ABC& entity, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary,
-        const QString& name, T& value )
+    void CreateProperties( kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary, const QString& name, T& value )
     {
         dictionary.Register( entity, name, value, true, eUrbanTemplate );
-        controller.Create( kernel::DictionaryUpdated( entity, name ) );
     }
 }
 
@@ -83,9 +79,9 @@ void Usages::UpdateDefault()
         occupations_[ defaultStr_ ].first = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
         occupations_[ defaultStr_ ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
 
-        CreateProperties( owner_, controller_, dictionary_, defaultString + tools::translate( "Block", "/Percentage" ), usages_[ defaultStr_ ] );
-        CreateProperties( owner_, controller_, dictionary_, defaultString + tools::translate( "Block", "/Nominal capacity" ), occupations_[ defaultStr_ ].first );
-        CreateProperties( owner_, controller_, dictionary_, defaultString + tools::translate( "Block", "/Maximal capacity" ), occupations_[ defaultStr_ ].second );
+        CreateProperties( owner_, dictionary_, defaultString + tools::translate( "Block", "/Percentage" ), usages_[ defaultStr_ ] );
+        CreateProperties( owner_, dictionary_, defaultString + tools::translate( "Block", "/Nominal capacity" ), occupations_[ defaultStr_ ].first );
+        CreateProperties( owner_, dictionary_, defaultString + tools::translate( "Block", "/Maximal capacity" ), occupations_[ defaultStr_ ].second );
     }
     else
     {
@@ -94,7 +90,6 @@ void Usages::UpdateDefault()
             dictionary_.Remove( defaultString + tools::translate( "Block", "/Percentage" ) );
             dictionary_.Remove( defaultString + tools::translate( "Block", "/Nominal capacity" ) );
             dictionary_.Remove( defaultString + tools::translate( "Block", "/Maximal capacity" ) );
-            controller_.Delete( DictionaryUpdated( owner_, defaultString ) );
         }
     }
 }
@@ -116,9 +111,9 @@ void Usages::UpdateMotivations( float livingSpace )
         occupations_[ usageName ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
         if( occupations_[ usageName ].first != 0 )
         {
-            CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Percentage" ), usages_[ usageName ] );
-            CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Nominal capacity" ), occupations_[ usageName ].first );
-            CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Maximal capacity" ), occupations_[ usageName ].second );
+            CreateProperties( owner_, dictionary_, motivationString + tools::translate( "Block", "/Percentage" ), usages_[ usageName ] );
+            CreateProperties( owner_, dictionary_, motivationString + tools::translate( "Block", "/Nominal capacity" ), occupations_[ usageName ].first );
+            CreateProperties( owner_, dictionary_, motivationString + tools::translate( "Block", "/Maximal capacity" ), occupations_[ usageName ].second );
         }
     }
     UpdateDefault();
@@ -140,9 +135,9 @@ void Usages::Add( const std::string& usage, unsigned int proportion )
         occupations_[ usage ].first = static_cast< unsigned int >( occupation * ( accommodation->GetNominalCapacity() ) );
         occupations_[ usage ].second = static_cast< unsigned int >( occupation * ( accommodation->GetMaxCapacity() ) );
 
-        CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Percentage" ), usages_[ usage ] );
-        CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Nominal capacity" ), occupations_[ usage ].first );
-        CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Maximal capacity" ), occupations_[ usage ].second );
+        CreateProperties( owner_, dictionary_, motivationString + tools::translate( "Block", "/Percentage" ), usages_[ usage ] );
+        CreateProperties( owner_, dictionary_, motivationString + tools::translate( "Block", "/Nominal capacity" ), occupations_[ usage ].first );
+        CreateProperties( owner_, dictionary_, motivationString + tools::translate( "Block", "/Maximal capacity" ), occupations_[ usage ].second );
     }
 
     UpdateDefault();
@@ -162,9 +157,6 @@ void Usages::Remove( const std::string& usage )
     dictionary_.Remove( motivationString + tools::translate( "Block", "/Percentage" ) );
     dictionary_.Remove( motivationString + tools::translate( "Block", "/Nominal capacity" ) );
     dictionary_.Remove( motivationString + tools::translate( "Block", "/Maximal capacity" ) );
-
-    controller_.Delete( kernel::DictionaryUpdated( owner_, motivationString ) );
-
     UpdateDefault();
 }
 

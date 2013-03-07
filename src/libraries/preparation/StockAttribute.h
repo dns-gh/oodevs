@@ -19,6 +19,7 @@ namespace kernel
     class Displayer_ABC;
     class FireClass;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -38,8 +39,8 @@ class StockAttribute : public kernel::StockAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit StockAttribute( kernel::PropertiesDictionary& dictionary );
-             StockAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dictionary );
+    explicit StockAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             StockAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~StockAttribute();
     //@}
 
@@ -57,7 +58,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     void ReadResource( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver );
     //@}
 };

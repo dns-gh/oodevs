@@ -22,6 +22,7 @@ namespace kernel
     class Displayer_ABC;
     class Object_ABC;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -46,9 +47,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              AltitudeModifierAttribute( kernel::PropertiesDictionary& dictionary, kernel::DetectionMap& detection,
-                                        const kernel::Object_ABC& object, kernel::Controllers& controllers );
+                                        const kernel::Object_ABC& object, kernel::Controllers& controllers, const kernel::Entity_ABC& entity );
              AltitudeModifierAttribute( xml::xistream& xis, kernel::DetectionMap& detection, const kernel::Object_ABC& object,
-                                        kernel::PropertiesDictionary& dictionary, kernel::Controllers& controllers );
+                                        kernel::PropertiesDictionary& dictionary, kernel::Controllers& controllers, const kernel::Entity_ABC& entity );
     virtual ~AltitudeModifierAttribute();
     //@}
 
@@ -80,7 +81,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 private:

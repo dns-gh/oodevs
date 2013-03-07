@@ -20,6 +20,7 @@ namespace kernel
     class Displayer_ABC;
     class NBCAgent;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -39,9 +40,9 @@ class ObstacleAttribute : public kernel::ObstacleAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObstacleAttribute( kernel::PropertiesDictionary& dictionary );
-             ObstacleAttribute( kernel::PropertiesDictionary& dictionary, Enum_DemolitionTargetType type );
-             ObstacleAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
+    explicit ObstacleAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             ObstacleAttribute( kernel::PropertiesDictionary& dictionary, Enum_DemolitionTargetType type, const kernel::Entity_ABC& entity );
+             ObstacleAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~ObstacleAttribute();
     //@}
 
@@ -70,7 +71,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary();
+    void CreateDictionary( const kernel::Entity_ABC& entity);
     //@}
 
 private:

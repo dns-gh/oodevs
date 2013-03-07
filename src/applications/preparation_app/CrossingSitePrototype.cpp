@@ -48,7 +48,7 @@ void CrossingSitePrototype::Commit( const kernel::Team_ABC& )
     if( creation_ )
     {
         PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
-        CrossingSiteAttribute* attribute = new CrossingSiteAttribute( dictionary );
+        CrossingSiteAttribute* attribute = new CrossingSiteAttribute( dictionary, *creation_ );
         attribute->SetWidth( width_->value() );
         attribute->SetDepth( depth_->value() );
         attribute->SetFlowSpeed( speed_->value() );

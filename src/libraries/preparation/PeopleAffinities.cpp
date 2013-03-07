@@ -15,6 +15,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/tools.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "tools/Iterator.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -22,10 +23,11 @@
 // Name: PeopleAffinities constructor
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-PeopleAffinities::PeopleAffinities( kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary )
+PeopleAffinities::PeopleAffinities( kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : Affinities( model )
     , controllers_( controllers )
     , dictionary_ ( dictionary )
+    , entity_( entity )
 {
     controllers_.Register( *this );
     InitializeAffinities();
@@ -35,10 +37,11 @@ PeopleAffinities::PeopleAffinities( kernel::Controllers& controllers, Model& mod
 // Name: PeopleAffinities constructor
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-PeopleAffinities::PeopleAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary )
+PeopleAffinities::PeopleAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : Affinities( xis, model )
     , controllers_( controllers )
     , dictionary_ ( dictionary )
+    , entity_( entity )
 {
     controllers_.Register( *this );
     InitializeAffinities();
@@ -113,5 +116,5 @@ void PeopleAffinities::AddTeam( const kernel::Team_ABC& team )
         affinities_[ team.GetId() ] = 0.f;
     teams_[ team.GetId() ] = team.GetName();
     CIT_Affinities it = affinities_.find( team.GetId() );
-    dictionary_.Register( *this, tools::translate( "Affinities", "Affinities/%1" ).arg( team.GetName() ), it->second, true );
+    dictionary_.RegisterExtension( entity_, this, tools::translate( "Affinities", "Affinities/%1" ).arg( team.GetName() ), it->second, true );
 }

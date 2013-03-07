@@ -63,13 +63,13 @@ public:
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
 AltitudeModifierAttribute::AltitudeModifierAttribute( kernel::PropertiesDictionary& dictionary, kernel::DetectionMap& detection,
-                                                      const kernel::Object_ABC& object, kernel::Controllers& controllers )
+                                                      const kernel::Object_ABC& object, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
     : detection_  ( detection )
     , object_     ( object )
     , controllers_( controllers )
     , height_     ( 0, Units::meters )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
     controllers_.Register( *this );
 }
 
@@ -78,13 +78,13 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( kernel::PropertiesDictiona
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
 AltitudeModifierAttribute::AltitudeModifierAttribute( xml::xistream& xis, kernel::DetectionMap& detection, const kernel::Object_ABC& object,
-                                                      kernel::PropertiesDictionary& dictionary, kernel::Controllers& controllers )
+                                                      kernel::PropertiesDictionary& dictionary, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
     : detection_  ( detection )
     , object_     ( object )
     , controllers_( controllers )
     , height_     ( 0, Units::meters )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
     controllers_.Register( *this );
     SetHeight( xis.attribute< unsigned int >( "height" ) );
 }
@@ -191,7 +191,7 @@ void AltitudeModifierAttribute::EndDrag() const
 // Name: AltitudeModifierAttribute::CreateDictionary
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void AltitudeModifierAttribute::CreateDictionary( PropertiesDictionary& dictionary )
+void AltitudeModifierAttribute::CreateDictionary( PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "AltitudeModifierAttribute", "Info/Altitude modifier/Height" ), height_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "AltitudeModifierAttribute", "Info/Altitude modifier/Height" ), height_ );
 }

@@ -17,8 +17,9 @@ using namespace kernel;
 // Name: PropertiesGroup constructor
 // Created: LGY 2013-01-15
 // -----------------------------------------------------------------------------
-PropertiesGroup::PropertiesGroup( Displayer_ABC& comparator )
+PropertiesGroup::PropertiesGroup( Displayer_ABC& comparator, const Entity_ABC& owner )
     : comparator_( comparator )
+    , owner_( owner )
 {
     // NOTHING
 }
@@ -99,4 +100,13 @@ bool PropertiesGroup::HasSameProperty() const
         if( property )
             property->Display( comparator_ );
     return comparator_.IsValid();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesGroup::PropertiesGroup
+// Created: MMC 2013-03-07
+// -----------------------------------------------------------------------------
+const Entity_ABC& PropertiesGroup:: GetOwner() const
+{
+    return owner_;
 }

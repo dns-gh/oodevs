@@ -22,7 +22,7 @@ PhysicalAttribute::PhysicalAttribute( const kernel::Entity_ABC* parent, kernel::
                                       UrbanObject& urbanObject, kernel::Controllers& controllers, const kernel::ObjectTypes& objectTypes )
 {
     architecture_.reset( new Architecture( parent, controllers, urbanObject, dictionary, objectTypes ) );
-    usages_.reset( new Usages( parent, dictionary, accommodationTypes, urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ), urbanObject, controllers.controller_ ) );
+    usages_.reset( new Usages( parent, dictionary, accommodationTypes, urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ), urbanObject ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,16 +42,16 @@ PhysicalAttribute::PhysicalAttribute( xml::xistream& xis, kernel::PropertiesDict
             architecture_.reset( new Architecture( 0, controllers, urbanObject, dictionary, objectTypes ) );
 
         if( xis.has_child( "usages" ) )
-            usages_.reset( new Usages( xis, dictionary, accommodationTypes, urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ), urbanObject, controllers.controller_ ) );
+            usages_.reset( new Usages( xis, dictionary, accommodationTypes, urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ), urbanObject ) );
         else
-            usages_.reset( new Usages( 0, dictionary, accommodationTypes, urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ), urbanObject, controllers.controller_ ) );
+            usages_.reset( new Usages( 0, dictionary, accommodationTypes, urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ), urbanObject ) );
 
         xis >> xml::end;
     }
     else
     {
         architecture_.reset( new Architecture( 0, controllers, urbanObject, dictionary, objectTypes ) );
-        usages_.reset( new Usages( 0, dictionary, accommodationTypes, urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ), urbanObject, controllers.controller_ ) );
+        usages_.reset( new Usages( 0, dictionary, accommodationTypes, urbanObject.GetLivingSpace( architecture_->GetFloorNumber(), architecture_->GetOccupation() ), urbanObject ) );
     }
 }
 

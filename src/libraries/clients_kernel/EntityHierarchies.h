@@ -82,7 +82,7 @@ protected:
 template< typename Interface >
 void EntityHierarchies< Interface >::CreateDictionary( PropertiesDictionary& dictionary ) const
 {
-    dictionary.Register( *(const Interface*)this, tools::translate( "EntityHierarchies", "Hierarchies/Superior" ), superior_ );
+    dictionary.RegisterExtension( entity_, (const Interface*)this, tools::translate( "EntityHierarchies", "Hierarchies/Superior" ), superior_ );
 }
 
 }

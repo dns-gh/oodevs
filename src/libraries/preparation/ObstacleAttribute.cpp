@@ -20,28 +20,28 @@ using namespace kernel;
 // Name: ObstacleAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dictionary )
+ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : dictionary_    ( dictionary )
     , type_          ( eDemolitionTargetType_Preliminary )
     , bActivated_    ( true )
     , activationTime_( 0, 0 )
     , activityTime_  ( 0, 0 )
 {
-    CreateDictionary();
+    CreateDictionary( entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute constructor
 // Created: JCR 2008-06-11
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dictionary, Enum_DemolitionTargetType type )
+ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dictionary, Enum_DemolitionTargetType type, const kernel::Entity_ABC& entity )
     : dictionary_    ( dictionary )
     , type_          ( type )
     , bActivated_    ( type_.GetValue() == eDemolitionTargetType_Preliminary )
     , activationTime_( 0, 0 )
     , activityTime_  ( 0, 0 )
 {
-    CreateDictionary();
+    CreateDictionary( entity );
 }
 
 namespace
@@ -70,7 +70,7 @@ namespace
 // Name: ObstacleAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+ObstacleAttribute::ObstacleAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : dictionary_    ( dictionary )
     , type_          ( xis.attribute< std::string >( "type", std::string() ) )
     , bActivated_    ( xis.attribute< bool >( "activated" ) )
@@ -81,7 +81,7 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis, kernel::PropertiesDict
     activationTime_ = activationTime.addSecs( GetActivationTime( xis ) );
     QTime activityTime;
     activityTime_ = activityTime.addSecs( GetActivityTime( xis ) );
-    CreateDictionary();
+    CreateDictionary( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,14 +162,14 @@ void ObstacleAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: ObstacleAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::CreateDictionary()
+void ObstacleAttribute::CreateDictionary( const kernel::Entity_ABC& entity )
 {
-    dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Obstacle type" ), type_ );
-    dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Obstacle activated" ), bActivated_ );
+    dictionary_.RegisterExtension( entity, this, tools::translate( "Object", "Info/Demolition target parameters/Obstacle type" ), type_ );
+    dictionary_.RegisterExtension( entity, this, tools::translate( "Object", "Info/Demolition target parameters/Obstacle activated" ), bActivated_ );
     if( type_.GetValue() == eDemolitionTargetType_Preliminary )
     {
-        dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Activation time" ), activationTime_ );
-        dictionary_.Register( *this, tools::translate( "Object", "Info/Demolition target parameters/Activity time" ), activityTime_ );
+        dictionary_.RegisterExtension( entity, this, tools::translate( "Object", "Info/Demolition target parameters/Activation time" ), activationTime_ );
+        dictionary_.RegisterExtension( entity, this, tools::translate( "Object", "Info/Demolition target parameters/Activity time" ), activityTime_ );
     }
 }
 

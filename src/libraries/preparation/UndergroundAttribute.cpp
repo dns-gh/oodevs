@@ -20,22 +20,22 @@ using namespace kernel;
 // Name: UndergroundAttribute constructor
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-UndergroundAttribute::UndergroundAttribute( PropertiesDictionary& dictionary, kernel::Controller& controller )
+UndergroundAttribute::UndergroundAttribute( PropertiesDictionary& dictionary, kernel::Controller& controller, kernel::Entity_ABC& entity )
     : controller_( controller )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UndergroundAttribute constructor
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-UndergroundAttribute::UndergroundAttribute( xml::xistream& xis, kernel::Controller& controller, PropertiesDictionary& dictionary )
+UndergroundAttribute::UndergroundAttribute( xml::xistream& xis, kernel::Controller& controller, PropertiesDictionary& dictionary, kernel::Entity_ABC& entity )
     : controller_( controller )
 {
     xis >> xml::attribute( "network", network_ );
     controller_.Update( *static_cast< UndergroundAttribute_ABC* >( this ) );
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ void UndergroundAttribute::SetNetwork( const std::string& network )
 // Name: UndergroundAttribute::CreateDictionary
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-void UndergroundAttribute::CreateDictionary( PropertiesDictionary& dictionary )
+void UndergroundAttribute::CreateDictionary( PropertiesDictionary& dictionary, kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "UndergroundAttribute", "Info/Underground/Network" ), network_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "UndergroundAttribute", "Info/Underground/Network" ), network_ );
 }

@@ -18,19 +18,19 @@
 // Name: LodgingAttribute constructor
 // Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-LodgingAttribute::LodgingAttribute( kernel::PropertiesDictionary& dictionary )
+LodgingAttribute::LodgingAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LodgingAttribute constructor
 // Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-LodgingAttribute::LodgingAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+LodgingAttribute::LodgingAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     xis >> xml::attribute( "capacity", lodgingCapacity_ );
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ void LodgingAttribute::SetLodgingCapacity( unsigned int capacity )
 // Name: LodgingAttribute::CreateDictionary
 // Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-void LodgingAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void LodgingAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "LodgingAttribute", "Info/Lodging attributes/Capacity" ), lodgingCapacity_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "LodgingAttribute", "Info/Lodging attributes/Capacity" ), lodgingCapacity_ );
 }

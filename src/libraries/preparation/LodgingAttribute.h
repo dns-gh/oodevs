@@ -17,6 +17,7 @@ namespace kernel
 {
     class Displayer_ABC;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -37,8 +38,8 @@ class LodgingAttribute : public kernel::ObjectExtension
 public:
     //! @name Constructors/Destructor
     //@{
-             LodgingAttribute( kernel::PropertiesDictionary& dictionary );
-             LodgingAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
+             LodgingAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             LodgingAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
 
     virtual ~LodgingAttribute();
     //@}
@@ -63,7 +64,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 private:

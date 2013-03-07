@@ -20,17 +20,17 @@ using namespace kernel;
 // Name: BypassAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( kernel::PropertiesDictionary& dico )
+BypassAttribute::BypassAttribute( kernel::PropertiesDictionary& dico, const kernel::Entity_ABC& entity )
     : rBypassConstructionPercentage_( 0, Units::percentage )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dico, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( xml::xistream& xis, kernel::PropertiesDictionary& /*dictionary*/ )
+BypassAttribute::BypassAttribute( xml::xistream& xis, kernel::PropertiesDictionary& /*dictionary*/, const kernel::Entity_ABC& /*entity*/ )
     : rBypassConstructionPercentage_ ( 0, Units::percentage )
 {
     float percentage = xis.attribute< float >( "value" );
@@ -80,9 +80,9 @@ void BypassAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: BypassAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
+void BypassAttribute::CreateDictionary( kernel::PropertiesDictionary& dico, const kernel::Entity_ABC& entity )
 {
-    dico.Register( *this, tools::translate( "Object", "Info/Breaching/Value" ), rBypassConstructionPercentage_ );
+    dico.RegisterExtension( entity, this, tools::translate( "Object", "Info/Breaching/Value" ), rBypassConstructionPercentage_ );
 }
 
 // -----------------------------------------------------------------------------

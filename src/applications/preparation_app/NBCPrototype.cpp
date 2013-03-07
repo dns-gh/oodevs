@@ -50,7 +50,7 @@ void NBCPrototype::Commit( const kernel::Team_ABC& )
     if( creation_ )
     {
         PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
-        NBCAttribute* attribute = new NBCAttribute( dictionary );
+        NBCAttribute* attribute = new NBCAttribute( dictionary, *creation_ );
         {
             attribute->SetState( nbcStates_->GetValue() );
             QModelIndexList indexes = nbcAgents_->selectionModel()->selectedIndexes();

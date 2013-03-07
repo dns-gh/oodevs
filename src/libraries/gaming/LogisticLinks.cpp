@@ -52,7 +52,7 @@ LogisticLinks::LogisticLinks( Controller& controller,
     , entity_           ( entity )
     , property_         ( tools::translate( "Logistic", "Logistic links/Superiors" ) )
 {
-    dictionary.Register( *this, property_, superiors_ );
+    dictionary.RegisterExtension( entity_, this, property_, superiors_ );
 }
 
 // -----------------------------------------------------------------------------

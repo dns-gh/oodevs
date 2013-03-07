@@ -20,20 +20,20 @@ using namespace kernel;
 // Name: CrossingSiteAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-CrossingSiteAttribute::CrossingSiteAttribute( kernel::PropertiesDictionary& dictionary )
+CrossingSiteAttribute::CrossingSiteAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : width_            ( 0, Units::meters )
     , depth_            ( 0, Units::meters )
     , speed_            ( 0, Units::metersPerSecond )
     , needsConstruction_( false )
 {
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-CrossingSiteAttribute::CrossingSiteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+CrossingSiteAttribute::CrossingSiteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : width_            ( 0, Units::meters )
     , depth_            ( 0, Units::meters )
     , speed_            ( 0, Units::metersPerSecond )
@@ -43,7 +43,7 @@ CrossingSiteAttribute::CrossingSiteAttribute( xml::xistream& xis, kernel::Proper
         >> xml::content( "depth", (int&)(depth_.value_) )
         >> xml::content( "speed", (int&)(speed_.value_) )
         >> xml::content( "construction-needed", needsConstruction_ );
-    CreateDictionary( dictionary );
+    CreateDictionary( dictionary, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,10 +122,10 @@ void CrossingSiteAttribute::SerializeObjectAttributes( xml::xostream& xos ) cons
 // Name: CrossingSiteAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void CrossingSiteAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    dictionary.Register( *this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Width" ), width_ );
-    dictionary.Register( *this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Depth" ), depth_ );
-    dictionary.Register( *this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Speed" ), speed_ );
-    dictionary.Register( *this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Build river banks" ), needsConstruction_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Width" ), width_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Depth" ), depth_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Speed" ), speed_ );
+    dictionary.RegisterExtension( entity, this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Build river banks" ), needsConstruction_ );
 }

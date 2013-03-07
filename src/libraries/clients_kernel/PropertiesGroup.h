@@ -15,6 +15,8 @@
 namespace kernel
 {
     class Displayer_ABC;
+    class Entity_ABC;
+
 // =============================================================================
 /** @class  PropertiesGroup
     @brief  Properties group
@@ -26,7 +28,7 @@ class PropertiesGroup : public Property_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PropertiesGroup( Displayer_ABC& comparator );
+    explicit PropertiesGroup( Displayer_ABC& comparator, const Entity_ABC& owner );
     virtual ~PropertiesGroup();
     //@}
 
@@ -37,6 +39,7 @@ public:
     virtual void Display( Displayer_ABC& displayer );
     virtual const QString& GetName() const;
     virtual E_Category GetCategory() const;
+    virtual const kernel::Entity_ABC& GetOwner() const;
     //@}
 
     //! @name Operations
@@ -61,6 +64,7 @@ private:
     //@{
     T_SubProperties subProperties_;
     Displayer_ABC& comparator_;
+    const Entity_ABC& owner_;
     //@}
 };
 

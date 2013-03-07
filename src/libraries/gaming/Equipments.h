@@ -68,6 +68,7 @@ private:
     virtual void SetSuperior( const kernel::Entity_ABC& superior );
     void Update( const std::vector< Equipment >& differences );
     void AddToDictionary( const Equipment& equipment );
+    void RemoveFromDictionary( const Equipment& equipment );
     void UpdateController();
     //@}
 

@@ -18,6 +18,7 @@ namespace kernel
 {
     class Displayer_ABC;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -37,8 +38,8 @@ class TrafficabilityAttribute : public kernel::TrafficabilityAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TrafficabilityAttribute( kernel::PropertiesDictionary& dictionary, double value );
-             TrafficabilityAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
+             TrafficabilityAttribute( kernel::PropertiesDictionary& dictionary, double value, const kernel::Entity_ABC& entity );
+             TrafficabilityAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~TrafficabilityAttribute();
     //@}
 
@@ -57,7 +58,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 private:

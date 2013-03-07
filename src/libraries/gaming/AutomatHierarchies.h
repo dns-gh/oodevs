@@ -58,7 +58,6 @@ private:
     virtual bool IsJammed() const;
     virtual void DoUpdate( const sword::AutomatCreation& message );
     virtual void DoUpdate( const sword::AutomatChangeKnowledgeGroup& message );
-    virtual void AddSuperiorToDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC* const& superior ) const;
     //@}
 
 private:
