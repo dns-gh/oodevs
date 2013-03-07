@@ -29,7 +29,6 @@ namespace xml
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  SvglRenderer
     @brief  SvglRenderer
@@ -50,7 +49,8 @@ public:
     static std::string DefaultStyle();
     void SetCurrentColor( float r, float g, float b, float a );
     svg::Node_ABC* Compile( xml::xistream& input, float lod);
-    void Render( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight );
+    void Render( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport,
+                 unsigned vWidth, unsigned vHeight, bool pickingMode );
     //@}
 
 private:
@@ -68,10 +68,12 @@ private:
 
     //! @name Helpers
     //@{
-    unsigned int GenerateList( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight );
+    unsigned int GenerateList( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight, bool pickingMode );
     void         ConfigureColorList();
     void         ConfigureWidthList( const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight );
     void         CreateStaticLists();
+    unsigned int RetrieveListId( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport,
+                                 unsigned vWidth, unsigned vHeight, bool pickingMode, T_Lists& lists );
     std::auto_ptr< svg::Style > CreateStyle( const std::string& style );
     //@}
 
@@ -85,6 +87,7 @@ private:
     std::auto_ptr< svg::ListLengthFactory > listLenghts_;
 
     T_Lists lists_;
+    T_Lists pickingLists_;
     geometry::Rectangle2f previousViewport_;
     unsigned int previousWidth_;
     unsigned int previousHeight_;

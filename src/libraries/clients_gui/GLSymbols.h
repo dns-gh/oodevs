@@ -46,7 +46,8 @@ public:
 
     //! @name Operations
     //@{
-    void PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
+    void PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport,
+                    unsigned vWidth = 640, unsigned vHeight = 480, bool pickingMode = false );
     void Load( const tools::ExerciseConfig& config );
     void SetSymbolsPath( const std::string& symbolPath );
     const std::vector< std::string >& GetNotFoundSymbol() const;

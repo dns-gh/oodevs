@@ -16,6 +16,7 @@
 #include <svgl/ListLengthFactory.h>
 #include <svgl/PropertyFactory.h>
 #include <svgl/Style.h>
+#include <svgl/Pick.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace geometry;
@@ -96,32 +97,45 @@ svg::Node_ABC* SvglRenderer::Compile( xml::xistream& input, float lod )
 // Name: SvglRenderer::Render
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void SvglRenderer::Render( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight )
+void SvglRenderer::Render( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport,
+                           unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
     CreateStaticLists();
-
-    unsigned int listId = 0;
-    CIT_Lists it = lists_.find( node );
-    if( it == lists_.end() )
-    {
-        listId = GenerateList( node, style, viewport, vWidth, vHeight );
-        if( !listId )
-            return;
-        lists_[ node ] = listId;
-    }
-    else
-        listId = it->second;
-
+    unsigned int listId = RetrieveListId( node, style, viewport, vWidth, vHeight, pickingMode,
+                                          pickingMode ? pickingLists_ : lists_ );
+    if( !listId )
+        return;
     ConfigureColorList();
     ConfigureWidthList( viewport, vWidth, vHeight );
     glCallList( listId );
 }
 
 // -----------------------------------------------------------------------------
+// Name: SvglRenderer::RetrieveListId
+// Created: LGY 2013-03-07
+// -----------------------------------------------------------------------------
+unsigned int SvglRenderer::RetrieveListId( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport,
+                                           unsigned vWidth, unsigned vHeight, bool pickingMode, T_Lists& lists )
+{
+    unsigned int listId = 0;
+    CIT_Lists it = lists.find( node );
+    if( it == lists.end() )
+    {
+        listId = GenerateList( node, style, viewport, vWidth, vHeight, pickingMode );
+        if( !listId )
+            return 0;
+        lists[ node ] = listId;
+    }
+    else
+        listId = it->second;
+    return listId;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SvglRenderer::GenerateList
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-unsigned int SvglRenderer::GenerateList( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight )
+unsigned int SvglRenderer::GenerateList( svg::Node_ABC* node, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth, unsigned vHeight, bool pickingMode )
 {
     unsigned int result = glGenLists( 1 );
     if( result )
@@ -129,11 +143,14 @@ unsigned int SvglRenderer::GenerateList( svg::Node_ABC* node, const std::string&
         glNewList( result, GL_COMPILE );
             const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
             ListPaint color( colorList_ );
+            svg::Pick pick( pickingMode );
             renderingContext_->SetViewport( box, vWidth, vHeight );
             renderingContext_->PushProperty( RenderingContext::color, color );
+            renderingContext_->PushProperty( svg::RenderingContext_ABC::pickingmode, pick );
             std::auto_ptr< Style > border( CreateStyle( style ) );
             references_->Register( "border", *border );
             node->Draw( *renderingContext_, *references_ );
+            renderingContext_->PopProperty( svg::RenderingContext_ABC::pickingmode );
             renderingContext_->PopProperty( RenderingContext::color );
         glEndList();
     }

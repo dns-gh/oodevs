@@ -36,7 +36,8 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const std::string& name, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
+    void Draw( const std::string& name, const geometry::Rectangle2f& viewport, unsigned vWidth = 640,
+               unsigned vHeight = 480, bool pickingMode = false );
     //@}
 
 private:

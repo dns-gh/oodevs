@@ -40,7 +40,8 @@ SvglProxy::~SvglProxy()
 // Name: SvglProxy::Draw
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void SvglProxy::Draw( const std::string& name, const geometry::Rectangle2f& viewport, unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/ )
+void SvglProxy::Draw( const std::string& name, const geometry::Rectangle2f& viewport, unsigned vWidth /* = 640*/,
+                      unsigned vHeight /* = 480*/, bool pickingMode /* = false*/ )
 {
     svg::Node_ABC*& node = symbols_[ name ];
     if( ! node )
@@ -49,5 +50,5 @@ void SvglProxy::Draw( const std::string& name, const geometry::Rectangle2f& view
         node = renderer_.Compile( input, 100 ); // $$$$ AGE 2007-05-31:
     }
     if( node )
-        renderer_.Render( node, SvglRenderer::DefaultStyle(), viewport, vWidth, vHeight );
+        renderer_.Render( node, SvglRenderer::DefaultStyle(), viewport, vWidth, vHeight, pickingMode );
 }
