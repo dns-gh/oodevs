@@ -65,10 +65,10 @@ func (sim *SimProcess) Success() bool {
 
 func (sim *SimProcess) Kill() {
 	if sim != nil {
-		sim.tailch <- 1
-		sim.quitAll.Wait()
 		sim.cmd.Process.Kill()
 		sim.cmd.Wait()
+		sim.tailch <- 1
+		sim.quitAll.Wait()
 	}
 }
 
