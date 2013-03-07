@@ -549,24 +549,30 @@ void MainWindow::ToggleFullScreen()
 // -----------------------------------------------------------------------------
 void MainWindow::ToggleDocks()
 {
-    if( docks_.isNull() || docks_.isEmpty() && toolbars_.isNull() || toolbars_.isEmpty())
+    static QByteArray states_;
+
+    if( states_.isNull() || states_.isEmpty() )
     {
-        docks_ = saveState();
-        toolbars_ = saveState();
+        states_ = saveState();
         QList< QToolBar* > toolbars = qFindChildren< QToolBar* >( this , QString() );
         for( QList< QToolBar* >::iterator it = toolbars.begin(); it != toolbars.end(); ++it )
+        {
+            if( kernel::DisplayableModesObserver_ABC* observer = dynamic_cast< kernel::DisplayableModesObserver_ABC* >( *it ) )
+                if( GetCurrentMode() & observer->GetVisibleModes() )
+                    continue;
             (*it)->hide();
+        }
         QList< QDockWidget* > docks = qFindChildren< QDockWidget* >( this , QString() );
         for( QList< QDockWidget* >::iterator it = docks.begin(); it != docks.end(); ++it )
+        {
+            if( kernel::DisplayableModesObserver_ABC* observer = dynamic_cast< kernel::DisplayableModesObserver_ABC* >( *it ) )
+                if( GetCurrentMode() & observer->GetVisibleModes() )
+                    continue;
             (*it)->hide();
+        }
     }
-    else
-    {
-        if( restoreState( docks_ ) )
-            docks_ = 0;
-        if( restoreState( toolbars_ ) )
-            toolbars_ = 0;
-    }
+    else if( restoreState( states_ ) )
+        states_ = 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -146,8 +146,7 @@ private:
     std::auto_ptr< StatusBar > pStatus_;
     std::auto_ptr< IndicatorPlotFactory > plotFactory_;
     gui::ParametersLayer* parameters_; // $$$$ ABR 2013-02-14: Can't make an auto_ptr of this one, because every layers are destroyed into GlProxy destructor.
-    QByteArray docks_;
-    QByteArray toolbars_;
+    QByteArray states_;
     bool connected_;
     bool onPlanif_;
 
