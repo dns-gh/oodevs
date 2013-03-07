@@ -170,11 +170,11 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const Viewport_AB
 {
     if( !viewport.IsHotpointVisible() && ( level_ == eUrbanLevelBlock || !polygon_.IsEmpty() ) )
         return;
-    std::string name;
-    unsigned int nameSize = 13;
-    float zoom = tools.Zoom();
-    if( level_ == eUrbanLevelBlock)
+    if( level_ == eUrbanLevelBlock )
     {
+        std::string name;
+        float zoom = tools.Zoom();
+        unsigned int nameSize = 13;
         if( hasInfrastructure_ && zoom >  0.00045f )
         {
             name = object_.GetName().toStdString();

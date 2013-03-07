@@ -62,7 +62,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const;
-    virtual void Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     void Update( xml::xistream& xis );
     void Update( const gui::ResourceNetwork_ABC::T_ResourceNodes& nodes );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );

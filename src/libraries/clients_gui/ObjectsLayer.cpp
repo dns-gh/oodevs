@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "ObjectsLayer.h"
 
-#include "ResourceNetwork_ABC.h"
 #include "TerrainPicker.h"
 
 #include "clients_kernel/ObjectType.h"
@@ -53,39 +52,6 @@ void ObjectsLayer::ContextMenu( const GraphicalEntity_ABC& selectable, const geo
         controllers_.actions_.ContextMenu( object, entity, point, where );
 }
 
-namespace
-{
-    struct DrawExtensionsFunctor : boost::noncopyable
-    {
-        DrawExtensionsFunctor( const Viewport_ABC& viewport, const GlTools_ABC& tools )
-            : viewport_( viewport )
-            , tools_( tools )
-        {}
-
-        void operator()( const Entity_ABC& object )
-        {
-            // dessin du réseau en dernier par dessus les objets
-            if( const ResourceNetwork_ABC* resource = object.Retrieve< ResourceNetwork_ABC >() )
-                resource->Draw( viewport_, tools_ );
-        }
-
-        const Viewport_ABC& viewport_;
-        const GlTools_ABC& tools_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectsLayer::Paint
-// Created: JSR 2010-09-06
-// -----------------------------------------------------------------------------
-void ObjectsLayer::Paint( Viewport_ABC& viewport )
-{
-    // dessin des objets
-    EntityLayer< kernel::Object_ABC >::Paint( viewport );
-    // dessin des extensions(en deux temps pour les afficher par dessus les objets)
-    DrawExtensionsFunctor functor( viewport, tools_ );
-    Apply( functor );
-}
 
 namespace
 {

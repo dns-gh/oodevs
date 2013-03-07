@@ -102,9 +102,9 @@ const Entity_ABC* ResourceNetwork::FindEntity( unsigned int id ) const
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetwork::Draw
-// Created: JSR 2010-08-19
+// Created: LGY 2013-03-07
 // -----------------------------------------------------------------------------
-void ResourceNetwork::Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void ResourceNetwork::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     int filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< int >();
     if( filter == 1 )// off

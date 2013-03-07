@@ -102,9 +102,9 @@ QString ResourceNetworkAttribute::GetLinkName( const std::string& resource, unsi
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute::Draw
-// Created: JSR 2010-09-07
+// Created: LGY 2013-03-07
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void ResourceNetworkAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     int filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< int >();
     if( filter == 1 )// off

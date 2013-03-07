@@ -22,6 +22,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/Options.h"
 #include <xeumeuleu/xml.hpp>
 
 #define DEFAULT_THRESHOLD 30
@@ -164,11 +165,11 @@ void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
 
 // -----------------------------------------------------------------------------
 // Name: InfrastructureAttribute::Draw
-// Created: SLG 2011-01-11
+// Created: LGY 2013-03-07
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools ) const
+void InfrastructureAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( type_ && viewport.IsHotpointVisible() )
+    if( type_ && viewport.IsHotpointVisible() && controllers_.options_.GetOption( "Infra", true ).To< bool >() )
         tools.DrawApp6Symbol( type_->GetSymbol(), position_, 0.1f, 0.1f );
 }
 
@@ -264,3 +265,4 @@ void InfrastructureAttribute::UpdateDictionnary( bool changed )
         controllers_.controller_.Delete( kernel::DictionaryUpdated( object_, tools::translate( "Infrastructure", "Info/Infrastructure" ) ) );
     }
 }
+

@@ -11,6 +11,7 @@
 #define CLIENTS_GUI_INFRASTRUCTURE_ABC_H__
 
 #include "clients_kernel/UrbanExtensions.h"
+#include "Drawable_ABC.h"
 
 namespace kernel
 {
@@ -32,6 +33,7 @@ namespace gui
 // Created: JSR 2010-08-19
 // =============================================================================
 class Infrastructure_ABC : public kernel::InfrastructureAttribute_ABC
+                         , public Drawable_ABC
 {
 
 public:
@@ -48,11 +50,6 @@ public:
     virtual unsigned int GetThreshold() const = 0;
     virtual const kernel::InfrastructureType* GetType() const = 0;
     virtual void SetType( kernel::InfrastructureType* infrastructure ) = 0;
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools ) const = 0;
     //@}
 };
 

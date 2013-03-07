@@ -44,7 +44,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Paint( Viewport_ABC& viewport );
     virtual void Reset2d();
     //@}
 

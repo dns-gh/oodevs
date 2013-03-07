@@ -11,8 +11,6 @@
 #include "UrbanLayer.h"
 
 #include "DrawVisitor.h"
-#include "Infrastructure_ABC.h"
-#include "ResourceNetwork_ABC.h"
 #include "View_ABC.h"
 #include "Viewport_ABC.h"
 #include "clients_kernel/Hierarchies.h"
@@ -43,54 +41,6 @@ UrbanLayer::UrbanLayer( kernel::Controllers& controllers, GlTools_ABC& tools, Co
 UrbanLayer::~UrbanLayer()
 {
     // NOTHING
-}
-
-namespace
-{
-    struct DrawExtensionsFunctor : boost::noncopyable
-    {
-        DrawExtensionsFunctor( Viewport_ABC& viewport, const GlTools_ABC& tools, bool drawInfrastructure )
-            : viewport_          ( viewport )
-            , tools_             ( tools )
-            , drawInfrastructure_( drawInfrastructure )
-        {}
-
-        void operator()( const kernel::Entity_ABC& object )
-        {
-            if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
-            {
-                auto resource = object.Retrieve< ResourceNetwork_ABC >();
-                auto infra = drawInfrastructure_ ? object.Retrieve< Infrastructure_ABC >() : 0;
-                if( resource ||  infra )
-                {
-                    viewport_.SetHotpoint( positions->Barycenter() );
-                    if( resource )
-                        resource->Draw( viewport_, tools_ );
-                    if( infra )
-                        infra->Draw( viewport_, tools_ );
-                }
-            }
-        }
-        Viewport_ABC& viewport_;
-        const GlTools_ABC& tools_;
-        bool drawInfrastructure_;
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanLayer::Paint
-// Created: SLG 2006-03-23
-// -----------------------------------------------------------------------------
-void UrbanLayer::Paint( Viewport_ABC& viewport )
-{
-    // dessin des blocs urbains
-    EntityLayer< kernel::UrbanObject_ABC >::Paint( viewport );
-    // dessin des extensions(en deux temps pour les afficher par dessus les blocs)
-    if( !tools_.IsPickingMode() )
-    {
-        DrawExtensionsFunctor functor( viewport, tools_, controllers_.options_.GetOption( "Infra", true ).To< bool >() );
-        Apply( functor );
-    }
 }
 
 // -----------------------------------------------------------------------------
