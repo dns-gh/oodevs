@@ -28,6 +28,9 @@ type SimOpts struct {
 	// Delay after which the simulation process will be terminated if the
 	// startup function fails to connect to its dispatcher server.
 	ConnectTimeout time.Duration
+
+	// Prefix the tail output with supplied string
+	TailPrefix string
 }
 
 func (o *SimOpts) GetExerciseDir() string {
@@ -177,9 +180,13 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 		opts.GetDispatcherLogPath(),
 	}
 	go func() {
+		prefix := opts.TailPrefix
+		if len(prefix) > 0 {
+			prefix = prefix + ": "
+		}
 		defer sim.quitAll.Done()
 		TailFiles(logFiles, sim.tailch, func(line string) bool {
-			log.Print(line)
+			log.Printf(prefix + line)
 			return false
 		})
 	}()
