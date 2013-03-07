@@ -91,6 +91,41 @@ func TestDispatcherMisconfiguration(t *testing.T) {
 	}
 }
 
+func TestDispatcherAddressCollision(t *testing.T) {
+	startSim := func(simOffset int) (*simu.SimProcess, error) {
+		opts := MakeOpts()
+		exDir := opts.GetExerciseDir()
+		session := simu.CreateDefaultSession()
+		session.EndTick = 1000
+		session.Paused = false
+		sessionPath, err := simu.WriteNewSessionFile(session, exDir)
+		if err != nil {
+			t.Fatal("failed to write the session")
+		}
+		opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
+		opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+simOffset+6)
+		opts.TailPrefix = fmt.Sprintf("sim+%v", simOffset)
+		return simu.StartSim(opts)
+	}
+
+	sim1, err := startSim(0)
+	defer sim1.Kill()
+	if err != nil {
+		t.Fatalf("simulation failed to start: %v", err)
+	}
+
+	sim2, err := startSim(1)
+	defer sim2.Kill()
+	sim2.Wait(60 * time.Second)
+	/*if sim2.Success() {
+		    t.Fatal("simulation with colliding dispatcher should have failed")
+	    }*/
+	logData := ReadTextFile(t, sim2.Opts.GetDispatcherLogPath())
+	if !strings.Contains(logData, "Une seule utilisation de chaque") {
+		t.Fatal("dispatcher.log says nothing about address collision")
+	}
+}
+
 var application string
 var rootdir string
 var rundir string

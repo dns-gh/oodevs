@@ -55,6 +55,7 @@ type SimProcess struct {
 	sessionDir string
 	quitAll    sync.WaitGroup
 
+	Opts           *SimOpts
 	DispatcherAddr string
 }
 
@@ -170,6 +171,7 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 		cmd:            cmd,
 		tailch:         make(chan int, 1),
 		sessionDir:     sessionDir,
+		Opts:           opts,
 		DispatcherAddr: gamingServer,
 	}
 	err = cmd.Start()
