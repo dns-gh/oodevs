@@ -624,7 +624,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
 {
     tools::Resolver< MIL_AgentPion >::Register( pion.GetID(), pion );
     pion.CallRole( &PHY_RoleInterface_UrbanLocation::MagicMove, position );
-    StartInfiniteCommands( pion );
+    StartContinuousCommands( pion );
     return pion;
 }
 
@@ -697,7 +697,7 @@ void Sink::Clean()
         pion->Clean();
         if( pion->IsMarkedForDestruction() && !pion->CallRole( &DEC_RolePion_Decision::IsUsedByDIA, false ) )
         {
-            StopInfiniteCommands( *pion );
+            StopContinuousCommands( *pion );
             it = elements_.erase( it );
             delete pion;
         }
@@ -787,10 +787,10 @@ void Sink::Unregister( const core::Model& model, core::ModelListener_ABC& listen
 }
 
 // -----------------------------------------------------------------------------
-// Name: Sink::StartInfiniteCommands
+// Name: Sink::StartContinuousCommands
 // Created: MCO 2013-03-05
 // -----------------------------------------------------------------------------
-void Sink::StartInfiniteCommands( const MIL_AgentPion& pion )
+void Sink::StartContinuousCommands( const MIL_AgentPion& pion )
 {
     const unsigned int id = pion.GetID();
     core::Model parameters;
@@ -800,10 +800,10 @@ void Sink::StartInfiniteCommands( const MIL_AgentPion& pion )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Sink::StopInfiniteCommands
+// Name: Sink::StopContinuousCommands
 // Created: MCO 2013-03-05
 // -----------------------------------------------------------------------------
-void Sink::StopInfiniteCommands( const MIL_AgentPion& pion )
+void Sink::StopContinuousCommands( const MIL_AgentPion& pion )
 {
     const unsigned int id = pion.GetID();
     boost::for_each(

@@ -109,8 +109,8 @@ private:
     //@{
     void Initialize();
 
-    void StartInfiniteCommands( const MIL_AgentPion& pion );
-    void StopInfiniteCommands( const MIL_AgentPion& pion );
+    void StartContinuousCommands( const MIL_AgentPion& pion );
+    void StopContinuousCommands( const MIL_AgentPion& pion );
 
     MIL_AgentPion& Configure( MIL_AgentPion& pion, const MT_Vector2D& position );
     void CreateRoles( SinkRoleExtender& ext, const MT_Vector2D& position );
