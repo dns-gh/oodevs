@@ -111,7 +111,7 @@ void CreationPanels::NotifyUpdated( const kernel::Profile_ABC& profile )
 void CreationPanels::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
 {
     RichDockWidget::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
-    panels_->SelectAndLockPanel( GetCurrentMode() == eModes_Replay? 5 : 1, GetCurrentMode() == eModes_Replay );
+    panels_->SelectAndLockPanel( GetCurrentMode() == eModes_Replay? 5 : 0, GetCurrentMode() == eModes_Replay );
 }
 
 // -----------------------------------------------------------------------------
