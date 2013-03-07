@@ -488,12 +488,12 @@ void GlProxy::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& s
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlProxy::RegisterObjectPicking
+// Name: GlProxy::RenderPicking
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void GlProxy::RegisterObjectPicking( const T_ObjectPicking& object )
+void GlProxy::RenderPicking( const T_ObjectPicking& object )
 {
-    tools_->RegisterObjectPicking( object );
+    tools_->RenderPicking( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -506,10 +506,11 @@ bool GlProxy::IsPickingMode() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlProxy::GlobalViewport
-// Created: LGY 2013-02-20
+// Name: GlProxy::Picking
+// Created: LGY 2013-03-06
 // -----------------------------------------------------------------------------
-geometry::Rectangle2f GlProxy::GlobalViewport() const
+void GlProxy::Picking()
 {
-    return tools_->GlobalViewport();
+    tools_->Picking();
 }
+

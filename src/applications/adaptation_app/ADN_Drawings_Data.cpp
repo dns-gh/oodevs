@@ -78,9 +78,9 @@ namespace
         virtual void DrawTacticalGraphics( const std::string&, const kernel::Location_ABC&, bool, bool ) const {}
         virtual void DrawApp6SymbolFixedSize( const std::string&, const geometry::Point2f&, float) const {}
         virtual void FillSelection( const geometry::Point2f&, T_ObjectsPicking& ) {};
-        virtual void RegisterObjectPicking( const T_ObjectPicking& ) {};
-        virtual geometry::Rectangle2f GlobalViewport() const { return geometry::Rectangle2f(); };
+        virtual void RenderPicking( const T_ObjectPicking& ) {};
         virtual bool IsPickingMode() const { return false; };
+        virtual void Picking() {};
         //@}
     };
 }

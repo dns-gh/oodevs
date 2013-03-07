@@ -74,8 +74,8 @@ public:
     //! @name Picking
     //@{
     virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection ) = 0;
-    virtual void RegisterObjectPicking( const T_ObjectPicking& object ) = 0;
-    virtual geometry::Rectangle2f GlobalViewport() const = 0;
+    virtual void Picking() = 0;
+    virtual void RenderPicking( const T_ObjectPicking& object ) = 0;
     virtual bool IsPickingMode() const = 0;
     //@}
 

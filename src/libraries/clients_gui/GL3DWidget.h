@@ -92,9 +92,9 @@ public:
     virtual void SetCurrentCursor( const QCursor& cursor );
 
     virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection );
-    virtual void RegisterObjectPicking( const T_ObjectPicking& object );
+    virtual void Picking();
+    virtual void RenderPicking( const T_ObjectPicking& object );
     virtual bool IsPickingMode() const;
-    virtual geometry::Rectangle2f GlobalViewport() const;
     //@}
 
 private:

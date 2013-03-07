@@ -111,21 +111,18 @@ void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport, bo
     {
         SelectColor( entity );
         const geometry::Point2f position = GetPosition( entity );
+        viewport.SetHotpoint( position );
         DrawVisitor drawer;
         entity.Apply( drawer );
 
         if( pickingMode )
         {
-            Viewport2d globalViewport( tools_.GlobalViewport() );
-            globalViewport.SetHotpoint( position );
-            tools_.RegisterObjectPicking( std::make_pair( entity.GetId(), type_ ) );
-            drawer.Pick( position, globalViewport, tools_ );
+            tools_.RenderPicking( std::make_pair( entity.GetId(), type_ ) );
+            drawer.Pick( position, viewport, tools_ );
+            tools_.Picking();
         }
         else
-        {
-            viewport.SetHotpoint( position );
             drawer.Draw( position, viewport, tools_ );
-        }
     }
 }
 
