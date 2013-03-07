@@ -53,6 +53,8 @@ type SimProcess struct {
 	tailch     chan int // terminate tail goroutine
 	sessionDir string
 	quitAll    sync.WaitGroup
+
+	DispatcherAddr string
 }
 
 // Return true if the process exited on success, false otherwise
@@ -205,9 +207,10 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	}
 	cmd.Dir = *rundir
 	sim := SimProcess{
-		cmd:        cmd,
-		tailch:     make(chan int, 1),
-		sessionDir: sessionDir,
+		cmd:            cmd,
+		tailch:         make(chan int, 1),
+		sessionDir:     sessionDir,
+		DispatcherAddr: gamingServer,
 	}
 	err = cmd.Start()
 
