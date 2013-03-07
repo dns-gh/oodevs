@@ -99,16 +99,51 @@ func (sim *SimProcess) Wait(d time.Duration) {
 	}
 }
 
-// If path does not exist, try to open it repeatedly. Once it is opened, keep
-// logging all file lines until a read fails or the quit channel is signalled.
-func tail(path string, quit chan int, done *sync.WaitGroup) {
+// Tail each input path. If path does not exist, try to open it repeatedly.
+// Once it is opened, keep logging all file lines until a read fails or the
+// quit channel is signalled.
+func tail(paths []string, quit chan int, done *sync.WaitGroup) {
 	defer func() {
 		done.Done()
 	}()
 
+	readers := make([]func(), 0, len(paths))
+	for _, path := range paths {
+		// Duplicate variable for the closure
+		logPath := path
+		pending := ""
+		var reader *bufio.Reader
+		stopped := false
+		fn := func() {
+			if stopped {
+				return
+			}
+			if reader == nil {
+				fp, err := os.Open(logPath)
+				if err != nil {
+					return
+				}
+				defer fp.Close()
+				reader = bufio.NewReader(fp)
+			}
+
+			for {
+				line, err := reader.ReadString('\n')
+				pending += line
+				if err != nil {
+					if err != io.EOF {
+						stopped = true
+					}
+					return
+				}
+				log.Print(pending)
+				pending = ""
+			}
+		}
+		readers = append(readers, fn)
+	}
+
 	ticker := time.NewTicker(1 * time.Second)
-	var reader *bufio.Reader
-	pending := ""
 	for {
 		select {
 		case <-ticker.C:
@@ -116,26 +151,8 @@ func tail(path string, quit chan int, done *sync.WaitGroup) {
 		case <-quit:
 			return
 		}
-		if reader == nil {
-			fp, err := os.Open(path)
-			if err != nil {
-				continue
-			}
-			defer fp.Close()
-			reader = bufio.NewReader(fp)
-		}
-
-		for {
-			line, err := reader.ReadString('\n')
-			pending += line
-			if err != nil {
-				if err != io.EOF {
-					return
-				}
-				break
-			}
-			log.Print(pending)
-			pending = ""
+		for _, reader := range readers {
+			reader()
 		}
 	}
 }
@@ -215,7 +232,11 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	err = cmd.Start()
 
 	sim.quitAll.Add(1)
-	go tail(sim.GetLogPath(), sim.tailch, &sim.quitAll)
+	logFiles := []string{
+		opts.GetSimLogPath(),
+		opts.GetDispatcherLogPath(),
+	}
+	go tail(logFiles, sim.tailch, &sim.quitAll)
 
 	connectTimeout := opts.ConnectTimeout
 	if connectTimeout <= 0 {
