@@ -223,12 +223,14 @@
         <attribute name="exercise"/>
         <attribute name="session" default="default"/>
         <attribute name="simulation" default="simulation_app"/>
+        <attribute name="schemas.dir" default="${run.dir}/resources/schemas/${version.major}/exercise"/>
+        <attribute name="exercise.dir" default="${data.dir}/exercises/@{exercise}"/>
         <sequential>
-            <schemavalidate nonamespacefile="${run.dir}/resources/schemas/${version.major}/exercise/exercise.xsd" file="../data/exercises/@{exercise}/exercise.xml" failonerror="true" warn="true"/>
-            <schemavalidate nonamespacefile="${run.dir}/resources/schemas/${version.major}/exercise/orbat.xsd" file="../data/exercises/@{exercise}/orbat.xml" failonerror="true" warn="true"/>
-            <schemavalidate nonamespacefile="${run.dir}/resources/schemas/${version.major}/exercise/profiles.xsd" file="../data/exercises/@{exercise}/profiles.xml" failonerror="true" warn="true"/>
-            <schemavalidate nonamespacefile="${run.dir}/resources/schemas/${version.major}/exercise/weather.xsd" file="../data/exercises/@{exercise}/weather.xml" failonerror="true" warn="true"/>
-            <schemavalidate nonamespacefile="${run.dir}/resources/schemas/${version.major}/exercise/session.xsd" file="../data/exercises/@{exercise}/sessions/@{session}/session.xml" failonerror="true" warn="true"/>
+            <schemavalidate nonamespacefile="@{schemas.dir}/exercise.xsd" file="@{exercise.dir}/exercise.xml" failonerror="true" warn="true"/>
+            <schemavalidate nonamespacefile="@{schemas.dir}/orbat.xsd" file="@{exercise.dir}/orbat.xml" failonerror="true" warn="true"/>
+            <schemavalidate nonamespacefile="@{schemas.dir}/profiles.xsd" file="@{exercise.dir}/profiles.xml" failonerror="true" warn="true"/>
+            <schemavalidate nonamespacefile="@{schemas.dir}/weather.xsd" file="@{exercise.dir}/weather.xml" failonerror="true" warn="true"/>
+            <schemavalidate nonamespacefile="@{schemas.dir}/session.xsd" file="@{exercise.dir}/sessions/@{session}/session.xml" failonerror="true" warn="true"/>
             <run-simulation exercise="@{exercise}" session="@{session}"/>
         </sequential>
     </macrodef>
