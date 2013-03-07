@@ -507,12 +507,3 @@ void LogisticTreeView::contextMenuEvent( QContextMenuEvent* event )
             HierarchyTreeView_ABC::contextMenuEvent( event );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: LogisticTreeView::CanShowContextMenu
-// Created: NPT 2013-03-06
-// -----------------------------------------------------------------------------
-bool LogisticTreeView::CanShowContextMenu( const kernel::Entity_ABC& entity )
-{
-    return entity.GetTypeName() != kernel::Team_ABC::typeName_;
-}
