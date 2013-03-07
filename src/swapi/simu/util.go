@@ -3,30 +3,29 @@ package simu
 import (
 	"bufio"
 	"io"
-	"log"
 	"os"
 	"time"
 )
 
+// The handler sees all lines read by TailFiles. Return true to stop the
+// TailFiles call.
+type TailHandler func(line string) bool
+
 // Tail each input path. If path does not exist, try to open it repeatedly.
 // Once it is opened, keep logging all file lines until a read fails or the
 // quit channel is signalled.
-func TailFiles(paths []string, quit chan int) {
-	readers := make([]func(), 0, len(paths))
+func TailFiles(paths []string, quit chan int, handler TailHandler) {
+	readers := make([]func() bool, 0, len(paths))
 	for _, path := range paths {
 		// Duplicate variable for the closure
 		logPath := path
 		pending := ""
 		var reader *bufio.Reader
-		stopped := false
-		fn := func() {
-			if stopped {
-				return
-			}
+		fn := func() bool {
 			if reader == nil {
 				fp, err := os.Open(logPath)
 				if err != nil {
-					return
+					return false
 				}
 				defer fp.Close()
 				reader = bufio.NewReader(fp)
@@ -36,14 +35,14 @@ func TailFiles(paths []string, quit chan int) {
 				line, err := reader.ReadString('\n')
 				pending += line
 				if err != nil {
-					if err != io.EOF {
-						stopped = true
-					}
-					return
+					return err != io.EOF
 				}
-				log.Print(pending)
+				if handler(pending) {
+					return true
+				}
 				pending = ""
 			}
+			panic("unreachable")
 		}
 		readers = append(readers, fn)
 	}
@@ -56,8 +55,15 @@ func TailFiles(paths []string, quit chan int) {
 		case <-quit:
 			return
 		}
-		for _, reader := range readers {
-			reader()
+		for i := 0; i != len(readers); {
+			if readers[i]() {
+				readers = append(readers[:i], readers[i+1:]...)
+				continue
+			}
+			i++
+		}
+		if len(readers) <= 0 {
+			break
 		}
 	}
 }

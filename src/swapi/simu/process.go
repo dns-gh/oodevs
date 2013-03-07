@@ -2,6 +2,7 @@ package simu
 
 import (
 	"errors"
+	"log"
 	"net"
 	"os"
 	"os/exec"
@@ -177,7 +178,10 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	}
 	go func() {
 		defer sim.quitAll.Done()
-		TailFiles(logFiles, sim.tailch)
+		TailFiles(logFiles, sim.tailch, func(line string) bool {
+			log.Print(line)
+			return false
+		})
 	}()
 
 	connectTimeout := opts.ConnectTimeout
