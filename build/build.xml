@@ -226,11 +226,11 @@
         <attribute name="schemas.dir" default="${run.dir}/resources/schemas/${version.major}/exercise"/>
         <attribute name="exercise.dir" default="${data.dir}/exercises/@{exercise}"/>
         <sequential>
-            <schemavalidate nonamespacefile="@{schemas.dir}/exercise.xsd" file="@{exercise.dir}/exercise.xml" failonerror="true" warn="true"/>
-            <schemavalidate nonamespacefile="@{schemas.dir}/orbat.xsd" file="@{exercise.dir}/orbat.xml" failonerror="true" warn="true"/>
-            <schemavalidate nonamespacefile="@{schemas.dir}/profiles.xsd" file="@{exercise.dir}/profiles.xml" failonerror="true" warn="true"/>
-            <schemavalidate nonamespacefile="@{schemas.dir}/weather.xsd" file="@{exercise.dir}/weather.xml" failonerror="true" warn="true"/>
-            <schemavalidate nonamespacefile="@{schemas.dir}/session.xsd" file="@{exercise.dir}/sessions/@{session}/session.xml" failonerror="true" warn="true"/>
+            <schemavalidate nonamespacefile="@{schemas.dir}/exercise.xsd" file="@{exercise.dir}/exercise.xml"/>
+            <schemavalidate nonamespacefile="@{schemas.dir}/orbat.xsd" file="@{exercise.dir}/orbat.xml"/>
+            <schemavalidate nonamespacefile="@{schemas.dir}/profiles.xsd" file="@{exercise.dir}/profiles.xml"/>
+            <schemavalidate nonamespacefile="@{schemas.dir}/weather.xsd" file="@{exercise.dir}/weather.xml"/>
+            <schemavalidate nonamespacefile="@{schemas.dir}/session.xsd" file="@{exercise.dir}/sessions/@{session}/session.xml"/>
             <run-simulation exercise="@{exercise}" session="@{session}"/>
         </sequential>
     </macrodef>
