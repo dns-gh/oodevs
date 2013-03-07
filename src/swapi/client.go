@@ -17,8 +17,8 @@ import (
 
 var (
 	MaxPostMessages     = 32
-	ClientTimeout       = time.Duration(10) * time.Minute
-	TickPeriod          = time.Duration(1) * time.Second
+	ClientTimeout       = 10 * time.Minute
+	TickPeriod          = 1 * time.Second
 	ErrTimeout          = errors.New("handler timeout")
 	ErrConnectionClosed = errors.New("connection closed")
 	InvalidContext      = int32(0)
@@ -226,7 +226,7 @@ func (c *Client) write() {
 }
 
 func (c *Client) Register(handler MessageHandler) int32 {
-	next := MakeHandlerRegister(handler, time.Duration(0))
+	next := MakeHandlerRegister(handler, 0)
 	c.registers <- next
 	return <-next.context
 }
@@ -245,5 +245,5 @@ func (c *Client) PostWithTimeout(msg SwordMessage, handler MessageHandler, timeo
 }
 
 func (c *Client) Post(msg SwordMessage, handler MessageHandler) int32 {
-	return c.PostWithTimeout(msg, handler, time.Duration(0))
+	return c.PostWithTimeout(msg, handler, 0)
 }
