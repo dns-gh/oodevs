@@ -40,7 +40,7 @@ func MakeOpts() *simu.SimOpts {
 	if len(rundir) > 0 {
 		opts.RunDir = &rundir
 	}
-	opts.ExerciseName = "worldwide/Egypt"
+	opts.ExerciseName = "tests/crossroad-empty"
 	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort+5)
 	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+6)
 	return &opts
