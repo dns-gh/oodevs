@@ -255,7 +255,7 @@ bool ADN_Missions_ABC::WriteMissionSheet( const std::string& missionDir, std::st
     std::string filePath = std::string( missionDir + "/" + fileName );
     if( !bfs::is_directory( missionDir + "/obsolete" ) )
         bfs::create_directories( missionDir + "/obsolete" );
-    if( !IsEmptyMissionSheet() )
+    if( !IsEmptyMissionSheet() || fileName == "tempMissionSheet" )
     {
         //mission sheet xml creation
         xml::xofstream xos( filePath + ".xml" );
