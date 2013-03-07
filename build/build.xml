@@ -248,7 +248,7 @@
             <!-- Copy physical database -->
             <delete dir="${data.dir}/data/models/ada/physical/@{temporary-name}" failonerror="false"/>
             <copy todir="${data.dir}/data/models/ada/physical/@{temporary-name}">
-                <fileset dir="../data/tests/test_data_migration/@{old-version}/physical"/>
+                <fileset dir="${data.dir}/tests/test_data_migration/@{old-version}/physical"/>
             </copy>
             <!-- ADN -->
             <delete dir="${out.dir}/@{temporary-name}"/>
@@ -256,7 +256,7 @@
             <!-- Copy exercise -->
             <delete dir="${data.dir}/exercises/@{temporary-name}" failonerror="false"/>
             <copy todir="${data.dir}/exercises/@{temporary-name}">
-                <fileset dir="../data/tests/test_data_migration/@{old-version}/exercises/@{exercise}"/>
+                <fileset dir="${data.dir}/tests/test_data_migration/@{old-version}/exercises/@{exercise}"/>
                 <filterset>
                     <filter token="DATASET" value="ada"/>
                     <filter token="PHYSICAL" value="@{temporary-name}"/>
@@ -316,12 +316,12 @@
             <arg value="--test"/>
         </check-gui>
         <check-gui app="gaming_app">
-            <arg value="--root-dir=../../data"/>
+            <arg value="--root-dir=${data.dir}"/>
             <arg value="--exercise=worldwide/Egypt"/>
             <arg value="--session=default"/>
         </check-gui>
         <check-app app="dispatcher_app">
-            <arg value="--root-dir=../../data"/>
+            <arg value="--root-dir=${data.dir}"/>
             <arg value="--exercise=worldwide/Egypt"/>
             <arg value="--session=default"/>
             <arg value="--dispatcher-address=${test.portnumber}"/>
@@ -334,7 +334,7 @@
             <arg value="--test"/>
         </check-app>
         <check-app app="replayer_app">
-            <arg value="--root-dir=../../data"/>
+            <arg value="--root-dir=${data.dir}"/>
             <arg value="--exercise=worldwide/Egypt"/>
             <arg value="--session=default"/>
             <arg value="--dispatcher-address=${test.portnumber}"/>
