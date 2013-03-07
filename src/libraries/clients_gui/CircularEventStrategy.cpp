@@ -211,15 +211,13 @@ void CircularEventStrategy::HandleKeyRelease( QKeyEvent* /*key*/ )
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    if( !mouse )
+    if( !mouse || ( mouse->buttons() & mouse->button() ) == 0 ) // mouse release
         return;
 
-
+    Layer_ABC::T_LayerElements extractedElements;
     GlTools_ABC::T_ObjectsPicking selection;
     tools_.FillSelection( point, selection );
-
-    Layer_ABC::T_LayerElements extractedElements;
-    for( auto it = layers_.begin(); it != layers_.end(); ++it )                                             // Extract elements
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )                                         // Extract elements
     {
         if( !( mouse->button() == Qt::LeftButton || ( mouse->button() == Qt::RightButton && !( *it )->IsReadOnly() ) ) )
             continue;
@@ -227,7 +225,6 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
     }
 
     if(  Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMousePress, false ) ) ||                      // a layer has return true
-        ( mouse->buttons() & mouse->button() ) == 0 ||                                                      // mouse release
         ( mouse->globalPos() - QCursor::pos() ).manhattanLength() > 3 ||                                    // the mouse has moved more than 3 pixels since the oldPosition
         ( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton ) ||                      // no good button
         ( mouse->modifiers() == Qt::ShiftModifier  ) )                                                      // metrics mode
