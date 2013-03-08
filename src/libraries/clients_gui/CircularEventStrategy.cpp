@@ -240,6 +240,16 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
 }
 
 // -----------------------------------------------------------------------------
+// Name: CircularEventStrategy::HandleMouseRelease
+// Created: LGY 2013-03-08
+// -----------------------------------------------------------------------------
+void CircularEventStrategy::HandleMouseRelease( QMouseEvent* mouse, const geometry::Point2f& point )
+{
+    if( ! Apply( MouseFunctor( mouse, point, &MapLayer_ABC::HandleMouseRelease ) ) && default_ )
+        default_->HandleMouseRelease( mouse, point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: CircularEventStrategy::HandleMouseDoubleClick
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------

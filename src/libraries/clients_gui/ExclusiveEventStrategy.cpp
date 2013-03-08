@@ -95,6 +95,18 @@ void ExclusiveEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometr
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExclusiveEventStrategy::HandleMouseRelease
+// Created: LGY 2013-03-08
+// -----------------------------------------------------------------------------
+void ExclusiveEventStrategy::HandleMouseRelease( QMouseEvent* mouse, const geometry::Point2f& point )
+{
+    if( layer_ )
+        layer_->HandleMouseRelease( mouse, point );
+    else
+        forward_.HandleMouseRelease( mouse, point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExclusiveEventStrategy::HandleMouseDoubleClick
 // Created: AGE 2006-09-04
 // -----------------------------------------------------------------------------

@@ -53,6 +53,7 @@ public:
     virtual void HandleKeyPress        ( QKeyEvent* key );
     virtual void HandleKeyRelease      ( QKeyEvent* key );
     virtual void HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual void HandleMouseRelease    ( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual void HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual void HandleMouseMove       ( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual void HandleMouseWheel      ( QWheelEvent* mouse,     const geometry::Point2f& point );
