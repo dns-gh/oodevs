@@ -13,7 +13,6 @@ func startSimOnExercise(t *testing.T, exercise string, endTick int,
 	opts.ExerciseName = exercise
 
 	session := simu.CreateDefaultSession()
-	session.EndTick = 1000
 	session.Paused = paused
 	WriteSession(t, opts, session)
 	sim, err := simu.StartSim(opts)

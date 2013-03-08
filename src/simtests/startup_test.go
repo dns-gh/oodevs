@@ -112,7 +112,6 @@ func TestDispatcherMisconfiguration(t *testing.T) {
 func TestDispatcherAddressCollision(t *testing.T) {
 	startSim := func(simOffset int) (*simu.SimProcess, error) {
 		session := simu.CreateDefaultSession()
-		session.EndTick = 1000
 
 		opts := MakeOpts()
 		WriteSession(t, opts, session)
