@@ -78,10 +78,11 @@ namespace
             SendMessageStub< sword::SimToClient >();
             SendMessageStub< sword::MessengerToClient >();
         }
-        virtual void ConnectionSucceeded( const std::string& endpoint )
+        virtual void ConnectionSucceeded( const std::string& source,
+                const std::string& endpoint )
         {
             client_ = endpoint;
-            tools::ServerNetworker::ConnectionSucceeded( endpoint );
+            tools::ServerNetworker::ConnectionSucceeded( source, endpoint );
         }
 
     private:
@@ -100,7 +101,7 @@ namespace
 
     MOCK_BASE_CLASS( MockConnectionHandler, SwordConnectionHandler_ABC )
     {
-        MOCK_METHOD( OnConnectionSucceeded, 1 );
+        MOCK_METHOD( OnConnectionSucceeded, 2 );
         MOCK_METHOD( OnConnectionFailed, 2 );
         MOCK_METHOD( OnConnectionError, 2 );
         MOCK_METHOD( OnConnectionWarning, 2 );
@@ -131,7 +132,7 @@ BOOST_AUTO_TEST_CASE( ClientConnectsAndAuthenticatesToSimulation )
     MockServer server( PORT );
     SwordProxy client( defaultHost, PORT, defaultProfile, defaultPassword );
     MockConnectionHandler connectionHandler;
-    MOCK_EXPECT( connectionHandler.OnConnectionSucceeded ).once().with( MakeHost( defaultHost, PORT ) );
+    MOCK_EXPECT( connectionHandler.OnConnectionSucceeded ).once().with( mock::any, MakeHost( defaultHost, PORT ) );
     MOCK_EXPECT( connectionHandler.OnAuthenticationSucceeded ).once().with( defaultProfile );
     client.Connect( &connectionHandler );
     Timeout timeout( timeOut );
@@ -152,7 +153,7 @@ BOOST_AUTO_TEST_CASE( MessageHandlersCanBeRegistered )
     MockServer server( PORT );
     SwordProxy client( defaultHost, PORT, defaultProfile, defaultPassword );
     MockConnectionHandler connectionHandler;
-    MOCK_EXPECT( connectionHandler.OnConnectionSucceeded ).once().with( MakeHost( defaultHost, PORT ) );
+    MOCK_EXPECT( connectionHandler.OnConnectionSucceeded ).once().with( mock::any, MakeHost( defaultHost, PORT ) );
     MOCK_EXPECT( connectionHandler.OnAuthenticationSucceeded ).once().with( defaultProfile );
     MockMessageHandler messageHandler;
     MOCK_EXPECT( messageHandler.OnReceiveMessageSimToClient ).at_least( 1 );

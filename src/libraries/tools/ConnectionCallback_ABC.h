@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void ConnectionSucceeded( const std::string& endpoint ) = 0;
+    virtual void ConnectionSucceeded( const std::string& source, const std::string& endpoint ) = 0;
     virtual void ConnectionFailed   ( const std::string& address, const std::string& error ) = 0;
     //@}
 };

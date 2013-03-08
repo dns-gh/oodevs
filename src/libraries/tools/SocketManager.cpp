@@ -80,6 +80,7 @@ void SocketManager::Disconnect( const std::string& endpoint )
 // -----------------------------------------------------------------------------
 void SocketManager::Add( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket )
 {
+    const std::string source = ToString( socket->local_endpoint() );
     const std::string address = ToString( socket->remote_endpoint() );
     boost::shared_ptr< Socket > pSocket = boost::make_shared< Socket >( socket, message_, address );
     SOCKET nativeSock = socket->native();
@@ -90,7 +91,7 @@ void SocketManager::Add( const boost::shared_ptr< boost::asio::ip::tcp::socket >
     }
     pSocket->StartReading();
     sockets_.insert( std::make_pair( address, pSocket ) );
-    connection_->ConnectionSucceeded( address );
+    connection_->ConnectionSucceeded( source, address );
 }
 
 // -----------------------------------------------------------------------------

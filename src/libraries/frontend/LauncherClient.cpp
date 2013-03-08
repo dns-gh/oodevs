@@ -59,7 +59,7 @@ void LauncherClient::Connect( const std::string& host, unsigned int port, fronte
 // Name: LauncherClient::ConnectionSucceeded
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-void LauncherClient::ConnectionSucceeded( const std::string& endpoint )
+void LauncherClient::ConnectionSucceeded( const std::string&, const std::string& endpoint )
 {
     publisher_->SetHost( endpoint );
     responseHandler_->SetMainHandler( boost::shared_ptr< ResponseHandler_ABC >( new RemoteHost( *publisher_, endpoint, controller_ ) ) );

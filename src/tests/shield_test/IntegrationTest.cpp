@@ -74,7 +74,7 @@ namespace
             RegisterMessage( *this, &Client::Receive );
         }
         MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const MsgsSimToClient::MsgSimToClient& ), Receive );
-        MOCK_METHOD( ConnectionSucceeded, 1 );
+        MOCK_METHOD( ConnectionSucceeded, 2 );
         MOCK_METHOD( ConnectionFailed, 2 );
         MOCK_METHOD( ConnectionError, 2 );
         MOCK_METHOD( ConnectionWarning, 2 );
@@ -97,7 +97,7 @@ namespace
             MOCK_EXPECT( listener.Info ).once().with( mock::contain( "Shield proxy received connection from" ) ).calls( --bl::var( notified ) );
             MOCK_EXPECT( handler.Register ).once().with( mock::any, mock::retrieve( sender ), mock::retrieve( broadcaster ) )
                 .calls( (--bl::var( notified ), bl::bind( &dispatcher::ClientBroadcaster_ABC::Activate, &bl::_3, bl::_1 )) );
-            MOCK_EXPECT( client.ConnectionSucceeded ).once().with( mock::retrieve( client.host ) ).calls( --bl::var( notified ) );
+            MOCK_EXPECT( client.ConnectionSucceeded ).once().with( mock::any, mock::retrieve( client.host ) ).calls( --bl::var( notified ) );
             MOCK_EXPECT( model.Send ).once().calls( --bl::var( notified ) );
             wait( bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
             mock::verify();

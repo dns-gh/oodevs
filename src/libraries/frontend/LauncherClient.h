@@ -71,7 +71,7 @@ private:
 
     //! @name Operations
     //@{
-    virtual void ConnectionSucceeded( const std::string& endpoint );
+    virtual void ConnectionSucceeded( const std::string& source, const std::string& endpoint );
     virtual void ConnectionFailed( const std::string& address, const std::string& error );
     virtual void ConnectionError( const std::string& address, const std::string& error );
     virtual void ConnectionWarning( const std::string& address, const std::string& warning );

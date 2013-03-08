@@ -81,7 +81,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void ConnectionSucceeded( const std::string& from );
+    virtual void ConnectionSucceeded( const std::string& source, const std::string& from );
     virtual void ConnectionFailed( const std::string& from, const std::string& error );
     virtual void ConnectionError( const std::string& from, const std::string& error );
     virtual void ConnectionWarning( const std::string& from, const std::string& warning );

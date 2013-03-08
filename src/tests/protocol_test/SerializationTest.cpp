@@ -38,8 +38,8 @@ namespace
             , client_  ( endpoint_ )
         {
             int connections = 0;
-            MOCK_EXPECT( server_.ConnectionSucceeded ).once().with( mock::retrieve( link_ ) ).calls( ++boost::lambda::var( connections ) );
-            MOCK_EXPECT( client_.ConnectionSucceeded ).once().with( endpoint_ ).calls( ++boost::lambda::var( connections ) );
+            MOCK_EXPECT( server_.ConnectionSucceeded ).once().with( mock::any, mock::retrieve( link_ ) ).calls( ++boost::lambda::var( connections ) );
+            MOCK_EXPECT( client_.ConnectionSucceeded ).once().with( mock::any, endpoint_ ).calls( ++boost::lambda::var( connections ) );
             wait( boost::lambda::var( connections ) == 2, boost::bind( &Fixture::Update, this ) );
             mock::verify();
             mock::reset();

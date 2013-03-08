@@ -35,7 +35,7 @@ public:
 
     //! @name Proxyfied operations
     //@{
-    virtual void OnConnectionSucceeded( const std::string& endpoint );
+    virtual void OnConnectionSucceeded( const std::string& source, const std::string& endpoint );
     virtual void OnConnectionFailed( const std::string& endpoint, const std::string& reason );
     virtual void OnConnectionError( const std::string& endpoint, const std::string& reason );
     virtual void OnConnectionWarning( const std::string& endpoint, const std::string& reason );

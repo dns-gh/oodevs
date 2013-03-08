@@ -64,7 +64,7 @@ private:
 
     //! @name Connection handlers
     //@{
-    virtual void ConnectionSucceeded( const std::string& endpoint );
+    virtual void ConnectionSucceeded( const std::string& source, const std::string& endpoint );
     virtual void ConnectionFailed( const std::string& endpoint, const std::string& error );
     virtual void ConnectionError( const std::string& endpoint, const std::string& error );
     virtual void ConnectionWarning( const std::string& endpoint, const std::string& error );

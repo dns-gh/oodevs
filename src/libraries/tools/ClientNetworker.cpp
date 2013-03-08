@@ -97,7 +97,7 @@ void ClientNetworker::Update()
 // Name: ClientNetworker::ConnectionSucceeded
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ClientNetworker::ConnectionSucceeded( const std::string& )
+void ClientNetworker::ConnectionSucceeded( const std::string&, const std::string& )
 {
     // NOTHING
 }

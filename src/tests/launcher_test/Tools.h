@@ -95,7 +95,7 @@ namespace launcher_test
         }
         MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToSim& ), ReceiveSim );
         MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToAuthentication& ), ReceiveAuth );
-        MOCK_METHOD( ConnectionSucceeded, 1 );
+        MOCK_METHOD( ConnectionSucceeded, 2 );
         MOCK_METHOD( ConnectionFailed, 2 );
         MOCK_METHOD( ConnectionError, 2 );
         MOCK_METHOD( ConnectionWarning, 2 );
@@ -225,7 +225,7 @@ namespace launcher_test
             savePath = bfs::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/session.xml.save" ) );
             bfs::copy_file( filePath, savePath, bfs::copy_option::overwrite_if_exists );
 
-            MOCK_EXPECT( dispatcher.ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
+            MOCK_EXPECT( dispatcher.ConnectionSucceeded ).once().with( mock::any, mock::retrieve( dispatcher.host ) );
             exercise->StartDispatcher( session,
                 boost::assign::map_list_of
                     ( "session/config/simulation/network/@port", boost::lexical_cast< std::string >( PORT + 1 ) )

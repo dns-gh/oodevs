@@ -140,7 +140,7 @@ void ServerNetworker::Send( const std::string& endpoint, unsigned long tag, Mess
 // Name: ServerNetworker::ConnectionSucceeded
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void ServerNetworker::ConnectionSucceeded( const std::string& )
+void ServerNetworker::ConnectionSucceeded( const std::string&, const std::string& )
 {
     // NOTHING
 }

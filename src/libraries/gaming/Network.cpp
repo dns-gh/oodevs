@@ -138,9 +138,9 @@ unsigned long Network::GetSentAmount() const
 // Name: Network::ConnectionSucceeded
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void Network::ConnectionSucceeded( const std::string& endpoint )
+void Network::ConnectionSucceeded( const std::string& source, const std::string& endpoint )
 {
-    ClientNetworker::ConnectionSucceeded( endpoint );
+    ClientNetworker::ConnectionSucceeded( source, endpoint );
     session_ = endpoint;
     logger_.Info( tools::translate( "Network", "Connected to " ).toStdString() + endpoint );
     manager_->Connect( session_ );

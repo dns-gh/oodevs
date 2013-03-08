@@ -39,7 +39,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void ConnectionSucceeded( const std::string& address );
+    virtual void ConnectionSucceeded( const std::string& source, const std::string& endpoint );
     virtual void ConnectionFailed   ( const std::string& address, const std::string& error );
     //@}
 
@@ -54,9 +54,10 @@ private:
     //@{
     struct Event
     {
-        Event( const std::string& endpoint );
-        Event( const std::string& endpoint, const std::string& error );
+        Event( const std::string& source, const std::string& endpoint,
+                const std::string& error );
 
+        std::string source_;
         std::string endpoint_;
         std::string error_;
     };

@@ -36,10 +36,11 @@ LauncherService::~LauncherService()
 // Name: LauncherService::ConnectionSucceeded
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
-void LauncherService::ConnectionSucceeded( const std::string& endpoint )
+void LauncherService::ConnectionSucceeded( const std::string& source,
+        const std::string& endpoint )
 {
     clients_[ endpoint ].reset( new LauncherPublisher( *this, endpoint ) );
-    tools::ServerNetworker::ConnectionSucceeded( endpoint );
+    tools::ServerNetworker::ConnectionSucceeded( source, endpoint );
 }
 
 // -----------------------------------------------------------------------------

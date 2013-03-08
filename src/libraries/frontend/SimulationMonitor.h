@@ -50,7 +50,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void ConnectionSucceeded( const std::string& endpoint );
+    virtual void ConnectionSucceeded( const std::string& source, const std::string& endpoint );
     virtual void ConnectionFailed( const std::string& endpoint, const std::string& reason );
     virtual void ConnectionError( const std::string& endpoint, const std::string& reason );
     virtual void ConnectionWarning( const std::string& endpoint, const std::string& reason );

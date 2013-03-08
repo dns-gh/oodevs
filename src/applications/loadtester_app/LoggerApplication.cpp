@@ -84,7 +84,7 @@ int LoggerApplication::Run()
 // Name: LoggerApplication::ConnectionSucceeded
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::ConnectionSucceeded( const std::string& endpoint )
+void LoggerApplication::ConnectionSucceeded( const std::string&, const std::string& endpoint )
 {
     endpoint_ = endpoint;
     authentication::AuthenticationRequest message;

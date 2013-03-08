@@ -34,19 +34,11 @@ BufferedConnectionCallback::~BufferedConnectionCallback()
 // Name: BufferedConnectionCallback::Event
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-BufferedConnectionCallback::Event::Event( const std::string& endpoint )
-    : endpoint_( endpoint )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: BufferedConnectionCallback::Event
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-BufferedConnectionCallback::Event::Event( const std::string& address, const std::string& error )
-    : endpoint_( address )
-    , error_( error )
+BufferedConnectionCallback::Event::Event( const std::string& source,
+        const std::string& endpoint, const std::string& error )
+    :   source_( source )
+    ,   endpoint_( endpoint )
+    ,   error_( error )
 {
     // NOTHING
 }
@@ -68,7 +60,7 @@ void BufferedConnectionCallback::Commit( ConnectionCallback_ABC& callback )
         if( ! event.error_.empty() )
             callback.ConnectionFailed( event.endpoint_, event.error_ );
         else
-            callback.ConnectionSucceeded( event.endpoint_ );
+            callback.ConnectionSucceeded( event.source_, event.endpoint_ );
     }
 }
 
@@ -76,10 +68,11 @@ void BufferedConnectionCallback::Commit( ConnectionCallback_ABC& callback )
 // Name: BufferedConnectionCallback::ConnectionSucceeded
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void BufferedConnectionCallback::ConnectionSucceeded( const std::string& endpoint )
+void BufferedConnectionCallback::ConnectionSucceeded( const std::string& source,
+        const std::string& endpoint )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    events_.push_back( Event( endpoint ) );
+    events_.push_back( Event( source, endpoint, "" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,5 +82,5 @@ void BufferedConnectionCallback::ConnectionSucceeded( const std::string& endpoin
 void BufferedConnectionCallback::ConnectionFailed( const std::string& address, const std::string& error )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    events_.push_back( Event( address, error ) );
+    events_.push_back( Event( "", address, error ) );
 }
