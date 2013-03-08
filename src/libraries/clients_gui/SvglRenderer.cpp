@@ -143,7 +143,7 @@ unsigned int SvglRenderer::GenerateList( svg::Node_ABC* node, const std::string&
             const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
             ListPaint color( colorList_ );
             if( pickingMode )
-                renderingContext_->EnablePickingMode();
+                renderingContext_->EnablePickingMode( 5.f );
             renderingContext_->SetViewport( box, vWidth, vHeight );
             renderingContext_->PushProperty( RenderingContext::color, color );
             std::auto_ptr< Style > border( CreateStyle( style ) );

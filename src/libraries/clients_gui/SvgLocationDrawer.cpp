@@ -177,7 +177,7 @@ void SvgLocationDrawer::DrawShape( const T& shape )
         context_->PushProperty( svg::RenderingContext_ABC::fillOpacity, opacity );
         context_->PushProperty( svg::RenderingContext_ABC::strokeOpacity, opacity );
         if( tools_->IsPickingMode() )
-            context_->EnablePickingMode();
+            context_->EnablePickingMode( 5.f );
         style_.Draw( shape, *context_, *tools_, zoom_ );
         context_->DisablePickingMode();
         context_->PopProperty( svg::RenderingContext_ABC::strokeOpacity );
