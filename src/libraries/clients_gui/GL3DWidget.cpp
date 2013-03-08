@@ -759,3 +759,11 @@ bool Gl3dWidget::IsPickingMode() const
     return false;
 }
 
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::LineWidth
+// Created: LGY 2013-03-08
+// -----------------------------------------------------------------------------
+float Gl3dWidget::LineWidth( float base ) const
+{
+    return base;
+}

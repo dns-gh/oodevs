@@ -14,6 +14,7 @@
 #include "DrawingTemplate.h"
 #include "SimpleLocationDrawer.h"
 #include "SvgLocationDrawer.h"
+#include "GlTools_ABC.h"
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Location_ABC.h"
@@ -105,7 +106,7 @@ void TacticalGraphics::Draw( const std::string& symbol, const kernel::Location_A
                 location.Accept( drawer );
             glPopAttrib();
         }
-        glLineWidth( 2.f );
+        glLineWidth( tools.LineWidth( 2.f ) );
         location.Accept( drawer );
         glPopAttrib();
     }

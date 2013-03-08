@@ -68,6 +68,7 @@ public:
 
     virtual unsigned short StipplePattern( int factor = 1 ) const;
     virtual float Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
+    virtual float LineWidth( float base ) const;
     virtual float Zoom() const;
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 );
     virtual void SetCurrentCursor ( const QCursor& cursor );

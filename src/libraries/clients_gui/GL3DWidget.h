@@ -58,6 +58,7 @@ public:
 
     virtual unsigned short  StipplePattern( int factor = 1 ) const;
     virtual float           Pixels( const geometry::Point2f& at = geometry::Point2f() ) const;
+    virtual float           LineWidth( float base ) const;
     virtual float           Zoom() const;
     virtual float           GetAdaptiveZoomFactor( bool bVariableSize = true ) const;
 

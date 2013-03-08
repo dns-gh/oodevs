@@ -514,3 +514,11 @@ void GlProxy::Picking()
     tools_->Picking();
 }
 
+// -----------------------------------------------------------------------------
+// Name: GlProxy::LineWidth
+// Created: LGY 2013-03-08
+// -----------------------------------------------------------------------------
+float GlProxy::LineWidth( float base ) const
+{
+    return tools_->LineWidth( base );
+}

@@ -82,6 +82,7 @@ public:
     //! @name Accessors
     //@{
     virtual float           Pixels( const geometry::Point2f& at = geometry::Point2f() ) const = 0;
+    virtual float           LineWidth( float base ) const = 0;
     virtual unsigned short  StipplePattern( int factor = 1 ) const = 0;
     virtual float           Zoom() const = 0;
     virtual float           GetAdaptiveZoomFactor( bool bVariableSize = true ) const = 0;
