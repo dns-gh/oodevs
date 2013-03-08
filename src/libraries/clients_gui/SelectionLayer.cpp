@@ -77,17 +77,25 @@ bool SelectionLayer::HandleMousePress( QMouseEvent* event, const geometry::Point
         return false;
     if( event->button() == Qt::LeftButton )
     {
-        if( event->buttons() == Qt::NoButton && displaying_ )
-        {
-            firstPointSet_ = false;
-            displaying_ = false;
-            controllers_.actions_.NotifyRectangleSelection( topLeft_, bottomRight_, event->modifiers() == Qt::ControlModifier );
-        }
-        else if( event->buttons() == Qt::LeftButton )
-        {
-            topLeft_ = point;
-            bottomRight_ = point;
-        }
+        topLeft_ = point;
+        bottomRight_ = point;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SelectionLayer::HandleMouseRelease
+// Created: LGY 2013-03-08
+// -----------------------------------------------------------------------------
+bool SelectionLayer::HandleMouseRelease( QMouseEvent* event, const geometry::Point2f& /*point*/ )
+{
+    if( !controllers_.actions_.HasMultipleSelection() )
+        return false;
+    if( event->button() == Qt::LeftButton && event->buttons() == Qt::NoButton && displaying_ )
+    {
+        firstPointSet_ = false;
+        displaying_ = false;
+        controllers_.actions_.NotifyRectangleSelection( topLeft_, bottomRight_, event->modifiers() == Qt::ControlModifier );
     }
     return false;
 }

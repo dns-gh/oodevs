@@ -49,6 +49,7 @@ private:
     //! @name Helpers
     //@{
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
+    virtual bool HandleMouseRelease( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMouseMove ( QMouseEvent* event, const geometry::Point2f& point );
     //@}
 
