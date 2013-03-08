@@ -62,7 +62,6 @@ func TestSuccess(t *testing.T) {
 	exDir := opts.GetExerciseDir()
 	session := CreateDefaultSession()
 	session.EndTick = 3
-	session.Paused = false
 	sessionPath, err := WriteNewSessionFile(session, exDir)
 	if err != nil {
 		t.Fatal("failed to write the session")
@@ -70,7 +69,11 @@ func TestSuccess(t *testing.T) {
 	opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
 	sim, err := StartSim(opts)
 	defer sim.Kill()
-	if err != nil {
+	// Since the simulation can run the 3 ticks before the test connection
+	// returns successfully, we cannot check the error returned by StartSim
+	// unless we have a way to start in paused mode and unpause it. Instead,
+	// just check the exit status
+	if sim == nil {
 		t.Fatalf("simulation failed to start: %v", err)
 	}
 	sim.Wait(60 * time.Second)
