@@ -12,6 +12,24 @@ import (
 	"time"
 )
 
+var (
+	application string
+	rootdir     string
+	rundir      string
+	testPort    int
+)
+
+func init() {
+	flag.StringVar(&application, "application", "",
+		"path to simulation_app executable")
+	flag.StringVar(&rootdir, "root-dir", "",
+		"path to simulation root directory")
+	flag.StringVar(&rundir, "run-dir", "",
+		"path application run directory, default to application directory")
+	flag.IntVar(&testPort, "test-port", 35000,
+		"base port for spawned simulations")
+}
+
 func CheckSimFailed(t *testing.T, err error, sim *simu.SimProcess) {
 	if err == nil {
 		t.Fatalf("simulation should not have started")
@@ -124,20 +142,4 @@ func TestDispatcherAddressCollision(t *testing.T) {
 	if !strings.Contains(logData, "Une seule utilisation de chaque") {
 		t.Fatal("dispatcher.log says nothing about address collision")
 	}
-}
-
-var application string
-var rootdir string
-var rundir string
-var testPort int
-
-func init() {
-	flag.StringVar(&application, "application", "",
-		"path to simulation_app executable")
-	flag.StringVar(&rootdir, "root-dir", "",
-		"path to simulation root directory")
-	flag.StringVar(&rundir, "run-dir", "",
-		"path application run directory, default to application directory")
-	flag.IntVar(&testPort, "test-port", 35000,
-		"base port for spawned simulations")
 }

@@ -11,6 +11,24 @@ import (
 	"time"
 )
 
+var (
+	application string
+	rootdir     string
+	rundir      string
+	testPort    int
+)
+
+func init() {
+	flag.StringVar(&application, "application", "",
+		"path to simulation_app executable")
+	flag.StringVar(&rootdir, "root-dir", "",
+		"path to simulation root directory")
+	flag.StringVar(&rundir, "run-dir", "",
+		"path application run directory, default to application directory")
+	flag.IntVar(&testPort, "test-port", 35000,
+		"base port for spawned simulations")
+}
+
 func TestSimOpts(t *testing.T) {
 	opts := SimOpts{}
 	opts.RootDir = "data/dir"
@@ -99,20 +117,4 @@ func TestDelayedStartupFailure(t *testing.T) {
 	if sim.Success() {
 		t.Fatal("simulation should have exited on error")
 	}
-}
-
-var application string
-var rootdir string
-var rundir string
-var testPort int
-
-func init() {
-	flag.StringVar(&application, "application", "",
-		"path to simulation_app executable")
-	flag.StringVar(&rootdir, "root-dir", "",
-		"path to simulation root directory")
-	flag.StringVar(&rundir, "run-dir", "",
-		"path application run directory, default to application directory")
-	flag.IntVar(&testPort, "test-port", 35000,
-		"base port for spawned simulations")
 }
