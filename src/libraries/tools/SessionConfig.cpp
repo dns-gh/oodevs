@@ -145,10 +145,13 @@ std::string SessionConfig::BuildOnLocalCheckpointChildFile( const std::string& c
 // -----------------------------------------------------------------------------
 void SessionConfig::ExtractParties( const std::string& subset )
 {
-    std::vector< std::string > result;
-    boost::split( result, subset, boost::algorithm::is_any_of( ";" ) );
-    for( auto it = result.begin(); it != result.end(); ++it )
-        subsetParties_.insert( boost::lexical_cast< unsigned int >( *it ) );
+    if( !subset.empty() )
+    {
+        std::vector< std::string > result;
+        boost::split( result, subset, boost::algorithm::is_any_of( ";" ) );
+        for( auto it = result.begin(); it != result.end(); ++it )
+            subsetParties_.insert( boost::lexical_cast< unsigned int >( *it ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
