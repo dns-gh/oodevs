@@ -16,7 +16,6 @@
 #include <svgl/ListLengthFactory.h>
 #include <svgl/PropertyFactory.h>
 #include <svgl/Style.h>
-#include <svgl/Pick.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace geometry;
@@ -143,14 +142,14 @@ unsigned int SvglRenderer::GenerateList( svg::Node_ABC* node, const std::string&
         glNewList( result, GL_COMPILE );
             const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
             ListPaint color( colorList_ );
-            svg::Pick pick( pickingMode );
+            if( pickingMode )
+                renderingContext_->EnablePickingMode();
             renderingContext_->SetViewport( box, vWidth, vHeight );
             renderingContext_->PushProperty( RenderingContext::color, color );
-            renderingContext_->PushProperty( svg::RenderingContext_ABC::pickingmode, pick );
             std::auto_ptr< Style > border( CreateStyle( style ) );
             references_->Register( "border", *border );
             node->Draw( *renderingContext_, *references_ );
-            renderingContext_->PopProperty( svg::RenderingContext_ABC::pickingmode );
+            renderingContext_->DisablePickingMode();
             renderingContext_->PopProperty( RenderingContext::color );
         glEndList();
     }

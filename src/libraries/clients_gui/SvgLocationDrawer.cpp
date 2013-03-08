@@ -14,7 +14,6 @@
 #include "GlTools_ABC.h"
 #include <svgl/svgl.h>
 #include <svgl/Opacity.h>
-#include <svgl/Pick.h>
 #include <iterator>
 
 using namespace gui;
@@ -173,14 +172,14 @@ void SvgLocationDrawer::DrawShape( const T& shape )
         const geometry::BoundingBox box( viewport_.Left(), viewport_.Bottom(), viewport_.Right(), viewport_.Top() );
         context_->SetViewport( box, 320, 200 );
         svg::Color svgColor( color_.name().toStdString() );
-        svg::Pick pick( tools_->IsPickingMode() );
         svg::Opacity opacity( static_cast< float >( color_.alphaF() ) );
         context_->PushProperty( svg::RenderingContext_ABC::color, svgColor );
         context_->PushProperty( svg::RenderingContext_ABC::fillOpacity, opacity );
         context_->PushProperty( svg::RenderingContext_ABC::strokeOpacity, opacity );
-        context_->PushProperty( svg::RenderingContext_ABC::pickingmode, pick );
+        if( tools_->IsPickingMode() )
+            context_->EnablePickingMode();
         style_.Draw( shape, *context_, *tools_, zoom_ );
-        context_->PopProperty( svg::RenderingContext_ABC::pickingmode );
+        context_->DisablePickingMode();
         context_->PopProperty( svg::RenderingContext_ABC::strokeOpacity );
         context_->PopProperty( svg::RenderingContext_ABC::fillOpacity );
         context_->PopProperty( svg::RenderingContext_ABC::color );
