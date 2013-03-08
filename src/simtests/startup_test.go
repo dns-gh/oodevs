@@ -135,9 +135,11 @@ func TestDispatcherAddressCollision(t *testing.T) {
 	sim2, err := startSim(1)
 	defer sim2.Kill()
 	sim2.Wait(60 * time.Second)
-	/*if sim2.Success() {
-		    t.Fatal("simulation with colliding dispatcher should have failed")
-	    }*/
+	// This should be fixed by SWORD-1549
+	//
+	//if sim2.Success() {
+	//	    t.Fatal("simulation with colliding dispatcher should have failed")
+	//    }
 	logData := ReadTextFile(t, sim2.Opts.GetDispatcherLogPath())
 	if !strings.Contains(logData, "Une seule utilisation de chaque") {
 		t.Fatal("dispatcher.log says nothing about address collision")
