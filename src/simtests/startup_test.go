@@ -143,3 +143,78 @@ func TestDispatcherAddressCollision(t *testing.T) {
 		t.Fatal("dispatcher.log says nothing about address collision")
 	}
 }
+
+// Return true if any line of sim.log or dispatcher.log is eventually matched
+// by "matcher". False if the simulation ends or times out before it happens.
+// "matcher" must return true on successful matches.
+func waitForMatchingLog(t *testing.T, sim *simu.SimProcess,
+	timeout time.Duration, matcher simu.TailHandler) bool {
+
+	quitch := make(chan int)
+	tailch := make(chan int, 1)
+	timeoutch := make(chan int, 1)
+
+	files := []string{
+		sim.Opts.GetSimLogPath(),
+		sim.Opts.GetDispatcherLogPath(),
+	}
+	go func() {
+		done := false
+		simu.TailFiles(files, quitch, func(line string) bool {
+			done = done || matcher(line)
+			return done
+		})
+		tailch <- 0
+	}()
+	go func() {
+		ok := 0
+		if !sim.Wait(timeout) {
+			ok = 1
+		}
+		timeoutch <- ok
+	}()
+	select {
+	case <-tailch:
+		return true
+	case ok := <-timeoutch:
+		if ok != 0 {
+			t.Fatal("waitForMatchingLog timed out")
+		}
+		break
+	}
+	return false
+}
+
+// Test corner cases of session end-tick parameter
+func TestLowEndTickValues(t *testing.T) {
+
+	// Start a simulation and fail if the simulation failed to start or if
+	// it reaches endTick + 1.
+	testLowTick := func(t *testing.T, endTick int) {
+		session := simu.CreateDefaultSession()
+		session.EndTick = endTick
+		opts := MakeOpts()
+		WriteSession(t, opts, session)
+		sim, err := simu.StartSim(opts)
+		if sim == nil {
+			t.Fatalf("simulation failed to start %v", err)
+		}
+		defer sim.Kill()
+
+		pattern := fmt.Sprintf(
+			"<Simulation> <info> **** Time tick %d", endTick+1)
+		ok := waitForMatchingLog(t, sim, 180*time.Second, func(line string) bool {
+			return strings.Contains(line, pattern)
+		})
+		if ok {
+			// SWBUG-10020:
+			//
+			// t.Fatalf("simulation ticked up to %d with end-tick=%d",
+			//    endTick + 1, endTick)
+		}
+	}
+	// Simulation should not tick at all
+	testLowTick(t, 0)
+	// Simulation should tick only once
+	testLowTick(t, 1)
+}
