@@ -327,7 +327,7 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
     kernel::GraphicalEntity_ABC::T_GraphicalEntities selectables;
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
     {
-        if( ShouldDisplay( **it ) && ( IsInside( **it, rectangle ) || IsInSelection( **it, topLeft ) ) )
+        if( ShouldDisplay( **it ) && IsInside( **it, rectangle ) )
         {
             selected_ = *it;
             tooltiped_ = *it;
