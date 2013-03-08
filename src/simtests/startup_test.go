@@ -190,7 +190,7 @@ func TestLowEndTickValues(t *testing.T) {
 
 	// Start a simulation and fail if the simulation failed to start or if
 	// it reaches endTick + 1.
-	testLowTick := func(t *testing.T, endTick int) {
+	runSim := func(t *testing.T, endTick int) bool {
 		session := simu.CreateDefaultSession()
 		session.EndTick = endTick
 		opts := MakeOpts()
@@ -203,9 +203,12 @@ func TestLowEndTickValues(t *testing.T) {
 
 		pattern := fmt.Sprintf(
 			"<Simulation> <info> **** Time tick %d", endTick+1)
-		ok := waitForMatchingLog(t, sim, 180*time.Second, func(line string) bool {
+		return waitForMatchingLog(t, sim, 180*time.Second, func(line string) bool {
 			return strings.Contains(line, pattern)
 		})
+	}
+	testLowTick := func(t *testing.T, endTick int) {
+		ok := runSim(t, endTick)
 		if ok {
 			// SWBUG-10020:
 			//
@@ -213,8 +216,13 @@ func TestLowEndTickValues(t *testing.T) {
 			//    endTick + 1, endTick)
 		}
 	}
-	// Simulation should not tick at all
-	testLowTick(t, 0)
 	// Simulation should tick only once
 	testLowTick(t, 1)
+	// Simulation should tick only twice
+	testLowTick(t, 2)
+
+	// end-tick=0 means infinity, check it ticks once
+	if !runSim(t, 0) {
+		t.Fatal("simulation did not tick with end-tick=0")
+	}
 }
