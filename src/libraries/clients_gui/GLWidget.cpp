@@ -274,14 +274,14 @@ void GlWidget::Picking()
 {
     unsigned char pixel[3];
     glReadPixels( point_.x(), windowHeight_ - point_.y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel );
-    for( auto it = renderObjects_.begin(); it != renderObjects_.end(); ++it )
+    if( !renderObjects_.empty() )
     {
-        if( std::get< 0 >( *it ) == (int) pixel[ 0 ] && 
-            std::get< 1 >( *it ) == (int) pixel[ 1 ] && 
-            std::get< 2 >( *it ) == (int) pixel[ 2 ] )
+        T_RenderObject lastObject = renderObjects_.back();
+        if( std::get< 0 >( lastObject ) == (int) pixel[ 0 ] &&
+            std::get< 1 >( lastObject ) == (int) pixel[ 1 ] &&
+            std::get< 2 >( lastObject ) == (int) pixel[ 2 ] )
         {
-            pickObjects_.push_back( std::get< 3 >( *it ) );
-            break;
+            pickObjects_.push_back( std::get< 3 >( lastObject ) );
         }
     }
 }
