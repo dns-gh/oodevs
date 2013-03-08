@@ -1,5 +1,5 @@
 function integration.getAvoidingPositionsFor( entity )
-    return { CreateProxyKnowledge( world.AvoidingArea, entity ) }
+    return { CreateProxyKnowledge( integration.ontology.types.avoidingArea, entity ) }
 end
 
 function integration.getObjectsInArea( localisation, objectTypes )
