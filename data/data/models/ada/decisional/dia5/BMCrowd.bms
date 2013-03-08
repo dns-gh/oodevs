@@ -21,6 +21,7 @@ integration.ontology = {
         population = sword.military.world.Crowd,
         genObject = sword.military.world.EngineerObject,
         limaStatique = sword.military.world.LimaStatique,
+        avoidingArea = sword.military.world.AvoidingArea
         }
 }
 

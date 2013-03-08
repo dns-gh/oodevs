@@ -25,7 +25,8 @@ integration.ontology = {
         humanWound = sword.military.world.HumanWound,
         equipmentType = sword.military.world.EquipmentType,
         fuseau = sword.military.world.Fuseau,
-        itinerary = france.military.ontologie.classe.Itinerary
+        itinerary = france.military.ontologie.classe.Itinerary,
+        avoidingArea = sword.military.world.AvoidingArea
         }
 }
 
