@@ -216,7 +216,7 @@ const defaultSession = `
       <random1 deviation="0.5" distribution="0" mean="0.5"/>
       <random2 deviation="0.5" distribution="0" mean="0.5"/>
       <random3 deviation="0.5" distribution="0" mean="0.5"/>
-      <time end-tick="100000" latency="0" factor="10" paused="true" step="10"/>
+      <time end-tick="100000" latency="0" factor="10" paused="false" step="10"/>
     </simulation>
   </config>
   <meta>

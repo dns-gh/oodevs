@@ -72,7 +72,6 @@ func WriteSession(t *testing.T, opts *simu.SimOpts, session *simu.Session) {
 func TestDispatcherMisconfiguration(t *testing.T) {
 	session := simu.CreateDefaultSession()
 	session.EndTick = 3
-	session.Paused = false
 
 	opts := MakeOpts()
 	opts.ConnectTimeout = 600 * time.Second
@@ -114,7 +113,6 @@ func TestDispatcherAddressCollision(t *testing.T) {
 	startSim := func(simOffset int) (*simu.SimProcess, error) {
 		session := simu.CreateDefaultSession()
 		session.EndTick = 1000
-		session.Paused = false
 
 		opts := MakeOpts()
 		WriteSession(t, opts, session)

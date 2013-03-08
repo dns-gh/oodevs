@@ -60,7 +60,7 @@ func TestWriteSession(t *testing.T) {
 	s := CreateDefaultSession()
 	s.GamingServer = "masagroup.net"
 	s.EndTick = 42
-	s.Paused = false
+	s.Paused = true
 	data, err := WriteSession(s)
 	Assert(t, err == nil, "failed to write session")
 	expected := `
@@ -88,7 +88,7 @@ func TestWriteSession(t *testing.T) {
       <random1 deviation="0.5" distribution="0" mean="0.5"></random1>
       <random2 deviation="0.5" distribution="0" mean="0.5"></random2>
       <random3 deviation="0.5" distribution="0" mean="0.5"></random3>
-      <time end-tick="42" latency="0" factor="10" paused="false" step="10"></time>
+      <time end-tick="42" latency="0" factor="10" paused="true" step="10"></time>
     </simulation>
   </config>
   <meta>
