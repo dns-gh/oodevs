@@ -31,7 +31,7 @@ func ConnectClient(t *testing.T, sim *simu.SimProcess) *swapi.Client {
 }
 
 func TestLogin(t *testing.T) {
-	sim := startSimOnExercise(t, "tests/crossroad-empty", 1000, false)
+	sim := startSimOnExercise(t, "tests/crossroad-small-empty", 1000, false)
 	defer sim.Kill()
 
 	// Test invalid login
