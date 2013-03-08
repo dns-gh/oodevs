@@ -4,7 +4,6 @@ import (
 	"errors"
 	"log"
 	"net"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"sync"
@@ -69,8 +68,10 @@ func (o *SimOpts) WriteSession(session *Session) error {
 }
 
 type SimProcess struct {
-	cmd        *exec.Cmd
-	tailch     chan int // terminate tail goroutine
+	cmd    *exec.Cmd
+	tailch chan int // terminate tail goroutine
+	// Passed channel will be signalled once the process ends
+	waitqueue  chan chan int
 	sessionDir string
 	quitAll    sync.WaitGroup
 
@@ -89,9 +90,7 @@ func (sim *SimProcess) Success() bool {
 func (sim *SimProcess) Kill() {
 	if sim != nil {
 		sim.cmd.Process.Kill()
-		sim.cmd.Wait()
-		sim.tailch <- 1
-		sim.quitAll.Wait()
+		sim.Wait(time.Duration(0))
 	}
 }
 
@@ -99,25 +98,28 @@ func (sim *SimProcess) GetLogPath() string {
 	return filepath.Join(sim.sessionDir, "Sim.log")
 }
 
-func (sim *SimProcess) Wait(d time.Duration) {
-	waitch := make(chan int)
-	go func() {
-		sim.cmd.Wait()
-		waitch <- 1
-	}()
+// Return true if the simulation stopped before the timeout. Wait indefinitely
+// if the timeout is zero.
+func (sim *SimProcess) Wait(d time.Duration) bool {
+	waitch := make(chan int, 1)
+	sim.waitqueue <- waitch
 
 	timeoutch := make(chan int)
 	go func() {
-		time.Sleep(d)
-		timeoutch <- 1
+		// Infinite timeout is duration is zero
+		if d.Nanoseconds() > 0 {
+			time.Sleep(d)
+			timeoutch <- 1
+		}
 	}()
 
 	select {
 	case <-waitch:
 		break
 	case <-timeoutch:
-		sim.Kill()
+		return false
 	}
+	return true
 }
 
 // Repeatedly try to connect to host. Fail if no connection can be made
@@ -144,14 +146,10 @@ func waitForNetwork(waitch chan error, host string, timeout time.Duration) {
 	waitch <- errors.New("connection timed out")
 }
 
-func waitForExit(waitch chan error, process *os.Process) {
-	process.Wait()
-	waitch <- nil
-}
-
-// Start a simulation using supplied options. Return a running SimProcess
-// or nil on error. On success, the simulation process will be ready to
-// receive incoming connections.
+// Start a simulation using supplied options. On success, the simulation
+// process will be ready to receive incoming connections. On error, the
+// simulation might still be returned if the connection timed out or the
+// process terminated before a connection can be made.
 func StartSim(opts *SimOpts) (*SimProcess, error) {
 	if len(opts.Executable) <= 0 {
 		return nil, errors.New("simulation_app executable path is not defined")
@@ -189,11 +187,43 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	sim := SimProcess{
 		cmd:            cmd,
 		tailch:         make(chan int, 1),
+		waitqueue:      make(chan chan int, 1),
 		sessionDir:     sessionDir,
 		Opts:           opts,
 		DispatcherAddr: gamingServer,
 	}
 	err = cmd.Start()
+
+	// Process.Wait() cannot be called concurrently, so always wait for process
+	// termination and handle wait requests. Callers wanting to wait for
+	// termination posts a channel which is signalled when it happens.
+	go func() {
+		waitch := make(chan int)
+		go func() {
+			cmd.Wait()
+			sim.tailch <- 1
+			sim.quitAll.Wait()
+			waitch <- 1
+		}()
+
+		terminated := false
+		pendings := []chan int{}
+		for {
+			select {
+			case ch := <-sim.waitqueue:
+				if terminated {
+					ch <- 1
+				} else {
+					pendings = append(pendings, ch)
+				}
+			case <-waitch:
+				terminated = true
+				for _, ch := range pendings {
+					ch <- 1
+				}
+			}
+		}
+	}()
 
 	sim.quitAll.Add(1)
 	logFiles := []string{
@@ -220,18 +250,18 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	// Wait for either the simulation to terminate, fails to open a server
 	// socket, or succeeds. Fails in the two first cases.
 	netch := make(chan error)
-	procch := make(chan error)
 	go waitForNetwork(netch, gamingServer, connectTimeout)
-	go waitForExit(procch, sim.cmd.Process)
+	procch := make(chan int, 1)
+	sim.waitqueue <- procch
 	select {
 	case err := <-netch:
 		if err != nil {
 			sim.Kill()
-			return nil, err
+			return &sim, err
 		}
 		break
 	case <-procch:
-		return nil, errors.New("failed to start simulation")
+		return &sim, errors.New("failed to start simulation")
 	}
 	return &sim, err
 }
