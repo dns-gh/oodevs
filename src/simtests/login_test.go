@@ -1,7 +1,6 @@
 package simtests
 
 import (
-	"path/filepath"
 	"swapi"
 	"swapi/simu"
 	"testing"
@@ -16,12 +15,7 @@ func startSimOnExercise(t *testing.T, exercise string, endTick int,
 	session := simu.CreateDefaultSession()
 	session.EndTick = 1000
 	session.Paused = paused
-	sessionPath, err := simu.WriteNewSessionFile(session, opts.GetExerciseDir())
-	if err != nil {
-		t.Fatal("failed to write the session")
-	}
-
-	opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
+	WriteSession(t, opts, session)
 	sim, err := simu.StartSim(opts)
 	if err != nil {
 		t.Fatalf("failed to start the simulation: %v", err)

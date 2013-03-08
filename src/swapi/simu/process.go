@@ -41,12 +41,31 @@ func (o *SimOpts) GetSessionDir() string {
 	return filepath.Join(o.GetExerciseDir(), "sessions", o.SessionName)
 }
 
+func (o *SimOpts) GetSessionFile() string {
+	return filepath.Join(o.GetSessionDir(), "session.xml")
+}
+
 func (o *SimOpts) GetSimLogPath() string {
 	return filepath.Join(o.GetSessionDir(), "Sim.log")
 }
 
 func (o *SimOpts) GetDispatcherLogPath() string {
 	return filepath.Join(o.GetSessionDir(), "Dispatcher.log")
+}
+
+// Write the input session at a suitable place in the configured exercise
+// and set SimOpts.SessionName accordingly
+func (o *SimOpts) WriteSession(session *Session) error {
+	if len(o.ExerciseName) <= 0 {
+		return errors.New("exercise name is not set")
+	}
+	exDir := o.GetExerciseDir()
+	sessionPath, err := WriteNewSessionFile(session, exDir)
+	if err != nil {
+		return err
+	}
+	o.SessionName = filepath.Base(filepath.Dir(sessionPath))
+	return nil
 }
 
 type SimProcess struct {

@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
-	"path/filepath"
 	"regexp"
 	"strings"
 	"swapi/simu"
@@ -64,30 +63,32 @@ func MakeOpts() *simu.SimOpts {
 	return &opts
 }
 
-func TestDispatcherMisconfiguration(t *testing.T) {
-	opts := MakeOpts()
-	opts.ConnectTimeout = 600 * time.Second
+func WriteSession(t *testing.T, opts *simu.SimOpts, session *simu.Session) {
+	if err := opts.WriteSession(session); err != nil {
+		t.Fatal("failed to write the session")
+	}
+}
 
-	exDir := opts.GetExerciseDir()
+func TestDispatcherMisconfiguration(t *testing.T) {
 	session := simu.CreateDefaultSession()
 	session.EndTick = 3
 	session.Paused = false
-	sessionPath, err := simu.WriteNewSessionFile(session, exDir)
-	if err != nil {
-		t.Fatal("failed to write the session")
-	}
+
+	opts := MakeOpts()
+	opts.ConnectTimeout = 600 * time.Second
+	WriteSession(t, opts, session)
 
 	// Remove dispatcher/network element
 	re, err := regexp.Compile(`<network client.*?</network>`)
 	if err != nil {
 		t.Fatalf("failed to compile regular expression: %v", err)
 	}
+	sessionPath := opts.GetSessionFile()
 	content := re.ReplaceAllString(ReadTextFile(t, sessionPath), "")
 	if err = ioutil.WriteFile(sessionPath, []byte(content), 0644); err != nil {
 		t.Fatalf("failed to rewrite session file: %v", err)
 	}
 
-	opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
 	sim, err := simu.StartSim(opts)
 	defer sim.Kill()
 	CheckSimFailed(t, err, sim)
@@ -111,16 +112,12 @@ func TestDispatcherMisconfiguration(t *testing.T) {
 
 func TestDispatcherAddressCollision(t *testing.T) {
 	startSim := func(simOffset int) (*simu.SimProcess, error) {
-		opts := MakeOpts()
-		exDir := opts.GetExerciseDir()
 		session := simu.CreateDefaultSession()
 		session.EndTick = 1000
 		session.Paused = false
-		sessionPath, err := simu.WriteNewSessionFile(session, exDir)
-		if err != nil {
-			t.Fatal("failed to write the session")
-		}
-		opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
+
+		opts := MakeOpts()
+		WriteSession(t, opts, session)
 		opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+simOffset+6)
 		opts.TailPrefix = fmt.Sprintf("sim+%v", simOffset)
 		return simu.StartSim(opts)
