@@ -43,7 +43,8 @@
     </parameters>
     <modifiers/>
     <links>
-        <link name="deploy" skill="sword.military.platoon.skills.Deploy"/>
+        <link name="moveTo" skill="sword.military.platoon.skills.MoveToward"/>
+        <link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
         <link name="intercepterMissile" skill="france.military.platoon.combat.support.art.skills.IntercepterMissile"/>
     </links>
     <resources>
