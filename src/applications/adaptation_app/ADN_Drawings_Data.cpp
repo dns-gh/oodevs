@@ -46,6 +46,7 @@ namespace
         virtual unsigned short  StipplePattern( int ) const { return 0; }
         virtual float           Zoom() const { return 0.f; }
         virtual float           GetAdaptiveZoomFactor( bool ) const { return 0.f; }
+        virtual float           LineWidth( float base ) const { return base; };
         //@}
 
         //! @name Operations
