@@ -225,6 +225,11 @@ func (c *Client) write() {
 	}
 }
 
+// Supplied handler will be called in two cases:
+// - Whenever a message is received, with the message and the context bound
+//   to the handler and returned by Register(). The error is nil.
+// - During client termination in Close() or when request is aborted,
+//   with the context and an error. The message is nil.
 func (c *Client) Register(handler MessageHandler) int32 {
 	next := MakeHandlerRegister(handler, 0)
 	c.registers <- next
