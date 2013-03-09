@@ -1709,10 +1709,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Cette fonctionnalité n&apos;est pas disponible pour les anciens formats de terrain.</translation>
     </message>
     <message>
-        <source>The following raster you add is missing extent information.</source>
-        <translation>Ce raster n&apos;a pas de zone géographique définie.</translation>
-    </message>
-    <message>
         <source>Fatal error adding Raster source.</source>
         <translation>Erreur fatale en ajoutant la source de Raster.</translation>
     </message>

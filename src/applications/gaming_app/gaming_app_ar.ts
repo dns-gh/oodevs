@@ -1709,10 +1709,6 @@ This data can&apos;t be projected.</source>
 لا يمكن وضع إسقاطات لهذه البيانات.</translation>
     </message>
     <message>
-        <source>The following raster you add is missing extent information.</source>
-        <translation type="unfinished">يفتقد النقطية التالية يمكنك إضافة قدر من المعلومات.</translation>
-    </message>
-    <message>
         <source>Fatal error adding Raster source.</source>
         <translation type="unfinished">خطأ فادح: إضافة النقطية المصدر.</translation>
     </message>

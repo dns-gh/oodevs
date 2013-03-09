@@ -1707,10 +1707,6 @@ This data can&apos;t be projected.</source>
         <translation></translation>
     </message>
     <message>
-        <source>The following raster you add is missing extent information.</source>
-        <translation>The following raster you add is missing extent information.</translation>
-    </message>
-    <message>
         <source>Fatal error adding Raster source.</source>
         <translation>Fatal error adding Raster source.</translation>
     </message>

@@ -1009,10 +1009,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The following raster you add is missing extent information.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fatal error adding Raster source.</source>
         <translation type="unfinished"></translation>
     </message>
