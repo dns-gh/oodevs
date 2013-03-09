@@ -138,11 +138,11 @@ unsigned long Network::GetSentAmount() const
 // Name: Network::ConnectionSucceeded
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void Network::ConnectionSucceeded( const std::string& source, const std::string& endpoint )
+void Network::ConnectionSucceeded( const std::string& local, const std::string& remote )
 {
-    ClientNetworker::ConnectionSucceeded( source, endpoint );
-    session_ = endpoint;
-    logger_.Info( tools::translate( "Network", "Connected to " ).toStdString() + endpoint );
+    ClientNetworker::ConnectionSucceeded( local, remote );
+    session_ = remote;
+    logger_.Info( tools::translate( "Network", "Connected to " ).toStdString() + remote );
     manager_->Connect( session_ );
     simu_.Connect( session_ );
 }

@@ -34,10 +34,10 @@ BufferedConnectionCallback::~BufferedConnectionCallback()
 // Name: BufferedConnectionCallback::Event
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-BufferedConnectionCallback::Event::Event( const std::string& source,
-        const std::string& endpoint, const std::string& error )
-    :   source_( source )
-    ,   endpoint_( endpoint )
+BufferedConnectionCallback::Event::Event( const std::string& local,
+        const std::string& remote, const std::string& error )
+    :   local_( local )
+    ,   remote_( remote )
     ,   error_( error )
 {
     // NOTHING
@@ -58,9 +58,9 @@ void BufferedConnectionCallback::Commit( ConnectionCallback_ABC& callback )
     {
         const Event& event = *it;
         if( ! event.error_.empty() )
-            callback.ConnectionFailed( event.endpoint_, event.error_ );
+            callback.ConnectionFailed( event.remote_, event.error_ );
         else
-            callback.ConnectionSucceeded( event.source_, event.endpoint_ );
+            callback.ConnectionSucceeded( event.local_, event.remote_ );
     }
 }
 
@@ -68,11 +68,11 @@ void BufferedConnectionCallback::Commit( ConnectionCallback_ABC& callback )
 // Name: BufferedConnectionCallback::ConnectionSucceeded
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void BufferedConnectionCallback::ConnectionSucceeded( const std::string& source,
-        const std::string& endpoint )
+void BufferedConnectionCallback::ConnectionSucceeded( const std::string& local,
+        const std::string& remote )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    events_.push_back( Event( source, endpoint, "" ) );
+    events_.push_back( Event( local, remote, "" ) );
 }
 
 // -----------------------------------------------------------------------------

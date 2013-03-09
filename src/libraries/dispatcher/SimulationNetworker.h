@@ -60,7 +60,7 @@ private:
 
     //! @name Connection callbacks
     //@{
-    virtual void ConnectionSucceeded( const std::string& source, const std::string& endpoint );
+    virtual void ConnectionSucceeded( const std::string& local, const std::string& remote );
     virtual void ConnectionFailed   ( const std::string& address, const std::string& error );
     virtual void ConnectionError    ( const std::string& address, const std::string& error );
     virtual void ConnectionWarning  ( const std::string& address, const std::string& error );

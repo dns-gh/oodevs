@@ -64,12 +64,12 @@ void SwordClient::Connect( SwordConnectionHandler_ABC* handler )
 // Name: SwordClient::ConnectionSucceeded
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-void SwordClient::ConnectionSucceeded( const std::string& source,
-        const std::string& endpoint )
+void SwordClient::ConnectionSucceeded( const std::string& local,
+        const std::string& remote )
 {
-    tools::ClientNetworker::ConnectionSucceeded( source, endpoint );
-    connectionHandler_->OnConnectionSucceeded( source, endpoint );
-    publisher_.reset( new MessageSender( *this, endpoint ) );
+    tools::ClientNetworker::ConnectionSucceeded( local, remote );
+    connectionHandler_->OnConnectionSucceeded( local, remote );
+    publisher_.reset( new MessageSender( *this, remote ) );
     {
         authentication::AuthenticationRequest message;
         message().mutable_version()->set_value( sword::ProtocolVersion().value() );

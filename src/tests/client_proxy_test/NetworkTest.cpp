@@ -78,11 +78,11 @@ namespace
             SendMessageStub< sword::SimToClient >();
             SendMessageStub< sword::MessengerToClient >();
         }
-        virtual void ConnectionSucceeded( const std::string& source,
-                const std::string& endpoint )
+        virtual void ConnectionSucceeded( const std::string& local,
+                const std::string& remote )
         {
-            client_ = endpoint;
-            tools::ServerNetworker::ConnectionSucceeded( source, endpoint );
+            client_ = remote;
+            tools::ServerNetworker::ConnectionSucceeded( local, remote );
         }
 
     private:

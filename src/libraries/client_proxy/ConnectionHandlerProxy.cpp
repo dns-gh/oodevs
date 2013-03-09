@@ -42,11 +42,11 @@ void ConnectionHandlerProxy::SetHandler( SwordConnectionHandler_ABC* handler )
 // Name: ConnectionHandlerProxy::OnConnectionSucceeded
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-void ConnectionHandlerProxy::OnConnectionSucceeded( const std::string& source,
-        const std::string& endpoint )
+void ConnectionHandlerProxy::OnConnectionSucceeded( const std::string& local,
+        const std::string& remote )
 {
     if( handler_ )
-        handler_->OnConnectionSucceeded( source, endpoint );
+        handler_->OnConnectionSucceeded( local, remote );
 }
 
 // -----------------------------------------------------------------------------

@@ -29,11 +29,11 @@ public:
     virtual ~ConnectionCallback_ABC() {}
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void ConnectionSucceeded( const std::string& source, const std::string& endpoint ) = 0;
+    // Called upon connection success, with local and remote endpoints address.
+    // Note the meaning of local and remote is not the same if are connecting
+    // as client or server.
+    virtual void ConnectionSucceeded( const std::string& local, const std::string& remote ) = 0;
     virtual void ConnectionFailed   ( const std::string& address, const std::string& error ) = 0;
-    //@}
 };
 
 }

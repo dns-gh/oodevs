@@ -156,13 +156,13 @@ void ClientsNetworker::Unregister( const std::string& link )
 // Name: ClientsNetworker::ConnectionSucceeded
 // Created: NLD 2002-07-12
 // -----------------------------------------------------------------------------
-void ClientsNetworker::ConnectionSucceeded( const std::string& source,
-        const std::string& link )
+void ClientsNetworker::ConnectionSucceeded( const std::string& local,
+        const std::string& remote )
 {
-    MT_LOG_INFO_MSG( "Connection received from client '" << link << "'" );
-    ServerNetworker::ConnectionSucceeded( source, link );
-    boost::shared_ptr< Client >& pClient = clients_[ link ];
-    pClient.reset( new Client( *this, *this, link ) );
+    MT_LOG_INFO_MSG( "Connection received from client '" << remote << "'" );
+    ServerNetworker::ConnectionSucceeded( local, remote );
+    boost::shared_ptr< Client >& pClient = clients_[ remote ];
+    pClient.reset( new Client( *this, *this, remote ) );
     services_.Send( *pClient );
     MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
 }

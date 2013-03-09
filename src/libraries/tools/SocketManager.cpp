@@ -80,9 +80,9 @@ void SocketManager::Disconnect( const std::string& endpoint )
 // -----------------------------------------------------------------------------
 void SocketManager::Add( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket )
 {
-    const std::string source = ToString( socket->local_endpoint() );
-    const std::string address = ToString( socket->remote_endpoint() );
-    boost::shared_ptr< Socket > pSocket = boost::make_shared< Socket >( socket, message_, address );
+    const std::string local = ToString( socket->local_endpoint() );
+    const std::string remote = ToString( socket->remote_endpoint() );
+    boost::shared_ptr< Socket > pSocket = boost::make_shared< Socket >( socket, message_, remote );
     SOCKET nativeSock = socket->native();
     if( nativeSock !=0 )
     {
@@ -90,8 +90,8 @@ void SocketManager::Add( const boost::shared_ptr< boost::asio::ip::tcp::socket >
         setsockopt( nativeSock, SOL_SOCKET, SO_SNDTIMEO, reinterpret_cast< const char* >( &timeOut_ ), sizeof( DWORD) );
     }
     pSocket->StartReading();
-    sockets_.insert( std::make_pair( address, pSocket ) );
-    connection_->ConnectionSucceeded( source, address );
+    sockets_.insert( std::make_pair( remote, pSocket ) );
+    connection_->ConnectionSucceeded( local, remote );
 }
 
 // -----------------------------------------------------------------------------

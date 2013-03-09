@@ -61,9 +61,9 @@ SimulationMonitor::~SimulationMonitor()
 // Name: SimulationMonitor::ConnectionSucceeded
 // Created: SBO 2010-10-26
 // -----------------------------------------------------------------------------
-void SimulationMonitor::ConnectionSucceeded( const std::string& source, const std::string& endpoint )
+void SimulationMonitor::ConnectionSucceeded( const std::string& local, const std::string& remote )
 {
-    tools::ClientNetworker::ConnectionSucceeded( source, endpoint );
+    tools::ClientNetworker::ConnectionSucceeded( local, remote );
     connected_ = true;
 }
 

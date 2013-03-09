@@ -84,9 +84,9 @@ int LoggerApplication::Run()
 // Name: LoggerApplication::ConnectionSucceeded
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-void LoggerApplication::ConnectionSucceeded( const std::string&, const std::string& endpoint )
+void LoggerApplication::ConnectionSucceeded( const std::string&, const std::string& remote )
 {
-    endpoint_ = endpoint;
+    endpoint_ = remote;
     authentication::AuthenticationRequest message;
     message().mutable_version()->set_value( sword::ProtocolVersion().value() );
     message().set_login( login_.c_str() );

@@ -89,11 +89,11 @@ void Server::Update()
 // Name: Server::ConnectionSucceeded
 // Created: MCO 2010-11-29
 // -----------------------------------------------------------------------------
-void Server::ConnectionSucceeded( const std::string& source, const std::string& from )
+void Server::ConnectionSucceeded( const std::string& local, const std::string& remote )
 {
-    clients_.Add( from );
-    listener_.Info( "Shield proxy received connection from " + from );
-    tools::ServerNetworker::ConnectionSucceeded( source, from );
+    clients_.Add( remote );
+    listener_.Info( "Shield proxy received connection from " + remote );
+    tools::ServerNetworker::ConnectionSucceeded( local, remote );
 }
 
 // -----------------------------------------------------------------------------

@@ -49,13 +49,13 @@ SimulationNetworker::~SimulationNetworker()
 // Name: SimulationNetworker::ConnectionSucceeded
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void SimulationNetworker::ConnectionSucceeded( const std::string& source,
-        const std::string& endpoint )
+void SimulationNetworker::ConnectionSucceeded( const std::string& local,
+        const std::string& remote )
 {
-    MT_LOG_INFO_MSG( "Connected from '" << source << "' to '" << endpoint << "'" );
-    ClientNetworker::ConnectionSucceeded( source, endpoint );
+    MT_LOG_INFO_MSG( "Connected from '" << local << "' to '" << remote << "'" );
+    ClientNetworker::ConnectionSucceeded( local, remote );
     assert( !simulation_.get() );
-    simulation_.reset( new Simulation( handler_, *this, endpoint ) );
+    simulation_.reset( new Simulation( handler_, *this, remote ) );
 }
 
 // -----------------------------------------------------------------------------

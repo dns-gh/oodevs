@@ -84,7 +84,7 @@ void SwordFacade::Stop()
 // Name: SwordFacade::OnConnectionSucceeded
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::OnConnectionSucceeded( const std::string&, const std::string& /*endpoint*/ )
+void SwordFacade::OnConnectionSucceeded( const std::string& /*local*/, const std::string& /*remote*/ )
 {
     isConnected_ = true;
 }

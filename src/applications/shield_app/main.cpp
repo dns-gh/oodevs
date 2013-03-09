@@ -95,11 +95,11 @@ namespace
             std::cout << "received from " << link << " : " << message.ShortDebugString() << std::endl;
         }
     private:
-        virtual void ConnectionSucceeded( const std::string& source, const std::string& host )
+        virtual void ConnectionSucceeded( const std::string& local, const std::string& remote )
         {
-            host_ = host;
-            std::cout << "connection succeeded : " << host << std::endl;
-            tools::ClientNetworker::ConnectionSucceeded( source, host );
+            host_ = remote;
+            std::cout << "connection succeeded : " << remote << std::endl;
+            tools::ClientNetworker::ConnectionSucceeded( local, remote );
             MsgsClientToAuthentication::MsgClientToAuthentication request;
             request.mutable_message()->mutable_authentication_request()->set_login( profile_ );
             request.mutable_message()->mutable_authentication_request()->set_password( password_ );
