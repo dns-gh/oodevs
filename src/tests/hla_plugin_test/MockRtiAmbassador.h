@@ -23,17 +23,17 @@ namespace hla
 MOCK_BASE_CLASS( MockRtiAmbassador, hla::RtiAmbassador_ABC )
 {
     MOCK_METHOD( Tick, 0 );
-    MOCK_METHOD_EXT( Create, 2, bool( const std::string&, const std::string& ), CreateFom )
-    MOCK_METHOD_EXT( Create, 2, bool( const std::string&, const std::vector< std::string >& ), CreateFoms )
+    MOCK_METHOD( Create, 2, bool( const std::string&, const std::string& ), CreateFom )
+    MOCK_METHOD( Create, 2, bool( const std::string&, const std::vector< std::string >& ), CreateFoms )
     MOCK_METHOD( Destroy, 1 );
     MOCK_METHOD( Connect, 1 );
     MOCK_METHOD( Disconnect, 0 );
     MOCK_METHOD( Join, 3 );
     MOCK_METHOD( Resign, 0 );
-    MOCK_METHOD_EXT( Subscribe, 2, void( const ClassIdentifier&, const Class_ABC& ), SubscribeClass );
-    MOCK_METHOD_EXT( Publish, 2, void( const ClassIdentifier&, const Class_ABC& ), PublishClass );
-    MOCK_METHOD_EXT( Subscribe, 1, void( const InteractionIdentifier& ), SubscribeInteraction );
-    MOCK_METHOD_EXT( Publish, 1, void( const InteractionIdentifier& ), PublishInteraction );
+    MOCK_METHOD( Subscribe, 2, void( const ClassIdentifier&, const Class_ABC& ), SubscribeClass );
+    MOCK_METHOD( Publish, 2, void( const ClassIdentifier&, const Class_ABC& ), PublishClass );
+    MOCK_METHOD( Subscribe, 1, void( const InteractionIdentifier& ), SubscribeInteraction );
+    MOCK_METHOD( Publish, 1, void( const InteractionIdentifier& ), PublishInteraction );
     MOCK_METHOD( ReserveObjectInstance, 1 );
     MOCK_METHOD( RegisterObjectInstance, 2 );
     MOCK_METHOD( DeleteObjectInstance, 1 );

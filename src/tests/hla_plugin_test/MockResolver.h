@@ -23,9 +23,9 @@ namespace tools
 template< typename T >
 MOCK_BASE_CLASS( MockResolver, Resolver_ABC< T > )
 {
-    MOCK_METHOD_EXT_TPL( Find, 1, T*( const unsigned long& ), Find );
-    MOCK_METHOD_EXT_TPL( Get, 1, T&( const unsigned long& ), Get );
-    MOCK_METHOD_EXT_TPL( CreateIterator, 0, Iterator< const T& >(), CreateIterator );
+    MOCK_METHOD_TPL( Find, 1, T*( const unsigned long& ) );
+    MOCK_METHOD_TPL( Get, 1, T&( const unsigned long& ) );
+    MOCK_METHOD_TPL( CreateIterator, 0, Iterator< const T& >() );
 };
 
 }

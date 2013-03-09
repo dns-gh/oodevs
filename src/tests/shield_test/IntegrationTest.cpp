@@ -73,7 +73,7 @@ namespace
         {
             RegisterMessage( *this, &Client::Receive );
         }
-        MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const MsgsSimToClient::MsgSimToClient& ), Receive );
+        MOCK_METHOD( Receive, 2, void( const std::string&, const MsgsSimToClient::MsgSimToClient& ) );
         MOCK_METHOD( ConnectionSucceeded, 2 );
         MOCK_METHOD( ConnectionFailed, 2 );
         MOCK_METHOD( ConnectionError, 2 );

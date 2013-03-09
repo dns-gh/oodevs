@@ -27,7 +27,7 @@ public:
         RegisterMessage( *this, &MockServer::OnReceivePion );
         AllowConnections();
     }
-    MOCK_METHOD_EXT( OnReceivePion, 2, void( const std::string&, const MsgPion& ), OnReceivePion );
+    MOCK_METHOD( OnReceivePion, 2, void( const std::string&, const MsgPion& ) );
     MOCK_METHOD( ConnectionSucceeded, 2 )
     MOCK_METHOD( ConnectionFailed, 2 )
     MOCK_METHOD( ConnectionError, 2 )

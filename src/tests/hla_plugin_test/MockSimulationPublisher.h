@@ -23,8 +23,8 @@ namespace dispatcher
 // =============================================================================
 MOCK_BASE_CLASS( MockSimulationPublisher, SimulationPublisher_ABC )
 {
-    MOCK_METHOD_EXT( Send, 1, void( const sword::ClientToSim& ), SendClientToSim )
-    MOCK_METHOD_EXT( Send, 1, void( const sword::DispatcherToSim& ), SendDispatcherToSim )
+    MOCK_METHOD( Send, 1, void( const sword::ClientToSim& ), SendClientToSim )
+    MOCK_METHOD( Send, 1, void( const sword::DispatcherToSim& ), SendDispatcherToSim )
 };
 
 }

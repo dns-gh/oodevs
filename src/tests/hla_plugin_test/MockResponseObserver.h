@@ -25,7 +25,7 @@ namespace hla
 template< typename T >
 MOCK_BASE_CLASS( MockResponseObserver, ResponseObserver_ABC< T > )
 {
-    MOCK_METHOD_EXT_TPL( Notify, 2, void( const T&, const std::string& ), Notify );
+    MOCK_METHOD_TPL( Notify, 2, void( const T&, const std::string& ) )
 };
 
 }

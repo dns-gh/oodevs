@@ -25,8 +25,8 @@ MOCK_BASE_CLASS( MockRoleNBC, nbc::PHY_RoleInterface_NBC )
     MOCK_METHOD( Poison, 1 );
     MOCK_METHOD( Contaminate, 1 );
     MOCK_METHOD( Afflict, 2 );
-    MOCK_METHOD_EXT( Decontaminate, 0, void(), DecontaminateComplete );
-    MOCK_METHOD_EXT( Decontaminate, 1, void( double ), DecontaminatePartial );
+    MOCK_METHOD( Decontaminate, 0, void(), DecontaminateComplete );
+    MOCK_METHOD( Decontaminate, 1, void( double ), DecontaminatePartial );
     MOCK_METHOD( Update, 1 );
     MOCK_METHOD( Clean, 0 );
     MOCK_METHOD( HasChanged, 0 );

@@ -49,9 +49,9 @@ namespace
     template< typename T, typename Identifier >
     struct MockResolver : tools::Resolver_ABC< T, Identifier >
     {
-        MOCK_METHOD_EXT_TPL( Find, 1, T*( const Identifier& id ), Find )
-        MOCK_METHOD_EXT_TPL( Get, 1, T&( const Identifier& id ), Get )
-        MOCK_METHOD_EXT_TPL( CreateIterator, 0, tools::Iterator< const T& >(), CreateIterator )
+        MOCK_METHOD_TPL( Find, 1, T*( const Identifier& id ) )
+        MOCK_METHOD_TPL( Get, 1, T&( const Identifier& id ) )
+        MOCK_METHOD_TPL( CreateIterator, 0, tools::Iterator< const T& >() )
     };
 
     MOCK_BASE_CLASS( MockKnowledgeGroupsModel, KnowledgeGroupsModel )
@@ -60,22 +60,21 @@ namespace
             : KnowledgeGroupsModel( controllers, knowledgeGroupFactory )
         {}
 
-        MOCK_METHOD_EXT( Create, 1, void( kernel::Team_ABC& ), Create1 );
-        MOCK_METHOD_EXT( Create, 3, void( xml::xistream&, kernel::Team_ABC&, Model& ), Create3 );
-        MOCK_METHOD_EXT( CreateSubKnowledgeGroup, 1, void ( kernel::Team_ABC& ), Create21 );
-        MOCK_METHOD_EXT( CreateSubKnowledgeGroup, 3, void ( xml::xistream& , kernel::KnowledgeGroup_ABC& , Model& ), Create23 );
+        MOCK_METHOD( Create, 1, void( kernel::Team_ABC& ), Create1 );
+        MOCK_METHOD( Create, 3, void( xml::xistream&, kernel::Team_ABC&, Model& ), Create3 );
+        MOCK_METHOD( CreateSubKnowledgeGroup, 1, void ( kernel::Team_ABC& ), Create21 );
+        MOCK_METHOD( CreateSubKnowledgeGroup, 3, void ( xml::xistream& , kernel::KnowledgeGroup_ABC& , Model& ), Create23 );
     };
 
     MOCK_BASE_CLASS( MockKnowledgeGroupFactory, kernel::KnowledgeGroupFactory_ABC)
     {
-        MOCK_METHOD_EXT( Create, 1, kernel::KnowledgeGroup_ABC*( kernel::Team_ABC& ), Create1 );
-        MOCK_METHOD_EXT( Create, 2, kernel::KnowledgeGroup_ABC*( xml::xistream& , kernel::Team_ABC& ), Create2 );
-        MOCK_METHOD_EXT( Create, 1, kernel::KnowledgeGroup_ABC*( kernel::KnowledgeGroup_ABC& ), Create3 );
-        MOCK_METHOD_EXT( Create, 2, kernel::KnowledgeGroup_ABC*( xml::xistream&, kernel::KnowledgeGroup_ABC& ), Create4 );
+        MOCK_METHOD( Create, 1, kernel::KnowledgeGroup_ABC*( kernel::Team_ABC& ), Create1 );
+        MOCK_METHOD( Create, 2, kernel::KnowledgeGroup_ABC*( xml::xistream& , kernel::Team_ABC& ), Create2 );
+        MOCK_METHOD( Create, 1, kernel::KnowledgeGroup_ABC*( kernel::KnowledgeGroup_ABC& ), Create3 );
+        MOCK_METHOD( Create, 2, kernel::KnowledgeGroup_ABC*( xml::xistream&, kernel::KnowledgeGroup_ABC& ), Create4 );
     };
 
-    typedef tools::Resolver< kernel::KnowledgeGroupType, std::string > T_KnowledgeGroupTypeResolver;
-    MOCK_BASE_CLASS( MockKnowledgeGroupTypeResolver, T_KnowledgeGroupTypeResolver )
+    MOCK_BASE_CLASS( MockKnowledgeGroupTypeResolver, tools::Resolver< kernel::KnowledgeGroupType, std::string > )
     {
         MOCK_METHOD( Find, 1 );
         MOCK_METHOD( Get, 1 );

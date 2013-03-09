@@ -37,12 +37,12 @@ MOCK_BASE_CLASS( MockFormation, dispatcher::Formation_ABC )
     MOCK_METHOD( GetTeam, 0 );
     MOCK_METHOD( GetFormations, 0 );
     MOCK_METHOD( GetAutomates, 0 );
-    MOCK_METHOD_EXT( Register, 1, void ( dispatcher::Formation_ABC& ), RegisterFormation );
-    MOCK_METHOD_EXT( Remove, 1, void ( dispatcher::Formation_ABC& ), RemoveFormation );
-    MOCK_METHOD_EXT( Register, 1, void ( dispatcher::Automat_ABC& ), RegisterAutomat );
-    MOCK_METHOD_EXT( Remove, 1, void ( dispatcher::Automat_ABC& ), RemoveAutomat );
-    MOCK_METHOD_EXT( SetSuperior, 1, void ( dispatcher::Formation_ABC& ), SetSuperiorFormation );
-    MOCK_METHOD_EXT( SetSuperior, 1, void ( dispatcher::Team_ABC& ), SetSuperiorTeam );
+    MOCK_METHOD( Register, 1, void ( dispatcher::Formation_ABC& ), RegisterFormation );
+    MOCK_METHOD( Remove, 1, void ( dispatcher::Formation_ABC& ), RemoveFormation );
+    MOCK_METHOD( Register, 1, void ( dispatcher::Automat_ABC& ), RegisterAutomat );
+    MOCK_METHOD( Remove, 1, void ( dispatcher::Automat_ABC& ), RemoveAutomat );
+    MOCK_METHOD( SetSuperior, 1, void ( dispatcher::Formation_ABC& ), SetSuperiorFormation );
+    MOCK_METHOD( SetSuperior, 1, void ( dispatcher::Team_ABC& ), SetSuperiorTeam );
     MOCK_METHOD( GetLogisticLevel, 0 );
     MOCK_METHOD( GetLogisticEntity, 0 );
     MOCK_METHOD( GetApp6Symbol, 0);

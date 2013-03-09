@@ -20,17 +20,17 @@
 // =============================================================================
 MOCK_BASE_CLASS( MockDEC_KnowledgeResolver_ABC, DEC_KnowledgeResolver_ABC )
 {
-    MOCK_METHOD_EXT( ResolveKnowledgeAgent, 1, boost::shared_ptr< DEC_Knowledge_Agent >( const sword::UnitKnowledgeId& ), ResolveKnowledgeAgentFromMessage );
-    MOCK_METHOD_EXT( ResolveKnowledgeAgent, 1, boost::shared_ptr< DEC_Knowledge_Agent >( const MIL_Agent_ABC& ), ResolveKnowledgeAgent );
-    MOCK_METHOD_EXT( ResolveKnowledgeAgent, 1, boost::shared_ptr< DEC_Knowledge_Agent >( unsigned int ), ResolveKnowledgeAgentFromId );
+    MOCK_METHOD( ResolveKnowledgeAgent, 1, boost::shared_ptr< DEC_Knowledge_Agent >( const sword::UnitKnowledgeId& ), ResolveKnowledgeAgentFromMessage );
+    MOCK_METHOD( ResolveKnowledgeAgent, 1, boost::shared_ptr< DEC_Knowledge_Agent >( const MIL_Agent_ABC& ), ResolveKnowledgeAgent );
+    MOCK_METHOD( ResolveKnowledgeAgent, 1, boost::shared_ptr< DEC_Knowledge_Agent >( unsigned int ), ResolveKnowledgeAgentFromId );
 
-    MOCK_METHOD_EXT( ResolveKnowledgeObject, 1, boost::shared_ptr< DEC_Knowledge_Object >( const sword::ObjectKnowledgeId& ), ResolveKnowledgeObjectFromMessage );
-    MOCK_METHOD_EXT( ResolveKnowledgeObject, 1, boost::shared_ptr< DEC_Knowledge_Object >( const MIL_Object_ABC& ), ResolveKnowledgeObject );
-    MOCK_METHOD_EXT( ResolveKnowledgeObject, 1, boost::shared_ptr< DEC_Knowledge_Object >( unsigned int ), ResolveKnowledgeObjectFromId );
+    MOCK_METHOD( ResolveKnowledgeObject, 1, boost::shared_ptr< DEC_Knowledge_Object >( const sword::ObjectKnowledgeId& ), ResolveKnowledgeObjectFromMessage );
+    MOCK_METHOD( ResolveKnowledgeObject, 1, boost::shared_ptr< DEC_Knowledge_Object >( const MIL_Object_ABC& ), ResolveKnowledgeObject );
+    MOCK_METHOD( ResolveKnowledgeObject, 1, boost::shared_ptr< DEC_Knowledge_Object >( unsigned int ), ResolveKnowledgeObjectFromId );
 
-    MOCK_METHOD_EXT( ResolveKnowledgePopulation, 1, boost::shared_ptr< DEC_Knowledge_Population >( const sword::CrowdKnowledgeId& ), ResolveKnowledgePopulationFromMessage );
-    MOCK_METHOD_EXT( ResolveKnowledgePopulation, 1, boost::shared_ptr< DEC_Knowledge_Population >( const MIL_Population& ), ResolveKnowledgePopulation );
-    MOCK_METHOD_EXT( ResolveKnowledgePopulation, 1, boost::shared_ptr< DEC_Knowledge_Population >( unsigned int ), ResolveKnowledgePopulationFromId );
+    MOCK_METHOD( ResolveKnowledgePopulation, 1, boost::shared_ptr< DEC_Knowledge_Population >( const sword::CrowdKnowledgeId& ), ResolveKnowledgePopulationFromMessage );
+    MOCK_METHOD( ResolveKnowledgePopulation, 1, boost::shared_ptr< DEC_Knowledge_Population >( const MIL_Population& ), ResolveKnowledgePopulation );
+    MOCK_METHOD( ResolveKnowledgePopulation, 1, boost::shared_ptr< DEC_Knowledge_Population >( unsigned int ), ResolveKnowledgePopulationFromId );
 
     MOCK_METHOD( ResolveKnowledgeObjectByObjectID, 1 );
 };

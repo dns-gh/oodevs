@@ -21,7 +21,7 @@ namespace
 
     MOCK_BASE_CLASS( MockMessageHandler, MessageHandler_ABC )
     {
-        MOCK_METHOD_EXT( Receive, 1, void ( const sword::SimToClient& ), OnReceiveMessageSimToClient );
+        MOCK_METHOD( Receive, 1, void ( const sword::SimToClient& ), OnReceiveMessageSimToClient );
     };
 
     struct Fixture

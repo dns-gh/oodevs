@@ -37,17 +37,17 @@ MOCK_BASE_CLASS( MockAutomat, dispatcher::Automat_ABC )
     // dispatcher::Automat_ABC
     MOCK_METHOD( GetTeam, 0 );
     MOCK_METHOD( GetKnowledgeGroup, 0 );
-    MOCK_METHOD_EXT( Register, 1, void ( dispatcher::Automat_ABC& ), RegisterAutomat );
-    MOCK_METHOD_EXT( Remove, 1, void ( dispatcher::Automat_ABC& ), RemoveAutomat );
-    MOCK_METHOD_EXT( Register, 1, void ( dispatcher::Agent_ABC& ), RegisterAgent );
-    MOCK_METHOD_EXT( Remove, 1, void ( dispatcher::Agent_ABC& ), RemoveAgent );
+    MOCK_METHOD( Register, 1, void ( dispatcher::Automat_ABC& ), RegisterAutomat );
+    MOCK_METHOD( Remove, 1, void ( dispatcher::Automat_ABC& ), RemoveAutomat );
+    MOCK_METHOD( Register, 1, void ( dispatcher::Agent_ABC& ), RegisterAgent );
+    MOCK_METHOD( Remove, 1, void ( dispatcher::Agent_ABC& ), RemoveAgent );
     MOCK_METHOD( GetAutomats, 0 );
     MOCK_METHOD( GetAgents, 0 );
     MOCK_METHOD( GetParentAutomat, 0 );
     MOCK_METHOD( GetFormation, 0 );
     MOCK_METHOD( IsEngaged, 0 );
-    MOCK_METHOD_EXT( SetSuperior, 1, void ( dispatcher::Formation_ABC& ), SetSuperiorFormation );
-    MOCK_METHOD_EXT( SetSuperior, 1, void ( dispatcher::Automat_ABC& ), SetSuperiorAutomat );
+    MOCK_METHOD( SetSuperior, 1, void ( dispatcher::Formation_ABC& ), SetSuperiorFormation );
+    MOCK_METHOD( SetSuperior, 1, void ( dispatcher::Automat_ABC& ), SetSuperiorAutomat );
     MOCK_METHOD( GetLogisticLevel, 0);
     MOCK_METHOD( GetApp6Symbol, 0);
 
@@ -58,7 +58,7 @@ MOCK_BASE_CLASS( MockAutomat, dispatcher::Automat_ABC )
     MOCK_METHOD( Accept, 1 );
 
     // dispatcher::LogisticHierarchyOwner_ABC
-    MOCK_METHOD_EXT( Send, 1, void ( sword::ParentEntity& ), LogisticHierarchyOwnerSend );
+    MOCK_METHOD( Send, 1, void ( sword::ParentEntity& ), LogisticHierarchyOwnerSend );
 };
 
 #endif // __MockAutomat_h_

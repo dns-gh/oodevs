@@ -27,8 +27,8 @@ public:
         RegisterMessage( *this, &MockClient::OnReceivePion );
         RegisterMessage( *this, &MockClient::OnReceiveEmpty );
     }
-    MOCK_METHOD_EXT( OnReceivePion, 2, void( const std::string&, const MsgPion& ), OnReceivePion );
-    MOCK_METHOD_EXT( OnReceiveEmpty, 2, void( const std::string&, const EmptyMessage& ), OnReceiveEmpty );
+    MOCK_METHOD( OnReceivePion, 2, void( const std::string&, const MsgPion& ) );
+    MOCK_METHOD( OnReceiveEmpty, 2, void( const std::string&, const EmptyMessage& ) );
     MOCK_METHOD( ConnectionSucceeded, 2 )
     MOCK_METHOD( ConnectionFailed, 2 )
     MOCK_METHOD( ConnectionError, 2 )

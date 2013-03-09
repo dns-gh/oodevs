@@ -14,7 +14,7 @@
 
 MOCK_BASE_CLASS( MockObjectManager, MIL_ObjectManager )
 {
-    MOCK_METHOD_EXT( CreateObject, 2, MIL_Object_ABC&( xml::xistream&, MIL_Army_ABC& ), CreateObjectFromXml );
+    MOCK_METHOD( CreateObject, 2, MIL_Object_ABC&( xml::xistream&, MIL_Army_ABC& ), CreateObjectFromXml );
 };
 
 #endif // __MockArmy_h_

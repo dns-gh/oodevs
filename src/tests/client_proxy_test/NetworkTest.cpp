@@ -111,10 +111,10 @@ namespace
 
     MOCK_BASE_CLASS( MockMessageHandler, SwordMessageHandler_ABC )
     {
-        MOCK_METHOD_EXT( OnReceiveMessage, 1, void ( const sword::SimToClient& ), OnReceiveMessageSimToClient );
-        MOCK_METHOD_EXT( OnReceiveMessage, 1, void ( const sword::MessengerToClient& ), OnReceiveMessageMessengerToClient );
-        MOCK_METHOD_EXT( OnReceiveMessage, 1, void ( const sword::AuthenticationToClient& ), OnReceiveMessageAuthenticationToClient );
-        MOCK_METHOD_EXT( OnReceiveMessage, 1, void ( const sword::DispatcherToClient& ), OnReceiveMessageDispatcherToClient );
+        MOCK_METHOD( OnReceiveMessage, 1, void ( const sword::SimToClient& ), OnReceiveMessageSimToClient );
+        MOCK_METHOD( OnReceiveMessage, 1, void ( const sword::MessengerToClient& ), OnReceiveMessageMessengerToClient );
+        MOCK_METHOD( OnReceiveMessage, 1, void ( const sword::AuthenticationToClient& ), OnReceiveMessageAuthenticationToClient );
+        MOCK_METHOD( OnReceiveMessage, 1, void ( const sword::DispatcherToClient& ), OnReceiveMessageDispatcherToClient );
     };
 
     std::string MakeHost( const std::string& host, unsigned short port )

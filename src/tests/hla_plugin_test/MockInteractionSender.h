@@ -25,7 +25,7 @@ namespace hla
 template< typename Interaction >
 MOCK_BASE_CLASS( MockInteractionSender, InteractionSender_ABC< Interaction > )
 {
-    MOCK_METHOD_EXT_TPL( Send, 1, void( const Interaction& ), Send )
+    MOCK_METHOD_TPL( Send, 1, void( const Interaction& ) )
 };
 
 }

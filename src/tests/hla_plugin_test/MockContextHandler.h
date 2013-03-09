@@ -25,9 +25,9 @@ namespace hla
 template< typename MessageResponse >
 MOCK_BASE_CLASS( MockContextHandler, ContextHandler_ABC< MessageResponse > )
 {
-    MOCK_METHOD_EXT_TPL( Register, 1, void( ResponseObserver_ABC< MessageResponse >& ), Register );
-    MOCK_METHOD_EXT_TPL( Unregister, 1, void( ResponseObserver_ABC< MessageResponse >& ), Unregister );
-    MOCK_METHOD_EXT_TPL( Send, 2, void( simulation::UnitMagicAction&, const std::string& ), Send );
+    MOCK_METHOD_TPL( Register, 1, void( ResponseObserver_ABC< MessageResponse >& ) );
+    MOCK_METHOD_TPL( Unregister, 1, void( ResponseObserver_ABC< MessageResponse >& ) );
+    MOCK_METHOD_TPL( Send, 2, void( simulation::UnitMagicAction&, const std::string& ) );
 };
 
 }

@@ -34,12 +34,12 @@ namespace protobuf
 // =============================================================================
 MOCK_BASE_CLASS( MockClientPublisher, dispatcher::ClientPublisher_ABC )
 {
-    MOCK_METHOD_EXT( Send, 1, void ( const sword::SimToClient& ), SendSimToClient );
-    MOCK_METHOD_EXT( Send, 1, void ( const sword::AuthenticationToClient& ), SendAuthenticationToClient );
-    MOCK_METHOD_EXT( Send, 1, void ( const sword::ReplayToClient& ), SendReplayToClient );
-    MOCK_METHOD_EXT( Send, 1, void ( const sword::AarToClient& ), SendAarToClient );
-    MOCK_METHOD_EXT( Send, 1, void ( const sword::MessengerToClient& ), SendMessengerToClient );
-    MOCK_METHOD_EXT( Send, 1, void ( const sword::DispatcherToClient& ), SendDispatcherToClient );
+    MOCK_METHOD( Send, 1, void ( const sword::SimToClient& ), SendSimToClient );
+    MOCK_METHOD( Send, 1, void ( const sword::AuthenticationToClient& ), SendAuthenticationToClient );
+    MOCK_METHOD( Send, 1, void ( const sword::ReplayToClient& ), SendReplayToClient );
+    MOCK_METHOD( Send, 1, void ( const sword::AarToClient& ), SendAarToClient );
+    MOCK_METHOD( Send, 1, void ( const sword::MessengerToClient& ), SendMessengerToClient );
+    MOCK_METHOD( Send, 1, void ( const sword::DispatcherToClient& ), SendDispatcherToClient );
 };
 
 #endif // __MockClientPublisher_h_

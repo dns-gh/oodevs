@@ -23,10 +23,10 @@
 template< typename K, typename A >
 MOCK_BASE_CLASS( MockFunction1, TYPE )
 {
-    MOCK_METHOD_EXT_TPL( BeginTick, 0, void(), BeginTick );
-    MOCK_METHOD_EXT_TPL( SetKey, 1, void( const K& ), SetKey );
-    MOCK_METHOD_EXT_TPL( Apply, 1, void( const A& ), Apply );
-    MOCK_METHOD_EXT_TPL( EndTick, 0, void(), EndTick );
+    MOCK_METHOD( BeginTick, 0, void() );
+    MOCK_METHOD_TPL( SetKey, 1, void( const K& ) );
+    MOCK_METHOD_TPL( Apply, 1, void( const A& ) );
+    MOCK_METHOD( EndTick, 0, void() );
 };
 #endif
 
@@ -41,10 +41,10 @@ MOCK_BASE_CLASS( MockFunction1, TYPE )
 template< typename K, typename A1, typename A2 >
 MOCK_BASE_CLASS( MockFunction2, TYPE2 )
 {
-    MOCK_METHOD_EXT_TPL( BeginTick, 0, void(), BeginTick );
-    MOCK_METHOD_EXT_TPL( SetKey, 1, void( const K& ), SetKey );
-    MOCK_METHOD_EXT_TPL( Apply, 2, void( const A1&, const A2& ), Apply );
-    MOCK_METHOD_EXT_TPL( EndTick, 0, void(), EndTick );
+    MOCK_METHOD( BeginTick, 0, void() );
+    MOCK_METHOD_TPL( SetKey, 1, void( const K& ) );
+    MOCK_METHOD_TPL( Apply, 2, void( const A1&, const A2& ) );
+    MOCK_METHOD( EndTick, 0, void() );
 };
 #endif
 

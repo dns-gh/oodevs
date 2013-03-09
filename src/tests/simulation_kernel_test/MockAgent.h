@@ -38,23 +38,23 @@ MOCK_BASE_CLASS( MockAgent, MIL_Agent_ABC )
     MOCK_METHOD( UpdateUnderIndirectFire, 0 );
     MOCK_METHOD( CanEmitReports, 0 );
 
-//    MOCK_METHOD_EXT( GetAutomate, 0, const MIL_Automate&(), GetAutomatConstRef );
-    MOCK_METHOD_EXT( GetAutomate, 0, MIL_Automate&(), GetAutomatRef );
+//    MOCK_METHOD( GetAutomate, 0, const MIL_Automate&(), GetAutomatConstRef );
+    MOCK_METHOD( GetAutomate, 0, MIL_Automate&(), GetAutomatRef );
 
-//    MOCK_METHOD_EXT( GetDecision, 0, const DEC_Decision_ABC&(), GetDecisionConstRef );
-    MOCK_METHOD_EXT( GetDecision, 0, DEC_Decision_ABC&(), GetDecisionRef );
+//    MOCK_METHOD( GetDecision, 0, const DEC_Decision_ABC&(), GetDecisionConstRef );
+    MOCK_METHOD( GetDecision, 0, DEC_Decision_ABC&(), GetDecisionRef );
 
     MOCK_METHOD( GetAlgorithms, 0 );
 
     MOCK_METHOD( BelongsTo, 1 );
 
-//    MOCK_METHOD_EXT( GetOrderManager, 0, const MIL_PionOrderManager&(), GetOrderManagerConstRef );
-    MOCK_METHOD_EXT( GetOrderManager, 0, MIL_PionOrderManager&(), GetOrderManagerRef );
+//    MOCK_METHOD( GetOrderManager, 0, const MIL_PionOrderManager&(), GetOrderManagerConstRef );
+    MOCK_METHOD( GetOrderManager, 0, MIL_PionOrderManager&(), GetOrderManagerRef );
 
     MOCK_METHOD( ChangeSuperior, 1 );
 
-    MOCK_METHOD_EXT( NotifyAttackedBy, 2, void( MIL_AgentPion&, bool ), NotifyAttackedByAgent );
-    MOCK_METHOD_EXT( NotifyAttackedBy, 1, void( MIL_Population& ), NotifyAttackedByPopulation );
+    MOCK_METHOD( NotifyAttackedBy, 2, void( MIL_AgentPion&, bool ), NotifyAttackedByAgent );
+    MOCK_METHOD( NotifyAttackedBy, 1, void( MIL_Population& ), NotifyAttackedByPopulation );
 
     MOCK_METHOD( MagicMove, 1 );
     MOCK_METHOD( Distance, 1 );

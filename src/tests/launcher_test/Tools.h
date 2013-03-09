@@ -93,8 +93,8 @@ namespace launcher_test
             RegisterMessage< MockDispatcher, sword::ClientToSim >( *this, &MockDispatcher::Receive );
             RegisterMessage< MockDispatcher, sword::ClientToAuthentication >( *this, &MockDispatcher::AutoAuthentification );
         }
-        MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToSim& ), ReceiveSim );
-        MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToAuthentication& ), ReceiveAuth );
+        MOCK_METHOD( Receive, 2, void( const std::string&, const sword::ClientToSim& ), ReceiveSim );
+        MOCK_METHOD( Receive, 2, void( const std::string&, const sword::ClientToAuthentication& ), ReceiveAuth );
         MOCK_METHOD( ConnectionSucceeded, 2 );
         MOCK_METHOD( ConnectionFailed, 2 );
         MOCK_METHOD( ConnectionError, 2 );

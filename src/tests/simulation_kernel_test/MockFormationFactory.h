@@ -14,8 +14,8 @@
 
 MOCK_BASE_CLASS( MockFormationFactory, FormationFactory_ABC )
 {
-    MOCK_METHOD_EXT( Create, 3, MIL_Formation&( xml::xistream&, MIL_Army_ABC&, MIL_Formation* ), Create3 );
-    MOCK_METHOD_EXT( Create, 5, MIL_Formation&( int, const std::string&, const std::string&, MIL_Army_ABC&, MIL_Formation* ), Create5 );
+    MOCK_METHOD( Create, 3, MIL_Formation&( xml::xistream&, MIL_Army_ABC&, MIL_Formation* ), Create3 );
+    MOCK_METHOD( Create, 5, MIL_Formation&( int, const std::string&, const std::string&, MIL_Army_ABC&, MIL_Formation* ), Create5 );
 };
 
 #endif // __MockArmy_h_

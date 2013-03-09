@@ -23,7 +23,7 @@ namespace hla
 template< typename T >
 MOCK_BASE_CLASS( MockInteractionNotification, InteractionNotification_ABC< T > )
 {
-    MOCK_METHOD_EXT_TPL( Receive, 1, void( T& ), Receive )
+    MOCK_METHOD_TPL( Receive, 1, void( T& ) )
 };
 
 }

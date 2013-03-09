@@ -32,8 +32,8 @@ namespace
 {
     MOCK_BASE_CLASS( MockPublisher, dispatcher::SimulationPublisher_ABC )
     {
-        MOCK_METHOD_EXT( Send, 1, void( const sword::DispatcherToSim& ), DispatchToSim );
-        MOCK_METHOD_EXT( Send, 1, void( const sword::ClientToSim& ),     ClientToSim );
+        MOCK_METHOD( Send, 1, void( const sword::DispatcherToSim& ), DispatchToSim );
+        MOCK_METHOD( Send, 1, void( const sword::ClientToSim& ),     ClientToSim );
     };
 
     const Tree FromJson( const std::string& data )

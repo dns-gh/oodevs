@@ -39,13 +39,13 @@ namespace dispatcher
         MOCK_METHOD( Accept, 1 );
         MOCK_METHOD( GetApp6Symbol, 0 );
         MOCK_METHOD( GetType, 0 );
-        MOCK_METHOD_EXT( Send, 1, void( sword::ParentEntity& ), Send );
-        MOCK_METHOD_EXT( Register   , 1, void( dispatcher::Automat_ABC& ), RegisterAutomat );
-        MOCK_METHOD_EXT( Remove     , 1, void( dispatcher::Automat_ABC& ), RemoveAutomat );
-        MOCK_METHOD_EXT( Register   , 1, void( dispatcher::Agent_ABC& ), RegisterAgent );
-        MOCK_METHOD_EXT( Remove     , 1, void( dispatcher::Agent_ABC& ), RemoveAgent );
-        MOCK_METHOD_EXT( SetSuperior, 1, void( dispatcher::Formation_ABC& ), SetSuperiorFormation );
-        MOCK_METHOD_EXT( SetSuperior, 1, void( dispatcher::Automat_ABC& ), SetSuperiorAutomat );
+        MOCK_METHOD( Send, 1, void( sword::ParentEntity& ) );
+        MOCK_METHOD( Register   , 1, void( dispatcher::Automat_ABC& ), RegisterAutomat );
+        MOCK_METHOD( Remove     , 1, void( dispatcher::Automat_ABC& ), RemoveAutomat );
+        MOCK_METHOD( Register   , 1, void( dispatcher::Agent_ABC& ), RegisterAgent );
+        MOCK_METHOD( Remove     , 1, void( dispatcher::Agent_ABC& ), RemoveAgent );
+        MOCK_METHOD( SetSuperior, 1, void( dispatcher::Formation_ABC& ), SetSuperiorFormation );
+        MOCK_METHOD( SetSuperior, 1, void( dispatcher::Automat_ABC& ), SetSuperiorAutomat );
     };
     MOCK_BASE_CLASS( MockAgent, Agent_ABC )
     {

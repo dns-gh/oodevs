@@ -129,10 +129,10 @@ namespace
     {
         MOCK_METHOD( FindAgent, 2 );
         MOCK_METHOD( FindPopulation, 2 );
-        MOCK_METHOD_EXT( Find, 2, const kernel::AgentKnowledge_ABC*( const kernel::AgentKnowledge_ABC&, const kernel::Entity_ABC& ), FindAgentKnowledgeFromKnowledge );
-        MOCK_METHOD_EXT( Find, 2, const kernel::AgentKnowledge_ABC*( const kernel::Agent_ABC&, const kernel::Entity_ABC& ), FindAgentKnowledgeFromAgent );
-        MOCK_METHOD_EXT( Find, 2, const kernel::PopulationKnowledge_ABC*( const kernel::PopulationKnowledge_ABC&, const kernel::Entity_ABC& ), FindPopulationKnowledgeFromKnowledge );
-        MOCK_METHOD_EXT( Find, 2, const kernel::PopulationKnowledge_ABC*( const kernel::Population_ABC&, const kernel::Entity_ABC& ), FindPopulationKnowledgeFromPopulation );
+        MOCK_METHOD( Find, 2, const kernel::AgentKnowledge_ABC*( const kernel::AgentKnowledge_ABC&, const kernel::Entity_ABC& ), FindAgentKnowledgeFromKnowledge );
+        MOCK_METHOD( Find, 2, const kernel::AgentKnowledge_ABC*( const kernel::Agent_ABC&, const kernel::Entity_ABC& ), FindAgentKnowledgeFromAgent );
+        MOCK_METHOD( Find, 2, const kernel::PopulationKnowledge_ABC*( const kernel::PopulationKnowledge_ABC&, const kernel::Entity_ABC& ), FindPopulationKnowledgeFromKnowledge );
+        MOCK_METHOD( Find, 2, const kernel::PopulationKnowledge_ABC*( const kernel::Population_ABC&, const kernel::Entity_ABC& ), FindPopulationKnowledgeFromPopulation );
     };
 
     MOCK_BASE_CLASS( MockObject, kernel::Object_ABC )
@@ -158,11 +158,11 @@ namespace
 
     MOCK_BASE_CLASS( MockObjectKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC )
     {
-        MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( unsigned long, const kernel::Team_ABC& ), FindObjectKnowledgeFromId );
-        MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( unsigned long, const kernel::Entity_ABC& ), FindObjectKnowledgeFromIdWithEntity );
-        MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::ObjectKnowledge_ABC&, const kernel::Team_ABC& ), FindObjectKnowledgeFromKnowledge );
-        MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::Object_ABC&, const kernel::Team_ABC& ), FindObjectKnowledgeFromObject );
-        MOCK_METHOD_EXT( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::Object_ABC&, const kernel::Entity_ABC& ), FindObjectKnowledgeFromObjectWithEntity );
+        MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( unsigned long, const kernel::Team_ABC& ), FindObjectKnowledgeFromId );
+        MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( unsigned long, const kernel::Entity_ABC& ), FindObjectKnowledgeFromIdWithEntity );
+        MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::ObjectKnowledge_ABC&, const kernel::Team_ABC& ), FindObjectKnowledgeFromKnowledge );
+        MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::Object_ABC&, const kernel::Team_ABC& ), FindObjectKnowledgeFromObject );
+        MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::Object_ABC&, const kernel::Entity_ABC& ), FindObjectKnowledgeFromObjectWithEntity );
     };
 
     MOCK_BASE_CLASS( MockCommunicationHierarchies, kernel::CommunicationHierarchies )

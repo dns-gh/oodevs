@@ -26,10 +26,10 @@ MOCK_BASE_CLASS( MockEntityIdentifierResolver, EntityIdentifierResolver_ABC )
 {
     MOCK_METHOD( Create, 2 )
     MOCK_METHOD( Register, 2 )
-    MOCK_METHOD_EXT( Unregister, 1, void( const rpr::EntityIdentifier&), UnregisterId )
-    MOCK_METHOD_EXT( Unregister, 1, void( const std::string&), UnregisterName )
-    MOCK_METHOD_EXT( Resolve, 1, const std::string&( const rpr::EntityIdentifier&), ResolveId )
-    MOCK_METHOD_EXT( Resolve, 1, const rpr::EntityIdentifier&( const std::string&), ResolveName )
+    MOCK_METHOD( Unregister, 1, void( const rpr::EntityIdentifier&), UnregisterId )
+    MOCK_METHOD( Unregister, 1, void( const std::string&), UnregisterName )
+    MOCK_METHOD( Resolve, 1, const std::string&( const rpr::EntityIdentifier&), ResolveId )
+    MOCK_METHOD( Resolve, 1, const rpr::EntityIdentifier&( const std::string&), ResolveName )
 };
 
 }

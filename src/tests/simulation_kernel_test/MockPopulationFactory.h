@@ -14,8 +14,8 @@
 
 MOCK_BASE_CLASS( MockPopulationFactory, PopulationFactory_ABC )
 {
-    MOCK_METHOD_EXT( Create, 2, MIL_Population&( xml::xistream&, MIL_Army_ABC& ), Create1 )
-    MOCK_METHOD_EXT( Create, 7, MIL_Population&( const std::string&, const MT_Vector2D&, int, const std::string&, MIL_Army_ABC&, MIL_UrbanObject_ABC*, unsigned int ), Create2 )
+    MOCK_METHOD( Create, 2, MIL_Population&( xml::xistream&, MIL_Army_ABC& ), Create1 )
+    MOCK_METHOD( Create, 7, MIL_Population&( const std::string&, const MT_Vector2D&, int, const std::string&, MIL_Army_ABC&, MIL_UrbanObject_ABC*, unsigned int ), Create2 )
 };
 
 #endif // __MockArmy_h_

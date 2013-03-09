@@ -21,11 +21,11 @@ namespace tools
 // Created: AHC 2012-10-11
 // =============================================================================
 template< typename T, typename I >
-MOCK_BASE_CLASS( MockResolver, tools::Resolver_ABC<T BOOST_PP_COMMA() I> )
+MOCK_BASE_CLASS( MockResolver, tools::Resolver_ABC<T, I> )
 {
-    MOCK_METHOD_EXT_TPL( Find, 1, T*( const I& ), Find );
-    MOCK_METHOD_EXT_TPL( Get, 1, T&( const I& ), Get );
-    MOCK_METHOD_EXT_TPL( CreateIterator, 0, Iterator< const T& >(), CreateIterator );
+    MOCK_METHOD_TPL( Find, 1, T*( const I& ) );
+    MOCK_METHOD_TPL( Get, 1, T&( const I& ) );
+    MOCK_METHOD_TPL( CreateIterator, 0, Iterator< const T& >() );
 };
 
 }

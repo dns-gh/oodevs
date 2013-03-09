@@ -31,16 +31,16 @@ MOCK_BASE_CLASS( MockTeam, Team_ABC )
     MOCK_METHOD( Accept, 1 );
     MOCK_METHOD( GetKarma, 0 );
     MOCK_METHOD( GetExtension, 2 );
-    MOCK_METHOD_EXT( Register, 1, void( dispatcher::Formation_ABC& ), RegisterFormation );
-    MOCK_METHOD_EXT( Remove  , 1, void( dispatcher::Formation_ABC& ), RemoveFormation );
-    MOCK_METHOD_EXT( Register, 1, void( dispatcher::Population_ABC& ), RegisterPopulation );
-    MOCK_METHOD_EXT( Remove  , 1, void( dispatcher::Population_ABC& ), RemovePopulation );
-    MOCK_METHOD_EXT( Register, 1, void( dispatcher::Inhabitant_ABC& ), RegisterInhabitant );
-    MOCK_METHOD_EXT( Remove  , 1, void( dispatcher::Inhabitant_ABC& ), RemoveInhabitant );
-    MOCK_METHOD_EXT( Register, 1, void( dispatcher::Object_ABC& ), RegisterObject );
-    MOCK_METHOD_EXT( Remove  , 1, void( dispatcher::Object_ABC& ), RemoveObject );
-    MOCK_METHOD_EXT( Register, 1, void( dispatcher::KnowledgeGroup_ABC& ), RegisterKnowledgeGroup );
-    MOCK_METHOD_EXT( Remove  , 1, void( dispatcher::KnowledgeGroup_ABC& ), RemoveKnowledgeGroup );
+    MOCK_METHOD( Register, 1, void( dispatcher::Formation_ABC& ), RegisterFormation );
+    MOCK_METHOD( Remove  , 1, void( dispatcher::Formation_ABC& ), RemoveFormation );
+    MOCK_METHOD( Register, 1, void( dispatcher::Population_ABC& ), RegisterPopulation );
+    MOCK_METHOD( Remove  , 1, void( dispatcher::Population_ABC& ), RemovePopulation );
+    MOCK_METHOD( Register, 1, void( dispatcher::Inhabitant_ABC& ), RegisterInhabitant );
+    MOCK_METHOD( Remove  , 1, void( dispatcher::Inhabitant_ABC& ), RemoveInhabitant );
+    MOCK_METHOD( Register, 1, void( dispatcher::Object_ABC& ), RegisterObject );
+    MOCK_METHOD( Remove  , 1, void( dispatcher::Object_ABC& ), RemoveObject );
+    MOCK_METHOD( Register, 1, void( dispatcher::KnowledgeGroup_ABC& ), RegisterKnowledgeGroup );
+    MOCK_METHOD( Remove  , 1, void( dispatcher::KnowledgeGroup_ABC& ), RemoveKnowledgeGroup );
 };
 
 }

@@ -14,26 +14,26 @@
 
 MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
 {
-    MOCK_METHOD_EXT( IsUsingActiveRadar, 0, bool(), IsUsingActiveRadar );
-    MOCK_METHOD_EXT( IsUsingActiveRadar, 1, bool( const PHY_RadarClass& ), IsUsingActiveRadarByClass );
+    MOCK_METHOD( IsUsingActiveRadar, 0, bool(), IsUsingActiveRadar );
+    MOCK_METHOD( IsUsingActiveRadar, 1, bool( const PHY_RadarClass& ), IsUsingActiveRadarByClass );
 
     MOCK_METHOD( NotifyExternalPerception, 2 );
-    MOCK_METHOD_EXT( NotifyPerception, 3, void( MIL_Agent_ABC&, const PHY_PerceptionLevel&, bool ), NotifyAgentPerceptionRecorded );
-    MOCK_METHOD_EXT( NotifyPerception, 2, bool( MIL_Agent_ABC&, const PHY_PerceptionLevel& ), NotifyAgentPerception );
-    MOCK_METHOD_EXT( NotifyPerception, 2, void( MIL_Object_ABC&, const PHY_PerceptionLevel& ), NotifyObjectPerception );
-    MOCK_METHOD_EXT( NotifyPerception, 2, bool( MIL_PopulationConcentration&, const PHY_PerceptionLevel& ), NotifyPopulationConcentrationPerception );
-    MOCK_METHOD_EXT( NotifyPerception, 3, bool( MIL_PopulationFlow&, const PHY_PerceptionLevel&, const T_PointVector& ), NotifyPopulationFlowPerception );
-    MOCK_METHOD_EXT( NotifyPerception, 1, void( const MIL_Effect_IndirectFire& ), NotifyIndirectFirePerception );
-    MOCK_METHOD_EXT( NotifyPerception, 3, void( MIL_Object_ABC&, const MT_Vector2D&, const MT_Vector2D& ), NotifyDisasterCollision );
-    MOCK_METHOD_EXT( NotifyPerceptionUrban, 2, void( const MIL_UrbanObject_ABC&, const PHY_PerceptionLevel& ), NotifyUrbanBlockPerception );
+    MOCK_METHOD( NotifyPerception, 3, void( MIL_Agent_ABC&, const PHY_PerceptionLevel&, bool ), NotifyAgentPerceptionRecorded );
+    MOCK_METHOD( NotifyPerception, 2, bool( MIL_Agent_ABC&, const PHY_PerceptionLevel& ), NotifyAgentPerception );
+    MOCK_METHOD( NotifyPerception, 2, void( MIL_Object_ABC&, const PHY_PerceptionLevel& ), NotifyObjectPerception );
+    MOCK_METHOD( NotifyPerception, 2, bool( MIL_PopulationConcentration&, const PHY_PerceptionLevel& ), NotifyPopulationConcentrationPerception );
+    MOCK_METHOD( NotifyPerception, 3, bool( MIL_PopulationFlow&, const PHY_PerceptionLevel&, const T_PointVector& ), NotifyPopulationFlowPerception );
+    MOCK_METHOD( NotifyPerception, 1, void( const MIL_Effect_IndirectFire& ), NotifyIndirectFirePerception );
+    MOCK_METHOD( NotifyPerception, 3, void( MIL_Object_ABC&, const MT_Vector2D&, const MT_Vector2D& ), NotifyDisasterCollision );
+    MOCK_METHOD( NotifyPerceptionUrban, 2, void( const MIL_UrbanObject_ABC&, const PHY_PerceptionLevel& ), NotifyUrbanBlockPerception );
 
     MOCK_METHOD( Update, 1 );
     MOCK_METHOD( Clean, 0 );
     MOCK_METHOD( ExecutePerceptions, 0 );
     MOCK_METHOD( ExecuteCollisions, 0 );
-    MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const MT_Vector2D& ), ComputePointPerception );
-    MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const DEC_Knowledge_Object& ), ComputeObjectKnowledgePerception );
-    MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const DEC_Knowledge_Agent& ), ComputeAgentKnowledgePerception );
+    MOCK_METHOD( ComputePerception, 1, const PHY_PerceptionLevel&( const MT_Vector2D& ), ComputePointPerception );
+    MOCK_METHOD( ComputePerception, 1, const PHY_PerceptionLevel&( const DEC_Knowledge_Object& ), ComputeObjectKnowledgePerception );
+    MOCK_METHOD( ComputePerception, 1, const PHY_PerceptionLevel&( const DEC_Knowledge_Agent& ), ComputeAgentKnowledgePerception );
 
     MOCK_METHOD( SetVisionModeNormal, 0 );
     MOCK_METHOD( SetVisionModeDirection, 1 );
@@ -53,8 +53,8 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD( DisableCoupDeSonde, 0 );
     MOCK_METHOD( EnableRecoPoint, 4 );
     MOCK_METHOD( DisableRecoPoint, 1 );
-    MOCK_METHOD_EXT( EnableRecoLocalisation, 3, int( const TER_Localisation&, float, DEC_Decision_ABC& callerAgent ), EnableRecoLocalisationWithRadius );
-    MOCK_METHOD_EXT( EnableRecoLocalisation, 2, int( const TER_Localisation&, DEC_Decision_ABC& callerAgent ), EnableRecoLocalisation );
+    MOCK_METHOD( EnableRecoLocalisation, 3, int( const TER_Localisation&, float, DEC_Decision_ABC& callerAgent ), EnableRecoLocalisationWithRadius );
+    MOCK_METHOD( EnableRecoLocalisation, 2, int( const TER_Localisation&, DEC_Decision_ABC& callerAgent ), EnableRecoLocalisation );
     MOCK_METHOD( EnableRecoUrbanBlock, 1 );
     MOCK_METHOD( DisableRecoUrbanBlock, 1 );
     MOCK_METHOD( EnableControlLocalisation, 2 );
@@ -84,14 +84,14 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD( GetMainPerceptionDirection, 1 );
 
     MOCK_METHOD( IsPeriphericalVisionEnabled, 0 );
-    MOCK_METHOD_EXT( IsKnown, 1, bool( const MIL_Agent_ABC& ), IsAgentKnown );
-    MOCK_METHOD_EXT( IsKnown, 1, bool( const MIL_Object_ABC& ), IsObjectKnown );
-    MOCK_METHOD_EXT( IsIdentified, 1, bool( const MIL_Agent_ABC& ), IsAgentIdentified );
-    MOCK_METHOD_EXT( IsIdentified, 1, bool( const MIL_Object_ABC& ), IsObjectIdentified );
-    MOCK_METHOD_EXT( IsIdentified, 1, bool( const MIL_PopulationConcentration& ), IsPopulationConcentrationIdentified );
-    MOCK_METHOD_EXT( IsIdentified, 1, bool( const MIL_UrbanObject_ABC& ), IsUrbanBlockIdentified );
+    MOCK_METHOD( IsKnown, 1, bool( const MIL_Agent_ABC& ), IsAgentKnown );
+    MOCK_METHOD( IsKnown, 1, bool( const MIL_Object_ABC& ), IsObjectKnown );
+    MOCK_METHOD( IsIdentified, 1, bool( const MIL_Agent_ABC& ), IsAgentIdentified );
+    MOCK_METHOD( IsIdentified, 1, bool( const MIL_Object_ABC& ), IsObjectIdentified );
+    MOCK_METHOD( IsIdentified, 1, bool( const MIL_PopulationConcentration& ), IsPopulationConcentrationIdentified );
+    MOCK_METHOD( IsIdentified, 1, bool( const MIL_UrbanObject_ABC& ), IsUrbanBlockIdentified );
     MOCK_METHOD( IsFireObserver, 0 );
-    MOCK_METHOD_EXT( CanPerceive, 1, bool( const MIL_ObjectType_ABC& ), CanPerceive );
+    MOCK_METHOD( CanPerceive, 1 );
     MOCK_METHOD( GetPerception, 2 );
 
     MOCK_METHOD( SendDebugState, 0 );

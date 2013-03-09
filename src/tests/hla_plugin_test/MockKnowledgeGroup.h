@@ -26,10 +26,10 @@ MOCK_BASE_CLASS( MockKnowledgeGroup, KnowledgeGroup_ABC )
         : KnowledgeGroup_ABC( id )
     {}
     MOCK_METHOD( GetTeam, 0 );
-    MOCK_METHOD_EXT( Register, 1, void( dispatcher::KnowledgeGroup_ABC& ), RegisterKnowledgeGroup );
-    MOCK_METHOD_EXT( Remove  , 1, void( dispatcher::KnowledgeGroup_ABC& ), RemoveKnowledgeGroup );
-    MOCK_METHOD_EXT( Register, 1, void( dispatcher::Automat_ABC& ), RegisterAutomat );
-    MOCK_METHOD_EXT( Remove  , 1, void( dispatcher::Automat_ABC& ), RemoveAutomat );
+    MOCK_METHOD( Register, 1, void( dispatcher::KnowledgeGroup_ABC& ), RegisterKnowledgeGroup );
+    MOCK_METHOD( Remove  , 1, void( dispatcher::KnowledgeGroup_ABC& ), RemoveKnowledgeGroup );
+    MOCK_METHOD( Register, 1, void( dispatcher::Automat_ABC& ), RegisterAutomat );
+    MOCK_METHOD( Remove  , 1, void( dispatcher::Automat_ABC& ), RemoveAutomat );
     MOCK_METHOD( ChangeSuperior, 1 );
     MOCK_METHOD( SendCreation, 1 );
     MOCK_METHOD( SendFullUpdate, 1 );
