@@ -1,5 +1,6 @@
 ^(bin|dist|include|out|run|lib|pkg|data)/
 ^src/sword/
+^tags$
 
 syntax: glob
 *.pb.go
