@@ -4,6 +4,7 @@ import (
 	"swapi"
 	"swapi/simu"
 	"testing"
+	"time"
 )
 
 func startSimOnExercise(t *testing.T, exercise string, endTick int,
@@ -73,6 +74,16 @@ func TestLogin(t *testing.T) {
 	if err != nil {
 		t.Fatalf("login failed: %v", err)
 	}
+	// Test model readyness
+	if !client.Model.WaitReady(10 * time.Second) {
+		t.Fatal("model initialization timed out")
+	}
+	if !client.Model.WaitReady(10 * time.Second) {
+		t.Fatal("waiting a second time for model initialization timed out")
+	}
+	if !client.Model.IsReady() {
+		t.Fatal("model is initialized but not marked ready")
+	}
 	client.Close()
 }
 
@@ -113,7 +124,7 @@ func TestNoDataSentUntilSuccessfulLogin(t *testing.T) {
 	client := ConnectClient(t, sim)
 	seen := waitForMessages(client, 5*time.Second)
 	if seen {
-        /* SWBUG-10026
+		/* SWBUG-10026
 
 		   t.Fatal("messages seen before any client action")
 		*/
@@ -124,7 +135,7 @@ func TestNoDataSentUntilSuccessfulLogin(t *testing.T) {
 	}
 	seen = waitForMessages(client, 5*time.Second)
 	if seen {
-        /* SWBUG-10026
+		/* SWBUG-10026
 
 		   t.Fatal("message seen after invalid login")
 		*/

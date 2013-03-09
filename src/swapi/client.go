@@ -52,7 +52,9 @@ type HandlerError struct {
 }
 
 type Client struct {
-	Address     string
+	Address string
+	Model   *Model
+
 	context     int32
 	link        net.Conn
 	handlers    map[int32]MessageHandler
@@ -72,8 +74,9 @@ func NewClient(address string) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Client{
+	client := &Client{
 		Address:     address,
+		Model:       NewModel(),
 		link:        link,
 		handlers:    make(map[int32]MessageHandler),
 		timeouts:    make(map[int32]time.Time),
@@ -84,7 +87,8 @@ func NewClient(address string) (*Client, error) {
 		events:      make(chan SwordMessage, MaxPostMessages),
 		errors:      make(chan HandlerError, MaxPostMessages),
 		quit:        make(chan bool),
-	}, nil
+	}
+	return client, nil
 }
 
 func (c *Client) Run() error {
@@ -92,6 +96,7 @@ func (c *Client) Run() error {
 	go c.serve()
 	go c.write()
 	go c.listen(errors)
+	c.Model.Listen(c)
 	return <-errors
 }
 
