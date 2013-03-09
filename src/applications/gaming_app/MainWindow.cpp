@@ -105,7 +105,6 @@
 #include "clients_gui/MiniViews.h"
 #include "clients_gui/TerrainProfiler.h"
 #include "geodata/ProjectionException.h"
-#include "geodata/ExtentException.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
@@ -607,10 +606,6 @@ void MainWindow::OnAddRaster()
     {
         QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing spatial reference information.\nThis data can't be projected.") ) ;
         // Created: AME 2010-09-16 : TODO->allow user to set the projection in UI
-    }
-    catch( const geodata::ExtentException& )
-    {
-        QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing extent information.") ) ;
     }
     catch( ... )
     {

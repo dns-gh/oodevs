@@ -92,7 +92,6 @@
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
 #include "geodata/ProjectionException.h"
-#include "geodata/ExtentException.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/FormationModel.h"
 #include "preparation/GhostModel.h"
@@ -841,10 +840,6 @@ void MainWindow::OnAddRaster()
     {
         QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing spatial reference information.\nThis data can't be projected.") ) ;
         // Created: AME 2010-09-16 : TODO->allow user to set the projection in UI
-    }
-    catch( const geodata::ExtentException& )
-    {
-        QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing extent information.") ) ;
     }
     catch( ... )
     {
