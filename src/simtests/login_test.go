@@ -75,3 +75,58 @@ func TestLogin(t *testing.T) {
 	}
 	client.Close()
 }
+
+func waitForMessages(client *swapi.Client, timeout time.Duration) bool {
+	waitch := make(chan int)
+	msgch := make(chan int, 32)
+
+	handler := func(msg *swapi.SwordMessage, ctx int32, err error) bool {
+		if msg != nil && msg.AuthenticationToClient != nil {
+			auth := msg.AuthenticationToClient
+			resp := auth.GetMessage().GetAuthenticationResponse()
+			if resp != nil {
+				return false
+			}
+		}
+		msgch <- 1
+		return false
+	}
+	client.Register(handler)
+	go func() {
+		time.Sleep(timeout)
+		waitch <- 1
+	}()
+	select {
+	case <-waitch:
+		return false
+	case <-msgch:
+		break
+	}
+	return true
+}
+
+func TestNoDataSentUntilSuccessfulLogin(t *testing.T) {
+	sim := startSimOnExercise(t, "tests/crossroad-small-empty", 1000, false)
+	defer sim.Kill()
+
+	// Connect and watch incoming messages
+	client := ConnectClient(t, sim)
+	seen := waitForMessages(client, 5*time.Second)
+	if seen {
+        /* SWBUG-10026
+
+		   t.Fatal("messages seen before any client action")
+		*/
+	}
+	err := client.Login("foo", "bar")
+	if err == nil {
+		t.Fatal("login should have failed")
+	}
+	seen = waitForMessages(client, 5*time.Second)
+	if seen {
+        /* SWBUG-10026
+
+		   t.Fatal("message seen after invalid login")
+		*/
+	}
+}
