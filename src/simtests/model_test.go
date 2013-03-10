@@ -7,7 +7,7 @@ import (
 )
 
 func (s *TestSuite) TestModelInitialization(c *C) {
-	sim := startSimOnExercise(c, "tests/crossroad-small-empty", 1000, false)
+	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
 	defer sim.Kill()
 	client := ConnectClient(c, sim)
 	err := client.Login("admin", "")

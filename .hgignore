@@ -1,6 +1,8 @@
-^(bin|dist|include|out|run|lib|pkg|data)/
+^(bin|dist|include|out|run|lib|pkg)/
+^data/data/
 ^src/sword/
 ^tags$
+/sessions/
 
 syntax: glob
 *.pb.go
