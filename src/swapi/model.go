@@ -20,11 +20,16 @@ type modelCond struct {
 // actions: commands which are just functions applied once on the Model,
 // mostly used to implement queries, and conditions which are fired each
 // time a message is processed until they return true.
+//
+// Note that accessor will return either immutable entities or copies of
+// such entities (mostly collections) so clients can manipulate the
+// result freely.
 type Model struct {
 	// State only touched by the run() goroutine
 	// True once the initial state has been received
-	ready bool
-	conds []*modelCond
+	ready   bool
+	conds   []*modelCond
+	parties map[uint32]*Party
 
 	// State only touched by caller routines
 	condId int
@@ -37,12 +42,13 @@ type Model struct {
 
 func NewModel() *Model {
 	model := Model{
-		ready:  false,
-		condId: 0,
-		msgch:  make(chan *SwordMessage, 128),
-		cmdch:  make(chan *modelCmd, 4),
-		condch: make(chan *modelCond, 4),
-		conds:  []*modelCond{},
+		ready:   false,
+		condId:  0,
+		msgch:   make(chan *SwordMessage, 128),
+		cmdch:   make(chan *modelCmd, 4),
+		condch:  make(chan *modelCond, 4),
+		conds:   []*modelCond{},
+		parties: map[uint32]*Party{},
 	}
 	go model.run()
 	return &model
@@ -79,6 +85,12 @@ func (model *Model) update(msg *SwordMessage) {
 		m := msg.SimulationToClient.GetMessage()
 		if m.GetControlSendCurrentStateEnd() != nil {
 			model.ready = true
+		} else if mm := m.GetPartyCreation(); mm != nil {
+			party := &Party{
+				id:   mm.GetParty().GetId(),
+				name: mm.GetName(),
+			}
+			model.parties[party.GetId()] = party
 		}
 	}
 }
@@ -156,4 +168,14 @@ func (model *Model) WaitReady(timeout time.Duration) bool {
 	return model.waitCond(timeout, func(model *Model) bool {
 		return model.ready
 	})
+}
+
+func (model *Model) GetParties() map[uint32]*Party {
+	parties := map[uint32]*Party{}
+	model.waitCommand(func(model *Model) {
+		for k, v := range model.parties {
+			parties[k] = v
+		}
+	})
+	return parties
 }
