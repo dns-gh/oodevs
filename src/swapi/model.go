@@ -1,6 +1,7 @@
 package swapi
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -86,13 +87,56 @@ func (model *Model) update(msg *SwordMessage) {
 		if m.GetControlSendCurrentStateEnd() != nil {
 			model.ready = true
 		} else if mm := m.GetPartyCreation(); mm != nil {
-			party := &Party{
-				id:   mm.GetParty().GetId(),
-				name: mm.GetName(),
+			party := NewParty(
+				mm.GetParty().GetId(),
+				mm.GetName())
+			model.parties[party.Id] = party
+		} else if mm := m.GetFormationCreation(); mm != nil {
+			formation := NewFormation(
+				mm.GetFormation().GetId(),
+				mm.GetName(),
+				mm.GetParent().GetId(),
+				mm.GetParty().GetId())
+			party, parent := model.findFormation(formation.PartyId,
+				formation.ParentId)
+			if party == nil {
+				panic(fmt.Sprintf("cannot create formation %v with unknown"+
+					"parent party=%v/parent=%v", formation.Id, formation.PartyId,
+					formation.ParentId))
 			}
-			model.parties[party.GetId()] = party
+			if parent == nil {
+				party.Formations[formation.Id] = formation
+				return
+			}
+			parent.Formations[formation.Id] = formation
 		}
 	}
+}
+
+func (model *Model) findFormation(partyId uint32,
+	parentId uint32) (*Party, *Formation) {
+	party, ok := model.parties[partyId]
+	if !ok {
+		return nil, nil
+	}
+	if parentId == 0 {
+		return party, nil
+	}
+	pendings := []*Formation{}
+	for _, v := range party.Formations {
+		pendings = append(pendings, v)
+	}
+	for len(pendings) > 0 {
+		f := pendings[len(pendings)-1]
+		pendings = pendings[:len(pendings)-1]
+		if f.Id == parentId {
+			return party, f
+		}
+		for _, v := range f.Formations {
+			pendings = append(pendings, v)
+		}
+	}
+	return nil, nil
 }
 
 // Register a handler on supplied client and start processing messages
@@ -174,7 +218,7 @@ func (model *Model) GetParties() map[uint32]*Party {
 	parties := map[uint32]*Party{}
 	model.waitCommand(func(model *Model) {
 		for k, v := range model.parties {
-			parties[k] = v
+			parties[k] = v.Copy()
 		}
 	})
 	return parties
