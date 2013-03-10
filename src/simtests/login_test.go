@@ -1,13 +1,13 @@
 package simtests
 
 import (
+	. "launchpad.net/gocheck"
 	"swapi"
 	"swapi/simu"
-	"testing"
 	"time"
 )
 
-func startSimOnExercise(t *testing.T, exercise string, endTick int,
+func startSimOnExercise(c *C, exercise string, endTick int,
 	paused bool) *simu.SimProcess {
 
 	opts := MakeOpts()
@@ -16,23 +16,19 @@ func startSimOnExercise(t *testing.T, exercise string, endTick int,
 
 	session := simu.CreateDefaultSession()
 	session.Paused = paused
-	WriteSession(t, opts, session)
+	WriteSession(c, opts, session)
 	sim, err := simu.StartSim(opts)
-	if err != nil {
-		t.Fatalf("failed to start the simulation: %v", err)
-	}
+	c.Assert(err, IsNil) // failed to start the simulation
 	return sim
 }
 
-func ConnectClient(t *testing.T, sim *simu.SimProcess) *swapi.Client {
-	c, err := swapi.Connect(sim.DispatcherAddr)
-	if err != nil {
-		t.Fatalf("failed connect to simulation: %v", err)
-	}
-	return c
+func ConnectClient(c *C, sim *simu.SimProcess) *swapi.Client {
+	client, err := swapi.Connect(sim.DispatcherAddr)
+	c.Assert(err, IsNil) // failed to connect to simulation
+	return client
 }
 
-func TestLogin(t *testing.T) {
+func (s *TestSuite) TestLogin(c *C) {
 	addContextChecker := func(client *swapi.Client) {
 		// Capture response contexts and double check them
 		client.Register(func(msg *swapi.SwordMessage, ctx int32,
@@ -55,36 +51,30 @@ func TestLogin(t *testing.T) {
 		})
 	}
 
-	sim := startSimOnExercise(t, "tests/crossroad-small-empty", 1000, false)
+	sim := startSimOnExercise(c, "tests/crossroad-small-empty", 1000, false)
 	defer sim.Kill()
 
 	// Test invalid login
-	client := ConnectClient(t, sim)
+	client := ConnectClient(c, sim)
 	// Also check returned context is valid
 	addContextChecker(client)
 	err := client.Login("foo", "bar")
-	if err == nil {
-		t.Fatal("login with invalid credentials should have failed")
-	}
+	c.Assert(err, NotNil) // login with invalid credentials should have failed
 	client.Close()
 
 	// Test valid login
-	client = ConnectClient(t, sim)
+	client = ConnectClient(c, sim)
 	addContextChecker(client)
 	err = client.Login("admin", "")
-	if err != nil {
-		t.Fatalf("login failed: %v", err)
-	}
+	c.Assert(err, IsNil) // login failed
+
 	// Test model readyness
-	if !client.Model.WaitReady(10 * time.Second) {
-		t.Fatal("model initialization timed out")
-	}
-	if !client.Model.WaitReady(10 * time.Second) {
-		t.Fatal("waiting a second time for model initialization timed out")
-	}
-	if !client.Model.IsReady() {
-		t.Fatal("model is initialized but not marked ready")
-	}
+	ok := client.Model.WaitReady(10 * time.Second)
+	c.Assert(ok, Equals, true) // model initialization timed out
+
+	ok = client.Model.WaitReady(10 * time.Second)
+	c.Assert(ok, Equals, true) // second wait for model initialization timed out
+	c.Assert(client.Model.IsReady(), Equals, true)
 	client.Close()
 }
 
@@ -117,12 +107,12 @@ func waitForMessages(client *swapi.Client, timeout time.Duration) bool {
 	return true
 }
 
-func TestNoDataSentUntilSuccessfulLogin(t *testing.T) {
-	sim := startSimOnExercise(t, "tests/crossroad-small-empty", 1000, false)
+func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
+	sim := startSimOnExercise(c, "tests/crossroad-small-empty", 1000, false)
 	defer sim.Kill()
 
 	// Connect and watch incoming messages
-	client := ConnectClient(t, sim)
+	client := ConnectClient(c, sim)
 	seen := waitForMessages(client, 5*time.Second)
 	if seen {
 		/* SWBUG-10026
@@ -131,9 +121,7 @@ func TestNoDataSentUntilSuccessfulLogin(t *testing.T) {
 		*/
 	}
 	err := client.Login("foo", "bar")
-	if err == nil {
-		t.Fatal("login should have failed")
-	}
+	c.Assert(err, NotNil) // login with invalid credentials should have failed
 	seen = waitForMessages(client, 5*time.Second)
 	if seen {
 		/* SWBUG-10026

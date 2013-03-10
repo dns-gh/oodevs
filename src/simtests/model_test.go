@@ -1,22 +1,19 @@
 package simtests
 
 import (
+	. "launchpad.net/gocheck"
 	"swapi"
-	"testing"
 	"time"
 )
 
-func TestModelInitialization(t *testing.T) {
-	sim := startSimOnExercise(t, "tests/crossroad-small-empty", 1000, false)
+func (s *TestSuite) TestModelInitialization(c *C) {
+	sim := startSimOnExercise(c, "tests/crossroad-small-empty", 1000, false)
 	defer sim.Kill()
-	client := ConnectClient(t, sim)
+	client := ConnectClient(c, sim)
 	err := client.Login("admin", "")
-	if err != nil {
-		t.Fatalf("login failed: %v", err)
-	}
-	if !client.Model.WaitReady(10 * time.Second) {
-		t.Fatalf("model initialization timed out")
-	}
+	c.Assert(err, IsNil) // login failed
+	ok := client.Model.WaitReady(10 * time.Second)
+	c.Assert(ok, Equals, true) // model initialization timed out
 	model := client.Model
 
 	expectedParties := map[uint32]*swapi.Party{
@@ -24,17 +21,11 @@ func TestModelInitialization(t *testing.T) {
 		2: swapi.NewParty(2, "party2"),
 	}
 	parties := model.GetParties()
-	if len(parties) != len(expectedParties) {
-		t.Fatalf("got %v parties, %v expected", len(parties), len(expectedParties))
-	}
+	c.Assert(len(parties), Equals, len(expectedParties)) // parties count mismatch
 	for k, v := range parties {
 		other, ok := expectedParties[k]
-		if !ok {
-			t.Fatalf("unexpected party %v:%v", v.GetId(), v.GetName())
-		}
-		if other.GetName() != v.GetName() {
-			t.Fatalf("got a party named %v, %v expected", v.GetName(),
-				other.GetName())
-		}
+		c.Assert(ok, Equals, true, Commentf("unexpected party %v:%v",
+			v.GetId(), v.GetName()))
+		c.Assert(v.GetName(), Equals, other.GetName()) // party names mismatch
 	}
 }

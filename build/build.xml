@@ -9,6 +9,7 @@
     <property name="test.port" value="35000"/>
 
     <target name="update">
+        <update name="gocheck"/>
         <update name="golang"/>
         <update name="goprotobuf"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>

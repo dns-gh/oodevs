@@ -1,41 +1,18 @@
 package simtests
 
 import (
-	"flag"
 	"fmt"
 	"io/ioutil"
+	. "launchpad.net/gocheck"
 	"regexp"
 	"strings"
 	"swapi/simu"
-	"testing"
 	"time"
 )
 
-var (
-	application string
-	rootdir     string
-	rundir      string
-	testPort    int
-)
-
-func init() {
-	flag.StringVar(&application, "application", "",
-		"path to simulation_app executable")
-	flag.StringVar(&rootdir, "root-dir", "",
-		"path to simulation root directory")
-	flag.StringVar(&rundir, "run-dir", "",
-		"path application run directory, default to application directory")
-	flag.IntVar(&testPort, "test-port", 35000,
-		"base port for spawned simulations")
-}
-
-func CheckSimFailed(t *testing.T, err error, sim *simu.SimProcess) {
-	if err == nil {
-		t.Fatalf("simulation should not have started")
-	}
-	if !strings.Contains(err.Error(), "failed to start simulation") {
-		t.Fatalf("unexpected failure: %v", err)
-	}
+func CheckSimFailed(c *C, err error, sim *simu.SimProcess) {
+	c.Assert(err, NotNil) // simulation should not have started
+	c.Assert(err, ErrorMatches, "(?s).*failed to start simulation.*")
 
 	/* Probably SWORD-1549
 
@@ -45,80 +22,57 @@ func CheckSimFailed(t *testing.T, err error, sim *simu.SimProcess) {
 	*/
 }
 
-func ReadTextFile(t *testing.T, path string) string {
+func ReadTextFile(c *C, path string) string {
 	data, err := ioutil.ReadFile(path)
-	if err != nil {
-		t.Fatalf("failed to read %v: %v", path, err)
-	}
+	c.Assert(err, IsNil, Commentf("failed to read: %v", path))
 	return string(data)
 }
 
-func MakeOpts() *simu.SimOpts {
-	opts := simu.SimOpts{}
-	opts.Executable = application
-	opts.RootDir = rootdir
-	opts.DataDir = rootdir
-	if len(rundir) > 0 {
-		opts.RunDir = &rundir
-	}
-	opts.ExerciseName = "tests/crossroad-small-empty"
-	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort+5)
-	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+6)
-	return &opts
+func WriteSession(c *C, opts *simu.SimOpts, session *simu.Session) {
+	err := opts.WriteSession(session)
+	c.Assert(err, IsNil) // failed to write session
 }
 
-func WriteSession(t *testing.T, opts *simu.SimOpts, session *simu.Session) {
-	if err := opts.WriteSession(session); err != nil {
-		t.Fatal("failed to write the session")
-	}
-}
-
-func TestDispatcherMisconfiguration(t *testing.T) {
+func (s *TestSuite) TestDispatcherMisconfiguration(c *C) {
 	session := simu.CreateDefaultSession()
 	session.EndTick = 3
 
 	opts := MakeOpts()
 	opts.ConnectTimeout = 600 * time.Second
-	WriteSession(t, opts, session)
+	WriteSession(c, opts, session)
 
 	// Remove dispatcher/network element
 	re, err := regexp.Compile(`<network client.*?</network>`)
-	if err != nil {
-		t.Fatalf("failed to compile regular expression: %v", err)
-	}
+	c.Assert(err, IsNil) // failed to compile regular expression
+
 	sessionPath := opts.GetSessionFile()
-	content := re.ReplaceAllString(ReadTextFile(t, sessionPath), "")
-	if err = ioutil.WriteFile(sessionPath, []byte(content), 0644); err != nil {
-		t.Fatalf("failed to rewrite session file: %v", err)
-	}
+	content := re.ReplaceAllString(ReadTextFile(c, sessionPath), "")
+	err = ioutil.WriteFile(sessionPath, []byte(content), 0644)
+	c.Assert(err, IsNil) // failed to rewrite session file
 
 	sim, err := simu.StartSim(opts)
 	defer sim.Kill()
-	CheckSimFailed(t, err, sim)
+	CheckSimFailed(c, err, sim)
 
 	// Sim.log should say something about the dispatcher and dispatcher.log
-	simLog := ReadTextFile(t, opts.GetSimLogPath())
-	expected := "<functERR> dispatcher: failed to create dispatcher"
-	if !strings.Contains(simLog, expected) {
-		t.Fatal("cannot find dispatcher error in sim.log")
-	}
+	simLog := ReadTextFile(c, opts.GetSimLogPath())
+	expected := "(?s).*<functERR> dispatcher: failed to create dispatcher.*"
+	c.Assert(simLog, Matches, expected)
 
 	// Dispatcher.log should mention the missing XML element
 	// [2013-03-04 10:46:24] <Dispatcher> <functERR> session.xml (line 4, column 17)
 	//   : Node 'dispatcher' does not have a child named 'network'
-	expected = "Node 'dispatcher' does not have a child named 'network'"
-	dispatcherLog := ReadTextFile(t, opts.GetDispatcherLogPath())
-	if !strings.Contains(dispatcherLog, expected) {
-		t.Fatal("cannot find session.xml error in dispatcher.log")
-	}
+	expected = "(?s).*Node 'dispatcher' does not have a child named 'network'.*"
+	dispatcherLog := ReadTextFile(c, opts.GetDispatcherLogPath())
+	c.Assert(dispatcherLog, Matches, expected)
 }
 
-func TestDispatcherAddressCollision(t *testing.T) {
+func (s *TestSuite) TestDispatcherAddressCollision(c *C) {
 	startSim := func(simOffset int) (*simu.SimProcess, error) {
 		session := simu.CreateDefaultSession()
 
 		opts := MakeOpts()
-		WriteSession(t, opts, session)
+		WriteSession(c, opts, session)
 		opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+simOffset+6)
 		opts.TailPrefix = fmt.Sprintf("sim+%v", simOffset)
 		return simu.StartSim(opts)
@@ -126,9 +80,7 @@ func TestDispatcherAddressCollision(t *testing.T) {
 
 	sim1, err := startSim(0)
 	defer sim1.Kill()
-	if err != nil {
-		t.Fatalf("simulation failed to start: %v", err)
-	}
+	c.Assert(err, IsNil) // simulation failed to start
 
 	sim2, err := startSim(1)
 	defer sim2.Kill()
@@ -138,16 +90,14 @@ func TestDispatcherAddressCollision(t *testing.T) {
 	//if sim2.Success() {
 	//	    t.Fatal("simulation with colliding dispatcher should have failed")
 	//    }
-	logData := ReadTextFile(t, sim2.Opts.GetDispatcherLogPath())
-	if !strings.Contains(logData, "Une seule utilisation de chaque") {
-		t.Fatal("dispatcher.log says nothing about address collision")
-	}
+	logData := ReadTextFile(c, sim2.Opts.GetDispatcherLogPath())
+	c.Assert(logData, Matches, "(?s).*Une seule utilisation de chaque.*")
 }
 
 // Return true if any line of sim.log or dispatcher.log is eventually matched
 // by "matcher". False if the simulation ends or times out before it happens.
 // "matcher" must return true on successful matches.
-func waitForMatchingLog(t *testing.T, sim *simu.SimProcess,
+func waitForMatchingLog(c *C, sim *simu.SimProcess,
 	timeout time.Duration, matcher simu.TailHandler) bool {
 
 	quitch := make(chan int)
@@ -178,7 +128,7 @@ func waitForMatchingLog(t *testing.T, sim *simu.SimProcess,
 		return true
 	case ok := <-timeoutch:
 		if ok != 0 {
-			t.Fatal("waitForMatchingLog timed out")
+			c.Fatal("waitForMatchingLo timed out")
 		}
 		break
 	}
@@ -186,29 +136,27 @@ func waitForMatchingLog(t *testing.T, sim *simu.SimProcess,
 }
 
 // Test corner cases of session end-tick parameter
-func TestLowEndTickValues(t *testing.T) {
+func (s *TestSuite) TestLowEndTickValues(c *C) {
 
 	// Start a simulation and fail if the simulation failed to start or if
 	// it reaches endTick + 1.
-	runSim := func(t *testing.T, endTick int) bool {
+	runSim := func(c *C, endTick int) bool {
 		session := simu.CreateDefaultSession()
 		session.EndTick = endTick
 		opts := MakeOpts()
-		WriteSession(t, opts, session)
-		sim, err := simu.StartSim(opts)
-		if sim == nil {
-			t.Fatalf("simulation failed to start %v", err)
-		}
+		WriteSession(c, opts, session)
+		sim, _ := simu.StartSim(opts)
+		c.Assert(sim, NotNil) // simulation failed to start"
 		defer sim.Kill()
 
 		pattern := fmt.Sprintf(
 			"<Simulation> <info> **** Time tick %d", endTick+1)
-		return waitForMatchingLog(t, sim, 180*time.Second, func(line string) bool {
+		return waitForMatchingLog(c, sim, 180*time.Second, func(line string) bool {
 			return strings.Contains(line, pattern)
 		})
 	}
-	testLowTick := func(t *testing.T, endTick int) {
-		ok := runSim(t, endTick)
+	testLowTick := func(c *C, endTick int) {
+		ok := runSim(c, endTick)
 		if ok {
 			// SWBUG-10020:
 			//
@@ -217,12 +165,12 @@ func TestLowEndTickValues(t *testing.T) {
 		}
 	}
 	// Simulation should tick only once
-	testLowTick(t, 1)
+	testLowTick(c, 1)
 	// Simulation should tick only twice
-	testLowTick(t, 2)
+	testLowTick(c, 2)
 
 	// end-tick=0 means infinity, check it ticks once
-	if !runSim(t, 0) {
-		t.Fatal("simulation did not tick with end-tick=0")
+	if !runSim(c, 0) {
+		c.Fatal("simulation did not tick with end-tick=0")
 	}
 }
