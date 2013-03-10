@@ -12,6 +12,7 @@ func startSimOnExercise(t *testing.T, exercise string, endTick int,
 
 	opts := MakeOpts()
 	opts.ExerciseName = exercise
+	opts.ConnectTimeout = 20 * time.Second
 
 	session := simu.CreateDefaultSession()
 	session.Paused = paused
