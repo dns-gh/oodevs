@@ -6,6 +6,7 @@ import (
 	"sort"
 	"strings"
 	"swapi"
+	"swapi/simu"
 	"time"
 )
 
@@ -88,19 +89,24 @@ func printParties(p *prettyPrinter, parties map[uint32]*swapi.Party) *prettyPrin
 	return p
 }
 
-func (s *TestSuite) TestModelInitialization(c *C) {
+func connectAndWaitModel(c *C) (*simu.SimProcess, *swapi.Client) {
 	sim := startSimOnExercise(c, "crossroad-small-orbat", 1000, false)
-	defer sim.Kill()
 	client := ConnectClient(c, sim)
 	err := client.Login("admin", "")
 	c.Assert(err, IsNil) // login failed
 	ok := client.Model.WaitReady(10 * time.Second)
 	c.Assert(ok, Equals, true) // model initialization timed out
+	return sim, client
+}
+
+func (s *TestSuite) TestModelInitialization(c *C) {
+	sim, client := connectAndWaitModel(c)
+	defer sim.Kill()
 	model := client.Model
 
 	dump := printParties(&prettyPrinter{}, model.GetParties()).GetOutput()
 	expected := "" +
-`Party[1]
+		`Party[1]
   Name: party
     Formation[5]
       Id: 5
@@ -127,4 +133,24 @@ Party[2]
 `
 
 	c.Assert(dump, Equals, expected)
+}
+
+func (s *TestSuite) TestModelIsolation(c *C) {
+	sim, client := connectAndWaitModel(c)
+	defer sim.Kill()
+	model := client.Model
+	parties := model.GetParties()
+	expected := printParties(&prettyPrinter{}, parties).GetOutput()
+
+	// Modify some properties, query the model again and check it did
+	// not change.
+	delete(parties, 2)
+	parties[1].Name = "foobar"
+	parties[1].Formations[5].Name = "blaz"
+	delete(parties[1].Formations, 6)
+	modified := printParties(&prettyPrinter{}, parties).GetOutput()
+	c.Assert(modified, Not(Equals), expected)
+
+	updated := printParties(&prettyPrinter{}, model.GetParties()).GetOutput()
+	c.Assert(updated, Equals, expected)
 }
