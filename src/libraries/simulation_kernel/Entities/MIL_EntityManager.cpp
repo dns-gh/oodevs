@@ -1060,6 +1060,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
     {
         ack().mutable_unit()->set_id( 0 );
         ack().set_error_code( UnitActionAck::error_invalid_unit );
+        ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
         return;
     }
 
