@@ -105,6 +105,8 @@ private:
 
     void UpdateDataWhenHumanRemoved( const Human_ABC& human );
     void UpdateDataWhenHumanAdded( const Human_ABC& human );
+
+    void RemoveUselessStates();
     //@}
 
     //! @name Types
