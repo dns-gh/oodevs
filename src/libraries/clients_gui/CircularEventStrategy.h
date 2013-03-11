@@ -27,8 +27,10 @@ namespace gui
 */
 // Created: AGE 2006-08-21
 // =============================================================================
-class CircularEventStrategy : public EventStrategy_ABC
+class CircularEventStrategy : public QObject
+                            , public EventStrategy_ABC
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -71,6 +73,14 @@ private:
 
     template< typename Functor >
     bool Apply( Functor functor );
+
+    void HideTooltip();
+    //@}
+
+private slots:
+    //! @name slots
+    //@{
+    void OnDisplayToolTip();
     //@}
 
 private:
@@ -82,6 +92,9 @@ private:
     Layer_ABC::T_Layers::const_reverse_iterator rlast_;
     std::auto_ptr< SelectionMenu > menu_;
     GlTools_ABC& tools_;
+    QTimer* timer_;
+    geometry::Point2f point_;
+    bool tooltiped_;
     //@}
 };
 

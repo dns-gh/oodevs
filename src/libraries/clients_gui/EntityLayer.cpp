@@ -41,8 +41,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, GlTools_ABC& tools, 
     , tools_      ( tools )
     , strategy_   ( strategy )
     , view_       ( view )
-    , infoTooltip_( 0 )
-    , tooltiped_  ( controllers )
+    , infoTooltip_( new InformationToolTip() )
     , selected_   ( controllers )
     , name_       ( ENT_Tr::ConvertFromLayerType( type ).c_str() )
     , type_       ( type )
@@ -82,12 +81,8 @@ void EntityLayerBase::Paint( Viewport_ABC& viewport )
     if( selected_ )
         Draw( *selected_, viewport, pickingMode );
 
-    if( tooltiped_ && !pickingMode )
-    {
-        if( !infoTooltip_.get() )
-            infoTooltip_ = std::auto_ptr< InformationToolTip >( new InformationToolTip() );
+    if( !pickingMode )
         infoTooltip_->Draw();
-    }
 }
 
 namespace
@@ -173,61 +168,6 @@ void EntityLayerBase::ContextMenu( const kernel::GraphicalEntity_ABC& selectable
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityLayerBase::HandleMouseMove
-// Created: AGE 2006-06-29
-// -----------------------------------------------------------------------------
-bool EntityLayerBase::HandleMouseMove( QMouseEvent* /*mouseEvent*/, const geometry::Point2f& point )
-{
-    if( !tooltiped_ || !ShouldDisplayTooltip( *tooltiped_, point ) )
-    {
-        tooltiped_ = 0;
-        if( infoTooltip_.get() )
-            infoTooltip_->Hide();
-        bool found = false;
-        for( auto it = entities_.begin(); it != entities_.end() && !found; ++it )
-            found = DisplayTooltip( **it, point );
-        return found;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityLayerBase::ShouldDisplayTooltip
-// Created: AGE 2006-06-29
-// -----------------------------------------------------------------------------
-bool EntityLayerBase::ShouldDisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point )
-{
-    return ShouldDisplay( entity ) && IsInSelection( entity, point );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityLayerBase::DisplayTooltip
-// Created: AGE 2006-06-29
-// -----------------------------------------------------------------------------
-bool EntityLayerBase::DisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& onTerrainPoint )
-{
-    if( !infoTooltip_.get() )
-        infoTooltip_ = std::auto_ptr< InformationToolTip >( new InformationToolTip() );
-
-    if( ShouldDisplayTooltip( entity, onTerrainPoint ) && DisplayTooltip( entity, *infoTooltip_ ) )
-    {
-        tooltiped_ = &entity;
-        return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityLayerBase::DisplayTooltip
-// Created: AGE 2006-06-29
-// -----------------------------------------------------------------------------
-bool EntityLayerBase::DisplayTooltip( const Entity_ABC& entity, Displayer_ABC& displayer )
-{
-    entity.GetInterfaces().Apply( &Displayable_ABC::DisplayInTooltip, displayer );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityLayerBase::IsInSelection
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
@@ -276,8 +216,6 @@ bool EntityLayerBase::RemoveEntity( const Entity_ABC& entity )
         entities_.erase( it );
         if( &entity == selected_ )
             selected_ = 0;
-        if( &entity == tooltiped_ )
-            tooltiped_ = 0;
         return true;
     }
     return false;
@@ -323,14 +261,12 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
         return;
     geometry::Rectangle2f rectangle( topLeft, bottomRight );
     selected_ = 0;
-    tooltiped_ = 0;
     kernel::GraphicalEntity_ABC::T_GraphicalEntities selectables;
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
     {
         if( ShouldDisplay( **it ) && IsInside( **it, rectangle ) )
         {
             selected_ = *it;
-            tooltiped_ = *it;
             selectables.push_back( *it );
         }
     }
@@ -340,10 +276,15 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
 
 namespace
 {
+    bool IsValid( const kernel::Entity_ABC& entity, const GlTools_ABC::T_ObjectPicking& selection, E_LayerTypes type )
+    {
+        return entity.GetId() == selection.first && type == selection.second;
+    }
+
     bool IsInLayerSelection(  const kernel::Entity_ABC& entity, const GlTools_ABC::T_ObjectsPicking& selection, E_LayerTypes type )
     {
         for( auto it = selection.begin(); it != selection.end(); ++it )
-            if( entity.GetId() == it->first && type == it->second )
+            if( IsValid( entity, *it, type ) )
                 return true;
         return false;
     }
@@ -374,4 +315,31 @@ void EntityLayerBase::ExtractElements( T_LayerElements& extractedElement, const 
 QString EntityLayerBase::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::ShowTooltip
+// Created: LGY 2013-03-08
+// -----------------------------------------------------------------------------
+bool EntityLayerBase::ShowTooltip( const T_ObjectPicking& selection )
+{
+    for( auto it = entities_.begin(); it != entities_.end(); ++it )
+    {
+        const kernel::Entity_ABC& entity = **it;
+        if( ShouldDisplay( entity ) && IsValid( entity, selection, type_ ) )
+        {
+            entity.GetInterfaces().Apply( &Displayable_ABC::DisplayInTooltip, *infoTooltip_ );
+            return true;
+        }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::HideTooltip
+// Created: LGY 2013-03-08
+// -----------------------------------------------------------------------------
+void EntityLayerBase::HideTooltip()
+{
+    infoTooltip_->Hide();
 }

@@ -64,7 +64,6 @@ protected:
     //! @name Events
     //@{
     virtual bool HandleMouseDoubleClick( QMouseEvent* event, const geometry::Point2f& point );
-    virtual bool HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point );
     //@}
 
     //! @name Helpers
@@ -92,9 +91,8 @@ protected:
     virtual void SelectColor( const kernel::Entity_ABC& );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
 
-    virtual bool ShouldDisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point );
-    virtual bool DisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& terrainPoint );
-    virtual bool DisplayTooltip( const kernel::Entity_ABC&, kernel::Displayer_ABC& displayer );
+    virtual bool ShowTooltip( const T_ObjectPicking& selection );
+    virtual void HideTooltip();
 
     virtual void SelectInRectangle( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
     //@}
@@ -131,7 +129,6 @@ private:
     ColorStrategy_ABC&                        strategy_;
     View_ABC&                                 view_;
     std::auto_ptr< InformationToolTip >       infoTooltip_;
-    kernel::SafePointer< kernel::Entity_ABC > tooltiped_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     std::set< unsigned int >                  selection_;
     //@}

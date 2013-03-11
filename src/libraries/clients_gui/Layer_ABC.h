@@ -51,6 +51,8 @@ public:
     virtual QString GetName() const = 0;
     virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift ) = 0;
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& ) = 0;
+    virtual bool ShowTooltip( const T_ObjectPicking& selection ) = 0;
+    virtual void HideTooltip() = 0;
     virtual void ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection ) = 0;
     //@}
 };

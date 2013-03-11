@@ -345,3 +345,21 @@ void Layer::ExtractElements( T_LayerElements&, const GlTools_ABC::T_ObjectsPicki
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: Layer::ShowTooltip
+// Created: LGY 2013-03-08
+// -----------------------------------------------------------------------------
+bool Layer::ShowTooltip( const T_ObjectPicking& /*selection*/ )
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Layer::HideTooltip
+// Created: LGY 2013-03-08
+// -----------------------------------------------------------------------------
+void Layer::HideTooltip()
+{
+    // NOTHING
+}

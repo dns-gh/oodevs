@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "CircularEventStrategy.h"
+#include "moc_CircularEventStrategy.cpp"
 #include "GlTools_ABC.h"
 #include "SelectionMenu.h"
 
@@ -20,12 +21,15 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 CircularEventStrategy::CircularEventStrategy( EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
                                               DrawingTypes& drawingTypes, GlTools_ABC& tools )
-    : menu_( new SelectionMenu( entitySymbols, colorStrategy, drawingTypes, tools ) )
+    : QObject()
+    , menu_( new SelectionMenu( entitySymbols, colorStrategy, drawingTypes, tools ) )
     , default_( 0 )
     , exclusive_( true )
     , tools_( tools )
+    , timer_( new QTimer( this ) )
+    , tooltiped_( false )
 {
-    // NOTHING
+    connect( timer_, SIGNAL( timeout() ), SLOT( OnDisplayToolTip() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -265,6 +269,10 @@ void CircularEventStrategy::HandleMouseDoubleClick( QMouseEvent* mouse, const ge
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point )
 {
+    point_ = point;
+    if( tooltiped_ )
+        HideTooltip();
+    timer_->start( 500 );
     if( ! Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMouseMove, false ) ) && default_ )
         default_->HandleMouseMove( mouse, point );
 }
@@ -331,4 +339,41 @@ void CircularEventStrategy::HandleLeaveDragEvent( QDragLeaveEvent* event )
         event->accept();
     else
         event->ignore();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CircularEventStrategy::OnDisplayToolTip
+// Created: LGY 2013-03-01
+// -----------------------------------------------------------------------------
+void CircularEventStrategy::OnDisplayToolTip()
+{
+    if( QApplication::activeWindow() && !QApplication::activePopupWidget() )
+    {
+        if( !tooltiped_ )
+        {
+            GlTools_ABC::T_ObjectsPicking selection;
+            tools_.FillSelection( point_, selection );
+            if( !selection.empty() )
+                for( auto it = layers_.begin(); it != layers_.end(); ++it )
+                     if( ( *it )->ShowTooltip( selection.back() ) )
+                     {
+                         tooltiped_ = true;
+                         timer_->start( 10000 );
+                         return;
+                     }
+        }
+        else
+            HideTooltip();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CircularEventStrategy::HideTooltip
+// Created: LGY 2013-03-11
+// -----------------------------------------------------------------------------
+void CircularEventStrategy::HideTooltip()
+{
+    tooltiped_ = false;
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
+        ( *it )->HideTooltip();
 }

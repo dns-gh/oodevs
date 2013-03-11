@@ -1503,9 +1503,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\EntityImplementation.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\CircularEventStrategy.h">
-      <Filter>Source Files\gl\Strategies</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\StandardIconProxyStyle.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -1878,6 +1875,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\SymbolSizeOptionChooser.h">
       <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\CircularEventStrategy.h">
+      <Filter>Source Files\gl\Strategies</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

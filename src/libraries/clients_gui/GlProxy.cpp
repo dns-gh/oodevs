@@ -484,7 +484,8 @@ bool GlProxy::ShouldEdit( const kernel::GraphicalEntity_ABC& selectable ) const
 // -----------------------------------------------------------------------------
 void GlProxy::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection )
 {
-    tools_->FillSelection( point, selection );
+    if( tools_ )
+        tools_->FillSelection( point, selection );
 }
 
 // -----------------------------------------------------------------------------

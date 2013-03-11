@@ -49,12 +49,6 @@ public:
     void SetFrameDrawer( const FrameDrawer& frameDrawer );
     QSize Size() const;
     virtual void paintEvent( QPaintEvent * event );
-    //@}
-
-    //! @name slots
-    //@{
-public slots:
-    virtual void Show();
     virtual void Hide();
     //@}
 
