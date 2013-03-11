@@ -45,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PreferencesDialog( QWidget* parent, kernel::Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                const Painter_ABC& painter, GlSelector& selector );
+                                const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer );
     virtual ~PreferencesDialog();
     //@}
 
@@ -58,7 +58,6 @@ public:
 
     void AddPage( const QString& name, PreferencePanel_ABC& page );
     void AddLayer( const QString& name, gui::Layer& layer, bool dynamic = false );
-    void AddLayer( const QString& name, gui::Elevation2dLayer& layer ); // $$$$ AGE 2007-01-17:
     //@}
 
 private slots:

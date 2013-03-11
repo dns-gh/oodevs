@@ -31,7 +31,7 @@ using namespace gui;
 // Created: SBO 2006-05-03
 // -----------------------------------------------------------------------------
 PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                      const Painter_ABC& painter, GlSelector& selector )
+                                      const Painter_ABC& painter, GlSelector& selector, Elevation2dLayer& elevation2dLayer )
     : ModalDialog( parent, "PreferencesDialog" )
     , controllers_      ( controllers )
     , painter_          ( painter )
@@ -78,6 +78,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     AddPage( tr( "2D" ), *layersPanel_ );
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
     AddPage( tr( "2D/Population" ), *new InhabitantPanel( this, controllers ) );
+    AddPage( tr( "2D/Elevation" ), *new ElevationPanel( this, elevation2dLayer, controllers_, painter_ ) );
 
     box = new Q3HBox( this );
     box->setMargin( 5 );
@@ -182,14 +183,4 @@ void PreferencesDialog::OnCancel()
 void PreferencesDialog::AddLayer( const QString& name, gui::Layer& layer, bool dynamic /* = false */ )
 {
     layersPanel_->AddLayer( name, layer, dynamic );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PreferencesDialog::AddLayer
-// Created: AGE 2007-01-17
-// -----------------------------------------------------------------------------
-void PreferencesDialog::AddLayer( const QString& name, gui::Elevation2dLayer& layer )
-{
-    AddPage( tr( "2D/Elevation" ), *new ElevationPanel( this, layer, controllers_, painter_ ) );
-    layersPanel_->AddLayer( name, layer );
 }

@@ -35,6 +35,7 @@ namespace gui
     class FormationLayer;
     class HelpSystem;
     class EntitySymbols;
+    class Elevation2dLayer;
 }
 
 class ColorController;
@@ -108,7 +109,8 @@ private:
     bool Load();
     void LoadExercise( bool checkConsistency = true );
     void CreateLayers( gui::ParametersLayer& parameters, gui::Layer& locations, gui::Layer& weather, gui::Layer& profilerLayer,
-                       const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation );
+                       const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
+                       gui::Elevation2dLayer& elevation2d );
     void closeEvent( QCloseEvent* pEvent );
     void DoClose();
     void DoLoad( QString filename, bool checkConsistency = true );

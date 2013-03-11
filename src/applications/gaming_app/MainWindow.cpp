@@ -198,7 +198,10 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, *pProfile_ );
     gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
-    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_ ) );
+
+    gui::Elevation2dLayer& elevation2d = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    preferenceDialog_.reset( new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_, *selector_, elevation2d ) );
+
     preferenceDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( preferenceDialog_.get(), controllers ) );
     new VisionConesToggler( controllers, network_.GetMessageMgr(), this );
     new CommandFacade( this, controllers_, config, network.GetCommands(), *interpreter, *glProxy_, *pProfile_ );
@@ -244,7 +247,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( this, SIGNAL( ShowHelp() ), help, SLOT( ShowHelp() ) );
 
     // Last layers
-    CreateLayers( *locationsLayer, *meteoLayer, *profilerLayer, *automatsLayer, *formationLayer, simulation, *picker );
+    CreateLayers( *locationsLayer, *meteoLayer, *profilerLayer, *automatsLayer, *formationLayer, simulation, *picker, elevation2d );
 
     // Menu bar & status bar
     setMenuBar( new Menu( this, controllers, staticModel_, *preferenceDialog_, *profileDialog, *factory, license, *interpreter, network_, logger ) );
@@ -287,14 +290,14 @@ MainWindow::~MainWindow()
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, gui::Layer& profilerLayer,
-                               gui::Layer& automats, gui::Layer& formationLayer, const Simulation& simulation, gui::TerrainPicker& picker )
+                               gui::Layer& automats, gui::Layer& formationLayer, const Simulation& simulation, gui::TerrainPicker& picker,
+                               gui::Elevation2dLayer& elevation2dLayer )
 {
     gui::TooltipsLayer& tooltipLayer = *new gui::TooltipsLayer( *glProxy_ );
     gui::Layer& terrainLayer         = *new gui::TerrainLayer( controllers_, *glProxy_, preferenceDialog_->GetPreferences(), picker );
     gui::Layer& agents               = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, simulation );
     gui::Layer& missionsLayer        = *new gui::MiscLayer< MissionPanel >( dockContainer_->GetMissionPanel() );
     gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( dockContainer_->GetCreationPanel() );
-    gui::Layer& elevation2d          = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     gui::Layer& raster               = *new gui::RasterLayer( controllers_.controller_ );
     gui::Layer& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
@@ -318,7 +321,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
 
     // ordre de dessin
     AddLayer( *glProxy_, *preferenceDialog_, defaultLayer );
-    AddLayer( *glProxy_, *preferenceDialog_, elevation2d, "main,composition,miniviews", tr( "Elevation" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, elevation2dLayer, "main,composition,miniviews", tr( "Elevation" ) );
     AddLayer( *glProxy_, *preferenceDialog_, raster, "main,composition,miniviews", tr( "Raster" ) );
     AddLayer( *glProxy_, *preferenceDialog_, terrainLayer, "main,composition,miniviews", tr( "Terrain" ) );
     AddLayer( *glProxy_, *preferenceDialog_, contour, "main,composition,miniviews", tr( "Contour Lines" ) );

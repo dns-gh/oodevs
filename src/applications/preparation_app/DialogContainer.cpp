@@ -48,7 +48,7 @@
 DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controllers, Model& model, const ::StaticModel& staticModel, const kernel::Profile_ABC& profile,
                                   gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
                                   const tools::ExerciseConfig& config, gui::SymbolIcons& icons, gui::LightingProxy& lighting, const gui::Painter_ABC& painter,
-                                  gui::ParametersLayer& paramLayer, gui::GlTools_ABC& tools, gui::GlSelector& selector )
+                                  gui::ParametersLayer& paramLayer, gui::GlTools_ABC& tools, gui::GlSelector& selector, gui::Elevation2dLayer& elevation2dLayer )
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, profile );
@@ -62,7 +62,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     new LogisticStockEditor( parent, controllers, staticModel );
     new LongNameEditor( parent, controllers, staticModel );
 
-    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector );
+    prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector, elevation2dLayer );
     prefDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog_, controllers ) );
     profileDialog_ = new ProfileDialog( parent, controllers, symbols, model, staticModel.extensions_ );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );

@@ -42,6 +42,7 @@ namespace gui
     class RichToolBar;
     class TerrainLayer;
     class TerrainPicker;
+    class Elevation2dLayer;
 }
 
 class Config;
@@ -118,7 +119,8 @@ private:
     static std::string BuildRemotePath( std::string server, std::string path );
 
     void CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, gui::Layer& profilerLayer,
-                       gui::Layer& automats, gui::Layer& formationLayer, const Simulation& simulation, gui::TerrainPicker& picker );
+                       gui::Layer& automats, gui::Layer& formationLayer, const Simulation& simulation, gui::TerrainPicker& picker,
+                       gui::Elevation2dLayer& elevation2dLayer );
 
 private:
     //! @name Member data

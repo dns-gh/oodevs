@@ -179,18 +179,21 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     gui::WeatherLayer* weatherLayer = new gui::WeatherLayer( *glProxy_, *eventStrategy_ );
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
+    gui::Elevation2dLayer& elevation2d = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
 
     // Dialogs
-    dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons_, config, *symbols, *lighting_, *pPainter_, *paramLayer, *glProxy_, *selector_ ) );
+    dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_,
+                                                 *icons_, config, *symbols, *lighting_, *pPainter_, *paramLayer, *glProxy_, *selector_, elevation2d ) );
 
     // Dock widgets
-    dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, *icons_, *modelBuilder_, model_, staticModel_, config_, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_, *profilerLayer ) );
+    dockContainer_.reset( new DockContainer( this, controllers_, automats, formation, *icons_, *modelBuilder_, model_, staticModel_, config_, *symbols,
+                                             *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_, *profilerLayer ) );
 
     // ToolBars
     toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer, *eventStrategy_, *paramLayer, model_.urban_, dialogContainer_->GetRemoveBlocksDialog(), dockContainer_->GetTerrainProfiler() ) );
 
     // Layers 2
-    CreateLayers( *paramLayer, *locationsLayer, *weatherLayer, *profilerLayer, PreparationProfile::GetProfile(), *picker, automats, formation );
+    CreateLayers( *paramLayer, *locationsLayer, *weatherLayer, *profilerLayer, PreparationProfile::GetProfile(), *picker, automats, formation, elevation2d );
 
     // Help
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
@@ -268,7 +271,8 @@ namespace
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& locations, gui::Layer& weather, gui::Layer& profilerLayer,
-                               const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation )
+                               const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
+                               gui::Elevation2dLayer& elevation2d )
 {
     assert( dialogContainer_.get() && dockContainer_.get() );
     gui::PreferencesDialog& preferences     = dialogContainer_->GetPrefDialog();
@@ -278,7 +282,6 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     gui::Layer& objectCreationLayer     = *new gui::MiscLayer< ObjectCreationPanel >( dockContainer_->GetObjectCreationPanel() );
     gui::Layer& inhabitantCreationLayer = *new gui::MiscLayer< InhabitantCreationPanel >( dockContainer_->GetInhabitantCreationPanel() );
     gui::Layer& indicatorCreationLayer  = *new gui::MiscLayer< ScoreDialog >( dialogContainer_->GetScoreDialog() );
-    gui::Elevation2dLayer& elevation2d      = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     gui::Layer& raster                  = *new gui::RasterLayer( controllers_.controller_ );
     gui::Layer& watershed               = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d             = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
