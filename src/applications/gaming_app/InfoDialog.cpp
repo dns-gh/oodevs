@@ -85,7 +85,5 @@ void InfoDialog_Base::OnToggle( bool state )
 // -----------------------------------------------------------------------------
 void InfoDialog_Base::SetEnabled( bool state )
 {
-    if( !state && isShown() )
-        hide();
     emit Disabled( !state );
 }
