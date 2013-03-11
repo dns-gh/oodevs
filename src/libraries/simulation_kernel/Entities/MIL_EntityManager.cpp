@@ -1066,6 +1066,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
 
     ack().mutable_unit()->set_id( id );
     ack().set_error_code( UnitActionAck::no_error );
+    ack().set_error_msg( "" );
     try
     {
         switch( message.type() )
