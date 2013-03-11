@@ -180,6 +180,8 @@ message UnitMagicActionAck {
     //! Reason for the failure of the agent magic action execution
     //! operation. @see UnitActionAck.ErrorCode
     required UnitActionAck.ErrorCode error_code = 2;
+    //! More detailed account of the returned error
+    optional string                  error_msg  = 3;
 }
 
 /** @struct MagicActionAck
