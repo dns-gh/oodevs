@@ -57,6 +57,7 @@ public:
 
     virtual void Execute( TER_Pathfinder_ABC& pathfind );
     virtual void CleanAfterComputation();
+    virtual bool IsPathForUnit( MIL_Agent_ABC* pion ) const;
 
     virtual double GetLength() const;
     virtual E_State GetState() const;

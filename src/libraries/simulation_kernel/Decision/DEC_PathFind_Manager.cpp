@@ -119,6 +119,35 @@ void DEC_PathFind_Manager::CancelJob( DEC_Path_ABC* pPath )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PathFind_Manager::CancelJobForUnit
+// Created: JSR 2013-03-11
+// -----------------------------------------------------------------------------
+void DEC_PathFind_Manager::CancelJobForUnit( MIL_Agent_ABC* pion )
+{
+    std::vector< boost::shared_ptr< DEC_Path_ABC > > paths;
+    {
+        boost::mutex::scoped_lock locker( mutex_ );
+        for( auto it = longRequests_.begin(); it != longRequests_.end(); ++it )
+            if( ( *it )->IsPathForUnit( pion ) )
+                paths.push_back( ( *it )->GetPath() );
+        for( auto it = shortRequests_.begin(); it != shortRequests_.end(); ++it )
+            if( ( *it )->IsPathForUnit( pion ) )
+                paths.push_back(  ( *it )->GetPath() );
+    }
+    for( auto it = paths.begin(); it != paths.end(); ++it )
+        CancelJob( ( *it ).get() );
+    boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
+    for( auto it = paths.begin(); it != paths.end(); ++it )
+        for( auto itReq = requestsToCleanAfterComputation_.begin(); itReq != requestsToCleanAfterComputation_.end(); )
+        {
+            if( itReq->get() == it->get() )
+                itReq = requestsToCleanAfterComputation_.erase( itReq );
+            else
+                ++itReq;
+        }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager::GetNbrShortRequests
 // Created: NLD 2005-04-01
 // -----------------------------------------------------------------------------

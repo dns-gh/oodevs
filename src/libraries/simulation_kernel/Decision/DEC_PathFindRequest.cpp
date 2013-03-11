@@ -13,15 +13,16 @@
 #include "DEC_Path_ABC.h"
 #include "simulation_terrain/TER_PathFinder_ABC.h"
 
-DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager* m,
-        const boost::shared_ptr< DEC_Path_ABC > p )
+DEC_PathFindRequest::DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC > p )
     : manager_( m )
     , path_( p )
 {
+    // NOTHING
 }
 
 DEC_PathFindRequest::~DEC_PathFindRequest()
 {
+    // NOTHING
 }
 
 void DEC_PathFindRequest::FindPath( TER_Pathfinder_ABC& pathfind )
@@ -37,4 +38,13 @@ void DEC_PathFindRequest::CleanAfterComputation()
 const boost::shared_ptr< DEC_Path_ABC >& DEC_PathFindRequest::GetPath() const
 {
     return path_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFindRequest::IsPathForUnit
+// Created: JSR 2013-03-11
+// -----------------------------------------------------------------------------
+bool DEC_PathFindRequest::IsPathForUnit( MIL_Agent_ABC* pion ) const
+{
+    return path_.get() && path_->IsPathForUnit( pion );
 }

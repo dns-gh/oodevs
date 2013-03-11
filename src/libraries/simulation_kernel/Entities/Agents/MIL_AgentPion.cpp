@@ -45,6 +45,7 @@
 #include "Actions/CrowdTransport/PHY_RoleAction_CrowdTransport.h"
 #include "Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
+#include "Decision/DEC_PathFind_Manager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
@@ -831,6 +832,8 @@ void MIL_AgentPion::DeleteUnit()
         return;
     CancelCurrentMission();
     pOrderManager_->StopAllMissions();
+
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().CancelJobForUnit( this );
 
     SpecializedDelete();
 

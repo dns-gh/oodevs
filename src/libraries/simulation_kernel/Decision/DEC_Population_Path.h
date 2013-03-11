@@ -48,6 +48,7 @@ public:
     //@{
     virtual void Execute( TER_Pathfinder_ABC& pathfind );
     virtual void CleanAfterComputation();
+    virtual bool IsPathForUnit( MIL_Agent_ABC* pion ) const;
     virtual bool NeedRefine() const;
     virtual bool UseStrictClosest() const;
     //@}

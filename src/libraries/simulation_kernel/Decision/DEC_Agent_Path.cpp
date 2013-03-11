@@ -589,6 +589,15 @@ void DEC_Agent_Path::CleanAfterComputation()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::IsPathForUnit
+// Created: JSR 2013-03-11
+// -----------------------------------------------------------------------------
+bool DEC_Agent_Path::IsPathForUnit( MIL_Agent_ABC* pion ) const
+{
+    return &queryMaker_ == pion;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::Execute
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------

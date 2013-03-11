@@ -24,6 +24,7 @@ class DEC_Path_ABC;
 class DEC_PathFindRequest;
 class TER_PathFinderThread;
 class TER_PathFindRequest_ABC;
+class MIL_Agent_ABC;
 class MIL_Config;
 
 namespace xml
@@ -48,6 +49,7 @@ public:
     void UpdateInSimulationThread();
     void StartCompute( const boost::shared_ptr< DEC_Path_ABC >& pPath );
     void CancelJob( DEC_Path_ABC* pPath );
+    void CancelJobForUnit( MIL_Agent_ABC* pion );
     void CleanPathAfterComputation( const boost::shared_ptr< DEC_Path_ABC >& pPath );
     //@}
 

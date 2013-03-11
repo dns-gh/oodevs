@@ -14,6 +14,7 @@
 
 class TerrainData;
 class MT_Vector2D;
+class MIL_Agent_ABC;
 class TER_Pathfinder_ABC;
 
 // =============================================================================
@@ -41,6 +42,7 @@ public:
     //@{
     virtual void Execute( TER_Pathfinder_ABC& pathfind ) = 0;
     virtual void CleanAfterComputation() = 0;
+    virtual bool IsPathForUnit( MIL_Agent_ABC* pion ) const = 0;
     virtual double GetLength() const = 0;
     void AddRef();
     void DecRef();

@@ -143,6 +143,15 @@ void DEC_Population_Path::CleanAfterComputation()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::IsPathForUnit
+// Created: JSR 2013-03-11
+// -----------------------------------------------------------------------------
+bool DEC_Population_Path::IsPathForUnit( MIL_Agent_ABC* /*pion*/ ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Population_Path::Execute
 // Created: AGE 2005-02-25
 // -----------------------------------------------------------------------------

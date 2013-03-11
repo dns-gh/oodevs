@@ -16,6 +16,7 @@
 
 class DEC_Path_ABC;
 class DEC_PathFind_Manager;
+class MIL_Agent_ABC;
 
 // DEC_PathFindRequest insulates DEC_Path_ABC cleanup logic from
 // TER_PathFinderThread. While the cleanup code itself belongs to DEC_Path_ABC,
@@ -26,17 +27,26 @@ class DEC_PathFindRequest: public TER_PathFindRequest_ABC,
                            private boost::noncopyable
 {
 public:
-             DEC_PathFindRequest( DEC_PathFind_Manager* m,
-                     const boost::shared_ptr< DEC_Path_ABC > p);
+    //! @name Constructors/Destructor
+    //@{
+             DEC_PathFindRequest( DEC_PathFind_Manager* m, const boost::shared_ptr< DEC_Path_ABC > p );
     virtual ~DEC_PathFindRequest();
+    //@}
 
+    //! @name Operations
+    //@{
     virtual void FindPath( TER_Pathfinder_ABC& pathfind );
     virtual void CleanAfterComputation();
     const boost::shared_ptr< DEC_Path_ABC >& GetPath() const;
+    bool IsPathForUnit( MIL_Agent_ABC* pion ) const;
+    //@}
 
 private:
+    //! @name Member data
+    //@{
     DEC_PathFind_Manager* const manager_;
     const boost::shared_ptr< DEC_Path_ABC > path_;
+    //@}
 };
 
 #endif // DEC_PATHFINDREQUEST_H
