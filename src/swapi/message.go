@@ -81,10 +81,12 @@ func (m *SwordMessage) SetContext(context int32) {
 	if m.ClientToReplay != nil {
 		m.ClientToReplay.Context = protoctx
 		m.tag = clientToReplayTag
+		return
 	}
 	if m.ClientToSimulation != nil {
 		m.ClientToSimulation.Context = protoctx
 		m.tag = clientToSimulationTag
+		return
 	}
 	panic(fmt.Sprintf("unsupported client message: %v", m))
 }
