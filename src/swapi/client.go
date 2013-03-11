@@ -16,8 +16,9 @@ import (
 )
 
 var (
-	MaxPostMessages     = 32
-	ClientTimeout       = 10 * time.Minute
+	MaxPostMessages = 32
+	// By default, wait indefinitely for handlers to terminate
+	ClientTimeout       = 0 * time.Second
 	TickPeriod          = 1 * time.Second
 	ErrTimeout          = errors.New("handler timeout")
 	ErrConnectionClosed = errors.New("connection closed")
@@ -52,8 +53,9 @@ type HandlerError struct {
 }
 
 type Client struct {
-	Address string
-	Model   *Model
+	Address     string
+	Model       *Model
+	PostTimeout time.Duration
 
 	context     int32
 	link        net.Conn
@@ -77,6 +79,7 @@ func NewClient(address string) (*Client, error) {
 	client := &Client{
 		Address:     address,
 		Model:       NewModel(),
+		PostTimeout: ClientTimeout,
 		link:        link,
 		handlers:    make(map[int32]MessageHandler),
 		timeouts:    make(map[int32]time.Time),
@@ -255,5 +258,5 @@ func (c *Client) PostWithTimeout(msg SwordMessage, handler MessageHandler, timeo
 }
 
 func (c *Client) Post(msg SwordMessage, handler MessageHandler) int32 {
-	return c.PostWithTimeout(msg, handler, 0)
+	return c.PostWithTimeout(msg, handler, c.PostTimeout)
 }

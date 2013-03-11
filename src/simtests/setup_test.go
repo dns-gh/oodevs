@@ -26,6 +26,9 @@ func init() {
 		"base port for spawned simulations")
 }
 
+const ExCrossroadSmallOrbat = "crossroad-small-orbat"
+const ExCrossroadSmallEmpty = "crossroad-small-empty"
+
 func MakeOpts() *simu.SimOpts {
 	opts := simu.SimOpts{}
 	opts.Executable = application

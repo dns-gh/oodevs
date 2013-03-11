@@ -89,9 +89,6 @@ func printParties(p *prettyPrinter, parties map[uint32]*swapi.Party) *prettyPrin
 	return p
 }
 
-const ExCrossroadSmallOrbat = "crossroad-small-orbat"
-const ExCrossroadSmallEmpty = "crossroad-small-empty"
-
 func connectAndWaitModel(c *C, exercise string) (*simu.SimProcess, *swapi.Client) {
 	sim := startSimOnExercise(c, exercise, 1000, false)
 	client := ConnectClient(c, sim)
