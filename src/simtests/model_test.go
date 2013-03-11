@@ -89,8 +89,11 @@ func printParties(p *prettyPrinter, parties map[uint32]*swapi.Party) *prettyPrin
 	return p
 }
 
-func connectAndWaitModel(c *C) (*simu.SimProcess, *swapi.Client) {
-	sim := startSimOnExercise(c, "crossroad-small-orbat", 1000, false)
+const ExCrossroadSmallOrbat = "crossroad-small-orbat"
+const ExCrossroadSmallEmpty = "crossroad-small-empty"
+
+func connectAndWaitModel(c *C, exercise string) (*simu.SimProcess, *swapi.Client) {
+	sim := startSimOnExercise(c, exercise, 1000, false)
 	client := ConnectClient(c, sim)
 	err := client.Login("admin", "")
 	c.Assert(err, IsNil) // login failed
@@ -100,7 +103,7 @@ func connectAndWaitModel(c *C) (*simu.SimProcess, *swapi.Client) {
 }
 
 func (s *TestSuite) TestModelInitialization(c *C) {
-	sim, client := connectAndWaitModel(c)
+	sim, client := connectAndWaitModel(c, ExCrossroadSmallOrbat)
 	defer sim.Kill()
 	model := client.Model
 
@@ -136,7 +139,7 @@ Party[2]
 }
 
 func (s *TestSuite) TestModelIsolation(c *C) {
-	sim, client := connectAndWaitModel(c)
+	sim, client := connectAndWaitModel(c, ExCrossroadSmallOrbat)
 	defer sim.Kill()
 	model := client.Model
 	parties := model.GetParties()
@@ -153,4 +156,35 @@ func (s *TestSuite) TestModelIsolation(c *C) {
 
 	updated := printParties(&prettyPrinter{}, model.GetParties()).GetOutput()
 	c.Assert(updated, Equals, expected)
+}
+
+func (s *TestSuite) TestCreateFormation(c *C) {
+	sim, client := connectAndWaitModel(c, ExCrossroadSmallEmpty)
+	defer sim.Kill()
+	model := client.Model
+
+	// Add formation to party
+	id1, err := client.CreateFormation(1, 0, "newformation")
+
+	// Add formation to formation
+	_, err = client.CreateFormation(0, id1, "newformation2")
+	c.Assert(err, IsNil) // failed to create formation
+	dump := printParties(&prettyPrinter{}, model.GetParties()).GetOutput()
+	expected := "" +
+		`Party[1]
+  Name: party1
+    Formation[524]
+      Id: 524
+      Name: newformation
+      ParentId: 0
+      PartyId: 1
+        Formation[525]
+          Id: 525
+          Name: newformation2
+          ParentId: 524
+          PartyId: 1
+Party[2]
+  Name: party2
+`
+	c.Assert(dump, Equals, expected)
 }
