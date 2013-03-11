@@ -88,5 +88,5 @@ template< typename Entity >
 inline
 bool EntityTreeView< Entity >::CanShowContextMenu( const kernel::Entity_ABC& entity )
 {
-    return entity.GetTypeName() != kernel::Team_ABC::typeName_;
+    return entity.GetId() != 0;
 }

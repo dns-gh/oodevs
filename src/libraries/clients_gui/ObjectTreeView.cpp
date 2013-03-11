@@ -129,5 +129,5 @@ bool ObjectTreeView::LessThan( const QModelIndex& left, const QModelIndex& right
 // -----------------------------------------------------------------------------
 bool ObjectTreeView::CanShowContextMenu( const kernel::Entity_ABC& entity )
 {
-    return entity.GetTypeName() != kernel::Team_ABC::typeName_;
+    return entity.GetId() != 0;
 }
