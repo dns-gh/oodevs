@@ -151,13 +151,8 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanRemoved( const Human_ABC& human )
             state->psyop_ == human.IsMentalDiseased() )
         {
             founded = true;
-            if( state->number_ > 1 )
+            if( state->number_ > 0 )
                 --state->number_;
-            else
-            {
-                humansStates_.erase( it );
-                delete state;
-            }
             break;
         }
     }
@@ -483,6 +478,8 @@ void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
         pion_->Apply( &human::HumansChangedNotificationHandler_ABC::NotifyHumanHasChanged );
         pion_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     }
+    else
+        RemoveUselessStates();
 }
 
 // -----------------------------------------------------------------------------
@@ -575,6 +572,24 @@ unsigned int PHY_RolePion_Humans::GetNumber() const
         result += state.number_;
     }
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::RemoveUselessStates
+// Created: MMC 2013-03-08
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Humans::RemoveUselessStates()
+{
+    for( auto it = humansStates_.begin(); it != humansStates_.end(); )
+    {
+        if( !*it || ( *it && (*it)->number_ <= 0 ) )
+        {
+            delete *it;
+            it = humansStates_.erase( it );
+        }
+        else
+            ++it;
+    }
 }
 
 } // namespace human
