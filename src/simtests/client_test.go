@@ -10,6 +10,7 @@ import (
 
 func (s *TestSuite) TestPostTimeout(c *C) {
 	sim := startSimOnExercise(c, ExCrossroadSmallEmpty, 1000, false)
+	defer sim.Kill()
 	client := ConnectClient(c, sim)
 	err := client.Login("admin", "")
 	c.Assert(err, IsNil) // login failed
@@ -27,7 +28,6 @@ func (s *TestSuite) TestPostTimeout(c *C) {
 	}
 	// Post some dummy never ending handler
 	quit := make(chan error)
-	start := time.Now()
 	client.Post(msg, func(msg *swapi.SwordMessage, context int32, err error) bool {
 		if err != nil {
 			quit <- err
@@ -35,11 +35,10 @@ func (s *TestSuite) TestPostTimeout(c *C) {
 		}
 		return false
 	})
+	go func() {
+		time.Sleep(2 * client.PostTimeout)
+		quit <- nil
+	}()
 	err = <-quit
-	end := time.Now()
 	c.Assert(err, ErrorMatches, "(?i).*timeout.*")
-	if end.Sub(start) > 2*client.PostTimeout {
-		c.Fatalf("post timeout took too long: %v > %v", end.Sub(start),
-			client.PostTimeout)
-	}
 }
