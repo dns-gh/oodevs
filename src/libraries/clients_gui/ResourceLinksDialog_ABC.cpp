@@ -443,7 +443,7 @@ void ResourceLinksDialog_ABC::Show()
     if( selected_.size() != 1 )
         return;
     resourceNodes_ = selected_.front()->Get< ResourceNetwork_ABC >().GetResourceNodes();
-    if( resourceNodes_.size() != dotationList_->count() )
+    if( static_cast< int >( resourceNodes_.size() ) != dotationList_->count() )
     {
         dotationList_->clear();
         for( auto it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
