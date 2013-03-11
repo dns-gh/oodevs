@@ -44,6 +44,7 @@ class ResourceLinksDialog_ABC : public RichDockWidget
                               , public kernel::MultipleSelectionObserver_Base< kernel::UrbanObject_ABC >
                               , public kernel::MultipleSelectionObserver_Base< kernel::Object_ABC >
                               , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                              , public tools::ElementObserver_ABC< gui::ResourceNetwork_ABC >
                               , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
                               , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
 {
@@ -84,6 +85,7 @@ private:
     virtual void MultipleSelect( const std::vector< const kernel::Object_ABC* >& elements );
 
     virtual void NotifyDeleted( const kernel::Entity_ABC& element );
+    virtual void NotifyUpdated( const gui::ResourceNetwork_ABC& element );
     virtual void NotifyContextMenu( const kernel::Object_ABC&, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::UrbanObject_ABC&, kernel::ContextMenu& menu );
     virtual void SetReadOnly( bool readOnly ) const;

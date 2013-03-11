@@ -175,6 +175,7 @@ void ResourceNetwork::DoUpdate( const sword::ObjectUpdate& message )
         for( int i = 0; i < message.attributes().resource_networks().network_size(); ++i )
             UpdateNetwork( &entity_, message.attributes().resource_networks().network( i ) );
     }
+    controllers_.controller_.Update( static_cast< const gui::ResourceNetwork_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,6 +189,7 @@ void ResourceNetwork::DoUpdate( const sword::UrbanUpdate& message )
         for( int i = 0; i < message.attributes().infrastructures().resource_network_size(); ++i )
             UpdateNetwork( &entity_, message.attributes().infrastructures().resource_network( i ) );
     }
+    controllers_.controller_.Update( static_cast< const gui::ResourceNetwork_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -228,8 +228,14 @@ void ResourceLinksDialog_ABC::Update()
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnActivationChanged( bool on )
 {
-    if( dotationList_->currentItem() )
-        resourceNodes_[ dotationList_->currentItem()->text().toStdString() ].isEnabled_ = on;
+    if( GetCurrentMode() != eModes_Replay )
+    {
+        if( dotationList_->currentItem() )
+            resourceNodes_[ dotationList_->currentItem()->text().toStdString() ].isEnabled_ = on;
+    }
+    else
+        if( resourceNodes_[ dotationList_->currentItem()->text().toStdString() ].isEnabled_ != on )
+            groupBox_->setChecked( !on );
 }
 
 // -----------------------------------------------------------------------------
@@ -343,6 +349,15 @@ void ResourceLinksDialog_ABC::NotifyDeleted( const Entity_ABC& element )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::NotifyUpdated
+// Created: NPT 2013-03-08
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::NotifyUpdated( const gui::ResourceNetwork_ABC& /*element*/ )
+{
+    Show();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog_ABC::NotifyContextMenu
 // Created: JSR 2011-02-24
 // -----------------------------------------------------------------------------
@@ -417,8 +432,6 @@ void ResourceLinksDialog_ABC::SetReadOnly( bool readOnly ) const
     table_->setEditTriggers( readOnly? QAbstractItemView::NoEditTriggers : QAbstractItemView::CurrentChanged );
     generateProduction_->setEnabled( !readOnly );
     okButton_->setEnabled( !readOnly );
-    groupBox_->setCheckable( !readOnly );
-    groupBox_->setEnabled( !readOnly );
 }
 
 // -----------------------------------------------------------------------------
@@ -427,18 +440,21 @@ void ResourceLinksDialog_ABC::SetReadOnly( bool readOnly ) const
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Show()
 {
-    dotationList_->clear();
     if( selected_.size() != 1 )
         return;
     resourceNodes_ = selected_.front()->Get< ResourceNetwork_ABC >().GetResourceNodes();
-    for( auto it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
-        if( it == resourceNodes_.begin() )
-        {
-            selectedItem_ = new QListWidgetItem( it->second.resource_.c_str(), dotationList_ );
-            dotationList_->setCurrentItem( selectedItem_ );
-        }
-        else
-            new QListWidgetItem( it->second.resource_.c_str(), dotationList_ );
+    if( resourceNodes_.size() != dotationList_->count() )
+    {
+        dotationList_->clear();
+        for( auto it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
+            if( it == resourceNodes_.begin() )
+            {
+                selectedItem_ = new QListWidgetItem( it->second.resource_.c_str(), dotationList_ );
+                dotationList_->setCurrentItem( selectedItem_ );
+            }
+            else
+                new QListWidgetItem( it->second.resource_.c_str(), dotationList_ );
+    }
 
     if( dotationList_->count() > 0 )
         groupBox_->setEnabled( true );
