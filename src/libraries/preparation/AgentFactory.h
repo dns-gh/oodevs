@@ -61,7 +61,7 @@ public:
 public:
     //! @name Helpers
     //@{
-    static kernel::Entity_ABC* FindOrCreateKnowledgeGroup( const kernel::Entity_ABC& parent, Model& model );
+    static kernel::Entity_ABC* FindOrCreateKnowledgeGroup( const kernel::Entity_ABC& parent );
     //@}
 
 private:

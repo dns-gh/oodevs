@@ -37,10 +37,11 @@ using namespace kernel;
 // Name: TeamsModel constructor
 // Created: SBO 2006-08-30
 // -----------------------------------------------------------------------------
-TeamsModel::TeamsModel( Controllers& controllers, TeamFactory_ABC& factory )
-    : controllers_      ( controllers )
-    , factory_          ( factory )
-    , noSideTeam_       ( factory.CreateNoSideTeam() )
+TeamsModel::TeamsModel( Controllers& controllers, TeamFactory_ABC& factory, KnowledgeGroupsModel& knowledgeGroupsModel )
+    : controllers_         ( controllers )
+    , factory_             ( factory )
+    , noSideTeam_          ( factory.CreateNoSideTeam() )
+    , knowledgeGroupsModel_( knowledgeGroupsModel )
 {
     controllers_.Register( *this );
 }
@@ -72,7 +73,11 @@ void TeamsModel::Purge()
 void TeamsModel::CreateTeam()
 {
     Team_ABC* team = factory_.CreateTeam();
-    Register( team->GetId(), *team );
+    if(team )
+    {
+        knowledgeGroupsModel_.Create( *team );
+        Register( team->GetId(), *team );
+    }
 }
 
 // -----------------------------------------------------------------------------

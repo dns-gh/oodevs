@@ -127,7 +127,7 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const ker
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< kernel::AutomatDecisions_ABC >( *new AutomatDecisions( controllers_.controller_, *result ) );
-    kernel::Entity_ABC* kg = FindOrCreateKnowledgeGroup( parent, model_ );
+    kernel::Entity_ABC* kg = FindOrCreateKnowledgeGroup( parent );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
 
     bool isTC2 = type.IsTC2(); //$$ NAZE
@@ -203,7 +203,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
 // Name: AgentFactory::FindOrCreateKnowledgeGroup
 // Created: AGE 2006-10-10
 // -----------------------------------------------------------------------------
-kernel::Entity_ABC* AgentFactory::FindOrCreateKnowledgeGroup( const kernel::Entity_ABC& parent, Model& model )
+kernel::Entity_ABC* AgentFactory::FindOrCreateKnowledgeGroup( const kernel::Entity_ABC& parent )
 {
     const kernel::Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
     const kernel::CommunicationHierarchies& teamHierarchy = team.Get< kernel::CommunicationHierarchies >();
@@ -214,11 +214,6 @@ kernel::Entity_ABC* AgentFactory::FindOrCreateKnowledgeGroup( const kernel::Enti
         if( dynamic_cast< const kernel::KnowledgeGroup_ABC* >( entity ) )
             return const_cast< kernel::Entity_ABC* >( entity );
     }
-    // LTO begin
-    kernel::Team_ABC* teamtop = dynamic_cast< kernel::Team_ABC* >( const_cast< kernel::Entity_ABC* >(&team) );
-    if( teamtop )
-        return model.knowledgeGroups_.Create( *teamtop );
-    // LTO end
     return const_cast< kernel::Entity_ABC* >( &team );
 }
 
