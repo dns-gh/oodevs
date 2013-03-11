@@ -1159,6 +1159,10 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
     {
         ack().set_error_code( e.GetErrorID() );
     }
+    catch( const std::exception& )
+    {
+        ack().set_error_code( UnitActionAck::error_invalid_parameter );
+    }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
