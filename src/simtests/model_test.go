@@ -94,7 +94,7 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 func connectAndWaitModel(c *C, exercise string) (*simu.SimProcess, *swapi.Client) {
 	sim := startSimOnExercise(c, exercise, 1000, false)
 	client := ConnectClient(c, sim)
-	err := client.Login("admin", "")
+	err := client.Login("alluser", "alluser")
 	c.Assert(err, IsNil) // login failed
 	ok := client.Model.WaitReady(10 * time.Second)
 	c.Assert(ok, Equals, true) // model initialization timed out
