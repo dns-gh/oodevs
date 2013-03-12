@@ -32,7 +32,7 @@ func (p *prettyPrinter) GetOutput() string {
 	return strings.Join(p.lines, "\n") + "\n"
 }
 
-func printParties(p *prettyPrinter, parties map[uint32]*swapi.Party) *prettyPrinter {
+func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 	var printFormation func(p *prettyPrinter, f *swapi.Formation)
 	printFormation = func(p *prettyPrinter, f *swapi.Formation) {
 		p.P("Id: %d", f.Id)
@@ -76,13 +76,13 @@ func printParties(p *prettyPrinter, parties map[uint32]*swapi.Party) *prettyPrin
 	}
 
 	keys := []int{}
-	for k := range parties {
+	for k := range model.Parties {
 		keys = append(keys, int(k))
 	}
 	sort.Ints(keys)
 
 	for _, k := range keys {
-		party := parties[uint32(k)]
+		party := model.Parties[uint32(k)]
 		p.P("Party[%v]", k)
 		p.Shift()
 		printParty(p, party)
@@ -106,7 +106,7 @@ func (s *TestSuite) TestModelInitialization(c *C) {
 	defer sim.Kill()
 	model := client.Model
 
-	dump := printParties(&prettyPrinter{}, model.GetParties()).GetOutput()
+	dump := printParties(&prettyPrinter{}, model.GetData()).GetOutput()
 	expected := "" +
 		`Party[1]
   Name: party
@@ -148,19 +148,19 @@ func (s *TestSuite) TestModelIsolation(c *C) {
 	sim, client := connectAndWaitModel(c, ExCrossroadSmallOrbat)
 	defer sim.Kill()
 	model := client.Model
-	parties := model.GetParties()
-	expected := printParties(&prettyPrinter{}, parties).GetOutput()
+	data := model.GetData()
+	expected := printParties(&prettyPrinter{}, data).GetOutput()
 
 	// Modify some properties, query the model again and check it did
 	// not change.
-	delete(parties, 2)
-	parties[1].Name = "foobar"
-	parties[1].Formations[5].Name = "blaz"
-	delete(parties[1].Formations, 6)
-	modified := printParties(&prettyPrinter{}, parties).GetOutput()
+	delete(data.Parties, 2)
+	data.Parties[1].Name = "foobar"
+	data.Parties[1].Formations[5].Name = "blaz"
+	delete(data.Parties[1].Formations, 6)
+	modified := printParties(&prettyPrinter{}, data).GetOutput()
 	c.Assert(modified, Not(Equals), expected)
 
-	updated := printParties(&prettyPrinter{}, model.GetParties()).GetOutput()
+	updated := printParties(&prettyPrinter{}, model.GetData()).GetOutput()
 	c.Assert(updated, Equals, expected)
 }
 
@@ -187,7 +187,7 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 	// Add formation to formation
 	_, err = client.CreateFormation(0, id1, "newformation2", 2, "aucun")
 	c.Assert(err, IsNil) // failed to create formation
-	dump := printParties(&prettyPrinter{}, model.GetParties()).GetOutput()
+	dump := printParties(&prettyPrinter{}, model.GetData()).GetOutput()
 	expected := "" +
 		`Party[1]
   Name: party1

@@ -29,9 +29,9 @@ type modelCond struct {
 type Model struct {
 	// State only touched by the run() goroutine
 	// True once the initial state has been received
-	ready   bool
-	conds   []*modelCond
-	parties map[uint32]*Party
+	ready bool
+	conds []*modelCond
+	data  *ModelData
 
 	// State only touched by caller routines
 	condId int
@@ -44,13 +44,13 @@ type Model struct {
 
 func NewModel() *Model {
 	model := Model{
-		ready:   false,
-		condId:  0,
-		msgch:   make(chan *SwordMessage, 128),
-		cmdch:   make(chan *modelCmd, 4),
-		condch:  make(chan *modelCond, 4),
-		conds:   []*modelCond{},
-		parties: map[uint32]*Party{},
+		ready:  false,
+		condId: 0,
+		msgch:  make(chan *SwordMessage, 128),
+		cmdch:  make(chan *modelCmd, 4),
+		condch: make(chan *modelCond, 4),
+		conds:  []*modelCond{},
+		data:   NewModelData(),
 	}
 	go model.run()
 	return &model
@@ -83,6 +83,7 @@ func (model *Model) run() {
 }
 
 func (model *Model) update(msg *SwordMessage) {
+	d := model.data
 	if msg.SimulationToClient != nil {
 		m := msg.SimulationToClient.GetMessage()
 		if m.GetControlSendCurrentStateEnd() != nil {
@@ -91,7 +92,7 @@ func (model *Model) update(msg *SwordMessage) {
 			party := NewParty(
 				mm.GetParty().GetId(),
 				mm.GetName())
-			model.parties[party.Id] = party
+			d.Parties[party.Id] = party
 		} else if mm := m.GetFormationCreation(); mm != nil {
 			level, ok := sword.EnumNatureLevel_name[int32(mm.GetLevel())]
 			if !ok {
@@ -125,7 +126,7 @@ func (model *Model) update(msg *SwordMessage) {
 
 func (model *Model) findFormation(partyId uint32,
 	parentId uint32) (*Party, *Formation) {
-	party, ok := model.parties[partyId]
+	party, ok := model.data.Parties[partyId]
 	if !ok {
 		return nil, nil
 	}
@@ -224,12 +225,10 @@ func (model *Model) WaitReady(timeout time.Duration) bool {
 	})
 }
 
-func (model *Model) GetParties() map[uint32]*Party {
-	parties := map[uint32]*Party{}
+func (model *Model) GetData() *ModelData {
+	var d *ModelData
 	model.waitCommand(func(model *Model) {
-		for k, v := range model.parties {
-			parties[k] = v.Copy()
-		}
+		d = model.data.Copy()
 	})
-	return parties
+	return d
 }

@@ -53,3 +53,21 @@ func (party *Party) Copy() *Party {
 	}
 	return p
 }
+
+type ModelData struct {
+	Parties map[uint32]*Party
+}
+
+func NewModelData() *ModelData {
+	return &ModelData{
+		Parties: map[uint32]*Party{},
+	}
+}
+
+func (model *ModelData) Copy() *ModelData {
+	m := NewModelData()
+	for k, v := range model.Parties {
+		m.Parties[k] = v.Copy()
+	}
+	return m
+}
