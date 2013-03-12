@@ -98,7 +98,7 @@ func (p *MissionParams) AddACharStr(value string) *MissionParams {
 }
 
 func (c *Client) CreateFormation(partyId uint32, parentId uint32,
-	name string, level int) (uint32, error) {
+	name string, level int, logLevel string) (uint32, error) {
 	tasker := &sword.Tasker{}
 	taskerId := uint32(0)
 	if parentId != 0 {
@@ -115,7 +115,7 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 	params := NewMissionParams()
 	params.AddAReal(float32(level))
 	params.AddACharStr(name)
-	params.AddACharStr("")
+	params.AddACharStr(logLevel)
 	actionType := sword.UnitMagicAction_formation_creation
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{

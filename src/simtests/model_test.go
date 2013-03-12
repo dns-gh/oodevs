@@ -161,32 +161,36 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 	model := client.Model
 
 	// Test with invalid tasker
-	_, err := client.CreateFormation(0, 0, "invalid-tasker", 1)
+	_, err := client.CreateFormation(0, 0, "invalid-tasker", 1, "")
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// Test invalid level
-	_, err = client.CreateFormation(1, 0, "invalid-tasker", 42)
+	_, err = client.CreateFormation(1, 0, "invalid-tasker", 42, "")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Test invalid log level
+	_, err = client.CreateFormation(1, 0, "invalid-tasker", 1, "invalid")
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Add formation to party
-	id1, err := client.CreateFormation(1, 0, "newformation", 1)
+	id1, err := client.CreateFormation(1, 0, "newformation", 1, "")
 
 	// Add formation to formation
-	_, err = client.CreateFormation(0, id1, "newformation2", 1)
+	_, err = client.CreateFormation(0, id1, "newformation2", 1, "aucun")
 	c.Assert(err, IsNil) // failed to create formation
 	dump := printParties(&prettyPrinter{}, model.GetParties()).GetOutput()
 	expected := "" +
 		`Party[1]
   Name: party1
-    Formation[525]
-      Id: 525
+    Formation[526]
+      Id: 526
       Name: newformation
       ParentId: 0
       PartyId: 1
-        Formation[526]
-          Id: 526
+        Formation[527]
+          Id: 527
           Name: newformation2
-          ParentId: 525
+          ParentId: 526
           PartyId: 1
 Party[2]
   Name: party2
