@@ -28,7 +28,6 @@ Exercise::Exercise( kernel::Controller& controller )
     : controller_    ( controller )
     , actionPlanning_( "" )
     , settings_      ()
-    , needSaving_( false )
 {
     // NOTHING
 }
@@ -43,76 +42,11 @@ Exercise::~Exercise()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Exercise::ReadAllowedSicVersions
-// Created: JSR 2013-02-25
-// -----------------------------------------------------------------------------
-bool Exercise::ReadAllowedSicVersions()
-{
-    allowedSicVersions_[ eSicAtlas ].clear();
-    allowedSicVersions_[ eSicDQPManager ].clear();
-    allowedSicVersions_[ eSicSICF ].clear();
-    allowedSicVersions_[ eSicSIR ].clear();
-
-    const std::string sicVersionFile = tools::GeneralConfig::BuildResourceChildFile( "sicVersion.xml" );
-    if( bfs::exists( sicVersionFile ) )
-    {
-        xml::xifstream xis( sicVersionFile );
-        xis >> xml::start( "sic-version" )
-                >> xml::list( *this, &Exercise::ReadSicVersions )
-            >> xml::end;
-        return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Exercise::ReadSicVersions
-// Created: JSR 2013-02-25
-// -----------------------------------------------------------------------------
-void Exercise::ReadSicVersions( const std::string& tag, xml::xistream& xis )
-{
-    xis >> xml::list( "version", *this, &Exercise::ReadSicVersion, tag );
-}
-
-namespace
-{
-    Exercise::E_Sics ConvertFromString( const std::string& sic )
-    {
-        if( sic == "atlas" )
-            return Exercise::eSicAtlas;
-        if( sic == "dqp-manager" )
-            return Exercise::eSicDQPManager;
-        if( sic == "sicf" )
-            return Exercise::eSicSICF;
-        if( sic == "sir" )
-            return Exercise::eSicSIR;
-        return Exercise::eSicNbr;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Exercise::ReadSicVersion
-// Created: JSR 2013-02-26
-// -----------------------------------------------------------------------------
-void Exercise::ReadSicVersion( xml::xistream& xis, const std::string& strSic )
-{
-    E_Sics sic = ConvertFromString( strSic );
-    if( sic < eSicNbr )
-        allowedSicVersions_[ sic ].push_back( T_AllowedSicVersion( xis.attribute< int >( "revision" ), xis.attribute< std::string >( "name" ) ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Exercise::Load
 // Created: SBO 2010-03-08
 // -----------------------------------------------------------------------------
 void Exercise::Load( xml::xistream& xis )
 {
-    needSaving_ = false;
-    bool sicPresent = ReadAllowedSicVersions();
-    sicVersions_[ eSicAtlas ].clear();
-    sicVersions_[ eSicDQPManager ].clear();
-    sicVersions_[ eSicSICF ].clear();
-    sicVersions_[ eSicSIR ].clear();
     std::string name;
     xis >> xml::start( "exercise" )
             >> xml::optional >> xml::start( "meta" )
@@ -124,52 +58,12 @@ void Exercise::Load( xml::xistream& xis )
                 >> xml::end // end resources
             >> xml::end // end meta
             >> xml::optional >> xml::start( "action-planning" )
-                >> xml::attribute( "file", actionPlanning_ )
-            >> xml::end; // end action-planning
-    if( sicPresent )
-        xis >> xml::optional >> xml::start( "sic" )
-                >> xml::attribute( "atlas", sicVersions_[ eSicAtlas ] )
-                >> xml::attribute( "dqp-manager", sicVersions_[ eSicDQPManager ] )
-                >> xml::attribute( "sicf", sicVersions_[ eSicSICF ] )
-                >> xml::attribute( "sir", sicVersions_[ eSicSIR ] )
-            >> xml::end; // sic
-    xis >> xml::end; // end exercise
+                >> xml::attribute< std::string >( "file", actionPlanning_ )
+            >> xml::end // end action-planning
+        >> xml::end; // end exercise
 
-    if( sicPresent )
-    {
-        CheckSic( eSicAtlas );
-        CheckSic( eSicDQPManager );
-        CheckSic( eSicSICF );
-        CheckSic( eSicSIR );
-    }
     name_ = name.c_str();
     controller_.Create( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Exercise::CheckSic
-// Created: JSR 2013-02-26
-// -----------------------------------------------------------------------------
-void Exercise::CheckSic( E_Sics sic )
-{
-    const T_AllowedSicVersions& sicVersions = allowedSicVersions_[ sic ];
-    if( sicVersions.empty() )
-        return;
-    std::string defaultName;
-    unsigned int revision = std::numeric_limits< unsigned int >::max();
-    for( int i = 0; i < sicVersions.size(); ++i )
-    {
-        const T_AllowedSicVersion& sicVersion = sicVersions[ i ];
-        if( sicVersion.name_ == sicVersions_[ sic ] )
-            return;
-        if( sicVersion.revision_ < revision )
-        {
-            revision = sicVersion.revision_;
-            defaultName = sicVersion.name_;
-        }
-    }
-    sicVersions_[ sic ] = defaultName;
-    needSaving_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -213,7 +107,7 @@ namespace
 {
     void CopyNode( const std::string& name, xml::xistream& xis, xml::xostream& xos )
     {
-        if( name != "meta" && name != "action-planning" && name != "settings" && name != "drawings" && name != "terrain" && name != "sic" )
+        if( name != "meta" && name != "action-planning" && name != "settings" && name != "drawings" && name != "terrain" )
             xos << xml::content( name, xis );
     }
     void CopyFromFile( const std::string& file, xml::xostream& xos )
@@ -244,25 +138,8 @@ void Exercise::SerializeAndSign( const tools::ExerciseConfig& config, const tool
     xos << xml::start( "drawings" ) << xml::attribute( "file", config.GetDrawingsFileName() ) << xml::end;
     if( !actionPlanning_.empty() )
         xos << xml::start( "action-planning" ) << xml::attribute( "file", actionPlanning_ ) << xml::end;
-    if( !sicVersions_[ eSicAtlas ].empty() || !sicVersions_[ eSicDQPManager ].empty() ||
-        !sicVersions_[ eSicSICF ].empty() || !sicVersions_[ eSicSIR ].empty() )
-        xos << xml::start( "sic" )
-                << xml::attribute( "atlas", sicVersions_[ eSicAtlas ] )
-                << xml::attribute( "dqp-manager", sicVersions_[ eSicDQPManager ] )
-                << xml::attribute( "sicf", sicVersions_[ eSicSICF ] )
-                << xml::attribute( "sir", sicVersions_[ eSicSIR ] )
-            << xml::end; // sic
     xos << xml::end;
     tools::WriteXmlCrc32Signature( file );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Exercise::NeedsSaving
-// Created: JSR 2013-02-26
-// -----------------------------------------------------------------------------
-bool Exercise::NeedsSaving() const
-{
-    return needSaving_;
 }
 
 // -----------------------------------------------------------------------------
@@ -382,36 +259,4 @@ void Exercise::Accept( ExerciseVisitor_ABC& visitor ) const
         visitor.VisitBriefing( it->first, it->second );
     for( T_Resources::const_iterator it = resources_.begin(); it != resources_.end(); ++it )
         visitor.VisitResource( it->first, it->second );
-    AcceptSic( visitor, eSicSICF );
-    AcceptSic( visitor, eSicSIR );
-    AcceptSic( visitor, eSicAtlas );
-    AcceptSic( visitor, eSicDQPManager );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Exercise::AcceptSic
-// Created: JSR 2013-02-26
-// -----------------------------------------------------------------------------
-void Exercise::AcceptSic( ExerciseVisitor_ABC& visitor, E_Sics sic ) const
-{
-    const T_AllowedSicVersions& sicVersion = allowedSicVersions_[ sic ];
-    for( auto it = sicVersion.begin(); it != sicVersion.end(); ++it )
-        visitor.VisitSicVersion( sic, it->revision_, it->name_, it->name_ == sicVersions_[ sic ] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Exercise::SetSicVersion
-// Created: JSR 2013-02-26
-// -----------------------------------------------------------------------------
-void Exercise::SetSicVersion( E_Sics sic, unsigned int revision )
-{
-    const T_AllowedSicVersions& sicVersion = allowedSicVersions_[ sic ];
-    for( auto it = sicVersion.begin(); it != sicVersion.end(); ++it )
-    {
-        if( it->revision_ == revision )
-        {
-            sicVersions_[ sic ] = it->name_;
-            return;
-        }
-    }
 }

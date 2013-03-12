@@ -452,10 +452,6 @@
         <source>Melmil</source>
         <translation>Melmil</translation>
     </message>
-    <message>
-        <source>SIC versions</source>
-        <translation>Versions des SICs</translation>
-    </message>
 </context>
 <context>
     <name>ExtensionsPanel</name>
@@ -1507,7 +1503,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>The following object is invalid and will be deleted at next save: %1</source>
-        <translation>L'objet suivant est invalide et sera supprimé à la prochaine sauvegarde : %1</translation>
+        <translation>L&apos;objet suivant est invalide et sera supprimé à la prochaine sauvegarde : %1</translation>
     </message>
 </context>
 <context>
