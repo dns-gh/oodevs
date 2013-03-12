@@ -487,6 +487,16 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& s
     glPopMatrix();
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::DrawApp6SymbolFixedSize
+// Created: LGY 2013-03-12
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor ) const
+{
+    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, 1.f );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawApp6Symbol
 // Created: AGE 2006-03-28
