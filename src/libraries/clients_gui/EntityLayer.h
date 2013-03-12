@@ -95,6 +95,8 @@ protected:
     virtual void HideTooltip();
 
     virtual void SelectInRectangle( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
+
+    virtual void Pick( const geometry::Point2f& point );
     //@}
 
     //! @name Layer_ABC implementation

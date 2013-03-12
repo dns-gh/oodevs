@@ -107,21 +107,25 @@ bool GhostsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
         return true;
     }
 
-    // Move ghost on map
     bool found = false;
-    for( unsigned int i = 0; i < entities_.size() && !found; ++i )
-        if( IsInSelection( *entities_[ i ], point ) )
-        {
-            highLightedGhost_ = static_cast< const kernel::Ghost_ABC* >( entities_[ i ] );
-            if( ( dnd::HasData< kernel::AgentType >( event ) && highLightedGhost_->GetGhostType() == eGhostType_Agent ) ||
-                ( dnd::HasData< kernel::AutomatType >( event ) && highLightedGhost_->GetGhostType() == eGhostType_Automat ) )
+    if( dnd::HasData< kernel::AgentType >( event ) || dnd::HasData< kernel::AutomatType >( event ) )
+    {
+        Pick( point );
+        // Move ghost on map
+        for( unsigned int i = 0; i < entities_.size() && !found; ++i )
+            if( IsInSelection( *entities_[ i ] ) )
             {
-                highLightedGhost_->OverFly( controllers_.actions_ );
-                found = true;
+                highLightedGhost_ = static_cast< const kernel::Ghost_ABC* >( entities_[ i ] );
+                if( ( dnd::HasData< kernel::AgentType >( event ) && highLightedGhost_->GetGhostType() == eGhostType_Agent ) ||
+                    ( dnd::HasData< kernel::AutomatType >( event ) && highLightedGhost_->GetGhostType() == eGhostType_Automat ) )
+                {
+                    highLightedGhost_->OverFly( controllers_.actions_ );
+                    found = true;
+                }
+                else
+                    highLightedGhost_ = 0;
             }
-            else
-                highLightedGhost_ = 0;
-        }
+    }
     if( !found )
     {
         highLightedGhost_ = 0;

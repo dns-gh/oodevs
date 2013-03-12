@@ -95,9 +95,11 @@ public:
     virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, bool fixedSize = true ) const;
 
     virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection );
+    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type );
     virtual void Picking();
     virtual void RenderPicking( const T_ObjectPicking& object );
     virtual bool IsPickingMode() const;
+    virtual bool ShouldDisplay( E_LayerTypes type ) const;
 
     virtual void CenterOn( const geometry::Point2f& point );
     virtual void Zoom( float width );
@@ -193,6 +195,7 @@ private:
     T_ObjectsPicking pickObjects_;
     QPoint point_;
     std::vector< unsigned int > selectionBuffer_;
+    std::set< E_LayerTypes > pickingLayers_;
     T_Geometry urbanGeometryBuffer_;
     //@}
 };

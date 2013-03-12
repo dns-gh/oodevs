@@ -64,6 +64,7 @@ public:
 
     virtual bool ShouldDisplay( const std::string& name = std::string() ) const;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const;
+    virtual bool ShouldDisplay( E_LayerTypes type ) const;
     virtual bool ShouldEdit( const kernel::GraphicalEntity_ABC& selectable ) const;
 
     virtual unsigned short StipplePattern( int factor = 1 ) const;
@@ -99,6 +100,7 @@ public:
     virtual void DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor ) const;
 
     virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection );
+    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type );
     virtual void Picking();
     virtual void RenderPicking( const T_ObjectPicking& object );
     virtual bool IsPickingMode() const;

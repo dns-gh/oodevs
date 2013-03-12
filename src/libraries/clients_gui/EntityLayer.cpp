@@ -102,7 +102,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Draw( const Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode )
 {
-    if( ShouldDisplay( entity ) )
+    if( ShouldDisplay( entity ) && tools_.ShouldDisplay( type_ ) )
     {
         SelectColor( entity );
         const geometry::Point2f position = GetPosition( entity );
@@ -342,4 +342,22 @@ bool EntityLayerBase::ShowTooltip( const T_ObjectPicking& selection )
 void EntityLayerBase::HideTooltip()
 {
     infoTooltip_->Hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::Pick
+// Created: LGY 2013-03-11
+// -----------------------------------------------------------------------------
+void EntityLayerBase::Pick( const geometry::Point2f& point )
+{
+    selection_.clear();
+    GlTools_ABC::T_ObjectsPicking selection;
+    tools_.FillSelection( point, selection, type_ );
+    if( !selection.empty() )
+        for( auto it = entities_.begin(); it != entities_.end(); ++it )
+        {
+            const kernel::Entity_ABC& entity = **it;
+            if( ShouldDisplay( **it ) && IsInLayerSelection( entity, selection, type_ ) )
+                selection_.insert( entity.GetId() );
+        }
 }

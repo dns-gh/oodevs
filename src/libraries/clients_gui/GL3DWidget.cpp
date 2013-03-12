@@ -733,6 +733,15 @@ void Gl3dWidget::FillSelection( const geometry::Point2f& /*point*/, T_ObjectsPic
 }
 
 // -----------------------------------------------------------------------------
+// Name: GL3DWidget::FillSelection
+// Created: LGY 2013-03-11
+// -----------------------------------------------------------------------------
+void Gl3dWidget::FillSelection( const geometry::Point2f& /*point*/, T_ObjectsPicking& /*selection*/, E_LayerTypes /*type*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: GL3DWidget::Picking
 // Created: LGY 2013-03-06
 // -----------------------------------------------------------------------------
@@ -766,4 +775,13 @@ bool Gl3dWidget::IsPickingMode() const
 float Gl3dWidget::LineWidth( float base ) const
 {
     return base;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::ShouldDisplay
+// Created: LGY 2013-03-11
+// -----------------------------------------------------------------------------
+bool Gl3dWidget::ShouldDisplay( E_LayerTypes /*type*/ ) const
+{
+    return true;
 }

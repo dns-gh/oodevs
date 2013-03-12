@@ -69,11 +69,13 @@ public:
     virtual void Select( bool, bool, bool ) const = 0;  //!< Returns the previous selection state
     virtual bool ShouldDisplay( const std::string& name = std::string() ) const = 0;
     virtual bool ShouldDisplay( const std::string& name, bool autoCondition ) const = 0;
+    virtual bool ShouldDisplay( E_LayerTypes type ) const = 0;
     //@}
 
     //! @name Picking
     //@{
     virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection ) = 0;
+    virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type ) = 0;
     virtual void Picking() = 0;
     virtual void RenderPicking( const T_ObjectPicking& object ) = 0;
     virtual bool IsPickingMode() const = 0;

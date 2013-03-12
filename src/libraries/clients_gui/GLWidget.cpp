@@ -1037,6 +1037,26 @@ void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: GLWidget::FillSelection
+// Created: LGY 2013-03-11
+// -----------------------------------------------------------------------------
+void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type )
+{
+    pickingLayers_.insert( type );
+    FillSelection( point, selection );
+    pickingLayers_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLWidget::ShouldDisplay
+// Created: LGY 2013-03-11
+// -----------------------------------------------------------------------------
+bool GlWidget::ShouldDisplay( E_LayerTypes type ) const
+{
+    return pickingLayers_.empty() || pickingLayers_.find( type ) != pickingLayers_.end();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::IsPickingMode
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------

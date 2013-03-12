@@ -165,6 +165,17 @@ bool GlProxy::ShouldDisplay( const std::string& name, bool autoCondition ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::ShouldDisplay
+// Created: LGY 2013-03-11
+// -----------------------------------------------------------------------------
+bool GlProxy::ShouldDisplay( E_LayerTypes type ) const
+{
+    if( tools_ )
+        return tools_->ShouldDisplay( type );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::Pixels
 // Created: AGE 2007-04-05
 // -----------------------------------------------------------------------------
@@ -486,6 +497,16 @@ void GlProxy::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& s
 {
     if( tools_ )
         tools_->FillSelection( point, selection );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::FillSelection
+// Created: LGY 2013-03-11
+// -----------------------------------------------------------------------------
+void GlProxy::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type )
+{
+    if( tools_ )
+        tools_->FillSelection( point, selection, type );
 }
 
 // -----------------------------------------------------------------------------
