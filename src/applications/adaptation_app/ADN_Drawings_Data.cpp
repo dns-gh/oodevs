@@ -38,6 +38,7 @@ namespace
         virtual void Select( bool, bool, bool ) const {}
         virtual bool ShouldDisplay( const std::string& ) const { return true; }
         virtual bool ShouldDisplay( const std::string&, bool ) const { return true; }
+        virtual bool ShouldDisplay( E_LayerTypes ) const { return true; }
         //@}
 
         //! @name Accessors
@@ -79,6 +80,7 @@ namespace
         virtual void DrawTacticalGraphics( const std::string&, const kernel::Location_ABC&, bool, bool ) const {}
         virtual void DrawApp6SymbolFixedSize( const std::string&, const geometry::Point2f&, float) const {}
         virtual void FillSelection( const geometry::Point2f&, T_ObjectsPicking& ) {};
+        virtual void FillSelection( const geometry::Point2f&, T_ObjectsPicking&, E_LayerTypes ) {};
         virtual void RenderPicking( const T_ObjectPicking& ) {};
         virtual bool IsPickingMode() const { return false; };
         virtual void Picking() {};
