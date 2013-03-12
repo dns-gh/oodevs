@@ -149,7 +149,7 @@ private:
     typedef T_Fonts::const_iterator         CIT_Fonts;
 
     typedef std::vector< GLdouble > T_Points;
-    typedef std::vector< T_Points > T_Geometry;;
+    typedef std::vector< T_Points > T_Geometry;
 
     typedef std::pair< unsigned int, E_LayerTypes > T_Object;
     typedef std::tuple< int, int, int, T_Object >   T_RenderObject;
