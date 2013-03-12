@@ -160,6 +160,10 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 	defer sim.Kill()
 	model := client.Model
 
+	// Test with invalid tasker
+	_, err := client.CreateFormation(0, 0, "invalid-tasker")
+	c.Assert(err, ErrorMatches, "(?i).*invalid_unit.*")
+
 	// Add formation to party
 	id1, err := client.CreateFormation(1, 0, "newformation")
 

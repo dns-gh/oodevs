@@ -24,6 +24,7 @@ func startSimOnExercise(c *C, exercise string, endTick int,
 
 func ConnectClient(c *C, sim *simu.SimProcess) *swapi.Client {
 	client, err := swapi.Connect(sim.DispatcherAddr)
+	client.PostTimeout = 3 * time.Minute
 	c.Assert(err, IsNil) // failed to connect to simulation
 	return client
 }
