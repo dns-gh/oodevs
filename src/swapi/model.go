@@ -2,6 +2,7 @@ package swapi
 
 import (
 	"fmt"
+	"sword"
 	"time"
 )
 
@@ -92,11 +93,20 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetName())
 			model.parties[party.Id] = party
 		} else if mm := m.GetFormationCreation(); mm != nil {
+			level, ok := sword.EnumNatureLevel_name[int32(mm.GetLevel())]
+			if !ok {
+				level = "unknown"
+			}
+			logLevel, ok := sword.EnumLogisticLevel_name[int32(mm.GetLogisticLevel())]
+			if !ok {
+				logLevel = "unknown"
+			}
 			formation := NewFormation(
 				mm.GetFormation().GetId(),
 				mm.GetName(),
 				mm.GetParent().GetId(),
-				mm.GetParty().GetId())
+				mm.GetParty().GetId(),
+				level, logLevel)
 			party, parent := model.findFormation(formation.PartyId,
 				formation.ParentId)
 			if party == nil {

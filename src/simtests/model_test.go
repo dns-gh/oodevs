@@ -39,6 +39,8 @@ func printParties(p *prettyPrinter, parties map[uint32]*swapi.Party) *prettyPrin
 		p.P("Name: %s", f.Name)
 		p.P("ParentId: %d", f.ParentId)
 		p.P("PartyId: %d", f.PartyId)
+		p.P("Level: %s", f.Level)
+		p.P("LogLevel: %s", f.LogLevel)
 		keys := []int{}
 		for k := range f.Formations {
 			keys = append(keys, int(k))
@@ -113,25 +115,32 @@ func (s *TestSuite) TestModelInitialization(c *C) {
       Name: formation-1
       ParentId: 0
       PartyId: 1
+      Level: xxxxx
+      LogLevel: none
         Formation[7]
           Id: 7
           Name: formation-1.1
           ParentId: 5
           PartyId: 1
+          Level: xxxx
+          LogLevel: none
         Formation[8]
           Id: 8
           Name: formation-1.2
           ParentId: 5
           PartyId: 1
+          Level: xxxx
+          LogLevel: none
     Formation[6]
       Id: 6
       Name: empty
       ParentId: 0
       PartyId: 1
+      Level: xxxxx
+      LogLevel: none
 Party[2]
   Name: empty-party
 `
-
 	c.Assert(dump, Equals, expected)
 }
 
@@ -176,7 +185,7 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 	id1, err := client.CreateFormation(1, 0, "newformation", 1, "")
 
 	// Add formation to formation
-	_, err = client.CreateFormation(0, id1, "newformation2", 1, "aucun")
+	_, err = client.CreateFormation(0, id1, "newformation2", 2, "aucun")
 	c.Assert(err, IsNil) // failed to create formation
 	dump := printParties(&prettyPrinter{}, model.GetParties()).GetOutput()
 	expected := "" +
@@ -187,11 +196,15 @@ func (s *TestSuite) TestCreateFormation(c *C) {
       Name: newformation
       ParentId: 0
       PartyId: 1
+      Level: b
+      LogLevel: none
         Formation[527]
           Id: 527
           Name: newformation2
           ParentId: 526
           PartyId: 1
+          Level: o
+          LogLevel: none
 Party[2]
   Name: party2
 `
