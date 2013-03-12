@@ -138,7 +138,7 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupTest )
 {
     int argc = 1;
     char* argv = "";
-    QApplication app(argc, &argv);
+    QApplication app( argc, &argv );
 
     assert(qApp);
     xml::xistringstream xis( "<knowledge-group id=\"42\" name =\"group1\"/>" );
