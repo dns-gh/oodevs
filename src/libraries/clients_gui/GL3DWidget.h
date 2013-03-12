@@ -100,6 +100,12 @@ public:
     virtual bool ShouldDisplay( E_LayerTypes type ) const;
     //@}
 
+protected:
+    //! @name Operations
+    //@{
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -140,6 +146,7 @@ private:
     unsigned int frame_;
     bool isInitialized_;
     ViewFrustum current_;
+    float SymbolSize_;
     //@}
 };
 

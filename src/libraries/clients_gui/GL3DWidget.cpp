@@ -15,6 +15,7 @@
 
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/OptionVariant.h"
 
 #include <graphics/Compass.h>
 #include <graphics/EventStrategy_ABC.h>
@@ -41,6 +42,7 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, float width,
     , zRatio_        ( 5 )
     , frame_         ( 0 )
     , isInitialized_ ( false )
+    , SymbolSize_  ( 3.f )
 {
     // NOTHING
 }
@@ -138,8 +140,10 @@ float Gl3dWidget::Pixels( const Point2f& at ) const
 // Name: Gl3dWidget::GetAdaptiveZoomFactor
 // Created: RPD 2009-12-14
 // -----------------------------------------------------------------------------
-float Gl3dWidget::GetAdaptiveZoomFactor( bool /* bVariableSize = true*/ ) const
+float Gl3dWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 {
+    if( !bVariableSize )
+        return SymbolSize_;
     return 1.f;
 }
 
@@ -161,7 +165,7 @@ void Gl3dWidget::DrawCross( const Point2f& at, float size /* = -1.f*/, E_Unit un
     if( size < 0 )
         size = 10.f * Pixels( at );
     else if( unit == pixels )
-        size *= Pixels( at );
+        size *= Pixels( at ) * GetAdaptiveZoomFactor( false ) / 100.f;
 
     const Vector2f u( size, size );
     const Vector2f v( size, -size );
@@ -404,11 +408,15 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Un
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /* = 1.f*/, bool /*fixedSize = true */ ) const
 {
+    if( factor < -1.f )
+        factor = GetAdaptiveZoomFactor( false );
+    else
+        factor *= GetAdaptiveZoomFactor( false );
     // $$$$ AGE 2006-09-11:
     const float halfWidth   = factor * 600.f * 0.5f;
-    const float deltaHeight = factor * 600.f * 0.062f;
+    const float deltaHeight = factor * 600.f * 0.04f;
     const float xdelta = ( 1 + h ) * halfWidth;
-    const float barHeight = 60;
+    const float barHeight = 60 * GetAdaptiveZoomFactor( false );
     glPushMatrix();
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glTranslatef( center.X(), center.Y(), ElevationAt( center ) + 100.f );
@@ -466,7 +474,9 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where, const 
 void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float /*thickness = 1.f*/ ) const
 {
     if( factor < 0 )
-        factor = 1;
+        factor = GetAdaptiveZoomFactor( false );
+    else
+        factor *= GetAdaptiveZoomFactor( false );
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
     const float svgWidth = 360;
@@ -794,4 +804,16 @@ float Gl3dWidget::LineWidth( float base ) const
 bool Gl3dWidget::ShouldDisplay( E_LayerTypes /*type*/ ) const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::OptionChanged
+// Created: MMC 2013-03-12
+// -----------------------------------------------------------------------------
+void Gl3dWidget::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == "SymbolSize" )
+        SymbolSize_ = value.To< float >();
+    else
+        GlToolsBase::OptionChanged( name, value );
 }
