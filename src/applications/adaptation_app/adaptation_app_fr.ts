@@ -1670,30 +1670,30 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     <name>ADN_FuneralPackagingResources_GUI</name>
     <message>
         <source>Resource</source>
-        <translation type="unfinished">Dotation</translation>
+        <translation>Dotation</translation>
     </message>
     <message>
         <source>Packaging duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Durée de paquetage</translation>
     </message>
     <message>
         <source>Is terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Final</translation>
     </message>
     <message>
         <source>Add resource</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une dotation</translation>
     </message>
     <message>
         <source>Remove resource</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirer une dotation</translation>
     </message>
 </context>
 <context>
     <name>ADN_Funeral_GUI</name>
     <message>
         <source>Fake transporter speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse du transporteur virtuel</translation>
     </message>
 </context>
 <context>
