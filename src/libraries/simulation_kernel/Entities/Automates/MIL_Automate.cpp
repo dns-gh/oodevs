@@ -559,7 +559,7 @@ void MIL_Automate::UpdateState()
         pDotationSupplyManager_->Update();
         pStockSupplyManager_->Update();
         for( auto it = pionsToDelete_.begin(); it != pionsToDelete_.end(); ++it )
-            ( *it )->DeleteUnit();
+            ( *it )->DeleteUnit( 0 );
         pionsToDelete_.clear();
     }
     catch( const std::exception& e )
@@ -1010,7 +1010,7 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
         {
             if( !pPionPC_ )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_unit );
-            pPionPC_->OnReceiveUnitMagicAction( msg, armies );
+            pPionPC_->OnReceiveUnitMagicAction( msg, armies, 0 );
         }
         break;
     }

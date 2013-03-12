@@ -826,7 +826,7 @@ void MIL_AgentPion::SpecializedDelete()
 // Name: MIL_AgentPion::DeleteUnit
 // Created: JSR 2013-02-19
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::DeleteUnit()
+void MIL_AgentPion::DeleteUnit( unsigned int nCtx )
 {
     if( markedForDestruction_ )
         return;
@@ -855,16 +855,16 @@ void MIL_AgentPion::DeleteUnit()
 
     client::UnitDestruction msg;
     msg().mutable_unit()->set_id( GetID() );
-    msg.Send( NET_Publisher_ABC::Publisher() );
+    msg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveDeleteUnit
 // Created: JSR 2013-01-29
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveDeleteUnit()
+void MIL_AgentPion::OnReceiveDeleteUnit( unsigned int nCtx )
 {
-    DeleteUnit();
+    DeleteUnit( nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -1146,7 +1146,7 @@ void MIL_AgentPion::OnReceiveCreateWound( const sword::MissionParameters& msg )
 // Name: MIL_AgentPion::OnReceiveUnitMagicAction
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies )
+void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies, unsigned int nCtx )
 {
     switch( msg.type() )
     {
@@ -1178,7 +1178,7 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         OnReceiveDestroyAll();
         break;
     case sword::UnitMagicAction::delete_unit:
-        OnReceiveDeleteUnit();
+        OnReceiveDeleteUnit( nCtx );
         break;
     case sword::UnitMagicAction::change_human_factors:
         OnReceiveChangeHumanFactors( msg.parameters() );

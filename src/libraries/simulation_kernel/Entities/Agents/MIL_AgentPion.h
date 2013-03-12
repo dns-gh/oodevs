@@ -131,7 +131,7 @@ public:
     void UpdateNetwork();
     void Clean();
     void Register( MissionController_ABC& pController );
-    void DeleteUnit();
+    void DeleteUnit( unsigned int nCtx );
     //@}
 
     //! @name Knowledge
@@ -151,7 +151,7 @@ public:
     void SendFullState( unsigned int nCtx ) const;
     void SendKnowledge( unsigned int nCtx ) const;
 
-    void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies );
+    void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies, unsigned int nCtx );
     void OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& asn );
     void OnReceiveOrder( const sword::UnitOrder& msg );
     void OnReceiveFragOrder( const sword::FragOrder& msg );
@@ -192,7 +192,7 @@ private:
     void OnReceiveResupply( const sword::MissionParameters& msg );
     void OnReceiveDestroyAll();
     void OnReceiveDestroyComponent();
-    void OnReceiveDeleteUnit();
+    void OnReceiveDeleteUnit( unsigned int nCtx );
     void OnReceiveRecoverHumansTransporters();
     void OnReceiveCreateWound( const sword::MissionParameters& asn );
     void OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg );

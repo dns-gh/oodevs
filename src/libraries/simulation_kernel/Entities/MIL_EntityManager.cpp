@@ -1146,7 +1146,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else if( MIL_Automate* pAutomate = FindAutomate( id ) )
                 pAutomate->OnReceiveUnitMagicAction( message, *armyFactory_ );
             else if( MIL_AgentPion* pPion = FindAgentPion( id ) )
-                pPion->OnReceiveUnitMagicAction( message, *armyFactory_ );
+                pPion->OnReceiveUnitMagicAction( message, *armyFactory_, nCtx );
             else if( MIL_Population* pPopulation = FindPopulation( id ) )
                 pPopulation->OnReceiveUnitMagicAction( message );
             else if( MIL_Inhabitant* pInhabitant = FindInhabitant( id ) )
