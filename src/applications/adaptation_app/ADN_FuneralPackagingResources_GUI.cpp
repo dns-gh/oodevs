@@ -123,6 +123,7 @@ void ADN_FuneralPackagingResources_GUI::AddNewDotation( ADN_Resources_Data::Cate
 {
     ADN_FuneralPackagingResource* pNewInfo = new ADN_FuneralPackagingResource();
     pNewInfo->resource_ = &category;
+    pNewInfo->resource_.SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( category.parentResource_.nType_ ).GetCategories() );
     pNewInfo->processDuration_ = "1h";
     pNewInfo->terminal_ = false;
 

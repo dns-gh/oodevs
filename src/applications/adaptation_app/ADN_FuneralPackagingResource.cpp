@@ -45,9 +45,10 @@ void ADN_FuneralPackagingResource::ReadArchive( xml::xistream& input )
           >> xml::attribute( "process-duration", processDuration_ )
           >> xml::attribute( "terminal", terminal_ );
     ADN_Resources_Data::CategoryInfo* resource = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( resourceName );
-    if( resource == 0 )
+    if( !resource )
         throw MASA_EXCEPTION( tools::translate( "Funeral_Data", "Invalid resource '%1'" ).arg( resourceName.c_str() ).toStdString() );
     resource_ = resource;
+    resource_.SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( resource->parentResource_.nType_ ).GetCategories() );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,10 +75,12 @@ void ADN_FuneralPackagingResource::ExchangeData( ADN_FuneralPackagingResource& p
     bool curTerminal                = terminal_.GetData();
 
     resource_.SetData( packResource.resource_.GetData() );
+    resource_.SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( packResource.resource_.GetData()->parentResource_.nType_ ).GetCategories() );
     processDuration_    = packResource.processDuration_.GetData();
     terminal_           = packResource.terminal_.GetData();
 
     packResource.resource_.SetData( curResource );
+    packResource.resource_.SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( curResource->parentResource_.nType_ ).GetCategories() );
     packResource.processDuration_   = curProcessDuration;
     packResource.terminal_          = curTerminal;
 }
