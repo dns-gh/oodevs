@@ -64,9 +64,10 @@ void ADN_FuneralPackagingResource::ReadArchive( xml::xistream& input )
           >> xml::attribute( "process-duration", processDuration_ )
           >> xml::attribute( "terminal", terminal_ );
     ADN_Equipement_Data::CategoryInfo* resource = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( resourceName );
-    if( resource == 0 )
+    if( !resource )
         throw ADN_DataException( tools::translate( "Funeral_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Funeral_Data", "Invalid resource '%1'" ).arg( resourceName.c_str() ).toAscii().constData() );
     resource_ = resource;
+    resource_.SetVector( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( resource->parentResource_.nType_ ).GetCategories() );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,10 +94,12 @@ void ADN_FuneralPackagingResource::ExchangeData( ADN_FuneralPackagingResource& p
     bool curTerminal                = terminal_.GetData();
 
     resource_.SetData( packResource.resource_.GetData(), true );
+    resource_.SetVector( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( packResource.resource_.GetData()->parentResource_.nType_ ).GetCategories() );
     processDuration_    = packResource.processDuration_.GetData();
     terminal_           = packResource.terminal_.GetData();
 
     packResource.resource_.SetData( curResource, true );
+    packResource.resource_.SetVector( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( curResource->parentResource_.nType_ ).GetCategories() );
     packResource.processDuration_   = curProcessDuration;
     packResource.terminal_          = curTerminal;
 }
