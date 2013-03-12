@@ -98,7 +98,7 @@ func (p *MissionParams) AddACharStr(value string) *MissionParams {
 }
 
 func (c *Client) CreateFormation(partyId uint32, parentId uint32,
-	name string) (uint32, error) {
+	name string, level int) (uint32, error) {
 	tasker := &sword.Tasker{}
 	taskerId := uint32(0)
 	if parentId != 0 {
@@ -112,7 +112,10 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 		}
 		taskerId = partyId
 	}
-	params := NewMissionParams().AddAReal(8).AddACharStr(name).AddACharStr("")
+	params := NewMissionParams()
+	params.AddAReal(float32(level))
+	params.AddACharStr(name)
+	params.AddACharStr("")
 	actionType := sword.UnitMagicAction_formation_creation
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
@@ -137,12 +140,10 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 		if msg.SimulationToClient == nil || msg.Context != context {
 			return false
 		}
-		if state == 0 {
-			// Wait for the first MagicActionAck
-			reply := msg.SimulationToClient.GetMessage().GetMagicActionAck()
-			if reply == nil {
-				quit <- errors.New(fmt.Sprintf("MagicActionAck expected, go %v",
-					msg.SimulationToClient.GetMessage()))
+		m := msg.SimulationToClient.GetMessage()
+		if reply := m.GetMagicActionAck(); reply != nil {
+			if state != 0 {
+				quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
 				return true
 			}
 			code := reply.GetErrorCode()
@@ -157,40 +158,46 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 			}
 			state = 1
 			return false
-		} else if state == 1 {
+		} else if reply := m.GetFormationCreation(); reply != nil {
 			// FormationCreation feedback
-			reply := msg.SimulationToClient.GetMessage().GetFormationCreation()
-			if reply == nil {
-				quit <- errors.New(fmt.Sprintf("FormationCreation expected, go %v",
-					msg.SimulationToClient.GetMessage()))
+			if state != 1 {
+				quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
 				return true
 			}
 			formationId = reply.GetFormation().GetId()
 			state = 2
 			return false
-		} else if state == 2 {
+		} else if reply := m.GetUnitMagicActionAck(); reply != nil {
 			// Wait for the final UnitMagicActionAck
-			reply := msg.SimulationToClient.GetMessage().GetUnitMagicActionAck()
-			if reply == nil {
-				quit <- errors.New(fmt.Sprintf("UnitMagicActionAck expected, go %v",
-					msg.SimulationToClient.GetMessage()))
-				return true
-			}
 			code := reply.GetErrorCode()
-			if code == sword.UnitActionAck_no_error {
-				receivedTaskerId = reply.GetUnit().GetId()
-				quit <- nil
-				return true
+			if state == 0 {
+				if code == sword.UnitActionAck_no_error {
+					quit <- errors.New(fmt.Sprintf(
+						"Got unexpected success %v", m))
+				} else {
+					err = errors.New("unknown error")
+					name, ok := sword.UnitActionAck_ErrorCode_name[int32(code)]
+					if ok {
+						err = errors.New(name)
+					}
+					quit <- err
+				}
+			} else if state == 2 {
+				if code != sword.UnitActionAck_no_error {
+					quit <- errors.New(fmt.Sprintf(
+						"Got unexpected failure %v", m))
+				} else {
+					receivedTaskerId = reply.GetUnit().GetId()
+					quit <- nil
+				}
+			} else {
+				quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
 			}
-			err = errors.New("unknown error")
-			name, ok := sword.UnitActionAck_ErrorCode_name[int32(code)]
-			if !ok {
-				err = errors.New(name)
-			}
-			quit <- err
+			return true
+		} else {
+			quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
 		}
 		return true
-
 	}
 	c.Post(msg, handler)
 	err := <-quit
