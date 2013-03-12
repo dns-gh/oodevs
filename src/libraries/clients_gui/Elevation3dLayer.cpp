@@ -92,6 +92,8 @@ bool Elevation3dLayer::HandleKeyPress( QKeyEvent* event )
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::Paint( const ViewFrustum& frustum )
 {
+    if( !ShouldDrawPass() )
+        return;
     if( reset_ )
     {
         Reset();
