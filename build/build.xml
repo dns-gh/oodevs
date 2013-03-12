@@ -120,7 +120,7 @@
         </build-lib>
     </target>
 
-    <target name="library.preparation" depends="library.clients_gui,library.actions_gui,library.indicators,library.flood,library.geostore" description="build preparation static library">
+    <target name="library.preparation" depends="library.clients_gui,library.actions_gui,library.indicators,library.flood,library.geostore,library.meteo" description="build preparation static library">
         <build-lib name="preparation" depends="qt4" pattern="lib${ant.project.name}_preparation-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
