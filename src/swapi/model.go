@@ -93,6 +93,23 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetParty().GetId(),
 				mm.GetName())
 			d.Parties[party.Id] = party
+		} else if mm := m.GetAutomatCreation(); mm != nil {
+			automat := NewAutomat(
+				mm.GetAutomat().GetId(),
+				mm.GetParty().GetId(),
+				mm.GetName())
+			if parent := mm.GetParent().GetAutomat(); parent != nil {
+				// XXX: automats of automats
+			} else if parent := mm.GetParent().GetFormation(); parent != nil {
+				_, f := model.findFormation(mm.GetParty().GetId(),
+					parent.GetId())
+				if f != nil {
+					f.Automats[automat.Id] = automat
+					return
+				}
+			}
+			// XXX: report error here
+
 		} else if mm := m.GetFormationCreation(); mm != nil {
 			level, ok := sword.EnumNatureLevel_name[int32(mm.GetLevel())]
 			if !ok {

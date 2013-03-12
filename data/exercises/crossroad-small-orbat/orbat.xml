@@ -6,7 +6,15 @@
       <tactical>
         <formation id="5" level="xxxxx" name="formation-1" symbol="symbols/sfgpu">
           <formation id="7" level="xxxx" name="formation-1.1" symbol="symbols/sfgpu"/>
-          <formation id="8" level="xxxx" name="formation-1.2" symbol="symbols/sfgpu"/>
+          <formation id="8" level="xxxx" name="formation-1.2" symbol="symbols/sfgpucath">
+            <automat engaged="true" id="9" knowledge-group="3" name="ARMOR.MBT squadron" symbol="symbols/sfgpucath" type="ARMOR.MBT squadron">
+              <unit command-post="true" id="10" name="ARMOR.Armored squadron CP" position="28RDS1997435740" type="ARMOR.Armored squadron CP"/>
+              <unit command-post="false" id="11" name="ARMOR.MBT platoon" position="28RDS1997535840" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="12" name="ARMOR.MBT platoon" position="28RDS2007435740" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="13" name="ARMOR.MBT platoon" position="28RDS1997335641" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="14" name="ARMOR.MBT platoon" position="28RDS1987435741" type="ARMOR.MBT platoon"/>
+            </automat>
+          </formation>
         </formation>
         <formation id="6" level="xxxxx" name="empty" symbol="symbols/sfgpu"/>
       </tactical>

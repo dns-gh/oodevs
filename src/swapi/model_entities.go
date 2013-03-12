@@ -1,5 +1,27 @@
 package swapi
 
+type Automat struct {
+	Id      uint32
+	PartyId uint32
+	Name    string
+}
+
+func NewAutomat(id, partyId uint32, name string) *Automat {
+	return &Automat{
+		Id:      id,
+		PartyId: partyId,
+		Name:    name,
+	}
+}
+
+func (a *Automat) Copy() *Automat {
+	return &Automat{
+		Id:      a.Id,
+		PartyId: a.PartyId,
+		Name:    a.Name,
+	}
+}
+
 type Formation struct {
 	Id         uint32
 	PartyId    uint32
@@ -8,6 +30,7 @@ type Formation struct {
 	Level      string
 	LogLevel   string
 	Formations map[uint32]*Formation
+	Automats   map[uint32]*Automat
 }
 
 func NewFormation(id uint32, name string, parentId uint32,
@@ -20,6 +43,7 @@ func NewFormation(id uint32, name string, parentId uint32,
 		Level:      level,
 		LogLevel:   logLevel,
 		Formations: map[uint32]*Formation{},
+		Automats:   map[uint32]*Automat{},
 	}
 }
 
@@ -28,6 +52,9 @@ func (formation *Formation) Copy() *Formation {
 		formation.PartyId, formation.Level, formation.LogLevel)
 	for k, v := range formation.Formations {
 		f.Formations[k] = v.Copy()
+	}
+	for k, v := range formation.Automats {
+		f.Automats[k] = v.Copy()
 	}
 	return f
 }

@@ -33,6 +33,12 @@ func (p *prettyPrinter) GetOutput() string {
 }
 
 func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
+	printAutomat := func(p *prettyPrinter, a *swapi.Automat) {
+		p.P("Id: %d", a.Id)
+		p.P("PartyId: %d", a.PartyId)
+		p.P("Name: %s", a.Name)
+	}
+
 	var printFormation func(p *prettyPrinter, f *swapi.Formation)
 	printFormation = func(p *prettyPrinter, f *swapi.Formation) {
 		p.P("Id: %d", f.Id)
@@ -52,6 +58,21 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 			p.P("Formation[%d]", k)
 			p.Shift()
 			printFormation(p, child)
+			p.Unshift()
+			p.Unshift()
+		}
+
+		keys = []int{}
+		for k := range f.Automats {
+			keys = append(keys, int(k))
+		}
+		sort.Ints(keys)
+		for _, k := range keys {
+			child := f.Automats[uint32(k)]
+			p.Shift()
+			p.P("Automat[%d]", k)
+			p.Shift()
+			printAutomat(p, child)
 			p.Unshift()
 			p.Unshift()
 		}
@@ -131,6 +152,10 @@ func (s *TestSuite) TestModelInitialization(c *C) {
           PartyId: 1
           Level: xxxx
           LogLevel: none
+            Automat[9]
+              Id: 9
+              PartyId: 1
+              Name: ARMOR.MBT squadron
     Formation[6]
       Id: 6
       Name: empty
