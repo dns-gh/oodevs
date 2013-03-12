@@ -376,4 +376,5 @@ void CircularEventStrategy::HideTooltip()
     tooltiped_ = false;
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
         ( *it )->HideTooltip();
+    timer_->stop();
 }
