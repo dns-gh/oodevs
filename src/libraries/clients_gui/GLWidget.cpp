@@ -82,7 +82,8 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, flo
 // -----------------------------------------------------------------------------
 GlWidget::~GlWidget()
 {
-    gluDeleteTess( tesselator_ );
+    if( tesselator_ )
+        gluDeleteTess( tesselator_ );
     glDeleteLists( circle_, 1 );
 }
 
