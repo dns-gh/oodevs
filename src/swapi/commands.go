@@ -19,14 +19,16 @@ var (
 	ErrInvalidLogin = errors.New("invalid login")
 )
 
-func (c *Client) Login(username, password string) error {
+func (c *Client) LoginWithVersion(username, password, version string) error {
 	msg := SwordMessage{
 		ClientToAuthentication: &sword.ClientToAuthentication{
 			Message: &sword.ClientToAuthentication_Content{
 				AuthenticationRequest: &sword.AuthenticationRequest{
 					Login:    proto.String(username),
 					Password: proto.String(password),
-					Version:  &sword.ProtocolVersion{Value: proto.String("5.0")},
+					Version: &sword.ProtocolVersion{
+						Value: proto.String(version),
+					},
 				},
 			},
 		},
@@ -52,7 +54,7 @@ func (c *Client) Login(username, password string) error {
 		}
 		err = ErrInvalidLogin
 		name, ok := sword.AuthenticationResponse_ErrorCode_name[int32(code)]
-		if !ok {
+		if ok {
 			err = errors.New(name)
 		}
 		quit <- err
@@ -60,6 +62,10 @@ func (c *Client) Login(username, password string) error {
 	}
 	c.Post(msg, handler)
 	return <-quit
+}
+
+func (c *Client) Login(username, password string) error {
+	return c.LoginWithVersion(username, password, "5.0")
 }
 
 type MissionParams struct {

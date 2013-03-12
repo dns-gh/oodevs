@@ -60,7 +60,13 @@ func (s *TestSuite) TestLogin(c *C) {
 	// Also check returned context is valid
 	addContextChecker(client)
 	err := client.Login("foo", "bar")
-	c.Assert(err, NotNil) // login with invalid credentials should have failed
+	c.Assert(err, ErrorMatches, "invalid_login")
+	client.Close()
+
+	// Test invalid version
+	client = ConnectClient(c, sim)
+	err = client.LoginWithVersion("admin", "user", "1.0")
+	c.Assert(err, ErrorMatches, "mismatched_protocol_version")
 	client.Close()
 
 	// Test valid login
