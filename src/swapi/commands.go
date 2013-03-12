@@ -62,6 +62,41 @@ func (c *Client) Login(username, password string) error {
 	return <-quit
 }
 
+type MissionParams struct {
+	Params *sword.MissionParameters
+}
+
+func NewMissionParams() *MissionParams {
+	return &MissionParams{
+		Params: &sword.MissionParameters{
+			Elem: []*sword.MissionParameter{},
+		},
+	}
+}
+
+func (p *MissionParams) addParam(param *sword.MissionParameter_Value) *MissionParams {
+	holder := &sword.MissionParameter{
+		NullValue: proto.Bool(false),
+		Value: []*sword.MissionParameter_Value{
+			param,
+		},
+	}
+	p.Params.Elem = append(p.Params.Elem, holder)
+	return p
+}
+
+func (p *MissionParams) AddAReal(value float32) *MissionParams {
+	param := &sword.MissionParameter_Value{}
+	param.AReal = proto.Float32(value)
+	return p.addParam(param)
+}
+
+func (p *MissionParams) AddACharStr(value string) *MissionParams {
+	param := &sword.MissionParameter_Value{}
+	param.ACharStr = proto.String(value)
+	return p.addParam(param)
+}
+
 func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 	name string) (uint32, error) {
 	tasker := &sword.Tasker{}
@@ -77,42 +112,15 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 		}
 		taskerId = partyId
 	}
-
+	params := NewMissionParams().AddAReal(8).AddACharStr(name).AddACharStr("")
 	actionType := sword.UnitMagicAction_formation_creation
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker: tasker,
-					Type:   &actionType,
-					Parameters: &sword.MissionParameters{
-						Elem: []*sword.MissionParameter{
-							&sword.MissionParameter{
-								NullValue: proto.Bool(false),
-								Value: []*sword.MissionParameter_Value{
-									&sword.MissionParameter_Value{
-										AReal: proto.Float32(8),
-									},
-								},
-							},
-							&sword.MissionParameter{
-								NullValue: proto.Bool(false),
-								Value: []*sword.MissionParameter_Value{
-									&sword.MissionParameter_Value{
-										ACharStr: proto.String(name),
-									},
-								},
-							},
-							&sword.MissionParameter{
-								NullValue: proto.Bool(false),
-								Value: []*sword.MissionParameter_Value{
-									&sword.MissionParameter_Value{
-										ACharStr: proto.String(""),
-									},
-								},
-							},
-						},
-					},
+					Tasker:     tasker,
+					Type:       &actionType,
+					Parameters: params.Params,
 				},
 			},
 		},
