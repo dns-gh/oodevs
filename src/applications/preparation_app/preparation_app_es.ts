@@ -452,6 +452,10 @@
         <source>Melmil</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>SIC versions</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExtensionsPanel</name>
