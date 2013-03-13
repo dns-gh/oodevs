@@ -107,6 +107,7 @@ void ADN_Weapons_WizardPage::ApplyOptions()
         std::string strLauncher = pComboLauncher_->currentText().toStdString();
         ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
         element_->ptrLauncher_ = pLauncher;
+        element_->bDirect_ = pLauncher->bDirect_.GetData();
 
         std::string strAmmo = pComboAmmo_->currentText().toStdString();
         ADN_Resources_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition );
