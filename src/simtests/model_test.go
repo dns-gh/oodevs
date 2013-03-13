@@ -33,10 +33,45 @@ func (p *prettyPrinter) GetOutput() string {
 }
 
 func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
-	printAutomat := func(p *prettyPrinter, a *swapi.Automat) {
+	printUnit := func(p *prettyPrinter, u *swapi.Unit) {
+		p.P("Id: %d", u.Id)
+		p.P("AutomatId: %d", u.AutomatId)
+		p.P("Name: %s", u.Name)
+	}
+
+	var printAutomat func(p *prettyPrinter, a *swapi.Automat)
+	printAutomat = func(p *prettyPrinter, a *swapi.Automat) {
 		p.P("Id: %d", a.Id)
 		p.P("PartyId: %d", a.PartyId)
 		p.P("Name: %s", a.Name)
+		keys := []int{}
+		for k := range a.Automats {
+			keys = append(keys, int(k))
+		}
+		sort.Ints(keys)
+		for _, k := range keys {
+			child := a.Automats[uint32(k)]
+			p.Shift()
+			p.P("Automat[%d]", k)
+			p.Shift()
+			printAutomat(p, child)
+			p.Unshift()
+			p.Unshift()
+		}
+
+		for k := range a.Units {
+			keys = append(keys, int(k))
+		}
+		sort.Ints(keys)
+		for _, k := range keys {
+			child := a.Units[uint32(k)]
+			p.Shift()
+			p.P("Unit[%d]", k)
+			p.Shift()
+			printUnit(p, child)
+			p.Unshift()
+			p.Unshift()
+		}
 	}
 
 	var printFormation func(p *prettyPrinter, f *swapi.Formation)
@@ -156,6 +191,26 @@ func (s *TestSuite) TestModelInitialization(c *C) {
               Id: 9
               PartyId: 1
               Name: ARMOR.MBT squadron
+                Unit[10]
+                  Id: 10
+                  AutomatId: 9
+                  Name: ARMOR.Armored squadron CP
+                Unit[11]
+                  Id: 11
+                  AutomatId: 9
+                  Name: ARMOR.MBT platoon
+                Unit[12]
+                  Id: 12
+                  AutomatId: 9
+                  Name: ARMOR.MBT platoon
+                Unit[13]
+                  Id: 13
+                  AutomatId: 9
+                  Name: ARMOR.MBT platoon
+                Unit[14]
+                  Id: 14
+                  AutomatId: 9
+                  Name: ARMOR.MBT platoon
     Formation[6]
       Id: 6
       Name: empty

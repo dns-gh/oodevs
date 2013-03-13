@@ -1,10 +1,29 @@
 package swapi
 
+type Unit struct {
+	Id        uint32
+	AutomatId uint32
+	Name      string
+}
+
+func NewUnit(id, automatId uint32, name string) *Unit {
+	return &Unit{
+		Id:        id,
+		AutomatId: automatId,
+		Name:      name,
+	}
+}
+
+func (u *Unit) Copy() *Unit {
+	return NewUnit(u.Id, u.AutomatId, u.Name)
+}
+
 type Automat struct {
 	Id       uint32
 	PartyId  uint32
 	Name     string
-	Automats []*Automat
+	Automats map[uint32]*Automat
+	Units    map[uint32]*Unit
 }
 
 func NewAutomat(id, partyId uint32, name string) *Automat {
@@ -12,7 +31,8 @@ func NewAutomat(id, partyId uint32, name string) *Automat {
 		Id:       id,
 		PartyId:  partyId,
 		Name:     name,
-		Automats: []*Automat{},
+		Automats: map[uint32]*Automat{},
+		Units:    map[uint32]*Unit{},
 	}
 }
 
@@ -20,6 +40,9 @@ func (a *Automat) Copy() *Automat {
 	other := NewAutomat(a.Id, a.PartyId, a.Name)
 	for k, v := range a.Automats {
 		other.Automats[k] = v.Copy()
+	}
+	for k, v := range a.Units {
+		other.Units[k] = v.Copy()
 	}
 	return other
 }
@@ -178,6 +201,15 @@ func (model *ModelData) addAutomat(automatId, formationId uint32, a *Automat) bo
 	}
 	if parent := model.FindFormation(formationId); parent != nil {
 		parent.Automats[a.Id] = a
+		return true
+	}
+	return false
+}
+
+func (model *ModelData) addUnit(unit *Unit) bool {
+	f := model.FindAutomat(unit.AutomatId)
+	if f != nil {
+		f.Units[unit.Id] = unit
 		return true
 	}
 	return false

@@ -93,6 +93,14 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetParty().GetId(),
 				mm.GetName())
 			d.Parties[party.Id] = party
+		} else if mm := m.GetUnitCreation(); mm != nil {
+			unit := NewUnit(
+				mm.GetUnit().GetId(),
+				mm.GetAutomat().GetId(),
+				mm.GetName())
+			if !d.addUnit(unit) {
+				// XXX report the error here
+			}
 		} else if mm := m.GetAutomatCreation(); mm != nil {
 			automat := NewAutomat(
 				mm.GetAutomat().GetId(),
