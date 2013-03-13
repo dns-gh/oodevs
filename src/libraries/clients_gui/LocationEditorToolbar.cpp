@@ -113,7 +113,7 @@ void LocationEditorToolbar::CreateBookmark()
         bookmarksMenu_->clear();
         bookmarks_.push_back( Bookmark( name.toStdString(), utm ) );
         layer_.AddLocation( menuPoint_ );
-        for( int i = 0; i < bookmarks_.size(); ++i )
+        for( size_t i = 0; i < bookmarks_.size(); ++i )
             bookmarksMenu_->insertItem( bookmarks_[ i ].name_.c_str(), this, SLOT( GotoBookmark( int ) ), 0, i );
         bookmarksMenu_->insertSeparator();
         bookmarksMenu_->insertItem( tr( "Clear bookmarks" ), this, SLOT( ClearBookmarks() ) );
@@ -128,9 +128,9 @@ void LocationEditorToolbar::CreateBookmark()
 // Name: LocationEditorToolbar::GotoBookmark
 // Created: SBO 2007-03-26
 // -----------------------------------------------------------------------------
-void LocationEditorToolbar::GotoBookmark( int index )
+void LocationEditorToolbar::GotoBookmark( size_t index )
 {
-    if( index >= 0 && index < static_cast< int >( bookmarks_.size() ) )
+    if( index < static_cast< int >( bookmarks_.size() ) )
         try
         {
             view_.CenterOn( converter_.ConvertToXY( bookmarks_.at( index ).position_ ) );
