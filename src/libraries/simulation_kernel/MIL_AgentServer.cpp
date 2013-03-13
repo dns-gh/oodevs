@@ -98,7 +98,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pEntityManager_->LoadUrbanModel( config_ );
         pEntityManager_->Finalize();
     }
-    Resume( nextPause_ );
+    Resume( nextPause_, 0 );
     timerManager_.Register( *this );
     MT_LOG_INFO_MSG( "Tick duration : " << nTimeStepDuration_ << " seconds" );
     MT_LOG_INFO_MSG( "Acceleration factor : " << nTimeFactor_ );
@@ -211,7 +211,7 @@ void MIL_AgentServer::OnTimer()
     if( config_.GetEndTick() == nCurrentTimeStep_ )
         nSimState_ = eSimStopped;
     if( nextPause_ > 0 && --nextPause_ == 0 )
-        Pause();
+        Pause( 0 );
 }
 
 namespace
@@ -404,7 +404,7 @@ void MIL_AgentServer::SendControlInformation() const
 // Name: MIL_AgentServer::Stop
 // Created: AGE 2007-08-10
 // -----------------------------------------------------------------------------
-void MIL_AgentServer::Stop()
+void MIL_AgentServer::Stop( unsigned int nCtx )
 {
     client::ControlStopAck msg;
     if( nSimState_ == eSimStopped )
@@ -416,14 +416,14 @@ void MIL_AgentServer::Stop()
         MT_LOG_INFO_MSG( "Simulation stopped" );
         msg().set_error_code( sword::ControlAck::no_error );
     }
-    msg.Send( NET_Publisher_ABC::Publisher() );
+    msg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::Pause
 // Created: AGE 2007-08-10
 // -----------------------------------------------------------------------------
-void MIL_AgentServer::Pause()
+void MIL_AgentServer::Pause( unsigned int nCtx )
 {
     client::ControlPauseAck msg;
     if( nSimState_ != eSimRunning && nSimState_ != eSimWait )
@@ -435,14 +435,14 @@ void MIL_AgentServer::Pause()
         MT_LOG_INFO_MSG( "Simulation paused" );
         msg().set_error_code( sword::ControlAck::no_error );
     }
-    msg.Send( NET_Publisher_ABC::Publisher() );
+    msg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::Resume
 // Created: AGE 2007-08-10
 // -----------------------------------------------------------------------------
-void MIL_AgentServer::Resume( unsigned int ticks )
+void MIL_AgentServer::Resume( unsigned int ticks, unsigned int nCtx )
 {
     nextPause_ = ticks;
     client::ControlResumeAck msg;
@@ -455,7 +455,7 @@ void MIL_AgentServer::Resume( unsigned int ticks )
         MT_LOG_INFO_MSG( "Simulation resumed" );
         msg().set_error_code( sword::ControlAck::no_error );
     }
-    msg.Send( NET_Publisher_ABC::Publisher() );
+    msg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
