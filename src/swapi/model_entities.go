@@ -130,3 +130,17 @@ func (model *ModelData) FindFormation(formationId uint32) *Formation {
 	}
 	panic("unreachable")
 }
+
+func (model *ModelData) addFormation(f *Formation) bool {
+	parent := model.FindFormation(f.ParentId)
+	if parent != nil {
+		parent.Formations[f.Id] = f
+		return true
+	}
+	party, ok := model.Parties[f.PartyId]
+	if ok {
+		party.Formations[f.Id] = f
+		return true
+	}
+	return false
+}

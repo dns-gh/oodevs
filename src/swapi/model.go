@@ -124,17 +124,11 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetParent().GetId(),
 				mm.GetParty().GetId(),
 				level, logLevel)
-			parent := d.FindFormation(formation.ParentId)
-			if parent != nil {
-				parent.Formations[formation.Id] = formation
+			if !d.addFormation(formation) {
+				panic(fmt.Sprintf("cannot create formation %v with unknown"+
+					"parent party=%v/parent=%v", formation.Id, formation.PartyId,
+					formation.ParentId))
 			}
-			party, ok := d.Parties[formation.PartyId]
-			if ok {
-				party.Formations[formation.Id] = formation
-			}
-			panic(fmt.Sprintf("cannot create formation %v with unknown"+
-				"parent party=%v/parent=%v", formation.Id, formation.PartyId,
-				formation.ParentId))
 		}
 	}
 }
