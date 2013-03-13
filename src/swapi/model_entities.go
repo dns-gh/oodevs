@@ -296,6 +296,16 @@ func (model *ModelData) removeUnit(unitId uint32) bool {
 	return false
 }
 
+func (model *ModelData) ListCrowds() []*Crowd {
+	crowds := []*Crowd{}
+	for _, party := range model.Parties {
+		for _, crowd := range party.Crowds {
+			crowds = append(crowds, crowd)
+		}
+	}
+	return crowds
+}
+
 func (model *ModelData) addCrowd(crowd *Crowd) bool {
 	party, ok := model.Parties[crowd.PartyId]
 	if ok {

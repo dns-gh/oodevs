@@ -15,6 +15,10 @@ import (
 func postInvalidUnitMagicAction(client *swapi.Client, tasker *sword.Tasker) error {
 	params := swapi.NewMissionParams()
 	actionType := sword.UnitMagicAction_crowd_total_destruction
+	if tasker.GetCrowd() != nil {
+		actionType = sword.UnitMagicAction_delete_unit
+	}
+
 	msg := swapi.SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
@@ -69,6 +73,11 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 	c.Assert(len(automats) > 0, Equals, true)
 	automatId := automats[0].Id
 
+	// Get a crowd identifier
+	crowds := data.ListCrowds()
+	c.Assert(len(crowds) > 0, Equals, true)
+	crowdId := crowds[0].Id
+
 	taskers := []*sword.Tasker{
 		&sword.Tasker{
 			Formation: &sword.FormationId{
@@ -83,6 +92,11 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 		&sword.Tasker{
 			Unit: &sword.UnitId{
 				Id: proto.Uint32(automatId),
+			},
+		},
+		&sword.Tasker{
+			Crowd: &sword.CrowdId{
+				Id: proto.Uint32(crowdId),
 			},
 		},
 	}
