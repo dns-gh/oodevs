@@ -101,8 +101,7 @@ func (model *Model) update(msg *SwordMessage) {
 			if parent := mm.GetParent().GetAutomat(); parent != nil {
 				// XXX: automats of automats
 			} else if parent := mm.GetParent().GetFormation(); parent != nil {
-				_, f := model.findFormation(mm.GetParty().GetId(),
-					parent.GetId())
+				f := d.FindFormation(parent.GetId())
 				if f != nil {
 					f.Automats[automat.Id] = automat
 					return
@@ -125,46 +124,19 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetParent().GetId(),
 				mm.GetParty().GetId(),
 				level, logLevel)
-			party, parent := model.findFormation(formation.PartyId,
-				formation.ParentId)
-			if party == nil {
-				panic(fmt.Sprintf("cannot create formation %v with unknown"+
-					"parent party=%v/parent=%v", formation.Id, formation.PartyId,
-					formation.ParentId))
+			parent := d.FindFormation(formation.ParentId)
+			if parent != nil {
+				parent.Formations[formation.Id] = formation
 			}
-			if parent == nil {
+			party, ok := d.Parties[formation.PartyId]
+			if ok {
 				party.Formations[formation.Id] = formation
-				return
 			}
-			parent.Formations[formation.Id] = formation
+			panic(fmt.Sprintf("cannot create formation %v with unknown"+
+				"parent party=%v/parent=%v", formation.Id, formation.PartyId,
+				formation.ParentId))
 		}
 	}
-}
-
-func (model *Model) findFormation(partyId uint32,
-	parentId uint32) (*Party, *Formation) {
-	party, ok := model.data.Parties[partyId]
-	if !ok {
-		return nil, nil
-	}
-	if parentId == 0 {
-		return party, nil
-	}
-	pendings := []*Formation{}
-	for _, v := range party.Formations {
-		pendings = append(pendings, v)
-	}
-	for len(pendings) > 0 {
-		f := pendings[len(pendings)-1]
-		pendings = pendings[:len(pendings)-1]
-		if f.Id == parentId {
-			return party, f
-		}
-		for _, v := range f.Formations {
-			pendings = append(pendings, v)
-		}
-	}
-	return nil, nil
 }
 
 // Register a handler on supplied client and start processing messages
