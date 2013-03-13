@@ -99,36 +99,32 @@ func (model *ModelData) Copy() *ModelData {
 	return m
 }
 
-func (model *ModelData) EnumerateFormations() func() *Formation {
+func (model *ModelData) ListFormations() []*Formation {
+	formations := []*Formation{}
 	pendings := []*Formation{}
 	for _, p := range model.Parties {
 		for _, f := range p.Formations {
 			pendings = append(pendings, f)
 		}
 	}
-	enumerator := func() *Formation {
-		if len(pendings) <= 0 {
-			return nil
-		}
+	for len(pendings) > 0 {
 		f := pendings[len(pendings)-1]
 		pendings = pendings[:len(pendings)-1]
 		for _, v := range f.Formations {
 			pendings = append(pendings, v)
 		}
-		return f
+		formations = append(formations, f)
 	}
-	return enumerator
+	return formations
 }
 
 func (model *ModelData) FindFormation(formationId uint32) *Formation {
-	formations := model.EnumerateFormations()
-	for {
-		f := formations()
-		if f == nil || f.Id == formationId {
+	for _, f := range model.ListFormations() {
+		if f.Id == formationId {
 			return f
 		}
 	}
-	panic("unreachable")
+	return nil
 }
 
 func (model *ModelData) addFormation(f *Formation) bool {
