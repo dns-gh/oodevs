@@ -73,6 +73,7 @@ signals:
     //! @name Signals
     //@{
     void Widget2dChanged( gui::GlWidget* );
+    void Widget3dChanged( gui::Gl3dWidget* );
     void MouseMove( const geometry::Point2f& );
     void MouseMove( const geometry::Point3f& );
     //@}

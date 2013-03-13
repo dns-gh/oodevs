@@ -18,6 +18,7 @@
 #include "DrawingTypes.h"
 #include "EntitySymbols.h"
 #include "GlWidget.h"
+#include "Gl3dWidget.h"
 #include "StandardIconProxyStyle.h"
 
 #include "clients_kernel/App6Symbol.h"
@@ -30,6 +31,7 @@
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
@@ -51,15 +53,19 @@ namespace
 // Name: SelectionMenu constructor
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
-SelectionMenu::SelectionMenu( EntitySymbols& entitySymbols, ColorStrategy& colorStrategy, DrawingTypes& drawingTypes, GlTools_ABC& tools )
-    : entitySymbols_( entitySymbols )
+SelectionMenu::SelectionMenu( Options& options, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
+                              DrawingTypes& drawingTypes, GlTools_ABC& tools )
+    : options_( options )
+    , entitySymbols_( entitySymbols )
     , colorStrategy_( colorStrategy )
     , drawingTypes_( drawingTypes )
     , tools_( tools )
-    , parent_( 0 )
+    , parent2d_( 0 )
+    , parent3d_( 0 )
     , moreElements_( 0u )
+    , mode3d_( false )
 {
-    // NOTHING
+    options_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +74,7 @@ SelectionMenu::SelectionMenu( EntitySymbols& entitySymbols, ColorStrategy& color
 // -----------------------------------------------------------------------------
 SelectionMenu::~SelectionMenu()
 {
-    // NOTHING
+    options_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +83,16 @@ SelectionMenu::~SelectionMenu()
 // -----------------------------------------------------------------------------
 void SelectionMenu::OnWidget2dChanged( gui::GlWidget* parent )
 {
-    parent_ = parent;
+    parent2d_ = parent;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SelectionMenu::OnWidget3dChanged
+// Created: LGY 2013-03-13
+// -----------------------------------------------------------------------------
+void SelectionMenu::OnWidget3dChanged( gui::Gl3dWidget* parent )
+{
+    parent3d_ = parent;
 }
 
 namespace
@@ -256,13 +271,23 @@ bool SelectionMenu::GenerateIcons()
 
 namespace
 {
-    class RichMenu : public QMenu
+    class Menu_ABC : public QMenu
     {
     public:
-        explicit RichMenu( gui::GlWidget* parent ) : QMenu( parent ), button_( Qt::NoButton ), parent_( parent ) {}
+                 Menu_ABC( QWidget* parent ) : QMenu( parent ){}
+        virtual ~Menu_ABC() {}
+
+        virtual Qt::MouseButton GetButton() const = 0;
+    };
+
+    template< typename T >
+    class RichMenu : public Menu_ABC
+    {
+    public:
+        explicit RichMenu( T* parent ) : Menu_ABC( parent ), button_( Qt::NoButton ), parent_( parent ) {}
         virtual ~RichMenu() {}
 
-        Qt::MouseButton GetButton() const { return button_; }
+        virtual Qt::MouseButton GetButton() const { return button_; }
 
         virtual void mousePressEvent( QMouseEvent* event )
         {
@@ -276,7 +301,7 @@ namespace
         }
 
     private:
-        gui::GlWidget* parent_;
+        T* parent_;
         Qt::MouseButton button_;
     };
 }
@@ -293,9 +318,14 @@ void SelectionMenu::GenerateMenu()
         return;
     }
 
-    RichMenu menu( parent_ );
-    menu.setStyle( new StandardIconProxyStyle() );
-    QAction* dummyEntry = menu.addAction( "" ); // Can't have a separator without an item before
+    std::auto_ptr< Menu_ABC > menu;
+    if( mode3d_ )
+        menu.reset( new RichMenu< gui::Gl3dWidget >( parent3d_ ) );
+    else
+        menu.reset( new RichMenu< gui::GlWidget >( parent2d_ ) );
+
+    menu->setStyle( new StandardIconProxyStyle() );
+    QAction* dummyEntry = menu->addAction( "" ); // Can't have a separator without an item before
     dummyEntry->setEnabled( false );
     dummyEntry->setFont( QFont( "Arial", 1 ) );
 
@@ -305,13 +335,13 @@ void SelectionMenu::GenerateMenu()
         kernel::GraphicalEntity_ABC::T_GraphicalEntities& entities = extractedPair->second;
         if( !layer )
             continue;
-        menu.addSeparator()->setText( layer->GetName() );
+        menu->addSeparator()->setText( layer->GetName() );
         for( auto extractedElement = entities.begin(); extractedElement != entities.end(); ++extractedElement )
         {
             const GraphicalEntity_ABC* graphicalEntity = *extractedElement;
             if( !graphicalEntity )
                 continue;
-            QAction* action = menu.addAction( graphicalEntity->GetTooltip() );
+            QAction* action = menu->addAction( graphicalEntity->GetTooltip() );
             QPixmap& pixmap = icons_[ graphicalEntity ];
             if( !action )
                 continue;
@@ -331,12 +361,12 @@ void SelectionMenu::GenerateMenu()
 
     if( moreElements_!= 0u )
     {
-        QAction* action = menu.addAction( tr( "And %1 more elements..." ).arg( QString::number( moreElements_ ) ) );
+        QAction* action = menu->addAction( tr( "And %1 more elements..." ).arg( QString::number( moreElements_ ) ) );
         action->setEnabled( false );
         action->setFont( QFont( "Arial", -1, -1, true ) );
     }
 
-    if( QAction* resultingAction = menu.exec( mouseEvent_->globalPos() ) )
+    if( QAction* resultingAction = menu->exec( mouseEvent_->globalPos() ) )
     {
         const QString actionText = resultingAction->text();
         for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
@@ -352,7 +382,7 @@ void SelectionMenu::GenerateMenu()
                     continue;
                 if( graphicalEntity->GetTooltip() == actionText )
                 {
-                    ApplyMousePress( *layer, *graphicalEntity, point_, &*mouseEvent_, menu.GetButton() );
+                    ApplyMousePress( *layer, *graphicalEntity, point_, &*mouseEvent_, menu->GetButton() );
                     icons_.clear();
                     return;
                 }
@@ -428,4 +458,14 @@ void SelectionMenu::FilterElement( const Layer_ABC::T_LayerElements& extractedEl
         extractedElements_ = filteredElements;
         moreElements_ = static_cast< unsigned int > ( total ) - MAX_ELEMENT;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SelectionMenu::OptionChanged
+// Created: LGY 2013-03-13
+// -----------------------------------------------------------------------------
+void SelectionMenu::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == "3D" )
+        mode3d_ = value.To< bool >();
 }

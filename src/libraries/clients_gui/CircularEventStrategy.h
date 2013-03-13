@@ -13,6 +13,11 @@
 #include <graphics/EventStrategy_ABC.h>
 #include "Layer_ABC.h"
 
+namespace kernel
+{
+    class Options;
+}
+
 namespace gui
 {
     class ColorStrategy;
@@ -35,7 +40,7 @@ class CircularEventStrategy : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             CircularEventStrategy( EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
+             CircularEventStrategy( kernel::Options& options, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
                                     DrawingTypes& drawingTypes, GlTools_ABC& tools );
     virtual ~CircularEventStrategy();
     //@}

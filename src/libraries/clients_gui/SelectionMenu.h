@@ -11,11 +11,13 @@
 #define __SelectionMenu_h_
 
 #include <boost/noncopyable.hpp>
+#include "clients_kernel/OptionsObserver_ABC.h"
 #include "Layer_ABC.h"
 
 namespace kernel
 {
     class GraphicalEntity_ABC;
+    class Options;
 }
 
 namespace gui
@@ -24,6 +26,7 @@ namespace gui
     class DrawingTypes;
     class GlTools_ABC;
     class GlWidget;
+    class Gl3dWidget;
     class EntitySymbols;
 
 // =============================================================================
@@ -33,6 +36,8 @@ namespace gui
 // Created: ABR 2013-01-30
 // =============================================================================
 class SelectionMenu : public QObject
+                    , public tools::Observer_ABC
+                    , public kernel::OptionsObserver_ABC
                     , private boost::noncopyable
 {
     Q_OBJECT
@@ -40,7 +45,8 @@ class SelectionMenu : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             SelectionMenu( EntitySymbols& entitySymbols, ColorStrategy& colorStrategy, DrawingTypes& drawingTypes, GlTools_ABC& tools );
+             SelectionMenu( kernel::Options& options, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
+                            DrawingTypes& drawingTypes, GlTools_ABC& tools );
     virtual ~SelectionMenu();
     //@}
 
@@ -55,6 +61,7 @@ private slots:
     //@{
     void GenerateMenu();
     void OnWidget2dChanged( gui::GlWidget* );
+    void OnWidget3dChanged( gui::Gl3dWidget* );
     //@}
 
 private:
@@ -64,11 +71,13 @@ private:
     void FilterElement( const Layer_ABC::T_LayerElements& extractedElements );
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, float r, float g, float b, const std::string& category = "", float markerPixelRatio = 1.f ) const;
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, const QColor& color, const std::string& category = "", float markerPixelRatio = 1.f ) const;
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Options& options_;
     EntitySymbols& entitySymbols_;
     ColorStrategy& colorStrategy_;
     DrawingTypes& drawingTypes_;
@@ -78,8 +87,10 @@ private:
     std::map< const kernel::GraphicalEntity_ABC*, QPixmap > icons_;
     std::auto_ptr< QMouseEvent > mouseEvent_;
     geometry::Point2f point_;
-    gui::GlWidget* parent_;
+    gui::GlWidget* parent2d_;
+    gui::Gl3dWidget* parent3d_;
     unsigned int moreElements_;
+    bool mode3d_;
     //@}
 };
 

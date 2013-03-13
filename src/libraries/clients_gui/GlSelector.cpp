@@ -60,6 +60,7 @@ GlSelector::GlSelector( QWidget* parent, GlProxy& proxy, Controllers& controller
 // -----------------------------------------------------------------------------
 GlSelector::~GlSelector()
 {
+    emit Widget3dChanged( 0 );
     emit Widget2dChanged( 0 );
     controllers_.options_.Unregister( *this );
 }
@@ -142,6 +143,7 @@ void GlSelector::Clean()
     {
         widget3d_->makeCurrent();
         proxy_.Reset3d();
+        emit Widget3dChanged( 0 );
         delete widget3d_;
         widget3d_ = 0;
         proxy_.ChangeTo( widget3d_ );
@@ -178,6 +180,7 @@ void GlSelector::OptionChanged( const std::string& name, const OptionVariant& va
                     addWidget( widget3d_ );
                     connect( widget3d_, SIGNAL( MouseMove( const geometry::Point3f& ) ), this, SIGNAL( MouseMove( const geometry::Point3f& ) ) );
                     proxy_.RegisterTo( widget3d_ );
+                    emit Widget3dChanged( widget3d_ );
                 }
                 proxy_.ChangeTo( widget3d_ );
                 setCurrentWidget( widget3d_ );
