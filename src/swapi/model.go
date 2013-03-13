@@ -137,6 +137,14 @@ func (model *Model) update(msg *SwordMessage) {
 					"parent party=%v/parent=%v", formation.Id, formation.PartyId,
 					formation.ParentId))
 			}
+		} else if mm := m.GetCrowdCreation(); mm != nil {
+			crowd := NewCrowd(
+				mm.GetCrowd().GetId(),
+				mm.GetParty().GetId(),
+				mm.GetName())
+			if !d.addCrowd(crowd) {
+				// XXX report error here
+			}
 		} else if mm := m.GetUnitDestruction(); mm != nil {
 			d.removeUnit(mm.GetUnit().GetId())
 		}

@@ -21,8 +21,30 @@
       <communication>
         <knowledge-group id="3" name="knowledge group [3]" type="Standard"/>
       </communication>
-      <populations/>
-      <inhabitants/>
+      <populations>
+        <population attitude="calme" id="17" name="Standard Crowd" position="28RDS2084937747" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="100" wounded="0"/>
+          <armed-individuals value="0.1"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants>
+        <inhabitant id="22" name="population" type="popType1">
+          <composition dead="0" healthy="100" wounded="0"/>
+          <health-need quantity="0.1"/>
+          <information></information>
+          <living-area>
+            <urban-block id="21"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </inhabitant>
+      </inhabitants>
       <logistics/>
     </party>
     <party id="2" name="empty-party" type="friend">

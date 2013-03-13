@@ -1,5 +1,23 @@
 package swapi
 
+type Crowd struct {
+	Id      uint32
+	PartyId uint32
+	Name    string
+}
+
+func NewCrowd(id, partyId uint32, name string) *Crowd {
+	return &Crowd{
+		Id:      id,
+		PartyId: partyId,
+		Name:    name,
+	}
+}
+
+func (c *Crowd) Copy() *Crowd {
+	return NewCrowd(c.Id, c.PartyId, c.Name)
+}
+
 type Unit struct {
 	Id        uint32
 	AutomatId uint32
@@ -88,6 +106,7 @@ type Party struct {
 	Id         uint32
 	Name       string
 	Formations map[uint32]*Formation
+	Crowds     map[uint32]*Crowd
 }
 
 func NewParty(id uint32, name string) *Party {
@@ -95,6 +114,7 @@ func NewParty(id uint32, name string) *Party {
 		Id:         id,
 		Name:       name,
 		Formations: map[uint32]*Formation{},
+		Crowds:     map[uint32]*Crowd{},
 	}
 }
 
@@ -102,6 +122,9 @@ func (party *Party) Copy() *Party {
 	p := NewParty(party.Id, party.Name)
 	for k, v := range party.Formations {
 		p.Formations[k] = v.Copy()
+	}
+	for k, v := range party.Crowds {
+		p.Crowds[k] = v.Copy()
 	}
 	return p
 }
@@ -245,6 +268,15 @@ func (model *ModelData) removeUnit(unitId uint32) bool {
 	}
 	if _, ok := a.Units[unitId]; ok {
 		delete(a.Units, unitId)
+		return true
+	}
+	return false
+}
+
+func (model *ModelData) addCrowd(crowd *Crowd) bool {
+	party, ok := model.Parties[crowd.PartyId]
+	if ok {
+		party.Crowds[crowd.Id] = crowd
 		return true
 	}
 	return false
