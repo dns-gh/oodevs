@@ -172,7 +172,7 @@ void LauncherToAdmin::Convert( const sword::SessionParameterChangeResponse& from
 // -----------------------------------------------------------------------------
 void LauncherToAdmin::Convert( const sword::SessionCommandExecutionResponse& from, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse* to )
 {
-    CONVERT_NON_INJECTIVE_ENUM( error_code, error_code, ( sword::SessionCommandExecutionResponse::success, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::success )
+    CONVERT_NON_INJECTIVE_ENUM( error_code,             ( sword::SessionCommandExecutionResponse::success, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::success )
                                                         ( sword::SessionCommandExecutionResponse::invalid_exercise_name, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::invalid_exercise_name )
                                                         ( sword::SessionCommandExecutionResponse::invalid_session_name, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::invalid_session_name )
                                                         ( sword::SessionCommandExecutionResponse::session_not_running, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::session_not_running )

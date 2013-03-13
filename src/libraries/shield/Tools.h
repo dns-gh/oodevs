@@ -70,8 +70,8 @@ inline void ConvertSimple(const T& from, T* to)
     CONVERT_ENUM_TO( field, field, mapping )
 #define CONVERT_NON_INJECTIVE_ENUM_TO( from_field, to_field, mapping ) \
     CONVERT_ENUM_EXT( from_field, to_field, mapping, false )
-#define CONVERT_NON_INJECTIVE_ENUM( from_field, to_field, mapping ) \
-    CONVERT_NON_INJECTIVE_ENUM_TO( from_field, to_field, mapping )
+#define CONVERT_NON_INJECTIVE_ENUM( field, mapping ) \
+    CONVERT_NON_INJECTIVE_ENUM_TO( field, field, mapping )
 
 #define CONVERT_ID_TO( from_field, to_field ) \
     if( from.has_##from_field() ) \

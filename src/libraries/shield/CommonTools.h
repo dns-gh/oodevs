@@ -64,7 +64,7 @@ namespace shield
     template< typename From, typename To >
     static void ConvertControlAckErrorCode( const From& from, To* to )
     {
-        CONVERT_NON_INJECTIVE_ENUM( error_code, error_code, ( sword::ControlAck::no_error, MsgsSimToClient::ControlAck::no_error )
+        CONVERT_NON_INJECTIVE_ENUM( error_code, ( sword::ControlAck::no_error, MsgsSimToClient::ControlAck::no_error )
                                   ( sword::ControlAck::error_already_started, MsgsSimToClient::ControlAck::error_already_started )
                                   ( sword::ControlAck::error_not_started, MsgsSimToClient::ControlAck::error_not_started )
                                   ( sword::ControlAck::error_not_paused, MsgsSimToClient::ControlAck::error_not_paused )

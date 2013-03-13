@@ -2152,7 +2152,7 @@ namespace
     void ConvertKnowledgeGroupAck( const From& from, To* to )
     {
         CONVERT_ID( knowledge_group );
-        CONVERT_NON_INJECTIVE_ENUM( error_code, error_code, ( sword::KnowledgeGroupAck::no_error, MsgsSimToClient::KnowledgeGroupAck::no_error )
+        CONVERT_NON_INJECTIVE_ENUM( error_code, ( sword::KnowledgeGroupAck::no_error, MsgsSimToClient::KnowledgeGroupAck::no_error )
                                   ( sword::KnowledgeGroupAck::error_invalid_unit, MsgsSimToClient::KnowledgeGroupAck::error_invalid_unit )
                                   ( sword::KnowledgeGroupAck::error_invalid_superior, MsgsSimToClient::KnowledgeGroupAck::error_invalid_superior )
                                   ( sword::KnowledgeGroupAck::error_invalid_party, MsgsSimToClient::KnowledgeGroupAck::error_invalid_camp )
