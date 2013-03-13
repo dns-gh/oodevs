@@ -57,4 +57,13 @@ func (s *TestSuite) TestPauseStopResume(c *C) {
 		c.Fatal("simulation ticked while paused")
 	}
 	model.WaitTimeout = 1 * time.Minute
+
+	// Stop the simulation
+	err = client.Stop()
+	c.Assert(err, IsNil)
+	if !sim.Wait(10 * time.Second) {
+		c.Fatal("simulation refused to stop when asked gently")
+	}
+	c.Assert(sim.Success(), Equals, true)
+
 }

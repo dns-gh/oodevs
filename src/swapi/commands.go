@@ -366,3 +366,33 @@ func (c *Client) Resume(nextPause uint32) error {
 	err := <-quit
 	return err
 }
+
+func (c *Client) Stop() error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				ControlStop: &sword.ControlStop{},
+			},
+		},
+	}
+	quit := make(chan error)
+	handler := func(msg *SwordMessage, context int32, err error) bool {
+		if err != nil {
+			quit <- err
+			return true
+		}
+		if msg.SimulationToClient == nil || msg.Context != context {
+			return false
+		}
+		m := msg.SimulationToClient.GetMessage()
+		if reply := m.GetControlStopAck(); reply != nil {
+			quit <- getControlAckError(reply.GetErrorCode())
+		} else {
+			quit <- errors.New(fmt.Sprintf("Go unexpected %v", m))
+		}
+		return true
+	}
+	c.Post(msg, handler)
+	err := <-quit
+	return err
+}
