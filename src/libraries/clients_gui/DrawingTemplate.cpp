@@ -401,13 +401,6 @@ void DrawingTemplate::GenerateSamplePixmap( const GlTools_ABC& tools, float r /*
     glEnable( GL_TEXTURE_2D );
     glEnable( GL_BLEND );
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-    glClearDepth( 1.0f );
-    glEnable( GL_DEPTH_TEST );
-    glDepthFunc( GL_LEQUAL );
-    glEnableClientState( GL_VERTEX_ARRAY );
-    glLineWidth( 1.f );
-    glColor3f( 1.f, 1.f, 1.f );
-    glDisable( GL_DEPTH_TEST );
     glBindTexture( GL_TEXTURE_2D, 0 );
 
     // Draw sample
