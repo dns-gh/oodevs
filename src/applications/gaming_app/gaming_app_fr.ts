@@ -2661,10 +2661,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Contrôle du rejeu</translation>
     </message>
     <message>
-        <source>Tick %L1</source>
-        <translation>Tick %L1</translation>
-    </message>
-    <message>
         <source>Time table</source>
         <translation>Table de temps</translation>
     </message>

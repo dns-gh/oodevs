@@ -51,7 +51,8 @@ protected:
 private slots:
     //! @name Slots
     //@{
-    void OnSliderMoved( int );
+    void OnSliderMoved( int value );
+    void OnSpinBoxChanged();
     void OnSliderPressed();
     void OnSliderReleased();
     void OnTimeTable();
@@ -65,7 +66,7 @@ private:
     Publisher_ABC& network_;
     unsigned int maxTick_;
     QSlider* slider_;
-    QLabel* value_;
+    QSpinBox* value_;
     bool isPlayingBeforeMove_;
     bool replayPaused_;
     //@}

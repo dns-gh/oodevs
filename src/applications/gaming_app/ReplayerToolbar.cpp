@@ -19,6 +19,29 @@
 
 using namespace sword;
 
+namespace
+{
+    class EditSpinBox : public QSpinBox
+    {
+    public:
+        EditSpinBox( QWidget* widget )
+            : QSpinBox( widget )
+        {
+            // NOTHING
+        }
+        virtual ~EditSpinBox()
+        {
+            // NOTHING
+        }
+
+        virtual void stepBy( int steps )
+        {
+            QSpinBox::stepBy( steps );
+            emit editingFinished();
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ReplayerToolbar constructor
 // Created: AGE 2007-04-11
@@ -67,9 +90,8 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
             slider_->setMinimumWidth( 200 );
             slider_->setTickmarks( QSlider::TicksBelow );
             addSeparator();
-            value_ = new QLabel( this );
+            value_ = new EditSpinBox( this );
             addWidget( value_ );
-            value_->setMargin( 5 );
             addSeparator();
             QToolButton* pTimeTableButton = new QToolButton( this );
             pTimeTableButton->setIconSet( MAKE_ICON( tic_temps ) );
@@ -83,12 +105,13 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
             connect( slider_, SIGNAL( sliderPressed() ), SLOT( OnSliderPressed() ) );
             connect( slider_, SIGNAL( sliderReleased() ), SLOT( OnSliderReleased() ) );
             connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMoved( int ) ) );
+            connect( value_, SIGNAL( editingFinished() ), SLOT( OnSpinBoxChanged() ) );
             connect( pTimeTableButton, SIGNAL( clicked() ), SLOT( OnTimeTable() ) );
             connect( pRefreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
         }
         replayPaused_ = simulation.IsPaused();
-        slider_->setMaxValue( maxTick_ );
-        slider_->setMinValue( simulation.GetFirstTick() );
+        value_->setRange( simulation.GetFirstTick(), maxTick_);
+        slider_->setRange( simulation.GetFirstTick(), maxTick_ );
         slider_->setTickInterval( slider_->maxValue() / 20 );
         slider_->setValue( simulation.GetCurrentTick() );
     }
@@ -149,11 +172,23 @@ void ReplayerToolbar::NotifyUpdated( const Simulation::sTimeTable& timeTable )
 
 // -----------------------------------------------------------------------------
 // Name: ReplayerToolbar::OnSliderMoved
-// Created: AGE 2007-04-11
+// Created: JSR 2013-03-11
 // -----------------------------------------------------------------------------
-void ReplayerToolbar::OnSliderMoved( int frame )
+void ReplayerToolbar::OnSliderMoved( int value )
 {
-    value_->setText( tr( "Tick %L1" ).arg( frame ) );
+    value_->setValue( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayerToolbar::OnSpinBoxChanged
+// Created: JSR 2013-03-11
+// -----------------------------------------------------------------------------
+void ReplayerToolbar::OnSpinBoxChanged()
+{
+    slider_->blockSignals( true );
+    slider_->setValue( value_->value() );
+    slider_->blockSignals( false );
+    OnSliderReleased();
 }
 
 // -----------------------------------------------------------------------------

@@ -2657,10 +2657,6 @@ This data can&apos;t be projected.</source>
         <translation>Time table</translation>
     </message>
     <message>
-        <source>Tick %L1</source>
-        <translation>Tick %L1</translation>
-    </message>
-    <message>
         <source>Refresh</source>
         <translation>Refresh</translation>
     </message>

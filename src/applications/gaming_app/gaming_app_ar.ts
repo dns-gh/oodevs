@@ -2659,10 +2659,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">الجدول الزمني</translation>
     </message>
     <message>
-        <source>Tick %L1</source>
-        <translation type="unfinished">التجزئة % L1</translation>
-    </message>
-    <message>
         <source>Refresh</source>
         <translation type="unfinished">قم بتحديث</translation>
     </message>
