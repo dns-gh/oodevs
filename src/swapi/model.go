@@ -98,12 +98,14 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetAutomat().GetId(),
 				mm.GetParty().GetId(),
 				mm.GetName())
+			automatId, formationId := uint32(0), uint32(0)
 			if parent := mm.GetParent().GetAutomat(); parent != nil {
-				// XXX: automats of automats
+				automatId = parent.GetId()
 			} else if parent := mm.GetParent().GetFormation(); parent != nil {
-				if d.addAutomat(parent.GetId(), automat) {
-					return
-				}
+				formationId = parent.GetId()
+			}
+			if d.addAutomat(automatId, formationId, automat) {
+				return
 			}
 			// XXX: report error here
 

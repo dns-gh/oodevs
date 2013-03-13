@@ -1,25 +1,27 @@
 package swapi
 
 type Automat struct {
-	Id      uint32
-	PartyId uint32
-	Name    string
+	Id       uint32
+	PartyId  uint32
+	Name     string
+	Automats []*Automat
 }
 
 func NewAutomat(id, partyId uint32, name string) *Automat {
 	return &Automat{
-		Id:      id,
-		PartyId: partyId,
-		Name:    name,
+		Id:       id,
+		PartyId:  partyId,
+		Name:     name,
+		Automats: []*Automat{},
 	}
 }
 
 func (a *Automat) Copy() *Automat {
-	return &Automat{
-		Id:      a.Id,
-		PartyId: a.PartyId,
-		Name:    a.Name,
+	other := NewAutomat(a.Id, a.PartyId, a.Name)
+	for k, v := range a.Automats {
+		other.Automats[k] = v.Copy()
 	}
+	return other
 }
 
 type Formation struct {
@@ -141,11 +143,42 @@ func (model *ModelData) addFormation(f *Formation) bool {
 	return false
 }
 
-func (model *ModelData) addAutomat(formationId uint32, a *Automat) bool {
-	parent := model.FindFormation(formationId)
-	if parent == nil {
-		return false
+func (model *ModelData) ListAutomats() []*Automat {
+	automats := []*Automat{}
+	pendings := []*Automat{}
+	for _, f := range model.ListFormations() {
+		for _, a := range f.Automats {
+			pendings = append(pendings, a)
+		}
 	}
-	parent.Automats[a.Id] = a
-	return true
+	for len(pendings) > 0 {
+		a := pendings[len(pendings)-1]
+		pendings = pendings[:len(pendings)-1]
+		for _, child := range a.Automats {
+			pendings = append(pendings, child)
+		}
+		automats = append(automats, a)
+	}
+	return automats
+}
+
+func (model *ModelData) FindAutomat(id uint32) *Automat {
+	for _, a := range model.ListAutomats() {
+		if a.Id == id {
+			return a
+		}
+	}
+	return nil
+}
+
+func (model *ModelData) addAutomat(automatId, formationId uint32, a *Automat) bool {
+	if parent := model.FindAutomat(automatId); parent != nil {
+		parent.Automats[a.Id] = a
+		return true
+	}
+	if parent := model.FindFormation(formationId); parent != nil {
+		parent.Automats[a.Id] = a
+		return true
+	}
+	return false
 }
