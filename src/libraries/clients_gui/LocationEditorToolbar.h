@@ -54,7 +54,7 @@ private slots:
     void Goto();
     void AddParamPoint();
     void CreateBookmark();
-    void GotoBookmark( size_t index );
+    void GotoBookmark( int index );
     void ClearBookmarks();
     //@}
 
