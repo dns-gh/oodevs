@@ -83,6 +83,11 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 	c.Assert(len(crowds) > 0, Equals, true)
 	crowdId := crowds[0].Id
 
+	// Get a population identifier
+	populations := data.ListPopulations()
+	c.Assert(len(populations) > 0, Equals, true)
+	popId := populations[0].Id
+
 	taskers := []*sword.Tasker{
 		&sword.Tasker{
 			Formation: &sword.FormationId{
@@ -102,6 +107,11 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 		&sword.Tasker{
 			Crowd: &sword.CrowdId{
 				Id: proto.Uint32(crowdId),
+			},
+		},
+		&sword.Tasker{
+			Population: &sword.PopulationId{
+				Id: proto.Uint32(popId),
 			},
 		},
 	}

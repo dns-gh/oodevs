@@ -315,6 +315,16 @@ func (model *ModelData) addCrowd(crowd *Crowd) bool {
 	return false
 }
 
+func (model *ModelData) ListPopulations() []*Population {
+	pops := []*Population{}
+	for _, party := range model.Parties {
+		for _, pop := range party.Populations {
+			pops = append(pops, pop)
+		}
+	}
+	return pops
+}
+
 func (model *ModelData) addPopulation(population *Population) bool {
 	party, ok := model.Parties[population.PartyId]
 	if ok {
