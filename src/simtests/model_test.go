@@ -296,13 +296,17 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 	defer sim.Kill()
 	model := client.Model
 
+	// Destroy invalid unit
+	err := client.DeleteUnit(1234)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
 	// Find some unit
 	units := model.GetData().ListUnits()
 	c.Assert(len(units) > 0, Equals, true)
 	unit := units[0]
 
 	// Blast it
-	err := client.DeleteUnit(unit.Id)
+	err = client.DeleteUnit(unit.Id)
 	c.Assert(err, IsNil)
 	c.Assert(model.GetData().FindUnit(unit.Id), IsNil)
 }

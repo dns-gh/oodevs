@@ -247,7 +247,6 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 		},
 	}
 	state := 0
-	deletedId := uint32(0)
 	quit := make(chan error)
 	handler := func(msg *SwordMessage, context int32, err error) bool {
 		if err != nil {
@@ -266,15 +265,22 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 			state = 1
 			return false
 		} else if reply := m.GetUnitMagicActionAck(); reply != nil {
-			if state != 1 {
-				quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
-				return true
-			}
 			id, err := GetUnitMagicActionAck(reply)
-			deletedId = id
-			if err == nil && id != unitId {
-				err = errors.New(fmt.Sprintf(
-					"Deleted unit identifier mismatch: %v != %v", unitId, id))
+			if state == 0 {
+				if err == nil {
+					err = errors.New(fmt.Sprintf("Go unexpected success %v", m))
+				}
+			} else if state == 1 {
+				if err != nil {
+					err = errors.New(fmt.Sprintf("Go unexpected failure %v", m))
+				} else {
+					if id != unitId {
+						err = errors.New(fmt.Sprintf(
+							"Deleted unit identifier mismatch: %v != %v", unitId, id))
+					}
+				}
+			} else {
+				err = errors.New(fmt.Sprintf("Got unexpected %v", m))
 			}
 			quit <- err
 		} else {
