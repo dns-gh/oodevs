@@ -140,3 +140,12 @@ func (model *ModelData) addFormation(f *Formation) bool {
 	}
 	return false
 }
+
+func (model *ModelData) addAutomat(formationId uint32, a *Automat) bool {
+	parent := model.FindFormation(formationId)
+	if parent == nil {
+		return false
+	}
+	parent.Automats[a.Id] = a
+	return true
+}

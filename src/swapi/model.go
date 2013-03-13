@@ -101,9 +101,7 @@ func (model *Model) update(msg *SwordMessage) {
 			if parent := mm.GetParent().GetAutomat(); parent != nil {
 				// XXX: automats of automats
 			} else if parent := mm.GetParent().GetFormation(); parent != nil {
-				f := d.FindFormation(parent.GetId())
-				if f != nil {
-					f.Automats[automat.Id] = automat
+				if d.addAutomat(parent.GetId(), automat) {
 					return
 				}
 			}
