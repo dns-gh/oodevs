@@ -342,7 +342,8 @@ void MIL_Inhabitant::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
     default:
-        assert( false );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
+            sword::UnitActionAck::error_invalid_unit );
     }
 }
 

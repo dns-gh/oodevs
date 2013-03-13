@@ -325,7 +325,8 @@ void MIL_Formation::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg 
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
     default:
-        break;
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
+            sword::UnitActionAck::error_invalid_unit );
     }
 }
 

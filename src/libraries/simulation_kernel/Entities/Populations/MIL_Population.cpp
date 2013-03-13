@@ -1131,7 +1131,8 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
         OnReloadBrain( msg.parameters() );
         break;
     default:
-        assert( false );
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
+            sword::UnitActionAck::error_invalid_unit );
     }
 }
 

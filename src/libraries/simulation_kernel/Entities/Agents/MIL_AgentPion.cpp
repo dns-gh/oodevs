@@ -1229,8 +1229,8 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         OnReceiveFinishLogisticHandlings(); 
         break;
     default:
-        assert( false );
-        break;
+        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
+            sword::UnitActionAck::error_invalid_unit );
     }
     UpdatePhysicalState();
 }
