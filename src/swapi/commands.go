@@ -103,6 +103,21 @@ func (p *MissionParams) AddACharStr(value string) *MissionParams {
 	return p.addParam(param)
 }
 
+func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
+	// Wait for the final UnitMagicActionAck
+	code := msg.GetErrorCode()
+	if code == sword.UnitActionAck_no_error {
+		id := msg.GetUnit().GetId()
+		return id, nil
+	}
+	err := errors.New("unknown error")
+	name, ok := sword.UnitActionAck_ErrorCode_name[int32(code)]
+	if ok {
+		err = errors.New(name)
+	}
+	return 0, err
+}
+
 func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 	name string, level int, logLevel string) (uint32, error) {
 	tasker := &sword.Tasker{}
@@ -175,31 +190,23 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 			return false
 		} else if reply := m.GetUnitMagicActionAck(); reply != nil {
 			// Wait for the final UnitMagicActionAck
-			code := reply.GetErrorCode()
+			id, err := GetUnitMagicActionAck(reply)
+			receivedTaskerId = id
 			if state == 0 {
-				if code == sword.UnitActionAck_no_error {
-					quit <- errors.New(fmt.Sprintf(
-						"Got unexpected success %v", m))
-				} else {
-					err = errors.New("unknown error")
-					name, ok := sword.UnitActionAck_ErrorCode_name[int32(code)]
-					if ok {
-						err = errors.New(name)
-					}
-					quit <- err
+				if err == nil {
+					err = errors.New(fmt.Sprintf("Got unexpected success %v", m))
 				}
+				quit <- err
 			} else if state == 2 {
-				if code != sword.UnitActionAck_no_error {
+				if err != nil {
 					quit <- errors.New(fmt.Sprintf(
 						"Got unexpected failure %v", m))
 				} else {
-					receivedTaskerId = reply.GetUnit().GetId()
 					quit <- nil
 				}
 			} else {
 				quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
 			}
-			return true
 		} else {
 			quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
 		}
@@ -218,4 +225,52 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 		}
 	}
 	return formationId, err
+}
+
+func (c *Client) DeleteUnit(unitId uint32) error {
+	tasker := &sword.Tasker{
+		Unit: &sword.UnitId{
+			Id: proto.Uint32(unitId),
+		},
+	}
+	params := NewMissionParams()
+	actionType := sword.UnitMagicAction_delete_unit
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				UnitMagicAction: &sword.UnitMagicAction{
+					Tasker:     tasker,
+					Type:       &actionType,
+					Parameters: params.Params,
+				},
+			},
+		},
+	}
+	deletedId := uint32(0)
+	quit := make(chan error)
+	handler := func(msg *SwordMessage, context int32, err error) bool {
+		if err != nil {
+			quit <- err
+			return true
+		}
+		if msg.SimulationToClient == nil || msg.Context != context {
+			return false
+		}
+		m := msg.SimulationToClient.GetMessage()
+		if reply := m.GetUnitMagicActionAck(); reply != nil {
+			id, err := GetUnitMagicActionAck(reply)
+			deletedId = id
+			if err == nil && id != unitId {
+				err = errors.New(fmt.Sprintf(
+					"Deleted unit identifier mismatch: %v != %v", unitId, id))
+			}
+			quit <- err
+		} else {
+			quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
+		}
+		return true
+	}
+	c.Post(msg, handler)
+	err := <-quit
+	return err
 }

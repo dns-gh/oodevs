@@ -137,6 +137,8 @@ func (model *Model) update(msg *SwordMessage) {
 					"parent party=%v/parent=%v", formation.Id, formation.PartyId,
 					formation.ParentId))
 			}
+		} else if mm := m.GetUnitDestruction(); mm != nil {
+			d.removeUnit(mm.GetUnit().GetId())
 		}
 	}
 }

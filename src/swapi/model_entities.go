@@ -206,10 +206,45 @@ func (model *ModelData) addAutomat(automatId, formationId uint32, a *Automat) bo
 	return false
 }
 
+func (model *ModelData) ListUnits() []*Unit {
+	units := []*Unit{}
+	for _, a := range model.ListAutomats() {
+		for _, u := range a.Units {
+			units = append(units, u)
+		}
+	}
+	return units
+}
+
+func (model *ModelData) FindUnit(unitId uint32) *Unit {
+	for _, u := range model.ListUnits() {
+		if u.Id == unitId {
+			return u
+		}
+	}
+	return nil
+}
+
 func (model *ModelData) addUnit(unit *Unit) bool {
 	f := model.FindAutomat(unit.AutomatId)
 	if f != nil {
 		f.Units[unit.Id] = unit
+		return true
+	}
+	return false
+}
+
+func (model *ModelData) removeUnit(unitId uint32) bool {
+	u := model.FindUnit(unitId)
+	if u == nil {
+		return false
+	}
+	a := model.FindAutomat(u.AutomatId)
+	if a == nil {
+		return false
+	}
+	if _, ok := a.Units[unitId]; ok {
+		delete(a.Units, unitId)
 		return true
 	}
 	return false

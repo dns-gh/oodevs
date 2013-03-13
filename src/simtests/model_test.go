@@ -290,3 +290,19 @@ Party[2]
 `
 	c.Assert(dump, Equals, expected)
 }
+
+func (s *TestSuite) TestDeleteUnit(c *C) {
+	sim, client := connectAndWaitModel(c, ExCrossroadSmallOrbat)
+	defer sim.Kill()
+	model := client.Model
+
+	// Find some unit
+	units := model.GetData().ListUnits()
+	c.Assert(len(units) > 0, Equals, true)
+	unit := units[0]
+
+	// Blast it
+	err := client.DeleteUnit(unit.Id)
+	c.Assert(err, IsNil)
+	c.Assert(model.GetData().FindUnit(unit.Id), IsNil)
+}
