@@ -635,6 +635,8 @@ message ControlAck {
         error_invalid_time_factor = 5;
         //! The new date/time must be after the current date/time
         error_invalid_date_time   = 6;
+        //! Caller has not enough privileges for this operation
+        error_forbidden           = 7;
     }
 }
 

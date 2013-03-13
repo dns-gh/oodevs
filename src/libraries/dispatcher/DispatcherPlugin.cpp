@@ -17,6 +17,7 @@
 #include "Logger.h"
 #include "ClientsNetworker.h"
 #include "protocol/SimulationSenders.h"
+#include "protocol/RightsHelper.h"
 
 using namespace dispatcher;
 
@@ -29,6 +30,7 @@ DispatcherPlugin::DispatcherPlugin( SimulationPublisher_ABC& simulation, Clients
     : simulation_( simulation )
     , links_     ( links )
     , order_     ( order )
+    , clients_   ( clients )
 {
     clients.RegisterMessage( MakeLogger( log, "Dispatcher received : ", *this, &DispatcherPlugin::OnReceive ) );
 }
@@ -70,5 +72,14 @@ void DispatcherPlugin::OnReceive( const std::string& link, const sword::ClientTo
     {
         order_.Resolve( message );
         simulation_.Send( message );
+    }
+    else
+    {
+        sword::SimToClient error;
+        error.set_context( message.context() );
+        if( protocol::GetForbiddenError( message, error ))
+        {
+            clients_.Send( error );
+        }
     }
 }

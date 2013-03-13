@@ -64,13 +64,16 @@ namespace shield
     template< typename From, typename To >
     static void ConvertControlAckErrorCode( const From& from, To* to )
     {
-        CONVERT_ENUM( error_code, ( sword::ControlAck::no_error, MsgsSimToClient::ControlAck::no_error )
+        CONVERT_NON_INJECTIVE_ENUM( error_code, error_code, ( sword::ControlAck::no_error, MsgsSimToClient::ControlAck::no_error )
                                   ( sword::ControlAck::error_already_started, MsgsSimToClient::ControlAck::error_already_started )
                                   ( sword::ControlAck::error_not_started, MsgsSimToClient::ControlAck::error_not_started )
                                   ( sword::ControlAck::error_not_paused, MsgsSimToClient::ControlAck::error_not_paused )
                                   ( sword::ControlAck::error_already_paused, MsgsSimToClient::ControlAck::error_already_paused )
                                   ( sword::ControlAck::error_invalid_time_factor, MsgsSimToClient::ControlAck::error_invalid_time_factor )
-                                  ( sword::ControlAck::error_invalid_date_time, MsgsSimToClient::ControlAck::error_invalid_date_time ) );
+                                  ( sword::ControlAck::error_invalid_date_time, MsgsSimToClient::ControlAck::error_invalid_date_time )
+        // Shield enumerations are likely specified somewhere, so remap on some
+        // error even if the code makes little sense
+                                  ( sword::ControlAck::error_forbidden, MsgsSimToClient::ControlAck::error_not_started ) );
     }
     template< typename From, typename To >
     void ConvertCoordLatLong( const From& from, To* to )

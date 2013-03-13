@@ -56,6 +56,7 @@ private:
     SimulationPublisher_ABC& simulation_;
     LinkResolver_ABC& links_;
     OrderResolver_ABC& order_;
+    ClientsNetworker& clients_;
     //@}
 };
 
