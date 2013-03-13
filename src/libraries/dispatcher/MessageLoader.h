@@ -62,6 +62,7 @@ public:
     virtual unsigned int GetTickNumber() const;
     virtual unsigned int GetFirstTick() const;
     unsigned int FindKeyFrame( unsigned int frameNumber );
+    unsigned int FindTickForDate( const std::string& GDHDate ) const;
     void FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsigned int endTick ) const;
     void ReloadAllFragmentsInfos();
     //@}

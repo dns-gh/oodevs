@@ -27,6 +27,14 @@ message ControlSkipToTick {
     required int32 tick = 1;
 }
 
+/** @struct ControlSkipToDate
+    @brief Skips to a given date
+*/
+message ControlSkipToDate {
+    //! The new date and/or time
+    required DateTime date_time = 1;
+}
+
 /** @struct TimeTableRequest
     @brief Requests datetime information in a specified tick range
 
@@ -79,6 +87,8 @@ message ClientToReplay {
         optional TimeTableRequest        time_table_request         = 6;
         //! A message to force data reload
         optional ForceRefreshDataRequest force_refresh_data_request = 7;
+        //! A message to skip to a given date
+        optional ControlSkipToDate       control_skip_to_date       = 8;
     }
     /** @property context
         @brief Identifies the request matching the response.

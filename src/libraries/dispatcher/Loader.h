@@ -51,6 +51,7 @@ public:
     unsigned int GetFirstTick() const;
 
     void FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsigned int endTick ) const;
+    unsigned int FindTickForDate( const std::string& GDHDate ) const;
 
     void ReloadAll();
     //@}

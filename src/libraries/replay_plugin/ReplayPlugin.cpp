@@ -132,6 +132,8 @@ void ReplayPlugin::OnReceive( const std::string& , const sword::ClientToReplay& 
         ChangeTimeFactor( wrapper.message().control_change_time_factor().time_factor() );
     else if( wrapper.message().has_control_skip_to_tick() )
         skipToFrame_ = wrapper.message().control_skip_to_tick().tick();
+    else if( wrapper.message().has_control_skip_to_date() )
+        skipToFrame_ = loader_.FindTickForDate( wrapper.message().control_skip_to_date().date_time().data() );
     else if( wrapper.message().has_time_table_request() )
         RequestTimeTable( wrapper.message().time_table_request().tick_range() );
     else if( wrapper.message().has_force_refresh_data_request() )

@@ -21,8 +21,12 @@
 #include <boost/thread/thread.hpp>
 #include <boost/bind.hpp>
 #include <boost/make_shared.hpp>
+#pragma warning( push, 1 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
 
 namespace bfs = boost::filesystem;
+namespace bpt = boost::posix_time;
 using namespace dispatcher;
 
 namespace
@@ -248,6 +252,62 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
     {
         MT_LOG_ERROR_MSG( "Exception caught while filling time table." );
     }
+}
+
+namespace
+{
+    unsigned int ConvertFromGDHToSeconds( const std::string& GDHDate )
+    {
+        bpt::ptime time = bpt::from_iso_string( GDHDate );
+        return ( time - bpt::from_time_t( 0 ) ).total_seconds();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageLoader::FindTickForDate
+// Created: JSR 2013-03-12
+// -----------------------------------------------------------------------------
+unsigned int MessageLoader::FindTickForDate( const std::string& GDHDate ) const
+{
+    const unsigned int seconds = ConvertFromGDHToSeconds( GDHDate );
+    unsigned int ret = GetFirstTick();
+    try
+    {
+        boost::mutex::scoped_lock lock( access_ );
+        bool found = false;
+        for( auto it = fragmentsInfos_.begin(); it != fragmentsInfos_.end() && !found; ++it )
+        {
+            std::ifstream infoFile;
+            unsigned int start;
+            unsigned int end;
+            std::string simTime;
+            std::string realTime;
+            if( OpenFile( infoFile, records_ / it->first / infoFileName ) )
+            {
+                tools::InputBinaryWrapper wrapper( infoFile );
+                wrapper >> start;
+                wrapper >> end;
+                for( unsigned int i = start; i <= end; ++i )
+                {
+                    wrapper >> simTime;
+                    wrapper >> realTime;
+                    if( ConvertFromGDHToSeconds( simTime ) > seconds )
+                    {
+                        found = true;
+                        break;
+                    }
+                    else
+                        ret = i;
+                }
+                infoFile.close();
+            }
+        }
+    }
+    catch( ... )
+    {
+        MT_LOG_ERROR_MSG( "Exception caught while finding tick for date." );
+    }
+    return std::min( ret, GetTickNumber() - 1 );
 }
 
 // -----------------------------------------------------------------------------

@@ -131,6 +131,15 @@ void Loader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick, unsig
 }
 
 // -----------------------------------------------------------------------------
+// Name: Loader::FindTickForDate
+// Created: JSR 2013-03-12
+// -----------------------------------------------------------------------------
+unsigned int Loader::FindTickForDate( const std::string& GDHDate ) const
+{
+    return loader_->FindTickForDate( GDHDate );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Loader::ReloadAll
 // Created: MMC 2012-09-14
 // -----------------------------------------------------------------------------

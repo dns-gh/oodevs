@@ -22,6 +22,7 @@ namespace replay
     GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlResume             , control_resume                 )
     GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlChangeTimeFactor   , control_change_time_factor     )
     GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlSkipToTick         , control_skip_to_tick           )
+    GENERATE_MESSAGE( sword::ClientToReplay, sword, ControlSkipToDate         , control_skip_to_date           )
     GENERATE_MESSAGE( sword::ClientToReplay, sword, TimeTableRequest          , time_table_request             )
     GENERATE_MESSAGE( sword::ClientToReplay, sword, ForceRefreshDataRequest   , force_refresh_data_request     )
 

@@ -2051,15 +2051,15 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const s
     if( host_.empty() )
         return;
     if( wrapper.message().has_control_replay_information() )
-        OnReceiveMsgCtrReplayInfo             ( wrapper.message().control_replay_information()     );
+        OnReceiveMsgCtrReplayInfo( wrapper.message().control_replay_information()     );
     else if( wrapper.message().has_control_stop_ack() )
         {}
     else if( wrapper.message().has_control_pause_ack() )
-        OnReceiveControlPauseAck           ( wrapper.message().control_pause_ack() );
+        OnReceiveControlPauseAck( wrapper.message().control_pause_ack() );
     else if( wrapper.message().has_control_resume_ack() )
-        OnReceiveControlResumeAck          ( wrapper.message().control_resume_ack() );
+        OnReceiveControlResumeAck( wrapper.message().control_resume_ack() );
     else if( wrapper.message().has_control_skip_to_tick_ack() )
-        OnReceiveControlSkipToTickAck      ( wrapper.message().control_skip_to_tick_ack() );
+        OnReceiveControlSkipToTickAck( wrapper.message().control_skip_to_tick_ack() );
     else if( wrapper.message().has_control_change_time_factor_ack() )
         OnReceiveControlChangeTimeFactorAck( wrapper.message().control_change_time_factor_ack() );
     else if( wrapper.message().has_new_data_chunk_notification() )

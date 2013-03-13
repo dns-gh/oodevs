@@ -123,8 +123,7 @@ void ActionsScheduler::SetDate( const QDateTime& dateTime )
 // -----------------------------------------------------------------------------
 void ActionsScheduler::SkipToDate( const QDateTime& dateTime )
 {
-    replay::ControlSkipToTick skip;
-    unsigned int tick = dateTime < simulation_.GetInitialDateTime()? simulation_.GetFirstTick() : simulation_.GetInitialDateTime().secsTo( dateTime ) / simulation_.GetTickDuration();
-    skip().set_tick( tick < simulation_.GetTickCount()- 1 ? tick - 1 : simulation_.GetTickCount() - 1 );
+    replay::ControlSkipToDate skip;
+    skip().mutable_date_time()->set_data( MakeGDHString( dateTime ).c_str() );
     skip.Send( publisher_ );
 }
