@@ -58,7 +58,7 @@ func postInvalidUnitMagicAction(client *swapi.Client, tasker *sword.Tasker) erro
 }
 
 func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
-	sim, client := connectAndWaitModel(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Kill()
 	model := client.Model
 	data := model.GetData()

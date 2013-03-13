@@ -189,18 +189,24 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 	return p
 }
 
-func connectAndWaitModel(c *C, exercise string) (*simu.SimProcess, *swapi.Client) {
+func connectAndWaitModel(c *C, user, password, exercise string) (
+	*simu.SimProcess, *swapi.Client) {
+
 	sim := startSimOnExercise(c, exercise, 1000, false)
 	client := ConnectClient(c, sim)
-	err := client.Login("alluser", "alluser")
+	err := client.Login(user, password)
 	c.Assert(err, IsNil) // login failed
 	ok := client.Model.WaitReady(10 * time.Second)
 	c.Assert(ok, Equals, true) // model initialization timed out
 	return sim, client
 }
 
+func connectAllUserAndWait(c *C, exercise string) (*simu.SimProcess, *swapi.Client) {
+	return connectAndWaitModel(c, "alluser", "alluser", exercise)
+}
+
 func (s *TestSuite) TestModelInitialization(c *C) {
-	sim, client := connectAndWaitModel(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Kill()
 	model := client.Model
 
@@ -275,7 +281,7 @@ Party[2]
 }
 
 func (s *TestSuite) TestModelIsolation(c *C) {
-	sim, client := connectAndWaitModel(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Kill()
 	model := client.Model
 	data := model.GetData()
@@ -295,7 +301,7 @@ func (s *TestSuite) TestModelIsolation(c *C) {
 }
 
 func (s *TestSuite) TestCreateFormation(c *C) {
-	sim, client := connectAndWaitModel(c, ExCrossroadSmallEmpty)
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallEmpty)
 	defer sim.Kill()
 	model := client.Model
 
@@ -342,7 +348,7 @@ Party[2]
 }
 
 func (s *TestSuite) TestDeleteUnit(c *C) {
-	sim, client := connectAndWaitModel(c, ExCrossroadSmallOrbat)
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Kill()
 	model := client.Model
 	data := model.GetData()

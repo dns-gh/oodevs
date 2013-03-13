@@ -34,7 +34,8 @@ type Model struct {
 	data  *ModelData
 
 	// State only touched by caller routines
-	condId int
+	condId      int
+	WaitTimeout time.Duration
 
 	// Shared state
 	msgch  chan *SwordMessage
@@ -44,13 +45,14 @@ type Model struct {
 
 func NewModel() *Model {
 	model := Model{
-		ready:  false,
-		condId: 0,
-		msgch:  make(chan *SwordMessage, 128),
-		cmdch:  make(chan *modelCmd, 4),
-		condch: make(chan *modelCond, 4),
-		conds:  []*modelCond{},
-		data:   NewModelData(),
+		ready:       false,
+		condId:      0,
+		WaitTimeout: 60 * time.Second,
+		msgch:       make(chan *SwordMessage, 128),
+		cmdch:       make(chan *modelCmd, 4),
+		condch:      make(chan *modelCond, 4),
+		conds:       []*modelCond{},
+		data:        NewModelData(),
 	}
 	go model.run()
 	return &model
@@ -88,6 +90,15 @@ func (model *Model) update(msg *SwordMessage) {
 		m := msg.SimulationToClient.GetMessage()
 		if m.GetControlSendCurrentStateEnd() != nil {
 			model.ready = true
+		} else if mm := m.GetControlBeginTick(); mm != nil {
+			t, err := time.Parse("20060102T150405",
+				mm.GetDateTime().GetData())
+			if err != nil {
+				// XXX: report parsing error here
+				return
+			}
+			d.Time = t
+			d.Tick = mm.GetCurrentTick()
 		} else if mm := m.GetPartyCreation(); mm != nil {
 			party := NewParty(
 				mm.GetParty().GetId(),
@@ -240,4 +251,10 @@ func (model *Model) GetData() *ModelData {
 		d = model.data.Copy()
 	})
 	return d
+}
+
+func (model *Model) WaitUntilTick(tick int32) bool {
+	return model.waitCond(model.WaitTimeout, func(model *Model) bool {
+		return tick <= model.data.Tick
+	})
 }

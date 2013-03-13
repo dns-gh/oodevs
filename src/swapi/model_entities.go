@@ -1,5 +1,9 @@
 package swapi
 
+import (
+	"time"
+)
+
 type Population struct {
 	Id      uint32
 	PartyId uint32
@@ -154,16 +158,23 @@ func (party *Party) Copy() *Party {
 
 type ModelData struct {
 	Parties map[uint32]*Party
+	// Tick and time of the most recent started tick
+	Tick int32
+	Time time.Time
 }
 
 func NewModelData() *ModelData {
 	return &ModelData{
 		Parties: map[uint32]*Party{},
+		Tick:    0,
+		Time:    time.Time{},
 	}
 }
 
 func (model *ModelData) Copy() *ModelData {
 	m := NewModelData()
+	m.Tick = model.Tick
+	m.Time = model.Time
 	for k, v := range model.Parties {
 		m.Parties[k] = v.Copy()
 	}

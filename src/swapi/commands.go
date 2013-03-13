@@ -292,3 +292,77 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 	err := <-quit
 	return err
 }
+
+func getControlAckError(code sword.ControlAck_ErrorCode) error {
+	if code == sword.ControlAck_no_error {
+		return nil
+	}
+	err := errors.New("unknown error")
+	name, ok := sword.ControlAck_ErrorCode_name[int32(code)]
+	if ok {
+		err = errors.New(name)
+	}
+	return err
+}
+
+func (c *Client) Pause() error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				ControlPause: &sword.ControlPause{},
+			},
+		},
+	}
+	quit := make(chan error)
+	handler := func(msg *SwordMessage, context int32, err error) bool {
+		if err != nil {
+			quit <- err
+			return true
+		}
+		if msg.SimulationToClient == nil || msg.Context != context {
+			return false
+		}
+		m := msg.SimulationToClient.GetMessage()
+		if reply := m.GetControlPauseAck(); reply != nil {
+			quit <- getControlAckError(reply.GetErrorCode())
+		} else {
+			quit <- errors.New(fmt.Sprintf("Go unexpected %v", m))
+		}
+		return true
+	}
+	c.Post(msg, handler)
+	err := <-quit
+	return err
+}
+
+func (c *Client) Resume(nextPause uint32) error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				ControlResume: &sword.ControlResume{
+					Tick: proto.Uint32(nextPause),
+				},
+			},
+		},
+	}
+	quit := make(chan error)
+	handler := func(msg *SwordMessage, context int32, err error) bool {
+		if err != nil {
+			quit <- err
+			return true
+		}
+		if msg.SimulationToClient == nil || msg.Context != context {
+			return false
+		}
+		m := msg.SimulationToClient.GetMessage()
+		if reply := m.GetControlResumeAck(); reply != nil {
+			quit <- getControlAckError(reply.GetErrorCode())
+		} else {
+			quit <- errors.New(fmt.Sprintf("Go unexpected %v", m))
+		}
+		return true
+	}
+	c.Post(msg, handler)
+	err := <-quit
+	return err
+}
