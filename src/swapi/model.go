@@ -145,6 +145,14 @@ func (model *Model) update(msg *SwordMessage) {
 			if !d.addCrowd(crowd) {
 				// XXX report error here
 			}
+		} else if mm := m.GetPopulationCreation(); mm != nil {
+			population := NewPopulation(
+				mm.GetId().GetId(),
+				mm.GetParty().GetId(),
+				mm.GetName())
+			if !d.addPopulation(population) {
+				// XXX report error here
+			}
 		} else if mm := m.GetUnitDestruction(); mm != nil {
 			d.removeUnit(mm.GetUnit().GetId())
 		}

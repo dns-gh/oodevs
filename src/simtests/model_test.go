@@ -33,6 +33,12 @@ func (p *prettyPrinter) GetOutput() string {
 }
 
 func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
+	printPopulation := func(p *prettyPrinter, pop *swapi.Population) {
+		p.P("Id: %d", pop.Id)
+		p.P("PartyId: %d", pop.PartyId)
+		p.P("Name: %s", pop.Name)
+	}
+
 	printCrowd := func(p *prettyPrinter, c *swapi.Crowd) {
 		p.P("Id: %d", c.Id)
 		p.P("PartyId: %d", c.PartyId)
@@ -150,6 +156,21 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 			p.Unshift()
 			p.Unshift()
 		}
+
+		keys = []int{}
+		for k := range party.Populations {
+			keys = append(keys, int(k))
+		}
+		sort.Ints(keys)
+		for _, k := range keys {
+			child := party.Populations[uint32(k)]
+			p.Shift()
+			p.P("Population[%d]", k)
+			p.Shift()
+			printPopulation(p, child)
+			p.Unshift()
+			p.Unshift()
+		}
 	}
 
 	keys := []int{}
@@ -243,6 +264,10 @@ func (s *TestSuite) TestModelInitialization(c *C) {
       Id: 17
       PartyId: 1
       Name: Standard Crowd
+    Population[22]
+      Id: 22
+      PartyId: 1
+      Name: population
 Party[2]
   Name: empty-party
 `

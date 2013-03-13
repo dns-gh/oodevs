@@ -1,5 +1,23 @@
 package swapi
 
+type Population struct {
+	Id      uint32
+	PartyId uint32
+	Name    string
+}
+
+func NewPopulation(id, partyId uint32, name string) *Population {
+	return &Population{
+		Id:      id,
+		PartyId: partyId,
+		Name:    name,
+	}
+}
+
+func (p *Population) Copy() *Population {
+	return NewPopulation(p.Id, p.PartyId, p.Name)
+}
+
 type Crowd struct {
 	Id      uint32
 	PartyId uint32
@@ -103,18 +121,20 @@ func (formation *Formation) Copy() *Formation {
 }
 
 type Party struct {
-	Id         uint32
-	Name       string
-	Formations map[uint32]*Formation
-	Crowds     map[uint32]*Crowd
+	Id          uint32
+	Name        string
+	Formations  map[uint32]*Formation
+	Crowds      map[uint32]*Crowd
+	Populations map[uint32]*Population
 }
 
 func NewParty(id uint32, name string) *Party {
 	return &Party{
-		Id:         id,
-		Name:       name,
-		Formations: map[uint32]*Formation{},
-		Crowds:     map[uint32]*Crowd{},
+		Id:          id,
+		Name:        name,
+		Formations:  map[uint32]*Formation{},
+		Crowds:      map[uint32]*Crowd{},
+		Populations: map[uint32]*Population{},
 	}
 }
 
@@ -125,6 +145,9 @@ func (party *Party) Copy() *Party {
 	}
 	for k, v := range party.Crowds {
 		p.Crowds[k] = v.Copy()
+	}
+	for k, v := range party.Populations {
+		p.Populations[k] = v.Copy()
 	}
 	return p
 }
@@ -277,6 +300,15 @@ func (model *ModelData) addCrowd(crowd *Crowd) bool {
 	party, ok := model.Parties[crowd.PartyId]
 	if ok {
 		party.Crowds[crowd.Id] = crowd
+		return true
+	}
+	return false
+}
+
+func (model *ModelData) addPopulation(population *Population) bool {
+	party, ok := model.Parties[population.PartyId]
+	if ok {
+		party.Populations[population.Id] = population
 		return true
 	}
 	return false
