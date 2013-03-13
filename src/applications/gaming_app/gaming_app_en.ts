@@ -2660,6 +2660,14 @@ This data can&apos;t be projected.</source>
         <source>Refresh</source>
         <translation>Refresh</translation>
     </message>
+    <message>
+        <source>Ticks</source>
+        <translation>Ticks</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation>Time</translation>
+    </message>
 </context>
 <context>
     <name>ReportListView</name>

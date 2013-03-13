@@ -12,8 +12,9 @@
 #include "moc_ReplayerToolbar.cpp"
 #include "TimeTableRequestDialog.h"
 #include "icons.h"
-#include "clients_kernel/Tools.h"
+#include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 
@@ -21,22 +22,15 @@ using namespace sword;
 
 namespace
 {
-    class EditSpinBox : public QSpinBox
+    template< class Widget >
+    class EditWidget : public Widget
     {
     public:
-        EditSpinBox( QWidget* widget )
-            : QSpinBox( widget )
-        {
-            // NOTHING
-        }
-        virtual ~EditSpinBox()
-        {
-            // NOTHING
-        }
-
+        EditWidget() {}
+        virtual ~EditWidget() {}
         virtual void stepBy( int steps )
         {
-            QSpinBox::stepBy( steps );
+            Widget::stepBy( steps );
             emit editingFinished();
         }
     };
@@ -52,6 +46,8 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     , network_( network )
     , maxTick_( 0 )
     , slider_( 0 )
+    , sliderTick_( 0 )
+    , simulationStep_( 0 )
     , isPlayingBeforeMove_( false )
     , replayPaused_( true )
 {
@@ -82,7 +78,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         maxTick_ = simulation.GetTickCount();
         if( ! slider_ )
         {
-            slider_ = new QSlider( Qt::Horizontal, this );
+            slider_ = new QSlider( Qt::Horizontal );
             addWidget( slider_ );
             const unsigned int firstTick = simulation.GetFirstTick();
             slider_->setMinValue( firstTick == std::numeric_limits< unsigned int >::max() ? maxTick_ : firstTick );
@@ -90,30 +86,51 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
             slider_->setMinimumWidth( 200 );
             slider_->setTickmarks( QSlider::TicksBelow );
             addSeparator();
-            value_ = new EditSpinBox( this );
-            addWidget( value_ );
+            button_ = new QPushButton();
+            menu_ = new kernel::ContextMenu( button_ );
+            button_->setPopup( menu_ );
+            button_->setText( tr( "Ticks" ) );
+            menu_->insertItem( tr( "Ticks" ), 0 );
+            menu_->insertItem( tr( "Time" ), 1 );
+            menu_->setItemChecked( 0, true );
+            addWidget( button_ );
+            QSpinBox* spinBox = new EditWidget< QSpinBox >();
+            spinBoxAction_ = addWidget( spinBox );
+            spinBoxAction_->setVisible( true );
+            QDateTimeEdit* dateTime = new EditWidget< QDateTimeEdit >();
+            dateTime->setDisplayFormat( "dd/MM/yy HH:mm:ss" );
+            dateTime->setButtonSymbols( QAbstractSpinBox::NoButtons );
+            dateTimeAction_ = addWidget( dateTime );
+            dateTimeAction_->setVisible( false );
             addSeparator();
-            QToolButton* pTimeTableButton = new QToolButton( this );
+            QToolButton* pTimeTableButton = new QToolButton();
             pTimeTableButton->setIconSet( MAKE_ICON( tic_temps ) );
             pTimeTableButton->setTextLabel( tr( "Time table" ) );
             addWidget( pTimeTableButton );
             addSeparator();
-            QToolButton* pRefreshButton = new QToolButton( this );
+            QToolButton* pRefreshButton = new QToolButton();
             pRefreshButton->setIconSet( MAKE_ICON( refresh ) );
             pRefreshButton->setTextLabel( tr( "Refresh" ) );
             addWidget( pRefreshButton );
             connect( slider_, SIGNAL( sliderPressed() ), SLOT( OnSliderPressed() ) );
             connect( slider_, SIGNAL( sliderReleased() ), SLOT( OnSliderReleased() ) );
             connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMoved( int ) ) );
-            connect( value_, SIGNAL( editingFinished() ), SLOT( OnSpinBoxChanged() ) );
+            connect( spinBox, SIGNAL( editingFinished() ), SLOT( OnSpinBoxChanged() ) );
+            connect( dateTime, SIGNAL( editingFinished() ), SLOT( OnDateTimeChanged() ) );
             connect( pTimeTableButton, SIGNAL( clicked() ), SLOT( OnTimeTable() ) );
             connect( pRefreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
+            connect( menu_, SIGNAL( activated( int ) ), SLOT( OnMenuActivated( int ) ) );
         }
         replayPaused_ = simulation.IsPaused();
-        value_->setRange( simulation.GetFirstTick(), maxTick_);
+        simulationStep_ = simulation.GetTickDuration();
+        SpinBox()->setRange( simulation.GetFirstTick(), maxTick_);
         slider_->setRange( simulation.GetFirstTick(), maxTick_ );
         slider_->setTickInterval( slider_->maxValue() / 20 );
+        slider_->blockSignals( true );
         slider_->setValue( simulation.GetCurrentTick() );
+        slider_->blockSignals( false );
+        SpinBox()->setValue( simulation.GetCurrentTick() );
+        DateTimeEdit()->setDateTime( simulation.GetDateTime() );
     }
 }
 
@@ -176,7 +193,11 @@ void ReplayerToolbar::NotifyUpdated( const Simulation::sTimeTable& timeTable )
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::OnSliderMoved( int value )
 {
-    value_->setValue( value );
+    SpinBox()->setValue( value );
+    QDateTime date = DateTimeEdit()->dateTime();
+    date = date.addSecs( ( value - sliderTick_ ) * simulationStep_ );
+    DateTimeEdit()->setDateTime( date );
+    sliderTick_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -185,10 +206,36 @@ void ReplayerToolbar::OnSliderMoved( int value )
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::OnSpinBoxChanged()
 {
-    slider_->blockSignals( true );
-    slider_->setValue( value_->value() );
-    slider_->blockSignals( false );
-    OnSliderReleased();
+    SkipToTick( SpinBox()->value() );
+}
+
+namespace
+{
+    std::string MakeGDHString( const QDateTime& datetime )
+    {
+        // $$$$ SBO 2008-04-25: ...
+        QString str = datetime.toString( Qt::ISODate );
+        str.remove( ':' );
+        str.remove( '-' );
+        return str.toStdString();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayerToolbar::OnDateTimeChanged
+// Created: JSR 2013-03-12
+// -----------------------------------------------------------------------------
+void ReplayerToolbar::OnDateTimeChanged()
+{
+    replay::ControlSkipToDate skip;
+    skip().mutable_date_time()->set_data( MakeGDHString( DateTimeEdit()->dateTime() ).c_str() );
+    skip.Send( network_ );
+    if( isPlayingBeforeMove_ )
+    {
+        replay::ControlResume message;
+        message().set_tick( 1 );
+        message.Send( network_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -197,6 +244,7 @@ void ReplayerToolbar::OnSpinBoxChanged()
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::OnSliderPressed()
 {
+    sliderTick_ = slider_->value();
     isPlayingBeforeMove_ = !replayPaused_;
     if( isPlayingBeforeMove_ )
     {
@@ -211,15 +259,21 @@ void ReplayerToolbar::OnSliderPressed()
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::OnSliderReleased()
 {
-    replay::ControlSkipToTick skip;
-    skip().set_tick( slider_->value() - 1 );
-    skip.Send( network_ );
-    if( isPlayingBeforeMove_ )
-    {
-        replay::ControlResume message;
-        message().set_tick( 1 );
-        message.Send( network_ );
-    }
+    SkipToTick( slider_->value() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayerToolbar::OnMenuActivated
+// Created: JSR 2013-03-13
+// -----------------------------------------------------------------------------
+void ReplayerToolbar::OnMenuActivated( int index )
+{
+    bool tickMode = index == 0;
+    spinBoxAction_->setVisible( tickMode );
+    dateTimeAction_->setVisible( !tickMode );
+    button_->setText( tickMode ? tr( "Ticks" ) : tr( "Time" ) );
+    menu_->setItemChecked( 0, tickMode );
+    menu_->setItemChecked( 1, !tickMode );
 }
 
 // -----------------------------------------------------------------------------
@@ -239,4 +293,39 @@ void ReplayerToolbar::OnRefresh()
 {
     replay::ForceRefreshDataRequest reload;
     reload.Send( network_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayerToolbar::SkipToTick
+// Created: JSR 2013-03-12
+// -----------------------------------------------------------------------------
+void ReplayerToolbar::SkipToTick( unsigned int tick )
+{
+    replay::ControlSkipToTick skip;
+    skip().set_tick( tick - 1 );
+    skip.Send( network_ );
+    if( isPlayingBeforeMove_ )
+    {
+        replay::ControlResume message;
+        message().set_tick( 1 );
+        message.Send( network_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayerToolbar::SpinBox
+// Created: JSR 2013-03-12
+// -----------------------------------------------------------------------------
+QSpinBox* ReplayerToolbar::SpinBox()
+{
+    return static_cast< QSpinBox* >( widgetForAction( spinBoxAction_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayerToolbar::DateTimeEdit
+// Created: JSR 2013-03-12
+// -----------------------------------------------------------------------------
+QDateTimeEdit* ReplayerToolbar::DateTimeEdit()
+{
+    return static_cast< QDateTimeEdit* >( widgetForAction( dateTimeAction_ ) );
 }

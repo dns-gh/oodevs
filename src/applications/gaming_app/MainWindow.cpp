@@ -240,7 +240,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     AddToolBar( *this, new gui::GisToolbar( this, controllers, staticModel_.detection_, dockContainer_->GetTerrainProfiler() ), eModes_Default );
     AddToolBar( *this, new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ), eModes_Default );
     addToolBarBreak();
-    AddToolBar( *this, new ReplayerToolbar( this, controllers, network_.GetMessageMgr() ), eModes_Default | eModes_Gaming, eModes_None );
+    AddToolBar( *this, new ReplayerToolbar( this, controllers, network_.GetMessageMgr() ), eModes_Default | eModes_Gaming, eModes_Replay );
     AddToolBar( *this, new MessagePanel( this, controllers_, network_.GetMessageMgr(), network.GetCommands(), *factory ), eModes_Default );
 
     // Help

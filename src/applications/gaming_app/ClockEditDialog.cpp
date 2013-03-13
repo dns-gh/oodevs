@@ -33,7 +33,7 @@ ClockEditDialog::ClockEditDialog( QWidget* parent, kernel::Controllers& controll
     {
         new QLabel( tools::translate( "ClockEditDialog", "New date and time: " ), box );
         editor_ = new QDateTimeEdit( box );
-        editor_->setDisplayFormat( "dd/MM/yy HH:mm:ss");
+        editor_->setDisplayFormat( "dd/MM/yy HH:mm:ss" );
     }
     pLayout->addWidget( box, 0, 0 );
     Q3HBox* buttons = new Q3HBox( this );

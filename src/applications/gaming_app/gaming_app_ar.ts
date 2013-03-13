@@ -2662,6 +2662,14 @@ This data can&apos;t be projected.</source>
         <source>Refresh</source>
         <translation type="unfinished">قم بتحديث</translation>
     </message>
+    <message>
+        <source>Ticks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished">الوقت</translation>
+    </message>
 </context>
 <context>
     <name>ReportListView</name>

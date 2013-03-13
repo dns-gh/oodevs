@@ -16,6 +16,7 @@
 
 namespace kernel
 {
+    class ContextMenu;
     class Controllers;
 }
 
@@ -53,10 +54,20 @@ private slots:
     //@{
     void OnSliderMoved( int value );
     void OnSpinBoxChanged();
+    void OnDateTimeChanged();
     void OnSliderPressed();
     void OnSliderReleased();
+    void OnMenuActivated( int index );
     void OnTimeTable();
     void OnRefresh();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void SkipToTick( unsigned int tick );
+    QSpinBox* SpinBox();
+    QDateTimeEdit* DateTimeEdit();
     //@}
 
 private:
@@ -66,7 +77,12 @@ private:
     Publisher_ABC& network_;
     unsigned int maxTick_;
     QSlider* slider_;
-    QSpinBox* value_;
+    QAction* spinBoxAction_;
+    QAction* dateTimeAction_;
+    kernel::ContextMenu* menu_;
+    QPushButton* button_;
+    int sliderTick_;
+    unsigned int simulationStep_;
     bool isPlayingBeforeMove_;
     bool replayPaused_;
     //@}

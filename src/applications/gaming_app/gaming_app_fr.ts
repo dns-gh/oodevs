@@ -2668,6 +2668,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Refresh</source>
         <translation>Mettre à jour</translation>
     </message>
+    <message>
+        <source>Ticks</source>
+        <translation>Ticks</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation>Heure</translation>
+    </message>
 </context>
 <context>
     <name>ReportListView</name>
