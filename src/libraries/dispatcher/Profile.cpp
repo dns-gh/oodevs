@@ -189,6 +189,8 @@ bool Profile::CheckRights( const sword::ClientToSim& wrapper ) const
         return bSupervision_;
     if( message.has_control_resume() )
         return bSupervision_;
+    if( message.has_control_stop() )
+        return bSupervision_;
     if( message.has_control_change_time_factor() )
         return bSupervision_;
     if( message.has_control_date_time_change() )
