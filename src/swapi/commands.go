@@ -246,6 +246,7 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 			},
 		},
 	}
+	state := 0
 	deletedId := uint32(0)
 	quit := make(chan error)
 	handler := func(msg *SwordMessage, context int32, err error) bool {
@@ -257,7 +258,18 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 			return false
 		}
 		m := msg.SimulationToClient.GetMessage()
-		if reply := m.GetUnitMagicActionAck(); reply != nil {
+		if reply := m.GetUnitDestruction(); reply != nil {
+			if state != 0 {
+				quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
+				return true
+			}
+			state = 1
+			return false
+		} else if reply := m.GetUnitMagicActionAck(); reply != nil {
+			if state != 1 {
+				quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
+				return true
+			}
 			id, err := GetUnitMagicActionAck(reply)
 			deletedId = id
 			if err == nil && id != unitId {
