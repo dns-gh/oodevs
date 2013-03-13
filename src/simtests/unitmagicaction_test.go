@@ -121,3 +121,71 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 			Commentf("for tasker %v", tasker))
 	}
 }
+
+func (s *TestSuite) TestCreateFormation(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallEmpty)
+	defer sim.Kill()
+	model := client.Model
+
+	// Test with invalid tasker
+	_, err := client.CreateFormation(0, 0, "invalid-tasker", 1, "")
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// Test invalid level
+	_, err = client.CreateFormation(1, 0, "invalid-tasker", 42, "")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Test invalid log level
+	_, err = client.CreateFormation(1, 0, "invalid-tasker", 1, "invalid")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Add formation to party
+	id1, err := client.CreateFormation(1, 0, "newformation", 1, "")
+
+	// Add formation to formation
+	_, err = client.CreateFormation(0, id1, "newformation2", 2, "aucun")
+	c.Assert(err, IsNil) // failed to create formation
+	dump := printParties(&prettyPrinter{}, model.GetData()).GetOutput()
+	expected := "" +
+		`Party[1]
+  Name: party1
+    Formation[526]
+      Id: 526
+      Name: newformation
+      ParentId: 0
+      PartyId: 1
+      Level: b
+      LogLevel: none
+        Formation[527]
+          Id: 527
+          Name: newformation2
+          ParentId: 526
+          PartyId: 1
+          Level: o
+          LogLevel: none
+Party[2]
+  Name: party2
+`
+	c.Assert(dump, Equals, expected)
+}
+
+func (s *TestSuite) TestDeleteUnit(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Kill()
+	model := client.Model
+	data := model.GetData()
+
+	// Destroy invalid unit
+	err := client.DeleteUnit(1234)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// Find some unit
+	units := data.ListUnits()
+	c.Assert(len(units) > 0, Equals, true)
+	unit := units[0]
+
+	// Blast it
+	err = client.DeleteUnit(unit.Id)
+	c.Assert(err, IsNil)
+	c.Assert(model.GetData().FindUnit(unit.Id), IsNil)
+}
