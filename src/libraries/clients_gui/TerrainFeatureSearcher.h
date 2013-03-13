@@ -12,6 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -30,6 +31,7 @@ namespace gui
 // =============================================================================
 class TerrainFeatureSearcher : public tools::Observer_ABC
                              , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                             , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -40,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    bool Search  ( const QString& name, geometry::Point2f& point, QString& hint );
+    bool Search( const QString& name, geometry::Point2f& point, QString& hint );
     bool FindNext( geometry::Point2f& point, QString& hint );
     //@}
 
@@ -51,12 +53,6 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TerrainFeatureSearcher( const TerrainFeatureSearcher& );            //!< Copy constructor
-    TerrainFeatureSearcher& operator=( const TerrainFeatureSearcher& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void LoadFeatures();

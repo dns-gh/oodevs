@@ -10,25 +10,17 @@
 #ifndef __LocationParsers_h_
 #define __LocationParsers_h_
 
-#pragma warning( push )
-#pragma warning( disable : 4512 )
-#include <boost/ptr_container/ptr_map.hpp>
-#pragma warning( pop )
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Controllers;
     class CoordinateConverter_ABC;
-    class CoordinateSystems;
 }
 
 namespace gui
 {
     class LocationParser_ABC;
-    class UtmParser;
-    class Wgs84DdParser;
-    class Wgs84DmsParser;
-    class XyParser;
 
 // =============================================================================
 /** @class  LocationParsers
@@ -36,7 +28,7 @@ namespace gui
 */
 // Created: AME 2010-03-10
 // =============================================================================
-class LocationParsers
+class LocationParsers : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -48,44 +40,17 @@ public:
     //! @name Operations
     //@{
     LocationParser_ABC& GetParser( int parserId );
-    bool Parse( int parserId, QString content, geometry::Point2f& result, QStringList& hint );
-    bool Parse( int parserId, QString contentX, QString contentY, geometry::Point2f& result, QStringList& hint );
-    void AddParser( LocationParser_ABC& parser, int id );
-    //@}
-
-public:
-    enum paramPos
-    {
-        E_Local,
-        E_Mgrs,
-        E_Wgs84Dd,
-        E_Wgs84Dms
-    };
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    LocationParsers( const LocationParsers& );            //!< Copy constructor
-    LocationParsers& operator=( const LocationParsers& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void FillParsers();
+    bool Parse( int parserId, const QString& content, geometry::Point2f& result, QStringList& hint );
+    bool Parse( int parserId, const QString& contentX, const QString& contentY, geometry::Point2f& result, QStringList& hint );
+    void AddParser( LocationParser_ABC* parser, int id );
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef boost::ptr_map< int, LocationParser_ABC* > T_parsers;
-    typedef T_parsers::const_iterator                CIT_parsers;
-    //@}
-
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
-    T_parsers parsers_;
+    std::map< int, std::auto_ptr< LocationParser_ABC > > parsers_;
     //@}
 };
 

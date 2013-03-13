@@ -11,7 +11,6 @@
 #define __CoordinateSystems_h_
 
 #include <boost/noncopyable.hpp>
-#include <map>
 
 namespace kernel
 {
@@ -24,6 +23,8 @@ namespace kernel
 class CoordinateSystems : public boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
     enum Projection
     {
         E_Mgrs,
@@ -31,22 +32,30 @@ public:
         E_Wgs84Dms,
         E_Local
     };
-
     typedef std::map< int, QString > T_SpatialReference;
+    //@}
 
+public:
     //! @name Constructors/Destructor
     //@{
              CoordinateSystems();
     virtual ~CoordinateSystems();
     //@}
 
-public:
-     //! @name Member data
+    //! @name Setters/Getters
     //@{
-    int default_;
-    const T_SpatialReference systems_;
+    void SetDefault( Projection projection );
+    const Projection GetDefault() const;
+    const std::map< int, QString >& GetSystems() const;
     //@}
 
+private:
+     //! @name Member data
+    //@{
+    Projection default_;
+    const std::map< int, QString > systems_;
+    //@}
 };
+
 }
 #endif // __CoordinateSystems_h_

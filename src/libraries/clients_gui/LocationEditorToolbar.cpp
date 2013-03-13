@@ -12,6 +12,7 @@
 #include "moc_LocationEditorToolbar.cpp"
 #include "ParametersLayer.h"
 #include "View_ABC.h"
+#include "FeatureNameParser.h"
 #include "LocationsLayer.h"
 #include "LocationParser_ABC.h"
 #include "UtmParser.h"
@@ -37,30 +38,29 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     : RichToolBar( controllers, parent, "locationeditor", tr( "Location editor" ) )
     , controllers_( controllers )
     , converter_( converter )
-    , featureNameParser_( controllers )
     , view_( view )
     , layer_( layer )
     , bookmarksMenu_( 0 )
 {
-    locBox_ = new LocationEditorBox( this, controllers, converter );
-    locBox_->AddParser( featureNameParser_, tr( "Feature" ) );
-    gotoButton_ = new QToolButton( this );
-    gotoButton_->setIconSet( MAKE_PIXMAP( goto ) );
-    gotoButton_->setPopupDelay( 0 );
-    gotoButton_->setPopupMode( QToolButton::MenuButtonPopup );
-    bookmarksMenu_ = new kernel::ContextMenu( gotoButton_ );
-    gotoButton_->setPopup( bookmarksMenu_ );
+    locBox_ = new LocationEditorBox( controllers, converter );
+    locBox_->AddParser( new FeatureNameParser( controllers ), tr( "Feature" ) );
+    QToolButton* gotoButton = new QToolButton( this );
+    gotoButton->setIconSet( MAKE_PIXMAP( goto ) );
+    gotoButton->setPopupDelay( 0 );
+    gotoButton->setPopupMode( QToolButton::MenuButtonPopup );
+    bookmarksMenu_ = new kernel::ContextMenu( gotoButton );
+    gotoButton->setPopup( bookmarksMenu_ );
     ClearBookmarks();
-    QToolTip::add( gotoButton_, tr( "Center on location" ) );
+    QToolTip::add( gotoButton, tr( "Center on location" ) );
     paramsButton_ = new QToolButton( this );
     paramsButton_->setIconSet( MAKE_PIXMAP( special_point ) );
     QToolTip::add( paramsButton_, tr( "Set special point" ) );
 
     addWidget( locBox_ );
-    addWidget( gotoButton_ );
+    addWidget( gotoButton );
     addWidget( paramsButton_ );
 
-    connect( gotoButton_, SIGNAL( clicked() ), SLOT( Goto() ) );
+    connect( gotoButton, SIGNAL( clicked() ), SLOT( Goto() ) );
     connect( paramsButton_, SIGNAL( clicked() ), SLOT( AddParamPoint() ) );
 
     controllers_.Update( *this );
@@ -113,14 +113,14 @@ void LocationEditorToolbar::CreateBookmark()
         bookmarksMenu_->clear();
         bookmarks_.push_back( Bookmark( name.toStdString(), utm ) );
         layer_.AddLocation( menuPoint_ );
-        unsigned int i = 0;
-        for( auto it = bookmarks_.begin(); it != bookmarks_.end(); ++it, ++i )
-            bookmarksMenu_->insertItem( it->name_.c_str(), this, SLOT( GotoBookmark( int ) ), 0, i );
+        for( int i = 0; i < bookmarks_.size(); ++i )
+            bookmarksMenu_->insertItem( bookmarks_[ i ].name_.c_str(), this, SLOT( GotoBookmark( int ) ), 0, i );
         bookmarksMenu_->insertSeparator();
         bookmarksMenu_->insertItem( tr( "Clear bookmarks" ), this, SLOT( ClearBookmarks() ) );
     }
     catch( ... )
     {
+        // NOTHING
     }
 }
 
@@ -130,7 +130,7 @@ void LocationEditorToolbar::CreateBookmark()
 // -----------------------------------------------------------------------------
 void LocationEditorToolbar::GotoBookmark( int index )
 {
-    if( index >= 0 && index < int( bookmarks_.size() ) )
+    if( index >= 0 && index < static_cast< int >( bookmarks_.size() ) )
         try
         {
             view_.CenterOn( converter_.ConvertToXY( bookmarks_.at( index ).position_ ) );

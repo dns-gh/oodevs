@@ -16,7 +16,7 @@ using namespace gui;
 // Name: XyParser constructor
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-XyParser::XyParser() : numParameters_( 2 )
+XyParser::XyParser()
 {
     // NOTHING
 }
@@ -34,7 +34,7 @@ XyParser::~XyParser()
 // Name: XyParser::Parse
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-bool XyParser::Parse( QString content, geometry::Point2f& result, QString& hint ) const
+bool XyParser::Parse( const QString& content, geometry::Point2f& result, QString& hint ) const
 {
     hint = content;
     hint.replace( ',', ' ' );
@@ -53,11 +53,12 @@ bool XyParser::Parse( QString content, geometry::Point2f& result, QString& hint 
     result.Set( x, y );
     return true;
 }
+
 // -----------------------------------------------------------------------------
 // Name: XyParser::Parse
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
-bool XyParser::Parse( QString content, geometry::Point2f& result, QStringList& hint ) const
+bool XyParser::Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const
 {
     QStringList listValue = QStringList::split( ":", content );
     QString hintX = listValue[ 0 ].stripWhiteSpace();
@@ -86,5 +87,5 @@ bool XyParser::Parse( QString content, geometry::Point2f& result, QStringList& h
 // -----------------------------------------------------------------------------
 int XyParser::GetNumberOfParameters() const
 {
-    return numParameters_;
+    return 2;
 }

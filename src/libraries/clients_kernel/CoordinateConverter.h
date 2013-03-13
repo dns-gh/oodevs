@@ -10,27 +10,28 @@
 #ifndef __kernel_CoordinateConverter_h_
 #define __kernel_CoordinateConverter_h_
 
-#include "Types.h"
 #include "CoordinateConverter_ABC.h"
 #include <geocoord/PlanarCartesian.h>
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
 #include <geocoord/UTM.h>
+#include <boost/noncopyable.hpp>
 
 namespace tools
 {
     class ExerciseConfig;
-
 }
 
 namespace kernel
 {
     class CoordinateSystems;
+
 // =============================================================================
 // Created: APE 2004-07-19
 // $$$$ AGE 2006-04-28: warning : not thread safe
 // =============================================================================
 class CoordinateConverter : public CoordinateConverter_ABC
+                          , private boost::noncopyable
 {
 public:
     //! @name Constructor / Destructor
@@ -61,12 +62,6 @@ public:
     //@}
 
 private:
-    //! @name Copy / Assignment
-    //@{
-    CoordinateConverter( const CoordinateConverter& );
-    CoordinateConverter& operator=( const CoordinateConverter& );
-    //@}
-
     //! @name Initialization
     //@{
     void ReadTerrain( const std::string& terrain );
@@ -82,15 +77,15 @@ private:
     //! @name Member data
     //@{
     geometry::Rectangle2f extent_;
-    geometry::Vector2f    translation_;
+    geometry::Vector2f translation_;
 
-            geocoord::PlanarCartesian::Parameters parameters_;
-    mutable geocoord::PlanarCartesian             planar_;
-    mutable geocoord::MGRS                        mgrs_;
-    mutable geocoord::Geodetic                    geodetic_;
-    mutable geocoord::UTM                         utm_;
-    std::auto_ptr< CoordinateSystems >            private_;
-    const CoordinateSystems&                      systems_;
+    geocoord::PlanarCartesian::Parameters parameters_;
+    mutable geocoord::PlanarCartesian planar_;
+    mutable geocoord::MGRS mgrs_;
+    mutable geocoord::Geodetic geodetic_;
+    mutable geocoord::UTM utm_;
+    std::auto_ptr< CoordinateSystems > private_;
+    const CoordinateSystems& systems_;
     //@}
 };
 

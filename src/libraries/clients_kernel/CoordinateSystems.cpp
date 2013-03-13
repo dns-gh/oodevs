@@ -10,7 +10,6 @@
 #include "clients_kernel_pch.h"
 #include "CoordinateSystems.h"
 #include "Tools.h"
-
 #include <boost/assign/list_of.hpp>
 
 using namespace kernel;
@@ -39,3 +38,31 @@ CoordinateSystems::~CoordinateSystems()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: CoordinateSystems::SetDefault
+// Created: JSR 2013-03-13
+// -----------------------------------------------------------------------------
+void CoordinateSystems::SetDefault( CoordinateSystems::Projection projection )
+{
+    if( default_ < E_Mgrs || default_ > E_Local )
+        throw MASA_EXCEPTION( "Unknown projection" );
+    default_ = projection;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CoordinateSystems::GetDefault
+// Created: JSR 2013-03-13
+// -----------------------------------------------------------------------------
+const CoordinateSystems::Projection CoordinateSystems::GetDefault() const
+{
+    return default_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::map< int, QString >& CoordinateSystems::GetSystems
+// Created: JSR 2013-03-13
+// -----------------------------------------------------------------------------
+const std::map< int, QString >& CoordinateSystems::GetSystems() const
+{
+    return systems_;
+}

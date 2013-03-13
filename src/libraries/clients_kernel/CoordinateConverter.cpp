@@ -151,8 +151,9 @@ bool CoordinateConverter::IsInBoundaries( const geometry::Point2f& point ) const
 std::string CoordinateConverter::ConvertToGeoDms( const geometry::Point2f& pos ) const
 {
     SetGeodeticCoordinates( pos );
-    return std::string ( geodetic_.GetLatitude( "DD° MM' SS.SS H" ) + ":" + geodetic_.GetLongitude( "DD° MM' SS.SS H" ) );
+    return geodetic_.GetLatitude( "DD° MM' SS.SS H" ) + ":" + geodetic_.GetLongitude( "DD° MM' SS.SS H" );
 }
+
 // -----------------------------------------------------------------------------
 // Name: CoordinateConverter::ConvertToUtm
 // Created: AME 2010-02-23
@@ -177,6 +178,7 @@ void CoordinateConverter::SetGeodeticCoordinates( const geometry::Point2f& pos )
     planar_.Set( translated.X(), translated.Y() );
     geodetic_.SetCoordinates( planar_ );
 }
+
 // -----------------------------------------------------------------------------
 // Name: CoordinateConverter::ConvertFromGeoDms
 // Created: AME 2010-03-05
@@ -204,25 +206,27 @@ const CoordinateSystems& CoordinateConverter::GetCoordSystem() const
 std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& position ) const
 {
     std::string positionStr;
-    switch( systems_.default_ )
+    switch( systems_.GetDefault() )
     {
-        case CoordinateSystems::E_Mgrs: positionStr = ConvertToMgrs( position ); break;
-        case CoordinateSystems::E_Wgs84Dd:
-            {
-                geometry::Point2d pos( ConvertToGeo( position ) );
-                positionStr = boost::str( boost::format( "%f:%f" )  % pos.Y()
-                                                                    % pos.X() );
-                break;
-            }
-        case CoordinateSystems::E_Wgs84Dms: positionStr = ConvertToGeoDms( position ); break;
-        case CoordinateSystems::E_Local:
-            positionStr = boost::str( boost::format( "%f:%f" ) % position.Y()
-                                                               % position.X() );
-             break;
-        default:
-            positionStr = "----"; break;
+    case CoordinateSystems::E_Mgrs:
+        positionStr = ConvertToMgrs( position );
+        break;
+    case CoordinateSystems::E_Wgs84Dd:
+        {
+            geometry::Point2d pos( ConvertToGeo( position ) );
+            positionStr = boost::str( boost::format( "%f:%f" ) % pos.Y() % pos.X() );
+            break;
+        }
+    case CoordinateSystems::E_Wgs84Dms:
+        positionStr = ConvertToGeoDms( position );
+        break;
+    case CoordinateSystems::E_Local:
+        positionStr = boost::str( boost::format( "%f:%f" ) % position.Y() % position.X() );
+        break;
+    default:
+        positionStr = "----";
+        break;
     }
-
     return positionStr;
 }
 

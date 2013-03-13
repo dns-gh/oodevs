@@ -11,11 +11,11 @@
 #define __CoordinateSystemsPanel_h_
 
 #include "PreferencePanel_ABC.h"
+#include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
-    class CoordinateSystems;
     class Controllers;
     class Options;
 }
@@ -29,8 +29,8 @@ namespace gui
 // Created: AME 2010-03-15
 // =============================================================================
 class CoordinateSystemsPanel : public PreferencePanel_ABC
-                      , public tools::Observer_ABC
-                      , public kernel::OptionsObserver_ABC
+                             , public tools::Observer_ABC
+                             , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT
 public:
@@ -48,21 +48,15 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CoordinateSystemsPanel( const CoordinateSystemsPanel& );            //!< Copy constructor
-    CoordinateSystemsPanel& operator=( const CoordinateSystemsPanel& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
      kernel::Options& options_;
      kernel::Controllers& controllers_;
      kernel::CoordinateSystems& coordinateSystems_;
      QComboBox* listCoordSys_;
-     int previousCoordinateSystem_;
+     kernel::CoordinateSystems::Projection previousCoordinateSystem_;
     //@}
 };
+
 }
 #endif // __CoordinateSystemsPanel_h_

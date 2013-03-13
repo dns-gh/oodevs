@@ -18,8 +18,7 @@ using namespace gui;
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
 Wgs84DdParser::Wgs84DdParser( const kernel::CoordinateConverter_ABC& converter )
-    : converter_    ( converter )
-    , numParameters_( 2 )
+    : converter_( converter )
 {
     // NOTHING
 }
@@ -36,7 +35,7 @@ Wgs84DdParser::~Wgs84DdParser()
 // Name: Wgs84DdParser::Parse
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
-bool Wgs84DdParser::Parse( QString content, geometry::Point2f& result, QStringList& hint ) const
+bool Wgs84DdParser::Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const
 {
     QStringList listValue = QStringList::split( ":", content );
     QString hintX = listValue[ 0 ].stripWhiteSpace();
@@ -65,5 +64,5 @@ bool Wgs84DdParser::Parse( QString content, geometry::Point2f& result, QStringLi
 // -----------------------------------------------------------------------------
 int Wgs84DdParser::GetNumberOfParameters() const
 {
-    return numParameters_;
+    return 2;
 }

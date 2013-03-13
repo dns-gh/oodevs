@@ -11,6 +11,7 @@
 #define __XyParser_h_
 
 #include "LocationParser_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace gui
 {
@@ -22,6 +23,7 @@ namespace gui
 // Created: AGE 2008-05-29
 // =============================================================================
 class XyParser : public LocationParser_ABC
+               , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -32,14 +34,10 @@ public:
 
     //! @name Operations
     //@{
-    bool Parse( QString content, geometry::Point2f& result, QString& hint ) const;
-    virtual bool Parse( QString content, geometry::Point2f& result, QStringList& hint ) const;
+    bool Parse( const QString& content, geometry::Point2f& result, QString& hint ) const;
+    virtual bool Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const;
     virtual int GetNumberOfParameters() const;
-
     //@}
-
-private:
-    int numParameters_;
 };
 
 }

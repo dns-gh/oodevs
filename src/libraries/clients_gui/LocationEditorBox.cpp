@@ -14,49 +14,41 @@
 #include "LocationParser_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/CoordinateSystems.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/ContextMenu.h"
 
 using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: LocationEditorBox constructor
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
-LocationEditorBox::LocationEditorBox( QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
-    : Q3HBox( parent )
-    , controllers_( controllers )
-    , converter_( converter )
-    , coordinateSystems_ ( converter.GetCoordSystem() )
+LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
+    : converter_( converter )
+    , parsers_( new LocationParsers( controllers, converter ) )
 {
-    setFrameStyle( QFrame::NoFrame );
     setFixedWidth( 250 );
-    parsers_ = new LocationParsers( controllers, converter );
 
-    choiceParserButton_ = new QToolButton( this );
-    choiceParserButton_->setFixedWidth( 60 );
-    parserMenu_ = new  kernel::ContextMenu( choiceParserButton_ );
+    choiceParserButton_ = new QPushButton();
+    parserMenu_ = new kernel::ContextMenu( choiceParserButton_ );
     choiceParserButton_->setPopup( parserMenu_ );
-    choiceParserButton_->setPopupDelay( 0 );
-    choiceParserButton_->setText( tr("Location: " ));
+    choiceParserButton_->setText( tr("Location: " ) );
 
-    coordBox_ = new Q3HBox( this );
-    valueBox_ = new Q3HBox( this );
+    latitudeLabel_ = new QLabel( tr( "lat: " ) );
+    latitude_ = new QLineEdit();
+    longitudeLabel_ = new QLabel( tr( "long: " ) );
+    longitude_ = new QLineEdit();
+    coordBox_ = new QWidget();
+    QHBoxLayout* coordLayout = new QHBoxLayout( coordBox_ );
+    coordLayout->addWidget( latitudeLabel_ );
+    coordLayout->addWidget( latitude_ );
+    coordLayout->addWidget( longitudeLabel_ );
+    coordLayout->addWidget( longitude_ );
+    coordLayout->setMargin( 0 );
 
-    latitudeLabel_ = new QLabel( tr( "lat: " ), coordBox_ );
-    latitudeLabel_->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    latitudeLabel_->setFixedWidth( 30 );
-    latitude_ = new QLineEdit( coordBox_ );
-    latitude_->setFixedWidth( 60 );
-    longitudeLabel_ = new QLabel( tr( "long: " ), coordBox_ );
-    longitudeLabel_->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    longitudeLabel_->setFixedWidth( 30 );
-    longitude_ = new QLineEdit( coordBox_ );
-    longitude_->setFixedWidth( 60 );
-
-    singleField_ = new QLineEdit( valueBox_ );
+    singleField_ = new QLineEdit( this );
 
     FillDefaultMenu();
-    SelectParser( converter.GetCoordSystem().default_ );
+    SelectParser( converter.GetCoordSystem().GetDefault() );
 
     subMenu_ = new kernel::ContextMenu();
     list_ = new QListWidget( subMenu_ );
@@ -64,14 +56,20 @@ LocationEditorBox::LocationEditorBox( QWidget* parent, kernel::Controllers& cont
 
     connect( parserMenu_, SIGNAL( activated( int ) ), SLOT( SelectParser( int ) ) );
     connect( list_, SIGNAL( currentRowChanged( int ) ), SLOT( GetSelectedItemInSubList( int ) ) );
+
+    QHBoxLayout* layout = new QHBoxLayout( this );
+    layout->addWidget( choiceParserButton_ );
+    layout->addWidget( coordBox_ );
+    layout->addWidget( singleField_ );
 }
+
 // -----------------------------------------------------------------------------
 // Name: LocationEditorBox destructor
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
 LocationEditorBox::~LocationEditorBox()
 {
-    delete parsers_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +78,8 @@ LocationEditorBox::~LocationEditorBox()
 // -----------------------------------------------------------------------------
 void LocationEditorBox::FillDefaultMenu()
 {
-    for( auto it = coordinateSystems_.systems_.begin(); it != coordinateSystems_.systems_.end(); it++ )
+    const kernel::CoordinateSystems::T_SpatialReference& systems = converter_.GetCoordSystem().GetSystems();
+    for( auto it = systems.begin(); it != systems.end(); ++it )
         parserMenu_->insertItem( it->second, it->first );
 }
 
@@ -93,23 +92,17 @@ void LocationEditorBox::SelectDefaultParser( int index )
     parserSelected_ = index;
     SelectParser( parserSelected_ );
 }
+
 // -----------------------------------------------------------------------------
 // Name: LocationEditorBox::SelectParser
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
 void LocationEditorBox::SelectParser( int index )
 {
+    parserMenu_->setItemChecked( parserSelected_, false );
     parserSelected_ = index;
-    for( int i = 0; i < (int) parserMenu_->count(); i++ )
-    {
-        if( parserMenu_->idAt( i ) == index )
-        {
-            parserMenu_->setItemChecked( parserMenu_->idAt( i ), true );
-            QToolTip::add( choiceParserButton_,  parserMenu_->text( i ) );
-        }
-        else
-            parserMenu_->setItemChecked( parserMenu_->idAt( i ), false );
-    }
+    parserMenu_->setItemChecked( index, true );
+    QToolTip::add( choiceParserButton_, parserMenu_->text( index ) );
     UpdateParamZone( parserSelected_ );
 }
 
@@ -127,12 +120,12 @@ void LocationEditorBox::UpdateParamZone( int index )
     if( parsers_->GetParser( index ).GetNumberOfParameters() == 1 )
     {
         coordBox_->hide();
-        valueBox_->show();
+        singleField_->show();
     }
     else
     {
         coordBox_->show();
-        valueBox_->hide();
+        singleField_->hide();
         if( index == kernel::CoordinateSystems::E_Local )
         {
             latitudeLabel_->setText( tr( "y: " ) );
@@ -150,7 +143,7 @@ void LocationEditorBox::UpdateParamZone( int index )
 // Name: LocationEditorBox::AddParser
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
-void LocationEditorBox::AddParser( LocationParser_ABC& parser, const QString& name )
+void LocationEditorBox::AddParser( LocationParser_ABC* parser, const QString& name )
 {
     int id = parserMenu_->insertItem( name );
     parsers_->AddParser( parser, id );
@@ -164,12 +157,13 @@ void LocationEditorBox::SetAspect( bool oneValue, bool red )
 {
     if( red )
     {
+        static const QColor color = QColor( Qt::red ).light( 120 );
         if( oneValue )
-            singleField_->setPaletteBackgroundColor( QColor( Qt::red ).light( 120 ) );
+            singleField_->setPaletteBackgroundColor( color );
         else
         {
-            latitude_->setPaletteBackgroundColor( QColor( Qt::red ).light( 120 ) );
-            longitude_->setPaletteBackgroundColor( QColor( Qt::red ).light( 120 ) );
+            latitude_->setPaletteBackgroundColor( color );
+            longitude_->setPaletteBackgroundColor( color );
         }
     }
     else
@@ -231,8 +225,8 @@ bool LocationEditorBox::GetPosition( geometry::Point2f& result )
         parsing_succeed = parsers_->Parse( parserSelected_, longitude_->text(), latitude_->text(), result, hint );
         if( parsing_succeed )
         {
-            longitude_->setText( hint[0] );
-            latitude_->setText( hint[1] );
+            longitude_->setText( hint[ 0 ] );
+            latitude_->setText( hint[ 1 ] );
         }
     }
        SetAspect( oneParameter, !parsing_succeed );

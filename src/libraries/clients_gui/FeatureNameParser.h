@@ -11,6 +11,7 @@
 #define __FeatureNameParser_h_
 
 #include "LocationParser_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -28,6 +29,7 @@ namespace gui
 // Created: AGE 2008-05-29
 // =============================================================================
 class FeatureNameParser : public LocationParser_ABC
+                        , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -38,15 +40,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Parse( QString content, geometry::Point2f& result, QStringList& hint ) const;
+    virtual bool Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const;
     virtual int GetNumberOfParameters() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    FeatureNameParser( const FeatureNameParser& );            //!< Copy constructor
-    FeatureNameParser& operator=( const FeatureNameParser& ); //!< Assignment operator
     //@}
 
 private:
@@ -54,7 +49,6 @@ private:
     //@{
     std::auto_ptr< TerrainFeatureSearcher > searcher_;
     mutable QString lastRequest_;
-    int numParameters_;
     //@}
 };
 

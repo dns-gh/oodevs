@@ -13,6 +13,7 @@
 #include "LocationParser_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -32,6 +33,7 @@ namespace gui
 class UtmParser : public LocationParser_ABC
                 , public tools::Observer_ABC
                 , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -42,17 +44,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Parse( QString content, geometry::Point2f& result, QStringList& hint ) const;
+    virtual bool Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const;
     virtual int GetNumberOfParameters() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UtmParser( const UtmParser& );            //!< Copy constructor
-    UtmParser& operator=( const UtmParser& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
@@ -65,7 +61,6 @@ private:
     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
     std::string zone_;
-    int numParameters_;
     //@}
 };
 

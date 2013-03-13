@@ -18,8 +18,7 @@ using namespace gui;
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
 Wgs84DmsParser::Wgs84DmsParser( const kernel::CoordinateConverter_ABC& converter )
-    : converter_    ( converter )
-    , numParameters_( 2 )
+    : converter_( converter )
 {
     // NOTHING
 }
@@ -35,7 +34,7 @@ Wgs84DmsParser::~Wgs84DmsParser()
 // Name: Wgs84DmsParser::Parse
 // Created: AME 2010-03-04
 // -----------------------------------------------------------------------------
-bool Wgs84DmsParser::Parse( QString content, geometry::Point2f& result, QStringList& hint ) const
+bool Wgs84DmsParser::Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const
 {
     try
     {
@@ -65,7 +64,7 @@ bool Wgs84DmsParser::Parse( QString content, geometry::Point2f& result, QStringL
 // Name: Wgs84DmsParser::FormatDmsCoordinate
 // Created: AME 2010-03-11
 // -----------------------------------------------------------------------------
-bool Wgs84DmsParser::FormatDmsCoordinate( const QString content, bool longitude, QString& hint ) const
+bool Wgs84DmsParser::FormatDmsCoordinate( const QString& content, bool longitude, QString& hint ) const
 {
     QString coordValue = content.stripWhiteSpace().upper();
     coordValue.replace('°',' ');
@@ -114,5 +113,5 @@ bool Wgs84DmsParser::FormatDmsCoordinate( const QString content, bool longitude,
 // -----------------------------------------------------------------------------
 int Wgs84DmsParser::GetNumberOfParameters() const
 {
-    return numParameters_;
+    return 2;
 }

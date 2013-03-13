@@ -11,6 +11,7 @@
 #define __Wgs84DdParser_h_
 
 #include "LocationParser_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -26,6 +27,7 @@ namespace gui
 // Created: AME 2010-03-04
 // =============================================================================
 class Wgs84DdParser : public LocationParser_ABC
+                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -36,22 +38,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Parse( QString content, geometry::Point2f& result, QStringList& hint ) const;
+    virtual bool Parse( const QString& content, geometry::Point2f& result, QStringList& hint ) const;
     virtual int GetNumberOfParameters() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Wgs84DdParser( const Wgs84DdParser& );            //!< Copy constructor
-    Wgs84DdParser& operator=( const Wgs84DdParser& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    int numParameters_;
     //@}
 };
 

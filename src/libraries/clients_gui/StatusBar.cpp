@@ -93,11 +93,12 @@ QLabel* StatusBar::AddField( QStatusBar* parent, unsigned int size, const QStrin
 // -----------------------------------------------------------------------------
 QLabel* StatusBar::AddField( QStatusBar* parent, unsigned int size, int id, bool checked )
 {
-    auto it = converter_.GetCoordSystem().systems_.find( id );
-    if( it != converter_.GetCoordSystem().systems_.end() )
+    const CoordinateSystems::T_SpatialReference& systems = converter_.GetCoordSystem().GetSystems();
+    auto it = systems.find( id );
+    if( it != systems.end() )
     {
         QLabel* field = AddField( parent, size, it->second, checked );
-        coordinateFields_[id] = field;
+        coordinateFields_[ id ] = field;
         return field;
     }
     return 0;

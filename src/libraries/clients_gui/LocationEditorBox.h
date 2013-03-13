@@ -28,20 +28,20 @@ namespace gui
 */
 // Created: AME 2010-03-12
 // =============================================================================
-class LocationEditorBox : public Q3HBox
+class LocationEditorBox : public QWidget
 {
     Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationEditorBox( QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter );
+             LocationEditorBox( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter );
     virtual ~LocationEditorBox();
     //@}
 
     //! @name Operations
     //@{
     void FillDefaultMenu();
-    void AddParser( LocationParser_ABC& parser, const QString& name );
+    void AddParser( LocationParser_ABC* parser, const QString& name );
     bool GetPosition( geometry::Point2f& result );
     void SelectDefaultParser( int index );
     void UpdateField( const geometry::Point2f& position );
@@ -64,21 +64,18 @@ private:
 private:
     //! @name Member data
     //@{
-    LocationParsers* parsers_;
-    kernel::Controllers& controllers_;
-    const kernel::CoordinateSystems& coordinateSystems_;
     const kernel::CoordinateConverter_ABC& converter_;
+    std::auto_ptr< LocationParsers > parsers_;
     QLineEdit* latitude_;
     QLineEdit* longitude_;
     QLabel* latitudeLabel_;
     QLabel* longitudeLabel_;
-    QToolButton* choiceParserButton_;
+    QPushButton* choiceParserButton_;
     kernel::ContextMenu* parserMenu_;
     QLineEdit* singleField_;
     QMenu* subMenu_;
     QListWidget* list_;
-    Q3HBox* coordBox_;
-    Q3HBox* valueBox_;
+    QWidget* coordBox_;
     int parserSelected_;
     //@}
 };

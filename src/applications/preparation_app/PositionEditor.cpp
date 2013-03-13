@@ -22,18 +22,18 @@
 PositionEditor::PositionEditor( QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
     : gui::PropertyDialog( parent )
     , converter_( converter )
-    , value_    ( 0 )
+    , value_( 0 )
 {
     setCaption( tr( "Position Editor" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
     pMainLayout->setMargin( 10 );
 
-    locBox_ =  new gui::LocationEditorBox( this, controllers, converter );
-    locBox_->SelectDefaultParser( converter.GetCoordSystem().default_ );
+    locBox_ = new gui::LocationEditorBox( controllers, converter );
+    locBox_->SelectDefaultParser( converter.GetCoordSystem().GetDefault() );
     pMainLayout->addWidget( locBox_ );
 
     QHBoxLayout* pbuttonBox = new QHBoxLayout();
-    QPushButton* okBtn     = new QPushButton( tr( "Ok" ) );
+    QPushButton* okBtn = new QPushButton( tr( "Ok" ) );
     QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ) );
     okBtn->setDefault( true );
     okBtn->setMaximumWidth( 100 );
@@ -62,8 +62,11 @@ PositionEditor::~PositionEditor()
 // -----------------------------------------------------------------------------
 void PositionEditor::SetValue( kernel::Moveable_ABC*& value )
 {
-    value_ = &value;
-    locBox_->UpdateField( (*value_)->GetPosition() );
+    if( value )
+    {
+        value_ = &value;
+        locBox_->UpdateField( value->GetPosition() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +75,7 @@ void PositionEditor::SetValue( kernel::Moveable_ABC*& value )
 // -----------------------------------------------------------------------------
 kernel::Moveable_ABC* PositionEditor::GetValue()
 {
-    return *value_;
+    return value_ ? *value_ : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -84,24 +87,24 @@ void PositionEditor::OnAccept()
     try
     {
         geometry::Point2f point;
-
         if( locBox_->GetPosition( point ) )
         {
-            if( !converter_.IsInBoundaries( point ) )
+            if( converter_.IsInBoundaries( point ) )
             {
-                QMessageBox::warning( this, tr( "Invalid coordinates" ), tr( " Location is outside terrain bounding box " ), QMessageBox::Ok, Qt::NoButton );
-                return;
-            }
-            else
-            {
-                (*value_)->Move( point );
+                if( value_ && *value_ )
+                    ( *value_ )->Move( point );
                 accept();
             }
+            else
+                QMessageBox::warning( this, tr( "Invalid coordinates" ), tr( " Location is outside terrain bounding box " ), QMessageBox::Ok, Qt::NoButton );
         }
     }
-    catch( ... ){}
-
+    catch( ... )
+    {
+        // NOTHING
+    }
 }
+
 // -----------------------------------------------------------------------------
 // Name: PositionEditor::OnReject
 // Created: AME 2010-03-08

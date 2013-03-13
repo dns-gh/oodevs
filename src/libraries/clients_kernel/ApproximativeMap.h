@@ -10,8 +10,9 @@
 #ifndef __ApproximativeMap_h_
 #define __ApproximativeMap_h_
 
-#include <vector>
 #include <string>
+#include <vector>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -28,7 +29,7 @@ namespace internal
 // Created: AGE 2008-04-04
 // =============================================================================
 template< typename T >
-class ApproximativeMap
+class ApproximativeMap : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -42,13 +43,6 @@ public:
     void Add( const std::string& key, const T& value );
     const T* Find( const std::string& key ) const;
     const T* Find( const std::string& key, int threshold ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ApproximativeMap( const ApproximativeMap& );            //!< Copy constructor
-    ApproximativeMap& operator=( const ApproximativeMap& ); //!< Assignment operator
     //@}
 
 private:
