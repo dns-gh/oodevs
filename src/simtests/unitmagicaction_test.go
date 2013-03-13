@@ -73,6 +73,11 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 	c.Assert(len(automats) > 0, Equals, true)
 	automatId := automats[0].Id
 
+	// Get a unit identifier
+	units := data.ListUnits()
+	c.Assert(len(units) > 0, Equals, true)
+	unitId := units[0].Id
+
 	// Get a crowd identifier
 	crowds := data.ListCrowds()
 	c.Assert(len(crowds) > 0, Equals, true)
@@ -91,7 +96,7 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 		},
 		&sword.Tasker{
 			Unit: &sword.UnitId{
-				Id: proto.Uint32(automatId),
+				Id: proto.Uint32(unitId),
 			},
 		},
 		&sword.Tasker{
