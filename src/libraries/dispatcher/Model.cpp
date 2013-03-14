@@ -287,7 +287,10 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( message.has_unit_environment_type() )
         agents_.Get( message.unit_environment_type().unit().id() ).Update( message.unit_environment_type() );
     else if( message.has_unit_destruction() )
+    {
+        ClearLogisticRequests( message.unit_destruction().unit().id() );
         Destroy( agents_, message.unit_destruction().unit().id(), message.unit_destruction() );
+    }
     else if( message.has_automat_creation() )
         CreateUpdate< Automat >( automats_, message.automat_creation().automat().id(), message.automat_creation(), staticModel_.types_ );
     else if( message.has_automat_destruction() )
@@ -364,7 +367,10 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( message.has_log_maintenance_handling_destruction() )
         Destroy( logConsignsMaintenance_, message.log_maintenance_handling_destruction().request().id(), message.log_maintenance_handling_destruction() );
     else if( message.has_log_maintenance_handling_update() )
-        logConsignsMaintenance_.Get( message.log_maintenance_handling_update().request().id() ).Update( message.log_maintenance_handling_update() );
+    {
+        if( LogConsignMaintenance* consign = logConsignsMaintenance_.Find( message.log_maintenance_handling_update().request().id() ) )
+            consign->Update( message.log_maintenance_handling_update() );
+    }
     else if( message.has_log_maintenance_state() )
         agents_.Get( message.log_maintenance_state().unit().id() ).Update( message.log_maintenance_state() );
 
@@ -373,7 +379,10 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( message.has_log_supply_handling_destruction() )
         Destroy( logConsignsSupply_, message.log_supply_handling_destruction().request().id(), message.log_supply_handling_destruction() );
     else if( message.has_log_supply_handling_update() )
-        logConsignsSupply_.Get( message.log_supply_handling_update().request().id() ).Update( message.log_supply_handling_update() );
+    {
+        if( LogConsignSupply* consign = logConsignsSupply_.Find( message.log_supply_handling_update().request().id() ) )
+            consign->Update( message.log_supply_handling_update() );
+    }
     else if( message.has_log_supply_state() )
         agents_.Get( message.log_supply_state().unit().id() ).Update( message.log_supply_state() );
     else if( message.has_log_supply_quotas() )
@@ -396,7 +405,10 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( message.has_log_funeral_handling_destruction() )
         Destroy( logConsignsFuneral_, message.log_funeral_handling_destruction().request().id(), message.log_funeral_handling_destruction() );
     else if( message.has_log_funeral_handling_update() )
-        logConsignsFuneral_.Get( message.log_funeral_handling_update().request().id() ).Update( message.log_funeral_handling_update() );
+    {
+        if( LogConsignFuneral* consign = logConsignsFuneral_.Find( message.log_funeral_handling_update().request().id() ) )
+            consign->Update( message.log_funeral_handling_update() );
+    }
 
     else if( message.has_population_creation() )
         CreateUpdate< Inhabitant >( inhabitants_, message.population_creation().id().id(), message.population_creation(), staticModel_.types_ );
@@ -697,4 +709,42 @@ void Model::ClearOldReports( unsigned int tick )
 {
     if( tick % config_.GetReportsClearFrequency() == 0 )
         reports_.DeleteAll();
+}
+
+namespace
+{
+    template< typename T >
+    struct FillObsoleteConsigns : boost::noncopyable
+    {
+        FillObsoleteConsigns( unsigned int unitId ) : unitId_( unitId ) {}
+        void operator()( const T& consign ) const
+        {
+            if( consign.IsObsoleteForUnit( unitId_ ) )
+                obsoleteIds_.push_back( consign.GetId() );
+        }
+        unsigned int unitId_;
+        mutable std::vector< unsigned long > obsoleteIds_;
+    };
+
+    template< typename T >
+    void ClearConsigns( tools::Resolver< T >& resolver, unsigned int unitId )
+    {
+        FillObsoleteConsigns< T > functor( unitId );
+        resolver.Apply( functor );
+        for( auto it = functor.obsoleteIds_.begin(); it != functor.obsoleteIds_.end(); ++it )
+            resolver.Delete( *it );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::ClearLogisticRequests
+// Created: JSR 2013-03-14
+// -----------------------------------------------------------------------------
+void Model::ClearLogisticRequests( unsigned int unitId )
+{
+    // Just to avoid a random crash if a supply consign has not been properly deleted by the simulation when an unit is destroyed
+    ClearConsigns( logConsignsMaintenance_, unitId );
+    ClearConsigns( logConsignsSupply_, unitId );
+    ClearConsigns( logConsignsMedical_, unitId );
+    ClearConsigns( logConsignsFuneral_, unitId );
 }

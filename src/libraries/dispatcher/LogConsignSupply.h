@@ -23,9 +23,7 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Agent;
     class Model;
-    class LogSupplyDotation;
     class ClientPublisher_ABC;
     class LogSupplyRecipientResourcesRequest;
 
@@ -52,14 +50,10 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    bool IsObsoleteForUnit( unsigned int id ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LogConsignSupply( const LogConsignSupply& );            //!< Copy constructor
-    LogConsignSupply& operator=( const LogConsignSupply& ); //!< Assignment operator
-    //@}
     //! @name Tools
     //@{
     kernel::Entity_ABC* FindLogEntity(const sword::ParentEntity& msg) const;
@@ -67,12 +61,11 @@ private:
     //@}
 
 private:
-    const Model&               model_;
-    const unsigned long        nTickCreation_;
-
-    const kernel::Entity_ABC*        pTreatingEntity_;
-    const kernel::Entity_ABC*        pConvoyingEntity_;
-    const kernel::Agent_ABC*         pConvoy_;
+    const Model& model_;
+    const unsigned long nTickCreation_;
+    const kernel::Entity_ABC* pTreatingEntity_;
+    const kernel::Entity_ABC* pConvoyingEntity_;
+    const kernel::Agent_ABC* pConvoy_;
     sword::LogSupplyHandlingUpdate::EnumLogSupplyHandlingStatus nState_;
     unsigned long currentStateEndTick_;
     tools::Resolver< LogSupplyRecipientResourcesRequest > requests_;

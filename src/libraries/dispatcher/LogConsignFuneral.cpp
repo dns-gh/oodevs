@@ -15,7 +15,6 @@
 #include "Agent.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include <boost/foreach.hpp>
 
 using namespace dispatcher;
 
@@ -34,6 +33,7 @@ LogConsignFuneral::LogConsignFuneral( const Model& model, const sword::LogFunera
     , currentStateEndTick_( std::numeric_limits< unsigned long >::max() )
     , rank_               ( msg.rank() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,6 +42,7 @@ LogConsignFuneral::LogConsignFuneral( const Model& model, const sword::LogFunera
 // -----------------------------------------------------------------------------
 LogConsignFuneral::~LogConsignFuneral()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -113,6 +114,17 @@ void LogConsignFuneral::SendDestruction( ClientPublisher_ABC& publisher ) const
 void LogConsignFuneral::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignFuneral::IsObsoleteForUnit
+// Created: JSR 2013-03-14
+// -----------------------------------------------------------------------------
+bool LogConsignFuneral::IsObsoleteForUnit( unsigned int id ) const
+{
+    return ( pRequestingUnit_ && pRequestingUnit_->GetId() == id ) ||
+           ( pHandlingEntity_ && pHandlingEntity_->GetId() == id ) ||
+           ( pConvoy_ && pConvoy_->GetId() == id );
 }
 
 // -----------------------------------------------------------------------------

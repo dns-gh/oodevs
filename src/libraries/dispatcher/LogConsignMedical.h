@@ -48,13 +48,7 @@ public:
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
     void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    LogConsignMedical( const LogConsignMedical& );            //!< Copy constructor
-    LogConsignMedical& operator=( const LogConsignMedical& ); //!< Assignment operator
+    bool IsObsoleteForUnit( unsigned int id ) const;
     //@}
 
 private:

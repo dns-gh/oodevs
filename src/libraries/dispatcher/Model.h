@@ -16,12 +16,6 @@
 
 namespace kernel
 {
-    class AgentType;
-    class AgentTypes;
-    class FragOrderType;
-    class MissionType;
-    class ObjectType;
-    class ObjectTypes;
     class StaticModel;
     class ExtensionTypes;
     class Entity_ABC;
@@ -31,10 +25,18 @@ namespace kernel
 namespace dispatcher
 {
     class Config;
+    class Fire;
+    class FireEffect;
     class FolkModel;
+    class LogConsignFuneral;
+    class LogConsignMaintenance;
+    class LogConsignMedical;
+    class LogConsignSupply;
     class MeteoModel;
+    class PopulationFire;
+    class Report;
     class SimulationModel;
-    class UrbanKnowledge;
+    class UrbanKnowledge_ABC;
     class MemoryLogger_ABC;
 
 // =============================================================================
@@ -94,16 +96,7 @@ public:
     virtual const tools::Resolver_ABC< Inhabitant_ABC >&        Inhabitants() const { return inhabitants_; }
     virtual const tools::Resolver_ABC< AgentKnowledge_ABC >&    AgentKnowledges() const { return agentKnowledges_; }
     virtual const tools::Resolver_ABC< ObjectKnowledge_ABC >&   ObjectKnowledges() const { return objectKnowledges_; }
-    virtual const tools::Resolver_ABC< UrbanKnowledge_ABC >&    UrbanKnowledges() const { return urbanKnowledges_; }
     virtual const tools::Resolver_ABC< PopulationKnowledge >&   PopulationKnowledges() const { return populationKnowledges_; }
-    virtual const tools::Resolver_ABC< LogConsignMaintenance >& LogConsignsMaintenance() const { return logConsignsMaintenance_; }
-    virtual const tools::Resolver_ABC< LogConsignSupply >&      LogConsignsSupply() const { return logConsignsSupply_; }
-    virtual const tools::Resolver_ABC< LogConsignMedical >&     LogConsignsMedical() const { return logConsignsMedical_; }
-    virtual const tools::Resolver_ABC< LogConsignFuneral >&     LogConsignsFuneral() const { return logConsignsFuneral_; }
-    virtual const tools::Resolver_ABC< Fire >&                  Fires() const { return fires_; }
-    virtual const tools::Resolver_ABC< PopulationFire >&        PopulationFires() const { return populationFires_; }
-    virtual const tools::Resolver_ABC< FireEffect >&            FireEffects() const { return fireEffects_; }
-    virtual const tools::Resolver_ABC< Report >&                Reports() const { return reports_; }
 
     virtual void SetToTasker( sword::Tasker& tasker, unsigned int id ) const;
     unsigned int TaskerToId( const sword::Tasker& tasker ) const;
@@ -111,12 +104,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Model( const Model& );            //!< Copy constructor
-    Model& operator=( const Model& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     template< typename Concrete, typename Base, typename Message >
@@ -153,6 +140,7 @@ private:
 
     void DeleteCheckpoint( const std::string& name );
     void ClearOldReports( unsigned int tick );
+    void ClearLogisticRequests( unsigned int unitId );
     //@}
 
 private:

@@ -110,3 +110,12 @@ void LogConsignMaintenance::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignMaintenance::IsObsoleteForUnit
+// Created: JSR 2013-03-14
+// -----------------------------------------------------------------------------
+bool LogConsignMaintenance::IsObsoleteForUnit( unsigned int id ) const
+{
+    return agent_.GetId() == id || ( pTreatingAgent_ && pTreatingAgent_->GetId() == id );
+}

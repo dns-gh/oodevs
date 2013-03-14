@@ -153,3 +153,14 @@ void LogConsignSupply::FillLogEntityID(sword::ParentEntity& msg, const kernel::E
     else if( dynamic_cast<const kernel::Formation_ABC*>( entity) )
         msg.mutable_formation()->set_id( entity->GetId() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogConsignSupply::IsObsoleteForUnit
+// Created: JSR 2013-03-14
+// -----------------------------------------------------------------------------
+bool LogConsignSupply::IsObsoleteForUnit( unsigned int id ) const
+{
+    return ( pTreatingEntity_ && pTreatingEntity_->GetId() == id ) ||
+           ( pConvoyingEntity_ && pConvoyingEntity_->GetId() == id ) ||
+           ( pConvoy_ && pConvoy_->GetId() == id );
+}

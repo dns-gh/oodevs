@@ -49,13 +49,7 @@ public:
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
     void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    LogConsignMaintenance( const LogConsignMaintenance& );            //!< Copy constructor
-    LogConsignMaintenance& operator=( const LogConsignMaintenance& ); //!< Assignment operator
+    bool IsObsoleteForUnit( unsigned int id ) const;
     //@}
 
 private:

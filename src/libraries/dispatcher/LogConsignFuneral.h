@@ -24,10 +24,8 @@ namespace kernel
 
 namespace dispatcher
 {
-    class Agent;
     class Model;
     class ClientPublisher_ABC;
-    class LogSupplyRecipientResourcesRequest;
 
 // =============================================================================
 /** @class  LogConsignFuneral
@@ -52,27 +50,23 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    bool IsObsoleteForUnit( unsigned int id ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LogConsignFuneral( const LogConsignFuneral& );            //!< Copy constructor
-    LogConsignFuneral& operator=( const LogConsignFuneral& ); //!< Assignment operator
-    //@}
     //! @name Tools
     //@{
-    kernel::Entity_ABC* FindLogEntity(const sword::ParentEntity& msg) const;
-    void FillLogEntityID(sword::ParentEntity& msg, const kernel::Entity_ABC* entity) const;
+    kernel::Entity_ABC* FindLogEntity( const sword::ParentEntity& msg ) const;
+    void FillLogEntityID( sword::ParentEntity& msg, const kernel::Entity_ABC* entity ) const;
     //@}
 
 private:
-    const Model&               model_;
-    const unsigned long        nTickCreation_;
+    const Model& model_;
+    const unsigned long nTickCreation_;
 
-    const kernel::Agent_ABC*         pRequestingUnit_;
-    const kernel::Entity_ABC*        pHandlingEntity_;
-    const kernel::Agent_ABC*         pConvoy_;
+    const kernel::Agent_ABC* pRequestingUnit_;
+    const kernel::Entity_ABC* pHandlingEntity_;
+    const kernel::Agent_ABC* pConvoy_;
     sword::LogFuneralHandlingUpdate::EnumLogFuneralHandlingStatus nState_;
     unsigned long currentStateEndTick_;
     boost::optional< unsigned > packaging_;
