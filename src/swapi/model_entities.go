@@ -174,8 +174,6 @@ type ModelData struct {
 func NewModelData() *ModelData {
 	return &ModelData{
 		Parties: map[uint32]*Party{},
-		Tick:    0,
-		Time:    time.Time{},
 	}
 }
 
