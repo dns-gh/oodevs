@@ -15,6 +15,11 @@
 #include <QtGui/qpixmap.h>
 #pragma warning( pop )
 
+namespace tools
+{
+    class Path;
+}
+
 namespace indicators
 {
 
@@ -43,7 +48,7 @@ private:
     //! @name Helpers
     //@{
     void LoadIcons( xml::xistream& xis );
-    void LoadIcon( xml::xistream& xis, const std::string& path );
+    void LoadIcon( xml::xistream& xis, const tools::Path& path );
     QPixmap Icon( double value ) const;
     //@}
 

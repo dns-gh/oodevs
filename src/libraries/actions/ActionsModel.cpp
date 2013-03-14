@@ -16,6 +16,8 @@
 #include "clients_kernel/StaticModel.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/Loader_ABC.h"
+#include "tools/FileWrapper.h"
+#include "tools/Path.h"
 #include <boost/bind.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -227,7 +229,7 @@ void ActionsModel::Destroy( const Action_ABC& action )
 // Name: ActionsModel::Load
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-void ActionsModel::Load( const std::string& filename, const tools::Loader_ABC& fileLoader, bool readonly /* = false*/ )
+void ActionsModel::Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader, bool readonly /* = false*/ )
 {
     fileLoader.LoadFile( filename, boost::bind( &ActionsModel::ReadActions, this, _1, readonly ) );
 }
@@ -281,9 +283,9 @@ void ActionsModel::ReadAction( xml::xistream& xis, bool readonly, std::string& e
 // Name: ActionsModel::Save
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-void ActionsModel::Save( const std::string& filename, const ActionsFilter_ABC* filter /* = 0*/ ) const
+void ActionsModel::Save( const tools::Path& filename, const ActionsFilter_ABC* filter /* = 0*/ ) const
 {
-    xml::xofstream xos( filename );
+    tools::Xofstream xos( filename );
     xos << xml::start( "actions" );
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
         if( !filter || filter->Allows( *it->second ) )

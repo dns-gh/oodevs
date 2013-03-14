@@ -10,12 +10,11 @@
 #include "clients_gui_pch.h"
 #include "AddRasterDialog.h"
 #include "moc_AddRasterDialog.cpp"
-#include <boost/algorithm/string.hpp>
 #include "SpinBoxAndSlider.h"
-#include <boost/filesystem.hpp>
+#include "FileDialog.h"
+#include <boost/algorithm/string.hpp>
 
 using namespace gui;
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: AddRasterDialog constructor
@@ -105,7 +104,7 @@ void AddRasterDialog::OnValueChanged()
     {
         QStringList list = QStringList::split( ";", fileEditor_->text() );
         for( QStringList::const_iterator it = list.constBegin(); it != list.constEnd(); ++it )
-            if( !bfs::exists( it->toUtf8().constData() ) )
+            if( !tools::Path::FromUnicode( it->toStdWString() ).Exists() )
                 warning += "<font color=\"#FF0000\">" + tr( "File '%1' doesn't exist." ).arg( *it ) + "</font><br/>";
     }
     warningLabel_->setText( warning );
@@ -119,20 +118,18 @@ void AddRasterDialog::OnValueChanged()
 // -----------------------------------------------------------------------------
 void AddRasterDialog::OnBrowse()
 {
-    QStringList strRasterPathFiles = QFileDialog::getOpenFileNames( this, tr( "Select USRP header file or GeoTIFF File" ), "", tr( "USRP database (TRANSH01.THF);;Images (*.tif *.bmp *.png *.jpg *.jp2);;All Files (*.*)" ) );
-    if( strRasterPathFiles.isEmpty() )
+    tools::Path::T_Paths strRasterPathFiles = gui::FileDialog::getOpenFileNames( this, tr( "Select USRP header file or GeoTIFF File" ), "", tr( "USRP database (TRANSH01.THF);;Images (*.tif *.bmp *.png *.jpg *.jp2);;All Files (*.*)" ) );
+    if( strRasterPathFiles.empty() )
         return;
 
-    std::string files;
-    for( QStringList::const_iterator it = strRasterPathFiles.constBegin(); it != strRasterPathFiles.constEnd(); ++it )
-        files += it->toAscii() + ";";
+    std::wstring files;
+    for( auto it = strRasterPathFiles.begin(); it != strRasterPathFiles.end(); ++it )
+        files += it->Normalize().ToUnicode() + L";";
     if( files.empty() )
         return;
     files.erase( files.size() - 1 );
     boost::to_lower( files );
-    std::replace( files.begin(), files.end(), '\\', '/' );
-
-    fileEditor_->setText( files.c_str() );
+    fileEditor_->setText( QString::fromStdWString( files ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -11,10 +11,15 @@
 #define __MT_FileLogger_h_
 
 #include "MT_Logger_ABC.h"
+#include "tools/Path.h"
 #pragma warning( push, 0 )
 #include <boost/thread/mutex.hpp>
 #pragma warning( pop )
-#include <fstream>
+
+namespace tools
+{
+    class Ofstream;
+}
 
 //=============================================================================
 /**
@@ -34,7 +39,7 @@ class MT_FileLogger : public MT_Logger_ABC
 {
 
 public:
-    explicit MT_FileLogger( const char* strFileName, unsigned int maxFiles, int maxSize, int nLogLevels,
+    explicit MT_FileLogger( const tools::Path& strFileName, unsigned int maxFiles, int maxSize, int nLogLevels,
                             bool bClearPreviousLog = false, E_Type type = eSimulation, bool sizeInBytes = false );
 
     virtual ~MT_FileLogger();
@@ -45,16 +50,16 @@ protected:
     //-------------------------------------------------------------------------
     //@{
     virtual void WriteString( const std::string& s );
-    unsigned int OpenNewOfstream( const std::string& fileName, bool clearPrevious = true );
+    unsigned int OpenNewOfstream( const tools::Path& fileName, bool clearPrevious = true );
     unsigned int GetOldestFile();
-    std::string GetFileName( unsigned int fileCount );
+    tools::Path GetFileName( unsigned int fileCount ) const;
     //@}
 
 private:
-    std::auto_ptr< std::ofstream > file_;
-    std::string fileName_;
-    std::string fileNameNoExtension_;
-    std::string fileNameExtension_;
+    std::auto_ptr< tools::Ofstream > file_;
+    tools::Path fileName_;
+    tools::Path fileNameNoExtension_;
+    tools::Path fileNameExtension_;
     boost::mutex mutex_;
     const unsigned int maxFiles_;
     unsigned int filesCount_;

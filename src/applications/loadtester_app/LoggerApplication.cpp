@@ -15,6 +15,7 @@
 #include "protocol/ReplaySenders.h"
 #include "protocol/DispatcherSenders.h"
 #include "protocol/MessengerSenders.h"
+#include "tools/Path.h"
 #pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
 #pragma warning( pop )
@@ -25,14 +26,14 @@
 // Name: LoggerApplication constructor
 // Created: LDC 2009-09-02
 // -----------------------------------------------------------------------------
-LoggerApplication::LoggerApplication( const std::string& hostname, const std::string& logFile, const std::string& login, const std::string& password, bool verbose )
+LoggerApplication::LoggerApplication( const std::string& hostname, const tools::Path& logFile, const std::string& login, const std::string& password, bool verbose )
     : login_          ( login )
     , password_       ( password )
     , bConnectionLost_( false )
     , bVerbose_       ( verbose )
 {
-    if(! logFile.empty() )
-        file_.open( logFile.c_str(), std::ios::out | std::ios::trunc );
+    if( !logFile.IsEmpty() )
+        file_.open( logFile, std::ios::out | std::ios::trunc );
     RegisterMessage( *this, &LoggerApplication::OnReceiveSimToClient );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgAuthenticationToClient );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgDispatcherToClient );

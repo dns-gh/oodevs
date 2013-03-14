@@ -48,13 +48,13 @@ DrawerModel::~DrawerModel()
 // Name: DrawerModel::Load
 // Created: SBO 2007-03-21
 // -----------------------------------------------------------------------------
-void DrawerModel::Load( const std::string& filename )
+void DrawerModel::Load( const tools::Path& filename )
 {
-    xml::xifstream xis( filename );
+    tools::Xifstream xis( filename );
     xis >> xml::start( "shapes" );
-    const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
-    if( !schema.empty() )
-        xml::xifstream( filename, xml::external_grammar( tools::GeneralConfig::BuildResourceChildFile( schema ) ) );
+    const tools::Path schema = xis.attribute< tools::Path >( "xsi:noNamespaceSchemaLocation", "" );
+    if( !schema.IsEmpty() )
+        tools::Xifstream( filename, xml::external_grammar( tools::GeneralConfig::BuildResourceChildFile( schema ).ToUTF8().c_str() ) );
     ReadShapes( xis );
     xis >> xml::end;
 }
@@ -132,7 +132,7 @@ namespace
 // Name: DrawerModel::Save
 // Created: SBO 2007-03-21
 // -----------------------------------------------------------------------------
-void DrawerModel::Save( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
+void DrawerModel::Save( const tools::Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     T_DrawingsMap formationMap;
     T_DrawingsMap automatMap;
@@ -155,7 +155,7 @@ void DrawerModel::Save( const std::string& filename, const tools::SchemaWriter_A
             notDiffused.insert( &drawing );
     }
 
-    xml::xofstream xos( filename );
+    tools::Xofstream xos( filename );
     xos << xml::start( "shapes" );
     schemaWriter.WriteExerciseSchema( xos, "drawings" );
     SerializeDrawingsMap( xos, formationMap, "formation" );

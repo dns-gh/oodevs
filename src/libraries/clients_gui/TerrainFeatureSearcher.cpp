@@ -17,11 +17,9 @@
 #include <graphics/NoVBOShapeLayer.h>
 #include <graphics/GraphicSetup_ABC.h>
 #pragma warning( disable : 4355 4512 )
-#include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string.hpp>
 
 using namespace gui;
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: TerrainFeatureSearcher constructor
@@ -61,8 +59,8 @@ namespace
 
     struct NameShapeLayer : public GraphicSetup_ABC, public NoVBOShapeLayer
     {
-        NameShapeLayer( const std::string& filename )
-            : NoVBOShapeLayer( *this, filename )
+        NameShapeLayer( const tools::Path& filename )
+            : NoVBOShapeLayer( *this, filename.ToLocal().c_str() )
         {}
         virtual void DrawName( const geometry::Point2f& at, const std::string& name )
         {
@@ -86,7 +84,7 @@ namespace
 // -----------------------------------------------------------------------------
 bool TerrainFeatureSearcher::Search( const QString& name, geometry::Point2f& point, QString& hint )
 {
-    if( !pendingSourceFile_.empty() )
+    if( !pendingSourceFile_.IsEmpty() )
         LoadFeatures();
     const T_Feature* feature = nameLocations_->Find( Cleanup( name.toStdString() ) );
     if( feature != current_ )
@@ -131,13 +129,13 @@ void TerrainFeatureSearcher::NotifyUpdated( const kernel::ModelLoaded& model )
     index_ = 0;
     nameLocations_.reset( new T_NameLocations( 500 ) );
 
-    const std::string& graphicsDirectory = model.config_.GetGraphicsDirectory();
+    const tools::Path& graphicsDirectory = model.config_.GetGraphicsDirectory();
 
-    if( ! graphicsDirectory.empty() )
+    if( !graphicsDirectory.IsEmpty() )
     {
-        const bfs::path dump = bfs::path( graphicsDirectory ) / "shapes.dump";
-        if( bfs::exists( dump ) )
-            pendingSourceFile_ = dump.string();
+        const tools::Path dump = graphicsDirectory / "shapes.dump";
+        if( dump.Exists() )
+            pendingSourceFile_ = dump;
     }
 }
 
@@ -154,5 +152,5 @@ void TerrainFeatureSearcher::LoadFeatures()
     layer.Paint( universe );
     for( std::map< std::string, T_PointVector >::const_iterator it = layer.names_.begin(); it != layer.names_.end(); ++it )
             nameLocations_->Add( it->first, T_Feature( it->first.c_str(), it->second ) );
-    pendingSourceFile_ = "";
+    pendingSourceFile_.Clear();
 }

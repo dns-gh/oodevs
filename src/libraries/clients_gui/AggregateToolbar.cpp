@@ -13,6 +13,7 @@
 #include "AutomatsLayer.h"
 #include "FormationLayer.h"
 #include "resources.h"
+#include "ImageWrapper.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -79,7 +80,7 @@ AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
     if( showDisplayModes)
     {
         btn = new QToolButton();
-        btn->setIcon( QIcon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/eye.png" ).c_str() ) );
+        btn->setIcon( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/eye.png" ) ) );
         btn->setAutoRaise( true );
         btn->setPopupMode( QToolButton::InstantPopup );
         QToolTip::add( btn, tools::translate( "AggregateToolbar", "Change Orbat display mode" ) );

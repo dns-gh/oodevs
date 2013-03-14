@@ -18,13 +18,9 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController.h"
 #include "ParamComboBox.h"
-
 #include "tools/ExerciseConfig.h"
-#include <boost/filesystem.hpp>
-
+#include "tools/Path.h"
 #include <QtWebKit/qwebview.h>
-
-namespace bfs = boost::filesystem;
 
 using namespace actions::gui;
 
@@ -83,21 +79,20 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
     mainTab_ = CreateTab( tabs_, tr( "Mandatory" ) );
     optionalTab_ = CreateTab( tabs_, tr( "Optional" ) );
     {
-        std::string path = config.GetPhysicalChildPath( missionSheetPath );
         std::string doctrine = order.GetDoctrineInformation();
         std::string usage = order.GetUsageInformation();
-        std::string fileName = std::string( config.GetPhysicalChildPath( missionSheetPath ) + "/" + order.GetName() + ".html" );
-        if( bfs::is_regular_file( fileName ) || ( !doctrine.empty() && !usage.empty() ) )
+        tools::Path fileName = config.GetPhysicalChildPath( missionSheetPath ) / tools::Path::FromUTF8( order.GetName() ) + ".html";
+        if( fileName.IsRegularFile() || ( !doctrine.empty() && !usage.empty() ) )
         {
             QWidget* helpTab = new QWidget( tabs_ );
             tabs_->addTab( helpTab, tr( "Help" ) );
             QVBoxLayout* helpLayout = new QVBoxLayout( helpTab );
 
-            if( bfs::is_regular_file( fileName ) )
+            if( fileName.IsRegularFile() )
             {
-                std::replace( fileName.begin(), fileName.end(), '\\', '/' );
+                fileName.MakePreferred();
                 QWebView* missionSheetText = new QWebView();
-                missionSheetText->load( QUrl( fileName.c_str() ) );
+                missionSheetText->load( QUrl( fileName.ToUTF8().c_str() ) );
                 helpLayout->addWidget( missionSheetText );
             }
             else 

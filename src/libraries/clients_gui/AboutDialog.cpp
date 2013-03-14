@@ -13,6 +13,7 @@
 #include "ItemFactory_ABC.h"
 #include "RichLabel.h"
 #include "Tools.h"
+#include "ImageWrapper.h"
 #include "tools/GeneralConfig.h"
 
 using namespace gui;
@@ -25,7 +26,13 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QStri
     : QDialog( parent, 0, true, Qt::WStyle_Splash )
 {
     setCaption( tools::translate( "Application", "About" ) );
-    QPixmap pixmap( GetSplashScreen() );
+
+    QPixmap pixmap;
+    const tools::Path filename = tools::Path::FromUnicode( tools::translate( "Application", "images/gui/splash_swordot.png" ).toStdWString() );
+    pixmap = gui::Pixmap( filename.IsEmpty()
+        ? tools::GeneralConfig::BuildResourceChildFile( "images/gui/splash_swordot.png" )
+        : tools::GeneralConfig::BuildResourceChildFile( filename ) );
+
     setMinimumSize( pixmap.width(), pixmap.height() + 50 );
     Q3VBox* vbox = new Q3VBox( this );
     {
@@ -66,16 +73,4 @@ AboutDialog::~AboutDialog()
 QSize AboutDialog::sizeHint() const
 {
     return sizeHint_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AboutDialog::GetSplashScreen
-// Created: SBO 2008-08-19
-// -----------------------------------------------------------------------------
-QString AboutDialog::GetSplashScreen() const
-{
-    const QString filename = tools::translate( "Application", "images/gui/splash_swordot.png" );
-    if( filename.isNull() || filename.isEmpty() )
-        return tools::GeneralConfig::BuildResourceChildFile( "images/gui/splash_swordot.png" ).c_str();
-    return tools::GeneralConfig::BuildResourceChildFile( filename.toStdString() ).c_str();
 }

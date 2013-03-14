@@ -9,6 +9,7 @@
 
 #include "LoggerApplication.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/Path.h"
 #include <iostream>
 
 int main( int argc, char** argv )
@@ -17,7 +18,7 @@ int main( int argc, char** argv )
     if( argc < 2 )
         return 1;
     std::string hostname( argv[1] );
-    std::string logFile( argc > 2 ? argv[2] : "" );
+    tools::Path logFile( argc > 2 ? argv[2] : "" );
     std::string verbose;
     if( argc > 3 )
         verbose = argv[3];

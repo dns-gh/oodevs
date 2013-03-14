@@ -20,14 +20,11 @@
 #include "clients_kernel/OptionVariant.h"
 #include "tools/ExerciseConfig.h"
 
-#include <boost/filesystem/operations.hpp>
 #include <graphics/DataFactory.h>
 #include <graphics/extensions.h>
 #include <graphics/NoVBOShapeLayer.h>
 #include <graphics/RawShapeLayer.h>
 #include <graphics/ShapeCollector.h>
-
-namespace bfs = boost::filesystem;
 
 using namespace kernel;
 using namespace gui;
@@ -86,7 +83,7 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
     if( !ShouldDrawPass() || GetAlpha() == 0 )
         return;
 
-    if( !layer_.get() && !noVBOlayer_.get() && !graphicsDirectory_.empty() )
+    if( !layer_.get() && !noVBOlayer_.get() && !graphicsDirectory_.IsEmpty() )
         LoadGraphics();
 
     if( layer_.get() || noVBOlayer_.get() )
@@ -146,7 +143,7 @@ void TerrainLayer::Reset()
 {
     width_ = 0;
     height_ = 0;
-    graphicsDirectory_.clear();
+    graphicsDirectory_.Clear();
     layer_.reset();
     noVBOlayer_.reset();
 }
@@ -171,8 +168,8 @@ template< typename Base >
 class TerrainLayer::MyLayer : public Base
 {
 public:
-    MyLayer( TerrainLayer& parent, const std::string& filename )
-        : Base( parent.setup_, filename )
+    MyLayer( TerrainLayer& parent, const tools::Path& filename )
+        : Base( parent.setup_, filename.ToLocal() )
         , parent_( parent ) {}
 
     virtual bool ShouldDisplay( const TerrainData& data, const geometry::Rectangle2f& /*viewport*/ )
@@ -243,24 +240,24 @@ void TerrainLayer::LoadGraphics()
     world_.Set( 0, 0, width_, height_ );
     try
     {
-        const bfs::path aggregated = bfs::path( graphicsDirectory_ ) / "shapes.dump";
-        if( ! bfs::exists( aggregated ) )
+        const tools::Path aggregated = graphicsDirectory_ / "shapes.dump";
+        if( !aggregated.Exists() )
         {
             DataFactory factory;
             ShapeCollector collector( factory );
-            collector.LoadGraphicDirectory( graphicsDirectory_ );
-            collector.Finalize( aggregated.string() );
+            collector.LoadGraphicDirectory( graphicsDirectory_.ToLocal() );
+            collector.Finalize( aggregated.ToLocal() );
         }
-        if( bfs::exists( aggregated ) )
+        else
         {
             if( gl::HasVBO() )
             {
-                layer_.reset( new MyLayer< RawShapeLayer >  ( *this, aggregated.string() ) );
+                layer_.reset( new MyLayer< RawShapeLayer >  ( *this, aggregated ) );
                 layer_->Initialize( world_ );
             }
             else
             {
-                noVBOlayer_.reset( new MyLayer< NoVBOShapeLayer >( *this, aggregated.string() ) );
+                noVBOlayer_.reset( new MyLayer< NoVBOShapeLayer >( *this, aggregated ) );
                 noVBOlayer_->Initialize( world_ );
             }
         }

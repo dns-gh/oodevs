@@ -24,7 +24,7 @@ using namespace gui;
 RasterLayer::RasterLayer( kernel::Controller& controller, const std::string& textureName /* = "usrp.texture" */ )
     : controller_ ( controller )
     , ignore_     ( false )
-    , textureName_( textureName )
+    , textureName_( tools::Path::FromUTF8( textureName ) )
 {
     controller_.Register( *this );
 }
@@ -46,7 +46,7 @@ void RasterLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     if( !ShouldDrawPass() || GetAlpha() == 0 )
         return;
-    if( ! textures_.get() && ! graphicsDirectory_.empty() && ! ignore_ )
+    if( ! textures_.get() && ! graphicsDirectory_.IsEmpty() && ! ignore_ )
         GenerateTexture();
     if( textures_.get() )
     {
@@ -67,11 +67,10 @@ void RasterLayer::GenerateTexture()
 {
     try
     {
-        textures_.reset( new TextureSet( graphicsDirectory_ + "/" + textureName_ ) );
+        textures_.reset( new TextureSet( ( graphicsDirectory_ / textureName_ ).ToLocal() ) );
     }
     catch( ... )
     {
-        // $$$$ AGE 2007-01-04:
         ignore_ = true;
     }
 }
@@ -91,7 +90,7 @@ void RasterLayer::NotifyUpdated( const kernel::ModelLoaded& modelLoaded )
 // -----------------------------------------------------------------------------
 void RasterLayer::Reset()
 {
-    graphicsDirectory_.clear();
+    graphicsDirectory_.Clear();
     textures_.reset();
     ignore_ = false;
 }

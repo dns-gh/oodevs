@@ -52,7 +52,7 @@ protected:
     //! @name Member data
     //@{
     gui::RichLabel* sourceLabel_;
-    const std::string root_;
+    const tools::Path root_;
     ValuedComboBox< std::string >* propagationFiles_;
     ValuedComboBox< std::string >* dataField_;
     QCheckBox* exportData_;

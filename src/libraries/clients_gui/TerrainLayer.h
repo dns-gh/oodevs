@@ -88,7 +88,7 @@ private:
     geometry::Rectangle2f world_;
     kernel::TristateOption smallNames_;
     kernel::TristateOption bigNames_;
-    std::string graphicsDirectory_;
+    tools::Path graphicsDirectory_;
     float width_;
     float height_;
 

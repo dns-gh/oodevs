@@ -8,8 +8,7 @@
 // *****************************************************************************
 
 #include <tools/Exception.h>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/convenience.hpp>
+#include "tools/Path.h"
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
@@ -21,9 +20,9 @@ namespace
 {
     void SetDirectory()
     {
-        char buffer[ MAX_PATH ];
-        if( GetModuleFileNameA( GetModuleHandle( "BugTrap.dll" ), buffer, MAX_PATH ) )
-            SetCurrentDirectory( boost::filesystem::path( buffer ).branch_path().string().c_str() );
+        wchar_t buffer[ MAX_PATH ];
+        if( GetModuleFileNameW( GetModuleHandleW( L"BugTrap.dll" ), buffer, MAX_PATH ) )
+            SetCurrentDirectoryW( tools::Path( buffer ).Parent().ToUnicode().c_str() );
     }
 
     void Execute( const std::string& commandLine )

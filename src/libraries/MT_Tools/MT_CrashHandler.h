@@ -13,6 +13,11 @@
 #include <windows.h>
 #include <string>
 
+namespace tools
+{
+    class Path;
+}
+
 // =============================================================================
 // Created: NLD 2006-03-17
 // =============================================================================
@@ -21,7 +26,7 @@ class MT_CrashHandler
 public:
     //! @name Handlers
     //@{
-    static void SetRootDirectory ( const std::string& root );
+    static void SetRootDirectory ( const tools::Path& root );
     static int  ContinueSearch   ( EXCEPTION_POINTERS* pExceptionPointers );
     static int  ExecuteHandler   ( EXCEPTION_POINTERS* pExceptionPointers );
     static int  ContinueExecution( EXCEPTION_POINTERS* pExceptionPointers );

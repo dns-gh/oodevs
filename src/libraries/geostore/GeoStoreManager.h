@@ -11,7 +11,6 @@
 #define __GeoStoreManager_h_
 
 #include <geometry/Types.h>
-#include <boost/filesystem/path.hpp>
 
 namespace kernel
 {
@@ -20,6 +19,11 @@ namespace kernel
 
 class PointProjector_ABC;
 class UrbanModel;
+
+namespace tools
+{
+    class Path;
+}
 
 namespace geostore
 {
@@ -37,7 +41,7 @@ class GeoStoreManager : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             GeoStoreManager( const boost::filesystem::path& path, const SpatialIndexer& index );
+             GeoStoreManager( const tools::Path& path, const SpatialIndexer& index );
     virtual ~GeoStoreManager();
     //@}
 

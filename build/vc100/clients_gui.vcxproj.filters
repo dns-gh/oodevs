@@ -928,6 +928,12 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\PickingSelector.cpp">
       <Filter>Source Files\gl\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\FileDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ImageWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1514,6 +1520,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\PickingSelector.h">
       <Filter>Source Files\gl\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\FileDialog.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ImageWrapper.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

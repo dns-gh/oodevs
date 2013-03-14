@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "WikiXmlConverter.h"
-#include <boost/filesystem.hpp>
 #include <boost/regex.hpp>
 #include <boost/bind.hpp>
 #pragma warning( push, 0 )

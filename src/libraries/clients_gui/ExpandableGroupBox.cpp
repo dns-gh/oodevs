@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "ExpandableGroupBox.h"
 #include "moc_ExpandableGroupBox.cpp"
+#include "ImageWrapper.h"
 
 using namespace gui;
 
@@ -21,8 +22,8 @@ ExpandableGroupBox::ExpandableGroupBox( QWidget* parent /* = 0 */, const QString
     : QFrame( parent )
     , title_       ( title )
     , orientation_ ( orientation )
-    , expandIcon_  ( QIcon( "resources/images/gui/toggle-expand.png" ) )
-    , collapseIcon_( QIcon( "resources/images/gui/toggle-collapse.png" ) )
+    , expandIcon_  ( gui::Icon( "resources/images/gui/toggle-expand.png" ) )
+    , collapseIcon_( gui::Icon( "resources/images/gui/toggle-collapse.png" ) )
 {
     titleWidget_ = new QFrame();
     titleWidget_->setFrameStyle( QFrame::StyledPanel );

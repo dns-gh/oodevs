@@ -60,11 +60,11 @@ void DetectionMap::Load( const tools::ExerciseConfig& config )
     delete map_;
     delete[] environment_;
 
-    const std::string& detection = config.GetDetectionFile();
+    const tools::Path& detection = config.GetDetectionFile();
 
-    map_ = new ElevationMap( detection );
+    map_ = new ElevationMap( detection.ToLocal() );
 
-    tools::InputBinaryStream archive( detection );
+    tools::InputBinaryStream archive( detection.ToLocal() );
     double rcs; unsigned uDummy;
     archive >> rcs >> uDummy >> uDummy;
     cellsize_ = static_cast< float >( rcs );

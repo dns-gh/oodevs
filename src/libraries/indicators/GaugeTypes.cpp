@@ -42,7 +42,7 @@ GaugeTypes::~GaugeTypes()
 // Name: GaugeTypes::Load
 // Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
-void GaugeTypes::Load( const tools::ExerciseConfig& config, const std::string& filename )
+void GaugeTypes::Load( const tools::ExerciseConfig& config, const tools::Path& filename )
 {
     config.GetLoader().LoadFile( filename, boost::bind( &GaugeTypes::Read, this, _1 ) );
 }

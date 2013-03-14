@@ -10,7 +10,7 @@
 #ifndef PropagationManager_h
 #define PropagationManager_h
 
-#include <boost/filesystem/path.hpp>
+#include "tools/Path.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/noncopyable.hpp>
 #include <string>
@@ -38,30 +38,27 @@ public:
 
     //! @name Types
     //@{
-    typedef std::vector< std::string >                    T_Files;
-    typedef std::map< boost::posix_time::ptime, T_Files > T_Schedule;
-    typedef T_Schedule::const_iterator                  CIT_Schedule;
+    typedef std::map< boost::posix_time::ptime, tools::Path::T_Paths > T_Schedule;
     //@}
 
     //! @name Operations
     //@{
-    void Initialize( const std::string& config, const std::string& time );
-    T_Files GetFiles( const std::string& time );
-    const std::string& GetProjectionFile() const;
+    void Initialize( const tools::Path& config, const std::string& time );
+    tools::Path::T_Paths GetFiles( const std::string& time );
+    const tools::Path& GetProjectionFile() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void ReadFile( xml::xistream& xis, const boost::filesystem::path& path,
-                   const boost::posix_time::ptime& startTime, boost::posix_time::time_duration& delta );
+    void ReadFile( xml::xistream& xis, const tools::Path& path, const boost::posix_time::ptime& startTime, boost::posix_time::time_duration& delta );
     void ReadColor( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string projection_;
+    tools::Path projection_;
     T_Schedule schedule_;
     //@}
 };

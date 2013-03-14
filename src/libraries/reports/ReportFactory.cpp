@@ -21,6 +21,8 @@
 #include "clients_kernel/EquipmentType.h"
 #include "protocol/Protocol.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/FileWrapper.h"
+#include "tools/Path.h"
 #include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
@@ -63,12 +65,12 @@ ReportFactory::~ReportFactory()
 void ReportFactory::Load( const tools::ExerciseConfig& config  )
 {
     stages_->Load( config );
-    xml::xifstream scipio( config.GetPhysicalFile() );
-    std::string reports;
+    tools::Xifstream scipio( config.GetPhysicalFile() );
+    tools::Path reports;
     scipio >> xml::start( "physical" )
                 >> xml::start( "reports" )
                     >> xml::attribute( "file", reports );
-    xml::xifstream xis( config.BuildPhysicalChildFile( reports ) );
+    tools::Xifstream xis( config.BuildPhysicalChildFile( reports ) );
     xis >> xml::start( "reports" )
             >> xml::list( "report", *this, &ReportFactory::ReadReport )
         >> xml::end;

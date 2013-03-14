@@ -24,6 +24,11 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
+namespace tools
+{
+    class Path;
+}
+
 namespace gui
 {
 // =============================================================================
@@ -38,7 +43,7 @@ class ObjectPrototypeShapeFileLoader : public ObjectPrototypeLoader_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ObjectPrototypeShapeFileLoader( const kernel::CoordinateConverter_ABC& coordinateConverter, QWidget* parent, const QString& filename, const kernel::ObjectType& objectType );
+    ObjectPrototypeShapeFileLoader( const kernel::CoordinateConverter_ABC& coordinateConverter, QWidget* parent, const tools::Path& filename, const kernel::ObjectType& objectType );
     virtual ~ObjectPrototypeShapeFileLoader();
     //@}
 

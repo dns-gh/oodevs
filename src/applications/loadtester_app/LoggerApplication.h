@@ -12,9 +12,9 @@
 
 #include "protocol/Protocol.h"
 #include "tools/ClientNetworker.h"
+#include "tools/FileWrapper.h"
 #include <string>
 #include <iostream>
-#include <fstream>
 
 // =============================================================================
 /** @class  LoggerApplication
@@ -27,7 +27,7 @@ class LoggerApplication : public tools::ClientNetworker
 public:
     //! @name Constructors/Destructor
     //@{
-             LoggerApplication( const std::string& hostname, const std::string& logFile, const std::string& login, const std::string& password, bool verbose );
+             LoggerApplication( const std::string& hostname, const tools::Path& logFile, const std::string& login, const std::string& password, bool verbose );
     virtual ~LoggerApplication();
     //@}
 
@@ -67,7 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::ofstream file_;
+    tools::Ofstream file_;
     const std::string login_;
     std::string  password_;
     std::string  endpoint_;

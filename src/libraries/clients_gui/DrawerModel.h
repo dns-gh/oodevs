@@ -57,8 +57,8 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& filename );
-    void Save( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void Load( const tools::Path& filename );
+    void Save( const tools::Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
     kernel::Drawing_ABC* Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const;

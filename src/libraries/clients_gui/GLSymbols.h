@@ -10,6 +10,8 @@
 #ifndef __GLSymbols_h_
 #define __GLSymbols_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace svg
 {
     class Node_ABC;
@@ -35,7 +37,7 @@ namespace gui
 */
 // Created: SBO 2006-12-15
 // =============================================================================
-class GLSymbols
+class GLSymbols : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -49,17 +51,11 @@ public:
     void PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport,
                     unsigned vWidth = 640, unsigned vHeight = 480, bool pickingMode = false );
     void Load( const tools::ExerciseConfig& config );
-    void SetSymbolsPath( const std::string& symbolPath );
+    void SetSymbolsPath( const tools::Path& symbolPath );
     const std::vector< std::string >& GetNotFoundSymbol() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GLSymbols( const GLSymbols& );            //!< Copy constructor
-    GLSymbols& operator=( const GLSymbols& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     svg::Node_ABC* Compile( std::string symbol, float lod, bool firstNode );
@@ -77,7 +73,7 @@ private:
     //! @name Member data
     //@{
     SvglRenderer& renderer_;
-    std::string symbolsPath_;
+    tools::Path symbolsPath_;
     std::auto_ptr< zip::izipfile > zipFile_;
     T_Symbols                      symbols_;
     std::vector< std::string >     notFoundSymbols_;

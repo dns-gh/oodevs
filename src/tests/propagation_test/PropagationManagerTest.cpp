@@ -10,20 +10,14 @@
 #include "propagation_test_pch.h"
 #include "propagation/PropagationManager.h"
 #include <boost/assign.hpp>
-#include <boost/filesystem/path.hpp>
 
 namespace
 {
-    void CheckPath( const std::string& lhs, const std::string& rhs )
-    {
-        BOOST_CHECK_EQUAL( boost::filesystem::path( lhs ).generic_string(), boost::filesystem::path( rhs ).generic_string() );
-    }
-
-    void CheckVector( const std::vector< std::string >& lhs, const std::vector< std::string >& rhs )
+    void CheckVector( const tools::Path::T_Paths& lhs, const tools::Path::T_Paths& rhs )
     {
         BOOST_CHECK_EQUAL( lhs.size(), rhs.size() );
         for( std::size_t i = 0; i < rhs.size(); ++i )
-            CheckPath( lhs[ i ], rhs[ i ] );
+            BOOST_CHECK_EQUAL( lhs[ i ], rhs[ i ] );
     }
 }
 
@@ -35,7 +29,7 @@ BOOST_AUTO_TEST_CASE( extract_information )
 {
     PropagationManager manager;
     manager.Initialize( BOOST_RESOLVE( "propagation.xml" ), "" );
-    CheckPath( manager.GetProjectionFile(), BOOST_RESOLVE( "projection.prj" ) );
+    BOOST_CHECK_EQUAL( manager.GetProjectionFile(), BOOST_RESOLVE( "projection.prj" ) );
 
     BOOST_CHECK( manager.GetFiles( "20100901T121500" ).empty() );
 
@@ -62,7 +56,7 @@ BOOST_AUTO_TEST_CASE( extract_information_with_a_different_start_time )
 {
     PropagationManager manager;
     manager.Initialize( BOOST_RESOLVE( "propagation.xml" ), "20100901T141011" );
-    CheckPath( manager.GetProjectionFile(), BOOST_RESOLVE( "projection.prj" ) );
+    BOOST_CHECK_EQUAL( manager.GetProjectionFile(), BOOST_RESOLVE( "projection.prj" ) );
 
     BOOST_CHECK( manager.GetFiles( "20100901T141010" ).empty() );
 

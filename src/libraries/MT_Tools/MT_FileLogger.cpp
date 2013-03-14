@@ -10,12 +10,9 @@
 #include "MT_FileLogger.h"
 #include <cstdio>
 #include <ctime>
+#include "tools/FileWrapper.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/lexical_cast.hpp>
-
-namespace bfs = boost::filesystem;
 
 #ifdef WIN32
 #   define snprintf _snprintf
@@ -25,7 +22,7 @@ namespace bfs = boost::filesystem;
 // Name: MT_FileLogger constructor
 // Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
-MT_FileLogger::MT_FileLogger( const char* strFileName , unsigned int maxFiles, int maxSize, int nLogLevels, bool bClearPreviousLog, E_Type type, bool sizeInBytes )
+MT_FileLogger::MT_FileLogger( const tools::Path& strFileName , unsigned int maxFiles, int maxSize, int nLogLevels, bool bClearPreviousLog, E_Type type, bool sizeInBytes )
     : MT_Logger_ABC( nLogLevels, type )
     , fileName_( strFileName )
     , maxFiles_( maxFiles < 1 ? 1 : maxFiles )
@@ -34,12 +31,10 @@ MT_FileLogger::MT_FileLogger( const char* strFileName , unsigned int maxFiles, i
     , sizeCount_( 0 )
     , sizeInBytes_( sizeInBytes )
 {
-    bfs::path pathFileName( fileName_ );
-    fileNameNoExtension_ = pathFileName.parent_path().string() + "/" + pathFileName.stem().string();
-    fileNameExtension_ = pathFileName.extension().string();
+    fileNameNoExtension_ = fileName_.Parent() / fileName_.BaseName();
+    fileNameExtension_ = fileName_.Extension();
     filesCount_ = GetOldestFile();
-    std::string startFileName = GetFileName( filesCount_ );
-    sizeCount_ = static_cast< int >( OpenNewOfstream( startFileName, bClearPreviousLog ) );
+    sizeCount_ = static_cast< int >( OpenNewOfstream( GetFileName( filesCount_ ), bClearPreviousLog ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -54,10 +49,10 @@ MT_FileLogger::~MT_FileLogger()
 
 namespace
 {
-    unsigned int ComputeLines( const std::string& fileName )
+    unsigned int ComputeLines( const tools::Path& fileName )
     {
         unsigned int count = 0;
-        std::ifstream file( fileName.c_str() );
+        tools::Ifstream file( fileName );
         if( file && !file.fail() )
         {
             std::string currentLine;
@@ -73,23 +68,22 @@ namespace
 // Name: MT_FileLogger OpenNewOfstream
 // Created:  MMC 2012-01-31
 //-----------------------------------------------------------------------------
-unsigned int MT_FileLogger::OpenNewOfstream( const std::string& fileName, bool clearPrevious /* = true */ )
+unsigned int MT_FileLogger::OpenNewOfstream( const tools::Path& fileName, bool clearPrevious /* = true */ )
 {
     unsigned int size = 0;
     if ( file_.get() )
         file_->close();
 
-    file_.reset( new std::ofstream );
     if( clearPrevious || maxFiles_ > 1 )
-        file_->open( fileName.c_str(), std::ios::out | std::ios::trunc );
+        file_.reset( new tools::Ofstream( fileName, std::ios::out | std::ios::trunc ) );
     else
     {
         try
         {
-            if( maxSize_ > 0 && bfs::exists( fileName ) )
+            if( maxSize_ > 0 && fileName.Exists() )
             {
                 if( sizeInBytes_ )
-                    size = static_cast< unsigned int >( bfs::file_size( bfs::path( fileName ) ) );
+                    size = fileName.FileSize();
                 else
                     size = ComputeLines( fileName );
             }
@@ -97,7 +91,7 @@ unsigned int MT_FileLogger::OpenNewOfstream( const std::string& fileName, bool c
         catch( ... ) 
         { size = 0; }
 
-        file_->open( fileName.c_str(), std::ios::out | std::ios::app );
+        file_.reset( new tools::Ofstream( fileName, std::ios::out | std::ios::app ) );
     }
     return size;
 }
@@ -124,11 +118,11 @@ void MT_FileLogger::WriteString( const std::string& s )
 // Name: MT_FileLogger::GetOldestFile
 // Created:  MMC 2012-03-02
 //-----------------------------------------------------------------------------
-std::string MT_FileLogger::GetFileName( unsigned int fileCount )
+tools::Path MT_FileLogger::GetFileName( unsigned int fileCount ) const
 {
     if( fileCount <= 1 )
         return fileName_;
-    return fileNameNoExtension_ + ( "." + boost::lexical_cast< std::string >( fileCount - 1 ) ) + fileNameExtension_;
+    return fileNameNoExtension_ + std::string( "." + boost::lexical_cast< std::string >( fileCount - 1 ) ).c_str() + fileNameExtension_;
 }
 
 //-----------------------------------------------------------------------------
@@ -143,16 +137,16 @@ unsigned int MT_FileLogger::GetOldestFile()
     unsigned int oldest = 1;
     try
     {
-        std::string fileName = GetFileName( 1 );
-        if( bfs::exists( fileName ) )
+        tools::Path fileName = GetFileName( 1 );
+        if( fileName.Exists() )
         {
-            std::time_t minTime = bfs::last_write_time( fileName );
+            std::time_t minTime = fileName.LastWriteTime();
             for( unsigned int i = 2; i <= maxFiles_; ++i )
             {
                 fileName = GetFileName( i );
-                if( bfs::exists( fileName ) )
+                if( fileName.Exists() )
                 {
-                    std::time_t curTime = bfs::last_write_time( fileName );
+                    std::time_t curTime = fileName.LastWriteTime();
                     if( curTime < minTime )
                     {
                         minTime = curTime;

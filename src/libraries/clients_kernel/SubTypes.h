@@ -11,6 +11,7 @@
 #define __SubTypes_h_
 
 #include "StrongType.h"
+#include "tools/Path.h"
 
 namespace kernel
 {
@@ -28,8 +29,7 @@ namespace kernel
     DECLARE_SUBTYPE( TeamKarma, const Karma* );
     DECLARE_SUBTYPE( EntityLogisticLevel, const LogisticLevel* );
     DECLARE_SUBTYPE( CriticalIntelligenceType, QString );
-    DECLARE_SUBTYPE( DisasterDirectory, QString );
-
+    DECLARE_SUBTYPE( DisasterDirectory, tools::Path );
 }
 
 #endif // __SubTypes_h_

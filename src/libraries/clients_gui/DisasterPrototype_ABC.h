@@ -54,7 +54,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    void FillInPaths( const std::string& root );
+    void FillInPaths( const tools::Path& root );
     //@}
 
 protected:

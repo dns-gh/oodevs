@@ -14,7 +14,6 @@
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.hpp>
 #include <htmlhelp.h>
-#include <boost/filesystem.hpp>
 
 using namespace gui;
 
@@ -22,7 +21,7 @@ using namespace gui;
 // Name: HelpSystem constructor
 // Created: AGE 2008-08-18
 // -----------------------------------------------------------------------------
-HelpSystem::HelpSystem( QWidget* root, const std::string& config )
+HelpSystem::HelpSystem( QWidget* root, const tools::Path& config )
     : QObject( root )
     , root_  ( root )
     , helpFile_( "" )
@@ -30,12 +29,12 @@ HelpSystem::HelpSystem( QWidget* root, const std::string& config )
     try
     {
         const std::string strGuide = tools::translate( "gui::HelpSystem", "Sword_General_User_Guide" ).toStdString();
-        std::string locale = tools::readLang();
-        helpFile_ = tools::GeneralConfig::BuildResourceChildFile( "help/" + locale + "/" + strGuide + ".pdf" );
-        if( !boost::filesystem::exists( helpFile_ ) )
+        tools::Path locale = tools::Path( tools::readLang().c_str() );
+        helpFile_ = tools::GeneralConfig::BuildResourceChildFile( tools::Path( "help" ) / locale / tools::Path::FromUTF8( strGuide ) + ".pdf" );
+        if( !helpFile_.Exists() )
             helpFile_ =  tools::GeneralConfig::BuildResourceChildFile( "help/en/Sword_General_User_Guide.pdf" );
 
-        xml::xifstream xis( config );
+        tools::Xifstream xis( config );
         xis >> xml::start( "widgets" )
                 >> xml::list( "widget", *this, &HelpSystem::ReadWidget )
             >> xml::end;
@@ -96,12 +95,12 @@ std::string HelpSystem::FindWidget( const QObject* root )
 // -----------------------------------------------------------------------------
 void HelpSystem::ShowHelp()
 {
-    if( !boost::filesystem::exists( helpFile_ ) )
+    if( !helpFile_.Exists() )
         return;
 
     // pdf help
-    if( !QDesktopServices::openUrl( QUrl( helpFile_.c_str() ) ) )
-        QMessageBox::warning( 0, tools::translate( "gui::HelpSystem", "Error" ), tools::translate( "gui::HelpSystem", "Error opening help file '%1'. Make sure you have a PDF viewer installed on your computer." ).arg( helpFile_.c_str() ) );
+    if( !QDesktopServices::openUrl( QUrl( helpFile_.ToUTF8().c_str() ) ) )
+        QMessageBox::warning( 0, tools::translate( "gui::HelpSystem", "Error" ), tools::translate( "gui::HelpSystem", "Error opening help file '%1'. Make sure you have a PDF viewer installed on your computer." ).arg( helpFile_.ToUTF8().c_str() ) );
 
     // chm help (not to be removed, temporarily commented)
     //const std::string page = FindWidget( qApp->widgetAt( QCursor::pos() ) );

@@ -17,6 +17,7 @@
 #include "DrawingTemplate.h"
 #include "DrawingTypes.h"
 #include "EntitySymbols.h"
+#include "ImageWrapper.h"
 #include "GlWidget.h"
 #include "Gl3dWidget.h"
 #include "StandardIconProxyStyle.h"
@@ -42,9 +43,9 @@ using namespace kernel;
 
 namespace
 {
-    QPixmap MakePixmap( const std::string& name )
+    QPixmap MakePixmap( const tools::Path& name )
     {
-        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() );
+        return gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( tools::Path( "images/gui" ) / name + ".png" ) );
     }
     static const unsigned int MAX_ELEMENT = 16u;
 }

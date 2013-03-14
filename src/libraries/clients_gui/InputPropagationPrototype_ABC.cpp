@@ -11,11 +11,6 @@
 #include "InputPropagationPrototype_ABC.h"
 #include "Tools.h"
 #include "tools/GeneralConfig.h"
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
-
-namespace bfs = boost::filesystem;
 
 using namespace kernel;
 using namespace gui;
@@ -26,7 +21,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent, const tools::GeneralConfig& config )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation" ) )
-    , root_ ( config.GetRootDir() )
+    , root_( config.GetRootDir() )
 {
     QGridLayout* layout = new QGridLayout( this, 0, 2, 6, 10 );
     layout->addWidget( new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation Model:" ) ) );
@@ -60,11 +55,11 @@ InputPropagationPrototype_ABC::~InputPropagationPrototype_ABC()
 // -----------------------------------------------------------------------------
 void InputPropagationPrototype_ABC::FillInPaths()
 {
-    std::string path( BuildPropagationDir( root_, "data/propagations" ) );
-    QStringList result( ListDirectories( path, &IsPropagationDir ) );
+    tools::Path path = root_ / "data/propagations";
+    tools::Path::T_Paths files = path.ListElements( &IsPropagationDir, true );
 
-    for( QStringList::const_iterator it = result.constBegin(); it != result.constEnd(); ++it )
-        propagationFiles_->AddItem( *it, (*it).toStdString() );
+    for( auto it = files.begin(); it != files.end(); ++it )
+        propagationFiles_->AddItem( it->ToUTF8(), it->ToUTF8() );
 }
 
 // -----------------------------------------------------------------------------

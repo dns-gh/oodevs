@@ -15,13 +15,7 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push, 0 )
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-#pragma warning( pop )
 #include <boost/bind.hpp>
-
-namespace bfs = boost::filesystem;
 
 using namespace kernel;
 

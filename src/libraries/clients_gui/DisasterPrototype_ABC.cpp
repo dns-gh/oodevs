@@ -50,13 +50,15 @@ DisasterPrototype_ABC::~DisasterPrototype_ABC()
 // Name: DisasterPrototype_ABC::FillInPaths
 // Created: LGY 2012-11-20
 // -----------------------------------------------------------------------------
-void DisasterPrototype_ABC::FillInPaths( const std::string& root )
+void DisasterPrototype_ABC::FillInPaths( const tools::Path& root )
 {
-    std::string path( ( bfs::path( root ) / "data/propagations" ).string() );
-    QStringList result( ListDirectories( path, &IsPropagationDir ) );
-
-    for( QStringList::const_iterator it = result.constBegin(); it != result.constEnd(); ++it )
-        propagationFiles_->AddItem( *it, (*it).toStdString() );
+    tools::Path path = root / "data/propagations";
+    const tools::Path::T_Paths results = path.ListElements( &IsPropagationDir );
+    for( auto it = results.begin(); it != results.end(); ++it )
+    {
+        const std::string text = it->ToUTF8();
+        propagationFiles_->AddItem( text, text );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -39,9 +39,9 @@ namespace
 }
 
 
-std::string BOOST_RESOLVE( const std::string& filename )
+tools::Path BOOST_RESOLVE( const tools::Path& filename )
 {
     if( data_directory.empty() )
         return filename;
-    return data_directory + '/' + filename;
+    return tools::Path( data_directory.c_str() ) / filename;
 }

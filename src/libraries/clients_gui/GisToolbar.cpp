@@ -12,9 +12,10 @@
 #include "moc_GisToolbar.cpp"
 #include "ColorButton.h"
 #include "ContourLinesObserver.h"
+#include "ImageWrapper.h"
 #include "RichSpinBox.h"
 #include "Tools.h"
-#include "clients_gui/TerrainProfiler.h"
+#include "TerrainProfiler.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Options.h"
@@ -27,9 +28,9 @@ using namespace gui;
 
 namespace
 {
-    QPixmap MakePixmap( const std::string& name )
+    QPixmap MakePixmap( const tools::Path& name )
     {
-        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() );
+        return gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( tools::Path( "images/gui" ) / name + ".png" ) );
     }
 }
 

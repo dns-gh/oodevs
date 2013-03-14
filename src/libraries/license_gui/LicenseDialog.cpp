@@ -9,13 +9,12 @@
 
 #include "LicenseDialog.h"
 #include "tools/win32/FlexLm.h"
+#include "tools/FileWrapper.h"
+#include "tools/Path.h"
 #include <tchar.h>
 #include <sstream>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <xeumeuleu/xml.hpp>
 
-namespace bfs = boost::filesystem;
 using namespace license_gui;
 
 #define ID_MAIN_EDIT 1001
@@ -332,13 +331,13 @@ void LicenseDialog::InstallLicense( HWND hWnd )
         {
             try
             {
-                bfs::path sourceFile( szFileName );
-                bfs::path destFile( szAppPath );
-                destFile.remove_filename();
-                destFile /= sourceFile.filename();
-                if( bfs::exists( destFile) )
-                    bfs::remove( destFile );
-                bfs::copy_file( sourceFile, destFile );
+                tools::Path sourceFile( szFileName );
+                tools::Path destFile( szAppPath );
+                destFile = destFile.Parent();
+                destFile /= sourceFile.FileName();
+                if( destFile.Exists() )
+                    destFile.Remove();
+                sourceFile.Copy( destFile );
                 installingLicense_ = true;
             }
             catch( ... )
@@ -360,13 +359,13 @@ void LicenseDialog::ReadTranslations()
         TCHAR szAppPath[ MAX_PATH ];
         if( GetModuleFileName( NULL, szAppPath, MAX_PATH ) )
         {
-            bfs::path filePath( szAppPath );
-            filePath.remove_filename();
+            tools::Path filePath( szAppPath );
+            filePath = filePath.Parent();
             const std::string language = ReadLang();
-            filePath /= bfs::path( "resources/locales" ) / bfs::path( "license_gui_" + language + ".ts" );
-            if( bfs::exists( filePath) )
+            filePath /= tools::Path( "resources/locales" ) / "license_gui_" + language.c_str() + ".ts";
+            if( filePath.Exists() )
             {
-                xml::xifstream xis( filePath.string() );
+                tools::Xifstream xis( filePath );
                 xis >> xml::start( "TS" )
                       >> xml::start( "context" )
                         >> xml::list( "message", *this, &LicenseDialog::ReadTranslation );

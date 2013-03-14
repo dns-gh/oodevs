@@ -21,6 +21,7 @@
 namespace tools
 {
     class ExerciseConfig;
+    class Path;
 }
 
 namespace xml
@@ -51,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const tools::ExerciseConfig& config, const std::string& filename );
+    void Load( const tools::ExerciseConfig& config, const tools::Path& filename );
     void Purge();
     virtual Gauge* Create() const;
     virtual Gauge* Create( xml::xistream& xis ) const;

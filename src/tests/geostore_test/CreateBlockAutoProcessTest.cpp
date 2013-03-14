@@ -15,7 +15,6 @@
 #include <terrain/TerrainObject.h>
 #include <tools/TemporaryDirectory.h>
 #include <boost/assign/list_of.hpp>
-#include <boost/filesystem.hpp>
 
 using namespace geostore;
 
@@ -25,7 +24,7 @@ namespace
     {
         Fixture()
             : dir( "geostoretest-", temp_directory )
-            , db ( dir.path() / "geostore.sqlite", dir.path(), proj )
+            , db ( tools::Path::FromUnicode( dir.path().wstring() ) / "geostore.sqlite", tools::Path::FromUnicode( dir.path().wstring() ), proj )
         {}
         void AddLayer( const std::string& name, GeometryType geomType, float top, float left, float bottom, float right )
         {

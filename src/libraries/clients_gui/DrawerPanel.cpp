@@ -17,6 +17,7 @@
 #include "DrawingCategory.h"
 #include "DrawingTemplate.h"
 #include "DrawingCategoryItem.h"
+#include "FileDialog.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -250,18 +251,17 @@ void DrawerPanel::StartDrawing()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Open()
 {
-    QString filename = QFileDialog::getOpenFileName( this, tr( "Load drawings file" ), config_.BuildExerciseChildFile( "" ).c_str(), tr( "Drawings (*.xml)" ) );
-    if( filename.isEmpty() )
+    tools::Path filename = FileDialog::getOpenFileName( this, tr( "Load drawings file" ), config_.BuildExerciseChildFile( "" ), tr( "Drawings (*.xml)" ) );
+    if( filename.IsEmpty() )
         return;
-    if( filename.startsWith( "//" ) )
-        filename.replace( "/", "\\" );
+    filename.MakePreferred();
     try
     {
-        model_.Load( filename.toStdString() );
+        model_.Load( filename );
     }
     catch( const xml::exception& )
     {
-        QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid drawings file." ).arg( filename ) );
+        QMessageBox::critical( this, tr( "Error" ), tr( "'%1' is not a valid drawings file." ).arg( filename.ToUTF8().c_str() ) );
     }
 }
 
@@ -271,21 +271,20 @@ void DrawerPanel::Open()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Save()
 {
-    QString filename = QFileDialog::getSaveFileName( this, tr( "Save drawings to file" ), config_.BuildExerciseChildFile( "" ).c_str(), tr( "Drawings (*.xml)" ) );
-    if( filename.isEmpty() )
+    tools::Path filename = FileDialog::getSaveFileName( this, tr( "Save drawings to file" ), config_.BuildExerciseChildFile( "" ), tr( "Drawings (*.xml)" ) );
+    if( filename.IsEmpty() )
         return;
-    if( filename.startsWith( "//" ) )
-        filename.replace( "/", "\\" );
-    if( !filename.endsWith( ".xml" ) )
-        filename.append( ".xml" );
+    filename.MakePreferred();
+    if( !filename.HasExtension() || filename.Extension() != ".xml" )
+        filename.ReplaceExtension( ".xml" );
     try
     {
         tools::SchemaWriter schemaWriter; //$$ Probablement à remonter
-        model_.Save( filename.toStdString(), schemaWriter );
+        model_.Save( filename, schemaWriter );
     }
     catch( const xml::exception& )
     {
-        QMessageBox::critical( this, tr( "Error" ), tr( "Unable to save drawings to file '%1'. \nPlease check access permissions or write protection." ).arg( filename ) );
+        QMessageBox::critical( this, tr( "Error" ), tr( "Unable to save drawings to file '%1'. \nPlease check access permissions or write protection." ).arg( filename.ToUTF8().c_str() ) );
     }
 }
 

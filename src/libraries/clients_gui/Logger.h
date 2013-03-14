@@ -13,7 +13,7 @@
 #include "clients_gui/RichDockWidget.h"
 #include "clients_kernel/Logger_ABC.h"
 #include "Types.h"
-#include <fstream>
+#include "tools/FileWrapper.h"
 
 namespace kernel
 {
@@ -39,7 +39,7 @@ class Logger : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             Logger( QWidget* pParent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, const std::string& filename );
+             Logger( QWidget* pParent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, const tools::Path& filename );
     virtual ~Logger();
     //@}
 
@@ -75,7 +75,7 @@ private:
     QTreeWidget* treeWidget_;
     const kernel::Time_ABC& simulation_;
     kernel::ContextMenu* popupMenu_;
-    std::ofstream log_;
+    tools::Ofstream log_;
     unsigned int counter_;
     //@}
 };

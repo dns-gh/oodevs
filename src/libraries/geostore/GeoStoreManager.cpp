@@ -15,21 +15,20 @@
 #include <terrain/PointProjector.h>
 
 using namespace geostore;
-namespace bfs = boost::filesystem;
 
-GeoStoreManager::GeoStoreManager( const bfs::path& path, const SpatialIndexer& index )
+GeoStoreManager::GeoStoreManager( const tools::Path& path, const SpatialIndexer& index )
     : index_    ( index )
-    , projector_( new PointProjector( path ) )
+    , projector_( new PointProjector( path.ToBoost() ) )
 {
-    bfs::path layersDir = path / "Graphics";
-    bfs::path dbFile = layersDir / "geostore.sqlite";
+    tools::Path layersDir = path / "Graphics";
+    tools::Path dbFile = layersDir / "geostore.sqlite";
     try
     {
         database_.reset( new Database( dbFile, layersDir, *projector_ ) );
     }
     catch( ... )
     {
-        bfs::remove( dbFile );
+        dbFile.Remove();
         database_.reset( new Database( dbFile, layersDir, *projector_ ) );
     }
 }

@@ -1030,7 +1030,7 @@ namespace
 
 BOOST_AUTO_TEST_CASE( read_aurige_orders )
 {
-    xml::xifstream xis( BOOST_RESOLVE( "aurige.ord" ) );
+    tools::Xifstream xis( BOOST_RESOLVE( "aurige.ord" ) );
     xis >> xml::start( "actions" );
     size_t count = 0;
     xis >> xml::list( "action", boost::bind( &ReadAction, boost::ref( count ), _1 ) );

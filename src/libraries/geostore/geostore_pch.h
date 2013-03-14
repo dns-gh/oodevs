@@ -12,8 +12,6 @@
 
 #pragma warning ( push, 0 )
 #include <boost/lexical_cast.hpp>
-#include <boost/filesystem/convenience.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/noncopyable.hpp>
 #pragma warning ( pop )
 #include <sqlite/sqlite3.h>

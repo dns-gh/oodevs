@@ -11,6 +11,7 @@
 #define GEOSTORE_GEOMETRY_COLLECTION
 
 #include <spatialite/spatialite/gaiageo.h>
+#include <boost/shared_ptr.hpp>
 
 namespace geostore
 {

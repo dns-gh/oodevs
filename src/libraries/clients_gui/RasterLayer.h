@@ -54,8 +54,8 @@ private:
     kernel::Controller&         controller_;
     std::auto_ptr< TextureSet > textures_;
     bool                        ignore_;
-    std::string                 graphicsDirectory_;
-    const std::string           textureName_;
+    tools::Path                 graphicsDirectory_;
+    const tools::Path           textureName_;
     //@}
 };
 

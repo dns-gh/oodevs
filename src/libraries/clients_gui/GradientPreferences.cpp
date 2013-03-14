@@ -9,12 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "GradientPreferences.h"
-
 #include "Gradient.h"
-
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
-
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;
@@ -56,7 +53,7 @@ void GradientPreferences::Commit( const std::vector< Gradient* >& presets )
 // -----------------------------------------------------------------------------
 void GradientPreferences::Reset()
 {
-    xml::xifstream xis( "gradients.xml" ); // $$$$ SBO 2007-07-03:
+    tools::Xifstream xis( "gradients.xml" );
     Load( xis );
 }
 

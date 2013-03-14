@@ -25,7 +25,7 @@ GraphicPreferences::GraphicPreferences( kernel::Controllers& controllers )
     : controllers_( controllers )
     , alpha_( 1 )
 {
-    xml::xifstream xis( "preferences.xml" ); // $$$$ AGE 2006-04-05:
+    tools::Xifstream xis( "preferences.xml" );
     xis >> xml::start( "preferences" )
             >> xml::start( "terrains" )
                 >> xml::list( "terrain", *this, & GraphicPreferences::ReadTerrainPreference );

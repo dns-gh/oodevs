@@ -132,9 +132,11 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Drawer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\EntityTreeView_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ExpandableGroupBox.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\FileDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Gradient.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HelpSystem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HierarchyTreeView_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\ImageWrapper.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\InformationToolTip.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ItemPixmapDelegate.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\KeyModel.cpp" />
@@ -677,6 +679,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\FileDialog.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\FilterProxyModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\GlTools_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Gradient.h" />
@@ -696,6 +699,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\InformationToolTip.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\ImageWrapper.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Infrastructure_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ItemDecorationGetter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ItemFactory_ABC.h" />

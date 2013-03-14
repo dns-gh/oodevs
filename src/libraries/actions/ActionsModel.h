@@ -11,6 +11,7 @@
 #define __ActionsModel_h_
 
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 class Publisher_ABC;
 
@@ -41,6 +42,7 @@ namespace xml
 namespace tools
 {
     class Loader_ABC;
+    class Path;
 }
 
 class AgentServerMsgMgr;
@@ -64,6 +66,7 @@ namespace actions
 // Created: SBO 2007-03-12
 // =============================================================================
 class ActionsModel : public tools::Resolver< Action_ABC >
+                   , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -90,19 +93,13 @@ public:
     Action_ABC* CreateObjectDestroyMagicAction( const kernel::Entity_ABC& object );
     void Destroy( const Action_ABC& action );
     void Purge( const ActionsFilter_ABC* filter = 0 );
-    void Load( const std::string& filename, const tools::Loader_ABC& fileLoader, bool readonly = false );
-    void Save( const std::string& filename, const ActionsFilter_ABC* filter = 0 ) const;
+    void Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader, bool readonly = false );
+    void Save( const tools::Path& filename, const ActionsFilter_ABC* filter = 0 ) const;
     void Publish( const Action_ABC& action, int context );
     void PublishForce( const Action_ABC& action );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ActionsModel( const ActionsModel& );            //!< Copy constructor
-    ActionsModel& operator=( const ActionsModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadActions( xml::xistream& xis, bool readonly );

@@ -62,7 +62,7 @@ Elevation3dLayer::~Elevation3dLayer()
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
-    graphicsDirectory_.clear();
+    graphicsDirectory_.Clear();
     graphicsDirectory_ = modelLoaded.config_.GetGraphicsDirectory();
     reset_ = true;
 }
@@ -102,9 +102,9 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
 
     if( !program_.get() && ! ignoreShader_ )
         CreateShaders();
-    if( ! textures_.get() && !graphicsDirectory_.empty() && !ignoreTextures_ )
+    if( ! textures_.get() && !graphicsDirectory_.IsEmpty() && !ignoreTextures_ )
         CreateTextures();
-    if( ! visitor_.get() && !graphicsDirectory_.empty() && elevation_.Data() )
+    if( ! visitor_.get() && !graphicsDirectory_.IsEmpty() && elevation_.Data() )
         visitor_.reset( new CompiledVisitor3d( elevation_.GetMap() ) );
 
     if( !textures_.get() || !visitor_.get() )
@@ -194,9 +194,9 @@ void Elevation3dLayer::CreateTextures()
     try
     {
         textures_.reset( new MultiTextureLayer() );
-        usrp_.   reset( new TextureSet( graphicsDirectory_ + "/usrp.texture" ) );
+        usrp_.   reset( new TextureSet( ( graphicsDirectory_ / "usrp.texture" ).ToLocal() ) );
         if( ! ignoreShader_ )
-            normals_.reset( new TextureSet( graphicsDirectory_ + "/normals.texture" ) );
+            normals_.reset( new TextureSet( ( graphicsDirectory_ / "normals.texture" ).ToLocal() ) );
         textures_->SetLayer( 0, *usrp_ );
         if( ! ignoreShader_ )
             textures_->SetLayer( 1, *normals_ );

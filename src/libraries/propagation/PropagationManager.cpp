@@ -8,9 +8,8 @@
 // *****************************************************************************
 
 #include "PropagationManager.h"
+#include "tools/FileWrapper.h"
 #include <xeumeuleu/xml.hpp>
-
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: PropagationManager constructor
@@ -34,11 +33,10 @@ PropagationManager::~PropagationManager()
 // Name: PropagationManager::Initialize
 // Created: LGY 2012-11-07
 // -----------------------------------------------------------------------------
-void PropagationManager::Initialize( const std::string& config, const std::string& time )
+void PropagationManager::Initialize( const tools::Path& config, const std::string& time )
 {
-    bfs::path path( config );
-    bfs::path parent( path.parent_path() );
-    xml::xifstream xis( path.string() );
+    const tools::Path parent = config.Parent();
+    tools::Xifstream xis( config );
     boost::posix_time::ptime startTime;
     boost::posix_time::time_duration delta;
     if( time != "" )
@@ -50,7 +48,7 @@ void PropagationManager::Initialize( const std::string& config, const std::strin
                 >> xml::end
         >> xml::end;
 
-    projection_ = bfs::path( parent / projection_ ).string();
+    projection_ = ( parent / projection_ ).Normalize();
 }
 
 namespace
@@ -68,22 +66,21 @@ namespace
 // Name: PropagationManager::ReadFile
 // Created: LGY 2012-11-07
 // -----------------------------------------------------------------------------
-void PropagationManager::ReadFile( xml::xistream& xis, const boost::filesystem::path& path,
-                                   const boost::posix_time::ptime& startTime, boost::posix_time::time_duration & delta )
+void PropagationManager::ReadFile( xml::xistream& xis, const tools::Path& path, const boost::posix_time::ptime& startTime, boost::posix_time::time_duration & delta )
 {
     boost::posix_time::ptime time = Convert( xis.attribute< std::string >( "time" ) );
     if( !startTime.is_not_a_date_time() && schedule_.empty() && startTime > time )
         delta = startTime - time;
     if( !delta.is_not_a_date_time() )
         time += delta;
-    schedule_[ time ].push_back( bfs::path( path / bfs::path( xis.value< std::string >() ).filename() ).string() );
+    schedule_[ time ].push_back( ( path / ( xis.value< tools::Path >() ).FileName() ).Normalize() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PropagationManager::GetProjectionFile
 // Created: LGY 2012-11-07
 // -----------------------------------------------------------------------------
-const std::string& PropagationManager::GetProjectionFile() const
+const tools::Path& PropagationManager::GetProjectionFile() const
 {
     return projection_;
 }
@@ -92,10 +89,10 @@ const std::string& PropagationManager::GetProjectionFile() const
 // Name: PropagationManager::GetFiles
 // Created: LGY 2012-11-07
 // -----------------------------------------------------------------------------
-PropagationManager::T_Files PropagationManager::GetFiles( const std::string& time )
+tools::Path::T_Paths PropagationManager::GetFiles( const std::string& time )
 {
     const boost::posix_time::ptime ptime( boost::posix_time::from_iso_string( time ) );
-    T_Files files;
+    tools::Path::T_Paths files;
     for( auto it = schedule_.begin(); it != schedule_.end(); ++it )
         if( ptime >= it->first )
             files = it->second;

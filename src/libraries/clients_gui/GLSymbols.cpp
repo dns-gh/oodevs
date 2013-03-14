@@ -15,10 +15,7 @@
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
 #include <svgl/Node_ABC.h>
-#include <xeumeuleu/xml.hpp>
-#include <boost/filesystem/operations.hpp>
-
-namespace bfs = boost::filesystem;
+#include <zipstream/zipstream.h>
 
 using namespace geometry;
 using namespace gui;
@@ -30,8 +27,8 @@ using namespace svg;
 // -----------------------------------------------------------------------------
 GLSymbols::GLSymbols( SvglRenderer& renderer )
     : renderer_( renderer )
-    , zipFile_ ( new zip::izipfile( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ).c_str() ) )
-    , symbolsPath_( "" )
+    , zipFile_ ( new zip::izipfile( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ).ToUnicode() ) )
+    , symbolsPath_()
 {
     // NOTHING
 }
@@ -87,16 +84,16 @@ svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool firstNode
     {
         try
         {
-            const std::string symbolFile = symbol + ".svg";
-            if( !symbolsPath_.empty() && bfs::exists( symbolsPath_ ) )
+            const tools::Path symbolFile = tools::Path::FromUTF8( symbol ) + ".svg";
+            if( !symbolsPath_.IsEmpty() && symbolsPath_.Exists() )
             {
-                bfs::path symbolPath = bfs::path( symbolsPath_ ) / symbolFile.c_str();
-                xml::xifstream xis( symbolPath.string() );
+                tools::Path symbolPath = symbolsPath_ / symbolFile;
+                tools::Xifstream xis( symbolPath );
                 return renderer_.Compile( xis, lod );
             }
             else
             {
-                zip::izipstream zipStream( *zipFile_, symbolFile.c_str() );
+                zip::izipstream zipStream( *zipFile_, symbolFile.ToUTF8().c_str() );
                 xml::xistreamstream xis( zipStream );
                 return renderer_.Compile( xis, lod );
             }
@@ -118,7 +115,7 @@ svg::Node_ABC* GLSymbols::Compile( std::string symbol, float lod, bool firstNode
 // Name: GLSymbols::SetSymbolsPath
 // Created: ABR 2013-01-22
 // -----------------------------------------------------------------------------
-void GLSymbols::SetSymbolsPath( const std::string& symbolPath )
+void GLSymbols::SetSymbolsPath( const tools::Path& symbolPath )
 {
     symbolsPath_ = symbolPath;
 }

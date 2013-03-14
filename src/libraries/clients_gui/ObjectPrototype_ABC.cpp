@@ -11,6 +11,7 @@
 #include "ObjectPrototype_ABC.h"
 #include "moc_ObjectPrototype_ABC.cpp"
 
+#include "FileDialog.h"
 #include "GlTools_ABC.h"
 #include "LoadableLineEdit.h"
 #include "LocationCreator.h"
@@ -352,13 +353,13 @@ void ObjectPrototype_ABC::LoadFromFile( bool mustLoadFromFile )
         if( type )
         {
 
-            QString filename = QFileDialog::getOpenFileName( this, tr( "Choose a file" ), QString::null, "Shapefile (*.shp)" );
-            if( !filename.isNull() )
+            tools::Path filename = gui::FileDialog::getOpenFileName( this, tr( "Choose a file" ), "", "Shapefile (*.shp)" );
+            if( !filename.IsEmpty() )
             {
                 try
                 {
                     loader_.reset( new ObjectPrototypeShapeFileLoader( coordinateConverter_, this, filename, *type ) );
-                    loadFromFilePathLabel_->setText( filename );
+                    loadFromFilePathLabel_->setText( QString::fromStdWString( filename.ToUnicode() ) );
                 }
                 catch( const ObjectPrototypeLoader_ABC::LoadCancelledException& )
                 {
@@ -366,7 +367,7 @@ void ObjectPrototype_ABC::LoadFromFile( bool mustLoadFromFile )
                 }
                 catch( const std::exception& e )
                 {
-                    QMessageBox::warning( this, tr( "Cannot load %1" ).arg( filename ), tools::GetExceptionMsg( e ).c_str(), QMessageBox::Ok, QMessageBox::NoButton );
+                    QMessageBox::warning( this, tr( "Cannot load %1" ).arg( filename.ToUTF8().c_str() ), tools::GetExceptionMsg( e ).c_str(), QMessageBox::Ok, QMessageBox::NoButton );
                 }
             }
         }

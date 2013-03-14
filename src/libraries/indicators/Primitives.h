@@ -18,6 +18,7 @@
 namespace tools
 {
     class ExerciseConfig;
+    class Path;
 }
 
 namespace xml
@@ -47,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const tools::ExerciseConfig& config, const std::string& file );
+    void Load( const tools::ExerciseConfig& config, const tools::Path& file );
     void Purge();
     //@}
 

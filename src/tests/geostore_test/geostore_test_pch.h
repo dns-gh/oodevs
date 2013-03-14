@@ -24,6 +24,9 @@
 #include <spatialite.h>
 
 extern std::string temp_directory;
-std::string BOOST_RESOLVE( const std::string& filename );
+
+#include "tools/Path.h"
+
+tools::Path BOOST_RESOLVE( const tools::Path& filename );
 
 #endif // __dispatcher_kernel_test_pch_h_

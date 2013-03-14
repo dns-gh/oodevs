@@ -84,7 +84,7 @@ private:
     bool reset_;
     bool ignoreShader_;
     bool ignoreTextures_;
-    std::string graphicsDirectory_;
+    tools::Path graphicsDirectory_;
     //@}
 };
 

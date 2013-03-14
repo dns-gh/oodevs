@@ -10,11 +10,11 @@
 #ifndef __Database_h_
 #define __Database_h_
 
+#include "tools/Path.h"
 #include "GeometryType.h"
 #include <boost/noncopyable.hpp>
 #include <boost/smart_ptr.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
-#include <boost/filesystem/path.hpp>
 #include <string>
 #include <vector>
 
@@ -40,7 +40,7 @@ class Database : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     Database( const boost::filesystem::path& dbFile, const boost::filesystem::path& layersDir, PointProjector_ABC& projector );
+     Database( const tools::Path& dbFile, const tools::Path& layersDir, PointProjector_ABC& projector );
     ~Database();
     //@}
 
@@ -51,8 +51,8 @@ public:
 private:
     //! @name Helpers
     //@{
-    void LoadLayers( PointProjector_ABC& projector, const boost::filesystem::path& layersDir );
-    void LoadLayer( std::string layer, PointProjector_ABC& projector, const boost::filesystem::path& file );
+    void LoadLayers( PointProjector_ABC& projector, const tools::Path& layersDir );
+    void LoadLayer( std::string layer, PointProjector_ABC& projector, const tools::Path& file );
     //@}
 
 private:

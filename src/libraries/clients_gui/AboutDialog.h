@@ -36,12 +36,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AboutDialog( const AboutDialog& );            //!< Copy constructor
-    AboutDialog& operator=( const AboutDialog& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     QString GetSplashScreen() const;

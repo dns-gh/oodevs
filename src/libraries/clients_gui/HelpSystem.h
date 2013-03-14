@@ -30,7 +30,7 @@ class HelpSystem : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             HelpSystem( QWidget* root, const std::string& config );
+             HelpSystem( QWidget* root, const tools::Path& config );
     virtual ~HelpSystem();
     //@}
 
@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string helpFile_;
+    tools::Path helpFile_;
     QWidget* root_; // à virer
     T_Anchors anchors_;
     //@}

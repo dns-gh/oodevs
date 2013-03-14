@@ -9,6 +9,7 @@
 
 #include "MT_CrashHandler.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/Path.h"
 #include <tools/win32/StackWalkerProxy.h>
 #include <windows.h>
 #include <dbghelp.h>
@@ -23,7 +24,7 @@
 namespace
 {
     // bax: global var is unavoidable as exception filters have no context...
-    static std::string rootDirectory = "Debug";
+    static tools::Path rootDirectory = "Debug";
 
     bool Log( HANDLE hFile, BOOL bMiniDumpSuccessful )
     {
@@ -123,19 +124,19 @@ namespace
     void Dump( EXCEPTION_POINTERS* pExceptionPointers )
     {
         BOOL bMiniDumpSuccessful;
-        CHAR szFileName[MAX_PATH];
+        WCHAR szFileName[MAX_PATH];
         HANDLE hDumpFile;
         SYSTEMTIME stLocalTime;
         MINIDUMP_EXCEPTION_INFORMATION ExpParam;
 
         GetLocalTime( &stLocalTime );
 
-        const std::string filename = rootDirectory + "\\SWORD-crash-%04d%02d%02d-%02d%02d%02d-%ld-%ld.dmp";
-        StringCchPrintf( szFileName, MAX_PATH, filename.c_str(),
+        const tools::Path filename = ( rootDirectory / "SWORD-crash-%04d%02d%02d-%02d%02d%02d-%ld-%ld.dmp" ).MakePreferred();
+        StringCchPrintfW( szFileName, MAX_PATH, filename.ToUnicode().c_str(),
                    stLocalTime.wYear, stLocalTime.wMonth, stLocalTime.wDay, 
                    stLocalTime.wHour, stLocalTime.wMinute, stLocalTime.wSecond, 
                    GetCurrentProcessId(), GetCurrentThreadId());
-        hDumpFile = CreateFile(szFileName, GENERIC_READ|GENERIC_WRITE, 
+        hDumpFile = CreateFileW(szFileName, GENERIC_READ|GENERIC_WRITE, 
                     FILE_SHARE_WRITE|FILE_SHARE_READ, 0, CREATE_ALWAYS, 0, 0);
 
         if( hDumpFile == INVALID_HANDLE_VALUE )
@@ -206,7 +207,7 @@ int MT_CrashHandler::ContinueExecution( EXCEPTION_POINTERS* pExceptionPointers )
 // Name: MT_CrashHandler::SetRootDirectory
 // Created: BAX 2012-08-08
 // -----------------------------------------------------------------------------
-void MT_CrashHandler::SetRootDirectory( const std::string& root )
+void MT_CrashHandler::SetRootDirectory( const tools::Path& root )
 {
     rootDirectory = root;
 }

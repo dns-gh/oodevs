@@ -25,15 +25,15 @@ using namespace gui;
 // Name: ObjectPrototypeShapeFileLoader constructor
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
-ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::CoordinateConverter_ABC& coordinateConverter, QWidget* parent, const QString& filename, const kernel::ObjectType& objectType )
+ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::CoordinateConverter_ABC& coordinateConverter, QWidget* parent, const tools::Path& filename, const kernel::ObjectType& objectType )
     : currentFeature_     ( 0 )
     , objectType_         ( objectType )
     , coordinateConverter_( coordinateConverter )
 {
     OGRRegisterAll();
-    dataSource_.reset( OGRSFDriverRegistrar::Open( filename.toStdString().c_str(), FALSE ), OGRDataSource::DestroyDataSource );
+    dataSource_.reset( OGRSFDriverRegistrar::Open( filename.ToLocal().c_str(), FALSE ), OGRDataSource::DestroyDataSource );
     if( ! dataSource_ )
-        throw MASA_EXCEPTION( tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot load shapefile %1" ).arg( filename ).toStdString() );
+        throw MASA_EXCEPTION( tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot load shapefile %1" ).arg( filename.ToUTF8().c_str() ).toStdString() );
 
     QStringList loadableLayerNames;
     QString unloadableLayerExplanations;

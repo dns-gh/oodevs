@@ -18,6 +18,10 @@
 #include <geometry/Types.h>
 #include <vector>
 
+namespace tools
+{
+    class Path;
+}
 
 // =============================================================================
 /** @class  ASCExtractor
@@ -32,8 +36,8 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-    explicit ASCExtractor( const std::string& file );
-             ASCExtractor( const std::string& file, const std::string& projection );
+    explicit ASCExtractor( const tools::Path& file );
+             ASCExtractor( const tools::Path& file, const tools::Path& projection );
     virtual ~ASCExtractor();
     //@}
 

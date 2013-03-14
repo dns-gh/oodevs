@@ -10,6 +10,7 @@
 #include "indicators_pch.h"
 #include "Tendency.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "tools/Path.h"
 #include "tools/GeneralConfig.h"
 #pragma warning( push, 0 )
 #include <QtGui/qpixmap.h>
@@ -51,8 +52,8 @@ namespace
 {
     QPixmap ComputePixmap( double value )
     {
-        const std::string image( value > 0 ? "raise" : ( value < 0 ? "fall" : "stable" ) );
-        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gauges/tendency/" + image + ".png" ).c_str() );
+        const tools::Path image = tools::Path( value > 0 ? "raise" : ( value < 0 ? "fall" : "stable" ) );
+        return QPixmap( QString::fromWCharArray( tools::GeneralConfig::BuildResourceChildFile( tools::Path( "images/gauges/tendency" ) / image + ".png" ).ToUnicode().c_str() ) );
     }
 }
 

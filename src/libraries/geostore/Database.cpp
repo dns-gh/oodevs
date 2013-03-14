@@ -20,17 +20,16 @@
 
 using namespace geostore;
 
-namespace bfs = boost::filesystem;
 namespace blc = boost::locale::conv;
 
 namespace
 {
-    sqlite3* Open( const bfs::path& path )
+    sqlite3* Open( const tools::Path& path )
     {
         sqlite3* db = 0;
         if( SQLITE_OK !=
             sqlite3_open_v2(
-                blc::utf_to_utf< char >( path.wstring() ).c_str(),
+                blc::utf_to_utf< char >( path.ToBoost().wstring() ).c_str(),
                 &db,
                 SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,
                 0 ) )
@@ -40,7 +39,7 @@ namespace
     }
 }
 
-Database::Database( const bfs::path& dbFile, const bfs::path& layersDir, PointProjector_ABC& projector )
+Database::Database( const tools::Path& dbFile, const tools::Path& layersDir, PointProjector_ABC& projector )
     : db_  ( Open( dbFile ), &sqlite3_close )
     , log_ ( new LogTable( db_.get() ) )
 {
@@ -56,27 +55,29 @@ Database::~Database()
     // NOTHING
 }
 
-void Database::LoadLayers( PointProjector_ABC& projector, const bfs::path& layersDir )
+void Database::LoadLayers( PointProjector_ABC& projector, const tools::Path& layersDir )
 {
-    for( bfs::directory_iterator it( layersDir ); it != bfs::directory_iterator(); ++it )
+    for( auto it( layersDir.begin() ); it != layersDir.end(); ++it )
     {
-        std::string layer = bfs::basename( *it );
-        if( bfs::extension( *it ) == ".bin" && layer != "preview" )
+        std::string layer = it->BaseName().ToUTF8();
+        if( it->Extension() == ".bin" && layer != "preview" )
             LoadLayer( layer, projector, *it );
     }
 }
 
-void Database::LoadLayer( std::string layer, PointProjector_ABC& projector, const bfs::path& file )
+void Database::LoadLayer( std::string layer, PointProjector_ABC& projector, const tools::Path& file )
 {
     std::time_t time;
     log_->GetLastAccessTime( layer, time );
-    if( bfs::last_write_time( file ) <= time )
+    if( file.LastWriteTime() <= time )
+    {
         tables_.insert( layer, new GeoTable( db_.get(), layer ) );
+    }
     else
     {
-        const TerrainFileReader reader( file.string(), projector );
+        const TerrainFileReader reader( file.ToLocal(), projector );
         AddLayer( layer, static_cast< GeometryType >( reader.GetGeomType() ), reader.GetFeatures() );
-        log_->SetLastAccessTime( layer, bfs::last_write_time( file ) );
+        log_->SetLastAccessTime( layer, file.LastWriteTime() );
     }
 }
 

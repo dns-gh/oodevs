@@ -12,10 +12,8 @@
 #include "GaugeNormalizer.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "tools/GeneralConfig.h"
-#include <boost/filesystem/operations.hpp>
+#include "tools/Path.h"
 #include <xeumeuleu/xml.hpp>
-
-namespace bfs = boost::filesystem;
 
 using namespace indicators;
 
@@ -44,7 +42,7 @@ IconsGaugeType::~IconsGaugeType()
 // -----------------------------------------------------------------------------
 void IconsGaugeType::LoadIcons( xml::xistream& xis )
 {
-    const std::string path = xis.attribute< std::string >( "path" );
+    const tools::Path path = tools::Path::FromUTF8( xis.attribute< std::string >( "path" ) );
     xis >> xml::list( "icon", *this, &IconsGaugeType::LoadIcon, path );
 }
 
@@ -52,10 +50,10 @@ void IconsGaugeType::LoadIcons( xml::xistream& xis )
 // Name: IconsGaugeType::LoadIcon
 // Created: SBO 2009-05-06
 // -----------------------------------------------------------------------------
-void IconsGaugeType::LoadIcon( xml::xistream& xis, const std::string& path )
+void IconsGaugeType::LoadIcon( xml::xistream& xis, const tools::Path& path )
 {
-    const std::string filename( tools::GeneralConfig::BuildResourceChildFile( path + "/" + xis.attribute< std::string >( "file" ) ) );
-    icons_[ xis.attribute< double >( "key" ) ] = QPixmap( filename.c_str() );
+    const tools::Path filename = tools::GeneralConfig::BuildResourceChildFile( path / tools::Path::FromUTF8( xis.attribute< std::string >( "file" ) ) );
+    icons_[ xis.attribute< double >( "key" ) ] = QPixmap( QString::fromWCharArray( filename.ToUnicode().c_str() ) );
     if( icons_[ xis.attribute< double >( "key" ) ].isNull() )
         throw MASA_EXCEPTION( "Invalid icon." );
 }

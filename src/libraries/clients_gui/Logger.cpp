@@ -33,10 +33,10 @@ namespace
 // Name: Logger constructor
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-Logger::Logger( QWidget* pParent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, const std::string& filename )
+Logger::Logger( QWidget* pParent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, const tools::Path& filename )
     : gui::RichDockWidget( controllers, pParent, "logger-panel" )
     , simulation_( simulation )
-    , log_( filename.c_str(), std::ios::out | std::ios::app )
+    , log_( filename, std::ios::out | std::ios::app )
     , popupMenu_( new kernel::ContextMenu( this ) )
     , counter_( 0 )
 {

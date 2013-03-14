@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "DisplayToolbar.h"
 #include "BooleanOptionButton.h"
+#include "ImageWrapper.h"
 #include "resources.h"
 #include "Tools.h"
 #include "clients_kernel/Controllers.h"
@@ -20,9 +21,9 @@ using namespace gui;
 
 namespace
 {
-    QPixmap MakeIcon( const std::string& file )
+    QPixmap MakeIcon( const tools::Path& file )
     {
-        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( file ).c_str() );
+        return gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( file ) );
     }
 }
 
@@ -38,7 +39,7 @@ DisplayToolbar::DisplayToolbar( QMainWindow* parent, kernel::Controllers& contro
 
     // Raster
     QAction* rasterAction = new QAction( tr( "Add raster data" ), this );
-    rasterAction->setIcon( QIcon( "resources/images/gui/raster.png" ) );
+    rasterAction->setIcon( Icon( "resources/images/gui/raster.png" ) );
     rasterAction->setToolTip( tr( "Add raster data" ) );
     connect( rasterAction, SIGNAL( triggered() ), parent, SLOT( OnAddRaster() ) );
     addAction( rasterAction );

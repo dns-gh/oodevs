@@ -41,7 +41,7 @@ Primitives::~Primitives()
 // Name: Primitives::Load
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-void Primitives::Load( const tools::ExerciseConfig& config, const std::string& file )
+void Primitives::Load( const tools::ExerciseConfig& config, const tools::Path& file )
 {
     config.GetLoader().LoadFile( file, boost::bind( &Primitives::Read, this, _1 ) );
 }

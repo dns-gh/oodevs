@@ -71,7 +71,7 @@ private:
     std::auto_ptr< T_NameLocations > nameLocations_;
     const T_Feature* current_;
     unsigned index_;
-    std::string pendingSourceFile_;
+    tools::Path pendingSourceFile_;
     //@}
 };
 
