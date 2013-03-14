@@ -166,9 +166,9 @@ void CreateExerciceWidget::Update()
             sessionList_->addItem( tools::translate( "CreateExerciceWidget", "No session" ) );
         sessionList_->setCurrentRow( 0 );
     }
-    if( exerciseList_->count() != fc::ListExercises( config_ ).size() )
+    if( exerciseList_->count() != static_cast< int >( fc::ListExercises( config_ ).size()) )
         UpdateExercises( items.empty()? 0 : items[ 0 ]->text() );;
-    if( editTerrainList_->count() - 1 != fc::ListTerrains( config_ ).size() )
+    if( editTerrainList_->count() - 1 != static_cast< int >( fc::ListTerrains( config_ ).size()) )
         UpdateTerrains();
 }
 
