@@ -182,3 +182,17 @@ func (s *TestSuite) TestLowEndTickValues(c *C) {
 		c.Fatal("simulation did not tick with end-tick=0")
 	}
 }
+
+// Test stopping the simulation through protobuf API
+func (s *TestSuite) TestStoppingSimProcess(c *C) {
+	session := simu.CreateDefaultSession()
+	opts := MakeOpts()
+	WriteSession(c, opts, session)
+	sim, err := simu.StartSim(opts)
+	c.Assert(err, IsNil)
+	defer sim.Kill()
+
+	err = sim.Stop()
+	c.Assert(err, IsNil)
+	c.Assert(sim.Success(), Equals, true)
+}

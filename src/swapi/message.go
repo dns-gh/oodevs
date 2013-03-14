@@ -20,22 +20,22 @@ import (
 const (
 	MaxMessageSize = 1 << 26
 	// client -> * tags
-	clientToAarTag            = 496354747
-	clientToAuthenticationTag = 3393095543
-	clientToMessengerTag      = 2651046712
-	clientToReplayTag         = 745507513
-	clientToSimulationTag     = 496449857
+	ClientToAarTag            = 496354747
+	ClientToAuthenticationTag = 3393095543
+	ClientToMessengerTag      = 2651046712
+	ClientToReplayTag         = 745507513
+	ClientToSimulationTag     = 496449857
 	// * -> client tags
-	aarToClientTag            = 3335378374
-	authenticationToClientTag = 468259588
-	dispatcherToClientTag     = 3012412245
-	messengerToClientTag      = 4281023046
-	replayToClientTag         = 2824568610
-	simulationToClientTag     = 3540368649
+	AarToClientTag            = 3335378374
+	AuthenticationToClientTag = 468259588
+	DispatcherToClientTag     = 3012412245
+	MessengerToClientTag      = 4281023046
+	ReplayToClientTag         = 2824568610
+	SimulationToClientTag     = 3540368649
 	// probably useless, for reference...
-	adminToLauncherTag        = 487143762
-	dispatcherToSimulationTag = 4036107609
-	launcherToAdminTag        = 1796776068
+	AdminToLauncherTag        = 487143762
+	DispatcherToSimulationTag = 4036107609
+	LauncherToAdminTag        = 1796776068
 )
 
 type header struct {
@@ -65,27 +65,27 @@ func (m *SwordMessage) SetContext(context int32) {
 	protoctx := proto.Int32(context)
 	if m.ClientToAar != nil {
 		m.ClientToAar.Context = protoctx
-		m.tag = clientToAarTag
+		m.tag = ClientToAarTag
 		return
 	}
 	if m.ClientToAuthentication != nil {
 		m.ClientToAuthentication.Context = protoctx
-		m.tag = clientToAuthenticationTag
+		m.tag = ClientToAuthenticationTag
 		return
 	}
 	if m.ClientToMessenger != nil {
 		m.ClientToMessenger.Context = protoctx
-		m.tag = clientToMessengerTag
+		m.tag = ClientToMessengerTag
 		return
 	}
 	if m.ClientToReplay != nil {
 		m.ClientToReplay.Context = protoctx
-		m.tag = clientToReplayTag
+		m.tag = ClientToReplayTag
 		return
 	}
 	if m.ClientToSimulation != nil {
 		m.ClientToSimulation.Context = protoctx
-		m.tag = clientToSimulationTag
+		m.tag = ClientToSimulationTag
 		return
 	}
 	panic(fmt.Sprintf("unsupported client message: %v", m))
@@ -148,29 +148,29 @@ func decode(msg *SwordMessage, tag uint32, data []uint8) error {
 	var err error
 	msg.tag = tag
 	switch tag {
-	case aarToClientTag:
+	case AarToClientTag:
 		msg.AarToClient = &sword.AarToClient{}
 		err = proto.Unmarshal(data, msg.AarToClient)
 		msg.Context = msg.AarToClient.GetContext()
-	case authenticationToClientTag:
+	case AuthenticationToClientTag:
 		// XXX: context field in AuthenticationToClient is invalid
 		msg.AuthenticationToClient = &sword.AuthenticationToClient{}
 		err = proto.Unmarshal(data, msg.AuthenticationToClient)
 		msg.Context = msg.AuthenticationToClient.GetContext()
-	case dispatcherToClientTag:
+	case DispatcherToClientTag:
 		// XXX: missing context field in DispatcherToClient
 		msg.DispatcherToClient = &sword.DispatcherToClient{}
 		err = proto.Unmarshal(data, msg.DispatcherToClient)
-	case messengerToClientTag:
+	case MessengerToClientTag:
 		// XXX: context field not set by sender
 		msg.MessengerToClient = &sword.MessengerToClient{}
 		err = proto.Unmarshal(data, msg.MessengerToClient)
 		msg.Context = msg.MessengerToClient.GetContext()
-	case replayToClientTag:
+	case ReplayToClientTag:
 		msg.ReplayToClient = &sword.ReplayToClient{}
 		err = proto.Unmarshal(data, msg.ReplayToClient)
 		msg.Context = msg.ReplayToClient.GetContext()
-	case simulationToClientTag:
+	case SimulationToClientTag:
 		msg.SimulationToClient = &sword.SimToClient{}
 		err = proto.Unmarshal(data, msg.SimulationToClient)
 		msg.Context = msg.SimulationToClient.GetContext()

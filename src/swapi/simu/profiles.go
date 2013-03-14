@@ -43,7 +43,7 @@ func ReadProfiles(data []byte) (*Profiles, error) {
 	return &p, nil
 }
 
-func ReadProfileFile(profilePath string) (*Profiles, error) {
+func ReadProfilesFile(profilePath string) (*Profiles, error) {
 	data, err := ioutil.ReadFile(profilePath)
 	if err != nil {
 		return nil, errors.New(fmt.Sprintf(

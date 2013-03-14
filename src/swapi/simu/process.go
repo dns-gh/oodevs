@@ -9,11 +9,14 @@
 package simu
 
 import (
+	"code.google.com/p/goprotobuf/proto"
 	"errors"
 	"log"
 	"net"
 	"os/exec"
 	"path/filepath"
+	"swapi"
+	"sword"
 	"sync"
 	"time"
 )
@@ -50,6 +53,10 @@ func (o *SimOpts) GetSessionDir() string {
 
 func (o *SimOpts) GetSessionFile() string {
 	return filepath.Join(o.GetSessionDir(), "session.xml")
+}
+
+func (o *SimOpts) GetProfilesFile() string {
+	return filepath.Join(o.GetExerciseDir(), "profiles.xml")
 }
 
 func (o *SimOpts) GetSimLogPath() string {
@@ -100,6 +107,62 @@ func (sim *SimProcess) Kill() {
 		sim.cmd.Process.Kill()
 		sim.Wait(time.Duration(0))
 	}
+}
+
+func logAndStop(host, user, password string) error {
+	conn, err := net.Dial("tcp", host)
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+	w := swapi.NewWriter(conn)
+	err = w.Encode(swapi.ClientToAuthenticationTag, &sword.ClientToAuthentication{
+		Message: &sword.ClientToAuthentication_Content{
+			AuthenticationRequest: &sword.AuthenticationRequest{
+				Login:    proto.String(user),
+				Password: proto.String(password),
+				Version: &sword.ProtocolVersion{
+					Value: proto.String("5.0"),
+				},
+			},
+		},
+	})
+	if err != nil {
+		return err
+	}
+	err = w.Encode(swapi.ClientToSimulationTag, &sword.ClientToSim{
+		Message: &sword.ClientToSim_Content{
+			ControlStop: &sword.ControlStop{},
+		},
+	})
+	return err
+}
+
+// Connect to the simulation and execute a Login/Stop sequence using
+// supervisor credentials found in the profiles.xml.
+func (sim *SimProcess) Stop() error {
+	if sim == nil {
+		return errors.New("simulation is stopped already")
+	}
+	// We need a supervisor to stop the simulation
+	profiles, err := ReadProfilesFile(sim.Opts.GetProfilesFile())
+	if err == nil {
+		admin := profiles.FindSupervisor()
+		if admin != nil {
+			err = logAndStop(sim.DispatcherAddr, admin.Name, admin.Password)
+			if err == nil {
+				if sim.Wait(10 * time.Second) {
+					return nil
+				}
+				err = errors.New("Wait timed out")
+			}
+		} else {
+			err = errors.New("could not find supervisor profile")
+		}
+	}
+	// Maybe we stopped, may be not, kill it anyway
+	sim.Kill()
+	return err
 }
 
 func (sim *SimProcess) GetLogPath() string {
