@@ -11,6 +11,7 @@
 #include "ClockWidget.h"
 #include "AlarmsWidget.h"
 #include "ClockEditDialog.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "gaming/Simulation.h"
@@ -67,7 +68,7 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
         vBox->layout()->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
         {
             QPushButton* editButton = new QPushButton( vBox );
-            editButton->setIconSet( QPixmap( QImage( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/clock_edit.png" ).c_str() ) ) );
+            editButton->setIconSet( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/clock_edit.png" ) ) );
             editButton->setFlat( true );
             editButton->setFixedSize( 22, 22 );
             editButton->setPaletteBackgroundColor( backgroundColor );
@@ -76,7 +77,7 @@ ClockWidget::ClockWidget( QWidget* parent, kernel::Controllers& controllers, con
         }
         {
             alarmButton_ = new QPushButton( vBox );
-            alarmButton_->setIconSet( QPixmap( QImage( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/clock_alarm.png" ).c_str() ) ) );
+            alarmButton_->setIconSet( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/clock_alarm.png" ) ) );
             alarmButton_->setFlat( true );
             alarmButton_->setFixedSize( 22, 22 );
             alarmButton_->setPaletteBackgroundColor( backgroundColor );

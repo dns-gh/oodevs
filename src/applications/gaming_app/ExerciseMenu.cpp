@@ -15,13 +15,7 @@
 #include "clients_gui/LinkInterpreter_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push, 0 )
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/convenience.hpp>
-#pragma warning( pop )
 #include <Qt3Support/q3url.h>
-
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseMenu constructor
@@ -52,7 +46,7 @@ ExerciseMenu::~ExerciseMenu()
 void ExerciseMenu::NotifyUpdated( const kernel::ModelLoaded& model )
 {
     Reset();
-    xml::xifstream xis( model.config_.GetExerciseFile() );
+    tools::Xifstream xis( model.config_.GetExerciseFile() );
     xis >> xml::start( "exercise" )
             >> xml::optional >> xml::start( "meta" )
                 >> xml::optional >> xml::start( "resources" )
@@ -82,15 +76,16 @@ namespace
 // -----------------------------------------------------------------------------
 void ExerciseMenu::ReadResource( xml::xistream& xis, const tools::ExerciseConfig& config )
 {
-    std::string file, name;
+    tools::Path file;
+    std::string name;
     xis >> xml::attribute( "file", file )
         >> xml::attribute( "name", name );
-    if( file.empty() )
+    if( file.IsEmpty() )
         return;
     const int id = insertItem( name.c_str(), static_cast< int >( links_.size() ) );
-    file = config.BuildExerciseChildFile( file.c_str() );
-    links_.push_back( MakeLink( file ) );
-    setItemEnabled( id, bfs::exists( file ) );
+    file = config.BuildExerciseChildFile( file );
+    links_.push_back( file.Absolute() );
+    setItemEnabled( id, file.Exists() );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,18 +96,12 @@ void ExerciseMenu::OnSelect( int index )
 {
     if( index >= 0 && index < int( links_.size() ) )
     {
-        QString tmp = QString::fromUtf8( links_[index].c_str() );
-        QStringList path = QStringList::split( ":", tmp );
-        if( path.size() > 1 && path.front().length() == 1 )
-        {
-            const QString drive = path.front();
-            path.pop_front();
-            tmp = path.join( ":" );
-            Q3Url::encode( tmp );
-            tmp = QString( "%1:%2" ).arg( drive ).arg( tmp );
-        }
-        else
-            Q3Url::encode( tmp );
+        tools::Path& link = links_[ index ];
+        tools::Path drive = link.Root();
+        tools::Path path = link.Relative();
+        QString tmp = path.ToUTF8().c_str();
+        Q3Url::encode( tmp );
+        tmp = QString( "%1:%2" ).arg( drive.ToUTF8().c_str() ).arg( tmp );
         interpreter_.Interprete( QString( "file://%1" ).arg( tmp ) );
     }
 }

@@ -33,7 +33,7 @@ class Propagation : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Propagation( const std::string& file, const PropagationManager& manager,
+             Propagation( const tools::Path& file, const PropagationManager& manager,
                           const kernel::CoordinateConverter_ABC& converter, const kernel::DisasterType& disasterType );
     virtual ~Propagation();
     //@}

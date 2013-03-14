@@ -70,7 +70,7 @@ private:
     virtual void NotifyModeChanged( E_Modes newMode );
 
     QToolButton* CreateToolButton( const QString label, const QPixmap& pixmap, const char* slot );
-    void DoLoad( const std::string& filename );
+    void DoLoad( const tools::Path& filename );
     //@}
 
 private slots:
@@ -97,7 +97,7 @@ private:
     QMessageBox*                      confirmation_;
     bool                              initialized_;
     bool                              hasReplay_;
-    std::string                       filename_;
+    tools::Path                       filename_;
     gui::RichAction*                  planningAction_;
     //@}
 };

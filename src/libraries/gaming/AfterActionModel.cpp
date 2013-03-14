@@ -12,6 +12,7 @@
 #include "AfterActionFunction.h"
 #include "IndicatorRequests.h"
 #include "clients_kernel/Controller.h"
+#include "tools/FileWrapper.h"
 #include <xeumeuleu/xml.hpp>
 #include "protocol/AarSenders.h"
 
@@ -69,9 +70,9 @@ IndicatorRequest& AfterActionModel::CreateRequest( const AfterActionFunction& fu
 // Name: AfterActionModel::Load
 // Created: AGE 2007-09-20
 // -----------------------------------------------------------------------------
-void AfterActionModel::Load( const std::string& functions )
+void AfterActionModel::Load( const tools::Path& functions )
 {
-    xml::xifstream xis( functions );
+    tools::Xifstream xis( functions );
     xis >> xml::start( "functions" )
         >> xml::list( "function", *this, &AfterActionModel::ReadFunction )
         >> xml::end;

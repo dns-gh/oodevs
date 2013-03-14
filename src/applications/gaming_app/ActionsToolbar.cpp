@@ -15,6 +15,8 @@
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/FileDialog.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_gui/RichAction.h"
 #include "Config.h"
 #include "gaming/Services.h"
@@ -23,10 +25,6 @@
 #include "ENT/ENT_Enums_Gen.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
-#include <boost/filesystem/convenience.hpp>
-#include <boost/filesystem/operations.hpp>
-
-namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -52,9 +50,9 @@ namespace
         T_Callback callback_;
     };
 
-    QPixmap MakePixmap( const std::string& name )
+    QPixmap MakePixmap( const tools::Path& name )
     {
-        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gaming/" ) + name + ".png" ).c_str() );
+        return gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( tools::Path( "images/gaming" ) / name + ".png" ) );
     }
 }
 
@@ -101,9 +99,9 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const Co
     connect( this, SIGNAL( activeRefreshButton( bool ) ), reloadButton, SLOT( setEnabled( bool ) ) );
 
     // Command line order file
-    if( !config_.GetOrderFile().empty() )
-        filename_ = ( bfs::path( config_.GetExerciseDir( config_.GetExerciseName() ) ) / bfs::path( config_.GetOrderFile() ) ).string();
-    emit activeRefreshButton( !filename_.empty() );
+    if( !config_.GetOrderFile().IsEmpty() )
+        filename_ = config_.GetExerciseDir( config_.GetExerciseName() ) / config_.GetOrderFile();
+    emit activeRefreshButton( !filename_.IsEmpty() );
 
     controllers_.Register( *this );
 }
@@ -148,19 +146,18 @@ void ActionsToolbar::SetFilter( const actions::ActionsFilter_ABC& filter )
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Load()
 {
-    const std::string rootDir = config_.BuildExerciseChildFile( "orders.ord" );
-    filename_ = QFileDialog::getOpenFileName( topLevelWidget(), tr( "Load" ), rootDir.c_str(), tr( "Actions files (*.ord)" ) ).toStdString();
+    filename_ = gui::FileDialog::getOpenFileName( topLevelWidget(), tr( "Load" ), config_.BuildExerciseChildFile( "orders.ord" ), tr( "Actions files (*.ord)" ) );
     DoLoad( filename_ );
-    emit activeRefreshButton( !filename_.empty() );
+    emit activeRefreshButton( !filename_.IsEmpty() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsToolbar::DoLoad
 // Created: ABR 2011-10-10
 // -----------------------------------------------------------------------------
-void ActionsToolbar::DoLoad( const std::string& filename )
+void ActionsToolbar::DoLoad( const tools::Path& filename )
 {
-    if( filename.empty() )
+    if( filename.IsEmpty() )
         return;
     try
     {
@@ -178,14 +175,13 @@ void ActionsToolbar::DoLoad( const std::string& filename )
 // -----------------------------------------------------------------------------
 void ActionsToolbar::Save()
 {
-    const std::string rootDir = config_.BuildExerciseChildFile( "orders" );
-    QString filename = QFileDialog::getSaveFileName( topLevelWidget(), tr( "Save" ), rootDir.c_str(), tr( "Actions files (*.ord)" ) );
-    if( filename == QString::null )
+    tools::Path filename = gui::FileDialog::getSaveFileName( topLevelWidget(), tr( "Save" ), config_.BuildExerciseChildFile( "orders" ), tr( "Actions files (*.ord)" ) );
+    if( filename.IsEmpty() )
         return;
-    if( filename.right( 4 ) != ".ord" )
-        filename += ".ord";
-    filename_ = filename.toStdString();
-    emit activeRefreshButton( !filename_.empty() );
+    if( filename.Extension() != ".ord" )
+        filename.ReplaceExtension( ".ord" );
+    filename_ = filename;
+    emit activeRefreshButton( !filename_.IsEmpty() );
     actions_.Save( filename_, filter_ );
 }
 
@@ -234,24 +230,15 @@ void ActionsToolbar::Reload()
     PurgeFilter filter;
     actions_.Purge( &filter );
 
-    assert( !filename_.empty() );
+    assert( !filename_.IsEmpty() );
     DoLoad( filename_ );
 }
 
 namespace
 {
-    void GetOrdFilesList( bfs::path& path, std::vector< std::string >& list )
+    bool IsOrderFile( const tools::Path& path )
     {
-        if( bfs::exists( path ) )
-        {
-            bfs::directory_iterator end;
-            for( bfs::directory_iterator it( path ); it != end; ++it )
-            {
-                const bfs::path child = *it;
-                if( bfs::is_regular_file( child ) && bfs::extension( child ).compare( ".ord" ) == 0 )
-                    list.push_back( child.string().c_str() );
-            }
-        }
+        return path.IsRegularFile() && path.Extension() == ".ord";
     }
 }
 
@@ -269,10 +256,8 @@ void ActionsToolbar::NotifyUpdated( const Simulation& simulation )
             if( hasReplay_ )
             {
                 // todo charger
-                std::vector< std::string > files;
-                bfs::path path = bfs::path( config_.GetSessionDir() );
-                GetOrdFilesList( path, files );
-                for( std::vector< std::string >::const_iterator it = files.begin(); it != files.end(); ++it )
+                tools::Path::T_Paths files = config_.GetSessionDir().ListElements( &IsOrderFile, false );
+                for( auto it = files.begin(); it != files.end(); ++it )
                     DoLoad( *it );
             }
             else
@@ -281,8 +266,8 @@ void ActionsToolbar::NotifyUpdated( const Simulation& simulation )
         else
         {
             actions_.Purge();
-            filename_.clear();
-            emit activeRefreshButton( !filename_.empty() );
+            filename_.Clear();
+            emit activeRefreshButton( !filename_.IsEmpty() );
         }
     }
 }
@@ -302,7 +287,7 @@ void ActionsToolbar::NotifyUpdated( const Services& services )
 // -----------------------------------------------------------------------------
 void ActionsToolbar::NotifyUpdated( const Simulation::sCheckPoint& checkPoint )
 {
-    if( !checkPoint.name_.empty() )
+    if( !checkPoint.name_.IsEmpty() )
         try
         {
             actions_.Save( config_.BuildOnLocalCheckpointChildFile( checkPoint.name_, "timeline.ord" ) );

@@ -41,7 +41,7 @@ TacticalTreeView::TacticalTreeView( kernel::Controllers& controllers, const kern
     , actionsModel_( actionsModel )
     , displayMode_( eObservableUnits )
     , changeSuperiorDialog_( 0 )
-    , icon_user_( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/icon_user.png" ).c_str() )
+    , icon_user_( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/icon_user.png" ).ToUTF8().c_str() )
 {
     controllers_.Update( *this );
     setEditTriggers( 0 );

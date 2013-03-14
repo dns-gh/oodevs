@@ -19,8 +19,6 @@
 #include <boost/smart_ptr/make_shared.hpp>
 #include <xeumeuleu/xml.hpp>
 
-namespace bfs = boost::filesystem;
-
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -57,7 +55,7 @@ void PropagationAttribute::DoUpdate( const sword::ObjectUpdate& message )
     if( message.attributes().has_propagation() )
     {
         sword::ObjectAttributePropagation attribute = message.attributes().propagation();
-        pManager_->Initialize( attribute.model(), attribute.has_date() ? attribute.date() : "" );
+        pManager_->Initialize( tools::Path::FromUTF8( attribute.model() ), attribute.has_date() ? attribute.date() : "" );
     }
 }
 
@@ -67,8 +65,7 @@ void PropagationAttribute::DoUpdate( const sword::ObjectUpdate& message )
 // -----------------------------------------------------------------------------
 void PropagationAttribute::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
 {
-    PropagationManager::T_Files files = pManager_->GetFiles( simulation_.GetDateTime()
-                                                            .toString(  "yyyyMMdd'T'HHmmss" ).toStdString() );
+    tools::Path::T_Paths files = pManager_->GetFiles( simulation_.GetDateTime().toString(  "yyyyMMdd'T'HHmmss" ).toStdString() );
     if( files_ != files )
     {
         propagations_.clear();

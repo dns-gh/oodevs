@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 PopulationTreeView::PopulationTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
     : gui::PopulationTreeView( controllers, profile, modelObserver, parent )
-    , icon_user_( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/icon_user.png" ).c_str() )
+    , icon_user_( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/icon_user.png" ).ToUTF8().c_str() )
 {
     setItemDelegate( new gui::ItemPixmapDelegate( dataModel_, boost::bind( &PopulationTreeView::GetEntityPixmap, this, _1 ), this, 20 ) );
 }

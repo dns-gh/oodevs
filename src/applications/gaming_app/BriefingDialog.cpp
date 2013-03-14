@@ -14,7 +14,6 @@
 #include "gaming/Command.h"
 #include "tools/ExerciseConfig.h"
 #include <string>
-#include <boost/filesystem.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: BriefingDialog constructor
@@ -63,8 +62,7 @@ void BriefingDialog::Receive( const Command& command )
     if( command.ArgumentCount() < 2 )
         return;
     dialogId_ = command.Argument( 1 );
-    boost::filesystem::path path( config_.BuildExerciseChildFile( "scripts" ) );
-    Load( ( path / command.Argument( 2 ) ).string() );
+    Load( config_.BuildExerciseChildFile( "scripts" ) / tools::Path::FromUTF8( command.Argument( 2 ) ) );
     setMinimumSize( 600, 700 );
     show();
 }
@@ -73,10 +71,9 @@ void BriefingDialog::Receive( const Command& command )
 // Name: BriefingDialog::Load
 // Created: SBO 2008-07-02
 // -----------------------------------------------------------------------------
-void BriefingDialog::Load( const std::string& filename )
+void BriefingDialog::Load( const tools::Path& filename )
 {
-    const QFileInfo file( filename.c_str() );
-    browser_->setSource( file.absFilePath() );
+    browser_->setSource( filename.Absolute().ToUTF8().c_str() );
 }
 
 // -----------------------------------------------------------------------------

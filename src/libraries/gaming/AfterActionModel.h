@@ -65,7 +65,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Load( const std::string& functions );
+    void Load( const tools::Path& functions );
     void ReadFunction( xml::xistream& xis );
     //@}
 

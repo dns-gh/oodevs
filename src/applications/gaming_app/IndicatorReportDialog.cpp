@@ -12,13 +12,13 @@
 #include "moc_IndicatorReportDialog.cpp"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/FileDialog.h"
 #include "clients_gui/LinkInterpreter_ABC.h"
 #include "gaming/Score.h"
 #include "gaming/ScoreModel.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/regex.hpp>
-#include <fstream>
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorReportDialog constructor
@@ -103,14 +103,11 @@ IndicatorReportDialog::~IndicatorReportDialog()
 // -----------------------------------------------------------------------------
 void IndicatorReportDialog::OnBrowseTemplate()
 {
-    const QString startPath( config_.BuildExerciseChildFile( "reports/" ).c_str() );
-    QString filename = QFileDialog::getOpenFileName( topLevelWidget(), tools::translate( "IndicatorReports", "Load report template file" )
-                                                   , startPath, tools::translate( "IndicatorReports", "Report template (*.html)" ) );
-    if( filename.isEmpty() )
+    const tools::Path filename = gui::FileDialog::getOpenFileName( topLevelWidget(), tools::translate( "IndicatorReports", "Load report template file" ),
+                                                                   config_.BuildExerciseChildFile( "reports" ), tools::translate( "IndicatorReports", "Report template (*.html)" ) );
+    if( filename.IsEmpty() )
         return;
-    if( filename.startsWith( "//" ) )
-        filename.replace( "/", "\\" );
-    templateFile_->setText( filename );
+    templateFile_->setText( filename.ToUTF8().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,14 +116,14 @@ void IndicatorReportDialog::OnBrowseTemplate()
 // -----------------------------------------------------------------------------
 void IndicatorReportDialog::OnBrowseOutput()
 {
-    const QString startPath = templateFile_->text().isEmpty() ? config_.BuildExerciseChildFile( "reports/" ).c_str() : QDir( templateFile_->text() ).absPath();
-    QString filename = QFileDialog::getSaveFileName( topLevelWidget(), tools::translate( "IndicatorReports", "Save report to" )
-                                                    , startPath, tools::translate( "IndicatorReports", "Report (*.html)" ) );
-    if( filename == QString::null )
+    const tools::Path startPath = templateFile_->text().isEmpty() ? config_.BuildExerciseChildFile( "reports" ) : tools::Path::FromUnicode( templateFile_->text().toStdWString() ).Absolute();
+    tools::Path filename = gui::FileDialog::getSaveFileName( topLevelWidget(), tools::translate( "IndicatorReports", "Save report to" ),
+                                                             startPath, tools::translate( "IndicatorReports", "Report (*.html)" ) );
+    if( filename.IsEmpty() )
         return;
-    if( !filename.endsWith( ".html" ) )
-        filename += ".html";
-    outputFile_->setText( filename );
+    if( filename.Extension() != ".html" )
+        filename.ReplaceExtension( ".html" );
+    outputFile_->setText( filename.ToUTF8().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,8 +157,8 @@ void IndicatorReportDialog::OnAccept()
 // -----------------------------------------------------------------------------
 void IndicatorReportDialog::CreateReport() const
 {
-    std::ifstream input( templateFile_->text().toStdString().c_str() );
-    std::ofstream output( outputFile_->text().toStdString().c_str() );
+    tools::Ifstream input( tools::Path::FromUnicode( templateFile_->text().toStdWString() ) );
+    tools::Ofstream output( tools::Path::FromUnicode( outputFile_->text().toStdWString() ) );
     std::string line;
     while( input.good() )
     {

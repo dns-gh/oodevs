@@ -28,18 +28,18 @@ Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observ
 {
     po::options_description desc( "Gaming options" );
     desc.add_options()
-        ( "host",  po::value< std::string >( &host_ ), "specify host to join" )
-        ( "login", po::value< std::string >( &login_ ), "specify login" )
-        ( "order-file", po::value< std::string >( &orderFile_ ), "specify an order file to load" );
+        ( "host",  po::value( &host_ ), "specify host to join" )
+        ( "login", po::value( &login_ ), "specify login" )
+        ( "order-file", po::value( &orderFile_ ), "specify an order file to load" );
     AddOptions( desc );
     Parse( argc, argv );
     isLoginInCommandLine_ = IsSet( "login" );
     if( isLoginInCommandLine_ && login_ == "anonymous" )
         login_ = "";
-    const std::string session = GetSessionFile();
-    if( !session.empty() )
+    const tools::Path session = GetSessionFile();
+    if( !session.IsEmpty() )
     {
-        xml::xifstream xis( session );
+        tools::Xifstream xis( session );
         xis >> xml::start( "session" )
                 >> xml::start( "config" )
                     >> xml::start( "gaming" )
@@ -75,13 +75,13 @@ void Config::Connect( Network& network ) const
 // -----------------------------------------------------------------------------
 void Config::LoadSession( Network& network ) const
 {
-    const std::string session = GetSessionFile();
-    if( session.empty() )
+    const tools::Path session = GetSessionFile();
+    if( session.IsEmpty() )
         return;
     try
     {
         std::string host;
-        xml::xifstream xis( session );
+        tools::Xifstream xis( session );
         xis >> xml::start( "session" )
                 >> xml::start( "config" )
                     >> xml::start( "gaming" )
@@ -108,7 +108,7 @@ std::string Config::GetLogin() const
 // Name: Config::GetOrbatFile
 // Created: ABR 2011-10-10
 // -----------------------------------------------------------------------------
-std::string Config::GetOrderFile() const
+tools::Path Config::GetOrderFile() const
 {
     return orderFile_;
 }

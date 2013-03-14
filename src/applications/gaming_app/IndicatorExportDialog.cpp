@@ -11,9 +11,9 @@
 #include "IndicatorExportDialog.h"
 #include "moc_IndicatorExportDialog.cpp"
 #include "gaming/IndicatorRequest.h"
+#include "clients_gui/FileDialog.h"
 #include "clients_kernel/Tools.h"
 #include <boost/foreach.hpp>
-#include <fstream>
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorExportDialog constructor
@@ -84,12 +84,12 @@ void IndicatorExportDialog::Export()
 // -----------------------------------------------------------------------------
 void IndicatorExportDialog::OnBrowse()
 {
-    QString filename = QFileDialog::getSaveFileName( topLevelWidget(), tools::translate( "Scores", "Export data" ), QString(), tools::translate( "Scores", "CSV (*.csv)" ) );
-    if( filename == QString::null )
+    tools::Path filename = gui::FileDialog::getSaveFileName( topLevelWidget(), tools::translate( "Scores", "Export data" ), "", tools::translate( "Scores", "CSV (*.csv)" ) );
+    if( filename.IsEmpty() )
         return;
-    if( !filename.endsWith( ".csv" ) )
-        filename += ".csv";
-    file_->setText( filename );
+    if( filename.Extension() != ".csv" )
+        filename.ReplaceExtension( ".csv" );
+    file_->setText( QString::fromStdWString( filename.ToUnicode() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ void IndicatorExportDialog::OnAccept()
 {
     try
     {
-        std::ofstream file( file_->text().toStdString().c_str() );
+        tools::Ofstream file( file_->text().toStdString().c_str() );
         if( !file )
             throw MASA_EXCEPTION( tools::translate( "IndicatorExportDialog", "Impossible to create file in specified directory" ).toStdString() );
         const std::string sep = separator_->text().toStdString();

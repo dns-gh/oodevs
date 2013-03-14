@@ -45,7 +45,6 @@
 #include "clients_gui/LoadableLineEdit.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
-#include <boost/bind.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -205,7 +204,7 @@ namespace
         factory->Register( "altitude-modifier"         , boost::bind( &Capacity< AltitudeModifierPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "trafficability"            , boost::bind( &TrafficabilityAttribute, _1, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "bypassable"                , boost::bind( &BypassableAttribute, _2, _3, boost::ref( attributesList ) ) );
-        factory->Register( "disaster"                  , boost::bind( &::DisasterAttribute, _2, _3, boost::ref( config ), boost::ref( controllers ), boost::ref( attributesList ) ) );
+        factory->Register( "disaster"                  , boost::bind( &DisasterAttribute, _2, _3, boost::ref( config ), boost::ref( controllers ), boost::ref( attributesList ) ) );
 
         boost::shared_ptr< NBCBuilder > pNBCBuilders = boost::make_shared< NBCBuilder >();
         factory->Register( "intoxication"              , boost::bind( &NBCBuilder::Add, pNBCBuilders, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );

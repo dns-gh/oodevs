@@ -8,6 +8,7 @@
 
 #include "gaming_app_pch.h"
 #include "ConnectLoginDialog.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Network.h"
@@ -27,9 +28,8 @@ namespace
             setText( profile_.GetLogin().isEmpty() ? tools::translate( "LoginDialog", "Anonymous" ) : profile_.GetLogin() );
             const QString pixmap = QString( "images/gaming/profile/%1%2.png" ).arg( profile_.IsSupervision() ? "supervisor" : "standard" )
                 .arg( profile_.IsPasswordProtected() ? "_password" : "" );
-            QImage img( tools::ExerciseConfig::BuildResourceChildFile( pixmap.toStdString() ).c_str() );
-            img = img.scaled( 30, 30 );
-            setIcon( QPixmap::fromImage( img ) );
+            gui::Image img( tools::ExerciseConfig::BuildResourceChildFile( tools::Path::FromUnicode( pixmap.toStdWString() ) ) );
+            setIcon( QPixmap::fromImage( img.scaled( 30, 30 ) ) );
         }
 
         bool RequiresPassword() const { return profile_.IsPasswordProtected(); }

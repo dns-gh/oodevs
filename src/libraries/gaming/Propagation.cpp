@@ -21,7 +21,7 @@
 // Name: Propagation constructor
 // Created: LGY 2012-10-26
 // -----------------------------------------------------------------------------
-Propagation::Propagation( const std::string& file, const PropagationManager& manager,
+Propagation::Propagation( const tools::Path& file, const PropagationManager& manager,
                           const kernel::CoordinateConverter_ABC& converter, const kernel::DisasterType& disasterType )
 {
     ASCExtractor extractor( file, manager.GetProjectionFile() );

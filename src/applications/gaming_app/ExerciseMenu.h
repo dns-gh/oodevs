@@ -82,7 +82,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::LinkInterpreter_ABC& interpreter_;
-    std::vector< std::string > links_;
+    tools::Path::T_Paths links_;
     //@}
 };
 

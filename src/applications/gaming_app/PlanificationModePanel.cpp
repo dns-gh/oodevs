@@ -9,14 +9,15 @@
 
 #include "gaming_app_pch.h"
 #include "PlanificationModePanel.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_kernel/Controllers.h"
 #include "tools/GeneralConfig.h"
 
 namespace
 {
-    QPixmap MakePixmap( const std::string& name )
+    QPixmap MakePixmap( const tools::Path& name )
     {
-        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gaming/" ) + name + ".png" ).c_str() );
+        return gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( tools::Path( "images/gaming" ) / name + ".png" ) );
     }
 }
 

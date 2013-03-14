@@ -38,7 +38,7 @@ public:
     //@{
     void Connect( Network& network ) const;
     std::string GetLogin() const;
-    std::string GetOrderFile() const;
+    tools::Path GetOrderFile() const;
     bool IsLoginInCommandLine() const;
     unsigned long GetNetworkTimeOut() const;
     //@}
@@ -54,7 +54,7 @@ private:
     //@{
     std::string host_;
     std::string login_;
-    std::string orderFile_;
+    tools::Path orderFile_;
     bool isLoginInCommandLine_;
     unsigned long networkTimeOut_;
     //@}

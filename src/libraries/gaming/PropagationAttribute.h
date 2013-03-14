@@ -14,7 +14,6 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "tools/ElementObserver_ABC.h"
 #include "Simulation.h"
-#include <boost/filesystem/path.hpp>
 #include <boost/shared_array.hpp>
 #include <vector>
 
@@ -48,6 +47,7 @@ class PropagationAttribute : public kernel::DisasterAttribute_ABC
                            , public gui::Drawable_ABC
                            , public tools::Observer_ABC
                            , public tools::ElementObserver_ABC< Simulation::sEndTick >
+                           , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -64,12 +64,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PropagationAttribute( const PropagationAttribute& );            //!< Copy constructor
-    PropagationAttribute& operator=( const PropagationAttribute& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation::sEndTick& tick );
@@ -81,7 +75,6 @@ private:
     //@{
     typedef boost::shared_ptr< Propagation > T_Propagation;
     typedef std::vector< T_Propagation >     T_Propagations;
-    typedef T_Propagations::const_iterator CIT_Propagations;
     //@}
 
 private:
@@ -93,7 +86,7 @@ private:
     std::auto_ptr< PropagationManager > pManager_;
     const kernel::DisasterType& disasterType_;
     T_Propagations propagations_;
-    std::vector< std::string > files_;
+    tools::Path::T_Paths files_;
     //@}
 };
 

@@ -42,5 +42,5 @@ LauncherCommand::~LauncherCommand()
 void LauncherCommand::Receive( const Command& command )
 {
     QProcess process;
-    process.start( config_.BuildExerciseChildFile( command.Argument( 1 ) ).c_str() ) ;
+    process.start( config_.BuildExerciseChildFile( tools::Path::FromUTF8( command.Argument( 1 ) ) ).ToUTF8().c_str() );
 }

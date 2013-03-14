@@ -33,6 +33,7 @@
 #include "ConnectLoginDialog.h"
 #include "MagicOrdersInterface.h"
 #include "Menu.h"
+#include "MessagePanel.h"
 #include "MissionPanel.h"
 #include "ObjectKnowledgesLayer.h"
 #include "ObjectsLayer.h"
@@ -70,6 +71,7 @@
 #include "clients_gui/Logger.h"
 #include "clients_gui/MiscLayer.h"
 #include "clients_gui/ParametersLayer.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RichItemFactory.h"
@@ -110,14 +112,10 @@
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
 
-#include "MessagePanel.h"
 
-namespace bfs = boost::filesystem;
 using namespace kernel;
 
 namespace
@@ -162,7 +160,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 {
     controllers_.modes_.SetMainWindow( this );
     controllers_.modes_.AddRegistryEntry( eModes_Gaming, "Gaming" );
-    controllers_.modes_.AddRegistryEntry( eModes_Replay, "Gaming" );
+    controllers_.modes_.AddRegistryEntry( eModes_Replay, "Replayer" );
 
     // Strategy
     strategy_.reset( new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ ) );
@@ -262,7 +260,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Initialize
     setCentralWidget( selector_.get() );
     setAttribute( Qt::WA_DeleteOnClose, true );
-    setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
+    setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
     planifName_ = tr( "SWORD" ) + tr( " - Not connected" );
     setCaption( planifName_ );
     resize( 800, 600 );
@@ -313,7 +311,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
     gui::Layer& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
     gui::Layer& defaultLayer         = *new gui::DefaultLayer( controllers_ );
-    gui::Layer& logoLayer            = *new gui::LogoLayer( *glProxy_, QImage( config_.BuildResourceChildFile( "logo.png" ).c_str() ), 0.7f );
+    gui::Layer& logoLayer            = *new gui::LogoLayer( *glProxy_, gui::Image( config_.BuildResourceChildFile( "logo.png" ) ), 0.7f );
     gui::Layer& teamLayer            = *new TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
     gui::Layer& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
     gui::Layer& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, *parameters_, *glProxy_, *pProfile_ );
@@ -430,14 +428,14 @@ namespace
 {
     struct SelectionStub{};
 
-    QString ExtractExerciceName( const std::string& filename )
+    QString ExtractExerciceName( const tools::Path& filename )
     {
-        if( !bfs::exists( filename ) )
+        if( !filename.Exists() )
             return "";
-        xml::xifstream xis( filename );
+        tools::Xifstream xis( filename );
         xis >> xml::start( "exercise" )
                 >> xml::optional >> xml::start( "meta" );
-        return bfs::path( filename ).parent_path().filename().string().c_str();
+        return filename.Parent().FileName().ToUTF8().c_str();
     }
 }
 
@@ -586,7 +584,7 @@ void MainWindow::OnAddRaster()
 {
     try
     {
-        if( !bfs::exists( config_.BuildTerrainChildFile( "config.xml" ) ) )
+        if( !config_.BuildTerrainChildFile( "config.xml" ).Exists() )
         {
             QMessageBox::warning( 0, tr( "Warning" ), tr( "This functionality is not available with old terrain format." ) );
             return;
@@ -596,14 +594,13 @@ void MainWindow::OnAddRaster()
         if( result == QDialog::Accepted )
         {
             QStringList parameters;
-            parameters << ( std::string( "--config=" ) + bfs::system_complete( config_.BuildTerrainChildFile( "config.xml" ) ).string() ).c_str();
+            parameters << ( std::string( "--config=" ) + config_.BuildTerrainChildFile( "config.xml" ).SystemComplete().ToUTF8() ).c_str();
             parameters << ( std::string( "--raster=" ) + addRasterDialog_->GetFiles().toStdString() ).c_str();
             parameters << ( std::string( "--pixelsize=" ) + boost::lexical_cast< std::string >( addRasterDialog_->GetPixelSize() ) ).c_str();
-            bfs::path filename = bfs::system_complete( bfs::path( config_.GetGraphicsDirectory() ) / "~~tmp.texture.bin" );
-            parameters << ( std::string( "--file=" ) + filename.string() ).c_str();
-            bfs::path workingDirectory = bfs::system_complete( "../Terrain/applications/" );
-            process_->setWorkingDirectory( workingDirectory.string().c_str() );
-            process_->start( bfs::path( workingDirectory / "raster_app.exe" ).string().c_str(), parameters );
+            parameters << ( std::string( "--file=" ) + ( config_.GetGraphicsDirectory() / "~~tmp.texture.bin" ).SystemComplete().ToUTF8() ).c_str();
+            tools::Path workingDirectory = tools::Path( "../Terrain/applications/" ).SystemComplete();
+            process_->setWorkingDirectory( workingDirectory.ToUTF8().c_str() );
+            process_->start( ( workingDirectory / "raster_app.exe" ).ToUTF8().c_str(), parameters );
         }
     }
     catch( const geodata::ProjectionException& )
@@ -633,9 +630,9 @@ void MainWindow::OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitS
         raster.GenerateTexture();
         try
         {
-            const bfs::path aggregated = bfs::path( config_.GetGraphicsDirectory() ) / "~~tmp.texture.bin";
-            if( bfs::exists( aggregated ) )
-                bfs::remove( aggregated );
+            const tools::Path aggregated = config_.GetGraphicsDirectory() / "~~tmp.texture.bin";
+            if( aggregated.Exists() )
+                aggregated.Remove();
         }
         catch( ... )
         {

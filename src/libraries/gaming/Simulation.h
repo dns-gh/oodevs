@@ -44,7 +44,7 @@ public:
     struct sCheckPoint
     {
         bool start_;
-        std::string name_;
+        tools::Path name_;
     };
     struct sTimeTable : private boost::noncopyable
     {

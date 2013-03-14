@@ -11,6 +11,7 @@
 #include "InfoEventsWidget.h"
 #include "gaming/Attributes.h"
 #include "gaming/Contaminations.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Tools.h"
@@ -50,7 +51,7 @@ InfoEventsWidget::~InfoEventsWidget()
 // -----------------------------------------------------------------------------
 void InfoEventsWidget::InitializeEvents( QWidget* parent )
 {
-    const QPixmap defaultIcon( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() );
+    const gui::Pixmap defaultIcon( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) );
 
     events_["jammed"]         = CreateEvent( parent, MAKE_PIXMAP( brouillage ),
                                     tools::translate( "InfoEventsWidget", "Communication: jammed" ) );

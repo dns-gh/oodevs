@@ -202,9 +202,9 @@ void Simulation::EndCheckPoint( const sword::ControlCheckPointSaveEnd& message )
 {
     checkPoint_.start_ = false;
     if( message.has_name() )
-        checkPoint_.name_ = message.name();
+        checkPoint_.name_ = tools::Path::FromUTF8( message.name() );
     else
-        checkPoint_.name_ = "";
+        checkPoint_.name_ = tools::Path();
     controller_.Update( checkPoint_ );
     controller_.Update( *this );
 }

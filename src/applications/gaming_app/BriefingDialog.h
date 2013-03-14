@@ -49,15 +49,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    BriefingDialog( const BriefingDialog& );            //!< Copy constructor
-    BriefingDialog& operator=( const BriefingDialog& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void Load( const std::string& filename );
+    void Load( const tools::Path& filename );
     virtual void reject();
     virtual void accept();
     //@}
