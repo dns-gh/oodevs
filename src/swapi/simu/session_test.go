@@ -9,37 +9,21 @@
 package simu
 
 import (
-	"io/ioutil"
-	"os"
+	. "launchpad.net/gocheck"
 	"path"
-	"testing"
 )
 
-func Assert(t *testing.T, pred bool, msg string) {
-	if !pred {
-		t.Error(msg)
-	}
-}
-
-func AssertEqual(t *testing.T, expected, value string) {
-	if expected != value {
-		t.Fatalf("%v != %v", expected, value)
-	}
-}
-
-func TestParsingError(t *testing.T) {
+func (s *TestSuite) TestParsingError(c *C) {
 	data := `
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <session>
 </session>
 `
 	_, err := ReadSession([]byte(data))
-	if err == nil {
-		t.Error("reading invalid session data should have failed")
-	}
+	c.Assert(err, NotNil)
 }
 
-func TestParsing(t *testing.T) {
+func (s *TestSuite) TestParsing(c *C) {
 	data := `
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <session>
@@ -50,27 +34,24 @@ func TestParsing(t *testing.T) {
     </config>
 </session>
 `
-	s, err := ReadSession([]byte(data))
-	if err != nil {
-		t.Fatalf("failed to parse session: %v", err)
-	}
-	AssertEqual(t, s.GamingServer, "localhost:10001")
+	session, err := ReadSession([]byte(data))
+	c.Assert(err, IsNil)
+	c.Assert(session.GamingServer, Matches, "localhost:10001")
 }
 
-func TestCreateDefaultSession(t *testing.T) {
-	s := CreateDefaultSession()
-	if s == nil {
-		t.Fatal("default session cannot be nil")
-	}
+func (s *TestSuite) TestCreateDefaultSession(c *C) {
+	session := CreateDefaultSession()
+	c.Assert(session, NotNil)
 }
 
-func TestWriteSession(t *testing.T) {
-	s := CreateDefaultSession()
-	s.GamingServer = "masagroup.net"
-	s.EndTick = 42
-	s.Paused = true
-	data, err := WriteSession(s)
-	Assert(t, err == nil, "failed to write session")
+func (s *TestSuite) TestWriteSession(c *C) {
+	session := CreateDefaultSession()
+	session.GamingServer = "masagroup.net"
+	session.EndTick = 42
+	session.Paused = true
+	data, err := WriteSession(session)
+	c.Assert(err, IsNil)
+
 	expected := `
 <session>
   <config>
@@ -105,15 +86,7 @@ func TestWriteSession(t *testing.T) {
     <name>test</name>
   </meta>
 </session>`
-	AssertEqual(t, expected, string(data))
-}
-
-func createTempDir(t *testing.T) string {
-	tempDir, err := ioutil.TempDir("", "timeline-")
-	if err != nil {
-		t.Fatal("failed to create temporary directory")
-	}
-	return tempDir
+	c.Assert(string(data), Equals, expected)
 }
 
 func createTestSession() *Session {
@@ -122,37 +95,27 @@ func createTestSession() *Session {
 	return s
 }
 
-func checkSessionFile(t *testing.T, sessionPath string) {
+func checkSessionFile(c *C, sessionPath string) {
 	s2, err := ReadSessionFile(sessionPath)
-	if err != nil {
-		t.Fatalf("failed to reread session: %v", err)
-	}
-	if s2.EndTick != 55 {
-		t.Fatalf("read session end-tick differs: %v", s2.EndTick)
-	}
+	c.Assert(err, IsNil)
+	c.Assert(s2.EndTick, Equals, 55)
 }
 
-func TestWriteSessionFile(t *testing.T) {
-	tempDir := createTempDir(t)
-	defer os.RemoveAll(tempDir)
+func (s *TestSuite) TestWriteSessionFile(c *C) {
+	tempDir := c.MkDir()
 
-	s := createTestSession()
+	session := createTestSession()
 	p := path.Join(tempDir, "dirtocreate", "session.xml")
-	err := WriteSessionFile(s, p)
-	if err != nil {
-		t.Fatalf("failed to write session: %v", err)
-	}
-	checkSessionFile(t, p)
+	err := WriteSessionFile(session, p)
+	c.Assert(err, IsNil)
+	checkSessionFile(c, p)
 }
 
-func TestWriteNewSessionFile(t *testing.T) {
-	tempDir := createTempDir(t)
-	defer os.RemoveAll(tempDir)
+func (s *TestSuite) TestWriteNewSessionFile(c *C) {
+	tempDir := c.MkDir()
 
-	s := createTestSession()
-	p, err := WriteNewSessionFile(s, tempDir)
-	if err != nil {
-		t.Fatalf("failed to write session: %v", err)
-	}
-	checkSessionFile(t, p)
+	session := createTestSession()
+	p, err := WriteNewSessionFile(session, tempDir)
+	c.Assert(err, IsNil)
+	checkSessionFile(c, p)
 }

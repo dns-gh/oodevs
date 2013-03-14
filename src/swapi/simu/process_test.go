@@ -12,10 +12,9 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	. "launchpad.net/gocheck"
 	"path/filepath"
 	"regexp"
-	"strings"
-	"testing"
 	"time"
 )
 
@@ -37,15 +36,13 @@ func init() {
 		"base port for spawned simulations")
 }
 
-func TestSimOpts(t *testing.T) {
+func (s *TestSuite) TestSimOpts(c *C) {
 	opts := SimOpts{}
 	opts.RootDir = "data/dir"
 	opts.ExerciseName = "exercisename"
 
 	d := opts.GetExerciseDir()
-	if filepath.ToSlash(d) != "data/dir/exercises/exercisename" {
-		t.Fatalf("invalid exercise dir: %v", d)
-	}
+	c.Assert(filepath.ToSlash(d), Equals, "data/dir/exercises/exercisename")
 }
 
 func MakeOpts() *SimOpts {
@@ -64,16 +61,15 @@ func MakeOpts() *SimOpts {
 }
 
 // Test the simulation can be started successfully and ticks a bit.
-func TestSuccess(t *testing.T) {
+func (s *TestSuite) TestSuccess(c *C) {
 	opts := MakeOpts()
 
 	exDir := opts.GetExerciseDir()
 	session := CreateDefaultSession()
 	session.EndTick = 3
 	sessionPath, err := WriteNewSessionFile(session, exDir)
-	if err != nil {
-		t.Fatal("failed to write the session")
-	}
+	c.Assert(err, IsNil)
+
 	opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
 	sim, err := StartSim(opts)
 	defer sim.Kill()
@@ -81,19 +77,16 @@ func TestSuccess(t *testing.T) {
 	// returns successfully, we cannot check the error returned by StartSim
 	// unless we have a way to start in paused mode and unpause it. Instead,
 	// just check the exit status
-	if sim == nil {
-		t.Fatalf("simulation failed to start: %v", err)
-	}
+	c.Assert(sim, NotNil, Commentf("simulation failed to start: %v", err))
+
 	sim.Wait(60 * time.Second)
-	if !sim.Success() {
-		t.Fatal("simulation should have terminated successfully")
-	}
+	c.Assert(sim.Success(), Equals, true)
 }
 
 // Test SimProcess fails fast when started with an invalid configuration and
 // taking enough time to detect it that exec module does not pick it.
 // See the funcErr in Sim.log
-func TestDelayedStartupFailure(t *testing.T) {
+func (s *TestSuite) TestDelayedStartupFailure(c *C) {
 	opts := MakeOpts()
 
 	exDir := opts.GetExerciseDir()
@@ -101,30 +94,21 @@ func TestDelayedStartupFailure(t *testing.T) {
 	session.EndTick = 3
 	session.Paused = false
 	sessionPath, err := WriteNewSessionFile(session, exDir)
-	if err != nil {
-		t.Fatal("failed to write the session")
-	}
+	c.Assert(err, IsNil)
 
 	// Remove dispatcher/network element
 	data, err := ioutil.ReadFile(sessionPath)
 	re, err := regexp.Compile(`<network client.*?</network>`)
-	if err != nil {
-		t.Fatalf("failed to compile regular expression: %v", err)
-	}
+	c.Assert(err, IsNil)
+
 	content := re.ReplaceAllString(string(data), "")
-	if err = ioutil.WriteFile(sessionPath, []byte(content), 0644); err != nil {
-		t.Fatalf("failed to rewrite session file: %v", err)
-	}
+	err = ioutil.WriteFile(sessionPath, []byte(content), 0644)
+	c.Assert(err, IsNil)
 
 	opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
 	sim, err := StartSim(opts)
 	defer sim.Kill()
-	if err == nil {
-		t.Fatalf("simulation should not have started")
-	}
-	if !strings.Contains(err.Error(), "failed to start simulation") {
-		t.Fatalf("unexpected failure: %v", err)
-	}
+	c.Assert(err, ErrorMatches, "failed to start simulation")
 
 	/* Probably SWORD-1549 
 
