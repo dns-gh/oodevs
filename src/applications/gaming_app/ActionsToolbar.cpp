@@ -256,7 +256,7 @@ void ActionsToolbar::NotifyUpdated( const Simulation& simulation )
             if( hasReplay_ )
             {
                 // todo charger
-                tools::Path::T_Paths files = config_.GetSessionDir().ListElements( &IsOrderFile, false, false );
+                tools::Path::T_Paths files = config_.GetSessionDir().ListElements( boost::bind( &IsOrderFile, _1 ), false, false );
                 for( auto it = files.begin(); it != files.end(); ++it )
                     DoLoad( *it );
             }

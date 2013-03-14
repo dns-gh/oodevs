@@ -11,10 +11,12 @@
 #include "Path.h"
 #include <tools/Exception.h>
 #pragma warning( push, 0 )
+#include <boost/bind.hpp>
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 #include <boost/algorithm/string/replace.hpp>
+#include <tools/Exception.h>
 
 using namespace tools;
 
@@ -186,29 +188,48 @@ std::time_t Path::LastWriteTime() const
 // Name: Path::ListFiles
 // Created: ABR 2013-03-01
 // -----------------------------------------------------------------------------
-Path::T_Paths Path::ListFiles( bool recursif /* = true */, bool relative /*= true*/, bool normalized /*= false*/  ) const
+Path::T_Paths Path::ListFiles( bool recursive /* = true */, bool relative /*= true*/, bool normalized /*= false*/  ) const
 {
-    return ListElements( &FileExtractor, recursif, relative, normalized );
+    return ListElements( boost::bind( &FileExtractor, _1 ), recursive, relative, normalized );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Path::ListDirectories
 // Created: ABR 2013-03-01
 // -----------------------------------------------------------------------------
-Path::T_Paths Path::ListDirectories( bool recursif /* = true */, bool relative /*= true*/, bool normalized /*= false*/  ) const
+Path::T_Paths Path::ListDirectories( bool recursive /* = true */, bool relative /*= true*/, bool normalized /*= false*/  ) const
 {
-    return ListElements( &DirectoryExtractor, recursif, relative, normalized );
+    return ListElements( boost::bind( &DirectoryExtractor, _1 ), recursive, relative, normalized );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path::ExtractElement
+// Created: ABR 2013-03-08
+// -----------------------------------------------------------------------------
+bool Path::ExtractElement( const T_Functor& functor, tools::Path::T_Paths& result, bool relative, bool normalized, const Path& path ) const
+{
+    if( !functor || functor( path ) )
+    {
+        tools::Path copy = path;
+        if( relative )
+            copy = copy.Relative( *this );
+        result.push_back( ( normalized ) ? copy.Normalize() : copy );
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Path::ListElements
-// Created: ABR 2013-03-07
+// Created: ABR 2013-03-01
 // -----------------------------------------------------------------------------
-Path::T_Paths Path::ListElements( bool recursif /*= true*/, bool relative /*= true*/, bool normalized /*= false*/ ) const
+Path::T_Paths Path::ListElements( const T_Functor& functor /* = T_Functor() */, bool recursive /* = true */, bool relative /* = true */, bool normalized /* = false */ ) const
 {
-    return ListElements( &DefaultExtractor, recursif, relative, normalized );
+    T_Paths result;
+    if( !Exists() || !IsDirectory() )
+        return result;
+    Apply( boost::bind( &Path::ExtractElement, *this, boost::cref( functor ), boost::ref( result ), relative, normalized, _1 ), recursive );
+    return result;
 }
-
 // -----------------------------------------------------------------------------
 // Name: Path::Rename
 // Created: ABR 2013-03-05
@@ -278,12 +299,72 @@ bool Path::CreateDirectories() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Path::Copy
-// Created: ABR 2013-02-26
+// Name: Path::Apply
+// Created: ABR 2013-02-28
 // -----------------------------------------------------------------------------
-bool Path::Copy( const Path& to, CopyOption option /* = FailIfExists */ ) const
+bool Path::Apply( const T_Functor& functor, bool recursive /* = true */ ) const
 {
-    return Copy( &DefaultExtractor, to, option );
+    if( recursive )
+    {
+        boost::filesystem::recursive_directory_iterator endIt;
+        for( boost::filesystem::recursive_directory_iterator it( path_ ); it != endIt; ++it )
+            if( functor( Path( it->path() ) ) )
+                return true;
+    }
+    else
+    {
+        boost::filesystem::directory_iterator endIt;
+        for( boost::filesystem::directory_iterator it( path_ ); it != endIt; ++it )
+            if( functor( Path( it->path() ) ) )
+                return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path::Copy
+// Created: ABR 2013-03-01
+// -----------------------------------------------------------------------------
+bool Path::Copy( const Path& to, CopyOption option /*= FailIfExists */, const T_Functor& functor /* = T_Functor() */ ) const
+{
+    boost::filesystem::copy_option::enum_type boostOption = boost::filesystem::copy_option::fail_if_exists;
+    if( option == OverwriteIfExists )
+        boostOption = boost::filesystem::copy_option::overwrite_if_exists;
+
+    try
+    {
+        if( IsDirectory() )
+        {
+            to.CreateDirectories();
+            boost::filesystem::directory_iterator endIt;
+            for( boost::filesystem::directory_iterator file( path_ ); file != endIt; ++file )
+            {
+                const tools::Path current( file->path() );
+                if( !functor || functor( current ) )
+                {
+                    if( !current.Copy( to / current.FileName(), option, functor ) )
+                        return false;
+                }
+            }
+        }
+        else
+        {
+            if( !Exists() )
+                return false;
+            if( !to.Parent().Exists() )
+                to.Parent().CreateDirectories();
+            if( to.Exists() && option == IgnoreIfExists )
+                return true;
+
+            boost::filesystem::copy_file( path_, to.path_, boostOption );
+        }
+    }
+    catch( std::exception& e )
+    {
+        throw MASA_EXCEPTION( tools::GetExceptionMsg( e ) );
+    }
+
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -326,8 +407,6 @@ Path Path::MakePreferred() const
 {
     tools::Path copy = *this;
     return copy.MakePreferred();
-    //copy.path_.make_preferred();
-    //return copy;
 }
 
 // -----------------------------------------------------------------------------
@@ -338,10 +417,6 @@ Path Path::Normalize() const
 {
     tools::Path copy = *this;
     return copy.Normalize();
-    //std::wstring text = ToUnicode();
-    //boost::replace_all( text, L"\\", L"/" );
-    //copy.path_ = text;
-    //return copy;
 }
 
 // -----------------------------------------------------------------------------
@@ -615,11 +690,6 @@ bool Path::HasRootDirectory() const
 // -----------------------------------------------------------------------------
 // Extractors
 // -----------------------------------------------------------------------------
-bool tools::DefaultExtractor( const Path& )
-{
-    return true;
-}
-
 bool tools::FileExtractor( const Path& path )
 {
     return path.IsRegularFile();

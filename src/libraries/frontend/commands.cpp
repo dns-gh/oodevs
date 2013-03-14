@@ -43,7 +43,7 @@ namespace frontend
 
         tools::Path::T_Paths ListTerrains( const tools::GeneralConfig& config )
         {
-            return config.GetTerrainsDir().ListElements( &IsValidTerrain );
+            return config.GetTerrainsDir().ListElements( boost::bind( &IsValidTerrain, _1 ) );
         }
 
         bool IsValidExercise( const tools::Path& dir )
@@ -55,7 +55,7 @@ namespace frontend
         {
             const tools::Path baseDirectory = config.GetExercisesDir();
             if( !baseDirectory.IsEmpty() )
-                return ( baseDirectory / subDirs ).ListElements( &IsValidExercise );
+                return ( baseDirectory / subDirs ).ListElements( boost::bind( &IsValidExercise, _1 ) );
             return tools::Path::T_Paths();
         }
 
@@ -77,7 +77,7 @@ namespace frontend
 
         tools::Path::T_Paths ListSessions( const tools::GeneralConfig& config, const tools::Path& exercise )
         {
-            return config.GetSessionsDir( exercise ).ListElements( &IsValidReplay );
+            return config.GetSessionsDir( exercise ).ListElements( boost::bind( &IsValidReplay, _1 ) );
         }
 
         bool HasCheckpoints( const tools::Path& session )
@@ -87,7 +87,7 @@ namespace frontend
 
         tools::Path::T_Paths ListSessionsWithCheckpoint( const tools::GeneralConfig& config, const tools::Path& exercise )
         {
-            return config.GetSessionsDir( exercise ).ListElements( &HasCheckpoints );
+            return config.GetSessionsDir( exercise ).ListElements( boost::bind( &HasCheckpoints, _1 ) );
         }
 
         tools::Path::T_Paths ListCheckpoints( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session )
@@ -138,7 +138,7 @@ namespace frontend
 
         tools::Path::T_Paths ListModels( const tools::GeneralConfig& config )
         {
-            return config.GetModelsDir().ListElements( &IsValidModel, false );
+            return config.GetModelsDir().ListElements( boost::bind( &IsValidModel, _1 ), false );
         }
 
         bool IsValidPhysicalModel( const tools::Path& record )
@@ -148,7 +148,7 @@ namespace frontend
 
         tools::Path::T_Paths ListPhysicalModels( const tools::GeneralConfig& config, const tools::Path& model )
         {
-            return config.GetPhysicalsDir( model ).ListElements( &IsValidPhysicalModel, false );
+            return config.GetPhysicalsDir( model ).ListElements( boost::bind( &IsValidPhysicalModel, _1 ), false );
         }
 
         bool IsValidScript( const tools::Path& child )
@@ -158,7 +158,7 @@ namespace frontend
 
         tools::Path::T_Paths ListScripts( const tools::GeneralConfig& config, const tools::Path& exercise )
         {
-            return ( config.GetExerciseDir( exercise ) / "scripts" ).ListElements( &IsValidScript );
+            return ( config.GetExerciseDir( exercise ) / "scripts" ).ListElements( boost::bind( &IsValidScript, _1 ) );
         }
 
         bool IsValidOrder( const tools::Path& child )
@@ -168,7 +168,7 @@ namespace frontend
 
         tools::Path::T_Paths ListOrders( const tools::GeneralConfig& config, const tools::Path& exercise )
         {
-            return ( config.GetExerciseDir( exercise ) / "orders" ).ListElements( &IsValidOrder );
+            return ( config.GetExerciseDir( exercise ) / "orders" ).ListElements( boost::bind( &IsValidOrder, _1 ) );
         }
 
         bool IsValidPropagation( const tools::Path& child )
@@ -178,7 +178,7 @@ namespace frontend
 
         tools::Path::T_Paths ListPropagations( const tools::GeneralConfig& config )
         {
-            return ( config.GetRootDir() / "data/propagations" ).ListElements( &IsValidPropagation );
+            return ( config.GetRootDir() / "data/propagations" ).ListElements( boost::bind( &IsValidPropagation, _1 ) );
         }
 
         bool IsOther( const tools::Path& child )
@@ -188,7 +188,7 @@ namespace frontend
 
         tools::Path::T_Paths ListOtherDirectories( const tools::GeneralConfig& config, const tools::Path& exercise )
         {
-            return config.GetExerciseDir( exercise ).ListElements( &IsOther, false );
+            return config.GetExerciseDir( exercise ).ListElements( boost::bind( &IsOther, _1 ), false );
         }
 
         tools::Path::T_Paths ListPackageFiles( const tools::Path& filename )

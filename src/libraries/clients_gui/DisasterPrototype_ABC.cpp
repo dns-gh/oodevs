@@ -13,6 +13,7 @@
 #include "Tools.h"
 #include "LoadableTimeEdit.h"
 #include "tools/GeneralConfig.h"
+#include <boost/bind.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -53,7 +54,7 @@ DisasterPrototype_ABC::~DisasterPrototype_ABC()
 void DisasterPrototype_ABC::FillInPaths( const tools::Path& root )
 {
     tools::Path path = root / "data/propagations";
-    const tools::Path::T_Paths results = path.ListElements( &IsPropagationDir );
+    const tools::Path::T_Paths results = path.ListElements( boost::bind( &IsPropagationDir, _1 ) );
     for( auto it = results.begin(); it != results.end(); ++it )
     {
         const std::string text = it->ToUTF8();

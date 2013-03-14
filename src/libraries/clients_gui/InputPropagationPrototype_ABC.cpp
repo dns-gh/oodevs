@@ -11,6 +11,7 @@
 #include "InputPropagationPrototype_ABC.h"
 #include "Tools.h"
 #include "tools/GeneralConfig.h"
+#include <boost/bind.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -56,7 +57,7 @@ InputPropagationPrototype_ABC::~InputPropagationPrototype_ABC()
 void InputPropagationPrototype_ABC::FillInPaths()
 {
     tools::Path path = root_ / "data/propagations";
-    tools::Path::T_Paths files = path.ListElements( &IsPropagationDir, true );
+    tools::Path::T_Paths files = path.ListElements( boost::bind( &IsPropagationDir, _1 ), true );
 
     for( auto it = files.begin(); it != files.end(); ++it )
         propagationFiles_->AddItem( it->ToUTF8(), it->ToUTF8() );

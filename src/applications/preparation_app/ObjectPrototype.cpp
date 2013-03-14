@@ -38,6 +38,7 @@
 #include "preparation/UrbanModel.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
+#include <boost/bind.hpp>
 
 using namespace kernel;
 using namespace gui;

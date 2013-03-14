@@ -14,11 +14,10 @@
 #pragma warning( disable: 4512 ) // No assignment operator found
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/function.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/split_member.hpp>
-#include <boost/bind.hpp>
 #pragma warning( pop )
-#include <tools/Exception.h>
 
 namespace xml
 {
@@ -29,12 +28,12 @@ namespace xml
 namespace boost
 {
     class any;
+    template< typename T > class function;
 }
 
 namespace tools
 {
     class Path;
-    bool DefaultExtractor( const Path& );
     bool FileExtractor( const Path& );
     bool DirectoryExtractor( const Path& );
 
@@ -56,6 +55,7 @@ public:
         IgnoreIfExists
     };
     typedef std::vector< Path > T_Paths;
+    typedef boost::function< bool( const Path& ) > T_Functor;
     //@}
 
 public:
@@ -98,15 +98,10 @@ public:
 
     //! @name List operations
     //@{
-    T_Paths ListFiles( bool recursif = true, bool relative = true, bool normalized = false ) const;
-    T_Paths ListDirectories( bool recursif = true, bool relative = true, bool normalized = false ) const;
-    T_Paths ListElements( bool recursif = true, bool relative = true, bool normalized = false ) const;
-
-    template< typename Functor >
-    T_Paths ListElements( const Functor& validator = &DefaultExtractor, bool recursif = true, bool relative = true, bool normalized = false ) const;
-
-    template< typename Functor >
-    bool Apply( const Functor& functor, bool recursif = true ) const;
+    T_Paths ListFiles( bool recursive = true, bool relative = true, bool normalized = false ) const;
+    T_Paths ListDirectories( bool recursive = true, bool relative = true, bool normalized = false ) const;
+    T_Paths ListElements( const T_Functor& validator = T_Functor(), bool recursive = true, bool relative = true, bool normalized = false ) const;
+    bool Apply( const T_Functor& functor, bool recursive = true ) const;
     //@}
 
     //! @name File operations
@@ -115,9 +110,7 @@ public:
     void Remove() const;
     void RemoveAll() const;
     bool CreateDirectories() const;
-    bool Copy( const Path& to, CopyOption option = FailIfExists ) const;
-    template< typename Functor >
-    bool Copy( const Functor& functor, const Path& to, CopyOption option = FailIfExists ) const;
+    bool Copy( const Path& to, CopyOption option = FailIfExists, const T_Functor& functor = T_Functor() ) const;
     //@}
 
     //! @name Modifiers
@@ -211,8 +204,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    template< typename Functor >
-    bool ExtractElement( const Functor& functor, tools::Path::T_Paths& result, bool relative, bool normalized, const Path& path ) const;
+    bool ExtractElement( const T_Functor& functor, tools::Path::T_Paths& result, bool relative, bool normalized, const Path& path ) const;
     //@}
 
 private:
@@ -223,106 +215,16 @@ private:
 };
 
 // -----------------------------------------------------------------------------
-// Name: Path::ExtractElement
-// Created: ABR 2013-03-08
+// boost program option validator
 // -----------------------------------------------------------------------------
-template< typename Functor >
-bool Path::ExtractElement( const Functor& functor, tools::Path::T_Paths& result, bool relative, bool normalized, const Path& path ) const
-{
-    tools::Path copy = path;
-    if( functor( copy ) )
-    {
-        if( relative )
-            copy = copy.Relative( *this );
-        result.push_back( ( normalized ) ? copy.Normalize() : copy );
-    }
-    return false;
-}
+void validate( boost::any& v, const std::vector< std::string >& values, tools::Path*, int );
 
 // -----------------------------------------------------------------------------
-// Name: Path::ListElements
-// Created: ABR 2013-03-01
+// stream manipulator
 // -----------------------------------------------------------------------------
-template< typename Functor >
-Path::T_Paths Path::ListElements( const Functor& functor /*= DefaultPathValidator*/, bool recursif /* = true */, bool relative /* = true */, bool normalized /* = false */ ) const
-{
-    T_Paths result;
-    if( !Exists() || !IsDirectory() )
-        return result;
-    Apply( boost::bind( &Path::ExtractElement< Functor >, *this, boost::cref( functor ), boost::ref( result ), relative, normalized, _1 ), recursif );
-    return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Path::Apply
-// Created: ABR 2013-02-28
-// -----------------------------------------------------------------------------
-template< typename Functor >
-bool Path::Apply( const Functor& functor, bool recursif /* = true */ ) const
-{
-    if( recursif )
-    {
-        boost::filesystem::recursive_directory_iterator endIt;
-        for( boost::filesystem::recursive_directory_iterator it( path_ ); it != endIt; ++it )
-            if( functor( Path( it->path() ) ) )
-                return true;
-    }
-    else
-    {
-        boost::filesystem::directory_iterator endIt;
-        for( boost::filesystem::directory_iterator it( path_ ); it != endIt; ++it )
-            if( functor( Path( it->path() ) ) )
-                return true;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Path::Copy
-// Created: ABR 2013-03-01
-// -----------------------------------------------------------------------------
-template< typename Functor >
-bool Path::Copy( const Functor& functor, const Path& to, CopyOption option /*= FailIfExists */ ) const
-{
-    boost::filesystem::copy_option::enum_type boostOption = boost::filesystem::copy_option::fail_if_exists;
-    if( option == OverwriteIfExists )
-        boostOption = boost::filesystem::copy_option::overwrite_if_exists;
-
-    try
-    {
-        if( IsDirectory() )
-        {
-            to.CreateDirectories();
-            boost::filesystem::directory_iterator endIt;
-            for( boost::filesystem::directory_iterator file( path_ ); file != endIt; ++file )
-            {
-                const tools::Path current( file->path() );
-                if( functor( current ) )
-                {
-                    if( !current.Copy( functor, to / current.FileName(), option ) )
-                        return false;
-                }
-            }
-        }
-        else
-        {
-            if( !Exists() )
-                return false;
-            if( !to.Parent().Exists() )
-                to.Parent().CreateDirectories();
-            if( to.Exists() && option == IgnoreIfExists )
-                return true;
-
-            boost::filesystem::copy_file( path_, to.path_, boostOption );
-        }
-    }
-    catch( std::exception& e )
-    {
-        throw MASA_EXCEPTION( tools::GetExceptionMsg( e ) );
-    }
-
-    return true;
-}
+std::ostream& operator<<( std::ostream& os, const Path& path );
+xml::xostream& operator<<( xml::xostream& xos, const tools::Path& path );
+xml::xistream& operator>>( xml::xistream& xis, tools::Path& path );
 
 // -----------------------------------------------------------------------------
 // Boost serialize
@@ -340,18 +242,6 @@ void Path::save( Archive& archive, const unsigned int ) const
 {
     archive << path_.wstring();
 }
-
-// -----------------------------------------------------------------------------
-// boost program option validator
-// -----------------------------------------------------------------------------
-void validate( boost::any& v, const std::vector< std::string >& values, tools::Path*, int );
-
-// -----------------------------------------------------------------------------
-// stream manipulator
-// -----------------------------------------------------------------------------
-std::ostream& operator<<( std::ostream& os, const Path& path );
-xml::xostream& operator<<( xml::xostream& xos, const tools::Path& path );
-xml::xistream& operator>>( xml::xistream& xis, tools::Path& path );
 
 } //! namespace tools
 

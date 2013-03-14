@@ -273,7 +273,7 @@ BOOST_AUTO_TEST_CASE( test_path_file_operations )
     BOOST_CHECK_EQUAL( dir2.Exists(), false );
     BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 0u );
 
-    dir1.Copy( boost::bind( &CheckFileName, L"foobar", _1 ), dir2 );
+    dir1.Copy( dir2, tools::Path::FailIfExists, boost::bind( &CheckFileName, L"foobar", _1 ) );
     BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 10u );
 }
 

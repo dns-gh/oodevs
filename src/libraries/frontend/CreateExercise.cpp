@@ -13,6 +13,7 @@
 #include "tools/GeneralConfig.h"
 #include "tools/SchemaWriter.h"
 #include <boost/algorithm/string.hpp>
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <algorithm>
 
@@ -101,53 +102,36 @@ namespace
     }
 
     // -----------------------------------------------------------------------------
-    class CheckedListExtractor : private boost::noncopyable
+    bool IsChecked( const tools::Path& path, const QStandardItem* parent, const QStandardItemModel& model, const frontend::ExerciseCopyParameters& params )
     {
-    public:
-        CheckedListExtractor( const QStandardItemModel& model, const frontend::ExerciseCopyParameters& params ) : model_( model ), params_( params ) {}
-
-        bool operator()( const tools::Path& path ) const
-        {
-            if( path.IsRegularFile() )
-                return true;
-            if( path.IsDirectory() )
-                return IsChecked( path, model_.invisibleRootItem() );
+        if( path.IsRegularFile() )
+            return true;
+        if( !path.IsDirectory() )
             return false;
-        }
+        if( !parent )
+            return false;
 
-    private:
-        bool IsChecked( const tools::Path& path, const QStandardItem* parent ) const
+        std::string pathStr = path.ToUTF8();
+        for( int row = 0; row < parent->rowCount(); ++row )
         {
-            bool result = false;
-            if( !parent )
-                return result;
-
-            std::string pathStr = path.ToUTF8();
-            for( int row = 0; !result && row < parent->rowCount(); ++row )
+            QStandardItem* item = parent->child( row );
+            if( item && item->checkState() == Qt::Checked )
             {
-                QStandardItem* item = parent->child( row );
-                if( item && item->checkState() == Qt::Checked )
-                {
-                    std::string file( item->text().toStdString() );
-                    std::string exerciseName = ( tools::Path( "exercises" ) / params_.from_ ).ToUTF8();
-                    if( file == "exercises" || file.find( exerciseName ) == std::string::npos )
-                        continue;
+                std::string file( item->text().toStdString() );
+                std::string exerciseName = ( tools::Path( "exercises" ) / params.from_ ).ToUTF8();
+                if( file == "exercises" || file.find( exerciseName ) == std::string::npos )
+                    continue;
 
-                    boost::algorithm::replace_first( file, exerciseName, "" );
-                    size_t found = pathStr.rfind( file );
-                    if( found != std::string::npos && found + file.size() == pathStr.size() )
-                        result = true;
-                    else if( item->hasChildren() )
-                        result = IsChecked( path, item );
-                }
+                boost::algorithm::replace_first( file, exerciseName, "" );
+                size_t found = pathStr.rfind( file );
+                if( found != std::string::npos && found + file.size() == pathStr.size() )
+                    continue;
+                else if( item->hasChildren() && !IsChecked( path, item, model, params ) )
+                    return false;
             }
-            return result;
         }
-
-    private:
-        const QStandardItemModel& model_;
-        const frontend::ExerciseCopyParameters& params_;
-    };
+        return true;
+    }
 }
 
 namespace frontend
@@ -171,8 +155,7 @@ namespace frontend
     {
         const tools::Path from = config.GetExerciseDir( params.from_ );
         const tools::Path to = config.GetExerciseDir( params.to_ );
-        const CheckedListExtractor extractor( *params.itemModel_, params );
-        from.Copy( extractor, to );
+        from.Copy( to, tools::Path::FailIfExists, boost::bind( &IsChecked, _1, params.itemModel_->invisibleRootItem(), boost::cref( *params.itemModel_ ), boost::cref( params ) ) );
         CreateExerciseFileCopy( from, to, params );
     }
 
@@ -181,8 +164,8 @@ namespace frontend
     {
         const tools::Path from = config.GetExerciseDir( params.from_ );
         const tools::Path to = config.GetExerciseDir( params.to_ );
-        from.Copy( &tools::FileExtractor, to );
+        from.Copy( to, tools::Path::FailIfExists, boost::bind( &tools::FileExtractor, _1 ) );
         CreateExerciseFileCopy( from, to, params );
-        params.checkpoint_.Copy( &CheckpointsExtractor, to, tools::Path::OverwriteIfExists );
+        params.checkpoint_.Copy( to, tools::Path::OverwriteIfExists, boost::bind( &CheckpointsExtractor, _1 ) );
     }
 }

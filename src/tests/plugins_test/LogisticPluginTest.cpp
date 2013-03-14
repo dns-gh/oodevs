@@ -458,7 +458,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 0 );
     }
 
-    tools::Path::T_Paths files = tmpDir.ListElements( true, false, true );
+    tools::Path::T_Paths files = tmpDir.ListElements( tools::Path::T_Functor(), true, false, true );
     std::vector< LogFile > expecteds;
     {
         T_Lines expectedLines;
@@ -568,7 +568,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPluginRestart )
     plugin = CreateLogisticPlugin( tmpDir );
     PushFuneralMessage( plugin.get() );
 
-    tools::Path::T_Paths files = tmpDir.ListElements( true, false, true );
+    tools::Path::T_Paths files = tmpDir.ListElements( tools::Path::T_Functor(), true, false, true );
     std::vector< LogFile > expected;
     {
         T_Lines expectedLines;
