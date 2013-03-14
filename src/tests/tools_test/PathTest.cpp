@@ -215,10 +215,10 @@ BOOST_AUTO_TEST_CASE( test_path_list_operations )
     ( tmpDir / "dir1" ).CreateDirectories();
     ( tmpDir / "dir2" ).CreateDirectories();
 
-    BOOST_CHECK_EQUAL( tmpDir.ListFiles().size(), 20 );
-    BOOST_CHECK_EQUAL( tmpDir.ListDirectories().size(), 2 );
-    BOOST_CHECK_EQUAL( tmpDir.ListElements().size(), 22 );
-    BOOST_CHECK_EQUAL( tmpDir.ListElements( boost::bind( &CheckFileName, L"foobar", _1 ) ).size(), 10 );
+    BOOST_CHECK_EQUAL( tmpDir.ListFiles().size(), 20u );
+    BOOST_CHECK_EQUAL( tmpDir.ListDirectories().size(), 2u );
+    BOOST_CHECK_EQUAL( tmpDir.ListElements().size(), 22u );
+    BOOST_CHECK_EQUAL( tmpDir.ListElements( boost::bind( &CheckFileName, L"foobar", _1 ) ).size(), 10u );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,23 +258,23 @@ BOOST_AUTO_TEST_CASE( test_path_file_operations )
     BOOST_CHECK_EQUAL( dir1.IsDirectory(), true );
     PopulateSampleDirectory( dir1 );
     PopulateSampleDirectory( dir1, "foobar" );
-    BOOST_CHECK_EQUAL( dir1.ListFiles().size(), 20 );
+    BOOST_CHECK_EQUAL( dir1.ListFiles().size(), 20u );
     BOOST_CHECK_EQUAL( dir2.Exists(), false );
     dir1.Copy( dir2 );
     BOOST_CHECK_EQUAL( dir2.Exists(), true );
-    BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 20 );
+    BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 20u );
     dir1.Copy( dir2, tools::Path::IgnoreIfExists );
-    BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 20 );
+    BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 20u );
     dir1.Copy( dir2, tools::Path::OverwriteIfExists );
-    BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 20 );
+    BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 20u );
     BOOST_CHECK_THROW( dir1.Copy( dir2, tools::Path::FailIfExists ), std::exception );
-    BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 20 );
+    BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 20u );
     dir2.RemoveAll();
     BOOST_CHECK_EQUAL( dir2.Exists(), false );
-    BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 0 );
+    BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 0u );
 
     dir1.Copy( boost::bind( &CheckFileName, L"foobar", _1 ), dir2 );
-    BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 10 );
+    BOOST_CHECK_EQUAL( dir2.ListFiles().size(), 10u );
 }
 
 // -----------------------------------------------------------------------------
