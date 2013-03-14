@@ -2936,7 +2936,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Requested time range is too large, only a subset of it is displayed.</source>
-        <translation>La plage de temps demandée est trop grande, seulement une partie d'elle est affichée.</translation>
+        <translation>La plage de temps demandée est trop grande, seulement une partie d&apos;elle est affichée.</translation>
     </message>
 </context>
 <context>
