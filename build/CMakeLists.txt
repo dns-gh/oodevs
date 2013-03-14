@@ -241,7 +241,10 @@ target_link_libraries( geostore
 # geostore_test
 add_target( geostore_test tests "tests/geostore_test" OPTIONS test )
 masa_add_target_include( geostore_test "${MASA_INCLUDE}/spatialite" )
-target_link_libraries( geostore_test geostore )
+target_link_libraries( geostore_test
+    geostore
+    sword_tools
+)
 
 # 3a_test
 add_target( 3a_test tests "tests/3a_test" OPTIONS protocol test )
@@ -252,8 +255,11 @@ add_target( actions_test tests "tests/actions_test" OPTIONS protocol test )
 target_link_libraries( actions_test actions )
 
 # propagation_test
-add_target( propagation_test tests "tests/propagation_test" OPTIONS test )
-target_link_libraries( propagation_test propagation )
+add_target( propagation_test tests "tests/propagation_test" OPTIONS test protocol )
+target_link_libraries( propagation_test
+    propagation
+    sword_tools
+)
 
 # protocol_test
 add_target( protocol_test tests "tests/protocol_test" OPTIONS protobuf protocol test )
@@ -311,7 +317,7 @@ target_link_libraries( web_control_plugin
 add_target( positions_plugin_test tests "tests/positions_plugin_test" OPTIONS protocol test )
 target_link_libraries( positions_plugin_test
     positions_plugin
-    ${TOOLS_LIBRARIES}
+    sword_tools
 )
 
 # plugins_test
@@ -615,7 +621,10 @@ target_link_libraries( launcher_app launcher_dll )
 # launcher_test_app
 add_target( launcher_test_app clients "applications/launcher_test_app" OPTIONS protocol executable )
 masa_add_target_include( launcher_test_app "${CMAKE_CURRENT_BINARY_DIR}/shield.out" )
-target_link_libraries( launcher_test_app launcher_dll )
+target_link_libraries( launcher_test_app
+    launcher_dll
+    sword_tools
+)
 
 # preparation
 # fixme need qt gui
@@ -656,7 +665,13 @@ target_link_libraries( loadtester_app sword_tools )
 
 # package_app
 add_target( package_app clients "applications/package_app" OPTIONS executable )
-target_link_libraries( package_app ${TOOLS_LIBRARIES} )
+target_link_libraries( package_app
+    ${TOOLS_LIBRARIES}
+    ${XERCES_LIBRARIES}
+    ${PROTOBUF_LIBRARIES}
+    sword_tools
+    mt_tools
+)
 
 # clients_test
 add_target( clients_test tests "tests/clients_test" OPTIONS qt3 qt test )
