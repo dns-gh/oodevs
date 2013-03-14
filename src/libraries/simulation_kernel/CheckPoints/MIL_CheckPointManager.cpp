@@ -83,12 +83,8 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config, const Obje
     std::ifstream file( config.BuildCheckpointChildFile( "data" ).c_str(), std::ios::in | std::ios::binary );
     if( !file || !file.is_open() )
         throw MASA_EXCEPTION( "Cannot open file '" + config.BuildCheckpointChildFile( "data" ) + "'" );
-    MIL_CheckPointInArchive* pArchive = new MIL_CheckPointInArchive( file, resolver );
-    MIL_AgentServer::GetWorkspace().load( *pArchive );
-    file.close();
-#ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
-    delete pArchive;
-#endif
+    MIL_CheckPointInArchive archive( file, resolver );
+    MIL_AgentServer::GetWorkspace().load( archive );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,12 +175,9 @@ boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::str
     std::ofstream file( strFileName.c_str(), std::ios::out | std::ios::binary );
     if( !file || !file.is_open() )
         throw MASA_EXCEPTION( "Cannot open file '" + strFileName + "'" );
-    MIL_CheckPointOutArchive* pArchive = new MIL_CheckPointOutArchive( file );
-    MIL_AgentServer::GetWorkspace().save( *pArchive );
+    MIL_CheckPointOutArchive archive( file );
+    MIL_AgentServer::GetWorkspace().save( archive );
     file.close();
-//#ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash // $$$$ LDC better avoided by defining BOOST_NO_STD_LOCALE
-    delete pArchive;
-//#endif
     return MIL_Tools::ComputeCRC( strFileName );
 }
 
