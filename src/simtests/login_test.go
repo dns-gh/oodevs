@@ -61,7 +61,7 @@ func (s *TestSuite) TestLogin(c *C) {
 	}
 
 	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
-	defer sim.Kill()
+	defer sim.Stop()
 
 	// Test invalid login
 	client := ConnectClient(c, sim)
@@ -124,7 +124,7 @@ func waitForMessages(client *swapi.Client, timeout time.Duration) bool {
 
 func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
-	defer sim.Kill()
+	defer sim.Stop()
 
 	// Connect and watch incoming messages
 	client := ConnectClient(c, sim)

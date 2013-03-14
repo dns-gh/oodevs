@@ -15,7 +15,7 @@ import (
 
 func (s *TestSuite) TestPauseStopResume(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallEmpty)
-	defer sim.Kill()
+	defer sim.Stop()
 	model := client.Model
 
 	err := client.Pause()
@@ -78,7 +78,7 @@ func (s *TestSuite) TestPauseStopResume(c *C) {
 
 func (s *TestSuite) TestControlRights(c *C) {
 	sim, client := connectAndWaitModel(c, "alluser", "alluser", ExCrossroadSmallEmpty)
-	defer sim.Kill()
+	defer sim.Stop()
 
 	err := client.Pause()
 	c.Assert(err, ErrorMatches, "error_forbidden")

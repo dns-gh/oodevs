@@ -59,7 +59,7 @@ func (s *TestSuite) TestDispatcherMisconfiguration(c *C) {
 	c.Assert(err, IsNil) // failed to rewrite session file
 
 	sim, err := simu.StartSim(opts)
-	defer sim.Kill()
+	defer sim.Stop()
 	CheckSimFailed(c, err, sim)
 
 	// Sim.log should say something about the dispatcher and dispatcher.log
@@ -87,11 +87,11 @@ func (s *TestSuite) TestDispatcherAddressCollision(c *C) {
 	}
 
 	sim1, err := startSim(0)
-	defer sim1.Kill()
+	defer sim1.Stop()
 	c.Assert(err, IsNil) // simulation failed to start
 
 	sim2, err := startSim(1)
-	defer sim2.Kill()
+	defer sim2.Stop()
 	sim2.Wait(60 * time.Second)
 	// This should be fixed by SWORD-1549
 	//
@@ -155,7 +155,7 @@ func (s *TestSuite) TestLowEndTickValues(c *C) {
 		WriteSession(c, opts, session)
 		sim, _ := simu.StartSim(opts)
 		c.Assert(sim, NotNil) // simulation failed to start"
-		defer sim.Kill()
+		defer sim.Stop()
 
 		pattern := fmt.Sprintf(
 			"<Simulation> <info> **** Time tick %d", endTick+1)

@@ -66,7 +66,7 @@ func postInvalidUnitMagicAction(client *swapi.Client, tasker *sword.Tasker) erro
 
 func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
-	defer sim.Kill()
+	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
 
@@ -131,7 +131,7 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 
 func (s *TestSuite) TestCreateFormation(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallEmpty)
-	defer sim.Kill()
+	defer sim.Stop()
 	model := client.Model
 
 	// Test with invalid tasker
@@ -178,7 +178,7 @@ Party[2]
 
 func (s *TestSuite) TestDeleteUnit(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
-	defer sim.Kill()
+	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
 

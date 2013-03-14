@@ -215,7 +215,7 @@ func connectAllUserAndWait(c *C, exercise string) (*simu.SimProcess, *swapi.Clie
 
 func (s *TestSuite) TestModelInitialization(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
-	defer sim.Kill()
+	defer sim.Stop()
 	model := client.Model
 
 	dump := printParties(&prettyPrinter{}, model.GetData()).GetOutput()
@@ -290,7 +290,7 @@ Party[2]
 
 func (s *TestSuite) TestModelIsolation(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
-	defer sim.Kill()
+	defer sim.Stop()
 	model := client.Model
 	data := model.GetData()
 	expected := printParties(&prettyPrinter{}, data).GetOutput()
