@@ -12,13 +12,10 @@
 #include "SpawnCommand.h"
 #include "ProcessWrapper.h"
 #include "tools/GeneralConfig.h"
-#include <boost/filesystem.hpp>
 #include <boost/make_shared.hpp>
 #pragma warning( push, 0 )
 #include <QtGui/qapplication.h>
 #pragma warning( pop )
-
-namespace bfs = boost::filesystem;
 
 namespace frontend
 {
@@ -26,26 +23,23 @@ namespace frontend
 namespace
 {
 
-bfs::path GetGenExecutable()
+tools::Path GetGenExecutable()
 {
-    const bfs::path appDir = bfs::path(
-            QApplication::applicationDirPath().toStdWString() );
-    const bfs::path terDir = appDir.parent_path() / "Terrain" / "applications";
-    return ( terDir / "generation_app.exe" );
+    const tools::Path appDir = tools::Path::FromUnicode( QApplication::applicationDirPath().toStdWString() );
+    return appDir.Parent() / "Terrain" / "applications" / "generation_app.exe";
 }
 
 class TerrainCommand: public SpawnCommand
 {
 public:
-    TerrainCommand( const tools::GeneralConfig& config, const QString& name )
-        : SpawnCommand( config, GetGenExecutable().string().c_str(), true, "")
+    TerrainCommand( const tools::GeneralConfig& config, const tools::Path& name )
+        : SpawnCommand( config, GetGenExecutable(), true, "" )
     {
-        const std::string directory = config.GetTerrainDir( name.toStdString() );
-        bfs::create_directories( directory );
+        const tools::Path directory = config.GetTerrainDir( name );
+        directory.CreateDirectories();
 
-        AddArgument( QString( "--out=\"%1\"" ).arg( directory.c_str() ) );
-        const bfs::path& terDir = GetGenExecutable().parent_path();
-        SetWorkingDirectory( QString::fromStdWString( terDir.wstring() ));
+        AddArgument( QString( "--out=\"%1\"" ).arg( directory.ToUTF8().c_str() ) );
+        SetWorkingDirectory( GetGenExecutable().Parent() );
     }
 };
 
@@ -53,12 +47,12 @@ public:
 
 bool IsTerrainAvailable()
 {
-    return bfs::exists( GetGenExecutable() );
+    return GetGenExecutable().Exists();
 }
 
 boost::shared_ptr< frontend::ProcessWrapper > CreateTerrain(
     ProcessObserver_ABC& observer, const tools::GeneralConfig& config,
-    const QString& name )
+    const tools::Path& name )
 {
     auto cmd = boost::make_shared< TerrainCommand >( config, name );
     auto process = boost::make_shared< ProcessWrapper >( observer, cmd );

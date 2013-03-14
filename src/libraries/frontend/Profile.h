@@ -62,7 +62,7 @@ public:
 
     //! @name Operations
     //@{
-    static void VisitProfiles( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, const std::string& exercise, ProfileVisitor_ABC& visitor );
+    static void VisitProfiles( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, const tools::Path& exercise, ProfileVisitor_ABC& visitor );
     void Send( sword::Profile& message ) const;
     //@}
 

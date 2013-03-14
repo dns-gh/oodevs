@@ -39,27 +39,27 @@ public:
     //! @name Constructors/Destructor
     //@{
              RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFactory_ABC& factory,
-                             const std::string& exercise, kernel::Controller& controller );
+                             const tools::Path& exercise, kernel::Controller& controller );
     virtual ~RemoteExercise();
     //@}
 
     //! @name Accessors
     //@{
-    virtual std::string GetId() const;
-    virtual std::string GetName() const;
+    virtual const std::string& GetId() const;
+    virtual const tools::Path& GetName() const;
     virtual unsigned int GetPort() const;
     virtual bool IsRunning() const;
     virtual bool IsHostedBy( const std::string& host ) const;
-    virtual void Start( const std::string& session ) const;
-    virtual void StartDispatcher( const std::string& session, const T_Parameters& parameters ) const;
-    virtual void Replay( const std::string& session ) const;
-    virtual void Stop( const std::string& session ) const;
+    virtual void Start( const tools::Path& session ) const;
+    virtual void StartDispatcher( const tools::Path& session, const T_Parameters& parameters ) const;
+    virtual void Replay( const tools::Path& session ) const;
+    virtual void Stop( const tools::Path& session ) const;
     virtual void QueryProfileList() const;
-    virtual void Pause( const std::string& session ) const;
-    virtual void Resume( const std::string& session ) const;
-    virtual void ChangeDateTime( const std::string& session, const std::string& date ) const;
-    virtual void SaveCheckpoint( const std::string& session, const std::string& name ) const;
-    virtual void QueryConnectedProfileList( const std::string& session ) const;
+    virtual void Pause( const tools::Path& session ) const;
+    virtual void Resume( const tools::Path& session ) const;
+    virtual void ChangeDateTime( const tools::Path& session, const std::string& date ) const;
+    virtual void SaveCheckpoint( const tools::Path& session, const tools::Path& name ) const;
+    virtual void QueryConnectedProfileList( const tools::Path& session ) const;
     //@}
 
     //! @name Operations
@@ -72,7 +72,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const Host_ABC& host_;
-    const std::string name_;
+    const tools::Path name_;
     const std::string id_;
     const unsigned int port_;
     bool running_;

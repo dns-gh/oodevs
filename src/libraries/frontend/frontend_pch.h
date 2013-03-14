@@ -31,5 +31,7 @@
 #include <string>
 
 #include <tools/Exception.h>
+#include "tools/FileWrapper.h"
+#include "tools/Path.h"
 
 #endif // __frontend_pch_h_

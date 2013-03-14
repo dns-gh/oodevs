@@ -30,12 +30,11 @@ namespace frontend
 // Created: AGE 2007-10-04
 // =============================================================================
 class SpawnCommand : public Process_ABC
-                   , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach = false,
+    SpawnCommand( const tools::GeneralConfig& config, const tools::Path& exe, bool attach = false,
                   std::string commanderEndpoint = "", std::string jobName = ""  );
     virtual ~SpawnCommand();
     //@}
@@ -50,11 +49,11 @@ public:
     virtual void         Stop();
     virtual unsigned int GetPercentage() const;
     virtual QString      GetStatus() const;
-    virtual std::string  GetStartedExercise() const;
-    virtual std::string  GetExercise() const;
-    virtual std::string  GetSession() const;
+    virtual tools::Path  GetStartedExercise() const;
+    virtual tools::Path  GetExercise() const;
+    virtual tools::Path  GetSession() const;
     void                 Attach( boost::shared_ptr< Process_ABC > process );
-    void                 SetWorkingDirectory( const QString& directory );
+    void                 SetWorkingDirectory( const tools::Path& directory );
     const std::string&   GetCommanderEndpoint() const;
     //@}
 
@@ -62,8 +61,8 @@ protected:
     //! @name Operations
     //@{
     void AddRootDirArgument();
-    void AddExerciseArgument( const QString& exercise );
-    void AddSessionArgument ( const QString& session );
+    void AddExerciseArgument( const tools::Path& exercise );
+    void AddSessionArgument ( const tools::Path& session );
     void AddArgument( const QString& arg );
     //@}
 
@@ -90,7 +89,7 @@ private:
     QString                          commandLine_;
     std::auto_ptr<InternalData>      internal_; //!< obscure data structure to hide OS implementation
     bool                             attach_;   //!< if set to true , kill the attached process on exit
-    std::string                      workingDirectory_;
+    tools::Path                      workingDirectory_;
     bool                             stopped_;
     boost::shared_ptr< Process_ABC > attachment_;
     std::string                      networkCommanderEndpoint_;

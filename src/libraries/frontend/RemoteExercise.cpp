@@ -23,11 +23,11 @@ using namespace frontend;
 // Created: SBO 2010-10-01
 // -----------------------------------------------------------------------------
 RemoteExercise::RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFactory_ABC& factory,
-                                const std::string& exercise, kernel::Controller& controller )
+                                const tools::Path& exercise, kernel::Controller& controller )
     : controller_( controller )
     , host_      ( host )
     , name_      ( exercise )
-    , id_        ( factory.CreateIdentifier( name_ ) )
+    , id_        ( factory.CreateIdentifier( exercise ) )
     , port_      ( 0 )
     , running_   ( false )
 {
@@ -47,7 +47,7 @@ RemoteExercise::~RemoteExercise()
 // Name: RemoteExercise::GetId
 // Created: SBO 2010-10-21
 // -----------------------------------------------------------------------------
-std::string RemoteExercise::GetId() const
+const std::string& RemoteExercise::GetId() const
 {
     return id_;
 }
@@ -56,7 +56,7 @@ std::string RemoteExercise::GetId() const
 // Name: RemoteExercise::GetName
 // Created: SBO 2010-10-01
 // -----------------------------------------------------------------------------
-std::string RemoteExercise::GetName() const
+const tools::Path& RemoteExercise::GetName() const
 {
     return name_;
 }
@@ -92,7 +92,7 @@ bool RemoteExercise::IsHostedBy( const std::string& host ) const
 // Name: RemoteExercise::Start
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void RemoteExercise::Start( const std::string& session ) const
+void RemoteExercise::Start( const tools::Path& session ) const
 {
     host_.StartSimulation( name_, session );
 }
@@ -101,7 +101,7 @@ void RemoteExercise::Start( const std::string& session ) const
 // Name: RemoteExercise::StartDispatcher
 // Created: AHC 2011-05-19
 // -----------------------------------------------------------------------------
-void RemoteExercise::StartDispatcher( const std::string& session, const T_Parameters& parameters ) const
+void RemoteExercise::StartDispatcher( const tools::Path& session, const T_Parameters& parameters ) const
 {
     host_.StartDispatcher( name_, session, parameters );
 }
@@ -110,7 +110,7 @@ void RemoteExercise::StartDispatcher( const std::string& session, const T_Parame
 // Name: RemoteExercise::Start
 // Created: SBO 2010-11-12
 // -----------------------------------------------------------------------------
-void RemoteExercise::Replay( const std::string& session ) const
+void RemoteExercise::Replay( const tools::Path& session ) const
 {
     host_.StartReplay( name_, session );
 }
@@ -119,7 +119,7 @@ void RemoteExercise::Replay( const std::string& session ) const
 // Name: RemoteExercise::Stop
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void RemoteExercise::Stop( const std::string& session ) const
+void RemoteExercise::Stop( const tools::Path& session ) const
 {
     host_.StopSession( name_, session );
 }
@@ -147,7 +147,7 @@ void RemoteExercise::QueryProfileList() const
 // Name: RemoteExercise::Pause
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteExercise::Pause( const std::string& session ) const
+void RemoteExercise::Pause( const tools::Path& session ) const
 {
     host_.Pause( name_, session );
 }
@@ -156,7 +156,7 @@ void RemoteExercise::Pause( const std::string& session ) const
 // Name: RemoteExercise::Resume
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteExercise::Resume( const std::string& session ) const
+void RemoteExercise::Resume( const tools::Path& session ) const
 {
     host_.Resume( name_, session );
 }
@@ -165,7 +165,7 @@ void RemoteExercise::Resume( const std::string& session ) const
 // Name: RemoteExercise::ChangeDateTime
 // Created: LGY 2011-06-22
 // -----------------------------------------------------------------------------
-void RemoteExercise::ChangeDateTime( const std::string& session, const std::string& date ) const
+void RemoteExercise::ChangeDateTime( const tools::Path& session, const std::string& date ) const
 {
     host_.ChangeDateTime( name_, session, date );
 }
@@ -174,7 +174,7 @@ void RemoteExercise::ChangeDateTime( const std::string& session, const std::stri
 // Name: RemoteExercise::SaveCheckpoint
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteExercise::SaveCheckpoint( const std::string& session, const std::string& name ) const
+void RemoteExercise::SaveCheckpoint( const tools::Path& session, const tools::Path& name ) const
 {
     host_.SaveCheckpoint( name_, session, name );
 }
@@ -183,7 +183,7 @@ void RemoteExercise::SaveCheckpoint( const std::string& session, const std::stri
 // Name: RemoteExercise::QueryConnectedProfileList
 // Created: AHC 2010-05-23
 // -----------------------------------------------------------------------------
-void RemoteExercise::QueryConnectedProfileList( const std::string& session ) const
+void RemoteExercise::QueryConnectedProfileList( const tools::Path& session ) const
 {
     host_.QueryConnectedProfileList( name_, session );
 }

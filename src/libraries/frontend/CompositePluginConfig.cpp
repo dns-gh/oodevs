@@ -80,7 +80,7 @@ bool CompositePluginConfig::IsAvailable() const
 // Name: CompositePluginConfig::Commit
 // Created: SBO 2011-05-09
 // -----------------------------------------------------------------------------
-void CompositePluginConfig::Commit( const std::string& exercise, const std::string& session )
+void CompositePluginConfig::Commit( const tools::Path& exercise, const tools::Path& session )
 {
     std::for_each( plugins_.begin(), plugins_.end(), boost::bind( &PluginConfig_ABC::Commit, _1, exercise, session ) );
 }

@@ -36,7 +36,7 @@ public:
     //@{
     virtual QString GetName() const = 0;
     virtual bool IsAvailable() const { return true; }
-    virtual void Commit( const std::string& exercise, const std::string& session ) = 0;
+    virtual void Commit( const tools::Path& exercise, const tools::Path& session ) = 0;
     //@}
 };
 

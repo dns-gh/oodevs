@@ -18,10 +18,9 @@
 #include "ScenarioEditPage.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
-#include <boost/filesystem/path.hpp>
 #include <xeumeuleu/xml.hpp>
 
-namespace bfs = boost::filesystem;
+namespace fc = frontend::commands;
 
 // -----------------------------------------------------------------------------
 // Name: CreateExerciceWidget constructor
@@ -78,7 +77,7 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
             sessionLabel_ = new QLabel();
             sessionList_ = new QListWidget();
             sessionList_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
-            connect( sessionList_, SIGNAL( 	currentTextChanged( const QString& ) ), SLOT( OnSessionSelected( const QString& ) ) );
+            connect( sessionList_, SIGNAL( currentTextChanged( const QString& ) ), SLOT( OnSessionSelected( const QString& ) ) );
 
             QVBoxLayout* sessionLayout = new QVBoxLayout();
             sessionLayout->setSpacing( 5 );
@@ -87,7 +86,7 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
 
             //checkpoint panel
             checkpointList_ = new frontend::CheckpointList( config );
-            connect( checkpointList_, SIGNAL( Select( const QString& ) ), SLOT( OnCheckpointSelected( const QString& ) ) );
+            connect( checkpointList_, SIGNAL( Select( const tools::Path& ) ), SLOT( OnCheckpointSelected( const tools::Path& ) ) );
 
             //checkpoint general selection panel
             checkpointCopyPanel_ = new QWidget();
@@ -156,20 +155,20 @@ void CreateExerciceWidget::Update()
     QList< QListWidgetItem* > items = exerciseList_->selectedItems();
     if( !items.empty() )
     {
-        std::string exercise( items[ 0 ]->text().toStdString() );
+        const tools::Path exercise = tools::Path::FromUnicode( items[ 0 ]->text().toStdWString() );
         contentListModel_.clear();
         frontend::BuildExerciseFeatures( exercise, config_, contentListModel_ );
         contentList_->expandAll();
         sessionList_->clear();
-        sessionList_->addItems( frontend::commands::ListSessionsWithCheckpoint( config_, exercise ) );
-        sessionList_->setEnabled( sessionList_->count() );
+        sessionList_->addItems( fc::PathListToQStringList( fc::ListSessionsWithCheckpoint( config_, exercise ) ) );
+        sessionList_->setEnabled( sessionList_->count() > 0 );
         if( !sessionList_->count() )
             sessionList_->addItem( tools::translate( "CreateExerciceWidget", "No session" ) );
         sessionList_->setCurrentRow( 0 );
     }
-    if( exerciseList_->count() != frontend::commands::ListExercises( config_ ).size() )
+    if( exerciseList_->count() != fc::ListExercises( config_ ).size() )
         UpdateExercises( items.empty()? 0 : items[ 0 ]->text() );;
-    if( editTerrainList_->count() - 1 != frontend::commands::ListTerrains( config_ ).size() )
+    if( editTerrainList_->count() - 1 != fc::ListTerrains( config_ ).size() )
         UpdateTerrains();
 }
 
@@ -182,12 +181,12 @@ void CreateExerciceWidget::UpdateExercises( QString selectedItem /*= ""*/ )
     //models
     editModelList_->clear();
     editModelList_->addItem( tools::translate( "CreateExerciceWidget", "Model:" ) );
-    QStringList decisionalModels = frontend::commands::ListModels( config_ );
-    for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+    tools::Path::T_Paths decisionalModels = fc::ListModels( config_ );
+    for( auto it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
     {
-        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
-        for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
-            editModelList_->addItem( QString( "%1/%2" ).arg( *it ).arg( *itP ) );
+        const tools::Path::T_Paths physicalModels = fc::ListPhysicalModels( config_, *it );
+        for( auto itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
+            editModelList_->addItem( QString( "%1/%2" ).arg( it->ToUTF8().c_str() ).arg( itP->ToUTF8().c_str() ) );
     }
     if( editModelList_->count() == 2 )
         editModelList_->setCurrentIndex( 1 );
@@ -195,7 +194,7 @@ void CreateExerciceWidget::UpdateExercises( QString selectedItem /*= ""*/ )
 
     //exercises
     exerciseList_->clear();
-    exerciseList_->addItems( frontend::commands::ListExercises( config_ ) );
+    exerciseList_->addItems( fc::PathListToQStringList( fc::ListExercises( config_ ) ) );
     QList< QListWidgetItem* > items = exerciseList_->findItems( selectedItem, Qt::MatchExactly );
     if( !items.isEmpty() )
         exerciseList_->setItemSelected( items[ 0 ], true );
@@ -209,7 +208,7 @@ void CreateExerciceWidget::UpdateTerrains()
 {
     editTerrainList_->clear();
     editTerrainList_->addItem( tools::translate( "CreateExerciceWidget", "Terrain:" ) );
-    editTerrainList_->addItems( frontend::commands::ListTerrains( config_ ) );
+    editTerrainList_->addItems( fc::PathListToQStringList( fc::ListTerrains( config_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,38 +219,42 @@ void CreateExerciceWidget::CreateExercise()
 {
     if( editTerrainList_->currentIndex() > 0 && editModelList_->currentIndex() > 0 )
     {
-        const QString& name = editName_->text();
-        if( name.isEmpty() || page_.ExerciceExists( name ) )
+        const tools::Path name = tools::Path::FromUnicode( editName_->text().toStdWString() );
+        if( name.IsEmpty() || page_.ExerciceExists( name ) )
             return;
 
-        const std::string terrain = editTerrainList_->currentText().toStdString();
+        const tools::Path terrain = tools::Path::FromUnicode( editTerrainList_->currentText().toStdWString() );
         const QStringList model = editModelList_->currentText().split( "/" );
+        const tools::Path decisionalModel = tools::Path::FromUnicode( model.front().toStdWString() );
+        const tools::Path physicalModel = tools::Path::FromUnicode( model.back().toStdWString() );
 
         if( saveAsGroupBox_->isChecked() )
         {
             QListWidgetItem* item = exerciseList_->currentItem();
             if( item == 0 )
                 return;
+            const tools::Path exercise = tools::Path::FromUnicode( item->text().toStdWString() );
+
             frontend::ExerciseCopyParameters params;
-            params.to_ = name.toStdString();
+            params.to_ = name;
             params.terrain_ = terrain;
-            params.model_ = model.front().toStdString();
-            params.physical_ = model.back().toStdString();
-            params.from_ = item->text().toStdString();
+            params.model_ = decisionalModel;
+            params.physical_ = physicalModel;
+            params.from_ = exercise;
             if( contentList_->isVisible() )
             {
                 params.itemModel_ = &contentListModel_;
                 frontend::CreateExerciseAsCopyOf( config_, params );
             }
-            else if( checkpointCopyPanel_->isVisible() && !checkpoint_.empty() )
+            else if( checkpointCopyPanel_->isVisible() && !checkpoint_.IsEmpty() )
             {
-                bfs::path checkpointPath( config_.GetCheckpointsDir( item->text().toStdString(), session_ ) );
-                params.checkpoint_ = ( checkpointPath / checkpoint_ ).string();
+                tools::Path checkpointPath = config_.GetCheckpointsDir( exercise, session_ );
+                params.checkpoint_ = checkpointPath / checkpoint_;
                 frontend::CreateExerciseAsCopyOfCheckpoint( config_, params );
             }
         }
         else
-            frontend::CreateExercise( config_, name.toStdString(), terrain, model.front().toStdString(), model.back().toStdString() );
+            frontend::CreateExercise( config_, name, terrain, decisionalModel, physicalModel );
 
         page_.Edit( name );
     }
@@ -264,10 +267,10 @@ void CreateExerciceWidget::CreateExercise()
 bool CreateExerciceWidget::EnableEditButton()
 {
     return editTerrainList_->currentIndex() > 0 && editModelList_->currentIndex() > 0
-        && !editName_->text().isEmpty() && !page_.ExerciceExists( editName_->text() )
+        && !editName_->text().isEmpty() && !page_.ExerciceExists( tools::Path::FromUnicode( editName_->text().toStdWString() ) )
         && ( !saveAsGroupBox_->isChecked()
             || ( exerciseList_->currentItem() != 0 && contentList_->isVisible()
-            || ( checkpointCopyPanel_->isVisible() && !checkpoint_.empty() ) ) );
+            || ( checkpointCopyPanel_->isVisible() && !checkpoint_.IsEmpty() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -279,7 +282,7 @@ void CreateExerciceWidget::OnSelectionChanged()
     QList< QListWidgetItem* > items = exerciseList_->selectedItems();
     if( items.empty() )
         return;
-    std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( items[ 0 ]->text().toStdString() ) );
+    std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( tools::Path::FromUnicode( items[ 0 ]->text().toStdWString() ) ) );
     std::string terrain, physical, dataSet;
     *xis >> xml::start( "exercise" )
             >> xml::start( "terrain" )
@@ -290,15 +293,16 @@ void CreateExerciceWidget::OnSelectionChanged()
                 >> xml::attribute( "physical", physical )
             >> xml::end
          >> xml::end;
-    const QStringList terrainList = frontend::commands::ListTerrains( config_ );
+    const QStringList terrainList = fc::PathListToQStringList( fc::ListTerrains( config_ ) );
     int index = terrainList.indexOf( terrain.c_str() );
-    editTerrainList_->setCurrentIndex( index + 1 );
-    const QStringList decisionalModels = frontend::commands::ListModels( config_ );
+    if( index != -1 )
+        editTerrainList_->setCurrentIndex( index + 1 );
+    const tools::Path::T_Paths decisionalModels = fc::ListModels( config_ );
     int indexModel = 0;
-    for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+    for( auto it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
     {
-        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
-        if( std::strcmp( (*it).toStdString().c_str(), dataSet.c_str() ) == 0 )
+        const QStringList physicalModels = fc::PathListToQStringList( fc::ListPhysicalModels( config_, *it ) );
+        if( it->ToUTF8() == dataSet )
         {
             int index = physicalModels.indexOf( QString( physical.c_str() ) );
             if( index != -1 )
@@ -318,8 +322,8 @@ void CreateExerciceWidget::OnSessionSelected( const QString& session )
 {
     if( QListWidgetItem* item = exerciseList_->currentItem() )
     {
-        session_ = session.toStdString();
-        checkpointList_->Update( item->text(), session );
+        session_ = tools::Path::FromUnicode( session.toStdWString() );
+        checkpointList_->Update( tools::Path::FromUnicode( item->text().toStdWString() ), session_ );
         page_.UpdateEditButton();
     }
 }
@@ -328,9 +332,9 @@ void CreateExerciceWidget::OnSessionSelected( const QString& session )
 // Name: CreateExerciceWidget::OnCheckpointSelected
 // Created: NPT 2012-09-14
 // -----------------------------------------------------------------------------
-void CreateExerciceWidget::OnCheckpointSelected( const QString& checkpoint )
+void CreateExerciceWidget::OnCheckpointSelected( const tools::Path& checkpoint )
 {
-    checkpoint_ = frontend::commands::CheckpointExists( config_, exerciseList_->currentItem()->text().toStdString(), session_, checkpoint.toStdString() ) ? checkpoint.toStdString() : "";
+    checkpoint_ = fc::CheckpointExists( config_, tools::Path::FromUnicode( exerciseList_->currentItem()->text().toStdWString() ), session_, checkpoint ) ? checkpoint : "";
     page_.UpdateEditButton();
 }
 

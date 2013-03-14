@@ -16,6 +16,7 @@
 #include "MessageDialog.h"
 #include "SessionTray.h"
 #include "clients_gui/HelpSystem.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_gui/resources.h"
 #include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
@@ -31,7 +32,7 @@ MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_AB
     , sessionTray_( 0 )
 {
     setAttribute( Qt::WA_DeleteOnClose );
-    setWindowIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
+    setWindowIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
     setFixedWidth( 800 );
     setFixedHeight( 600 );
     SetStyle();
@@ -40,8 +41,8 @@ MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_AB
     pages_->setCurrentWidget( home );
     setCentralWidget( pages_ );
     CenterWindow();
-    if( !config.GetPackageFile().empty() )
-        home->InstallPackage( config.GetPackageFile().c_str() );
+    if( !config.GetPackageFile().IsEmpty() )
+        home->InstallPackage( config.GetPackageFile() );
     new gui::HelpSystem( this, tools::GeneralConfig::BuildResourceChildFile( "help/frontend.xml" ) );
     sessionTray_.reset( new SessionTray( this ) );
 }
@@ -128,7 +129,7 @@ void MainWindow::Maximize( QSystemTrayIcon::ActivationReason reason )
 // -----------------------------------------------------------------------------
 void MainWindow::resizeEvent( QResizeEvent * )
 {
-    QImage background = QImage( "resources/images/selftraining/background.png" ).scaledToHeight( height() );
+    QImage background = gui::Image( "resources/images/selftraining/background.png" ).scaledToHeight( height() );
     background = background.scaledToWidth( width() );
     QPalette p( palette() );
     QPixmap px;

@@ -37,7 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetName() const;
-    virtual void Commit( const std::string& exercise, const std::string& session );
+    virtual void Commit( const tools::Path& exercise, const tools::Path& session );
     virtual void OnLanguageChanged();
     //@}
 
@@ -45,8 +45,8 @@ signals:
     //! @name Signals
     //@{
     void SwordVersionSelected( bool isLegacy );
-    void IntegrationPathSelected( const QString& integrationPath );
-    void DumpPathfindOptionsChanged( const QString& filter, const QString& directory );
+    void IntegrationPathSelected( const tools::Path& integrationPath );
+    void DumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
     //@}
 
 private:
@@ -55,7 +55,7 @@ private:
     //config
     const tools::GeneralConfig& config_;
 
-    QStringList* pathList_;
+    QStringList pathList_; // $$$$ ABR 2013-03-04: TODO Extract this to a new ComboBox class which will handle a registry based historic
     //legacy
     QCheckBox* legacyCheckBox_;
     QGroupBox* legacyBox_;

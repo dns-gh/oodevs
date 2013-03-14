@@ -105,7 +105,7 @@ QString SessionConfigPanel::GetName() const
 // Name: SessionConfigPanel::Commit
 // Created: JSR 2010-11-05
 // -----------------------------------------------------------------------------
-void SessionConfigPanel::Commit( const std::string& exercise, const std::string& session )
+void SessionConfigPanel::Commit( const tools::Path& exercise, const tools::Path& session )
 {
     frontend::CreateSession action( config_, exercise, session );
     {

@@ -69,11 +69,11 @@ private slots:
     virtual void OnStart();
     void OnSelect( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile );
     void ClearSelection();
-    void OnSelectCheckpoint( const QString& session, const QString& checkpoint );
+    void OnSelectCheckpoint( const tools::Path& session, const tools::Path& checkpoint );
     void OnSwordVersionSelected( bool isLegacy );
     void OnNoClientSelected( bool noClient );
-    void OnIntegrationPathSelected( const QString& integrationDir );
-    void OnDumpPathfindOptionsChanged( const QString& filter, const QString& directory );
+    void OnIntegrationPathSelected( const tools::Path& integrationDir );
+    void OnDumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
     //@}
 
 protected:
@@ -82,7 +82,7 @@ protected:
     virtual void OnLanguageChanged();
     virtual void Update();
     virtual std::string BuildSessionName() const;
-    void CreateSession( const QString& exercise, const QString& session );
+    void CreateSession( const tools::Path& exercise, const tools::Path& session );
     template< typename T >
     T* AddPlugin();
     bool CanBeStarted() const;
@@ -104,11 +104,11 @@ protected:
     ExerciseList*                 exercises_;
     const frontend::Exercise_ABC* exercise_;
     frontend::Profile             profile_;
-    QString                       session_;
-    QString                       checkpoint_;
-    QString                       integrationDir_;
+    tools::Path                   session_;
+    tools::Path                   checkpoint_;
+    tools::Path                   integrationDir_;
     QString                       pathfindFilter_;
-    QString                       dumpPathfindDirectory_;
+    tools::Path                   dumpPathfindDirectory_;
     T_Plugins                     plugins_;
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;

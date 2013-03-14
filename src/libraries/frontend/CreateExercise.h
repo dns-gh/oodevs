@@ -22,21 +22,20 @@ namespace frontend
         ExerciseCopyParameters() {}
         virtual ~ExerciseCopyParameters() {}
 
-        std::string from_;
-        std::string to_;
-        std::string checkpoint_;
-        std::string terrain_;
-        std::string model_;
-        std::string physical_;
+        tools::Path from_;
+        tools::Path to_;
+        tools::Path checkpoint_;
+        tools::Path terrain_;
+        tools::Path model_;
+        tools::Path physical_;
         const QStandardItemModel* itemModel_;
     };
 
-    void Copy( const std::string& from, const std::string& to );
+    void CreateExercise( const tools::GeneralConfig& config, const tools::Path& name,
+                         const tools::Path& terrain, const tools::Path& model, const tools::Path& physical = tools::Path() );
+    void EditExerciseParameters( const tools::GeneralConfig& config, const tools::Path& name,
+                         const tools::Path& terrain, const tools::Path& model, const tools::Path& physical = tools::Path() );
 
-    void CreateExercise( const tools::GeneralConfig& config, const std::string& name,
-                         const std::string& terrain, const std::string& model, const std::string& physical = "" );
-    void EditExerciseParameters( const tools::GeneralConfig& config, const std::string& name,
-                         const std::string& terrain, const std::string& model, const std::string& physical = "" );
     void CreateExerciseAsCopyOf( const tools::GeneralConfig& config, const ExerciseCopyParameters& parameters );
     void CreateExerciseAsCopyOfCheckpoint( const tools::GeneralConfig& config, const ExerciseCopyParameters& params );
 }

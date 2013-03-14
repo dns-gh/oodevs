@@ -26,15 +26,8 @@ class EditExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             EditExercise( const tools::GeneralConfig& config, const QString& name, bool attach = false );
+             EditExercise( const tools::GeneralConfig& config, const tools::Path& name, bool attach = false );
     virtual ~EditExercise();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    EditExercise( const EditExercise& );            //!< Copy constructor
-    EditExercise& operator=( const EditExercise& ); //!< Assignment operator
     //@}
 };
 

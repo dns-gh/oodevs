@@ -62,7 +62,7 @@ private:
 
     ProgressPage* progressPage_;
     QLineEdit* editName_;
-    QStringList existingTerrains_;
+    tools::Path::T_Paths existingTerrains_;
 
     QLabel* terrainLabel_;
     QLabel* errorLabel_;

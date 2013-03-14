@@ -59,7 +59,7 @@ private slots:
     virtual void OnStart();
     void OnSelectExercise( const frontend::Exercise_ABC& exercise, const frontend::Profile& profile );
     void ClearSelection();
-    void OnSelectSession( const QString& session );
+    void OnSelectSession( const tools::Path& session );
     //@}
 
 private:
@@ -68,7 +68,7 @@ private:
     virtual void OnLanguageChanged();
     virtual void Update();
     void StartExercise();
-    void ConfigureSession( const QString& exercise, const QString& session );
+    void ConfigureSession( const tools::Path& exercise, const tools::Path& session );
     //@}
 
 private:
@@ -82,7 +82,7 @@ private:
     SessionList* sessions_;
     const frontend::Exercise_ABC* exercise_;
     frontend::Profile profile_;
-    QString session_;
+    tools::Path session_;
     //@}
 };
 

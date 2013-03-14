@@ -10,13 +10,12 @@
 #ifndef __commands_h_
 #define __commands_h_
 
-#include <boost/function.hpp>
+#include "tools/ZipExtractor.h"
 
-#pragma warning( push, 0 )
-#include <QtCore/qstringlist.h>
-#pragma( pop )
-
-#include <vector>
+namespace boost
+{
+    template< typename T > class function0;
+}
 
 namespace tools
 {
@@ -26,39 +25,50 @@ namespace tools
 namespace zip
 {
     class izipfile;
-    class ozipfile;
 }
 
 namespace frontend
 {
-    class Config;
-
     namespace commands
     {
-        QStringList ListTerrains        ( const tools::GeneralConfig& config );
-        QStringList ListExercises       ( const tools::GeneralConfig& config, const std::string& subDirs = "" );
-        QStringList ListSessions        ( const tools::GeneralConfig& config, const std::string& exercise );
-        QStringList ListSessionsWithCheckpoint( const tools::GeneralConfig& config, const std::string& exercise );
-        std::map< unsigned int, QString > ListSides( const tools::GeneralConfig& config, const std::string& exercise );
-        QStringList ListCheckpoints     ( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
-        QStringList ListModels          ( const tools::GeneralConfig& config );
-        QStringList ListPropagations    ( const tools::GeneralConfig& config );
-        QStringList ListPhysicalModels  ( const tools::GeneralConfig& config, const std::string& model );
-        QStringList ListScripts         ( const tools::GeneralConfig& config, const std::string& exercise );
-        QStringList ListOrders          ( const tools::GeneralConfig& config, const std::string& exercise );
-        QStringList ListOtherDirectories( const tools::GeneralConfig& config, const std::string& exercise );
-        QStringList ListPackageFiles    ( const std::string& filename );
+        tools::Path::T_Paths ListTerrains        ( const tools::GeneralConfig& config );
+        tools::Path::T_Paths ListExercises       ( const tools::GeneralConfig& config, const tools::Path& subDirs = "" );
+        tools::Path::T_Paths ListSessions        ( const tools::GeneralConfig& config, const tools::Path& exercise );
+        tools::Path::T_Paths ListSessionsWithCheckpoint( const tools::GeneralConfig& config, const tools::Path& exercise );
+        std::map< unsigned int, QString > ListSides( const tools::GeneralConfig& config, const tools::Path& exercise );
+        tools::Path::T_Paths ListCheckpoints     ( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session );
+        tools::Path::T_Paths ListModels          ( const tools::GeneralConfig& config );
+        tools::Path::T_Paths ListPropagations    ( const tools::GeneralConfig& config );
+        tools::Path::T_Paths ListPhysicalModels  ( const tools::GeneralConfig& config, const tools::Path& model );
+        tools::Path::T_Paths ListScripts         ( const tools::GeneralConfig& config, const tools::Path& exercise );
+        tools::Path::T_Paths ListOrders          ( const tools::GeneralConfig& config, const tools::Path& exercise );
+        tools::Path::T_Paths ListOtherDirectories( const tools::GeneralConfig& config, const tools::Path& exercise );
+        tools::Path::T_Paths ListPackageFiles    ( const tools::Path& filename );
 
-        void InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination );
-        void InstallPackageFile( zip::izipfile& archive, const std::string& destination, boost::function0< void > callback );
+        void InstallPackageFile( zip::izipfile& archive, const tools::Path& filename, const tools::Path& destination );
+        template< typename Functor >
+        void InstallPackageFile( zip::izipfile& archive, const tools::Path& destination, Functor callback )
+        {
+            while( archive.isOk() && archive.browse() )
+            {
+                const tools::Path name = tools::Path::FromUTF8( archive.getCurrentFileName() );
+                if( name != "content.xml" ) // $$$$ SBO 2008-03-17: hard coded!
+                {
+                    tools::zipextractor::ExtractFile( archive, 0, name, destination );
+                    callback();
+                }
+            }
+        }
 
-        std::vector< std::string > RemoveCheckpoint( const tools::GeneralConfig& config, const std::string& exercise,
-                                                     const std::string& session, const std::vector< std::string >& checkpoints );
+        tools::Path::T_Paths RemoveCheckpoint( const tools::GeneralConfig& config, const tools::Path& exercise,
+                                               const tools::Path& session, const tools::Path::T_Paths& checkpoints );
 
-        bool ExerciseExists( const tools::GeneralConfig& config, const std::string& exercise );
-        bool SessionExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
-        bool CheckpointExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session, const std::string& checkpoint );
-        bool TerrainExists( const tools::GeneralConfig& config, const std::string& terrain );
+        bool ExerciseExists( const tools::GeneralConfig& config, const tools::Path& exercise );
+        bool SessionExists( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session );
+        bool CheckpointExists( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const tools::Path& checkpoint );
+        bool TerrainExists( const tools::GeneralConfig& config, const tools::Path& terrain );
+
+        QStringList PathListToQStringList( const tools::Path::T_Paths& paths );
     }
 }
 

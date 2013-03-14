@@ -11,6 +11,7 @@
 #include "ExerciseProperties.h"
 #include "moc_ExerciseProperties.cpp"
 #include "MessageDialog.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_kernel/Tools.h"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
@@ -18,6 +19,8 @@
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
+
+namespace fc = frontend::commands;
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseProperties constructor
@@ -106,17 +109,17 @@ void ExerciseProperties::Update()
     {
         terrainList_->clear();
         terrainList_->addItem( tools::translate( "ExerciseProperties", "Terrain:" ) );
-        terrainList_->addItems( frontend::commands::ListTerrains( config_ ) );
+        terrainList_->addItems( fc::PathListToQStringList( fc::ListTerrains( config_ ) ) );
 
         modelList_->clear();
         modelList_->addItem( tools::translate( "ExerciseProperties", "Model:" ) );
-        const QStringList decisionalModels = frontend::commands::ListModels( config_ );
+        const tools::Path::T_Paths decisionalModels = fc::ListModels( config_ );
         int index = 1;
-        for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+        for( auto it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
         {
-            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
-            for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP, ++index )
-                modelList_->addItem( QString( "%1/%2" ).arg( *it ).arg( *itP ), index );
+            const tools::Path::T_Paths physicalModels = fc::ListPhysicalModels( config_, *it );
+            for( auto itP = physicalModels.begin(); itP != physicalModels.end(); ++itP, ++index )
+                modelList_->addItem( QString( "%1/%2" ).arg( it->ToUTF8().c_str() ).arg( itP->ToUTF8().c_str() ), index );
         }
         if( modelList_->count() == 2 )
             modelList_->setCurrentIndex( 1 );
@@ -144,7 +147,7 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
         currentTerrain_.clear();
         currentData_.clear();
         currentPhysical_.clear();
-        std::string image;
+        tools::Path image;
         *xis >> xml::start( "exercise" )
                 >> xml::start( "terrain" )
                     >> xml::attribute( "name", currentTerrain_ )
@@ -159,10 +162,10 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
                     >> xml::optional >> xml::start( "briefing" )
                         >> xml::optional  >> xml::content( "image", image )
                             >> xml::list( "text", *this, &ExerciseProperties::ReadBriefingText );
-            if( !image.empty() )
+            if( !image.IsEmpty() )
             {
-                const std::string imagePath = config_.GetExerciseDir( QString( "%1/%2" ).arg( exercise->GetName().c_str() ).arg( image.c_str() ).toStdString() );
-                const QImage pix( imagePath.c_str() );
+                const tools::Path imagePath = config_.GetExerciseDir( exercise->GetName() / image );
+                const gui::Image pix( imagePath );
                 QPixmap px;
                 px.fromImage( pix );
                 briefingImage_->setPixmap( px );
@@ -170,7 +173,7 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
         }
         if( terrainList_ )
         {
-            const QStringList terrainList = frontend::commands::ListTerrains( config_ );
+            const QStringList terrainList = fc::PathListToQStringList( fc::ListTerrains( config_ ) );
             int index = terrainList.indexOf( currentTerrain_.c_str() );
             terrainList_->setCurrentIndex( index + 1 );
             int modelIndex = modelList_->findText( QString( "%1/%2" ).arg( currentData_.c_str() ).arg( currentPhysical_.c_str() ) );
@@ -241,9 +244,9 @@ bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
     if( dataChanged_ )
         if( terrainList_ && terrainList_->currentIndex() > 0 && modelList_ && modelList_->currentIndex() > 0 )
         {
-            const std::string terrain = terrainList_->currentText().toStdString();
+            const tools::Path terrain = tools::Path::FromUnicode( terrainList_->currentText().toStdWString() );
             const QStringList model = QString( modelList_->currentText() ).split( "/" );
-            frontend::EditExerciseParameters( config_, exercise.GetName(), terrain, model.front().toStdString(), model.back().toStdString() );
+            frontend::EditExerciseParameters( config_, exercise.GetName(), terrain, tools::Path::FromUnicode( model.front().toStdWString() ), tools::Path::FromUnicode( model.back().toStdWString() ) );
         }
     dataChanged_ = false;
     return true;

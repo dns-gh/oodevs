@@ -11,20 +11,23 @@
 #include "ExportWidget.h"
 #include "moc_ExportWidget.cpp"
 #include "ExerciseListView.h"
+#include "clients_gui/FileDialog.h"
 #include "clients_gui/tools.h"
 #include "clients_kernel/Controllers.h"
 #include "frontend/commands.h"
 #include "frontend/ListViewHelper.h"
+#include "tools/EncodingConverter.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
 #include "tools/Version.h"
-#include <tools/EncodingConverter.h>
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
+#include "tools/FileWrapper.h"
 #include <xeumeuleu/xml.h>
-#include <zipstream/zipstream.h>
+#pragma warning( push )
+#pragma warning( disable: 4244 4267 )
+#include <zipstream/ozipstream.h>
+#pragma warning( pop )
 
-namespace bfs = boost::filesystem;
+namespace fc = frontend::commands;
 
 // -----------------------------------------------------------------------------
 // Name: ExportWidget constructor
@@ -263,13 +266,13 @@ QTextEdit* ExportWidget::GetCurrentDescription() const
 
 namespace
 {
-    std::pair< std::string, std::string > Extract( const QString& text )
+    std::pair< tools::Path, tools::Path > Extract( const QString& text )
     {
         std::string selectedText = text.toStdString();
         size_t separator = selectedText.find_first_of( '/' );
         std::string base = selectedText.substr( 0, separator );
         std::string physical = selectedText.substr( separator, std::string::npos );
-        return std::make_pair( base, physical );
+        return std::make_pair( tools::Path::FromUTF8( base ), tools::Path::FromUTF8( physical ) );
     }
 }
 
@@ -287,7 +290,7 @@ QString ExportWidget::GetCurrentPackage() const
     case eTabs_Terrain:
         return text;
     case eTabs_Models:
-        return modelName_->text() + Extract( text ).second.c_str();
+        return modelName_->text() + Extract( text ).second.ToUTF8().c_str();
     default:
         break;
     }
@@ -302,7 +305,7 @@ bool ExportWidget::IsButtonEnabled()
 {
     QString text = GetCurrentSelection();
     if( !text.isEmpty() )
-        package_.second = text.toStdString() + ".otpak";
+        package_.second = tools::Path::FromUnicode( text.toStdWString() ) + ".otpak";
     return !text.isEmpty();
 }
 
@@ -312,9 +315,9 @@ bool ExportWidget::IsButtonEnabled()
 // -----------------------------------------------------------------------------
 void ExportWidget::OnSelectionChanged( const QModelIndex& modelIndex, const QModelIndex& /*previous*/ )
 {
-    std::string exercise( exerciseList_->GetExerciseName( modelIndex ).toStdString() );
+    tools::Path exercise = exerciseList_->GetExerciseName( modelIndex );
     exerciseContentModel_.clear();
-    if( !exercise.empty() )
+    if( !exercise.IsEmpty() )
     {
         frontend::BuildExerciseFeatures( exercise, config_, exerciseContentModel_ );
         frontend::BuildExerciseData( exercise, config_, exerciseContentModel_, fileLoader_ );
@@ -351,24 +354,24 @@ void ExportWidget::Update( QListWidgetItem* item /*= 0*/ )
     {
         // Terrain
         terrainList_->clear();
-        terrainList_->addItems( frontend::commands::ListTerrains( config_ ) );
+        terrainList_->addItems( fc::PathListToQStringList( fc::ListTerrains( config_ ) ) );
         // Physical
         decisionalCheckBox_->setEnabled( false );
         physicalList_->clear();
         QStringList physicalBase;
-        QStringList decisionalModels = frontend::commands::ListModels( config_ );
-        for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+        tools::Path::T_Paths decisionalModels = fc::ListModels( config_ );
+        for( auto it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
         {
-            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
-            for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
-                physicalBase << QString( "%1/%2" ).arg( *it ).arg( *itP );
+            const tools::Path::T_Paths physicalModels = fc::ListPhysicalModels( config_, *it );
+            for( auto itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
+                physicalBase << QString( "%1/%2" ).arg( it->ToUTF8().c_str() ).arg( itP->ToUTF8().c_str() );
         }
         physicalList_->addItems( physicalBase );
         modelName_->clear();
     }
     else if( tabs_->currentIndex() == eTabs_Models )
     {
-        modelName_->setText( Extract( physicalList_->currentItem()->text() ).first.c_str() );
+        modelName_->setText( Extract( physicalList_->currentItem()->text() ).first.ToUTF8().c_str() );
         decisionalCheckBox_->setEnabled( true );
     }
     OnButtonChanged();
@@ -390,49 +393,47 @@ namespace
         std::copy( it, end, out );
     }
 
-    void CopyFile( const bfs::path& root, const std::string& name, zip::ozipfile& zos, QProgressBar* progress )
+    void CopyFile( const tools::Path& root, const tools::Path& name, zip::ozipfile& zos, QProgressBar* progress )
     {
-        std::string filename( root.string() );
-        std::ifstream file( filename.c_str(), std::ifstream::in | std::ifstream::binary );
+        tools::Ifstream file( root, tools::Ifstream::in | tools::Ifstream::binary );
         if( file.good() )
         {
-            zip::ozipstream stream( zos, name.c_str(), std::ios_base::out | std::ios_base::binary );
+            zip::ozipstream stream( zos, name.ToUTF8().c_str(), std::ios_base::out | std::ios_base::binary );
             Copy( file, stream );
             AddProgress( progress, 10 );
         }
     }
 
-    void BrowseDirectory( const bfs::path& root, const std::string& name, zip::ozipfile& zos, bool recursive, QProgressBar* progress )
+    void BrowseDirectory( const tools::Path& root, const tools::Path& name, zip::ozipfile& zos, bool recursive, QProgressBar* progress )
     {
-        bfs::directory_iterator end;
-        for( bfs::directory_iterator it( root ); it != end; ++it )
+        for( auto it = root.begin(); it != root.end(); ++it )
         {
-            const bfs::path child = *it;
-            if( bfs::is_regular_file( child ) )
+            const tools::Path& child = *it;
+            if( child.IsRegularFile() )
             {
-                const std::string& file( child.filename().string() );
-                CopyFile( ( root / file.c_str() ), name + "/" + file, zos, progress );
+                const tools::Path& file = child.FileName();
+                CopyFile( root / file, name / file, zos, progress );
             }
-            else if( recursive && bfs::is_directory( child ) && child.filename() != ".svn" )
+            else if( recursive && child.IsDirectory() && child.FileName() != ".svn" )
             {
-                BrowseDirectory( child, name + "/" + child.filename().string(), zos, recursive, progress );
+                BrowseDirectory( child, name / child.FileName(), zos, recursive, progress );
             }
             AddProgress( progress, 2 );
         }
     }
 
-    void Serialize( const std::string& base, const std::string& name, zip::ozipfile& zos, bool recursive, QProgressBar* progress, const std::string& exportName = "" )
+    void Serialize( const tools::Path& base, const tools::Path& name, zip::ozipfile& zos, bool recursive, QProgressBar* progress, const tools::Path& exportName = "" )
     {
-        const bfs::path root = bfs::path( base ) / name;
-        if( ! bfs::exists( root ) )
+        const tools::Path root = base / name;
+        if( !root.Exists() )
             return;
-        if( ! bfs::is_directory( root ) )
+        if( !root.IsDirectory() )
             CopyFile( root, name, zos, progress );
         else
             BrowseDirectory( root, exportName != "" ? exportName : name, zos, recursive, progress );
     }
 
-    void BrowseChildren( const std::string& base, QStandardItem* item, zip::ozipfile& zos, QProgressBar* progress, bool recursive )
+    void BrowseChildren( const tools::Path& base, QStandardItem* item, zip::ozipfile& zos, QProgressBar* progress, bool recursive )
     {
         int row = 0;
         while( row < item->rowCount() )
@@ -440,7 +441,7 @@ namespace
             frontend::CheckListItem* child = dynamic_cast< frontend::CheckListItem* >( item->child( row ) );
             if( child && child->checkState() == Qt::Checked )
             {
-                std::string file( child->text().toStdString() );
+                tools::Path file = tools::Path::FromUnicode( child->text().toStdWString() ) ;
                 Serialize( base, file, zos, recursive, progress );
             }
             AddProgress( progress, 2 );
@@ -448,7 +449,7 @@ namespace
         }
     }
 
-    void BrowseFiles( const std::string& base, const QStandardItemModel& model, zip::ozipfile& zos, QProgressBar* progress )
+    void BrowseFiles( const tools::Path& base, const QStandardItemModel& model, zip::ozipfile& zos, QProgressBar* progress )
     {
         for( int row = 0; row < model.rowCount(); ++row )
         {
@@ -460,7 +461,7 @@ namespace
                     frontend::CheckListItem* item = dynamic_cast< frontend::CheckListItem* >( treeNode->child( row2 ) );
                     if( item && item->checkState() == Qt::Checked )
                     {
-                        std::string file( item->text().toStdString() );
+                        tools::Path file = tools::Path::FromUnicode( item->text().toStdWString() );
                         Serialize( base, file, zos, item->IsRecursive(), progress );
                         if( item->hasChildren() )
                             BrowseChildren( base, item, zos, progress, item->IsRecursive() );
@@ -483,13 +484,13 @@ namespace
         return itemCount;
     }
 
-    bfs::path GetDiffPath( bfs::path basepath, bfs::path other )
+    tools::Path GetDiffPath( tools::Path basepath, tools::Path other )
     {
-        bfs::path diff;
+        tools::Path diff;
         while( other != basepath )
         {
-            diff = other.stem() / diff;
-            other = other.parent_path();
+            diff = other.FileName() / diff;
+            other = other.Parent();
         }
         return diff;
     }
@@ -503,8 +504,8 @@ void ExportWidget::ExportPackage()
 {
     if( BrowseClicked() )
     {
-        std::string filename( std::string( package_.first.c_str() ) + "/" + package_.second.c_str() );
-        zip::ozipfile archive( filename.c_str() );
+        tools::Path file = package_.first / package_.second;
+        zip::ozipfile archive( file.ToUnicode() );
         if( archive.isOk() )
             InternalExportPackage( archive );
     }
@@ -516,15 +517,14 @@ void ExportWidget::ExportPackage()
 // -----------------------------------------------------------------------------
 bool ExportWidget::BrowseClicked()
 {
-    const QString filename = QFileDialog::getSaveFileName( this, tools::translate( "ExportWidget", "Select a package" ), package_.second.c_str(), "SWORD packages (*.otpak)" );
-    if( filename.isEmpty() )
+    const tools::Path filename = gui::FileDialog::getSaveFileName( this, tools::translate( "ExportWidget", "Select a package" ), package_.second.ToUTF8().c_str(), "SWORD packages (*.otpak)" );
+    if( filename.IsEmpty() )
         return false;
-    const bfs::path file = bfs::path( tools::FromUtf8ToLocalCharset( filename.toStdString() ) );
-    package_.first = file.parent_path().string();
-    package_.second = file.filename().string();
-    if( bfs::exists( file ) )
+    package_.first = filename.Parent();
+    package_.second = filename.FileName();
+    if( filename.Exists() )
         return QMessageBox::question( this, tools::translate( "ExportWidget", "Overwrite File?" ),
-                            tools::translate( "ExportWidget", "A file called %1 already exists. Do you want to overwrite it?" ).arg( filename ),
+                            tools::translate( "ExportWidget", "A file called %1 already exists. Do you want to overwrite it?" ).arg( filename.ToUTF8().c_str() ),
                             QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes;
     return true;
 }
@@ -578,36 +578,36 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
             assert( terrainList_->currentItem() );
             progress_->setValue( 0 );
             progress_->setMaximum( 100 );
-            bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetTerrainDir( terrainList_->currentItem()->text().toStdString() ) );
-            Serialize( config_.GetRootDir(), diffPath.string(), archive, true, progress_ );
+            tools::Path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetTerrainDir( tools::Path::FromUnicode( terrainList_->currentItem()->text().toStdWString() ) ) );
+            Serialize( config_.GetRootDir(), diffPath, archive, true, progress_ );
             progress_->setValue( 100 );
         }
         break;
     case eTabs_Models:
         {
             assert( physicalList_->currentItem() );
-            std::pair< std::string, std::string > content( Extract( physicalList_->currentItem()->text() ) );
+            std::pair< tools::Path, tools::Path > content( Extract( physicalList_->currentItem()->text() ) );
 
-            bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / content.first;
-            bfs::path exportPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / modelName_->text().toStdString();
+            tools::Path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / content.first;
+            tools::Path exportPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / tools::Path::FromUnicode( modelName_->text().toStdWString() );
 
             if( decisionalCheckBox_->isChecked() )
             {
                 progress_->setValue( 0 );
                 progress_->setMaximum( 100 );
-                Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / content.second ).string(), archive, true, progress_,
-                                                 bfs::path( exportPath / "physical" / content.second ).string() );
+                Serialize( config_.GetRootDir(), diffPath / "physical" / content.second, archive, true, progress_,
+                                                 exportPath / "physical" / content.second );
                 progress_->setValue( 50 );
-                Serialize( config_.GetRootDir(), bfs::path( diffPath / "decisional" ).string(), archive, true, progress_,
-                                                 bfs::path( exportPath / "decisional" ).string() );
+                Serialize( config_.GetRootDir(), diffPath / "decisional", archive, true, progress_,
+                                                 exportPath / "decisional" );
                 progress_->setValue( 100 );
             }
             else
             {
                 progress_->setValue( 0 );
                 progress_->setMaximum( 100 );
-                Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / content.second ).string(), archive, true, progress_,
-                                                 bfs::path( exportPath / "physical" / content.second ).string() );
+                Serialize( config_.GetRootDir(), diffPath / "physical" / content.second, archive, true, progress_,
+                                                 exportPath / "physical" / content.second );
                 progress_->setValue( 100 );
             }
             break;

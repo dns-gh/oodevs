@@ -36,7 +36,6 @@ namespace frontend
 // =============================================================================
 class ProfileList : public QListWidget
 {
-
     Q_OBJECT
 
 public:
@@ -47,10 +46,9 @@ public:
     //@}
 
 public slots:
-
     //! @name Slots
     //@{
-    void Update( const QString& exercise );
+    void Update( const tools::Path& exercise );
     void OnSelect( int index );
     //@}
 
@@ -61,15 +59,9 @@ signals:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ProfileList( const ProfileList& );            //!< Copy constructor
-    ProfileList& operator=( const ProfileList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void ReadProfiles( const std::string& exercise );
+    void ReadProfiles( const tools::Path& exercise );
     void ReadProfile ( xml::xistream& xis );
     //@}
 

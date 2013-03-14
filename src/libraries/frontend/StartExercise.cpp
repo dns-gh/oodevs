@@ -27,9 +27,9 @@ namespace
         return config.GetValue< bool >( "session/config/simulation/dispatcher/@embedded" );
     }
 
-    std::string GetEmbeddedDispatcherPath( const ConfigurationManipulator& config )
+    tools::Path GetEmbeddedDispatcherPath( const ConfigurationManipulator& config )
     {
-        return config.GetValue< std::string >( "session/config/simulation/dispatcher/@path?" );
+        return tools::Path::FromUTF8( config.GetValue< std::string >( "session/config/simulation/dispatcher/@path?" ) );
     }
 }
 
@@ -37,12 +37,12 @@ namespace
 // Name: StartExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session,
+StartExercise::StartExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session,
                               const std::map< std::string, std::string >& arguments, bool attach, bool launchDispatchedIfNotEmbedded /* = true*/,
                               std::string commanderEndpoint /* = ""*/, std::string processJobName /* = ""*/ )
     : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, processJobName )
-    , exercise_ ( exercise.toStdString() )
-    , session_ ( session.toStdString() )
+    , exercise_ ( exercise )
+    , session_ ( session )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
     , percentage_( 0 )
 {
@@ -50,7 +50,7 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     const std::string checkpoint = it != arguments.end() ? it->second : "";
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) && launchDispatchedIfNotEmbedded )
     {
-        QString dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ).c_str() );
+        tools::Path dispatcher_path = GetEmbeddedDispatcherPath( *configManipulator_ );
         dispatcher_.reset( new frontend::StartDispatcher( config, attach, exercise, session, checkpoint.c_str(), dispatcher_path ) );
     }
 
@@ -134,16 +134,16 @@ QString StartExercise::GetStatus() const
 // Name: StartExercise::GetStartedExercise
 // Created: LDC 2008-10-23
 // -----------------------------------------------------------------------------
-std::string StartExercise::GetStartedExercise() const
+tools::Path StartExercise::GetStartedExercise() const
 {
-    return GetPercentage() == 100 ? exercise_ : std::string();
+    return GetPercentage() == 100 ? exercise_ : tools::Path();
 }
 
 // -----------------------------------------------------------------------------
 // Name: StartExercise::GetExercise
 // Created: RPD 2011-09-12
 // -----------------------------------------------------------------------------
-std::string StartExercise::GetExercise() const
+tools::Path StartExercise::GetExercise() const
 {
     return exercise_;
 }
@@ -152,7 +152,7 @@ std::string StartExercise::GetExercise() const
 // Name: StartExercise::GetSession
 // Created: RPD 2011-09-12
 // -----------------------------------------------------------------------------
-std::string StartExercise::GetSession() const
+tools::Path StartExercise::GetSession() const
 {
     return session_;
 }

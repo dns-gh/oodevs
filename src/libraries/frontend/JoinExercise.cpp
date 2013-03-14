@@ -22,7 +22,7 @@ using namespace frontend;
 // Name: JoinExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-JoinExercise::JoinExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach )
+JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, bool attach )
     : SpawnCommand( config, "gaming_app.exe", attach, "" )
 {
     AddRootDirArgument();
@@ -34,7 +34,7 @@ JoinExercise::JoinExercise( const tools::GeneralConfig& config, const QString& e
 // Name: JoinExercise constructor
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-JoinExercise::JoinExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& profile, bool attach /* = false*/ )
+JoinExercise::JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile, bool attach /* = false*/ )
     : SpawnCommand( config, "gaming_app.exe", attach, "" )
 {
     AddRootDirArgument();

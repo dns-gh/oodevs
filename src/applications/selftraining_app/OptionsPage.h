@@ -56,7 +56,7 @@ public:
 public:
     //! @name Operations
     //@{
-    void ShowPackageInstallation( const QString& package );
+    void ShowPackageInstallation( const tools::Path& package );
     //@}
 
 public slots:
@@ -123,7 +123,7 @@ private:
     //@{
     T_Languages  languages_;
     std::string  selectedLanguage_;
-    std::string  selectedDataDir_;
+    tools::Path  selectedDataDir_;
     QLabel*      languageLabel_;
     QComboBox*   languageCombo_;
     QLabel*      dataLabel_;

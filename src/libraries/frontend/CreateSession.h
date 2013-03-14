@@ -11,6 +11,7 @@
 #define __CreateSession_h_
 
 #include "ConfigurationManipulator.h"
+#include <boost/noncopyable.hpp>
 
 namespace tools
 {
@@ -26,13 +27,13 @@ namespace frontend
 */
 // Created: SBO 2008-02-25
 // =============================================================================
-class CreateSession
+class CreateSession : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CreateSession( const std::string& filePath );
-             CreateSession( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
+    explicit CreateSession( const tools::Path& filePath );
+             CreateSession( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session );
     virtual ~CreateSession();
     //@}
 
@@ -50,17 +51,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CreateSession( const CreateSession& );            //!< Copy constructor
-    CreateSession& operator=( const CreateSession& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     std::auto_ptr< ConfigurationManipulator > setter_;
-    std::string session_;
+    tools::Path session_;
     //@}
 };
 

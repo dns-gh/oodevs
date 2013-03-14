@@ -25,15 +25,8 @@ class ImportExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             ImportExercise( const tools::GeneralConfig& config, const QString& inputScenario, const QString& outputScenario, bool attach = false );
+             ImportExercise( const tools::GeneralConfig& config, const tools::Path& inputScenario, const tools::Path& outputScenario, bool attach = false );
     virtual ~ImportExercise();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ImportExercise( const ImportExercise& );            //!< Copy constructor
-    ImportExercise& operator=( const ImportExercise& ); //!< Assignment operator
     //@}
 };
 

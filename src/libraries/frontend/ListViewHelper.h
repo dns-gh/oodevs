@@ -37,8 +37,8 @@ namespace frontend
         bool recursive_;
     };
 
-    void BuildExerciseData( const std::string& exercise, const tools::GeneralConfig& config, QStandardItemModel& content, const tools::Loader_ABC& fileLoader );
-    void BuildExerciseFeatures( const std::string& exercise, const tools::GeneralConfig& config, QStandardItemModel& content );
+    void BuildExerciseData( const tools::Path& exercise, const tools::GeneralConfig& config, QStandardItemModel& content, const tools::Loader_ABC& fileLoader );
+    void BuildExerciseFeatures( const tools::Path& exercise, const tools::GeneralConfig& config, QStandardItemModel& content );
 }
 
 #endif // __ListViewHelper_h_

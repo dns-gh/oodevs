@@ -77,7 +77,7 @@ std::string Launcher::GetLastError() const
 // Name: Launcher::SetRootDir
 // Created: ABR 2011-11-08
 // -----------------------------------------------------------------------------
-void Launcher::SetRootDir( const std::string& directory )
+void Launcher::SetRootDir( const tools::Path& directory )
 {
     launcher_->SetRootDir( directory );
 }

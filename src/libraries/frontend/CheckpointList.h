@@ -37,14 +37,14 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const QString& exercice, const QString& session );
+    void Update( const tools::Path& exercice, const tools::Path& session );
     void ClearSelection();
     //@}
 
 signals:
     //! @name Signals
     //@{
-    void Select( const QString& checkpoint );
+    void Select( const tools::Path& checkpoint );
     //@}
 
 public slots:
@@ -60,20 +60,13 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CheckpointList( const CheckpointList& );            //!< Copy constructor
-    CheckpointList& operator=( const CheckpointList& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
     QListWidget* list_;
-    QString exercise_;
-    QString session_;
-    QStringList checkpoints_;
+    tools::Path exercise_;
+    tools::Path session_;
+    tools::Path::T_Paths checkpoints_;
     bool enabled_;
     //@}
 };

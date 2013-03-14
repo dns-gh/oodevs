@@ -14,10 +14,8 @@
 #include "tools/DefaultLoader.h"
 #include "tools/GeneralConfig.h"
 #include "tools/NullFileLoaderObserver.h"
-#include <boost/filesystem.hpp>
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
-
-namespace bfs = boost::filesystem;
 
 using namespace frontend;
 
@@ -26,8 +24,10 @@ using namespace frontend;
 // Created: SBO 2011-05-09
 // -----------------------------------------------------------------------------
 PluginConfigBuilder::PluginConfigBuilder( const tools::GeneralConfig& config, QTabWidget* parent )
-    : config_   ( config )
+    : config_( config )
     , composite_( new CompositePluginConfig( parent ) )
+    , observer_( new tools::NullFileLoaderObserver() )
+    , loader_( new tools::DefaultLoader( *observer_ ) )
 {
     // NOTHING
 }
@@ -42,37 +42,40 @@ PluginConfigBuilder::~PluginConfigBuilder()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PluginConfigBuilder::AddPlugin
+// Created: ABR 2013-03-01
+// -----------------------------------------------------------------------------
+bool PluginConfigBuilder::AddPlugin( const tools::Path& path )
+{
+    if( path.FileName() == "plugin.xml" )
+    {
+        try
+        {
+            std::auto_ptr< xml::xistream > xis = loader_->LoadFile( path );
+            *xis >> xml::start( "plugin" );
+            composite_->Add( config_, *xis );
+        }
+        catch( const xml::exception& e )
+        {
+            observer_->NotifyInvalidXml( path, e );
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PluginConfigBuilder::BuildFromXml
 // Created: SBO 2011-05-09
 // -----------------------------------------------------------------------------
 PluginConfigBuilder& PluginConfigBuilder::BuildFromXml()
 {
-    const bfs::path root( config_.BuildPluginDirectory( "" ) );
-    if( composite_.get() && bfs::exists( root ) )
-    {
-        tools::NullFileLoaderObserver observer;
-        tools::DefaultLoader loader( observer );
-        bfs::recursive_directory_iterator end;
-        for( bfs::recursive_directory_iterator it( root ); it != end; ++it )
-            if( it->path().filename() == "plugin.xml" )
-            {
-                try
-                {
-                    std::auto_ptr< xml::xistream > xis = loader.LoadFile( it->path().string() );
-                    *xis >> xml::start( "plugin" );
-                    composite_->Add( config_, *xis );
-                }
-                catch( const xml::exception& e )
-                {
-                    observer.NotifyInvalidXml( it->path().string(), e );
-                }
-                catch( ... )
-                {
-                    // NOTHING
-                }
-                it.no_push();
-            }
-    }
+    const tools::Path root = config_.BuildPluginDirectory( "" );
+    if( composite_.get() && root.Exists() )
+        root.Apply( boost::bind( &PluginConfigBuilder::AddPlugin, this, _1 ), true );
     return *this;
 }
 

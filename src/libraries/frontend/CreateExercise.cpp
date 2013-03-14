@@ -13,25 +13,22 @@
 #include "tools/GeneralConfig.h"
 #include "tools/SchemaWriter.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <algorithm>
 
-namespace bfs = boost::filesystem;
-
 namespace
 {
-    void CreateExerciseXml( const std::string& file, const std::string& terrain, const std::string& model, const std::string& physical, bool keepMeta )
+    // -----------------------------------------------------------------------------
+    void CreateExerciseXml( const tools::Path& file, const tools::Path& terrain, const tools::Path& model, const tools::Path& physical, bool keepMeta )
     {
-        xml::xofstream xos( file );
+        tools::Xofstream xos( file );
         xos << xml::start( "exercise" );
         tools::SchemaWriter().WriteExerciseSchema( xos, "exercise" );
 
         std::string actionPlanning;
-        if( boost::filesystem::exists( file ) )
+        if( file.Exists() )
         {
-            xml::xifstream xis( file );
+            tools::Xifstream xis( file );
             xis >> xml::start( "exercise" );
             if( xis.has_child( "action-planning" ) )
                 xis >> xml::start( "action-planning" ) >> xml::attribute( "file", actionPlanning ) >> xml::end;
@@ -59,8 +56,10 @@ namespace
                     << xml::attribute( "dataset", model )
                     << xml::attribute( "physical", physical )
                 << xml::end
-        << xml::end;
+            << xml::end;
     }
+
+    // -----------------------------------------------------------------------------
     void CopyXmlFields( xml::xistream& xis, xml::xostream& xos, const std::string& fields )
     {
         std::vector< std::string > fieldsVector;
@@ -73,72 +72,19 @@ namespace
                 xis >> xml::end;
             }
     }
-    void Copy( const bfs::path& from, const bfs::path& to, const bfs::path& baseFrom, const bfs::path& baseTo, const QStandardItem* files, int depth = -1 );
-    void CopyDirectory( const bfs::path& from, const bfs::path& baseFrom, const bfs::path& baseTo, const QStandardItem* files, int depth )
-    {
-        bfs::directory_iterator end_itr;
-        for( bfs::directory_iterator it( from ); it != end_itr; ++it )
-        {
-            if( files )
-            {
-                bool founded = false;
-                
-                for( int i = 0; i < files->rowCount(); i++ )
-                    if( files->child( i )->text().toStdString().find( it->path().filename().string() ) != std::string::npos )
-                        founded = true;
-                if( founded )
-                    continue;
-            }
-            std::string filename = it->path().string();
-            boost::algorithm::replace_first( filename, baseFrom.string(), baseTo.string() );
-            Copy( it->path(), filename, baseFrom, baseTo, files, ( depth > 0 ) ? depth - 1 : depth );
-        }
-    }
-    void Copy( const bfs::path& from, const bfs::path& to, const bfs::path& baseFrom, const bfs::path& baseTo, const QStandardItem* files, int depth )
-    {
-        if( bfs::exists( from ) )
-        {
-            if( bfs::is_directory( from ) )
-            {
-                if( from.extension() == ".svn" || depth == 0 )
-                    return;
-                if( !bfs::exists( to ) )
-                    bfs::create_directories( to );
-                CopyDirectory( from, baseFrom, baseTo, files, depth );
-            }
-            else if( !bfs::exists( to ) )
-                bfs::copy_file( from, to );
-        }
-    }
-}
 
-namespace frontend
-{
-    void Copy( const std::string& from, const std::string& to )
+    // -----------------------------------------------------------------------------
+    bool CheckpointsExtractor( const tools::Path& path )
     {
-        ::Copy( from, to, from, to, 0, -1 );
+        const tools::Path filename = path.FileName();
+        return !path.IsDirectory() && filename != "CRCs.xml" && filename != "data" && filename != "MetaData.xml" && filename != "scores.xml" && filename != "timeline.ord";
     }
 
-    void CreateExercise( const tools::GeneralConfig& config, const std::string& name, const std::string& terrain, const std::string& model, const std::string& physical /*= ""*/ )
+    // -----------------------------------------------------------------------------
+    void CreateExerciseFileCopy( const tools::Path& dirFrom, const tools::Path& dirTo, const frontend::ExerciseCopyParameters& params )
     {
-        const std::string dir = config.GetExerciseDir( name );
-        bfs::create_directories( dir );
-        const std::string filename( ( bfs::path( dir ) / "exercise.xml" ).string() );
-        CreateExerciseXml( filename, terrain, model, physical, false );
-    }
-
-    void EditExerciseParameters( const tools::GeneralConfig& config, const std::string& name, const std::string& terrain, const std::string& model, const std::string& physical /*= ""*/ )
-    {
-        const std::string filename( ( bfs::path( config.GetExerciseDir( name ) ) / "exercise.xml" ).string() );
-        CreateExerciseXml( filename, terrain, model, physical, true );
-    }
-
-    void CreateExerciseFileCopy( const bfs::path& dirFrom, const bfs::path& dirTo, const ExerciseCopyParameters& params )
-    {
-        const std::string filenameFrom( ( dirFrom / "exercise.xml" ).string() );
-        const std::string filenameTo( ( dirTo / "exercise.xml" ).string() );
-        xml::xifstream xis( filenameFrom );
-        xml::xofstream xos( filenameTo );
+        tools::Xifstream xis( dirFrom / "exercise.xml" );
+        tools::Xofstream xos( dirTo / "exercise.xml" );
         xis >> xml::start( "exercise" );
         xos << xml::start( "exercise" );
         tools::SchemaWriter().WriteExerciseSchema( xos, "exercise" );
@@ -153,79 +99,90 @@ namespace frontend
         xis >> xml::end;
         xos << xml::end;
     }
-    void CopyCheckedPath( const bfs::path& dirFrom, const bfs::path& dirTo, const ExerciseCopyParameters& params, QStandardItem* parent = 0 )
-    {
-        if( !parent )
-            parent = params.itemModel_->invisibleRootItem();
 
-        for( int row = 0; row < parent->rowCount(); ++row )
+    // -----------------------------------------------------------------------------
+    class CheckedListExtractor : private boost::noncopyable
+    {
+    public:
+        CheckedListExtractor( const QStandardItemModel& model, const frontend::ExerciseCopyParameters& params ) : model_( model ), params_( params ) {}
+
+        bool operator()( const tools::Path& path ) const
         {
-            QStandardItem* item = parent->child( row );
-            if( item && item->checkState() == Qt::Checked )
-            {
-                std::string file( item->text().toStdString() );
-                if( file == "exercises" || file.find( "exercises/" + params.from_ ) == std::string::npos )
-                    continue;
-                else
-                    boost::algorithm::replace_first( file, "exercises/" + params.from_, "" );
-                bfs::path from( dirFrom / file );
-                bfs::path to( dirTo / file );
-                ::Copy( from, to, from, to, item->hasChildren() ? item : 0 );
-            }
-            if( item && item->hasChildren() )
-                CopyCheckedPath( dirFrom, dirTo, params, item );
-
+            if( path.IsRegularFile() )
+                return true;
+            if( path.IsDirectory() )
+                return IsChecked( path, model_.invisibleRootItem() );
+            return false;
         }
-    }
 
-    void CreateExerciseAsCopyOf( const tools::GeneralConfig& config, const ExerciseCopyParameters& params )
+    private:
+        bool IsChecked( const tools::Path& path, const QStandardItem* parent ) const
+        {
+            bool result = false;
+            if( !parent )
+                return result;
+
+            std::string pathStr = path.ToUTF8();
+            for( int row = 0; !result && row < parent->rowCount(); ++row )
+            {
+                QStandardItem* item = parent->child( row );
+                if( item && item->checkState() == Qt::Checked )
+                {
+                    std::string file( item->text().toStdString() );
+                    std::string exerciseName = ( tools::Path( "exercises" ) / params_.from_ ).ToUTF8();
+                    if( file == "exercises" || file.find( exerciseName ) == std::string::npos )
+                        continue;
+
+                    boost::algorithm::replace_first( file, exerciseName, "" );
+                    size_t found = pathStr.rfind( file );
+                    if( found != std::string::npos && found + file.size() == pathStr.size() )
+                        result = true;
+                    else if( item->hasChildren() )
+                        result = IsChecked( path, item );
+                }
+            }
+            return result;
+        }
+
+    private:
+        const QStandardItemModel& model_;
+        const frontend::ExerciseCopyParameters& params_;
+    };
+}
+
+namespace frontend
+{
+    // -----------------------------------------------------------------------------
+    void CreateExercise( const tools::GeneralConfig& config, const tools::Path& name, const tools::Path& terrain, const tools::Path& model, const tools::Path& physical /*= tools::Path()*/ )
     {
-        const bfs::path dirFrom = bfs::path( config.GetExerciseDir( params.from_ )  );
-        const bfs::path dirTo = bfs::path( config.GetExerciseDir( params.to_ ) );
-        bfs::create_directories( dirTo );
-
-        // Copy checked path
-        CopyCheckedPath( dirFrom, dirTo, params );
-        // Copy exercise.xml and linked file
-        CreateExerciseFileCopy( dirFrom, dirTo, params );
+        const tools::Path dir = config.GetExerciseDir( name );
+        dir.CreateDirectories();
+        CreateExerciseXml( dir / "exercise.xml", terrain, model, physical, false );
     }
 
     // -----------------------------------------------------------------------------
-    // Name: CreateExercise::CreateExerciseAsCopyOfCheckpoint
-    // Created: NPT 2012-09-17
+    void EditExerciseParameters( const tools::GeneralConfig& config, const tools::Path& name, const tools::Path& terrain, const tools::Path& model, const tools::Path& physical /*= tools::Path()*/ )
+    {
+        CreateExerciseXml( config.GetExerciseDir( name ) / "exercise.xml", terrain, model, physical, true );
+    }
+
+    // -----------------------------------------------------------------------------
+    void CreateExerciseAsCopyOf( const tools::GeneralConfig& config, const ExerciseCopyParameters& params )
+    {
+        const tools::Path from = config.GetExerciseDir( params.from_ );
+        const tools::Path to = config.GetExerciseDir( params.to_ );
+        const CheckedListExtractor extractor( *params.itemModel_, params );
+        from.Copy( extractor, to );
+        CreateExerciseFileCopy( from, to, params );
+    }
+
     // -----------------------------------------------------------------------------
     void CreateExerciseAsCopyOfCheckpoint( const tools::GeneralConfig& config, const ExerciseCopyParameters& params )
     {
-        const bfs::path dirExerciseFrom = bfs::path( config.GetExerciseDir( params.from_ ) );
-        const bfs::path dirCheckpointFrom = bfs::path( params.checkpoint_ );
-        const bfs::path dirTo = bfs::path( config.GetExerciseDir( params.to_ ) );
-        bfs::create_directories( dirTo );
-
-        //copy basic files of the exercise directory
-        bfs::directory_iterator end ;
-        for( bfs::directory_iterator itExercise( dirExerciseFrom ); itExercise != end ; ++itExercise )
-        {
-            if ( !bfs::is_directory( *itExercise ) )
-            {
-                bfs::path from( itExercise->path() );
-                bfs::path to( dirTo / itExercise->path().filename() );
-                bfs::copy_file( from, to );
-            }
-        }
-
-        // Copy exercise.xml
-        CreateExerciseFileCopy( dirExerciseFrom, dirTo, params );
-
-        //copy basic files of the checkpoint directory
-        for( bfs::directory_iterator itCheckpoint( dirCheckpointFrom ); itCheckpoint != end ; ++itCheckpoint )
-        {
-            const std::string filename = itCheckpoint->path().filename().string();
-            if ( !bfs::is_directory( *itCheckpoint ) && filename != "CRCs.xml" && filename != "data" && filename != "MetaData.xml" && filename != "scores.xml" && filename != "timeline.ord" )
-            {
-                bfs::path from( itCheckpoint->path() );
-                bfs::path to( dirTo / filename );
-                bfs::copy_file( from, to, bfs::copy_option::overwrite_if_exists );
-            }
-        }
+        const tools::Path from = config.GetExerciseDir( params.from_ );
+        const tools::Path to = config.GetExerciseDir( params.to_ );
+        from.Copy( &tools::FileExtractor, to );
+        CreateExerciseFileCopy( from, to, params );
+        params.checkpoint_.Copy( &CheckpointsExtractor, to, tools::Path::OverwriteIfExists );
     }
 }

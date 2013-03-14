@@ -10,17 +10,19 @@
 #include "selftraining_app_pch.h"
 #include "ImportWidget.h"
 #include "moc_ImportWidget.cpp"
+#include "clients_gui/FileDialog.h"
 #include "clients_kernel/Tools.h"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
+#include "tools/FileWrapper.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
 #include <xeumeuleu/xml.hpp>
-#include "tools/EncodingConverter.h"
-
 #pragma warning( push, 0 )
-#include <zipstream/zipstream.h>
+#include <zipstream/izipstream.h>
 #pragma warning( pop )
+
+namespace fc = frontend::commands;
 
 // -----------------------------------------------------------------------------
 // Name: ImportWidget constructor
@@ -118,14 +120,15 @@ void ImportWidget::InstallExercise()
 {
     if( packageContent_->count() )
     {
-        zip::izipfile archive( tools::FromUtf8ToLocalCharset( package_->text().toStdString() ) );
+        tools::Path path = tools::Path::FromUnicode( package_->text().toStdWString() );
+        zip::izipfile archive( path.ToUnicode() );
         if( archive.isOk() )
         {
             packageProgress_->show();
             packageProgress_->setValue( 0 );
             packageProgress_->setMaximum( packageContent_->count() );
             setCursor( Qt::WaitCursor );
-            frontend::commands::InstallPackageFile( archive, config_.GetRootDir(), Progress( packageProgress_ ) );
+            fc::InstallPackageFile( archive, config_.GetRootDir(), Progress( packageProgress_ ) );
             setCursor( Qt::ArrowCursor );
             packageProgress_->hide();
         }
@@ -147,7 +150,8 @@ bool ImportWidget::IsButtonEnabled() const
 // -----------------------------------------------------------------------------
 bool ImportWidget::ReadPackageContentFile()
 {
-    zip::izipfile archive( tools::FromUtf8ToLocalCharset( package_->text().toStdString() ) );
+    tools::Path path = tools::Path::FromUnicode( package_->text().toStdWString() );
+    zip::izipfile archive( path.ToUnicode() );
     if( !archive.isOk() )
         return false;
     zip::izipstream zipStream( archive, "content.xml" );
@@ -185,7 +189,7 @@ bool ImportWidget::ReadPackageContentFile()
 // -----------------------------------------------------------------------------
 void ImportWidget::PackageBrowseClicked()
 {
-    const QString filename = QFileDialog::getOpenFileName( this, tools::translate( "ImportWidget", "Select a package" ), QString(), "Officer Training packages (*.otpak)" );
+    const tools::Path filename = gui::FileDialog::getOpenFileName( this, tools::translate( "ImportWidget", "Select a package" ), "", "Officer Training packages (*.otpak)" );
     SelectPackage( filename );
 }
 
@@ -193,17 +197,17 @@ void ImportWidget::PackageBrowseClicked()
 // Name: ImportWidget::SelectPackage
 // Created: SBO 2011-03-30
 // -----------------------------------------------------------------------------
-void ImportWidget::SelectPackage( const QString& filename )
+void ImportWidget::SelectPackage( const tools::Path& filename )
 {
-    package_->setText( filename );
-    if( !filename.isEmpty() )
+    package_->setText( filename.ToUTF8().c_str() );
+    if( !filename.IsEmpty() )
     {
         packageName_->setText( "" );
         packageDescription_->setText( "" );
         packageVersion_->setText( "" );
         packageContent_->clear();
         if( ReadPackageContentFile() )
-            packageContent_->addItems( frontend::commands::ListPackageFiles( tools::FromUtf8ToLocalCharset( package_->text().toStdString() ) ) );
+            packageContent_->addItems( fc::PathListToQStringList( fc::ListPackageFiles( filename ) ) );
         else
             packageName_->setText( tools::translate( "ImportWidget", "otpak corrupted: unable to load content properly" ) );
     }

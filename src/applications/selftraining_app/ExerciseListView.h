@@ -38,21 +38,20 @@ public:
 
     //! @name Operations
     //@{
-    QString GetExerciseName( const QModelIndex& index ) const;
+    tools::Path GetExerciseName( const QModelIndex& index ) const;
     void AddExerciseEntry( const frontend::Exercise_ABC& exercise );
     QStandardItem* FindExerciseItem( const frontend::Exercise_ABC& exercise, QStandardItem* parent = 0 ) const;
     void DeleteExerciseEntry( const frontend::Exercise_ABC& exercise );
     const QStandardItem* GetSelectedExerciseItem() const;
     const frontend::Exercise_ABC* GetSelectedExercise() const;
     void Clear();
-    bool Exists( const QString& exercise ) const;
+    bool Exists( const tools::Path& exercise ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
     QStandardItem* FindExerciseItem( const QString& path, QStandardItem* parent = 0 ) const;
-    QString GetExerciseDisplayName( const QString& exercise ) const;
     //@}
 
 private:

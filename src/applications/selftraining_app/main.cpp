@@ -32,8 +32,8 @@ int main( int argc, char* argv[] )
     return EXIT_FAILURE;
 }
 
-int WINAPI WinMain( HINSTANCE /* hinstance */, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )
+int WINAPI wWinMain( HINSTANCE /* hinstance */, HINSTANCE /* hPrevInstance */, LPWSTR lpCmdLine, int /* nCmdShow */ )
 {
-    tools::WinArguments winArgs(lpCmdLine) ;
-    return main( winArgs.Argc(), const_cast<char**>( winArgs.Argv() ) );
+    tools::WinArguments winArgs( lpCmdLine ) ;
+    return main( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
 }

@@ -12,10 +12,7 @@
 #include "frontend/Exercise_ABC.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
-#include <boost/filesystem.hpp>
 #include <xeumeuleu/xml.hpp>
-
-namespace bfs = boost::filesystem;
 
 Q_DECLARE_METATYPE( const frontend::Exercise_ABC* )
 
@@ -123,9 +120,9 @@ void ExerciseListView::Clear()
 // Name: ExerciseListView::Exists
 // Created: NPT 2012-09-26
 // -----------------------------------------------------------------------------
-bool ExerciseListView::Exists( const QString& exercise ) const
+bool ExerciseListView::Exists( const tools::Path& exercise ) const
 {
-    return model_.findItems( exercise ).size() > 0;
+    return model_.findItems( exercise.ToUTF8().c_str() ).size() > 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -148,30 +145,6 @@ QStandardItem* ExerciseListView::FindExerciseItem( const QString& path, QStandar
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseListView::GetExerciseDisplayName
-// Created: LGY 2012-05-30
-// -----------------------------------------------------------------------------
-QString ExerciseListView::GetExerciseDisplayName( const QString& exercise ) const
-{
-    std::string displayName( exercise.toStdString() );
-    try
-    {
-        const std::string file = config_.GetExerciseFile( exercise.toStdString() );
-        if( boost::filesystem::exists( file ) )
-        {
-            std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( file );
-            *xis >> xml::start( "exercise" )
-                >> xml::optional >> xml::start( "meta" );
-        }
-    }
-    catch( ... )
-    {
-        // $$$$ SBO 2008-10-07: error in exercise.xml meta, just show directory name
-    }
-    return displayName.c_str();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ExerciseListView::AddExerciseEntry
 // Created: LGY 2012-05-30
 // -----------------------------------------------------------------------------
@@ -181,18 +154,19 @@ void ExerciseListView::AddExerciseEntry( const frontend::Exercise_ABC& exercise 
     static const QPixmap mission( "resources/images/selftraining/mission.png" );
 
     qApp->setOverrideCursor( Qt::WaitCursor );
-    QStringList path( QString( exercise.GetName().c_str() ).split( '/') );
+    tools::Path exerciseName = exercise.GetName();
+    QStringList path( QString( exerciseName.ToUTF8().c_str() ).split( '\\') );
     QStringList complete;
     QStandardItem* parent = 0;
-    for( QStringList::iterator it( path.begin() ); it != path.end(); ++it )
+    for( QStringList::const_iterator it( path.constBegin() ); it != path.constEnd(); ++it )
     {
         complete.append( *it );
-        const QString current( complete.join( "/" ) );
-        QStandardItem* item = FindExerciseItem( "/" + current );
+        const QString current( complete.join( "\\" ) );
+        QStandardItem* item = FindExerciseItem( "\\" + current );
         if( !item )
         {
-            const std::string fullpath( complete.size() < path.size() ? "/" + current.toStdString() : current.toStdString() );
-            item = new QStandardItem( directory, GetExerciseDisplayName( *it ) );
+            const std::string fullpath( complete.size() < path.size() ? "\\" + current.toStdString() : current.toStdString() );
+            item = new QStandardItem( directory, *it );
             item->setData( QString( fullpath.c_str() ), FullpathRole );
             if( parent )
                 parent->setChild( parent->rowCount(), item );
@@ -256,13 +230,13 @@ void ExerciseListView::DeleteExerciseEntry( const frontend::Exercise_ABC& exerci
 // Name: ExerciseListView::GetExerciseName
 // Created: LGY 2012-05-30
 // -----------------------------------------------------------------------------
-QString ExerciseListView::GetExerciseName( const QModelIndex& index ) const
+tools::Path ExerciseListView::GetExerciseName( const QModelIndex& index ) const
 {
     if( index.isValid() )
     {
         QStandardItem* item = model_.itemFromIndex( proxy_->mapToSource( index ) );
         if( item && item->data( FullpathRole ).isValid() && item->data( ExerciseRole ).isValid() )
-            return item->data( FullpathRole ).toString();
+            return tools::Path::FromUnicode( item->data( FullpathRole ).toString().toStdWString() );
     }
-    return QString();
+    return tools::Path();
 }

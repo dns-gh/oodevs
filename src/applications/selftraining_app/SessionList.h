@@ -39,13 +39,13 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const QString& exercice );
+    void Update( const tools::Path& exercice );
     //@}
 
 signals:
     //! @name Signals
     //@{
-    void Select( const QString& session );
+    void Select( const tools::Path& session );
     //@}
 
 private slots:
@@ -58,7 +58,7 @@ private:
     //! @name Helpers
     //@{
     virtual void OnLanguageChanged();
-    void ReadComments( const QString& session );
+    void ReadComments( const tools::Path& session );
     //@}
 
 private:
@@ -68,7 +68,7 @@ private:
     const tools::Loader_ABC& fileLoader_;
     QListWidget* list_;
     QTextEdit* comments_;
-    QString exercise_;
+    tools::Path exercise_;
     QLabel* sessionLabel_;
     //@}
 };

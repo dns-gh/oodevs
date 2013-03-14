@@ -57,10 +57,10 @@ public:
 public:
     //! @name Helpers
     //@{
-    void Edit( const QString& exercise );
-    bool ExerciceExists( const QString& string );
-    void LaunchScenarioImport( const QString& inputScenario, const QString& outputScenario );
-    void LaunchPreparation( const QString& outputScenario );
+    void Edit( const tools::Path& exercise );
+    bool ExerciceExists( const tools::Path& string );
+    void LaunchScenarioImport( const tools::Path& inputScenario, const tools::Path& outputScenario );
+    void LaunchPreparation( const tools::Path& outputScenario );
     void UpdateEditButton();
     //@}
 

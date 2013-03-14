@@ -212,7 +212,7 @@ void ExerciseList::UpdateExerciseEntry( const frontend::Exercise_ABC& exercise )
 // Name: ExerciseList::Exists
 // Created: SBO 2010-04-15
 // -----------------------------------------------------------------------------
-bool ExerciseList::Exists( const QString& exercise ) const
+bool ExerciseList::Exists( const tools::Path& exercise ) const
 {
     return exercises_->Exists( exercise );
 }

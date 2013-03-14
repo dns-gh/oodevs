@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     void InstallExercise();
-    void SelectPackage( const QString& filename );
+    void SelectPackage( const tools::Path& filename );
     //@}
 
 signals:

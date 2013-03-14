@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "SessionTray.h"
 #include "TrayMenu.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
 #include <QtGui/qsystemtrayicon.h>
@@ -19,7 +20,7 @@
 // Created: RDS 2008-09-26
 // -----------------------------------------------------------------------------
 SessionTray::SessionTray( QWidget *parent )
-    : trayIcon_( *new QSystemTrayIcon( QIcon( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ), parent ) )
+    : trayIcon_( *new QSystemTrayIcon( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ), parent ) )
 {
     trayIcon_.show();
     QObject::connect( &trayIcon_, SIGNAL( activated( QSystemTrayIcon::ActivationReason ) ), parent, SLOT( Maximize( QSystemTrayIcon::ActivationReason ) ) );

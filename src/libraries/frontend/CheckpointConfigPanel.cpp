@@ -122,7 +122,7 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
     //checkpoint box
     QVBoxLayout* boxLayout = new QVBoxLayout();
     checkpoints_ = new CheckpointList( config_ );
-    connect( checkpoints_, SIGNAL( Select( const QString& ) ), SLOT( OnCheckpointSelected( const QString& ) ) );
+    connect( checkpoints_, SIGNAL( Select( const tools::Path& ) ), SLOT( OnCheckpointSelected( const tools::Path& ) ) );
     boxLayout->addWidget( checkpoints_ );
     boxLayout->setMargin( 0 );
     boxLayout->setSpacing( 5 );
@@ -178,8 +178,10 @@ void CheckpointConfigPanel::Select( const frontend::Exercise_ABC& exercise )
     {
         exercise_ = &exercise;
         sessions_->clear();
-        sessions_->addItems( commands::ListSessionsWithCheckpoint( config_, exercise_->GetName().c_str() ) );
-        sessions_->setEnabled( sessions_->count() );
+        tools::Path::T_Paths paths = commands::ListSessionsWithCheckpoint( config_, exercise_->GetName() );
+        for( auto it = paths.begin(); it != paths.end(); ++it )
+            sessions_->addItem( QString( it->ToUTF8().c_str() ) );
+        sessions_->setEnabled( sessions_->count() > 0 );
         if( !sessions_->count() )
             sessions_->addItem( tools::translate( "CheckpointConfigPanel", "No session" ) );
         sessions_->setCurrentRow( 0 );
@@ -207,17 +209,17 @@ void CheckpointConfigPanel::ClearSelection()
 void CheckpointConfigPanel::SessionSelected( const QString& session )
 {
     if( exercise_ )
-        checkpoints_->Update( exercise_->GetName().c_str(), session );
+        checkpoints_->Update( exercise_->GetName(), tools::Path::FromUnicode( session.toStdWString() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CheckpointConfigPanel::OnCheckpointSelected
 // Created: SBO 2010-04-23
 // -----------------------------------------------------------------------------
-void CheckpointConfigPanel::OnCheckpointSelected( const QString& checkpoint )
+void CheckpointConfigPanel::OnCheckpointSelected( const tools::Path& checkpoint )
 {
-    QListWidgetItem* current = checkpoint.isEmpty() ? 0 : sessions_->currentItem();
-    emit CheckpointSelected( current ? current->text() : QString(), checkpoint );
+    QListWidgetItem* current = checkpoint.IsEmpty() ? 0 : sessions_->currentItem();
+    emit CheckpointSelected( current ? tools::Path::FromUnicode( current->text().toStdWString() ) : tools::Path(), checkpoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,7 +235,7 @@ QString CheckpointConfigPanel::GetName() const
 // Name: CheckpointConfigPanel::Commit
 // Created: SBO 2010-04-19
 // -----------------------------------------------------------------------------
-void CheckpointConfigPanel::Commit( const std::string& exercise, const std::string& session )
+void CheckpointConfigPanel::Commit( const tools::Path& exercise, const tools::Path& session )
 {
     if( checkpointsGroup_->isChecked() )
     {

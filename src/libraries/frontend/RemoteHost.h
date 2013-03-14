@@ -46,16 +46,16 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetId() const;
-    virtual void StartSimulation( const std::string& exercise, const std::string& session ) const;
-    virtual void StartDispatcher( const std::string& exercise, const std::string& session, const T_Parameters& parameters ) const;
-    virtual void StartReplay( const std::string& exercise, const std::string& session ) const;
-    virtual void StopSession( const std::string& exercise, const std::string& session ) const;
-    virtual void QueryProfileList( const std::string& exercise ) const;
-    virtual void Pause( const std::string& exercise, const std::string& session ) const;
-    virtual void Resume( const std::string& exercise, const std::string& session ) const;
-    virtual void ChangeDateTime( const std::string& exercise, const std::string& session, const std::string& date ) const;
-    virtual void SaveCheckpoint( const std::string& exercise, const std::string& session, const std::string& name ) const;
-    virtual void QueryConnectedProfileList( const std::string& exercise, const std::string& session ) const;
+    virtual void StartSimulation( const tools::Path& exercise, const tools::Path& session ) const;
+    virtual void StartDispatcher( const tools::Path& exercise, const tools::Path& session, const T_Parameters& parameters ) const;
+    virtual void StartReplay( const tools::Path& exercise, const tools::Path& session ) const;
+    virtual void StopSession( const tools::Path& exercise, const tools::Path& session ) const;
+    virtual void QueryProfileList( const tools::Path& exercise ) const;
+    virtual void Pause( const tools::Path& exercise, const tools::Path& session ) const;
+    virtual void Resume( const tools::Path& exercise, const tools::Path& session ) const;
+    virtual void ChangeDateTime( const tools::Path& exercise, const tools::Path& session, const std::string& date ) const;
+    virtual void SaveCheckpoint( const tools::Path& exercise, const tools::Path& session, const tools::Path& name ) const;
+    virtual void QueryConnectedProfileList( const tools::Path& exercise, const tools::Path& session ) const;
     //@}
 
     //! @name Operation
@@ -77,7 +77,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual std::string CreateIdentifier( const std::string& exercise ) const;
+    virtual std::string CreateIdentifier( const tools::Path& exercise ) const;
     //@}
 
 private:
@@ -86,7 +86,7 @@ private:
     LauncherPublisher& publisher_;
     const std::string id_;
     kernel::Controller& controller_;
-    std::map< std::string, boost::shared_ptr< Exercise_ABC > > exercises_;
+    std::map< tools::Path, boost::shared_ptr< Exercise_ABC > > exercises_;
     //@}
 };
 

@@ -11,6 +11,7 @@
 #define __Process_ABC_h_
 
 #include <boost/enable_shared_from_this.hpp>
+#include <boost/noncopyable.hpp>
 #include <string>
 
 class QString;
@@ -25,6 +26,7 @@ namespace frontend
 // Created: SBO 2008-10-14
 // =============================================================================
 class Process_ABC : public boost::enable_shared_from_this< frontend::Process_ABC >
+                  , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -37,9 +39,9 @@ public:
     //@{
     virtual unsigned int GetPercentage() const = 0;
     virtual QString      GetStatus() const = 0;
-    virtual std::string  GetStartedExercise() const = 0;
-    virtual std::string  GetExercise() const = 0;
-    virtual std::string  GetSession() const = 0;
+    virtual tools::Path  GetStartedExercise() const = 0;
+    virtual tools::Path  GetExercise() const = 0;
+    virtual tools::Path  GetSession() const = 0;
     //@}
 };
 

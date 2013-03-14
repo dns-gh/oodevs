@@ -42,20 +42,14 @@ public:
     //@{
     virtual unsigned int GetPercentage() const;
     virtual QString      GetStatus() const;
-    virtual std::string  GetStartedExercise() const;
-    virtual std::string  GetExercise() const;
-    virtual std::string  GetSession() const;
+    virtual tools::Path  GetStartedExercise() const;
+    virtual tools::Path  GetExercise() const;
+    virtual tools::Path  GetSession() const;
     void                 Start();
     void                 Stop();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CompositeProcessWrapper( const CompositeProcessWrapper& );            //!< Copy constructor
-    CompositeProcessWrapper& operator=( const CompositeProcessWrapper& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Run();

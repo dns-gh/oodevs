@@ -12,14 +12,10 @@
 #include "CommandLineTools.h"
 #include "tools/GeneralConfig.h"
 #pragma warning( push, 0 )
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <QtCore/qsettings.h>
 #pragma warning( pop )
 
-namespace bfs = boost::filesystem;
 namespace bpt = boost::posix_time;
 
 using namespace frontend;
@@ -28,7 +24,7 @@ using namespace frontend;
 // Name: CreateSession constructor
 // Created: RPD 2011-03-30
 // -----------------------------------------------------------------------------
-CreateSession::CreateSession(  const std::string& filePath )
+CreateSession::CreateSession(  const tools::Path& filePath )
     : setter_ ( new ConfigurationManipulator( filePath ) )
 {
     // NOTHING
@@ -38,7 +34,7 @@ CreateSession::CreateSession(  const std::string& filePath )
 // Name: CreateSession constructor
 // Created: SBO 2008-02-27
 // -----------------------------------------------------------------------------
-CreateSession::CreateSession( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
+CreateSession::CreateSession( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session )
     : setter_ ( new ConfigurationManipulator( config, exercise, session ) )
     , session_( session )
 {
@@ -72,7 +68,7 @@ void CreateSession::SetDefaultValues()
     {
         try
         {
-            bpt::from_iso_string( session_ );
+            //bpt::from_iso_string( session_.ToUTF8() );
             setter_->SetValue( "session/meta/date", session_ );
         }
         catch( ... )

@@ -11,10 +11,7 @@
 #include "ConfigurationManipulator.h"
 #include "tools/GeneralConfig.h"
 #include "tools/SchemaWriter.h"
-#include <boost/filesystem.hpp>
 #include <xeumeuleu/xml.hpp>
-
-namespace bfs = boost::filesystem;
 
 using namespace frontend;
 
@@ -22,7 +19,7 @@ using namespace frontend;
 // Name: ConfigurationManipulator constructor
 // Created: SBO 2008-02-25
 // -----------------------------------------------------------------------------
-ConfigurationManipulator::ConfigurationManipulator( const std::string& filename )
+ConfigurationManipulator::ConfigurationManipulator( const tools::Path& filename )
     : outputPath_( filename )
     , document_  ( new XmlNode( outputPath_ ) )
 {
@@ -33,7 +30,7 @@ ConfigurationManipulator::ConfigurationManipulator( const std::string& filename 
 // Name: ConfigurationManipulator constructor
 // Created: RDS 2008-08-21
 // -----------------------------------------------------------------------------
-ConfigurationManipulator::ConfigurationManipulator( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
+ConfigurationManipulator::ConfigurationManipulator( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session )
     : outputPath_( GetSessionXml( config, exercise, session ) )
     , document_  ( new XmlNode( outputPath_ ) )
 {
@@ -53,11 +50,11 @@ ConfigurationManipulator::~ConfigurationManipulator()
 // Name: ConfigurationManipulator::GetSessionXml
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
-std::string ConfigurationManipulator::GetSessionXml( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
+tools::Path ConfigurationManipulator::GetSessionXml( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session )
 {
-    const bfs::path dir( config.BuildSessionDir( exercise, session ) );
-    bfs::create_directories( dir );
-    return ( dir / "session.xml" ).string();
+    const tools::Path dir = config.BuildSessionDir( exercise, session );
+    dir.CreateDirectories();
+    return dir / "session.xml";
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +72,7 @@ void ConfigurationManipulator::Commit()
             try
             {
                 {
-                    xml::xofstream xos( outputPath_ );
+                    tools::Xofstream xos( outputPath_ );
                     document_->Serialize( xos );
                 }
                 ok = true;

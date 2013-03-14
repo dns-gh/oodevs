@@ -14,11 +14,9 @@
 #include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
 #include <xeumeuleu/xml.hpp>
 
-namespace bfs = boost::filesystem;
+namespace fc = frontend::commands;
 
 // -----------------------------------------------------------------------------
 // Name: SessionList constructor
@@ -72,14 +70,14 @@ void SessionList::OnLanguageChanged()
 // Name: SessionList::Update
 // Created: SBO 2009-12-13
 // -----------------------------------------------------------------------------
-void SessionList::Update( const QString& exercise )
+void SessionList::Update( const tools::Path& exercise )
 {
     if( exercise_ != exercise )
     {
         exercise_ = exercise;
         comments_->clear();
         list_->clear();
-        list_->addItems( frontend::commands::ListSessions( config_, exercise.toStdString() ) );
+        list_->addItems( fc::PathListToQStringList( fc::ListSessions( config_, exercise ) ) );
         list_->setCurrentRow( 0 );
     }
 }
@@ -92,7 +90,7 @@ void SessionList::SelectSession( int index )
 {
     if( index < 0 || index >= list_->count() )
         return;
-    const QString session = list_->item( index )->text();
+    const tools::Path session = tools::Path::FromUnicode( list_->item( index )->text().toStdWString() );
     ReadComments( session );
     emit Select( session );
 }
@@ -101,12 +99,12 @@ void SessionList::SelectSession( int index )
 // Name: SessionList::ReadComments
 // Created: SBO 2009-12-13
 // -----------------------------------------------------------------------------
-void SessionList::ReadComments( const QString& session )
+void SessionList::ReadComments( const tools::Path& session )
 {
     try
     {
         std::string date, name, comment;
-        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( (bfs::path( config_.BuildSessionDir( exercise_.toStdString(), session.toStdString() ) ) / "session.xml" ).string() );
+        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.BuildSessionDir( exercise_, session ) / "session.xml" );
         *xis >> xml::start( "session" )
                 >> xml::start( "meta" );
         if( xis->has_child( "comment" ) )

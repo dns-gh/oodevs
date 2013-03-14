@@ -49,7 +49,7 @@ public:
     virtual void OnLanguageChanged();
     virtual QString GetName() const;
     virtual bool IsAvailable() const;
-    virtual void Commit( const std::string& exercise, const std::string& session );
+    virtual void Commit( const tools::Path& exercise, const tools::Path& session );
     //@}
 
 private:
@@ -72,8 +72,8 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    const std::string           name_;
-    const std::string           library_;
+    const tools::Path           name_;
+    const tools::Path           library_;
     const std::string           version_;
     kernel::XmlDescription      description_;
     QString                     label_;

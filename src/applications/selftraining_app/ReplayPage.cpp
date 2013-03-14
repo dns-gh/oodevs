@@ -49,7 +49,7 @@ ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previ
 
     //session List
     sessions_ = new SessionList( mainBox, config, fileLoader_ );
-    connect( sessions_, SIGNAL( Select( const QString& ) ), SLOT( OnSelectSession( const QString& ) ) );
+    connect( sessions_, SIGNAL( Select( const tools::Path& ) ), SLOT( OnSelectSession( const tools::Path& ) ) );
 
     EnableButton( eButtonStart, false );
     AddContent( mainBox );
@@ -91,9 +91,9 @@ void ReplayPage::Update()
 // -----------------------------------------------------------------------------
 void ReplayPage::StartExercise()
 {
-    if( !exercise_ || session_.isEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( parentWidget()->parentWidget() ) )
+    if( !exercise_ || session_.IsEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( parentWidget()->parentWidget() ) )
         return;
-    const QString exerciseName = exercise_->GetName().c_str();
+    const tools::Path exerciseName = exercise_->GetName();
     const unsigned int port = exercise_->GetPort();
     ConfigureSession( exerciseName, session_ );
     boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exerciseName, session_, port, true ) );
@@ -122,11 +122,11 @@ void ReplayPage::OnSelectExercise( const frontend::Exercise_ABC& exercise, const
     if( exercise_ != &exercise )
     {
         session_ = "";
-        sessions_->Update( exercise.GetName().c_str() );
+        sessions_->Update( exercise.GetName() );
     }
     exercise_ = &exercise;
     profile_ = profile;
-    EnableButton( eButtonStart, !session_.isEmpty() && profile_.IsValid() );
+    EnableButton( eButtonStart, !session_.IsEmpty() && profile_.IsValid() );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,19 +146,19 @@ void ReplayPage::ClearSelection()
 // Name: ReplayPage::OnSelectSession
 // Created: SBO 2009-12-13
 // -----------------------------------------------------------------------------
-void ReplayPage::OnSelectSession( const QString& session )
+void ReplayPage::OnSelectSession( const tools::Path& session )
 {
     session_ = session;
-    EnableButton( eButtonStart, exercise_ && !session_.isEmpty() && profile_.IsValid() );
+    EnableButton( eButtonStart, exercise_ && !session_.IsEmpty() && profile_.IsValid() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPage::ConfigureSession
 // Created: SBO 2008-02-27
 // -----------------------------------------------------------------------------
-void ReplayPage::ConfigureSession( const QString& exercise, const QString& session )
+void ReplayPage::ConfigureSession( const tools::Path& exercise, const tools::Path& session )
 {
-    frontend::CreateSession action( config_, exercise.toStdString(), session.toStdString() );
+    frontend::CreateSession action( config_, exercise, session );
     action.SetDefaultValues(); // reset specific parameters
     action.Commit();
 }

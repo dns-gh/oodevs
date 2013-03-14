@@ -14,20 +14,13 @@
 #include "moc_PluginSetting.cpp"
 #include "tools/GeneralConfig.h"
 
+#include "clients_gui/FileDialog.h"
 #include "clients_kernel/Tools.h"
 
-#pragma warning( push, 0 )
-#include <Qt/qapplication.h>
 #include <QtGui/qcheckbox.h>
-#include <QtGui/qfiledialog.h>
+#include <QtGui/qcombobox.h>
 #include <QtGui/qlabel.h>
 #include <QtGui/qlineedit.h>
-#include <QtCore/qsettings.h>
-#include <QtGui/qspinbox.h>
-#include <QtGui/qtooltip.h>
-#include <QtGui/qcombobox.h>
-#include <QtGui/qpushbutton.h>
-#pragma warning( pop )
 
 #include <xeumeuleu/xml.hpp>
 #include <boost/algorithm/string.hpp>
@@ -198,10 +191,10 @@ void PluginSetting::OnFileClicked()
 {
     const std::string::size_type max_size = 20;
 
-    QString fileName = QFileDialog::getOpenFileName( 0, "Select recorded orders", config_.GetExercisesDir().c_str(), "Order File (*.ord)" );
-    if( !fileName.isNull() && !fileName.isEmpty() )
+    tools::Path fileName = gui::FileDialog::getOpenFileName( 0, "Select recorded orders", config_.GetExercisesDir(), "Order File (*.ord)" );
+    if( !fileName.IsEmpty() )
     {
-        fileName_ = fileName.toStdString();
+        fileName_ = fileName.ToUTF8();
         std::string::size_type size = fileName_.length() - std::min( max_size, fileName_.length() );
         std::string msg( fileName_, size, size );
         if( fileName_.size() > max_size + 2 )

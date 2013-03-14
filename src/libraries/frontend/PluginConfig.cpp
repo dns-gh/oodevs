@@ -23,7 +23,6 @@
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
-#include <boost/filesystem/convenience.hpp>
 #include <algorithm>
 
 using namespace frontend;
@@ -50,8 +49,8 @@ using namespace frontend;
 PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config, xml::xistream& xis )
     : PluginConfig_ABC( parent )
     , config_         ( config )
-    , name_           ( xis.attribute< std::string >( "name" ) )
-    , library_        ( xis.has_attribute( "library" ) ? PLUGIN( xis.attribute< std::string >( "library", "" ) ) : "" )
+    , name_           ( xis.attribute< tools::Path >( "name" ) )
+    , library_        ( tools::Path::FromUTF8( xis.has_attribute( "library" ) ? PLUGIN( xis.attribute< std::string >( "library", "" ) ) : "" ) )
     , version_        ( xis.attribute< std::string >( "version" ) )
     , description_    ( xis, tools::readLang() )
 {
@@ -126,8 +125,7 @@ QString PluginConfig::GetName() const
 // -----------------------------------------------------------------------------
 bool PluginConfig::IsAvailable() const
 {
-    using namespace boost::filesystem;
-    return library_.empty() || exists( path( config_.BuildPluginDirectory( name_ ) ) / library_ );
+    return library_.IsEmpty() || ( config_.BuildPluginDirectory( name_ ) / library_ ).Exists();
 }
 
 namespace
@@ -163,14 +161,14 @@ namespace
 // Name: PluginConfig::Commit
 // Created: SBO 2011-05-09
 // -----------------------------------------------------------------------------
-void PluginConfig::Commit( const std::string& exercise, const std::string& session )
+void PluginConfig::Commit( const tools::Path& exercise, const tools::Path& session )
 {
     if( box_->isChecked() )
     {
         frontend::CreateSession action( config_, exercise, session );
-        const std::string root( "session/config/dispatcher/plugins/" + name_ + "/" );
-        if( !library_.empty() )
-            action.SetOption( root + "@library", library_ );
+        const std::string root( "session/config/dispatcher/plugins/" + name_.ToUTF8() + "/" );
+        if( !library_.IsEmpty() )
+            action.SetOption( root + "@library", library_.ToUTF8() );
         SettingVisitor visitor( action, root );
         std::for_each( settings_.begin(), settings_.end(), boost::bind( &PluginSetting::Accept, _1, boost::ref( visitor ) ) );
         action.Commit();

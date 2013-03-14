@@ -64,7 +64,7 @@ private slots:
     //@{
     void OnSelectionChanged();
     void OnSessionSelected( const QString& session );
-    void OnCheckpointSelected( const QString& checkpoint );
+    void OnCheckpointSelected( const tools::Path& checkpoint );
     void CurrentTabChanged( int );
     //@}
 
@@ -91,8 +91,8 @@ private:
     QLabel*                     copyLabel_;
     QLabel*                     sessionLabel_;
 
-    std::string session_;
-    std::string checkpoint_;
+    tools::Path session_;
+    tools::Path checkpoint_;
     //@}
 };
 

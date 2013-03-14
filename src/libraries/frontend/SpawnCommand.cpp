@@ -26,7 +26,7 @@ struct SpawnCommand::InternalData
 // Name: SpawnCommand constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach ,
+SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const tools::Path& exe, bool attach ,
                             std::string commanderEndpoint /* = ""*/, std::string jobName /* = ""*/ )
     : config_                   ( config )
     , internal_                 ( new InternalData() )
@@ -36,7 +36,7 @@ SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe,
     , networkCommanderEndpoint_ ( commanderEndpoint )
     , jobName_                  ( jobName )
 {
-    AddArgument( exe );
+    AddArgument( exe.ToUTF8().c_str() );
     if( jobName_ == "launcher-job" )
         AddArgument( "--silent" );
 }
@@ -57,25 +57,25 @@ SpawnCommand::~SpawnCommand()
 // -----------------------------------------------------------------------------
 void SpawnCommand::AddRootDirArgument()
 {
-    AddArgument( ( "--root-dir=\"" + config_.GetRootDir() + "\"" ).c_str() );
+    AddArgument( ( "--root-dir=\"" + config_.GetRootDir().ToUTF8() + "\"" ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand::AddExerciseArgument
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-void SpawnCommand::AddExerciseArgument( const QString& exercise )
+void SpawnCommand::AddExerciseArgument( const tools::Path& exercise )
 {
-    AddArgument( "--exercise=\"" + exercise +"\"" );
+    AddArgument( QString( "--exercise=\"" ) + exercise.ToUTF8().c_str() +"\"" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand::AddSessionArgument
 // Created: AGE 2008-01-04
 // -----------------------------------------------------------------------------
-void SpawnCommand::AddSessionArgument( const QString& session )
+void SpawnCommand::AddSessionArgument( const tools::Path& session )
 {
-    AddArgument( "--session=\"" + session +"\"" );
+    AddArgument( QString( "--session=\"" ) + session.ToUTF8().c_str() +"\"" );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,16 +91,19 @@ void SpawnCommand::Start()
         0, 0, 0,
         0, 0, 0
     };
+    LPSTARTUPINFOW wStartupInfo = (LPSTARTUPINFOW) &startupInfo; 
+
     std::string debug( commandLine_.toStdString() ) ;
-    if( !CreateProcessA( 0,                                     // lpApplicationName
-                         commandLine_.toLocal8Bit().data(),     // lpCommandLine
+    LPWSTR commandLine = (LPWSTR)commandLine_.toStdWString().c_str();
+    if( !CreateProcessW( 0,                                     // lpApplicationName
+                         commandLine,                           // lpCommandLine
                          0,                                     // lpProcessAttributes
                          0,                                     // lpThreadAttributes
                          TRUE,                                  // bInheritHandles
                          CREATE_NEW_CONSOLE,                    // dwCreationFlags
                          0,                                     // lpEnvironment
-                         workingDirectory_.c_str(),             // lpCurrentDirectory
-                         &startupInfo,                          // lpStartupInfo
+                         workingDirectory_.ToUnicode().c_str(), // lpCurrentDirectory
+                         wStartupInfo,                          // lpStartupInfo
                          &internal_->pid_) )                    // lpProcessInformation
     {
         DWORD errCode = GetLastError();
@@ -264,36 +267,36 @@ QString SpawnCommand::GetStatus() const
 // Name: SpawnCommand::GetStartedExercise
 // Created: LDC 2008-10-23
 // -----------------------------------------------------------------------------
-std::string SpawnCommand::GetStartedExercise() const
+tools::Path SpawnCommand::GetStartedExercise() const
 {
-    return std::string();
+    return tools::Path();
 }
 
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand::GetExercise
 // Created: RPD 2011-09-12
 // -----------------------------------------------------------------------------
-std::string SpawnCommand::GetExercise() const
+tools::Path SpawnCommand::GetExercise() const
 {
-    return std::string();
+    return tools::Path();
 }
 
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand::GetSession
 // Created: RPD 2011-09-12
 // -----------------------------------------------------------------------------
-std::string SpawnCommand::GetSession() const
+tools::Path SpawnCommand::GetSession() const
 {
-    return std::string();
+    return tools::Path();
 }
 
 // -----------------------------------------------------------------------------
 // Name: SpawnCommand::SetWorkingDirectory
 // Created: SBO 2009-06-12
 // -----------------------------------------------------------------------------
-void SpawnCommand::SetWorkingDirectory( const QString& directory )
+void SpawnCommand::SetWorkingDirectory( const tools::Path& directory )
 {
-    workingDirectory_ = directory.toStdString();
+    workingDirectory_ = directory;
 }
 
 // -----------------------------------------------------------------------------

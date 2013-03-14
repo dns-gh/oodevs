@@ -102,7 +102,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::pair< std::string, std::string > T_Package; // <path, filename>
+    typedef std::pair< tools::Path, tools::Path > T_Package; // <path, filename>
     enum E_Tabs{ eTabs_Exercise = 0, eTabs_Terrain = 1, eTabs_Models = 2 };
     //@}
 

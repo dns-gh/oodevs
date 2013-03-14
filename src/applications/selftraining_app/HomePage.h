@@ -64,7 +64,7 @@ public:
 
     //! @name Operation
     //@{
-    void InstallPackage( const QString& package );
+    void InstallPackage( const tools::Path& package );
     //@}
 
 private:

@@ -42,7 +42,7 @@ public:
     //@{
     bool IsInitialized() const;
     std::string GetLastError() const;
-    void SetRootDir( const std::string& directory );
+    void SetRootDir( const tools::Path& directory );
     //@}
 
 private:

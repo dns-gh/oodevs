@@ -28,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              StartReplay( const tools::GeneralConfig& config,
-                          const QString& exercise, const QString& session,
+                          const tools::Path& exercise, const tools::Path& session,
                           unsigned port, bool attach = false,
                           std::string commanderEndpoint = "", std::string processJobName = "" );
     virtual ~StartReplay();

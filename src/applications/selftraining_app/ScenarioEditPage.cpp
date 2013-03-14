@@ -82,9 +82,9 @@ void ScenarioEditPage::OnLanguageChanged()
 // Name: ScenarioEditPage::ExerciceExists
 // Created: JSR 2010-07-13
 // -----------------------------------------------------------------------------
-bool ScenarioEditPage::ExerciceExists( const QString& string )
+bool ScenarioEditPage::ExerciceExists( const tools::Path& exercise )
 {
-    return exercises_->Exists( string );
+    return exercises_->Exists( exercise );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ void ScenarioEditPage::OnEdit()
     {
     case eTabs_Edit:
         if( exercise_ && exercises_->ChangeExerciceParameters() )
-            Edit( exercise_->GetName().c_str() );
+            Edit( exercise_->GetName() );
         break;
     case eTabs_Create:
         createExerciceWidget_->CreateExercise();
@@ -124,7 +124,7 @@ void ScenarioEditPage::OnEdit()
 // Name: ScenarioEditPage::Edit
 // Created: SBO 2008-10-16
 // -----------------------------------------------------------------------------
-void ScenarioEditPage::Edit( const QString& exercise )
+void ScenarioEditPage::Edit( const tools::Path& exercise )
 {
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, exercise, true ) );
     boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
@@ -228,7 +228,7 @@ void ScenarioEditPage::OnExercisePropertiesChanged()
 // Created: LDC 2010-07-06
 // LTO
 // -----------------------------------------------------------------------------
-void ScenarioEditPage::LaunchScenarioImport( const QString& inputScenario, const QString& outputScenario )
+void ScenarioEditPage::LaunchScenarioImport( const tools::Path& inputScenario, const tools::Path& outputScenario )
 {
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::ImportExercise( config_, inputScenario, outputScenario, true ) );
     boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
@@ -242,7 +242,7 @@ void ScenarioEditPage::LaunchScenarioImport( const QString& inputScenario, const
 // Created: LDC 2010-07-06
 // LTO
 // -----------------------------------------------------------------------------
-void ScenarioEditPage::LaunchPreparation( const QString& outputScenario )
+void ScenarioEditPage::LaunchPreparation( const tools::Path& outputScenario )
 {
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, outputScenario, true ) );
     boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );

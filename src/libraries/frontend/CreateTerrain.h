@@ -30,7 +30,7 @@ bool IsTerrainAvailable();
 // Spawn terrain creation application in a new attached process and return it.
 boost::shared_ptr< frontend::ProcessWrapper > CreateTerrain(
     ProcessObserver_ABC& observer, const tools::GeneralConfig& config,
-    const QString& name );
+    const tools::Path& name );
 
 }  // namespace frontend
 

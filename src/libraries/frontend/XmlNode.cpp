@@ -13,7 +13,6 @@
 #pragma warning( disable: 4800 )
 #include <boost/bind.hpp>
 #pragma warning( pop )
-#include <boost/filesystem/operations.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace frontend;
@@ -22,11 +21,11 @@ using namespace frontend;
 // Name: XmlNode constructor
 // Created: SBO 2008-02-27
 // -----------------------------------------------------------------------------
-XmlNode::XmlNode( const std::string& filename )
+XmlNode::XmlNode( const tools::Path& filename )
 {
-    if( boost::filesystem::exists( filename ) )
+    if( filename.Exists() )
     {
-        xml::xifstream xis( filename );
+        tools::Xifstream xis( filename );
         xis >> xml::attributes( *this, &XmlNode::ReadAttribute )
             >> xml::list( *this, &XmlNode::ReadChild )
             >> xml::optional >> text_;
@@ -83,10 +82,14 @@ void XmlNode::ReadChild( const std::string& name, xml::xistream& xis )
 
 namespace
 {
+    bool Check( const char c )
+    {
+        return isprint( c ) == 1;
+    }
     bool IsCData( const std::string& text )
     {
         // $$$$ SBO 2008-02-27: not enough
-        return std::find_if( text.begin(), text.end(), boost::bind( std::logical_not< bool >(), boost::bind( isprint, _1 ) ) ) != text.end();
+        return std::find_if( text.begin(), text.end(), boost::bind( std::logical_not< bool >(), boost::bind( &Check, _1 ) ) ) != text.end();
     }
 }
 

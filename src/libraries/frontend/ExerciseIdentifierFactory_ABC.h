@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string CreateIdentifier( const std::string& exercise ) const = 0;
+    virtual std::string CreateIdentifier( const tools::Path& exercise ) const = 0;
     //@}
 };
 

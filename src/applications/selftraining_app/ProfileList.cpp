@@ -44,14 +44,14 @@ ProfileList::~ProfileList()
 // Name: ProfileList::Update
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-void ProfileList::Update( const QString& exercise )
+void ProfileList::Update( const tools::Path& exercise )
 {
     profiles_.clear();
     clear();
     try
     {
-        if( !exercise.isEmpty() )
-            ReadProfiles( exercise.toStdString() );
+        if( !exercise.IsEmpty() )
+            ReadProfiles( exercise );
         emit currentRowChanged( 0 );
     }
     catch( ... )
@@ -65,9 +65,9 @@ void ProfileList::Update( const QString& exercise )
 // Name: ProfileList::ReadProfiles
 // Created: RDS 2008-09-10
 // -----------------------------------------------------------------------------
-void ProfileList::ReadProfiles( const std::string& exercise )
+void ProfileList::ReadProfiles( const tools::Path& exercise )
 {
-    std::string profilesFile;
+    tools::Path profilesFile;
     {
         std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.GetExerciseFile( exercise ) );
         *xis >> xml::start( "exercise" )
@@ -75,7 +75,7 @@ void ProfileList::ReadProfiles( const std::string& exercise )
                     >> xml::attribute( "file", profilesFile );
     }
     {
-        const std::string file = ( config_.BuildChildPath( config_.GetExerciseFile( exercise ), profilesFile ) );
+        const tools::Path file = config_.BuildChildPath( config_.GetExerciseFile( exercise ), profilesFile );
         std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( file );
         *xis >> xml::start( "profiles" )
                 >> xml::list( "profile", *this, &ProfileList::ReadProfile );

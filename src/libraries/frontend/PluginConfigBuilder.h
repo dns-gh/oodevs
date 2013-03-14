@@ -19,6 +19,8 @@ class QTabWidget;
 namespace tools
 {
     class GeneralConfig;
+    class Loader_ABC;
+    class RealFileLoaderObserver_ABC;
 }
 
 namespace frontend
@@ -54,10 +56,15 @@ public:
     //@}
 
 private:
+    bool AddPlugin( const tools::Path& path );
+
+private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
     std::auto_ptr< CompositePluginConfig > composite_;
+    std::auto_ptr< tools::RealFileLoaderObserver_ABC > observer_;
+    std::auto_ptr< tools::Loader_ABC > loader_;
     //@}
 };
 

@@ -14,7 +14,6 @@
 #pragma warning( push, 0 )
 #include <boost/foreach.hpp>
 #include <boost/program_options.hpp>
-#include <boost/filesystem/path.hpp>
 #pragma warning( pop )
 
 namespace po = boost::program_options;
@@ -57,6 +56,7 @@ Config::Config()
 {
     po::options_description desc( "General options" );
     desc.add_options()
+        ( "pouet", po::value( &tmp_ ), "test, to remove" ) // $$$$ ABR 2013-03-12: TODO REMOVE
         ( "debug", "activate debug mode" );
     AddOptions( desc );
 }

@@ -72,5 +72,7 @@
 #undef max
 
 #include <tools/Exception.h>
+#include "tools/FileWrapper.h"
+#include "tools/Path.h"
 
 #endif // __selftraining_app_pch_h_

@@ -16,12 +16,12 @@ using namespace frontend;
 // Name: ImportExercise constructor
 // Created: LDC 2010-07-06
 // -----------------------------------------------------------------------------
-ImportExercise::ImportExercise( const tools::GeneralConfig& config, const QString& inputScenario, const QString& outputScenario, bool attach /* = false*/ )
+ImportExercise::ImportExercise( const tools::GeneralConfig& config, const tools::Path& inputScenario, const tools::Path& outputScenario, bool attach /* = false*/ )
     : SpawnCommand( config, "import_app.exe", attach, "" )
 {
     AddRootDirArgument();
     AddExerciseArgument( outputScenario );
-    AddArgument( "--import=\"" + inputScenario + "\"" );
+    AddArgument( QString( "--import=\"" ) + inputScenario.ToUTF8().c_str() + "\"" );
 }
 
 // -----------------------------------------------------------------------------

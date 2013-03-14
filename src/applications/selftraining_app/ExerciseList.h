@@ -59,7 +59,7 @@ public:
     //! @name Operations
     //@{
     void SetFilter( const frontend::ExerciseFilter_ABC& filter );
-    bool Exists( const QString& exercise ) const;
+    bool Exists( const tools::Path& exercise ) const;
     bool IsPropertiesValid() const;
     bool ChangeExerciceParameters();
     //@}

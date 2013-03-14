@@ -15,18 +15,15 @@
 #include "DataWidget.h"
 #include "ImportWidget.h"
 #include "ExportWidget.h"
+#include "clients_gui/FileDialog.h"
 #include "clients_kernel/Tools.h"
 #include "Config.h"
 #include "Launcher.h"
 #include <boost/foreach.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
 #pragma warning( push, 1 )
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
-
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: OptionsPage constructor
@@ -212,11 +209,11 @@ void OptionsPage::OnChangeLanguage( const QString& lang )
 // -----------------------------------------------------------------------------
 void OptionsPage::OnChangeDataDirectory()
 {
-    const QString directory = QDir::convertSeparators( QFileDialog::getExistingDirectory( this , "", dataDirectory_->text() ) );
-    if( directory.isEmpty() )
+    const tools::Path directory = gui::FileDialog::getExistingDirectory( this , "", tools::Path::FromUnicode( dataDirectory_->text().toStdWString() ) );
+    if( directory.IsEmpty() )
         return;
-    selectedDataDir_ = directory.toStdString();
-    dataDirectory_->setText( directory );
+    selectedDataDir_ = directory;
+    dataDirectory_->setText( directory.ToUTF8().c_str() );
     hasChanged_ = true;
     UpdateButton();
 }
@@ -227,7 +224,7 @@ void OptionsPage::OnChangeDataDirectory()
 // -----------------------------------------------------------------------------
 void OptionsPage::OnEditDataDirectory( const QString& text )
 {
-    selectedDataDir_ = text.toStdString();
+    selectedDataDir_ = tools::Path::FromUnicode( text.toStdWString() );
     hasChanged_ = true;
     UpdateButton();
 }
@@ -314,31 +311,31 @@ void OptionsPage::Reconnect()
 // -----------------------------------------------------------------------------
 void OptionsPage::CreateDataDirectory()
 {
-    const std::string directory = dataDirectory_->text().toStdString();
-    if( bfs::exists( directory ) )
+    const tools::Path directory = tools::Path::FromUnicode( dataDirectory_->text().toStdWString() );
+    if( directory.Exists() )
         return;
 
     MessageDialog message( parent_, tools::translate( "OptionsPage", "Invalid directory" ),
-        tools::translate( "OptionsPage", "Directory \'%1\' doesn't exist. Do you want to create it ?" ).arg( directory.c_str() ),
+        tools::translate( "OptionsPage", "Directory \'%1\' doesn't exist. Do you want to create it ?" ).arg( directory.ToUTF8().c_str() ),
         QMessageBox::Yes, QMessageBox::No );
     if( message.exec() != QMessageBox::Yes )
     {
         selectedDataDir_ = config_.GetRootDir();
-        dataDirectory_->setText( selectedDataDir_.c_str() );
+        dataDirectory_->setText( selectedDataDir_.ToUTF8().c_str() );
         return;
     }
 
     try
     {
         selectedDataDir_ = directory;
-        bfs::create_directories( std::string( directory ) );
+        directory.CreateDirectories();
     }
     catch( const std::exception& e )
     {
         selectedDataDir_ = config_.GetRootDir();
-        dataDirectory_->setText( selectedDataDir_.c_str() );
+        dataDirectory_->setText( selectedDataDir_.ToUTF8().c_str() );
         MessageDialog message( parent_, tools::translate( "OptionsPage", "Error" ),
-            tools::translate( "OptionsPage", "Can't create directory \'%1\', error \'%2\' happen." ).arg( directory.c_str() ).arg( tools::GetExceptionMsg( e ).c_str() ), QMessageBox::Ok );
+            tools::translate( "OptionsPage", "Can't create directory \'%1\', error \'%2\' happen." ).arg( directory.ToUTF8().c_str() ).arg( tools::GetExceptionMsg( e ).c_str() ), QMessageBox::Ok );
         message.exec();
     }
 }
@@ -406,7 +403,7 @@ void OptionsPage::Commit()
 {
     QSettings settings( "MASA Group", "SWORD" );
     settings.setValue( "/Common/Language", selectedLanguage_.c_str() );
-    settings.setValue( "/Common/DataDirectory", selectedDataDir_.c_str() );
+    settings.setValue( "/Common/DataDirectory", selectedDataDir_.ToUTF8().c_str() );
 
     app_.GetLauncher().SetRootDir( selectedDataDir_ );
     config_.SetRootDir( selectedDataDir_ );
@@ -425,7 +422,7 @@ void OptionsPage::Reset()
 
     assert( languages_.find( selectedLanguage_ ) != languages_.end() );
     languageCombo_->setCurrentIndex( languageCombo_->findText( languages_.find( selectedLanguage_ )->second ) );
-    dataDirectory_->setText( QDir::convertSeparators( selectedDataDir_.c_str() ) );
+    dataDirectory_->setText( selectedDataDir_.ToUTF8().c_str() );
 
     hasChanged_ = false;
     UpdateButton();
@@ -435,7 +432,7 @@ void OptionsPage::Reset()
 // Name: ScenarioEditPage::ShowPackageInstallation
 // Created: BAX 2012-10-24
 // -----------------------------------------------------------------------------
-void OptionsPage::ShowPackageInstallation( const QString& package )
+void OptionsPage::ShowPackageInstallation( const tools::Path& package )
 {
     import_->SelectPackage( package );
     tabs_->setCurrentIndex( tabs_->indexOf( import_ ) );

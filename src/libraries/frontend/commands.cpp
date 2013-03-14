@@ -10,29 +10,24 @@
 #include "frontend_pch.h"
 #include "commands.h"
 #include "tools/GeneralConfig.h"
-#include "tools/ZipExtractor.h"
 #include "clients_gui/Tools.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 4244 4245 4996 )
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
 #include <boost/foreach.hpp>
+#include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <QtCore/qstringlist.h>
-
-namespace bfs = boost::filesystem;
 
 namespace
 {
-    void DeleteDirectory( const bfs::path path, std::vector< std::string >& result )
+    void DeleteDirectory( const tools::Path path, tools::Path::T_Paths& result )
     {
-        if( bfs::exists( path ) && bfs::is_directory( path ) )
+        if( path.Exists() && path.IsDirectory() )
         {
-            result.push_back( path.filename().string() );
-            bfs::remove_all( path );
+            result.push_back( path );
+            path.RemoveAll();
         }
     }
 }
@@ -41,89 +36,63 @@ namespace frontend
 {
     namespace commands
     {
-        template< typename Validator >
-        QStringList ListDirectoriesNoRecursive( const std::string& base, Validator v )
+        bool IsValidTerrain( const tools::Path& dir )
         {
-            QStringList result;
-            const bfs::path root = bfs::path( base );
-            if( ! bfs::exists( root ) )
-                return result;
-
-            bfs::directory_iterator end;
-            for( bfs::directory_iterator it( root ); it != end; ++it )
-            {
-                const bfs::path child = *it;
-                if( v( child ) )
-                    result.append( child.filename().string().c_str() );
-            }
-            return result;
+            return dir.IsDirectory() && ( dir / "terrain.xml" ).Exists();
         }
 
-        bool IsValidTerrain( const bfs::path& dir )
+        tools::Path::T_Paths ListTerrains( const tools::GeneralConfig& config )
         {
-            return bfs::is_directory( dir )
-                && bfs::exists( dir / "terrain.xml" );
+            return config.GetTerrainsDir().ListElements( &IsValidTerrain );
         }
 
-        QStringList ListTerrains( const tools::GeneralConfig& config )
+        bool IsValidExercise( const tools::Path& dir )
         {
-            return gui::ListDirectories( config.GetTerrainsDir(), &IsValidTerrain );
+            return dir.IsDirectory() && ( dir / "exercise.xml" ).Exists();
         }
 
-        bool IsValidExercise( const bfs::path& dir )
+        tools::Path::T_Paths ListExercises( const tools::GeneralConfig& config, const tools::Path& subDirs )
         {
-            return bfs::is_directory( dir )
-                && bfs::exists( dir / "exercise.xml" );
+            const tools::Path baseDirectory = config.GetExercisesDir();
+            if( !baseDirectory.IsEmpty() )
+                return ( baseDirectory / subDirs ).ListElements( &IsValidExercise );
+            return tools::Path::T_Paths();
         }
 
-        QStringList ListExercises( const tools::GeneralConfig& config, const std::string& subDirs )
+        bool IsValidReplay( const tools::Path& session )
         {
-            const std::string baseDirectory = config.GetExercisesDir();
-            if( !baseDirectory.empty() )
-                return gui::ListDirectories( config.GetExercisesDir() + "/" + subDirs, &IsValidExercise );
-            return QStringList();
-        }
-
-        bool IsValidReplay( const bfs::path& session )
-        {
-            bfs::path record = session / "record";
-            if( !bfs::is_directory( session ) || !bfs::exists( record ) || !bfs::is_directory( record ) )
+            tools::Path record = session / "record";
+            if( !session.IsDirectory() || !record.Exists() || !record.IsDirectory() )
                 return false;
-            bfs::directory_iterator end;
-            for( bfs::directory_iterator it( record ); it != end; ++it )
+
+            for( auto it = record.begin(); it != record.end(); ++it )
             {
-                const bfs::path child = *it;
-                if( bfs::is_directory( child ) && bfs::exists( child / "info" ) && bfs::exists( child / "index" )
-                    && bfs::exists( child / "keyindex" ) && bfs::exists( child / "key" ) && bfs::exists( child / "update" ) )
+                const tools::Path child = *it;
+                if( child.IsDirectory() && ( child / "info" ).Exists() && ( child / "index" ).Exists() &&
+                    ( child / "keyindex" ).Exists() && ( child / "key" ).Exists() && ( child / "update" ).Exists() )
                     return true; // un seul dossier valide suffit
             }
             return false;
         }
 
-        QStringList ListSessions( const tools::GeneralConfig& config, const std::string& exercise )
+        tools::Path::T_Paths ListSessions( const tools::GeneralConfig& config, const tools::Path& exercise )
         {
-            return gui::ListDirectories( config.GetSessionsDir( exercise ), &IsValidReplay );
+            return config.GetSessionsDir( exercise ).ListElements( &IsValidReplay );
         }
 
-        bool HasCheckpoints( const bfs::path& session )
+        bool HasCheckpoints( const tools::Path& session )
         {
-            return bfs::is_directory( session )
-                && bfs::exists      ( session / "checkpoints" );
+            return session.IsDirectory() && ( session / "checkpoints" ).Exists();
         }
 
-        QStringList ListSessionsWithCheckpoint( const tools::GeneralConfig& config, const std::string& exercise )
+        tools::Path::T_Paths ListSessionsWithCheckpoint( const tools::GeneralConfig& config, const tools::Path& exercise )
         {
-            return gui::ListDirectories( config.GetSessionsDir( exercise ), &HasCheckpoints );
+            return config.GetSessionsDir( exercise ).ListElements( &HasCheckpoints );
         }
 
-        bool IsValidCheckpoint( const bfs::path& record )
+        tools::Path::T_Paths ListCheckpoints( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session )
         {
-            return bfs::is_directory( record );
-        }
-
-        QStringList ListCheckpoints( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
-        {
-            return gui::ListDirectories( config.GetCheckpointsDir( exercise, session ), &IsValidCheckpoint );
+            return config.GetCheckpointsDir( exercise, session ).ListDirectories( true );
         }
 
         void ReadSide( xml::xistream& xis, std::map< unsigned int, QString >& result )
@@ -131,19 +100,13 @@ namespace frontend
             result[ xis.attribute< unsigned int >( "id" ) ] = xis.attribute< std::string >( "name", "" ).c_str();
         }
 
-        bfs::path GetOrbatFile( const tools::GeneralConfig& config, const std::string& exercise )
-        {
-            std::string fileName = config.GetExerciseDir( exercise );
-            return bfs::path( bfs::path( fileName ) / "orbat.xml" );
-        }
-
-        std::map< unsigned int, QString > ListSides( const tools::GeneralConfig& config, const std::string& exercise )
+        std::map< unsigned int, QString > ListSides( const tools::GeneralConfig& config, const tools::Path& exercise )
         {
             std::map< unsigned int, QString > result;
-            const bfs::path path( GetOrbatFile( config, exercise ) );
-            if( bfs::exists( path ) )
+            const tools::Path orbatFile = config.GetExerciseDir( exercise ) / "orbat.xml";
+            if( orbatFile.Exists() )
             {
-                xml::xifstream xis( path.string() );
+                tools::Xifstream xis( orbatFile );
                 xis >> xml::start( "orbat" )
                         >> xml::start( "parties" )
                             >> xml::list( "party", boost::bind( &ReadSide, _1, boost::ref( result ) ) );
@@ -151,148 +114,133 @@ namespace frontend
             return result;
         }
 
-        std::vector< std::string > RemoveCheckpoint( const tools::GeneralConfig& config, const std::string& exercise,
-                                                     const std::string& session, const std::vector< std::string >& checkpoints )
+        tools::Path::T_Paths RemoveCheckpoint( const tools::GeneralConfig& config, const tools::Path& exercise,
+                                                     const tools::Path& session, const tools::Path::T_Paths& checkpoints )
         {
-            std::vector< std::string > result;
-            const bfs::path path( config.GetCheckpointsDir( exercise, session ) );
+            tools::Path::T_Paths result;
+            const tools::Path path( config.GetCheckpointsDir( exercise, session ) );
             if( !checkpoints.empty() )
-                BOOST_FOREACH( const std::string& checkpoint, checkpoints )
-                    DeleteDirectory( bfs::path( path / checkpoint ), result );
+                BOOST_FOREACH( const tools::Path& checkpoint, checkpoints )
+                    DeleteDirectory( path / checkpoint, result );
             else
-                for( bfs::directory_iterator it( path ); it != bfs::directory_iterator(); ++it )
-                    DeleteDirectory( bfs::path( *it ), result );
+                for( auto it = path.begin(); it != path.end(); ++it )
+                    DeleteDirectory( *it, result );
             return result;
         }
 
-        bool IsValidModel( const bfs::path& record )
+        bool IsValidModel( const tools::Path& record )
         {
-            return bfs::is_directory( record )
-                && bfs::exists( record / "decisional" ) && bfs::is_directory( record / "decisional" )
-                && bfs::exists( record / "decisional" / "decisional.xml" )
-                && bfs::exists( record / "physical" );
+            return record.IsDirectory() &&
+                   ( record / "decisional" ).Exists() && ( record / "decisional" ).IsDirectory() &&
+                   ( record / "decisional" / "decisional.xml" ).Exists() &&
+                   ( record / "physical" ).Exists();
         }
 
-        QStringList ListModels( const tools::GeneralConfig& config )
+        tools::Path::T_Paths ListModels( const tools::GeneralConfig& config )
         {
-            return gui::ListDirectories( config.GetModelsDir(), &IsValidModel );
+            return config.GetModelsDir().ListElements( &IsValidModel, false );
         }
 
-        bool IsValidPhysicalModel( const bfs::path& record )
+        bool IsValidPhysicalModel( const tools::Path& record )
         {
-            return bfs::is_directory( record )
-                && bfs::exists( record / "physical.xml" );
+            return record.IsDirectory() && ( record / "physical.xml" ).Exists();
         }
 
-        QStringList ListPhysicalModels( const tools::GeneralConfig& config, const std::string& model )
+        tools::Path::T_Paths ListPhysicalModels( const tools::GeneralConfig& config, const tools::Path& model )
         {
-            return gui::ListDirectories( config.GetPhysicalsDir( model ), &IsValidPhysicalModel );
+            return config.GetPhysicalsDir( model ).ListElements( &IsValidPhysicalModel, false );
         }
 
-        bool IsValidScript( const bfs::path& child )
+        bool IsValidScript( const tools::Path& child )
         {
-            // std::string file( child.filename().c_str() );
-            return bfs::is_regular_file( child ) && bfs::extension( child ).compare( ".lua" ) == 0;
+            return child.IsRegularFile() && child.Extension() == ".lua";
         }
 
-        QStringList ListScripts( const tools::GeneralConfig& config, const std::string& exercise )
+        tools::Path::T_Paths ListScripts( const tools::GeneralConfig& config, const tools::Path& exercise )
         {
-            std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ) ) / "scripts" ).string() );
-            return gui::ListDirectories( dir, &IsValidScript );
+            return ( config.GetExerciseDir( exercise ) / "scripts" ).ListElements( &IsValidScript );
         }
 
-        bool IsValidOrder( const bfs::path& child )
+        bool IsValidOrder( const tools::Path& child )
         {
-            return bfs::is_regular_file( child ) && bfs::extension( child ).compare( ".ord" ) == 0;
-            // std::string file( child.filename().c_str() );
-            // return std::string( file, file.find_last_of( '.' ) ).compare( ".ord" ) == 0;
+            return child.IsRegularFile() && child.Extension() == ".ord";
         }
 
-        QStringList ListOrders( const tools::GeneralConfig& config, const std::string& exercise )
+        tools::Path::T_Paths ListOrders( const tools::GeneralConfig& config, const tools::Path& exercise )
         {
-            std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ) ) / "orders" ).string() );
-            return gui::ListDirectories( dir, &IsValidOrder );
+            return ( config.GetExerciseDir( exercise ) / "orders" ).ListElements( &IsValidOrder );
         }
 
-        bool IsValidPropagation( const bfs::path& child )
+        bool IsValidPropagation( const tools::Path& child )
         {
-            return bfs::is_directory( child )
-                   && bfs::exists( child / "propagation" ) && bfs::is_directory( child / "propagation" )
-                   && bfs::exists( child / "propagation.xml" );
+            return child.IsDirectory() && ( child / "propagation" ).Exists() && ( child / "propagation" ).IsDirectory() && ( child / "propagation.xml" ).Exists();
         }
 
-        QStringList ListPropagations( const tools::GeneralConfig& config )
+        tools::Path::T_Paths ListPropagations( const tools::GeneralConfig& config )
         {
-            std::string  dir( ( bfs::path( config.GetRootDir() ) / "data/propagations" ).string() );
-            return gui::ListDirectories( dir, &IsValidPropagation );
+            return ( config.GetRootDir() / "data/propagations" ).ListElements( &IsValidPropagation );
         }
 
-        bool IsOther( const bfs::path& child )
+        bool IsOther( const tools::Path& child )
         {
-            return bfs::is_directory( child ) && child.filename() != "sessions" && child.filename() != ".svn";
+            return child.IsDirectory() && child.FileName() != "sessions";
         }
 
-        QStringList ListOtherDirectories( const tools::GeneralConfig& config, const std::string& exercise )
+        tools::Path::T_Paths ListOtherDirectories( const tools::GeneralConfig& config, const tools::Path& exercise )
         {
-            std::string dir( ( bfs::path( config.GetExerciseDir( exercise ) ) ).string() );
-            return ListDirectoriesNoRecursive( dir, &IsOther );
+            return config.GetExerciseDir( exercise ).ListElements( &IsOther, false );
         }
 
-        QStringList ListPackageFiles( const std::string& filename )
+        tools::Path::T_Paths ListPackageFiles( const tools::Path& filename )
         {
-            QStringList list;
-            zip::izipfile archive( filename );
+            tools::Path::T_Paths list;
+            zip::izipfile archive( filename.ToUnicode() );
             if( archive.isOk() )
                 while( archive.browse() )
                 {
-                    const QString name = archive.getCurrentFileName().c_str();
+                    const std::string name = archive.getCurrentFileName();
                     if( name != "content.xml" ) // $$$$ SBO 2008-03-17: hard coded!
-                        list.append( name );
+                        list.push_back( tools::Path::FromUTF8( name ) );
                 }
             archive.close();
             return list;
         }
 
-        void InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination )
+        void InstallPackageFile( zip::izipfile& archive, const tools::Path& filename, const tools::Path& destination )
         {
-            tools::zipextractor::ExtractFile( archive, filename.c_str(), filename, destination );
+            tools::zipextractor::ExtractFile( archive, filename.ToUTF8().c_str(), filename, destination );
         }
 
-        void InstallPackageFile( zip::izipfile& archive, const std::string& destination, boost::function0< void > callback )
+        bool ExerciseExists( const tools::GeneralConfig& config, const tools::Path& exercise )
         {
-            while( archive.isOk() && archive.browse() )
-            {
-                const std::string name = archive.getCurrentFileName();
-                if( name != "content.xml" ) // $$$$ SBO 2008-03-17: hard coded!
-                {
-                    tools::zipextractor::ExtractFile( archive, 0, name, destination );
-                    callback();
-                }
-            }
+            const tools::Path::T_Paths exercises = ListExercises( config );
+            return std::find( exercises.begin(), exercises.end(), exercise ) != exercises.end();
         }
 
-        bool ExerciseExists( const tools::GeneralConfig& config, const std::string& exercise )
+        bool SessionExists( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session )
         {
-            const QStringList exercises = ListExercises( config );
-            return exercises.indexOf( exercise.c_str() ) != -1;
+            const tools::Path::T_Paths sessions = ListSessions( config, exercise );
+            return std::find( sessions.begin(), sessions.end(), session ) != sessions.end();
         }
 
-        bool SessionExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
+        bool CheckpointExists( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const tools::Path& checkpoint )
         {
-            const QStringList sessions = ListSessions( config, exercise );
-            return sessions.indexOf( session.c_str() ) != -1;
+            const tools::Path::T_Paths checkpoints = ListCheckpoints( config, exercise, session );
+            return std::find( checkpoints.begin(), checkpoints.end(), checkpoint ) != checkpoints.end();
         }
 
-        bool CheckpointExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session, const std::string& checkpoint )
+        bool TerrainExists( const tools::GeneralConfig& config, const tools::Path& terrain )
         {
-            const QStringList checkpoints = ListCheckpoints( config, exercise, session );
-            return checkpoints.indexOf( checkpoint.c_str() ) != -1;
+            const tools::Path::T_Paths terrains = ListTerrains( config );
+            return std::find( terrains.begin(), terrains.end(), terrain ) != terrains.end();
         }
 
-        bool TerrainExists( const tools::GeneralConfig& config, const std::string& terrain )
+        QStringList PathListToQStringList( const tools::Path::T_Paths& paths )
         {
-            const QStringList terrains = ListTerrains( config );
-            return terrains.indexOf( terrain.c_str() ) != -1;
+            QStringList result;
+            for( auto it = paths.begin(); it != paths.end(); ++it )
+                result += it->ToUTF8().c_str();
+            return result;
         }
     }
 }

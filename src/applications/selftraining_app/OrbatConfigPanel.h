@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetName() const;
-    virtual void Commit( const std::string& exercise, const std::string& session );
+    virtual void Commit( const tools::Path& exercise, const tools::Path& session );
     virtual void OnLanguageChanged();
     //@}
 
@@ -67,7 +67,7 @@ private:
     QVBoxLayout* mainLayout_;
     QCheckBox* noSideObjectsLabel_;
     T_Checkbox sideCheckBox_;
-    std::string currentExercise_;
+    tools::Path currentExercise_;
     //@}
 };
 

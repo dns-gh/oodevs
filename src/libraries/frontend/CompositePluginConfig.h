@@ -49,7 +49,7 @@ public:
     virtual void OnLanguageChanged();
     virtual QString GetName() const;
     virtual bool IsAvailable() const;
-    virtual void Commit( const std::string& exercise, const std::string& session );
+    virtual void Commit( const tools::Path& exercise, const tools::Path& session );
     void Add( const tools::GeneralConfig& config, xml::xistream& xis );
     template< typename T >
     void Add( const tools::GeneralConfig& config )

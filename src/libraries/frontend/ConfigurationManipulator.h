@@ -10,6 +10,7 @@
 #ifndef __ConfigurationManipulator_h_
 #define __ConfigurationManipulator_h_
 
+#include <boost/noncopyable.hpp>
 #include "XmlNode.h"
 
 namespace tools
@@ -19,6 +20,7 @@ namespace tools
 
 namespace frontend
 {
+    class XmlNode;
 
 // =============================================================================
 /** @class  ConfigurationManipulator
@@ -26,13 +28,13 @@ namespace frontend
 */
 // Created: SBO 2008-02-25
 // =============================================================================
-class ConfigurationManipulator
+class ConfigurationManipulator : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ConfigurationManipulator( const std::string& filename );
-             ConfigurationManipulator( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
+    explicit ConfigurationManipulator( const tools::Path& filename );
+             ConfigurationManipulator( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session );
     virtual ~ConfigurationManipulator();
     //@}
 
@@ -48,21 +50,15 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ConfigurationManipulator( const ConfigurationManipulator& );            //!< Copy constructor
-    ConfigurationManipulator& operator=( const ConfigurationManipulator& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    static std::string GetSessionXml( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
+    static tools::Path GetSessionXml( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string outputPath_;
+    const tools::Path outputPath_;
     std::auto_ptr< XmlNode > document_;
     //@}
 };

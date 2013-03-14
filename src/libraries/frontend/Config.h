@@ -31,22 +31,15 @@ public:
 
     //! @name Operations
     //@{
-    std::string GetPackageFile() const;
+    const tools::Path& GetPackageFile() const;
     unsigned short GetLauncherPort() const;
     bool IsTestMode() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Config( const Config& );            //!< Copy constructor
-    Config& operator=( const Config& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
-    std::string package_;
+    tools::Path package_;
     unsigned short launcherPort_;
     //@}
 };

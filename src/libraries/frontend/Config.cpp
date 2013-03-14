@@ -13,8 +13,6 @@
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <shlobj.h>
 #pragma warning( push, 0 )
 #include <QtCore/qsettings.h>
@@ -22,7 +20,6 @@
 #pragma warning( pop )
 
 namespace po = boost::program_options;
-namespace bfs = boost::filesystem;
 using namespace frontend;
 
 namespace
@@ -33,14 +30,14 @@ namespace
         return settings.value( "/Common/DataDirectory", "" ).toString();
     }
 
-    std::string GetDefaultRoot( const std::string& appName )
+    tools::Path GetDefaultRoot( const QString& appName )
     {
         const QString regDir = ReadDataDirectory();
         if( !regDir.isEmpty() )
-            return regDir.toStdString();
+            return tools::Path::FromUnicode( regDir.toStdWString() );
         char myDocuments[ MAX_PATH ];
         SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
-        return ( bfs::path( myDocuments ) / appName ).string();
+        return tools::Path( myDocuments ) / tools::Path::FromUnicode( appName.toStdWString() );
     }
 }
 
@@ -49,7 +46,7 @@ namespace
 // Created: SBO 2008-03-14
 // -----------------------------------------------------------------------------
 Config::Config()
-    : GeneralConfig( GetDefaultRoot( tools::translate( "Application", "SWORD" ).toStdString() ) )
+    : GeneralConfig( GetDefaultRoot( tools::translate( "Application", "SWORD" ) ) )
     , launcherPort_( 33000 )
 {
     po::options_description desc( "Frontend options" );
@@ -74,7 +71,7 @@ Config::~Config()
 // Name: Config::GetPackageFile
 // Created: SBO 2008-03-14
 // -----------------------------------------------------------------------------
-std::string Config::GetPackageFile() const
+const tools::Path& Config::GetPackageFile() const
 {
     return package_;
 }

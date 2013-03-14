@@ -96,7 +96,7 @@ void HomePage::OnOptions()
 // Name: HomePage::InstallPackage
 // Created: SBO 2011-03-30
 // -----------------------------------------------------------------------------
-void HomePage::InstallPackage( const QString& package )
+void HomePage::InstallPackage( const tools::Path& package )
 {
     optionsPage_->ShowPackageInstallation( package );
 }

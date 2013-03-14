@@ -163,7 +163,7 @@ QString AdvancedConfigPanel::GetName() const
 // Name: AdvancedConfigPanel::Commit
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
-void AdvancedConfigPanel::Commit( const std::string& exercise, const std::string& session )
+void AdvancedConfigPanel::Commit( const tools::Path& exercise, const tools::Path& session )
 {
     frontend::CreateSession action( config_, exercise, session );
     action.SetOption( "session/config/simulation/time/@step", stepSpin_->value() );

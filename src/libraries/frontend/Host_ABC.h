@@ -40,16 +40,16 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetId() const = 0;
-    virtual void StartSimulation( const std::string& exercise, const std::string& session ) const = 0;
-    virtual void StartDispatcher( const std::string& exercise, const std::string& session, const T_Parameters& parameters ) const = 0;
-    virtual void StartReplay( const std::string& exercise, const std::string& session ) const = 0;
-    virtual void StopSession( const std::string& exercise, const std::string& session ) const = 0;
-    virtual void QueryProfileList( const std::string& exercise ) const = 0;
-    virtual void Pause( const std::string& exercise, const std::string& session ) const = 0;
-    virtual void Resume( const std::string& exercise, const std::string& session ) const = 0;
-    virtual void ChangeDateTime( const std::string& exercise, const std::string& session, const std::string& date ) const = 0;
-    virtual void SaveCheckpoint( const std::string& exercise, const std::string& session, const std::string& name ) const = 0;
-    virtual void QueryConnectedProfileList( const std::string& exercise, const std::string& session ) const = 0;
+    virtual void StartSimulation( const tools::Path& exercise, const tools::Path& session ) const = 0;
+    virtual void StartDispatcher( const tools::Path& exercise, const tools::Path& session, const T_Parameters& parameters ) const = 0;
+    virtual void StartReplay( const tools::Path& exercise, const tools::Path& session ) const = 0;
+    virtual void StopSession( const tools::Path& exercise, const tools::Path& session ) const = 0;
+    virtual void QueryProfileList( const tools::Path& exercise ) const = 0;
+    virtual void Pause( const tools::Path& exercise, const tools::Path& session ) const = 0;
+    virtual void Resume( const tools::Path& exercise, const tools::Path& session ) const = 0;
+    virtual void ChangeDateTime( const tools::Path& exercise, const tools::Path& session, const std::string& date ) const = 0;
+    virtual void SaveCheckpoint( const tools::Path& exercise, const tools::Path& session, const tools::Path& name ) const = 0;
+    virtual void QueryConnectedProfileList( const tools::Path& exercise, const tools::Path& session ) const = 0;
     //@}
 };
 

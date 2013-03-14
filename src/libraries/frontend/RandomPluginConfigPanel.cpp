@@ -220,7 +220,7 @@ QString RandomPluginConfigPanel::GetName() const
 // Name: RandomPluginConfigPanel::Commit
 // Created: JSR 2010-07-12
 // -----------------------------------------------------------------------------
-void RandomPluginConfigPanel::Commit( const std::string& exercise, const std::string& session )
+void RandomPluginConfigPanel::Commit( const tools::Path& exercise, const tools::Path& session )
 {
     frontend::CreateSession action( config_, exercise, session );
     action.SetOption( "session/config/simulation/random/@seed", hasSeed_->isChecked() ? seed_->value() : 0 );

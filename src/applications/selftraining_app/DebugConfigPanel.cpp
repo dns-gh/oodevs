@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "DebugConfigPanel.h"
 #include "moc_DebugConfigPanel.cpp"
+#include "clients_gui/FileDialog.h"
 #include "clients_gui/tools.h"
 #include "frontend/CreateSession.h"
 
@@ -48,7 +49,6 @@ namespace
 DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
     : PluginConfig_ABC( parent )
     , config_( config )
-    , pathList_( new QStringList() )
     , profilingBox_( 0 )
     , decCallsBox_( 0 )
     , commandsBox_( 0 )
@@ -76,8 +76,8 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     QString pathValue = ReadStringRegistryValue( "IntegrationLayerPaths" );
     if( !pathValue.isEmpty() )
     {
-        pathList_ = new QStringList( QStringList::split( ";", pathValue ) );
-        integrationComboBox_->addItems( *pathList_ );
+        pathList_ = pathValue.split( ';' );
+        integrationComboBox_->addItems( pathList_ );
     }
     connect( integrationComboBox_, SIGNAL( editTextChanged( const QString& ) ), SLOT( OnEditIntegrationDirectory( const QString& ) ) );
 
@@ -171,8 +171,8 @@ void DebugConfigPanel::SwordVersionChecked( bool state )
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnChangeIntegrationDirectory()
 {
-    const QString directory = QDir::convertSeparators( QFileDialog::getExistingDirectory( this , "" ) );
-    integrationComboBox_->setCurrentText( directory );
+    const tools::Path directory = gui::FileDialog::getExistingDirectory( this , "" );
+    integrationComboBox_->setCurrentText( QString::fromStdWString( directory.ToUnicode() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,22 +181,23 @@ void DebugConfigPanel::OnChangeIntegrationDirectory()
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
 {
-    if( boost::filesystem::is_directory( directory.toStdString() ) )
+    tools::Path path = tools::Path::FromUnicode( directory.toStdWString() );
+    if( path.IsDirectory() )
     {
-        if ( !pathList_->contains( directory, Qt::CaseSensitive ) )
+        if ( !pathList_.contains( directory, Qt::CaseSensitive ) )
         {
             //maj of combobox
-            pathList_->push_front( directory );
-            if( pathList_->count() > maxIntegrationDir )
-                pathList_->removeLast();
+            pathList_.push_front( directory );
+            if( pathList_.count() > maxIntegrationDir )
+                pathList_.removeLast();
             integrationComboBox_->clear();
-            integrationComboBox_->addItems( *pathList_ );
+            integrationComboBox_->addItems( pathList_ );
 
             //save in registry
-            WriteStringRegistryValue( "IntegrationLayerPaths", pathList_->join( ";" ) );
+            WriteStringRegistryValue( "IntegrationLayerPaths", pathList_.join( ";" ) );
         }
+        emit IntegrationPathSelected( path );
     }
-    emit IntegrationPathSelected( directory );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,7 +231,7 @@ QString DebugConfigPanel::GetName() const
 // Name: DebugConfigPanel::Commit
 // Created: LGY 2013-02-05
 // -----------------------------------------------------------------------------
-void DebugConfigPanel::Commit( const std::string& exercise, const std::string& session )
+void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& session )
 {
     if( decCallsBox_->isChecked() || commandsBox_->isChecked() || hooksBox_->isChecked() )
     {
@@ -251,11 +252,11 @@ void DebugConfigPanel::Commit( const std::string& exercise, const std::string& s
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnChangeDataDirectory()
 {
-    const QString directory = QDir::convertSeparators( QFileDialog::getExistingDirectory( this , "", dataDirectory_->text() ) );
-    if( directory.isEmpty() )
+    const tools::Path directory = gui::FileDialog::getExistingDirectory( this , "", tools::Path::FromUnicode( dataDirectory_->text().toStdWString() ) );
+    if( directory.IsEmpty() )
         return;
-    dataDirectory_->setText( directory );
-    emit DumpPathfindOptionsChanged( filterEdit_->text(), dataDirectory_->text() );
+    dataDirectory_->setText( QString::fromStdWString( directory.ToUnicode() ) );
+    emit DumpPathfindOptionsChanged( filterEdit_->text(), tools::Path::FromUnicode( dataDirectory_->text().toStdWString() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -264,5 +265,5 @@ void DebugConfigPanel::OnChangeDataDirectory()
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::OnChangeDataFilter()
 {
-    emit DumpPathfindOptionsChanged( filterEdit_->text(), dataDirectory_->text() );
+    emit DumpPathfindOptionsChanged( filterEdit_->text(), tools::Path::FromUnicode( dataDirectory_->text().toStdWString() ) );
 }

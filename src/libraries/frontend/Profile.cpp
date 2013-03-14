@@ -103,10 +103,10 @@ namespace
 // Name: Profile::VisitProfiles
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void Profile::VisitProfiles( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, const std::string& exercise, ProfileVisitor_ABC& visitor )
+void Profile::VisitProfiles( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, const tools::Path& exercise, ProfileVisitor_ABC& visitor )
 {
-    const std::string exerciseFile = config.GetExerciseFile( exercise );
-    std::string profilesFile;
+    const tools::Path exerciseFile = config.GetExerciseFile( exercise );
+    tools::Path profilesFile;
     {
         std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( exerciseFile ) ;
         *xis >> xml::start( "exercise" )

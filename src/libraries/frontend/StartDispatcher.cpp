@@ -20,21 +20,21 @@ using namespace frontend;
 // -----------------------------------------------------------------------------
 StartDispatcher::StartDispatcher( const tools::GeneralConfig& config,
                                   bool attach,
-                                  const QString& exercise,
-                                  const QString& session,
-                                  const QString& checkpoint /*= ""*/,
-                                  const QString& dispatcher_path /*= ""*/,
+                                  const tools::Path& exercise,
+                                  const tools::Path& session,
+                                  const tools::Path& checkpoint /*= ""*/,
+                                  const tools::Path& dispatcher_path /*= ""*/,
                                   std::string commanderEndpoint /*= ""*/,
                                   std::string processJobName /*= ""*/ )
     : SpawnCommand( config, "dispatcher_app.exe", attach, commanderEndpoint, processJobName )
 {
-    if( !dispatcher_path.isEmpty() )
+    if( !dispatcher_path.IsEmpty() )
         SetWorkingDirectory( dispatcher_path );
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument( session );
-    if( !checkpoint.isEmpty() )
-        AddArgument( "--checkpoint=" + checkpoint );
+    if( !checkpoint.IsEmpty() )
+        AddArgument( QString( "--checkpoint=" ) + checkpoint.ToUTF8().c_str() );
 }
 
 // -----------------------------------------------------------------------------

@@ -27,8 +27,8 @@ class StartExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-    StartExercise(  const tools::GeneralConfig& config, const QString& exercise,
-                    const QString& session, const std::map< std::string, std::string >& arguments,
+    StartExercise(  const tools::GeneralConfig& config, const tools::Path& exercise,
+                    const tools::Path& session, const std::map< std::string, std::string >& arguments,
                     bool attach, bool launchDispatchedIfNotEmbedded = true,
                     std::string commanderEndpoint = "", std::string processJobName = "" );
     virtual ~StartExercise();
@@ -39,18 +39,12 @@ public:
     virtual void         Start();
     virtual void         Stop();
     virtual unsigned int GetPercentage() const;
-    virtual std::string  GetStartedExercise() const;
-    virtual std::string  GetExercise() const;
-    virtual std::string  GetSession() const;
+    virtual tools::Path  GetStartedExercise() const;
+    virtual tools::Path  GetExercise() const;
+    virtual tools::Path  GetSession() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    StartExercise( const StartExercise& );            //!< Copy constructor
-    StartExercise& operator=( const StartExercise& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual QString GetStatus() const;
@@ -59,8 +53,8 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string exercise_;
-    std::string session_ ;
+    tools::Path exercise_;
+    tools::Path session_ ;
     std::auto_ptr< SpawnCommand > dispatcher_;
     std::auto_ptr< ConfigurationManipulator > configManipulator_;
     unsigned int percentage_;

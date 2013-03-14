@@ -56,7 +56,7 @@ private:
     QListWidget* listWidget_;
     QPushButton* addButton_;
     QPushButton* removeButton_;
-    QString lastDir_;
+    tools::Path lastDir_;
     QString caption_;
     QString fileFilter_;
 };

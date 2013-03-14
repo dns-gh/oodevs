@@ -26,18 +26,12 @@ class JoinExercise : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             JoinExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach = false );
-             JoinExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& profile, bool attach = false );
+             JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, bool attach = false );
+             JoinExercise( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const QString& profile, bool attach = false );
     virtual ~JoinExercise();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    JoinExercise( const JoinExercise& );            //!< Copy constructor
-    JoinExercise& operator=( const JoinExercise& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual QString GetStatus() const;

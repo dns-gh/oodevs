@@ -26,8 +26,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     StartDispatcher( const tools::GeneralConfig& config, bool attach,
-                     const QString& exercise, const QString& session,
-                     const QString& checkpoint = "", const QString& dispatcher_path = "",
+                     const tools::Path& exercise, const tools::Path& session,
+                     const tools::Path& checkpoint = "", const tools::Path& dispatcher_path = "",
                      std::string commanderEndpoint = "", std::string processJobName = "" );
     virtual ~StartDispatcher();
     //@}

@@ -87,7 +87,7 @@ void CreateTerrainPage::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void CreateTerrainPage::OnStart()
 {
-    auto process = frontend::CreateTerrain( *progressPage_, config_, editName_->text());
+    auto process = frontend::CreateTerrain( *progressPage_, config_, tools::Path::FromUnicode( editName_->text().toStdWString() ) );
     progressPage_->Attach( process );
     process->Start();
     progressPage_->show();
@@ -108,18 +108,22 @@ void CreateTerrainPage::EditNameChanged( const QString& name )
     else
     {
         bool exists = false;
-        for( QStringList::iterator it = existingTerrains_.begin(); it != existingTerrains_.end(); ++it )
-            if( (*it).toLower() == name.toLower() )
+        for( auto it = existingTerrains_.begin(); it != existingTerrains_.end(); ++it )
+        {
+            std::string terrain = it->ToUTF8();
+            std::transform( terrain.begin(), terrain.end(), terrain.begin(), ::tolower);
+            if( terrain == name.toLower().toStdString() )
             {
                 exists = true;
                 break;
             }
+        }
 
         EnableButton( eButtonStart, !exists );
         if( exists )
             errorLabel_->setText( tools::translate( "CreateTerrainPage", "A terrain with this name already exists." ) );
         else
-            errorLabel_->setText( tools::translate( "CreateTerrainPage", "The new terrain will be created in:\n%1" ).arg( config_.GetTerrainDir( name.toStdString() ).c_str() ) );
+            errorLabel_->setText( tools::translate( "CreateTerrainPage", "The new terrain will be created in:\n%1" ).arg( config_.GetTerrainDir( tools::Path::FromUnicode( name.toStdWString() ) ).ToUTF8().c_str() ) );
     }
 }
 

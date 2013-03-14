@@ -13,11 +13,8 @@
 #include "commands.h"
 #include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
-#include <boost/filesystem/operations.hpp>
 #include <QtGui/qlabel.h>
 #include <xeumeuleu/xml.hpp>
-
-namespace bfs = boost::filesystem;
 
 using namespace frontend;
 
@@ -53,25 +50,24 @@ CheckpointList::~CheckpointList()
 
 namespace
 {
-    QString ReadName( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint )
+    QString ReadName( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session, const tools::Path& checkpoint )
     {
-        bfs::path p( config.GetCheckpointsDir( exercise.toStdString(), session.toStdString() ) );
-        p = p / checkpoint.toStdString() / "MetaData.xml";
+        tools::Path metaDataFile = config.GetCheckpointsDir( exercise, session ) / checkpoint / "MetaData.xml";
         try
         {
-            if( bfs::exists( p ) )
+            if( metaDataFile.Exists() )
             {
                 std::string name;
-                xml::xifstream xis( p.string() );
+                tools::Xifstream xis( metaDataFile );
                 xis >> xml::start( "checkpoint" ) >> xml::content( "name", name );
-                return name.empty() ? checkpoint : name.c_str();
+                return name.empty() ? checkpoint.ToUTF8().c_str() : name.c_str();
             }
         }
         catch( ... )
         {
             // NOTHING
         }
-        return checkpoint;
+        return checkpoint.ToUTF8().c_str();
     }
 }
 
@@ -79,16 +75,16 @@ namespace
 // Name: CheckpointList::Update
 // Created: SBO 2010-04-21
 // -----------------------------------------------------------------------------
-void CheckpointList::Update( const QString& exercise, const QString& session )
+void CheckpointList::Update( const tools::Path& exercise, const tools::Path& session )
 {
     if( exercise_ != exercise || session_ != session )
     {
         exercise_ = exercise;
         session_ = session;
         list_->clear();
-        checkpoints_ = frontend::commands::ListCheckpoints( config_, exercise.toStdString(), session.toStdString() );
+        checkpoints_ = frontend::commands::ListCheckpoints( config_, exercise, session );
         QStringList visibleNames;
-        for( QStringList::const_iterator it = checkpoints_.begin(); it != checkpoints_.end(); ++it )
+        for( auto it = checkpoints_.begin(); it != checkpoints_.end(); ++it )
             visibleNames.push_back( ReadName( config_, exercise, session, *it ) );
         list_->addItems( visibleNames );
         list_->setEnabled( list_->count() > 0 );
@@ -129,6 +125,6 @@ void CheckpointList::SelectCheckpoint( int index )
 void CheckpointList::Toggle( bool enabled )
 {
     enabled_ = enabled;
-    if( checkpoints_.count() )
+    if( checkpoints_.size() )
         emit Select( enabled && list_->currentItem() ? checkpoints_[ list_->currentRow() ] : "" );
 }

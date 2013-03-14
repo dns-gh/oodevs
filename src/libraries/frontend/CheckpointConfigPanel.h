@@ -47,13 +47,13 @@ public:
     //@{
     virtual void OnLanguageChanged();
     virtual QString GetName() const;
-    virtual void Commit( const std::string& exercise, const std::string& session );
+    virtual void Commit( const tools::Path& exercise, const tools::Path& session );
     //@}
 
 signals:
     //! @name Signals
     //@{
-    void CheckpointSelected( const QString& session, const QString& checkpoint );
+    void CheckpointSelected( const tools::Path& session, const tools::Path& checkpoint );
     //@}
 
 public slots:
@@ -67,7 +67,7 @@ private slots:
     //! @name Operations
     //@{
     void SessionSelected( const QString& session );
-    void OnCheckpointSelected( const QString& checkpoint );
+    void OnCheckpointSelected( const tools::Path& checkpoint );
     void OnFrequencyChanged( const QTime& time );
     void OnCheckpointKeptChanged( int value );
     void OnCheckpointCheckedChanged( bool value );

@@ -14,9 +14,6 @@
 #include "MessageDialog.h"
 #include "clients_kernel/Tools.h"
 #include "frontend/commands.h"
-#include <boost/filesystem/convenience.hpp>
-
-namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -69,15 +66,17 @@ DataWidget::~DataWidget()
 void DataWidget::Update()
 {
     terrains_->clear();
-    terrains_->addItems( frontend::commands::ListTerrains( config_ ) );
+    const tools::Path::T_Paths paths = frontend::commands::ListTerrains( config_ );
+    for( auto it = paths.begin(); it != paths.end(); ++it )
+        terrains_->addItem( it->ToUTF8().c_str() );
     models_->clear();
     QStringList physicalBase;
-    QStringList decisionalModels = frontend::commands::ListModels( config_ );
-    for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+    const tools::Path::T_Paths decisionalModels = frontend::commands::ListModels( config_ );
+    for( auto it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
     {
-        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
-        for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
-            physicalBase << QString( "%1/%2" ).arg( *it ).arg( *itP );
+        const tools::Path::T_Paths physicalModels = frontend::commands::ListPhysicalModels( config_, *it );
+        for( auto itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
+            physicalBase << QString( "%1/%2" ).arg( it->ToUTF8().c_str() ).arg( itP->ToUTF8().c_str() );
     }
     models_->addItems( physicalBase );
     OnButtonChanged();
@@ -108,12 +107,12 @@ void DataWidget::OnButtonChanged()
 
 namespace
 {
-    std::pair< std::string, std::string > Extract( const std::string& value )
+    std::pair< tools::Path, tools::Path > Extract( const QString& value )
     {
-        QStringList values = QString( value.c_str() ).split("/");
+        QStringList values = value.split("/");
         if( values.size() == 2 )
-            return std::make_pair( values[ 0 ].toStdString(), values[ 1 ].toStdString() );
-        return std::make_pair( "", "" );
+            return std::make_pair( tools::Path::FromUnicode( values[ 0 ].toStdWString() ), tools::Path::FromUnicode( values[ 1 ].toStdWString() ) );
+        return std::make_pair( tools::Path(), tools::Path() );
     }
 }
 
@@ -127,23 +126,23 @@ void DataWidget::OnDelete()
     if( !item )
         return;
 
-    std::string path;
+    tools::Path path;
     if( mainTabs_->currentWidget()->isAncestorOf( terrains_ ) )
     {
-        path = config_.GetTerrainDir( item->text().toStdString() );
+        path = config_.GetTerrainDir( tools::Path::FromUnicode( item->text().toStdWString() ) );
     }
     else
     {
-        std::pair< std::string, std::string > info( Extract( item->text().toStdString() ) );
+        std::pair< tools::Path, tools::Path > info( Extract( item->text() ) );
         path = config_.GetPhysicalsDir( info.first, info.second );
     }
     MessageDialog message( parent_, tools::translate( "DataWidget", "Delete" ), tools::translate( "DataWidget", "Are you sure you want to delete?" ), QMessageBox::Yes, QMessageBox::No );
     if( message.exec() != QMessageBox::Yes )
         return;
 
-    if( !bfs::exists( path ) || !bfs::is_directory( path ) )
+    if( !path.Exists() || !path.IsDirectory() )
         return;
 
-    bfs::remove_all( path );
+    path.RemoveAll();
     Update();
 }

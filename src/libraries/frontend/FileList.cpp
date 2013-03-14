@@ -11,13 +11,14 @@
 #include "FileList.h"
 #include "moc_FileList.cpp"
 
+#include "clients_gui/FileDialog.h"
+
 #pragma warning( push, 0 )
 #include <QtGui/QPushButton>
 #include <QtGui/QListWidget>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtCore/QStringList>
-#include <QtGui/QFileDialog>
 #pragma warning( pop )
 
 #include <boost/algorithm/string.hpp>
@@ -65,27 +66,21 @@ void FileList::SelectionChanged()
 
 void FileList::OnAddClicked()
 {
-    QFileDialog* fdialog = new QFileDialog(this, caption_, lastDir_, fileFilter_);
-    fdialog->setFileMode( QFileDialog::ExistingFiles );
-
-    QStringList files = fdialog->getOpenFileNames(); 
-    if (!files.isEmpty())
+    tools::Path::T_Paths files = gui::FileDialog::getOpenFileNames( this, caption_, lastDir_, fileFilter_, 0, 0, QFileDialog::ExistingFiles );
+    if ( !files.empty() )
     {
-        lastDir_ = fdialog->directory().absolutePath();
+        lastDir_ = files.back().Parent();
 
-        for (int i = 0; i < listWidget_->count(); ++i)
-        {
-            files.append(listWidget_->item(i)->text());
-        }
+        for( int i = 0; i < listWidget_->count(); ++i )
+            files.push_back( tools::Path::FromUnicode( listWidget_->item(i)->text().toStdWString() ) );
 
-        files.sort();
-        files.removeDuplicates();
+        std::sort( files.begin(), files.end() );
+        files.erase( std::unique( files.begin(), files.end() ), files.end() );
 
         listWidget_->clear();
-        listWidget_->addItems(files);
+        for( auto it = files.begin(); it != files.end(); ++it )
+            listWidget_->addItem( QString::fromStdWString( it->ToUnicode() ) );
     }
-
-    delete fdialog;
 }
 
 void FileList::OnRemoveClicked()

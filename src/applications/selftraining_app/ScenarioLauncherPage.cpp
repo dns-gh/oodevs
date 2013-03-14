@@ -35,25 +35,21 @@
 #include "clients_kernel/Tools.h"
 #include "tools/Loader_ABC.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem.hpp>
 #include <boost/foreach.hpp>
 #include <boost/assign/list_of.hpp>
 #include <xeumeuleu/xml.hpp>
 
-namespace bfs = boost::filesystem;
 namespace bpt = boost::posix_time;
 
 namespace
 {
-    std::string MakeLink( const std::string& file )
+    QString MakeLink( const tools::Path& file )
     {
-        const QFileInfo info( file.c_str() );
-        const QString protocol = info.suffix() == "exe" ? "cmd" : "file";
-        return QString( "%1://%2" ).arg( protocol ).arg( info.absoluteFilePath() ).toStdString();
+        const QString protocol = file.Extension() == "exe" ? "cmd" : "file";
+        return QString( "%1://%2" ).arg( protocol ).arg( file.ToUTF8().c_str() );
     }
 
-    bool IsValid( const std::string& fileName, const tools::Loader_ABC& fileLoader )
+    bool IsValid( const tools::Path& fileName, const tools::Loader_ABC& fileLoader )
     {
         bool isValid = true;
         try
@@ -70,7 +66,7 @@ namespace
         return isValid;
     }
 
-    std::string ReadTargetApplication( const std::string& fileName, const tools::Loader_ABC& fileLoader )
+    std::string ReadTargetApplication( const tools::Path& fileName, const tools::Loader_ABC& fileLoader )
     {
         std::string target = "gaming";
         try
@@ -104,7 +100,7 @@ namespace
         QStringList& stringList_;
     };
 
-    QStringList GetResources( const std::string& fileName, const tools::Loader_ABC& fileLoader )
+    QStringList GetResources( const tools::Path& fileName, const tools::Loader_ABC& fileLoader )
     {
         QStringList result;
         try
@@ -169,7 +165,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     frontend::CheckpointConfigPanel* checkpointPanel = AddPlugin< frontend::CheckpointConfigPanel >();
     connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), checkpointPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
     connect( exercises_, SIGNAL( ClearSelection() ), checkpointPanel, SLOT( ClearSelection() ) );
-    connect( checkpointPanel, SIGNAL( CheckpointSelected( const QString&, const QString& ) ), SLOT( OnSelectCheckpoint( const QString&, const QString& ) ) );
+    connect( checkpointPanel, SIGNAL( CheckpointSelected( const tools::Path&, const tools::Path& ) ), SLOT( OnSelectCheckpoint( const tools::Path&, const tools::Path& ) ) );
     
     //session config config panel
     AddPlugin< frontend::SessionConfigPanel >();
@@ -192,7 +188,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
         DebugConfigPanel* configPanel = AddPlugin< DebugConfigPanel >();
         connect( configPanel, SIGNAL( SwordVersionSelected( bool ) ), SLOT( OnSwordVersionSelected( bool ) ) );
         connect( configPanel, SIGNAL( IntegrationPathSelected( const QString& ) ), SLOT( OnIntegrationPathSelected(const QString& ) ) );
-        connect( configPanel, SIGNAL( DumpPathfindOptionsChanged( const QString&, const QString& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const QString& ) ) );
+        connect( configPanel, SIGNAL( DumpPathfindOptionsChanged( const QString&, const tools::Path& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const tools::Path& ) ) );
     }
 
     //general settings tab
@@ -279,21 +275,21 @@ void ScenarioLauncherPage::OnStart()
 {
     if( !CanBeStarted() || ! dialogs::KillRunningProcesses( parentWidget()->parentWidget() ) )
         return;
-    const QString exerciseName = exercise_->GetName().c_str();
+    const tools::Path exerciseName = exercise_->GetName();
 
-    const std::string target = ReadTargetApplication( config_.GetExerciseFile( exerciseName.toStdString() ), fileLoader_ );
+    const std::string target = ReadTargetApplication( config_.GetExerciseFile( exerciseName ), fileLoader_ );
     if( target == "gaming" )
     {
-        const QString session = session_.isEmpty() ? BuildSessionName().c_str() : session_;
+        const tools::Path session = session_.IsEmpty() ? tools::Path::FromUTF8( BuildSessionName() ) : session_;
         CreateSession( exerciseName, session );
 
         std::map< std::string, std::string > arguments = boost::assign::map_list_of( "legacy", isLegacy_ ? "true" : "false" )
-                                                                                   ( "checkpoint", checkpoint_ )
+                                                                                   ( "checkpoint", checkpoint_.ToUTF8().c_str() )
                                                                                    ( "filter-pathfinds", pathfindFilter_.toStdString().c_str() );
-        if( !integrationDir_.isEmpty() )
-            arguments[ "integration-dir" ] = "\"" + integrationDir_.toStdString() + "\"";
-        if( !dumpPathfindDirectory_.isEmpty() )
-            arguments[ "dump-pathfinds" ] = "\"" + dumpPathfindDirectory_.toStdString() + "\"";
+        if( !integrationDir_.IsEmpty() )
+            arguments[ "integration-dir" ] = "\"" + integrationDir_.ToUTF8() + "\"";
+        if( !dumpPathfindDirectory_.IsEmpty() )
+            arguments[ "dump-pathfinds" ] = "\"" + dumpPathfindDirectory_.ToUTF8() + "\"";
 
         boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exerciseName, session, arguments,
                                                                                              true, true, "", "" ) );
@@ -333,12 +329,11 @@ void ScenarioLauncherPage::OnStart()
     }
     if( target != "gaming" )
     {
-        const QStringList resources = GetResources( config_.GetExerciseFile( exerciseName.toStdString() ), fileLoader_ );
-        if( ! resources.empty() )
+        const QStringList resources = GetResources( config_.GetExerciseFile( exerciseName ), fileLoader_ );
+        if( !resources.empty() )
         {
-            std::string file = resources.begin()->toStdString();
-            file = ( bfs::path( config_.GetExerciseDir( exerciseName.toStdString() ) ) / file ).string();
-            interpreter_.Interprete( MakeLink( file ).c_str() );
+            tools::Path file = tools::Path::FromUnicode( resources.begin()->toStdWString() );
+            interpreter_.Interprete( MakeLink( config_.GetExerciseDir( exerciseName ) / file ) );
         }
     }
 }
@@ -347,16 +342,16 @@ void ScenarioLauncherPage::OnStart()
 // Name: ScenarioLauncherPage::CreateSession
 // Created: RDS 2008-09-08
 // -----------------------------------------------------------------------------
-void ScenarioLauncherPage::CreateSession( const QString& exercise, const QString& session )
+void ScenarioLauncherPage::CreateSession( const tools::Path& exercise, const tools::Path& session )
 {
     {
-        frontend::CreateSession action( config_, exercise.toStdString(), session.toStdString() );
+        frontend::CreateSession action( config_, exercise, session );
         action.SetDefaultValues();
         action.Commit();
     }
     {
         BOOST_FOREACH( const T_Plugins::value_type& plugin, plugins_ )
-            plugin->Commit( exercise.toStdString(), session.toStdString() );
+            plugin->Commit( exercise, session );
     }
 }
 
@@ -390,7 +385,7 @@ bool ScenarioLauncherPage::CanBeStarted() const
 {
     if( exercise_ )
     {
-        const std::string exerciseFile = config_.GetExerciseFile( exercise_->GetName().c_str() );
+        const tools::Path exerciseFile = config_.GetExerciseFile( exercise_->GetName() );
         if( !IsValid( exerciseFile, fileLoader_ ) )
             return false;
         const std::string target = ReadTargetApplication( exerciseFile, fileLoader_ );
@@ -406,7 +401,7 @@ bool ScenarioLauncherPage::CanBeStarted() const
 // Name: ScenarioLauncherPage::OnSelectCheckpoint
 // Created: SBO 2010-04-19
 // -----------------------------------------------------------------------------
-void ScenarioLauncherPage::OnSelectCheckpoint( const QString& session, const QString& checkpoint )
+void ScenarioLauncherPage::OnSelectCheckpoint( const tools::Path& session, const tools::Path& checkpoint )
 {
     session_ = session;
     checkpoint_ = checkpoint;
@@ -434,7 +429,7 @@ void ScenarioLauncherPage::OnSwordVersionSelected( bool isLegacy )
 // Name: ScenarioLauncherPage::OnIntegrationPathSelected
 // Created: NPT 2013-01-04
 // -----------------------------------------------------------------------------
-void ScenarioLauncherPage::OnIntegrationPathSelected( const QString& integrationDir )
+void ScenarioLauncherPage::OnIntegrationPathSelected( const tools::Path& integrationDir )
 {
     integrationDir_ = integrationDir;
 }
@@ -443,7 +438,7 @@ void ScenarioLauncherPage::OnIntegrationPathSelected( const QString& integration
 // Name: ScenarioLauncherPage::OnDumpPathfindOptionsChanged
 // Created: LGY 2013-02-06
 // -----------------------------------------------------------------------------
-void ScenarioLauncherPage::OnDumpPathfindOptionsChanged( const QString& filter, const QString& directory )
+void ScenarioLauncherPage::OnDumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory )
 {
     pathfindFilter_ = filter;
     dumpPathfindDirectory_ = directory;

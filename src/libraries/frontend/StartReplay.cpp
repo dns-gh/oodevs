@@ -24,13 +24,13 @@ using namespace frontend;
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
 StartReplay::StartReplay( const tools::GeneralConfig& config,
-                          const QString& exercise,
-                          const QString& session,
+                          const tools::Path& exercise,
+                          const tools::Path& session,
                           unsigned port, bool attach,
                           std::string commanderEndpoint /*= ""*/,
                           std::string processJobName /*= ""*/  )
-                          : SpawnCommand( config, "replayer_app.exe", attach, commanderEndpoint, processJobName )
-    , configManipulator_( new ConfigurationManipulator( config, exercise.toStdString(), session.toStdString() ) )
+    : SpawnCommand( config, "replayer_app.exe", attach, commanderEndpoint, processJobName )
+    , configManipulator_( new ConfigurationManipulator( config, exercise, session ) )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );

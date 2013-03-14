@@ -74,7 +74,7 @@ namespace
 // Name: OrbatConfigPanel::Commit
 // Created: LGY 2013-02-06
 // -----------------------------------------------------------------------------
-void OrbatConfigPanel::Commit( const std::string& exercise, const std::string& session )
+void OrbatConfigPanel::Commit( const tools::Path& exercise, const tools::Path& session )
 {
     if( sideBox_ && !sideCheckBox_.empty() )
     {
@@ -112,7 +112,7 @@ void OrbatConfigPanel::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void OrbatConfigPanel::Select( const frontend::Exercise_ABC& exercise )
 {
-    const std::string currentExercise = exercise.GetId();
+    const tools::Path currentExercise = exercise.GetName();
     if( currentExercise_ != currentExercise )
     {
         ClearSelection();
@@ -148,7 +148,7 @@ void OrbatConfigPanel::ClearSelection()
         delete sideBox_;
         sideBox_ = 0;
     }
-    currentExercise_.clear();
+    currentExercise_.Clear();
     sideCheckBox_.clear();
     noSideObjectsLabel_->hide();
 }

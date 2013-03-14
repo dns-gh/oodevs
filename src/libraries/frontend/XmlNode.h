@@ -13,6 +13,7 @@
 #include <tools/Exception.h>
 #include <map>
 #include <boost/lexical_cast.hpp>
+#include <boost/noncopyable.hpp>
 #include <QtCore/qstring.h>
 
 namespace xml
@@ -35,12 +36,12 @@ namespace frontend
 */
 // Created: SBO 2008-02-27
 // =============================================================================
-class XmlNode
+class XmlNode : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit XmlNode( const std::string& filename );
+    explicit XmlNode( const tools::Path& filename );
     virtual ~XmlNode();
     //@}
 
@@ -61,12 +62,6 @@ private:
     //@{
              XmlNode();
     explicit XmlNode( xml::xistream& xis );
-    //@}
-
-    //! @name Copy/Assignment
-    //@{
-    XmlNode( const XmlNode& );            //!< Copy constructor
-    XmlNode& operator=( const XmlNode& ); //!< Assignment operator
     //@}
 
     //! @name Types

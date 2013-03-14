@@ -50,20 +50,20 @@ std::string RemoteHost::GetId() const
 // Name: RemoteHost::CreateIdentifier
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-std::string RemoteHost::CreateIdentifier( const std::string& exercise ) const
+std::string RemoteHost::CreateIdentifier( const tools::Path& exercise ) const
 {
-    return id_ + "/" + exercise;
+    return id_ + "/" + exercise.ToUTF8();
 }
 
 // -----------------------------------------------------------------------------
 // Name: RemoteHost::StartSimulation
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void RemoteHost::StartSimulation( const std::string& exercise, const std::string& session ) const
+void RemoteHost::StartSimulation( const tools::Path& exercise, const tools::Path& session ) const
 {
     launcher::SessionStartRequest message;
-    message().set_exercise( exercise );
-    message().set_session( session );
+    message().set_exercise( exercise.ToUTF8() );
+    message().set_session( session.ToUTF8() );
     message().set_type( sword::SessionStartRequest::simulation );
     message.Send( publisher_ );
 }
@@ -72,11 +72,11 @@ void RemoteHost::StartSimulation( const std::string& exercise, const std::string
 // Name: RemoteHost::StartDispatcher
 // Created: AHC 2011-05-19
 // -----------------------------------------------------------------------------
-void RemoteHost::StartDispatcher( const std::string& exercise, const std::string& session, const T_Parameters& parameters ) const
+void RemoteHost::StartDispatcher( const tools::Path& exercise, const tools::Path& session, const T_Parameters& parameters ) const
 {
     launcher::SessionStartRequest message;
-    message().set_exercise( exercise );
-    message().set_session( session );
+    message().set_exercise( exercise.ToUTF8() );
+    message().set_session( session.ToUTF8() );
     message().set_type( sword::SessionStartRequest::dispatch );
     for( T_Parameters::const_iterator it = parameters.begin(); it != parameters.end(); ++it )
     {
@@ -91,11 +91,11 @@ void RemoteHost::StartDispatcher( const std::string& exercise, const std::string
 // Name: RemoteHost::StartReplay
 // Created: SBO 2010-11-12
 // -----------------------------------------------------------------------------
-void RemoteHost::StartReplay( const std::string& exercise, const std::string& session ) const
+void RemoteHost::StartReplay( const tools::Path& exercise, const tools::Path& session ) const
 {
     launcher::SessionStartRequest message;
-    message().set_exercise( exercise );
-    message().set_session( session );
+    message().set_exercise( exercise.ToUTF8() );
+    message().set_session( session.ToUTF8() );
     message().set_type( sword::SessionStartRequest::replay );
     message.Send( publisher_ );
 }
@@ -104,11 +104,11 @@ void RemoteHost::StartReplay( const std::string& exercise, const std::string& se
 // Name: RemoteHost::StopSession
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void RemoteHost::StopSession( const std::string& exercise, const std::string& session ) const
+void RemoteHost::StopSession( const tools::Path& exercise, const tools::Path& session ) const
 {
     launcher::SessionStopRequest message;
-    message().set_exercise( exercise );
-    message().set_session( session );
+    message().set_exercise( exercise.ToUTF8() );
+    message().set_session( session.ToUTF8() );
     message.Send( publisher_ );
 }
 
@@ -116,10 +116,10 @@ void RemoteHost::StopSession( const std::string& exercise, const std::string& se
 // Name: RemoteHost::QueryProfileList
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void RemoteHost::QueryProfileList(const std::string& exercise) const
+void RemoteHost::QueryProfileList(const tools::Path& exercise) const
 {
     launcher::ProfileListRequest message;
-    message().set_exercise( exercise );
+    message().set_exercise( exercise.ToUTF8() );
     message.Send( publisher_ );
  }
 
@@ -132,7 +132,7 @@ void RemoteHost::Handle( const sword::ExerciseListResponse& message )
     exercises_.clear();
     for( int i = 0; i < message.exercise().size(); ++i )
     {
-        boost::shared_ptr< RemoteExercise > exercise( new RemoteExercise( *this, *this, message.exercise( i ), controller_ ) );
+        boost::shared_ptr< RemoteExercise > exercise( new RemoteExercise( *this, *this, tools::Path::FromUTF8( message.exercise( i ) ), controller_ ) );
         exercises_[ exercise->GetName() ] = exercise;
     }
 }
@@ -143,9 +143,10 @@ void RemoteHost::Handle( const sword::ExerciseListResponse& message )
 // -----------------------------------------------------------------------------
 void RemoteHost::Handle( const sword::SessionStartResponse& message )
 {
-    boost::shared_ptr< Exercise_ABC > exercise( exercises_[ message.exercise() ] );
+    tools::Path exercisePath = tools::Path::FromUTF8( message.exercise() );
+    boost::shared_ptr< Exercise_ABC > exercise( exercises_[ exercisePath ] );
     if( !exercise.get() )
-        exercise.reset( new RemoteExercise( *this, *this, message.exercise(), controller_ ) );
+        exercise.reset( new RemoteExercise( *this, *this, exercisePath, controller_ ) );
     exercise->SetRunning( true );
 }
 
@@ -191,7 +192,7 @@ void RemoteHost::Handle( const sword::SessionParameterChangeResponse& /*message*
 // -----------------------------------------------------------------------------
 void RemoteHost::Handle( const sword::SessionStatus& message )
 {
-    std::map< std::string, boost::shared_ptr< Exercise_ABC > >::iterator it = exercises_.find( message.exercise() );
+    auto it = exercises_.find( tools::Path::FromUTF8( message.exercise() ) );
     if( it != exercises_.end() && message.status() == sword::SessionStatus::running )
         it->second->SetRunning( true );
 }
@@ -210,7 +211,7 @@ void RemoteHost::Handle( const sword::SessionListResponse& /*message*/ )
 // -----------------------------------------------------------------------------
 void RemoteHost::Handle( const sword::SessionStopResponse& message )
 {
-    std::map< std::string, boost::shared_ptr< Exercise_ABC > >::iterator it = exercises_.find( message.exercise() );
+    auto it = exercises_.find( tools::Path::FromUTF8( message.exercise() ) );
     if( it != exercises_.end() )
         it->second->SetRunning( false );
 }
@@ -246,11 +247,11 @@ void RemoteHost::Handle( const sword::CheckpointDeleteResponse& /*message*/ )
 // Name: RemoteHost::Pause
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteHost::Pause( const std::string& exercise, const std::string& session ) const
+void RemoteHost::Pause( const tools::Path& exercise, const tools::Path& session ) const
 {
     launcher::SessionCommandExecutionRequest message;
-    message().set_exercise( exercise );
-    message().set_session( session );
+    message().set_exercise( exercise.ToUTF8() );
+    message().set_session( session.ToUTF8() );
     message().set_set_running( false );
     message.Send( publisher_ );
 }
@@ -259,11 +260,11 @@ void RemoteHost::Pause( const std::string& exercise, const std::string& session 
 // Name: RemoteHost::Resume
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteHost::Resume( const std::string& exercise, const std::string& session ) const
+void RemoteHost::Resume( const tools::Path& exercise, const tools::Path& session ) const
 {
     launcher::SessionCommandExecutionRequest message;
-    message().set_exercise( exercise );
-    message().set_session( session );
+    message().set_exercise( exercise.ToUTF8() );
+    message().set_session( session.ToUTF8() );
     message().set_set_running( true );
     message.Send( publisher_ );
 }
@@ -272,12 +273,12 @@ void RemoteHost::Resume( const std::string& exercise, const std::string& session
 // Name: RemoteHost::SaveCheckpoint
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteHost::SaveCheckpoint( const std::string& exercise, const std::string& session, const std::string& name ) const
+void RemoteHost::SaveCheckpoint( const tools::Path& exercise, const tools::Path& session, const tools::Path& name ) const
 {
     launcher::SessionCommandExecutionRequest message;
-    message().set_exercise( exercise );
-    message().set_session( session );
-    message().set_save_checkpoint( name );
+    message().set_exercise( exercise.ToUTF8() );
+    message().set_session( session.ToUTF8() );
+    message().set_save_checkpoint( name.ToUTF8() );
     message.Send( publisher_ );
 }
 
@@ -285,11 +286,11 @@ void RemoteHost::SaveCheckpoint( const std::string& exercise, const std::string&
 // Name: RemoteHost::ChangeDateTime
 // Created: LGY 2011-06-22
 // -----------------------------------------------------------------------------
-void RemoteHost::ChangeDateTime( const std::string& exercise, const std::string& session, const std::string& date ) const
+void RemoteHost::ChangeDateTime( const tools::Path& exercise, const tools::Path& session, const std::string& date ) const
 {
     launcher::SessionCommandExecutionRequest message;
-    message().set_exercise( exercise );
-    message().set_session( session );
+    message().set_exercise( exercise.ToUTF8() );
+    message().set_session( session.ToUTF8() );
     message().mutable_time_change()->set_data( date );
     message.Send( publisher_ );
 }
@@ -298,10 +299,10 @@ void RemoteHost::ChangeDateTime( const std::string& exercise, const std::string&
 // Name: RemoteHost::QueryConnectedProfileList
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
-void RemoteHost::QueryConnectedProfileList( const std::string& exercise, const std::string& session ) const
+void RemoteHost::QueryConnectedProfileList( const tools::Path& exercise, const tools::Path& session ) const
 {
     launcher::ConnectedProfileListRequest message;
-    message().set_exercise( exercise );
-    message().set_session( session );
+    message().set_exercise( exercise.ToUTF8() );
+    message().set_session( session.ToUTF8() );
     message.Send( publisher_ );
 }
