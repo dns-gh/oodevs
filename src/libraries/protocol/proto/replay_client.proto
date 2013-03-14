@@ -90,6 +90,8 @@ message TimeTable {
     }
     //! The time mapping table
     repeated TimeMapping time_table_item = 1;
+    //! The completion status
+    optional bool        partial         = 2 [ default = false ];
 }
 
 /** @struct NewDataChunkNotification

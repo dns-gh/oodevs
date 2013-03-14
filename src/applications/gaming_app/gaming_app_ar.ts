@@ -2928,6 +2928,10 @@ This data can&apos;t be projected.</source>
         <source>Ok</source>
         <translation type="unfinished">موافق</translation>
     </message>
+    <message>
+        <source>Requested time range is too large, only a subset of it is displayed.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TimeTableRequestDialog</name>

@@ -171,6 +171,13 @@ namespace
                 table->item( i, 1 )->setFlags( Qt::ItemIsEnabled );
                 table->item( i, 2 )->setFlags( Qt::ItemIsEnabled );
             }
+            if( timeTable.has_partial() && timeTable.partial() )
+            {
+                QString format( "<font color=\"red\">%1</font>" );
+                QLabel* label = new QLabel( format.arg( tools::translate( "TimeTableDialog", "Requested time range is too large, only a subset of it is displayed." ) ) );
+                label->setWordWrap( true );
+                layout->addWidget( label );
+            }
             QPushButton* okButton = new QPushButton(  tools::translate( "TimeTableDialog", "Ok" ) );
             layout->addWidget( okButton );
             connect( okButton, SIGNAL( clicked() ), SLOT( accept() ) );

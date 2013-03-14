@@ -187,6 +187,20 @@ namespace
     }
 }
 
+namespace
+{
+    class Ifstream : public tools::Ifstream
+    {
+    public:
+         Ifstream() {}
+        ~Ifstream()
+        {
+            if( is_open() )
+                close();
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MessageLoader::FillTimeTable
 // Created: JSR 2011-07-25
@@ -204,7 +218,7 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
             {
                 if( tick >= it->second.first && tick <= it->second.second )
                 {
-                    tools::Ifstream infoFile;
+                    Ifstream infoFile;
                     unsigned int start;
                     unsigned int end;
                     std::string simTime;
@@ -225,17 +239,17 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
                                 item->set_tick( tick );
                                 item->mutable_simulation_time()->set_data( simTime );
                                 item->mutable_real_time()->set_data( realTime );
+                                int size = msg.ByteSize();
+                                if( size > 512 * 1024 ) //512 MB
+                                {
+                                    msg.set_partial( true );
+                                    return;
+                                }
                                 ++tick;
                             }
-
                             if( tick > endTick )
-                            {
-                                infoFile.close();
                                 return;
-                            }
                         }
-
-                        infoFile.close();
                     }
                     break;
                 }
