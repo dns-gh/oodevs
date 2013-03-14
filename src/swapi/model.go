@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+const DatePattern = "20060102T150405"
+
 type modelCmd struct {
 	done chan int
 	cmd  func(model *Model)
@@ -91,8 +93,7 @@ func (model *Model) update(msg *SwordMessage) {
 		if m.GetControlSendCurrentStateEnd() != nil {
 			model.ready = true
 		} else if mm := m.GetControlBeginTick(); mm != nil {
-			t, err := time.Parse("20060102T150405",
-				mm.GetDateTime().GetData())
+			t, err := time.Parse(DatePattern, mm.GetDateTime().GetData())
 			if err != nil {
 				// XXX: report parsing error here
 				return
