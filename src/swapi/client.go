@@ -53,8 +53,11 @@ type HandlerError struct {
 }
 
 type Client struct {
-	Address     string
-	Model       *Model
+	Address string
+	Model   *Model
+	// Control whether the model should be activated and updated on incoming
+	// events. Set if before running the client to have any effect.
+	EnableModel bool
 	PostTimeout time.Duration
 
 	context     int32
@@ -79,6 +82,7 @@ func NewClient(address string) (*Client, error) {
 	client := &Client{
 		Address:     address,
 		Model:       NewModel(),
+		EnableModel: true,
 		PostTimeout: ClientTimeout,
 		link:        link,
 		handlers:    make(map[int32]MessageHandler),
@@ -99,7 +103,9 @@ func (c *Client) Run() error {
 	go c.serve()
 	go c.write()
 	go c.listen(errors)
-	c.Model.Listen(c)
+	if c.EnableModel {
+		c.Model.Listen(c)
+	}
 	return <-errors
 }
 

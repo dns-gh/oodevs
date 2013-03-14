@@ -286,6 +286,17 @@ Party[2]
   Name: empty-party
 `
 	c.Assert(dump, Equals, expected)
+	client.Close()
+
+	client, err := swapi.NewClient(sim.DispatcherAddr)
+	c.Assert(err, IsNil)
+	client.EnableModel = false
+	go client.Run()
+	err = client.Login("alluser", "alluser")
+	c.Assert(err, IsNil)
+	c.Assert(client.Model, NotNil)
+	ok := client.Model.WaitReady(2 * time.Second)
+	c.Assert(ok, Equals, false)
 }
 
 func (s *TestSuite) TestModelIsolation(c *C) {

@@ -9,14 +9,12 @@
 package simu
 
 import (
-	"code.google.com/p/goprotobuf/proto"
 	"errors"
 	"log"
 	"net"
 	"os/exec"
 	"path/filepath"
 	"swapi"
-	"sword"
 	"sync"
 	"time"
 )
@@ -110,31 +108,16 @@ func (sim *SimProcess) Kill() {
 }
 
 func logAndStop(host, user, password string) error {
-	conn, err := net.Dial("tcp", host)
-	if err != nil {
-		return err
+	client, err := swapi.NewClient(host)
+	if err == nil {
+		client.EnableModel = false
+		go client.Run()
+		defer client.Close()
+		err = client.Login(user, password)
+		if err == nil {
+			err = client.Stop()
+		}
 	}
-	defer conn.Close()
-	w := swapi.NewWriter(conn)
-	err = w.Encode(swapi.ClientToAuthenticationTag, &sword.ClientToAuthentication{
-		Message: &sword.ClientToAuthentication_Content{
-			AuthenticationRequest: &sword.AuthenticationRequest{
-				Login:    proto.String(user),
-				Password: proto.String(password),
-				Version: &sword.ProtocolVersion{
-					Value: proto.String("5.0"),
-				},
-			},
-		},
-	})
-	if err != nil {
-		return err
-	}
-	err = w.Encode(swapi.ClientToSimulationTag, &sword.ClientToSim{
-		Message: &sword.ClientToSim_Content{
-			ControlStop: &sword.ControlStop{},
-		},
-	})
 	return err
 }
 
