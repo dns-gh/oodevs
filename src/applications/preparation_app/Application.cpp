@@ -87,7 +87,7 @@ int Application::Run()
     if( IsInvalidLicense() )
         return EXIT_FAILURE;
 
-    if( config_->HasGenerateScores() || !config_->GetFolderToMigrate().empty() )
+    if( config_->HasGenerateScores() || !config_->GetFolderToMigrate().IsEmpty() )
         return EXIT_SUCCESS;
 
     mainWindow_->show();

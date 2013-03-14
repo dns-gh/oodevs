@@ -69,7 +69,7 @@ void FilterManager::ReadFilter( xml::xistream& xis, QListWidget& list, Q3WidgetS
     if( xis.has_attribute( "command" ) )
     {
         filter = new FilterCommand( xis, config_ );
-        filter->connect( filter, SIGNAL( ForceSaveAndAddActionPlanning( const std::string& ) ), &parent_, SLOT( OnForceSaveAndAddActionPlanning( const std::string& ) ) );
+        filter->connect( filter, SIGNAL( ForceSaveAndAddActionPlanning( const tools::Path& ) ), &parent_, SLOT( OnForceSaveAndAddActionPlanning( const tools::Path& ) ) );
     }
     else
     {

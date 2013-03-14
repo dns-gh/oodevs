@@ -65,7 +65,7 @@ void ProfilesModel::Purge()
 // Name: ProfilesModel::Load
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-void ProfilesModel::Load( const tools::Loader_ABC& fileLoader, const std::string& file )
+void ProfilesModel::Load( const tools::Loader_ABC& fileLoader, const tools::Path& file )
 {
     fileLoader.LoadFile( file, boost::bind( &ProfilesModel::Read, this, _1 ) );
 }
@@ -84,9 +84,9 @@ void ProfilesModel::Read( xml::xistream& xis )
 // Name: ProfilesModel::Serialize
 // Created: SBO 2007-01-17
 // -----------------------------------------------------------------------------
-void ProfilesModel::Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const
+void ProfilesModel::Serialize( const tools::Path& file, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
-    xml::xofstream xos( file );
+    tools::Xofstream xos( file );
     xos << xml::start( "profiles" );
     schemaWriter.WriteExerciseSchema( xos, "profiles" );
     for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )

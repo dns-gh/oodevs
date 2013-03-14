@@ -26,10 +26,7 @@
 #include <gdal/ogrsf_frmts.h>
 #pragma warning( pop )
 #include "gdal_ogr/GdalOgrWorkspace.h"
-#include <boost/filesystem/operations.hpp>
 #include <boost/noncopyable.hpp>
-
-namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -45,7 +42,7 @@ class UrbanFileExporter : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanFileExporter( const std::string& directory, const std::string& name, PointProjector_ABC& projector, const UrbanModel& model );
+             UrbanFileExporter( const tools::Path& directory, const tools::Path& name, PointProjector_ABC& projector, const UrbanModel& model );
     virtual ~UrbanFileExporter();
     //@}
 
@@ -62,8 +59,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const std::string   directory_;
-    const std::string   name_;
+    const tools::Path   directory_;
+    const tools::Path   name_;
     PointProjector_ABC& projector_;
     const UrbanModel&   urbanModel_;
     OGRDataSource*      source_;
@@ -76,7 +73,7 @@ private:
 // Name: UrbanFileExporter constructor
 // Created: CMA 2012-03-12
 // -----------------------------------------------------------------------------
-UrbanFileExporter::UrbanFileExporter( const std::string& directory, const std::string& name, PointProjector_ABC& projector, const UrbanModel& model )
+UrbanFileExporter::UrbanFileExporter( const tools::Path& directory, const tools::Path& name, PointProjector_ABC& projector, const UrbanModel& model )
     : directory_ ( directory )
     , name_      ( name )
     , projector_ ( projector )
@@ -104,19 +101,19 @@ UrbanFileExporter::~UrbanFileExporter()
 // -----------------------------------------------------------------------------
 void UrbanFileExporter::Initialize()
 {
-    bfs::create_directories( bfs::path( directory_ ) );
+    directory_.CreateDirectories();
     OGRRegisterAll();
     OGRSFDriver* poDriver = OGRSFDriverRegistrar::GetRegistrar()->GetDriverByName( "ESRI Shapefile" );
     if( ! poDriver )
         throw MASA_EXCEPTION( "ESRI Shapefile driver not available" );
-    const std::string filepath =  directory_ + "/" + name_ + ".shp";
-    bfs::remove( filepath );
-    source_ = poDriver->CreateDataSource( filepath.c_str(), 0 );
+    const tools::Path filepath = directory_ / name_ + ".shp";
+    filepath.Remove();
+    source_ = poDriver->CreateDataSource( filepath.ToLocal().c_str(), 0 );
     if( !source_ )
-        throw MASA_EXCEPTION( "gdal_ogr : write shape failed " + filepath );
+        throw MASA_EXCEPTION( "gdal_ogr : write shape failed " + filepath.ToUTF8() );
     OGRSpatialReference newSpatialRef;
     newSpatialRef.SetWellKnownGeogCS( "EPSG:4326" );
-    layer_ = source_->CreateLayer( filepath.c_str(), &newSpatialRef, wkbPolygon, 0 );
+    layer_ = source_->CreateLayer( filepath.ToLocal().c_str(), &newSpatialRef, wkbPolygon, 0 );
     if( !layer_ )
         throw MASA_EXCEPTION( "Layer creation failed" );
 }
@@ -280,8 +277,7 @@ void UrbanFileExporter::WriteObject( const kernel::UrbanObject_ABC& urbanObject,
 }  // namespace
 
 
-void ExportUrbanFiles( const std::string& directory, const std::string& name,
-    PointProjector_ABC& projector, const UrbanModel& model)
+void ExportUrbanFiles( const tools::Path& directory, const tools::Path& name, PointProjector_ABC& projector, const UrbanModel& model)
 {
     // As usual, hide functions into classes, because Java?
     gdal_ogr::GdalOgrWorkspace workSpace;

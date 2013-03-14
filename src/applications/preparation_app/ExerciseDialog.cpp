@@ -10,13 +10,10 @@
 #include "preparation_app_pch.h"
 #include "ExerciseDialog.h"
 #include "moc_ExerciseDialog.cpp"
+#include "clients_gui/FileDialog.h"
 #include "clients_kernel/Controllers.h"
 #include <boost/algorithm/string.hpp>
 #include "tools/ExerciseConfig.h"
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/convenience.hpp>
-
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseDialog constructor
@@ -191,7 +188,7 @@ void ExerciseDialog::VisitBriefing( const QString& lang, const QString& text )
 // Name: ExerciseDialog::VisitResource
 // Created: SBO 2010-03-11
 // -----------------------------------------------------------------------------
-void ExerciseDialog::VisitResource( const QString& name, const QString& file )
+void ExerciseDialog::VisitResource( const QString& name, const tools::Path& file )
 {
     AddResource( name, file );
 }
@@ -200,7 +197,7 @@ void ExerciseDialog::VisitResource( const QString& name, const QString& file )
 // Name: ExerciseDialog::VisitOrderFile
 // Created: JSR 2012-03-01
 // -----------------------------------------------------------------------------
-void ExerciseDialog::VisitOrderFile( const QString& file )
+void ExerciseDialog::VisitOrderFile( const tools::Path& file )
 {
     AddOrderFile( file );
 }
@@ -216,32 +213,14 @@ void ExerciseDialog::showEvent( QShowEvent* showEvent )
     humanEvolutionCheckBox_->setChecked( exercise_.GetSettings().GetValue< bool >( "human-evolution" ) );
 }
 
-namespace
-{
-    std::string AbsolutePath( const std::string& file )
-    {
-        QDir info( file.c_str() );
-        return info.absPath().toStdString();
-    }
-
-    QString MakeRelativePath( const QString& filename, const tools::ExerciseConfig& config )
-    {
-        const std::string sp1 = AbsolutePath( bfs::path( config.GetExerciseFile() ).branch_path().string() );
-        const std::string sp2 = bfs::path( filename.toStdString() ).string();
-        if( boost::istarts_with( sp2, sp1 ) && sp1.size() < sp2.size() )
-            return bfs::path( sp2.substr( sp1.length() ) ).relative_path().string().c_str();
-        return sp2.c_str();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ExerciseDialog::AddResource
 // Created: SBO 2010-03-11
 // -----------------------------------------------------------------------------
-void ExerciseDialog::AddResource( const QString& name, const QString& file )
+void ExerciseDialog::AddResource( const QString& name, const tools::Path& file )
 {
     QStandardItem* item1 = new QStandardItem( name );
-    QStandardItem* item2 = new QStandardItem( MakeRelativePath( file, config_ ) );
+    QStandardItem* item2 = new QStandardItem( file.Relative( config_.GetExerciseFile().Parent() ).ToUTF8().c_str() );
     item1->setEditable( false );
     item2->setEditable( false );
     QList< QStandardItem* > items;
@@ -253,9 +232,9 @@ void ExerciseDialog::AddResource( const QString& name, const QString& file )
 // Name: ExerciseDialog::AddOrderFile
 // Created: JSR 2012-03-01
 // -----------------------------------------------------------------------------
-void ExerciseDialog::AddOrderFile( const QString& file )
+void ExerciseDialog::AddOrderFile( const tools::Path& file )
 {
-    const QString filename = MakeRelativePath( file, config_ );
+    const QString filename = file.Relative( config_.GetExerciseFile().Parent() ).ToUTF8().c_str();
     if( orderFiles_->findItems( filename ).size() > 0 )
         return;
     orderFiles_->appendRow( new QStandardItem( filename ) );
@@ -274,22 +253,21 @@ void ExerciseDialog::OnChangeLang()
 
 namespace
 {
-    QString CopyIfAbsolute( const QString& filename, const tools::ExerciseConfig& config, QStringList& list )
+    tools::Path CopyIfAbsolute( const QString& filename, const tools::ExerciseConfig& config, QStringList& list )
     {
+        tools::Path file = tools::Path::FromUnicode( filename.toStdWString() );
         try
         {
-            bfs::path file( filename.toStdString() );
-            if( !file.is_complete() )
-                return filename;
-            list.append( file.filename().string().c_str() );
-            bfs::path dest = bfs::path( config.BuildExerciseChildFile( "scripts") ) / "resources";
-            bfs::create_directories( dest );
-            bfs::copy_file( file, dest / file.filename() );
-            return MakeRelativePath( ( dest / file.filename() ).string().c_str(), config );
+            if( !file.IsAbsolute() )
+                return file;
+            list.append( file.FileName().ToUTF8().c_str() );
+            tools::Path dest = config.BuildExerciseChildFile( "scripts") / "resources" / file.FileName();
+            file.Copy( dest );
+            return dest.Relative( config.GetExerciseFile().Parent() );
         }
         catch( ... )
         {
-            return filename;
+            return file;
         }
     }
 }
@@ -306,7 +284,7 @@ void ExerciseDialog::OnAccept()
         exercise_.SetBriefing( it->first, it->second );
     exercise_.ClearResources();
     for( int row = 0; row < resources_->rowCount(); ++row )
-        exercise_.AddResource( resources_->item( row )->text(), resources_->item( row, 1 )->text() );
+        exercise_.AddResource( resources_->item( row )->text(), tools::Path::FromUnicode( resources_->item( row, 1 )->text().toStdWString() ) );
     exercise_.ClearOrderFiles();
     QStringList copiedFiles;
     for( int row = 0; row < orderFiles_->rowCount(); ++row )
@@ -360,9 +338,9 @@ QSize ExerciseDialog::sizeHint() const
 // -----------------------------------------------------------------------------
 void ExerciseDialog::OnAddResource()
 {
-    const QString filename = QFileDialog::getOpenFileName( this, QString(), config_.GetExerciseFile().c_str() );
-    if( !filename.isNull() )
-        AddResource( QFileInfo( filename ).baseName(), filename );
+    const tools::Path filename = gui::FileDialog::getOpenFileName( this, QString(), config_.GetExerciseFile() );
+    if( !filename.IsEmpty() )
+        AddResource( filename.BaseName().ToUTF8().c_str(), filename );
 }
 
 // -----------------------------------------------------------------------------
@@ -382,8 +360,8 @@ void ExerciseDialog::OnDeleteResource()
 // -----------------------------------------------------------------------------
 void ExerciseDialog::OnAddOrderFile()
 {
-    const QString filename = QFileDialog::getOpenFileName( this, QString(), QString(), tr( "Order files (*.ord)" ) );
-    if( !filename.isNull() )
+    const tools::Path filename = gui::FileDialog::getOpenFileName( this, QString(), tools::Path(), tr( "Order files (*.ord)" ) );
+    if( !filename.IsEmpty() )
         AddOrderFile( filename );
 }
 

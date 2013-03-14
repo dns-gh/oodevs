@@ -608,7 +608,7 @@ void ModelConsistencyChecker::CheckSuccessFactors()
         const tools::SchemaWriter schemaWriter;
         xml::xostringstream xos;
         model_.successFactors_.Serialize( xos, schemaWriter );
-        xsl::xstringtransform xst( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ) );
+        xsl::xstringtransform xst( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ).ToUTF8().c_str() );
         xml::xistringstream xis( xos.str() );
         xst << xis;
     }

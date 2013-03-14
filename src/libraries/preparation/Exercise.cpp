@@ -12,12 +12,9 @@
 #include "clients_kernel/Controller.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter_ABC.h"
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: Exercise constructor
@@ -60,7 +57,7 @@ void Exercise::Load( xml::xistream& xis )
                 >> xml::end // end orders
             >> xml::end // end meta
             >> xml::optional >> xml::start( "action-planning" )
-                >> xml::attribute< std::string >( "file", actionPlanning_ )
+                >> xml::attribute< tools::Path >( "file", actionPlanning_ )
             >> xml::end // end action-planning
         >> xml::end; // end exercise
 
@@ -86,10 +83,11 @@ void Exercise::ReadBriefing( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Exercise::ReadResource( xml::xistream& xis )
 {
-    std::string name, file;
+    std::string name;
+    tools::Path file;
     xis >> xml::attribute( "name", name )
         >> xml::attribute( "file", file );
-    resources_[ name.c_str() ] = file.c_str();
+    resources_[ name.c_str() ] = file;
 }
 
 // -----------------------------------------------------------------------------
@@ -98,8 +96,8 @@ void Exercise::ReadResource( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Exercise::ReadOrderFile( xml::xistream& xis )
 {
-    std::string file = xis.attribute< std::string >( "file" );
-    orderFiles_.insert( file.c_str() );
+    const tools::Path file = xis.attribute< tools::Path >( "file" );
+    orderFiles_.push_back( file );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +110,7 @@ void Exercise::Purge()
     briefings_.clear();
     resources_.clear();
     orderFiles_.clear();
-    actionPlanning_.clear();
+    actionPlanning_.Clear();
     isValid_ = true;
     settings_.Purge();
     controller_.Update( *this );
@@ -125,9 +123,9 @@ namespace
         if( name != "meta" && name != "action-planning" && name != "settings" && name != "terrain" && name != "urbanstate" && name != "urban" )
             xos << xml::content( name, xis );
     }
-    void CopyFromFile( const std::string& file, xml::xostream& xos )
+    void CopyFromFile( const tools::Path& file, xml::xostream& xos )
     {
-        xml::xifstream xis( file );
+        tools::Xifstream xis( file );
         xis >> xml::start( "exercise" )
                 >> xml::list( boost::bind( &CopyNode, _2, _3, boost::ref( xos ) ) )
             >> xml::end;
@@ -140,8 +138,8 @@ namespace
 // -----------------------------------------------------------------------------
 void Exercise::Serialize( const tools::ExerciseConfig& config, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
-    std::string file = config.GetExerciseFile();
-    xml::xofstream xos( file, xml::encoding( "UTF-8" ) );
+    tools::Path file = config.GetExerciseFile();
+    tools::Xofstream xos( file );
     xos << xml::start( "exercise" );
     schemaWriter.WriteExerciseSchema( xos, "exercise" );
     xos << xml::attribute( "valid", isValid_ )
@@ -160,7 +158,7 @@ void Exercise::Serialize( const tools::ExerciseConfig& config, const tools::Sche
         << xml::start( "terrain" )
             << xml::attribute( "name", config.GetTerrainName() )
         << xml::end;
-    if( !actionPlanning_.empty() )
+    if( !actionPlanning_.IsEmpty() )
         xos << xml::start( "action-planning" ) << xml::attribute( "file", actionPlanning_ ) << xml::end;
 }
 
@@ -190,7 +188,7 @@ void Exercise::SerializeResources( xml::xostream& xos ) const
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
         xos << xml::start( "resource" )
                 << xml::attribute( "name", it->first.toStdString() )
-                << xml::attribute( "file", it->second.toStdString() )
+                << xml::attribute( "file", it->second )
             << xml::end;
     xos << xml::end;
 }
@@ -206,7 +204,7 @@ void Exercise::SerializeOrderFiles( xml::xostream& xos ) const
     xos << xml::start( "orders" );
     for( auto it = orderFiles_.begin(); it != orderFiles_.end(); ++it )
         xos << xml::start( "order" )
-                << xml::attribute( "file", it->toUtf8().constData() )
+                << xml::attribute( "file", *it )
             << xml::end;
     xos << xml::end;
 }
@@ -253,7 +251,7 @@ void Exercise::SetBriefing( const QString& lang, const QString& text )
 // Name: Exercise::AddResource
 // Created: SBO 2010-03-11
 // -----------------------------------------------------------------------------
-void Exercise::AddResource( const QString& name, const QString& file )
+void Exercise::AddResource( const QString& name, const tools::Path& file )
 {
     resources_[ name ] = file;
     controller_.Update( *this );
@@ -263,9 +261,9 @@ void Exercise::AddResource( const QString& name, const QString& file )
 // Name: Exercise::AddOrderFile
 // Created: JSR 2012-03-01
 // -----------------------------------------------------------------------------
-void Exercise::AddOrderFile( const QString& file )
+void Exercise::AddOrderFile( const tools::Path& file )
 {
-    orderFiles_.insert( file );
+    orderFiles_.push_back( file );
     controller_.Update( *this );
 }
 
@@ -273,9 +271,9 @@ void Exercise::AddOrderFile( const QString& file )
 // Name: Exercise::SetActionPlanning
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
-void Exercise::SetActionPlanning( const std::string& filename )
+void Exercise::SetActionPlanning( const tools::Path& filename )
 {
-    if( actionPlanning_.empty() )
+    if( actionPlanning_.IsEmpty() )
         actionPlanning_ = filename;
 }
 
@@ -314,10 +312,10 @@ void Exercise::ClearOrderFiles()
 // -----------------------------------------------------------------------------
 void Exercise::Accept( ExerciseVisitor_ABC& visitor ) const
 {
-    for( T_Resources::const_iterator it = briefings_.begin(); it != briefings_.end(); ++it )
+    for( auto it = briefings_.begin(); it != briefings_.end(); ++it )
         visitor.VisitBriefing( it->first, it->second );
-    for( T_Resources::const_iterator it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
         visitor.VisitResource( it->first, it->second );
-    for( T_OrderFiles::const_iterator it = orderFiles_.begin(); it != orderFiles_.end(); ++it )
+    for( auto it = orderFiles_.begin(); it != orderFiles_.end(); ++it )
         visitor.VisitOrderFile( *it );
 }

@@ -112,7 +112,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void UpdateName( const std::string& orbat );
+    void UpdateName( const tools::Path& orbat );
     void SetLoaded( bool status );
     //@}
 

@@ -28,6 +28,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_gui/AboutDialog.h"
 #include "clients_gui/HelpSystem.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_gui/OptionMenu.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/resources.h"
@@ -65,9 +66,9 @@ namespace
         Populate( *optionMenu );
         parent->insertItem( iconSet, label, optionMenu );
     }
-    QPixmap MakePixmap( const std::string& name )
+    QPixmap MakePixmap( const tools::Path& name )
     {
-        return QPixmap( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() );
+        return gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( tools::Path( "images/gui" ) / name + ".png" ) );
     }
 }
 

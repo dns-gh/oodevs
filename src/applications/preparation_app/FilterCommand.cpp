@@ -18,10 +18,8 @@
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
-#include <boost/filesystem/operations.hpp>
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
-
-namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -38,14 +36,14 @@ namespace
 FilterCommand::FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& config )
     : Filter( xis )
     , config_        ( config )
-    , command_       ( xis.attribute< std::string >( "command" ) )
+    , command_       ( xis.attribute< tools::Path >( "command" ) )
     , reloadExercise_( xis.attribute< bool >( "reload-exercise", false ) )
     , minimalDisplay_( xis.attribute< bool >( "minimal-display", false ) )
     , nonBlocking_    ( xis.attribute< bool >( "non-blocking", false) )
-    , path_          ( xis.attribute< std::string >( "directory", "." ) )
+    , path_          ( xis.attribute< tools::Path >( "directory", "." ) )
     , commandLabel_  ( 0 )
 {
-    assert( !command_.empty() );
+    assert( !command_.IsEmpty() );
     ReadArguments( xis );
     ComputeArgument();
     ComputePath();
@@ -67,7 +65,7 @@ FilterCommand::~FilterCommand()
 const std::string FilterCommand::GetName() const
 {
     const std::string result = Filter::GetName();
-    return ( result.empty() ) ? command_ : result;
+    return ( result.empty() ) ? command_.ToUTF8() : result;
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +77,7 @@ bool FilterCommand::IsValid() const
     bool valid = true;
     for( auto it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
         valid = valid && it->second->IsValid();
-    return !command_.empty() && !path_.empty() && valid;
+    return !command_.IsEmpty() && !path_.IsEmpty() && valid;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,13 +97,13 @@ std::string FilterCommand::ConvertArgumentVariable( const std::string& value ) c
 {
     std::string result = value;
     if( value == "$rootdir$" )
-        result = config_.GetRootDir();
+        result = config_.GetRootDir().ToUTF8();
     else if( value == "$exercise$" )
-        result = config_.GetExerciseName();
+        result = config_.GetExerciseName().ToUTF8();
     else if( value == "$exercise_dir$" )
-        result = config_.GetExerciseDir( config_.GetExerciseName() );
+        result = config_.GetExerciseDir( config_.GetExerciseName() ).ToUTF8();
     else if( value == "$orbat_file$" )
-        result = config_.GetOrbatFile();
+        result = config_.GetOrbatFile().ToUTF8();
     else if( value == "$language$" )
         result = description_.GetCurrentLanguage();
     else if( value == "$input$" || value == "$input_file$" || value == "$input_dir$" || value == "$input_team_list$" || value.empty() ) // $$$$ ABR 2011-09-28: Cf FilterInputArgument
@@ -177,7 +175,16 @@ void FilterCommand::ComputeArgument()
             argumentsLine_ += ( arguments_[ i ].value_.empty() ) ? " " + arguments_[ i ].name_ : " " + arguments_[ i ].name_+ "=" + arguments_[ i ].value_;
     }
     if( commandLabel_ )
-        commandLabel_->setText( ( command_ + argumentsLine_ ).c_str() );
+        commandLabel_->setText( ( command_.ToUTF8() + argumentsLine_ ).c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterCommand::SearchCommand
+// Created: ABR 2013-03-07
+// -----------------------------------------------------------------------------
+bool FilterCommand::SearchCommand( const tools::Path& path ) const
+{
+    return !path.IsDirectory() && path.HasExtension() && path.Extension() == ".exe" && path.FileName() == command_;
 }
 
 // -----------------------------------------------------------------------------
@@ -186,51 +193,38 @@ void FilterCommand::ComputeArgument()
 // -----------------------------------------------------------------------------
 void FilterCommand::ComputePath()
 {
-    std::string path = getenv( "PATH" );
-    std::vector< std::string > valuesVector;
+    std::wstring path = _wgetenv( L"PATH" );
+    std::vector< std::wstring > valuesVector; // $$$$ ABR 2013-03-07: System encoded paths
     boost::split( valuesVector, path, boost::algorithm::is_any_of( ";" ) );
-    valuesVector.insert( valuesVector.begin(), config_.BuildPhysicalChildFile( "Filters/" ) );
-    if( path_.size() > 0 && path_[ 0 ] == '.' ) // $$$$ ABR 2011-08-01: If directory begin with '.', concat to current directory
-    {
-        TCHAR current[ 512 ];
-        int done = GetCurrentDirectory( 512, current );
-        if( done < 512 )
-            path_ = ( bfs::path( current ) / bfs::path( path_ ) ).string();
-    }
-    valuesVector.insert( valuesVector.begin(), path_ );
-    path_.clear();
+    valuesVector.insert( valuesVector.begin(), config_.BuildPhysicalChildFile( "Filters/" ).ToUnicode() );
+    if( path_.IsRelative() )
+        path_ = path_.Absolute();
+    valuesVector.insert( valuesVector.begin(), path_.ToUnicode() );
+    path_.Clear();
 
-    bool founded = false;
-    for( std::vector< std::string >::iterator it = valuesVector.begin(); it != valuesVector.end() && !founded; ++it )
+    for( auto it = valuesVector.begin(); it != valuesVector.end(); ++it )
     {
-        if( it->find( "%" ) != std::string::npos ) // $$$$ ABR 2011-08-01: If an environment variable is given, expand it.
+        std::wstring& currentValue = *it;
+        if( currentValue.find( L"%" ) != std::wstring::npos ) // $$$$ ABR 2011-08-01: If an environment variable is given, expand it.
         {
-            TCHAR result[ 512 ];
-            int done = ExpandEnvironmentStrings( it->c_str(), result, 512 );
+            LPWSTR result = L"";
+            int done = ExpandEnvironmentStringsW( currentValue.c_str(), result, 512 );
             if( done < 512 )
-                *it = result;
+                currentValue = result;
         }
         try
         {
-            if( bfs::exists( *it ) && bfs::is_directory( *it ) )
-            {
-                bfs::directory_iterator end_itr;
-                for( bfs::directory_iterator dir_it( *it ); dir_it != end_itr && !founded; ++dir_it )
-                    if( !bfs::is_directory( dir_it->path() ) )
-                    {
-                        std::string file = dir_it->path().filename().string();
-                        size_t pos = file.rfind( ".exe" );
-                        if( pos != std::string::npos && pos == file.size() - 4 && file == command_ )
-                        {
-                            path_ = *it;
-                            founded = true;
-                        }
-                    }
-            }
+            const tools::Path currentPath = tools::Path::FromUnicode( currentValue );
+            if( currentPath.Exists() && currentPath.IsDirectory() )
+                if( currentPath.Apply( boost::bind( &FilterCommand::SearchCommand, this, _1 ), false ) )
+                {
+                    path_ = currentPath;
+                    break;
+                }
         }
         catch( const std::exception& )
         {
-            // NOTHING, here to prevent bfs::exists to throw an exception when tested path is on an unknown hard drive
+            // NOTHING, here to prevent exists to throw an exception when tested path is on an unknown hard drive
         }
     }
     emit statusChanged( IsValid() );
@@ -245,7 +239,7 @@ QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
     Q3GroupBox* parametersWidget = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "FilterCommand", "Command overview" ), parent, "FilterCommand_ParameterGroupBox" );
     QWidget* widget = new QWidget( parametersWidget, "FilterCommand_BaseWidget" );
 
-    int row = ( !minimalDisplay_ ) ? 3 : ( path_.empty() ) ? 2 : 1;
+    int row = ( !minimalDisplay_ ) ? 3 : ( path_.IsEmpty() ) ? 2 : 1;
     QGridLayout* grid = new QGridLayout( widget, ( inputArguments_.empty() ) ? row : row + static_cast< int >( inputArguments_.size() ), 2, 0, 5, "FilterCommand_GridLayout" );
     grid->setColStretch( 1, 1 );
 
@@ -253,17 +247,17 @@ QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
     if( !minimalDisplay_ )
     {
         grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Command:" ), widget, "FilterCommand_CommandTitle" ), row, 0 );
-        commandLabel_ = new QLabel( ( command_ + argumentsLine_ ).c_str(), widget, "FilterCommand_CommandLabel" );
+        commandLabel_ = new QLabel( ( command_.ToUTF8() + argumentsLine_ ).c_str(), widget, "FilterCommand_CommandLabel" );
         commandLabel_->setWordWrap( true );
         grid->addWidget( commandLabel_, row++, 1 );
     }
     // Path
-    if( !minimalDisplay_ || ( minimalDisplay_ && path_.empty() ) )
+    if( !minimalDisplay_ || ( minimalDisplay_ && path_.IsEmpty() ) )
     {
         grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Path:" ), widget, "FilterCommand_PathTitle" ), row, 0 );
-        QLabel* pathLabel = ( path_.empty() )
+        QLabel* pathLabel = ( path_.IsEmpty() )
             ? new QLabel( "<font color=\"#FF0000\">" + tools::translate( "FilterCommand", "File not found, move your binary to the filters directory, or update the $PATH environment variable." ) + "</font>", widget, "FilterCommand_PathLabel" )
-            : new QLabel( path_.c_str(), widget, "FilterCommand_PathLabel" );
+            : new QLabel( path_.ToUTF8().c_str(), widget, "FilterCommand_PathLabel" );
         pathLabel->setWordWrap( true );
         grid->addWidget( pathLabel, row++, 1 );
     }
@@ -303,17 +297,15 @@ void FilterCommand::Execute()
 {
     // $$$$ ABR 2011-10-18: Hack, should not be hard coded, add an attribute to Filters.xml instead (when the ICD will no longer be frozen)
     {
-        std::string lowerCommand = command_;
+        std::wstring lowerCommand = command_.ToUnicode();
         std::transform( lowerCommand.begin(), lowerCommand.end(), lowerCommand.begin(), tolower);
-        if( lowerCommand.find( "melmil.exe" ) != std::string::npos && reloadExercise_ )
+        if( lowerCommand.find( L"melmil.exe" ) != std::wstring::npos && reloadExercise_ )
             emit ForceSaveAndAddActionPlanning( "melmil.xml" );
     }
-    assert( !path_.empty() );
-    boost::shared_ptr< frontend::SpawnCommand > command(
-        new frontend::SpawnCommand( config_, ( bfs::path( bfs::path( path_ ) / bfs::path( command_ ) ).string() + argumentsLine_ ).c_str(), true ) );
-    command->SetWorkingDirectory( path_.c_str() );
-    boost::shared_ptr< frontend::ProcessWrapper > process(
-        new frontend::ProcessWrapper( *this, command ) );
+    assert( !path_.IsEmpty() );
+    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::SpawnCommand( config_, path_ / command_ + tools::Path::FromUTF8( argumentsLine_ ), true ) );
+    command->SetWorkingDirectory( path_ );
+    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *this, command ) );
     if( nonBlocking_ )
         process->Start();
     else

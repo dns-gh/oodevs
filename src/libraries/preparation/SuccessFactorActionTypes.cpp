@@ -37,7 +37,7 @@ SuccessFactorActionTypes::~SuccessFactorActionTypes()
 // Name: SuccessFactorActionTypes::Load
 // Created: SBO 2009-06-16
 // -----------------------------------------------------------------------------
-void SuccessFactorActionTypes::Load( const tools::ExerciseConfig& config, const std::string& file )
+void SuccessFactorActionTypes::Load( const tools::ExerciseConfig& config, const tools::Path& file )
 {
     config.GetLoader().LoadFile( file, boost::bind( &SuccessFactorActionTypes::Read, this, _1 ) );
 }

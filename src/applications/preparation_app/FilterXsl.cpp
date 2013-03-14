@@ -11,17 +11,15 @@
 #include "FilterXsl.h"
 #include "moc_FilterXsl.cpp"
 
+#include "clients_gui/FileDialog.h"
 #include "clients_kernel/Tools.h"
 #include "tools/ExerciseConfig.h"
-#include <boost/filesystem/operations.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
 
-namespace bfs = boost::filesystem;
-
 namespace
 {
-    std::string ResolveInputFile( const std::string& target, const tools::ExerciseConfig& config )
+    tools::Path ResolveInputFile( const tools::Path& target, const tools::ExerciseConfig& config )
     {
         if( target == "orbat" )
             return config.GetOrbatFile();
@@ -40,26 +38,24 @@ namespace
         else
             return config.BuildExerciseChildFile( target );
     }
-    std::string MakeOutputFile( const std::string& directory, const std::string& input, const std::string& type )
+    tools::Path MakeOutputFile( const tools::Path& directory, const tools::Path& input, const tools::Path& type )
     {
-        const std::string extension = type;
-        bfs::path output( bfs::path( bfs::path( directory ) / bfs::path( input ).filename() ) );
-        return output.replace_extension( extension ).string();
+        tools::Path result = directory / input.FileName();
+        return result.ReplaceExtension( type );
     }
-    std::string MakeXsl( const std::string& file, const tools::ExerciseConfig& config, const std::string& lang = "" )
+    tools::Path MakeXsl( const tools::Path& file, const tools::ExerciseConfig& config, const std::string& lang = "" )
     {
-        const std::string extension( lang.empty() ? "" : "_" + lang );
-        const std::string xsl( file + extension + ".xsl" );
-        bfs::path filter( config.BuildPhysicalChildFile( ( bfs::path( "Filters" ) / xsl ).string() ) );
-        return filter.string();
+        const tools::Path extension = tools::Path::FromUTF8( lang.empty() ? "" : "_" + lang );
+        const tools::Path xsl = file + extension + ".xsl";
+        return config.BuildPhysicalChildFile( tools::Path( "Filters" ) / xsl );
     }
-    std::string ResolveXslFile( const std::string& xsl, const std::string& lang, const tools::ExerciseConfig& config )
+    tools::Path ResolveXslFile( const tools::Path& xsl, const std::string& lang, const tools::ExerciseConfig& config )
     {
-        std::string xslFile( MakeXsl( xsl, config, lang ) );
-        if( !bfs::exists( xslFile ) )
+        tools::Path xslFile = MakeXsl( xsl, config, lang );
+        if( !xslFile.Exists() )
         {
             xslFile = MakeXsl( xsl, config, "en" );
-            if( !bfs::exists( xslFile ) )
+            if( !xslFile.Exists() )
                 xslFile = MakeXsl( xsl, config );
         }
         return xslFile;
@@ -73,13 +69,13 @@ namespace
 FilterXsl::FilterXsl( xml::xistream& xis, const tools::ExerciseConfig& config )
     : Filter( xis )
     , xsl_            ( xis.attribute< std::string >( "xsl" ) )
-    , xslFile_        ( ResolveXslFile( xis.attribute< std::string >( "xsl" ), description_.GetCurrentLanguage(), config ) )
-    , inputFile_      ( ResolveInputFile( xis.attribute< std::string >( "target" ), config ) )
-    , exerciseFile_   ( config.GetExerciseFile().c_str() )
-    , outputExtension_( xis.attribute< std::string >( "output" ) )
+    , xslFile_        ( ResolveXslFile( xis.attribute< tools::Path >( "xsl" ), description_.GetCurrentLanguage(), config ) )
+    , inputFile_      ( ResolveInputFile( xis.attribute< tools::Path >( "target" ), config ) )
+    , exerciseFile_   ( config.GetExerciseFile() )
+    , outputExtension_( xis.attribute< tools::Path >( "output" ) )
     , output_         ( 0 )
 {
-    assert( !xsl_.empty() && !xslFile_.empty() && !inputFile_.empty() && !exerciseFile_.empty() && !outputExtension_.empty() );
+    assert( !xsl_.empty() && !xslFile_.IsEmpty() && !inputFile_.IsEmpty() && !exerciseFile_.IsEmpty() && !outputExtension_.IsEmpty() );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,11 +103,9 @@ const std::string FilterXsl::GetName() const
 // -----------------------------------------------------------------------------
 void FilterXsl::OnBrowse()
 {
-    assert( !exerciseFile_.empty() );
-    QString directory = QFileDialog::getExistingDirectory( QApplication::activeModalWidget(), tools::translate( "FilterXsl", "Select output directory" ), exerciseFile_.c_str() );
-    if( directory.startsWith( "//" ) )
-        directory.replace( "/", "\\" );
-    output_->setText( directory );
+    assert( !exerciseFile_.IsEmpty() );
+    tools::Path directory = gui::FileDialog::getExistingDirectory( QApplication::activeModalWidget(), tools::translate( "FilterXsl", "Select output directory" ), exerciseFile_ );
+    output_->setText( directory.ToUTF8().c_str() );
     emit( statusChanged( IsValid() ) );
 }
 
@@ -130,7 +124,7 @@ void FilterXsl::OnTextChanged()
 // -----------------------------------------------------------------------------
 bool FilterXsl::IsValid() const
 {
-    return output_ && !output_->text().isEmpty() && bfs::exists( output_->text().toStdString() );
+    return output_ && !output_->text().isEmpty() && tools::Path::FromUnicode( output_->text().toStdWString() ).Exists();
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +148,7 @@ QWidget* FilterXsl::CreateParametersWidget( QWidget* parent )
 // -----------------------------------------------------------------------------
 void FilterXsl::Execute()
 {
-    assert( output_ && !output_->text().isEmpty() && !inputFile_.empty() );
-    xsl::xftransform xft( xslFile_, MakeOutputFile( output_->text().toStdString(), inputFile_, outputExtension_ ) );
-    xft << xml::xifstream( inputFile_ );
+    assert( output_ && !output_->text().isEmpty() && !inputFile_.IsEmpty() );
+    xsl::xftransform xft( xslFile_.ToUTF8().c_str(), MakeOutputFile( tools::Path::FromUnicode( output_->text().toStdWString() ), inputFile_, outputExtension_ ).ToUTF8().c_str() );
+    xft << tools::Xifstream( inputFile_ );
 }

@@ -48,8 +48,8 @@ public:
     void Create( const QString& name );
     void Delete( const SuccessFactor& factor );
     void Purge();
-    void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
-    void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void Load( const tools::Loader_ABC& fileLoader, const tools::Path& file );
+    void Serialize( const tools::Path& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void SerializeScript( const tools::ExerciseConfig& config ) const;
     //@}

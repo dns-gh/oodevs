@@ -37,7 +37,6 @@
 #include "preparation/ObjectsModel.h"
 #include "preparation/UrbanModel.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/bind.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 
 using namespace kernel;
@@ -205,33 +204,33 @@ namespace
     std::auto_ptr< ObjectAttributePrototypeFactory_ABC > FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, DetectionMap& detection, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const tools::GeneralConfig& config, Object_ABC*& object )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
-        factory->Register( "constructor"               , boost::bind( &::ConstructorAttribute, _1, _2, _3, boost::ref( object ) ) );
+        factory->Register( "constructor"               , boost::bind( &ConstructorAttribute, _1, _2, _3, boost::ref( object ) ) );
         factory->Register( "activable"                 , boost::bind( &Capacity< ObstaclePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "time-limited"              , boost::bind( &Capacity< ActivityTimePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "supply-route"              , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( object ) ) );
-        factory->Register( "bridging"                  , boost::bind( &::BridgingAttribute, _1, _2, _3, boost::ref( object ) ) );
-        factory->Register( "bypassable"                , boost::bind( &::BypassableAttribute, _2, _3, boost::ref( object ) ) );
+        factory->Register( "bridging"                  , boost::bind( &BridgingAttribute, _1, _2, _3, boost::ref( object ) ) );
+        factory->Register( "bypassable"                , boost::bind( &BypassableAttribute, _2, _3, boost::ref( object ) ) );
 
         factory->Register( "delay"                     , boost::bind( &Capacity< DelayPrototype >::Build, _2, _3, boost::ref( object ) ) );
-        factory->Register( "disaster"                  , boost::bind( &::DisasterAttribute, _2, _3, boost::ref( config ), boost::ref( controllers ), boost::ref( object ) ) );
+        factory->Register( "disaster"                  , boost::bind( &DisasterAttribute, _2, _3, boost::ref( config ), boost::ref( controllers ), boost::ref( object ) ) );
         factory->Register( "fire-propagation-modifier" , boost::bind( &Capacity< FirePropagationModifierPrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "lodging"                   , boost::bind( &Capacity< LodgingPrototype >::Build, _2, _3, boost::ref( object ) ) );
 
-        factory->Register( "flood"                     , boost::bind( &::FloodAttribute, _2, _3, boost::ref( controllers ), boost::cref( detection ), boost::ref( object ) ) );
-        factory->Register( "logistic"                  , boost::bind( &::LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
-        factory->Register( "trafficability"            , boost::bind( &::TrafficabilityAttribute, _1, _2, _3, boost::ref( object ) ) );
-        factory->Register( "underground-network"       , boost::bind( &::UndergroundAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
-        factory->Register( "altitude-modifier"         , boost::bind( &::AltitudeModifierAttribute, _2, _3, boost::ref( controllers ), boost::ref( detection ), boost::ref( object ) ) );
+        factory->Register( "flood"                     , boost::bind( &FloodAttribute, _2, _3, boost::ref( controllers ), boost::cref( detection ), boost::ref( object ) ) );
+        factory->Register( "logistic"                  , boost::bind( &LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
+        factory->Register( "trafficability"            , boost::bind( &TrafficabilityAttribute, _1, _2, _3, boost::ref( object ) ) );
+        factory->Register( "underground-network"       , boost::bind( &UndergroundAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
+        factory->Register( "altitude-modifier"         , boost::bind( &AltitudeModifierAttribute, _2, _3, boost::ref( controllers ), boost::ref( detection ), boost::ref( object ) ) );
 
-        factory->Register( "medical"                   , boost::bind( &::MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
-        factory->Register( "stock"                     , boost::bind( &::StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
+        factory->Register( "medical"                   , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
+        factory->Register( "stock"                     , boost::bind( &StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
 
         boost::shared_ptr< NBCBuilder > pNBCBuilder = boost::make_shared< NBCBuilder >();
         factory->Register( "intoxication"              , boost::bind( &NBCBuilder::Add, pNBCBuilder, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         factory->Register( "contamination"             , boost::bind( &NBCBuilder::Add, pNBCBuilder, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         factory->RegisterFinalizeCreate( boost::bind( &NBCBuilder::Finalize, pNBCBuilder ) );
 
-        factory->Register( "resources"                 , boost::bind( &::ResourceNetworkAttribute, _2, _3, boost::ref( controllers ), boost::cref( urbanModel ), boost::cref( objectsModel ), boost::cref( resolver ), boost::ref( object ) ) );
+        factory->Register( "resources"                 , boost::bind( &ResourceNetworkAttribute, _2, _3, boost::ref( controllers ), boost::cref( urbanModel ), boost::cref( objectsModel ), boost::cref( resolver ), boost::ref( object ) ) );
 
         boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders = boost::make_shared< FinalizableBuilders >();
         factory->Register( "burn"                      , boost::bind( &FinalizableBuilders::AddBurn, pFinalizableBuilders, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );

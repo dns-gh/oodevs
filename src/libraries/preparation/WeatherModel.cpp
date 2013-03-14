@@ -70,7 +70,7 @@ void WeatherModel::Purge()
 // Name: WeatherModel::Load
 // Created: SBO 2006-12-19
 // -----------------------------------------------------------------------------
-void WeatherModel::Load( const tools::Loader_ABC& fileLoader, const std::string& filename )
+void WeatherModel::Load( const tools::Loader_ABC& fileLoader, const tools::Path& filename )
 {
     fileLoader.LoadFile( filename, boost::bind( &WeatherModel::Read, this, _1 ) );
 }
@@ -111,9 +111,9 @@ void WeatherModel::Read( xml::xistream& xis )
 // Name: WeatherModel::Serialize
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
-void WeatherModel::Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
+void WeatherModel::Serialize( const tools::Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
-    xml::xofstream xos( filename );
+    tools::Xofstream xos( filename );
     xos << xml::start( "weather" );
     schemaWriter.WriteExerciseSchema( xos, "weather" );
     xos     << xml::start( "exercise-date" )

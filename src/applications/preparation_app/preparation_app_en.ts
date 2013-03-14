@@ -34,10 +34,6 @@
         <translation>SWORD</translation>
     </message>
     <message>
-        <source>The signatures for the following files do not exist or are invalid : </source>
-        <translation>The signatures for the following files do not exist or are invalid : </translation>
-    </message>
-    <message>
         <source>The following files do not match their xsd : </source>
         <translation>The following files do not match their xsd : </translation>
     </message>

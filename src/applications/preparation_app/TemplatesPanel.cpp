@@ -41,7 +41,7 @@ TemplatesPanel::~TemplatesPanel()
 {
     try
     {
-        if( ! templateFile_.empty() )
+        if( ! templateFile_.IsEmpty() )
             list_->SaveTemplates( templateFile_ );
     }
     catch( ... )
@@ -57,7 +57,7 @@ TemplatesPanel::~TemplatesPanel()
 void TemplatesPanel::NotifyUpdated( const kernel::ModelLoaded& model )
 {
     Show();
-    templateFile_= model.config_.BuildPhysicalChildFile( "templates.xml" );
+    templateFile_ = model.config_.BuildPhysicalChildFile( "templates.xml" );
     list_->LoadTemplates( templateFile_ );
 }
 
@@ -93,6 +93,6 @@ void TemplatesPanel::OnCreateTemplate()
 {
     if( menuEntity_ )
         list_->CreateTemplate( *menuEntity_ );
-    if( ! templateFile_.empty() )
+    if( ! templateFile_.IsEmpty() )
         list_->SaveTemplates( templateFile_ );
 }

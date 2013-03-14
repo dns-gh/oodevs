@@ -50,8 +50,8 @@ public:
     //@{
     virtual void NotifyCreated( const Exercise& exercise );
     virtual void VisitBriefing( const QString& lang, const QString& text );
-    virtual void VisitResource( const QString& name, const QString& file );
-    virtual void VisitOrderFile( const QString& file );
+    virtual void VisitResource( const QString& name, const tools::Path& file );
+    virtual void VisitOrderFile( const tools::Path& file );
     //@}
 
 protected:
@@ -77,8 +77,8 @@ private:
     //! @name Helpers
     //@{
     void Update( const Exercise& exercise );
-    void AddResource( const QString& name, const QString& file );
-    void AddOrderFile( const QString& file );
+    void AddResource( const QString& name, const tools::Path& file );
+    void AddOrderFile( const tools::Path& file );
     virtual QSize sizeHint() const;
     //@}
 

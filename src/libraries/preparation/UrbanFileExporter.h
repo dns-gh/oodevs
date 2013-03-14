@@ -15,7 +15,7 @@
 class PointProjector_ABC;
 class UrbanModel;
 
-void ExportUrbanFiles( const std::string& directory, const std::string& name,
-    PointProjector_ABC& projector, const UrbanModel& model);
+void ExportUrbanFiles( const tools::Path& directory, const tools::Path& name,
+                       PointProjector_ABC& projector, const UrbanModel& model );
 
 #endif // __UrbanFileExporter_h_

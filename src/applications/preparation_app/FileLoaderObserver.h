@@ -29,9 +29,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool NotifyInvalidXml          ( const std::string& file, const xml::exception& e );
-    virtual void NotifyNoXmlSchemaSpecified( const std::string& file );
-    virtual void NotifyFileMigrated        ( const std::string& file , const std::string& fromVersion, const std::string& toVersion );
+    virtual bool NotifyInvalidXml          ( const tools::Path& file, const xml::exception& e );
+    virtual void NotifyNoXmlSchemaSpecified( const tools::Path& file );
+    virtual void NotifyFileMigrated        ( const tools::Path& file , const std::string& fromVersion, const std::string& toVersion );
 
     void DisplayErrors() const;
     virtual void GetXsdErrors( std::vector< std::string >& errors ) const;
@@ -39,15 +39,11 @@ public:
     //@}
 
 private:
-    //! @name Types
+    //! @name Member data
     //@{
-    typedef std::vector< std::string > ::const_iterator CIT_Error;
-    //@}
-
-    std::vector< std::string > invalidSignatureFiles_;
-    std::vector< std::string > missingSignatureFiles_;
     std::vector< std::string > malformedFiles_;
     std::vector< std::string > missingSchemaFiles_;
+    //@}
 };
 
 #endif // Preparation_FileLoaderObserver_h

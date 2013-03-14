@@ -13,14 +13,9 @@
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
 #include "tools/GeneralConfig.h"
-#pragma warning( push )
-#pragma warning( disable: 4127 4244 4245 )
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
-#pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
-namespace bfs = boost::filesystem;
+namespace fc = frontend::commands;
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseCreationDialog constructor
@@ -53,7 +48,7 @@ ExerciseCreationDialog::ExerciseCreationDialog( QWidget* parent, const tools::Ge
         editTerrainList_ = new QComboBox( box );
         grid->addMultiCellWidget( box, 1, 1, 0, 2 );
         editTerrainList_->clear();
-        editTerrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
+        editTerrainList_->addItems( fc::PathListToQStringList( fc::ListTerrains( config_ ) ) );
     }
     {
         Q3GroupBox* box = new Q3HGroupBox( tr( "Model" ), this );
@@ -62,12 +57,12 @@ ExerciseCreationDialog::ExerciseCreationDialog( QWidget* parent, const tools::Ge
         grid->addMultiCellWidget( box, 2, 2, 0, 2 );
 
         editModelList_->clear();
-        const QStringList decisionalModels = frontend::commands::ListModels( config_ );
-        for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+        const tools::Path::T_Paths decisionalModels = fc::ListModels( config_ );
+        for( auto it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
         {
-            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
-            for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
-                editModelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ) );
+            const tools::Path::T_Paths physicalModels = fc::ListPhysicalModels( config_, *it );
+            for( auto itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
+                editModelList_->addItem( QString( "%1/%2" ).arg( it->ToUTF8().c_str() ).arg( itP->ToUTF8().c_str() ) );
         }
     }
     {
@@ -99,9 +94,12 @@ void ExerciseCreationDialog::OnAccept()
 {
     try
     {
-        const std::string terrain = editTerrainList_->currentText().toStdString();
         const QStringList model = QStringList::split( "/", editModelList_->currentText() );
-        frontend::CreateExercise( config_, exerciseName_->text().toStdString(), terrain, model.front().toStdString(), model.back().toStdString() );
+        frontend::CreateExercise( config_,
+                                  tools::Path::FromUnicode( exerciseName_->text().toStdWString() ),
+                                  tools::Path::FromUnicode( editTerrainList_->currentText().toStdWString() ),
+                                  tools::Path::FromUnicode( model.front().toStdWString() ),
+                                  tools::Path::FromUnicode( model.back().toStdWString() ) );
         accept();
     }
     catch( const std::exception& e )
@@ -124,9 +122,9 @@ void ExerciseCreationDialog::OnCancel()
 // Name: ExerciseCreationDialog::GetFileName
 // Created: FDS 2010-11-03
 // -----------------------------------------------------------------------------
-QString ExerciseCreationDialog::GetFileName() const
+tools::Path ExerciseCreationDialog::GetFileName() const
 {
-    return config_.GetExerciseFile( exerciseName_->text().toStdString() ).c_str();
+    return config_.GetExerciseFile( tools::Path::FromUnicode( exerciseName_->text().toStdWString() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,5 +133,5 @@ QString ExerciseCreationDialog::GetFileName() const
 // -----------------------------------------------------------------------------
 void ExerciseCreationDialog::OnFileChanged()
 {
-    ok_->setDisabled( exerciseName_->text().isEmpty() ||  bfs::exists( config_.GetExerciseFile( exerciseName_->text().toStdString() ) ) || editTerrainList_->count() == 0 || editModelList_->count() == 0 );
+    ok_->setDisabled( exerciseName_->text().isEmpty() ||  config_.GetExerciseFile( tools::Path::FromUnicode( exerciseName_->text().toStdWString() ) ).Exists() || editTerrainList_->count() == 0 || editModelList_->count() == 0 );
 }

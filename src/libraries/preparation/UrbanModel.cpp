@@ -29,16 +29,12 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter_ABC.h"
 
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/ref.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
 #include <QtGui/qmessagebox.h>
 #include <xeumeuleu/xml.hpp>
 
 #pragma warning( disable : 4355 )
-
-namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -274,22 +270,21 @@ void UrbanModel::ReadBlock( xml::xistream& xis, kernel::UrbanObject_ABC* parent 
 // Name: UrbanModel::Serialize
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
-void UrbanModel::Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
+void UrbanModel::Serialize( const tools::Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
-    if( filename.empty() )
+    if( filename.IsEmpty() )
         return;
-    bfs::path directory( filename, bfs::native );
-    directory = directory.parent_path();
+    tools::Path directory = filename.Parent();
     try
     {
-        if( !bfs::exists( directory ) )
-            bfs::create_directories( directory );
+        if( !directory.Exists() )
+            directory.CreateDirectories();
     }
-    catch( bfs::filesystem_error& )
+    catch( std::exception& )
     {
-        bfs::create_directories( directory );
+        directory.CreateDirectories();
     }
-    xml::xofstream xos( filename, xml::encoding( "UTF-8" ) );
+    tools::Xofstream xos( filename );
     xos << xml::start( "urban" );
     schemaWriter.WriteSchema( xos, "exercise", "urban" );
     xos<< xml::start( "urban-objects" );

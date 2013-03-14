@@ -54,9 +54,9 @@ public:
     void Create( const QString& name );
     void Delete( const Score_ABC& score );
     void Purge();
-    void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
+    void Load( const tools::Loader_ABC& fileLoader, const tools::Path& file );
     bool CheckValidity( const tools::SchemaWriter_ABC& schemaWriter ) const;
-    void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void Serialize( const tools::Path& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void GenerateScoresFromTemplate( const tools::Loader_ABC& fileLoader );
     //@}

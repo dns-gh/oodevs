@@ -60,11 +60,11 @@ private:
     //! @name Member data
     //@{
     const std::string xsl_;
-    const std::string xslFile_;
-    const std::string inputFile_;
-    const std::string exerciseFile_;
-    const std::string outputExtension_;
-    std::string       outputFile_;
+    const tools::Path xslFile_;
+    const tools::Path inputFile_;
+    const tools::Path exerciseFile_;
+    const tools::Path outputExtension_;
+    tools::Path       outputFile_;
     QLineEdit*        output_;
     //@}
 };

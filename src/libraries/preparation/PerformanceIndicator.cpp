@@ -34,12 +34,8 @@
 #include "tools/Loader_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/bind.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
-
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: PerformanceIndicator constructor
@@ -72,7 +68,7 @@ PerformanceIndicator::~PerformanceIndicator()
 // Name: PerformanceIndicator::Load
 // Created: MMC 2012-02-02
 // -----------------------------------------------------------------------------
-void PerformanceIndicator::Load( const tools::ExerciseConfig& config, const std::string& file )
+void PerformanceIndicator::Load( const tools::ExerciseConfig& config, const tools::Path& file )
 {
     values_.exercise_ = config.GetExerciseName();
     values_.limit_ = static_cast< unsigned int >( limit_ );
@@ -81,16 +77,16 @@ void PerformanceIndicator::Load( const tools::ExerciseConfig& config, const std:
     float terrainMemSize = 0.f;
     try
     {
-        boost::filesystem::path detectionPath( config.GetDetectionDirectory() );
-        if( bfs::exists( detectionPath ) && bfs::is_directory( detectionPath ) )
-            for( bfs::directory_iterator it( detectionPath ); it != bfs::directory_iterator(); ++it )
-                if( !bfs::is_directory( *it ) && bfs::extension( *it ) == ".dat" )
-                    terrainMemSize += static_cast< float>( bfs::file_size( *it ) );
-        terrainMemSize += static_cast< float>( bfs::exists( config.GetPathfindGraphFile() )? bfs::file_size( config.GetPathfindGraphFile() ) : 0 );
-        terrainMemSize += static_cast< float>( bfs::exists( config.GetPathfindLinksFile() )? bfs::file_size( config.GetPathfindLinksFile() ) : 0 );
-        terrainMemSize += static_cast< float>( bfs::exists( config.GetPathfindNodesFile() )? bfs::file_size( config.GetPathfindNodesFile() ) : 0 );
+        tools::Path detectionPath = config.GetDetectionDirectory();
+        if( detectionPath.Exists() && detectionPath.IsDirectory() )
+            for( auto it = detectionPath.begin(); it != detectionPath.end(); ++it )
+                if( !it->IsDirectory() && it->Extension() == ".dat" )
+                    terrainMemSize += static_cast< float >( it->FileSize() );
+        terrainMemSize += static_cast< float >( config.GetPathfindGraphFile().Exists() ? config.GetPathfindGraphFile().FileSize() : 0 );
+        terrainMemSize += static_cast< float >( config.GetPathfindLinksFile().Exists() ? config.GetPathfindLinksFile().FileSize() : 0 );
+        terrainMemSize += static_cast< float >( config.GetPathfindNodesFile().Exists() ? config.GetPathfindNodesFile().FileSize() : 0 );
 
-        if( bfs::exists( file ) )
+        if( file.Exists() )
         {
             config.GetLoader().CheckFile( file );
             config.GetLoader().LoadFile( file, boost::bind( &PerformanceIndicator::Read, this, _1 ) );

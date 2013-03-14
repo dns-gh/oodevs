@@ -55,8 +55,8 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    void Load( const tools::Loader_ABC& fileLoader, const std::string& filename );
-    void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void Load( const tools::Loader_ABC& fileLoader, const tools::Path& filename );
+    void Serialize( const tools::Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     const QDateTime& GetDate() const;
     //@}
 

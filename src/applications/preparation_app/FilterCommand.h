@@ -56,6 +56,7 @@ private:
     void ReadArgument( xml::xistream& xis );
     void ComputeArgument();
     void ComputePath();
+    bool SearchCommand( const tools::Path& ) const;
     std::string ConvertArgumentVariable( const std::string& value ) const;
     bool IsInputArgument( size_t index ) const;
     //@}
@@ -95,11 +96,11 @@ private:
     //! @name Member data
     //@{
     const tools::ExerciseConfig& config_;
-    const std::string            command_;
+    const tools::Path            command_;
     std::string                  argumentsLine_;
     T_Arguments                  arguments_;
     T_InputArguments             inputArguments_;
-    std::string                  path_;
+    tools::Path                  path_;
     bool                         reloadExercise_;
     bool                         minimalDisplay_;
     bool                         nonBlocking_;

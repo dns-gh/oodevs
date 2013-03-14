@@ -30,7 +30,7 @@ public:
     //! @name Operations
     //@{
     bool IsPartyChecked( unsigned long partyID );
-    bool ParseOrbatFile( const std::string& fileName );
+    bool ParseOrbatFile( const tools::Path& fileName );
     QString GetTeamList();
     //@}
 

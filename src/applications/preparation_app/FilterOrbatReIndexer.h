@@ -76,7 +76,7 @@ private:
     //! @name Member data
     //@{
     Model&             model_;
-    const std::string  orbatFile_;
+    const tools::Path  orbatFile_;
     QLineEdit*         filename_;
     bool               isUrbanBlock_;
 

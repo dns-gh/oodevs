@@ -67,8 +67,8 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
-    void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void Load( const tools::Loader_ABC& fileLoader, const tools::Path& file );
+    void Serialize( const tools::Path& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
     void CreateProfile( const QString& name );

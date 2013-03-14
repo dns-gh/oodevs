@@ -91,7 +91,7 @@ public slots:
     void ToggleDocks();
     void ReloadExercise();
     void ClearLoadingErrors();
-    void OnForceSaveAndAddActionPlanning( const std::string& filename );
+    void OnForceSaveAndAddActionPlanning( const tools::Path& filename );
     void OnAddRaster();
     void OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitStatus );
     //@}
@@ -113,8 +113,9 @@ private:
                        gui::Elevation2dLayer& elevation2d );
     void closeEvent( QCloseEvent* pEvent );
     void DoClose();
-    void DoLoad( QString filename, bool checkConsistency = true );
+    void DoLoad( const tools::Path& filename, bool checkConsistency = true );
     void MigrateExercises();
+    bool MigrateExercise( const tools::Path& path );
 
     void NotifyModeChanged( E_Modes newMode );
     virtual void NotifyCreated();

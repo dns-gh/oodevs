@@ -52,7 +52,7 @@ void SuccessFactorsModel::Purge()
 // Name: SuccessFactorsModel::Load
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-void SuccessFactorsModel::Load( const tools::Loader_ABC& fileLoader, const std::string& file )
+void SuccessFactorsModel::Load( const tools::Loader_ABC& fileLoader, const tools::Path& file )
 {
     fileLoader.LoadFile( file, boost::bind( &SuccessFactorsModel::Read, this, _1 ) );
 }
@@ -72,9 +72,9 @@ void SuccessFactorsModel::Read( xml::xistream& xis )
 // Name: SuccessFactorsModel::Serialize
 // Created: SBO 2009-06-17
 // -----------------------------------------------------------------------------
-void SuccessFactorsModel::Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const
+void SuccessFactorsModel::Serialize( const tools::Path& file, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
-    xml::xofstream xos( file );
+    tools::Xofstream xos( file );
     Serialize( xos, schemaWriter );
 }
 
@@ -93,10 +93,10 @@ void SuccessFactorsModel::Serialize( xml::xostream& xos, const tools::SchemaWrit
 
 namespace
 {
-    void EraseLine( std::string filename, unsigned lineToErase )
+    void EraseLine( const tools::Path& filename, unsigned lineToErase )
     {
         std::string buffer = "";
-        std::ifstream inputFile( filename.c_str() );
+        tools::Ifstream inputFile( filename );
         if( inputFile )
         {
             std::string line;
@@ -106,7 +106,7 @@ namespace
         }
         inputFile.close();
 
-        std::ofstream outputFile( filename.c_str() );
+        tools::Ofstream outputFile( filename );
         outputFile << buffer;
         outputFile.close();
     }
@@ -119,8 +119,8 @@ namespace
 void SuccessFactorsModel::SerializeScript( const tools::ExerciseConfig& config ) const
 {
     {
-        xsl::xftransform xft( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ), config.BuildExerciseChildFile( "scripts/success-factors.lua" ) );
-        xft << xml::xifstream( config.GetSuccessFactorsFile() );
+        xsl::xftransform xft( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ).ToUTF8().c_str(), config.BuildExerciseChildFile( "scripts/success-factors.lua" ).ToUTF8().c_str() );
+        xft << tools::Xifstream( config.GetSuccessFactorsFile() );
     }
     EraseLine( config.BuildExerciseChildFile( "scripts/success-factors.lua" ), 0 ); // $$$$ ABR 2011-07-26: Temporaire, la transformation xsl de Xalan crash en vc100 (Mantis 5915)
 }

@@ -12,14 +12,12 @@
 #include "moc_TerrainExportDialog.cpp"
 #include "preparation/UrbanModel.h"
 #include "preparation/UrbanFileExporter.h"
+#include "clients_gui/FileDialog.h"
 #include "clients_gui/resources.h"
 #include "tools/ExerciseConfig.h"
 #include <terrain/PlanarCartesianProjector.h>
 #include <terrain/TerrainExportManager.h>
 #include <terrain/Translator.h>
-#include <boost/filesystem.hpp>
-
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: TerrainExportDialog constructor
@@ -121,8 +119,8 @@ namespace
 void TerrainExportDialog::accept()
 {
     QDialog::accept();
-    const std::string path = exportPathEditor_->text().toStdString();
-    assert( !path.empty() && bfs::exists( path ) && bfs::is_directory( path ) );
+    const tools::Path path = tools::Path::FromUnicode( exportPathEditor_->text().toStdWString() );
+    assert( !path.IsEmpty() && path.Exists() && path.IsDirectory() );
     QProgressDialog progressDialog( "", "", 0, 100, this, Qt::SplashScreen );
     progressDialog.setAutoClose( true );
     progressDialog.setContentsMargins( 5, 5, 5, 5 );
@@ -135,8 +133,8 @@ void TerrainExportDialog::accept()
             PlanarCartesianProjector projector( config_.GetTerrainLatitude(), config_.GetTerrainLongitude() );
             Translator translator( projector, geometry::Vector2d( config_.GetTerrainWidth() / 2.f, config_.GetTerrainHeight() / 2.f ) );
             {
-                TerrainExportManager manager( config_.GetTerrainDir( config_.GetTerrainName() ), translator );
-                manager.Run( path );
+                TerrainExportManager manager( config_.GetTerrainDir( config_.GetTerrainName() ).ToLocal(), translator );
+                manager.Run( path.ToLocal() );
             }
             SetProgression( progressDialog, 25, tr( "Exporting urban data..." ) );
             {
@@ -144,12 +142,12 @@ void TerrainExportDialog::accept()
             }
         }
         SetProgression( progressDialog, 50, tr( "Exporting raster data..." ) );
-        extractor::TerrainExtractionManager extractor( bfs::path( config_.GetTerrainFile() ).parent_path() );
+        extractor::TerrainExtractionManager extractor( config_.GetTerrainFile().Parent().ToBoost() );
         if( rasterCheck_->isChecked() )
-            extractor.ExportRaster( path );
+            extractor.ExportRaster( path.ToBoost() );
         SetProgression( progressDialog, 75, tr( "Exporting elevation data..." ) );
         if( elevationCheck_->isChecked() )
-            extractor.ExportElevation( path );
+            extractor.ExportElevation( path.ToBoost() );
         SetProgression( progressDialog, 100, "" );
         QMessageBox::information( this, tr( "Terrain export" ), tr( "Export successful." ) );
     }
@@ -166,8 +164,8 @@ void TerrainExportDialog::accept()
 // -----------------------------------------------------------------------------
 void TerrainExportDialog::OnBrowseExport()
 {
-    QString newDirectory = QFileDialog::getExistingDirectory( this, tr( "Select export directory" ), exportPathEditor_->text() );
-    exportPathEditor_->setText( newDirectory );
+    tools::Path newDirectory = gui::FileDialog::getExistingDirectory( this, tr( "Select export directory" ), tools::Path::FromUnicode( exportPathEditor_->text().toStdWString() ) );
+    exportPathEditor_->setText( QString::fromStdWString( newDirectory.ToUnicode() ) );
     CheckExportReady();
 }
 
@@ -177,7 +175,7 @@ void TerrainExportDialog::OnBrowseExport()
 // -----------------------------------------------------------------------------
 void TerrainExportDialog::CheckExportReady()
 {
-    const QString newDirectory = exportPathEditor_->text();
+    const tools::Path newDirectory = tools::Path::FromUnicode( exportPathEditor_->text().toStdWString() );
     const bool isExportEnabled = shapeCheck_->isChecked() || rasterCheck_->isChecked() || elevationCheck_->isChecked();
-    okButton_->setEnabled( isExportEnabled && !newDirectory.isEmpty() && bfs::exists( newDirectory.toStdString() ) && bfs::is_directory( newDirectory.toStdString() ) );
+    okButton_->setEnabled( isExportEnabled && !newDirectory.IsEmpty() && newDirectory.Exists() && newDirectory.IsDirectory() );
 }

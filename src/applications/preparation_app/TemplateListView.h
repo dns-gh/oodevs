@@ -43,8 +43,8 @@ public:
 
     //! @name Operations
     //@{
-    void LoadTemplates( const std::string& filename );
-    void SaveTemplates( const std::string& filename ) const;
+    void LoadTemplates( const tools::Path& filename );
+    void SaveTemplates( const tools::Path& filename ) const;
     void CreateTemplate( const kernel::Entity_ABC& entity );
     //@}
 
@@ -59,8 +59,6 @@ private:
     //! @name Types
     //@{
     typedef std::vector< HierarchyTemplate* > T_Templates;
-    typedef T_Templates::iterator            IT_Templates;
-    typedef T_Templates::const_iterator     CIT_Templates;
     //@}
 
     //! @name Helpers

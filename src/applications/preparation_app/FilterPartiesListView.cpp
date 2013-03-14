@@ -78,13 +78,13 @@ void FilterPartiesListView::OnItemClicked( const QModelIndex& index )
 // Name: FilterPartiesListView::ParseOrbatFile
 // Created: ABR 2012-05-29
 // -----------------------------------------------------------------------------
-bool FilterPartiesListView::ParseOrbatFile( const std::string& fileName )
+bool FilterPartiesListView::ParseOrbatFile( const tools::Path& fileName )
 {
     model_.clear();
     bool status = true;
     try
     {
-        xml::xifstream xis( fileName );
+        tools::Xifstream xis( fileName );
         xis >> xml::start( "orbat" )
                 >> xml::start( "parties" )
                     >> xml::list( "party", *this, &FilterPartiesListView::ReadTeam );

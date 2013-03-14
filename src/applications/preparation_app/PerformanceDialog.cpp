@@ -187,7 +187,7 @@ void PerformanceDialog::UpdateDisplay()
     UpdateBar( values, progressValueMulti_, progressLimit_ );
 
     QString detail;
-    detail +=        tr( "Exercise: " )         + QString::fromStdString( values.exercise_ ) + "\n";
+    detail +=        tr( "Exercise: " )         + values.exercise_.FileName().ToUTF8().c_str() + "\n";
     detail += "\n" + tr( "Teams: " )            + locale().toString( values.teams_ );
     detail += "\n" + tr( "Profiles: ")          + locale().toString( values.profiles_ );
     detail += "\n" + tr( "Automats: ")          + locale().toString( values.automats_ );

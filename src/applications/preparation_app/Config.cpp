@@ -12,10 +12,8 @@
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
-#include <boost/filesystem.hpp>
 
-namespace bfs = boost::filesystem;
-namespace po  = boost::program_options;
+namespace po = boost::program_options;
 
 // -----------------------------------------------------------------------------
 // Name: Config constructor
@@ -27,15 +25,15 @@ Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observ
 {
     po::options_description desc( "Preparation options" );
     desc.add_options()( "generate_scores", "generate default scores" );
-    desc.add_options()( "migrate", po::value< std::string >( &folderToMigrate_ )->default_value( "" ), "migrate a specific exercises directory" );
+    desc.add_options()( "migrate", po::value( &folderToMigrate_ )->default_value( "" ), "migrate a specific exercises directory" );
     AddOptions( desc );
     Parse( argc, argv );
     if( IsSet( "generate_scores" ) )
     {
-        std::string exercise = GetExerciseName();
-        if( exercise.empty() )
+        tools::Path exercise = GetExerciseName();
+        if( exercise.IsEmpty() )
             throw MASA_EXCEPTION( "Specify an exercise to generate scores." );
-        if( !bfs::exists( bfs::path( GetExerciseFile() ) ) )
+        if( !GetExerciseFile().Exists() )
             throw MASA_EXCEPTION( "The specified exercise does not exist." );
         generateScores_ = true;
     }
@@ -63,7 +61,7 @@ bool Config::HasGenerateScores() const
 // Name: Config::GetFolderToMigrate
 // Created: JSR 2011-09-07
 // -----------------------------------------------------------------------------
-const std::string& Config::GetFolderToMigrate()
+const tools::Path& Config::GetFolderToMigrate()
 {
     return folderToMigrate_;
 }

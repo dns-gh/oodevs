@@ -63,7 +63,7 @@ void ScoresModel::Purge()
 // Name: ScoresModel::Load
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-void ScoresModel::Load( const tools::Loader_ABC& fileLoader, const std::string& file )
+void ScoresModel::Load( const tools::Loader_ABC& fileLoader, const tools::Path& file )
 {
     fileLoader.LoadFile( file, boost::bind( &ScoresModel::Read, this, _1 ) );
 }
@@ -102,9 +102,9 @@ bool ScoresModel::CheckValidity( const tools::SchemaWriter_ABC& schemaWriter ) c
 // Name: ScoresModel::Serialize
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-void ScoresModel::Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const
+void ScoresModel::Serialize( const tools::Path& file, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
-    xml::xofstream xos( file );
+    tools::Xofstream xos( file );
     Serialize( xos, schemaWriter );
 }
 

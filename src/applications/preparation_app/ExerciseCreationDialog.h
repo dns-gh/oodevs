@@ -34,7 +34,7 @@ public:
 
     //! @name Accessors
     //@{
-    QString GetFileName() const;
+    tools::Path GetFileName() const;
     //@}
 
 private slots:

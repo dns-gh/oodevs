@@ -10,10 +10,6 @@
 #include "preparation_app_pch.h"
 #include "FileLoaderObserver.h"
 #include "clients_kernel/Tools.h"
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: FileLoader constructor
@@ -37,9 +33,9 @@ FileLoaderObserver::~FileLoaderObserver()
 // Name: FileLoaderObserver::NotifyInvalidXml
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-bool FileLoaderObserver::NotifyInvalidXml( const std::string& file, const xml::exception& e )
+bool FileLoaderObserver::NotifyInvalidXml( const tools::Path& file, const xml::exception& e )
 {
-    malformedFiles_.push_back( bfs::path( file ).filename().string() + " :\t" + tools::GetExceptionMsg( e ) );
+    malformedFiles_.push_back( file.FileName().ToUTF8() + " :\t" + tools::GetExceptionMsg( e ) );
     return true;
 }
 
@@ -47,16 +43,16 @@ bool FileLoaderObserver::NotifyInvalidXml( const std::string& file, const xml::e
 // Name: FileLoaderObserver::NotifyNoXmlSchemaSpecified
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-void FileLoaderObserver::NotifyNoXmlSchemaSpecified( const std::string& file )
+void FileLoaderObserver::NotifyNoXmlSchemaSpecified( const tools::Path& file )
 {
-    missingSchemaFiles_.push_back( bfs::path( file ).filename().string() );
+    missingSchemaFiles_.push_back( file.FileName().ToUTF8() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileLoaderObserver::NotifyFileMigrated
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-void FileLoaderObserver::NotifyFileMigrated( const std::string& /*file*/ , const std::string& /*fromVersion*/, const std::string& /*toVersion*/ )
+void FileLoaderObserver::NotifyFileMigrated( const tools::Path& /*file*/ , const std::string& /*fromVersion*/, const std::string& /*toVersion*/ )
 {
     // NOTHING
 }
@@ -67,22 +63,6 @@ void FileLoaderObserver::NotifyFileMigrated( const std::string& /*file*/ , const
 // -----------------------------------------------------------------------------
 void FileLoaderObserver::DisplayErrors() const
 {
-    if( !invalidSignatureFiles_.empty() || !missingSignatureFiles_.empty() )
-    {
-        QString invalidSignatureDisplay( tools::translate( "Application", "The signatures for the following files do not exist or are invalid : " ) + "\n" );
-        for( auto it = invalidSignatureFiles_.begin(); it != invalidSignatureFiles_.end(); ++it )
-        {
-            invalidSignatureDisplay += "\n";
-            invalidSignatureDisplay += it->c_str();
-        }
-        for( auto it = missingSignatureFiles_.begin(); it != missingSignatureFiles_.end(); ++it )
-        {
-            invalidSignatureDisplay += "\n";
-            invalidSignatureDisplay += it->c_str();
-        }
-        QMessageBox::warning( 0, tools::translate( "Application", "SWORD" ), invalidSignatureDisplay );
-    }
-
     if( !malformedFiles_.empty() )
     {
         QString malformedDisplay( tools::translate( "Application", "The following files do not match their xsd : " ) + "\n" );
@@ -114,8 +94,6 @@ void FileLoaderObserver::GetXsdErrors( std::vector< std::string >& errors ) cons
 // -----------------------------------------------------------------------------
 void FileLoaderObserver::Purge()
 {
-    invalidSignatureFiles_.clear();
-    missingSignatureFiles_.clear();
     malformedFiles_.clear();
     missingSchemaFiles_.clear();
 }

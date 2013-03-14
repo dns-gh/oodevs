@@ -12,12 +12,12 @@
 #include "moc_FilterOrbatReIndexer.cpp"
 
 #include "FilterPartiesListView.h"
+#include "clients_gui/FileDialog.h"
 #include "clients_kernel/Tools.h"
 #include "preparation/Model.h"
 #include "preparation/TeamsModel.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/IdManager.h"
-#include <boost/filesystem/operations.hpp>
 #include <xeumeuleu/xml.h>
 
 namespace
@@ -89,7 +89,7 @@ const std::string FilterOrbatReIndexer::GetDescription() const
 // -----------------------------------------------------------------------------
 bool FilterOrbatReIndexer::IsValid() const
 {
-    return filename_ && !filename_->text().isEmpty() && boost::filesystem::exists( filename_->text().toStdString() );
+    return filename_ && !filename_->text().isEmpty() && tools::Path::FromUnicode( filename_->text().toStdWString() ).Exists();
 }
 
 // -----------------------------------------------------------------------------
@@ -98,13 +98,10 @@ bool FilterOrbatReIndexer::IsValid() const
 // -----------------------------------------------------------------------------
 void FilterOrbatReIndexer::OnBrowse()
 {
-    assert( !orbatFile_.empty() );
-    QString filename = QFileDialog::getOpenFileName( QApplication::activeModalWidget(), tools::translate( "FilterOrbatReIndexer", "Load orbat file" )
-                                                   , orbatFile_.c_str(), "Orbat (*.xml)" );
-    if( filename.startsWith( "//" ) )
-        filename.replace( "/", "\\" );
-    filename_->setText( filename );
-    emit( statusChanged( IsValid() && partiesListView_->ParseOrbatFile( filename_->text().toStdString() ) ) );
+    assert( !orbatFile_.IsEmpty() );
+    tools::Path filename = gui::FileDialog::getOpenFileName( QApplication::activeModalWidget(), tools::translate( "FilterOrbatReIndexer", "Load orbat file" ), orbatFile_, "Orbat (*.xml)" );
+    filename_->setText( filename.ToUTF8().c_str() );
+    emit( statusChanged( IsValid() && partiesListView_->ParseOrbatFile( tools::Path::FromUnicode( filename_->text().toStdWString() ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +229,7 @@ void FilterOrbatReIndexer::Execute()
 {
     // Create new order of battle
     shift_ = model_.GetIdManager().GetNextId();
-    xml::xifstream xis( filename_->text().toStdString() );
+    tools::Xifstream xis( tools::Path::FromUnicode( filename_->text().toStdWString() ) );
     xml::xostringstream xos;
     xos << xml::start( "orbat" );
     xis >> xml::start( "orbat" )

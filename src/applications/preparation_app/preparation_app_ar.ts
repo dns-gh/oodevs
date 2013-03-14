@@ -34,10 +34,6 @@
         <translation type="unfinished">السيف</translation>
     </message>
     <message>
-        <source>The signatures for the following files do not exist or are invalid : </source>
-        <translation type="unfinished">تواقيع للملفات التالية غير موجودة أو غير صحيحة:</translation>
-    </message>
-    <message>
         <source>The following files do not match their xsd : </source>
         <translation type="unfinished">لا تطابق الملفات التالية على xsd:</translation>
     </message>

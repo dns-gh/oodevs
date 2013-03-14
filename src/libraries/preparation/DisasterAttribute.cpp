@@ -17,7 +17,7 @@
 // Name: DisasterAttribute constructor
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-DisasterAttribute::DisasterAttribute( kernel::PropertiesDictionary& dictionary, const QString& source, const QDateTime& date, const kernel::Entity_ABC& entity )
+DisasterAttribute::DisasterAttribute( kernel::PropertiesDictionary& dictionary, const tools::Path& source, const QDateTime& date, const kernel::Entity_ABC& entity )
     : source_( source )
     , date_  ( date )
 {
@@ -30,15 +30,14 @@ DisasterAttribute::DisasterAttribute( kernel::PropertiesDictionary& dictionary, 
 // -----------------------------------------------------------------------------
 DisasterAttribute::DisasterAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
-    std::string source, date;
-    xis >> xml::attribute( "source", source )
+    std::string date;
+    xis >> xml::attribute( "source", source_ )
         >> xml::optional
         >> xml::attribute( "date", date );
 
     if( date != "" )
         date_ = QDateTime::fromString( date.c_str(), "yyyyMMddThhmmss" );
 
-    source_ = source.c_str();
     CreateDictionary( dictionary, entity );
 }
 

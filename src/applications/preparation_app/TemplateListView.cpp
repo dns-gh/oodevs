@@ -12,10 +12,6 @@
 #include "moc_TemplateListView.cpp"
 #include "preparation/HierarchyTemplate.h"
 #include "clients_gui/DragAndDropHelpers.h"
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: TemplateListView constructor
@@ -103,14 +99,14 @@ void TemplateListView::OnRename( const QModelIndex& index, const QVariant& varia
 // Name: TemplateListView::LoadTemplates
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-void TemplateListView::LoadTemplates( const std::string& filename )
+void TemplateListView::LoadTemplates( const tools::Path& filename )
 {
     try
     {
         Clear();
-        if( !filename.empty() && bfs::exists( bfs::path( filename ) ) )
+        if( !filename.IsEmpty() && filename.Exists() )
         {
-            xml::xifstream input( filename );
+            tools::Xifstream input( filename );
             input >> xml::start( "templates" )
                   >> xml::list( "template", *this, &TemplateListView::ReadTemplate );
         }
@@ -125,9 +121,9 @@ void TemplateListView::LoadTemplates( const std::string& filename )
 // Name: TemplateListView::SaveTemplates
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-void TemplateListView::SaveTemplates( const std::string& filename ) const
+void TemplateListView::SaveTemplates( const tools::Path& filename ) const
 {
-    xml::xofstream output( filename );
+    tools::Xofstream output( filename );
     output << xml::start( "templates" );
     for( auto it = templates_.begin(); it != templates_.end(); ++it )
         (*it)->Serialize( output );
@@ -185,7 +181,7 @@ void TemplateListView::keyPressEvent( QKeyEvent* evt )
     {
         if( HierarchyTemplate* pTemplate = dataModel_.GetDataFromIndex< HierarchyTemplate >( index ) )
         {
-            IT_Templates it = std::find( templates_.begin(), templates_.end(), pTemplate );
+            auto it = std::find( templates_.begin(), templates_.end(), pTemplate );
             if( it != templates_.end() )
             {
                 *it = templates_.back();

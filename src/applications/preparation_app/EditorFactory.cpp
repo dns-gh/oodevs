@@ -377,17 +377,15 @@ namespace
                 DisasterEditor( QWidget* parent, const tools::GeneralConfig& config )
             : gui::ValuedComboBox< std::string >( parent )
         {
-            QStringList result( gui::ListDirectories( gui::BuildPropagationDir( config.GetRootDir(), "data/propagations" ),
-                                                 &gui::IsPropagationDir ) );
-
-            for( QStringList::const_iterator it = result.constBegin(); it != result.constEnd(); ++it )
-                AddItem( *it, (*it).toStdString() );
+            const tools::Path::T_Paths result = ( config.GetRootDir() / "data/propagations" ).ListElements( &gui::IsPropagationDir );
+            for( auto it = result.begin(); it != result.end(); ++it )
+                AddItem( it->ToUTF8(), it->ToUTF8() );
         }
         virtual ~DisasterEditor() {}
 
         virtual kernel::DisasterDirectory GetValue()
         {
-            return kernel::DisasterDirectory( gui::ValuedComboBox< std::string >::GetValue().c_str() );
+            return kernel::DisasterDirectory( tools::Path::FromUTF8( gui::ValuedComboBox< std::string >::GetValue() ) );
         }
     };
 }
@@ -399,6 +397,6 @@ namespace
 void EditorFactory::Call( kernel::DisasterDirectory* const& value )
 {
     DisasterEditor* editor= new DisasterEditor( parent_, config_ );
-    editor->SetCurrentItem( (*value)().toStdString() );
+    editor->SetCurrentItem( (*value)().ToUTF8() );
     result_ = editor;
 }

@@ -101,7 +101,7 @@ public:
                          , automatsKG_( 0 ), unitsKG_( 0 )
                          , performance_( 0.f ) {}
 
-        std::string  exercise_;
+        tools::Path  exercise_;
         unsigned int limit_;
         unsigned int units_;
         unsigned int automats_;
@@ -128,7 +128,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const tools::ExerciseConfig& config, const std::string& file );
+    void Load( const tools::ExerciseConfig& config, const tools::Path& file );
     const PerformanceIndicator::Values& ComputeValues();
     //@}
 

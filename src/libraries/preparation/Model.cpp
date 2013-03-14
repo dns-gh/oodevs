@@ -51,11 +51,7 @@
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>
-
-namespace bfs = boost::filesystem;
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
 
@@ -268,9 +264,9 @@ void Model::Purge()
 namespace
 {
     template< typename M >
-    bool LoadOptional( const tools::Loader_ABC& fileLoader, const std::string& fileName, M& model, const tools::SchemaWriter_ABC& schemaWriter )
+    bool LoadOptional( const tools::Loader_ABC& fileLoader, const tools::Path& fileName, M& model, const tools::SchemaWriter_ABC& schemaWriter )
     {
-        if( bfs::exists( fileName ) )
+        if( fileName.Exists() )
         {
             model.Load( fileLoader, fileName );
             return true;
@@ -293,7 +289,6 @@ void Model::Load( const tools::ExerciseConfig& config )
     height_ = config.GetTerrainHeight();
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
     config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
-    const std::string urbanFile = config.GetUrbanFile();
     oldUrbanMode_ = false;
     if( !config.GetLoader().LoadOptionalFile( config.GetUrbanFile(), boost::bind( &UrbanModel::LoadUrban, &urban_, _1 ) ) )
         if( config.GetLoader().LoadOptionalFile( config.GetTerrainUrbanFile(), boost::bind( &UrbanModel::LoadUrban, &urban_, _1 ) ) )
@@ -305,8 +300,8 @@ void Model::Load( const tools::ExerciseConfig& config )
     symbolsFactory_.Load( config );
     urban_.Load();
 
-    const std::string orbatFile = config.GetOrbatFile();
-    if( bfs::exists( bfs::path( orbatFile ) ) )
+    const tools::Path orbatFile = config.GetOrbatFile();
+    if( orbatFile.Exists() )
     {
         UpdateName( orbatFile );
         config.GetLoader().LoadFile( orbatFile, boost::bind( &TeamsModel::Load, &teams_, _1, boost::ref( *this ) ) );
@@ -321,7 +316,7 @@ void Model::Load( const tools::ExerciseConfig& config )
     LoadOptional( config.GetLoader(), config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
 
     performanceIndicator_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
-    if( bfs::exists( bfs::path( orbatFile ) ) )
+    if( orbatFile.Exists() )
         ghosts_.Finalize( staticModel_ ); // $$$$ ABR 2012-06-25: Resolve logistic link and profiles for ghost ... frozen ICD
 
     SetLoaded( true );
@@ -339,7 +334,7 @@ void Model::SaveExercise( const tools::ExerciseConfig& config )
     exercise_.Serialize( config, schemaWriter );
     exercise_.GetSettings().Serialize( config.GetSettingsFile(), schemaWriter );
     {
-        xml::xofstream xos( config.GetOrbatFile() );
+        tools::Xofstream xos( config.GetOrbatFile() );
         xos << xml::start( "orbat" );
         schemaWriter.WriteExerciseSchema( xos, "orbat" );
         teams_.Serialize( xos );
@@ -436,16 +431,9 @@ kernel::SymbolFactory& Model::GetSymbolsFactory() const
 // Name: Model::UpdateName
 // Created: SBO 2006-11-21
 // -----------------------------------------------------------------------------
-void Model::UpdateName( const std::string& orbat )
+void Model::UpdateName( const tools::Path& orbat )
 {
-    if( orbat.empty() )
-        name_ = "";
-    else
-    {
-        std::string file = bfs::path( orbat ).filename().string();
-        file = file.substr( 0, file.find_last_of( '.' ) );
-        name_ = file.c_str();
-    }
+    name_ = ( orbat.IsEmpty() ) ? "" : orbat.BaseName().ToUTF8().c_str();
 }
 
 // -----------------------------------------------------------------------------

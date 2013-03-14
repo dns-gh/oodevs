@@ -12,6 +12,7 @@
 #include "moc_TerrainToolBar.cpp"
 #include "RemoveBlocksDialog.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/SymbolSizeOptionChooser.h"
 #include "clients_kernel/Controllers.h"
@@ -22,14 +23,14 @@
 
 namespace
 {
-    QToolButton* AddButton( QWidget* parent, const QObject *receiver, const char *member, const QString& toolTip = "", const QString& iconPath = "", bool isCheckable = false )
+    QToolButton* AddButton( QWidget* parent, const QObject *receiver, const char *member, const QString& toolTip = "", const tools::Path& iconPath = "", bool isCheckable = false )
     {
         QToolButton* button = new QToolButton( parent );
         QObject::connect( button, SIGNAL( clicked() ), receiver, member );
         if( !toolTip.isEmpty() )
             button->setToolTip( toolTip );
-        if( !iconPath.isEmpty() )
-            button->setIcon( QIcon( iconPath ) );
+        if( !iconPath.IsEmpty() )
+            button->setIcon( gui::Icon( iconPath ) );
         button->setCheckable( isCheckable );
         return button;
     }

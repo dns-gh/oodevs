@@ -12,10 +12,8 @@
 #include "moc_FilterCsv.cpp"
 #include "CsvExport.h"
 #include "tools/ExerciseConfig.h"
+#include "clients_gui/FileDialog.h"
 #include "clients_kernel/Tools.h"
-#include <boost/filesystem/operations.hpp>
-
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: FilterCsv constructor
@@ -26,7 +24,7 @@ FilterCsv::FilterCsv( QWidget* parent, const tools::ExerciseConfig& config, Mode
     : progressDialog_( new QProgressDialog( parent, Qt::SplashScreen ) )
     , pExport_       ( new CsvExport( model, converter ) )
     , output_        ( 0 )
-    , exerciseFile_  ( config.GetExerciseFile().c_str() )
+    , exerciseFile_  ( config.GetExerciseFile() )
 {
     progressDialog_->setAutoClose( true );
     progressDialog_->setCancelButton( 0 );
@@ -58,8 +56,7 @@ namespace
 // -----------------------------------------------------------------------------
 void FilterCsv::Execute()
 {
-    bfs::path ouput( output_->text().toStdString() );
-    pExport_->Execute( ouput, *this );
+    pExport_->Execute( tools::Path::FromUnicode( output_->text().toStdWString() ), *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +110,7 @@ QWidget* FilterCsv::CreateParametersWidget( QWidget* parent )
 // -----------------------------------------------------------------------------
 bool FilterCsv::IsValid() const
 {
-    return output_ && !output_->text().isEmpty() && bfs::exists( output_->text().toStdString() );
+    return output_ && !output_->text().isEmpty() && tools::Path::FromUnicode( output_->text().toStdWString() ).Exists();
 }
 
 // -----------------------------------------------------------------------------
@@ -131,11 +128,8 @@ bool FilterCsv::NeedToReloadExercise() const
 // -----------------------------------------------------------------------------
 void FilterCsv::OnBrowse()
 {
-    QString directory = QFileDialog::getExistingDirectory( QApplication::activeModalWidget()
-                                                         , tools::translate( "FilterCsv", "Select output directory" ), exerciseFile_.c_str() );
-    if( directory.startsWith( "//" ) )
-        directory.replace( "/", "\\" );
-    output_->setText( directory );
+    tools::Path directory = gui::FileDialog::getExistingDirectory( QApplication::activeModalWidget(), tools::translate( "FilterCsv", "Select output directory" ), exerciseFile_ );
+    output_->setText( directory.ToUTF8().c_str() );
     emit( statusChanged( IsValid() ) );
 }
 

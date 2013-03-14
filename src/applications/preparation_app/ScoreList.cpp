@@ -16,9 +16,6 @@
 #include "preparation/Score_ABC.h"
 #include "preparation/ScoresModel.h"
 #include "tools/ExerciseConfig.h"
-#include <boost/filesystem/operations.hpp>
-
-namespace bfs = boost::filesystem;
 
 Q_DECLARE_METATYPE( const Score_ABC* )
 
@@ -93,7 +90,7 @@ void ScoreList::OnDelete()
 // -----------------------------------------------------------------------------
 void ScoreList::OnGenerate()
 {
-    if( bfs::exists( config_.GetOptionalPhysicalChildFile( "scores" ) ) )
+    if( config_.GetOptionalPhysicalChildFile( "scores" ).Exists() )
         model_.GenerateScoresFromTemplate( config_.GetLoader() );
 }
 
@@ -157,7 +154,7 @@ Score_ABC* ScoreList::FindSelected() const
 // -----------------------------------------------------------------------------
 void ScoreList::Load()
 {
-    if( bfs::exists( config_.GetOptionalPhysicalChildFile( "scores" ) ) )
+    if( config_.GetOptionalPhysicalChildFile( "scores" ).Exists() )
         generatorBox_->show();
     else
         generatorBox_->hide();

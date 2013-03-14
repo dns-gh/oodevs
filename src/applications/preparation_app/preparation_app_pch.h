@@ -57,6 +57,8 @@
 #include <set>
 
 #include <tools/Exception.h>
+#include "tools/FileWrapper.h"
+#include "tools/Path.h"
 
 #include <geometry/Types.h>
 typedef std::vector< geometry::Point2f > T_PointVector;

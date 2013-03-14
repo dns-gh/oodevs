@@ -11,6 +11,7 @@
 #include "FilterInputArgument.h"
 #include "moc_FilterInputArgument.cpp"
 #include "FilterPartiesListView.h"
+#include "clients_gui/FileDialog.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/XmlDescription.h"
 #include "tools/ExerciseConfig.h"
@@ -19,7 +20,7 @@
 // Name: FilterInputArgument constructor
 // Created: ABR 2011-09-28
 // -----------------------------------------------------------------------------
-FilterInputArgument::FilterInputArgument( const tools::ExerciseConfig& config, const std::string& argumentValue, const kernel::XmlDescription& description, const std::string& exerciseDir /* = "" */ )
+FilterInputArgument::FilterInputArgument( const tools::ExerciseConfig& config, const std::string& argumentValue, const kernel::XmlDescription& description, const tools::Path& exerciseDir /* = "" */ )
     : exerciseDir_( exerciseDir )
     , description_( description.GetName() )
     , config_     ( config )
@@ -117,11 +118,10 @@ void FilterInputArgument::Update()
 // -----------------------------------------------------------------------------
 void FilterInputArgument::OnBrowse()
 {
-    QString path = ( type_ == eFile )
-        ? QFileDialog::getOpenFileName( QApplication::activeModalWidget(), tools::translate( "FilterInputArgument", "Select a file" ), exerciseDir_.c_str() )
-        : QFileDialog::getExistingDirectory( QApplication::activeModalWidget(), tools::translate( "FilterInputArgument", "Select a directory" ), exerciseDir_.c_str() );
-    path.replace( "/", "\\" );
-    line_->setText( path );
+    tools::Path path = ( type_ == eFile )
+        ? gui::FileDialog::getOpenFileName( QApplication::activeModalWidget(), tools::translate( "FilterInputArgument", "Select a file" ), exerciseDir_ )
+        : gui::FileDialog::getExistingDirectory( QApplication::activeModalWidget(), tools::translate( "FilterInputArgument", "Select a directory" ), exerciseDir_ );
+    line_->setText( path.ToUTF8().c_str() );
 }
 
 // -----------------------------------------------------------------------------

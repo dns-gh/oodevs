@@ -70,7 +70,7 @@ private:
     kernel::Controllers& controllers_;
     TemplateListView* list_;
     kernel::SafePointer< kernel::Entity_ABC > menuEntity_;
-    std::string templateFile_;
+    tools::Path templateFile_;
     //@}
 };
 

@@ -49,10 +49,12 @@
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/GisToolbar.h"
 #include "clients_gui/GridLayer.h"
+#include "clients_gui/FileDialog.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/HighlightColorModifier.h"
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/InhabitantLayer.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/MiscLayer.h"
@@ -106,10 +108,8 @@
 #include "ENT/ENT_Tr_Gen.h"
 #include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
-#include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
-
-namespace bfs = boost::filesystem;
+#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -140,14 +140,14 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     controllers_.modes_.AddRegistryEntry( eModes_Prepare, "Preparation" );
 
     // Migration
-    if( config_.HasGenerateScores() || !config_.GetFolderToMigrate().empty() )
+    if( config_.HasGenerateScores() || !config_.GetFolderToMigrate().IsEmpty() )
     {
         if( config_.HasGenerateScores() )
         {
             staticModel_.Load( config_ );
             LoadExercise();
         }
-        if( !config_.GetFolderToMigrate().empty() )
+        if( !config_.GetFolderToMigrate().IsEmpty() )
             MigrateExercises();
         return;
     }
@@ -231,10 +231,10 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     controllers_.ChangeMode( eModes_Default );
     setLocale( QLocale() );
     setMinimumSize( 800, 600 );
-    setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
+    setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
 
     // Load exercise IFN
-    if( bfs::exists( bfs::path( config_.GetExerciseFile() ) ) )
+    if( config_.GetExerciseFile().Exists() )
     {
         SetProgression( 0, tr( "Initialize data ..." ) );
         if( Load() )
@@ -369,26 +369,21 @@ void MainWindow::New()
 {
     static ExerciseCreationDialog* exerciseCreationDialog_ = new ExerciseCreationDialog( this, config_ );
     if( exerciseCreationDialog_->exec() == QDialog::Accepted )
-    {
-        QString filename = exerciseCreationDialog_->GetFileName();
-        DoLoad( filename );
-    }
+        DoLoad( exerciseCreationDialog_->GetFileName() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::DoLoad
 // Created: LDC 2010-12-01
 // -----------------------------------------------------------------------------
-void MainWindow::DoLoad( QString filename, bool checkConsistency /*= true*/ )
+void MainWindow::DoLoad( const tools::Path& filename, bool checkConsistency /*= true*/ )
 {
-    if( filename.isEmpty() )
+    if( filename.IsEmpty() )
         return;
     SetProgression( 0, tr( "Initialize data ..." ) );
-    if( filename.startsWith( "//" ) )
-        filename.replace( "/", "\\" );
     try
     {
-        config_.LoadExercise( filename.toStdString() );
+        config_.LoadExercise( filename );
     }
     catch( ... )
     {
@@ -404,40 +399,44 @@ void MainWindow::DoLoad( QString filename, bool checkConsistency /*= true*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MainWindow::MigrateExercise
+// Created: ABR 2013-03-07
+// -----------------------------------------------------------------------------
+bool MainWindow::MigrateExercise( const tools::Path& path )
+{
+    tools::Path child = path / "exercise.xml";
+    if( child.Exists() )
+    {
+        try
+        {
+            std::cout << "Loading exercise " << path.FileName() << "...\n";
+            config_.LoadExercise( child );
+            staticModel_.Load( config_ );
+            LoadExercise();
+            std::cout << "Saving exercise " << path.FileName() << "...\n";
+            needsSaving_ = true;
+            Save();
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+        model_.Purge();
+        staticModel_.Purge();
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MainWindow::MigrateExercises
 // Created: JSR 2011-09-07
 // -----------------------------------------------------------------------------
 void MainWindow::MigrateExercises()
 {
-    const bfs::path root = bfs::path( config_.GetFolderToMigrate() );
-    if( ! bfs::exists( root ) )
-        throw MASA_EXCEPTION( ( "The folder " + config_.GetFolderToMigrate() + " does not exist" ).c_str() );
-
-    bfs::recursive_directory_iterator end;
-    for( bfs::recursive_directory_iterator it( root ); it != end; ++it )
-    {
-        const bfs::path dirPath = ( *it );
-        const bfs::path child = dirPath / "exercise.xml";
-        if( bfs::exists( child ) )
-        {
-            try
-            {
-                std::cout << "Loading exercise " << dirPath.filename() << "...\n";
-                config_.LoadExercise( child.string() );
-                staticModel_.Load( config_ );
-                LoadExercise();
-                std::cout << "Saving exercise " << dirPath.filename() << "...\n";
-                needsSaving_ = true;
-                Save();
-            }
-            catch( ... )
-            {
-                // NOTHING
-            }
-            model_.Purge();
-            staticModel_.Purge();
-        }
-    }
+    const tools::Path root = config_.GetFolderToMigrate();
+    if( !root.Exists() )
+        throw MASA_EXCEPTION( ( "The folder " + config_.GetFolderToMigrate().ToUTF8() + " does not exist" ).c_str() );
+    root.Apply( boost::bind( &MainWindow::MigrateExercise, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -447,8 +446,8 @@ void MainWindow::MigrateExercises()
 void MainWindow::Open()
 {
     // Open exercise file dialog
-    QString filename = QFileDialog::getOpenFileName( this, tr( "Load exercise definition file (exercise.xml)" ), config_.GetExerciseFile().c_str(), "Exercise (exercise.xml)" );
-    if( filename.isEmpty() || !Close() )
+    tools::Path filename = gui::FileDialog::getOpenFileName( this, tr( "Load exercise definition file (exercise.xml)" ), config_.GetExerciseFile(), "Exercise (exercise.xml)" );
+    if( filename.IsEmpty() || !Close() )
         return;
     // Load exercise
     DoLoad( filename );
@@ -561,7 +560,7 @@ void MainWindow::LoadExercise( bool checkConsistency /*= true*/ )
 void MainWindow::ReloadExercise()
 {
     if( Close() )
-        DoLoad( config_.GetExerciseFile().c_str() );
+        DoLoad( config_.GetExerciseFile() );
 }
 
 // -----------------------------------------------------------------------------
@@ -589,27 +588,29 @@ void MainWindow::Save( bool checkConsistency /* = true */ )
 void MainWindow::SaveAs()
 {
     bool exist = false;
-    QString name;
-    bfs::path exerciseDirectory;
+    tools::Path exerciseName;
+    tools::Path exerciseDirectory;
     do
     {
         bool ok = false;
-        name = QInputDialog::getText( tr( "Save exercise as ..." ),
+        QString name = QInputDialog::getText( tr( "Save exercise as ..." ),
             ( exist ) ? tr( "The exercise '%1' already exists. Please, enter a new exercise name:" ).arg( name ) : tr( "Enter an exercise name:" ),
             QLineEdit::Normal, tr( "Type exercise name here" ), &ok, this );
         if( ok && !name.isEmpty() )
         {
-            exerciseDirectory = bfs::path( config_.GetExercisesDir() ) / name.toStdString();
-            exist = frontend::commands::ExerciseExists( config_, name.toStdString() ) || bfs::exists( exerciseDirectory );
+            exerciseName = tools::Path::FromUnicode( name.toStdWString() );
+            exerciseName = exerciseName.Relative();
+            exerciseDirectory = config_.GetExercisesDir() / exerciseName;
+            exist = frontend::commands::ExerciseExists( config_, exerciseName ) || exerciseDirectory.Exists();
         }
         else
             return;
     } while( exist );
-    bfs::create_directories( exerciseDirectory );
-    bfs::path exerciseFile( config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( name.toStdString() ) );
-    bfs::copy_file( config_.GetExerciseFile(), exerciseFile );
-    config_.LoadExercise( exerciseFile.string() );
-    model_.exercise_.SetName( name );
+    exerciseDirectory.CreateDirectories();
+    tools::Path newExerciseFile = config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( exerciseName );
+    config_.GetExerciseFile().Copy( newExerciseFile );
+    config_.LoadExercise( newExerciseFile );
+    model_.exercise_.SetName( exerciseName.FileName().ToUTF8().c_str() );
     dialogContainer_->Purge();
     needsSaving_ = true;
     Save();
@@ -638,7 +639,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 // Name: MainWindow::OnForceSaveAndAddActionPlanning
 // Created: ABR 2011-10-18
 // -----------------------------------------------------------------------------
-void MainWindow::OnForceSaveAndAddActionPlanning( const std::string& filename )
+void MainWindow::OnForceSaveAndAddActionPlanning( const tools::Path& filename )
 {
     model_.exercise_.SetActionPlanning( filename );
     needsSaving_ = true;
@@ -708,7 +709,7 @@ void MainWindow::SetWindowTitle( bool needsSaving )
     if( model_.IsLoaded() )
     {
         filename = model_.exercise_.GetName().isEmpty()
-            ? ( config_.GetExerciseName().empty() ? tr( "Untitled" ) : config_.GetExerciseName().c_str() )
+            ? ( config_.GetExerciseName().IsEmpty() ? tr( "Untitled" ) : config_.GetExerciseName().ToUTF8().c_str() )
             : model_.exercise_.GetName();
         filename += ( needsSaving ) ? "*" : "";
     }
@@ -739,7 +740,7 @@ QMessageBox::StandardButton MainWindow::CheckSaving( bool checkConsistency /* = 
     if( needsSaving_ )
     {
         result = QMessageBox::question( this, tools::translate( "Application", "SWORD" ),
-                                        tr( "Unsaved modification detected.\nDo you want to save the exercise \'%1\'?" ).arg( config_.GetExerciseName().c_str() ),
+                                        tr( "Unsaved modification detected.\nDo you want to save the exercise \'%1\'?" ).arg( config_.GetExerciseName().ToUTF8().c_str() ),
                                         QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes );
         if( result == QMessageBox::Yes )
             Save( !checkConsistency );
@@ -819,7 +820,7 @@ void MainWindow::OnAddRaster()
 {
     try
     {
-        if( !bfs::exists( config_.BuildTerrainChildFile( "config.xml" ) ) )
+        if( !config_.BuildTerrainChildFile( "config.xml" ).Exists() )
         {
             QMessageBox::warning( 0, tr( "Warning" ), tr( "This functionality is not available with old terrain format." ) );
             return;
@@ -830,14 +831,13 @@ void MainWindow::OnAddRaster()
         if( result == QDialog::Accepted )
         {
             QStringList parameters;
-            parameters << ( std::string( "--config=" ) + bfs::system_complete( config_.BuildTerrainChildFile( "config.xml" ) ).string() ).c_str();
+            parameters << ( std::string( "--config=" ) + config_.BuildTerrainChildFile( "config.xml" ).SystemComplete().ToUTF8() ).c_str();
             parameters << ( std::string( "--raster=" ) + dialog.GetFiles().toStdString() ).c_str();
             parameters << ( std::string( "--pixelsize=" ) + boost::lexical_cast< std::string >( dialog.GetPixelSize() ) ).c_str();
-            bfs::path filename = bfs::system_complete( bfs::path( config_.GetGraphicsDirectory() ) / "~~tmp.texture.bin" );
-            parameters << ( std::string( "--file=" ) + filename.string() ).c_str();
-            bfs::path workingDirectory = bfs::system_complete( "../Terrain/applications/" );
-            process_->setWorkingDirectory( workingDirectory.string().c_str() );
-            process_->start( bfs::path( workingDirectory / "raster_app.exe" ).string().c_str(), parameters );
+            parameters << ( std::string( "--file=" ) + ( config_.GetGraphicsDirectory() / "~~tmp.texture.bin" ).SystemComplete().ToUTF8() ).c_str();
+            tools::Path workingDirectory = tools::Path( "../Terrain/applications/" ).SystemComplete();
+            process_->setWorkingDirectory( workingDirectory.ToUTF8().c_str() );
+            process_->start( ( workingDirectory / "raster_app.exe" ).ToUTF8().c_str(), parameters );
         }
     }
     catch( const geodata::ProjectionException& )
@@ -867,9 +867,9 @@ void MainWindow::OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitS
         raster.GenerateTexture();
         try
         {
-            const bfs::path aggregated = bfs::path( config_.GetGraphicsDirectory() ) / "~~tmp.texture.bin";
-            if( bfs::exists( aggregated ) )
-                bfs::remove( aggregated );
+            const tools::Path aggregated = config_.GetGraphicsDirectory() / "~~tmp.texture.bin";
+            if( aggregated.Exists() )
+                aggregated.Remove();
         }
         catch( ... )
         {

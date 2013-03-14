@@ -10,15 +10,12 @@
 #include "preparation_app_pch.h"
 #include "Application.h"
 #include "clients_gui/ApplicationMonitor.h"
-#include "tools/WinArguments.h"
 #include "clients_kernel/Tools.h"
+#include "tools/WinArguments.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
-#include <boost/filesystem.hpp>
 #include <boost/scoped_ptr.hpp>
-
-namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -77,20 +74,19 @@ int mainWrapper( int argc, char** argv )
 
 }  // namespace
 
-int WINAPI WinMain( HINSTANCE /* hinstance */, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )
+int WINAPI wWinMain( HINSTANCE /* hinstance */, HINSTANCE /* hPrevInstance */, LPWSTR lpCmdLine, int /* nCmdShow */ )
 {
     tools::WinArguments winArgs( lpCmdLine ) ;
-    std::string debugRoot;
+    tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir" ) );
     boost::scoped_ptr< MT_FileLogger > logger;
-    if( GetOption( winArgs, "--debug-dir", debugRoot ))
+    if( !debugDir.IsEmpty() )
     {
-        bfs::path debugDir( debugRoot );
-        bfs::create_directories( debugDir );
+        debugDir.CreateDirectories();
         boost::scoped_ptr< MT_FileLogger >( new MT_FileLogger(
-            ( debugDir / "preparation.log" ).string().c_str(), 1, -1,
+            debugDir / "preparation.log", 1, -1,
             MT_Logger_ABC::eLogLevel_All )).swap( logger );
         MT_LOG_REGISTER_LOGGER( *logger );
-        MT_CrashHandler::SetRootDirectory( debugRoot );
+        MT_CrashHandler::SetRootDirectory( debugDir );
     }
 
     int ret = mainWrapper( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ));

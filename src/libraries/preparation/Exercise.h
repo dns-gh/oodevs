@@ -36,8 +36,8 @@ public:
              ExerciseVisitor_ABC() {}
     virtual ~ExerciseVisitor_ABC() {}
     virtual void VisitBriefing( const QString& lang, const QString& briefing ) = 0;
-    virtual void VisitResource( const QString& name, const QString& file ) = 0;
-    virtual void VisitOrderFile( const QString& file ) = 0;
+    virtual void VisitResource( const QString& name, const tools::Path& file ) = 0;
+    virtual void VisitOrderFile( const tools::Path& file ) = 0;
 };
 
 // =============================================================================
@@ -69,9 +69,9 @@ public:
     QString GetName() const;
     void SetName( const QString& name );
     void SetBriefing( const QString& lang, const QString& text );
-    void AddResource( const QString& name, const QString& file );
-    void AddOrderFile( const QString& file );
-    void SetActionPlanning( const std::string& filename );
+    void AddResource( const QString& name, const tools::Path& file );
+    void AddOrderFile( const tools::Path& file );
+    void SetActionPlanning( const tools::Path& filename );
     void SetExerciseValidity( bool isValid );
     void ClearResources();
     void ClearOrderFiles();
@@ -88,23 +88,17 @@ private:
     void SerializeOrderFiles( xml::xostream& xos ) const;
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::map< QString, QString > T_Resources;
-    typedef std::set< QString >          T_OrderFiles;
-    //@}
-
 private:
     //! @name Member data
     //@{
-    kernel::Controller&     controller_;
+    kernel::Controller& controller_;
     tools::ExerciseSettings settings_;
-    QString                 name_;
-    T_Resources             briefings_;
-    T_Resources             resources_;
-    T_OrderFiles            orderFiles_;
-    std::string             actionPlanning_;
-    bool                    isValid_;
+    QString name_;
+    std::map< QString, QString > briefings_;
+    std::map< QString, tools::Path > resources_;
+    tools::Path::T_Paths orderFiles_;
+    tools::Path actionPlanning_;
+    bool isValid_;
     //@}
 };
 

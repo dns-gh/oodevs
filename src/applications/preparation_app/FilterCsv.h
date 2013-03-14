@@ -69,7 +69,7 @@ private:
     QProgressDialog* progressDialog_;
     std::auto_ptr< CsvExport > pExport_;
     QLineEdit* output_;
-    const std::string exerciseFile_;
+    const tools::Path exerciseFile_;
     //@}
 };
 

@@ -12,11 +12,12 @@
 #include "moc_OrbatDockWidget.cpp"
 #include "TreeViewsPanel.h"
 #include "clients_gui/AggregateToolbar.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_kernel/Controllers.h"
 #include "ENT/ENT_Enums_Gen.h"
 
-#define ICON_RIGHT QIcon( "resources/images/preparation/double_arrow_right.png" )
-#define ICON_LEFT  QIcon( "resources/images/preparation/double_arrow_left.png" )
+#define ICON_RIGHT gui::Icon( "resources/images/preparation/double_arrow_right.png" )
+#define ICON_LEFT  gui::Icon( "resources/images/preparation/double_arrow_left.png" )
 
 // -----------------------------------------------------------------------------
 // Name: OrbatDockWidget constructor

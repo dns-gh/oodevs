@@ -35,7 +35,7 @@ class FilterInputArgument : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FilterInputArgument( const tools::ExerciseConfig& config, const std::string& argumentValue, const kernel::XmlDescription& description, const std::string& exerciseDir = "" );
+    explicit FilterInputArgument( const tools::ExerciseConfig& config, const std::string& argumentValue, const kernel::XmlDescription& description, const tools::Path& exerciseDir = "" );
     virtual ~FilterInputArgument();
     //@}
 
@@ -74,7 +74,7 @@ private:
     QLineEdit*                   line_;
     FilterPartiesListView*       listView_;
     QLabel*                      errorLabel_;
-    const std::string            exerciseDir_;
+    const tools::Path            exerciseDir_;
     const std::string            description_;
     //@}
 };
