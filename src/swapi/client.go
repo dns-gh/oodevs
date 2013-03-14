@@ -120,13 +120,13 @@ func Connect(host string) (*Client, error) {
 
 func (c *Client) Close() {
 	c.eof = true
-	c.quit <- true
-	close(c.posts)
+	// Close all serve() inputs then ask it to terminate
 	c.ticker.Stop()
+	close(c.registers)
+	c.quit <- true
+	// Close write() inputs and close the connection
+	close(c.posts)
 	c.link.Close()
-	for context, handler := range c.handlers {
-		handler(nil, context, ErrConnectionClosed)
-	}
 }
 
 func (c *Client) getContext() int32 {
@@ -195,12 +195,33 @@ func (c *Client) timeout(now time.Time) {
 }
 
 func (c *Client) serve() {
+	closed := false
 	for {
 		select {
-		case <-c.quit:
-			return
-		case data := <-c.registers:
-			c.register(data)
+		case quit := <-c.quit:
+			closed = true
+			if quit {
+				// We can only flush the queue of pending handlers once the
+				// input channel is closed, which can only be done by the
+				// caller (and not by liste()).
+				for data := range c.registers {
+					data.handler(nil, 0, ErrConnectionClosed)
+				}
+			}
+			for context, handler := range c.handlers {
+				handler(nil, context, ErrConnectionClosed)
+			}
+			if quit {
+				return
+			}
+		case data, ok := <-c.registers:
+			if ok {
+				if closed {
+					data.handler(nil, 0, ErrConnectionClosed)
+				} else {
+					c.register(data)
+				}
+			}
 		case context := <-c.unregisters:
 			c.remove(context)
 		case event := <-c.events:
@@ -223,6 +244,9 @@ func (c *Client) listen(errors chan<- error) {
 				err = io.EOF
 			}
 			errors <- err
+			// Tell serve() to invalidate existing and future handlers, but not
+			// to stop yet as the caller can still interact with the client.
+			c.quit <- false
 			return
 		}
 		c.events <- msg

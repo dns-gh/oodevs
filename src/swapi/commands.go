@@ -61,7 +61,8 @@ func (c *Client) LoginWithVersion(username, password, version string) error {
 		return true
 	}
 	c.Post(msg, handler)
-	return <-quit
+	err := <-quit
+	return err
 }
 
 func (c *Client) Login(username, password string) error {

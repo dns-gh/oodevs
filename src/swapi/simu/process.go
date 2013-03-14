@@ -133,17 +133,14 @@ func (sim *SimProcess) Stop() error {
 		admin := profiles.FindSupervisor()
 		if admin != nil {
 			err = logAndStop(sim.DispatcherAddr, admin.Name, admin.Password)
-			if err == nil {
-				if sim.Wait(10 * time.Second) {
-					return nil
-				}
-				err = errors.New("Wait timed out")
+			if sim.Wait(10 * time.Second) {
+				return nil
 			}
+			err = errors.New("Wait timed out")
 		} else {
 			err = errors.New("could not find supervisor profile")
 		}
 	}
-	// Maybe we stopped, may be not, kill it anyway
 	sim.Kill()
 	return err
 }
