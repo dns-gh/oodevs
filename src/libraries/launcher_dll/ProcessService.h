@@ -12,6 +12,7 @@
 
 #include "frontend/ProcessObserver_ABC.h"
 #include "protocol/LauncherSenders.h"
+#include "tools/Path.h"
 #pragma warning( push, 0 )
 #pragma warning( disable : 4244 )
 #include <boost/enable_shared_from_this.hpp>
@@ -54,12 +55,12 @@ public:
     void SendExerciseList( sword::ExerciseListResponse& message );
     void SendSessionList( sword::SessionListResponse& message );
     void SendProfileList( sword::ProfileListResponse& message );
-    void SendCheckpointList( sword::CheckpointListResponse& message, const std::string& exercice, const std::string& session );
-    void RemoveCheckpoint( sword::CheckpointDeleteResponse& message, const std::vector< std::string >& checkpoints,
-                           const std::string& exercice, const std::string& session );
+    void SendCheckpointList( sword::CheckpointListResponse& message, const tools::Path& exercice, const tools::Path& session );
+    void RemoveCheckpoint( sword::CheckpointDeleteResponse& message, const tools::Path::T_Paths& checkpoints,
+                           const tools::Path& exercice, const tools::Path& session );
     sword::SessionStartResponse::ErrorCode StartSession( const std::string& endpoint, const sword::SessionStartRequest& message );
     sword::SessionStopResponse::ErrorCode StopSession( const sword::SessionStopRequest& message );
-    bool IsRunning( const std::string& exercise, const std::string& session ) const;
+    bool IsRunning( const tools::Path& exercise, const tools::Path& session ) const;
     void ExecuteCommand( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message );
     void ChangeParameter( const std::string& endpoint, const sword::SessionParameterChangeRequest& message );
     void SendConnectedProfiles( const std::string& endpoint, const sword::ConnectedProfileListRequest& message );
@@ -73,17 +74,17 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ExecutePauseResume( const std::string& endpoint, const std::string& exercise, const std::string& session,
+    void ExecutePauseResume( const std::string& endpoint, const tools::Path& exercise, const tools::Path& session,
                              bool running, int context, SwordFacade& facade );
-    void ExecuteChangeTime( const std::string& endpoint, const std::string& exercise, const std::string& session,
+    void ExecuteChangeTime( const std::string& endpoint, const tools::Path& exercise, const tools::Path& session,
                             const std::string& date, int context, SwordFacade& facade );
-    void SaveCheckpoint( const std::string& name, SwordFacade& facade );
+    void SaveCheckpoint( const tools::Path& name, SwordFacade& facade );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< std::pair< std::string, std::string >, boost::shared_ptr< SwordFacade > > ProcessContainer;
+    typedef std::map< std::pair< tools::Path, tools::Path >, boost::shared_ptr< SwordFacade > > ProcessContainer;
     //@}
 
 private:

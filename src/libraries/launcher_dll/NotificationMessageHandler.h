@@ -25,7 +25,7 @@ class NotificationMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             NotificationMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             NotificationMessageHandler( LauncherPublisher& publisher, const tools::Path& exercise, const tools::Path& session );
     virtual ~NotificationMessageHandler();
     //@}
 

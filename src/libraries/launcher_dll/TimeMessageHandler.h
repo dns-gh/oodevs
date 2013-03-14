@@ -25,7 +25,7 @@ class TimeMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             TimeMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             TimeMessageHandler( LauncherPublisher& publisher, const tools::Path& exercise, const tools::Path& session );
     virtual ~TimeMessageHandler();
     //@}
 

@@ -16,6 +16,7 @@
 #include "protocol/LauncherSenders.h"
 #include "protocol/AuthenticationSenders.h"
 #include "protocol/DispatcherSenders.h"
+#include "tools/Path.h"
 
 namespace launcher
 {
@@ -32,7 +33,7 @@ class ClientMessageHandlerBase : public MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ClientMessageHandlerBase( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             ClientMessageHandlerBase( LauncherPublisher& publisher, const tools::Path& exercise, const tools::Path& session );
     virtual ~ClientMessageHandlerBase();
     //@}
 
@@ -50,8 +51,8 @@ protected:
     template< typename T >
     void Send( T& message )
     {
-        message().set_exercise( exercise_ );
-        message().set_session( session_ );
+        message().set_exercise( exercise_.ToUTF8() );
+        message().set_session( session_.ToUTF8() );
         message.Send( publisher_ );
     }
     //@}
@@ -60,8 +61,8 @@ private:
     //! @name Member data
     //@{
     LauncherPublisher& publisher_;
-    const std::string exercise_;
-    const std::string session_;
+    const tools::Path exercise_;
+    const tools::Path session_;
     //@}
 };
 

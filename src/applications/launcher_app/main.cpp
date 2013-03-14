@@ -18,7 +18,6 @@
 #include <iostream>
 
 namespace bpo = boost::program_options;
-namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -46,8 +45,9 @@ namespace
         if( vm.count( "help" ) )
             return EXIT_SUCCESS;
 
-        bfs::path path = bfs::system_complete( bfs::path( argv[0] ) );
-        MT_FileLogger fileLogger( bfs::path( path.parent_path() / "Launcher.log" ).string().c_str(), 1, -1, MT_Logger_ABC::eLogLevel_All );
+        tools::Path path = argv[ 0 ];
+        path.SystemComplete();
+        MT_FileLogger fileLogger( path.Parent() / "Launcher.log", 1, -1, MT_Logger_ABC::eLogLevel_All );
         MT_LOG_REGISTER_LOGGER( fileLogger );
         HANDLE launcherJob  = CreateJobObject( 0, "launcher-job" );
         JOBOBJECT_EXTENDED_LIMIT_INFORMATION extendedJobInfo;;

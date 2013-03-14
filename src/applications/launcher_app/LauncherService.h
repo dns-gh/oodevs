@@ -11,9 +11,9 @@
 #define __LauncherService_h_
 
 #include <boost/noncopyable.hpp>
-#include <boost/filesystem.hpp>
 #include <windows.h>
 #include <string>
+#include "tools/Path.h"
 
 class LauncherFacade;
 
@@ -28,7 +28,7 @@ class LauncherService : private boost::noncopyable
 public:
     //! @name Instance
     //@{
-    static void Initialize( const boost::filesystem::path& path );
+    static void Initialize( const tools::Path& path );
     static void Terminate();
     static LauncherService& Instance();
     //@}
@@ -45,13 +45,13 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    explicit LauncherService( const boost::filesystem::path& path );
+    explicit LauncherService( const tools::Path& path );
     virtual ~LauncherService();
     //@}
 
     //! @name Services
     //@{
-    static void WINAPI ServiceMain( DWORD dwArgc, LPTSTR *lpszArgv );
+    static void WINAPI ServiceMain( DWORD dwArgc, LPWSTR *lpszArgv );
     static void WINAPI ServiceHandler( DWORD fdwControl );
     //@}
 
@@ -62,9 +62,9 @@ private:
     std::auto_ptr< LauncherFacade > pFacade_;
     SERVICE_STATUS_HANDLE hServiceStatusHandle_;
     SERVICE_STATUS ServiceStatus_;
-    const boost::filesystem::path& path_;
+    const tools::Path& path_;
     std::string port_;
-    const std::string name_;
+    const std::wstring name_;
     bool isRunning_;
     bool isPaused_;
     //@}

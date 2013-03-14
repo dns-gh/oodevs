@@ -31,11 +31,11 @@ LauncherFacade::LauncherFacade()
 // Name: LauncherFacade constructor
 // Created: LGY 2011-07-29
 // -----------------------------------------------------------------------------
-LauncherFacade::LauncherFacade( const std::string& path )
+LauncherFacade::LauncherFacade( const tools::Path& path )
     : launcher_( 0 )
 {
     tools::SetCodec();
-    ::SetCurrentDirectory( path.c_str() );
+    ::SetCurrentDirectoryW( path.ToUnicode().c_str() );
     config_.reset( new launcher::Config() );
 }
 
@@ -108,7 +108,7 @@ std::string LauncherFacade::GetLastError() const
 // Name: LauncherFacade::SetRootDir
 // Created: ABR 2011-11-08
 // -----------------------------------------------------------------------------
-void LauncherFacade::SetRootDir( const std::string& directory )
+void LauncherFacade::SetRootDir( const tools::Path& directory )
 {
     if( IsInitialized() )
         config_->SetRootDir( directory );

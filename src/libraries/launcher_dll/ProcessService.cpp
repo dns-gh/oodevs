@@ -18,7 +18,6 @@
 #include "frontend/StartExercise.h"
 #include "frontend/StartDispatcher.h"
 #include "frontend/StartReplay.h"
-#include <QtCore/qstringlist.h>
 #include "client_proxy/SwordMessageHandler_ABC.h"
 #include "SwordFacade.h"
 #include "Config.h"
@@ -77,9 +76,9 @@ ProcessService::~ProcessService()
 // -----------------------------------------------------------------------------
 void ProcessService::SendExerciseList( sword::ExerciseListResponse& message )
 {
-    const QStringList exercises = frontend::commands::ListExercises( config_ );
-    for( QStringList::const_iterator it = exercises.begin(); it != exercises.end(); ++it )
-        message.add_exercise( ( *it ).toStdString() );
+    const tools::Path::T_Paths exercises = frontend::commands::ListExercises( config_ );
+    for( auto it = exercises.begin(); it != exercises.end(); ++it )
+        message.add_exercise( it->ToUTF8() );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,9 +89,9 @@ void ProcessService::SendSessionList( sword::SessionListResponse& message )
 {
     for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
     {
-        const std::pair< std::string, std::string >& key = it->first;
-        if( key.first == message.exercise() )
-            message.add_session( key.second );
+        const std::pair< tools::Path, tools::Path >& key = it->first;
+        if( key.first.ToUTF8() == message.exercise() )
+            message.add_session( key.second.ToUTF8() );
     }
 }
 
@@ -104,12 +103,12 @@ void ProcessService::SendRunningExercices( const std::string& endpoint ) const
 {
     for( ProcessContainer::const_iterator it = processes_.begin(); it != processes_.end(); ++it )
     {
-        const std::pair< std::string, std::string >& key = it->first;
+        const std::pair< tools::Path, tools::Path >& key = it->first;
         if( IsRunning( key.first, key.second ) )
         {
             SessionStatus message;
-            message().set_exercise( key.first );
-            message().set_session( key.second );
+            message().set_exercise( key.first.ToUTF8() );
+            message().set_session( key.second.ToUTF8() );
             message().set_status( sword::SessionStatus::running );
             message.Send( server_.ResolveClient( endpoint ) );
         }
@@ -145,9 +144,9 @@ namespace
 // -----------------------------------------------------------------------------
 sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::string& endpoint, const sword::SessionStartRequest& message )
 {
-    const std::string session = message.session();
-    const std::string exercise = message.exercise();
-    const std::string checkpoint = message.has_checkpoint() ? message.checkpoint() : "";
+    const tools::Path session = tools::Path::FromUTF8( message.session() );
+    const tools::Path exercise = tools::Path::FromUTF8( message.exercise() );
+    const tools::Path checkpoint = tools::Path::FromUTF8( message.has_checkpoint() ? message.checkpoint() : "" );
 
     if( ! frontend::commands::ExerciseExists( config_, exercise ) )
         return sword::SessionStartResponse::invalid_exercise_name;
@@ -169,13 +168,13 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     if( message.type() == sword::SessionStartRequest::simulation )
     {
         std::map< std::string, std::string > arguments = boost::assign::map_list_of( "legacy", "true" )
-                                                                                   ( "checkpoint", checkpoint.c_str() );
-        command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), arguments, true, false, endpoint, "launcher-job" ) );
+                                                                                   ( "checkpoint", checkpoint.ToUTF8().c_str() );
+        command.reset( new frontend::StartExercise( config_, exercise, session, arguments, true, false, endpoint, "launcher-job" ) );
     }
     else if( message.type() == sword::SessionStartRequest::dispatch )
-        command.reset( new frontend::StartDispatcher( config_, true, exercise.c_str(), session.c_str(), checkpoint.c_str(), "", endpoint, "launcher-job" ) );
+        command.reset( new frontend::StartDispatcher( config_, true, exercise, session, checkpoint, "", endpoint, "launcher-job" ) );
     else
-        command.reset( new frontend::StartReplay( config_, exercise.c_str(), session.c_str(), 10001, true, endpoint, "launcher-job" ) );
+        command.reset( new frontend::StartReplay( config_, exercise, session, 10001, true, endpoint, "launcher-job" ) );
 
     SupervisorProfileCollector profileCollector;
     frontend::Profile::VisitProfiles( config_, fileLoader_, exercise, profileCollector );
@@ -200,8 +199,7 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
 // -----------------------------------------------------------------------------
 sword::SessionStopResponse::ErrorCode ProcessService::StopSession( const sword::SessionStopRequest& message )
 {
-    const std::string name = message.exercise();
-    ProcessContainer::iterator it = processes_.find( std::make_pair(message.exercise(), message.session() ) );
+    auto it = processes_.find( std::make_pair( tools::Path::FromUTF8( message.exercise() ), tools::Path::FromUTF8( message.session() ) ) );
     if( it != processes_.end() )
     {
         boost::shared_ptr< SwordFacade > process( it->second );
@@ -209,17 +207,17 @@ sword::SessionStopResponse::ErrorCode ProcessService::StopSession( const sword::
         processes_.erase( it );
         return sword::SessionStopResponse::success;
     }
-    return frontend::commands::ExerciseExists( config_, name ) ? sword::SessionStopResponse::session_not_running
-                                                               : sword::SessionStopResponse::invalid_exercise_name;
+    return frontend::commands::ExerciseExists( config_, tools::Path::FromUTF8( message.exercise() ) ) ? sword::SessionStopResponse::session_not_running
+                                                                                                      : sword::SessionStopResponse::invalid_exercise_name;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessService::IsRunning
 // Created: SBO 2010-10-07
 // -----------------------------------------------------------------------------
-bool ProcessService::IsRunning( const std::string& exercise, const std::string& session ) const
+bool ProcessService::IsRunning( const tools::Path& exercise, const tools::Path& session ) const
 {
-    ProcessContainer::const_iterator it = processes_.find( std::make_pair( exercise, session ) );
+    auto it = processes_.find( std::make_pair( exercise, session ) );
     return it != processes_.end() && ( config_.GetTestMode() || it->second->IsRunning() );
 }
 
@@ -253,8 +251,8 @@ void ProcessService::NotifyError( const std::string& /*error*/, std::string comm
             {
                 SessionStatus statusMessage;
                 statusMessage().set_status( sword::SessionStatus::not_running );
-                statusMessage().set_exercise( command->GetExercise() );
-                statusMessage().set_session( command->GetSession() );
+                statusMessage().set_exercise( command->GetExercise().ToUTF8() );
+                statusMessage().set_session( command->GetSession().ToUTF8() );
                 statusMessage.Send( publisher );
                 processes_.erase( it );
                 break;
@@ -289,7 +287,7 @@ void ProcessService::SendProfileList( sword::ProfileListResponse& message )
 {
     boost::recursive_mutex::scoped_lock locker( mutex_ );
     for( ProcessContainer::const_iterator it = processes_.begin(); it != processes_.end(); ++it )
-        if( it->first.first == message.exercise() )
+        if( it->first.first.ToUTF8() == message.exercise() )
         {
             ProfileCollector collector( message );
             frontend::Profile::VisitProfiles( config_, fileLoader_, it->first.first, collector );
@@ -301,18 +299,18 @@ void ProcessService::SendProfileList( sword::ProfileListResponse& message )
 // Name: ProcessService::SendCheckpointList
 // Created: LGY 2011-05-17
 // -----------------------------------------------------------------------------
-void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message, const std::string& exercice, const std::string& session )
+void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message, const tools::Path& exercice, const tools::Path& session )
 {
-    if( ! frontend::commands::ExerciseExists( config_, exercice ) )
+    if( !frontend::commands::ExerciseExists( config_, exercice ) )
         message.set_error_code( sword::CheckpointListResponse::invalid_exercise_name );
     else if( ! frontend::commands::SessionExists( config_, exercice, session ) )
         message.set_error_code( sword::CheckpointListResponse::invalid_session_name );
     else
     {
         message.set_error_code( sword::CheckpointListResponse::success );
-        const QStringList checkpoints = frontend::commands::ListCheckpoints( config_, exercice, session );
-        for( QStringList::const_iterator it = checkpoints.begin(); it != checkpoints.end(); ++it )
-            message.add_checkpoint( ( *it ).toStdString() );
+        const tools::Path::T_Paths checkpoints = frontend::commands::ListCheckpoints( config_, exercice, session );
+        for( auto it = checkpoints.begin(); it != checkpoints.end(); ++it )
+            message.add_checkpoint( it->ToUTF8() );
     }
 }
 
@@ -320,30 +318,30 @@ void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message,
 // Name: ProcessService::RemoveCheckpoint
 // Created: LGY 2011-05-19
 // -----------------------------------------------------------------------------
-void ProcessService::RemoveCheckpoint( sword::CheckpointDeleteResponse& message, const std::vector< std::string >& checkpoints,
-                                       const std::string& exercice, const std::string& session )
+void ProcessService::RemoveCheckpoint( sword::CheckpointDeleteResponse& message, const tools::Path::T_Paths& checkpoints,
+                                       const tools::Path& exercice, const tools::Path& session )
 {
-    if( ! frontend::commands::ExerciseExists( config_, exercice ) )
+    if( !frontend::commands::ExerciseExists( config_, exercice ) )
         message.set_error_code( sword::CheckpointDeleteResponse::invalid_exercise_name );
     else if( ! frontend::commands::SessionExists( config_, exercice, session ) )
         message.set_error_code( sword::CheckpointDeleteResponse::invalid_session_name );
     else
     {
         message.set_error_code( sword::CheckpointDeleteResponse::success );
-        const std::vector< std::string > result = frontend::commands::RemoveCheckpoint( config_, exercice, session, checkpoints );
-        BOOST_FOREACH( const std::string& name, result )
-            message.add_checkpoint( name );
+        const tools::Path::T_Paths result = frontend::commands::RemoveCheckpoint( config_, exercice, session, checkpoints );
+        BOOST_FOREACH( const tools::Path& name, result )
+            message.add_checkpoint( name.ToUTF8() );
     }
 }
 
 namespace
 {
     template< typename T, typename U >
-    void SendErrorMessage( LauncherPublisher& publisher, const std::string& exercise, const std::string& session, U error )
+    void SendErrorMessage( LauncherPublisher& publisher, const tools::Path& exercise, const tools::Path& session, U error )
     {
         T message;
-        message().set_exercise( exercise );
-        message().set_session( session );
+        message().set_exercise( exercise.ToUTF8() );
+        message().set_session( session.ToUTF8() );
         message().set_error_code( error );
         message.Send( publisher );
     }
@@ -355,23 +353,25 @@ namespace
 // -----------------------------------------------------------------------------
 void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message )
 {
-    ProcessContainer::const_iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
+    const tools::Path exercise = tools::Path::FromUTF8( message.exercise() );
+    const tools::Path session = tools::Path::FromUTF8( message.session() );
+    ProcessContainer::const_iterator it = processes_.find( std::make_pair( exercise, session ) );
     static int context = 1;
     if( processes_.end() == it )
-        return SendErrorMessage< SessionCommandExecutionResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionCommandExecutionResponse::invalid_session_name );
+        return SendErrorMessage< SessionCommandExecutionResponse >( server_.ResolveClient( endpoint ), exercise, session, sword::SessionCommandExecutionResponse::invalid_session_name );
     if( !it->second->IsConnected() )
-        return SendErrorMessage< SessionCommandExecutionResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionCommandExecutionResponse::session_not_running );
+        return SendErrorMessage< SessionCommandExecutionResponse >( server_.ResolveClient( endpoint ), exercise, session, sword::SessionCommandExecutionResponse::session_not_running );
     boost::shared_ptr< SwordFacade > client( it->second );
     if( message.has_set_running() )
     {
-        ExecutePauseResume( endpoint, message.exercise(), message.session(), message.set_running(), context, *client );
+        ExecutePauseResume( endpoint, exercise, session, message.set_running(), context, *client );
         ++context;
     }
     if( message.has_save_checkpoint() )
-        SaveCheckpoint( message.save_checkpoint(), *client );
+        SaveCheckpoint( tools::Path::FromUTF8( message.save_checkpoint() ), *client );
     if( message.has_time_change() )
     {
-        ExecuteChangeTime( endpoint, message.exercise(), message.session(), message.time_change().data(), context, *client );
+        ExecuteChangeTime( endpoint, exercise, session, message.time_change().data(), context, *client );
         ++context;
     }
 }
@@ -380,7 +380,7 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
 // Name: ProcessService::ExecutePauseResume
 // Created: LGY 2011-05-18
 // -----------------------------------------------------------------------------
-void ProcessService::ExecutePauseResume( const std::string& endpoint, const std::string& exercise, const std::string& session,
+void ProcessService::ExecutePauseResume( const std::string& endpoint, const tools::Path& exercise, const tools::Path& session,
                                          bool running, int context, SwordFacade& facade )
 {
     facade.RegisterMessageHandler( context,
@@ -401,7 +401,7 @@ void ProcessService::ExecutePauseResume( const std::string& endpoint, const std:
 // Name: ProcessService::ExecuteChangeTime
 // Created: LGY 2011-06-22
 // -----------------------------------------------------------------------------
-void ProcessService::ExecuteChangeTime( const std::string& endpoint, const std::string& exercise, const std::string& session,
+void ProcessService::ExecuteChangeTime( const std::string& endpoint, const tools::Path& exercise, const tools::Path& session,
                                         const std::string& date, int context, SwordFacade& facade )
 {
     facade.RegisterMessageHandler( context,
@@ -415,10 +415,10 @@ void ProcessService::ExecuteChangeTime( const std::string& endpoint, const std::
 // Name: ProcessService::SaveCheckpoint
 // Created: LGY 2011-05-18
 // -----------------------------------------------------------------------------
-void ProcessService::SaveCheckpoint( const std::string& name, SwordFacade& facade )
+void ProcessService::SaveCheckpoint( const tools::Path& name, SwordFacade& facade )
 {
     simulation::ControlCheckPointSaveNow request;
-    request().set_name( name );
+    request().set_name( name.ToUTF8() );
     request.Send( facade );
 }
 
@@ -438,12 +438,14 @@ void ProcessService::Update()
 // -----------------------------------------------------------------------------
 void ProcessService::ChangeParameter( const std::string& endpoint, const sword::SessionParameterChangeRequest& message )
 {
-    ProcessContainer::const_iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
+    const tools::Path exercise = tools::Path::FromUTF8( message.exercise() );
+    const tools::Path session = tools::Path::FromUTF8( message.session() );
+    auto it = processes_.find( std::make_pair( exercise, session ) );
     static int context = 1;
     if( processes_.end() == it )
-        return SendErrorMessage< SessionParameterChangeResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionParameterChangeResponse::invalid_session_name );
+        return SendErrorMessage< SessionParameterChangeResponse >( server_.ResolveClient( endpoint ), exercise, session, sword::SessionParameterChangeResponse::invalid_session_name );
     if( !it->second->IsConnected() )
-        return SendErrorMessage< SessionParameterChangeResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionParameterChangeResponse::session_not_running );
+        return SendErrorMessage< SessionParameterChangeResponse >( server_.ResolveClient( endpoint ), exercise, session, sword::SessionParameterChangeResponse::session_not_running );
 
     boost::shared_ptr< SwordFacade > client( it->second );
     if( message.has_acceleration_factor() )
@@ -466,14 +468,16 @@ void ProcessService::ChangeParameter( const std::string& endpoint, const sword::
 // -----------------------------------------------------------------------------
 void ProcessService::SendConnectedProfiles( const std::string& endpoint, const sword::ConnectedProfileListRequest& message )
 {
-    ProcessContainer::const_iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
+    const tools::Path exercise = tools::Path::FromUTF8( message.exercise() );
+    const tools::Path session = tools::Path::FromUTF8( message.session() );
+    auto it = processes_.find( std::make_pair( exercise, session ) );
     static int context = 1;
     if( processes_.end() == it )
-        return SendErrorMessage< ConnectedProfileListResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::ConnectedProfileListResponse::invalid_session_name );
+        return SendErrorMessage< ConnectedProfileListResponse >( server_.ResolveClient( endpoint ), exercise, session, sword::ConnectedProfileListResponse::invalid_session_name );
     if( !it->second->IsConnected() )
-        return SendErrorMessage< ConnectedProfileListResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::ConnectedProfileListResponse::session_not_running );
+        return SendErrorMessage< ConnectedProfileListResponse >( server_.ResolveClient( endpoint ), exercise, session, sword::ConnectedProfileListResponse::session_not_running );
     boost::shared_ptr< SwordFacade > client( it->second );
-    client->RegisterMessageHandler( context, std::auto_ptr< MessageHandler_ABC >( new ConnectedProfilesMessageHandler( server_.ResolveClient( endpoint ), message.exercise(), message.session() ) ) );
+    client->RegisterMessageHandler( context, std::auto_ptr< MessageHandler_ABC >( new ConnectedProfilesMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     authentication::ConnectedProfilesRequest request;
     request.Send( *client, context );
     ++context;
@@ -493,11 +497,11 @@ void ProcessService::SendSessionsStatuses( const std::string& endpoint )
             if( command && command->GetCommanderEndpoint() == endpoint )
             {
                 SessionStatus statusMessage;
-                std::string exercise = command->GetExercise();
-                std::string session = command->GetSession();
+                tools::Path exercise = command->GetExercise();
+                tools::Path session = command->GetSession();
                 statusMessage().set_status( IsRunning( exercise, session )? sword::SessionStatus::running : sword::SessionStatus::not_running );
-                statusMessage().set_exercise( exercise );
-                statusMessage().set_session( session );
+                statusMessage().set_exercise( exercise.ToUTF8() );
+                statusMessage().set_session( session.ToUTF8() );
                 statusMessage.Send( publisher );
             }
         }

@@ -17,6 +17,11 @@
 #pragma warning( push )
 #pragma warning( disable : 4251 )
 
+namespace tools
+{
+    class Path;
+}
+
 namespace launcher
 {
     class Config;
@@ -35,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LauncherFacade();
-    explicit LauncherFacade( const std::string& path );
+    explicit LauncherFacade( const tools::Path& path );
     virtual ~LauncherFacade();
     //@}
 
@@ -43,7 +48,7 @@ public:
     //@{
     void Initialize( int argc, char** argv );
     bool Update();
-    void SetRootDir( const std::string& directory );
+    void SetRootDir( const tools::Path& directory );
     //@}
 
     //! @name Accessors

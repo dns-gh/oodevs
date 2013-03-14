@@ -82,8 +82,8 @@ BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
     MOCK_EXPECT( handler->HandleSessionStatus ).once().with( mock::retrieve( statusResponse ) );
 
     Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" running: false" );
-    LAUNCHER_CHECK_MESSAGE( statusResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" status: paused" );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName().ToUTF8() + "\" session: \"" + session.ToUTF8() + "\" running: false" );
+    LAUNCHER_CHECK_MESSAGE( statusResponse, "exercise: \"" + exercise->GetName().ToUTF8() + "\" session: \"" + session.ToUTF8() + "\" status: paused" );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,8 +107,8 @@ BOOST_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
     MOCK_EXPECT( handler->HandleSessionStatus ).once().with( mock::retrieve( statusResponse ) );
 
     Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: session_already_running exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" running: true" );
-    LAUNCHER_CHECK_MESSAGE( statusResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" status: running" );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: session_already_running exercise: \"" + exercise->GetName().ToUTF8() + "\" session: \"" + session.ToUTF8() + "\" running: true" );
+    LAUNCHER_CHECK_MESSAGE( statusResponse, "exercise: \"" + exercise->GetName().ToUTF8() + "\" session: \"" + session.ToUTF8() + "\" status: running" );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +130,7 @@ BOOST_FIXTURE_TEST_CASE( ClientCanChangeDateTime, ExerciseFixture )
     MOCK_EXPECT( handler->HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
 
     Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\"" );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName().ToUTF8() + "\" session: \"" + session.ToUTF8() + "\"" );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +152,7 @@ BOOST_FIXTURE_TEST_CASE( ClientCanSaveCheckPoint, ExerciseFixture )
     MOCK_EXPECT( handler->HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
 
     Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" saved_checkpoint: \"checkpoint\"" );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName().ToUTF8() + "\" session: \"" + session.ToUTF8() + "\" saved_checkpoint: \"checkpoint\"" );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +172,7 @@ BOOST_FIXTURE_TEST_CASE( NotifyUnitExtension, ExerciseFixture )
     MOCK_EXPECT( handler->HandleSessionNotification ).once().with( mock::retrieve( launcherResponse ) );
 
     Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" notification { unit_update { unit { id: 42 } extensions { entries { name: \"name\" value: \"value\" } } } }" );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName().ToUTF8() + "\" session: \"" + session.ToUTF8() + "\" notification { unit_update { unit { id: 42 } extensions { entries { name: \"name\" value: \"value\" } } } }" );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,7 +192,7 @@ BOOST_FIXTURE_TEST_CASE( NotifyFormationExtension, ExerciseFixture )
     MOCK_EXPECT( handler->HandleSessionNotification ).once().with( mock::retrieve( launcherResponse ) );
 
     Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" notification { formation_update { formation { id: 42 } extensions { entries { name: \"name\" value: \"value\" } } } }" );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName().ToUTF8() + "\" session: \"" + session.ToUTF8() + "\" notification { formation_update { formation { id: 42 } extensions { entries { name: \"name\" value: \"value\" } } } }" );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +211,7 @@ BOOST_FIXTURE_TEST_CASE( NotifyProfileCreation, ExerciseFixture )
     MOCK_EXPECT( handler->HandleSessionNotification ).once().with( mock::retrieve( launcherResponse ) );
 
     Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" notification { profile_creation { profile { login: \"login\" password: \"password\" supervisor: true } } }" );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName().ToUTF8() + "\" session: \"" + session.ToUTF8() + "\" notification { profile_creation { profile { login: \"login\" password: \"password\" supervisor: true } } }" );
 }
 
 // -----------------------------------------------------------------------------
@@ -231,7 +231,7 @@ BOOST_FIXTURE_TEST_CASE( NotifyProfileUpdate, ExerciseFixture )
     MOCK_EXPECT( handler->HandleSessionNotification ).once().with( mock::retrieve( launcherResponse ) );
 
     Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" notification { profile_update { profile { login: \"login\" password: \"password\" supervisor: true } } }" );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName().ToUTF8() + "\" session: \"" + session.ToUTF8() + "\" notification { profile_update { profile { login: \"login\" password: \"password\" supervisor: true } } }" );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,8 +260,8 @@ BOOST_FIXTURE_TEST_CASE( NotifyControlInformation, ExerciseFixture )
     timeout.Start();
     while( !( parameterResponse.IsInitialized() && statusResponse.IsInitialized() ) && !timeout.Expired() )
         Update();
-    LAUNCHER_CHECK_MESSAGE( parameterResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" checkpoint_frequency: 39 acceleration_factor: 40" );
-    LAUNCHER_CHECK_MESSAGE( statusResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" status: paused" );
+    LAUNCHER_CHECK_MESSAGE( parameterResponse, "error_code: success exercise: \"" + exercise->GetName().ToUTF8() + "\" session: \"" + session.ToUTF8() + "\" checkpoint_frequency: 39 acceleration_factor: 40" );
+    LAUNCHER_CHECK_MESSAGE( statusResponse, "exercise: \"" + exercise->GetName().ToUTF8() + "\" session: \"" + session.ToUTF8() + "\" status: paused" );
 }
 
 // -----------------------------------------------------------------------------
@@ -283,6 +283,6 @@ BOOST_FIXTURE_TEST_CASE( ClientCanListConnectedProfiles, ExerciseFixture )
     MOCK_EXPECT( handler->HandleConnectedProfileList ).once().with( mock::retrieve( launcherResponse ) );
 
     Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() +
-        "\" session: \"" + session + "\" profile { login: \"login\" password: \"password\" read_only_formations { elem { id: 3 } elem { id: 5 } } read_write_formations { elem { id: 6 } elem { id: 7 } } read_only_automates { elem { id: 8 } elem { id: 9 } } read_write_automates { elem { id: 10 } elem { id: 11 } } read_only_parties { elem { id: 12 } elem { id: 13 } } read_write_parties { elem { id: 14 } elem { id: 15 } } read_only_crowds { elem { id: 16 } elem { id: 17 } } read_write_crowds { elem { id: 18 } elem { id: 19 } } supervisor: true }" );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName().ToUTF8() +
+        "\" session: \"" + session.ToUTF8() + "\" profile { login: \"login\" password: \"password\" read_only_formations { elem { id: 3 } elem { id: 5 } } read_write_formations { elem { id: 6 } elem { id: 7 } } read_only_automates { elem { id: 8 } elem { id: 9 } } read_write_automates { elem { id: 10 } elem { id: 11 } } read_only_parties { elem { id: 12 } elem { id: 13 } } read_write_parties { elem { id: 14 } elem { id: 15 } } read_only_crowds { elem { id: 16 } elem { id: 17 } } read_write_crowds { elem { id: 18 } elem { id: 19 } } supervisor: true }" );
 }

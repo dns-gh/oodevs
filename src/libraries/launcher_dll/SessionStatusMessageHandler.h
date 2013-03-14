@@ -25,7 +25,7 @@ class SessionStatusMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionStatusMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             SessionStatusMessageHandler( LauncherPublisher& publisher, const tools::Path& exercise, const tools::Path& session );
     virtual ~SessionStatusMessageHandler();
     //@}
 

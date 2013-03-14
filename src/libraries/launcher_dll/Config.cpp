@@ -16,12 +16,9 @@
 #include <QtCore/qsettings.h>
 #include <QtGui/qapplication.h>
 #include <boost/program_options.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 
 namespace po = boost::program_options;
-namespace bfs = boost::filesystem;
 
 using namespace launcher;
 
@@ -33,14 +30,14 @@ namespace
         return settings.value( "/Common/DataDirectory", "" ).toString();
     }
 
-    std::string GetDefaultRoot( const std::string& appName )
+    tools::Path GetDefaultRoot( const QString& appName )
     {
         const QString regDir = ReadDataDirectory();
         if( !regDir.isEmpty() )
-            return regDir.toStdString();
+            return tools::Path::FromUnicode( regDir.toStdWString() );
         char myDocuments[ MAX_PATH ];
         SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
-        return ( bfs::path( myDocuments ) / appName ).string();
+        return tools::Path( myDocuments ) / tools::Path::FromUnicode( appName.toStdWString() );
     }
 }
 
@@ -49,7 +46,7 @@ namespace
 // Created: SBO 2010-11-03
 // -----------------------------------------------------------------------------
 Config::Config()
-    : tools::GeneralConfig( GetDefaultRoot( tools::translate( "Application", "SWORD" ).toStdString() ) )
+    : tools::GeneralConfig( GetDefaultRoot( tools::translate( "Application", "SWORD" ) ) )
     , launcherPort_( 33000 )
 {
     po::options_description desc( "Launcher options" );

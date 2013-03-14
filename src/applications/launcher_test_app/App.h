@@ -12,7 +12,6 @@
 
 #include <string>
 #include <list>
-#include <fstream>
 #include <boost/thread.hpp>
 #pragma warning( push )
 #pragma warning( disable: 4127 )
@@ -22,7 +21,7 @@
 #include "clients_kernel/Controllers.h"
 #include "frontend/LauncherClient.h"
 #include "frontend/LauncherPublisher.h"
-
+#include "tools/FileWrapper.h"
 #include "ConnectionHandler.h"
 
 namespace frontend
@@ -84,7 +83,7 @@ private:
     boost::mutex mutex_;
     boost::condition_variable cond_;
     QApplication app;
-    std::ofstream outputFile_;
+    tools::Ofstream outputFile_;
     ConnectionHandler connectionHandler_;
     boost::shared_ptr<ResponseHandler> responseHandler_;
     kernel::Controllers controllers_;

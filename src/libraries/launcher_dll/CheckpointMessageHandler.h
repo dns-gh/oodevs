@@ -25,7 +25,7 @@ class CheckpointMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             CheckpointMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             CheckpointMessageHandler( LauncherPublisher& publisher, const tools::Path& exercise, const tools::Path& session );
     virtual ~CheckpointMessageHandler();
     //@}
 

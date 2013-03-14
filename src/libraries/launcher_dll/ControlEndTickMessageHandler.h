@@ -25,7 +25,7 @@ class ControlEndTickMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             ControlEndTickMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+             ControlEndTickMessageHandler( LauncherPublisher& publisher, const tools::Path& exercise, const tools::Path& session );
     virtual ~ControlEndTickMessageHandler();
     //@}
 

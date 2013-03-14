@@ -25,7 +25,7 @@ class ConnectedProfilesMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-    ConnectedProfilesMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+    ConnectedProfilesMessageHandler( LauncherPublisher& publisher, const tools::Path& exercise, const tools::Path& session );
     ~ConnectedProfilesMessageHandler();
     //@}
 

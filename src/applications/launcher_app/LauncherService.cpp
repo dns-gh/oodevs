@@ -11,6 +11,8 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "launcher_dll/LauncherFacade.h"
+#include "tools/FileWrapper.h"
+#include <tools/EncodingConverter.h>
 #include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/assign/list_of.hpp>
@@ -25,7 +27,7 @@ LauncherService* LauncherService::pInstance_ = 0;
 // Name: LauncherService::Initialize
 // Created: JSR 2011-05-12
 // -----------------------------------------------------------------------------
-void LauncherService::Initialize( const boost::filesystem::path& path )
+void LauncherService::Initialize( const tools::Path& path )
 {
     pInstance_ = new LauncherService( path );
 }
@@ -64,21 +66,21 @@ namespace
 // Name: LauncherService constructor
 // Created: JSR 2011-05-10
 // -----------------------------------------------------------------------------
-LauncherService::LauncherService( const boost::filesystem::path& path )
+LauncherService::LauncherService( const tools::Path& path )
     : pFacade_  ( 0 )
     , path_     ( path )
-    , name_     ( "Launcher" )
+    , name_     ( L"Launcher" )
     , port_     ( "33000" )
     , isRunning_( false )
     , isPaused_ ( false )
 {
-    const boost::filesystem::path configuration( boost::filesystem::path( path.parent_path() / "service-config.xml" ) );
+    const tools::Path configuration = path.Parent() / "service-config.xml";
     std::string port = "33000";
-    if( !boost::filesystem::exists( configuration ) )
+    if( !configuration.Exists() )
         MT_LOG_INFO_MSG( "Configuration file is not found!" );
     else
     {
-        xml::xifstream xis( configuration.string() );
+        tools::Xifstream xis( configuration );
         xis >> xml::start( "configuration" )
                 >> xml::start( "launcher" )
                     >> xml::attribute( "port", port_ );
@@ -117,11 +119,11 @@ void LauncherService::Install() const
     SC_HANDLE schSCManager = OpenSCManager( NULL, NULL, SC_MANAGER_CREATE_SERVICE );
     if( IsValid( schSCManager, MT_FormatString( "OpenSCManager failed, error code = %d", GetLastError() ) ) )
     {
-        SC_HANDLE schService = CreateService
+        SC_HANDLE schService = CreateServiceW
         (
             schSCManager, name_.c_str(), name_.c_str(), SERVICE_ALL_ACCESS,
             SERVICE_WIN32_OWN_PROCESS | SERVICE_INTERACTIVE_PROCESS,
-            SERVICE_AUTO_START, SERVICE_ERROR_NORMAL, path_.string().c_str(), NULL,
+            SERVICE_AUTO_START, SERVICE_ERROR_NORMAL, path_.ToUnicode().c_str(), NULL,
             NULL, NULL, NULL, NULL
         );
         if( IsValid( schService, MT_FormatString( "Failed to create service %s, error code = %d", name_.c_str(), GetLastError() ) ) )
@@ -130,7 +132,7 @@ void LauncherService::Install() const
             SERVICE_DESCRIPTION sd;
             sd.lpDescription = desc;
             ChangeServiceConfig2( schService, SERVICE_CONFIG_DESCRIPTION, &sd );
-            MT_LOG_INFO_MSG( "Service " << name_ << " installed" );
+            MT_LOG_INFO_MSG( "Service " << tools::FromUnicodeToUtf8( name_ ) << " installed" );
             CloseServiceHandle( schService );
         }
         CloseServiceHandle( schSCManager );
@@ -147,7 +149,7 @@ void LauncherService::RunService()
     SC_HANDLE schSCManager = OpenSCManager( NULL, NULL, SC_MANAGER_ALL_ACCESS );
     if( IsValid( schSCManager, MT_FormatString( "OpenSCManager failed, error code = %d", GetLastError() ) ) )
     {
-        SC_HANDLE schService = OpenService( schSCManager, name_.c_str(), SERVICE_ALL_ACCESS );
+        SC_HANDLE schService = OpenServiceW( schSCManager, name_.c_str(), SERVICE_ALL_ACCESS );
         if( IsValid( schService, MT_FormatString( "OpenService failed, error code = %d", GetLastError() ) ) )
         {
             if( StartService( schService, 0, (const char**)NULL ) )
@@ -173,7 +175,7 @@ void LauncherService::KillService()
     SC_HANDLE schSCManager = OpenSCManager( NULL, NULL, SC_MANAGER_ALL_ACCESS );
     if( IsValid( schSCManager, MT_FormatString( "OpenSCManager failed, error code = %d", GetLastError() ) ) )
     {
-        SC_HANDLE schService = OpenService( schSCManager, name_.c_str(), SERVICE_ALL_ACCESS );
+        SC_HANDLE schService = OpenServiceW( schSCManager, name_.c_str(), SERVICE_ALL_ACCESS );
         if( IsValid( schService, MT_FormatString( "OpenService failed, error code = %d", GetLastError() ) ) )
         {
             SERVICE_STATUS status;
@@ -200,13 +202,13 @@ void LauncherService::UnInstall()
     SC_HANDLE schSCManager = OpenSCManager( NULL, NULL, SC_MANAGER_ALL_ACCESS );
     if( IsValid( schSCManager, MT_FormatString( "OpenSCManager failed, error code = %d", GetLastError() ) ) )
     {
-        SC_HANDLE schService = OpenService( schSCManager, name_.c_str(), SERVICE_ALL_ACCESS );
+        SC_HANDLE schService = OpenServiceW( schSCManager, name_.c_str(), SERVICE_ALL_ACCESS );
         if( IsValid( schService, MT_FormatString( "OpenService failed, error code = %d", GetLastError() ) ) )
         {
             if( !DeleteService( schService  ) )
-                MT_LOG_INFO_MSG( "Failed to delete service " << name_ );
+                MT_LOG_INFO_MSG( "Failed to delete service " << tools::FromUnicodeToUtf8( name_ ) );
             else
-                MT_LOG_INFO_MSG( "Service " << name_ << " removed" );
+                MT_LOG_INFO_MSG( "Service " << tools::FromUnicodeToUtf8( name_ ) << " removed" );
             CloseServiceHandle( schService );
         }
         CloseServiceHandle( schSCManager );
@@ -217,7 +219,7 @@ void LauncherService::UnInstall()
 // Name: LauncherService::ServiceMain
 // Created: JSR 2011-05-11
 // -----------------------------------------------------------------------------
-void LauncherService::ServiceMain( DWORD, LPTSTR* )
+void LauncherService::ServiceMain( DWORD, LPWSTR* )
 {
     MT_LOG_INFO_MSG( "Service Main" );
 
@@ -229,7 +231,7 @@ void LauncherService::ServiceMain( DWORD, LPTSTR* )
     pInstance_->ServiceStatus_.dwCheckPoint              = 0;
     pInstance_->ServiceStatus_.dwWaitHint                = 0;
 
-    pInstance_->hServiceStatusHandle_ = RegisterServiceCtrlHandler( pInstance_->name_.c_str(), ServiceHandler );
+    pInstance_->hServiceStatusHandle_ = RegisterServiceCtrlHandlerW( pInstance_->name_.c_str(), ServiceHandler );
     if( pInstance_->hServiceStatusHandle_ == 0 )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "RegisterServiceCtrlHandler failed, error code = %d", GetLastError() ).c_str() );
@@ -242,11 +244,11 @@ void LauncherService::ServiceMain( DWORD, LPTSTR* )
     if( !SetServiceStatus( pInstance_->hServiceStatusHandle_, &pInstance_->ServiceStatus_ ) )
         MT_LOG_INFO_MSG( MT_FormatString( "SetServiceStatus failed, error code = %d", GetLastError() ).c_str() );
 
-    std::vector< char > appName = MakeArg( pInstance_->path_.filename().string() );
+    std::vector< char > appName = MakeArg( pInstance_->path_.FileName().ToUTF8() );
     std::vector< char > arg = MakeArg( std::string( "--launcher-port=" + pInstance_->port_ ) );
     std::vector< char* > args = boost::assign::list_of< char* >( &appName[ 0 ] )( &arg[ 0 ] );
 
-    pInstance_->pFacade_.reset( new LauncherFacade( pInstance_->path_.parent_path().string() ) );
+    pInstance_->pFacade_.reset( new LauncherFacade( pInstance_->path_.Parent() ) );
     pInstance_->pFacade_->Initialize( static_cast< int >( args.size() ), &args[ 0 ] );
     pInstance_->isRunning_ = true;
 
@@ -316,13 +318,13 @@ void LauncherService::ServiceHandler( DWORD fdwControl )
 void LauncherService::ExecuteSubProcess()
 {
     MT_LOG_INFO_MSG( "Execute subprocess" );
-    SERVICE_TABLE_ENTRY    lpServiceStartTable[] =
+    SERVICE_TABLE_ENTRYW lpServiceStartTable[] =
     {
-        { const_cast< char* >( name_.c_str() ), ServiceMain },
+        { const_cast< wchar_t* >( name_.c_str() ), ServiceMain },
         { NULL, NULL }
     };
 
-    if( !StartServiceCtrlDispatcher( lpServiceStartTable ) )
+    if( !StartServiceCtrlDispatcherW( lpServiceStartTable ) )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "StartServiceCtrlDispatcher failed, error code = %d", GetLastError() ).c_str() );
     }

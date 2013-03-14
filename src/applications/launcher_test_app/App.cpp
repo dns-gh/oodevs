@@ -12,6 +12,7 @@
 #include "ResponseHandler.h"
 #include "PBTools.h"
 
+#include "tools/Path.h"
 #include "protocol/LauncherSenders.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 )
@@ -87,25 +88,25 @@ App::App( int argc, char* argv[] )
 {
     po::options_description options;
     po::variables_map values;
-    std::string commandFile;
-    std::string outputFile;
+    tools::Path commandFile;
+    tools::Path outputFile;
     options.add_options()
             ( "host", po::value< std::string >( &host_ ), "launcher host" )
             ( "port", po::value< unsigned int >( &port_ ), "launcher port" )
             ( "test", "test mode" )
-            ( "file", po::value< std::string >( &commandFile ), "command file" )
-            ( "output", po::value< std::string >( &outputFile ), "output file" );
+            ( "file", po::value( &commandFile ), "command file" )
+            ( "output", po::value( &outputFile ), "output file" );
     po::store( po::command_line_parser( argc, argv ).options( options ).run(), values );
     po::notify( values );
     test_ = !!values.count( "test" );
-    if( outputFile.length() != 0)
+    if( !outputFile.IsEmpty() )
     {
-        outputFile_.open( outputFile.c_str() );
+        outputFile_.open( outputFile );
         responseHandler_.reset( new ResponseHandler( outputFile_, mutex_, cond_ ) );
     }
     else
         responseHandler_.reset( new ResponseHandler( std::cout, mutex_, cond_ ) );
-    if( commandFile.length() == 0 )
+    if( commandFile.IsEmpty() )
     {
         std::cout << options << std::endl;
 
@@ -116,7 +117,7 @@ App::App( int argc, char* argv[] )
     }
     else
     {
-        xml::xifstream xis(commandFile);
+        tools::Xifstream xis(commandFile);
         xis >> xml::start("messages")
                 >> xml::list("message", *this, &App::ReadMessage)
             >> xml::end;

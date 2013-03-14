@@ -16,7 +16,7 @@ using namespace launcher;
 // Name: ControlEndTickMessageHandler constructor
 // Created: LGY 2011-09-07
 // -----------------------------------------------------------------------------
-ControlEndTickMessageHandler::ControlEndTickMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session )
+ControlEndTickMessageHandler::ControlEndTickMessageHandler( LauncherPublisher& publisher, const tools::Path& exercise, const tools::Path& session )
     : ClientMessageHandlerBase( publisher, exercise, session )
     , timeFactor_( 0 )
     , checkpoint_( 0 )

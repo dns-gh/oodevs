@@ -21,13 +21,11 @@
 #include "protocol/ClientSenders.h"
 #include "MockResponseHandler.h"
 #include "MockConnectionHandler.h"
+#include "tools/Path.h"
 #include <tools/ElementObserver_ABC.h>
 #include <tools/ServerNetworker.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/filesystem.hpp>
 #include <boost/assign.hpp>
-
-namespace bfs = boost::filesystem;
 
 #define LAUNCHER_CHECK_MESSAGE( MSG, EXPECTED ) BOOST_CHECK_EQUAL( MSG.ShortDebugString(), EXPECTED )
 
@@ -221,9 +219,9 @@ namespace launcher_test
             exercise = listener.exercises_.front();
             BOOST_REQUIRE( exercise );
 
-            filePath = bfs::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/" + session + "/session.xml" ) );
-            savePath = bfs::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/session.xml.save" ) );
-            bfs::copy_file( filePath, savePath, bfs::copy_option::overwrite_if_exists );
+            filePath = BOOST_RESOLVE( exercise->GetName() / "sessions" / session / "session.xml" );
+            savePath = BOOST_RESOLVE( exercise->GetName() / "sessions" / "session.xml.save" );
+            filePath.Copy( savePath, tools::Path::OverwriteIfExists );
 
             MOCK_EXPECT( dispatcher.ConnectionSucceeded ).once().with( mock::any, mock::retrieve( dispatcher.host ) );
             exercise->StartDispatcher( session,
@@ -244,8 +242,8 @@ namespace launcher_test
         ~ExerciseFixture()
         {
            exercise->Stop( session );
-           bfs::copy_file( savePath, filePath, bfs::copy_option::overwrite_if_exists );
-           std::remove( savePath.string().c_str() );
+           savePath.Copy( filePath, tools::Path::OverwriteIfExists );
+           savePath.Remove();
         }
 
         void VerifySendRequest( const std::string& expected )
@@ -275,11 +273,11 @@ namespace launcher_test
             while( !message.IsInitialized() && !timeout.Expired() )
                 Update();
         }
-        bfs::path filePath;
-        bfs::path savePath;
+        tools::Path filePath;
+        tools::Path savePath;
         ExerciseListener listener;
         const frontend::Exercise_ABC* exercise;
-        const std::string session;
+        const tools::Path session;
         boost::shared_ptr< MockResponseHandler > handler;
     };
 }

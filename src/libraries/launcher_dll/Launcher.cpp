@@ -245,7 +245,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Checkpoi
     CheckpointListResponse response;
     response().set_exercise( message.exercise() );
     response().set_session( message.session() );
-    processes_->SendCheckpointList( response(), message.exercise(), message.session() );
+    processes_->SendCheckpointList( response(), tools::Path::FromUTF8( message.exercise() ), tools::Path::FromUTF8( message.session() ) );
     response.Send( server_->ResolveClient( endpoint ) );
 }
 
@@ -258,10 +258,10 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Checkpoi
     CheckpointDeleteResponse response;
     response().set_exercise( message.exercise() );
     response().set_session( message.session() );
-    std::vector< std::string > checkpoints;
+    tools::Path::T_Paths checkpoints;
     for( int i = 0; i < message.checkpoint_size(); ++i )
-        checkpoints.push_back( message.checkpoint( i ) );
-    processes_->RemoveCheckpoint( response(), checkpoints, message.exercise(), message.session() );
+        checkpoints.push_back( tools::Path::FromUTF8( message.checkpoint( i ) ) );
+    processes_->RemoveCheckpoint( response(), checkpoints, tools::Path::FromUTF8( message.exercise() ), tools::Path::FromUTF8( message.session() ) );
     response.Send( server_->ResolveClient( endpoint ) );
 }
 

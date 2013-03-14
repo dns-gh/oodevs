@@ -16,7 +16,7 @@ using namespace launcher;
 // Name: TimeMessageHandler constructor
 // Created: LGY 2011-06-22
 // -----------------------------------------------------------------------------
-TimeMessageHandler::TimeMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session )
+TimeMessageHandler::TimeMessageHandler( LauncherPublisher& publisher, const tools::Path& exercise, const tools::Path& session )
     : ClientMessageHandlerBase( publisher, exercise, session )
 {
     // NOTHING
