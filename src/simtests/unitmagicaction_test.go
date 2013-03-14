@@ -64,27 +64,27 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 
 	// Get a formation identifier
 	formations := data.ListFormations()
-	c.Assert(len(formations) > 0, Equals, true)
+	c.Assert(len(formations), Greater, 0)
 	formationId := formations[0].Id
 
 	// Get an automat identifier
 	automats := data.ListAutomats()
-	c.Assert(len(automats) > 0, Equals, true)
+	c.Assert(len(automats), Greater, 0)
 	automatId := automats[0].Id
 
 	// Get a unit identifier
 	units := data.ListUnits()
-	c.Assert(len(units) > 0, Equals, true)
+	c.Assert(len(units), Greater, 0)
 	unitId := units[0].Id
 
 	// Get a crowd identifier
 	crowds := data.ListCrowds()
-	c.Assert(len(crowds) > 0, Equals, true)
+	c.Assert(len(crowds), Greater, 0)
 	crowdId := crowds[0].Id
 
 	// Get a population identifier
 	populations := data.ListPopulations()
-	c.Assert(len(populations) > 0, Equals, true)
+	c.Assert(len(populations), Greater, 0)
 	popId := populations[0].Id
 
 	taskers := []*sword.Tasker{
@@ -180,7 +180,7 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 
 	// Find some unit
 	units := data.ListUnits()
-	c.Assert(len(units) > 0, Equals, true)
+	c.Assert(len(units), Greater, 0)
 	unit := units[0]
 
 	// Blast it
