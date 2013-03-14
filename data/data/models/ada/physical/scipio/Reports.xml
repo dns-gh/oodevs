@@ -692,5 +692,6 @@
     <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="508" message="Tir impossible : pion neutralisé"/>
+  <report category="operational" id="509" message="Travaux impossibles : pas de capacité de déminage"/>
 </reports>
-<!-- signature="3081402571" -->
+<!-- signature="1606162288" -->

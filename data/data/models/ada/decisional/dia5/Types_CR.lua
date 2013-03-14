@@ -472,4 +472,5 @@ eRC_TirIndirectLessInterventionType = 504
 eRC_CloseCrowdAttitudeChanged = 506
 eRC_CloseCrowdUrbanDestruction = 507
 eRC_AgentNeutralizedIndirectFireImpossible = 508
-eNbr = 509
+eRC_ObjetNonDevalorisable = 509
+eNbr = 510

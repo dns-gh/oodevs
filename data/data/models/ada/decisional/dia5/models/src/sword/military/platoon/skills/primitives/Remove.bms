@@ -19,7 +19,7 @@ rootnode
     end,
 
     failed = function( self, params, additionalParams )
-        Feedback( self.feedbacks.elementFailed, { element = additionalParams.element, needReinforcement = "destroy" } )
+        Feedback( self.feedbacks.elementFailed, { element = additionalParams.element, needReinforcement = "destroy", reason = additionalParams.reason } )
     end,
 
     cancelled = function( self, params, additionalParams )
@@ -104,12 +104,12 @@ node "removeElement"
                     if self.params.entity:canDemineIt() then
                         Activate( skill.nodes.Demine, 1, { entity = self.params.entity } )
                     else
-                       Feedback( self.feedbacks.failed, {element = self.params.entity} )
+                       Feedback( self.feedbacks.failed, {element = self.params.entity, reason = "demine"} )
                     end
                 elseif self.params.entity:canRemoveIt() then
                     Activate( skill.nodes.Remove, 1, { entity = self.params.entity } )
                 else
-                    Feedback( self.feedbacks.failed, {element = self.params.entity} )
+                    Feedback( self.feedbacks.failed, {element = self.params.entity, reason = "remove"} )
                 end
             end
         end
