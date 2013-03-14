@@ -158,7 +158,7 @@ public:
     //@{
     void Build();
     void Enable( bool enable );
-    void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath );
+    void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath );
     //@}
 
 private slots:

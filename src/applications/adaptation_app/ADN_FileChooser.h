@@ -13,6 +13,7 @@
 
 #include "ADN_Connector_ABC.h"
 #include <QtGui/qwidget.h>
+#include "tools/Path.h"
 
 class QLineEdit;
 class QPushButton;
@@ -36,29 +37,29 @@ public:
     explicit ADN_FileChooser(QWidget *parent,const QString& filter=szDefaultFilter_,const char* szName = 0);
     virtual ~ADN_FileChooser();
 
-    QString             GetFilename() const;
-    QString             GetDirectory() const;
+    tools::Path         GetFilename() const;
+    const tools::Path&  GetDirectory() const;
     E_Mode              GetMode() const;
     void                SetFilter(const QString& filter);
     ADN_Connector_ABC&  GetConnector(E_Mode type);
 
 public slots:
     void        SetMode( E_Mode m );
-    void        SetFilename(const QString& file);
-    void        SetDirectory(const QString& dir);
+    void        SetFilename(const tools::Path& file);
+    void        SetDirectory(const tools::Path& dir);
 
 private slots:
     void ChooseFile();
     void FilenameChanged(const QString& file);
 
 private:
-    QLineEdit*              pLineEdit_;
-    QPushButton*            pButton_;
-    E_Mode                  eMode_;
-    T_ConnectorVector    vConnectors_;
-    QString                 szFilter_;
-    QString                 szDirectory_;
-    static QString          szDefaultFilter_;
+    QLineEdit*          pLineEdit_;
+    QPushButton*        pButton_;
+    E_Mode              eMode_;
+    T_ConnectorVector   vConnectors_;
+    QString             szFilter_;
+    tools::Path         szDirectory_;
+    static QString      szDefaultFilter_;
 };
 
 //-----------------------------------------------------------------------------
@@ -66,7 +67,7 @@ private:
 // Created: JDY 03-07-01
 //-----------------------------------------------------------------------------
 inline
-QString ADN_FileChooser::GetDirectory() const
+const tools::Path& ADN_FileChooser::GetDirectory() const
 {
     return szDirectory_;
 }

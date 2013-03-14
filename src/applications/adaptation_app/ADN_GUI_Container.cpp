@@ -57,7 +57,7 @@ void ADN_GUI_Container::RegisterTable( ADN_MainWindow& mainWindow )
 // Name: ADN_GUI_Container::ExportHtml
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
-void ADN_GUI_Container::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
+void ADN_GUI_Container::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath )
 {
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second.second->ExportHtml( mainIndexBuilder, strPath );

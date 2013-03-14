@@ -109,7 +109,7 @@ public:
 
     //! @name Operations
     //@{
-    void FilesNeeded( T_StringList& l ) const;
+    void FilesNeeded( tools::Path::T_Paths& l ) const;
     void Reset();
     //@}
 

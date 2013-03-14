@@ -370,9 +370,9 @@ ADN_FireClass_Data::~ADN_FireClass_Data()
 // Name: ADN_FireClass_Data::FilesNeeded
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-void ADN_FireClass_Data::FilesNeeded( T_StringList& files ) const
+void ADN_FireClass_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFireClasses_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFireClasses_ );
 }
 
 // -----------------------------------------------------------------------------

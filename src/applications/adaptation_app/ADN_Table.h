@@ -54,7 +54,7 @@ public:
 
     int ComputeNbrPrintPages( const QSize& painterSize ) const;
     void Print( int nPage, QPainter& painter, const QSize& painterSize );
-    void SaveToXls( const QString& path, const QString& sheetName ) const;
+    void SaveToXls( const tools::Path& path, const QString& sheetName ) const;
 
     template< typename T >
     T* CreateNewElement();

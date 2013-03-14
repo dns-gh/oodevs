@@ -82,7 +82,7 @@ public:
              ADN_Radars_Data();
     virtual ~ADN_Radars_Data();
 
-    void FilesNeeded( T_StringList& files ) const;
+    void FilesNeeded( tools::Path::T_Paths& files ) const;
     void Reset();
 
     T_RadarInfos_Vector& GetRadars();

@@ -373,9 +373,9 @@ ADN_Disasters_Data::~ADN_Disasters_Data()
 // Name: ADN_Disasters_Data::FilesNeeded
 // Created: LGY 2012-11-13
 //-----------------------------------------------------------------------------
-void ADN_Disasters_Data::FilesNeeded( T_StringList& files ) const
+void ADN_Disasters_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDisasters_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDisasters_ );
 }
 
 //-----------------------------------------------------------------------------

@@ -80,7 +80,6 @@
 #include "ADN_Disasters_GUI.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/foreach.hpp>
-#include <boost/filesystem.hpp>
 #include <errno.h>
 #include <io.h>
 #include <windows.h>
@@ -91,8 +90,6 @@
 #pragma warning( pop )
 #include "tools/GeneralConfig.h"
 #include "tools/ZipExtractor.h"
-
-namespace bfs = boost::filesystem;
 
 ADN_Workspace* ADN_Workspace::pWorkspace_=0;
 
@@ -288,7 +285,7 @@ void ADN_Workspace::AddPage( ADN_MainWindow& mainWindow, E_WorkspaceElements ele
 // Name: ADN_Workspace::Reset
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-void ADN_Workspace::Reset(const std::string& filename, bool bVisible )
+void ADN_Workspace::Reset(const tools::Path& filename, bool bVisible )
 {
     if( bVisible )
     {
@@ -318,7 +315,7 @@ void ADN_Workspace::Reset(const std::string& filename, bool bVisible )
 // Name: ADN_Workspace::Load
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-void ADN_Workspace::Load( const std::string& filename, const tools::Loader_ABC& fileLoader )
+void ADN_Workspace::Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader )
 {
     Reset( filename, false );
 
@@ -350,15 +347,6 @@ void ADN_Workspace::Load( const std::string& filename, const tools::Loader_ABC& 
     GetObjects().GetGui().Enable( nOpenMode_ == eOpenMode_Admin );
 }
 
-inline bool isWritable(const std::string& filename)
-{
-    int fa=_access(filename.c_str(),2);
-    if( fa == -1 && errno == EACCES)
-        return false;
-    return true;
-
-}
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::SetOptions
 // Created: LDC 2011-09-21
@@ -388,40 +376,45 @@ namespace
             : dirInfos_( dirInfos )
         { 
             dirInfos_.UseTempDirectory( true );
-            directory_ = dirInfos_.GetTempDirectory().GetData();
-            if( bfs::exists( directory_ ) && bfs::is_directory( directory_ ) )
-                bfs::remove_all( directory_ );
+            directory_ = dirInfos_.GetTempDirectory();
         }
         ~TempDirectory() 
         {
-            bfs::remove_all( directory_ ); 
             dirInfos_.UseTempDirectory( false );
         }
 
-        const std::string& GetDirectory()
+        const tools::Path& GetDirectory()
         {
             return directory_;
         }
     private:
         ADN_Project_Data::WorkDirInfos& dirInfos_;
-        std::string directory_;
+        tools::Path directory_;
     };
+
+    inline bool IsWritable( const tools::Path& filename )
+    {
+        int fa = _waccess( filename.ToUnicode().c_str(), 2 );
+        if( fa == -1 && errno == EACCES )
+            return false;
+        return true;
+    }
 }
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::SaveAs
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC& fileLoader )
+bool ADN_Workspace::SaveAs( const tools::Path& filename, const tools::Loader_ABC& fileLoader )
 {
     ADN_Project_Data::WorkDirInfos& dirInfos = ADN_Project_Data::GetWorkDirInfos();
 
     // Set a temporary working directory
-    std::string szOldWorkDir = dirInfos.GetWorkingDirectory().GetData();
+    tools::Path szOldWorkDir = dirInfos.GetWorkingDirectory().GetData();
     dirInfos.SetWorkingDirectory( filename );
 
     // Retrieve list of needed files
-    T_StringList files;
+    tools::Path::T_Paths files;
     files.push_back( dirInfos.GetRelativePath( filename ) );
     projectData_->FilesNeeded( files );
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
@@ -433,30 +426,30 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
     // dialog log
     ADN_DialogLog dlgLog( 0 );
     dlgLog.setCaption( tr( "Sword Adaptation Tool - Saving Errors" ) );
-    dlgLog.setMsg( tr( "Error(s) have been encountered during saving of project " ).toStdString() + filename );
+    dlgLog.setMsg( tr( "Error(s) have been encountered during saving of project " ).toStdString() + filename.ToUTF8() );
     dlgLog.setMsgFormat( tr( "<p>- Unable to save %s : file is write protected</p>" ).toStdString());
 
     // Unchanged files
-    T_StringList unchangedFiles;
+    tools::Path::T_Paths unchangedFiles;
     const ADN_Project_Data::DataInfos& infos = projectData_->GetDataInfos();
-    unchangedFiles.push_back( infos.szPathfinder_.GetData() );
-    unchangedFiles.push_back( infos.szObjectNames_.GetData() );
-    unchangedFiles.push_back( infos.szHumanProtections_.GetData() );
-    unchangedFiles.push_back( infos.szMedicalTreatment_.GetData() );
-    unchangedFiles.push_back( infos.szExtensions_.GetData() );
-    unchangedFiles.push_back( infos.szDrawingTemplates_.GetData() );
-    unchangedFiles.push_back( infos.szScores_.GetData() );
-    unchangedFiles.push_back( infos.szSymbols_.GetData() );
-    unchangedFiles.push_back( infos.szFilters_.GetData() );
-    unchangedFiles.push_back( infos.szMissionSheetXslPath_.GetData() );
-    unchangedFiles.push_back( infos.szStages_.GetData() );
+    unchangedFiles.push_back( infos.szPathfinder_ );
+    unchangedFiles.push_back( infos.szObjectNames_ );
+    unchangedFiles.push_back( infos.szHumanProtections_ );
+    unchangedFiles.push_back( infos.szMedicalTreatment_ );
+    unchangedFiles.push_back( infos.szExtensions_ );
+    unchangedFiles.push_back( infos.szDrawingTemplates_ );
+    unchangedFiles.push_back( infos.szScores_ );
+    unchangedFiles.push_back( infos.szSymbols_ );
+    unchangedFiles.push_back( infos.szFilters_ );
+    unchangedFiles.push_back( infos.szMissionSheetXslPath_ );
+    unchangedFiles.push_back( infos.szStages_ );
     files.insert( files.end(), unchangedFiles.begin(), unchangedFiles.end() );
 
-    for( T_StringList::iterator it = files.begin(); it != files.end(); ++it )
+    for( auto it = files.begin(); it != files.end(); ++it )
     {
-        const std::string file = dirInfos.GetWorkingDirectory().GetData() + *it;
-        if( !isWritable( file ) )
-            dlgLog.addMsg( file );
+        const tools::Path file = dirInfos.GetWorkingDirectory().GetData() / *it;
+        if( !IsWritable( file ) )
+            dlgLog.addMsg( file.ToUTF8() );
     }
     // set old working directory
     dirInfos.SetWorkingDirectory( szOldWorkDir );
@@ -478,8 +471,10 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
         pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements + 1 );
         projectData_->SetFile( filename );
         projectData_->Save( fileLoader );
-        for( T_StringList::iterator it = unchangedFiles.begin(); it != unchangedFiles.end(); ++it )
-            ADN_Tools::CopyFileToFile( szOldWorkDir + *it, tempDirectory.GetDirectory() + *it );
+        for( tools::Path::T_Paths::iterator it = unchangedFiles.begin(); it != unchangedFiles.end(); ++it )
+        {
+            ( szOldWorkDir / *it ).Copy( tempDirectory.GetDirectory() / *it );
+        }
 
         for( int n = 0; n < eNbrWorkspaceElements; ++n )
         {
@@ -496,17 +491,17 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
 
     /////////////////////////////////////
     // Copy Tmp Files To Real Files
-    ADN_Tools::CopyDirToDir( tempDirectory.GetDirectory(), dirInfos.GetWorkingDirectory().GetData(), true, true );
+    tempDirectory.GetDirectory().Copy( dirInfos.GetWorkingDirectory().GetData(), tools::Path::OverwriteIfExists );
 
     // Copy remaining files if any
     if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
-        ADN_Tools::CopyDirToDir( bfs::path( szOldWorkDir ), bfs::path( dirInfos.GetWorkingDirectory().GetData() ), true, false );
+        szOldWorkDir.Copy( dirInfos.GetWorkingDirectory().GetData(), tools::Path::IgnoreIfExists );
 
     // Unzip symbols.pak if not already in the working directory
-    if( !bfs::exists( dirInfos.GetWorkingDirectory().GetData() + projectData_->GetDataInfos().szSymbolsPath_.GetData() ) )
+    if( !( dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ ).Exists() )
         tools::zipextractor::ExtractArchive( tools::GeneralConfig::BuildResourceChildFile( "symbols.pak" ),
-                                             dirInfos.GetWorkingDirectory().GetData() + projectData_->GetDataInfos().szSymbolsPath_.GetData() );
-    
+                                             dirInfos.GetWorkingDirectory().GetData() / projectData_->GetDataInfos().szSymbolsPath_ );
+
     pProgressIndicator_->Increment( "" );
     pProgressIndicator_->SetVisible( false );
 
@@ -529,19 +524,19 @@ bool ADN_Workspace::Save( const tools::Loader_ABC& fileLoader )
 // Name: ADN_Workspace::ExportHtml
 // Created: APE 2005-04-19
 // -----------------------------------------------------------------------------
-void ADN_Workspace::ExportHtml( const std::string& strPath )
+void ADN_Workspace::ExportHtml( const tools::Path& strPath )
 {
     ADN_HtmlBuilder mainIndexBuilder;
     mainIndexBuilder.BeginHtml( tr( "ADN - Data export" ) );
     mainIndexBuilder.BeginList();
 
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
-        elements_[n]->GetGuiABC().ExportHtml( mainIndexBuilder, strPath.c_str() );
+        elements_[n]->GetGuiABC().ExportHtml( mainIndexBuilder, strPath );
 
     mainIndexBuilder.EndList();
     mainIndexBuilder.EndHtml();
-    std::string strFileName = strPath + "/index.htm";
-    mainIndexBuilder.WriteToFile( strFileName.c_str() );
+    tools::Path fileName = strPath / "index.htm";
+    mainIndexBuilder.WriteToFile( fileName );
 }
 
 // -----------------------------------------------------------------------------

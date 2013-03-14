@@ -59,6 +59,6 @@ void ADN_Config::Save()
 void ADN_Config::Load()
 {
     // $$$$ SBO 2006-01-02: todo: load from registry
-    strSimPath_      = "./simulation_app.exe";
-    strSimArguments_ = "--testdata";
+    strSimPath_      = L"./simulation_app.exe";
+    strSimArguments_ = L"--testdata";
 }

@@ -81,9 +81,9 @@ ADN_Maintenance_Data::~ADN_Maintenance_Data()
 // Name: ADN_Maintenance_Data::FilesNeeded
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Maintenance_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_Maintenance_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMaintenance_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMaintenance_ );
 }
 
 // -----------------------------------------------------------------------------

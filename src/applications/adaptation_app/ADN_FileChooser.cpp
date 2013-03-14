@@ -11,17 +11,16 @@
 #include "adaptation_app_pch.h"
 #include "ADN_FileChooser.h"
 #include "moc_ADN_FileChooser.cpp"
-
 #include "ADN_Tools.h"
+#include "clients_gui/FileDialog.h"
 
 QString ADN_FileChooser::szDefaultFilter_="All Files (*.*)";
 
-class ADN_FileChooser_Connector
-: public ADN_Connector_ABC
+class ADN_FileChooser_Connector : public ADN_Connector_ABC
 {
 public:
 
-    typedef void (ADN_FileChooser::*T_OpSet)(const QString& file);
+    typedef void (ADN_FileChooser::*T_OpSet)(const tools::Path& file);
 
     ADN_FileChooser_Connector(ADN_FileChooser& flc,T_OpSet op): ADN_Connector_ABC() , flc_(flc), op_(op)
     {}
@@ -29,16 +28,16 @@ public:
     virtual ~ADN_FileChooser_Connector()
     {}
 
-    void SetDataPrivate(void *data)
+    void SetDataPrivate( void *data )
     {
         assert(data);
-        (flc_.*op_)(((std::string*)data)->c_str());
+        ( flc_.*op_ )( tools::Path::FromUTF8( *(std::string*) data ) );
     }
 
-    void  SetDataChanged(const QString& string)
+    void SetDataChanged( const QString& string )
     {
-        std::string newval=string.toStdString();
-        emit DataChanged((void*)&newval);
+        std::string newval = string.toStdString();
+        emit DataChanged( (void*)&newval );
     }
 
 private:
@@ -58,7 +57,7 @@ ADN_FileChooser::ADN_FileChooser(QWidget *parent,const QString& filter,const cha
 :   QWidget(parent,name)
 ,   eMode_(eFile)
 ,   szFilter_(filter)
-,   szDirectory_("")
+,   szDirectory_( "" )
 ,   pButton_(0)
 ,   pLineEdit_(0)
 ,   vConnectors_(2,static_cast< ADN_Connector_ABC* >( 0 ) )
@@ -99,40 +98,17 @@ ADN_FileChooser::~ADN_FileChooser()
 }
 
 //-----------------------------------------------------------------------------
-//
-//-----------------------------------------------------------------------------
-inline
-std::string GetPartPath( const std::string& szWorking, const std::string& full )
-{
-    if( _strcmpi( szWorking.c_str(),full.substr( 0, szWorking.size()).c_str() ) )
-        return std::string();
-    else
-        return full.substr( szWorking.size(), full.size()-szWorking.size() );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ADN_FileChooser::ChooseFile
 // Created: JDY 03-07-01
 //-----------------------------------------------------------------------------
 void ADN_FileChooser::ChooseFile()
 {
-    QString qfilename= eMode_ == eDirectory ? QFileDialog::getExistingDirectory( this, "Choose a directory", szDirectory_ )
-                                            : QFileDialog::getOpenFileName( this, "Choose a file to open", szDirectory_, szFilter_ );
+    tools::Path filename = eMode_ == eDirectory ? gui::FileDialog::getExistingDirectory( this, "Choose a directory", szDirectory_ )
+                                                : gui::FileDialog::getOpenFileName( this, "Choose a file to open", szDirectory_, szFilter_ );
 
-    if( qfilename == QString::null )
+    if( filename.IsEmpty() )
         return;
-    std::string res( qfilename.toStdString() );
-    std::replace( res.begin(), res.end(), '\\','/' );
-    std::string szPartialPath=GetPartPath( szDirectory_.toStdString(), res );
-    if( szPartialPath.empty() )
-    {
-        QMessageBox::information( this, "ADN",
-                                        "Unable to set file.\n"
-                                        "File is not in current working directory." );
-
-        return;
-    }
-    pLineEdit_->setText( szPartialPath.c_str() );
+    pLineEdit_->setText( QString::fromStdWString( filename.FileName().ToUnicode() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -148,10 +124,10 @@ void ADN_FileChooser::FilenameChanged(const QString& file)
 // Name: ADN_FileChooser::SetFileName
 // Created: JDY 03-07-01
 //-----------------------------------------------------------------------------
-void ADN_FileChooser::SetFilename( const QString &fn )
+void ADN_FileChooser::SetFilename( const tools::Path &fn )
 {
     int nPos = pLineEdit_->cursorPosition();
-    pLineEdit_->setText( fn );
+    pLineEdit_->setText( QString::fromStdWString( fn.ToUnicode() ) );
     pLineEdit_->setCursorPosition( nPos );
 }
 
@@ -159,18 +135,18 @@ void ADN_FileChooser::SetFilename( const QString &fn )
 // Name: ADN_FileChooser::FileName
 // Created: JDY 03-07-01
 //-----------------------------------------------------------------------------
-QString ADN_FileChooser::GetFilename() const
+tools::Path ADN_FileChooser::GetFilename() const
 {
-    return pLineEdit_->text();
+    return tools::Path::FromUnicode( pLineEdit_->text().toStdWString() );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ADN_FileChooser::SetWorkingDir
 // Created: JDY 03-07-01
 //-----------------------------------------------------------------------------
-void ADN_FileChooser::SetDirectory(const QString& szDir)
+void ADN_FileChooser::SetDirectory(const tools::Path& szDir)
 {
-    szDirectory_=szDir;
+    szDirectory_ = szDir;
 }
 
 //-----------------------------------------------------------------------------

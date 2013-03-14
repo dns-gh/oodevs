@@ -402,9 +402,9 @@ void ADN_Inhabitants_Data::Reset()
 // Name: ADN_Inhabitants_Data::FilesNeeded
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-void ADN_Inhabitants_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_Inhabitants_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szPeople_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szPeople_ );
 }
 
 // -----------------------------------------------------------------------------

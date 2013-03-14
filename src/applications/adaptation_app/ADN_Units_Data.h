@@ -226,7 +226,7 @@ public:
              ADN_Units_Data();
     virtual ~ADN_Units_Data();
 
-    void FilesNeeded( T_StringList& l ) const;
+    void FilesNeeded( tools::Path::T_Paths& l ) const;
     void Reset();
 
     T_UnitInfos_Vector& GetUnitsInfos();

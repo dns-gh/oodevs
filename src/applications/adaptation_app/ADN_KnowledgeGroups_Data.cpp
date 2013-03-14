@@ -167,9 +167,9 @@ ADN_KnowledgeGroups_Data::~ADN_KnowledgeGroups_Data()
 // Name: ADN_KnowledgeGroups_Data::FilesNeeded
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
-void ADN_KnowledgeGroups_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_KnowledgeGroups_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szKnowledgeGroups_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szKnowledgeGroups_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -33,7 +33,7 @@ ADN_Data_Container::~ADN_Data_Container()
 // Name: ADN_Data_Container::FilesNeeded
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
-void ADN_Data_Container::FilesNeeded( T_StringList& vFiles ) const
+void ADN_Data_Container::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->FilesNeeded( vFiles );

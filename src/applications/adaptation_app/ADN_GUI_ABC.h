@@ -65,7 +65,7 @@ public:
     //@{
     virtual void Build() = 0;
     virtual void RegisterTable( ADN_MainWindow& /*mainWindow*/ ) {}
-    virtual void ExportHtml( ADN_HtmlBuilder& /*mainIndexBuilder*/, const QString& /*strPath*/ ) {}
+    virtual void ExportHtml( ADN_HtmlBuilder& /*mainIndexBuilder*/, const tools::Path& /*path*/ ) {}
     virtual void ChangeCurrentSubTab( int ) {}
     virtual void FindSubTabAndSelectItem( const QString& /*name*/ ) {}
     virtual bool SelectItem( const QString& name );

@@ -89,7 +89,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void FilesNeeded( T_StringList& vFiles ) const;
+    virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
     virtual void Reset();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     //@}

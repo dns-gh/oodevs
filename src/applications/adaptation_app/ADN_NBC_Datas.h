@@ -97,7 +97,7 @@ public:
     virtual ~ADN_NBC_Datas();
     //@}
 
-    void FilesNeeded( T_StringList& vFiles ) const;
+    void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
     void Reset();
 
     T_NbcAgentInfos_Vector& GetNbcAgentVector();

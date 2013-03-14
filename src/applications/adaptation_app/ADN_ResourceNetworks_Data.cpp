@@ -120,9 +120,9 @@ ADN_ResourceNetworks_Data::~ADN_ResourceNetworks_Data()
 // Name: ADN_ResourceNetworks_Data::FilesNeeded
 // Created: JSR 2010-09-13
 // -----------------------------------------------------------------------------
-void ADN_ResourceNetworks_Data::FilesNeeded( T_StringList& files ) const
+void ADN_ResourceNetworks_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szResourceNetworks_.GetData());
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szResourceNetworks_ );
 }
 
 // -----------------------------------------------------------------------------

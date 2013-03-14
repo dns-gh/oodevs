@@ -48,11 +48,11 @@ ADN_Data_ABC::~ADN_Data_ABC()
 // -----------------------------------------------------------------------------
 void ADN_Data_ABC::Load( const tools::Loader_ABC& fileLoader )
 {
-    T_StringList fileList;
+    tools::Path::T_Paths fileList;
     FilesNeeded( fileList );
     if( !fileList.empty() )
     {
-        const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + fileList.front();
+        const tools::Path strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / fileList.front();
         fileLoader.LoadFile( strFile, boost::bind( &ADN_Data_ABC::ReadArchive, this, _1 ) );
     }
 }
@@ -72,14 +72,14 @@ void ADN_Data_ABC::Initialize()
 // -----------------------------------------------------------------------------
 void ADN_Data_ABC::Save()
 {
-    T_StringList fileList;
+    tools::Path::T_Paths fileList;
     FilesNeeded( fileList );
-    if( ! fileList.empty() )
+    if( !fileList.empty() )
     {
-        std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + fileList.front();
-        ADN_Tools::CreatePathToFile( strFile );
+        const tools::Path strFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() / fileList.front();
+        strFile.Parent().CreateDirectories();
         {
-            xml::xofstream output( strFile );
+            tools::Xofstream output( strFile );
             WriteArchive( output );
         }
     }

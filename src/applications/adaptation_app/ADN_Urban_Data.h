@@ -237,7 +237,7 @@ public:
              ADN_Urban_Data();
     virtual ~ADN_Urban_Data();
 
-    virtual void FilesNeeded( T_StringList& l ) const;
+    virtual void FilesNeeded( tools::Path::T_Paths& l ) const;
     virtual void Reset();
     virtual void Save();
     virtual void Load( const tools::Loader_ABC& fileLoader );

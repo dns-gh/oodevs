@@ -12,6 +12,8 @@
 #ifndef __ADN_Config_h_
 #define __ADN_Config_h_
 
+#include "tools/Path.h"
+
 class ADN_ConfigDialog;
 
 //*****************************************************************************
@@ -33,14 +35,14 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string& GetSimPath     () const;
-    const std::string& GetSimArguments() const;
+    const tools::Path& GetSimPath     () const;
+    const std::wstring& GetSimArguments() const;
     //@}
 
     //! @name Modifiers
     //@{
-    void SetSimPath     ( const std::string& strPath );
-    void SetSimArguments( const std::string& strArgs );
+    void SetSimPath     ( const tools::Path& strPath );
+    void SetSimArguments( const std::wstring& strArgs );
     //@}
 
 private:
@@ -54,8 +56,8 @@ private:
     ADN_ConfigDialog* pDialog_;
 
     // config data
-    std::string       strSimPath_;
-    std::string       strSimArguments_;
+    tools::Path       strSimPath_;
+    std::wstring      strSimArguments_;
 };
 
 #include "ADN_Config.inl"

@@ -116,7 +116,7 @@ public:
     UnitSymbolInfo* const GetSymbol() const;
     gui::GLSymbols& GetGlSymbols() const;
     T_UnitSymbolInfoVector& GetSymbols();
-    virtual void FilesNeeded( T_StringList& vFiles ) const;
+    virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Save();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;

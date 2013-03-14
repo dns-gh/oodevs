@@ -42,7 +42,7 @@ public:
     //@{
     virtual void Build();
     virtual void RegisterTable( ADN_MainWindow& mainWindow );
-    virtual void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath );
+    virtual void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath );
     //@}
 
 protected:

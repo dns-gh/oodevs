@@ -14,7 +14,7 @@
 // Created: SBO 2006-01-02
 // -----------------------------------------------------------------------------
 inline
-void ADN_Config::SetSimPath( const std::string& strPath )
+void ADN_Config::SetSimPath( const tools::Path& strPath )
 {
     strSimPath_ = strPath;
 }
@@ -24,7 +24,7 @@ void ADN_Config::SetSimPath( const std::string& strPath )
 // Created: SBO 2006-01-02
 // -----------------------------------------------------------------------------
 inline
-void ADN_Config::SetSimArguments( const std::string& strArgs )
+void ADN_Config::SetSimArguments( const std::wstring& strArgs )
 {
     strSimArguments_ = strArgs;
 }
@@ -34,7 +34,7 @@ void ADN_Config::SetSimArguments( const std::string& strArgs )
 // Created: SBO 2006-01-02
 // -----------------------------------------------------------------------------
 inline
-const std::string& ADN_Config::GetSimPath() const
+const tools::Path& ADN_Config::GetSimPath() const
 {
     return strSimPath_;
 }
@@ -44,7 +44,7 @@ const std::string& ADN_Config::GetSimPath() const
 // Created: SBO 2006-01-02
 // -----------------------------------------------------------------------------
 inline
-const std::string& ADN_Config::GetSimArguments() const
+const std::wstring& ADN_Config::GetSimArguments() const
 {
     return strSimArguments_;
 }

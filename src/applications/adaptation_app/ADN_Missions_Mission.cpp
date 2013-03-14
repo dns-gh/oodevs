@@ -17,15 +17,12 @@
 #include <boost/regex.hpp>
 #include <boost/bind.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/filesystem.hpp>
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 #include <queue>
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
-
-namespace bfs = boost::filesystem;
 
 // =============================================================================
 // Missions
@@ -86,7 +83,7 @@ ADN_Missions_Mission* ADN_Missions_Mission::CreateCopy()
 // Name: ADN_Missions_Mission::ReadArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const std::string& missionDir )
+void ADN_Missions_Mission::ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const tools::Path& missionDir )
 {
     std::string missionSheetDesc, symbol;
     ADN_Missions_ABC::ReadArchive( input, missionDir );

@@ -108,7 +108,7 @@ public:
     virtual ~ADN_Inhabitants_Data();
 
     void Reset();
-    void FilesNeeded(T_StringList& l) const;
+    void FilesNeeded(tools::Path::T_Paths& l) const;
 
     T_InhabitantsInfosVector& GetInhabitants();
     InhabitantsInfos* FindInhabitant( const std::string& strName );

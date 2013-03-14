@@ -67,19 +67,9 @@ ADN_Symbols_Data::~ADN_Symbols_Data()
 // Name: ADN_Symbols_Data::FilesNeeded
 // Created: SBO 2011-04-18
 // -----------------------------------------------------------------------------
-void ADN_Symbols_Data::FilesNeeded( T_StringList& /*files*/ ) const
+void ADN_Symbols_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Symbols_Data::Load
-// Created: ABR 2011-04-22
-// -----------------------------------------------------------------------------
-void ADN_Symbols_Data::Load( const tools::Loader_ABC& fileLoader )
-{
-    const std::string filename = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSymbols_.GetData();
-    fileLoader.LoadFile( filename, boost::bind( &ADN_Symbols_Data::ReadArchive, this, _1 ) );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSymbols_ );
 }
 
 // -----------------------------------------------------------------------------

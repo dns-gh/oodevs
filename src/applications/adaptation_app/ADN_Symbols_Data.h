@@ -66,8 +66,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void FilesNeeded( T_StringList& files ) const;
-    virtual void Load( const tools::Loader_ABC& fileLoader );
+    virtual void FilesNeeded( tools::Path::T_Paths& files ) const;
     virtual void Reset();
     //@}
 

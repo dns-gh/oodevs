@@ -207,9 +207,9 @@ std::stringstream& ADN_HtmlBuilder::Stream()
 // Name: ADN_HtmlBuilder::WriteToFile
 // Created: APE 2005-04-19
 // -----------------------------------------------------------------------------
-void ADN_HtmlBuilder::WriteToFile( const char* strFileName )
+void ADN_HtmlBuilder::WriteToFile( const tools::Path& strFileName )
 {
-    std::ofstream output( strFileName );
+    tools::Ofstream output( strFileName );
     output << strOutput_.str();
 }
 

@@ -749,9 +749,9 @@ ADN_Resources_Data::~ADN_Resources_Data()
 // Name: ADN_Resources_Data::FilesNeeded
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Resources_Data::FilesNeeded(T_StringList& files ) const
+void ADN_Resources_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szEquipements_.GetData());
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szEquipements_ );
 }
 
 // -----------------------------------------------------------------------------

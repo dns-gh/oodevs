@@ -54,10 +54,10 @@ ADN_Urban_Data::~ADN_Urban_Data()
 // Name: ADN_Urban_Data::FilesNeeded
 // Created: SLG 2010-03-08
 //-----------------------------------------------------------------------------
-void ADN_Urban_Data::FilesNeeded(T_StringList& files) const
+void ADN_Urban_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_.GetData() );
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrbanTemplates_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_ );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrbanTemplates_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -123,19 +123,17 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::Save()
 {
-    T_StringList fileList;
+    tools::Path::T_Paths fileList;
     FilesNeeded( fileList );
     for( auto it = fileList.begin(); it != fileList.end(); ++it )
     {
-        std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + *it;
-        ADN_Tools::CreatePathToFile( strFile );
-        {
-            xml::xofstream output( strFile );
-            if( *it == "Urban.xml" )
-                WriteArchive( output );
-            if( *it == "UrbanTemplates.xml" )
-                WriteTemplates( output );
-        }
+        tools::Path file = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() / *it;
+        file.Parent().CreateDirectories();
+        tools::Xofstream output( file );
+        if( *it == "Urban.xml" )
+            WriteArchive( output );
+        if( *it == "UrbanTemplates.xml" )
+            WriteTemplates( output );
     }
 }
 
@@ -145,15 +143,15 @@ void ADN_Urban_Data::Save()
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::Load( const tools::Loader_ABC& fileLoader )
 {
-    T_StringList fileList;
+    tools::Path::T_Paths fileList;
     FilesNeeded( fileList );
     for( auto it = fileList.begin(); it != fileList.end(); ++it )
     {
-        const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + (*it);
+        const tools::Path file = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / (*it);
         if( *it == "Urban.xml" )
-            fileLoader.LoadFile( strFile, boost::bind( &ADN_Urban_Data::ReadArchive, this, _1 ) );
+            fileLoader.LoadFile( file, boost::bind( &ADN_Urban_Data::ReadArchive, this, _1 ) );
         if( *it == "UrbanTemplates.xml" )
-            fileLoader.LoadFile( strFile, boost::bind( &ADN_Urban_Data::ReadTemplates, this, _1 ) );
+            fileLoader.LoadFile( file, boost::bind( &ADN_Urban_Data::ReadTemplates, this, _1 ) );
     }
 }
 

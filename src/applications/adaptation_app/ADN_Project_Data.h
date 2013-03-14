@@ -45,58 +45,58 @@ public:
         void SetNoReadOnly();
 
     public:
-        ADN_Type_String szDecisional_;
-        ADN_Type_String szSizes_;
-        ADN_Type_String szUrban_;
-        ADN_Type_String szArmors_;
-        ADN_Type_String szActiveProtections_;
-        ADN_Type_String szDotationNatures_;
-        ADN_Type_String szLogisticSupplyClasses_;
-        ADN_Type_String szObjects_;
-        ADN_Type_String szEquipements_;
-        ADN_Type_String szLaunchers_;
-        ADN_Type_String szWeapons_;
-        ADN_Type_String szSensors_;
-        ADN_Type_String szComponents_;
-        ADN_Type_String szUnits_;
-        ADN_Type_String szAutomata_;
-        ADN_Type_String szNBC_;
-        ADN_Type_String szHealth_;
-        ADN_Type_String szHumanFactors_;
-        ADN_Type_String szBreakdowns_;
-        ADN_Type_String szKnowledgeGroups_;
-        ADN_Type_String szMaintenance_;
-        ADN_Type_String szSupply_;
-        ADN_Type_String szCom_;
-        ADN_Type_String szPopulation_;
-        ADN_Type_String szPeople_;
-        ADN_Type_String szReports_;
-        ADN_Type_String szModels_;
-        ADN_Type_String szMissions_;
-        ADN_Type_String szResourceNetworks_;
-        ADN_Type_String szFireClasses_;
-        ADN_Type_String szFuneral_;
-        ADN_Type_String szUrbanTemplates_;
-        ADN_Type_String szDisasters_;
-        ADN_Type_String szStages_;
+        tools::Path szDecisional_;
+        tools::Path szSizes_;
+        tools::Path szUrban_;
+        tools::Path szArmors_;
+        tools::Path szActiveProtections_;
+        tools::Path szDotationNatures_;
+        tools::Path szLogisticSupplyClasses_;
+        tools::Path szObjects_;
+        tools::Path szEquipements_;
+        tools::Path szLaunchers_;
+        tools::Path szWeapons_;
+        tools::Path szSensors_;
+        tools::Path szComponents_;
+        tools::Path szUnits_;
+        tools::Path szAutomata_;
+        tools::Path szNBC_;
+        tools::Path szHealth_;
+        tools::Path szHumanFactors_;
+        tools::Path szBreakdowns_;
+        tools::Path szKnowledgeGroups_;
+        tools::Path szMaintenance_;
+        tools::Path szSupply_;
+        tools::Path szCom_;
+        tools::Path szPopulation_;
+        tools::Path szPeople_;
+        tools::Path szReports_;
+        tools::Path szModels_;
+        tools::Path szMissions_;
+        tools::Path szResourceNetworks_;
+        tools::Path szFireClasses_;
+        tools::Path szFuneral_;
+        tools::Path szUrbanTemplates_;
+        tools::Path szDisasters_;
+        tools::Path szStages_;
         // $$$$ NLD 2007-01-15: files not loaded!
-        ADN_Type_String szPathfinder_;
-        ADN_Type_String szObjectNames_;
-        ADN_Type_String szHumanProtections_;
-        ADN_Type_String szMedicalTreatment_;
-        ADN_Type_String szExtensions_;
-        ADN_Type_String szDrawingTemplates_;
-        ADN_Type_String szScores_;
-        ADN_Type_String szSymbols_;
-        ADN_Type_String szFilters_;
+        tools::Path szPathfinder_;
+        tools::Path szObjectNames_;
+        tools::Path szHumanProtections_;
+        tools::Path szMedicalTreatment_;
+        tools::Path szExtensions_;
+        tools::Path szDrawingTemplates_;
+        tools::Path szScores_;
+        tools::Path szSymbols_;
+        tools::Path szFilters_;
         // $$$$ NPT 2012-07-27: Mission sheets data path
-        ADN_Type_String szUnitsMissionPath_;
-        ADN_Type_String szAutomataMissionPath_;
-        ADN_Type_String szCrowdsMissionPath_;
-        ADN_Type_String szFragOrdersMissionPath_;
+        tools::Path szUnitsMissionPath_;
+        tools::Path szAutomataMissionPath_;
+        tools::Path szCrowdsMissionPath_;
+        tools::Path szFragOrdersMissionPath_;
         // $$$$ ABR 2013-01-21: Symbols directory
-        ADN_Type_String szMissionSheetXslPath_;
-        ADN_Type_String szSymbolsPath_;
+        tools::Path szMissionSheetXslPath_;
+        tools::Path szSymbolsPath_;
 
     private:
         bool readOnlyEnabled_;
@@ -108,19 +108,19 @@ public:
     {
     public:
                  FileInfos();
-        explicit FileInfos( const std::string& filename );
+        explicit FileInfos( const tools::Path& filename );
 
         // return filename in working directory or tmp directory ref
-        ADN_Type_String&       GetFileName();
-        const std::string      GetFileNameFull();
+        const tools::Path& GetFileName() const;
+        tools::Path GetFileNameFull() const;
 
-        FileInfos& operator =(const std::string&filename);
+        FileInfos& operator =( const tools::Path& filename );
 
     public:
-        static std::string     szUntitled_;
+        static tools::Path szUntitled_;
 
     private:
-        ADN_Type_String        szFileName_;
+        tools::Path szFileName_;
     };
 
 //*****************************************************************************
@@ -136,23 +136,20 @@ public:
     public:
         WorkDirInfos();
 
-        void               SetWorkingDirectory( const std::string& filename );
-        ADN_Type_String&   GetWorkingDirectory();  //!< Returns the working directory
+        void SetWorkingDirectory( const tools::Path& filename );
+        ADN_Type_Path& GetWorkingDirectory();                         //!< Returns the working directory
 
-        void               UseTempDirectory( bool bUse );
-        ADN_Type_String&   GetTempDirectory();     //!< Returns a temporary directory
+        void UseTempDirectory( bool bUse );
+        const tools::Path& GetTempDirectory() const;                            //!< Returns a temporary directory
+        tools::Path GetSaveDirectory() const;                                   //!< Returns either the working or the temporary directory according to the current mode
 
-        const std::string  GetSaveDirectory(); //!< Returns either the working or the temporary directory according to the current mode
-
-        std::string        GetRelativePath(const std::string& full, E_WorkDir e=eWorking); //!< Given "the/whole/path/toto/toto.xml" returns "/toto/toto.xml"
-
-        // private
-        std::string        GetFullPath(const std::string& part, E_WorkDir e=eWorking); //!< Given "/toto/toto.xml" returns "the/whole/path/toto/toto.xml"
+        tools::Path GetRelativePath(const tools::Path& full, E_WorkDir e = eWorking ) const; //!< Given "the/whole/path/toto/toto.xml" returns "/toto/toto.xml"
+        tools::Path GetFullPath(const tools::Path& part, E_WorkDir e = eWorking ) const; //!< Given "/toto/toto.xml" returns "the/whole/path/toto/toto.xml"
 
     private:
-        ADN_Type_String     szWorkingDir_;
-        ADN_Type_String     szTempDir_;
-        bool                bTmpActivated_;
+        ADN_Type_Path szWorkingDir_;
+        tools::Path   szTempDir_;
+        bool          bTmpActivated_;
     };
 
 //*****************************************************************************
@@ -160,9 +157,9 @@ public:
              ADN_Project_Data();
     virtual ~ADN_Project_Data();
 
-    void SetFile( const std::string& strFile );
+    void SetFile( const tools::Path& strFile );
 
-    virtual void FilesNeeded( T_StringList& vFiles ) const;
+    virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
     virtual void Reset();
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Save( const tools::Loader_ABC& fileLoader );
@@ -170,12 +167,12 @@ public:
     DataInfos&           GetDataInfos();
     const DataInfos&     GetDataInfos() const;
     FileInfos&           GetFileInfos();
-    std::string          GetMissionDir( E_MissionType missionType );
+    tools::Path          GetMissionDir( E_MissionType missionType );
     static WorkDirInfos& GetWorkDirInfos();
 
 private:
     void FilterNode( const std::string& node, xml::xistream& xis, xml::xostream& xos );
-    void WritePathfind( xml::xistream& xis, const std::string& path );
+    void WritePathfind( xml::xistream& xis, const tools::Path& path );
 
 public:
     DataInfos dataInfos_;
@@ -189,7 +186,7 @@ public:
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
 inline
-ADN_Type_String& ADN_Project_Data::WorkDirInfos::GetWorkingDirectory()
+ADN_Type_Path& ADN_Project_Data::WorkDirInfos::GetWorkingDirectory()
 {
     return szWorkingDir_;
 }
@@ -199,7 +196,7 @@ ADN_Type_String& ADN_Project_Data::WorkDirInfos::GetWorkingDirectory()
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
 inline
-ADN_Type_String& ADN_Project_Data::WorkDirInfos::GetTempDirectory()
+const tools::Path& ADN_Project_Data::WorkDirInfos::GetTempDirectory() const
 {
     return szTempDir_;
 }
@@ -209,9 +206,9 @@ ADN_Type_String& ADN_Project_Data::WorkDirInfos::GetTempDirectory()
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
 inline
-const std::string ADN_Project_Data::WorkDirInfos::GetSaveDirectory()
+tools::Path ADN_Project_Data::WorkDirInfos::GetSaveDirectory() const
 {
-    return bTmpActivated_ ? szTempDir_.GetData() : szWorkingDir_.GetData();
+    return bTmpActivated_ ? szTempDir_ : szWorkingDir_.GetData();
 }
 
 //-----------------------------------------------------------------------------
@@ -219,7 +216,7 @@ const std::string ADN_Project_Data::WorkDirInfos::GetSaveDirectory()
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
 inline
-ADN_Type_String& ADN_Project_Data::FileInfos::GetFileName()
+const tools::Path& ADN_Project_Data::FileInfos::GetFileName() const
 {
     return szFileName_;
 }
@@ -229,9 +226,9 @@ ADN_Type_String& ADN_Project_Data::FileInfos::GetFileName()
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
 inline
-const std::string ADN_Project_Data::FileInfos::GetFileNameFull()
+tools::Path ADN_Project_Data::FileInfos::GetFileNameFull() const
 {
-    return workDir_.GetFullPath( szFileName_.GetData(), ADN_Project_Data::WorkDirInfos::eWorking );
+    return workDir_.GetFullPath( szFileName_, ADN_Project_Data::WorkDirInfos::eWorking );
 }
 
 // -----------------------------------------------------------------------------

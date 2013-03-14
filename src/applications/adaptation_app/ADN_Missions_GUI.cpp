@@ -383,12 +383,9 @@ void ADN_Missions_GUI::OnNotifyElementDeleted( std::string elementName, E_Missio
 void ADN_Missions_GUI::OnGenerate( int index )
 {
     assert( index >= 0 && index < 4 );
-    QString missionPath = data_.GenerateMissionSheet( index, nameFields_[ index ]->text() );
+    tools::Path missionPath = data_.GenerateMissionSheet( index, nameFields_[ index ]->text() );
     missionTabs_[ index ]->setCurrentIndex( 2 );
-
-    std::string path = missionPath.toStdString();
-    std::replace( path.begin(), path.end(), '\\', '/' );
-    missionViewers_[ index ]->setText( path.c_str() );
+    missionViewers_[ index ]->setText( missionPath.Normalize().ToUTF8().c_str() );
 }
 
 // -----------------------------------------------------------------------------

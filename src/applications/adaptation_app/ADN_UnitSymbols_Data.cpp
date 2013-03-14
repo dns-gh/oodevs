@@ -221,7 +221,7 @@ ADN_UnitSymbols_Data::T_UnitSymbolInfoVector& ADN_UnitSymbols_Data::GetSymbols()
 // Name: ADN_UnitSymbols_Data::FilesNeeded
 // Created: MMC 2011-07-07
 // -----------------------------------------------------------------------------
-void ADN_UnitSymbols_Data::FilesNeeded( T_StringList& /*vFiles*/ ) const
+void ADN_UnitSymbols_Data::FilesNeeded( tools::Path::T_Paths& /*vFiles*/ ) const
 {
     // NOTHING
 }
@@ -232,7 +232,7 @@ void ADN_UnitSymbols_Data::FilesNeeded( T_StringList& /*vFiles*/ ) const
 // -----------------------------------------------------------------------------
 void ADN_UnitSymbols_Data::Load( const tools::Loader_ABC& /*fileLoader*/ )
 {
-    glSymbols_->SetSymbolsPath( ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSymbolsPath_.GetData() );
+    glSymbols_->SetSymbolsPath( ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSymbolsPath_ );
 
     if( ADN_Workspace::GetWorkspace().ShowSymbols() )
     {

@@ -367,7 +367,7 @@ void ADN_Table::Print( int /*nPage*/, QPainter& /*painter*/, const QSize& /*pain
 // Name: ADN_Table::SaveToXls
 // Created: JSR 2012-11-07
 // -----------------------------------------------------------------------------
-void ADN_Table::SaveToXls( const QString& path, const QString& sheetName ) const
+void ADN_Table::SaveToXls( const tools::Path& path, const QString& sheetName ) const
 {
     BasicExcel xls;
     xls.New(1);
@@ -527,7 +527,7 @@ void ADN_Table::SaveToXls( const QString& path, const QString& sheetName ) const
     for( int col = 0; col < dataModel_.columnCount(); ++col )
         sheet->SetColWidth( col, static_cast< USHORT >( std::max( columnMaxContentSize[ col ] * charactereSize, minimumSize ) ) );
 
-    xls.SaveAs( path.toUtf8().constData() );
+    xls.SaveAs( path.ToUnicode().c_str() );
 }
 
 // -----------------------------------------------------------------------------

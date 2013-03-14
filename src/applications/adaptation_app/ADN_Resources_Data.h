@@ -223,7 +223,7 @@ public:
     virtual ~ADN_Resources_Data();
 
 public:
-    void FilesNeeded(T_StringList& files ) const;
+    void FilesNeeded(tools::Path::T_Paths& files ) const;
     void Reset();
 
     T_ResourceInfos_Vector& GetResources();

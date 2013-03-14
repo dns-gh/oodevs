@@ -858,9 +858,9 @@ void ADN_Units_Data::Reset()
 // Name: ADN_Munitions_Data::FilesNeeded
 // Created: JDY 03-09-08
 //-----------------------------------------------------------------------------
-void ADN_Units_Data::FilesNeeded(T_StringList& files) const
+void ADN_Units_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUnits_.GetData());
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUnits_ );
 }
 
 // -----------------------------------------------------------------------------

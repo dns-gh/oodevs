@@ -54,8 +54,8 @@ ADN_App::ADN_App( gui::ApplicationMonitor& monitor, int argc, char** argv )
     // Command line options
     po::options_description desc( "Allowed options" );
     desc.add_options()
-        ( "input,i" , po::value< std::string >( &inputFile_  )->default_value( "" ), "specify root input file (physical.xml)" )
-        ( "output,o", po::value< std::string >( &outputFile_ )->default_value( "" ), "specify output file (physical.xml) (open/save-mode: input must be specified)" )
+        ( "input,i" , po::value( &inputFile_  )->default_value( "" ), "specify root input file (physical.xml)" )
+        ( "output,o", po::value( &outputFile_ )->default_value( "" ), "specify output file (physical.xml) (open/save-mode: input must be specified)" )
         ( "silent", "silent mode" )
         ( "nosymbols,n", "turn off unit symbols view" )
         ( "noreadonly", "disable read-only protection" )
@@ -133,9 +133,9 @@ int ADN_App::Run()
         if( IsInvalidLicense() )
             return EXIT_FAILURE;
 
-        if( !inputFile_.empty() )
+        if( !inputFile_.IsEmpty() )
             mainWindow_->OpenProject( inputFile_, true );
-        if( !outputFile_.empty() )
+        if( !outputFile_.IsEmpty() )
         {
             mainWindow_->SaveProjectAs( outputFile_ );
             return EXIT_SUCCESS;
@@ -143,7 +143,7 @@ int ADN_App::Run()
     }
     catch( const std::exception& e )
     {
-        if( outputFile_.empty() )
+        if( outputFile_.IsEmpty() )
             QMessageBox::critical( mainWindow_, tr( "Error" ), tools::GetExceptionMsg( e ).c_str() );
         else
         {

@@ -22,6 +22,7 @@ typedef ADN_Type_ABC<int>           ADN_Type_Int;
 typedef ADN_Type_ABC<double>        ADN_Type_Double;
 typedef ADN_Type_ABC<std::string>   ADN_Type_String;
 typedef ADN_Type_ABC<std::string>   ADN_Type_Time;
+typedef ADN_Type_ABC<tools::Path>   ADN_Type_Path;
 
 #define TYPEDEF_DECLARATION( BaseType, NewName )                        \
     typedef BaseType T_ ## NewName;
@@ -40,6 +41,5 @@ typedef ADN_Type_ABC<std::string>   ADN_Type_Time;
     typedef BaseType::const_iterator CIT_ ## NewName;
 
 TYPEDEF_FULL_DECLARATION( std::vector<QWidget*>, PtrWidgetVector )
-TYPEDEF_FULL_DECLARATION( std::list<std::string>, StringList )
 
 #endif // __ADN_Types_h_

@@ -63,9 +63,9 @@ void ADN_AiEngine_Data::Reset()
 // Name: ADN_AiEngine_Data::FilesNeeded
 // Created: AGN 2004-06-15
 // -----------------------------------------------------------------------------
-void ADN_AiEngine_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_AiEngine_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDecisional_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDecisional_ );
 }
 
 // -----------------------------------------------------------------------------

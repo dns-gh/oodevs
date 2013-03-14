@@ -477,10 +477,10 @@ void ADN_Weapons_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 // Name: ADN_Weapons_GUI::ExportHtml
 // Created: APE 2005-04-19
 // -----------------------------------------------------------------------------
-void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
+void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath )
 {
-    QString strLocalPath = strPath + tr( "WeaponSystems/" );
-    ADN_Tools::CreatePathToFile( strLocalPath.toStdString() );
+    tools::Path strLocalPath = strPath / tools::Path::FromUnicode( tr( "WeaponSystems/" ).toStdWString() );
+    strLocalPath.CreateDirectories();
     ADN_HtmlBuilder indexBuilder;
     indexBuilder.BeginHtml( tr( "Weapon Systems" ) );
     indexBuilder.BeginList();
@@ -490,8 +490,8 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
     for( ADN_Weapons_Data::IT_WeaponInfosVector it = weapons.begin(); it != weapons.end(); ++it, ++n )
     {
         ADN_Weapons_Data::WeaponInfos& weapon = **it;
-        QString strFileName = tr( "WeaponSystem_%1.htm" ).arg( n );
-        QString strLink = "<a href=\"" + strFileName + "\">" + weapon.strName_.GetData().c_str() + "</a>";
+        tools::Path strFileName = tools::Path::FromUnicode( tr( "WeaponSystem_%1.htm" ).arg( n ).toStdWString() );
+        QString strLink = QString( "<a href=\"" ) + strFileName.ToUTF8().c_str() + "\">" + weapon.strName_.GetData().c_str() + "</a>";
         indexBuilder.ListItem( strLink );
 
         ADN_HtmlBuilder builder;
@@ -551,11 +551,11 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
             builder.EndList();
         }
         builder.EndHtml();
-        builder.WriteToFile( strLocalPath + strFileName );
+        builder.WriteToFile( strLocalPath / strFileName );
     }
     indexBuilder.EndList();
     indexBuilder.EndHtml();
-    indexBuilder.WriteToFile( strLocalPath + "index.htm" );
+    indexBuilder.WriteToFile( strLocalPath / "index.htm" );
 
     QString strText = "<a href=\"" + tr( "WeaponSystems/" ) + "index.htm\">" + tr( "Weapon Systems" ) + "</a>";
     mainIndexBuilder.ListItem( strText );

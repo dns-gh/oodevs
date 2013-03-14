@@ -1971,9 +1971,9 @@ ADN_Equipments_Data::~ADN_Equipments_Data()
 // Name: ADN_Munitions_Data::FilesNeeded
 // Created: JDY 03-09-08
 //-----------------------------------------------------------------------------
-void ADN_Equipments_Data::FilesNeeded(T_StringList& files) const
+void ADN_Equipments_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szComponents_.GetData());
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szComponents_ );
 }
 
 //-----------------------------------------------------------------------------

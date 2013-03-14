@@ -13,11 +13,11 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Missions_Parameter.h"
 #include "clients_kernel/ContextMenu.h"
-#include "boost/filesystem.hpp"
+#include "clients_gui/FileDialog.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Missions_ABC.h"
-
-namespace bfs = boost::filesystem;
+#include "ADN_Missions_Data.h"
+#include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_DescriptionAttachment constructor
@@ -46,7 +46,7 @@ ADN_ListView_DescriptionAttachment::~ADN_ListView_DescriptionAttachment()
 // -----------------------------------------------------------------------------
 void ADN_ListView_DescriptionAttachment::AddFile()
 {
-    QString fileName = QFileDialog::getOpenFileName( this
+    tools::Path fileName = gui::FileDialog::getOpenFileName( this
         , tr( "Select an image" )
         , "."
         , tr( "All supported formats (*.bmp *.jpg *.jpeg *.gif *.png)\n"
@@ -55,35 +55,31 @@ void ADN_ListView_DescriptionAttachment::AddFile()
         "GIF (*.gif)\n"
         "PNG (*.png)\n" )
         );
-    if( fileName.isEmpty() )
+    if( fileName.IsEmpty() )
         return;
-    std::string imageDir = QDir::tempPath().toStdString() + "_MissionSheets/ImagesTemp" + QString::number( missionType_ ).toStdString() + "/";
-    if( !bfs::is_directory( imageDir ) )
-        bfs::create_directory( imageDir );
-    std::string newFileName = imageDir + QFileInfo( fileName ).fileName().toStdString(); 
-    if( fileName != QString( newFileName.c_str() ) )
+    tools::Path imageDir = tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( missionType_ ).c_str();
+    if( !imageDir.IsDirectory() )
+        imageDir.CreateDirectories();
+    tools::Path newFileName = imageDir / fileName.FileName();
+    if( newFileName.Exists() )
     {
-        if( bfs::exists( newFileName ) )
+        QMessageBox* box = new QMessageBox();
+        box->setWindowTitle(  tr( "Existing file found" ) );
+        box->setText( tr( "The file you want to copy already exists in the base, your file will be renamed" )  );
+        box->setModal( true );
+        box->show();
+        tools::Path tempFileName = newFileName;
+        for( int i = 1; tempFileName.Exists(); ++i )
         {
-            QMessageBox* box = new QMessageBox();
-            box->setWindowTitle(  tr( "Existing file found" ) );
-            box->setText( tr( "The file you want to copy already exists in the base, your file will be renamed" )  );
-            box->setModal( true );
-            box->show();
-            std::string tempFileName = newFileName;
-            int i = 1;
-            while( bfs::exists( tempFileName ) )
-            {
-                tempFileName = imageDir + QString( QFileInfo( newFileName.c_str() ).completeBaseName() + QString::number( i ) + "." + QFileInfo( newFileName.c_str() ).suffix() ).toStdString();
-                i++;
-            }
-            newFileName = tempFileName;
+            tempFileName = imageDir / newFileName.BaseName() + boost::lexical_cast< std::string >( i ).c_str() + newFileName.Extension();
+            i++;
         }
-        bfs::copy_file( fileName.toStdString(), newFileName, bfs::copy_option::overwrite_if_exists );
+        newFileName = tempFileName;
     }
+    fileName.Copy( newFileName, tools::Path::OverwriteIfExists );
     ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     if( connector )
-        connector->AddItem( new ADN_Missions_ABC::ADN_Missions_Attachment( QFileInfo( newFileName.c_str() ).fileName().toStdString() ) );
+        connector->AddItem( new ADN_Missions_ABC::ADN_Missions_Attachment( newFileName.FileName() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,10 +89,10 @@ void ADN_ListView_DescriptionAttachment::AddFile()
 void ADN_ListView_DescriptionAttachment::RemoveFile()
 {
     ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    std::string imageDir = QDir::tempPath().toStdString() + "_MissionSheets/ImagesTemp" + QString::number( missionType_ ).toStdString() + "/";
-    bfs::path imagePath = imageDir + GetModel().item( currentIndex().row() )->text().toStdString();
-    if( bfs::exists( imagePath ) )
-        bfs::remove( imagePath );
+    tools::Path imageDir = tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ / boost::lexical_cast< std::string >( missionType_ ).c_str();
+    imageDir /= tools::Path::FromUnicode( GetModel().item( currentIndex().row() )->text().toStdWString() );
+    if( imageDir.Exists() )
+        imageDir.Remove();
     if( connector )
         connector->RemItem( GetCurrentData() );
 }

@@ -77,7 +77,7 @@ public:
     void Print( int nPage, QPainter& painter, const QSize& painterSize );
 
     virtual std::string GetToolTipFor( const QModelIndex& index );
-    void SaveToXls( const QString& path, const QString& sheetName ) const;
+    void SaveToXls( const tools::Path& path, const QString& sheetName ) const;
 
 public slots:
     bool SetCurrentItem( void* pData );

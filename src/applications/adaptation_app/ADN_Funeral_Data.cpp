@@ -39,9 +39,9 @@ ADN_Funeral_Data::~ADN_Funeral_Data()
 // Name: ADN_Funeral_Data::FilesNeeded
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Funeral_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_Funeral_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFuneral_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFuneral_ );
 }
 
 // -----------------------------------------------------------------------------

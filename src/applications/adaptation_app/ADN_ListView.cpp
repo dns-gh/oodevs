@@ -651,7 +651,7 @@ namespace
 // Name: ADN_ListView::SaveToXls
 // Created: ABR 2012-02-09
 // -----------------------------------------------------------------------------
-void ADN_ListView::SaveToXls( const QString& path, const QString& sheetName ) const
+void ADN_ListView::SaveToXls( const tools::Path& path, const QString& sheetName ) const
 {
     BasicExcel xls;
 
@@ -679,7 +679,7 @@ void ADN_ListView::SaveToXls( const QString& path, const QString& sheetName ) co
                 SaveToSheet( xls, dataModel_.item( i )->text().toStdString().c_str(), sheet, dataModel_.item( i )->child( 0 ), maxDepth - 1, nbRow );
     }
 
-    xls.SaveAs( path.toStdString().c_str() );
+    xls.SaveAs( path.ToUnicode().c_str() );
 }
 
 // -----------------------------------------------------------------------------

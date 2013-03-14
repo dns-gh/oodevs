@@ -48,9 +48,9 @@ ADN_Communications_Data::~ADN_Communications_Data()
 // Name: ADN_Communications_Data::FilesNeeded
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Communications_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_Communications_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szCom_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szCom_ );
 }
 
 // -----------------------------------------------------------------------------

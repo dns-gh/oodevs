@@ -711,9 +711,9 @@ ADN_Crowds_Data::~ADN_Crowds_Data()
 // Name: ADN_Crowds_Data::FilesNeeded
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Crowds_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_Crowds_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szPopulation_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szPopulation_ );
 }
 
 // -----------------------------------------------------------------------------

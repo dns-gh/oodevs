@@ -47,12 +47,12 @@ ADN_Categories_Data::~ADN_Categories_Data()
 // Name: ADN_Categories_Data::FilesNeeded
 // Created: JDY 03-09-08
 //-----------------------------------------------------------------------------
-void ADN_Categories_Data::FilesNeeded(T_StringList& files) const
+void ADN_Categories_Data::FilesNeeded(tools::Path::T_Paths& files) const
 {
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData() );
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData() );
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData() );
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLogisticSupplyClasses_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_ );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_ );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_ );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLogisticSupplyClasses_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -74,20 +74,18 @@ void ADN_Categories_Data::Reset()
 //-----------------------------------------------------------------------------
 void ADN_Categories_Data::Load( const tools::Loader_ABC& fileLoader )
 {
-    const std::string szArmorsFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-                      + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
+    const ADN_Project_Data::DataInfos& dataInfos = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos();
+    const tools::Path workingDirectory = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
+    const tools::Path szArmorsFile = workingDirectory / dataInfos.szArmors_;
     fileLoader.LoadFile( szArmorsFile, boost::bind( &ADN_Categories_Data::ReadArmors, this, _1 ) );
 
-    const std::string szSizesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
+    const tools::Path szSizesFile =  workingDirectory / dataInfos.szSizes_;
     fileLoader.LoadFile( szSizesFile, boost::bind( &ADN_Categories_Data::ReadSizes, this, _1 ) );
 
-    const std::string szDotationNaturesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
+    const tools::Path szDotationNaturesFile =  workingDirectory / dataInfos.szDotationNatures_;
     fileLoader.LoadFile( szDotationNaturesFile, boost::bind( &ADN_Categories_Data::ReadDotationNatures, this, _1 ) );
 
-    const std::string szLogisticSupplyClassesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLogisticSupplyClasses_.GetData();
+    const tools::Path szLogisticSupplyClassesFile =  workingDirectory / dataInfos.szLogisticSupplyClasses_;
     fileLoader.LoadFile( szLogisticSupplyClassesFile, boost::bind( &ADN_Categories_Data::ReadLogisticSupplyClasses, this, _1 ) );
 
     vSizes_.CheckValidity();
@@ -108,32 +106,31 @@ void ADN_Categories_Data::Save()
         vLogisticSupplyClasses_.GetErrorStatus() == eError )
         throw MASA_EXCEPTION( GetInvalidDataErrorMsg() );
 
-    std::string szArmorFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
+    const ADN_Project_Data::DataInfos& dataInfos = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos();
+    const tools::Path saveDirectory = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory();
+
     {
-        ADN_Tools::CreatePathToFile( szArmorFile );
-        xml::xofstream output( szArmorFile );
+        tools::Path szArmorFile = saveDirectory / dataInfos.szArmors_;
+        szArmorFile.Parent().CreateDirectories();
+        tools::Xofstream output( szArmorFile );
         WriteArmors( output );
     }
-    std::string szSizesFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
     {
-        ADN_Tools::CreatePathToFile( szSizesFile );
-        xml::xofstream output( szSizesFile );
+        tools::Path szSizesFile = saveDirectory / dataInfos.szSizes_;
+        szSizesFile.Parent().CreateDirectories();
+        tools::Xofstream output( szSizesFile );
         WriteSizes( output );
     }
-    std::string szNaturesFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
     {
-        ADN_Tools::CreatePathToFile( szNaturesFile );
-        xml::xofstream output( szNaturesFile );
+        tools::Path szNaturesFile = saveDirectory / dataInfos.szDotationNatures_;
+        szNaturesFile.Parent().CreateDirectories();
+        tools::Xofstream output( szNaturesFile );
         WriteDotationNatures( output );
     }
-    std::string szLogisticSupplyClassesFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szLogisticSupplyClasses_.GetData();
     {
-        ADN_Tools::CreatePathToFile( szLogisticSupplyClassesFile );
-        xml::xofstream output( szLogisticSupplyClassesFile );
+        tools::Path szLogisticSupplyClassesFile = saveDirectory / dataInfos.szLogisticSupplyClasses_;
+        szLogisticSupplyClassesFile.Parent().CreateDirectories();
+        tools::Xofstream output( szLogisticSupplyClassesFile );
         WriteLogisticSupplyClasses( output );
     }
 }

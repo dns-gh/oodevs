@@ -75,11 +75,6 @@ namespace ADN_Tools
 
     bool CaselessCompare( const std::string& str1, const std::string& str2 );
 
-    void CreatePathToFile( const std::string& strFilePath );
-    bool CopyFileToFile( const std::string& strSrc, const std::string& strDest );
-    void CopyDirToDir( const boost::filesystem::path& pathFrom, const boost::filesystem::path& pathTo, bool recursive, bool forceCopy );
-    void CleanDirectoryContent( const boost::filesystem::path& dir, bool recursive );
-
     std::string Scriptify( const std::string& strFieldName );
     std::string ComputePostureScriptName( E_UnitPosture nPosture );
 

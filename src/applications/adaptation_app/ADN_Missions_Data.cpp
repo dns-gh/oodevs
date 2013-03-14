@@ -19,11 +19,13 @@
 #include "tools/Loader_ABC.h"
 #include <xeuseuleu/xsl.hpp>
 #include <boost/bind.hpp>
-#include <boost/filesystem.hpp>
-
-namespace bfs = boost::filesystem;
+#include <boost/lexical_cast.hpp>
 
 tools::IdManager ADN_Missions_Data::idManager_;
+tools::Path ADN_Missions_Data::imagePath_ = "Images";
+tools::Path ADN_Missions_Data::imageTemporaryPath_ = "_MissionSheets/ImagesTemp";
+tools::Path ADN_Missions_Data::xslTemporaryFile_ = "_adnTempXslt.xsl";
+tools::Path ADN_Missions_Data::missionSheetTemporaryFile_ = "tempMissionSheet";
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data constructor
@@ -51,9 +53,9 @@ ADN_Missions_Data::~ADN_Missions_Data()
 // Name: ADN_Missions_Data::FilesNeeded
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::FilesNeeded( T_StringList& files ) const
+void ADN_Missions_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMissions_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMissions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,25 +64,19 @@ void ADN_Missions_Data::FilesNeeded( T_StringList& files ) const
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::Reset()
 {
+
     idManager_.Reset();
     unitMissions_.Reset();
     automatMissions_.Reset();
     populationMissions_.Reset();
     fragOrders_.Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::Load
-// Created: LDC 2010-09-24
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::Load( const tools::Loader_ABC& fileLoader )
-{
-    T_StringList fileList;
-    FilesNeeded( fileList );
-    if( ! fileList.empty() )
+    try
     {
-        const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + fileList.front();
-        fileLoader.LoadFile( strFile, boost::bind( &ADN_Missions_Data::ReadArchive, this, _1 ) );
+        ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ ).Parent().RemoveAll();
+    }
+    catch( ... )
+    {
+        // NOTHING
     }
 }
 
@@ -126,10 +122,9 @@ void ADN_Missions_Data::Initialize()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::NotifyElementDeleted( std::string elementName, E_MissionType missionType )
 {
-    const std::string missionDirectoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-                                           + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( missionType );
-    std::string xmlFileName = missionDirectoryPath + std::string( "/" + elementName + ".xml");
-    std::string htmlFileName = missionDirectoryPath + std::string( "/" + elementName + ".html");
+    const tools::Path missionDirectoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( missionType );
+    tools::Path xmlFileName = missionDirectoryPath / tools::Path::FromUTF8( elementName ) + ".xml";
+    tools::Path htmlFileName = missionDirectoryPath / tools::Path::FromUTF8( elementName ) + ".html";
     toDeleteMissionSheets_.push_back( xmlFileName );
     toDeleteMissionSheets_.push_back( htmlFileName );
 }
@@ -138,19 +133,18 @@ void ADN_Missions_Data::NotifyElementDeleted( std::string elementName, E_Mission
 // Name: ADN_Missions_Data::GenerateMissionSheet
 // Created: NPT 2013-01-30
 // -----------------------------------------------------------------------------
-QString ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text )
+tools::Path ADN_Missions_Data::GenerateMissionSheet( int index, const QString& text )
 {
     assert( index >= 0 && index < 4 );
-    const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
-                                 + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( static_cast< E_MissionType >( index ) );
-    std::string tempFileName = "tempMissionSheet";
+    const tools::Path missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( static_cast< E_MissionType >( index ) );
+    tools::Path tempFileName = missionSheetTemporaryFile_;
     ADN_Missions_ABC* mission = FindMission( index, text.toStdString() );
     if( mission )
     {
         mission->WriteMissionSheet( missionDir, tempFileName, index );
         mission->SetNeedsSaving( true );
     }
-    return QString( missionDir.c_str() ) + "/" + QString( tempFileName.c_str() ) + ".html";
+    return missionDir / tempFileName + ".html";
 }
 
 namespace
@@ -158,29 +152,28 @@ namespace
     void CopyImageToTempDir( E_MissionType modelType )
     {
         //get mission dir
-        const std::string& missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
-            + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( modelType );
-        std::string tempDir = QDir::tempPath().toStdString() + "_MissionSheets/ImagesTemp" + QString::number( modelType ).toStdString();
+        const tools::Path missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( modelType );
+        const tools::Path tempDir = tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( modelType ).c_str();
         //copy images in temp directory for image temp save
-        if( bfs::exists( missionPath + "/Images" ) )
+        if( ( missionPath / ADN_Missions_Data::imagePath_ ).Exists() )
         {
-            if( bfs::exists( tempDir ) )
-                 ADN_Tools::CleanDirectoryContent( tempDir, false );
-            ADN_Tools::CopyDirToDir( missionPath + "/Images", tempDir, false, true );
+            if( tempDir.Exists() )
+                tempDir.RemoveAll();
+            ( missionPath / ADN_Missions_Data::imagePath_ ).Copy( tempDir, tools::Path::OverwriteIfExists );
         }
         else
-            bfs::create_directories( tempDir );
+            tempDir.CreateDirectories();
     }
 
     void CopyImageFromTempDir( E_MissionType type )
     {
-        const std::string& missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
-        std::string tempDir = QDir::tempPath().toStdString() + "_MissionSheets/ImagesTemp" + QString::number( type ).toStdString();
+        const tools::Path missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
+        const tools::Path tempDir = tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( type ).c_str();
         //copy images from temp directory for image temp reset
-        if( bfs::exists( tempDir ) )
+        if( tempDir.Exists() )
         {
-            ADN_Tools::CleanDirectoryContent( missionPath + "/Images", false );
-            ADN_Tools::CopyDirToDir( tempDir, missionPath + "/Images", false, true );
+            ( missionPath / ADN_Missions_Data::imagePath_ ).RemoveAll();
+            tempDir.Copy( missionPath / ADN_Missions_Data::imagePath_, tools::Path::OverwriteIfExists );
         }
     }
 }
@@ -191,6 +184,21 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 {
+    try
+    {
+        ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ ).Parent().RemoveAll();
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
+    for( int type = 0; type != eNbrMissionTypes; ++type )
+    {
+        const tools::Path missionDir = tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( type ).c_str();
+        if( !missionDir.Exists() )
+            missionDir.CreateDirectories();
+    }
+
     input >> xml::start( "missions" )
             >> xml::start( "units" )
                 >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( unitMissions_ ), eMissionType_Pawn ) )
@@ -221,8 +229,7 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, E_MissionType modelType )
 {
-    const std::string& missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
-                                   + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( modelType );
+    const tools::Path& missionPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( modelType );
 
     if( modelType == eMissionType_FragOrder )
     {
@@ -243,11 +250,11 @@ namespace
 {
     void WriteMissionSheets( E_MissionType type, const ADN_Missions_Data::T_Mission_Vector& missions )
     {
-        const std::string missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
+        const tools::Path missionDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / ADN_Workspace::GetWorkspace().GetProject().GetMissionDir( type );
         for( unsigned int i = 0; i < missions.size(); ++i )
             missions[i]->RenameDifferentNamedMissionSheet( missionDir );
         for( unsigned int i = 0; i < missions.size(); ++i )
-            missions[i]->WriteMissionSheet( missionDir, missions[i]->strName_.GetData(), type );
+            missions[i]->WriteMissionSheet( missionDir, tools::Path::FromUTF8( missions[i]->strName_.GetData() ), type );
     }
 
     void WriteMissions( xml::xostream& output, const std::string& name, E_MissionType type, const ADN_Missions_Data::T_Mission_Vector& missions )
@@ -292,7 +299,7 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
     WriteMissions( output, "fragorders", eMissionType_FragOrder, fragOrders_ );
 
     //move mission sheets to obsolete directory when mission is deleted
-    for( IT_StringList it = toDeleteMissionSheets_.begin(); it != toDeleteMissionSheets_.end() ; ++it )
+    for( auto it = toDeleteMissionSheets_.begin(); it != toDeleteMissionSheets_.end() ; ++it )
        MoveMissionSheetsToObsolete( *it );
 
     //save Images in temp directory
@@ -308,15 +315,10 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
 // Name: ADN_Missions_Data::MoveMissionSheetsToObsolete
 // Created: NPT 2012-08-01
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::MoveMissionSheetsToObsolete( std::string fileName )
+void ADN_Missions_Data::MoveMissionSheetsToObsolete( const tools::Path& fileName ) const
 {
-    if( bfs::exists( fileName ) )
-    {
-        std::string newFileName = fileName;
-        size_t pos = newFileName.find_last_of("//");
-        newFileName.insert(pos,"/obsolete");
-        bfs::rename( fileName.c_str(), newFileName.c_str() );
-    }
+    if( fileName.Exists() )
+        fileName.Rename( fileName.Parent() / "obsolete" / fileName.FileName() );
 }
 
 // -----------------------------------------------------------------------------

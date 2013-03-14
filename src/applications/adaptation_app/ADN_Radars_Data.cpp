@@ -277,7 +277,7 @@ ADN_Radars_Data::~ADN_Radars_Data()
 // Name: ADN_Radars_Data::FilesNeeded
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
-void ADN_Radars_Data::FilesNeeded( T_StringList& /*files*/ ) const
+void ADN_Radars_Data::FilesNeeded( tools::Path::T_Paths& /*files*/ ) const
 {
     // NOTHING
 }

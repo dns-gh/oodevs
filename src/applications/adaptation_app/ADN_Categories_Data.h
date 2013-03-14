@@ -48,7 +48,7 @@ public:
              ADN_Categories_Data();
     virtual ~ADN_Categories_Data();
 
-    void FilesNeeded(T_StringList& l) const;
+    void FilesNeeded(tools::Path::T_Paths& l) const;
     void Reset();
     void Load( const tools::Loader_ABC& fileLoader );
     void Save();

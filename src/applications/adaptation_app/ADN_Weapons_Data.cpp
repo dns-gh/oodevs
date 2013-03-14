@@ -338,9 +338,9 @@ ADN_Weapons_Data::~ADN_Weapons_Data()
 // Name: ADN_Weapons_Data::FilesNeeded
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
-void ADN_Weapons_Data::FilesNeeded( T_StringList& files ) const
+void ADN_Weapons_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szWeapons_.GetData());
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szWeapons_ );
 }
 
 // -----------------------------------------------------------------------------

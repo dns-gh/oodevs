@@ -30,9 +30,9 @@ class ADN_Missions_ABC : private boost::noncopyable
         {
         public:
             ADN_Missions_Attachment(){}
-            ADN_Missions_Attachment( const std::string& name )
+            ADN_Missions_Attachment( const tools::Path& name )
             {
-                strName_ = name;
+                strName_ = name.ToUTF8();
             }
             virtual ~ADN_Missions_Attachment(){}
         };
@@ -53,12 +53,11 @@ public:
 
     //! @name Operations
     //@{
-    std::string GetItemName();
     virtual ADN_Missions_ABC* CreateCopy() { return 0; }
 
     void FillContextParameters( E_EntityType entityType );
 
-    virtual void ReadArchive( xml::xistream& input, const std::string& missionDir );
+    virtual void ReadArchive( xml::xistream& input, const tools::Path& missionDir );
     virtual void WriteArchive( xml::xostream& output, const std::string& name );
 
     void ReadParameter( xml::xistream& input );
@@ -69,9 +68,9 @@ public:
     void WriteMissionSheetParametersDescriptions( xml::xostream& xos );
     void WriteMissionSheetAttachments( xml::xostream& xos );
     bool IsFileInAttachmentList( const std::string& fileName );
-    void ReadMissionSheet( const std::string& missionDir );
-    void RenameDifferentNamedMissionSheet( const std::string& missionDir );
-    bool WriteMissionSheet( const std::string& missionDir, std::string fileName, int type );
+    void ReadMissionSheet( const tools::Path& missionDir );
+    void RenameDifferentNamedMissionSheet( const tools::Path& missionDir );
+    bool WriteMissionSheet( const tools::Path& missionDir, const tools::Path& fileName, int type );
     bool IsEmptyMissionSheet();
     bool IsEmptyParameterList();
     bool NeedsSaving();

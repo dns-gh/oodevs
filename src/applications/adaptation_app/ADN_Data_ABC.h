@@ -27,10 +27,6 @@ namespace tools
 
 class ADN_ConsistencyChecker;
 
-typedef std::list<std::string>         T_StringList;
-typedef T_StringList::iterator        IT_StringList;
-typedef T_StringList::const_iterator CIT_StringList;
-
 // =============================================================================
 /** @class  ADN_Data_ABC
     @brief  ADN_Data_ABC
@@ -49,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void FilesNeeded( T_StringList& vFiles ) const = 0;
+    virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const = 0;
     virtual void Reset() = 0;
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();

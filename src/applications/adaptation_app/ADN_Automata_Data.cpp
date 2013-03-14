@@ -231,9 +231,9 @@ ADN_Automata_Data::~ADN_Automata_Data()
 // Name: ADN_Automata_Data::FilesNeeded
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_Automata_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szAutomata_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szAutomata_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -1144,9 +1144,9 @@ ADN_Sensors_Data::~ADN_Sensors_Data()
 // Name: ADN_Sensors_Data::FilesNeeded
 // Created: JDY 03-09-08
 //-----------------------------------------------------------------------------
-void ADN_Sensors_Data::FilesNeeded(T_StringList& files) const
+void ADN_Sensors_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSensors_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSensors_ );
 }
 
 //-----------------------------------------------------------------------------

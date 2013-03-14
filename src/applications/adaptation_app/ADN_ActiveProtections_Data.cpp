@@ -58,9 +58,9 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfos* ADN_ActiveProtections_Data::
 // Name: ADN_ActiveProtections_Data::FilesNeeded
 // Created: LDC 2010-01-13
 // -----------------------------------------------------------------------------
-void ADN_ActiveProtections_Data::FilesNeeded( T_StringList& vFiles) const
+void ADN_ActiveProtections_Data::FilesNeeded( tools::Path::T_Paths& vFiles) const
 {
-   vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szActiveProtections_.GetData() );
+   vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szActiveProtections_ );
 }
 
 // -----------------------------------------------------------------------------

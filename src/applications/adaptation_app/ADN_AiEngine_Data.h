@@ -36,7 +36,7 @@ public:
     //@}
 
     void Reset();
-    void FilesNeeded(T_StringList& l) const;
+    void FilesNeeded(tools::Path::T_Paths& l) const;
 
 private:
     void ReadArchive( xml::xistream& );

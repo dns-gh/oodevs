@@ -191,9 +191,9 @@ ADN_Breakdowns_Data::~ADN_Breakdowns_Data()
 // Name: ADN_Breakdowns_Data::FilesNeeded
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
-void ADN_Breakdowns_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_Breakdowns_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szBreakdowns_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szBreakdowns_ );
 }
 
 // -----------------------------------------------------------------------------

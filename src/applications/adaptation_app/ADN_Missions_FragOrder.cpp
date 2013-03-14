@@ -17,15 +17,12 @@
 #include <tools/Loader_ABC.h>
 #include <tools/EncodingConverter.h>
 #include <boost/bind.hpp>
-#include <boost/filesystem.hpp>
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 #include <queue>
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
-
-namespace bfs = boost::filesystem;
 
 ADN_Missions_FragOrder::ADN_Missions_FragOrder()
     : ADN_Missions_ABC()
@@ -60,7 +57,7 @@ ADN_Missions_FragOrder* ADN_Missions_FragOrder::CreateCopy()
     return newFragOrder;
 }
 
-void ADN_Missions_FragOrder::ReadArchive( xml::xistream& input, const std::string& missionDir )
+void ADN_Missions_FragOrder::ReadArchive( xml::xistream& input, const tools::Path& missionDir )
 {
     ADN_Missions_ABC::ReadArchive( input, missionDir );
     input >> xml::optional >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )

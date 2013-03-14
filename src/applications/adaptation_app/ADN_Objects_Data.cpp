@@ -1329,9 +1329,9 @@ void ADN_Objects_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) 
 // Name: ADN_Objects_Data::FilesNeeded
 // Created: JDY 03-09-08
 //-----------------------------------------------------------------------------
-void ADN_Objects_Data::FilesNeeded( T_StringList& files ) const
+void ADN_Objects_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szObjects_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szObjects_ );
 }
 
 //-----------------------------------------------------------------------------

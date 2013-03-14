@@ -370,10 +370,10 @@ void ADN_Units_GUI::UpdateValidators()
 // Name: ADN_Units_GUI::ExportHtml
 // Created: MGD 2010-02-10
 // -----------------------------------------------------------------------------
-void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
+void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath )
 {
-    QString strLocalPath = strPath + tr( "Units/" );
-    ADN_Tools::CreatePathToFile( strLocalPath.toStdString() );
+    tools::Path strLocalPath = strPath / tools::Path::FromUnicode( tr( "Units/" ).toStdWString() );
+    strLocalPath.CreateDirectories();
     ADN_HtmlBuilder indexBuilder;
     indexBuilder.BeginHtml( tr( "Units" ) );
 
@@ -390,7 +390,7 @@ void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString
 
     }
     indexBuilder.EndTable();
-    indexBuilder.WriteToFile( strLocalPath + "index.htm" );
+    indexBuilder.WriteToFile( strLocalPath / "index.htm" );
 
     QString strText = "<a href=\"" + tr( "Units/" ) + "index.htm\">" + tr( "Units" ) + "</a>";
     mainIndexBuilder.ListItem( strText );

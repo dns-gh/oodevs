@@ -25,7 +25,9 @@
 #include "ADN_Project_Data.h"
 #include "ADN_ProgressBar.h"
 #include "ADN_FileLoaderObserver.h"
+#include "clients_gui/FileDialog.h"
 #include "clients_gui/HelpSystem.h"
+#include "clients_gui/ImageWrapper.h"
 #include "clients_gui/resources.h"
 #include "tools/DefaultLoader.h"
 #include "tools/GeneralConfig.h"
@@ -35,35 +37,31 @@
 
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
-
-namespace bfs = boost::filesystem;
 
 namespace
 {
-    QString ReadDataDirectory()
+    tools::Path ReadDataDirectory()
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.readEntry( "/Common/DataDirectory", "" );
+        return tools::Path::FromUnicode( settings.readEntry( "/Common/DataDirectory", "" ).toStdWString() );
     }
 
-    std::string GetDefaultRoot( const std::string& appName )
+    tools::Path GetDefaultRoot( const std::string& appName )
     {
-        const QString regDir = ReadDataDirectory();
-        if( !regDir.isEmpty() )
-            return regDir.toStdString();
+        const tools::Path regDir = ReadDataDirectory();
+        if( !regDir.IsEmpty() )
+            return regDir;
         char myDocuments[ MAX_PATH ];
         SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
-        return ( bfs::path( myDocuments ) / appName ).string();
+        return tools::Path( myDocuments ) / tools::Path::FromUTF8( appName );
     }
 
     QString ReadPassword()
     {
         try
         {
-            xml::xifstream xis( tools::GeneralConfig::BuildResourceChildFile( "authoring.xml" ) );
+            tools::Xifstream xis( tools::GeneralConfig::BuildResourceChildFile( "authoring.xml" ) );
             xis >> xml::start( "authoring" )
                     >> xml::start( "restricted-access" );
             return xis.attribute< std::string >( "password" ).c_str();
@@ -102,7 +100,7 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
 {
     generalConfig_->Parse( argc, argv );
     setMinimumSize( 640, 480 );
-    setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
+    setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
     setCaption( tr( "Sword Adaptation Tool - No Project" ) + "[*]" );
 }
 
@@ -251,11 +249,9 @@ void ADN_MainWindow::SetMenuEnabled( bool bEnabled )
 // Name: ADN_MainWindow::SaveProjectAs
 // Created: SBO 2006-11-16
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::SaveProjectAs( const std::string& filename )
+void ADN_MainWindow::SaveProjectAs( const tools::Path& filename )
 {
-    std::string res( filename );
-    std::replace( res.begin(), res.end(), '\\', '/' );
-    workspace_.SaveAs( res, *fileLoader_ );
+    workspace_.SaveAs( filename, *fileLoader_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -301,19 +297,15 @@ void ADN_MainWindow::DoSaveProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::SaveAsProject()
 {
-    QString strDirectoryName = QFileDialog::getExistingDirectory( this, tr( "Save project as" ), generalConfig_->GetModelsDir().c_str() );
-    if( strDirectoryName.isEmpty() )
+    tools::Path directory = gui::FileDialog::getExistingDirectory( this, tr( "Save project as" ), generalConfig_->GetModelsDir() );
+    if( directory.IsEmpty() )
         return;
 
-    std::string res = strDirectoryName.toStdString();
-    std::replace( res.begin(), res.end(), '\\', '/' );
-    res += "/physical.xml";
-
-    bfs::path physicalPath( res );
-    if( bfs::exists( res ) )
+    directory /= "physical.xml";
+    if( directory.Exists() )
     {
         bool readOnly = false;
-        xml::xifstream xis( res );
+        tools::Xifstream xis( directory );
         xis >> xml::optional >> xml::start( "physical" )
             >> xml::optional >> xml::attribute( "read-only", readOnly );
         if( readOnly )
@@ -328,7 +320,7 @@ void ADN_MainWindow::SaveAsProject()
     bool hasSaved = true;
     try
     {
-        hasSaved = workspace_.SaveAs( res, *fileLoader_ );
+        hasSaved = workspace_.SaveAs( directory, *fileLoader_ );
         if( !hasSaved )
             QMessageBox::critical( this, tr( "Saving error" ), tr( "Something went wrong during the saving process." ) );
     }
@@ -341,7 +333,7 @@ void ADN_MainWindow::SaveAsProject()
     QApplication::restoreOverrideCursor();    // restore original cursor
     if( hasSaved )
     {
-        QString title = tr( "Sword Adaptation Tool - " ) + res.c_str();
+        QString title = tr( "Sword Adaptation Tool - " ) + directory.ToUTF8().c_str();
         if( workspace_.GetProject().GetDataInfos().IsReadOnly() )
             title += tr( " [ Read Only ]" );
         setCaption( title + "[*]" );
@@ -355,8 +347,8 @@ void ADN_MainWindow::SaveAsProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::NewProject()
 {
-    QString qfilename = QFileDialog::getSaveFileName( this, tr( "Create new project" ), generalConfig_->GetModelsDir().c_str(), tr( "Physical model file (physical.xml)" ) );
-    if( qfilename == QString::null )
+    tools::Path filename = gui::FileDialog::getSaveFileName( this, tr( "Create new project" ), generalConfig_->GetModelsDir(), tr( "Physical model file (physical.xml)" ) );
+    if( filename.IsEmpty() )
         return;
 
     workspace_.SetOpenMode( eOpenMode_Admin );
@@ -368,13 +360,11 @@ void ADN_MainWindow::NewProject()
     SetMenuEnabled(false);
     mainTabWidget_->hide();
 
-    std::string res( qfilename );
-    std::replace( res.begin(), res.end(), '\\', '/' );
-    workspace_.Reset( res );
+    workspace_.Reset( filename );
 
     SetMenuEnabled(true);
     mainTabWidget_->show();
-    setCaption( tr( "Sword Adaptation Tool - " ) + qfilename + "[*]" );
+    setCaption( tr( "Sword Adaptation Tool - " ) + filename.ToUTF8().c_str() + "[*]" );
     pProjectLoadAction_->setVisible( false );
 }
 
@@ -384,12 +374,12 @@ void ADN_MainWindow::NewProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::OpenProject()
 {
-    QString qfilename = QFileDialog::getOpenFileName( this, tr( "Open physical model project" ), generalConfig_->GetModelsDir().c_str(), tr( "Physical model file (physical.xml)" ) );
-    if( qfilename == QString::null )
+    tools::Path filename = gui::FileDialog::getOpenFileName( this, tr( "Open physical model project" ), generalConfig_->GetModelsDir(), tr( "Physical model file (physical.xml)" ) );
+    if( filename.IsEmpty() )
         return;
     try
     {
-        OpenProject( qfilename.toStdString() );
+        OpenProject( filename );
     }
     catch( const std::exception& e )
     {
@@ -404,7 +394,7 @@ void ADN_MainWindow::OpenProject()
 // Name: ADN_MainWindow::OpenProject
 // Created: APE 2005-04-14
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::OpenProject( const std::string& szFilename, bool isAdminMode )
+void ADN_MainWindow::OpenProject( const tools::Path& szFilename, bool isAdminMode )
 {
     if( isAdminMode )
     {
@@ -418,16 +408,16 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, bool isAdminMod
     mainTabWidget_->hide();
 
     QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
-    if( QString( szFilename.c_str() ).startsWith( "//" ) )
-    {
-        std::string res( szFilename );
-        std::replace( res.begin(), res.end(), '/', '\\' );
-        workspace_.Load( res, *fileLoader_ );
-    }
-    else
-        workspace_.Load( szFilename, *fileLoader_ );
+    //if( QString( szFilename.c_str() ).startsWith( "//" ) )
+    //{
+    //    std::string res( szFilename );
+    //    std::replace( res.begin(), res.end(), '/', '\\' );
+    //    workspace_.Load( res, *fileLoader_ );
+    //}
+    //else
+    workspace_.Load( szFilename, *fileLoader_ );
     QApplication::restoreOverrideCursor();    // restore original cursor
-    QString title = tr( "Sword Adaptation Tool - %1" ).arg( szFilename.c_str() );
+    QString title = tr( "Sword Adaptation Tool - %1" ).arg( szFilename.ToUTF8().c_str() );
     if( workspace_.GetProject().GetDataInfos().IsReadOnly() )
         title += tr( " [ Read Only ]" );
     setCaption( title + "[*]" );
@@ -443,14 +433,10 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, bool isAdminMod
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::ExportHtml()
 {
-    QString strPath = QFileDialog::getExistingDirectory( this, QString(), ADN_Workspace::GetWorkspace().GetProject().GetWorkDirInfos().GetWorkingDirectory().GetData().c_str() );
-    if( strPath == QString::null )
+    tools::Path path = gui::FileDialog::getExistingDirectory( this, QString(), ADN_Workspace::GetWorkspace().GetProject().GetWorkDirInfos().GetWorkingDirectory().GetData() );
+    if( path.IsEmpty() )
         return;
-
-    if( strPath.at( strPath.length() - 1 ) != '/' )
-        strPath += '/';
-
-    workspace_.ExportHtml( strPath.toStdString() );
+    workspace_.ExportHtml( path );
 }
 
 //-----------------------------------------------------------------------------
@@ -473,7 +459,6 @@ void ADN_MainWindow::CloseApplication( bool bAskSave /*= true*/ )
 {
     if( !bAskSave )
         bSkipSave_ = true;
-    workspace_.Reset( ADN_Project_Data::FileInfos::szUntitled_ );
     close();
 }
 
@@ -494,8 +479,8 @@ void ADN_MainWindow::TestData()
 
     try
     {
-        std::string strCommandLine = config_.GetSimPath() + " " + config_.GetSimArguments();
-        if( workspace_.GetProject().GetFileInfos().GetFileNameFull().empty() )
+        std::wstring strCommandLine = config_.GetSimPath().ToUnicode() + L" " + config_.GetSimArguments();
+        if( workspace_.GetProject().GetFileInfos().GetFileNameFull().IsEmpty() )
         {
             int nResult = QMessageBox::question( this, tr( "Data test" ), tr( "No project loaded, continue anyway?" ), QMessageBox::Yes, QMessageBox::No );
             if( nResult == QMessageBox::No )
@@ -537,7 +522,10 @@ void ADN_MainWindow::About()
 void ADN_MainWindow::closeEvent( QCloseEvent * e )
 {
     if( this->OfferToSave() == true )
+    {
+        workspace_.Reset( ADN_Project_Data::FileInfos::szUntitled_ );
         e->accept();
+    }
     else
         e->ignore();
 }
@@ -630,7 +618,7 @@ bool ADN_MainWindow::OfferToSave()
         return true;
     if( !isWindowModified() )
         return true;
-    QString strMessage = tr( "Save changes to project %1?" ).arg( workspace_.GetProject().GetFileInfos().GetFileNameFull().c_str() );
+    QString strMessage = tr( "Save changes to project %1?" ).arg( workspace_.GetProject().GetFileInfos().GetFileNameFull().ToUTF8().c_str() );
     int nResult = QMessageBox::information( this, tr( "Sword Adaptation Tool" ), strMessage, QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
     switch( nResult )
     {

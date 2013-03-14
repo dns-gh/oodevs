@@ -124,19 +124,9 @@ ADN_Drawings_Data::~ADN_Drawings_Data()
 // Name: ADN_Drawings_Data::FilesNeeded
 // Created: SBO 2011-04-18
 // -----------------------------------------------------------------------------
-void ADN_Drawings_Data::FilesNeeded( T_StringList& /*files*/ ) const
+void ADN_Drawings_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::Load
-// Created: ABR 2011-04-22
-// -----------------------------------------------------------------------------
-void ADN_Drawings_Data::Load( const tools::Loader_ABC& fileLoader )
-{
-    const std::string filename = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDrawingTemplates_.GetData();
-    fileLoader.LoadFile( filename, boost::bind( &ADN_Drawings_Data::ReadArchive, this, _1 ) );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDrawingTemplates_ );
 }
 
 // -----------------------------------------------------------------------------

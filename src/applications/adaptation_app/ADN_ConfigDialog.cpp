@@ -10,8 +10,8 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ConfigDialog.h"
 #include "moc_ADN_ConfigDialog.cpp"
-
 #include "ADN_Config.h"
+#include "clients_gui/FileDialog.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ConfigDialog::ADN_ConfigDialog
@@ -27,13 +27,13 @@ ADN_ConfigDialog::ADN_ConfigDialog( ADN_Config& config )
     Q3GridLayout* pGrid  = new Q3GridLayout( this, 4, 2, 5, 5 );
 
     pGrid->addWidget( new QLabel( tr( "SIM path" ), this ), 0, 0 );
-    pSimPath_ = new QLineEdit( config.GetSimPath().c_str(), this );
+    pSimPath_ = new QLineEdit( QString::fromStdWString( config.GetSimPath().ToUnicode() ), this );
     pGrid->addWidget( pSimPath_, 0, 1 );
     pSimPathBrowser_ = new QPushButton( tr( "Browse" ), this );
     pGrid->addWidget( pSimPathBrowser_, 0, 2 );
 
     pGrid->addWidget( new QLabel( tr( "SIM parameters" ), this ), 1, 0 );
-    pSimArguments_ = new QLineEdit( config.GetSimArguments().c_str(), this );
+    pSimArguments_ = new QLineEdit( QString::fromStdWString( config.GetSimArguments() ), this );
     pGrid->addMultiCellWidget( pSimArguments_, 1, 1, 1, 2 );
 
     pOk_     = new QPushButton( tr( "&OK" ), this );
@@ -61,8 +61,8 @@ ADN_ConfigDialog::~ADN_ConfigDialog()
 // -----------------------------------------------------------------------------
 void ADN_ConfigDialog::OnOk()
 {
-    pConfig_->SetSimPath     ( std::string( pSimPath_->text() ) );
-    pConfig_->SetSimArguments( std::string( pSimArguments_->text() ) );
+    pConfig_->SetSimPath     ( tools::Path::FromUnicode( pSimPath_->text().toStdWString() ) );
+    pConfig_->SetSimArguments( pSimArguments_->text().toStdWString() );
     emit accept();
 }
 
@@ -81,8 +81,8 @@ void ADN_ConfigDialog::OnCancel()
 // -----------------------------------------------------------------------------
 void ADN_ConfigDialog::OnBrowsePath()
 {
-    QString strSimPath = QFileDialog::getOpenFileName( this, tr( "Select SIM to use for data test" ), pSimPath_->text(), tr( "Sword executable (*.exe)" ) );
-    if( strSimPath == QString::null )
+    tools::Path strSimPath = gui::FileDialog::getOpenFileName( this, tr( "Select SIM to use for data test" ), tools::Path::FromUnicode( pSimPath_->text().toStdWString() ), tr( "Sword executable (*.exe)" ) );
+    if( strSimPath.IsEmpty() )
         return;
-    pSimPath_->setText( strSimPath );
+    pSimPath_->setText( QString::fromStdWString( strSimPath.ToUnicode() ) );
 }

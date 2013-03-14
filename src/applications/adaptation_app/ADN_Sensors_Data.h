@@ -428,7 +428,7 @@ public:
              ADN_Sensors_Data();
     virtual ~ADN_Sensors_Data();
 
-    void FilesNeeded( T_StringList& l ) const;
+    void FilesNeeded( tools::Path::T_Paths& l ) const;
     void Reset();
 
     T_SensorsInfos_Vector& GetSensorsInfos();

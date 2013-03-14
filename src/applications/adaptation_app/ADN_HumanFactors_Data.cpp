@@ -140,9 +140,9 @@ ADN_HumanFactors_Data::~ADN_HumanFactors_Data()
 // Name: ADN_HumanFactors_Data::FilesNeeded
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
-void ADN_HumanFactors_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_HumanFactors_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szHumanFactors_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szHumanFactors_ );
 }
 
 // -----------------------------------------------------------------------------

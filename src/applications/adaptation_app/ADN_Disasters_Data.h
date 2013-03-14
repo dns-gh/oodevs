@@ -166,7 +166,7 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void FilesNeeded(T_StringList& l) const;
+    virtual void FilesNeeded(tools::Path::T_Paths& l) const;
     virtual void Reset();
     //@}
 

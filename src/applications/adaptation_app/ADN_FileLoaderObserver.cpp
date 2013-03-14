@@ -35,9 +35,9 @@ ADN_FileLoaderObserver::~ADN_FileLoaderObserver()
 // Name: ADN_FileLoaderObserver::NotifyInvalidXml
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-bool ADN_FileLoaderObserver::NotifyInvalidXml( const std::string& fileName, const xml::exception& e )
+bool ADN_FileLoaderObserver::NotifyInvalidXml( const tools::Path& fileName, const xml::exception& e )
 {
-    std::cout << boost::format( "Invalid xml file %s - %s" ) % fileName % tools::GetExceptionMsg( e ) << std::endl;
+    std::cout << boost::format( "Invalid xml file %s - %s" ) % fileName.ToUTF8() % tools::GetExceptionMsg( e ) << std::endl;
     return true;
 }
 
@@ -45,16 +45,16 @@ bool ADN_FileLoaderObserver::NotifyInvalidXml( const std::string& fileName, cons
 // Name: ADN_FileLoaderObserver::NotifyNoXmlSchemaSpecified
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-void ADN_FileLoaderObserver::NotifyNoXmlSchemaSpecified( const std::string& fileName )
+void ADN_FileLoaderObserver::NotifyNoXmlSchemaSpecified( const tools::Path& fileName )
 {
-    std::cout << boost::format( "Xml file %s doesn't have any schema" ) % fileName << std::endl;
+    std::cout << boost::format( "Xml file %s doesn't have any schema" ) % fileName.ToUTF8() << std::endl;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_FileLoaderObserver::NotifyFileMigrated
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-void ADN_FileLoaderObserver::NotifyFileMigrated( const std::string& /*fileName*/, const std::string& /*fromVersion*/, const std::string& /*toVersion*/ )
+void ADN_FileLoaderObserver::NotifyFileMigrated( const tools::Path& /*fileName*/, const std::string& /*fromVersion*/, const std::string& /*toVersion*/ )
 {
     // NOTHING
 }

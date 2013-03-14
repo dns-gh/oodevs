@@ -512,10 +512,10 @@ void ADN_Equipments_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 // Name: ADN_Equipments_GUI::ExportHtml
 // Created: APE 2005-04-19
 // -----------------------------------------------------------------------------
-void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
+void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath )
 {
-    QString strLocalPath = strPath + tr( "Equipments/" );
-    ADN_Tools::CreatePathToFile( strLocalPath.toStdString() );
+    tools::Path strLocalPath = strPath / tools::Path::FromUnicode( tr( "Equipments/" ).toStdWString() );
+    strLocalPath.CreateDirectories();
     ADN_HtmlBuilder indexBuilder;
     indexBuilder.BeginHtml( tr( "Equipments" ) );
     indexBuilder.BeginList();
@@ -603,14 +603,14 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QS
 
         builder.EndHtml();
 
-        QString strFileName = tr( "Equipment_%1.htm" ).arg( n );
-        QString strLink = "<a href=\"" + strFileName + "\">" + composante.strName_.GetData().c_str() + "</a>";
+        tools::Path strFileName = tools::Path::FromUnicode( tr( "Equipment_%1.htm" ).arg( n ).toStdWString() );
+        QString strLink = QString( "<a href=\"" ) + strFileName.ToUTF8().c_str() + "\">" + composante.strName_.GetData().c_str() + "</a>";
         indexBuilder.ListItem( strLink );
-        builder.WriteToFile( strLocalPath + strFileName );
+        builder.WriteToFile( strLocalPath / strFileName );
     }
     indexBuilder.EndList();
     indexBuilder.EndHtml();
-    indexBuilder.WriteToFile( strLocalPath + "index.htm" );
+    indexBuilder.WriteToFile( strLocalPath / "index.htm" );
 
     QString strText = "<a href=\"" + tr( "Equipments/" ) + "index.htm\">" + tr( "Equipments" ) + "</a>";
     mainIndexBuilder.ListItem( strText );

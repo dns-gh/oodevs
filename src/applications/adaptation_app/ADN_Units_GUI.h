@@ -107,7 +107,7 @@ public:
     //! @name Operations
     //@{
     void Build();
-    void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath );
+    void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath );
     ADN_SymbolWidget* GetSymbolWidget() const;
     void SetSymbolFactory( kernel::SymbolFactory& factory );
     bool IsSymbolAvailable( const std::string& symbol );

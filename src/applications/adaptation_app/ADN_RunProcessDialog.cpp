@@ -43,9 +43,9 @@ ADN_RunProcessDialog::~ADN_RunProcessDialog()
 // Name: ADN_RunProcessDialog::RunCommand
 // Created: SBO 2006-01-25
 // -----------------------------------------------------------------------------
-void ADN_RunProcessDialog::RunCommand( const std::string& strCommandLine )
+void ADN_RunProcessDialog::RunCommand( const std::wstring& strCommandLine )
 {
-    pProcess_ = new Q3Process( QString( strCommandLine.c_str() ) );
+    pProcess_ = new Q3Process( QString::fromStdWString( strCommandLine ) );
 
     connect( pProcess_, SIGNAL( readyReadStdout() ), this, SLOT( ReadFromStdout() ) );
     connect( pProcess_, SIGNAL( readyReadStderr() ), this, SLOT( ReadFromStderr() ) );

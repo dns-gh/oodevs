@@ -13,6 +13,7 @@
 #include "ADN_ListView.h"
 #include "ADN_App.h"
 #include "ADN_MainWindow.h"
+#include "clients_gui/FileDialog.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListViewDialog constructor
@@ -92,9 +93,9 @@ void ADN_ListViewDialog::SaveListView()
 {
     if( !pListView_ )
         return;
-    QString path = QFileDialog::getSaveFileName( this, tr( "Save" ), QString(), tr("Excel files (*.xls)") );
-    if( path.isEmpty() )
+    const tools::Path path = gui::FileDialog::getSaveFileName( this, tr( "Save" ), tools::Path(), tr("Excel files (*.xls)") );
+    if( path.IsEmpty() )
         return;
     pListView_->SaveToXls( path, strCaption_ );
-    ShellExecute(0, NULL, path, NULL, NULL, SW_NORMAL);
+    ShellExecuteW( 0, NULL, path.ToUnicode().c_str(), NULL, NULL, SW_NORMAL );
 }

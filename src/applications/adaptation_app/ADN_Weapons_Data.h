@@ -168,7 +168,7 @@ public:
              ADN_Weapons_Data();
     virtual ~ADN_Weapons_Data();
 
-    void FilesNeeded( T_StringList& l ) const;
+    void FilesNeeded( tools::Path::T_Paths& l ) const;
     void Reset();
 
     T_WeaponInfosVector& GetWeaponInfos();

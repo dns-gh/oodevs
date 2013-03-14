@@ -103,7 +103,7 @@ public:
     explicit ADN_Models_Data();
     virtual ~ADN_Models_Data();
 
-    void            FilesNeeded(T_StringList& l) const;
+    void            FilesNeeded(tools::Path::T_Paths& l) const;
     void            Reset();
     QStringList     GetModelsThatUse( E_EntityType type, ADN_Missions_Mission& model );
     QStringList     GetModelsThatUse( E_EntityType type, ADN_Missions_FragOrder& fragOrder );

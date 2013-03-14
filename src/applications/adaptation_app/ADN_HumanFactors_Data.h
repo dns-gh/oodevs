@@ -74,7 +74,7 @@ public:
 
     //! @name Operations
     //@{
-    void FilesNeeded( T_StringList& vFiles ) const;
+    void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
     void Reset();
     //@}
 

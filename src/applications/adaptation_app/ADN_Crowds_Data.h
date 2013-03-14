@@ -239,7 +239,7 @@ public:
              ADN_Crowds_Data();
     virtual ~ADN_Crowds_Data();
 
-    void FilesNeeded( T_StringList& l ) const;
+    void FilesNeeded( tools::Path::T_Paths& l ) const;
     void Reset();
 
     T_CrowdsInfosVector& GetCrowds();

@@ -65,7 +65,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void FilesNeeded( T_StringList& vFiles ) const;
+    virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
     virtual void Reset();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
@@ -76,7 +76,6 @@ public:
     ADN_Missions_ABC* FindFragOrder( const std::string& strName );
     ADN_Missions_ABC* FindMission( const T_Mission_Vector& missions, const std::string& strName );
     ADN_Missions_ABC* FindMission( int missionType, const std::string& strName );
-    virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();
 
     QStringList         GetAllMissionsThatUse( ADN_Objects_Data_ObjectInfos& object ); // $$$$ ABR 2012-08-03: Warning, return not only the name, but concatenation of tab name and mission name
@@ -87,24 +86,28 @@ public:
     QStringList         GetFragOrdersThatUse( ADN_Objects_Data_ObjectInfos& object );
 
     void NotifyElementDeleted( std::string elementName, E_MissionType missionType );
-    QString GenerateMissionSheet( int index, const QString& text );
+    tools::Path GenerateMissionSheet( int index, const QString& text );
     //@}
 
 private:
     void ReadArchive( xml::xistream& input );
     void ReadMission( xml::xistream& input, T_Mission_Vector& missions, E_MissionType modelType );
     void WriteArchive( xml::xostream& output );
-    void MoveMissionSheetsToObsolete( std::string file );
+    void MoveMissionSheetsToObsolete( const tools::Path& file ) const;
 
 public:
-    T_Mission_Vector    unitMissions_;
-    T_Mission_Vector    automatMissions_;
-    T_Mission_Vector    populationMissions_;
-    T_Mission_Vector    fragOrders_;
-    T_StringList        toDeleteMissionSheets_;
+    T_Mission_Vector unitMissions_;
+    T_Mission_Vector automatMissions_;
+    T_Mission_Vector populationMissions_;
+    T_Mission_Vector fragOrders_;
+    tools::Path::T_Paths toDeleteMissionSheets_;
 
 public:
     static tools::IdManager idManager_;
+    static tools::Path imagePath_;
+    static tools::Path imageTemporaryPath_;
+    static tools::Path xslTemporaryFile_;
+    static tools::Path missionSheetTemporaryFile_;
 };
 
 #endif // __ADN_Missions_Data_h_

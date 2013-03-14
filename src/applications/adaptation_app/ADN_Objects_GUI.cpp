@@ -452,10 +452,10 @@ void ADN_Objects_GUI::Enable( bool enable )
 // Name: ADN_Objects_GUI::ExportHtml
 // Created: MGD 2010-02-10
 // -----------------------------------------------------------------------------
-void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
+void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath )
 {
-    QString strLocalPath = strPath + tr( "Objects/" );
-    ADN_Tools::CreatePathToFile( strLocalPath.toStdString() );
+    tools::Path strLocalPath = strPath / tools::Path::FromUnicode( tr( "Objects/" ).toStdWString() );
+    strLocalPath.CreateDirectories();
     ADN_HtmlBuilder indexBuilder;
     indexBuilder.BeginHtml( tr( "Objects" ) );
 
@@ -486,7 +486,7 @@ void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
 
     }
     indexBuilder.EndTable();
-    indexBuilder.WriteToFile( strLocalPath + "index.htm" );
+    indexBuilder.WriteToFile( strLocalPath / "index.htm" );
 
     QString strText = "<a href=\"" + tr( "Objects/" ) + "index.htm\">" + tr( "Objects" ) + "</a>";
     mainIndexBuilder.ListItem( strText );

@@ -312,9 +312,9 @@ void ADN_Supply_Data::Reset()
 // Name: ADN_Supply_Data::FilesNeeded
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_Supply_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSupply_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSupply_ );
 }
 
 // -----------------------------------------------------------------------------

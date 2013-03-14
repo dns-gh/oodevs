@@ -13,17 +13,16 @@
 #include "ADN_Tools.h"
 #include "ADN_Workspace.h"
 #include "ADN_Objects_Data.h"
+#include "ADN_Missions_Data.h"
 #include "XmlResources.cpp"
 #include "tools/Loader_ABC.h"
-#include <boost/filesystem/operations.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
 #include <process.h>
 #include <windows.h>
 
-namespace bfs = boost::filesystem;
-
 ADN_Project_Data::WorkDirInfos  ADN_Project_Data::workDir_;
-std::string                     ADN_Project_Data::FileInfos::szUntitled_ = "Untitled";
+tools::Path                     ADN_Project_Data::FileInfos::szUntitled_ = "Untitled";
 
 //-----------------------------------------------------------------------------
 // Name: DataInfos::DataInfos
@@ -38,46 +37,46 @@ ADN_Project_Data::DataInfos::DataInfos()
 
 namespace
 {
-    void ReadFile( xml::xistream& input, const std::string& file, ADN_Type_String& outfile )
+    void ReadFile( xml::xistream& input, const std::string& file, tools::Path& outfile )
     {
         input >> xml::start( file )
                 >> xml::attribute( "file", outfile )
               >> xml::end;
     }
 
-    void ReadPath( xml::xistream& input, const std::string& file, ADN_Type_String& outfile )
+    void ReadPath( xml::xistream& input, const std::string& file, tools::Path& outfile )
     {
         input >> xml::start( file )
             >> xml::attribute( "path", outfile )
             >> xml::end;
     }
 
-    void ReadOptionalPath( xml::xistream& input, const std::string& file, ADN_Type_String& outfile )
+    void ReadOptionalPath( xml::xistream& input, const std::string& file, tools::Path& outfile )
     {
         input >> xml::optional >> xml::start( file )
             >> xml::attribute( "path", outfile )
             >> xml::end;
     }
 
-    void ReadOptionalFile( xml::xistream& input, const std::string& file, ADN_Type_String& outfile )
+    void ReadOptionalFile( xml::xistream& input, const std::string& file, tools::Path& outfile )
     {
         input >> xml::optional >> xml::start( file )
                 >> xml::attribute( "file", outfile )
               >> xml::end;
     }
 
-    void WriteFile( xml::xostream& output, const std::string& file, ADN_Type_String& outfile )
+    void WriteFile( xml::xostream& output, const std::string& file, tools::Path& outfile )
     {
-        if( outfile.GetData().empty() )
+        if( outfile.IsEmpty() )
             return;
         output << xml::start( file )
                  << xml::attribute( "file", outfile )
                << xml::end;
     }
 
-    void WritePath( xml::xostream& output, const std::string& file, ADN_Type_String& outfile )
+    void WritePath( xml::xostream& output, const std::string& file, tools::Path& outfile )
     {
-        if( outfile.GetData().empty() )
+        if( outfile.IsEmpty() )
             return;
         output << xml::start( file )
             << xml::attribute( "path", outfile )
@@ -251,7 +250,7 @@ ADN_Project_Data::FileInfos::FileInfos()
 // Name: FileInfos::FileInfos
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
-ADN_Project_Data::FileInfos::FileInfos( const std::string& filename )
+ADN_Project_Data::FileInfos::FileInfos( const tools::Path& filename )
     : szFileName_( ADN_Project_Data::GetWorkDirInfos().GetRelativePath( filename ) )
 {
     // NOTHING
@@ -261,7 +260,7 @@ ADN_Project_Data::FileInfos::FileInfos( const std::string& filename )
 // Name: FileInfos::operator =
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
-ADN_Project_Data::FileInfos& ADN_Project_Data::FileInfos::operator=( const std::string& filename )
+ADN_Project_Data::FileInfos& ADN_Project_Data::FileInfos::operator=( const tools::Path& filename )
 {
     szFileName_ = ADN_Project_Data::GetWorkDirInfos().GetRelativePath( filename );
     return *this;
@@ -283,38 +282,36 @@ ADN_Project_Data::WorkDirInfos::WorkDirInfos()
 // Name: WorkDirInfos::GetFullPath
 // Created: JDY 03-06-24
 //-----------------------------------------------------------------------------
-std::string ADN_Project_Data::WorkDirInfos::GetFullPath( const std::string& part, E_WorkDir e )
+tools::Path ADN_Project_Data::WorkDirInfos::GetFullPath( const tools::Path& part, E_WorkDir e ) const
 {
-    return ( ( e == eWorking ) ? szWorkingDir_.GetData() : szTempDir_.GetData() ) + part;
+    return ( ( e == eWorking ) ? szWorkingDir_.GetData() : szTempDir_ ) / part;
 }
 
 //-----------------------------------------------------------------------------
 // Name: WorkDirInfos::GetPartPath
 // Created: JDY 03-06-24
 //-----------------------------------------------------------------------------
-std::string ADN_Project_Data::WorkDirInfos::GetRelativePath( const std::string& full, E_WorkDir e )
+tools::Path ADN_Project_Data::WorkDirInfos::GetRelativePath( const tools::Path& full, E_WorkDir e ) const
 {
-    std::string dir = ( e == eWorking ) ? szWorkingDir_.GetData() : szTempDir_.GetData();
-    if( _strcmpi( dir.c_str(), full.substr( 0, dir.size() ).c_str() ) )
-        return std::string();
-    else
-        return full.substr( dir.size(), full.size() - dir.size() );
+    const tools::Path dir = ( e == eWorking ) ? szWorkingDir_.GetData() : szTempDir_;
+    return full.Relative( dir );
 }
 
 //-----------------------------------------------------------------------------
 // Name: WorkDirInfos::SetWorkingDirectory
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
-void ADN_Project_Data::WorkDirInfos::SetWorkingDirectory( const std::string& filename )
+void ADN_Project_Data::WorkDirInfos::SetWorkingDirectory( const tools::Path& directory )
 {
-    char szDrive[_MAX_PATH];
-    char szDir[_MAX_PATH];
-    char szFile[_MAX_PATH];
-    char szExt[_MAX_PATH];
-    char szPath[_MAX_PATH];
-    _splitpath( filename.c_str(), szDrive, szDir, szFile, szExt );
-    _makepath( szPath, szDrive, szDir, 0, 0 );
-    szWorkingDir_ = std::string( szPath );
+    if( directory.IsDirectory() )
+    {
+        directory.CreateDirectories();
+        szWorkingDir_ = directory;
+    }
+    else
+    {
+        szWorkingDir_ = directory.Parent();
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -326,17 +323,17 @@ void ADN_Project_Data::WorkDirInfos::UseTempDirectory( bool bActivateTemp )
     bTmpActivated_ = bActivateTemp;
     if( bActivateTemp )
     {
-        char *pTempDir = ( char* )malloc( sizeof( char ) * ( _MAX_PATH + 1 ) );
-        int len = GetTempPath( _MAX_PATH + 1, pTempDir );
-        if( !len )
-            throw MASA_EXCEPTION( "Unable to access temp directory" );
-        std::string res( pTempDir );
-        std::replace( res.begin(), res.end(), '\\', '/' );
-        std::stringstream stream;
-        stream << res << _getpid() << "sword ot data.tmp/";
-        szTempDir_ = stream.str();
-        free( pTempDir );
+        tools::Path osTempDir = tools::Path::TemporaryPath();
+        szTempDir_ = osTempDir / "ADN_Temp_" + tools::Path::FromUTF8( boost::lexical_cast< std::string >( _getpid() ) );
+        if( szTempDir_.Exists() )
+        {
+            szTempDir_.RemoveAll();
+            szTempDir_.Remove();
+        }
+        szTempDir_.CreateDirectories();
     }
+    else
+        szTempDir_.RemoveAll();
 }
 
 //-----------------------------------------------------------------------------
@@ -364,7 +361,7 @@ ADN_Project_Data::~ADN_Project_Data()
 // Name: ADN_Project_Data::SetFile
 // Created: APE 2004-12-07
 // -----------------------------------------------------------------------------
-void ADN_Project_Data::SetFile( const std::string& strFile )
+void ADN_Project_Data::SetFile( const tools::Path& strFile )
 {
     workDir_.SetWorkingDirectory( strFile );
     szFile_ = strFile;
@@ -374,11 +371,11 @@ void ADN_Project_Data::SetFile( const std::string& strFile )
 // Name: ADN_Project_Data::FilesNeeded
 // Created: APE 2004-12-07
 // -----------------------------------------------------------------------------
-void ADN_Project_Data::FilesNeeded( T_StringList& /*vFiles*/ ) const
+void ADN_Project_Data::FilesNeeded( tools::Path::T_Paths& /*vFiles*/ ) const
 {
 #ifndef NDEBUG
     ADN_Project_Data* that = const_cast< ADN_Project_Data* >( this );
-    assert( ! that->szFile_.GetFileName().GetData().empty() );
+    assert( !that->szFile_.GetFileName().IsEmpty() );
 #endif
 }
 
@@ -388,7 +385,7 @@ void ADN_Project_Data::FilesNeeded( T_StringList& /*vFiles*/ ) const
 //-----------------------------------------------------------------------------
 void ADN_Project_Data::Reset()
 {
-    assert( ! szFile_.GetFileName().GetData().empty() );
+    assert( ! szFile_.GetFileName().IsEmpty() );
     // load default parameters (included has resource)
     xml::xistringstream defaultFile( physicalXml );
     dataInfos_.ReadArchive( defaultFile );
@@ -398,18 +395,18 @@ void ADN_Project_Data::Reset()
 // Name: ADN_Project_Data::GetMissionDir
 // Created: NPT 13-07-25
 //-----------------------------------------------------------------------------
-std::string ADN_Project_Data::GetMissionDir( E_MissionType missionType )
+tools::Path ADN_Project_Data::GetMissionDir( E_MissionType missionType )
 {
     switch( missionType )
     {
     case eMissionType_Pawn:
-        return dataInfos_.szUnitsMissionPath_.GetData();
+        return dataInfos_.szUnitsMissionPath_;
     case eMissionType_Automat:
-        return dataInfos_.szAutomataMissionPath_.GetData();
+        return dataInfos_.szAutomataMissionPath_;
     case eMissionType_Population:
-        return dataInfos_.szCrowdsMissionPath_.GetData();
+        return dataInfos_.szCrowdsMissionPath_;
     case eMissionType_FragOrder:
-        return dataInfos_.szFragOrdersMissionPath_.GetData();
+        return dataInfos_.szFragOrdersMissionPath_;
     default:
         return "";
     }
@@ -421,29 +418,28 @@ std::string ADN_Project_Data::GetMissionDir( E_MissionType missionType )
 //-----------------------------------------------------------------------------
 void ADN_Project_Data::Load( const tools::Loader_ABC& fileLoader )
 {
-    assert( ! szFile_.GetFileName().GetData().empty() );
+    assert( !szFile_.GetFileName().IsEmpty() );
 
     fileLoader.LoadFile( szFile_.GetFileNameFull(), boost::bind( &DataInfos::ReadArchive, &dataInfos_, _1 ) );
 
     // Check XML Validity for files not loaded
-    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData() );
-    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData() );
-    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData() );
-    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData() );
-    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szStages_.GetData() );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szPathfinder_ );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szObjectNames_ );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szHumanProtections_ );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szMedicalTreatment_ );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szStages_ );
 
-    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "templates.xml" );
-    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szDrawingTemplates_.GetData() );
-    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szScores_.GetData() );
-    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szSymbols_.GetData() );
-    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szExtensions_.GetData() );
-    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + "dis.xml" );
-    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + "FOM.xml" );
-    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + "mapping.xml" );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / "templates.xml" );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szDrawingTemplates_ );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szScores_ );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szSymbols_ );
+    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szExtensions_ );
+    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() / "dis.xml" );
+    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() / "FOM.xml" );
+    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() / "mapping.xml" );
 
-    std::auto_ptr< xml::xistream > xslStream = fileLoader.LoadFile( workDir_.GetSaveDirectory()
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMissionSheetXslPath_.GetData() );
-    xml::xofstream xosTemp( QDir::tempPath().toStdString() + "/_adnTempXslt.xsl" );
+    std::auto_ptr< xml::xistream > xslStream = fileLoader.LoadFile( workDir_.GetSaveDirectory() / dataInfos_.szMissionSheetXslPath_ );
+    tools::Xofstream xosTemp( tools::Path::TemporaryPath() / ADN_Missions_Data::xslTemporaryFile_ );
     *xslStream >> xosTemp;
 }
 
@@ -499,16 +495,16 @@ namespace
         rootNode = nodeName;
     }
 
-    void ChangeSchema( const std::string& inputFile, const std::string& schemaName )
+    void ChangeSchema( const tools::Path& inputFile, const std::string& schemaName )
     {
-        if( !bfs::exists( inputFile ) || bfs::is_directory( inputFile ) )
+        if( !inputFile.Exists() || inputFile.IsDirectory() )
             return;
 
         std::string rootNode;
-        xml::xifstream xis( inputFile );
+        tools::Xifstream xis( inputFile );
         xis >> xml::list( boost::bind( &ExtractRootNode, _2, _3, boost::ref( rootNode ) ) );
         xis >> xml::start( rootNode );
-        xml::xofstream xos( inputFile );
+        tools::Xofstream xos( inputFile );
         xos << xml::start( rootNode );
         xos << xis;
         ADN_Tools::AddSchema( xos, schemaName );
@@ -520,9 +516,9 @@ namespace
 // Name: ADN_Project_Data::WritePathfind
 // Created: CMA 2012-04-25
 //-----------------------------------------------------------------------------
-void ADN_Project_Data::WritePathfind( xml::xistream& xis, const std::string& path )
+void ADN_Project_Data::WritePathfind( xml::xistream& xis, const tools::Path& path )
 {
-    xml::xofstream xos( path );
+    tools::Xofstream xos( path );
     xis >> xml::start( "pathfind" );
     xos << xml::start( "pathfind" );
     ADN_Tools::AddSchema( xos, "Pathfind" );
@@ -535,24 +531,24 @@ void ADN_Project_Data::WritePathfind( xml::xistream& xis, const std::string& pat
 //-----------------------------------------------------------------------------
 void ADN_Project_Data::Save( const tools::Loader_ABC& fileLoader )
 {
-    assert( ! szFile_.GetFileName().GetData().empty() );
+    assert( !szFile_.GetFileName().IsEmpty() );
 
-    std::string szFile = workDir_.GetSaveDirectory() + szFile_.GetFileName().GetData();
-    ADN_Tools::CreatePathToFile( szFile );
+    tools::Path szFile = workDir_.GetSaveDirectory() + szFile_.GetFileName();
+    szFile.Parent().CreateDirectories();
     {
-        xml::xofstream output( szFile );
+        tools::Xofstream output( szFile );
         dataInfos_.WriteArchive( output );
     }
     // Update pathfind.xml
-    std::string path = workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData();
-    if( bfs::exists( bfs::path( path ) ) )
+    tools::Path path = workDir_.GetWorkingDirectory().GetData() / dataInfos_.szPathfinder_;
+    if( path.Exists() )
         fileLoader.LoadFile( path, boost::bind( &ADN_Project_Data::WritePathfind, this, _1, boost::cref( path ) ) );
     addedObjects_.clear();
 
     // Save XML Signature for files not loaded, bypassing "temp" folder
-    ChangeSchema( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData(), "ObjectNames" );
-    ChangeSchema( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData(), "HumanProtections" );
-    ChangeSchema( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData(), "MedicalTreatment" );
-    ChangeSchema( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szExtensions_.GetData(), "Extensions" );
-    ChangeSchema( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szStages_.GetData(), "Stages" );
+    ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szObjectNames_, "ObjectNames" );
+    ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szHumanProtections_, "HumanProtections" );
+    ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szMedicalTreatment_, "MedicalTreatment" );
+    ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szExtensions_, "Extensions" );
+    ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szStages_, "Stages" );
 }

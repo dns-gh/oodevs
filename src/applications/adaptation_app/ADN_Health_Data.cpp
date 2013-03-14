@@ -85,9 +85,9 @@ ADN_Health_Data::~ADN_Health_Data()
 // Name: ADN_Health_Data::FilesNeeded
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Health_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_Health_Data::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szHealth_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szHealth_ );
 }
 
 // -----------------------------------------------------------------------------

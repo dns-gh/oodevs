@@ -267,9 +267,9 @@ ADN_Reports_Data::~ADN_Reports_Data()
 // Name: ADN_Reports_Data::FilesNeeded
 // Created: SBO 2006-12-14
 // -----------------------------------------------------------------------------
-void ADN_Reports_Data::FilesNeeded( T_StringList& files ) const
+void ADN_Reports_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 {
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szReports_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szReports_ );
 }
 
 // -----------------------------------------------------------------------------

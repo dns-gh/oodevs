@@ -316,9 +316,9 @@ ADN_NBC_Datas::~ADN_NBC_Datas()
 // Name: ADN_NBC_Datas::FilesNeeded
 // Created: APE 2004-12-06
 // -----------------------------------------------------------------------------
-void ADN_NBC_Datas::FilesNeeded( T_StringList& vFiles ) const
+void ADN_NBC_Datas::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szNBC_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szNBC_ );
 }
 
 // -----------------------------------------------------------------------------

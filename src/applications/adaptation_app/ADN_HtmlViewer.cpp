@@ -11,7 +11,6 @@
 #include "ADN_HtmlViewer.h"
 #include "moc_ADN_HtmlViewer.cpp"
 #include "ADN_Connector_String.h"
-#include <boost/filesystem.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlViewer constructor
@@ -49,10 +48,9 @@ QString ADN_HtmlViewer::text() const
 void ADN_HtmlViewer::setText( const QString& text )
 {
     setHtml( "<html/>" );
-    std::string val = text.toStdString();
-    std::replace( val.begin(), val.end(), '\\', '/' );
-    if( boost::filesystem::exists( val ) )
-        load( QUrl( val.c_str() ) );
+    tools::Path val = tools::Path::FromUnicode( text.toStdWString() );
+    if( val.Exists() )
+        load( QUrl( val.Normalize().ToUTF8().c_str() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -165,7 +165,7 @@ public:
     void Build();
     void RegisterTable( ADN_MainWindow& mainWindow );
 
-    void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath );
+    void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath );
     //@}
 
 private:

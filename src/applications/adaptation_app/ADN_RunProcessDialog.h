@@ -25,7 +25,7 @@ public:
 
     //! @name Operations
     //@{
-    void RunCommand( const std::string& strCommandLine );
+    void RunCommand( const std::wstring& strCommandLine );
     //@}
 
 private slots:
