@@ -232,11 +232,11 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 			id, err := GetUnitMagicActionAck(reply)
 			if state == 0 {
 				if err == nil {
-					err = errors.New(fmt.Sprintf("Go unexpected success %v", m))
+					err = errors.New(fmt.Sprintf("Got unexpected success %v", m))
 				}
 			} else if state == 1 {
 				if err != nil {
-					err = errors.New(fmt.Sprintf("Go unexpected failure %v", m))
+					err = errors.New(fmt.Sprintf("Got unexpected failure %v", m))
 				} else {
 					if id != unitId {
 						err = errors.New(fmt.Sprintf(
@@ -290,7 +290,7 @@ func (c *Client) Pause() error {
 		if reply := m.GetControlPauseAck(); reply != nil {
 			quit <- getControlAckError(reply.GetErrorCode())
 		} else {
-			quit <- errors.New(fmt.Sprintf("Go unexpected %v", m))
+			quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
 		}
 		return true
 	}
@@ -322,7 +322,7 @@ func (c *Client) Resume(nextPause uint32) error {
 		if reply := m.GetControlResumeAck(); reply != nil {
 			quit <- getControlAckError(reply.GetErrorCode())
 		} else {
-			quit <- errors.New(fmt.Sprintf("Go unexpected %v", m))
+			quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
 		}
 		return true
 	}
@@ -352,7 +352,7 @@ func (c *Client) Stop() error {
 		if reply := m.GetControlStopAck(); reply != nil {
 			quit <- getControlAckError(reply.GetErrorCode())
 		} else {
-			quit <- errors.New(fmt.Sprintf("Go unexpected %v", m))
+			quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
 		}
 		return true
 	}
