@@ -67,3 +67,19 @@ func (s *TestSuite) TestPauseStopResume(c *C) {
 	c.Assert(sim.Success(), Equals, true)
 
 }
+
+func (s *TestSuite) TestControlRights(c *C) {
+	sim, client := connectAndWaitModel(c, "alluser", "alluser", ExCrossroadSmallEmpty)
+	defer sim.Kill()
+
+	err := client.Pause()
+	c.Assert(err, ErrorMatches, "error_forbidden")
+
+	// Privilege checking should happen before validity checks, that is
+	// resuming a non-paused simulation
+	err = client.Resume(0)
+	c.Assert(err, ErrorMatches, "error_forbidden")
+
+	err = client.Stop()
+	c.Assert(err, ErrorMatches, "error_forbidden")
+}
