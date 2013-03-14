@@ -13,7 +13,6 @@ import (
 // implemented by target type. It used to return nothing, not even an
 // error. This test should be adjusted if actions support more types.
 func postInvalidUnitMagicAction(client *swapi.Client, tasker *sword.Tasker) error {
-	params := swapi.NewMissionParams()
 	actionType := sword.UnitMagicAction_crowd_total_destruction
 	if tasker.GetCrowd() != nil {
 		actionType = sword.UnitMagicAction_delete_unit
@@ -25,7 +24,7 @@ func postInvalidUnitMagicAction(client *swapi.Client, tasker *sword.Tasker) erro
 				UnitMagicAction: &sword.UnitMagicAction{
 					Tasker:     tasker,
 					Type:       &actionType,
-					Parameters: params.Params,
+					Parameters: swapi.MakeParameters(),
 				},
 			},
 		},
