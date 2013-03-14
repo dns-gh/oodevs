@@ -16,7 +16,7 @@
 #include "MapWidget_ABC.h"
 #include "MT_Tools/MT_Profiler.h"
 #include <graphics/MapWidget.h>
-#include <tuple>
+
 namespace kernel
 {
     class Controllers;
@@ -27,6 +27,7 @@ namespace gui
     class IconLayout;
     class GlRenderPass_ABC;
     class TextureRenderPass;
+    class PickingSelector;
 
 // =============================================================================
 /** @class  GlWidget
@@ -151,15 +152,12 @@ private:
     typedef std::vector< GLdouble > T_Points;
     typedef std::vector< T_Points > T_Geometry;
 
-    typedef std::pair< unsigned int, E_LayerTypes > T_Object;
-    typedef std::tuple< int, int, int, T_Object >   T_RenderObject;
-    typedef std::vector< T_RenderObject >           T_RenderObjects;
     //@}
 
     //! @name Helpers
     //@{
     virtual void paintGL();
-    virtual void pickGL( const geometry::Point2f& point );
+    virtual void PickGL();
     virtual void initializeGL();
     virtual void resizeGL( int w, int h );
     virtual void updateGL();
@@ -168,7 +166,7 @@ private:
     void DrawTextLabel( const std::string& message, const geometry::Point2f& where, int baseSize = 12);
 
     void RenderPass( GlRenderPass_ABC& pass );
-    void RenderPass( GlRenderPass_ABC& pass, const geometry::Point2f& viewport );
+    void PickingPass( GlRenderPass_ABC& pass );
     //@}
 
 private:
@@ -189,13 +187,9 @@ private:
     bool bMulti_;
     float SymbolSize_;
     GLUtesselator* tesselator_;
-    // picking
-    bool pickingMode_;
-    T_RenderObjects renderObjects_;
-    T_ObjectsPicking pickObjects_;
+    std::auto_ptr< PickingSelector > pPickingSelector_;
     QPoint point_;
     std::vector< unsigned int > selectionBuffer_;
-    std::set< E_LayerTypes > pickingLayers_;
     T_Geometry urbanGeometryBuffer_;
     //@}
 };

@@ -925,6 +925,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\InformationToolTip.cpp">
       <Filter>Source Files\gl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\PickingSelector.cpp">
+      <Filter>Source Files\gl\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1508,6 +1511,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\WikiXmlConverter.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PickingSelector.h">
+      <Filter>Source Files\gl\Widgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

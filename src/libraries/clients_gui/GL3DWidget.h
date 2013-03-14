@@ -31,6 +31,7 @@ namespace tools
 namespace gui
 {
     class Layer;
+    class PickingSelector;
 
 // =============================================================================
 /** @class  Gl3dWidget
@@ -98,6 +99,9 @@ public:
     virtual void RenderPicking( const T_ObjectPicking& object );
     virtual bool IsPickingMode() const;
     virtual bool ShouldDisplay( E_LayerTypes type ) const;
+
+    virtual void resizeGL( int w, int h );
+    virtual void paintGL();
     //@}
 
 protected:
@@ -129,7 +133,7 @@ protected:
 
     //! @name Types
     //@{
-    typedef std::vector< Layer* >  T_Layers;
+    typedef std::vector< Layer* >      T_Layers;
     typedef T_Layers::iterator        IT_Layers;
     typedef T_Layers::const_iterator CIT_Layers;
     //@}
@@ -146,7 +150,12 @@ private:
     unsigned int frame_;
     bool isInitialized_;
     ViewFrustum current_;
+    //picking
+    std::auto_ptr< PickingSelector > pPickingSelector_;
+    QPoint point_;
     float SymbolSize_;
+    int windowHeight_;
+    int windowWidth_;
     //@}
 };
 

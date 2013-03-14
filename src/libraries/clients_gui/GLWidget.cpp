@@ -11,10 +11,12 @@
 #include "GlWidget.h"
 #include "GlRenderPass_ABC.h"
 #include "IconLayout.h"
+#include "PickingSelector.h"
 #include "clients_kernel/OptionVariant.h"
 #include <graphics/Scale.h>
 #include <graphics/extensions.h>
 #include <boost/assign/list_of.hpp>
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <iterator>
 #include <ctime>
@@ -67,8 +69,8 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, flo
     , currentPass_ ()
     , bMulti_      ( false )
     , SymbolSize_  ( 3.f )
-    , pickingMode_ ( false )
     , tesselator_  ( 0 )
+    , pPickingSelector_( new PickingSelector() )
     , selectionBuffer_( 1024 )
 {
     setAcceptDrops( true );
@@ -148,17 +150,17 @@ void GlWidget::paintGL()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GLWidget::pickGL
+// Name: GLWidget::PickGL
 // Created: LGY 2013-02-18
 // -----------------------------------------------------------------------------
-void GlWidget::pickGL( const geometry::Point2f& point )
+void GlWidget::PickGL()
 {
     if( bMulti_ ) // $$$$ LGY 2012-03-05: disable painGL : crash in remote desktop
     {
         setAutoUpdate( false );;
         for( T_RenderPasses::iterator it = passes_.begin(); it != passes_.end(); ++it )
             if( (*it)->GetName() == "main" )
-                RenderPass( **it, point );
+                PickingPass( **it );
         setAutoUpdate( true );
     }
 }
@@ -257,13 +259,12 @@ void GlWidget::RenderPass( GlRenderPass_ABC& pass )
 }
 
 // -----------------------------------------------------------------------------
-// Name: GLWidget::RenderPass
+// Name: GLWidget::PickingPass
 // Created: LGY 2013-02-18
 // -----------------------------------------------------------------------------
-void GlWidget::RenderPass( GlRenderPass_ABC& pass, const geometry::Point2f& point )
+void GlWidget::PickingPass( GlRenderPass_ABC& pass )
 {
     currentPass_ = pass.GetName();
-    point_ = CoordinatesToClient( point );
     pass.Render( *this );
 }
 
@@ -273,18 +274,7 @@ void GlWidget::RenderPass( GlRenderPass_ABC& pass, const geometry::Point2f& poin
 // -----------------------------------------------------------------------------
 void GlWidget::Picking()
 {
-    unsigned char pixel[3];
-    glReadPixels( point_.x(), windowHeight_ - point_.y(), 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel );
-    if( !renderObjects_.empty() )
-    {
-        T_RenderObject lastObject = renderObjects_.back();
-        if( std::get< 0 >( lastObject ) == (int) pixel[ 0 ] &&
-            std::get< 1 >( lastObject ) == (int) pixel[ 1 ] &&
-            std::get< 2 >( lastObject ) == (int) pixel[ 2 ] )
-        {
-            pickObjects_.push_back( std::get< 3 >( lastObject ) );
-        }
-    }
+    pPickingSelector_->Picking( point_, windowHeight_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -412,7 +402,7 @@ float GlWidget::Pixels( const geometry::Point2f& ) const
 // -----------------------------------------------------------------------------
 float GlWidget::LineWidth( float base ) const
 {
-    if( pickingMode_ )
+    if( pPickingSelector_->IsPickingMode() )
         return 5.f * Pixels();
     return base;
 }
@@ -558,7 +548,7 @@ void GlWidget::DrawPolygon( const T_PointVector& points ) const
     glPushAttrib( GL_CURRENT_BIT );
         float color[4];
         glGetFloatv( GL_CURRENT_COLOR, color );
-        if( !pickingMode_ )
+        if( !pPickingSelector_->IsPickingMode() )
             color[3] *= 0.5;
         glColor4fv( color );
         glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( points.size() ) );
@@ -1028,13 +1018,8 @@ void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& 
 {
     if( !extent_.IsInside( point ) )
         return;
-    pickingMode_ = true;
-    pickGL( point );
-    selection = pickObjects_;
-    renderObjects_.clear();
-    pickObjects_.clear();
-    pickingMode_ = false;
-
+    point_ = CoordinatesToClient( point );
+    pPickingSelector_->FillSelection( selection, boost::bind( &GlWidget::PickGL, this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1043,9 +1028,10 @@ void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& 
 // -----------------------------------------------------------------------------
 void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type )
 {
-    pickingLayers_.insert( type );
-    FillSelection( point, selection );
-    pickingLayers_.clear();
+    if( !extent_.IsInside( point ) )
+        return;
+    point_ = CoordinatesToClient( point );
+    pPickingSelector_->FillSelection( selection, type, boost::bind( &GlWidget::PickGL, this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1054,7 +1040,7 @@ void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& 
 // -----------------------------------------------------------------------------
 bool GlWidget::ShouldDisplay( E_LayerTypes type ) const
 {
-    return pickingLayers_.empty() || pickingLayers_.find( type ) != pickingLayers_.end();
+    return pPickingSelector_->ShouldDisplay( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -1063,7 +1049,7 @@ bool GlWidget::ShouldDisplay( E_LayerTypes type ) const
 // -----------------------------------------------------------------------------
 bool GlWidget::IsPickingMode() const
 {
-    return pickingMode_;
+    return pPickingSelector_->IsPickingMode();
 }
 
 // -----------------------------------------------------------------------------
@@ -1072,11 +1058,7 @@ bool GlWidget::IsPickingMode() const
 // -----------------------------------------------------------------------------
 void GlWidget::RenderPicking( const T_ObjectPicking& object )
 {
-    int red = std::rand() % 256;
-    int green = std::rand() % 256;
-    int blue = std::rand() % 256;
-    SetCurrentColor( red / 255.f, green / 255.f, blue / 255.f );
-    renderObjects_.push_back( std::make_tuple( red, green, blue, object ) );
+    pPickingSelector_->RenderPicking( object, boost::bind( &GlToolsBase::SetCurrentColor, this, _1, _2, _3, _4 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1087,4 +1069,3 @@ void GlWidget::wheelEvent( QWheelEvent* event )
 {
     MapWidget::wheelEvent( event );
 }
-

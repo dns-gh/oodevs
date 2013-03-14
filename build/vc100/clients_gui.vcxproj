@@ -150,6 +150,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\PickingSelector.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertyDelegate.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertyDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertyDisplayer.cpp" />
@@ -754,6 +755,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\ModelObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ObjectTreeView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\PickingSelector.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyDelegate.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyDialog.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyDisplayer.h" />

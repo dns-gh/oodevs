@@ -11,6 +11,7 @@
 #include "Gl3dWidget.h"
 
 #include "EntityLayer.h"
+#include "PickingSelector.h"
 #include "SimpleLocationDrawer.h"
 
 #include "clients_kernel/DetectionMap.h"
@@ -21,6 +22,8 @@
 #include <graphics/EventStrategy_ABC.h>
 #include <graphics/ViewFrustum.h>
 #include <graphics/Visitor3d.h>
+
+#include <boost/bind.hpp>
 
 using namespace geometry;
 using namespace kernel;
@@ -42,6 +45,7 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, float width,
     , zRatio_        ( 5 )
     , frame_         ( 0 )
     , isInitialized_ ( false )
+    , pPickingSelector_( new PickingSelector() )
     , SymbolSize_  ( 3.f )
 {
     // NOTHING
@@ -524,7 +528,7 @@ void Gl3dWidget::DrawTacticalGraphics( const std::string& /*symbol*/, const kern
 {
     // $$$$ SBO 2009-05-29: TODO: use SVG renderer instead
     glPushAttrib( GL_LINE_BIT );
-    glLineWidth( 3.f );
+    glLineWidth( LineWidth( 3.f ) );
     gui::SimpleLocationDrawer drawer( *this );
     location.Accept( drawer );
     glPopAttrib();
@@ -703,6 +707,8 @@ void Gl3dWidget::mouseReleaseEvent( QMouseEvent* event )
 // -----------------------------------------------------------------------------
 void Gl3dWidget::mousePressEvent( QMouseEvent* event )
 {
+    if( event )
+        point_ = event->pos();
     Gl3dWidget::mouseReleaseEvent( event );
     Widget3D::mousePressEvent( event );
 }
@@ -747,18 +753,32 @@ void Gl3dWidget::SetCurrentCursor( const QCursor& cursor )
 // Name: GL3DWidget::FillSelection
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void Gl3dWidget::FillSelection( const geometry::Point2f& /*point*/, T_ObjectsPicking& /*selection*/ )
+void Gl3dWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection )
 {
-    // NOTHING
+    if( !current_.IsVisible( point ) )
+        return;
+
+    glDisable( GL_DEPTH_TEST );
+
+    pPickingSelector_->FillSelection( selection, boost::bind( &Gl3dWidget::paintGL, this ) );
+
+    glEnable( GL_DEPTH_TEST );
+
 }
 
 // -----------------------------------------------------------------------------
 // Name: GL3DWidget::FillSelection
 // Created: LGY 2013-03-11
 // -----------------------------------------------------------------------------
-void Gl3dWidget::FillSelection( const geometry::Point2f& /*point*/, T_ObjectsPicking& /*selection*/, E_LayerTypes /*type*/ )
+void Gl3dWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type )
 {
-    // NOTHING
+    if( !current_.IsVisible( point ) )
+        return;
+    glDisable( GL_DEPTH_TEST );
+
+    pPickingSelector_->FillSelection( selection, type, boost::bind( &Gl3dWidget::paintGL, this ) );
+
+    glEnable( GL_DEPTH_TEST );
 }
 
 // -----------------------------------------------------------------------------
@@ -767,16 +787,16 @@ void Gl3dWidget::FillSelection( const geometry::Point2f& /*point*/, T_ObjectsPic
 // -----------------------------------------------------------------------------
 void Gl3dWidget::Picking()
 {
-    // NOTHING
+    pPickingSelector_->Picking( point_, windowHeight_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GL3DWidget::RenderPicking
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
-void Gl3dWidget::RenderPicking( const T_ObjectPicking& /*object*/ )
+void Gl3dWidget::RenderPicking( const T_ObjectPicking& object )
 {
-    // NOTHING
+    pPickingSelector_->RenderPicking( object, boost::bind( &GlToolsBase::SetCurrentColor, this, _1, _2, _3, _4 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -785,7 +805,7 @@ void Gl3dWidget::RenderPicking( const T_ObjectPicking& /*object*/ )
 // -----------------------------------------------------------------------------
 bool Gl3dWidget::IsPickingMode() const
 {
-    return false;
+    return pPickingSelector_->IsPickingMode();
 }
 
 // -----------------------------------------------------------------------------
@@ -801,9 +821,9 @@ float Gl3dWidget::LineWidth( float base ) const
 // Name: GL3DWidget::ShouldDisplay
 // Created: LGY 2013-03-11
 // -----------------------------------------------------------------------------
-bool Gl3dWidget::ShouldDisplay( E_LayerTypes /*type*/ ) const
+bool Gl3dWidget::ShouldDisplay( E_LayerTypes type ) const
 {
-    return true;
+    return pPickingSelector_->ShouldDisplay( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -816,4 +836,25 @@ void Gl3dWidget::OptionChanged( const std::string& name, const kernel::OptionVar
         SymbolSize_ = value.To< float >();
     else
         GlToolsBase::OptionChanged( name, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::resizeGL
+// Created: LGY 2013-03-13
+// -----------------------------------------------------------------------------
+void Gl3dWidget::resizeGL( int w, int h )
+{
+    windowHeight_ = h;
+    windowWidth_ = w;
+    Widget3D::resizeGL( w, h );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::paintGL
+// Created: LGY 2013-03-13
+// -----------------------------------------------------------------------------
+void Gl3dWidget::paintGL()
+{
+    Widget3D::resizeGL( windowHeight_, windowWidth_ );
+    Widget3D::paintGL();
 }
