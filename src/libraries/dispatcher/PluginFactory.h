@@ -30,6 +30,11 @@ namespace order
 }
 }
 
+namespace tools
+{
+    class Path;
+}
+
 namespace dispatcher
 {
     class Config;
@@ -73,7 +78,7 @@ private:
     //! @name Helpers
     //@{
     void ReadPlugin( const std::string& name, xml::xistream& xis );
-    void LoadPlugin( const std::string& name, xml::xistream& xis );
+    void LoadPlugin( const tools::Path& name, xml::xistream& xis );
     //@}
 
     //! @name Types

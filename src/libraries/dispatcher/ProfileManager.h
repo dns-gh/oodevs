@@ -28,6 +28,7 @@ namespace sword
 namespace tools
 {
     class SchemaWriter;
+    class Path;
 }
 
 namespace xml
@@ -83,7 +84,7 @@ private:
     //@{
     void ReadProfiles( xml::xistream& xis );
     void ReadProfile( xml::xistream& xis );
-    void Save( const std::string& path );
+    void Save( const tools::Path& path );
     virtual void RegisterIn( directia::brain::Brain& brain );
     void SetAutomatRight( const std::string& profile, unsigned int automat, bool readonly, bool readwrite );
     //@}

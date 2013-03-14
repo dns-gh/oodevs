@@ -48,7 +48,6 @@
 #include "clients_kernel/DecisionalModel.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/bind.hpp>
-#include <boost/filesystem.hpp>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( disable : 4503 4355 )
 
@@ -696,9 +695,8 @@ const kernel::ExtensionTypes& Model::GetExtensionTypes() const
 // -----------------------------------------------------------------------------
 void Model::DeleteCheckpoint( const std::string& name )
 {
-    std::string oldName = config_.GetCheckpointDirectory( name );
-    const boost::filesystem::path oldPath( oldName );
-    boost::filesystem::remove_all( oldPath );
+    const tools::Path oldPath = config_.GetCheckpointDirectory( tools::Path::FromUTF8( name ) );
+    oldPath.RemoveAll();
 }
 
 // -----------------------------------------------------------------------------

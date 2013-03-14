@@ -10,6 +10,7 @@
 #ifndef __dispatcher_RotatingLog_h_
 #define __dispatcher_RotatingLog_h_
 
+#include "tools/Path.h"
 #include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
 #include <memory>
@@ -30,7 +31,7 @@ class RotatingLog : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    RotatingLog( dispatcher::LogFactory_ABC& factory, const std::string& filename, unsigned int files, unsigned int size, bool sizeInBytes = false );
+    RotatingLog( dispatcher::LogFactory_ABC& factory, const tools::Path& filename, unsigned int files, unsigned int size, bool sizeInBytes = false );
     //@}
 
     //! @name Operations
@@ -52,9 +53,9 @@ private:
     //! @name Member data
     //@{
     LogFactory_ABC& factory_;
-    std::string filename_;
-    std::string fileNameNoExtension_;
-    std::string extension_;
+    tools::Path filename_;
+    tools::Path fileNameNoExtension_;
+    tools::Path extension_;
     unsigned int file_, files_, size_, count_;
     std::auto_ptr< Log_ABC > pLog_;
     bool sizeInBytes_;

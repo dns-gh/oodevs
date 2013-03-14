@@ -11,10 +11,15 @@
 #define __dispatcher_FileLogger_h_
 
 #include "Logger_ABC.h"
+#include "tools/FileWrapper.h"
 #pragma warning( push, 0 )
 #include <boost/thread/mutex.hpp>
 #pragma warning( pop )
-#include <fstream>
+
+namespace tools
+{
+    class Path;
+}
 
 namespace dispatcher
 {
@@ -29,7 +34,7 @@ class FileLogger : public Logger_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FileLogger( const std::string& filename );
+    explicit FileLogger( const tools::Path& filename );
     virtual ~FileLogger();
     //@}
 
@@ -49,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::ofstream output_;
+    tools::Ofstream output_;
     boost::mutex mutex_;
     //@}
 };

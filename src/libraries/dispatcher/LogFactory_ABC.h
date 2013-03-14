@@ -13,6 +13,11 @@
 #include <boost/noncopyable.hpp>
 #include <string>
 
+namespace tools
+{
+    class Path;
+}
+
 namespace dispatcher
 {
 // =============================================================================
@@ -32,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< Log_ABC > CreateLog( const std::string& filename ) = 0;
+    virtual std::auto_ptr< Log_ABC > CreateLog( const tools::Path& filename ) = 0;
     //@}
 };
 }

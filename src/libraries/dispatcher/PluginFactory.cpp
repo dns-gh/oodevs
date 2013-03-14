@@ -26,8 +26,8 @@
 #include "script_plugin/ScriptPlugin.h"
 #include "score_plugin/ScorePlugin.h"
 #include "order_plugin/OrderPlugin.h"
+#include "tools/FileWrapper.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/filesystem.hpp>
 #include <windows.h>
 
 using namespace dispatcher;
@@ -86,7 +86,7 @@ void PluginFactory::Instanciate()
     handler_.Add( new script::ScriptPlugin( model_, config_, simulation_, clients_, clients_, *rights_, registrables_ ) );
     handler_.Add( new score::ScorePlugin( clients_, clients_, clients_, config_, registrables_ ) );
     handler_.Add( new logger::LoggerPlugin( model_, staticModel_, config_, services_ ) );
-    xml::xifstream xis( config_.GetSessionFile() );
+    tools::Xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )
                 >> xml::start( "dispatcher" )
@@ -110,7 +110,7 @@ void PluginFactory::Close()
 void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis )
 {
     if( xis.has_attribute( "library" ) )
-        LoadPlugin( name, xis );
+        LoadPlugin( tools::Path::FromUTF8( name ), xis );
     else if( name == "recorder" )
         handler_.Add( new plugins::saver::SaverPlugin( clients_, model_, config_ ) );
     else
@@ -132,10 +132,9 @@ namespace
 # define EXTENSION ""
 #endif
 
-    std::string SetLibraryConfiguration( const std::string& libraryPath )
+    tools::Path SetLibraryConfiguration( const tools::Path& libraryPath )
     {
-        boost::filesystem::path p( libraryPath );
-        return boost::filesystem::basename( p ) + EXTENSION + boost::filesystem::extension( p );
+        return libraryPath.BaseName() + EXTENSION + libraryPath.Extension();
     }
 
     typedef dispatcher::Plugin_ABC* (*CreateFunctor)( dispatcher::Model_ABC&, const dispatcher::StaticModel&, dispatcher::SimulationPublisher_ABC&, dispatcher::ClientPublisher_ABC&, const dispatcher::Config&, dispatcher::Logger_ABC&, xml::xistream& );
@@ -154,21 +153,21 @@ namespace
 
     struct EnvironmentGuard
     {
-        explicit EnvironmentGuard( const std::string& directory )
+        explicit EnvironmentGuard( const tools::Path& directory )
         {
             memset( path_, 0, environment_buffer_size );
-            if( GetEnvironmentVariable( "Path", path_, environment_buffer_size ) == 0 )
+            if( GetEnvironmentVariableW( L"Path", path_, environment_buffer_size ) == 0 )
                 throw MASA_EXCEPTION( "Failed to retrieve 'PATH' environment variable." );
-            const std::string newPath( directory + ";" + std::string( path_ ) );
-            if( !SetEnvironmentVariable( "Path", newPath.c_str() ) )
+            const std::wstring newPath( directory.ToUnicode() + L";" + std::wstring( path_ ) );
+            if( !SetEnvironmentVariableW( L"Path", newPath.c_str() ) )
                 throw MASA_EXCEPTION( "Failed to set 'PATH' environment variable." );
         }
         ~EnvironmentGuard()
         {
-            if( !std::string( path_ ).empty() )
-                SetEnvironmentVariable( "Path", path_ );
+            if( !std::wstring( path_ ).empty() )
+                SetEnvironmentVariableW( L"Path", path_ );
         }
-        char path_[ environment_buffer_size ];
+        wchar_t path_[ environment_buffer_size ];
     };
 }
 
@@ -176,15 +175,15 @@ namespace
 // Name: PluginFactory::LoadPlugin
 // Created: SBO 2011-01-31
 // -----------------------------------------------------------------------------
-void PluginFactory::LoadPlugin( const std::string& name, xml::xistream& xis )
+void PluginFactory::LoadPlugin( const tools::Path& name, xml::xistream& xis )
 {
     try
     {
         const EnvironmentGuard environment( config_.BuildPluginDirectory( name ) );
-        const std::string library = SetLibraryConfiguration( xis.attribute< std::string >( "library" ) );
-        HMODULE module = LoadLibrary( library.c_str() );
+        const tools::Path library = SetLibraryConfiguration( xis.attribute< tools::Path >( "library" ) );
+        HMODULE module = LoadLibraryW( library.ToUnicode().c_str() );
         if( !module )
-            throw MASA_EXCEPTION( "failed to load library: '" + library + "'" );
+            throw MASA_EXCEPTION( "failed to load library: '" + library.ToUTF8() + "'" );
         CreateFunctor createFunction = LoadFunction< CreateFunctor >( module, "CreateInstance" );
         DestroyFunctor destroyFunction = LoadFunction< DestroyFunctor >( module, "DestroyInstance" );
         boost::shared_ptr< Logger_ABC > logger( new FileLogger( config_.BuildSessionChildFile( name + "_plugin.log" ) ) );
@@ -192,7 +191,7 @@ void PluginFactory::LoadPlugin( const std::string& name, xml::xistream& xis )
         if( !plugin.get() )
             throw MASA_EXCEPTION( "CreateFunctor returned an error (see details in plugin log file)" );
         handler_.Add( plugin, logger );
-        MT_LOG_INFO_MSG( "Plugin '" << name << "' loaded (file: " << library << ")" );
+        MT_LOG_INFO_MSG( "Plugin '" << name << "' loaded (file: " << library.ToUTF8() << ")" );
     }
     catch( const std::exception& e )
     {

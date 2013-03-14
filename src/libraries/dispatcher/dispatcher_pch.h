@@ -18,7 +18,6 @@
 #include <map>
 #include <set>
 #include <cassert>
-#include <fstream>
 #include <sstream>
 
 #include <tools/Exception.h>

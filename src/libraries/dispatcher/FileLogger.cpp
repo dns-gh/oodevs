@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "FileLogger.h"
+#include "tools/Path.h"
 #pragma warning( push, 0 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
@@ -19,8 +20,8 @@ using namespace dispatcher;
 // Name: FileLogger constructor
 // Created: SBO 2011-05-19
 // -----------------------------------------------------------------------------
-FileLogger::FileLogger( const std::string& filename )
-    : output_( filename.c_str(), std::ios::out | std::ios::trunc )
+FileLogger::FileLogger( const tools::Path& filename )
+    : output_( filename, std::ios::out | std::ios::trunc )
 {
     // NOTHING
 }

@@ -11,10 +11,8 @@
 #include "dispatcher/MessageLoader.h"
 #include "dispatcher/MessageHandler_ABC.h"
 #include "MT_Tools/MT_LogManager.h"
-#include <boost/filesystem/operations.hpp>
 
 using namespace dispatcher;
-namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -57,7 +55,7 @@ namespace
 
     struct TestCase
     {
-        std::string dir;
+        tools::Path dir;
         unsigned    first_tick;
         unsigned    last_tick;
         int         valid_frames;
@@ -98,7 +96,7 @@ namespace
         for( size_t i = 0; i < size; ++i )
         {
             const TestCase& test = tests[i];
-            BOOST_REQUIRE( !test.valid_frames || bfs::is_directory( BOOST_RESOLVE( test.dir ) ) );
+            BOOST_REQUIRE( !test.valid_frames || BOOST_RESOLVE( test.dir ).Exists() );
             MockMessageHandler msg, keymsg;
             MessageLoader loader( BOOST_RESOLVE( test.dir ), thread, 0 );
             BOOST_CHECK_EQUAL( loader.GetFirstTick(),  test.first_tick );

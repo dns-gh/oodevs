@@ -27,7 +27,7 @@ public:
     //! @name Operations
     //@{
 public:
-    virtual std::auto_ptr< Log_ABC > CreateLog( const std::string& filename )
+    virtual std::auto_ptr< Log_ABC > CreateLog( const tools::Path& filename )
     {
         return std::auto_ptr< Log_ABC >( new Log( filename ) );
     }

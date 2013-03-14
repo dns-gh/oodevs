@@ -9,9 +9,9 @@
 
 #include "dispatcher_pch.h"
 #include "Config.h"
+#include "tools/FileWrapper.h"
 #include "tools/Loader.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/filesystem/operations.hpp>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
@@ -59,7 +59,7 @@ void Config::Parse( int argc, char** argv )
     std::string simulationAddress;
     std::string dispatcherAddress;
     std::string subsetParties;
-    xml::xifstream xis( GetSessionFile() );
+    tools::Xifstream xis( GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )
                 >> xml::start( "simulation" )

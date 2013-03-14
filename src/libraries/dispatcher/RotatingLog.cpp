@@ -12,18 +12,15 @@
 #include "LogFactory_ABC.h"
 #include "Log_ABC.h"
 #include <boost/lexical_cast.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string.hpp>
 
 using namespace dispatcher;
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: RotatingLog constructor
 // Created: MCO 2011-06-26
 // -----------------------------------------------------------------------------
-RotatingLog::RotatingLog( dispatcher::LogFactory_ABC& factory, const std::string& filename,
+RotatingLog::RotatingLog( dispatcher::LogFactory_ABC& factory, const tools::Path& filename,
                           unsigned int files, unsigned int size, bool sizeInBytes /* = false */ )
     : factory_ ( factory )
     , filename_( filename )
@@ -33,13 +30,8 @@ RotatingLog::RotatingLog( dispatcher::LogFactory_ABC& factory, const std::string
     , count_   ( 0 )
     , sizeInBytes_( sizeInBytes )
 {
-    bfs::path pathFileName( filename_ );
-    std::string pathName = pathFileName.parent_path().string();
-    if( pathName.empty() )
-        fileNameNoExtension_ = pathFileName.stem().string();
-    else
-        fileNameNoExtension_ = pathFileName.parent_path().string() + "/" + pathFileName.stem().string();
-    extension_ = pathFileName.extension().string();
+    fileNameNoExtension_ = ( filename_.Parent().IsEmpty() ) ? filename_.BaseName() : filename_.Parent() / filename_.BaseName();
+    extension_ = filename_.Extension();
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +54,7 @@ void RotatingLog::DoWrite( const std::string& line )
             if( file_ == 1 )
                 pLog_ = factory_.CreateLog( filename_ );
             else
-                pLog_ = factory_.CreateLog( fileNameNoExtension_ + ( "." + boost::lexical_cast< std::string >( file_ - 1 ) ) + extension_ );
+                pLog_ = factory_.CreateLog( fileNameNoExtension_ + "." + tools::Path::FromUTF8( boost::lexical_cast< std::string >( file_ - 1 ) ) + extension_ );
         }
     }
     if( !pLog_.get() )

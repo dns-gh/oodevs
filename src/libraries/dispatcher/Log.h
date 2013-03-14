@@ -12,6 +12,8 @@
 
 #include "Log_ABC.h"
 #include <ctime>
+#include "tools/FileWrapper.h"
+#include "tools/Path.h"
 #pragma warning( push )
 #pragma warning( disable: 4996 )
 
@@ -28,11 +30,11 @@ class Log : public Log_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Log( const std::string& filename )
-        : s_( filename.c_str() )
+    explicit Log( const tools::Path& filename )
+        : s_( filename )
     {
         if( ! s_ )
-            throw MASA_EXCEPTION( "Failed to open log file '" + filename + "' for writing" );
+            throw MASA_EXCEPTION( "Failed to open log file '" + filename.ToUTF8() + "' for writing" );
     }
 
     virtual ~Log()
@@ -61,7 +63,7 @@ private:
 
     //! @name Member data
     //@{
-    std::ofstream s_;
+    tools::Ofstream s_;
     //@}
 };
 

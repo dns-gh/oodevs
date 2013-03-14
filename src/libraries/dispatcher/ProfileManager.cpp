@@ -16,20 +16,17 @@
 #include "Automat.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Scipio_enum.h"
-#include "tools/SchemaWriter.h"
+#include "tools/FileWrapper.h"
 #include "tools/Loader_ABC.h"
+#include "tools/SchemaWriter.h"
 #include "directia/brain/Brain.h"
 #include "protocol/Protocol.h"
 #include "protocol/AuthenticationSenders.h"
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
 using namespace kernel;
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: ProfileManager constructor
@@ -66,11 +63,10 @@ void ProfileManager::Receive( const sword::SimToClient& wrapper )
     {
         try
         {
-            std::string strPath = config_.GetCheckpointDirectory( wrapper.message().control_checkpoint_save_end().name() );
-            MT_LOG_INFO_MSG( "Begin save checkpoint " << strPath );
-            const bfs::path p( strPath );
-            if( !bfs::exists( p ) )
-                bfs::create_directories( p );
+            tools::Path strPath = config_.GetCheckpointDirectory( tools::Path::FromUTF8( wrapper.message().control_checkpoint_save_end().name() ) );
+            MT_LOG_INFO_MSG( "Begin save checkpoint " << strPath.ToUTF8() );
+            if( !strPath.Exists() )
+                strPath.CreateDirectories();
             Save( strPath );
         }
         catch( const std::exception& e )
@@ -90,10 +86,9 @@ void ProfileManager::Receive( const sword::SimToClient& wrapper )
 // Name: ProfileManager::Save
 // Created: LGY 2011-03-25
 // -----------------------------------------------------------------------------
-void ProfileManager::Save( const std::string& path )
+void ProfileManager::Save( const tools::Path& path )
 {
-    const std::string filename = config_.BuildDirectoryFile( path, "profiles.xml" );
-    xml::xofstream xos( filename );
+    tools::Xofstream xos( config_.BuildDirectoryFile( path, "profiles.xml" ) );
     xos << xml::start( "profiles" );
     pSchemaWriter_->WriteExerciseSchema( xos, "profiles" );
     for( auto it = profiles_.begin(); it != profiles_.end(); ++it )
@@ -138,14 +133,6 @@ void ProfileManager::ReadProfile( xml::xistream& xis )
         MT_LOG_ERROR_MSG( "Profile '" << strName << "' already exists - new profile ignored" );
 }
 
-namespace
-{
-    std::string GetCheckPointFileName( const std::string& directory )
-    {
-        return ( bfs::path( directory ) / bfs::path( "profiles.xml" ) ).string();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ProfileManager::Reset
 // Created: NLD 2006-10-06
@@ -160,7 +147,7 @@ void ProfileManager::Reset()
     try
     {
         if( config_.HasCheckpoint() )
-            config_.GetLoader().LoadFile( GetCheckPointFileName( config_.GetCheckpointDirectory() ), boost::bind( &ProfileManager::ReadProfiles, this, _1 ) );
+            config_.GetLoader().LoadFile( config_.GetCheckpointDirectory() / "profiles.xml", boost::bind( &ProfileManager::ReadProfiles, this, _1 ) );
         else
             config_.GetLoader().LoadFile( config_.GetProfilesFile(), boost::bind( &ProfileManager::ReadProfiles, this, _1 ) );
     }

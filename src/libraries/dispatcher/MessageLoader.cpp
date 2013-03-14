@@ -17,7 +17,6 @@
 #include "protocol/ReplaySenders.h"
 #include "tools/ThreadPool.h"
 #include "MT_Tools/MT_Logger.h"
-#include <boost/filesystem/operations.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/bind.hpp>
 #include <boost/make_shared.hpp>
@@ -25,25 +24,24 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 
-namespace bfs = boost::filesystem;
 namespace bpt = boost::posix_time;
 using namespace dispatcher;
 
 namespace
 {
-    const std::string infoFileName( "info" );
-    const std::string indexFileName( "index" );
-    const std::string keyIndexFileName( "keyindex" );
-    const std::string keyFileName( "key" );
-    const std::string updateFileName( "update" );
-    const std::string currentFolderName( "current" );
+    const tools::Path infoFileName( "info" );
+    const tools::Path indexFileName( "index" );
+    const tools::Path keyIndexFileName( "keyindex" );
+    const tools::Path keyFileName( "key" );
+    const tools::Path updateFileName( "update" );
+    const tools::Path currentFolderName( "current" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MessageLoader constructor
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------
-MessageLoader::MessageLoader( const bfs::path& records, bool threaded,
+MessageLoader::MessageLoader( const tools::Path& records, bool threaded,
                               ClientPublisher_ABC* clients )
     : records_  ( records )
     , clients_  ( clients )
@@ -99,8 +97,7 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
         if( next >= frames_.size() )
             return false;
         const Frame& current = frames_[ next ];
-        Load( updates_, current.offset_, current.size_, handler, callback,
-              bfs::path( currentOpenFolder_ ) / updateFileName );
+        Load( updates_, current.offset_, current.size_, handler, callback, currentOpenFolder_ / updateFileName );
     }
     return true;
 }
@@ -139,8 +136,7 @@ void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& 
             return;
         const KeyFrame* next = ::FindKeyFrame( keyFrames_, frameNumber );
         if( next )
-            Load( keys_, next->offset_, next->size_, handler, callback,
-                  bfs::path( currentOpenFolder_ ) / keyFileName );
+            Load( keys_, next->offset_, next->size_, handler, callback, currentOpenFolder_ / keyFileName );
     }
 }
 
@@ -179,14 +175,14 @@ unsigned int MessageLoader::FindKeyFrame( unsigned int frameNumber )
 
 namespace
 {
-    bool OpenFile( std::ifstream& stream, const bfs::path& file )
+    bool OpenFile( tools::Ifstream& stream, const tools::Path& file )
     {
-        if( !bfs::exists( file ) )
+        if( !file.Exists() )
             return false;
         // istream open()/close() are not supposed to clear the file state,
         // it must be done manually, nice move C++.
         stream.clear();
-        stream.open( file.string().c_str(), std::ios_base::binary | std::ios_base::in );
+        stream.open( file, std::ios_base::binary | std::ios_base::in );
         return stream.good();
     }
 }
@@ -208,7 +204,7 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
             {
                 if( tick >= it->second.first && tick <= it->second.second )
                 {
-                    std::ifstream infoFile;
+                    tools::Ifstream infoFile;
                     unsigned int start;
                     unsigned int end;
                     std::string simTime;
@@ -277,7 +273,7 @@ unsigned int MessageLoader::FindTickForDate( const std::string& GDHDate ) const
         bool found = false;
         for( auto it = fragmentsInfos_.begin(); it != fragmentsInfos_.end() && !found; ++it )
         {
-            std::ifstream infoFile;
+            tools::Ifstream infoFile;
             unsigned int start;
             unsigned int end;
             std::string simTime;
@@ -326,24 +322,47 @@ void MessageLoader::ScanData()
 
 namespace
 {
-    bool IsValidRecordDir( const bfs::directory_iterator& it )
+    bool IsValidRecordDir( const tools::Path& root )
     {
-        if( !bfs::is_directory( it->status() ) )
+        if( !root.IsDirectory() )
             return false;
-        const bfs::path& root = it->path();
-        return bfs::is_regular_file( root / infoFileName )
-            && bfs::is_regular_file( root / indexFileName )
-            && bfs::is_regular_file( root / keyIndexFileName )
-            && bfs::is_regular_file( root / keyFileName )
-            && bfs::is_regular_file( root / updateFileName );
+        return ( root / infoFileName ).IsRegularFile()
+            && ( root / indexFileName ).IsRegularFile()
+            && ( root / keyIndexFileName ).IsRegularFile()
+            && ( root / keyFileName ).IsRegularFile()
+            && ( root / updateFileName ).IsRegularFile();
     }
+}
 
-    bfs::directory_iterator IterateDirectory( const bfs::path& path )
+// -----------------------------------------------------------------------------
+// Name: MessageLoader::ScanFolder
+// Created: ABR 2013-03-14
+// -----------------------------------------------------------------------------
+bool MessageLoader::ScanFolder( const tools::Path& path, bool forceAdd )
+{
+    try
     {
-        if( !bfs::exists( path ) )
-            return bfs::directory_iterator();
-        return bfs::directory_iterator( path );
+        if( !IsValidRecordDir( path ) )
+            return false;
+
+        const tools::Path filename = path.FileName();
+        bool doAdd = false;
+        if( !forceAdd )
+        {
+            const bool mainLoop = !disk_.get() && init_->IsSignaled();
+            const bool skipCurrent = mainLoop && filename == currentFolderName;
+            doAdd = !skipCurrent && fragmentsInfos_.find( filename ) == fragmentsInfos_.end();
+            if( mainLoop && doAdd  )
+                fragmentsInfos_.erase( currentFolderName );
+        }
+        if( doAdd || forceAdd )
+            AddFolder( filename );
     }
+    catch( const std::exception& )
+    {
+        // NOTHING
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -353,37 +372,16 @@ namespace
 void MessageLoader::ScanDataFolders( bool forceAdd )
 {
     boost::mutex::scoped_lock lock( access_ );
-    for( bfs::directory_iterator it = IterateDirectory( records_ ); it !=  bfs::directory_iterator(); ++it )
-        try
-        {
-            if( !IsValidRecordDir( it ) )
-                continue;
-            const std::string dir = it->path().filename().string();
-            bool doAdd = false;
-            if( !forceAdd )
-            {
-                const bool mainLoop = !disk_.get() && init_->IsSignaled();
-                const bool skipCurrent = mainLoop && dir == currentFolderName;
-                doAdd = !skipCurrent && fragmentsInfos_.find( dir ) == fragmentsInfos_.end();
-                if( mainLoop && doAdd  )
-                    fragmentsInfos_.erase( currentFolderName );
-            }
-            if( doAdd || forceAdd )
-                AddFolder( dir );
-        }
-        catch( const std::exception & )
-        {
-            // NOTHING
-        }
+    records_.Apply( boost::bind( &MessageLoader::ScanFolder, this, _1, forceAdd ), false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MessageLoader::AddFolder
 // Created: JSR 2010-10-28
 // -----------------------------------------------------------------------------
-void MessageLoader::AddFolder( const std::string& folderName )
+void MessageLoader::AddFolder( const tools::Path& folderName )
 {
-    std::ifstream infoFile;
+    tools::Ifstream infoFile;
     unsigned int start;
     unsigned int end;
     if( !OpenFile( infoFile, records_ / folderName / infoFileName ) )
@@ -405,13 +403,13 @@ void MessageLoader::AddFolder( const std::string& folderName )
 
 namespace
 {
-    bool IsEof( std::ifstream& file )
+    bool IsEof( tools::Ifstream& file )
     {
         file.peek();
         return file.eof();
     }
 
-    void LoadIndexes( MessageLoader::T_Frames& frames, std::ifstream& file )
+    void LoadIndexes( MessageLoader::T_Frames& frames, tools::Ifstream& file )
     {
         try
         {
@@ -430,7 +428,7 @@ namespace
         }
     }
 
-    void LoadIndexes( MessageLoader::T_KeyFrames& frames, std::ifstream& file )
+    void LoadIndexes( MessageLoader::T_KeyFrames& frames, tools::Ifstream& file )
     {
         try
         {
@@ -451,10 +449,10 @@ namespace
     }
 
     template< typename T >
-    T LoadIndexesFrom( const bfs::path& filename )
+    T LoadIndexesFrom( const tools::Path& filename )
     {
         T reply;
-        std::ifstream stream;
+        tools::Ifstream stream;
         const bool valid = OpenFile( stream, filename );
         if( valid )
             LoadIndexes( reply, stream );
@@ -469,7 +467,7 @@ namespace
 bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
 {
     frameNumber = std::max( firstTick_, std::min( frameNumber, tickCount_ ) );
-    const bool doSwitch = currentOpenFolder_.empty()
+    const bool doSwitch = currentOpenFolder_.IsEmpty()
                        || frameNumber < fragmentsInfos_[ currentOpenFolder_ ].first
                        || frameNumber > fragmentsInfos_[ currentOpenFolder_ ].second;
     if( !doSwitch )
@@ -479,13 +477,13 @@ bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
     keyFrames_.clear();
     updates_.close();
     keys_.close();
-    currentOpenFolder_.clear();
+    currentOpenFolder_.Clear();
 
     for( auto it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
         if( frameNumber >= it->second.first && frameNumber <= it->second.second )
         {
             currentOpenFolder_ = it->first;
-            const bfs::path dir = records_ / currentOpenFolder_;
+            const tools::Path dir = records_ / currentOpenFolder_;
             OpenFile( updates_, dir / updateFileName );
             OpenFile( keys_,    dir / keyFileName );
             frames_    = LoadIndexesFrom< T_Frames >   ( dir / indexFileName );
@@ -502,7 +500,7 @@ struct dispatcher::Buffer
     {
         // NOTHING
     }
-    bool Read( std::ifstream& src )
+    bool Read( tools::Ifstream& src )
     {
         size_t len = 0;
         const size_t size = data_.size();
@@ -521,18 +519,18 @@ namespace
 {
     typedef boost::shared_ptr< dispatcher::Buffer > BufPtr;
 
-    BufPtr MakeBuffer( std::ifstream& src, size_t size, const bfs::path& filename )
+    BufPtr MakeBuffer( tools::Ifstream& src, size_t size, const tools::Path& filename )
     {
         BufPtr next( boost::make_shared< Buffer >( size ) );
         const bool valid = next->Read( src );
         if( !valid )
-            MT_LOG_WARNING_MSG( "[dispatcher] Skipping invalid file " + filename.string() );
+            MT_LOG_WARNING_MSG( "[dispatcher] Skipping invalid file " + filename.ToUTF8() );
         return valid ? next : BufPtr();
     }
 
-    BufPtr MakeBufferFrom( const bfs::path& filename, unsigned offset, unsigned size )
+    BufPtr MakeBufferFrom( const tools::Path& filename, unsigned offset, unsigned size )
     {
-        std::ifstream stream;
+        tools::Ifstream stream;
         const bool valid = OpenFile( stream, filename );
         if( !valid )
             return BufPtr();
@@ -545,7 +543,7 @@ namespace
 // Name: MessageLoader::Load
 // Created: AGE 2007-07-13
 // -----------------------------------------------------------------------------
-void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback, const bfs::path& filename )
+void MessageLoader::Load( tools::Ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback, const tools::Path& filename )
 {
     in.clear();
     in.seekg( from );
@@ -558,7 +556,7 @@ void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, Messa
 // Name: MessageLoader::LoadFrameInThread
 // Created: JSR 2010-10-29
 // -----------------------------------------------------------------------------
-void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback )
+void MessageLoader::LoadFrameInThread( const tools::Path& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback )
 {
     const T_Frames frames = LoadIndexesFrom< T_Frames >( records_ / folder / indexFileName );
 
@@ -581,7 +579,7 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
 // Name: MessageLoader::LoadKeyFrameInThread
 // Created: JSR 2010-10-29
 // -----------------------------------------------------------------------------
-void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback )
+void MessageLoader::LoadKeyFrameInThread( const tools::Path& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback )
 {
     const T_KeyFrames keyFrames = LoadIndexesFrom< T_KeyFrames >( records_ / folder / keyIndexFileName );
     const KeyFrame* next = ::FindKeyFrame( keyFrames, frameNumber );
@@ -646,7 +644,7 @@ void MessageLoader::ReloadAllFragmentsInfos()
     {
         boost::mutex::scoped_lock lock( access_ );
         fragmentsInfos_.clear();
-        currentOpenFolder_.clear();
+        currentOpenFolder_.Clear();
     }
     ScanDataFolders( true );
 }

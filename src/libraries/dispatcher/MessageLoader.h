@@ -12,11 +12,11 @@
 
 #include "Frames.h"
 #include "MessageLoader_ABC.h"
+#include "tools/Path.h"
+#include "tools/FileWrapper.h"
 #include <boost/shared_ptr.hpp>
-#include <boost/filesystem/path.hpp>
 #include <boost/thread/mutex.hpp>
 #include <vector>
-#include <fstream>
 
 namespace boost
 {
@@ -51,7 +51,7 @@ class MessageLoader : public MessageLoader_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MessageLoader( const boost::filesystem::path& records, bool threaded, ClientPublisher_ABC* clients = 0 );
+             MessageLoader( const tools::Path& records, bool threaded, ClientPublisher_ABC* clients = 0 );
     virtual ~MessageLoader();
     //@}
 
@@ -73,7 +73,7 @@ public:
     typedef std::vector< Frame > T_Frames;
     typedef std::vector< KeyFrame > T_KeyFrames;
     typedef T_KeyFrames::const_iterator CIT_KeyFrames;
-    typedef std::map< std::string, std::pair< unsigned int, unsigned int > > T_FragmentsInfos;
+    typedef std::map< tools::Path, std::pair< unsigned int, unsigned int > > T_FragmentsInfos;
     typedef T_FragmentsInfos::const_iterator CIT_FragmentsInfos;
     //@}
 
@@ -87,12 +87,13 @@ private:
     //! @name Helpers
     //@{
     void ScanData();
+    bool ScanFolder( const tools::Path& path, bool forceAdd );
     void ScanDataFolders( bool );
-    void AddFolder( const std::string& folderName );
+    void AddFolder( const tools::Path& folderName );
     bool SwitchToFragment( unsigned int& frameNumber );
-    void Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback, const boost::filesystem::path& filename );
-    void LoadFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback );
-    void LoadKeyFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback );
+    void Load( tools::Ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback, const tools::Path& filename );
+    void LoadFrameInThread( const tools::Path& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback );
+    void LoadKeyFrameInThread( const tools::Path& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback );
     void LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler, const T_Callback& callback );
     size_t LoadSimToClientMessage( const char* input, size_t size, MessageHandler_ABC& handler );
     //@}
@@ -100,7 +101,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const boost::filesystem::path records_;
+    const tools::Path records_;
     ClientPublisher_ABC* clients_;
     unsigned int firstTick_;
     unsigned int tickCount_;
@@ -111,9 +112,9 @@ private:
     std::auto_ptr< tools::ThreadPool > disk_;
     std::auto_ptr< tools::ThreadPool > cpu_;
     T_FragmentsInfos fragmentsInfos_;
-    std::string currentOpenFolder_;
-    std::ifstream updates_;
-    std::ifstream keys_;
+    tools::Path currentOpenFolder_;
+    tools::Ifstream updates_;
+    tools::Ifstream keys_;
     T_Frames frames_;
     T_KeyFrames keyFrames_;
     //@}

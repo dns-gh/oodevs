@@ -47,7 +47,7 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
         // paths, required to open a log file, are likely to be valid. Just
         // do that and log the error, in append mode.
         MT_FileLogger logger(
-            config_->BuildSessionChildFile( "Dispatcher.log" ).c_str(),
+            config_->BuildSessionChildFile( "Dispatcher.log" ),
             1, -1, MT_Logger_ABC::eLogLevel_All, false, MT_Logger_ABC::eDispatcher,
             false );
         MT_LOG_REGISTER_LOGGER( logger );
@@ -57,7 +57,7 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
     }
     bool bClearPreviousLog = !config_->HasCheckpoint();
 
-    file_.reset( new MT_FileLogger( config_->BuildSessionChildFile( "Dispatcher.log" ).c_str(),
+    file_.reset( new MT_FileLogger( config_->BuildSessionChildFile( "Dispatcher.log" ),
                                     config_->GetDispatcherLogFiles(), config_->GetDispatcherLogSize(),
                                     config_->GetDispatcherLogLevel(), bClearPreviousLog, MT_Logger_ABC::eDispatcher, config_->IsDispatcherLogInBytes() ) );
     MT_LOG_REGISTER_LOGGER( *file_ );

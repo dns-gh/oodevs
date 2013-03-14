@@ -25,6 +25,7 @@
 #include "score_plugin/ScorePlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
 #include "web_control_plugin/WebPlugin.h"
+#include "tools/FileWrapper.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace dispatcher;
@@ -95,7 +96,7 @@ Replayer::Replayer( const Config& config )
     handler_.Add( new plugins::aar::AarPlugin( *clientsNetworker_, *rights, config ) );
     handler_.Add( new plugins::score::ScorePlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
     handler_.Add( new plugins::messenger::MessengerPlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
-    xml::xifstream xis( config.GetSessionFile() );
+    tools::Xifstream xis( config.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )
                 >> xml::start( "dispatcher" )
