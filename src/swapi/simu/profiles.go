@@ -1,0 +1,50 @@
+package simu
+
+import (
+	"encoding/xml"
+	"errors"
+	"fmt"
+	"io/ioutil"
+)
+
+type Profile struct {
+	Name        string `xml:"name,attr"`
+	Password    string `xml:"password,attr"`
+	Supervision bool   `xml:"supervision,attr"`
+}
+
+type Profiles struct {
+	Profiles []Profile `xml:"profile"`
+}
+
+func (profiles *Profiles) FindSupervisor() *Profile {
+	for _, p := range profiles.Profiles {
+		if p.Supervision {
+			return &p
+		}
+	}
+	return nil
+}
+
+func ReadProfiles(data []byte) (*Profiles, error) {
+	p := Profiles{}
+	err := xml.Unmarshal(data, &p)
+	if err != nil {
+		return nil, errors.New(fmt.Sprintf("cannot parse profiles: %v", err))
+	}
+	return &p, nil
+}
+
+func ReadProfileFile(profilePath string) (*Profiles, error) {
+	data, err := ioutil.ReadFile(profilePath)
+	if err != nil {
+		return nil, errors.New(fmt.Sprintf(
+			"failed to read profiles file: %v", profilePath))
+	}
+	profiles, err := ReadProfiles(data)
+	if err != nil {
+		return nil, errors.New(fmt.Sprintf(
+			"failed to parse profiles file: %v", err))
+	}
+	return profiles, err
+}
