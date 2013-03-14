@@ -25,15 +25,12 @@
 #include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
 #include "Urban/MIL_UrbanCache.h"
-#include <boost/filesystem/path.hpp>
 #include <tools/thread/Thread.h>
 #include <tools/win32/ProcessMonitor.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
-
-namespace bfs = boost::filesystem;
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 

@@ -12,7 +12,7 @@
 #ifndef __MIL_ProfilerManager_h_
 #define __MIL_ProfilerManager_h_
 
-#include <fstream>
+#include "tools/FileWrapper.h"
 
 class MIL_AgentPion;
 class MIL_Automate;
@@ -42,7 +42,7 @@ private:
     //! @name Member data
     //@{
     const bool bEnabled_;
-    std::ofstream decisionUpdateFile_;
+    tools::Ofstream decisionUpdateFile_;
     //@}
 };
 

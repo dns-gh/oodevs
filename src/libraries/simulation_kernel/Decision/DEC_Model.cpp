@@ -15,9 +15,9 @@
 // Created: LDC 2009-02-24
 // -----------------------------------------------------------------------------
 DEC_Model::DEC_Model( const std::string& strName, xml::xistream& xis,
-                      const std::string& strSourcePath,
+                      const tools::Path& strSourcePath,
                       const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes,
-                      bool isMasalife, const std::string& integrationDir )
+                      bool isMasalife, const tools::Path& integrationDir )
     : DEC_Model_ABC( strName, xis, strSourcePath, missionTypes, isMasalife, integrationDir )
 {
     // NOTHING

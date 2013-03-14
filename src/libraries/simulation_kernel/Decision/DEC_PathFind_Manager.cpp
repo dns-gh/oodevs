@@ -38,7 +38,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config, double maxAvoida
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
 {
-    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "pathfinder",
+    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "pathfinder",
         boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1, boost::ref( config ), boost::cref( dangerousObjects ) ) );
     config.AddFileToCRC( fileLoaded );
     bUseInSameThread_ = config.GetPathFinderThreads() == 0;

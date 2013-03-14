@@ -18,14 +18,12 @@
 #include "MT_Tools/MT_FormatString.h"
 #include <pathfind/TerrainPathfinder.h>
 #include <pathfind/TerrainRetractationHandle.h>
-#include <boost/filesystem/convenience.hpp>
 #include <boost/interprocess/detail/atomic.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
 
 using namespace spatialcontainer;
 using namespace pathfind;
-namespace bfs = boost::filesystem;
 namespace bii = boost::interprocess::ipcdetail;
 
 namespace
@@ -47,7 +45,7 @@ namespace
 TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData,
                                             tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue,
                                             unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread,
-                                            const boost::filesystem::path& dump,
+                                            const tools::Path& dump,
                                             const std::string& filter )
     : tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >( queue )
     , pPathfinder_   ( 0 )
@@ -119,7 +117,7 @@ namespace
     struct PathfinderProxy : public TER_Pathfinder_ABC
                            , public boost::noncopyable
     {
-        PathfinderProxy( const bfs::path& dump, const std::set< size_t >& filter,
+        PathfinderProxy( const tools::Path& dump, const std::set< size_t >& filter,
                          TerrainPathfinder& root )
             : dump_  ( dump )
             , filter_( filter )
@@ -148,24 +146,24 @@ namespace
                                   TerrainRule_ABC& rule,
                                   tools::thread::Handler_ABC< TerrainPathPoint >& handler )
         {
-            const bool dump = !dump_.empty() && ( filter_.empty() || filter_.count( id_ ) );
+            const bool dump = !dump_.IsEmpty() && ( filter_.empty() || filter_.count( id_ ) );
             if( dump )
-                return root_.ComputePath( from, to, rule, handler, GetFilename() );
+                return root_.ComputePath( from, to, rule, handler, GetFilename().ToBoost() );
             return root_.ComputePath( from, to, rule, handler );
         }
     private:
-        bfs::path GetFilename() const
+        tools::Path GetFilename() const
         {
             std::stringstream name;
             name << "pathfind_"
                  << id_
                  << "_"
                  << bii::atomic_inc32( &s_idx_ );
-            return dump_ / name.str();
+            return dump_ / name.str().c_str();
         }
     private:
         static boost::uint32_t    s_idx_;
-        const bfs::path&          dump_;
+        const tools::Path&          dump_;
         const std::set< size_t >& filter_;
         TerrainPathfinder&        root_;
         size_t                    id_;

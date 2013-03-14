@@ -17,7 +17,6 @@
 #pragma warning( pop )
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/split_member.hpp>
-#include <fstream>
 
 typedef boost::archive::text_oarchive OutputArchive;
 typedef boost::archive::text_iarchive InputArchive;
@@ -107,7 +106,7 @@ BOOST_CLASS_EXPORT( MyRole2 )
 //{
 //    const std::string filename = BOOST_RESOLVE( "output-simple.bin" );
 //    {
-//        std::ofstream os( filename.c_str(), std::ios::out );
+//        tools::Ofstream os( filename.c_str(), std::ios::out );
 //        BOOST_CHECK( os && os.is_open() );
 //        OutputArchive out( os );
 //        MyEntity* entity( new MyEntity() );
@@ -116,7 +115,7 @@ BOOST_CLASS_EXPORT( MyRole2 )
 //        delete entity;
 //    }
 //    {
-//        std::ifstream is( filename.c_str(), std::ios::in );
+//        tools::Ifstream is( filename.c_str(), std::ios::in );
 //        BOOST_CHECK( is && is.is_open() );
 //        InputArchive in( is );
 //        MyEntity* entity;
@@ -136,7 +135,7 @@ BOOST_CLASS_EXPORT( MyRole2 )
 //{
 //    const std::string filename = BOOST_RESOLVE( "output-multiple.bin" );
 //    {
-//        std::ofstream os( filename.c_str(), std::ios::out );
+//        tools::Ofstream os( filename.c_str(), std::ios::out );
 //        BOOST_CHECK( os && os.is_open() );
 //        OutputArchive out( os );
 //        MyEntity* entity = new MyEntity();
@@ -146,7 +145,7 @@ BOOST_CLASS_EXPORT( MyRole2 )
 //        delete entity;
 //    }
 //    {
-//        std::ifstream is( filename.c_str(), std::ios::in );
+//        tools::Ifstream is( filename.c_str(), std::ios::in );
 //        BOOST_CHECK( is && is.is_open() );
 //        InputArchive in( is );
 //        MyEntity* entity;
@@ -225,7 +224,7 @@ BOOST_CLASS_EXPORT( MyRole2 )
 //{
 //    const std::string filename = BOOST_RESOLVE( "output-no-default-constructor.bin" );
 //    {
-//        std::ofstream os( filename.c_str(), std::ios::out );
+//        tools::Ofstream os( filename.c_str(), std::ios::out );
 //        BOOST_CHECK( os && os.is_open() );
 //        OutputArchive out( os );
 //        MyEntity* entity = new MyEntity();
@@ -234,7 +233,7 @@ BOOST_CLASS_EXPORT( MyRole2 )
 //        delete entity;
 //    }
 //    {
-//        std::ifstream is( filename.c_str(), std::ios::in );
+//        tools::Ifstream is( filename.c_str(), std::ios::in );
 //        BOOST_CHECK( is && is.is_open() );
 //        InputArchive in( is );
 //        MyEntity* entity;

@@ -13,6 +13,7 @@
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Codec.h"
+#include "tools/Path.h"
 #include <tools/Exception.h>
 #include "tools/WinArguments.h"
 
@@ -26,30 +27,11 @@
 
 #include <windows.h>
 
-namespace
+int RunReplayer(  HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
-typedef std::vector< std::string > T_Args;
-std::string GetOption( const T_Args& args, const std::string& name, const std::string& def )
-{
-    T_Args::const_iterator it = std::find( args.begin(), args.end(), name );
-    if( it != args.end() )
-        if( ++it != args.end() )
-            return *it;
-    return def;
-}
-
-bool HasFlag( const T_Args& args, const std::string& name )
-{
-    return std::find( args.begin(), args.end(), name ) != args.end();
-}
-}
-
-int RunReplayer(  HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
-{
-    const T_Args argv = boost::program_options::split_winmain( lpCmdLine );
-    const std::string debugRoot = GetOption( argv, "--debug-dir", "./Debug" );
-
-    MT_CrashHandler::SetRootDirectory( debugRoot );
+    tools::WinArguments winArgs( lpCmdLine );
+    tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
+    MT_CrashHandler::SetRootDirectory( debugDir );
 
     int nResult = EXIT_SUCCESS;
     MT_ConsoleLogger        consoleLogger;
@@ -57,10 +39,10 @@ int RunReplayer(  HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, 
     try
     {
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-        license_gui::LicenseDialog::CheckLicense( "sword-replayer", !HasFlag( argv, "verbose" ) );
+        license_gui::LicenseDialog::CheckLicense( "sword-replayer", !winArgs.HasOption( "verbose" ) );
 #endif
         tools::SetCodec();
-        App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow, !HasFlag( argv, "--no-log" ) );
+        App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow, !winArgs.HasOption( "--no-log" ) );
         app.Execute();
     }
     catch( const std::exception& e )
@@ -72,7 +54,7 @@ int RunReplayer(  HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, 
     return nResult;
 }
 
-int WINAPI WinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
+int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
     __try
     {

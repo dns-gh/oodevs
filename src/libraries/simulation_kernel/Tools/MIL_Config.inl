@@ -256,7 +256,7 @@ unsigned int MIL_Config::GetPathFinderThreads() const
 // Created: JSR 2010-03-11
 // -----------------------------------------------------------------------------
 inline
-const std::string& MIL_Config::GetCheckpointNameTestMode() const
+const tools::Path& MIL_Config::GetCheckpointNameTestMode() const
 {
     return strCheckPointNameTestMode_;
 }

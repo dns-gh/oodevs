@@ -15,6 +15,7 @@
 #include "MIL_Object_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "protocol/Protocol.h"
+#include "tools/FileWrapper.h"
 #include <geodata/Feature_ABC.h>
 #include <geodata/FeatureHandler_ABC.h>
 #pragma warning( push, 0 )
@@ -62,7 +63,7 @@ InputToxicCloudAttribute::InputToxicCloudAttribute()
 
 namespace
 {
-    std::string BuildPropagationFile( const std::string& path )
+    tools::Path BuildPropagationFile( const tools::Path& path )
     {
         return MIL_AgentServer::GetWorkspace().GetConfig().GetPropagationFile( path );
     }
@@ -75,7 +76,7 @@ namespace
 InputToxicCloudAttribute::InputToxicCloudAttribute( xml::xistream& xis )
     : extent_    ( ConvertTo( TER_World::GetWorld().GetExtent() ) )
     , quantities_( new T_Quantities( extent_ ) )
-    , filename_  ( BuildPropagationFile( xis.attribute< std::string >( "source" ) ) )
+    , filename_  ( BuildPropagationFile( xis.attribute< tools::Path >( "source" ) ) )
     , dataField_ ( xis.attribute< std::string >( "data-field" ) )
     , schedule_  ( new T_Schedule() )
     , bExport_   ( xis.attribute< bool >( "export", true ) )
@@ -143,9 +144,9 @@ InputToxicCloudAttribute& InputToxicCloudAttribute::operator=( const InputToxicC
 // -----------------------------------------------------------------------------
 void InputToxicCloudAttribute::LoadConfig()
 {
-    if( !filename_.empty() )
+    if( !filename_.IsEmpty() )
     {
-        xml::xifstream fxis( filename_ );
+        tools::Xifstream fxis( filename_ );
         fxis >> xml::start( "etude" )
                 >> xml::start( "resultats" )
                     >> xml::content( dataField_, field_ )
@@ -316,9 +317,9 @@ namespace
 // -----------------------------------------------------------------------------
 void InputToxicCloudAttribute::LoadShape( const std::string& name )
 {
-    const std::string fdir( tools::GeneralConfig::BuildChildPath( filename_, "propagation" ) );
+    const tools::Path fdir( tools::GeneralConfig::BuildChildPath( filename_, "propagation" ) );
 
-    gdal_ogr::VectorOgrDirectory dir( "", fdir );
+    gdal_ogr::VectorOgrDirectory dir( "", fdir.ToLocal() );
     Handler handler( field_, *quantities_, export_ );
     quantities_->Clear();
     export_.clear();

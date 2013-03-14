@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "MT_Tools/MT_String.h"
+#include "tools/Path.h"
 #include <set>
 
 namespace xml
@@ -33,10 +34,10 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-    const std::string& GetScriptFile() const;
-    const std::string& GetIncludePath() const;
+    const tools::Path& GetScriptFile() const;
+    const tools::Path& GetIncludePath() const;
     const std::string& GetDIAType() const;
-    const std::string& GetIntegrationDir() const;
+    const tools::Path& GetIntegrationDir() const;
     const bool IsMasalife() const;
     //@}
 
@@ -56,15 +57,15 @@ protected:
     //! @name Constructors
     //@{
     DEC_Model_ABC( const std::string& strModel, xml::xistream& xis,
-                   const std::string& strSourcePath,
+                   const tools::Path& strSourcePath,
                    const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes,
-                   bool isMasalife, const std::string& integrationDir );
+                   bool isMasalife, const tools::Path& integrationDir );
     //@}
 
 private:
     //! @name Initialization tools
     //@{
-    static bool FileChanged( const std::string& strFileName, time_t since );
+    static bool FileChanged( const tools::Path& strFileName, time_t since );
     //@}
 
     //! @name Initialization
@@ -94,9 +95,9 @@ private:
     const std::string strModel_;
     const bool isMasalife_;
     std::string strDIAType_;
-    std::string strScript_;
-    std::string strIncludePath_;
-    std::string integrationDir_;
+    tools::Path strScript_;
+    tools::Path strIncludePath_;
+    tools::Path integrationDir_;
     T_MissionSet availableMissions_;
     T_FragOrderSet availableFragOrders_;
     T_FragOrderPerMissionMap availableFragOrdersPerMission_;

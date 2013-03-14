@@ -14,7 +14,7 @@
 // Name: TER_GraphManager constructor
 // Created: CMA 2011-08-16
 // -----------------------------------------------------------------------------
-TER_GraphManager::TER_GraphManager( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive, float precision )
+TER_GraphManager::TER_GraphManager( const tools::Path& strGraphArchive, const tools::Path& strNodeArchive, const tools::Path& strLinkArchive, float precision )
     : staticData_( strGraphArchive, strNodeArchive, strLinkArchive, precision )
 {
     // NOTHING

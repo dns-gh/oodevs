@@ -49,9 +49,9 @@ namespace DEC_DecisionImpl
     void RegisterCommonUserFunctions( sword::Brain& brain , bool isMasalife );
     void RegisterMissionParameters( sword::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
     bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain,
-                      boost::shared_ptr< sword::Brain >& pBrain, const std::string& includePath,
-                      const std::string& brainFile, bool isMasalife, const std::string& type,
-                      bool reload, const std::string& integrationDir, sword::DEC_Logger* logger );
+                      boost::shared_ptr< sword::Brain >& pBrain, const tools::Path& includePath,
+                      const tools::Path& brainFile, bool isMasalife, const std::string& type,
+                      bool reload, const tools::Path& integrationDir, sword::DEC_Logger* logger );
 }
 
 namespace directia
@@ -65,20 +65,13 @@ namespace directia
 // Created: MGD 2010-01-27
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::string& type,
-                                   const std::string& includePath,const std::string& groupName,
-                                   bool isMasalife, bool reload, const std::string& integrationDir )
+void DEC_Decision< T >::InitBrain( const tools::Path& brainFile, const std::string& type,
+                                   const tools::Path& includePath,const std::string& groupName,
+                                   bool isMasalife, bool reload, const tools::Path& integrationDir )
 {
-    std::string realIncludePath = includePath;
+    tools::Path realIncludePath = includePath;
+    realIncludePath.Normalize();
     isMasalife_ = isMasalife;
-    std::size_t lookHere = 0;
-    std::size_t foundHere;
-    while( ( foundHere = realIncludePath.find( "\\", lookHere ) ) != std::string::npos )
-    {
-        realIncludePath.replace( foundHere, 1, "/" );
-        lookHere = foundHere + 1;
-    }
-    
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
     boost::shared_ptr< sword::Brain > pArchetypeBrain;
 

@@ -12,6 +12,7 @@
 
 #include "MIL.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include "tools/Path.h"
 #include <boost/scoped_ptr.hpp>
 
 class DEC_Knowledge_Object;
@@ -154,9 +155,9 @@ public:
 protected:
     //! @name Helpers
     //@{
-    void InitBrain( const std::string& brainFile, const std::string& type,
-                    const std::string& includePath, const std::string& groupName,
-                    bool isMasalife, bool reload, const std::string& integrationDir );
+    void InitBrain( const tools::Path& brainFile, const std::string& type,
+                    const tools::Path& includePath, const std::string& groupName,
+                    bool isMasalife, bool reload, const tools::Path& integrationDir );
     void CleanStateAfterCrash     ();
 
     void StartDefaultBehavior     ();

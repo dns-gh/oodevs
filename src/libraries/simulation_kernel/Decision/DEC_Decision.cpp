@@ -44,9 +44,6 @@
 #include <directia/tools/binders/ScriptRef.h>
 #include <geometry/Point2.h>
 #include <boost/bind.hpp>
-#include <boost/filesystem.hpp>
-
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: ScriptRefs
@@ -1574,17 +1571,17 @@ namespace
 {
     std::map< std::string, boost::shared_ptr< sword::Brain > > brainTable;
 
-    void LoadResourcesFile( const std::string& file, const bfs::path& dir, sword::Brain& brain )
+    void LoadResourcesFile( const std::string& file, const tools::Path& dir, sword::Brain& brain )
     {
-        brain.GetScriptRef( "include" )( ( dir / file ).string() );
+        brain.GetScriptRef( "include" )( ( dir / tools::Path( file.c_str() ) ).ToLocal() );
     }
 }
 
 bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::shared_ptr< sword::Brain >& pBrain,
-                  const std::string& includePath, const std::string& brainFile, bool isMasalife,
-                  const std::string& type, bool reload, const std::string& integrationDir, sword::DEC_Logger* logger )
+                  const tools::Path& includePath, const tools::Path& brainFile, bool isMasalife,
+                  const std::string& type, bool reload, const tools::Path& integrationDir, sword::DEC_Logger* logger )
 {
-    const std::string& idx = isMasalife ? type : brainFile;
+    const std::string& idx = isMasalife ? type : brainFile.ToLocal();
     pArchetypeBrain = brainTable[idx];
     if( reload )
         pArchetypeBrain.reset();
@@ -1601,7 +1598,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
             + PLUGIN( "communication" )
             + PLUGIN46( "errorhandler" )
             + PLUGIN46( "devtools" )
-            + "} cwd='" + includePath + "'", logger ) );
+            + "} cwd='" + includePath.ToLocal() + "'", logger ) );
     else
         pArchetypeBrain.reset( new sword::Brain(
             "plugins={"
@@ -1609,10 +1606,10 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
             + PLUGIN46( "motivation" )
             + PLUGIN46( "errorhandler" )
             + PLUGIN46( "devtools" )
-            + "} cwd='" + includePath + "'", logger ) );
+            + "} cwd='" + includePath.ToLocal() + "'", logger ) );
     pArchetypeBrain->RegisterFunction( "LoadResourcesFile", boost::function< void( const std::string& ) >(
         boost::bind( &LoadResourcesFile, _1, integrationDir, boost::ref( *pArchetypeBrain ) ) ) );
-    pArchetypeBrain->GetScriptRef( "include" )( brainFile, includePath, type );
+    pArchetypeBrain->GetScriptRef( "include" )( brainFile.ToLocal(), includePath.ToLocal(), type );
     if( !reload )
         brainTable[idx] = pArchetypeBrain;
     if( reload )

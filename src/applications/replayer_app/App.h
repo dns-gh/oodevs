@@ -39,7 +39,7 @@ class App
 public:
     //! @name Constructors/Destructor
     //@{
-             App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow, bool replayLog );
+             App( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow, bool replayLog );
     virtual ~App();
     //@}
 

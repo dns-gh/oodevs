@@ -38,7 +38,7 @@ DisasterAttribute::DisasterAttribute()
 
 namespace
 {
-    std::string BuildPropagationFile( const std::string& path )
+    tools::Path BuildPropagationFile( const tools::Path& path )
     {
         return MIL_AgentServer::GetWorkspace().GetConfig().GetPropagationFile( path );
     }
@@ -49,7 +49,7 @@ namespace
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
 DisasterAttribute::DisasterAttribute( xml::xistream& xis )
-    : model_   ( BuildPropagationFile( xis.attribute< std::string >( "source" ) ) )
+    : model_   ( BuildPropagationFile( xis.attribute< tools::Path >( "source" ) ) )
     , date_    ( xis.attribute< std::string >( "date", "" ) )
     , pManager_( new PropagationManager() )
 {
@@ -61,7 +61,7 @@ DisasterAttribute::DisasterAttribute( xml::xistream& xis )
 // Created: LGY 2012-12-12
 // -----------------------------------------------------------------------------
 DisasterAttribute::DisasterAttribute( const sword::MissionParameter_Value& attributes )
-    : model_   ( BuildPropagationFile( attributes.list( 1 ).acharstr() ) )
+    : model_   ( BuildPropagationFile( tools::Path::FromUTF8( attributes.list( 1 ).acharstr() ) ) )
     , pManager_( new PropagationManager() )
 {
     if( attributes.list_size() > 2 )
@@ -96,7 +96,7 @@ DisasterAttribute::~DisasterAttribute()
 // -----------------------------------------------------------------------------
 void DisasterAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
-    asn.mutable_propagation()->set_model( model_ );
+    asn.mutable_propagation()->set_model( model_.ToUTF8() );
     if( date_ != "" )
         asn.mutable_propagation()->set_date( date_ );
 }
@@ -148,7 +148,7 @@ namespace
 void DisasterAttribute::UpdateLocalisation( MIL_Object_ABC& object, unsigned int time )
 {
     const bpt::ptime realTime( bpt::from_time_t( MIL_AgentServer::GetWorkspace().TickToRealTime( time ) ) );
-    PropagationManager::T_Files files = pManager_->GetFiles( boost::posix_time::to_iso_string( realTime ) );
+    tools::Path::T_Paths files = pManager_->GetFiles( boost::posix_time::to_iso_string( realTime ) );
     if( files_ != files )
     {
         values_.clear();

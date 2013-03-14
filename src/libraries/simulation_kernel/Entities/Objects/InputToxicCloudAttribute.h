@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "ToxicAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "tools/Path.h"
 #include <spatialcontainer/SpatialContainer.h>
 #include <boost/shared_ptr.hpp>
 
@@ -129,7 +130,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string filename_;
+    tools::Path filename_;
     std::string field_;
     std::string dataField_;
     bool bExport_;

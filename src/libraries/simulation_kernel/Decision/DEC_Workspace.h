@@ -13,6 +13,11 @@ namespace xml
     class xistream;
 }
 
+namespace tools
+{
+    class Path;
+}
+
 class DEC_Model_ABC;
 class MIL_MissionType_ABC;
 class MIL_Config;
@@ -55,12 +60,12 @@ private:
     void InitializeObjectNames ( MIL_Config& config );
     void InitializeMissions    ( MIL_Config& config );
     void InitializeDIA         ( MIL_Config& config );
-    void InitializeModels      ( MIL_Config& config, const std::map< std::string, std::string >& strSourcePaths );
+    void InitializeModels      ( MIL_Config& config, const std::map< std::string, tools::Path >& strSourcePaths );
     void LoadDIA               ( MIL_Config& config, xml::xistream& xis );
     void LoadDecisional        ( xml::xistream& xis, unsigned int tickDuration );
     void LoadMissions          ( xml::xistream& xis );
-    void LoadModels            ( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths,
-                                 const std::string& integrationDir );
+    void LoadModels            ( xml::xistream& xis, const std::map< std::string, tools::Path >& strSourcePaths,
+                                 const tools::Path& integrationDir );
     //@}
 
 private:
@@ -74,10 +79,10 @@ private:
 
     //! @name Helpers
     //@{
-    void RegisterSourcePath( xml::xistream& xis, MIL_Config& config, std::map< std::string, std::string >& paths );
-    void ReadModel( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths,
+    void RegisterSourcePath( xml::xistream& xis, MIL_Config& config, std::map< std::string, tools::Path >& paths );
+    void ReadModel( xml::xistream& xis, const std::map< std::string, tools::Path >& strSourcePaths,
                     const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes,
-                    const std::string& integrationDir );
+                    const tools::Path& integrationDir );
     //@}
 
 private:

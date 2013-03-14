@@ -12,6 +12,11 @@
 
 #include "DEC_Model_ABC.h"
 
+namespace tools
+{
+    class Path;
+}
+
 namespace xml
 {
     class xistream;
@@ -27,9 +32,9 @@ class DEC_Model : public DEC_Model_ABC
 {
 public:
              DEC_Model( const std::string& strName, xml::xistream& xis,
-                        const std::string& strSourcePath,
+                        const tools::Path& strSourcePath,
                         const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes,
-                        bool isMasalife, const std::string& integrationDir );
+                        bool isMasalife, const tools::Path& integrationDir );
     virtual ~DEC_Model();
 };
 

@@ -58,7 +58,7 @@ TER_PathFindManager::~TER_PathFindManager()
 // -----------------------------------------------------------------------------
 TER_PathFinderThread& TER_PathFindManager::CreatePathFinderThread( tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue,
                                                                    unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread,
-                                                                   const boost::filesystem::path& dump, const std::string& filter )
+                                                                   const tools::Path& dump, const std::string& filter )
 {
     threads_.push_back( new TER_PathFinderThread( staticData_, queue, nMaxEndConnections, rMinEndConnectionLength, bUseSameThread, dump, filter ) );
     return *threads_.back();

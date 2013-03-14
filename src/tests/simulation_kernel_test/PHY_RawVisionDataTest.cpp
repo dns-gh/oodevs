@@ -30,8 +30,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( phy_rawvisiondata_getaltitude_offsets, Fixture )
 {
     weather::Meteo meteo;
-    std::string detectionFile = BOOST_RESOLVE(
-            "../../data/terrains/Paris_Est/Detection/detection.dat" );
+    tools::Path detectionFile = BOOST_RESOLVE( "../../data/terrains/Paris_Est/Detection/detection.dat" );
     PHY_RawVisionData vision( meteo, detectionFile, 0 );
 
     T_PointVector points( 4 );

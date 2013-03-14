@@ -15,6 +15,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_InterpolatedFunction.h"
 #include "tools/InputBinaryStream.h"
+#include "tools/Path.h"
 
 const weather::Meteo* ElevationGrid::sCell::pGlobalMeteo_ = 0;
 
@@ -43,8 +44,7 @@ const weather::PHY_Lighting& ElevationGrid::sCell::GetLighting() const
 // Created: JVT 02-11-05
 // Last modified: JVT 03-08-08
 //-----------------------------------------------------------------------------
-PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo,
-                                      const std::string& detection, PHY_MeteoDataManager* manager )
+PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo, const tools::Path& detection, PHY_MeteoDataManager* manager )
     : nNbrCol_( 0 )
     , nNbrRow_( 0 )
     , meteoManager_( manager )
@@ -197,13 +197,13 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
 // Created: JVT 02-12-11
 // Last modified: JVT 04-03-24
 //-----------------------------------------------------------------------------
-bool PHY_RawVisionData::Read( const std::string& strFile )
+bool PHY_RawVisionData::Read( const tools::Path& path )
 {
-    tools::InputBinaryStream archive( strFile.c_str() );
+    tools::InputBinaryStream archive( path.ToLocal() );
     if( !archive )
-        throw MASA_EXCEPTION( "Cannot open file " + strFile );
+        throw MASA_EXCEPTION( "Cannot open file " + path.ToUTF8() );
     if( !( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )
-       throw MASA_EXCEPTION( "Error reading file " + strFile );
+       throw MASA_EXCEPTION( "Error reading file " + path.ToUTF8() );
 
     ElevationGrid::sCell** ppCells = new ElevationGrid::sCell*[ nNbrCol_ ];
 
@@ -218,7 +218,7 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
             pTmp->pEffects = 0;
             archive.Read( reinterpret_cast< char* >( pTmp++ ), 4 );
             if( !archive )
-                throw MASA_EXCEPTION( "Error reading file " + strFile );
+                throw MASA_EXCEPTION( "Error reading file " + path.ToUTF8() );
         }
     }
 

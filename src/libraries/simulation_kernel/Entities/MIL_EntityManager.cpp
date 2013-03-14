@@ -112,17 +112,11 @@
 #include "Urban/PHY_ResourceNetworkType.h"
 #include "Urban/PHY_RoofShapeType.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push, 0 )
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-#pragma warning( pop )
 #include <boost/lexical_cast.hpp>
 
 #include "Adapters/Sink.h"
 #include "Adapters/Legacy/Sink.h"
 #include "Adapters/FloodModel.h"
-
-namespace bfs = boost::filesystem;
 
 using namespace sword;
 
@@ -347,9 +341,9 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "----  Loading ODB    ----" );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
 
-    const std::string strOrbat = config.GetOrbatFile();
-    MT_LOG_INFO_MSG( "ODB file name : '" << strOrbat << "'" );
-    config.GetLoader().LoadFile( strOrbat, boost::bind( &MIL_EntityManager::ReadOrbat, this, _1, boost::cref( config ) ) );
+    const tools::Path orbatFile = config.GetOrbatFile();
+    MT_LOG_INFO_MSG( "ODB file name : '" << orbatFile.ToUTF8() << "'" );
+    config.GetLoader().LoadFile( orbatFile, boost::bind( &MIL_EntityManager::ReadOrbat, this, _1, boost::cref( config ) ) );
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"       , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"           , sink_->Count() ) );
@@ -392,12 +386,12 @@ void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config )
     try
     {
         bool oldUrbanMode = false;
-        bfs::path fullPath( config.GetUrbanFile() );
-        bool urbanFound = bfs::exists( fullPath );
+        tools::Path fullPath = config.GetUrbanFile();
+        bool urbanFound = fullPath.Exists();
         if( !urbanFound )
         {
-            fullPath = bfs::path( config.GetTerrainUrbanFile() );
-            urbanFound = bfs::exists( fullPath );
+            fullPath = config.GetTerrainUrbanFile();
+            urbanFound = fullPath.Exists();
             oldUrbanMode = urbanFound;
         }
         if( urbanFound ) // avoid exception
@@ -405,11 +399,9 @@ void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config )
             MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
             MT_LOG_STARTUP_MESSAGE( "----  Loading UrbanModel    ----" );
             MT_LOG_STARTUP_MESSAGE( "--------------------------------" );
+            MT_LOG_INFO_MSG( "Loading Urban Model from path '" << ( oldUrbanMode ? config.GetTerrainFile() : config.GetExerciseFile() ).Parent().ToUTF8() << "'" );
 
-            std::string directoryPath = bfs::path( oldUrbanMode ? config.GetTerrainFile() : config.GetExerciseFile() ).branch_path().string();
-            MT_LOG_INFO_MSG( "Loading Urban Model from path '" << directoryPath << "'" );
-
-            config.GetLoader().LoadFile( fullPath.string(), boost::bind( &MIL_EntityManager::ReadUrban, this, _1, boost::ref( cities_ ) ) );
+            config.GetLoader().LoadFile( fullPath, boost::bind( &MIL_EntityManager::ReadUrban, this, _1, boost::ref( cities_ ) ) );
             if( cities_.empty() )
                 return;
 
@@ -420,10 +412,10 @@ void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config )
 
             if( oldUrbanMode )
             {
-                const std::string strUrbanState = config.GetUrbanStateFile();
-                if( !strUrbanState.empty() && bfs::exists( bfs::path( strUrbanState ) ) )
+                const tools::Path strUrbanState = config.GetUrbanStateFile();
+                if( !strUrbanState.IsEmpty() && strUrbanState.Exists() )
                 {
-                    MT_LOG_INFO_MSG( "UrbanState file name : '" << strUrbanState << "'" );
+                    MT_LOG_INFO_MSG( "UrbanState file name : '" << strUrbanState.ToUTF8() << "'" );
                     config.GetLoader().LoadFile( strUrbanState, boost::bind( &MIL_EntityManager::ReadUrbanStates, this, _1 ) );
                 }
             }

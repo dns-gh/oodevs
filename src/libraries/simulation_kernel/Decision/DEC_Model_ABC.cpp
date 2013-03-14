@@ -21,9 +21,9 @@
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
 DEC_Model_ABC::DEC_Model_ABC( const std::string& strModel, xml::xistream& xis,
-                              const std::string& strSourcePath,
+                              const tools::Path& strSourcePath,
                               const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes,
-                              bool isMasalife, const std::string& integrationDir )
+                              bool isMasalife, const tools::Path& integrationDir )
     : strModel_      ( strModel )
     , isMasalife_    ( isMasalife )
     , strIncludePath_( strSourcePath )
@@ -48,14 +48,14 @@ DEC_Model_ABC::~DEC_Model_ABC()
 // Name: DEC_Model_ABC::FileChanged
 // Created: AGE 2005-03-22
 // -----------------------------------------------------------------------------
-bool DEC_Model_ABC::FileChanged( const std::string& strFileName, time_t since )
+bool DEC_Model_ABC::FileChanged( const tools::Path& strFileName, time_t since )
 {
-    static std::map< std::string, time_t > changedFiles; // $$$$ AGE 2005-03-22: ram ?
-    std::map< std::string, time_t >::iterator itFile = changedFiles.find( strFileName );
+    static std::map< tools::Path, time_t > changedFiles; // $$$$ AGE 2005-03-22: ram ?
+    auto itFile = changedFiles.find( strFileName );
     if( itFile == changedFiles.end() )
     {
         struct _stat scriptInfo;
-        if( _stat( strFileName.c_str(), & scriptInfo ) == -1 )
+        if( _wstat( strFileName.ToUnicode().c_str(), &scriptInfo ) == -1 )
             return true;
         itFile = changedFiles.insert( std::make_pair( strFileName, scriptInfo.st_mtime ) ).first;
     }
@@ -181,7 +181,7 @@ const std::string& DEC_Model_ABC::GetName() const
 // Name: DEC_Model_ABC::GetScriptFile
 // Created: LDC 2009-04-08
 // -----------------------------------------------------------------------------
-const std::string& DEC_Model_ABC::GetScriptFile() const
+const tools::Path& DEC_Model_ABC::GetScriptFile() const
 {
     return strScript_;
 }
@@ -190,7 +190,7 @@ const std::string& DEC_Model_ABC::GetScriptFile() const
 // Name: DEC_Model_ABC::GetIncludePath
 // Created: LDC 2009-05-13
 // -----------------------------------------------------------------------------
-const std::string& DEC_Model_ABC::GetIncludePath() const
+const tools::Path& DEC_Model_ABC::GetIncludePath() const
 {
     return strIncludePath_;
 }
@@ -208,7 +208,7 @@ const std::string& DEC_Model_ABC::GetDIAType() const
 // Name: DEC_Model_ABC::GetIntegrationDir
 // Created: BAX 2012-11-09
 // -----------------------------------------------------------------------------
-const std::string& DEC_Model_ABC::GetIntegrationDir() const
+const tools::Path& DEC_Model_ABC::GetIntegrationDir() const
 {
     return integrationDir_;
 }

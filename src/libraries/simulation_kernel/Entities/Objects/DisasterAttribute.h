@@ -14,6 +14,7 @@
 #include "UpdatableAttribute_ABC.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "MIL.h"
+#include "tools/Path.h"
 #include <boost/shared_ptr.hpp>
 #include <vector>
 #include <memory>
@@ -80,11 +81,11 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string model_;
+    tools::Path model_;
     std::string date_;
     std::auto_ptr< PropagationManager > pManager_;
     std::vector< T_Extractor > values_;
-    std::vector< std::string > files_;
+    std::vector< tools::Path > files_;
     //@}
 };
 

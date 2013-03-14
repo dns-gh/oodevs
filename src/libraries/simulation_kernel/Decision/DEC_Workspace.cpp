@@ -29,7 +29,6 @@
 #include "Tools/MIL_AffinitiesMap.h"
 #include "tools/Version.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
 #include <sys/stat.h>
@@ -79,7 +78,7 @@ DEC_Workspace::~DEC_Workspace()
 void DEC_Workspace::InitializeConfig( MIL_Config& config )
 {
     const unsigned int tickDuration = config.GetTimeStep();
-    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1, tickDuration ) );
+    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1, tickDuration ) );
     config.AddFileToCRC( fileLoaded );
 }
 
@@ -172,7 +171,7 @@ void DEC_Workspace::LoadDIA( MIL_Config& config, xml::xistream& xis )
         throw MASA_EXCEPTION( "Decisional model version (" + decisionalVersion + ") does not match runtime version (" + runtimeVersion + ")" );
 
 
-    std::map< std::string, std::string > strSourcePaths;
+    std::map< std::string, tools::Path > strSourcePaths;
     xis >> xml::start( "RepertoiresSources" )
             >> xml::list( "RepertoireSources" , *this, &DEC_Workspace::RegisterSourcePath, config, strSourcePaths )
         >> xml::end;
@@ -187,13 +186,14 @@ void DEC_Workspace::LoadDIA( MIL_Config& config, xml::xistream& xis )
 // Name: DEC_Workspace::RegisterSourcePath
 // Created: MGD 2010-03-17
 // -----------------------------------------------------------------------------
-void DEC_Workspace::RegisterSourcePath( xml::xistream& xis, MIL_Config& config, std::map< std::string, std::string >& paths )
+void DEC_Workspace::RegisterSourcePath( xml::xistream& xis, MIL_Config& config, std::map< std::string, tools::Path >& paths )
 {
-    std::string nameSpace, dir;
+    std::string nameSpace;
+    tools::Path dir;
     xis >> xml::attribute( "namespace", nameSpace )
         >> xml::attribute( "directory", dir );
 
-    paths.insert( std::pair< std::string, std::string >( nameSpace, config.BuildDecisionalChildFile( dir ) ) );
+    paths.insert( std::pair< std::string, tools::Path >( nameSpace, config.BuildDecisionalChildFile( dir ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,7 +202,7 @@ void DEC_Workspace::RegisterSourcePath( xml::xistream& xis, MIL_Config& config, 
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeMissions( MIL_Config& config )
 {
-    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "missions", boost::bind( &DEC_Workspace::LoadMissions, this, _1 ) );
+    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "missions", boost::bind( &DEC_Workspace::LoadMissions, this, _1 ) );
     config.AddFileToCRC( fileLoaded );
 }
 
@@ -222,9 +222,9 @@ void DEC_Workspace::LoadMissions( xml::xistream& xisMission )
 // Name: DEC_Workspace::InitializeModels
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::string, std::string >& strSourcePaths )
+void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::string, tools::Path >& strSourcePaths )
 {
-    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "models", boost::bind(
+    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "models", boost::bind(
         &DEC_Workspace::LoadModels, this, _1, boost::cref( strSourcePaths ), config.GetIntegrationDir() ) );
     config.AddFileToCRC( fileLoaded );
 
@@ -234,8 +234,8 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::s
 // Name: DEC_Workspace::LoadModels
 // Created: LDC 2010-12-02
 // -----------------------------------------------------------------------------
-void DEC_Workspace::LoadModels( xml::xistream& xisModels, const std::map< std::string, std::string >& strSourcePaths,
-                                const std::string& integrationDir )
+void DEC_Workspace::LoadModels( xml::xistream& xisModels, const std::map< std::string, tools::Path >& strSourcePaths,
+                                const tools::Path& integrationDir )
 {
     xisModels >> xml::start( "models" );
 
@@ -267,9 +267,9 @@ void DEC_Workspace::LoadModels( xml::xistream& xisModels, const std::map< std::s
 // Name: DEC_Workspace::ReadModel
 // Created: RDS 2008-05-21
 // -----------------------------------------------------------------------------
-void DEC_Workspace::ReadModel( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths,
+void DEC_Workspace::ReadModel( xml::xistream& xis, const std::map< std::string, tools::Path >& strSourcePaths,
                                const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes,
-                               const std::string& integrationDir )
+                               const tools::Path& integrationDir )
 {
     std::string strName;
     xis >> xml::attribute( "name", strName );
@@ -286,7 +286,7 @@ void DEC_Workspace::ReadModel( xml::xistream& xis, const std::map< std::string, 
     //Key is net.masagroup for masalife, none for others.
     std::string key = isMasalife ? "net.masagroup" : "none";
 
-    const std::map< std::string, std::string >::const_iterator itFind = strSourcePaths.find( key );
+    const std::map< std::string, tools::Path >::const_iterator itFind = strSourcePaths.find( key );
     if( itFind == strSourcePaths.end() )
         xis.error( "Model corresponds to an unknown namespace" );
 
@@ -308,6 +308,6 @@ float DEC_Workspace::GetTime() const
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
 {
-    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "object-names", &DEC_ObjectFunctions::RegisterObjectNames );
+    const tools::Path fileLoaded = config.GetLoader().LoadPhysicalFile( "object-names", &DEC_ObjectFunctions::RegisterObjectNames );
     config.AddFileToCRC( fileLoaded );
 }

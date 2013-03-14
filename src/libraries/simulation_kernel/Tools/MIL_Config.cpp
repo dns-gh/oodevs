@@ -13,16 +13,15 @@
 #include "MIL_Config.h"
 #include "MIL_Tools.h"
 #include "tools/Codec.h"
+#include "tools/FileWrapper.h"
 #include "tools/Loader.h"
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
-#include <boost/filesystem/path.hpp>
 #pragma warning( pop )
 
 namespace po = boost::program_options;
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Config constructor
@@ -68,8 +67,8 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
         ( "deletecheckpoint"                                              , "delete checkpoint folder"                  )
         ( "legacy", po::value< bool >( &bLegacy_ )->default_value( false ), "activate legacy mode"                      )
         ( "integration-dir", po::value( &integrationDir_ )                , "set integration directory"                 )
-        ( "dump-pathfinds",  po::value( &pathfindDir_ )                   , "set pathfind dump directory" )
-        ( "filter-pathfinds",po::value( &pathfindFilter_ )                , "set pathfind id filter, separate multiple values with commas" )
+        ( "dump-pathfinds", po::value( &pathfindDir_ )                   , "set pathfind dump directory" )
+        ( "filter-pathfinds", po::value( &pathfindFilter_ )                , "set pathfind id filter, separate multiple values with commas" )
         ( "simulation-address", po::value( &networkAddress_ )             , "specify the simulation server address (ip:port)" );
     AddOptions( desc );
 }
@@ -108,7 +107,7 @@ void MIL_Config::Parse( int argc, char** argv )
 // Name: MIL_Config::ReadSessionFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-void MIL_Config::ReadSessionFile( const std::string& file )
+void MIL_Config::ReadSessionFile( const tools::Path& file )
 {
     setpause_ = 100;
     setstepmul_ = 200;
@@ -245,7 +244,7 @@ void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
 // Name: MIL_Config::AddFileToCRC
 // Created: JVT 2005-04-07
 // -----------------------------------------------------------------------------
-void MIL_Config::AddFileToCRC( const std::string& fileName )
+void MIL_Config::AddFileToCRC( const tools::Path& fileName )
 {
     if( CRCMap_.find( fileName ) == CRCMap_.end() )
         CRCMap_[ fileName ] = MIL_Tools::ComputeCRC( fileName );
@@ -255,11 +254,11 @@ void MIL_Config::AddFileToCRC( const std::string& fileName )
 // Name: MIL_Config::serialize
 // Created: JVT 2005-03-22
 // -----------------------------------------------------------------------------
-boost::crc_32_type::value_type MIL_Config::serialize( const std::string& strFileName ) const
+boost::crc_32_type::value_type MIL_Config::serialize( const tools::Path& strFileName ) const
 {
     try
     {
-        xml::xofstream xos( strFileName );
+        tools::Xofstream xos( strFileName );
         xos << xml::start( "files" );
         for( auto it = CRCMap_.begin(); it != CRCMap_.end(); ++it )
             xos << xml::start( "file" )
@@ -270,7 +269,7 @@ boost::crc_32_type::value_type MIL_Config::serialize( const std::string& strFile
     }
     catch( const xml::exception& e )
     {
-        throw MASA_EXCEPTION( "Cannot create file '" + strFileName + "', " + tools::GetExceptionMsg( e ) );
+        throw MASA_EXCEPTION( "Cannot create file '" + strFileName.ToUTF8() + "', " + tools::GetExceptionMsg( e ) );
     }
     return MIL_Tools::ComputeCRC( strFileName );
 }
@@ -279,7 +278,7 @@ boost::crc_32_type::value_type MIL_Config::serialize( const std::string& strFile
 // Name: MIL_Config::GetOrbatFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-std::string MIL_Config::GetOrbatFile() const
+tools::Path MIL_Config::GetOrbatFile() const
 {
     if( bCheckPointOrbat_ )
         return BuildCheckpointChildFile( "orbat.xml" );
@@ -290,9 +289,9 @@ std::string MIL_Config::GetOrbatFile() const
 // Name: MIL_Config::BuildCheckpointChildFile
 // Created: NLD 2007-01-11
 // -----------------------------------------------------------------------------
-std::string MIL_Config::BuildCheckpointChildFile( const std::string& file, std::string name /*= ""*/ ) const
+tools::Path MIL_Config::BuildCheckpointChildFile( const tools::Path& file, tools::Path name /*= ""*/ ) const
 {
-    if( name.empty() )
+    if( name.IsEmpty() )
         return BuildDirectoryFile( GetCheckpointDirectory(), file );
     return BuildDirectoryFile( tools::SessionConfig::GetCheckpointDirectory( name ), file );
 }
@@ -301,7 +300,7 @@ std::string MIL_Config::BuildCheckpointChildFile( const std::string& file, std::
 // Name: MIL_Config::GetIntegrationDir
 // Created: BAX 2012-11-09
 // -----------------------------------------------------------------------------
-const std::string& MIL_Config::GetIntegrationDir() const
+const tools::Path& MIL_Config::GetIntegrationDir() const
 {
     return integrationDir_;
 }
@@ -319,7 +318,7 @@ boost::optional< unsigned int > MIL_Config::GetPathFinderMaxComputationTime() co
 // Name: MIL_Config::GetPathfindDir
 // Created: BAX 2012-12-11
 // -----------------------------------------------------------------------------
-const std::string& MIL_Config::GetPathfindDir() const
+const tools::Path& MIL_Config::GetPathfindDir() const
 {
     return pathfindDir_;
 }

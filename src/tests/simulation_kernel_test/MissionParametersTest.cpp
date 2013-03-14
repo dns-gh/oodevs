@@ -366,11 +366,11 @@ BOOST_AUTO_TEST_CASE( TestMIL_EnumerationParameter )
 //BOOST_AUTO_TEST_CASE( TestMIL_EquipmentTypeParameter )
 //{
 //    PHY_ComposanteState::Initialize();
-//    xml::xifstream xisVol( "../../data/data/models/bmstest/physical/Volumes.xml" );
+//    tools::Xifstream xisVol( "../../data/data/models/bmstest/physical/Volumes.xml" );
 //    PHY_Volume::Initialize( xisVol );
-//    xml::xifstream xisProt( "../../data/data/models/bmstest/physical/Protections.xml" );
+//    tools::Xifstream xisProt( "../../data/data/models/bmstest/physical/Protections.xml" );
 //    PHY_Protection::Initialize ( xisProt );
-//    xml::xifstream xis( "../../data/data/models/bmstest/physical/Composantes.xml" );
+//    tools::Xifstream xis( "../../data/data/models/bmstest/physical/Composantes.xml" );
 //    MockMIL_Time_ABC time;
 //    PHY_ComposanteTypePion::Initialize( time, xis );
 //    EquipmentType in = 22;

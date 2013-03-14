@@ -12,6 +12,11 @@
 
 #include "TER_StaticData.h"
 
+namespace tools
+{
+    class Path;
+}
+
 // =============================================================================
 /** @class  TER_GraphManager
     @brief  %TER_GraphManager
@@ -23,7 +28,7 @@ class TER_GraphManager
 public:
     //! @name Constructors/Destructor
     //@{
-             TER_GraphManager( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive, float precision );
+             TER_GraphManager( const tools::Path& strGraphArchive, const tools::Path& strNodeArchive, const tools::Path& strLinkArchive, float precision );
     virtual ~TER_GraphManager();
     //@}
 

@@ -38,7 +38,7 @@ class SIM_App : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     SIM_App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine,
+     SIM_App( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine,
          int nCmdShow, int maxConnections, bool verbose );
     ~SIM_App();
     //@}

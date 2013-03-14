@@ -15,12 +15,9 @@
 #include "protocol/Protocol.h"
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/FileWrapper.h"
 #include "Tools/MIL_Tools.h"
-#include <boost/filesystem/path.hpp>
-#include <fstream>
 #include <sys/timeb.h>
-
-namespace bfs = boost::filesystem;
 
 MIL_Tools::converter< PHY_RawVisionData::E_VisionObject > MIL_Tools::environnementConverter_[] =
 {
@@ -53,14 +50,14 @@ const weather::Meteo::sWindData& MIL_Tools::GetWind( const MT_Vector2D& vPos )
 // Name: MIL_Tools::ComputeCRC
 // Created: JVT 2005-04-07
 // -----------------------------------------------------------------------------
-boost::crc_32_type::value_type MIL_Tools::ComputeCRC( const std::string& fileName )
+boost::crc_32_type::value_type MIL_Tools::ComputeCRC( const tools::Path& fileName )
 {
     static const unsigned int nBufferSize = 4096;
 
     char buffer[ nBufferSize ];
     boost::crc_32_type CRC;
 
-    std::ifstream file( fileName.c_str(), std::ios::in | std::ios::binary );
+    tools::Ifstream file( fileName, std::ios::in | std::ios::binary );
 
     while( file )
     {

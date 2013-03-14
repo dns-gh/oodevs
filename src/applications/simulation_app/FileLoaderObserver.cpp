@@ -11,6 +11,7 @@
 #include "FileLoaderObserver.h"
 #include "MT_Tools/MT_Logger.h"
 #include "xeumeuleu/xml.hpp"
+#include "tools/Path.h"
 
 // -----------------------------------------------------------------------------
 // Name: FileLoaderObserver constructor
@@ -34,9 +35,9 @@ FileLoaderObserver::~FileLoaderObserver()
 // Name: FileLoaderObserver::NotifyInvalidXml
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-bool FileLoaderObserver::NotifyInvalidXml( const std::string& fileName, const xml::exception& e )
+bool FileLoaderObserver::NotifyInvalidXml( const tools::Path& fileName, const xml::exception& e )
 {
-    MT_LOG_WARNING_MSG( "Invalid XML file " << fileName << " " << tools::GetExceptionMsg( e ) );
+    MT_LOG_WARNING_MSG( "Invalid XML file " << fileName.ToUTF8() << " " << tools::GetExceptionMsg( e ) );
     return true;
 }
 
@@ -44,16 +45,16 @@ bool FileLoaderObserver::NotifyInvalidXml( const std::string& fileName, const xm
 // Name: FileLoaderObserver::NotifyInvalidXml
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-void FileLoaderObserver::NotifyNoXmlSchemaSpecified( const std::string& fileName )
+void FileLoaderObserver::NotifyNoXmlSchemaSpecified( const tools::Path& fileName )
 {
-    MT_LOG_WARNING_MSG( "File " << fileName << " has no XML schema specified" );
+    MT_LOG_WARNING_MSG( "File " << fileName.ToUTF8() << " has no XML schema specified" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileLoaderObserver::NotifyFileMigrated
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-void FileLoaderObserver::NotifyFileMigrated( const std::string& /*fileName*/, const std::string& /*fromVersion*/, const std::string& /*toVersion*/ )
+void FileLoaderObserver::NotifyFileMigrated( const tools::Path& /*fileName*/, const std::string& /*fromVersion*/, const std::string& /*toVersion*/ )
 {
     // NOTHING
 }

@@ -48,7 +48,7 @@ static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1 };
 // Name: SIM_App constructor
 // Created: RDS 2008-07-08
 // -----------------------------------------------------------------------------
-SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPSTR lpCmdLine,
+SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPWSTR lpCmdLine,
                   int /* nCmdShow */, int maxConnections, bool verbose )
     : maxConnections_( maxConnections )
     , verbose_       ( verbose )
@@ -64,7 +64,7 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPSTR lpCm
 
     bool bClearPreviousLog = !config_->HasCheckpoint();
     tools::ExerciseConfig* exerciceConfig = static_cast< tools::ExerciseConfig* >( config_.get() );
-    logger_.reset( new MT_FileLogger( config_->BuildSessionChildFile( "Sim.log" ).c_str(),
+    logger_.reset( new MT_FileLogger( config_->BuildSessionChildFile( "Sim.log" ),
                                         exerciceConfig->GetSimLogFiles(), exerciceConfig->GetSimLogSize(),
                                         exerciceConfig->GetSimLogLevel(), bClearPreviousLog, MT_Logger_ABC::eSimulation, exerciceConfig->IsSimLogInBytes() ) );
     console_.reset( new MT_ConsoleLogger() );

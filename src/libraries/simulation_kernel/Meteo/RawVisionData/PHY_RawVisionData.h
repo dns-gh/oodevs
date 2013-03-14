@@ -19,6 +19,11 @@ class PHY_IndirectFireDotationClass;
 class PHY_MeteoDataManager;
 class ElevationGrid;
 
+namespace tools
+{
+    class Path;
+}
+
 //*****************************************************************************
 // Created: JVT 02-11-05
 // Last modified: JVT 04-03-24
@@ -41,8 +46,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RawVisionData( weather::Meteo& globalMeteo,
-                const std::string& detection, PHY_MeteoDataManager* manager );
+             PHY_RawVisionData( weather::Meteo& globalMeteo, const tools::Path& detection, PHY_MeteoDataManager* manager );
     virtual ~PHY_RawVisionData();
     //@}
 
@@ -86,7 +90,7 @@ public:
     /** @name IN/OUT */
     //-------------------------------------------------------------------------
     //@{
-    bool Read( const std::string& strFile );
+    bool Read( const tools::Path& file );
     //@}
 
 private:

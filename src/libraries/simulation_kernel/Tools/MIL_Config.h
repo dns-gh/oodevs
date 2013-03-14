@@ -71,9 +71,9 @@ public:
     bool               GetPausedAtStartup          () const;
     unsigned int       GetPathFinderThreads        () const;
     boost::optional< unsigned int > GetPathFinderMaxComputationTime() const;
-    const std::string& GetCheckpointNameTestMode   () const;
-    const std::string& GetIntegrationDir           () const;
-    const std::string& GetPathfindDir              () const;
+    const tools::Path& GetCheckpointNameTestMode   () const;
+    const tools::Path& GetIntegrationDir           () const;
+    const tools::Path& GetPathfindDir              () const;
     const std::string& GetPathfindFilter           () const;
 
     int                GetRandomSeed               () const;
@@ -88,27 +88,21 @@ public:
     //@{
     virtual void Parse( int argc, char** argv );
 
-    std::string BuildCheckpointChildFile( const std::string& file, std::string name = "" ) const;
+    tools::Path BuildCheckpointChildFile( const tools::Path& file, tools::Path name = "" ) const;
 
-    virtual std::string GetOrbatFile() const;
+    virtual tools::Path GetOrbatFile() const;
     //@}
 
     //! @name CheckPoints
     //@{
-    void AddFileToCRC( const std::string& fileName );
-    boost::crc_32_type::value_type serialize( const std::string& strFileName ) const;
+    void AddFileToCRC( const tools::Path& fileName );
+    boost::crc_32_type::value_type serialize( const tools::Path& strFileName ) const;
     //@}
 
 private:
-    //! @name Assignment operator
-    //@{
-    MIL_Config( const MIL_Config& );
-    MIL_Config& operator=( const MIL_Config& );
-    //@}
-
     //! @name Helpers
     //@{
-    void ReadSessionFile            ( const std::string& file );
+    void ReadSessionFile            ( const tools::Path& file );
     void ReadSessionXml             ( xml::xistream& xis );
     void ReadCheckPointConfiguration( xml::xistream& xis );
     void ReadDebugConfiguration     ( xml::xistream& xis );
@@ -117,7 +111,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const std::string, boost::crc_32_type::value_type > T_CRCMap;
+    typedef std::map< const tools::Path, boost::crc_32_type::value_type > T_CRCMap;
     //@}
 
 private:
@@ -149,7 +143,7 @@ private:
     bool           bEmbeddedDispatcher_;
     bool           bPausedAtStartup_;
     bool           bLegacy_;
-    std::string    strCheckPointNameTestMode_;
+    tools::Path    strCheckPointNameTestMode_;
     T_CRCMap       CRCMap_;
     int            randomSeed_;
     bool           randomGaussian_[ MIL_Random::eContextsNbr ];
@@ -157,8 +151,8 @@ private:
     double         randomMean_[ MIL_Random::eContextsNbr ];
     unsigned int   setpause_;
     unsigned int   setstepmul_;
-    std::string    integrationDir_;
-    std::string    pathfindDir_;
+    tools::Path    integrationDir_;
+    tools::Path    pathfindDir_;
     std::string    pathfindFilter_;
     //@}
 };

@@ -20,6 +20,11 @@
 #include <boost/CRC.hpp>
 #pragma warning ( pop )
 
+namespace tools
+{
+    class Path; 
+}
+
 namespace sword
 {
     class CoordLatLong;
@@ -88,7 +93,7 @@ public:
 
     //! @name CRC
     //@{
-    static boost::crc_32_type::value_type ComputeCRC( const std::string& strFileName );
+    static boost::crc_32_type::value_type ComputeCRC( const tools::Path& strFileName );
     //@}
 
 private:

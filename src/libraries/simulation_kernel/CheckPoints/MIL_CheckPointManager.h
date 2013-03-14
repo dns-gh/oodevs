@@ -18,6 +18,7 @@
 #include <boost/CRC.hpp>
 #pragma warning ( pop )
 #include <queue>
+#include "tools/Path.h"
 
 namespace sword
 {
@@ -71,19 +72,19 @@ public:
 private:
     //! @name Tools
     //@{
-    void RotateCheckPoints       ( const std::string& newName );
-    bool SaveCheckPoint          ( const std::string& name, const std::string& userName = "" );
-    bool SaveOrbatCheckPoint     ( const std::string& name );
-    bool SaveFullCheckPoint      ( const std::string& name, const std::string& userName = "" );
-    std::string BuildCheckPointName() const;
+    void RotateCheckPoints       ( const tools::Path& newName );
+    bool SaveCheckPoint          ( const tools::Path& name, const tools::Path& userName = "" );
+    bool SaveOrbatCheckPoint     ( const tools::Path& name );
+    bool SaveFullCheckPoint      ( const tools::Path& name, const tools::Path& userName = "" );
+    tools::Path BuildCheckPointName() const;
 
     void UpdateNextCheckPointTick();
     //@}
 
     //! @name Tools
     //@{
-    static void                           CreateMetaData     ( const std::string& strPath, const std::string& strName, const boost::crc_32_type::value_type&, const boost::crc_32_type::value_type& );
-    static boost::crc_32_type::value_type CreateData         ( const std::string& strFileName );
+    static void                           CreateMetaData     ( const tools::Path& path, const tools::Path& strName, const boost::crc_32_type::value_type&, const boost::crc_32_type::value_type& );
+    static boost::crc_32_type::value_type CreateData         ( const tools::Path& filename );
 
     static void                           CheckCRC           ( const MIL_Config& config );
     static void                           CheckFilesCRC      ( const MIL_Config& config );
@@ -92,7 +93,7 @@ private:
 private:
     //! @name types
     //@{
-    typedef std::queue< std::string > T_CheckPointsQueue;
+    typedef std::queue< tools::Path > T_CheckPointsQueue;
     //@}
 
 private:
@@ -100,7 +101,7 @@ private:
     unsigned int         nCheckPointsFrequency_;
     unsigned int         nLastCheckPointTick_;
     unsigned int         nNextCheckPointTick_;
-    std::string          checkpointName_;
+    tools::Path          checkpointName_;
     T_CheckPointsQueue   currentCheckPoints_;
 };
 

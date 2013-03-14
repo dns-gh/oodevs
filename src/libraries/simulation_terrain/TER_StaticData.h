@@ -12,6 +12,11 @@
 
 class StaticTerrainGraph;
 
+namespace tools
+{
+    class Path;
+}
+
 // =============================================================================
 /** @class  TER_StaticData
     @brief  %TER_StaticData
@@ -23,7 +28,7 @@ class TER_StaticData
 public:
     //! @name Constructors/Destructor
     //@{
-     TER_StaticData( const std::string& strGraphArchive, const std::string& strNodeArchive, const std::string& strLinkArchive, float precision );
+     TER_StaticData( const tools::Path& strGraphArchive, const tools::Path& strNodeArchive, const tools::Path& strLinkArchive, float precision );
     ~TER_StaticData();
     //@}
 

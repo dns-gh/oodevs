@@ -32,14 +32,6 @@
 #include <geocoord/Geoid.h>
 #include <xeumeuleu/xml.hpp>
 
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 4511 )
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-#pragma warning( pop )
-
-namespace bfs = boost::filesystem;
-
 TER_World*  TER_World::pInstance_ = 0;
 
 // -----------------------------------------------------------------------------
@@ -60,14 +52,6 @@ void TER_World::DestroyWorld()
 {
     delete pInstance_;
     pInstance_ = 0;
-}
-
-namespace
-{
-    std::string BuildChildFile( const std::string& parent, const std::string& child )
-    {
-        return ( bfs::path( parent ).branch_path() / bfs::path( child ) ).string();
-    }
 }
 
 // -----------------------------------------------------------------------------
