@@ -35,18 +35,6 @@ UrbanLayer::~UrbanLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanLayer::IsInSelection
-// Created: JSR 2012-05-15
-// -----------------------------------------------------------------------------
-bool UrbanLayer::IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const
-{
-    const UrbanHierarchies* hierarchies = static_cast< const UrbanHierarchies* >( entity.Retrieve< kernel::Hierarchies >() );
-    if( hierarchies && hierarchies->GetLevel() == eUrbanLevelBlock )
-        return gui::UrbanLayer::IsInSelection( entity, point );
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanLayer::IsInside
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------

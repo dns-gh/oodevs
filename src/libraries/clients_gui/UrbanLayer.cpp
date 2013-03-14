@@ -137,17 +137,6 @@ bool UrbanLayer::ShouldDisplay( const kernel::Entity_ABC& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanLayer::IsInSelection
-// Created: LGY 2011-04-18
-// -----------------------------------------------------------------------------
-bool UrbanLayer::IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const
-{
-    if( const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
-        return positions->IsInside( point );
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanLayer::IsInside
 // Created: JSR 2012-05-23
 // -----------------------------------------------------------------------------

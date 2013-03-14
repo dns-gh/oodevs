@@ -47,15 +47,6 @@ TacticalLinesLayer::~TacticalLinesLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLinesLayer::IsInSelection
-// Created: AGE 2006-11-21
-// -----------------------------------------------------------------------------
-bool TacticalLinesLayer::IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const
-{
-    return entity.Get< Positions >().IsAt( point, 10.f * tools_.Pixels( point ), tools_.GetAdaptiveZoomFactor() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: TacticalLinesLayer::HandleKeyPress
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------

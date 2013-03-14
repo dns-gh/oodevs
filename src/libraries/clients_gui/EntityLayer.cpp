@@ -168,15 +168,6 @@ void EntityLayerBase::ContextMenu( const kernel::GraphicalEntity_ABC& selectable
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityLayerBase::IsInSelection
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-bool EntityLayerBase::IsInSelection( const Entity_ABC& entity, const geometry::Point2f& point ) const
-{
-    return entity.Get< Positions >().IsAt( point, 5.f * tools_.Pixels( point ), tools_.GetAdaptiveZoomFactor() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityLayer::IsInSelection
 // Created: LGY 2013-03-01
 // -----------------------------------------------------------------------------

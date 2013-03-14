@@ -61,7 +61,6 @@ protected:
     virtual void CreateLima( const T_PointVector& points ) = 0;
     virtual bool CanCreateLine();
 
-    virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
 
     virtual bool HandleKeyPress        ( QKeyEvent* key );

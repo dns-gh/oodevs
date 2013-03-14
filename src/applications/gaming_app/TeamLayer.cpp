@@ -137,12 +137,3 @@ void TeamLayer::Paint( gui::Viewport_ABC& )
 {
     // NOTHING
 }
-
-// -----------------------------------------------------------------------------
-// Name: TeamLayer::IsInSelection
-// Created: ABR 2013-02-04
-// -----------------------------------------------------------------------------
-bool TeamLayer::IsInSelection( const kernel::Entity_ABC&, const geometry::Point2f& ) const
-{
-    return false;
-}

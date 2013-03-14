@@ -56,8 +56,6 @@ public:
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMouseMove( QMouseEvent* , const geometry::Point2f& point );
     virtual void NotifyActivated( const kernel::Team_ABC& entity );
-
-    virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     //@}
 
 private:

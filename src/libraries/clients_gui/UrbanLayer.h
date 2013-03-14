@@ -54,7 +54,6 @@ protected:
     virtual void NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
-    virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
     virtual void ActivateEntity( const kernel::Entity_ABC& entity );
     virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift );
