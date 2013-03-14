@@ -90,6 +90,7 @@ namespace
     }
 }
 
+#include "tools/Path.h"
 // -----------------------------------------------------------------------------
 // Name: Actions::IssueOrderFromFile
 // Created: PHC 2010-09-16
@@ -99,7 +100,7 @@ void Actions::IssueOrderFromFile( const std::string& name, const std::string& fi
     try
     {
         const auto& loader = config_.GetLoader();
-        const auto file = loader.LoadFile( config_.BuildExerciseChildFile( "scripts/resources/" + filename + ".ord" ) );
+        const auto file = loader.LoadFile( config_.BuildExerciseChildFile( tools::Path( "scripts/resources" ) / filename.c_str() + ".ord" ) );
         *file >> xml::start( "actions" )
                 >> xml::list( "action", boost::bind( &ReadWith, boost::cref( name ), boost::ref( *this ), &Actions::Send, _1 ) );
     }
@@ -126,7 +127,7 @@ void Actions::IssueXmlOrder( const std::string& name )
 {
     try
     {
-        config_.GetLoader().LoadFile( name, boost::bind( &Actions::Read, this, _1 ) );
+        config_.GetLoader().LoadFile( name.c_str(), boost::bind( &Actions::Read, this, _1 ) );
     }
     catch( const std::exception& e )
     {
@@ -170,7 +171,7 @@ void Actions::StartScheduler( const std::string& filename )
 {
     try
     {
-        const auto file = config_.GetLoader().LoadFile( config_.BuildExerciseChildFile( "scripts/resources/" + filename + ".ord" ) );
+        const auto file = config_.GetLoader().LoadFile( config_.BuildExerciseChildFile( tools::Path( "scripts/resources" ) + filename.c_str() + ".ord" ) );
         const kernel::XmlAdapter xml( *converter_, *entities_ );
         const auto ptr = boost::make_shared< ActionScheduler >( *file, xml, publisher_ );
         controller_.Register( *ptr );

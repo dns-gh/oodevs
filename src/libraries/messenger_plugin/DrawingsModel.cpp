@@ -16,14 +16,12 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/IdManager.h"
+#include "tools/FileWrapper.h"
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>
 
 using namespace plugins::messenger;
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: DrawingsModel constructor
@@ -49,12 +47,11 @@ DrawingsModel::~DrawingsModel()
 
 namespace
 {
-    std::string BuildDrawingsFile( const dispatcher::Config& config )
+    tools::Path BuildDrawingsFile( const dispatcher::Config& config )
     {
-        static const std::string filename = "drawings.xml";
         if( config.HasCheckpoint() )
-            return ( bfs::path( config.GetCheckpointDirectory() ) / bfs::path( filename ) ).string();
-        return config.BuildExerciseChildFile( filename );
+            return config.GetCheckpointDirectory() / "drawings.xml";
+        return config.BuildExerciseChildFile( "drawings.xml" );
     }
 }
 
@@ -66,17 +63,17 @@ void DrawingsModel::Load( const dispatcher::Config& config )
 {
     try
     {
-        const std::string filename = BuildDrawingsFile( config );
-        if( bfs::exists( filename ) )
+        const tools::Path filename = BuildDrawingsFile( config );
+        if( filename.Exists() )
         {
-            xml::xifstream xis( filename );
+            tools::Xifstream xis( filename );
             xis >> xml::start( "shapes" );
-            const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
+            const tools::Path schema = xis.attribute< tools::Path >( "xsi:noNamespaceSchemaLocation", "" );
             xis >> xml::end;
-            if( schema.empty() )
+            if( schema.IsEmpty() )
                 ReadShapes( xis );
             else
-                ReadShapes( xml::xifstream( filename, xml::external_grammar( config.BuildResourceChildFile( schema ) ) ) );
+                ReadShapes( tools::Xifstream( filename, xml::external_grammar( config.BuildResourceChildFile( schema ).ToUTF8().c_str() ) ) );
         }
     }
     catch( const std::exception& )
@@ -160,7 +157,7 @@ namespace
 // Name: DrawingsModel::Save
 // Created: SBO 2008-06-10
 // -----------------------------------------------------------------------------
-void DrawingsModel::Save( const std::string& directory ) const
+void DrawingsModel::Save( const tools::Path& directory ) const
 {
     T_DrawingsMap formationMap;
     T_DrawingsMap automatMap;
@@ -183,9 +180,8 @@ void DrawingsModel::Save( const std::string& directory ) const
             notDiffused.insert( &drawing );
     }
 
-    std::string filename = ( bfs::path( directory ) / bfs::path( "drawings.xml" ) ).string();
     {
-        xml::xofstream xos( filename );
+        tools::Xofstream xos( directory / "drawings.xml" );
         xos << xml::start( "shapes" )
             << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
             << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/drawings.xsd" );
@@ -292,7 +288,7 @@ void DrawingsModel::RegisterIn( directia::brain::Brain& brain )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DrawingProxy > DrawingsModel::CreateDrawing( const std::string& name )
 {
-    xml::xifstream xis( config_.BuildExerciseChildFile( "scripts/resources/drawings.xml" ) ); // $$$$ AGE 2008-07-09:
+    tools::Xifstream xis( config_.BuildExerciseChildFile( "scripts/resources/drawings.xml" ) );
     std::auto_ptr< Drawing > p;
     xis >> xml::start( "shapes" )
             >> xml::list( "shape", *this, &DrawingsModel::ReadNamedShape, p, name );

@@ -13,6 +13,7 @@
 #include "dispatcher/Registrable_ABC.h"
 #include "protocol/MessengerSenders.h"
 #include "tools/Resolver.h"
+#include "tools/Path.h"
 #include <boost/noncopyable.hpp>
 #include <ostream>
 #include <list>
@@ -47,7 +48,7 @@ class NotesModel : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, tools::IdManager& idManager, const std::string& file );
+             NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, tools::IdManager& idManager, const tools::Path& file );
     virtual ~NotesModel();
     //@}
 
@@ -67,7 +68,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    unsigned int LoadNotes( const std::string& filename, unsigned int skip );
+    unsigned int LoadNotes( const tools::Path& filename, unsigned int skip );
     void HandleRequestDestructSingle( Note* note );
     void HandleRequestDestructCascade( Note* note );
     void ReadNote( const std::string& input, std::vector< unsigned int >& notes );
@@ -75,8 +76,8 @@ private:
     void CreateHeader( std::ostream& os );
     unsigned int CreateNote( std::vector< std::string >& note, const unsigned int parent );
     virtual void RegisterIn( directia::brain::Brain& brain );
-    void CreateFromFile( const std::string& filename, bool tail );
-    void OpenContext( const std::string& name );
+    void CreateFromFile( const tools::Path& filename, bool tail );
+    void OpenContext( const tools::Path& name );
     void CloseContext();
     void ClearContext();
     //@}
@@ -85,7 +86,7 @@ private:
     //@{
     typedef std::list< unsigned long > T_List;
     typedef T_List::const_iterator     CIT_List;
-    typedef std::map< std::string, T_List > T_ContextNotes;
+    typedef std::map< tools::Path, T_List > T_ContextNotes;
     //@}
 
 private:
@@ -94,12 +95,12 @@ private:
     const dispatcher::Config&        config_;
     dispatcher::ClientPublisher_ABC& clients_;
     tools::IdManager&                idManager_;
-    const std::string                fileName_;
+    const tools::Path                fileName_;
     std::list< unsigned int >        headNotes_;
     std::string                      currentTime_;
     unsigned int                     cursor_;
     T_ContextNotes                   contexts_;
-    std::string                      currentContext_;
+    tools::Path                      currentContext_;
     //@}
 };
 

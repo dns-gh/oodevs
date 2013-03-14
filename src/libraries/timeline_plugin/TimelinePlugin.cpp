@@ -78,9 +78,9 @@ void TimelinePlugin::Load( const tools::ExerciseConfig& config, xml::xistream& x
 
     if( doRestart )
         publisher_->RestartScenario();
-	this->logger_->LogInfo( MT_FormatString("TimelinePlugin : load actions from scenario %d for actor %d" , scenarioId, actorId) );
-	ActionLoader loader( scenarioId, actorId, *publisher_, *this->logger_ );
-    loader.Load( config.BuildExerciseChildFile( file ) );
+    this->logger_->LogInfo( MT_FormatString("TimelinePlugin : load actions from scenario %d for actor %d" , scenarioId, actorId) );
+    ActionLoader loader( scenarioId, actorId, *publisher_, *this->logger_ );
+    loader.Load( config.BuildExerciseChildFile( tools::Path::FromUTF8( file ) ) );
 }
 
 // -----------------------------------------------------------------------------

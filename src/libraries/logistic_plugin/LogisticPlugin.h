@@ -35,6 +35,11 @@ namespace boost
     }
 }
 
+namespace tools
+{
+    class Path;
+}
+
 namespace plugins
 {
 namespace logistic
@@ -55,9 +60,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticPlugin(const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
-                 const std::string& maintenanceFile, const std::string& supplyFile,
-                 const std::string& funeralFile, const std::string& medicalFile,
-                 const char* localeStr);
+                 const tools::Path& maintenanceFile, const tools::Path& supplyFile,
+                 const tools::Path& funeralFile, const tools::Path& medicalFile,
+                 const char* localeStr );
     virtual ~LogisticPlugin();
     //@}
 
@@ -79,13 +84,6 @@ public:
     virtual void Receive( const sword::SimToClient& message, const boost::gregorian::date& today );
     virtual int GetConsignCount( E_LogisticType eLogisticType ) const;
     virtual void SetMaxLinesInFile( int maxLines );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    LogisticPlugin( const LogisticPlugin& );            //!< Copy constructor
-    LogisticPlugin& operator=( const LogisticPlugin& ); //!< Assignment operator
     //@}
 
 private:

@@ -67,7 +67,7 @@ private:
 // -----------------------------------------------------------------------------
 FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                 AgentSubject_ABC& subject, LocalAgentResolver_ABC& resolver, const RtiAmbassadorFactory_ABC& rtiFactory,
-                                const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory, CallsignResolver_ABC& callsignResolver,
+                                const FederateAmbassadorFactory_ABC& federateFactory, const tools::Path& pluginDirectory, CallsignResolver_ABC& callsignResolver,
                                 TacticalObjectSubject_ABC& tacticalObjectSubject,
                                 OwnershipStrategy_ABC& ownershipStrategy, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer )
     : subject_           ( subject )

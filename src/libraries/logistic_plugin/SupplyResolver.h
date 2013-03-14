@@ -92,7 +92,7 @@ class SupplyResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyResolver( const std::string& name, const NameResolver_ABC& nameResolver );
+             SupplyResolver( const tools::Path& name, const NameResolver_ABC& nameResolver );
     virtual ~SupplyResolver();
     //@}
 

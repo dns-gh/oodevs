@@ -11,13 +11,17 @@
 #define __Unit_h_
 
 #include <boost/noncopyable.hpp>
-#include <boost/filesystem/fstream.hpp>
 #include <vector>
 #include <string>
 
 namespace sword
 {
     class CoordLatLong;
+}
+
+namespace tools
+{
+    class Ofstream;
 }
 
 namespace plugins
@@ -41,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    void Export( boost::filesystem::ofstream& file );
+    void Export( tools::Ofstream& file );
     void UpdatePosition( const sword::CoordLatLong& coord );
     //@}
 

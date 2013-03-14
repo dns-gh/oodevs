@@ -11,6 +11,7 @@
 #define __ScoresModel_h_
 
 #include "dispatcher/Registrable_ABC.h"
+#include "tools/Path.h"
 #pragma warning( push, 0 )
 #pragma warning( disable : 4996 )
 #include <QtCore/qdatetime.h>
@@ -94,12 +95,12 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& file );
+    void Load( const tools::Path& file );
     void Update( const sword::Indicator& message );
     void Update( const sword::SimToClient& message );
     void RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const sword::PlotRequest& request );
     void Export() const;
-    void SimplifiedExport( const std::string& path ) const;
+    void SimplifiedExport( const tools::Path& path ) const;
     void SendInformation( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     //@}
 
@@ -135,7 +136,7 @@ private:
     QDateTime initialDateTime_;
     bool dateTimeInitialized_;
     unsigned int tickDuration_;
-    const std::string sessionDir_;
+    const tools::Path sessionDir_;
     static const std::string separator_;
     //@}
 };

@@ -10,6 +10,7 @@
 #include "FuneralResolver.h"
 #include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "tools/FileWrapper.h"
 
 using namespace plugins::logistic;
 
@@ -108,7 +109,7 @@ const ConsignData_ABC& FuneralConsignData::ManageMessage( const ::sword::LogFune
 // Name: FuneralResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-FuneralResolver::FuneralResolver( const std::string& name, const NameResolver_ABC& nameResolver ) 
+FuneralResolver::FuneralResolver( const tools::Path& name, const NameResolver_ABC& nameResolver ) 
     : ConsignResolver_ABC( name, nameResolver )
 {
     // NOTHING

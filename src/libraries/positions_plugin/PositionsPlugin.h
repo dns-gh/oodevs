@@ -12,7 +12,7 @@
 
 #include "TeamResolver.h"
 #include "dispatcher/Plugin_ABC.h"
-#include <boost/filesystem/path.hpp>
+#include "tools/Path.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <string>
 #include <vector>
@@ -37,7 +37,7 @@ class PositionsPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PositionsPlugin( const std::string& filename, unsigned int exportFrequency );
+             PositionsPlugin( const tools::Path& filename, unsigned int exportFrequency );
     virtual ~PositionsPlugin();
     //@}
 
@@ -64,7 +64,7 @@ private:
 private:
     //! @name Member data
     //@{
-    boost::filesystem::path  filepath_;
+    tools::Path              filepath_;
     unsigned int             exportFrequency_;
     bool                     firstTick_;
     boost::posix_time::ptime lastExportTime_;

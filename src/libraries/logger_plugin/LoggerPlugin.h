@@ -14,7 +14,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "reports/ReportFactory.h"
 #include "RcEntityResolver.h"
-#include <fstream>
+#include "tools/Path.h"
 #include <set>
 
 namespace tools
@@ -65,12 +65,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LoggerPlugin( const LoggerPlugin& );            //!< Copy constructor
-    LoggerPlugin& operator=( const LoggerPlugin& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void FormatMission( const char* name, int id, int mission );
@@ -86,7 +80,7 @@ private:
     //! @name Member data
     //@{
     const tools::SessionConfig&    sessionConfig_;
-    std::string                    filename_;
+    tools::Path                    filename_;
     std::auto_ptr< MT_FileLogger > pLogger_;
     kernel::ObjectTypes            objectTypes_;
     RcEntityResolver               resolver_;

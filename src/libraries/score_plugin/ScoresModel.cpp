@@ -17,15 +17,12 @@
 #include "3a/StaticModel.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/protocol.h"
+#include "tools/FileWrapper.h"
 #include "tools/SessionConfig.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/filesystem/fstream.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
-
-namespace bfs = boost::filesystem;
 
 using namespace plugins::score;
 
@@ -72,11 +69,11 @@ ScoresModel::~ScoresModel()
 // Name: ScoresModel::Load
 // Created: SBO 2009-08-20
 // -----------------------------------------------------------------------------
-void ScoresModel::Load( const std::string& file )
+void ScoresModel::Load( const tools::Path& file )
 {
-    if( bfs::exists( bfs::path( file ) ) )
+    if( file.Exists() )
     {
-        xml::xifstream xis( file );
+        tools::Xifstream xis( file );
         xis >> xml::start( "scores" )
                 >> xml::list( "score", *this, &ScoresModel::ReadIndicators );
     }
@@ -213,8 +210,8 @@ void ScoresModel::Export() const
     if( dateTimeInitialized_ )
         try
         {
-            bfs::path bfspath( sessionDir_ + "/scores.csv" );
-            bfs::ofstream file( bfspath );
+            tools::Path path = sessionDir_ / "scores.csv";
+            tools::Ofstream file( path );
             const std::size_t size = AddHeader( file );
             for( std::size_t index = 0; index < size; ++index )
                 AddLine( file, index );
@@ -230,13 +227,13 @@ void ScoresModel::Export() const
 // Name: ScoresModel::SimplifiedExport
 // Created: FPO 2011-03-24
 // -----------------------------------------------------------------------------
-void ScoresModel::SimplifiedExport( const std::string& path ) const
+void ScoresModel::SimplifiedExport( const tools::Path& path ) const
 {
     if( dateTimeInitialized_ )
         try
         {
-            bfs::path bfspath( path + "/scores.csv" );
-            bfs::ofstream file( bfspath );
+            tools::Path filePath = path / "scores.csv";
+            tools::Ofstream file( filePath );
             const std::size_t size = AddHeader( file );
             if( size )
             {

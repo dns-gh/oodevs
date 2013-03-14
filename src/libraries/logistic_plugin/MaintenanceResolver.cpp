@@ -10,6 +10,7 @@
 #include "MaintenanceResolver.h"
 #include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "tools/FileWrapper.h"
 
 using namespace plugins::logistic;
 
@@ -99,7 +100,7 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
 // Name: MaintenanceResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-MaintenanceResolver::MaintenanceResolver( const std::string& name, const NameResolver_ABC& nameResolver )
+MaintenanceResolver::MaintenanceResolver( const tools::Path& name, const NameResolver_ABC& nameResolver )
     : ConsignResolver_ABC( name, nameResolver )
 {
     // NOTHING

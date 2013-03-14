@@ -11,10 +11,10 @@
 #include "FederateFactory.h"
 #include "FederateAmbassadorFactory_ABC.h"
 #include "Federate_ABC.h"
+#include "tools/Path.h"
 #include <hla/RtiAmbassador_ABC.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/algorithm/string.hpp>
-#include <boost/filesystem.hpp>
 
 using namespace plugins::hla;
 
@@ -23,7 +23,7 @@ using namespace plugins::hla;
 // Created: AHC 2011-11-09
 // -----------------------------------------------------------------------------
 std::auto_ptr< Federate_ABC > FederateFactory::CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador,
-        const FederateAmbassadorFactory_ABC& factory, const std::string& pluginDirectory )
+        const FederateAmbassadorFactory_ABC& factory, const tools::Path& pluginDirectory )
 {
     std::auto_ptr< Federate_ABC > federate = factory.Create( ambassador, xis.attribute< std::string >( "name", "SWORD" ), xis.attribute< int >( "lookahead", -1 ) );
     if( !federate->Connect() )
@@ -35,7 +35,7 @@ std::auto_ptr< Federate_ABC > FederateFactory::CreateFederate( xml::xisubstream 
         if( xis.attribute< bool >( "creation", false ) )
         {
             std::string fom = xis.attribute< std::string >( "fom", "ASI_FOM_v2.0.8_2010.xml" );
-            std::vector<std::string> fomFiles;
+            std::vector< std::string > fomFiles;
 
             boost::split(fomFiles, fom, boost::is_any_of(",;"));
 
@@ -46,9 +46,13 @@ std::auto_ptr< Federate_ABC > FederateFactory::CreateFederate( xml::xisubstream 
             }
             else
             {
-                if( !boost::filesystem::path(fom).is_complete() )
-                    fom = pluginDirectory + "/" + fom ;
-                if( !federate->Create( name, fom ) )
+                tools::Path fomPath = tools::Path::FromUTF8( fom );
+                if( !fomPath.IsAbsolute() )
+                {
+                    fomPath = pluginDirectory / fomPath;
+                    fomPath.Normalize();
+                }
+                if( !federate->Create( name, fomPath.ToUTF8() ) )
                     throw MASA_EXCEPTION( "Could not create the federation '" + name + "'" );
             }
 

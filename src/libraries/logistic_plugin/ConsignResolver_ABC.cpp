@@ -9,10 +9,9 @@
 
 #include "ConsignResolver_ABC.h"
 #include "clients_kernel/Tools.h"
-#include <boost/filesystem/operations.hpp>
+#include "tools/FileWrapper.h"
 #include <boost/regex.hpp>
 
-namespace bfs = boost::filesystem;
 namespace bg = boost::gregorian;
 
 namespace plugins
@@ -20,14 +19,14 @@ namespace plugins
 namespace logistic
 {
 
-std::string EscapeRegex( const std::string& s )
+std::wstring EscapeRegex( const std::wstring& s )
 {
-    std::string escaped;
+    std::wstring escaped;
     escaped.reserve( 2*s.size() );
     for( size_t i = 0; i != s.size(); ++i )
     {
         if( !std::isalnum( s[i] ))
-            escaped.push_back( '\\' );
+            escaped.push_back( L'\\' );
         escaped.push_back( s[i] );
     }
     return escaped;
@@ -37,7 +36,7 @@ std::string EscapeRegex( const std::string& s )
 // Name: ConsignResolver_ABC constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-ConsignResolver_ABC::ConsignResolver_ABC( const std::string& name, const NameResolver_ABC& nameResolver )
+ConsignResolver_ABC::ConsignResolver_ABC( const tools::Path& name, const NameResolver_ABC& nameResolver )
     : name_( name ), curTick_( 0 ), nameResolver_( nameResolver ), curFileIndex_( 0 ), curLineIndex_( 0 ), maxLinesInFile_( 50000 ), daysBeforeToKeep_( 1 )
 {
     // NOTHING
@@ -99,15 +98,6 @@ void ConsignResolver_ABC::DestroyConsignData( int requestId )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConsignResolver_ABC::AppendDateWithExtension
-// Created: MMC 2012-08-06
-// -----------------------------------------------------------------------------
-void ConsignResolver_ABC::AppendDateWithExtension( std::string& fileName, const bg::date& d, int fileIndex )
-{
-    fileName += "." + to_iso_string( d ) + "." + boost::lexical_cast< std::string >( fileIndex ) + ".csv";
-}
-
-// -----------------------------------------------------------------------------
 // Name: ConsignResolver_ABC::SetNewFile
 // Created: MMC 2012-08-27
 // -----------------------------------------------------------------------------
@@ -120,11 +110,10 @@ void ConsignResolver_ABC::SetNewFile( const boost::gregorian::date& today )
         else
             curFileIndex_ = 0;
     }
-    std::string newFileName( name_ );
-    AppendDateWithExtension( newFileName, today, curFileIndex_++ );
+    fileName_ = name_;
+    fileName_.ReplaceExtension( tools::Path::FromUTF8( "." + to_iso_string( today ) + "." + boost::lexical_cast< std::string >( curFileIndex_++ ) + ".csv" ) );
     curLineIndex_ = 0;
     fileDate_ = today;
-    fileName_ = newFileName;
 }
 
 // -----------------------------------------------------------------------------
@@ -133,18 +122,14 @@ void ConsignResolver_ABC::SetNewFile( const boost::gregorian::date& today )
 // -----------------------------------------------------------------------------
 void ConsignResolver_ABC::InitFileIndex( const boost::gregorian::date& today )
 {
-    const bfs::path curPath( name_ );
-    boost::regex todayRegex(
-        EscapeRegex( curPath.filename().string() ) + "\\." + to_iso_string( today ) + "\\.(\\d+)\\.csv$");
-
-    boost::smatch m;
-    bfs::directory_iterator end;
-    for( bfs::directory_iterator dir_it( curPath.parent_path() ) ; dir_it != end ; ++dir_it )
+    boost::wregex todayRegex( EscapeRegex( name_.FileName().ToUnicode() ) + L"\\." + to_iso_wstring( today ) + L"\\.(\\d+)\\.csv$");
+    boost::wsmatch m;
+    for( auto it = name_.Parent().begin(); it != name_.end(); ++it )
     {
-        if( bfs::is_regular_file( dir_it->status() ) )
+        if( it->IsRegularFile() )
         {
-            const std::string fileName = dir_it->path().filename().string();
-            if(boost::regex_match( fileName, m, todayRegex ) )
+            const std::wstring fileName = it->FileName().ToUnicode();
+            if( boost::regex_match( fileName, m, todayRegex ) )
             {
                 const int curIndex = boost::lexical_cast< int >( m.str( 1 ) ) + 1;
                 if( curIndex > curFileIndex_ )
@@ -160,29 +145,27 @@ void ConsignResolver_ABC::InitFileIndex( const boost::gregorian::date& today )
 // -----------------------------------------------------------------------------
 void ConsignResolver_ABC::RemoveOldFiles( const boost::gregorian::date& today )
 {
-    const bfs::path curPath( name_ );
-    boost::regex fileRegex(
-        EscapeRegex( curPath.filename().string() ) + "\\.(\\d{8})\\.\\d+\\.csv$");
-    const std::string minDate = to_iso_string( today - bg::days( daysBeforeToKeep_ ) );
+    boost::wregex fileRegex( EscapeRegex( name_.FileName().ToUnicode() ) + L"\\.(\\d{8})\\.\\d+\\.csv$");
+    const std::wstring minDate = to_iso_wstring( today - bg::days( daysBeforeToKeep_ ) );
 
-    boost::smatch m;
-    std::vector< bfs::path > filesToRemove;
-    bfs::directory_iterator end;
-    for( bfs::directory_iterator dir_it( curPath.parent_path() ) ; dir_it != end ; ++dir_it )
+    boost::wsmatch m;
+    std::vector< tools::Path > filesToRemove;
+    for( auto it = name_.Parent().begin(); it != name_.end(); ++it )
     {
-        if( bfs::is_regular_file( dir_it->status() ) )
+        if( it->IsRegularFile() )
         {
-            const std::string fileName = dir_it->path().filename().string();
+            const std::wstring fileName = it->FileName().ToUnicode();
             // ISO date lexicographic order matches the chronological one
-            if( boost::regex_match( fileName, m, fileRegex ) && m.str(1) < minDate)
-                filesToRemove.push_back( dir_it->path() );
+            if( boost::regex_match( fileName, m, fileRegex ) && m.str(1) < minDate )
+                filesToRemove.push_back( *it );
         }
     }
-    for( std::vector< bfs::path >::const_iterator it = filesToRemove.begin(); it != filesToRemove.end(); ++it )
+
+    for( auto it = filesToRemove.begin(); it != filesToRemove.end(); ++it )
     {
         try
         {
-            bfs::remove( *it );
+            it->Remove();
         }
         catch( ... )
         {
@@ -199,20 +182,20 @@ void ConsignResolver_ABC::OpenFile()
 {
     if( output_.is_open() )
         output_.close();
-    if( !fileName_.empty() )
+    if( !fileName_.IsEmpty() )
     {
         try
         {
-            if( bfs::exists( fileName_ ) )
+            if( fileName_.Exists() )
             {
                 if( !output_.is_open() )
-                    output_.open( fileName_.c_str(), std::ios_base::out | std::ios_base::app );
+                    output_.open( fileName_, std::ios_base::out | std::ios_base::app );
             }
             else
             {
                 if( output_.is_open() )
                     output_.close();
-                output_.open( fileName_.c_str(), std::ios_base::out | std::ios_base::app );
+                output_.open( fileName_, std::ios_base::out | std::ios_base::app );
                 output_ << header_;
             }
         }

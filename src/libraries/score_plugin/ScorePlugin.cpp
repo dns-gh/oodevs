@@ -20,12 +20,9 @@
 #include "tools/MessageDispatcher_ABC.h"
 #include "tools/SessionConfig.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
-#include <fstream>
 #include <xeumeuleu/xml.hpp>
 
-namespace bfs = boost::filesystem;
 using namespace plugins::score;
 
 // -----------------------------------------------------------------------------
@@ -70,7 +67,7 @@ void ScorePlugin::Receive( const sword::SimToClient& wrapper )
     if( wrapper.message().has_control_checkpoint_save_end() )
     {
         scores_->Export();
-        scores_->SimplifiedExport( config_.GetCheckpointDirectory( wrapper.message().control_checkpoint_save_end().name() ) );
+        scores_->SimplifiedExport( config_.GetCheckpointDirectory( tools::Path::FromUTF8( wrapper.message().control_checkpoint_save_end().name() ) ) );
     }
 }
 

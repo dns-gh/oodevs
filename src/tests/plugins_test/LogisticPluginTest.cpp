@@ -14,33 +14,19 @@
 #include <tools/TemporaryDirectory.h>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/regex.hpp>
 #include <algorithm>
 #include <cstdlib>
-#include <fstream>
 #include <string>
 
-
 using namespace plugins::logistic;
-namespace bfs = boost::filesystem;
 namespace bpt = boost::posix_time;
 namespace bg = boost::gregorian;
 
 namespace
 {
-
-std::string NormalizePath( std::string path )
-{
-    for( size_t i = 0; i != path.size(); ++i )
-    {
-        if( path[i] == '\\')
-            path[i] = '/';
-    }
-    return path;
-}
 
 class SimpleNameResolver : public NameResolver_ABC
 {
@@ -106,22 +92,22 @@ public:
     }
 };
 
-boost::shared_ptr<LogisticPlugin> CreateLogisticPlugin( const bfs::path& tempDir )
+boost::shared_ptr<LogisticPlugin> CreateLogisticPlugin( const tools::Path& tempDir )
 {
     boost::shared_ptr< SimpleNameResolver > nameResolver( new SimpleNameResolver() );
     return boost::shared_ptr< LogisticPlugin >( new LogisticPlugin( nameResolver,
-        (tempDir / "maintenance" ).string(),
-        (tempDir / "supply" ).string(),
-        (tempDir / "funeral" ).string(),
-        (tempDir / "medical" ).string(),
+        tempDir / "maintenance",
+        tempDir / "supply",
+        tempDir / "funeral",
+        tempDir / "medical",
         "en" ));
 }
 
 typedef std::vector< std::string > T_Lines;
-void CheckFileContent( T_Lines expected, const std::string& path )
+void CheckFileContent( T_Lines expected, const tools::Path& path )
 {
     T_Lines lines;
-    std::fstream fp( path.c_str(), std::ios::in );
+    tools::Fstream fp( path, std::ios::in );
     std::string line;
     while( std::getline( fp, line ))
         lines.push_back(line);
@@ -131,19 +117,19 @@ void CheckFileContent( T_Lines expected, const std::string& path )
 
 struct LogFile
 {
-    LogFile( const std::string& r, const T_Lines& l ): regexp( r ), lines( l ) {}
+    LogFile( const std::wstring& r, const T_Lines& l ): regexp( r ), lines( l ) {}
 
-    std::string regexp;
+    std::wstring regexp;
     T_Lines lines;
 };
 
-void CheckRegexps( const std::vector< LogFile >& logFiles, const std::vector< std::string >& files )
+void CheckRegexps( const std::vector< LogFile >& logFiles, const tools::Path::T_Paths& files )
 {
     BOOST_CHECK_EQUAL( logFiles.size(), files.size() );
     for( size_t i = 0; i != files.size(); ++i )
     {
-        boost::regex re( logFiles[i].regexp, boost::regex::perl );
-        BOOST_CHECK( boost::regex_match( files[i], re ) );
+        boost::wregex re( logFiles[i].regexp, boost::wregex::perl );
+        BOOST_CHECK( boost::regex_match( files[i].ToUnicode(), re ) );
 
         CheckFileContent( logFiles[i].lines, files[i] );
     }
@@ -153,9 +139,9 @@ void CheckRegexps( const std::vector< LogFile >& logFiles, const std::vector< st
 
 BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
 {
-    tools::TemporaryDirectory tempDir( "testlogisticplugin-",
-            ::GetTestTempDirectory() );
-    boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tempDir.path() );
+    tools::TemporaryDirectory tempDir( "testlogisticplugin-", ::GetTestTempDirectory() );
+    tools::Path tmpDir = tools::Path::FromUnicode( tempDir.path().wstring() );
+    boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tmpDir );
 
     {
         bg::date day1( bg::from_string( "2001/05/17" ) );
@@ -472,18 +458,15 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 0 );
     }
 
-    std::vector< std::string > files;
-    tempDir.ListDir( files );
-
+    tools::Path::T_Paths files = tmpDir.ListElements( true, false, true );
     std::vector< LogFile > expecteds;
-
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; unit ; handling unit ; conveying unit ; rank ; packaging resource ; state ; state end tick" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ;  ;  ; rank_0 ;  ;  ; " );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_0 ; " );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_1 ; 100" );
-        expecteds.push_back( LogFile( "^.*/funeral\\.20050220\\.0\\.csv$", expectedLines ) );
+        expecteds.push_back( LogFile( L"^.*/funeral\\.20050220\\.0\\.csv$", expectedLines ) );
     }
 
     {
@@ -492,7 +475,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_2 ; 200" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_3 ; 300" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; automat_8 ; agent_9 ; rank_0 ; resource_10 ; funeral_4 ; 400" );
-        expecteds.push_back( LogFile( "^.*/funeral\\.20050220\\.1\\.csv$", expectedLines ) );
+        expecteds.push_back( LogFile( L"^.*/funeral\\.20050220\\.1\\.csv$", expectedLines ) );
     }
 
     {
@@ -501,14 +484,14 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         expectedLines.push_back( "7 ; 200 ; GDH1 ; agent_8 ;  ; equipment_10 ; breakdown_11 ;  ; " );
         expectedLines.push_back( "17 ; 300 ; GDH2 ; agent_18 ;  ; equipment_20 ; breakdown_21 ;  ; " );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; agent_12 ; equipment_10 ; breakdown_11 ; maintenance_0 ; 30" );
-        expecteds.push_back( LogFile( "^.*/maintenance\\.20010517\\.0\\.csv$", expectedLines ) );
+        expecteds.push_back( LogFile( L"^.*/maintenance\\.20010517\\.0\\.csv$", expectedLines ) );
     }
 
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; unit ; provider ; rank ; wound ; nbc ; mental ; state ; state end tick" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; agent_12 ; rank_0 ; wound_0 ; yes ; no ; medical_1 ; 40" );
-        expecteds.push_back( LogFile( "^.*/medical\\.20020126\\.0\\.csv$", expectedLines ) );
+        expecteds.push_back( LogFile( L"^.*/medical\\.20020126\\.0\\.csv$", expectedLines ) );
     }
 
     {
@@ -516,7 +499,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         expectedLines.push_back( "request id ; tick ; GDH ; unit ; provider ; rank ; wound ; nbc ; mental ; state ; state end tick" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; agent_12 ; rank_0 ; wound_0 ; yes ; no ; medical_2 ; 50" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; agent_12 ; rank_0 ; wound_0 ; yes ; no ; consign finished ; 50" );
-        expecteds.push_back( LogFile( "^.*/medical\\.20020127\\.0\\.csv$", expectedLines ) );
+        expecteds.push_back( LogFile( L"^.*/medical\\.20020127\\.0\\.csv$", expectedLines ) );
     }
 
     {
@@ -525,14 +508,14 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         expectedLines.push_back( "7 ; 300 ; GDH2 ;  ; automat_8 ; automat_9 ;  ;  ; " );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_11 ; automat_8 ; automat_9 ; agent_10 ; supply_0 ; 100 ; resource_0 ; 300 ; 200 ; 100 ; resource_1 ; 310 ; 210 ; 110" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_12 ; automat_8 ; automat_9 ; agent_10 ; supply_0 ; 100 ; resource_3 ; 120 ; 75 ; 50" );
-        expecteds.push_back( LogFile( "^.*/supply\\.20080921\\.0\\.csv$", expectedLines ) );
+        expecteds.push_back( LogFile( L"^.*/supply\\.20080921\\.0\\.csv$", expectedLines ) );
     }
 
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; recipient ; provider ; transport provider ; conveyor ; state ; state end tick ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed ; resource type ; requested ; granted ; conveyed" );
         expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_13 ;  ;  ; agent_10 ; supply_0 ; 100 ; resource_0 ; 300 ; 200 ; 100" );
-        expecteds.push_back( LogFile( "^.*/supply\\.20080921\\.1\\.csv$", expectedLines ) );
+        expecteds.push_back( LogFile( L"^.*/supply\\.20080921\\.1\\.csv$", expectedLines ) );
     }
 
     {
@@ -541,7 +524,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_11 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 200 ; resource_0 ; 300 ; 200 ; 100 ; resource_1 ; 310 ; 210 ; 110" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_12 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 200" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; automat_14 ; automat_8 ; automat_9 ; agent_10 ; supply_1 ; 200 ; resource_3 ; 120 ; 75 ; 50" );
-        expecteds.push_back( LogFile( "^.*/supply\\.20080922\\.0\\.csv$", expectedLines ) );
+        expecteds.push_back( LogFile( L"^.*/supply\\.20080922\\.0\\.csv$", expectedLines ) );
     }
 
     {
@@ -550,7 +533,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_13 ;  ;  ; agent_10 ; supply_1 ; 200 ; resource_0 ; 300 ; 200 ; 100" );
         expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_17 ;  ;  ; agent_10 ; supply_1 ; 200 ; resource_3 ; 180 ; 85 ; 80" );
         expectedLines.push_back( "8 ; 300 ; GDH2 ; automat_18 ;  ;  ; agent_10 ; supply_1 ; 200 ; resource_4 ; 24 ; 23 ; 21" );
-        expecteds.push_back( LogFile( "^.*/supply\\.20080922\\.1\\.csv$", expectedLines ) );
+        expecteds.push_back( LogFile( L"^.*/supply\\.20080922\\.1\\.csv$", expectedLines ) );
     }
 
     CheckRegexps( expecteds, files );
@@ -573,35 +556,34 @@ void PushFuneralMessage( LogisticPlugin* plugin )
 
 BOOST_AUTO_TEST_CASE( TestLogisticPluginRestart )
 {
-    tools::TemporaryDirectory tempDir( "testlogisticplugin-",
-            ::GetTestTempDirectory() );
-    boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tempDir.path() );
+    tools::TemporaryDirectory tempDir( "testlogisticplugin-", ::GetTestTempDirectory() );
+    tools::Path tmpDir = tools::Path::FromUnicode( tempDir.path().wstring() );
+    boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tmpDir );
 
     plugin->SetMaxLinesInFile( 1 );
     for( int i = 0; i < 2; ++i )
         PushFuneralMessage( plugin.get() );
 
     // Recreate it on multiple files
-    plugin = CreateLogisticPlugin( tempDir.path() );
+    plugin = CreateLogisticPlugin( tmpDir );
     PushFuneralMessage( plugin.get() );
-  
-    std::vector< std::string > files;
-    tempDir.ListDir( files );
+
+    tools::Path::T_Paths files = tmpDir.ListElements( true, false, true );
     std::vector< LogFile > expected;
     {
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; unit ; handling unit ; conveying unit ; rank ; packaging resource ; state ; state end tick" );
         expectedLines.push_back( "7 ; 0 ;  ; agent_8 ;  ;  ; rank_0 ;  ;  ; " );
-        expected.push_back( LogFile( "^.*/funeral\\.20050220\\.0\\.csv$", expectedLines ) );
-        expected.push_back( LogFile( "^.*/funeral\\.20050220\\.1\\.csv$", expectedLines ) );
-        expected.push_back( LogFile( "^.*/funeral\\.20050220\\.2\\.csv$", expectedLines ) );
+        expected.push_back( LogFile( L"^.*/funeral\\.20050220\\.0\\.csv$", expectedLines ) );
+        expected.push_back( LogFile( L"^.*/funeral\\.20050220\\.1\\.csv$", expectedLines ) );
+        expected.push_back( LogFile( L"^.*/funeral\\.20050220\\.2\\.csv$", expectedLines ) );
     }
     CheckRegexps( expected, files );
 }
 
 BOOST_AUTO_TEST_CASE( TestEscapeRegex )
 {
-    BOOST_CHECK_EQUAL( "", EscapeRegex( "" ));
-    BOOST_CHECK_EQUAL( "abC123", EscapeRegex( "abC123" ));
-    BOOST_CHECK_EQUAL( "a\\^bc\\{12\\}3\\*\\\\", EscapeRegex( "a^bc{12}3*\\" ));
+    BOOST_CHECK_EQUAL( "", "" );
+    BOOST_CHECK_EQUAL( tools::Path::FromUnicode( L"abC123" ), tools::Path::FromUnicode( EscapeRegex( L"abC123" ) ) );
+    BOOST_CHECK_EQUAL( tools::Path::FromUnicode( L"a\\^bc\\{12\\}3\\*\\\\" ), tools::Path::FromUnicode( EscapeRegex( L"a^bc{12}3*\\" ) ) );
 }

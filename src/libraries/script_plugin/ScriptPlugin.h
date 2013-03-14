@@ -37,6 +37,7 @@ namespace kernel
 namespace tools
 {
     class MessageDispatcher_ABC;
+    class Path;
 }
 
 namespace plugins
@@ -87,7 +88,7 @@ private:
     //! @name Types
     //@{
     void LoadScripts();
-    void LoadScript( const std::string& file );
+    void LoadScript( const tools::Path& file );
     void OnReceiveClientToMessenger( const std::string&, const sword::ClientToMessenger& );
     virtual void RegisterIn( directia::brain::Brain& brain );
 
@@ -96,7 +97,7 @@ private:
     std::string ToUtm( const dispatcher::Position& position );
     dispatcher::Position UtmPosition( const std::string& utm );
 
-    std::string GenerateOrdersScript( const std::vector< std::string >& files );
+    tools::Path GenerateOrdersScript( const std::vector< tools::Path >& files );
 
     void ApplyPendings();
     //@}

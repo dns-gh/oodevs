@@ -12,6 +12,8 @@
 
 #include "ConsignData_ABC.h"
 #include "protocol/Protocol.h"
+#include "tools/FileWrapper.h"
+#include "tools/Path.h"
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/noncopyable.hpp>
 
@@ -30,7 +32,7 @@ class NameResolver_ABC;
 
 // Return a version of string s escaped so that its characters are interpreted
 // as-is when used to build a regular expression.
-std::string EscapeRegex( const std::string& s );
+std::wstring EscapeRegex( const std::wstring& s );
 
 // =============================================================================
 /** @class  ConsignResolver_ABC
@@ -44,7 +46,7 @@ class ConsignResolver_ABC : private boost::noncopyable
 public:
     //! @name Constructor/Destructor
     //@{
-    ConsignResolver_ABC( const std::string& name, const NameResolver_ABC& nameResolver );
+    ConsignResolver_ABC( const tools::Path& name, const NameResolver_ABC& nameResolver );
     virtual ~ConsignResolver_ABC();
     //@}
 
@@ -72,7 +74,7 @@ protected:
     virtual void DestroyConsignData( int requestId );
 
     template < typename M, typename T >
-    void TraceConsign( const M& msg, std::ofstream& output )
+    void TraceConsign( const M& msg, tools::Ofstream& output )
     {
         if( msg.has_request() )
         {
@@ -87,7 +89,6 @@ protected:
     //! @name Helpers
     //@{
     void InitFileIndex( const boost::gregorian::date& today );
-    void AppendDateWithExtension( std::string& fileName, const boost::gregorian::date& d, int fileIndex );
     void CheckOutputFile( const boost::gregorian::date& today );
     void SetNewFile( const boost::gregorian::date& today );
     void RemoveOldFiles( const boost::gregorian::date& today );
@@ -102,9 +103,9 @@ protected:
     boost::gregorian::date fileDate_;
     int curTick_;
     std::string simTime_;
-    const std::string name_;
-    std::string fileName_;
-    std::ofstream output_;
+    const tools::Path name_;
+    tools::Path fileName_;
+    tools::Ofstream output_;
     std::map< int, ConsignData_ABC* > consignsData_;
     int curFileIndex_;
     int curLineIndex_;

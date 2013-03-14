@@ -9,7 +9,7 @@
 
 #include "PositionsPlugin.h"
 #include "protocol/Protocol.h"
-#include <boost/filesystem.hpp>
+#include "tools/FileWrapper.h"
 
 using namespace plugins::positions;
 
@@ -19,7 +19,7 @@ const std::string PositionsPlugin::separator_ = ";";
 // Name: PositionsPlugin constructor
 // Created: ABR 2011-04-01
 // -----------------------------------------------------------------------------
-PositionsPlugin::PositionsPlugin( const std::string& filename, unsigned int exportFrequency )
+PositionsPlugin::PositionsPlugin( const tools::Path& filename, unsigned int exportFrequency )
     : filepath_       ( filename )
     , exportFrequency_( exportFrequency )
     , firstTick_      ( true )
@@ -102,7 +102,7 @@ void PositionsPlugin::SaveTime()
 // -----------------------------------------------------------------------------
 void PositionsPlugin::ExportData() const
 {
-    boost::filesystem::ofstream file( filepath_ );
+    tools::Ofstream file( filepath_ );
     file << "Team (id)" << separator_ << "Unit (id)";
     for( auto it = times_.begin(); it != times_.end(); ++it )
         file << separator_ << *it;

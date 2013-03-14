@@ -12,6 +12,7 @@
 #include "timeline_plugin/Publisher_ABC.h"
 #include "timeline_plugin/ActionLoader.h"
 #include "dispatcher/Logger_ABC.h" 
+#include "tools/FileWrapper.h"
 #include <xeumeuleu/xml.hpp>
 #include <iostream>
 
@@ -58,11 +59,11 @@ namespace
 
 BOOST_AUTO_TEST_CASE( timeline_plugin_action_loader_test )
 {
-    const std::string filename( BOOST_RESOLVE( "timeline_plugin/orders.ord" ) );
-	MockPublisher publisher;
-	dispatcher::MockLogger logger;
-	MOCK_EXPECT( logger.LogInfo );
-    xml::xifstream xis( filename );
+    const tools::Path filename = BOOST_RESOLVE( "timeline_plugin/orders.ord" );
+    MockPublisher publisher;
+    dispatcher::MockLogger logger;
+    MOCK_EXPECT( logger.LogInfo );
+    tools::Xifstream xis( filename );
     xis >> xml::start( "actions" ) >> xml::start( "action" );
     xml::xostringstream xos;
     xos << xml::content( "action", xis );

@@ -11,7 +11,8 @@
 #define __Saver_h_
 
 #include "dispatcher/Frames.h"
-#include <fstream>
+#include "tools/FileWrapper.h"
+#include "tools/Path.h"
 #include <boost/noncopyable.hpp>
 
 namespace dispatcher
@@ -70,14 +71,14 @@ private:
     //! @name Member data
     //@{
     dispatcher::ClientPublisher_ABC& client_;
-    static const std::string currentFolderName_;
-    std::string recorderDirectory_;
+    static const tools::Path currentFolderName_;
+    tools::Path recorderDirectory_;
     std::string realTime_;
     dispatcher::Frame current_;
-    std::ofstream index_;
-    std::ofstream keyIndex_;
-    std::ofstream key_;
-    std::ofstream update_;
+    tools::Ofstream index_;
+    tools::Ofstream keyIndex_;
+    tools::Ofstream key_;
+    tools::Ofstream update_;
     unsigned int frameCount_;
     unsigned int fragmentFirstFrame_;
     unsigned int currentFolder_;

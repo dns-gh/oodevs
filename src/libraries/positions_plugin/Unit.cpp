@@ -10,6 +10,7 @@
 #include "Unit.h"
 #include "PositionsPlugin.h"
 #include "protocol/Protocol.h"
+#include "tools/FileWrapper.h"
 
 using namespace plugins::positions;
 
@@ -49,7 +50,7 @@ void Unit::UpdatePosition( const sword::CoordLatLong& coord )
 // Name: Unit::Export
 // Created: ABR 2011-04-01
 // -----------------------------------------------------------------------------
-void Unit::Export( boost::filesystem::ofstream& file )
+void Unit::Export( tools::Ofstream& file )
 {
     file << name_ << " (" << id_ << ")";
     for( auto it = positions_.begin(); it != positions_.end(); ++it )

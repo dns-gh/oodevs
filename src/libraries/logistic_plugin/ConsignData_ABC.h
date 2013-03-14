@@ -10,9 +10,9 @@
 #ifndef __ConsignData_ABC_h_
 #define __ConsignData_ABC_h_
 
-#include <fstream>
 #include <sstream>
 #include <boost/noncopyable.hpp>
+#include "tools/FileWrapper.h"
 
 namespace plugins
 {
@@ -37,7 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual void operator>>( std::stringstream& output ) const = 0;
-    virtual void operator>>( std::ofstream& output ) const { std::stringstream line; *this >> line; output << line.str(); }
+    virtual void operator>>( tools::Ofstream& output ) const { std::stringstream line; *this >> line; output << line.str(); }
     //@}
 
 public:

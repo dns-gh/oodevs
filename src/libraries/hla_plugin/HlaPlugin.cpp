@@ -46,6 +46,7 @@
 #include "EntityIdentifierResolver.h"
 #include "FOM_Serializer.h"
 #include "SideResolver.h"
+#include "tools/FileWrapper.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AgentType.h"
@@ -71,19 +72,19 @@ using namespace plugins::hla;
 
 namespace
 {
-    unsigned ReadTimeStep( const std::string& session )
+    unsigned ReadTimeStep( const tools::Path& session )
     {
-        xml::xifstream xis( session );
+        tools::Xifstream xis( session );
         unsigned step;
         xis >> xml::start( "session" ) >> xml::start( "config" )
                 >> xml::start( "simulation" ) >> xml::start( "time" )
                     >> xml::attribute( "step", step );
         return step;
     }
-    std::string ReadMapping( xml::xisubstream xis, const std::string& mapping )
+    tools::Path ReadMapping( xml::xisubstream xis, const std::string& mapping )
     {
         xis >> xml::start( "mappings" );
-        return xis.content< std::string >( mapping );
+        return xis.content< tools::Path >( mapping );
     }
     std::string ReadDivestitureZone( xml::xisubstream xis )
     {
@@ -191,22 +192,22 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , clientsPublisher_           ( clientsPublisher )
     , config_                     ( config )
     , pXisSession_                ( new xml::xibufferstream( xis ) )
-    , pXisConfiguration_          ( new xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "configuration", "configuration.xml" ) ) )
+    , pXisConfiguration_          ( new tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / xis.attribute< tools::Path >( "configuration", "configuration.xml" ) ) ) )
     , pXis_                       ( new xml::ximultistream( *pXisSession_, *pXisConfiguration_ >> xml::start( "configuration" ) ) )
     , logFilter_                  ( new LogFilter( logger ) )
     , logger_                     ( pXis_->attribute< bool >( "debug", false ) ? logger : *logFilter_ )
     , pContextFactory_            ( new ContextFactory() )
     , pObjectResolver_            ( new ObjectResolver() )
-    , pRtiFactory_                ( new RtiAmbassadorFactory( *pXis_, xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/protocols.xml" ) ) )
+    , pRtiFactory_                ( new RtiAmbassadorFactory( *pXis_, tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / "protocols.xml" ) ) ) )
     , pDebugRtiFactory_           ( new DebugRtiAmbassadorFactory( *pRtiFactory_, logger_, *pObjectResolver_ ) )
     , pFederateFactory_           ( new FederateAmbassadorFactory( ReadTimeStep( config.GetSessionFile() ) ) )
     , pDebugFederateFactory_      ( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger_, *pObjectResolver_ ) )
-    , pAggregateTypeResolver_     ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "aggregate" ) ) ) )
-    , pAutomatAggregateResolver_  ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "automat" ) ) ) )
-    , pSurfaceVesselTypeResolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "surface-vessel" ) ) ) )
-    , pComponentTypeResolver_     ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "component" ) ) ) )
-    , pEntityMunitionTypeResolver_( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "munition" ) ) ) )
-    , pEntityObjectTypeResolver_  ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "object" ) ) ) )
+    , pAggregateTypeResolver_     ( new rpr::EntityTypeResolver( tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / ReadMapping( *pXis_, "aggregate" ) ) ) ) )
+    , pAutomatAggregateResolver_  ( new rpr::EntityTypeResolver( tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / ReadMapping( *pXis_, "automat" ) ) ) ) )
+    , pSurfaceVesselTypeResolver_ ( new rpr::EntityTypeResolver( tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / ReadMapping( *pXis_, "surface-vessel" ) ) ) ) )
+    , pComponentTypeResolver_     ( new rpr::EntityTypeResolver( tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / ReadMapping( *pXis_, "component" ) ) ) ) )
+    , pEntityMunitionTypeResolver_( new rpr::EntityTypeResolver( tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / ReadMapping( *pXis_, "munition" ) ) ) ) )
+    , pEntityObjectTypeResolver_  ( new rpr::EntityTypeResolver( tools::Xifstream( ( config.BuildPluginDirectory( "hla" ) / ReadMapping( *pXis_, "object" ) ) ) ) )
     , pComponentTypes_            ( new ComponentTypes( staticModel.types_ ) )
     , pUnitTypeResolver_          ( new UnitTypeResolver< kernel::AgentType >( *pAggregateTypeResolver_, staticModel.types_, logger ) )
     , pAutomatTypeResolver_       ( new UnitTypeResolver< kernel::AutomatType >( *pAutomatAggregateResolver_, staticModel.types_, logger ) )

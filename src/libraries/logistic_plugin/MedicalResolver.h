@@ -70,7 +70,7 @@ class MedicalResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalResolver( const std::string& name, const NameResolver_ABC& nameResolver );
+             MedicalResolver( const tools::Path& name, const NameResolver_ABC& nameResolver );
     virtual ~MedicalResolver();
     //@}
 

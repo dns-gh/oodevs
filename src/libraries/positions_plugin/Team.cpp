@@ -10,6 +10,7 @@
 #include "Team.h"
 #include "PositionsPlugin.h"
 #include "Unit.h"
+#include "tools/FileWrapper.h"
 
 using namespace plugins::positions;
 
@@ -58,7 +59,7 @@ void Team::UpdatePosition( unsigned int unitId, const sword::CoordLatLong& coord
 // Name: Team::Export
 // Created: ABR 2011-04-01
 // -----------------------------------------------------------------------------
-void Team::Export( boost::filesystem::ofstream& file ) const
+void Team::Export( tools::Ofstream& file ) const
 {
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {

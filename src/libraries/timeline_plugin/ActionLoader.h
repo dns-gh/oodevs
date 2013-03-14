@@ -20,6 +20,11 @@ namespace dispatcher
     class Logger_ABC;
 }
 
+namespace tools
+{
+    class Path;
+}
+
 namespace plugins
 {
 namespace timeline
@@ -43,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& filename );
+    void Load( const tools::Path& filename );
     //@}
 
 private:

@@ -37,6 +37,7 @@ namespace sword
 namespace tools
 {
     class IdManager;
+    class Path;
 }
 
 namespace xml
@@ -71,7 +72,7 @@ public:
 
     //! @name Operations
     //@{
-    void Save( const std::string& directory ) const;
+    void Save( const tools::Path& directory ) const;
     //@}
 
     //! @name Requests

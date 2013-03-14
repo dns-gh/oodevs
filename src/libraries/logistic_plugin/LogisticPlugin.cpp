@@ -18,6 +18,7 @@
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/SessionConfig.h"
+#include "tools/Path.h"
 #pragma warning( push, 0 )
 #include <QtCore/qsettings.h>
 #include <QtCore/qtextcodec.h>
@@ -48,8 +49,8 @@ namespace
 // Name: LogisticPlugin constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const std::string& maintenanceFile,
-    const std::string& supplyFile, const std::string& funeralFile, const std::string& medicalFile, const char* localeStr )
+LogisticPlugin::LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const tools::Path& maintenanceFile,
+                                const tools::Path& supplyFile, const tools::Path& funeralFile, const tools::Path& medicalFile, const char* localeStr )
     : nameResolver_( nameResolver )
     , localAppli_ ( !qApp ? new QApplication( localAppliArgc, localAppliArgv ) : 0 )
 {
@@ -145,10 +146,10 @@ LogisticPlugin* CreateLogisticPlugin(
 {
     return new LogisticPlugin(
         nameResolver,
-        config.BuildSessionChildFile( xis.attribute( "maintenancefile", "LogMaintenance" )),
-        config.BuildSessionChildFile( xis.attribute( "supplyfile", "LogSupply" )),
-        config.BuildSessionChildFile( xis.attribute( "funeralfile", "LogFuneral" )),
-        config.BuildSessionChildFile( xis.attribute( "medicalfile", "LogMedical" )),
+        config.BuildSessionChildFile( xis.attribute< tools::Path >( "maintenancefile", "LogMaintenance" ) ),
+        config.BuildSessionChildFile( xis.attribute< tools::Path >( "supplyfile", "LogSupply" ) ),
+        config.BuildSessionChildFile( xis.attribute< tools::Path >( "funeralfile", "LogFuneral" ) ),
+        config.BuildSessionChildFile( xis.attribute< tools::Path >( "medicalfile", "LogMedical" ) ),
         0 );  // localeStr
 }
 

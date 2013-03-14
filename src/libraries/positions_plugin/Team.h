@@ -11,11 +11,15 @@
 #define __Team_h_
 
 #include "tools/Resolver.h"
-#include <boost/filesystem/fstream.hpp>
 
 namespace sword
 {
     class CoordLatLong;
+}
+
+namespace tools
+{
+    class Ofstream;
 }
 
 namespace plugins
@@ -43,7 +47,7 @@ public:
     //@{
     void AddUnit( unsigned int unitId, const std::string& name, unsigned int timePreviouslyExported );
 
-    void Export( boost::filesystem::ofstream& file ) const;
+    void Export( tools::Ofstream& file ) const;
 
     void UpdatePosition( unsigned int unitId, const sword::CoordLatLong& coord );
     //@}

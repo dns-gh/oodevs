@@ -10,6 +10,7 @@
 #include "TeamResolver.h"
 #include "Team.h"
 #include "protocol/Protocol.h"
+#include "tools/FileWrapper.h"
 #include <tools/Exception.h>
 #include <boost/bind.hpp>
 
@@ -81,7 +82,7 @@ void TeamResolver::UpdatePosition( unsigned int unitId, const sword::CoordLatLon
 // Name: TeamResolver::Export
 // Created: ABR 2011-04-01
 // -----------------------------------------------------------------------------
-void TeamResolver::Export( boost::filesystem::ofstream& file ) const
+void TeamResolver::Export( tools::Ofstream& file ) const
 {
     Apply( boost::bind( &Team::Export, _1, boost::ref( file ) ) );
 }

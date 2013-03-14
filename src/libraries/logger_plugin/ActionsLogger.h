@@ -40,6 +40,7 @@ namespace kernel
 namespace tools
 {
     class SessionConfig;
+    class Path;
 }
 
 namespace boost
@@ -95,7 +96,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void SaveTo( const std::string& filename, const T_Filter& filter ) const;
+    void SaveTo( const tools::Path& filename, const T_Filter& filter ) const;
     void Commit() const;
     void LoadOrdersIfCheckpoint();
     template< typename T, typename U >

@@ -11,6 +11,8 @@
 #include "ActionLoader.h"
 #include "Publisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/FileWrapper.h"
+#include "tools/Path.h"
 #include <xeumeuleu/xml.hpp>
 #include "dispatcher/Logger_ABC.h"
 
@@ -24,7 +26,7 @@ ActionLoader::ActionLoader( long scenarioId, long actorId, Publisher_ABC& publis
     : publisher_ ( publisher )
     , scenarioId_( scenarioId )
     , actorId_   ( actorId )
-	, logger_( &logger )
+    , logger_( &logger )
 {
     // NOTHING
 }
@@ -42,18 +44,18 @@ ActionLoader::~ActionLoader()
 // Name: ActionLoader::Load
 // Created: JCR 2010-09-08
 // -----------------------------------------------------------------------------
-void ActionLoader::Load( const std::string& filename )
+void ActionLoader::Load( const tools::Path& filename )
 {
     std::string errors;
-    xml::xifstream xis( filename );
+    tools::Xifstream xis( filename );
     xis >> xml::start( "actions" )
             >> xml::list( "action", *this, &ActionLoader::ReadAction, errors )
         >> xml::end();
-	
-	if( errors != "" )
-		throw std::exception( std::string( "The order file contains error(s), some actions could not be loaded:\n'" + errors + "'" ).c_str() );
-	this->logger_->LogInfo( std::string("load recorded orders from ") + filename );
-    }
+
+    if( errors != "" )
+        throw std::exception( std::string( "The order file contains error(s), some actions could not be loaded:\n'" + errors + "'" ).c_str() );
+    this->logger_->LogInfo( std::string("load recorded orders from ") + filename.ToUTF8() );
+}
 
 namespace
 {

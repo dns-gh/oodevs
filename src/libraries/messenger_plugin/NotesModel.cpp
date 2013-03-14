@@ -16,10 +16,10 @@
 #include "clients_kernel/Tools.h"
 #include "protocol/MessengerSenders.h"
 #include "tools/IdManager.h"
+#include "tools/FileWrapper.h"
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/filesystem/path.hpp>
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -34,14 +34,14 @@ namespace
 // Name: NotesModel constructor
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-NotesModel::NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, tools::IdManager& idManager, const std::string& file )
+NotesModel::NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, tools::IdManager& idManager, const tools::Path& file )
     : config_   ( config )
     , clients_  ( clients )
     , idManager_( idManager )
     , fileName_ ( file )
     , cursor_   ( 0 )
 {
-    LoadNotes( file, 0 );
+    LoadNotes( fileName_, 0 );
     SaveNotes();
 }
 
@@ -199,7 +199,7 @@ void NotesModel::HandleRequestDestructCascade( Note* note )
 // -----------------------------------------------------------------------------
 void NotesModel::SaveNotes()
 {
-    std::ofstream file( fileName_.c_str(), std::ios::out | std::ios_base::trunc );
+    tools::Ofstream file( fileName_, std::ios::out | std::ios_base::trunc );
     if( !file || file.fail() )
     {
         MT_LOG_INFO_MSG( "Could not save note file : " << fileName_ );
@@ -222,8 +222,8 @@ void NotesModel::SaveNotes()
 void NotesModel::CreateHeader( std::ostream& os )
 {
     std::string terrain, physicalBase, decisionalBase;
-    boost::filesystem::path path( config_.GetExerciseFile() );
-    xml::xifstream xis( path.string() );
+    tools::Path path( config_.GetExerciseFile() );
+    tools::Xifstream xis( path );
     xis >> xml::start( "exercise" )
             >> xml::start( "terrain" )
                 >> xml::attribute( "name", terrain )
@@ -243,7 +243,7 @@ void NotesModel::CreateHeader( std::ostream& os )
     os << tools::translate( "NoteModel", "Value" ).toStdString() + ";";
     os << tools::translate( "NoteModel", "Comments" ).toStdString() << std::endl;*/
 
-    os << "Exercise" << ":;" << path.parent_path().filename() << std::endl;
+    os << "Exercise" << ":;" << path.Parent().FileName() << std::endl;
     os << "Physical base" << ":;" << physicalBase << std::endl;
     os << "Decisional base" << ":;" << decisionalBase << std::endl;
     os << "Terrain" << ":;" << terrain << std::endl;
@@ -274,9 +274,9 @@ void NotesModel::WriteNote( std::ostream& os, const Note& note, int& lineNumber,
 // Name: NotesModel::LoadNotes
 // Created: HBD 2010-02-15
 // -----------------------------------------------------------------------------
-unsigned int NotesModel::LoadNotes( const std::string& filename, unsigned int skip )
+unsigned int NotesModel::LoadNotes( const tools::Path& filename, unsigned int skip )
 {
-    std::ifstream file( filename.c_str() );
+    tools::Ifstream file( filename );
     if( !file || file.fail() )
     {
         MT_LOG_INFO_MSG( "Cannot load note file : " << filename );
@@ -336,7 +336,7 @@ unsigned int NotesModel::CreateNote( std::vector< std::string >& fields, const u
     boost::algorithm::replace_all( fields[3], "<br>", "\n" );
     std::auto_ptr< Note > note( new Note( id, fields, parent, currentTime_ ) );
     Register( note->GetId(), *note );
-    if( !currentContext_.empty() )
+    if( !currentContext_.IsEmpty() )
         contexts_[ currentContext_ ].push_back( note->GetId() );
     if( note->GetParent() )
         if( Note* parent = Find( note->GetParent() ) )
@@ -375,7 +375,7 @@ void NotesModel::RegisterIn( directia::brain::Brain& brain )
 // Name: NotesModel::CreateFromFile
 // Created: SBO 2011-05-02
 // -----------------------------------------------------------------------------
-void NotesModel::CreateFromFile( const std::string& filename, bool tail )
+void NotesModel::CreateFromFile( const tools::Path& filename, bool tail )
 {
     OpenContext( filename );
     ClearContext();
@@ -387,7 +387,7 @@ void NotesModel::CreateFromFile( const std::string& filename, bool tail )
 // Name: NotesModel::OpenContext
 // Created: SBO 2011-05-03
 // -----------------------------------------------------------------------------
-void NotesModel::OpenContext( const std::string& name )
+void NotesModel::OpenContext( const tools::Path& name )
 {
     currentContext_ = name;
 }
@@ -398,7 +398,7 @@ void NotesModel::OpenContext( const std::string& name )
 // -----------------------------------------------------------------------------
 void NotesModel::CloseContext()
 {
-    currentContext_ = "";
+    currentContext_.Clear();
 }
 
 // -----------------------------------------------------------------------------

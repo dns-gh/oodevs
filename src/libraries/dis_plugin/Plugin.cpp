@@ -17,6 +17,7 @@
 #include "dispatcher/Model_ABC.h"
 #include "rpr/EntityTypeResolver.h"
 #include "tic/PlatformDelegateFactory.h"
+#include "tools/FileWrapper.h"
 #include <xeumeuleu/xml.hpp>
 
 #pragma warning( disable: 4355 )
@@ -25,9 +26,9 @@ using namespace plugins::dis;
 
 namespace
 {
-    unsigned ReadTimeStep( const std::string& session )
+    unsigned ReadTimeStep( const tools::Path& session )
     {
-        xml::xifstream xis( session );
+        tools::Xifstream xis( session );
         unsigned step;
         xis >> xml::start( "session" ) >> xml::start( "config" )
                 >> xml::start( "simulation" ) >> xml::start( "time" )
@@ -46,7 +47,7 @@ Plugin::Plugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, 
     , converter_( new kernel::CoordinateConverter( config ) )
     , timeStep_ ( ReadTimeStep( config.GetSessionFile() ) )
     , platforms_( new tic::PlatformDelegateFactory( *converter_, static_cast< float >( timeStep_ ) ) )
-    , resolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) )
+    , resolver_ ( new rpr::EntityTypeResolver( tools::Xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) )
     , factory_  ( new Model( *network_, *this, *converter_, *resolver_, xis, *platforms_ ) )
     , fires_    ( new FireManager( *network_, *this, static_cast< unsigned char >( xis.attribute< unsigned short >( "exercise"  ) ) ) )
     , time_     ( 0 )

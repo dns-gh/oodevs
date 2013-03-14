@@ -20,16 +20,15 @@
 #include "protocol/Simulation.h"
 #include "protocol/XmlWriters.h"
 #include "tools/Exception.h"
+#include "tools/FileWrapper.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SessionConfig.h"
 
 #include <boost/bind.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/algorithm/string/erase.hpp>
 #include <xeumeuleu/xml.hpp>
 
-namespace bfs = boost::filesystem;
 using namespace plugins::logger;
 
 typedef sword::ClientToSim_Content Content;
@@ -84,9 +83,9 @@ namespace
 // Name: ActionsLogger::SaveTo
 // Created: BAX 2013-02-11
 // -----------------------------------------------------------------------------
-void ActionsLogger::SaveTo( const std::string& filename, const T_Filter& filter ) const
+void ActionsLogger::SaveTo( const tools::Path& filename, const T_Filter& filter ) const
 {
-    xml::xofstream xos( filename );
+    tools::Xofstream xos( filename );
     xos << xml::start( "actions" );
     const Adapter adapter( *converter_ );
     for( auto it = actions_.begin(); it != actions_.end(); ++it )
@@ -146,8 +145,8 @@ void ActionsLogger::LoadOrdersIfCheckpoint()
         return;
 
     loaded_ = true;
-    std::string filename( config_.BuildSessionChildFile( "actions.ord" ) );
-    if( !bfs::exists( filename ) )
+    tools::Path filename( config_.BuildSessionChildFile( "actions.ord" ) );
+    if( !filename.Exists() )
         return;
 
     const kernel::XmlAdapter adapter( *converter_, *entities_ );
@@ -247,7 +246,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ActionsLogger::SaveCheckpointActiveMissions( std::string name )
 {
-    const auto filename = config_.BuildOnLocalCheckpointChildFile( name, "current.ord" );
+    const auto filename = config_.BuildOnLocalCheckpointChildFile( tools::Path::FromUTF8( name ), "current.ord" );
     SaveTo( filename, boost::bind( &ActiveFilter, boost::cref( *entities_ ), _1 ) );
     Commit();
 }

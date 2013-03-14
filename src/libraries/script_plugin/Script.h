@@ -10,6 +10,8 @@
 #ifndef __Script_h_
 #define __Script_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace directia
 {
 namespace brain
@@ -21,6 +23,11 @@ namespace brain
 namespace dispatcher
 {
     class Registrable_ABC;
+}
+
+namespace tools
+{
+    class Path;
 }
 
 namespace plugins
@@ -35,20 +42,13 @@ namespace script
 */
 // Created: AGE 2008-06-12
 // =============================================================================
-class Script
+class Script : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Script( const std::string& file, dispatcher::Registrable_ABC& registrables );
+             Script( const tools::Path& file, dispatcher::Registrable_ABC& registrables );
     virtual ~Script();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Script( const Script& );            //!< Copy constructor
-    Script& operator=( const Script& ); //!< Assignment operator
     //@}
 
 private:

@@ -33,13 +33,13 @@
 #include "dispatcher/Profile_ABC.h"
 #include "dispatcher/Registrable_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include "tools/FileWrapper.h"
 #include "tools/MessageDispatcher_ABC.h"
+#include "tools/Path.h"
 #include "MT_Tools/MT_Logger.h"
 #include <directia/brain/Brain.h>
-#include <boost/filesystem.hpp>
 #include <boost/bind/apply.hpp>
 
-namespace bfs = boost::filesystem;
 using namespace plugins::script;
 using namespace dispatcher;
 
@@ -189,24 +189,24 @@ void ScriptPlugin::Update()
 // -----------------------------------------------------------------------------
 void ScriptPlugin::LoadScripts()
 {
-    const bfs::path dir( config_.BuildExerciseChildFile( "scripts" ) );
-    if( bfs::exists( dir ) )
+    const tools::Path dir( config_.BuildExerciseChildFile( "scripts" ) );
+    if( dir.Exists() )
     {
-        for( bfs::directory_iterator it( dir ); it !=  bfs::directory_iterator(); ++it )
+        for( auto it = dir.begin(); it != dir.end(); ++it )
         {
-            const bfs::path& file = *it;
-            if( !bfs::is_directory( file ) && bfs::extension( file ) == ".lua" )
-                LoadScript( file.string() );
+            const tools::Path& file = *it;
+            if( !file.IsDirectory() && file.Extension() == ".lua" )
+                LoadScript( file );
         }
     }
-    const std::vector< std::string >& orderFiles = config_.GetStartupOrderFiles();
+    const std::vector< tools::Path >& orderFiles = config_.GetStartupOrderFiles();
     if( !orderFiles.empty() )
     {
         try
         {
-            const std::string luaFile = GenerateOrdersScript( orderFiles );
+            tools::Path luaFile = GenerateOrdersScript( orderFiles );
             LoadScript( luaFile );
-            bfs::remove( bfs::path( luaFile ) );
+            luaFile.Remove();
         }
         catch( ... )
         {
@@ -219,7 +219,7 @@ void ScriptPlugin::LoadScripts()
 // Name: ScriptPlugin::LoadScript
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-void ScriptPlugin::LoadScript( const std::string& file )
+void ScriptPlugin::LoadScript( const tools::Path& file )
 {
     try
     {
@@ -291,12 +291,12 @@ dispatcher::Position ScriptPlugin::UtmPosition( const std::string& utm )
 // Name: ScriptPlugin::GenerateOrdersScript
 // Created: JSR 2012-03-02
 // -----------------------------------------------------------------------------
-std::string ScriptPlugin::GenerateOrdersScript( const std::vector< std::string >& files )
+tools::Path ScriptPlugin::GenerateOrdersScript( const std::vector< tools::Path >& files )
 {
-    std::string templateFile = config_.BuildResourceChildFile( "StartupOrdersTemplate.lua" );
-    std::ifstream file( templateFile.c_str() );
-    const bfs::path dest( config_.BuildExerciseChildFile( "StartupOrders.lua" ) );
-    std::ofstream destFile( dest.string().c_str() );
+    tools::Path templateFile = config_.BuildResourceChildFile( "StartupOrdersTemplate.lua" );
+    tools::Ifstream file( templateFile );
+    const tools::Path dest = config_.BuildExerciseChildFile( "StartupOrders.lua" );
+    tools::Ofstream destFile( dest );
     std::string line;
     while( destFile.good() && std::getline( file, line ) )
     {
@@ -304,17 +304,15 @@ std::string ScriptPlugin::GenerateOrdersScript( const std::vector< std::string >
             destFile << line << '\n';
         else
         {
-            for( std::vector< std::string >::const_iterator it = files.begin(); it != files.end(); ++it )
+            for( auto it = files.begin(); it != files.end(); ++it )
             {
-                std::string orderFile = *it;
-                std::size_t pos = orderFile.rfind( ".ord" );
-                if( pos != std::string::npos )
-                    orderFile.erase( pos );
-                destFile << "actions:StartScheduler( \"../../" << orderFile << "\" )\n";
+                tools::Path orderFile = *it;
+                orderFile.ReplaceExtension();
+                destFile << "actions:StartScheduler( \"../../" << orderFile.ToLocal() << "\" )\n";
             }
         }
     }
-    return dest.string();
+    return dest;
 }
 
 // -----------------------------------------------------------------------------

@@ -18,15 +18,13 @@
 #include "dispatcher/Config.h"
 #include "dispatcher/CompositeRegistrable.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/FileWrapper.h"
 #include "tools/Loader_ABC.h"
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #include "tools/IdManager.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 #include <direct.h>
 
-namespace bfs = boost::filesystem;
 using namespace plugins::messenger;
 
 // -----------------------------------------------------------------------------
@@ -73,9 +71,9 @@ void Model::SendStateToNewClient( dispatcher::ClientPublisher_ABC& client )
 
 namespace
 {
-    std::string GetCheckPointFileName( const std::string& directory )
+    tools::Path GetCheckPointFileName( const tools::Path& directory )
     {
-        return ( bfs::path( directory ) / bfs::path( "messenger.xml" ) ).string();
+        return directory / "messenger.xml";
     }
 }
 
@@ -85,12 +83,11 @@ namespace
 // -----------------------------------------------------------------------------
 void Model::Save( const std::string& name ) const
 {
-    const std::string directory = config_.GetCheckpointDirectory( name );
+    const tools::Path directory = config_.GetCheckpointDirectory( tools::Path::FromUTF8( name ) );
 
-    ::_mkdir( directory.c_str() );
-
+    directory.CreateDirectories();
     {
-        xml::xofstream xos( GetCheckPointFileName( directory ) );
+        tools::Xofstream xos( GetCheckPointFileName( directory ) );
         TacticalLinesModel::T_FormationMap formations;
         TacticalLinesModel::T_AutomatMap automats;
 

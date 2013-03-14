@@ -18,16 +18,13 @@
 #include "tools/OutputBinaryWrapper.h"
 #include <boost/algorithm/string.hpp>
 #pragma warning( push, 1 )
-#include <boost/filesystem/convenience.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 #include <boost/lexical_cast.hpp>
 
-namespace bfs = boost::filesystem;
-
 using namespace plugins::saver;
 
-const std::string Saver::currentFolderName_( "current" );
+const tools::Path Saver::currentFolderName_( "current" );
 
 // -----------------------------------------------------------------------------
 // Name: Saver constructor
@@ -41,7 +38,7 @@ Saver::Saver( dispatcher::ClientPublisher_ABC& client, const dispatcher::Config&
     , currentFolder_     ( 0 )
     , hasCheckpoint_     ( config.HasCheckpoint() )
 {
-    MT_LOG_INFO_MSG( "Recorder enabled - data stored in " << bfs::path( recorderDirectory_ ).string() );
+    MT_LOG_INFO_MSG( "Recorder enabled - data stored in " << recorderDirectory_.ToUTF8() );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,30 +57,30 @@ Saver::~Saver()
 
 namespace
 {
-    std::string CreateFolderName( unsigned int frame )
+    tools::Path CreateFolderName( unsigned int frame )
     {
         std::string foldername;
         std::string number = boost::lexical_cast< std::string >( frame );
         foldername.assign( 8 - number.size(), '0' );
         foldername.append( number );
-        return foldername;
+        return foldername.c_str();
     }
 }
 
 namespace
 {
-    void DeleteFilesRecursive( const bfs::path& path )
+    void DeleteFilesRecursive( const tools::Path& path )
     {
-        if( !bfs::exists( path ) )
+        if( !path.Exists() )
             return;
-        bfs::directory_iterator endItr;
-        for( bfs::directory_iterator itr( path ); itr != endItr; ++itr )
-            if( bfs::is_directory( itr->status() ) )
-                DeleteFilesRecursive( itr->path() );
+
+        for( auto it = path.begin(); it != path.end(); ++it )
+            if( it->IsDirectory() )
+                DeleteFilesRecursive( *it );
             else
                 try
                 {
-                    bfs::remove( itr->path() );
+                    it->Remove();
                 }
                 catch( ... )
                 {
@@ -104,15 +101,14 @@ void Saver::ControlInformation( const sword::ControlInformation& controlInformat
         UpdateFragments();
     else
     {
-        const bfs::path recorderDirectory( recorderDirectory_ );
-        if( bfs::exists( recorderDirectory ) )
+        if( recorderDirectory_.Exists() )
             try
             {
-                bfs::remove_all( recorderDirectory );
+                recorderDirectory_.RemoveAll();
             }
             catch( ... )
             {
-                DeleteFilesRecursive( recorderDirectory );
+                DeleteFilesRecursive( recorderDirectory_ );
             }
     }
     CreateNewFragment( true );
@@ -124,27 +120,27 @@ void Saver::ControlInformation( const sword::ControlInformation& controlInformat
 // -----------------------------------------------------------------------------
 void Saver::CreateNewFragment( bool first /*= false*/ )
 {
-    const bfs::path currentDirectory = bfs::path( recorderDirectory_ ) / currentFolderName_;
+    const tools::Path currentDirectory = recorderDirectory_ / currentFolderName_;
     bool exists = false;
     try
     {
-        exists = bfs::exists( currentDirectory );
+        exists = currentDirectory.Exists();
     }
     catch( const std::exception& )
     {
         exists = false;
     }
     if( !exists )
-        bfs::create_directories( currentDirectory );
+        currentDirectory.CreateDirectories();
     if( !first )
         TerminateFragment();
-    index_   .open( ( currentDirectory / "index"    ).string().c_str(), std::ios_base::binary | std::ios_base::out );
-    keyIndex_.open( ( currentDirectory / "keyindex" ).string().c_str(), std::ios_base::binary | std::ios_base::out );
-    key_     .open( ( currentDirectory / "key"      ).string().c_str(), std::ios_base::binary | std::ios_base::out );
-    update_  .open( ( currentDirectory / "update"   ).string().c_str(), std::ios_base::binary | std::ios_base::out );
+    index_   .open( currentDirectory / "index"   , std::ios_base::binary | std::ios_base::out );
+    keyIndex_.open( currentDirectory / "keyindex", std::ios_base::binary | std::ios_base::out );
+    key_     .open( currentDirectory / "key"     , std::ios_base::binary | std::ios_base::out );
+    update_  .open( currentDirectory / "update"  , std::ios_base::binary | std::ios_base::out );
     current_.Reset( static_cast< unsigned >( update_.tellp() ) );
-    std::ofstream info;
-    info.open( ( currentDirectory / "info" ).string().c_str(), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc );
+    tools::Ofstream info;
+    info.open( currentDirectory / "info", std::ios_base::binary | std::ios_base::out | std::ios_base::trunc );
     info.close();
 }
 
@@ -205,7 +201,7 @@ void Saver::SaveKeyFrame( const Savable_ABC& message )
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Saver plugin : " << tools::GetExceptionMsg( e ) << " : " << ( bfs::path( recorderDirectory_ ) / currentFolderName_ / "key") );
+        MT_LOG_ERROR_MSG( "Saver plugin : " << tools::GetExceptionMsg( e ) << " : " << ( recorderDirectory_ / currentFolderName_ / "key" ) );
     }
 }
 
@@ -229,7 +225,7 @@ void Saver::Flush()
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Saver plugin : " << tools::GetExceptionMsg( e ) << " : " << ( bfs::path( recorderDirectory_ ) / currentFolderName_ / "index") );
+        MT_LOG_ERROR_MSG( "Saver plugin : " << tools::GetExceptionMsg( e ) << " : " << ( recorderDirectory_ / currentFolderName_ / "index" ) );
     }
     GenerateInfoFile();
 }
@@ -240,25 +236,25 @@ void Saver::Flush()
 // -----------------------------------------------------------------------------
 void Saver::CopyFromCurrentToFolder()
 {
+    const tools::Path currentDirectory = recorderDirectory_ / currentFolderName_;
     try
     {
-        const bfs::path currentDirectory = bfs::path( recorderDirectory_ ) / currentFolderName_;
-        if( !bfs::exists( currentDirectory ) )
+        if( !currentDirectory.Exists() )
             return;
-        const bfs::path newDirectory = bfs::path( recorderDirectory_ ) / CreateFolderName( currentFolder_++ );
-        bfs::create_directories( newDirectory );
-        bfs::directory_iterator endItr;
-        for( bfs::directory_iterator itr( currentDirectory ); itr != endItr; ++itr )
+        const tools::Path newDirectory = recorderDirectory_ / CreateFolderName( currentFolder_++ );
+        newDirectory.CreateDirectories();
+
+        for( auto it = currentDirectory.begin(); it != currentDirectory.end(); ++it )
         {
-            std::string destPath = itr->path().string();
-            boost::algorithm::replace_first( destPath, currentDirectory.string(), newDirectory.string() );
-            bfs::copy_file( itr->path(), bfs::path( destPath ) );
-            bfs::remove( itr->path() );
+            std::wstring destPath = it->ToUnicode();
+            boost::algorithm::replace_first( destPath, currentDirectory.ToUnicode(), newDirectory.ToUnicode() );
+            it->Copy( tools::Path::FromUnicode( destPath ) );
+            it->Remove();
         }
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Saver plugin : " << tools::GetExceptionMsg( e ) << " : " << ( bfs::path( recorderDirectory_ ) / currentFolderName_ / "index") );
+        MT_LOG_ERROR_MSG( "Saver plugin : " << tools::GetExceptionMsg( e ) << " : " << ( currentDirectory / "index" ) );
     }
 }
 
@@ -285,12 +281,12 @@ void Saver::TerminateFragment()
 // -----------------------------------------------------------------------------
 void Saver::GenerateInfoFile() const
 {
-    const bfs::path currentDirectory = bfs::path( recorderDirectory_ ) / currentFolderName_;
+    const tools::Path currentDirectory = recorderDirectory_ / currentFolderName_;
     try
     {
         const std::string localTime = boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() );
-        std::ofstream info;
-        info.open( ( currentDirectory / "info" ).string().c_str(), std::ios_base::binary | std::ios_base::in | std::ios_base::ate );
+        tools::Ofstream info;
+        info.open( currentDirectory / "info", std::ios_base::binary | std::ios_base::in | std::ios_base::ate );
         tools::OutputBinaryWrapper wrapper( info );
         info.seekp( 0, std::ios_base::beg );
         wrapper << fragmentFirstFrame_;
@@ -302,7 +298,7 @@ void Saver::GenerateInfoFile() const
     }
     catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Saver plugin : " << tools::GetExceptionMsg( e ) << " : " << (currentDirectory / "info") );
+        MT_LOG_ERROR_MSG( "Saver plugin : " << tools::GetExceptionMsg( e ) << " : " << ( currentDirectory / "info" ) );
     }
 }
 
@@ -312,20 +308,18 @@ void Saver::GenerateInfoFile() const
 // -----------------------------------------------------------------------------
 void Saver::UpdateFragments()
 {
-    const bfs::path recorderDirectory( recorderDirectory_ );
-    if( !bfs::exists( recorderDirectory ) )
+    if( !recorderDirectory_.Exists() )
         return;
     currentFolder_ = 0;
-    for( bfs::directory_iterator it( recorderDirectory ); it !=  bfs::directory_iterator(); ++it )
-        if( bfs::is_directory( it->status() ) )
+    for( auto it = recorderDirectory_.begin(); it != recorderDirectory_.end(); ++it )
+        if( it->IsDirectory() )
         {
-            const bfs::path infoFile = it->path() / "info";
-            if( bfs::exists( infoFile ) )
+            const tools::Path infoFile = *it / "info";
+            if( infoFile.Exists() )
             {
                 try
                 {
-                    std::ifstream stream;
-                    stream.open( infoFile.string().c_str(), std::ios_base::binary | std::ios_base::in );
+                    tools::Ifstream stream( infoFile, std::ios_base::binary | std::ios_base::in );
                     tools::InputBinaryWrapper wrapper( stream );
                     unsigned int start;
                     unsigned int end;
@@ -335,18 +329,17 @@ void Saver::UpdateFragments()
                     if( start >= frameCount_ )
                         try
                         {
-                            bfs::remove_all( it->path() );
+                            it->RemoveAll();
                         }
                         catch( ... )
                         {
-                            DeleteFilesRecursive( it->path() );
+                            DeleteFilesRecursive( *it );
                         }
                     else if( frameCount_ > start && frameCount_ <= end )
                     {
                         std::vector< std::string > timetable;
                         {
-                            std::ifstream stream;
-                            stream.open( infoFile.string().c_str(), std::ios_base::binary | std::ios_base::in );
+                            tools::Ifstream stream( infoFile, std::ios_base::binary | std::ios_base::in );
                             tools::InputBinaryWrapper wrapper( stream );
                             unsigned int dummy;
                             wrapper >> dummy; // start
@@ -362,8 +355,8 @@ void Saver::UpdateFragments()
                             stream.close();
                         }
                         {
-                            std::ofstream stream;
-                            stream.open( infoFile.string().c_str(), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc );
+                            tools::Ofstream stream;
+                            stream.open( infoFile, std::ios_base::binary | std::ios_base::out | std::ios_base::trunc );
                             tools::OutputBinaryWrapper wrapper( stream );
                             wrapper << start;
                             wrapper << frameCount_ - 1;
@@ -371,13 +364,13 @@ void Saver::UpdateFragments()
                                 wrapper << *it;
                             stream.close();
                         }
-                        if( it->path().filename() == Saver::currentFolderName_ )
+                        if( it->FileName() == Saver::currentFolderName_ )
                             CopyFromCurrentToFolder();
                         else
-                            currentFolder_ = boost::lexical_cast< unsigned int >( it->path().filename() ) + 1;
+                            currentFolder_ = boost::lexical_cast< unsigned int >( it->FileName() ) + 1;
                     }
                     else
-                        currentFolder_ = std::max( currentFolder_, boost::lexical_cast< unsigned int >( it->path().filename() ) + 1 );
+                        currentFolder_ = std::max( currentFolder_, boost::lexical_cast< unsigned int >( it->FileName().ToUnicode() ) + 1 );
                 }
                 catch( const std::exception & )
                 {

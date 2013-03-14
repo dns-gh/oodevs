@@ -13,6 +13,7 @@
 #include "MiscEvents.h"
 #include "directia/brain/Brain.h"
 #include "dispatcher/Config.h"
+#include "tools/Path.h"
 
 using namespace plugins::script;
 
@@ -59,7 +60,7 @@ void IndicatorConditions::RegisterIn( directia::brain::Brain& brain )
 // -----------------------------------------------------------------------------
 std::string IndicatorConditions::PrependSessionPath( const std::string& filename )
 {
-    return config_.BuildSessionChildFile( filename );
+    return config_.BuildSessionChildFile( filename.c_str() ).ToLocal();
 }
 
 // -----------------------------------------------------------------------------

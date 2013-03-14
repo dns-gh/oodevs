@@ -10,6 +10,7 @@
 #include "MedicalResolver.h"
 #include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "tools/FileWrapper.h"
 #pragma warning( push, 0 )
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
@@ -126,7 +127,7 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
 // Name: MedicalResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-MedicalResolver::MedicalResolver( const std::string& name, const NameResolver_ABC& nameResolver ) 
+MedicalResolver::MedicalResolver( const tools::Path& name, const NameResolver_ABC& nameResolver ) 
     : ConsignResolver_ABC( name, nameResolver )
 {
     // NOTHING

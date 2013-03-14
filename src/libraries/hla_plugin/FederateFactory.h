@@ -22,6 +22,11 @@ namespace xml
     class xisubstream;
 }
 
+namespace tools
+{
+    class Path;
+}
+
 namespace plugins
 {
 namespace hla
@@ -42,7 +47,7 @@ public:
     //! @name Operations
     //@{
     static std::auto_ptr< Federate_ABC > CreateFederate( xml::xisubstream xis, ::hla::RtiAmbassador_ABC& ambassador,
-            const FederateAmbassadorFactory_ABC& factory, const std::string& pluginDirectory );
+            const FederateAmbassadorFactory_ABC& factory, const tools::Path& pluginDirectory );
     //@}
 
 };

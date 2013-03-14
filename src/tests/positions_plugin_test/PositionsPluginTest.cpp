@@ -10,6 +10,7 @@
 #include "positions_plugin_test_pch.h"
 #include "positions_plugin/PositionsPlugin.h"
 #include "protocol/Protocol.h"
+#include "tools/FileWrapper.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace bpt = boost::posix_time;
@@ -21,7 +22,7 @@ namespace
 
     const std::string load( const char* filename = output )
     {
-        std::ifstream ifs( filename );
+        tools::Ifstream ifs( filename );
         if( ! ifs )
             throw MASA_EXCEPTION( std::string( "File " ) + filename + " not found" );
         return std::string( std::istreambuf_iterator< char >( ifs ), std::istreambuf_iterator< char >() );
@@ -82,7 +83,7 @@ BOOST_FIXTURE_TEST_CASE( plugin_being_destroyed_adds_last_received_time_to_outpu
         plugin.Receive( MakeTimeMessage( 0 ) );
         std::remove( output );
         plugin.Receive( MakeTimeMessage( frequency - 1 ) );
-        BOOST_REQUIRE( ! std::ifstream( output ) );
+        BOOST_REQUIRE( ! tools::Ifstream( output ) );
     }
     BOOST_CHECK_EQUAL( "Team (id);Unit (id);1970-Jan-01 00:00:00;1970-Jan-01 00:00:41\n", load() );
 }
@@ -93,7 +94,7 @@ BOOST_FIXTURE_TEST_CASE( plugin_receiving_a_control_begin_tick_message_adds_time
     plugin.Receive( MakeTimeMessage( 0 ) );
     std::remove( output );
     plugin.Receive( MakeTimeMessage( frequency - 1 ) );
-    BOOST_REQUIRE( ! std::ifstream( output ) );
+    BOOST_REQUIRE( ! tools::Ifstream( output ) );
     plugin.Receive( MakeTimeMessage( frequency ) );
     BOOST_CHECK_EQUAL( "Team (id);Unit (id);1970-Jan-01 00:00:00;1970-Jan-01 00:00:42\n", load() );
 }

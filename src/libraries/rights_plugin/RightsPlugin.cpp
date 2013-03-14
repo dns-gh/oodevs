@@ -152,7 +152,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
     }
     else
     {
-        ack().set_terrain_name( config_.GetTerrainName() );
+        ack().set_terrain_name( config_.GetTerrainName().ToUTF8() );
         ack().set_error_code( sword::AuthenticationResponse::success );
         profile->Send( *ack().mutable_profile() );
         ack.Send( client );

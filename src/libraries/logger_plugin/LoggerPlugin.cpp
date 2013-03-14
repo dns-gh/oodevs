@@ -37,7 +37,7 @@ using namespace plugins::logger;
 // -----------------------------------------------------------------------------
 LoggerPlugin::LoggerPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config, const dispatcher::Services& services )
     : sessionConfig_( config )
-    , filename_    ( config.BuildSessionChildFile( "Messages.log" ).c_str() )
+    , filename_    ( config.BuildSessionChildFile( "Messages.log" ) )
     , pLogger_     ( 0 )
     , resolver_    ( model )
     , factory_     ( resolver_, objectTypes_, objectTypes_, 0 )
@@ -93,11 +93,11 @@ bool LoggerPlugin::Initialize()
         if( !services_.HasService< replay::Service >() )
         {
             if( !pLogger_.get() )
-                pLogger_.reset( new MT_FileLogger( filename_.c_str(),
-                                                    sessionConfig_.GetLoggerPluginLogFiles(),
-                                                    sessionConfig_.GetLoggerPluginLogSize(),
-                                                    sessionConfig_.GetLoggerPluginLogLevel(),
-                                                    !sessionConfig_.HasCheckpoint(), MT_Logger_ABC::eLoggerPlugin, sessionConfig_.IsLoggerPluginLogInBytes() ) );
+                pLogger_.reset( new MT_FileLogger( filename_,
+                                                   sessionConfig_.GetLoggerPluginLogFiles(),
+                                                   sessionConfig_.GetLoggerPluginLogSize(),
+                                                   sessionConfig_.GetLoggerPluginLogLevel(),
+                                                   !sessionConfig_.HasCheckpoint(), MT_Logger_ABC::eLoggerPlugin, sessionConfig_.IsLoggerPluginLogInBytes() ) );
         }
         else
             enabled_ = false;
