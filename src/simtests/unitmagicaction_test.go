@@ -156,17 +156,17 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 	expected := "" +
 		`Party[1]
   Name: party1
-    Formation[526]
-      Id: 526
+    Formation[528]
+      Id: 528
       Name: newformation
       ParentId: 0
       PartyId: 1
       Level: b
       LogLevel: none
-        Formation[527]
-          Id: 527
+        Formation[529]
+          Id: 529
           Name: newformation2
-          ParentId: 526
+          ParentId: 528
           PartyId: 1
           Level: o
           LogLevel: none
