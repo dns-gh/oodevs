@@ -122,4 +122,16 @@ bool EntityLayer< ConcreteEntity >::IsIn( const kernel::GraphicalEntity_ABC& sel
     return dynamic_cast< const ConcreteEntity* >( &selectable ) != 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::ShouldDisplayTooltip
+// Created: NPT 2013-03-14
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+bool EntityLayer< ConcreteEntity >::ShouldDisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point )
+{
+    if( dynamic_cast< const ConcreteEntity* >( &entity ) == 0 )
+        return false;
+    return EntityLayerBase::ShouldDisplayTooltip( entity, point );
+}
+
 }

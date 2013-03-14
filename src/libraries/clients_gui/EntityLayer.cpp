@@ -24,6 +24,8 @@
 using namespace kernel;
 using namespace gui;
 
+std::auto_ptr< kernel::SafePointer< kernel::Entity_ABC > > EntityLayerBase::tooltiped_;
+
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23
@@ -35,10 +37,11 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
     , strategy_   ( strategy )
     , view_       ( view )
     , tooltip_    ( 0 )
-    , tooltiped_  ( controllers )
     , selected_   ( controllers )
     , name_       ( name )
 {
+    if( tooltiped_.get() == 0 )
+        tooltiped_.reset( new kernel::SafePointer< kernel::Entity_ABC >( controllers ) );
     // NOTHING
 }
 
@@ -72,8 +75,8 @@ void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
             Draw( **it, viewport );
     if( selected_ )
         Draw( *selected_, viewport );
-    if( tooltiped_ )
-        if( const Positions* positions = tooltiped_->Retrieve< Positions >() )
+    if( *( tooltiped_.get() ) )
+        if( const Positions* positions = ( *tooltiped_ )->Retrieve< Positions >() )
         {
             const geometry::Point2f position = positions->GetPosition();
             if( !tooltip_.get() )
@@ -144,9 +147,12 @@ void EntityLayerBase::ContextMenu( const kernel::GraphicalEntity_ABC& selectable
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::HandleMouseMove( QMouseEvent* , const geometry::Point2f& point )
 {
-    if( !tooltiped_ || !ShouldDisplayTooltip( *tooltiped_, point ) )
+    if( ! tooltiped_.get() )
+        return false;
+    kernel::SafePointer< kernel::Entity_ABC >& sf = *tooltiped_;
+    if( !sf || !ShouldDisplayTooltip( *sf, point ) )
     {
-        tooltiped_ = 0;
+        *tooltiped_ = 0;
         if( tooltip_.get() )
             tooltip_->Hide();
 
@@ -180,7 +186,7 @@ bool EntityLayerBase::DisplayTooltip( const kernel::Entity_ABC& entity, const ge
     }
     if( ShouldDisplayTooltip( entity, point ) && DisplayTooltip( entity, *tooltip_ ) )
     {
-        tooltiped_ = &entity;
+        *tooltiped_ = &entity;
         return true;
     }
     return false;
@@ -236,8 +242,8 @@ bool EntityLayerBase::RemoveEntity( const Entity_ABC& entity )
         entities_.erase( it );
         if( &entity == selected_ )
             selected_ = 0;
-        if( &entity == tooltiped_ )
-            tooltiped_ = 0;
+        if( &entity == *tooltiped_ )
+            *tooltiped_ = 0;
         return true;
     }
     return false;
@@ -283,14 +289,14 @@ void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const
         return;
     geometry::Rectangle2f rectangle( topLeft, bottomRight );
     selected_ = 0;
-    tooltiped_ = 0;
+    *tooltiped_ = 0;
     kernel::GraphicalEntity_ABC::T_GraphicalEntities selectables;
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
     {
         if( ShouldDisplay( **it ) && ( IsInside( **it, rectangle ) || IsInSelection( **it, topLeft ) ) )
         {
             selected_ = *it;
-            tooltiped_ = *it;
+            *tooltiped_ = *it;
             selectables.push_back( *it );
         }
     }

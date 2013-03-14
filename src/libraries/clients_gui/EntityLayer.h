@@ -124,7 +124,7 @@ private:
     ColorStrategy_ABC&                      strategy_;
     View_ABC&                               view_;
     std::auto_ptr< kernel::GlTooltip_ABC >  tooltip_;
-    kernel::SafePointer< kernel::Entity_ABC > tooltiped_;
+    static std::auto_ptr< kernel::SafePointer< kernel::Entity_ABC > > tooltiped_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
@@ -160,6 +160,7 @@ protected:
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual void HandleRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
     virtual bool IsIn( const kernel::GraphicalEntity_ABC& selectable ) const;
+    virtual bool ShouldDisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point );
     //@}
 
 protected:
