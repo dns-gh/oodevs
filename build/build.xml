@@ -29,6 +29,8 @@
         <go_proto input="${src.dir}/sword"/>
     </target>
 
+    <target name="configure" depends="update,proto"/>    
+
     <target name="build">
         <go cmd="install"/>
     </target>
@@ -36,6 +38,9 @@
     <target name="test">
         <echo message="test.port=${test.port}"/>
         <go cmd="vet"/>
+        <go cmd="test">
+            <arg value="-i"/>
+        </go>
         <go cmd="test">
             <!-- We currently need this to avoid port collisions in tests
                  belonging to the same module. Note that it does not prevent
@@ -46,6 +51,7 @@
             <arg value="--application=${run.dir}/simulation_app.exe"/>
             <arg value="--root-dir=${data.dir}"/>
             <arg value="--test-port=${test.port}"/>
+            <!--arg value="-v=true"/-->
         </go>
     </target>
 
