@@ -102,20 +102,6 @@ float GhostPositions::GetHeight( bool aggregated ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GhostPositions::IsAt
-// Created: ABR 2011-10-19
-// -----------------------------------------------------------------------------
-bool GhostPositions::IsAt( const geometry::Point2f& pos, float precision, float adaptiveFactor ) const
-{
-    const float halfSizeX = 500.f * 0.5f * ( aggregated_ ? 2.f : 1.f ); // $$$$ SBO 2006-03-21: use font size?
-    const float sizeY     = 400.f * ( aggregated_ ? 2.f : 1.f );
-    const Point2f position = GetPosition( true );
-    const Rectangle2f agentBBox( position.X() - halfSizeX * adaptiveFactor - precision, position.Y() - precision,
-        position.X() + halfSizeX * adaptiveFactor + precision, position.Y() + sizeY * adaptiveFactor + precision);
-    return agentBBox.IsInside( pos );
-}
-
-// -----------------------------------------------------------------------------
 // Name: GhostPositions::IsIn
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------

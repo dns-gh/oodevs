@@ -186,15 +186,6 @@ float InhabitantPositions::GetHeight( bool /*aggregated*/ ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantPositions::IsAt
-// Created: SLG 2010-11-25
-// -----------------------------------------------------------------------------
-bool InhabitantPositions::IsAt( const geometry::Point2f& /*pos*/, float /*precision*/, float /*adaptiveFactor*/ ) const
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: InhabitantPositions::IsIn
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------

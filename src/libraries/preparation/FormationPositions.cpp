@@ -85,25 +85,6 @@ float FormationPositions::GetHeight( bool aggregated ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationPositions::IsAt
-// Created: SBO 2009-02-02
-// -----------------------------------------------------------------------------
-bool FormationPositions::IsAt( const geometry::Point2f& pos, float precision /* = 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
-{
-    if( !IsAggregated( formation_ ) && HasSubordinate( formation_, boost::bind( &FormationPositions::IsAggregated, this, _1 ) ) )
-    {
-        // $$$$ SBO 2009-02-02: Aggregated symbol position
-        const float halfSizeX = 500.f * 0.5f * 4.f; // $$$$ SBO 2006-03-21: use font size?
-        const float sizeY     = 400.f * 4.f;
-        const geometry::Point2f position = GetPosition( true );
-        const geometry::Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
-                                               position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
-        return agentBBox.IsInside( pos );
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: FormationPositions::IsIn
 // Created: SBO 2009-02-02
 // -----------------------------------------------------------------------------

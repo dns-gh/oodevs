@@ -236,29 +236,6 @@ Point2f PopulationFlow::GetPosition( bool ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationFlow::IsAt
-// Created: AGE 2006-04-10
-// -----------------------------------------------------------------------------
-bool PopulationFlow::IsAt( const geometry::Point2f& point, float precision /* = 100.f*/, float /*adaptiveFactor*/ ) const
-{
-    // $$$$ AGE 2006-04-10: Factoriser ce basard
-    if( flow_.empty() )
-        return false;
-    precision *= precision;
-    if( flow_.size() == 1 )
-        return flow_.front().SquareDistance( point ) <= precision;
-    CIT_PointVector previous = flow_.begin();
-    for( CIT_PointVector current = previous + 1; current != flow_.end(); ++current )
-    {
-        const Segment2f segment( *previous, *current );
-        if( segment.SquareDistance( point ) < precision )
-            return true;
-        previous = current;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PopulationFlow::IsIn
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------

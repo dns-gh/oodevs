@@ -63,15 +63,6 @@ float PopulationKnowledgePositions::GetHeight( bool aggregated ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledgePositions::IsAt
-// Created: AGE 2006-05-18
-// -----------------------------------------------------------------------------
-bool PopulationKnowledgePositions::IsAt( const geometry::Point2f& pos, float precision /* = 100.f*/, float /*adaptiveFactor*/ ) const
-{
-    return GetRealPosition().IsAt( pos, precision );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePositions::IsIn
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------

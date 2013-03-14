@@ -65,7 +65,6 @@ public:
 
     virtual geometry::Point2f GetPosition( bool aggregated = false ) const;
     virtual float GetHeight( bool aggregated ) const;
-    virtual bool IsAt( const geometry::Point2f& pos, float precision, float adaptiveFactor ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;

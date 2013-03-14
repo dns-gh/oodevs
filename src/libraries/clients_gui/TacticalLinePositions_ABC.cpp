@@ -75,29 +75,6 @@ float TacticalLinePositions_ABC::GetHeight( bool ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLinePositions_ABC::IsAt
-// Created: SBO 2006-11-06
-// -----------------------------------------------------------------------------
-bool TacticalLinePositions_ABC::IsAt( const geometry::Point2f& point, float precision, float /*adaptiveFactor*/ ) const
-{
-    precision *= precision;
-    if( pointList_.empty() )
-        return false;
-    if( pointList_.size() == 1 )
-        return pointList_.front().SquareDistance( point ) <= precision;
-
-    CIT_PointVector previous = pointList_.begin();
-    for( CIT_PointVector current = previous + 1; current != pointList_.end(); ++current )
-    {
-        const geometry::Segment2f segment( *previous, *current );
-        if( segment.SquareDistance( point ) < precision )
-            return true;
-        previous = current;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: TacticalLinePositions_ABC::IsIn
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------

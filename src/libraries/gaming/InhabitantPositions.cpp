@@ -40,15 +40,6 @@ geometry::Point2f InhabitantPositions::GetPosition( bool aggregated ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantPositions::IsAt
-// Created: SLG 2010-11-30
-// -----------------------------------------------------------------------------
-bool InhabitantPositions::IsAt( const geometry::Point2f& /*pos*/, float /*precision*/ /* = 100.f*/, float /*adaptiveFactor*/ ) const
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: InhabitantPositions::IsIn
 // Created: SLG 2010-11-30
 // -----------------------------------------------------------------------------

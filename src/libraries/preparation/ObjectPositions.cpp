@@ -117,29 +117,6 @@ float ObjectPositions::GetHeight( bool ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPositions::IsAt
-// Created: SBO 2006-09-11
-// -----------------------------------------------------------------------------
-bool ObjectPositions::IsAt( const geometry::Point2f& pos, float precision /* = 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
-{
-    precision*=precision;
-    if( points_.empty() )
-        return false;
-    if( points_.size() == 1 )
-        return points_.front().SquareDistance( pos ) <= precision;
-
-    CIT_PointVector previous = points_.begin();
-    for( CIT_PointVector current = previous + 1; current != points_.end(); ++current )
-    {
-        const geometry::Segment2f segment( *previous, *current );
-        if( segment.SquareDistance( pos ) < precision )
-            return true;
-        previous = current;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectPositions::IsIn
 // Created: SBO 2006-09-11
 // -----------------------------------------------------------------------------

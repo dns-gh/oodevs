@@ -37,7 +37,6 @@ public:
     virtual void Move( const geometry::Point2f& position );
     virtual geometry::Point2f GetPosition( bool aggregated ) const;
     virtual float GetHeight( bool ) const;
-    virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f,  float adaptiveFactor = 1.f) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;

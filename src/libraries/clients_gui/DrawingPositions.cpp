@@ -81,21 +81,6 @@ float DrawingPositions::GetHeight( bool ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawingPositions::IsAt
-// Created: SBO 2008-06-02
-// -----------------------------------------------------------------------------
-bool DrawingPositions::IsAt( const geometry::Point2f& pos, float precision /* = 100.f*/, float /*adaptiveFactor*/ ) const
-{
-    if( IsValid() )
-    {
-        kernel::LocationProximityComputer computer( pos, precision );
-        Accept( computer );
-        return computer.IsAt();
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DrawingPositions::IsIn
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------

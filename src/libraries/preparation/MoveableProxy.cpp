@@ -57,15 +57,6 @@ float MoveableProxy::GetHeight( bool ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MoveableProxy::IsAt
-// Created: LGY 2012-05-07
-// -----------------------------------------------------------------------------
-bool MoveableProxy::IsAt( const geometry::Point2f& /*pos*/, float /*precision = 100.f*/,  float /*adaptiveFactor = 1.f*/) const
-{
-    throw MASA_EXCEPTION( "not implemented" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MoveableProxy::IsIn
 // Created: LGY 2012-05-07
 // -----------------------------------------------------------------------------
