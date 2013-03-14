@@ -13,7 +13,6 @@
 #include "tools/FileMatcherFileName.h"
 #include "tools/FileMatcherNonVersionedSchema.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/filesystem.hpp>
 
 BOOST_AUTO_TEST_CASE( test_matcher_root_node )
 {
@@ -28,7 +27,7 @@ BOOST_AUTO_TEST_CASE( test_matcher_root_node )
                                      "  <decisional file=\"Decisionnel.xml\"/>"
                                      "</physical>" );
 
-    std::string newSchema;
+    tools::Path newSchema;
     bool output = matcher->MatchAndReturnNewSchema( "whatever.xml", xisMatching, newSchema );
     BOOST_CHECK( output );
     BOOST_CHECK_EQUAL( newSchema, "yeah.xsd" );
@@ -50,7 +49,7 @@ BOOST_AUTO_TEST_CASE( test_matcher_filename )
     boost::shared_ptr< tools::FileMatcher_ABC > matcher = factory.CreateFileMatcher( matcherConf );
     matcherConf >> xml::end;
 
-    std::string newSchema;
+    tools::Path newSchema;
     xml::xistringstream xisEmpty( "<?xml version=\"1.0\"?><empty/>" );
     bool output = matcher->MatchAndReturnNewSchema( "valid-test.xml", xisEmpty, newSchema );
     BOOST_CHECK( output );
@@ -83,7 +82,7 @@ BOOST_AUTO_TEST_CASE( test_matcher_non_versioned_schema )
                                      "  <decisional file=\"Decisionnel.xml\"/>"
                                      "</physical>" );
 
-    std::string newSchema;
+    tools::Path newSchema;
     bool output = matcher->MatchAndReturnNewSchema( "whatever.xml", xisMatching, newSchema );
     BOOST_CHECK( output );
     BOOST_CHECK_EQUAL( newSchema, "/great/schema.xsd" );

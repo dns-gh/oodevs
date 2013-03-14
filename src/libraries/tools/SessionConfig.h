@@ -32,19 +32,19 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string GetSessionDir() const;
-    virtual std::string GetSessionFile() const;
-    virtual std::string BuildSessionChildFile( const std::string& file ) const;
+    virtual Path GetSessionDir() const;
+    virtual Path GetSessionFile() const;
+    virtual Path BuildSessionChildFile( const Path& file ) const;
 
-    virtual std::string GetRecordDirectory() const;
-    virtual std::string GetCheckpointsDirectory() const;
-    virtual std::string GetCheckpointDirectory( const std::string& checkpoint ) const;
-    virtual std::string BuildOnLocalCheckpointChildFile( const std::string& checkpoint, const std::string& file ) const;
+    virtual Path GetRecordDirectory() const;
+    virtual Path GetCheckpointsDirectory() const;
+    virtual Path GetCheckpointDirectory() const;
+    virtual Path GetCheckpointDirectory( const Path& checkpoint ) const;
+    virtual Path BuildOnLocalCheckpointChildFile( const Path& checkpoint, const Path& file ) const;
 
     virtual bool HasCheckpoint() const;
     virtual bool CanCreateNoPartyObjects() const;
     virtual bool CanCreateParty( unsigned int id ) const;
-    virtual std::string GetCheckpointDirectory() const;
 
     virtual void Parse( int argc, char** argv );
     //@}
@@ -65,10 +65,10 @@ protected:
 private:
     //! @name Member data
     //@{
-    std::string sessionConfigFile_;
-    std::string sessionName_;
+    Path sessionConfigFile_;
+    Path sessionName_;
+    Path strCheckPointName_;
     bool hasCheckPoint_;
-    std::string strCheckPointName_;
     //@}
 };
 

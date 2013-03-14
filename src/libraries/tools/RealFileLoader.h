@@ -15,7 +15,6 @@
 #include <list>
 #include <map>
 #include <memory>
-#include <boost/filesystem/path.hpp>
 
 namespace xml
 {
@@ -24,10 +23,11 @@ namespace xml
 
 namespace tools
 {
-    class FileMigration_ABC;
-    class SchemaVersionExtractor_ABC;
     class FileMatcher_ABC;
     class FileMatcherFactory_ABC;
+    class FileMigration_ABC;
+    class Path;
+    class SchemaVersionExtractor_ABC;
 
 // =============================================================================
 /** @class  RealFileLoader_ABC
@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< xml::xistream > LoadFile( const std::string& file, RealFileLoaderObserver_ABC& observer ) const;
+    virtual std::auto_ptr< xml::xistream > LoadFile( const Path& file, RealFileLoaderObserver_ABC& observer ) const;
     //@}
 
 private:
@@ -56,15 +56,15 @@ private:
     void ReadAddedFile  ( xml::xistream& xis );
     void ReadMigration  ( xml::xistream& xis );
 
-    const std::string&             CheckIfAddedFile    ( const std::string& initialInputFileName ) const;
-    bool                           AssignDefaultSchema ( const std::string& inputFileName, xml::xistream& xis, std::string& newSchema ) const;
-    std::auto_ptr< xml::xistream > UpgradeToLastVersion( const std::string& inputFileName, std::auto_ptr< xml::xistream > xis, const std::string& initialSchema, const std::string& initialVersion, RealFileLoaderObserver_ABC& observer ) const;
+    const Path&                    CheckIfAddedFile    ( const Path& initialInputFileName ) const;
+    bool                           AssignDefaultSchema ( const Path& inputFileName, xml::xistream& xis, Path& newSchema ) const;
+    std::auto_ptr< xml::xistream > UpgradeToLastVersion( const Path& inputFileName, std::auto_ptr< xml::xistream > xis, const Path& initialSchema, const Path& initialVersion, RealFileLoaderObserver_ABC& observer ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::pair< std::string, std::string >               T_AddedFile; // filename/default file
+    typedef std::pair< Path, Path >                             T_AddedFile; // filename/default file
     typedef std::list< T_AddedFile >                            T_AddedFiles;
     typedef std::list< boost::shared_ptr< FileMigration_ABC > > T_Migrations;
     typedef std::list< boost::shared_ptr< FileMatcher_ABC > >   T_DefaultSchemasAssignment;

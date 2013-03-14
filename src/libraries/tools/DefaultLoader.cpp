@@ -12,10 +12,8 @@
 #include "RealFileLoader.h"
 #include "SchemaVersionExtractor.h"
 #include "GeneralConfig.h"
-#include <xeumeuleu/xml.hpp>
-#include <boost/filesystem/operations.hpp>
+#include "FileWrapper.h"
 
-namespace bfs = boost::filesystem;
 using namespace tools;
 
 // -----------------------------------------------------------------------------
@@ -26,7 +24,8 @@ DefaultLoader::DefaultLoader( RealFileLoaderObserver_ABC& observer )
     : observer_              ( observer )
     , schemaVersionExtractor_( new SchemaVersionExtractor() )
 {
-    xml::xifstream xis( tools::GeneralConfig::BuildResourceChildFile( "migrations.xml" ) );
+
+    Xifstream xis( tools::GeneralConfig::BuildResourceChildFile( "migrations.xml" ) );
     fileLoader_.reset( new RealFileLoader( xis, *schemaVersionExtractor_ ) );
 }
 
@@ -43,7 +42,7 @@ DefaultLoader::~DefaultLoader()
 // Name: DefaultLoader::LoadFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
-void DefaultLoader::LoadFile( const std::string& fileName, T_Loader loader ) const
+void DefaultLoader::LoadFile( const Path& fileName, T_Loader loader ) const
 {
     loader( *fileLoader_->LoadFile( fileName, observer_ ) );
 }
@@ -52,9 +51,9 @@ void DefaultLoader::LoadFile( const std::string& fileName, T_Loader loader ) con
 // Name: DefaultLoader::LoadOptionalFile
 // Created: JSR 2012-05-30
 // -----------------------------------------------------------------------------
-bool DefaultLoader::LoadOptionalFile( const std::string& fileName, T_Loader loader ) const
+bool DefaultLoader::LoadOptionalFile( const Path& fileName, T_Loader loader ) const
 {
-    if( bfs::exists( fileName ) && !bfs::is_directory( fileName ) )
+    if( fileName.Exists() && !fileName.IsDirectory() )
     {
         LoadFile( fileName, loader );
         return true;
@@ -66,7 +65,7 @@ bool DefaultLoader::LoadOptionalFile( const std::string& fileName, T_Loader load
 // Name: DefaultLoader::LoadFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
-std::auto_ptr< xml::xistream > DefaultLoader::LoadFile( const std::string& fileName ) const
+std::auto_ptr< xml::xistream > DefaultLoader::LoadFile( const Path& fileName ) const
 {
     return fileLoader_->LoadFile( fileName, observer_ );
 }
@@ -75,7 +74,7 @@ std::auto_ptr< xml::xistream > DefaultLoader::LoadFile( const std::string& fileN
 // Name: DefaultLoader::LoadPhysicalFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
-std::string DefaultLoader::LoadPhysicalFile( const std::string&, T_Loader ) const
+Path DefaultLoader::LoadPhysicalFile( const std::string&, T_Loader ) const
 {
     throw MASA_EXCEPTION( "Invalid call DefaultFileLoader::LoadPhysicalFile" );
 }
@@ -84,7 +83,7 @@ std::string DefaultLoader::LoadPhysicalFile( const std::string&, T_Loader ) cons
 // Name: DefaultLoader::LoadOptionalPhysicalFile
 // Created: ABR 2011-05-24
 // -----------------------------------------------------------------------------
-std::string DefaultLoader::LoadOptionalPhysicalFile( const std::string&, T_Loader ) const
+Path DefaultLoader::LoadOptionalPhysicalFile( const std::string&, T_Loader ) const
 {
     throw MASA_EXCEPTION( "Invalid call DefaultFileLoader::LoadOptionalPhysicalFile" );
 }
@@ -93,7 +92,7 @@ std::string DefaultLoader::LoadOptionalPhysicalFile( const std::string&, T_Loade
 // Name: DefaultLoader::CheckFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
-void DefaultLoader::CheckFile( const std::string& fileName ) const
+void DefaultLoader::CheckFile( const Path& fileName ) const
 {
     fileLoader_->LoadFile( fileName, observer_ );
 }
@@ -102,9 +101,9 @@ void DefaultLoader::CheckFile( const std::string& fileName ) const
 // Name: DefaultLoader::CheckOptionalFile
 // Created: ABR 2011-05-24
 // -----------------------------------------------------------------------------
-void DefaultLoader::CheckOptionalFile( const std::string& fileName ) const
+void DefaultLoader::CheckOptionalFile( const Path& fileName ) const
 {
-    if( bfs::exists( fileName ) && !bfs::is_directory( fileName ) )
+    if( fileName.Exists() && !fileName.IsDirectory() )
         fileLoader_->LoadFile( fileName, observer_ );
 }
 

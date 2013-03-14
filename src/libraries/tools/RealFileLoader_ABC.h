@@ -21,6 +21,7 @@ namespace xml
 
 namespace tools
 {
+    class Path;
     class RealFileLoaderObserver_ABC;
 
 // =============================================================================
@@ -40,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< xml::xistream > LoadFile( const std::string& file, RealFileLoaderObserver_ABC& observer ) const = 0;
+    virtual std::auto_ptr< xml::xistream > LoadFile( const Path& file, RealFileLoaderObserver_ABC& observer ) const = 0;
     //@}
 };
 

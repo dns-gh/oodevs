@@ -10,8 +10,8 @@
 #ifndef FileMatcher_ABC_h
 #define FileMatcher_ABC_h
 
-#include <string>
 #include <boost/noncopyable.hpp>
+#include "Path.h"
 
 namespace xml
 {
@@ -37,7 +37,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool MatchAndReturnNewSchema( const std::string& inputFileName, xml::xistream& xisInput, std::string& outputSchema ) const = 0;
+    virtual bool MatchAndReturnNewSchema( const Path& inputFileName, xml::xistream& xisInput, Path& outputSchema ) const = 0;
     //@}
 };
 

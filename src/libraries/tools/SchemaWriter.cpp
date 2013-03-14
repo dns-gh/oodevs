@@ -9,6 +9,7 @@
 
 #include "tools_pch.h"
 #include "SchemaWriter.h"
+#include "Path.h"
 #include "version.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -36,19 +37,19 @@ SchemaWriter::~SchemaWriter()
 // Name: SchemaWriter::WriteSchema
 // Created: ABR 2012-04-18
 // -----------------------------------------------------------------------------
-void SchemaWriter::WriteSchema( xml::xostream& xos, const std::string& category, const std::string& schemaName ) const
+void SchemaWriter::WriteSchema( xml::xostream& xos, const Path& category, const Path& schemaName ) const
 {
     xos << xml::prefix( "http://www.w3.org/2001/XMLSchema-instance", "xsi" )
         << xml::attribute( "model-version", tools::AppModelVersion() )
         << xml::ns( "http://www.w3.org/2001/XMLSchema-instance" )
-        << xml::attribute( "noNamespaceSchemaLocation", "schemas/" + std::string( tools::AppMajorVersion() ) + "/" + category + "/" + schemaName + ".xsd" );
+        << xml::attribute( "noNamespaceSchemaLocation", Path( "schemas" ) / tools::AppMajorVersion() / category / schemaName + ".xsd" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SchemaWriter::WritePhysicalSchema
 // Created: ABR 2012-04-18
 // -----------------------------------------------------------------------------
-void SchemaWriter::WritePhysicalSchema( xml::xostream& xos, const std::string& schemaName ) const
+void SchemaWriter::WritePhysicalSchema( xml::xostream& xos, const Path& schemaName ) const
 {
     WriteSchema( xos, "physical", schemaName );
 }
@@ -57,7 +58,7 @@ void SchemaWriter::WritePhysicalSchema( xml::xostream& xos, const std::string& s
 // Name: SchemaWriter destructor
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-void SchemaWriter::WriteExerciseSchema( xml::xostream& xos, const std::string& schemaName ) const
+void SchemaWriter::WriteExerciseSchema( xml::xostream& xos, const Path& schemaName ) const
 {
     WriteSchema( xos, "exercise", schemaName );
 }

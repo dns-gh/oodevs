@@ -20,6 +20,8 @@ namespace xml
 
 namespace tools
 {
+    class Path;
+
 // =============================================================================
 /** @class  RealFileLoader_ABC
     @brief  RealFileLoader_ABC
@@ -37,9 +39,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool NotifyInvalidXml          ( const std::string& file, const xml::exception& e ) = 0;
-    virtual void NotifyNoXmlSchemaSpecified( const std::string& file ) = 0;
-    virtual void NotifyFileMigrated        ( const std::string& file , const std::string& fromVersion, const std::string& toVersion ) = 0;
+    virtual bool NotifyInvalidXml          ( const Path& file, const xml::exception& e ) = 0;
+    virtual void NotifyNoXmlSchemaSpecified( const Path& file ) = 0;
+    virtual void NotifyFileMigrated        ( const Path& file, const std::string& fromVersion, const std::string& toVersion ) = 0;
     virtual void GetXsdErrors( std::vector< std::string >& /* errors */ ) const { /* NOTHING */ }
     virtual void Purge() { /* NOTHING */ };
     //@}

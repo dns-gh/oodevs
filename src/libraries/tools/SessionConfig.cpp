@@ -11,13 +11,11 @@
 #include "SessionConfig.h"
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
-namespace po = boost::program_options;
 using namespace tools;
+namespace po = boost::program_options;
 
 // -----------------------------------------------------------------------------
 // Name: SessionConfig constructor
@@ -32,9 +30,9 @@ SessionConfig::SessionConfig( RealFileLoaderObserver_ABC& observer )
 {
     po::options_description desc( "Session options" );
     desc.add_options()
-        ( "session", po::value< std::string >( &sessionName_ ), "specify session name" )
-        ( "checkpoint", po::value< std::string >( &strCheckPointName_ ), "specify checkpoint to load" )
-        ( "session-file", po::value< std::string >( &sessionConfigFile_ ), "specify session file name" )
+        ( "session", po::value( &sessionName_ ), "specify session name" )
+        ( "checkpoint", po::value( &strCheckPointName_ ), "specify checkpoint to load" )
+        ( "session-file", po::value( &sessionConfigFile_ ), "specify session file name" )
     ;
     AddOptions( desc );
 }
@@ -62,7 +60,7 @@ void SessionConfig::Parse( int argc, char** argv )
 // Name: SessionConfig::GetSessionDir
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string SessionConfig::GetSessionDir() const
+Path SessionConfig::GetSessionDir() const
 {
     return ExerciseConfig::GetSessionDir( sessionName_ );
 }
@@ -71,7 +69,7 @@ std::string SessionConfig::GetSessionDir() const
 // Name: SessionConfig::GetSessionFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-std::string SessionConfig::GetSessionFile() const
+Path SessionConfig::GetSessionFile() const
 {
     return BuildDirectoryFile( GetSessionDir(), sessionConfigFile_ );
 }
@@ -80,7 +78,7 @@ std::string SessionConfig::GetSessionFile() const
 // Name: SessionConfig::BuildSessionChildFile
 // Created: NLD 2007-01-11
 // -----------------------------------------------------------------------------
-std::string SessionConfig::BuildSessionChildFile( const std::string& file ) const
+Path SessionConfig::BuildSessionChildFile( const Path& file ) const
 {
     return BuildChildPath( GetSessionFile(), file );
 }
@@ -89,7 +87,7 @@ std::string SessionConfig::BuildSessionChildFile( const std::string& file ) cons
 // Name: SessionConfig::GetRecordDirectory
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string SessionConfig::GetRecordDirectory() const
+Path SessionConfig::GetRecordDirectory() const
 {
     return BuildSessionChildFile( "record" );
 }
@@ -98,7 +96,7 @@ std::string SessionConfig::GetRecordDirectory() const
 // Name: SessionConfig::GetCheckpointsDirectory
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string SessionConfig::GetCheckpointsDirectory() const
+Path SessionConfig::GetCheckpointsDirectory() const
 {
     return BuildSessionChildFile( "checkpoints" );
 }
@@ -107,7 +105,7 @@ std::string SessionConfig::GetCheckpointsDirectory() const
 // Name: SessionConfig::GetCheckpointDirectory
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string SessionConfig::GetCheckpointDirectory( const std::string& checkpoint ) const
+Path SessionConfig::GetCheckpointDirectory( const Path& checkpoint ) const
 {
     return BuildDirectoryFile( GetCheckpointsDirectory(), checkpoint );
 }
@@ -125,7 +123,7 @@ bool SessionConfig::HasCheckpoint() const
 // Name: SessionConfig::GetCheckpointDirectory
 // Created: AGE 2008-03-14
 // -----------------------------------------------------------------------------
-std::string SessionConfig::GetCheckpointDirectory() const
+Path SessionConfig::GetCheckpointDirectory() const
 {
     return GetCheckpointDirectory( strCheckPointName_ );
 }
@@ -134,7 +132,7 @@ std::string SessionConfig::GetCheckpointDirectory() const
 // Name: SessionConfig::BuildOnLocalCheckpointChildFile
 // Created: HBD 2010-11-03
 // -----------------------------------------------------------------------------
-std::string SessionConfig::BuildOnLocalCheckpointChildFile( const std::string& checkpoint, const std::string& file ) const
+Path SessionConfig::BuildOnLocalCheckpointChildFile( const Path& checkpoint, const Path& file ) const
 {
    return BuildDirectoryFile( BuildDirectoryFile ( BuildSessionChildFile( "checkpoints" ), checkpoint ), file );
 }

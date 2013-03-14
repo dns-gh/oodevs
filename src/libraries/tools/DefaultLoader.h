@@ -35,14 +35,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual void                           CheckFile        ( const std::string& file ) const;
-    virtual void                           CheckOptionalFile( const std::string& file ) const;
-    virtual void                           LoadFile         ( const std::string& fileName, T_Loader loader ) const;
-    virtual bool                           LoadOptionalFile ( const std::string& fileName, T_Loader loader ) const;
-    virtual std::auto_ptr< xml::xistream > LoadFile         ( const std::string& fileName ) const;
+    virtual void                           CheckFile        ( const Path& file ) const;
+    virtual void                           CheckOptionalFile( const Path& file ) const;
+    virtual void                           LoadFile         ( const Path& fileName, T_Loader loader ) const;
+    virtual bool                           LoadOptionalFile ( const Path& fileName, T_Loader loader ) const;
+    virtual std::auto_ptr< xml::xistream > LoadFile         ( const Path& fileName ) const;
 
-    virtual std::string                    LoadPhysicalFile        ( const std::string& rootTag, T_Loader loader ) const; // Invalid for this class
-    virtual std::string                    LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const; // Invalid for this class
+    virtual Path                           LoadPhysicalFile        ( const std::string& rootTag, T_Loader loader ) const; // Invalid for this class
+    virtual Path                           LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const; // Invalid for this class
 
     virtual const RealFileLoaderObserver_ABC& GetObserver() const;
     //@}

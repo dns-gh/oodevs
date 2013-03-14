@@ -12,32 +12,28 @@
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 
-namespace po = boost::program_options;
-namespace bfs = boost::filesystem;
-
 using namespace tools;
+namespace po = boost::program_options;
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig constructor
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-GeneralConfig::GeneralConfig( const std::string& defaultRoot /* = "../"*/ )
+GeneralConfig::GeneralConfig( const Path& defaultRoot /* = "../"*/ )
     : CommandLineConfig_ABC()
-    , terrainConfigFile_ ( "terrain.xml"  )
+    , terrainConfigFile_ ( "terrain.xml" )
     , exerciseConfigFile_( "exercise.xml" )
 {
     po::options_description desc( "General options" );
     desc.add_options()
-        ( "root-dir"      , po::value< std::string >( &rootDir_       )->default_value( defaultRoot        ), "specify global root directory"     )
-        ( "terrains-dir"  , po::value< std::string >( &terrainsDir_   )->default_value( "data/terrains/"   ), "specify terrains root directory"   )
-        ( "models-dir"    , po::value< std::string >( &modelsDir_     )->default_value( "data/models/"     ), "specify models root directory"     )
-        ( "population-dir", po::value< std::string >( &populationDir_ )->default_value( "data/population/" ), "specify population root directory" )
-        ( "exercises-dir" , po::value< std::string >( &exercisesDir_  )->default_value( "exercises/"       ), "specify exercises root directory"  )
-        ( "plugins-dir"   , po::value< std::string >( &pluginsDir_    )->default_value( "plugins/"         ), "specify plugins root directory"    );
+        ( "root-dir"      , po::value( &rootDir_ )->default_value( defaultRoot ), "specify global root directory"     )
+        ( "terrains-dir"  , po::value( &terrainsDir_ )->default_value( "data/terrains"     ), "specify terrains root directory"   )
+        ( "models-dir"    , po::value( &modelsDir_ )->default_value( "data/models"         ), "specify models root directory"     )
+        ( "population-dir", po::value( &populationDir_ )->default_value( "data/population" ), "specify population root directory" )
+        ( "exercises-dir" , po::value( &exercisesDir_ )->default_value( "exercises"        ), "specify exercises root directory"  )
+        ( "plugins-dir"   , po::value( &pluginsDir_ )->default_value( "plugins"            ), "specify plugins root directory"    );
     AddOptions( desc );
 }
 
@@ -48,44 +44,6 @@ GeneralConfig::GeneralConfig( const std::string& defaultRoot /* = "../"*/ )
 GeneralConfig::~GeneralConfig()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeneralConfig::SetRootDir
-// Created: ABR 2011-11-08
-// -----------------------------------------------------------------------------
-void GeneralConfig::SetRootDir( const std::string& directory )
-{
-    ResolveNewRelativePath( rootDir_, directory, terrainsDir_ );
-    ResolveNewRelativePath( rootDir_, directory, modelsDir_ );
-    ResolveNewRelativePath( rootDir_, directory, exercisesDir_ );
-    ResolveNewRelativePath( rootDir_, directory, populationDir_ );
-    rootDir_ = directory;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeneralConfig::ResolveRelativePath
-// Created: AGE 2008-03-13
-// -----------------------------------------------------------------------------
-void GeneralConfig::ResolveRelativePath( const std::string& root, std::string& path )
-{
-    const bfs::path r( root );
-    const bfs::path p( path );
-    if( !p.has_root_directory() )
-        path = ( r / p ).string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeneralConfig::ResolveNewRelativePath
-// Created: ABR 2011-11-08
-// -----------------------------------------------------------------------------
-void GeneralConfig::ResolveNewRelativePath( const std::string& oldRoot, const std::string& newRoot, std::string& path )
-{
-    if( boost::istarts_with( path, oldRoot ) )
-    {
-        path = path.substr( oldRoot.size() + 1 );
-        ResolveRelativePath( newRoot, path );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -102,21 +60,54 @@ void GeneralConfig::Parse( int argc, char** argv )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GeneralConfig::ResolveRelativePath
+// Created: AGE 2008-03-13
+// -----------------------------------------------------------------------------
+void GeneralConfig::ResolveRelativePath( const Path& root, Path& path )
+{
+    if( !path.HasRootDirectory() )
+        path = root / path;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::SetRootDir
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void GeneralConfig::SetRootDir( const Path& directory )
+{
+    ResolveNewRelativePath( rootDir_, directory, terrainsDir_ );
+    ResolveNewRelativePath( rootDir_, directory, modelsDir_ );
+    ResolveNewRelativePath( rootDir_, directory, exercisesDir_ );
+    ResolveNewRelativePath( rootDir_, directory, populationDir_ );
+    rootDir_ = directory;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::ResolveNewRelativePath
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void GeneralConfig::ResolveNewRelativePath( const Path& oldRoot, const Path& newRoot, Path& path )
+{
+    path = path.Relative( oldRoot );
+    ResolveRelativePath( newRoot, path );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GeneralConfig::BuildChildPath
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::BuildChildPath( const std::string& parent, const std::string& child )
+Path GeneralConfig::BuildChildPath( const Path& parent, const Path& child )
 {
-    return ( bfs::path( parent ).branch_path() / bfs::path( child ) ).string();
+    return parent.Parent() / child;
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::BuildDirectoryFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::BuildDirectoryFile( const std::string& directory, const std::string& file )
+Path GeneralConfig::BuildDirectoryFile( const Path& directory, const Path& file )
 {
-    return ( bfs::path( directory ) / bfs::path( file ) ).string();
+    return directory / file;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +115,7 @@ std::string GeneralConfig::BuildDirectoryFile( const std::string& directory, con
 // Created: NLD 2007-05-21
 // -----------------------------------------------------------------------------
 // static
-std::string GeneralConfig::BuildWorkingDirectoryChildFile( const std::string& file )
+Path GeneralConfig::BuildWorkingDirectoryChildFile( const Path& file )
 {
     return BuildDirectoryFile( ".", file );
 }
@@ -134,7 +125,7 @@ std::string GeneralConfig::BuildWorkingDirectoryChildFile( const std::string& fi
 // Created: AGE 2008-08-14
 // -----------------------------------------------------------------------------
 // static
-std::string GeneralConfig::BuildResourceChildFile( const std::string& file )
+Path GeneralConfig::BuildResourceChildFile( const Path& file )
 {
     return BuildDirectoryFile( "./resources", file );
 }
@@ -143,7 +134,7 @@ std::string GeneralConfig::BuildResourceChildFile( const std::string& file )
 // Name: GeneralConfig::GetRootDir
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetRootDir() const
+const Path& GeneralConfig::GetRootDir() const
 {
     return rootDir_;
 }
@@ -152,7 +143,7 @@ std::string GeneralConfig::GetRootDir() const
 // Name: GeneralConfig::GetExercisesDir
 // Created: NLD 2007-01-29
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetExercisesDir() const
+const Path& GeneralConfig::GetExercisesDir() const
 {
     return exercisesDir_;
 }
@@ -161,63 +152,61 @@ std::string GeneralConfig::GetExercisesDir() const
 // Name: GeneralConfig::GetExerciseDir
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetExerciseDir( const std::string& exercise ) const
+Path GeneralConfig::GetExerciseDir( const Path& exercise ) const
 {
-    return ( bfs::path( exercisesDir_ ) / bfs::path( exercise ) ).string();
+    return exercisesDir_ / exercise;
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetExerciseFile
 // Created: NLD 2007-01-29
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetExerciseFile( const std::string& exercise ) const
+Path GeneralConfig::GetExerciseFile( const Path& exercise ) const
 {
-    return ( bfs::path( GetExerciseDir( exercise ) ) / exerciseConfigFile_ ).string();
+    return GetExerciseDir( exercise ) / exerciseConfigFile_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetPhysicalsDir
 // Created: NLD 2007-01-29
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetPhysicalsDir( const std::string& dataset ) const
+Path GeneralConfig::GetPhysicalsDir( const Path& dataset ) const
 {
-    // $$$$ NLD 2007-01-29: trucs en dur
-    return ( bfs::path( modelsDir_ ) / bfs::path( dataset ) / "physical" ).string();
+    return modelsDir_ / ( dataset.IsAbsolute() ? dataset.FileName() : dataset ) / "physical";
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetPhysicalsDir
 // Created: LGY 2012-02-28
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetPhysicalsDir( const std::string& dataset, const std::string& physical ) const
+Path GeneralConfig::GetPhysicalsDir( const Path& dataset, const Path& physical ) const
 {
-    return ( bfs::path( GetPhysicalsDir( dataset ) ) / bfs::path( physical ) ).string();
+    return GetPhysicalsDir( dataset ) / physical;
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetPhysicalFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetPhysicalFile( const std::string& dataset, const std::string& physical ) const
+Path GeneralConfig::GetPhysicalFile( const Path& dataset, const Path& physical ) const
 {
-    return ( bfs::path( GetPhysicalsDir( dataset ) ) / bfs::path( physical ) / "physical.xml" ).string();
+    return GetPhysicalsDir( dataset ) / physical / "physical.xml";
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetDecisionalFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetDecisionalFile( const std::string& dataset ) const
+Path GeneralConfig::GetDecisionalFile( const Path& dataset ) const
 {
-    // $$$$ NLD 2007-01-29:
-    return ( bfs::path( modelsDir_ ) / bfs::path( dataset ) / "decisional/decisional.xml" ).string();
+    return modelsDir_ / dataset / "decisional/decisional.xml";
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::BuildDecisionalChildFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::BuildDecisionalChildFile( const std::string& dataset, const std::string& file ) const
+Path GeneralConfig::BuildDecisionalChildFile( const Path& dataset, const Path& file ) const
 {
     return BuildChildPath( GetDecisionalFile( dataset ), file );
 }
@@ -226,7 +215,7 @@ std::string GeneralConfig::BuildDecisionalChildFile( const std::string& dataset,
 // Name: GeneralConfig::GetTerrainsDir
 // Created: NLD 2007-01-29
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetTerrainsDir() const
+const Path& GeneralConfig::GetTerrainsDir() const
 {
     return terrainsDir_;
 }
@@ -235,52 +224,52 @@ std::string GeneralConfig::GetTerrainsDir() const
 // Name: GeneralConfig::GetTerrainDir
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetTerrainDir( const std::string& terrain ) const
+Path GeneralConfig::GetTerrainDir( const Path& terrain ) const
 {
-    return ( bfs::path( terrainsDir_ ) / bfs::path( terrain ) ).string();
+    return terrainsDir_ / terrain;
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetTerrainFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetTerrainFile( const std::string& terrain ) const
+Path GeneralConfig::GetTerrainFile( const Path& terrain ) const
 {
-    return ( bfs::path( GetTerrainDir( terrain ) ) / terrainConfigFile_ ).string();
+    return GetTerrainDir( terrain ) / terrainConfigFile_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetTerrainUrbanFile
 // Created: ABR 2012-05-22
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetTerrainUrbanFile( const std::string& terrain ) const
+Path GeneralConfig::GetTerrainUrbanFile( const Path& terrain ) const
 {
-    return ( bfs::path( GetTerrainDir( terrain ) ) / "urban" / "urban.xml" ).string();
+    return GetTerrainDir( terrain ) / "urban/urban.xml";
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetSessionsDir
 // Created: AGE 2008-01-04
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetSessionsDir( const std::string& exercise ) const
+Path GeneralConfig::GetSessionsDir( const Path& exercise ) const
 {
-    return ( bfs::path( GetExerciseDir( exercise ) ) / "sessions" ).string();
+    return GetExerciseDir( exercise ) / "sessions";
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::BuildSessionDir
 // Created: AGE 2008-01-04
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::BuildSessionDir( const std::string& exercise, const std::string& session ) const
+Path GeneralConfig::BuildSessionDir( const Path& exercise, const Path& session ) const
 {
-    return ( bfs::path( GetSessionsDir( exercise ) ) / bfs::path( session ) ).string();
+    return GetSessionsDir( exercise ) / session;
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetModelsDir
 // Created: NLD 2007-01-29
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetModelsDir() const
+const Path& GeneralConfig::GetModelsDir() const
 {
     return modelsDir_;
 }
@@ -289,38 +278,36 @@ std::string GeneralConfig::GetModelsDir() const
 // Name: GeneralConfig::BuildPopulationChildFile
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::BuildPopulationChildFile( const std::string& file ) const
+Path GeneralConfig::BuildPopulationChildFile( const Path& file ) const
 {
-    return ( bfs::path( populationDir_ ) / bfs::path( file ) ).string();
+    return populationDir_ / file;
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetCheckpointsDir
 // Created: AGE 2007-10-08
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::GetCheckpointsDir( const std::string& exercise, const std::string& session ) const
+Path GeneralConfig::GetCheckpointsDir( const Path& exercise, const Path& session ) const
 {
-    return ( bfs::path( BuildSessionDir( exercise, session ) ) / "checkpoints" ).string();
+    return BuildSessionDir( exercise, session ) / "checkpoints";
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::LoadExercise
 // Created: SBO 2008-08-21
 // -----------------------------------------------------------------------------
-void GeneralConfig::LoadExercise( const std::string& file )
+void GeneralConfig::LoadExercise( const Path& file )
 {
-    bfs::path p( file );
-    exercisesDir_ = p.branch_path().branch_path().string();
+    exercisesDir_ = file.Parent().Parent();
 }
 
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::BuildPluginDirectory
 // Created: SBO 2011-05-26
 // -----------------------------------------------------------------------------
-std::string GeneralConfig::BuildPluginDirectory( const std::string& plugin ) const
+Path GeneralConfig::BuildPluginDirectory( const Path& plugin ) const
 {
-    const bfs::path pluginsRoot( pluginsDir_ );
-    if( pluginsRoot.has_root_directory() )
-        return ( pluginsRoot / plugin ).string();
-    return ( boost::filesystem::current_path() / pluginsRoot / plugin ).string();
+    if( pluginsDir_.HasRootDirectory() )
+        return pluginsDir_ / plugin;
+    return pluginsDir_.Absolute() / plugin;
 }

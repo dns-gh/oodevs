@@ -9,6 +9,7 @@
 
 #include "tools_pch.h"
 #include "SchemaVersionExtractor.h"
+#include "Path.h"
 
 using namespace tools;
 
@@ -17,7 +18,7 @@ using namespace tools;
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
 SchemaVersionExtractor::SchemaVersionExtractor()
-    : regex_( "[^0-9.]*([0-9][0-9.]*).*")
+    : regex_( L"[^0-9.]*([0-9][0-9.]*).*")
 {
     // NOTHING
 }
@@ -35,11 +36,12 @@ SchemaVersionExtractor::~SchemaVersionExtractor()
 // Name: SchemaVersionExtractor::ExtractVersion
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
-std::string SchemaVersionExtractor::ExtractVersion( const std::string& schema ) const
+Path SchemaVersionExtractor::ExtractVersion( const Path& schema ) const
 {
-    boost::match_results< std::string::const_iterator > what;
-    if( boost::regex_match( schema, what, regex_, boost::match_default | boost::match_partial ) && what[1].matched )
-        return std::string( what[1].first, what[1].second );
+    const std::wstring schemaString = schema.ToUnicode();
+    boost::match_results< std::wstring::const_iterator > what;
+    if( boost::regex_match( schemaString, what, regex_, boost::match_default | boost::match_partial ) && what[1].matched )
+        return Path::FromUnicode( std::wstring( what[1].first, what[1].second ) );
     else
-        return std::string();
+        return Path();
 }

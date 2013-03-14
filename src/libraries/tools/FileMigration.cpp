@@ -22,8 +22,8 @@ using namespace tools;
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
 FileMigration::FileMigration( xml::xistream& xis )
-    : fromVersion_( xis.attribute< std::string >( "from" ) )
-    , toVersion_  ( xis.attribute< std::string >( "to" ) )
+    : fromVersion_( Path::FromUTF8( xis.attribute< std::string >( "from" ) ) )
+    , toVersion_( Path::FromUTF8( xis.attribute< std::string >( "to" ) ) )
 {
     xis >> xml::list( "upgrade", *this, &FileMigration::ReadXslTransform );
 }
@@ -47,11 +47,11 @@ FileMigration::~FileMigration()
 // -----------------------------------------------------------------------------
 void FileMigration::ReadXslTransform( xml::xistream& xis )
 {
-    const std::string schema = xis.attribute< std::string >( "schema" );
-    const std::string xslFile = GeneralConfig::BuildResourceChildFile( xis.attribute< std::string >( "apply" ) );
-    xsl::xstringtransform xslTmp( xslFile );
-    if( !transformsFromSchema_.insert( std::make_pair( schema, xslFile ) ).second )
-        throw MASA_EXCEPTION( boost::str( boost::format( "Invalid migration from %s to %s for schema %s: more than one transformtion for this schema" ) % fromVersion_ % toVersion_ % schema ) );
+    const Path schema = Path::FromUTF8( xis.attribute< std::string >( "schema" ) );
+    const Path xslFile = GeneralConfig::BuildResourceChildFile( Path::FromUTF8( xis.attribute< std::string >( "apply" ) ) );
+    xsl::xstringtransform xslTmp( xslFile.ToUTF8() );
+    if( !transformsFromSchema_.insert( std::make_pair( schema.ToUTF8(), xslFile ) ).second )
+        throw MASA_EXCEPTION( boost::str( boost::format( "Invalid migration from %s to %s for schema %s: more than one transformtion for this schema" ) % fromVersion_.ToUTF8() % toVersion_.ToUTF8() % schema.ToUTF8() ) );
 }
 
 // =============================================================================
@@ -62,13 +62,13 @@ void FileMigration::ReadXslTransform( xml::xistream& xis )
 // Name: FileMigration::UpgradeFile
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
-std::auto_ptr< xml::xistream > FileMigration::UpgradeFile( std::auto_ptr< xml::xistream > xis, const std::string& schema ) const
+std::auto_ptr< xml::xistream > FileMigration::UpgradeFile( std::auto_ptr< xml::xistream > xis, const Path& schema ) const
 {
-    T_XslTransforms::const_iterator it = transformsFromSchema_.find( schema );
+    T_XslTransforms::const_iterator it = transformsFromSchema_.find( schema.ToUTF8() );
     if( it == transformsFromSchema_.end() )
         return xis;
 
-    xsl::xstringtransform xst( it->second );
+    xsl::xstringtransform xst( it->second.ToUTF8() );
     xst << *xis;
     return std::auto_ptr< xml::xistream >( new xml::xistringstream( xst.str() ) );
 }

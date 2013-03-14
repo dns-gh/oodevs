@@ -44,61 +44,61 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string GetExerciseName() const;
-    virtual std::string GetExerciseFile() const;
-    virtual std::string BuildExerciseChildFile( const std::string& file ) const;
+    virtual Path GetExerciseName() const;
+    virtual Path GetExerciseFile() const;
+    virtual Path BuildExerciseChildFile( const Path& file ) const;
 
-    virtual std::string GetPhysicalFile() const;
-    virtual std::string BuildPhysicalChildFile( const std::string& file ) const;
-    virtual std::string GetOptionalPhysicalChildFile( const std::string rootTag ) const;
-    std::string GetPhysicalChildPath( const std::string rootTag ) const;
+    virtual Path GetPhysicalFile() const;
+    virtual Path BuildPhysicalChildFile( const Path& file ) const;
+    virtual Path GetOptionalPhysicalChildFile( const std::string& rootTag ) const;
+    Path GetPhysicalChildPath( const std::string& rootTag ) const;
 
-    virtual std::string GetDecisionalFile() const;
-    virtual std::string BuildDecisionalChildFile( const std::string& file ) const;
+    virtual Path GetDecisionalFile() const;
+    virtual Path BuildDecisionalChildFile( const Path& file ) const;
 
-    virtual const std::string& GetTerrainName() const; // $$$$ MCO : no clue why it's all virtual methods in here, especially since they're not in GeneralConfig
-    virtual std::string GetTerrainFile() const;
-    virtual std::string BuildTerrainChildFile( const std::string& file ) const;
+    virtual const Path& GetTerrainName() const; // $$$$ MCO : no clue why it's all virtual methods in here, especially since they're not in GeneralConfig
+    virtual Path GetTerrainFile() const;
+    virtual Path BuildTerrainChildFile( const Path& file ) const;
 
-    virtual std::string GetSessionsDir() const;
-    virtual std::string GetSessionDir( const std::string& session ) const;
+    virtual Path GetSessionsDir() const;
+    virtual Path GetSessionDir( const Path& session ) const;
 
-    virtual std::string GetWeatherFile() const;
-    virtual std::string GetWeatherFileName() const;
-    virtual std::string GetOrbatFile() const;
-    virtual std::string GetOrbatFileName() const;
-    virtual std::string GetTerrainUrbanFile() const;
-    virtual std::string GetUrbanFile() const;
-    virtual std::string GetUrbanFileName() const;
-    virtual std::string GetUrbanStateFile() const;
-    virtual std::string GetKnowledgesFile() const;
-    virtual std::string GetKnowledgesFileName() const;
-    virtual std::string GetProfilesFile() const;
-    virtual std::string GetPopulationFile() const;
-    virtual std::string GetScoresFile() const;
-    virtual std::string GetSettingsFile() const;
-    virtual std::string GetSettingsFileName() const;
-    virtual std::string GetSuccessFactorsFile() const;
+    virtual Path GetWeatherFile() const;
+    virtual Path GetWeatherFileName() const;
+    virtual Path GetOrbatFile() const;
+    virtual Path GetOrbatFileName() const;
+    virtual Path GetTerrainUrbanFile() const;
+    virtual Path GetUrbanFile() const;
+    virtual Path GetUrbanFileName() const;
+    virtual Path GetUrbanStateFile() const;
+    virtual Path GetKnowledgesFile() const;
+    virtual Path GetKnowledgesFileName() const;
+    virtual Path GetProfilesFile() const;
+    virtual Path GetPopulationFile() const;
+    virtual Path GetScoresFile() const;
+    virtual Path GetSettingsFile() const;
+    virtual Path GetSettingsFileName() const;
+    virtual Path GetSuccessFactorsFile() const;
 
-    virtual std::string GetPropagationFile( const std::string& path ) const;
-    virtual std::string BuildPropagationChildFile( const std::string& path, const std::string& file ) const;
+    virtual Path GetPropagationFile( const Path& path ) const;
+    virtual Path BuildPropagationChildFile( const Path& path, const Path& file ) const;
 
-    virtual const std::vector< std::string >& GetStartupOrderFiles() const;
+    virtual const std::vector< Path >& GetStartupOrderFiles() const;
 
     virtual void Parse( int argc, char** argv );
-    void LoadExercise( const std::string& file ); //$$$ Rien à foutre la ...
-    void LoadTerrain( const std::string& terrainName ); //$$$ Rien à foutre la non plus
+    void LoadExercise( const Path& file ); //$$$ Rien à foutre la ...
+    void LoadTerrain( const Path& terrainName ); //$$$ Rien à foutre la non plus
 
-    std::string GetDataSet() const;
-    std::string GetPhysicalBase() const;
+    Path GetDataSet() const;
+    Path GetPhysicalBase() const;
 
-    std::string GetGraphicsDirectory() const;
-    std::string GetDetectionDirectory() const;
-    std::string GetDetectionFile() const;
-    std::string GetPathfindGraphFile() const;
-    std::string GetPathfindLinksFile() const;
-    std::string GetPathfindNodesFile() const;
-    std::string GetUrbanTerrainFile() const;
+    Path GetGraphicsDirectory() const;
+    Path GetDetectionDirectory() const;
+    Path GetDetectionFile() const;
+    Path GetPathfindGraphFile() const;
+    Path GetPathfindLinksFile() const;
+    Path GetPathfindNodesFile() const;
+    Path GetUrbanTerrainFile() const;
 
     float GetTerrainWidth() const;
     float GetTerrainHeight() const;
@@ -145,7 +145,6 @@ private:
     //@}
 
 protected:
-
     //! @name Types
     //@{
     struct LogSettingsData
@@ -198,7 +197,7 @@ protected:
     void SetShieldLogSettings( const LogSettingsData& settings );
     void SetSimLogSettings( const LogSettingsData& settings );
     void SetLoggerPluginLogSettings( const LogSettingsData& settings );
-    void SetExerciseName( const std::string& file );
+    void SetExerciseName( const Path& file );
     //@}
 
 private:
@@ -208,23 +207,24 @@ private:
     std::auto_ptr< tools::WorldParameters > pWorldParameters_;
 
     std::string modelVersion_;
-    std::string exerciseName_;
-    std::string terrain_;
-    std::string dataset_;
-    std::string physical_;
-    std::string weather_;
-    std::string orbat_;
-    std::string knowledges_;
-    std::string profiles_;
-    std::string urban_;
-    std::string urbanState_;
-    std::string scores_;
-    std::string settings_;
-    std::string successFactors_;
-    std::string population_;
-    std::string propagations_;
 
-    std::vector< std::string > startupOrderFiles_;
+    Path exerciseName_;
+    Path terrain_;
+    Path dataset_;
+    Path physical_;
+    Path weather_;
+    Path orbat_;
+    Path knowledges_;
+    Path profiles_;
+    Path urban_;
+    Path urbanState_;
+    Path scores_;
+    Path settings_;
+    Path successFactors_;
+    Path population_;
+    Path propagations_;
+
+    std::vector< Path > startupOrderFiles_;
 
     LogSettings dispatcherProtobufLogSettings_;
     LogSettings shieldLogSettings_;

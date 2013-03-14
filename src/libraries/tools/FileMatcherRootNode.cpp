@@ -20,8 +20,8 @@ using namespace tools;
 // Created: NLD 2011-03-08
 // -----------------------------------------------------------------------------
 FileMatcherRootNode::FileMatcherRootNode( xml::xistream& xis )
-    : rootNodeToMatch_( xis.attribute< std::string >( "root-node" ) )
-    , assignedSchema_ ( xis.attribute< std::string >( "assign-schema" ) )
+    : rootNodeToMatch_( Path::FromUTF8( xis.attribute< std::string >( "root-node" ) ) )
+    , assignedSchema_ ( Path::FromUTF8( xis.attribute< std::string >( "assign-schema" ) ) )
 {
 }
 
@@ -35,9 +35,9 @@ FileMatcherRootNode::~FileMatcherRootNode()
 
 namespace
 {
-    void ExtractRootNode( const std::string& nodeName, xml::xistream& , std::string& rootNode )
+    void ExtractRootNode( const std::string& nodeName, xml::xistream& , Path& rootNode )
     {
-        rootNode = nodeName;
+        rootNode = Path::FromUTF8( nodeName );
     }
 }
 
@@ -45,11 +45,11 @@ namespace
 // Name: FileMatcherRootNode destructor
 // Created: NLD 2011-03-08
 // -----------------------------------------------------------------------------
-bool FileMatcherRootNode::MatchAndReturnNewSchema( const std::string& /*inputFileName*/, xml::xistream& xis, std::string& outputSchema ) const
+bool FileMatcherRootNode::MatchAndReturnNewSchema( const Path& /*inputFileName*/, xml::xistream& xis, Path& outputSchema ) const
 {
-    outputSchema.clear();
+    outputSchema.Clear();
 
-    std::string rootNode;
+    Path rootNode;
     xis >> xml::list( boost::bind( &ExtractRootNode, _2, _3, boost::ref( rootNode ) ) );
 
     if( rootNodeToMatch_ != rootNode )

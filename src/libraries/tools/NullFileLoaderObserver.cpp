@@ -9,6 +9,7 @@
 
 #include "tools_pch.h"
 #include "NullFileLoaderObserver.h"
+#include "Path.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/format.hpp>
 #include <iostream>
@@ -37,9 +38,9 @@ NullFileLoaderObserver::~NullFileLoaderObserver()
 // Name: NullFileLoaderObserver::NotifyInvalidXml
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-bool NullFileLoaderObserver::NotifyInvalidXml( const std::string& fileName, const xml::exception& e )
+bool NullFileLoaderObserver::NotifyInvalidXml( const Path& fileName, const xml::exception& e )
 {
-    std::cout << boost::format( "Invalid xml file %s - %s" ) % fileName % tools::GetExceptionMsg( e ) << std::endl;
+    std::cout << boost::format( "Invalid xml file %s - %s" ) % fileName.ToUTF8() % tools::GetExceptionMsg( e ) << std::endl;
     return true;
 }
 
@@ -47,16 +48,16 @@ bool NullFileLoaderObserver::NotifyInvalidXml( const std::string& fileName, cons
 // Name: NullFileLoaderObserver::NotifyNoXmlSchemaSpecified
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-void NullFileLoaderObserver::NotifyNoXmlSchemaSpecified( const std::string& fileName )
+void NullFileLoaderObserver::NotifyNoXmlSchemaSpecified( const Path& fileName )
 {
-    std::cout << boost::format( "Xml file %s doesn't have any schema" ) % fileName << std::endl;
+    std::cout << boost::format( "Xml file %s doesn't have any schema" ) % fileName.ToUTF8() << std::endl;
 }
 
 // -----------------------------------------------------------------------------
 // Name: NullFileLoaderObserver::NotifyFileMigrated
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-void NullFileLoaderObserver::NotifyFileMigrated( const std::string& /*fileName*/, const std::string& /*fromVersion*/, const std::string& /*toVersion*/ )
+void NullFileLoaderObserver::NotifyFileMigrated( const Path& /*fileName*/, const std::string& /*fromVersion*/, const std::string& /*toVersion*/ )
 {
     // NOTHING
 }

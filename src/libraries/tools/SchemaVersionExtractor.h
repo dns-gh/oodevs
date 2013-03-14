@@ -15,6 +15,8 @@
 
 namespace tools
 {
+    class Path;
+
 // =============================================================================
 /** @class  SchemaVersionExtractor
     @brief  SchemaVersionExtractor
@@ -32,11 +34,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string ExtractVersion( const std::string& schema ) const;
+    virtual Path ExtractVersion( const Path& schema ) const;
     //@}
 
 private:
-    boost::regex regex_;
+    boost::wregex regex_;
 };
 
 }

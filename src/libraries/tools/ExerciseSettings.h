@@ -19,13 +19,14 @@
 namespace xml
 {
     class xistream;
-    class xofstream;
 }
 
 namespace tools
 {
     class Loader_ABC;
     class SchemaWriter_ABC;
+    class Path;
+    class Xofstream;
 
 // =============================================================================
 /** @class  ExerciseSettings
@@ -47,7 +48,7 @@ public:
     //@{
     void Purge();
     void Load( xml::xistream& xis );
-    void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void Serialize( const tools::Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     //@}
 
     //! @name Accessors
@@ -69,7 +70,7 @@ private:
         explicit Setting( xml::xistream& xis );
         virtual ~Setting();
 
-        void Serialize( xml::xofstream& xos ) const;
+        void Serialize( tools::Xofstream& xos ) const;
 
         const std::string            name_;
         const std::string            type_;

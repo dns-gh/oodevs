@@ -20,8 +20,8 @@ using namespace tools;
 // Created: NLD 2011-03-08
 // -----------------------------------------------------------------------------
 FileMatcherNonVersionedSchema::FileMatcherNonVersionedSchema( xml::xistream& xis )
-    : nonVersionedSchemaToMatch_( xis.attribute< std::string >( "non-versioned-schema" ) )
-    , assignedSchema_ ( xis.attribute< std::string >( "assign-schema" ) )
+    : nonVersionedSchemaToMatch_( Path::FromUTF8( xis.attribute< std::string >( "non-versioned-schema" ) ) )
+    , assignedSchema_( Path::FromUTF8( xis.attribute< std::string >( "assign-schema" ) ) )
 {
 }
 
@@ -35,9 +35,9 @@ FileMatcherNonVersionedSchema::~FileMatcherNonVersionedSchema()
 
 namespace
 {
-    void ExtractSchemaName( xml::xistream& xis, std::string& schema )
+    void ExtractSchemaName( xml::xistream& xis, Path& schema )
     {
-        schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
+        schema = xis.attribute< tools::Path >( "xsi:noNamespaceSchemaLocation", "" );
     }
 }
 
@@ -45,11 +45,11 @@ namespace
 // Name: FileMatcherNonVersionedSchema destructor
 // Created: NLD 2011-03-08
 // -----------------------------------------------------------------------------
-bool FileMatcherNonVersionedSchema::MatchAndReturnNewSchema( const std::string& /*inputFileName*/, xml::xistream& xis, std::string& outputSchema ) const
+bool FileMatcherNonVersionedSchema::MatchAndReturnNewSchema( const Path& /*inputFileName*/, xml::xistream& xis, Path& outputSchema ) const
 {
-    outputSchema.clear();
+    outputSchema.Clear();
 
-    std::string nonVersionedSchema;
+    Path nonVersionedSchema;
     xis >> xml::list( boost::bind( &ExtractSchemaName, _3, boost::ref( nonVersionedSchema ) ) );
 
     if( nonVersionedSchemaToMatch_ != nonVersionedSchema )

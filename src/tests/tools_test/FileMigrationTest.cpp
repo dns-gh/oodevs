@@ -9,8 +9,8 @@
 
 #include "tools_test_pch.h"
 #include "tools/FileMigration.h"
+#include "tools/FileWrapper.h"
 #include "tools/GeneralConfig.h"
-#include <boost/filesystem.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <iostream>
 
@@ -20,15 +20,15 @@ namespace
     {
         Fixture()
         {
-            boost::filesystem::path outputDir = tools::GeneralConfig::BuildResourceChildFile( "testFileMigration" );
-            boost::filesystem::remove_all( outputDir );
-            boost::filesystem::create_directories( outputDir );
-            boost::filesystem::copy_file( BOOST_RESOLVE( "testFileMigration/test-1.3.xsl" ), outputDir / "test-1.3.xsl" );
+            tools::Path outputDir = tools::GeneralConfig::BuildResourceChildFile( "testFileMigration" );
+            outputDir.RemoveAll();
+            outputDir.CreateDirectories();
+            BOOST_RESOLVE( "testFileMigration/test-1.3.xsl" ).Copy( outputDir / "test-1.3.xsl" );
         }
 
         ~Fixture()
         {
-            boost::filesystem::remove_all( tools::GeneralConfig::BuildResourceChildFile( "testFileMigration" ) );
+            tools::GeneralConfig::BuildResourceChildFile( "testFileMigration" ).RemoveAll();
         }
     };
 }
@@ -43,12 +43,12 @@ BOOST_FIXTURE_TEST_CASE( test_single_migration, Fixture )
     xisMigrations.start( "migration" );
     tools::FileMigration fileMigration( xisMigrations );
 
-    std::auto_ptr< xml::xistream > inputStream = fileMigration.UpgradeFile( std::auto_ptr< xml::xistream >( new xml::xifstream( BOOST_RESOLVE( "testFileMigration/input-1.2.xml" ) ) ), "testFileMigration/1.2/schema.xsd" );
+    std::auto_ptr< xml::xistream > inputStream = fileMigration.UpgradeFile( std::auto_ptr< xml::xistream >( new tools::Xifstream( BOOST_RESOLVE( "testFileMigration/input-1.2.xml" ) ) ), "testFileMigration/1.2/schema.xsd" );
     BOOST_REQUIRE( inputStream.get() );
     xml::xostringstream actual;
     actual << *inputStream;
 
-    xml::xifstream tmp( BOOST_RESOLVE( "testFileMigration/input-1.3.xml" ) );
+    tools::Xifstream tmp( BOOST_RESOLVE( "testFileMigration/input-1.3.xml" ) );
     xml::xostringstream expected;
     expected << tmp;
     BOOST_CHECK_XML_EQUAL( actual.str(), expected.str() );
@@ -64,13 +64,13 @@ BOOST_FIXTURE_TEST_CASE( test_single_migration_not_applicable, Fixture )
     xisMigrations.start( "migration" );
     tools::FileMigration fileMigration( xisMigrations );
 
-    std::auto_ptr< xml::xistream > inputStream = fileMigration.UpgradeFile( std::auto_ptr< xml::xistream >( new xml::xifstream( BOOST_RESOLVE( "testFileMigration/input-1.2.xml" ) ) ), "testFileMigration/1.2/OTHER_SCHEMA.xsd" );
+    std::auto_ptr< xml::xistream > inputStream = fileMigration.UpgradeFile( std::auto_ptr< xml::xistream >( new tools::Xifstream( BOOST_RESOLVE( "testFileMigration/input-1.2.xml" ) ) ), "testFileMigration/1.2/OTHER_SCHEMA.xsd" );
     BOOST_REQUIRE( inputStream.get() );
     xml::xostringstream actual;
     actual << *inputStream;
 
     // File not changed
-    xml::xifstream tmp( BOOST_RESOLVE( "testFileMigration/input-1.2.xml" ) );
+    tools::Xifstream tmp( BOOST_RESOLVE( "testFileMigration/input-1.2.xml" ) );
     xml::xostringstream expected;
     expected << tmp;
 

@@ -9,7 +9,7 @@
 
 #include "tools_pch.h"
 #include "WinArguments.h"
-
+#include <tools/EncodingConverter.h>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
@@ -20,10 +20,12 @@ using namespace tools;
 // Name: WinArguments constructor
 // Created: RDS 2008-07-22
 // -----------------------------------------------------------------------------
-WinArguments::WinArguments( const std::string& arguments )
+WinArguments::WinArguments( const std::wstring& arguments )
 {
-    argv_ = boost::program_options::split_winmain( arguments );
-    argv_.insert( argv_.begin(), "simulation_app.exe" );
+    std::vector< std::wstring > wargv = boost::program_options::split_winmain( arguments );
+    argv_.insert( argv_.begin(), "dummy-application.exe" ); // $$$$ ABR 2013-03-13: here to simulate a classic command line for boost parser
+    for( auto it = wargv.begin(); it != wargv.end(); ++it )
+        argv_.push_back( tools::FromUnicodeToUtf8( *it ) );
     std::transform( argv_.begin(), argv_.end(), std::back_inserter( cArgv_ ), std::mem_fun_ref( &std::string::c_str ) );
 }
 
@@ -52,4 +54,26 @@ const char* const* WinArguments::Argv() const
 int WinArguments::Argc() const
 {
     return (int)cArgv_.size();
+}
+
+// -----------------------------------------------------------------------------
+// Name: WinArguments::HasOption
+// Created: ABR 2013-03-12
+// -----------------------------------------------------------------------------
+bool WinArguments::HasOption( const std::string& name ) const
+{
+    return std::find( argv_.begin(), argv_.end(), name ) != argv_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: WinArguments::GetOption
+// Created: ABR 2013-03-12
+// -----------------------------------------------------------------------------
+std::string WinArguments::GetOption( const std::string& name, const std::string& defaultValue /* = "" */ )
+{
+    auto it = std::find( argv_.begin(), argv_.end(), name );
+    if( it != argv_.end() )
+        if( ++it != argv_.end() )
+            return *it;
+    return defaultValue;
 }

@@ -11,6 +11,7 @@
 #define FileMigration_h
 
 #include "FileMigration_ABC.h"
+#include "Path.h"
 #include <map>
 
 namespace tools
@@ -32,19 +33,19 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const std::string& GetFromVersion() const { return fromVersion_; }
-    virtual const std::string& GetToVersion  () const { return toVersion_; }
+    virtual const Path& GetFromVersion() const { return fromVersion_; }
+    virtual const Path& GetToVersion  () const { return toVersion_; }
     //@}
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< xml::xistream > UpgradeFile( std::auto_ptr< xml::xistream > file, const std::string& schema ) const;
+    virtual std::auto_ptr< xml::xistream > UpgradeFile( std::auto_ptr< xml::xistream > file, const Path& schema ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, std::string > T_XslTransforms;
+    typedef std::map< std::string, Path > T_XslTransforms;
     //@}
 
 private:
@@ -54,8 +55,8 @@ private:
     //@}
 
 private:
-    const std::string fromVersion_;
-    const std::string toVersion_;
+    const Path fromVersion_;
+    const Path toVersion_;
     T_XslTransforms transformsFromSchema_;
 };
 

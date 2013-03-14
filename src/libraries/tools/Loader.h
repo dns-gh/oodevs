@@ -37,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string LoadPhysicalFile        ( const std::string& rootTag, T_Loader loader ) const; // Return the file path/name loaded
-    virtual std::string LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const; // Return the file path/name loaded
+    virtual Path LoadPhysicalFile        ( const std::string& rootTag, T_Loader loader ) const; // Return the file path/name loaded
+    virtual Path LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const; // Return the file path/name loaded
     //@}
 
 private:

@@ -31,12 +31,12 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool MatchAndReturnNewSchema( const std::string& inputFileName, xml::xistream& xisInput, std::string& outputSchema ) const;
+    virtual bool MatchAndReturnNewSchema( const Path& inputFileName, xml::xistream& xisInput, Path& outputSchema ) const;
     //@}
 
 private:
-    const std::string nonVersionedSchemaToMatch_;
-    const std::string assignedSchema_;
+    const Path nonVersionedSchemaToMatch_;
+    const Path assignedSchema_;
 };
 
 }

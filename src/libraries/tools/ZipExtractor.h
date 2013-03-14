@@ -17,13 +17,15 @@ namespace zip
 
 namespace tools
 {
+    class Path;
+
     namespace zipextractor
     {
         // Extract a specific files from an archive
-        void ExtractFile( zip::izipfile& archive, const char* inputName, const std::string& outputName, const std::string& destination );
+        void ExtractFile( zip::izipfile& archive, const char* inputName, const Path& outputName, const Path& destination );
 
         // Extract the whole archive
-        void ExtractArchive( const std::string& archivePath, const std::string& destination );
+        void ExtractArchive( const Path& archivePath, const Path& destination );
     }
 }
 

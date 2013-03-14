@@ -10,11 +10,12 @@
 #ifndef SchemaVersionExtractor_ABC_h
 #define SchemaVersionExtractor_ABC_h
 
-#include <string>
 #include <boost/noncopyable.hpp>
 
 namespace tools
 {
+    class Path;
+
 // =============================================================================
 /** @class  SchemaVersionExtractor_ABC
     @brief  SchemaVersionExtractor_ABC
@@ -32,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string ExtractVersion( const std::string& schema ) const = 0;
+    virtual Path ExtractVersion( const Path& schema ) const = 0;
     //@}
 };
 

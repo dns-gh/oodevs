@@ -21,6 +21,8 @@ namespace xml
 
 namespace tools
 {
+    class Path;
+
 // =============================================================================
 /** @class  FileMigration_ABC
     @brief  FileMigration_ABC
@@ -38,13 +40,13 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const std::string& GetFromVersion() const = 0;
-    virtual const std::string& GetToVersion  () const = 0;
+    virtual const Path& GetFromVersion() const = 0;
+    virtual const Path& GetToVersion  () const = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< xml::xistream > UpgradeFile( std::auto_ptr< xml::xistream > file, const std::string& schema ) const = 0;
+    virtual std::auto_ptr< xml::xistream > UpgradeFile( std::auto_ptr< xml::xistream > file, const Path& schema ) const = 0;
     //@}
 };
 

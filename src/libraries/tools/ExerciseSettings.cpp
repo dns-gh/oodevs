@@ -9,7 +9,9 @@
 
 #include "tools_pch.h"
 #include "ExerciseSettings.h"
+#include "FileWrapper.h"
 #include "Loader_ABC.h"
+#include "Path.h"
 #include "SchemaWriter_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -59,7 +61,7 @@ ExerciseSettings::Setting::~Setting()
 // Name: ExerciseSettings::Serialize
 // Created: ABR 2011-12-09
 // -----------------------------------------------------------------------------
-void ExerciseSettings::Setting::Serialize( xml::xofstream& xos ) const
+void ExerciseSettings::Setting::Serialize( tools::Xofstream& xos ) const
 {
     xos << xml::start( "setting" )
         << xml::attribute( "name", name_ )
@@ -146,9 +148,9 @@ void ExerciseSettings::ReadSetting( xml::xistream& xis )
 // Name: ExerciseSettings::Serialize
 // Created: ABR 2011-12-09
 // -----------------------------------------------------------------------------
-void ExerciseSettings::Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
+void ExerciseSettings::Serialize( const tools::Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
-    xml::xofstream xos( filename );
+    tools::Xofstream xos( filename );
     xos << xml::start( "settings" );
     schemaWriter.WriteExerciseSchema( xos, "settings" );
     for( auto it = settings_.begin(); it != settings_.end(); ++it )

@@ -11,7 +11,6 @@
 #include "tools/SchemaWriter.h"
 #include "tools/Version.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/filesystem.hpp>
 
 BOOST_AUTO_TEST_CASE( test_schema_writer )
 {

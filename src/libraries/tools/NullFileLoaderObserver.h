@@ -32,9 +32,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool NotifyInvalidXml( const std::string& file, const xml::exception& e );
-    virtual void NotifyNoXmlSchemaSpecified( const std::string& file );
-    virtual void NotifyFileMigrated( const std::string& file , const std::string& fromVersion, const std::string& toVersion );
+    virtual bool NotifyInvalidXml( const Path& file, const xml::exception& e );
+    virtual void NotifyNoXmlSchemaSpecified( const Path& file );
+    virtual void NotifyFileMigrated( const Path& file , const std::string& fromVersion, const std::string& toVersion );
     //@}
 };
 

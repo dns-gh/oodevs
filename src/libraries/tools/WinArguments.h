@@ -11,6 +11,7 @@
 #define __tools_WinArguments_h_
 
 #include <vector>
+#include <boost/noncopyable.hpp>
 
 namespace tools
 {
@@ -20,12 +21,12 @@ namespace tools
 */
 // Created: RDS 2008-07-22
 // =============================================================================
-class WinArguments
+class WinArguments : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit WinArguments( const std::string& arguments );
+    explicit WinArguments( const std::wstring& arguments );
     virtual ~WinArguments();
     //@}
 
@@ -33,13 +34,9 @@ public:
     //@{
     const char* const* Argv() const;
     int                Argc() const;
-    //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    WinArguments( const WinArguments& );            //!< Copy constructor
-    WinArguments& operator=( const WinArguments& ); //!< Assignment operator
+    bool HasOption( const std::string& name ) const;
+    std::string GetOption( const std::string& name, const std::string& defaultValue = "" );
     //@}
 
 private:

@@ -11,6 +11,7 @@
 #define __GeneralConfig_h_
 
 #include "CommandLineConfig_ABC.h"
+#include "Path.h"
 
 namespace tools
 {
@@ -26,44 +27,44 @@ class GeneralConfig : public CommandLineConfig_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit GeneralConfig( const std::string& defaultRoot = "../" );
+    explicit GeneralConfig( const Path& defaultRoot = "../" );
     virtual ~GeneralConfig();
     //@}
 
     //! @name Operations
     //@{
-    static std::string BuildChildPath( const std::string& parent, const std::string& child );
-    static std::string BuildDirectoryFile( const std::string& directory, const std::string& file );
-    static std::string BuildWorkingDirectoryChildFile( const std::string& file );
-    static std::string BuildResourceChildFile( const std::string& file );
+    static Path BuildChildPath( const Path& parent, const Path& child );
+    static Path BuildDirectoryFile( const Path& directory, const Path& file );
+    static Path BuildWorkingDirectoryChildFile( const Path& file );
+    static Path BuildResourceChildFile( const Path& file );
 
-    std::string GetRootDir() const;
-    void SetRootDir( const std::string& directory );
-    std::string BuildPluginDirectory( const std::string& plugin ) const;
+    const Path& GetRootDir() const;
+    void SetRootDir( const Path& directory );
+    Path BuildPluginDirectory( const Path& plugin ) const;
 
-    std::string GetExercisesDir() const;
-    std::string GetExerciseDir( const std::string& exercice ) const;
-    std::string GetExerciseFile( const std::string& exercise ) const;
+    const Path& GetExercisesDir() const;
+    Path GetExerciseDir( const Path& exercice ) const;
+    Path GetExerciseFile( const Path& exercise ) const;
 
-    std::string GetModelsDir() const;
+    const Path& GetModelsDir() const;
 
-    std::string GetPhysicalsDir( const std::string& dataset ) const;
-    std::string GetPhysicalsDir( const std::string& dataset, const std::string& physical ) const;
-    std::string GetPhysicalFile( const std::string& dataset, const std::string& physical ) const;
+    Path GetPhysicalsDir( const Path& dataset ) const;
+    Path GetPhysicalsDir( const Path& dataset, const Path& physical ) const;
+    Path GetPhysicalFile( const Path& dataset, const Path& physical ) const;
 
-    std::string GetDecisionalFile( const std::string& dataset ) const;
-    std::string BuildDecisionalChildFile( const std::string& dataset, const std::string& file ) const;
+    Path GetDecisionalFile( const Path& dataset ) const;
+    Path BuildDecisionalChildFile( const Path& dataset, const Path& file ) const;
 
-    std::string GetTerrainsDir() const;
-    std::string GetTerrainDir( const std::string& terrain ) const;
-    std::string GetTerrainFile( const std::string& terrain ) const;
-    std::string GetTerrainUrbanFile( const std::string& terrain ) const;
+    const Path& GetTerrainsDir() const;
+    Path GetTerrainDir( const Path& terrain ) const;
+    Path GetTerrainFile( const Path& terrain ) const;
+    Path GetTerrainUrbanFile( const Path& terrain ) const;
 
-    std::string GetSessionsDir( const std::string& exercise ) const;
-    std::string BuildSessionDir( const std::string& exercise, const std::string& session ) const;
-    std::string GetCheckpointsDir( const std::string& exercise, const std::string& session ) const;
+    Path GetSessionsDir( const Path& exercise ) const;
+    Path BuildSessionDir( const Path& exercise, const Path& session ) const;
+    Path GetCheckpointsDir( const Path& exercise, const Path& session ) const;
 
-    std::string BuildPopulationChildFile( const std::string& file ) const;
+    Path BuildPopulationChildFile( const Path& file ) const;
 
     virtual void Parse( int argc, char** argv );
     //@}
@@ -71,23 +72,23 @@ public:
 protected:
     //! @name Operations
     //@{
-    static void ResolveRelativePath( const std::string& root, std::string& path );
-    static void ResolveNewRelativePath( const std::string& oldRoot, const std::string& newRoot, std::string& path );
-    void LoadExercise( const std::string& file );
+    static void ResolveRelativePath( const Path& root, Path& path );
+    static void ResolveNewRelativePath( const Path& oldRoot, const Path& newRoot, Path& path );
+    void LoadExercise( const Path& file );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string rootDir_;
-    std::string terrainsDir_;
-    std::string modelsDir_;
-    std::string exercisesDir_;
-    std::string populationDir_;
-    std::string pluginsDir_;
+    Path rootDir_;
+    Path terrainsDir_;
+    Path modelsDir_;
+    Path exercisesDir_;
+    Path populationDir_;
+    Path pluginsDir_;
 
-    const std::string terrainConfigFile_;
-    const std::string exerciseConfigFile_;
+    const Path terrainConfigFile_;
+    const Path exerciseConfigFile_;
     //@}
 };
 

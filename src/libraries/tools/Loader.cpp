@@ -12,7 +12,6 @@
 #include "RealFileLoader.h"
 #include "SchemaVersionExtractor.h"
 #include "ExerciseConfig.h"
-#include <boost/filesystem/operations.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace tools;
@@ -41,7 +40,7 @@ Loader::~Loader()
 // Name: Loader::LoadPhysicalFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
-std::string Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) const
+Path Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) const
 {
     std::auto_ptr< xml::xistream > physicalFileXis = fileLoader_->LoadFile( config_.GetPhysicalFile(), observer_ );
     std::string childFileName;
@@ -50,16 +49,16 @@ std::string Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loade
                              >> xml::attribute( "file", childFileName )
                          >> xml::end
                      >> xml::end;
-    childFileName = config_.BuildPhysicalChildFile( childFileName );
-    LoadFile( childFileName, loader );
-    return childFileName;
+    Path childFile = config_.BuildPhysicalChildFile( Path::FromUTF8( childFileName ) );
+    LoadFile( childFile, loader );
+    return childFile;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Loader::LoadOptionalPhysicalFile
 // Created: ABR 2011-05-24
 // -----------------------------------------------------------------------------
-std::string Loader::LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const
+Path Loader::LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const
 {
     std::auto_ptr< xml::xistream > physicalFileXis = fileLoader_->LoadFile( config_.GetPhysicalFile(), observer_ );
     std::string childFileName;
@@ -69,9 +68,9 @@ std::string Loader::LoadOptionalPhysicalFile( const std::string& rootTag, T_Load
                          >> xml::end
                      >> xml::end;
     if( childFileName.empty() )
-        return "";
-    childFileName = config_.BuildPhysicalChildFile( childFileName );
-    if( boost::filesystem::exists( childFileName ) )
-        LoadFile( childFileName, loader );
-    return childFileName;
+        return Path();
+    Path childFile = config_.BuildPhysicalChildFile( Path::FromUTF8( childFileName ) );
+    if( childFile.Exists() )
+        LoadFile( childFile, loader );
+    return childFile;
 }

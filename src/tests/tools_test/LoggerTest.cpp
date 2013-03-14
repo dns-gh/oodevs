@@ -9,9 +9,9 @@
 
 #include "tools_test_pch.h"
 #include "MT_Tools/MT_FileLogger.h"
+#include "tools/FileWrapper.h"
 #include <tools/TemporaryDirectory.h>
 #include <boost/regex.hpp>
-#include <fstream>
 
 namespace
 {
@@ -23,10 +23,10 @@ std::string FixLogLine( std::string& line )
     return boost::regex_replace( line, re, "[DATE]\\1" );
 }
 
-void ParseLog( const std::string& path, std::vector< std::string >& lines )
+void ParseLog( const tools::Path& path, std::vector< std::string >& lines )
 {
     lines.clear();
-    std::fstream file( path.c_str(), std::ios::in );
+    tools::Fstream file( path, std::ios::in );
     std::string line;
     while( std::getline( file, line ))
     {
@@ -34,7 +34,7 @@ void ParseLog( const std::string& path, std::vector< std::string >& lines )
     }
 }
 
-void CheckLines( const char** expected, const std::string& path )
+void CheckLines( const char** expected, const tools::Path& path )
 {
     std::vector< std::string > lines;
     ParseLog( path, lines);
@@ -56,9 +56,9 @@ void CheckLines( const char** expected, const std::string& path )
 BOOST_AUTO_TEST_CASE( filelogger_basics )
 {
     tools::TemporaryDirectory temp( "filelogger-", temp_directory );
+    tools::Path loggerFile = tools::Path::FromUnicode( temp.path().wstring() ) / "log.txt";
     {
-        MT_FileLogger logger( (temp.path() / "log.txt" ).string().c_str(), 1, 1000,
-            MT_Logger_ABC::eLogLevel_All, false, MT_Logger_ABC::eSimulation, false);
+        MT_FileLogger logger( loggerFile, 1, 1000, MT_Logger_ABC::eLogLevel_All, false, MT_Logger_ABC::eSimulation, false );
         logger.Log( MT_Logger_ABC::eLogLevel_Info, "message", "context", 42 );
         logger.Pause();
         logger.Log( MT_Logger_ABC::eLogLevel_Info, "message_paused", "context", 42 );
@@ -68,9 +68,6 @@ BOOST_AUTO_TEST_CASE( filelogger_basics )
         logger.Log( MT_Logger_ABC::eLogLevel_FatalError, "message_nocontext", 0, 42 );
         logger.Log( MT_Logger_ABC::eLogLevel_All, 0, "no message", 42 );
     }
-    std::vector< std::string > files;
-    temp.ListDir( files );
-    BOOST_CHECK_EQUAL( 1U, files.size() );
     {
         const char* expected[] =
         {
@@ -81,6 +78,6 @@ BOOST_AUTO_TEST_CASE( filelogger_basics )
             "[DATE] <Simulation> <Unknown log level> (42) [Context: no message]",
             0,
         };
-        CheckLines( expected, files[0] );
+        CheckLines( expected, loggerFile );
     }
 }

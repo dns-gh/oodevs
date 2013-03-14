@@ -12,18 +12,15 @@
 #include "Loader.h"
 #include "WorldParameters.h"
 #include "MT_Tools/MT_Logger.h"
-#include <xeumeuleu/xml.hpp>
+#include "FileWrapper.h"
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>
 
-namespace po = boost::program_options;
-namespace bfs = boost::filesystem;
 using namespace tools;
+namespace po = boost::program_options;
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig constructor
@@ -35,7 +32,7 @@ ExerciseConfig::ExerciseConfig( RealFileLoaderObserver_ABC& observer )
 {
     po::options_description desc( "Exercise options" );
     desc.add_options()
-        ( "exercise", po::value< std::string >( &exerciseName_ ), "specify exercise name" )
+        ( "exercise", po::value( &exerciseName_ ), "specify exercise name" )
     ;
     AddOptions( desc );
 }
@@ -56,14 +53,14 @@ ExerciseConfig::~ExerciseConfig()
 void ExerciseConfig::Parse( int argc, char** argv )
 {
     tools::GeneralConfig::Parse( argc, argv );
-    if( !GetExerciseName().empty() )
+    if( !GetExerciseName().IsEmpty() )
         LoadExercise( GetExerciseFile() );
-    const std::string debugSettingFile = BuildExerciseChildFile( "debug.xml" );
     try
     {
-        if( boost::filesystem::exists( debugSettingFile ) )
+        const Path debugSettingFile = BuildExerciseChildFile( "debug.xml" );
+        if( debugSettingFile.Exists() )
         {
-            xml::xifstream xis( debugSettingFile );
+            Xifstream xis( debugSettingFile );
             if( xis.has_child( "debug" ) )
             {
                 xis >> xml::start( "debug" );
@@ -79,14 +76,13 @@ void ExerciseConfig::Parse( int argc, char** argv )
     {
         // NOTHING
     }
-
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::LoadExercise
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-void ExerciseConfig::LoadExercise( const std::string& file )
+void ExerciseConfig::LoadExercise( const Path& file )
 {
     try
     {
@@ -112,15 +108,22 @@ void ExerciseConfig::LoadExercise( const std::string& file )
 // -----------------------------------------------------------------------------
 void ExerciseConfig::ReadExercise( xml::xistream& xis )
 {
+    knowledges_ = "knowledges.xml";
+    urban_ = "urban.xml";
+    settings_ = "settings.xml";
+    propagations_ = "propagations";
+    scores_ = "scores.xml";
+    successFactors_ = "success-factors.xml";
     startupOrderFiles_.clear();
+
     xis >> xml::start( "exercise" )
             >> xml::optional >> xml::attribute( "model-version", modelVersion_ );
     xis     >> xml::optional >> xml::start( "meta" )
                 >> xml::optional >> xml::start( "orders" )
                     >> xml::list( "order", *this, &ExerciseConfig::ReadOrder )
                 >> xml::end
-            >> xml::end;
-    xis     >> xml::start( "terrain" )
+            >> xml::end
+            >> xml::start( "terrain" )
                 >> xml::attribute( "name", terrain_ )
             >> xml::end
             >> xml::start( "model" )
@@ -133,9 +136,9 @@ void ExerciseConfig::ReadExercise( xml::xistream& xis )
             >> xml::start( "orbat" )
                 >> xml::attribute( "file", orbat_ )
             >> xml::end
-            >> xml::optional >> xml::start( "knowledges" );
-    knowledges_ = xis.attribute< std::string >( "file", "knowledges.xml" );
-    xis     >> xml::end
+            >> xml::optional >> xml::start( "knowledges" )
+                >> xml::attribute( "file", knowledges_ )
+            >> xml::end
             >> xml::start( "profiles" )
                 >> xml::attribute( "file", profiles_ )
             >> xml::end
@@ -145,21 +148,21 @@ void ExerciseConfig::ReadExercise( xml::xistream& xis )
             >> xml::optional >> xml::start( "population" )
                 >> xml::attribute( "name", population_ )
             >> xml::end
-            >> xml::optional >> xml::start( "urban" );
-    urban_ = xis.attribute< std::string >( "file", "urban.xml" );
-    xis     >> xml::end
-            >> xml::optional >> xml::start( "settings" );
-    settings_ = xis.attribute< std::string >( "file", "settings.xml" );
-    xis     >> xml::end
-            >> xml::optional >> xml::start( "propagations" );
-    propagations_ = xis.attribute< std::string >( "name", "propagations" );
-    xis     >> xml::end
-            >> xml::optional >> xml::start( "scores" );
-    scores_ = xis.attribute< std::string >( "file", "scores.xml" );
-    xis     >> xml::end
-            >> xml::optional >> xml::start( "success-factors" );
-    successFactors_ = xis.attribute< std::string >( "file", "success-factors.xml" );
-    xis     >> xml::end;
+            >> xml::optional >> xml::start( "urban" )
+                >> xml::attribute( "file", urban_ )
+            >> xml::end
+            >> xml::optional >> xml::start( "settings" )
+                >> xml::attribute( "file", settings_ )
+            >> xml::end
+            >> xml::optional >> xml::start( "propagations" )
+                >> xml::attribute( "name", propagations_ )
+            >> xml::end
+            >> xml::optional >> xml::start( "scores" )
+                >> xml::attribute( "file", scores_ )
+            >> xml::end
+            >> xml::optional >> xml::start( "success-factors" )
+                >> xml::attribute( "file", successFactors_ )
+            >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -168,17 +171,16 @@ void ExerciseConfig::ReadExercise( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ExerciseConfig::ReadOrder( xml::xistream& xis )
 {
-    startupOrderFiles_.push_back( xis.attribute< std::string >( "file" ) );
+    startupOrderFiles_.push_back( xis.attribute< Path >( "file" ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::SetExerciseName
 // Created: SBO 2008-08-21
 // -----------------------------------------------------------------------------
-void ExerciseConfig::SetExerciseName( const std::string& file )
+void ExerciseConfig::SetExerciseName( const Path& file )
 {
-    bfs::path p( file );
-    exerciseName_ = p.branch_path().filename().string();
+    exerciseName_ = file.Parent().FileName();
     GeneralConfig::LoadExercise( file );
 }
 
@@ -186,7 +188,7 @@ void ExerciseConfig::SetExerciseName( const std::string& file )
 // Name: ExerciseConfig::GetExerciseName
 // Created: ABR 2011-06-21
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetExerciseName() const
+Path ExerciseConfig::GetExerciseName() const
 {
     return exerciseName_;
 }
@@ -195,7 +197,7 @@ std::string ExerciseConfig::GetExerciseName() const
 // Name: ExerciseConfig::GetExerciseFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetExerciseFile() const
+Path ExerciseConfig::GetExerciseFile() const
 {
     return GeneralConfig::GetExerciseFile( exerciseName_ );
 }
@@ -204,7 +206,7 @@ std::string ExerciseConfig::GetExerciseFile() const
 // Name: ExerciseConfig::BuildExerciseChildFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::BuildExerciseChildFile( const std::string& file ) const
+Path ExerciseConfig::BuildExerciseChildFile( const Path& file ) const
 {
     return BuildChildPath( GetExerciseFile(), file );
 }
@@ -213,7 +215,7 @@ std::string ExerciseConfig::BuildExerciseChildFile( const std::string& file ) co
 // Name: ExerciseConfig::LoadTerrain
 // Created: ABR 2012-06-11
 // -----------------------------------------------------------------------------
-void ExerciseConfig::LoadTerrain( const std::string& terrainName )
+void ExerciseConfig::LoadTerrain( const Path& terrainName )
 {
     terrain_ = terrainName;
     pWorldParameters_.reset( new WorldParameters( *fileLoader_, dataset_, physical_, GetTerrainFile(), GetPopulationFile() ) );
@@ -223,7 +225,7 @@ void ExerciseConfig::LoadTerrain( const std::string& terrainName )
 // Name: ExerciseConfig::GetPhysicalFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetPhysicalFile() const
+Path ExerciseConfig::GetPhysicalFile() const
 {
     return GeneralConfig::GetPhysicalFile( dataset_, physical_ );
 }
@@ -232,7 +234,7 @@ std::string ExerciseConfig::GetPhysicalFile() const
 // Name: ExerciseConfig::GetOptionalPhysicalChildFile
 // Created: ABR 2011-05-24
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetOptionalPhysicalChildFile( const std::string rootTag ) const
+Path ExerciseConfig::GetOptionalPhysicalChildFile( const std::string& rootTag ) const
 {
     std::auto_ptr< xml::xistream > physicalFileXis = fileLoader_->LoadFile( GetPhysicalFile() );
     std::string childFileName;
@@ -241,14 +243,14 @@ std::string ExerciseConfig::GetOptionalPhysicalChildFile( const std::string root
                              >> xml::attribute( "file", childFileName )
                          >> xml::end
                      >> xml::end;
-    return !childFileName.empty() ? BuildPhysicalChildFile( childFileName ) : "";
+    return !childFileName.empty() ? BuildPhysicalChildFile( Path::FromUTF8( childFileName ) ) : Path();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetPhysicalChildPath
 // Created: ABR 2011-05-24
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetPhysicalChildPath( const std::string rootTag ) const
+Path ExerciseConfig::GetPhysicalChildPath( const std::string& rootTag ) const
 {
     std::auto_ptr< xml::xistream > physicalFileXis = fileLoader_->LoadFile( GetPhysicalFile() );
     std::string childFilePath;
@@ -257,14 +259,14 @@ std::string ExerciseConfig::GetPhysicalChildPath( const std::string rootTag ) co
                             >> xml::attribute( "path", childFilePath )
                          >> xml::end
                      >> xml::end;
-    return !childFilePath.empty() ? BuildPhysicalChildFile( childFilePath ) : "";
+    return !childFilePath.empty() ? BuildPhysicalChildFile( Path::FromUTF8( childFilePath ) ) : Path();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::BuildPhysicalChildFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::BuildPhysicalChildFile( const std::string& file ) const
+Path ExerciseConfig::BuildPhysicalChildFile( const Path& file ) const
 {
     return BuildChildPath( GetPhysicalFile(), file );
 }
@@ -273,7 +275,7 @@ std::string ExerciseConfig::BuildPhysicalChildFile( const std::string& file ) co
 // Name: ExerciseConfig::GetDecisionalFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetDecisionalFile() const
+Path ExerciseConfig::GetDecisionalFile() const
 {
     return GeneralConfig::GetDecisionalFile( dataset_ );
 }
@@ -282,7 +284,7 @@ std::string ExerciseConfig::GetDecisionalFile() const
 // Name: ExerciseConfig::BuildDecisionalChildFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::BuildDecisionalChildFile( const std::string& file ) const
+Path ExerciseConfig::BuildDecisionalChildFile( const Path& file ) const
 {
     return BuildChildPath( GetDecisionalFile(), file );
 }
@@ -291,7 +293,7 @@ std::string ExerciseConfig::BuildDecisionalChildFile( const std::string& file ) 
 // Name: ExerciseConfig::GetTerrainName
 // Created: AGE 2011-10-04
 // -----------------------------------------------------------------------------
-const std::string& ExerciseConfig::GetTerrainName() const
+const Path& ExerciseConfig::GetTerrainName() const
 {
     return terrain_;
 }
@@ -300,7 +302,7 @@ const std::string& ExerciseConfig::GetTerrainName() const
 // Name: ExerciseConfig::GetTerrainFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetTerrainFile() const
+Path ExerciseConfig::GetTerrainFile() const
 {
     return GeneralConfig::GetTerrainFile( terrain_ );
 }
@@ -309,7 +311,7 @@ std::string ExerciseConfig::GetTerrainFile() const
 // Name: ExerciseConfig::GetUrbanFile
 // Created: JSR 2012-09-04
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetUrbanFile() const
+Path ExerciseConfig::GetUrbanFile() const
 {
     return BuildExerciseChildFile( urban_ );
 }
@@ -318,7 +320,7 @@ std::string ExerciseConfig::GetUrbanFile() const
 // Name: ExerciseConfig::GetUrbanFileName
 // Created: JSR 2012-09-04
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetUrbanFileName() const
+Path ExerciseConfig::GetUrbanFileName() const
 {
     return urban_;
 }
@@ -327,7 +329,7 @@ std::string ExerciseConfig::GetUrbanFileName() const
 // Name: ExerciseConfig::BuildTerrainChildFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::BuildTerrainChildFile( const std::string& file ) const
+Path ExerciseConfig::BuildTerrainChildFile( const Path& file ) const
 {
     return BuildChildPath( GetTerrainFile(), file );
 }
@@ -336,7 +338,7 @@ std::string ExerciseConfig::BuildTerrainChildFile( const std::string& file ) con
 // Name: ExerciseConfig::GetSessionsDir
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetSessionsDir() const
+Path ExerciseConfig::GetSessionsDir() const
 {
     return GeneralConfig::GetSessionsDir( exerciseName_ );
 }
@@ -345,7 +347,7 @@ std::string ExerciseConfig::GetSessionsDir() const
 // Name: ExerciseConfig::GetSessionDir
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetSessionDir( const std::string& session ) const
+Path ExerciseConfig::GetSessionDir( const Path& session ) const
 {
     return BuildDirectoryFile( GetSessionsDir(), session );
 }
@@ -354,7 +356,7 @@ std::string ExerciseConfig::GetSessionDir( const std::string& session ) const
 // Name: ExerciseConfig::GetWeatherFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetWeatherFile() const
+Path ExerciseConfig::GetWeatherFile() const
 {
     return BuildExerciseChildFile( weather_ );
 }
@@ -363,7 +365,7 @@ std::string ExerciseConfig::GetWeatherFile() const
 // Name: ExerciseConfig::GetWeatherFileName
 // Created: NPT 2012-09-06
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetWeatherFileName() const
+Path ExerciseConfig::GetWeatherFileName() const
 {
     return weather_;
 }
@@ -372,7 +374,7 @@ std::string ExerciseConfig::GetWeatherFileName() const
 // Name: ExerciseConfig::GetOrbatFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetOrbatFile() const
+Path ExerciseConfig::GetOrbatFile() const
 {
     return BuildExerciseChildFile( orbat_ );
 }
@@ -381,7 +383,7 @@ std::string ExerciseConfig::GetOrbatFile() const
 // Name: ExerciseConfig::GetOrbatFileName
 // Created: NPT 2012-09-04
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetOrbatFileName() const
+Path ExerciseConfig::GetOrbatFileName() const
 {
     return orbat_;
 }
@@ -390,7 +392,7 @@ std::string ExerciseConfig::GetOrbatFileName() const
 // Name: ExerciseConfig::GetTerrainUrbanFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetTerrainUrbanFile() const
+Path ExerciseConfig::GetTerrainUrbanFile() const
 {
     return GeneralConfig::GetTerrainUrbanFile( terrain_ );
 }
@@ -399,9 +401,9 @@ std::string ExerciseConfig::GetTerrainUrbanFile() const
 // Name: ExerciseConfig::GetUrbanStateFile
 // Created: JSR 2010-06-21
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetUrbanStateFile() const
+Path ExerciseConfig::GetUrbanStateFile() const
 {
-    if( urbanState_.empty() )
+    if( urbanState_.IsEmpty() )
         return urbanState_;
     return BuildExerciseChildFile( urbanState_ );
 }
@@ -410,7 +412,7 @@ std::string ExerciseConfig::GetUrbanStateFile() const
 // Name: ExerciseConfig::GetKnowledgesFile
 // Created: NPT 2012-09-04
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetKnowledgesFile() const
+Path ExerciseConfig::GetKnowledgesFile() const
 {
     return BuildExerciseChildFile( knowledges_ );
 }
@@ -419,7 +421,7 @@ std::string ExerciseConfig::GetKnowledgesFile() const
 // Name: ExerciseConfig::GetKnowledgesFileName
 // Created: NPT 2012-09-04
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetKnowledgesFileName() const
+Path ExerciseConfig::GetKnowledgesFileName() const
 {
     return knowledges_;
 }
@@ -428,7 +430,7 @@ std::string ExerciseConfig::GetKnowledgesFileName() const
 // Name: ExerciseConfig::GetProfilesFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetProfilesFile() const
+Path ExerciseConfig::GetProfilesFile() const
 {
     return BuildExerciseChildFile( profiles_ );
 }
@@ -437,7 +439,7 @@ std::string ExerciseConfig::GetProfilesFile() const
 // Name: ExerciseConfig::GetScoresFile
 // Created: SBO 2009-04-24
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetScoresFile() const
+Path ExerciseConfig::GetScoresFile() const
 {
     return BuildExerciseChildFile( scores_ );
 }
@@ -446,7 +448,7 @@ std::string ExerciseConfig::GetScoresFile() const
 // Name: ExerciseConfig::GetSettingsFile
 // Created: ABR 2011-12-09
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetSettingsFile() const
+Path ExerciseConfig::GetSettingsFile() const
 {
     return BuildExerciseChildFile( settings_ );
 }
@@ -455,7 +457,7 @@ std::string ExerciseConfig::GetSettingsFile() const
 // Name: ExerciseConfig::GetSettingsFileName
 // Created: ABR 2011-12-12
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetSettingsFileName() const
+Path ExerciseConfig::GetSettingsFileName() const
 {
     return settings_;
 }
@@ -464,7 +466,7 @@ std::string ExerciseConfig::GetSettingsFileName() const
 // Name: ExerciseConfig::GetSuccessFactorsFile
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetSuccessFactorsFile() const
+Path ExerciseConfig::GetSuccessFactorsFile() const
 {
     return BuildExerciseChildFile( successFactors_ );
 }
@@ -473,7 +475,7 @@ std::string ExerciseConfig::GetSuccessFactorsFile() const
 // Name: ExerciseConfig::GetPropagationFile
 // Created: JCR 2010-05-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetPropagationFile( const std::string& path ) const
+Path ExerciseConfig::GetPropagationFile( const Path& path ) const
 {
     return BuildPropagationChildFile( path, "propagation.xml" );
 }
@@ -482,18 +484,18 @@ std::string ExerciseConfig::GetPropagationFile( const std::string& path ) const
 // Name: ExerciseConfig::BuildPropagationChildFile
 // Created: JCR 2010-05-12
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::BuildPropagationChildFile( const std::string& path, const std::string& file ) const
+Path ExerciseConfig::BuildPropagationChildFile( const Path& path, const Path& file ) const
 {
-    std::string propagations( propagations_ );
+    Path propagations( propagations_ );
     ResolveRelativePath( BuildDirectoryFile( GetRootDir(), "data" ), propagations );
     return BuildDirectoryFile( BuildDirectoryFile( propagations, path ), file );
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::vector< std::string >& ExerciseConfig::GetStartupOrderFiles
+// Name: std::vector< Path >& ExerciseConfig::GetStartupOrderFiles
 // Created: JSR 2012-03-02
 // -----------------------------------------------------------------------------
-const std::vector< std::string >& ExerciseConfig::GetStartupOrderFiles() const
+const std::vector< Path >& ExerciseConfig::GetStartupOrderFiles() const
 {
     return startupOrderFiles_;
 }
@@ -502,12 +504,11 @@ const std::vector< std::string >& ExerciseConfig::GetStartupOrderFiles() const
 // Name: ExerciseConfig::GetPopulationFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetPopulationFile() const
+Path ExerciseConfig::GetPopulationFile() const
 {
-    // $$$$ AGE 2008-03-13: JJJJJJCCCCCCRRRRRRR
-    if( population_.empty() )
+    if( population_.IsEmpty() )
         return population_;
-    return BuildPopulationChildFile( ( bfs::path( population_ ) / "model" / "population.xml" ).string() );
+    return BuildPopulationChildFile( population_ / "model/population.xml" );
 }
 
 // -----------------------------------------------------------------------------
@@ -536,7 +537,7 @@ void ExerciseConfig::LogSettings::SetLogSettings( int level, int files, int size
     maxFileSize_ = size;
     std::string unit( sizeUnit );
     boost::algorithm::to_lower( unit );
-    sizeUnit_ = ( unit == "bytes" || unit == "kbytes" || unit == "mbytes" )? eLogSizeType_Bytes : eLogSizeType_Lines;
+    sizeUnit_ = ( unit == "bytes" || unit == "kbytes" || unit == "mbytes" ) ? eLogSizeType_Bytes : eLogSizeType_Lines;
     if( unit == "kbytes" )
         maxFileSize_ *= 1000;
     else if( unit == "mbytes" )
@@ -778,7 +779,7 @@ bool ExerciseConfig::IsLoggerPluginLogInBytes() const
 // Name: ExerciseConfig::GetDataSet
 // Created: ABR 2012-05-24
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetDataSet() const
+Path ExerciseConfig::GetDataSet() const
 {
     return dataset_;
 }
@@ -787,7 +788,7 @@ std::string ExerciseConfig::GetDataSet() const
 // Name: ExerciseConfig::GetPhysicalBase
 // Created: ABR 2012-05-24
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetPhysicalBase() const
+Path ExerciseConfig::GetPhysicalBase() const
 {
     return physical_;
 }
@@ -796,7 +797,7 @@ std::string ExerciseConfig::GetPhysicalBase() const
 // Name: ExerciseConfig::GetGraphicsDirectory
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetGraphicsDirectory() const
+Path ExerciseConfig::GetGraphicsDirectory() const
 {
     return pWorldParameters_->graphicsDirectory_;
 }
@@ -805,7 +806,7 @@ std::string ExerciseConfig::GetGraphicsDirectory() const
 // Name: ExerciseConfig::GetDetectionFile
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetDetectionFile() const
+Path ExerciseConfig::GetDetectionFile() const
 {
     return pWorldParameters_->detection_;
 }
@@ -850,7 +851,7 @@ float ExerciseConfig::GetTerrainLatitude() const
 // Name: ExerciseConfig::GetDetectionDirectory
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetDetectionDirectory() const
+Path ExerciseConfig::GetDetectionDirectory() const
 {
     return pWorldParameters_->detectionDirectory_;
 }
@@ -859,7 +860,7 @@ std::string ExerciseConfig::GetDetectionDirectory() const
 // Name: ExerciseConfig::GetPathfindGraphFile
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetPathfindGraphFile() const
+Path ExerciseConfig::GetPathfindGraphFile() const
 {
     return pWorldParameters_->pathfindGraph_;
 }
@@ -868,7 +869,7 @@ std::string ExerciseConfig::GetPathfindGraphFile() const
 // Name: ExerciseConfig::GetPathfindLinksFile
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetPathfindLinksFile() const
+Path ExerciseConfig::GetPathfindLinksFile() const
 {
     return pWorldParameters_->pathfindLinks_;
 }
@@ -877,7 +878,7 @@ std::string ExerciseConfig::GetPathfindLinksFile() const
 // Name: ExerciseConfig::GetPathfindNodesFile
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetPathfindNodesFile() const
+Path ExerciseConfig::GetPathfindNodesFile() const
 {
     return pWorldParameters_->pathfindNodes_;
 }
@@ -913,7 +914,7 @@ const std::vector< unsigned char >& ExerciseConfig::GetUtmZones() const
 // Name: ExerciseConfig::GetUrbanTerrainFile
 // Created: LGY 2012-06-05
 // -----------------------------------------------------------------------------
-std::string ExerciseConfig::GetUrbanTerrainFile() const
+Path ExerciseConfig::GetUrbanTerrainFile() const
 {
     return pWorldParameters_->urban_;
 }

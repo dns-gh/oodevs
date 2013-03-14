@@ -12,28 +12,23 @@
 #include "ExerciseConfig.h"
 #include "Loader_ABC.h"
 #include "SchemaWriter_ABC.h"
-#include <xeumeuleu/xml.hpp>
+#include "FileWrapper.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
-#include <boost/filesystem/path.hpp>
 
 using namespace tools;
-
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: WorldParameters constructor
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
-WorldParameters::WorldParameters( const Loader_ABC& fileLoader, const std::string& dataset,
-                                  const std::string& physical, const std::string& terrainFile,
-                                  const std::string& populationFile )
+WorldParameters::WorldParameters( const Loader_ABC& fileLoader, const Path& dataset, const Path& physical, const Path& terrainFile, const Path& populationFile )
     : dataset_ ( dataset )
     , physical_( physical )
     , terrainSamePhysical_( true )
 {
     fileLoader.LoadFile( terrainFile, boost::bind( &WorldParameters::ReadTerrain, this, boost::cref( terrainFile ), _1 ) );
-    if( !populationFile.empty() )
+    if( !populationFile.IsEmpty() )
         fileLoader.LoadFile( populationFile, boost::bind( &WorldParameters::ReadPopulation, this, boost::cref( populationFile ), _1 ) );
 }
 
@@ -50,9 +45,9 @@ WorldParameters::~WorldParameters()
 // Name: WorldParameters::Serialize
 // Created: ABR 2012-05-24
 // -----------------------------------------------------------------------------
-void WorldParameters::Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
+void WorldParameters::Serialize( const Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
-    xml::xofstream xos( filename, xml::encoding( "UTF-8" ) );
+    tools::Xofstream xos( filename );
     xos << xml::start( "terrain" );
     schemaWriter.WriteSchema( xos, "terrain", "terrain" );
     xos << xml::start( "data" )
@@ -102,14 +97,14 @@ void WorldParameters::Purge()
     longitude_ = 0;
     width_ = 0;
     height_ = 0;
-    graphicsDirectory_.clear();
-    detectionDirectory_.clear();
-    pathfindGraph_.clear();
-    pathfindLinks_.clear();
-    pathfindNodes_.clear();
-    detection_.clear();
-    urban_.clear();
-    populationGraph_.clear();
+    graphicsDirectory_.Clear();
+    detectionDirectory_.Clear();
+    pathfindGraph_.Clear();
+    pathfindLinks_.Clear();
+    pathfindNodes_.Clear();
+    detection_.Clear();
+    urban_.Clear();
+    populationGraph_.Clear();
     xMin_.clear();
     xMax_.clear();
     yMin_.clear();
@@ -120,9 +115,9 @@ void WorldParameters::Purge()
 
 namespace
 {
-    std::string BuildChildPath( const std::string& parent, const std::string& child )
+    Path BuildChildPath( const Path& parentFile, const Path& child )
     {
-        return ( bfs::path( parent ).branch_path() / bfs::path( child ) ).string();
+        return parentFile.Parent() / child;
     }
 }
 
@@ -130,19 +125,20 @@ namespace
 // Name: WorldParameters::ReadPopulation
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void WorldParameters::ReadPopulation( const std::string& populationFile, xml::xistream& xis )
+void WorldParameters::ReadPopulation( const Path& populationFile, xml::xistream& xis )
 {
+    std::string populationGraph;
     xis >> xml::start( "configuration" )
                 >> xml::start( "graph" )
-                    >> xml::attribute( "file", populationGraph_ );
-    populationGraph_ = BuildChildPath( populationFile, populationGraph_ );
+                    >> xml::attribute( "file", populationGraph );
+    populationGraph_ = BuildChildPath( populationFile, Path::FromUTF8( populationGraph ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: WorldParameters::ReadTerrain
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void WorldParameters::ReadTerrain( const std::string& terrainFile, xml::xistream& xis )
+void WorldParameters::ReadTerrain( const Path& terrainFile, xml::xistream& xis )
 {
     std::string world, pathfind, graphics, detection;
     std::string urban( "urban/urban.xml" );
@@ -185,7 +181,7 @@ void WorldParameters::ReadTerrain( const std::string& terrainFile, xml::xistream
                 >> xml::end
             >> xml::end
         >> xml::end;
-        terrainSamePhysical_ = ( terrainDataSet == dataset_ && terrainPhysical == physical_ );
+        terrainSamePhysical_ = ( terrainDataSet == dataset_.ToUTF8() && terrainPhysical == physical_.ToUTF8() );
     }
     else
     {
@@ -195,28 +191,28 @@ void WorldParameters::ReadTerrain( const std::string& terrainFile, xml::xistream
                 >> xml::content( "RawVision", detection )
                 >> xml::content( "Graphics", graphics )
             >> xml::end;
-        ReadWorld( BuildChildPath( terrainFile, world ) );
+        ReadWorld( BuildChildPath( terrainFile, Path::FromUTF8( world ) ) );
         ReadExtent( BuildChildPath( terrainFile, "extent.xml" ) );
     }
 
     InitExtent();
 
-    detection_ = BuildChildPath( terrainFile, detection + "/detection.dat" );
-    graphicsDirectory_ = BuildChildPath( terrainFile, graphics );
-    detectionDirectory_ = BuildChildPath( terrainFile, detection );
-    pathfindGraph_ = BuildChildPath( terrainFile, pathfind + "/graph.bin" );
-    pathfindLinks_ = BuildChildPath( terrainFile, pathfind + "/links.bin" );
-    pathfindNodes_ = BuildChildPath( terrainFile, pathfind + "/nodes.bin" );
-    urban_ = BuildChildPath( terrainFile, urban );
+    detection_ = BuildChildPath( terrainFile, Path::FromUTF8( detection + "/detection.dat" ) );
+    graphicsDirectory_ = BuildChildPath( terrainFile, Path::FromUTF8( graphics ) );
+    detectionDirectory_ = BuildChildPath( terrainFile, Path::FromUTF8( detection ) );
+    pathfindGraph_ = BuildChildPath( terrainFile, Path::FromUTF8( pathfind + "/graph.bin" ) );
+    pathfindLinks_ = BuildChildPath( terrainFile, Path::FromUTF8( pathfind + "/links.bin" ) );
+    pathfindNodes_ = BuildChildPath( terrainFile, Path::FromUTF8( pathfind + "/nodes.bin" ) );
+    urban_ = BuildChildPath( terrainFile, Path::FromUTF8( urban ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: WorldParameters::ReadWorld
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void WorldParameters::ReadWorld( const std::string& world )
+void WorldParameters::ReadWorld( const Path& world )
 {
-    xml::xifstream xis( world );
+    Xifstream xis( world );
     xis >> xml::start( "World" )
             >> xml::content( "Latitude", latitude_ )
             >> xml::content( "Longitude", longitude_ )
@@ -229,9 +225,9 @@ void WorldParameters::ReadWorld( const std::string& world )
 // Name: WorldParameters::ReadExtent
 // Created: MGD 2010-12-16
 // -----------------------------------------------------------------------------
-void WorldParameters::ReadExtent( const std::string& extent )
+void WorldParameters::ReadExtent( const Path& extent )
 {
-    xml::xifstream xis( extent );
+    Xifstream xis( extent );
     xis >> xml::start( "Extent" )
             >> xml::content( "HautGauche", yMin_ )
             >> xml::content( "HautDroit", yMax_ )
