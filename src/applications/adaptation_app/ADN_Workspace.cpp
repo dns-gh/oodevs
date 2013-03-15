@@ -473,7 +473,8 @@ bool ADN_Workspace::SaveAs( const tools::Path& filename, const tools::Loader_ABC
         projectData_->Save( fileLoader );
         for( tools::Path::T_Paths::iterator it = unchangedFiles.begin(); it != unchangedFiles.end(); ++it )
         {
-            ( szOldWorkDir / *it ).Copy( tempDirectory.GetDirectory() / *it );
+            if( !it->IsEmpty() )
+                ( szOldWorkDir / *it ).Copy( tempDirectory.GetDirectory() / *it );
         }
 
         for( int n = 0; n < eNbrWorkspaceElements; ++n )

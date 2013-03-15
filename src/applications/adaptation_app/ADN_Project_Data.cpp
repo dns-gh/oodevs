@@ -533,7 +533,7 @@ void ADN_Project_Data::Save( const tools::Loader_ABC& fileLoader )
 {
     assert( !szFile_.GetFileName().IsEmpty() );
 
-    tools::Path szFile = workDir_.GetSaveDirectory() + szFile_.GetFileName();
+    tools::Path szFile = workDir_.GetSaveDirectory() / szFile_.GetFileName();
     szFile.Parent().CreateDirectories();
     {
         tools::Xofstream output( szFile );

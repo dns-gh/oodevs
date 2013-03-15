@@ -347,9 +347,11 @@ void ADN_MainWindow::SaveAsProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::NewProject()
 {
-    tools::Path filename = gui::FileDialog::getSaveFileName( this, tr( "Create new project" ), generalConfig_->GetModelsDir(), tr( "Physical model file (physical.xml)" ) );
-    if( filename.IsEmpty() )
+    tools::Path path = gui::FileDialog::getExistingDirectory( this, tr( "Create new project" ), generalConfig_->GetModelsDir() );
+    if( path.IsEmpty() )
         return;
+
+    path /= "physical.xml";
 
     workspace_.SetOpenMode( eOpenMode_Admin );
     emit OpenModeToggled();
@@ -360,11 +362,11 @@ void ADN_MainWindow::NewProject()
     SetMenuEnabled(false);
     mainTabWidget_->hide();
 
-    workspace_.Reset( filename );
+    workspace_.Reset( path );
 
     SetMenuEnabled(true);
     mainTabWidget_->show();
-    setCaption( tr( "Sword Adaptation Tool - " ) + filename.ToUTF8().c_str() + "[*]" );
+    setCaption( tr( "Sword Adaptation Tool - " ) + path.ToUTF8().c_str() + "[*]" );
     pProjectLoadAction_->setVisible( false );
 }
 
