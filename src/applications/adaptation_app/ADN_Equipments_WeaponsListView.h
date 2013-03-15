@@ -31,7 +31,7 @@ public:
 private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
-    bool Contains( const ADN_Weapons_Data::WeaponInfos* pInfo );
+    bool Contains( const ADN_Weapons_Data_WeaponInfos* pInfo );
 };
 
 #endif // __ADN_Equipments_WeaponsListView_h_

@@ -12,13 +12,13 @@
 
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_StandardItem.h"
-#include "ADN_Weapons_Data.h"
+#include "ADN_Weapons_Data_PhInfos.h"
 #include "ADN_Weapons_GUI.h"
 #include "ADN_Tr.h"
 #include "GQ_PlotData.h"
 #include "GQ_Plot.h"
 
-typedef ADN_Weapons_Data::PhSizeInfos PhSizeInfos;
+typedef ADN_Weapons_Data_PhSizeInfos PhSizeInfos;
 
 //-----------------------------------------------------------------------------
 // Internal List View Objects connector to be connected with ADN_ListView_Munitions_PhSizes

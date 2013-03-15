@@ -16,6 +16,9 @@
 #include <boost/noncopyable.hpp>
 #include <boost/function.hpp>
 
+class ADN_Launchers_Data::LauncherInfos;
+class ADN_Resources_Data::AmmoCategoryInfo;
+
 // =============================================================================
 // @class  ADN_WeaponFilter
 // @brief  ADN_WeaponFilter
@@ -26,12 +29,6 @@ class ADN_WeaponFilter : public ADN_Connector_ABC, boost::noncopyable
 {
     Q_OBJECT
 
-private:
-    //! @name Types
-    //@{
-    typedef boost::function< bool( const ADN_Weapons_Data::WeaponInfos& infos ) > T_Validate;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -40,7 +37,8 @@ public:
 
     //! @name Modifiers
     //@{
-    void Initialize( ADN_Type_Bool* pData, T_Validate validate );
+    void Initialize( ADN_Launchers_Data::LauncherInfos& launcher, bool direct );
+    void Initialize( ADN_Resources_Data::AmmoCategoryInfo& ammo, bool direct );
     //@}
 
 protected:
@@ -58,8 +56,10 @@ protected:
 private:
     //! @name Member data
     //@{
-    T_Validate validate_;
+    bool bDirect_;
     ADN_Type_Bool* pData_;
+    ADN_Launchers_Data::LauncherInfos* pLauncher_;
+    ADN_Resources_Data::AmmoCategoryInfo* pAmmo_;
     mutable ADN_Connector_ABC* pConnector_;
     //@}
 };

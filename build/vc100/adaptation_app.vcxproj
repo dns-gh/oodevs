@@ -329,6 +329,8 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tr.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_PhInfos.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_WeaponInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_WizardPage.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Data_ABC.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FileLoaderObserver.cpp" />
@@ -1835,6 +1837,8 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tools.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tr.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_VectorEditionDialog.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_PhInfos.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_WeaponInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_WizardPage.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WizardPage.h" />

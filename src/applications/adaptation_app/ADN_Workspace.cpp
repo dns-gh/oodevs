@@ -666,7 +666,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     if( ADN_Sensors_Data::SensorInfos* infos = dynamic_cast< ADN_Sensors_Data::SensorInfos* >( data ) )
         // TODO: Sensors that use sensors, but no bind existence to cause no ptr in vector
         return FillUsingElements( eEquipments, *infos, GetEquipments().GetData(), &ADN_Equipments_Data::GetEquipmentsThatUse, result );
-    if( ADN_Weapons_Data::WeaponInfos* infos = dynamic_cast< ADN_Weapons_Data::WeaponInfos* >( data ) )
+    if( ADN_Weapons_Data_WeaponInfos* infos = dynamic_cast< ADN_Weapons_Data_WeaponInfos* >( data ) )
         return FillUsingElements( eEquipments, *infos, GetEquipments().GetData(), &ADN_Equipments_Data::GetEquipmentsThatUse, result );
     if( ADN_Breakdowns_Data::BreakdownInfo* infos = dynamic_cast< ADN_Breakdowns_Data::BreakdownInfo* >( data ) )
         return FillUsingElements( eEquipments, *infos, GetEquipments().GetData(), &ADN_Equipments_Data::GetEquipmentsThatUse, result );

@@ -1201,6 +1201,12 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_ABC.cpp">
       <Filter>Source Files\Workspace\Missions\Missions data</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_WeaponInfos.cpp">
+      <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_PhInfos.cpp">
+      <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1806,6 +1812,9 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_ABC.h">
       <Filter>Source Files\Workspace\Missions\Missions data</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_PhInfos.h">
+      <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -2199,6 +2208,9 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Point_GUI.h">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_WeaponInfos.h">
+      <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

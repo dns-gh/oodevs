@@ -11,7 +11,8 @@
 #define __ADN_Weapons_WizardPage_h_
 
 #include "ADN_WizardPage.h"
-#include "ADN_Weapons_Data.h"
+// #include "ADN_Weapons_Data.h"
+#include "ADN_Weapons_Data_WeaponInfos.h"
 
 // =============================================================================
 /** @class  ADN_Weapons_WizardPage
@@ -19,7 +20,7 @@
 */
 // Created: ABR 2012-07-31
 // =============================================================================
-class ADN_Weapons_WizardPage : public ADN_WizardPage< ADN_Weapons_Data::WeaponInfos >
+class ADN_Weapons_WizardPage : public ADN_WizardPage< ADN_Weapons_Data_WeaponInfos >
 {
 public:
     //! @name Constructors/Destructor

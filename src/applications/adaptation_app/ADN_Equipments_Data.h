@@ -19,7 +19,7 @@
 #include "ADN_Launchers_Data.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Resources_Data.h"
-#include "ADN_Weapons_Data.h"
+#include "ADN_Weapons_Data_WeaponInfos.h"
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_ResourceNatureInfos.h"
 #include "ADN_Breakdowns_Data.h"
@@ -304,14 +304,14 @@ public:
 
     public:
         WeaponInfos();
-        WeaponInfos( ADN_Weapons_Data::WeaponInfos& weapon );
+        WeaponInfos( ADN_Weapons_Data_WeaponInfos& weapon );
 
         WeaponInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Weapons_Data::WeaponInfos> ptrWeapon_;
+        ADN_TypePtr_InVector_ABC< ADN_Weapons_Data_WeaponInfos > ptrWeapon_;
     };
 
     typedef ADN_Type_Vector_ABC<WeaponInfos>       T_WeaponInfos_Vector;
@@ -586,7 +586,7 @@ public:
 
     QStringList GetEquipmentsThatUse( ADN_Radars_Data::RadarInfos& sensor );
     QStringList GetEquipmentsThatUse( ADN_Sensors_Data::SensorInfos& sensor );
-    QStringList GetEquipmentsThatUse( ADN_Weapons_Data::WeaponInfos& weapon );
+    QStringList GetEquipmentsThatUse( ADN_Weapons_Data_WeaponInfos& weapon );
     QStringList GetEquipmentsThatUse( ADN_Breakdowns_Data::BreakdownInfo& breakdown );
     QStringList GetEquipmentsThatUse( ADN_Objects_Data_ObjectInfos& object );
     QStringList GetEquipmentsThatUse( helpers::ArmorInfos& armor );

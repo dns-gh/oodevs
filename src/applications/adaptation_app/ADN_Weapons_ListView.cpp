@@ -25,7 +25,7 @@
 #include "ADN_Wizard.h"
 #include "ADN_Weapons_WizardPage.h"
 
-typedef ADN_Weapons_Data::WeaponInfos WeaponInfos;
+typedef ADN_Weapons_Data_WeaponInfos WeaponInfos;
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_ListView constructor

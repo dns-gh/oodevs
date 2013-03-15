@@ -63,10 +63,10 @@ void ADN_Equipments_WeaponsListView::OnContextMenu( const QPoint& pt )
     Q3PopupMenu addMenu( this );
 
     // Add the available weapons to the 'add weapons' submenu.
-    ADN_Weapons_Data::T_WeaponInfosVector& vWeapons = ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponInfos();
-    for( ADN_Weapons_Data::IT_WeaponInfosVector it = vWeapons.begin(); it != vWeapons.end(); ++it )
+    auto& vWeapons = ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponInfos();
+    for( auto it = vWeapons.begin(); it != vWeapons.end(); ++it )
     {
-        ADN_Weapons_Data::WeaponInfos* pWeapon = *it;
+        ADN_Weapons_Data_WeaponInfos* pWeapon = *it;
         // Don't add a weapon to the menu if it already is present in the list.
         if( Contains( pWeapon ) )
             continue;
@@ -104,7 +104,7 @@ void ADN_Equipments_WeaponsListView::OnContextMenu( const QPoint& pt )
 // Name: ADN_Equipments_WeaponsListView::Contains
 // Created: AGN 03-08-01
 //-----------------------------------------------------------------------------
-bool ADN_Equipments_WeaponsListView::Contains( const ADN_Weapons_Data::WeaponInfos* pInfo )
+bool ADN_Equipments_WeaponsListView::Contains( const ADN_Weapons_Data_WeaponInfos* pInfo )
 {
     const int rowCount = dataModel_.rowCount();
     for( int row = 0; row < rowCount; ++row )

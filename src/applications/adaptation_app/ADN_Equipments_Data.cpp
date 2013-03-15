@@ -795,7 +795,7 @@ ADN_Equipments_Data::WeaponInfos::WeaponInfos()
 // Name: WeaponInfos::WeaponInfos
 // Created: APE 2005-01-24
 // -----------------------------------------------------------------------------
-ADN_Equipments_Data::WeaponInfos::WeaponInfos( ADN_Weapons_Data::WeaponInfos& weapon )
+ADN_Equipments_Data::WeaponInfos::WeaponInfos( ADN_Weapons_Data_WeaponInfos& weapon )
     : ADN_RefWithName( weapon )
     , ptrWeapon_ ( ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponInfos(), &weapon )
 {
@@ -823,7 +823,7 @@ void ADN_Equipments_Data::WeaponInfos::ReadArchive( xml::xistream& input )
     std::string strLauncher, strAmmunition;
     input >> xml::attribute( "launcher", strLauncher )
           >> xml::attribute( "munition", strAmmunition );
-    ADN_Weapons_Data::WeaponInfos* pWeapon = ADN_Workspace::GetWorkspace().GetWeapons().GetData().FindWeapon( strLauncher, strAmmunition );
+    ADN_Weapons_Data_WeaponInfos* pWeapon = ADN_Workspace::GetWorkspace().GetWeapons().GetData().FindWeapon( strLauncher, strAmmunition );
     if( !pWeapon )
         throw MASA_EXCEPTION( tools::translate( "Equipments_Data",  "Equipment - Invalid weapon system '%1/%2'" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).toStdString() );
     ptrWeapon_ = pWeapon;
@@ -2069,7 +2069,7 @@ QStringList ADN_Equipments_Data::GetEquipmentsThatUse( ADN_Sensors_Data::SensorI
 // Name: ADN_Equipments_Data::GetEquipmentsThatUse
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-QStringList ADN_Equipments_Data::GetEquipmentsThatUse( ADN_Weapons_Data::WeaponInfos& weapon )
+QStringList ADN_Equipments_Data::GetEquipmentsThatUse( ADN_Weapons_Data_WeaponInfos& weapon )
 {
     QStringList result;
     for( IT_EquipmentInfos_Vector it = vEquipments_.begin(); it != vEquipments_.end(); ++it )

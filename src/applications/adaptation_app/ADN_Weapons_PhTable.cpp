@@ -18,7 +18,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Weapons_PhTable.h"
-#include "ADN_Weapons_Data.h"
+#include "ADN_Weapons_Data_PhInfos.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_PhTable constructor
@@ -90,7 +90,7 @@ void ADN_Weapons_PhTable::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 void ADN_Weapons_PhTable::AddRow( int row, void* data )
 {
-    ADN_Weapons_Data::PhInfos* infos = static_cast< ADN_Weapons_Data::PhInfos* >( data );
+    ADN_Weapons_Data_PhInfos* infos = static_cast< ADN_Weapons_Data_PhInfos* >( data );
     if( !infos )
         return;
     QStandardItem* item = AddItem( row, 0, data, &infos->nDistance_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
@@ -107,7 +107,7 @@ void ADN_Weapons_PhTable::dataChanged( const QModelIndex& topLeft, const QModelI
     ADN_Table::dataChanged( topLeft, bottomRight );
     if( topLeft == bottomRight )
     {
-        if( ADN_Weapons_Data::PhInfos* pCurPh = static_cast< ADN_Weapons_Data::PhInfos* >( GetSelectedData() ) )
+        if( ADN_Weapons_Data_PhInfos* pCurPh = static_cast< ADN_Weapons_Data_PhInfos* >( GetSelectedData() ) )
         {
             const QModelIndex index = topLeft.model()->index( topLeft.row(), 0 );
             const_cast< QAbstractItemModel* >( topLeft.model() )->setData( index, pCurPh->nDistance_.GetData(), Qt::UserRole ); // sort
@@ -122,7 +122,7 @@ void ADN_Weapons_PhTable::dataChanged( const QModelIndex& topLeft, const QModelI
 // -----------------------------------------------------------------------------
 void ADN_Weapons_PhTable::CreateNewElement()
 {
-    ADN_Weapons_Data::PhInfos* pNewInfo = new ADN_Weapons_Data::PhInfos();
+    ADN_Weapons_Data_PhInfos* pNewInfo = new ADN_Weapons_Data_PhInfos();
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( pNewInfo );
     pCTable->AddItem( 0 );
@@ -134,6 +134,6 @@ void ADN_Weapons_PhTable::CreateNewElement()
 // -----------------------------------------------------------------------------
 void ADN_Weapons_PhTable::DeleteCurrentElement()
 {
-    if( ADN_Weapons_Data::PhInfos* pCurPh = static_cast< ADN_Weapons_Data::PhInfos* >( GetSelectedData() ) )
+    if( ADN_Weapons_Data_PhInfos* pCurPh = static_cast< ADN_Weapons_Data_PhInfos* >( GetSelectedData() ) )
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurPh );
 }
