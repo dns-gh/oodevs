@@ -240,7 +240,7 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
                                 item->mutable_simulation_time()->set_data( simTime );
                                 item->mutable_real_time()->set_data( realTime );
                                 int size = msg.ByteSize();
-                                if( size > 512 * 1024 ) //512 MB
+                                if( size > 512 * 1024 ) //512 kB
                                 {
                                     msg.set_partial( true );
                                     return;
