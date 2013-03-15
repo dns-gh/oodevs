@@ -59,12 +59,9 @@ PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
     : Parameter< QString >( parameter )
     , converter_          ( converter )
 {
-    xml::list( boost::bind( &WalkPath, this, boost::ref( wayBackPath_ ), &PushFlowParameters::ReadPoint, _1, _2, _3 ) );
-    if( wayBackPath_.empty() )
-        return;
+    xis >> xml::list( boost::bind( &WalkPath, this, boost::ref( wayBackPath_ ), &PushFlowParameters::ReadPoint, _1, _2, _3 ) );
     xis >> xml::list( "recipient", *this, &PushFlowParameters::ReadRecipient, entityResolver, dotationTypeResolver )
         >> xml::list( "transporter", *this, &PushFlowParameters::ReadTransporter, equipmentTypeResolver );
-
 }
 
 // -----------------------------------------------------------------------------
