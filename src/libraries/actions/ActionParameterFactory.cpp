@@ -197,8 +197,8 @@ namespace
 {
     void ThrowUnexpected( const kernel::OrderParameter& expected, xml::xistream& xis )
     {
-        const std::string found = xis.attribute< std::string >( "name" );
-        throw MASA_EXCEPTION( tools::translate( "ActionParameterFactory", "Expecting '%1' found '%2'" ).arg( expected.GetName().c_str() ).arg( found.c_str() ).toStdString() );
+        const std::string found = xis.attribute< std::string >( "type" );
+        throw MASA_EXCEPTION( tools::translate( "ActionParameterFactory", "Expecting '%1' found '%2'" ).arg( expected.GetType().c_str() ).arg( found.c_str() ).toStdString() );
     }
 }
 
