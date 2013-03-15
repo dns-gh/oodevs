@@ -57,7 +57,7 @@ CoordinateSystemsPanel::~CoordinateSystemsPanel()
 void CoordinateSystemsPanel::Commit()
 {
     coordinateSystems_.SetDefault( static_cast< Projection >( listCoordSys_->currentItem() ) );
-    options_.Change( "CoordSystem", coordinateSystems_.GetDefault() );
+    options_.Change( "CoordSystem", static_cast< int >( coordinateSystems_.GetDefault() ) );
     previousCoordinateSystem_ = coordinateSystems_.GetDefault();
 }
 
