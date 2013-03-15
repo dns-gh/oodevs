@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE( TestSpawnCommand )
     tools::TemporaryDirectory tempDir( "launcher_test-", temp_directory );
 
     // Try to run some python command from the packaged python
-    bfs::path rootDir = tempDir.path() / "../../../..";
+    bfs::path rootDir = BOOST_RESOLVE( "../../.." ).ToBoost();
     bfs::path python = rootDir / "bin/python/python.exe";
     BOOST_REQUIRE( bfs::exists( python ));
 
