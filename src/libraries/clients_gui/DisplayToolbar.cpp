@@ -34,7 +34,7 @@ namespace
 DisplayToolbar::DisplayToolbar( QMainWindow* parent, kernel::Controllers& controllers )
     : RichToolBar( controllers, parent, "displaytoolbar", tools::translate( "gui::DisplayToolbar", "Display toolbar" ) )
 {
-    addWidget( new BooleanOptionButton( MAKE_ICON( threed ), tools::translate( "gui::DisplayToolbar", "3D" ), this, controllers.options_, "3D" ) );
+    addWidget( new BooleanOptionButton( MAKE_ICON( threed ), tools::translate( "gui::DisplayToolbar", "3D" ), this, controllers.options_, "3D", false ) );
     addWidget( new BooleanOptionButton( MakeIcon( "images/gui/fogofwar.png" ), tools::translate( "gui::DisplayToolbar", "Fog of war" ), this, controllers.options_, "FogOfWar" ) );
 
     // Raster

@@ -86,8 +86,6 @@ void GlSelector::Load()
     proxy_.ChangeTo( widget2d_ );
     proxy_.RegisterTo( widget2d_ );
     setCurrentWidget( widget2d_ );
-    b3d_ = false;
-    controllers_.options_.Change( "3D", b3d_ );
     controllers_.options_.Change( "MapDraggingType", static_cast <int> ( !bDragMapWithWheel_ ));
     connect( displayTimer_, SIGNAL(timeout()), widget2d_, SLOT(updateGL()) );
     displayTimer_->start( 50 );

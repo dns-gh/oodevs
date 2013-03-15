@@ -152,7 +152,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const Dialog
         menu->insertItem( tools::translate( "Menu", "Terrain..." ), subMenu );
         menu->insertSeparator();
 
-        gui::OptionMenu< bool >* boolMenu = new gui::OptionMenu< bool >( menu, controllers.options_, "3D" );
+        gui::OptionMenu< bool >* boolMenu = new gui::OptionMenu< bool >( menu, controllers.options_, "3D", false );
         boolMenu->AddItem( tools::translate( "Menu", "2D" ), false );
         boolMenu->AddItem( tools::translate( "Menu", "3D" ), true );
         menu->insertItem( MAKE_ICON( threed ), tools::translate( "Menu", "Display mode" ), boolMenu );

@@ -18,11 +18,13 @@ using namespace gui;
 // Name: BooleanOptionButton constructor
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-BooleanOptionButton::BooleanOptionButton( const QIcon& iconSet, const QString& toolTip, QWidget* parent, kernel::Options& options, const std::string& option)
+BooleanOptionButton::BooleanOptionButton( const QIcon& iconSet, const QString& toolTip, QWidget* parent, kernel::Options& options,
+                                          const std::string& option, bool savable )
     : QToolButton( parent )
     , options_( options )
     , option_( option )
     , toolTip_( toolTip )
+    , savable_( savable )
 {
     setIconSet( iconSet );
     QToolTip::add( this, toolTip_ );
@@ -46,7 +48,7 @@ BooleanOptionButton::~BooleanOptionButton()
 // -----------------------------------------------------------------------------
 void BooleanOptionButton::OnToggled( bool on )
 {
-    options_.Change( option_, on );
+    options_.Change( option_, on, savable_ );
 }
 
 // -----------------------------------------------------------------------------
