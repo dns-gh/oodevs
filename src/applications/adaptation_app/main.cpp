@@ -13,6 +13,7 @@
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Version.h"
 #include "tools/Version.h"
+#include "tools/WinArguments.h"
 
 static const std::string szADN_Version   = "ADN - " + std::string( tools::AppProjectVersion() ) + " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
 
@@ -42,8 +43,11 @@ namespace
     }
 }
 
-int main( int argc, char** argv )
+int main( int, char** )
 {
+    tools::WinArguments winArgs( GetCommandLineW() );
+    int argc = winArgs.Argc();
+    char** argv = const_cast< char** >( winArgs.Argv() );
     gui::ApplicationMonitor monitor( argc, argv );
 
 #ifdef _DEBUG

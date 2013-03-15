@@ -9,6 +9,7 @@
 
 #include <tools/Exception.h>
 #include "tools/Path.h"
+#include "tools/WinArguments.h"
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
@@ -42,16 +43,17 @@ namespace
     }
 }
 
-int main( int argc, char* argv[] )
+int main( int , char** )
 {
     try
     {
+        tools::WinArguments winArgs( GetCommandLineW() );
         SetDirectory();
         std::string package;
         po::options_description options;
         po::variables_map values;
         options.add_options()( "install", po::value< std::string >( &package ), "package to install" );
-        po::store( po::command_line_parser( argc, argv ).options( options ).run(), values );
+        po::store( po::command_line_parser( winArgs.Argc(), winArgs.Argv() ).options( options ).run(), values );
         po::notify( values );
         if( values.count( "install" ) )
         {

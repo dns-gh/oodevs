@@ -17,7 +17,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include <boost/scoped_ptr.hpp>
 
-int main( int argc, char** argv )
+int appMain( int argc, char** argv )
 {
     gui::ApplicationMonitor monitor( argc, argv );
     try
@@ -43,7 +43,7 @@ int mainWrapper( int argc, char** argv )
 {
     __try
     {
-        return main( argc, argv );
+        return appMain( argc, argv );
     }
     __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
     {
@@ -53,9 +53,9 @@ int mainWrapper( int argc, char** argv )
 
 }  // namespace
 
-int WINAPI wWinMain( HINSTANCE /* hinstance */, HINSTANCE /* hPrevInstance */, LPWSTR lpCmdLine, int /* nCmdShow */ )
+int main( int, char** )
 {
-    tools::WinArguments winArgs( lpCmdLine ) ;
+    tools::WinArguments winArgs( GetCommandLineW() ) ;
     tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir" ) );
     boost::scoped_ptr< MT_FileLogger > logger;
     if( !debugDir.IsEmpty() )
@@ -63,12 +63,12 @@ int WINAPI wWinMain( HINSTANCE /* hinstance */, HINSTANCE /* hPrevInstance */, L
         debugDir.CreateDirectories();
         boost::scoped_ptr< MT_FileLogger >( new MT_FileLogger(
             debugDir / "preparation.log", 1, -1,
-            MT_Logger_ABC::eLogLevel_All )).swap( logger );
+            MT_Logger_ABC::eLogLevel_All ) ).swap( logger );
         MT_LOG_REGISTER_LOGGER( *logger );
         MT_CrashHandler::SetRootDirectory( debugDir );
     }
 
-    int ret = mainWrapper( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ));
+    int ret = mainWrapper( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
     if( logger )
         MT_LOG_UNREGISTER_LOGGER( *logger );
     return ret;
