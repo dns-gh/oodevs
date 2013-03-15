@@ -71,9 +71,22 @@ bool WinArguments::HasOption( const std::string& name ) const
 // -----------------------------------------------------------------------------
 std::string WinArguments::GetOption( const std::string& name, const std::string& defaultValue /* = "" */ )
 {
-    auto it = std::find( argv_.begin(), argv_.end(), name );
-    if( it != argv_.end() )
-        if( ++it != argv_.end() )
-            return *it;
+    for( auto arg = argv_.begin() + 1; arg != argv_.end(); ++arg )
+    {
+        if( arg->find(name) != 0 )
+            continue;
+        if( arg->size() == name.size() )
+        {
+            // "--foo bar" form
+            if( (arg + 1) != argv_.end() )
+                return *(arg + 1);
+        }
+        else
+        {
+            // "--foo=bar" form
+            if( (*arg)[name.size()] == '=' )
+                return arg->substr(name.size() + 1 );
+        }
+    }
     return defaultValue;
 }
