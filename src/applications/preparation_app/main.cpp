@@ -17,27 +17,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include <boost/scoped_ptr.hpp>
 
-namespace
-{
-
-bool GetOption( const tools::WinArguments& args, const std::string& name,
-        std::string& value )
-{
-    const std::string n = name + "=";
-    for( int i = 1; i < args.Argc(); ++i )
-    {
-        const std::string arg = args.Argv()[i];
-        if( arg.find( n ) == 0 )
-        {
-            value = arg.substr( n.size() );
-            return true;
-        }
-    }
-    return false;
-}
-
-}  // namespace
-
 int main( int argc, char** argv )
 {
     gui::ApplicationMonitor monitor( argc, argv );
