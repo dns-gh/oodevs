@@ -13,6 +13,8 @@
 #include "tools/GeneralConfig.h"
 #include <windows.h>
 #include <tlhelp32.h>
+#include "MT_Tools/MT_Logger.h"
+#include <tools/EncodingConverter.h>
 
 using namespace frontend;
 
@@ -31,7 +33,7 @@ SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const tools::Pat
     : config_                   ( config )
     , internal_                 ( new InternalData() )
     , attach_                   ( attach )
-    , workingDirectory_         ( "." )
+    , workingDirectory_         ()
     , stopped_                  ( false )
     , networkCommanderEndpoint_ ( commanderEndpoint )
     , jobName_                  ( jobName )
@@ -84,30 +86,36 @@ void SpawnCommand::AddSessionArgument( const tools::Path& session )
 // -----------------------------------------------------------------------------
 void SpawnCommand::Start()
 {
-    STARTUPINFO startupInfo = { sizeof( STARTUPINFOA ), 0, 0, 0,
-        (ulong)CW_USEDEFAULT, (ulong)CW_USEDEFAULT, (ulong)CW_USEDEFAULT, (ulong)CW_USEDEFAULT,
-        0, 0, 0,
-        0,
-        0, 0, 0,
-        0, 0, 0
-    };
-    LPSTARTUPINFOW wStartupInfo = (LPSTARTUPINFOW) &startupInfo; 
+    STARTUPINFOW startupInfo;
+    memset( &startupInfo, 0, sizeof( startupInfo ));
+    startupInfo.cb = sizeof( STARTUPINFOW );
+    startupInfo.dwX = (DWORD)CW_USEDEFAULT;
+    startupInfo.dwY = (DWORD)CW_USEDEFAULT;
+    startupInfo.dwXSize = (DWORD)CW_USEDEFAULT;
+    startupInfo.dwYSize = (DWORD)CW_USEDEFAULT;
 
-    std::string debug( commandLine_.toStdString() ) ;
-    LPWSTR commandLine = (LPWSTR)commandLine_.toStdWString().c_str();
+    // CreateProcessW() can modify the input command line buffer
+    std::wstring cmd = commandLine_.toStdWString();
+    std::vector< wchar_t > buffer( cmd.size() + 1);
+    *std::copy( cmd.begin(), cmd.end(), buffer.begin() ) = '\0';
     if( !CreateProcessW( 0,                                     // lpApplicationName
-                         commandLine,                           // lpCommandLine
+                         &buffer[0],                            // lpCommandLine
                          0,                                     // lpProcessAttributes
                          0,                                     // lpThreadAttributes
                          TRUE,                                  // bInheritHandles
                          CREATE_NEW_CONSOLE,                    // dwCreationFlags
                          0,                                     // lpEnvironment
-                         workingDirectory_.ToUnicode().c_str(), // lpCurrentDirectory
-                         wStartupInfo,                          // lpStartupInfo
+                         !workingDirectory_.IsEmpty()           // lpCurrentDirectory
+                            ? workingDirectory_.ToUnicode().c_str()
+                            : NULL,
+                         &startupInfo,                          // lpStartupInfo
                          &internal_->pid_) )                    // lpProcessInformation
     {
         DWORD errCode = GetLastError();
-        throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" ).arg( debug.c_str() ).arg( errCode ).toStdString().c_str() );
+        throw MASA_EXCEPTION(
+            tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" )
+                .arg( tools::EscapeNonAscii( cmd ).c_str())
+                .arg( errCode ).toStdString().c_str() );
     }
 
     if ( HANDLE jobObject = OpenJobObject( JOB_OBJECT_ALL_ACCESS, TRUE, jobName_.c_str() ) )
