@@ -13,6 +13,9 @@
 #include "Process_ABC.h"
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/noncopyable.hpp>
+#pragma warning( push, 0 )
+#include <QtCore/qstring.h>
+#pragma warning( pop )
 
 namespace tools
 {

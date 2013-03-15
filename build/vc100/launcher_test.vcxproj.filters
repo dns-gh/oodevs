@@ -19,6 +19,9 @@
     <ClCompile Include="..\..\src\tests\launcher_test\ServiceTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\launcher_test\SpawnCommandTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\launcher_test\launcher_test_pch.h">

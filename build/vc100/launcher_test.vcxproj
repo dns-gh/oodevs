@@ -144,6 +144,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\tests\launcher_test\OptionTest.cpp" />
     <ClCompile Include="..\..\src\tests\launcher_test\ServiceTest.cpp" />
+    <ClCompile Include="..\..\src\tests\launcher_test\SpawnCommandTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\launcher_test\launcher_test_pch.h" />
