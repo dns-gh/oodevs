@@ -43,6 +43,7 @@ public:
     void RenderPicking( const GlTools_ABC::T_ObjectPicking& object, boost::function< void( float, float, float, float ) > setCurrentColor );
     bool IsPickingMode() const;
     bool ShouldDisplay( E_LayerTypes type ) const;
+    QColor GetColor() const;
     //@}
 
 private:
@@ -65,6 +66,7 @@ private:
     std::set< E_LayerTypes > pickingLayers_;
     T_RenderObjects renderObjects_;
     GlTools_ABC::T_ObjectsPicking pickObjects_;
+    QColor color_;
     //@}
 };
 

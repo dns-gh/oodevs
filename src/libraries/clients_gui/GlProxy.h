@@ -104,6 +104,7 @@ public:
     virtual void Picking();
     virtual void RenderPicking( const T_ObjectPicking& object );
     virtual bool IsPickingMode() const;
+    virtual QColor GetPickingColor() const;
     //@}
 
 private:

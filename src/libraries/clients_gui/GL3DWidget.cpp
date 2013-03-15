@@ -827,6 +827,15 @@ bool Gl3dWidget::ShouldDisplay( E_LayerTypes type ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GL3DWidget::GetPickingColor
+// Created: LGY 2013-03-15
+// -----------------------------------------------------------------------------
+QColor Gl3dWidget::GetPickingColor() const
+{
+    return pPickingSelector_->GetColor();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::OptionChanged
 // Created: MMC 2013-03-12
 // -----------------------------------------------------------------------------

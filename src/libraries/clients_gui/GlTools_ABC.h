@@ -79,6 +79,7 @@ public:
     virtual void Picking() = 0;
     virtual void RenderPicking( const T_ObjectPicking& object ) = 0;
     virtual bool IsPickingMode() const = 0;
+    virtual QColor GetPickingColor() const = 0;
     //@}
 
     //! @name Accessors

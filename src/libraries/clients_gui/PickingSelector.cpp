@@ -85,8 +85,18 @@ void PickingSelector::RenderPicking( const GlTools_ABC::T_ObjectPicking& object,
     int red = std::rand() % 256;
     int green = std::rand() % 256;
     int blue = std::rand() % 256;
+    color_ = QColor( red, green, blue );
     setCurrentColor( red / 255.f, green / 255.f, blue / 255.f, 1.f );
     renderObjects_.push_back( std::make_tuple( red, green, blue, object ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PickingSelector::GetColor
+// Created: LGY 2013-03-15
+// -----------------------------------------------------------------------------
+QColor PickingSelector::GetColor() const
+{
+    return color_;
 }
 
 // -----------------------------------------------------------------------------

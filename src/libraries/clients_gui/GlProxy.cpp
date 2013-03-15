@@ -544,3 +544,12 @@ float GlProxy::LineWidth( float base ) const
 {
     return tools_->LineWidth( base );
 }
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::GetPickingColor
+// Created: LGY 2013-03-15
+// -----------------------------------------------------------------------------
+QColor GlProxy::GetPickingColor() const
+{
+    return tools_->GetPickingColor();
+}

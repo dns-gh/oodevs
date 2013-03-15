@@ -1062,6 +1062,15 @@ void GlWidget::RenderPicking( const T_ObjectPicking& object )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GLWidget::GetPickingColor
+// Created: LGY 2013-03-15
+// -----------------------------------------------------------------------------
+QColor GlWidget::GetPickingColor() const
+{
+    return pPickingSelector_->GetColor();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::wheelEvent
 // Created: ABR 2013-02-21
 // -----------------------------------------------------------------------------

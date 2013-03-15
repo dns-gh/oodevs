@@ -169,7 +169,7 @@ void DrawerShape::Translate( const geometry::Point2f& from, const geometry::Vect
 // -----------------------------------------------------------------------------
 void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool overlined ) const
 {
-    drawer_->Draw( location_, viewport, tools, color_, overlined, tools.GetAdaptiveZoomFactor() );
+    drawer_->Draw( location_, viewport, tools, tools.IsPickingMode() ? tools.GetPickingColor() : color_, overlined, tools.GetAdaptiveZoomFactor() );
 }
 
 // -----------------------------------------------------------------------------

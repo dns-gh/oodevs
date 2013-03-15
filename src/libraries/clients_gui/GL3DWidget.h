@@ -99,6 +99,7 @@ public:
     virtual void RenderPicking( const T_ObjectPicking& object );
     virtual bool IsPickingMode() const;
     virtual bool ShouldDisplay( E_LayerTypes type ) const;
+    virtual QColor GetPickingColor() const;
 
     virtual void resizeGL( int w, int h );
     virtual void paintGL();

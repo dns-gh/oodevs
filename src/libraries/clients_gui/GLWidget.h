@@ -101,6 +101,7 @@ public:
     virtual void RenderPicking( const T_ObjectPicking& object );
     virtual bool IsPickingMode() const;
     virtual bool ShouldDisplay( E_LayerTypes type ) const;
+    virtual QColor GetPickingColor() const;
 
     virtual void CenterOn( const geometry::Point2f& point );
     virtual void Zoom( float width );
