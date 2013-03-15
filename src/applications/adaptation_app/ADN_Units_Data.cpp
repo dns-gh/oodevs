@@ -684,10 +684,11 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
 {
+    const std::string decisionalModel = ptrModel_.GetData() == 0 ? "" : ptrModel_.GetData()->strName_.GetData();
     output << xml::start( "unit" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "type", eTypeId_.Convert() )
-            << xml::attribute( "decisional-model", ptrModel_.GetData()->strName_ )
+            << xml::attribute( "decisional-model", decisionalModel )
             << xml::attribute( "id", nId_ );
 
     output << xml::start( "nature" )
