@@ -84,6 +84,7 @@ namespace
         virtual void RenderPicking( const T_ObjectPicking& ) {};
         virtual bool IsPickingMode() const { return false; };
         virtual void Picking() {};
+        virtual QColor GetPickingColor() const { return QColor() ; }
         //@}
     };
 }
