@@ -1009,20 +1009,19 @@ namespace
 {
     typedef std::vector< ClientToSim_Content > T_Content;
 
-    void ReadAction( size_t& count, xml::xistream& xis )
+    void ReadAction( size_t& count, xml::xostream& xos, xml::xistream& xis )
     {
         ClientToSim_Content msg;
         {
             MockReader reader;
             MOCK_EXPECT( reader.Convert ).returns( dummy );
-            MOCK_EXPECT( reader.Resolve ).returns( Reader_ABC::UNIT );
+            MOCK_EXPECT( reader.Resolve ).returns( Reader_ABC::AUTOMAT );
             Read( reader, msg, xis );
         }
         {
             MockWriter writer;
             MOCK_EXPECT( writer.Convert ).returns( "fixme" );
-            xml::xostringstream xos;
-            Write( xos << xml::start( "actions" ), writer, msg );
+            Write( xml::xosubstream( xos ) << xml::start( "action" ), writer, msg );
         }
         ++count;
     }
@@ -1030,10 +1029,13 @@ namespace
 
 BOOST_AUTO_TEST_CASE( read_aurige_orders )
 {
-    tools::Xifstream xis( BOOST_RESOLVE( "aurige.ord" ) );
+    const std::string input = "orders.ord";
+    tools::Xifstream xis( BOOST_RESOLVE( input ) );
+    tools::Xofstream xos( BOOST_RESOLVE( input + ".clone" ) );
     xis >> xml::start( "actions" );
+    xos << xml::start( "actions" );
     size_t count = 0;
-    xis >> xml::list( "action", boost::bind( &ReadAction, boost::ref( count ), _1 ) );
-    BOOST_CHECK_EQUAL( count, 14795u );
+    xis >> xml::list( "action", boost::bind( &ReadAction, boost::ref( count ), boost::ref( xos ), _1 ) );
+    BOOST_CHECK_EQUAL( count, 5u );
 }
 #endif
