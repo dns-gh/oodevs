@@ -253,6 +253,7 @@ BOOST_AUTO_TEST_CASE( test_path_file_operations )
     BOOST_CHECK_EQUAL( file2.Exists(), false );
 
     BOOST_CHECK_EQUAL( dir1.Exists(), false );
+    BOOST_CHECK_EQUAL( dir1.IsDirectory(), false );
     dir1.CreateDirectories();
     BOOST_CHECK_EQUAL( dir1.Exists(), true );
     BOOST_CHECK_EQUAL( dir1.IsDirectory(), true );
@@ -295,6 +296,26 @@ BOOST_AUTO_TEST_CASE( test_path_iterator )
         const std::wstring baseName = path.BaseName().ToUnicode();
         BOOST_CHECK_EQUAL( baseName.find( L"test" ) != std::wstring::npos, true );
     }
+}
+
+
+namespace
+{
+
+bool DummyFunctor( const tools::Path& )
+{
+    return false;
+}
+
+} // namespace
+
+BOOST_AUTO_TEST_CASE( test_path_apply )
+{
+    tools::TemporaryDirectory dir( "pathtest-", temp_directory );
+    tools::Path subdir = tools::Path::FromUnicode( (dir.path() / "subdir").wstring() );
+    // This used to throw on missing directories
+    subdir.Apply( DummyFunctor, false );
+    subdir.Apply( DummyFunctor, true );
 }
 
 // -----------------------------------------------------------------------------

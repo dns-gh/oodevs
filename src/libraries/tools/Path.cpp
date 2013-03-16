@@ -304,19 +304,22 @@ bool Path::CreateDirectories() const
 // -----------------------------------------------------------------------------
 bool Path::Apply( const T_Functor& functor, bool recursive /* = true */ ) const
 {
-    if( recursive )
+    if( IsDirectory() )
     {
-        boost::filesystem::recursive_directory_iterator endIt;
-        for( boost::filesystem::recursive_directory_iterator it( path_ ); it != endIt; ++it )
-            if( functor( Path( it->path() ) ) )
-                return true;
-    }
-    else
-    {
-        boost::filesystem::directory_iterator endIt;
-        for( boost::filesystem::directory_iterator it( path_ ); it != endIt; ++it )
-            if( functor( Path( it->path() ) ) )
-                return true;
+        if( recursive )
+        {
+            bfs::recursive_directory_iterator endIt;
+            for( bfs::recursive_directory_iterator it( path_ ); it != endIt; ++it )
+                if( functor( Path( it->path() ) ) )
+                    return true;
+        }
+        else
+        {
+            bfs::directory_iterator endIt;
+            for( bfs::directory_iterator it( path_ ); it != endIt; ++it )
+                if( functor( Path( it->path() ) ) )
+                    return true;
+        }
     }
     return false;
 }
