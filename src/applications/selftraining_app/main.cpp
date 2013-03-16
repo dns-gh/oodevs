@@ -56,6 +56,16 @@ int mainWrapper( int argc, char** argv )
 int main( int, char** )
 {
     tools::WinArguments winArgs( GetCommandLineW() ) ;
+
+    // Change the current working directory, useful when combined with
+    // --install and called by a registry key file type bindings. For deployed
+    // applications, the expected cwd is almost always the parent applications
+    // directory, but the option can also be used with development versions
+    // from shell-impaired operating systems.
+    tools::Path cwd = tools::Path::FromUTF8( winArgs.GetOption( "--cwd" ));
+    if( !cwd.IsEmpty() && cwd.Exists() )
+        boost::filesystem::current_path( cwd.ToBoost() );
+
     tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir" ) );
     boost::scoped_ptr< MT_FileLogger > logger;
     if( !debugDir.IsEmpty() )

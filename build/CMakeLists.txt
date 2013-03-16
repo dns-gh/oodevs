@@ -663,16 +663,6 @@ target_link_libraries( adaptation_app
 add_target( loadtester_app clients "applications/loadtester_app" OPTIONS protocol executable )
 target_link_libraries( loadtester_app sword_tools )
 
-# package_app
-add_target( package_app clients "applications/package_app" OPTIONS executable )
-target_link_libraries( package_app
-    ${TOOLS_LIBRARIES}
-    ${XERCES_LIBRARIES}
-    ${PROTOBUF_LIBRARIES}
-    sword_tools
-    mt_tools
-)
-
 # clients_test
 add_target( clients_test tests "tests/clients_test" OPTIONS qt3 qt test )
 target_link_libraries( clients_test preparation )

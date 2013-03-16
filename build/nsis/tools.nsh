@@ -278,7 +278,7 @@
     WriteRegStr HKCR ".otpak" "" "Officer Training Package"
     WriteRegStr HKCR "Officer Training Package\shell" "" "open"
     WriteRegStr HKCR "Officer Training Package\DefaultIcon" "" "$INSTDIR\applications\sword-ot.ico"
-    WriteRegStr HKCR "Officer Training Package\shell\open\command" "" '$INSTDIR\applications\package_app.exe --install="%1"'
+    WriteRegStr HKCR "Officer Training Package\shell\open\command" "" '"$INSTDIR\applications\selftraining_app.exe" --cwd "$INSTDIR\applications" --install="%1"'
 
 !macroend
 
@@ -341,7 +341,6 @@
     !insertmacro OT._KillRunning "dispatcher_app.exe" ${AbortMessage}
     !insertmacro OT._KillRunning "gaming_app.exe" ${AbortMessage}
     !insertmacro OT._KillRunning "launcher_app.exe" ${AbortMessage}
-    !insertmacro OT._KillRunning "package_app.exe" ${AbortMessage}
     !insertmacro OT._KillRunning "preparation_app.exe" ${AbortMessage}
     !insertmacro OT._KillRunning "replayer_app.exe" ${AbortMessage}
     !insertmacro OT._KillRunning "simulation_app.exe" ${AbortMessage}
