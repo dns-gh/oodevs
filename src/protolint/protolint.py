@@ -396,6 +396,22 @@ def cmdcompare(ui, args):
                 [], matcher)
     return ret
 
+def cmdlist(ui, args):
+    parser = optparse.OptionParser(usage='list DIR')
+    opts, args = parser.parse_args(args)
+
+    protodir, = args
+    modules = parsemodules(ui, protodir)
+    names = []
+    for module in modules:
+        for nm, m in module.messages.iteritems():
+            if nm not in _roottypes or 'Content' not in m.messages:
+                continue
+            for mm in m.messages['Content'].fields.values():
+                names.append('.'.join([module.name, nm, mm.type]))
+    for n in sorted(names):
+        ui.write('%s\n' % n)
+
 if __name__ == '__main__':
     if len(sys.argv) < 2:
         parser.writeerr('mapproto: at least 2 arguments expected')
@@ -405,9 +421,10 @@ if __name__ == '__main__':
     cmds = {
         'check': cmdcheck,
         'compare': cmdcompare,
-        'todo': cmdtodo,
+        'list': cmdlist,
         'naming': cmdnaming,
         'style': cmdstyle,
+        'todo': cmdtodo,
         }
     ui = Ui()
     if cmd not in cmds:
