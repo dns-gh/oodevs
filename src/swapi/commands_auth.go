@@ -18,6 +18,26 @@ var (
 	ErrInvalidLogin = errors.New("invalid login")
 )
 
+type authHandler func(msg *sword.AuthenticationToClient_Content,
+	context int32, err error, quit chan error) bool
+
+func (c *Client) postAuthRequest(msg SwordMessage, handler authHandler,
+	quit chan error) int32 {
+	wrapper := func(msg *SwordMessage, context int32, err error) bool {
+		if err != nil {
+			quit <- err
+			return true
+		}
+		if msg.AuthenticationToClient == nil ||
+			msg.AuthenticationToClient.GetMessage() == nil ||
+			msg.Context != context {
+			return false
+		}
+		return handler(msg.AuthenticationToClient.GetMessage(), context, err, quit)
+	}
+	return c.Post(msg, wrapper)
+}
+
 func (c *Client) LoginWithVersion(username, password, version string) error {
 	msg := SwordMessage{
 		ClientToAuthentication: &sword.ClientToAuthentication{
@@ -32,17 +52,11 @@ func (c *Client) LoginWithVersion(username, password, version string) error {
 			},
 		},
 	}
-	quit := make(chan error)
-	handler := func(msg *SwordMessage, context int32, err error) bool {
-		if err != nil {
-			quit <- err
-			return true
-		}
-		if msg.AuthenticationToClient == nil || msg.Context != context {
-			return false
-		}
+	handler := func(msg *sword.AuthenticationToClient_Content, context int32,
+		err error, quit chan error) bool {
+
 		// we cannot check context as sword always set it to 0
-		reply := msg.AuthenticationToClient.GetMessage().GetAuthenticationResponse()
+		reply := msg.GetAuthenticationResponse()
 		if reply == nil {
 			return false
 		}
@@ -59,7 +73,8 @@ func (c *Client) LoginWithVersion(username, password, version string) error {
 		quit <- err
 		return true
 	}
-	c.Post(msg, handler)
+	quit := make(chan error)
+	c.postAuthRequest(msg, handler, quit)
 	err := <-quit
 	return err
 }
@@ -83,16 +98,10 @@ func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 		},
 	}
 	profiles := []*Profile{}
-	quit := make(chan error)
-	handler := func(msg *SwordMessage, context int32, err error) bool {
-		if err != nil {
-			quit <- err
-			return true
-		}
-		if msg.AuthenticationToClient == nil || msg.Context != context {
-			return false
-		}
-		reply := msg.AuthenticationToClient.GetMessage().GetConnectedProfileList()
+	handler := func(msg *sword.AuthenticationToClient_Content, context int32,
+		err error, quit chan error) bool {
+
+		reply := msg.GetConnectedProfileList()
 		if reply == nil {
 			return false
 		}
@@ -107,7 +116,8 @@ func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 		quit <- err
 		return true
 	}
-	c.Post(msg, handler)
+	quit := make(chan error)
+	c.postAuthRequest(msg, handler, quit)
 	err := <-quit
 	return profiles, err
 }
