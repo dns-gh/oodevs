@@ -42,6 +42,9 @@ namespace plugins
 {
 namespace rights
 {
+
+class AuthenticationSender;
+
 // =============================================================================
 /** @class  RightsPlugin
     @brief  RightsPlugin
@@ -82,11 +85,11 @@ private:
     //! @name Helpers
     //@{
     void OnReceive( const std::string& link, const sword::ClientToAuthentication& message );
-    void OnReceiveMsgAuthenticationRequest( const std::string& link, const sword::AuthenticationRequest& message, unsigned int ctx );
-    void OnReceiveProfileCreationRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileCreationRequest& message );
-    void OnReceiveProfileUpdateRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileUpdateRequest& message, unsigned int context );
-    void OnReceiveProfileDestructionRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileDestructionRequest& message );
-    void OnReceiveConnectedProfilesRequest( dispatcher::ClientPublisher_ABC& client, int context, const sword::ConnectedProfilesRequest& message );
+    void OnReceiveMsgAuthenticationRequest( const std::string& link, const sword::AuthenticationRequest& message, AuthenticationSender& sender );
+    void OnReceiveProfileCreationRequest(const sword::ProfileCreationRequest& message, AuthenticationSender& sender );
+    void OnReceiveProfileUpdateRequest(const sword::ProfileUpdateRequest& message, AuthenticationSender& sender );
+    void OnReceiveProfileDestructionRequest(const sword::ProfileDestructionRequest& message, AuthenticationSender& sender );
+    void OnReceiveConnectedProfilesRequest(const sword::ConnectedProfilesRequest& message, AuthenticationSender& sender );
 
     bool IsAuthenticated( const std::string& login ) const;
     //@}
@@ -102,7 +105,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    void SendProfiles( unsigned int ctx ) const;
+    void SendProfiles( AuthenticationSender& sender ) const;
     //@}
 
 private:
