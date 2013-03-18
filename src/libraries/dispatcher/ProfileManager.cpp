@@ -245,8 +245,8 @@ sword::ProfileCreationRequestAck_ErrorCode ProfileManager::Create( const sword::
 // -----------------------------------------------------------------------------
 sword::ProfileUpdateRequestAck_ErrorCode ProfileManager::Update( const sword::ProfileUpdateRequest& message )
 {
-    Profile*& pProfile = profiles_[ message.login() ];
-    if( !pProfile )
+    auto it = profiles_.find( message.login() );
+    if( it == profiles_.end() )
         return sword::ProfileUpdateRequestAck::invalid_profile;
     const std::string newLogin = message.profile().login();
     if( newLogin.empty() )
@@ -254,6 +254,7 @@ sword::ProfileUpdateRequestAck_ErrorCode ProfileManager::Update( const sword::Pr
     if( newLogin != message.login() && profiles_.find( newLogin ) != profiles_.end() )
         return sword::ProfileUpdateRequestAck::duplicate_login;
     // $$$$ SBO 2007-01-22: check password id needed
+    Profile* pProfile = it->second;
     pProfile->Update( message );
     if( newLogin != message.login() )
     {
