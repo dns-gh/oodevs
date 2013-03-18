@@ -145,3 +145,39 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 		*/
 	}
 }
+
+func (s *TestSuite) TestListConnectedProfiles(c *C) {
+
+	checkProfile := func(p *swapi.Profile, login string, supervisor bool) {
+		c.Assert(p.Login, Equals, login)
+		c.Assert(p.Password, Equals, "")
+		c.Assert(p.Supervisor, Equals, supervisor)
+	}
+
+	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
+	defer sim.Stop()
+
+	// Can I get a list before being connected?
+	client := ConnectClient(c, sim)
+	err := client.Login("admin", "")
+	c.Assert(err, IsNil)
+	defer client.Close() // need to release a connection for graceful Stop()
+
+	client2 := ConnectClient(c, sim)
+	err = client2.Login("user1", "user1")
+	c.Assert(err, IsNil)
+
+	// Admin can get itself
+	profiles, err := client.ListConnectedProfiles()
+	c.Assert(err, IsNil)
+	c.Assert(len(profiles), Equals, 2)
+	checkProfile(profiles[0], "admin", true)
+	checkProfile(profiles[1], "user1", false)
+
+	// Regular use can get admin?
+	profiles, err = client2.ListConnectedProfiles()
+	c.Assert(err, IsNil)
+	c.Assert(len(profiles), Equals, 2)
+	checkProfile(profiles[0], "admin", true)
+	checkProfile(profiles[1], "user1", false)
+}

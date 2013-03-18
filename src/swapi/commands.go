@@ -69,6 +69,51 @@ func (c *Client) Login(username, password string) error {
 	return c.LoginWithVersion(username, password, "5.0")
 }
 
+type Profile struct {
+	Login      string
+	Password   string
+	Supervisor bool
+}
+
+func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
+	msg := SwordMessage{
+		ClientToAuthentication: &sword.ClientToAuthentication{
+			Message: &sword.ClientToAuthentication_Content{
+				ConnectedProfilesRequest: &sword.ConnectedProfilesRequest{},
+			},
+		},
+	}
+	profiles := []*Profile{}
+	quit := make(chan error)
+	handler := func(msg *SwordMessage, context int32, err error) bool {
+		if err != nil {
+			quit <- err
+			return true
+		}
+		if msg.AuthenticationToClient == nil {
+			return false
+		}
+		// we cannot check context as sword always set it to 0
+		reply := msg.AuthenticationToClient.GetMessage().GetConnectedProfileList()
+		if reply == nil {
+			return false
+		}
+		for _, p := range reply.GetElem() {
+			profile := Profile{
+				Login:      p.GetLogin(),
+				Password:   p.GetPassword(),
+				Supervisor: p.GetSupervisor(),
+			}
+			profiles = append(profiles, &profile)
+		}
+		quit <- err
+		return true
+	}
+	c.Post(msg, handler)
+	err := <-quit
+	return profiles, err
+}
+
 func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
 	// Wait for the final UnitMagicActionAck
 	code := msg.GetErrorCode()
