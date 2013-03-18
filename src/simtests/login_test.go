@@ -121,21 +121,20 @@ func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	}
 }
 
-func (s *TestSuite) TestListConnectedProfiles(c *C) {
+func connectAndWait(c *C, sim *simu.SimProcess, user, password string) *swapi.Client {
+	client := ConnectClient(c, sim)
+	err := client.Login(user, password)
+	c.Assert(err, IsNil)
+	ok := client.Model.WaitReady(10 * time.Second)
+	c.Assert(ok, Equals, true)
+	return client
+}
 
+func (s *TestSuite) TestListConnectedProfiles(c *C) {
 	checkProfile := func(p *swapi.Profile, login string, supervisor bool) {
 		c.Assert(p.Login, Equals, login)
 		c.Assert(p.Password, Equals, "")
 		c.Assert(p.Supervisor, Equals, supervisor)
-	}
-
-	connect := func(sim *simu.SimProcess, user, password string) *swapi.Client {
-		client := ConnectClient(c, sim)
-		err := client.Login(user, password)
-		c.Assert(err, IsNil)
-		ok := client.Model.WaitReady(10 * time.Second)
-		c.Assert(ok, Equals, true)
-		return client
 	}
 
 	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
@@ -145,9 +144,9 @@ func (s *TestSuite) TestListConnectedProfiles(c *C) {
 	// without proper 'context' can confuse the command callback and make it
 	// think it actually did something. Instead, wait for the model to be
 	// initialized so all this noise is behind us.
-	client := connect(sim, "admin", "")
+	client := connectAndWait(c, sim, "admin", "")
 	defer client.Close() // need to release a connection for graceful Stop()
-	client2 := connect(sim, "user1", "user1")
+	client2 := connectAndWait(c, sim, "user1", "user1")
 
 	// Admin can get itself
 	profiles, err := client.ListConnectedProfiles()
@@ -162,4 +161,57 @@ func (s *TestSuite) TestListConnectedProfiles(c *C) {
 	c.Assert(len(profiles), Equals, 2)
 	checkProfile(profiles[0], "admin", true)
 	checkProfile(profiles[1], "user1", false)
+}
+
+func (s *TestSuite) TestProfileEditing(c *C) {
+	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
+	defer sim.Stop()
+
+	userProfile := &swapi.Profile{
+		Login:      "userprofile",
+		Password:   "",
+		Supervisor: false,
+	}
+	adminProfile := &swapi.Profile{
+		Login:      "adminprofile",
+		Password:   "adminpassword",
+		Supervisor: true,
+	}
+	emptyLoginProfile := &swapi.Profile{
+		Login:      "",
+		Password:   "adminpassword",
+		Supervisor: false,
+	}
+
+	// A regular user cannot do anything
+	user := connectAndWait(c, sim, "user1", "user1")
+	_, err := user.CreateProfile(userProfile)
+	c.Assert(err, ErrorMatches, "forbidden")
+	user.Close()
+
+	// An admin can create regular users
+	admin := connectAndWait(c, sim, "admin", "")
+	login, err := admin.CreateProfile(userProfile)
+	c.Assert(err, IsNil)
+	c.Assert(login, Equals, userProfile.Login)
+
+	// And supervisor as well
+	login, err = admin.CreateProfile(adminProfile)
+	c.Assert(err, IsNil)
+	c.Assert(login, Equals, adminProfile.Login)
+
+	// Test empty login
+	login, err = admin.CreateProfile(emptyLoginProfile)
+	c.Assert(err, ErrorMatches, "invalid_login")
+
+	// Test duplicate login
+	login, err = admin.CreateProfile(adminProfile)
+	c.Assert(err, ErrorMatches, "duplicate_login")
+
+	admin.Close()
+	// Check the users are usable
+	admin = connectAndWait(c, sim, adminProfile.Login, adminProfile.Password)
+	admin.Close()
+	user = connectAndWait(c, sim, userProfile.Login, userProfile.Password)
+	user.Close()
 }

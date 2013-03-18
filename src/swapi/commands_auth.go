@@ -11,6 +11,7 @@ package swapi
 import (
 	"code.google.com/p/goprotobuf/proto"
 	"errors"
+	"fmt"
 	"sword"
 )
 
@@ -120,4 +121,48 @@ func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 	c.postAuthRequest(msg, handler, quit)
 	err := <-quit
 	return profiles, err
+}
+
+func (c *Client) CreateProfile(profile *Profile) (string, error) {
+	p := &sword.Profile{
+		Login:      proto.String(profile.Login),
+		Password:   proto.String(profile.Password),
+		Supervisor: proto.Bool(profile.Supervisor),
+	}
+
+	msg := SwordMessage{
+		ClientToAuthentication: &sword.ClientToAuthentication{
+			Message: &sword.ClientToAuthentication_Content{
+				ProfileCreationRequest: &sword.ProfileCreationRequest{
+					Profile: p,
+				},
+			},
+		},
+	}
+	login := ""
+	handler := func(msg *sword.AuthenticationToClient_Content, context int32,
+		err error, quit chan error) bool {
+
+		if reply := msg.GetProfileCreationRequestAck(); reply != nil {
+			code := reply.GetErrorCode()
+			if code == sword.ProfileCreationRequestAck_success {
+				login = reply.GetLogin()
+				err = nil
+			} else {
+				err = errors.New("unknown error")
+				name, ok := sword.ProfileCreationRequestAck_ErrorCode_name[int32(code)]
+				if ok {
+					err = errors.New(name)
+				}
+			}
+		} else {
+			err = errors.New(fmt.Sprintf("Got unexpected %v", msg))
+		}
+		quit <- err
+		return true
+	}
+	quit := make(chan error)
+	c.postAuthRequest(msg, handler, quit)
+	err := <-quit
+	return login, err
 }
