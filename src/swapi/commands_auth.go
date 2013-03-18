@@ -12,6 +12,7 @@ import (
 	"code.google.com/p/goprotobuf/proto"
 	"errors"
 	"fmt"
+	"log"
 	"sword"
 )
 
@@ -29,6 +30,7 @@ func (c *Client) postAuthRequest(msg SwordMessage, handler authHandler,
 			quit <- err
 			return true
 		}
+		log.Println(msg)
 		if msg.AuthenticationToClient == nil ||
 			msg.AuthenticationToClient.GetMessage() == nil ||
 			msg.Context != context {
@@ -116,18 +118,21 @@ func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 	return profiles, err
 }
 
-func (c *Client) CreateProfile(profile *Profile) (*Profile, error) {
+func profileToProto(profile *Profile) *sword.Profile {
 	p := &sword.Profile{
 		Login:      proto.String(profile.Login),
 		Password:   proto.String(profile.Password),
 		Supervisor: proto.Bool(profile.Supervisor),
 	}
+	return p
+}
 
+func (c *Client) CreateProfile(profile *Profile) (*Profile, error) {
 	msg := SwordMessage{
 		ClientToAuthentication: &sword.ClientToAuthentication{
 			Message: &sword.ClientToAuthentication_Content{
 				ProfileCreationRequest: &sword.ProfileCreationRequest{
-					Profile: p,
+					Profile: profileToProto(profile),
 				},
 			},
 		},
@@ -166,4 +171,43 @@ func (c *Client) CreateProfile(profile *Profile) (*Profile, error) {
 	c.postAuthRequest(msg, handler, quit)
 	err := <-quit
 	return created, err
+}
+
+func (c *Client) UpdateProfile(login string, profile *Profile) (*Profile, error) {
+	msg := SwordMessage{
+		ClientToAuthentication: &sword.ClientToAuthentication{
+			Message: &sword.ClientToAuthentication_Content{
+				ProfileUpdateRequest: &sword.ProfileUpdateRequest{
+					Login:   proto.String(login),
+					Profile: profileToProto(profile),
+				},
+			},
+		},
+	}
+	var updated *Profile
+	handler := func(msg *sword.AuthenticationToClient_Content, context int32,
+		err error, quit chan error) bool {
+
+		if reply := msg.GetProfileUpdateRequestAck(); reply != nil {
+			code := reply.GetErrorCode()
+			if code == sword.ProfileUpdateRequestAck_success {
+				updated = c.Model.GetProfile(reply.GetLogin())
+				err = nil
+			} else {
+				err = errors.New("unknown error")
+				name, ok := sword.ProfileUpdateRequestAck_ErrorCode_name[int32(code)]
+				if ok {
+					err = errors.New(name)
+				}
+			}
+		} else {
+			err = errors.New(fmt.Sprintf("Got unexpected %v", msg))
+		}
+		quit <- err
+		return true
+	}
+	quit := make(chan error)
+	c.postAuthRequest(msg, handler, quit)
+	err := <-quit
+	return updated, err
 }

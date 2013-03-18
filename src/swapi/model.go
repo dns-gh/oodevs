@@ -190,6 +190,13 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetProfile().GetPassword(),
 				mm.GetProfile().GetSupervisor())
 			d.addProfile(profile)
+		} else if mm := m.GetProfileUpdate(); mm != nil {
+			profile := NewProfile(
+				mm.GetProfile().GetLogin(),
+				mm.GetProfile().GetPassword(),
+				mm.GetProfile().GetSupervisor())
+			d.updateProfile(mm.GetLogin(), profile)
+			// XXX report error here
 		}
 	}
 }

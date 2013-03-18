@@ -187,6 +187,9 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	user := connectAndWait(c, sim, "user1", "user1")
 	_, err := user.CreateProfile(userProfile)
 	c.Assert(err, ErrorMatches, "forbidden")
+
+	_, err = user.UpdateProfile("user1", userProfile)
+	c.Assert(err, ErrorMatches, "forbidden")
 	user.Close()
 
 	// An admin can create regular users
@@ -209,6 +212,25 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	// Test duplicate login
 	profile, err = admin.CreateProfile(adminProfile)
 	c.Assert(err, ErrorMatches, "duplicate_login")
+
+	// Regular profile update
+	userProfile.Password = "userpassword"
+	profile, err = admin.UpdateProfile(userProfile.Login, userProfile)
+	c.Assert(err, IsNil)
+	c.Assert(profile, NotNil)
+	c.Assert(profile.Password, Equals, userProfile.Password)
+
+	// Duplicating through update
+	profile, err = admin.UpdateProfile("user1", userProfile)
+	c.Assert(err, ErrorMatches, "duplicate_login")
+
+	// Updating with empty login
+	profile, err = admin.UpdateProfile(userProfile.Login, emptyLoginProfile)
+	c.Assert(err, ErrorMatches, "invalid_login")
+
+	// Updating missing profile
+	profile, err = admin.UpdateProfile("missing", userProfile)
+	c.Assert(err, ErrorMatches, "invalid_profile")
 
 	admin.Close()
 	// Check the users are usable
