@@ -154,18 +154,25 @@ func (s *TestSuite) TestListConnectedProfiles(c *C) {
 		c.Assert(p.Supervisor, Equals, supervisor)
 	}
 
+	connect := func(sim *simu.SimProcess, user, password string) *swapi.Client {
+		client := ConnectClient(c, sim)
+		err := client.Login(user, password)
+		c.Assert(err, IsNil)
+		ok := client.Model.WaitReady(10 * time.Second)
+		c.Assert(ok, Equals, true)
+		return client
+	}
+
 	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
 	defer sim.Stop()
 
-	// Can I get a list before being connected?
-	client := ConnectClient(c, sim)
-	err := client.Login("admin", "")
-	c.Assert(err, IsNil)
+	// The dispatcher sends connected user lists upon authentication, which
+	// without proper 'context' can confuse the command callback and make it
+	// think it actually did something. Instead, wait for the model to be
+	// initialized so all this noise is behind us.
+	client := connect(sim, "admin", "")
 	defer client.Close() // need to release a connection for graceful Stop()
-
-	client2 := ConnectClient(c, sim)
-	err = client2.Login("user1", "user1")
-	c.Assert(err, IsNil)
+	client2 := connect(sim, "user1", "user1")
 
 	// Admin can get itself
 	profiles, err := client.ListConnectedProfiles()

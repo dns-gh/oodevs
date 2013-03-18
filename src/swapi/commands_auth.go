@@ -89,10 +89,9 @@ func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 			quit <- err
 			return true
 		}
-		if msg.AuthenticationToClient == nil {
+		if msg.AuthenticationToClient == nil || msg.Context != context {
 			return false
 		}
-		// we cannot check context as sword always set it to 0
 		reply := msg.AuthenticationToClient.GetMessage().GetConnectedProfileList()
 		if reply == nil {
 			return false
