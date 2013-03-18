@@ -1216,8 +1216,6 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& message, MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx )
 {
-    client::MagicActionAck ack;
-    ack().set_error_code( MagicActionAck::no_error );
     if( !army )
     {
         if( !formation )
@@ -1227,15 +1225,15 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
     }
     if( !message.has_parameters() || message.parameters().elem_size() < 3 || message.parameters().elem_size() > 4 || !( message.parameters().elem( 0 ).value_size() == 1 ) || !message.parameters().elem( 0 ).value().Get( 0 ).has_areal() )
     {
-        ack().set_error_code( MagicActionAck::error_invalid_parameter );
-        return;
+        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode,
+            UnitActionAck::error_invalid_parameter );
     }
     if( message.parameters().elem_size() >= 4 )
-       if( message.parameters().elem( 3 ).value_size() != 1 || !message.parameters().elem( 3 ).value().Get(0).has_extensionlist() )
-       {
-           ack().set_error_code( MagicActionAck::error_invalid_parameter );
-           return;
-       }
+        if( message.parameters().elem( 3 ).value_size() != 1 || !message.parameters().elem( 3 ).value().Get(0).has_extensionlist() )
+        {
+            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode,
+                UnitActionAck::error_invalid_parameter );
+        }
 
     const ::MissionParameters& parameters = message.parameters();
     int level = static_cast< int >( parameters.elem( 0 ).value().Get( 0 ).areal() );
@@ -1245,7 +1243,12 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
     if( message.parameters().elem_size() >= 4 )
         newFormation.SetExtensions( message.parameters().elem( 3 ) );
 
+    // This MagicActionAck is a leftover of previous protocol iteration, we
+    // should get rid of it in future versions.
+    client::MagicActionAck ack;
+    ack().set_error_code( MagicActionAck::no_error );
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+
     newFormation.SendCreation( nCtx );
 }
 
