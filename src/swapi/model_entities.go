@@ -12,6 +12,24 @@ import (
 	"time"
 )
 
+type Profile struct {
+	Login      string
+	Password   string
+	Supervisor bool
+}
+
+func NewProfile(login, password string, supervisor bool) *Profile {
+	return &Profile{
+		Login:      login,
+		Password:   password,
+		Supervisor: supervisor,
+	}
+}
+
+func (p *Profile) Copy() *Profile {
+	return NewProfile(p.Login, p.Password, p.Supervisor)
+}
+
 type Population struct {
 	Id      uint32
 	PartyId uint32
@@ -165,7 +183,8 @@ func (party *Party) Copy() *Party {
 }
 
 type ModelData struct {
-	Parties map[uint32]*Party
+	Parties  map[uint32]*Party
+	Profiles map[string]*Profile
 	// Tick and time of the most recent started tick
 	Tick int32
 	Time time.Time
@@ -173,7 +192,8 @@ type ModelData struct {
 
 func NewModelData() *ModelData {
 	return &ModelData{
-		Parties: map[uint32]*Party{},
+		Parties:  map[uint32]*Party{},
+		Profiles: map[string]*Profile{},
 	}
 }
 
@@ -183,6 +203,9 @@ func (model *ModelData) Copy() *ModelData {
 	m.Time = model.Time
 	for k, v := range model.Parties {
 		m.Parties[k] = v.Copy()
+	}
+	for k, v := range model.Profiles {
+		m.Profiles[k] = v.Copy()
 	}
 	return m
 }
@@ -349,4 +372,24 @@ func (model *ModelData) addPopulation(population *Population) bool {
 		return true
 	}
 	return false
+}
+
+func (model *ModelData) addProfile(profile *Profile) {
+	model.Profiles[profile.Login] = profile
+}
+
+func (model *ModelData) updateProfile(login string, profile *Profile) bool {
+	_, ok := model.Profiles[login]
+	if ok {
+		model.Profiles[login] = profile
+	}
+	return ok
+}
+
+func (model *ModelData) removeProfile(login string) bool {
+	_, ok := model.Profiles[login]
+	if ok {
+		delete(model.Profiles, login)
+	}
+	return ok
 }

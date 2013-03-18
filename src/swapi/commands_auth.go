@@ -84,12 +84,6 @@ func (c *Client) Login(username, password string) error {
 	return c.LoginWithVersion(username, password, "5.0")
 }
 
-type Profile struct {
-	Login      string
-	Password   string
-	Supervisor bool
-}
-
 func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 	msg := SwordMessage{
 		ClientToAuthentication: &sword.ClientToAuthentication{
@@ -107,12 +101,11 @@ func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 			return false
 		}
 		for _, p := range reply.GetElem() {
-			profile := Profile{
-				Login:      p.GetLogin(),
-				Password:   p.GetPassword(),
-				Supervisor: p.GetSupervisor(),
-			}
-			profiles = append(profiles, &profile)
+			profile := NewProfile(
+				p.GetLogin(),
+				p.GetPassword(),
+				p.GetSupervisor())
+			profiles = append(profiles, profile)
 		}
 		quit <- err
 		return true
@@ -123,7 +116,7 @@ func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 	return profiles, err
 }
 
-func (c *Client) CreateProfile(profile *Profile) (string, error) {
+func (c *Client) CreateProfile(profile *Profile) (*Profile, error) {
 	p := &sword.Profile{
 		Login:      proto.String(profile.Login),
 		Password:   proto.String(profile.Password),
@@ -139,14 +132,22 @@ func (c *Client) CreateProfile(profile *Profile) (string, error) {
 			},
 		},
 	}
-	login := ""
+	var created *Profile
 	handler := func(msg *sword.AuthenticationToClient_Content, context int32,
 		err error, quit chan error) bool {
 
 		if reply := msg.GetProfileCreationRequestAck(); reply != nil {
 			code := reply.GetErrorCode()
 			if code == sword.ProfileCreationRequestAck_success {
-				login = reply.GetLogin()
+				// The profile should be available by now. It is safe to call
+				// GetProfile() here:
+				// - The model has its own goroutine, so no reentrancy issue
+				// - This handler block the others so there we are not racing
+				//   for profile creation.
+				// - GetProfile() posts on the model goroutine so all pending
+				//   pending messages will be processed before we try to
+				//   access profiles.
+				created = c.Model.GetProfile(reply.GetLogin())
 				err = nil
 			} else {
 				err = errors.New("unknown error")
@@ -164,5 +165,5 @@ func (c *Client) CreateProfile(profile *Profile) (string, error) {
 	quit := make(chan error)
 	c.postAuthRequest(msg, handler, quit)
 	err := <-quit
-	return login, err
+	return created, err
 }

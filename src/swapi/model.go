@@ -182,6 +182,15 @@ func (model *Model) update(msg *SwordMessage) {
 		} else if mm := m.GetUnitDestruction(); mm != nil {
 			d.removeUnit(mm.GetUnit().GetId())
 		}
+	} else if msg.AuthenticationToClient != nil {
+		m := msg.AuthenticationToClient.GetMessage()
+		if mm := m.GetProfileCreation(); mm != nil {
+			profile := NewProfile(
+				mm.GetProfile().GetLogin(),
+				mm.GetProfile().GetPassword(),
+				mm.GetProfile().GetSupervisor())
+			d.addProfile(profile)
+		}
 	}
 }
 
@@ -270,6 +279,17 @@ func (model *Model) GetData() *ModelData {
 		d = model.data.Copy()
 	})
 	return d
+}
+
+func (model *Model) GetProfile(login string) *Profile {
+	var p *Profile
+	model.waitCommand(func(model *Model) {
+		profile, ok := model.data.Profiles[login]
+		if ok {
+			p = profile.Copy()
+		}
+	})
+	return p
 }
 
 func (model *Model) WaitUntilTick(tick int32) bool {

@@ -191,21 +191,23 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 
 	// An admin can create regular users
 	admin := connectAndWait(c, sim, "admin", "")
-	login, err := admin.CreateProfile(userProfile)
+	profile, err := admin.CreateProfile(userProfile)
 	c.Assert(err, IsNil)
-	c.Assert(login, Equals, userProfile.Login)
+	c.Assert(profile, NotNil)
+	c.Assert(profile.Login, Equals, userProfile.Login)
 
 	// And supervisor as well
-	login, err = admin.CreateProfile(adminProfile)
+	profile, err = admin.CreateProfile(adminProfile)
 	c.Assert(err, IsNil)
-	c.Assert(login, Equals, adminProfile.Login)
+	c.Assert(profile, NotNil)
+	c.Assert(profile.Login, Equals, adminProfile.Login)
 
 	// Test empty login
-	login, err = admin.CreateProfile(emptyLoginProfile)
+	profile, err = admin.CreateProfile(emptyLoginProfile)
 	c.Assert(err, ErrorMatches, "invalid_login")
 
 	// Test duplicate login
-	login, err = admin.CreateProfile(adminProfile)
+	profile, err = admin.CreateProfile(adminProfile)
 	c.Assert(err, ErrorMatches, "duplicate_login")
 
 	admin.Close()
