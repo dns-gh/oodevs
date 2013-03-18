@@ -31,6 +31,11 @@
 namespace
 {
 
+void PureCallHandler( void )
+{
+    ::RaiseException( 1, EXCEPTION_NONCONTINUABLE, 0, 0 );
+}
+
 void CrashHandler( EXCEPTION_POINTERS* exception )
 {
     MT_CrashHandler::ExecuteHandler( exception );
@@ -45,6 +50,7 @@ int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
     debugDir.CreateDirectories();
     MT_CrashHandler::SetRootDirectory( debugDir );
     tools::InitCrashHandler( &CrashHandler );
+    _set_purecall_handler( PureCallHandler );
 
     int nResult = EXIT_SUCCESS;
     MT_ConsoleLogger        consoleLogger;
