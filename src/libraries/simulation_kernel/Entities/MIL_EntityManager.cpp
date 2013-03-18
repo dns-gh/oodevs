@@ -1111,12 +1111,8 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
                 throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
             break;
         case UnitMagicAction::formation_creation :
-            if( MIL_Army_ABC*  pArmy = armyFactory_->Find( id ) )
-                ProcessFormationCreationRequest( message, pArmy, 0, nCtx );
-            else if( MIL_Formation* pFormation = FindFormation( id ) )
-                ProcessFormationCreationRequest( message, 0, pFormation, nCtx );
-            else
-                throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
+            ProcessFormationCreationRequest( message, armyFactory_->Find( id ),
+                FindFormation( id ), nCtx );
             break;
         case UnitMagicAction::crowd_creation:
             if( MIL_Formation* pFormation = FindFormation( id ) )
@@ -1225,10 +1221,8 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
     if( !army )
     {
         if( !formation )
-        {
-            ack().set_error_code( MagicActionAck::error_invalid_parameter );
-            return;
-        }
+            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode,
+                    UnitActionAck::error_invalid_unit );
         army = &(formation->GetArmy());
     }
     if( !message.has_parameters() || message.parameters().elem_size() < 3 || message.parameters().elem_size() > 4 || !( message.parameters().elem( 0 ).value_size() == 1 ) || !message.parameters().elem( 0 ).value().Get( 0 ).has_areal() )
