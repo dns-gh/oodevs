@@ -116,6 +116,10 @@ void BufferedMessageCallback::Commit( MessageCallback_ABC& callback, const std::
     {
         callback.OnMessage( endpoint, message );
     }
+    catch( const DisconnectionRequest& e )
+    {
+        callback.OnError( endpoint, tools::GetExceptionMsg( e ) );
+    }
     catch( const ConnectionError& e )
     {
         callback.OnError( endpoint, tools::GetExceptionMsg( e ) );

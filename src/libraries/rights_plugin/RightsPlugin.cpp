@@ -139,6 +139,9 @@ void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client, const std::str
 // -----------------------------------------------------------------------------
 void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuthentication& wrapper )
 {
+    if( wrapper.message().has_disconnection_request() )
+        throw tools::DisconnectionRequest( "disconnection request from " + link );
+
     unsigned int ctx = wrapper.has_context() ? wrapper.context() : 0;
     AuthenticationSender sender( base_.GetPublisher( link ), clients_, ctx );
     if( wrapper.message().has_authentication_request() )

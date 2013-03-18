@@ -30,6 +30,13 @@ public:
     //@}
 };
 
+class DisconnectionRequest : public ConnectionError
+{
+public:
+             DisconnectionRequest( const std::string& message ) : ConnectionError( message ) {}
+    virtual ~DisconnectionRequest() {}
+};
+
 }
 
 #endif // ConnectionError_h
