@@ -27,11 +27,19 @@ type modelCond struct {
 	cond func(model *Model) bool
 }
 
+type ModelRequest struct {
+	Message *SwordMessage
+	Command *modelCmd
+	Cond    *modelCond
+}
+
 // The model registers a handler to a Client and updates itself with
 // incoming messages in a separate goroutine. It supports two kind of
 // actions: commands which are just functions applied once on the Model,
 // mostly used to implement queries, and conditions which are fired each
-// time a message is processed until they return true.
+// time a message is processed until they return true. Messages, commands and
+// conditions are deliberately serialized so we know that commands issued from
+// a message handler will have a model update with all previous messages.
 //
 // Note that accessor will return either immutable entities or copies of
 // such entities (mostly collections) so clients can manipulate the
@@ -48,9 +56,7 @@ type Model struct {
 	WaitTimeout time.Duration
 
 	// Shared state
-	msgch  chan *SwordMessage
-	cmdch  chan *modelCmd
-	condch chan *modelCond
+	requests chan *ModelRequest
 }
 
 func NewModel() *Model {
@@ -58,9 +64,7 @@ func NewModel() *Model {
 		ready:       false,
 		condId:      0,
 		WaitTimeout: 60 * time.Second,
-		msgch:       make(chan *SwordMessage, 128),
-		cmdch:       make(chan *modelCmd, 4),
-		condch:      make(chan *modelCond, 4),
+		requests:    make(chan *ModelRequest, 128),
 		conds:       []*modelCond{},
 		data:        NewModelData(),
 	}
@@ -71,24 +75,26 @@ func NewModel() *Model {
 func (model *Model) run() {
 	for {
 		select {
-		case msg := <-model.msgch:
-			model.update(msg)
-			for i := 0; i != len(model.conds); {
-				if model.conds[i].cond(model) {
-					model.conds[i].done <- 1
-					model.conds = append(model.conds[:i], model.conds[i+1:]...)
-					continue
+		case rq := <-model.requests:
+			if rq.Message != nil {
+				model.update(rq.Message)
+				for i := 0; i != len(model.conds); {
+					if model.conds[i].cond(model) {
+						model.conds[i].done <- 1
+						model.conds = append(model.conds[:i], model.conds[i+1:]...)
+						continue
+					}
+					i++
 				}
-				i++
-			}
-		case cmd := <-model.cmdch:
-			cmd.cmd(model)
-			cmd.done <- 1
-		case cond := <-model.condch:
-			if cond.cond(model) {
-				cond.done <- 1
-			} else {
-				model.conds = append(model.conds, cond)
+			} else if rq.Command != nil {
+				rq.Command.cmd(model)
+				rq.Command.done <- 1
+			} else if rq.Cond != nil {
+				if rq.Cond.cond(model) {
+					rq.Cond.done <- 1
+				} else {
+					model.conds = append(model.conds, rq.Cond)
+				}
 			}
 		}
 	}
@@ -185,19 +191,21 @@ func (model *Model) Listen(client *Client) {
 		if err != nil {
 			return true
 		}
-		model.msgch <- msg
+		model.requests <- &ModelRequest{Message: msg}
 		return false
 	}
 	client.Register(handler)
 }
 
 func (model *Model) waitCommand(cmd func(model *Model)) {
-	c := &modelCmd{
-		done: make(chan int, 1),
-		cmd:  cmd,
+	c := &ModelRequest{
+		Command: &modelCmd{
+			done: make(chan int, 1),
+			cmd:  cmd,
+		},
 	}
-	model.cmdch <- c
-	<-c.done
+	model.requests <- c
+	<-c.Command.done
 }
 
 // Post and wait for a condition to be validated. Return false on
@@ -205,12 +213,14 @@ func (model *Model) waitCommand(cmd func(model *Model)) {
 func (model *Model) waitCond(timeout time.Duration,
 	cond func(model *Model) bool) bool {
 	model.condId++
-	c := &modelCond{
-		id:   model.condId,
-		done: make(chan int, 1),
-		cond: cond,
+	c := &ModelRequest{
+		Cond: &modelCond{
+			id:   model.condId,
+			done: make(chan int, 1),
+			cond: cond,
+		},
 	}
-	model.condch <- c
+	model.requests <- c
 	timeoutch := make(chan int)
 	if timeout.Nanoseconds() > 0 {
 		go func() {
@@ -220,12 +230,12 @@ func (model *Model) waitCond(timeout time.Duration,
 	}
 	removed := false
 	select {
-	case <-c.done:
+	case <-c.Cond.done:
 		break
 	case <-timeoutch:
 		model.waitCommand(func(model *Model) {
 			for i := 0; i != len(model.conds); {
-				if model.conds[i].id == c.id {
+				if model.conds[i].id == c.Cond.id {
 					model.conds[i].done <- 0
 					model.conds = append(model.conds[:i], model.conds[i+1:]...)
 					removed = true
