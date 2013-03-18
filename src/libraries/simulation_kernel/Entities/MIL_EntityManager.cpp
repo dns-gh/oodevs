@@ -1112,7 +1112,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             break;
         case UnitMagicAction::formation_creation :
             ProcessFormationCreationRequest( message, armyFactory_->Find( id ),
-                FindFormation( id ), nCtx );
+                FindFormation( id ), nCtx, ack() );
             break;
         case UnitMagicAction::crowd_creation:
             if( MIL_Formation* pFormation = FindFormation( id ) )
@@ -1214,7 +1214,8 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
 // Name: MIL_EntityManager::ProcessFormationCreationRequest
 // Created: LDC 2010-10-20
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& message, MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx )
+void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& message,
+    MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx, sword::UnitMagicActionAck& ack )
 {
     if( !army )
     {
@@ -1245,10 +1246,12 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
 
     // This MagicActionAck is a leftover of previous protocol iteration, we
     // should get rid of it in future versions.
-    client::MagicActionAck ack;
-    ack().set_error_code( MagicActionAck::no_error );
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    client::MagicActionAck oldAck;
+    oldAck().set_error_code( MagicActionAck::no_error );
+    oldAck.Send( NET_Publisher_ABC::Publisher(), nCtx );
 
+    ack.mutable_result()->add_elem()->add_value()->mutable_formation()
+        ->set_id( newFormation.GetID() );
     newFormation.SendCreation( nCtx );
 }
 

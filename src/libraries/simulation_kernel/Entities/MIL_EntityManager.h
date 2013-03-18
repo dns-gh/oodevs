@@ -31,6 +31,7 @@ namespace sword
     class SetAutomatMode;
     class UnitCreationRequest;
     class UnitMagicAction;
+    class UnitMagicActionAck;
     class KnowledgeMagicAction;
     class MagicAction;
     class MissionParameter_Value;
@@ -49,6 +50,7 @@ namespace propagation
 {
     class FloodModel_ABC;
 }
+
 class ArmyFactory_ABC;
 class AgentFactory_ABC;
 class AutomateFactory_ABC;
@@ -235,7 +237,7 @@ private:
     void ProcessMagicActionCreateFireOrder  ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     // LTO end
     void ProcessAutomatCreationRequest      ( const sword::UnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx );
-    void ProcessFormationCreationRequest    ( const sword::UnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx );
+    void ProcessFormationCreationRequest    ( const sword::UnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx, sword::UnitMagicActionAck& ack );
     void ProcessCrowdCreationRequest        ( const sword::UnitMagicAction&      message, MIL_Army_ABC& army, unsigned int context );
     void ProcessTransferEquipmentRequest    ( const sword::UnitMagicAction&      message, MIL_AgentPion& pion );
     void ProcessFormationChangeSuperior     ( const sword::UnitMagicAction&      message, unsigned int nCtx );
