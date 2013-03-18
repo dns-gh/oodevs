@@ -416,12 +416,11 @@ bool PHY_RoleAction_Transport::CanTransportPion( MIL_Agent_ABC& transported, boo
     if( weightComp->TotalTransportedWeight() <= 0. )
         return false;
 
-    if( !bTransportOnlyLoadable )
-    {
-        std::auto_ptr< TransportCapacityComputer_ABC > computer( owner_->GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() );
-        if( weightComp->HeaviestTransportedWeight() > owner_->Execute( *computer ).MaxComposanteTransportedWeight() )
-            return false;
-    }
+    std::auto_ptr< TransportCapacityComputer_ABC > capacityComp( owner_->GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() );
+    owner_->Execute( *capacityComp );
+    if( capacityComp->WeightLoadedPerTimeStep() == 0 || ( !bTransportOnlyLoadable && weightComp->HeaviestTransportedWeight() > capacityComp->MaxComposanteTransportedWeight() ) )
+        return false;
+
     return true;
 }
 
