@@ -23,6 +23,7 @@
 #include "protocol/Protocol.h"
 #include "protocol/AuthenticationSenders.h"
 #include <boost/bind.hpp>
+#include <boost/make_shared.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace dispatcher;
@@ -119,13 +120,13 @@ void ProfileManager::ReadProfile( xml::xistream& xis )
     {
         try
         {
-            Profile*& pProfile = profiles_[ strName ];
+            auto profile = boost::make_shared< Profile >( model_, clients_,
+                strName, xis );
+            profiles_[ strName ] = profile;
             MT_LOG_INFO_MSG( "New profile loaded : '" << strName << "'" );
-            pProfile = new Profile( model_, clients_, strName, xis );
         }
         catch( const xml::exception& )
         {
-            profiles_.erase( strName );
             MT_LOG_INFO_MSG( "Invalid profile ignored : '" << strName << "'" );
         }
     }
@@ -140,8 +141,6 @@ void ProfileManager::ReadProfile( xml::xistream& xis )
 void ProfileManager::Reset()
 {
     MT_LOG_INFO_MSG( "Loading profiles" );
-    for( auto it = profiles_.begin(); it != profiles_.end(); ++it )
-        delete it->second;
     profiles_.clear();
 
     try
@@ -161,19 +160,20 @@ void ProfileManager::Reset()
 // Name: ProfileManager::Authenticate
 // Created: NLD 2006-10-06
 // -----------------------------------------------------------------------------
-Profile* ProfileManager::Authenticate( const std::string& strName, const std::string& strPassword ) const
+boost::shared_ptr< Profile > ProfileManager::Authenticate( const std::string& strName,
+        const std::string& strPassword ) const
 {
     auto it = profiles_.find( strName );
     if( it == profiles_.end() )
     {
         MT_LOG_INFO_MSG( "Auth - Profile '" << strName << "' doesn't exists" );
-        return 0;
+        return boost::shared_ptr< Profile >();
     }
 
     if( !it->second->CheckPassword( strPassword ) )
     {
         MT_LOG_INFO_MSG( "Auth - Profile '" << strName << "' invalid password" );
-        return 0;
+        return boost::shared_ptr< Profile >();
     }
 
     MT_LOG_INFO_MSG( "Auth - Profile '" << strName << "' authenticated" );
@@ -210,11 +210,11 @@ sword::ProfileCreationRequestAck_ErrorCode ProfileManager::Create( const sword::
     if( login.empty() )
         return sword::ProfileCreationRequestAck::invalid_login;
     // $$$$ SBO 2007-01-22: check password if needed (maybe add a way to specify password constraints...)
-    Profile*& pProfile = profiles_[ login ];
-    if( pProfile )
+    if( profiles_.find( login ) != profiles_.end() )
         return sword::ProfileCreationRequestAck::duplicate_login;
     MT_LOG_INFO_MSG( "New profile created : '" << login << "'" );
-    pProfile = new Profile( model_, clients_, message );
+    auto profile = boost::make_shared< Profile >( model_, clients_, message );
+    profiles_[ login ] = profile;
     return sword::ProfileCreationRequestAck::success;
 }
 
@@ -233,7 +233,7 @@ sword::ProfileUpdateRequestAck_ErrorCode ProfileManager::Update( const sword::Pr
     if( newLogin != message.login() && profiles_.find( newLogin ) != profiles_.end() )
         return sword::ProfileUpdateRequestAck::duplicate_login;
     // $$$$ SBO 2007-01-22: check password id needed
-    Profile* pProfile = it->second;
+    auto pProfile = it->second;
     pProfile->Update( message );
     if( newLogin != message.login() )
     {
@@ -252,7 +252,6 @@ sword::ProfileDestructionRequestAck_ErrorCode ProfileManager::Destroy( const swo
     auto it = profiles_.find( message.login() );
     if( it == profiles_.end() )
         return sword::ProfileDestructionRequestAck::invalid_profile;
-    delete it->second;
     profiles_.erase( it );
     return sword::ProfileDestructionRequestAck::success;
 }

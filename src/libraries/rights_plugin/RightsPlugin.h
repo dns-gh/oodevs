@@ -12,6 +12,7 @@
 
 #include "dispatcher/Plugin_ABC.h"
 #include "dispatcher/LinkResolver_ABC.h"
+#include <boost/shared_ptr.hpp>
 #include <map>
 
 namespace sword
@@ -97,7 +98,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, dispatcher::Profile* > T_Profiles;
+    typedef std::map< std::string, boost::shared_ptr< dispatcher::Profile > > T_Profiles;
     typedef T_Profiles::iterator                         IT_Profiles;
     typedef T_Profiles::const_iterator                  CIT_Profiles;
     //@}

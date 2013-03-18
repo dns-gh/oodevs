@@ -200,7 +200,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         sender.Send( reply );
         return;
     }
-    Profile* profile = profiles_->Authenticate( message.login(), message.password() );
+    auto profile = profiles_->Authenticate( message.login(), message.password() );
     if( !profile )
     {
         ack->set_error_code( sword::AuthenticationResponse::invalid_login );

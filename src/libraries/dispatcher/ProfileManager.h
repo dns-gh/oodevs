@@ -12,6 +12,7 @@
 
 #include "MessageHandler_ABC.h"
 #include "Registrable_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 namespace sword
 {
@@ -62,7 +63,8 @@ public:
     //! @name Operations
     //@{
     void Reset();
-    Profile* Authenticate( const std::string& strName, const std::string& strPassword ) const;
+    boost::shared_ptr< Profile > Authenticate( const std::string& strName,
+            const std::string& strPassword ) const;
 
     void Send( ClientPublisher_ABC& publisher ) const;
     void Send( sword::AuthenticationResponse& message ) const;
@@ -93,7 +95,7 @@ private:
     const Config& config_;
     Model& model_;
     ClientPublisher_ABC& clients_;
-    std::map< std::string, Profile* > profiles_;
+    std::map< std::string, boost::shared_ptr< Profile > > profiles_;
     std::auto_ptr< tools::SchemaWriter > pSchemaWriter_;
 };
 
