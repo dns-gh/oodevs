@@ -38,35 +38,11 @@ func ConnectClient(c *C, sim *simu.SimProcess) *swapi.Client {
 }
 
 func (s *TestSuite) TestLogin(c *C) {
-	addContextChecker := func(client *swapi.Client) {
-		// Capture response contexts and double check them
-		client.Register(func(msg *swapi.SwordMessage, ctx int32,
-			err error) bool {
-			if msg != nil && msg.AuthenticationToClient != nil {
-				auth := msg.AuthenticationToClient
-				resp := auth.GetMessage().GetAuthenticationResponse()
-				if resp != nil {
-					if auth.GetContext() != ctx {
-						/* SWBUG-10025
-
-						   t.Fatalf("AuthenticationResponse context does not "+
-						       "match: %v != %v", auth.GetContext(), ctx)
-						*/
-					}
-					return true
-				}
-			}
-			return false
-		})
-	}
-
 	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
 	defer sim.Stop()
 
 	// Test invalid login
 	client := ConnectClient(c, sim)
-	// Also check returned context is valid
-	addContextChecker(client)
 	err := client.Login("foo", "bar")
 	c.Assert(err, ErrorMatches, "invalid_login")
 	client.Close()
@@ -79,7 +55,6 @@ func (s *TestSuite) TestLogin(c *C) {
 
 	// Test valid login
 	client = ConnectClient(c, sim)
-	addContextChecker(client)
 	err = client.Login("admin", "")
 	c.Assert(err, IsNil) // login failed
 

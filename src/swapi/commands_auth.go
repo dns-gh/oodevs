@@ -38,7 +38,7 @@ func (c *Client) LoginWithVersion(username, password, version string) error {
 			quit <- err
 			return true
 		}
-		if msg.AuthenticationToClient == nil {
+		if msg.AuthenticationToClient == nil || msg.Context != context {
 			return false
 		}
 		// we cannot check context as sword always set it to 0
