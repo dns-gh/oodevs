@@ -187,20 +187,6 @@ namespace
     }
 }
 
-namespace
-{
-    class Ifstream : public tools::Ifstream
-    {
-    public:
-         Ifstream() {}
-        ~Ifstream()
-        {
-            if( is_open() )
-                close();
-        }
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: MessageLoader::FillTimeTable
 // Created: JSR 2011-07-25
@@ -218,7 +204,7 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
             {
                 if( tick >= it->second.first && tick <= it->second.second )
                 {
-                    Ifstream infoFile;
+                    tools::Ifstream infoFile;
                     unsigned int start;
                     unsigned int end;
                     std::string simTime;
