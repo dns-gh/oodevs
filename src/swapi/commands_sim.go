@@ -75,30 +75,16 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 		}
 		m := msg.SimulationToClient.GetMessage()
 		if reply := m.GetMagicActionAck(); reply != nil {
+			// Ignore this message, UnitMagicActionAck should be enough
+			return false
+		} else if reply := m.GetFormationCreation(); reply != nil {
+			// FormationCreation feedback
 			if state != 0 {
 				quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
 				return true
 			}
-			code := reply.GetErrorCode()
-			if code != sword.MagicActionAck_no_error {
-				err = errors.New("unknown error")
-				name, ok := sword.MagicActionAck_ErrorCode_name[int32(code)]
-				if ok {
-					err = errors.New(name)
-				}
-				quit <- err
-				return true
-			}
-			state = 1
-			return false
-		} else if reply := m.GetFormationCreation(); reply != nil {
-			// FormationCreation feedback
-			if state != 1 {
-				quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
-				return true
-			}
 			formationId = reply.GetFormation().GetId()
-			state = 2
+			state = 1
 			return false
 		} else if reply := m.GetUnitMagicActionAck(); reply != nil {
 			// Wait for the final UnitMagicActionAck
@@ -109,7 +95,7 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 					err = errors.New(fmt.Sprintf("Got unexpected success %v", m))
 				}
 				quit <- err
-			} else if state == 2 {
+			} else if state == 1 {
 				if err != nil {
 					quit <- errors.New(fmt.Sprintf(
 						"Got unexpected failure %v", m))

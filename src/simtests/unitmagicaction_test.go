@@ -20,7 +20,7 @@ import (
 // For a given tasker type, send a unit magic action which is not
 // implemented by target type. It used to return nothing, not even an
 // error. This test should be adjusted if actions support more types.
-func postInvalidUnitMagicAction(client *swapi.Client, tasker *sword.Tasker) error {
+func postInvalidTasker(client *swapi.Client, tasker *sword.Tasker) error {
 	actionType := sword.UnitMagicAction_crowd_total_destruction
 	if tasker.GetCrowd() != nil {
 		actionType = sword.UnitMagicAction_delete_unit
@@ -37,6 +37,10 @@ func postInvalidUnitMagicAction(client *swapi.Client, tasker *sword.Tasker) erro
 			},
 		},
 	}
+	return postInvalidUnitMagicAction(client, &msg)
+}
+
+func postInvalidUnitMagicAction(client *swapi.Client, msg *swapi.SwordMessage) error {
 	quit := make(chan error)
 	handler := func(msg *swapi.SwordMessage, context int32, err error) bool {
 		if err != nil {
@@ -59,7 +63,7 @@ func postInvalidUnitMagicAction(client *swapi.Client, tasker *sword.Tasker) erro
 		return true
 
 	}
-	client.Post(msg, handler)
+	client.Post(*msg, handler)
 	err := <-quit
 	return err
 }
@@ -123,7 +127,7 @@ func (s *TestSuite) TestNotImplementedUnitMagicAction(c *C) {
 		},
 	}
 	for _, tasker := range taskers {
-		err := postInvalidUnitMagicAction(client, tasker)
+		err := postInvalidTasker(client, tasker)
 		c.Assert(err, ErrorMatches, "error_invalid_unit",
 			Commentf("for tasker %v", tasker))
 	}
@@ -174,6 +178,26 @@ Party[2]
   Name: party2
 `
 	c.Assert(dump, Equals, expected)
+
+	// Invalid formation parameters (empty)
+	actionType := sword.UnitMagicAction_formation_creation
+	msg := swapi.SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				UnitMagicAction: &sword.UnitMagicAction{
+					Tasker: &sword.Tasker{
+						Formation: &sword.FormationId{
+							Id: proto.Uint32(id1),
+						},
+					},
+					Type:       &actionType,
+					Parameters: swapi.MakeParameters(),
+				},
+			},
+		},
+	}
+	err = postInvalidUnitMagicAction(client, &msg)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 }
 
 func (s *TestSuite) TestDeleteUnit(c *C) {
