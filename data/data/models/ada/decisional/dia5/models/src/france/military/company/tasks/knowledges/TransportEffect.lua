@@ -37,6 +37,10 @@ return
     end,
 
     getEquipmentTransportation = function( self, params )
-        return params.withEquipment
+        if params.withEquipment then
+            return params.withEquipment
+        else
+            return false
+        end
     end,
 }
