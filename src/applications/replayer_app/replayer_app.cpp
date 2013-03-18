@@ -16,7 +16,6 @@
 #include "tools/Path.h"
 #include <tools/Exception.h>
 #include "tools/WinArguments.h"
-#include <tools/win32/CrashHandler.h>
 
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
@@ -28,23 +27,12 @@
 
 #include <windows.h>
 
-namespace
-{
-
-void CrashHandler( EXCEPTION_POINTERS* exception )
-{
-    MT_CrashHandler::ExecuteHandler( exception );
-}
-
-} // namespace
-
-int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
+int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
     tools::WinArguments winArgs( lpCmdLine );
     tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
     debugDir.CreateDirectories();
     MT_CrashHandler::SetRootDirectory( debugDir );
-    tools::InitCrashHandler( &CrashHandler );
 
     int nResult = EXIT_SUCCESS;
     MT_ConsoleLogger        consoleLogger;
@@ -65,4 +53,16 @@ int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
     }
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return nResult;
+}
+
+int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
+{
+    __try
+    {
+        return Run( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
+    }
+    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
+    {
+    }
+    return EXIT_FAILURE;
 }
