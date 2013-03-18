@@ -250,6 +250,8 @@ bool Profile::CheckRights( const sword::ClientToAuthentication& wrapper ) const
 {
     if( wrapper.message().has_authentication_request() )
         return true;
+    if( wrapper.message().has_connected_profiles_request() )
+        return true;
     else if( wrapper.message().has_profile_creation_request() )
         return bSupervision_; //$$$ Administration
     else if( wrapper.message().has_profile_update_request() )
