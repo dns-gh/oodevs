@@ -82,7 +82,7 @@ private:
     //! @name Helpers
     //@{
     void OnReceive( const std::string& link, const sword::ClientToAuthentication& message );
-    void OnReceiveMsgAuthenticationRequest( const std::string& link, const sword::AuthenticationRequest& message );
+    void OnReceiveMsgAuthenticationRequest( const std::string& link, const sword::AuthenticationRequest& message, unsigned int ctx );
     void OnReceiveProfileCreationRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileCreationRequest& message );
     void OnReceiveProfileUpdateRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileUpdateRequest& message, unsigned int context );
     void OnReceiveProfileDestructionRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileDestructionRequest& message );
@@ -102,7 +102,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    void SendProfiles() const;
+    void SendProfiles( unsigned int ctx ) const;
     //@}
 
 private:

@@ -87,7 +87,7 @@ void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client, const std::str
         {
             authenticated_.erase( it );
             --currentConnections_;
-            SendProfiles();
+            SendProfiles( 0 );
             MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
             return;
         }
@@ -101,14 +101,14 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
 {
     if( GetProfile( link ).CheckRights( wrapper ) )
     {
-        unsigned int nCtx = wrapper.has_context()? wrapper.context() : 0;
+        unsigned int ctx = wrapper.has_context()? wrapper.context() : 0;
 
         if( wrapper.message().has_authentication_request() )
-            OnReceiveMsgAuthenticationRequest( link, wrapper.message().authentication_request() );
+            OnReceiveMsgAuthenticationRequest( link, wrapper.message().authentication_request(), ctx );
         if( wrapper.message().has_profile_creation_request() )
             OnReceiveProfileCreationRequest( GetPublisher( link ), wrapper.message().profile_creation_request() );
         if( wrapper.message().has_profile_update_request() )
-            OnReceiveProfileUpdateRequest( GetPublisher( link ), wrapper.message().profile_update_request(), nCtx );
+            OnReceiveProfileUpdateRequest( GetPublisher( link ), wrapper.message().profile_update_request(), ctx );
         if( wrapper.message().has_profile_destruction_request() )
             OnReceiveProfileDestructionRequest( GetPublisher( link ), wrapper.message().profile_destruction_request() );
         if( wrapper.message().has_connected_profiles_request() )
@@ -120,7 +120,7 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
 // Name: RightsPlugin::OnReceiveMsgAuthenticationRequest
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, const sword::AuthenticationRequest& message )
+void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, const sword::AuthenticationRequest& message, unsigned int ctx )
 {
     ClientPublisher_ABC& client = base_.GetPublisher( link );
     authentication::AuthenticationResponse ack;
@@ -129,7 +129,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
     {
         ack().set_error_code( sword::AuthenticationResponse::mismatched_protocol_version );
         profiles_->Send( ack() );
-        ack.Send( client );
+        ack.Send( client, ctx );
         return;
     }
     CIT_Profiles it = authenticated_.find( link );
@@ -139,7 +139,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
     {
         ack().set_error_code( sword::AuthenticationResponse::too_many_connections );
         profiles_->Send( ack() );
-        ack.Send( client );
+        ack.Send( client, ctx );
         return;
     }
     Profile* profile = profiles_->Authenticate( message.login(), message.password() );
@@ -147,19 +147,19 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
     {
         ack().set_error_code( sword::AuthenticationResponse::invalid_login );
         profiles_->Send( ack() );
-        ack.Send( client );
-        SendProfiles();
+        ack.Send( client, ctx );
+        SendProfiles( ctx );
     }
     else
     {
         ack().set_terrain_name( config_.GetTerrainName().ToUTF8() );
         ack().set_error_code( sword::AuthenticationResponse::success );
         profile->Send( *ack().mutable_profile() );
-        ack.Send( client );
+        ack.Send( client, ctx );
         authenticated_[ link ] = profile;
         container_.NotifyClientAuthenticated( client, link, *profile );
         ++currentConnections_;
-        SendProfiles();
+        SendProfiles( ctx );
         MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
     }
 }
@@ -257,10 +257,10 @@ ClientPublisher_ABC& RightsPlugin::GetPublisher( const std::string& link )
 // Name: RightsPlugin::SendProfiles
 // Created: LGY 2011-11-21
 // -----------------------------------------------------------------------------
-void RightsPlugin::SendProfiles() const
+void RightsPlugin::SendProfiles( unsigned int ctx ) const
 {
     authentication::ConnectedProfileList response;
     for( T_Profiles::const_iterator it = authenticated_.begin(); it != authenticated_.end(); ++it )
         it->second->Send( *response().add_elem() );
-    response.Send( clients_ );
+    response.Send( clients_, ctx );
 }
