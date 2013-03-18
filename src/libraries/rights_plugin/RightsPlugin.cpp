@@ -18,6 +18,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/AuthenticationSenders.h"
 #include "protocol/Version.h"
+#include "protocol/RightsHelper.h"
 #include "tools/MessageDispatcher_ABC.h"
 
 using namespace plugins::rights;
@@ -99,12 +100,17 @@ void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client, const std::str
 // -----------------------------------------------------------------------------
 void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuthentication& wrapper )
 {
+    unsigned int ctx = wrapper.has_context()? wrapper.context() : 0;
+    if( wrapper.message().has_authentication_request() )
+    {
+        // Cannot forbid an authentication request
+        OnReceiveMsgAuthenticationRequest( link,
+            wrapper.message().authentication_request(), ctx );
+        return;
+    }
+
     if( GetProfile( link ).CheckRights( wrapper ) )
     {
-        unsigned int ctx = wrapper.has_context()? wrapper.context() : 0;
-
-        if( wrapper.message().has_authentication_request() )
-            OnReceiveMsgAuthenticationRequest( link, wrapper.message().authentication_request(), ctx );
         if( wrapper.message().has_profile_creation_request() )
             OnReceiveProfileCreationRequest( GetPublisher( link ), wrapper.message().profile_creation_request() );
         if( wrapper.message().has_profile_update_request() )
@@ -113,6 +119,19 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
             OnReceiveProfileDestructionRequest( GetPublisher( link ), wrapper.message().profile_destruction_request() );
         if( wrapper.message().has_connected_profiles_request() )
             OnReceiveConnectedProfilesRequest( GetPublisher( link ), wrapper.context(), wrapper.message().connected_profiles_request() );
+    }
+    else
+    {
+        sword::AuthenticationToClient ack;
+        ack.set_context( ctx );
+        if( !protocol::GetForbiddenError( wrapper, ack ))
+        {
+            // Irrelevant but better than no error
+            auto m = ack.mutable_message()->mutable_profile_creation_request_ack();
+            m->set_error_code( sword::ProfileCreationRequestAck::forbidden );
+            m->set_login( "unknown" );
+        }
+        base_.GetPublisher( link ).Send( ack );
     }
 }
 

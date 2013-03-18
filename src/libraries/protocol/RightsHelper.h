@@ -18,6 +18,8 @@ namespace protocol
 // Fill out with a "forbidden" action response relevant for the input message.
 // Return false such an error is no implemented/available.
 bool GetForbiddenError( const sword::ClientToSim& in, sword::SimToClient& out);
+bool GetForbiddenError( const sword::ClientToAuthentication& in,
+        sword::AuthenticationToClient& out);
 
 }  // namespace protocol
 

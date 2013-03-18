@@ -46,10 +46,11 @@ void AuthenticationToClient::Convert( const sword::ProfileCreation& from, MsgsAu
 void AuthenticationToClient::Convert( const sword::ProfileCreationRequestAck& from, MsgsAuthenticationToClient::MsgProfileCreationRequestAck* to )
 {
     CONVERT( login );
-    CONVERT_ENUM( error_code, ( sword::ProfileCreationRequestAck::success, MsgsAuthenticationToClient::MsgProfileCreationRequestAck::success )
+    CONVERT_NON_INJECTIVE_ENUM( error_code, ( sword::ProfileCreationRequestAck::success, MsgsAuthenticationToClient::MsgProfileCreationRequestAck::success )
                               ( sword::ProfileCreationRequestAck::invalid_login, MsgsAuthenticationToClient::MsgProfileCreationRequestAck::invalid_login )
                               ( sword::ProfileCreationRequestAck::invalid_password, MsgsAuthenticationToClient::MsgProfileCreationRequestAck::invalid_password )
-                              ( sword::ProfileCreationRequestAck::duplicate_login, MsgsAuthenticationToClient::MsgProfileCreationRequestAck::duplicate_login ) );
+                              ( sword::ProfileCreationRequestAck::duplicate_login, MsgsAuthenticationToClient::MsgProfileCreationRequestAck::duplicate_login )
+                              ( sword::ProfileCreationRequestAck::forbidden, MsgsAuthenticationToClient::MsgProfileCreationRequestAck::invalid_login ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,11 +70,12 @@ void AuthenticationToClient::Convert( const sword::ProfileUpdate& from, MsgsAuth
 void AuthenticationToClient::Convert( const sword::ProfileUpdateRequestAck& from, MsgsAuthenticationToClient::MsgProfileUpdateRequestAck* to )
 {
     CONVERT( login );
-    CONVERT_ENUM( error_code, ( sword::ProfileUpdateRequestAck::success, MsgsAuthenticationToClient::MsgProfileUpdateRequestAck::success )
+    CONVERT_NON_INJECTIVE_ENUM( error_code, ( sword::ProfileUpdateRequestAck::success, MsgsAuthenticationToClient::MsgProfileUpdateRequestAck::success )
                               ( sword::ProfileUpdateRequestAck::invalid_profile, MsgsAuthenticationToClient::MsgProfileUpdateRequestAck::invalid_profile )
                               ( sword::ProfileUpdateRequestAck::invalid_login, MsgsAuthenticationToClient::MsgProfileUpdateRequestAck::invalid_login )
                               ( sword::ProfileUpdateRequestAck::invalid_password, MsgsAuthenticationToClient::MsgProfileUpdateRequestAck::invalid_password )
-                              ( sword::ProfileUpdateRequestAck::duplicate_login, MsgsAuthenticationToClient::MsgProfileUpdateRequestAck::duplicate_login ) );
+                              ( sword::ProfileUpdateRequestAck::duplicate_login, MsgsAuthenticationToClient::MsgProfileUpdateRequestAck::duplicate_login )
+                              ( sword::ProfileUpdateRequestAck::forbidden, MsgsAuthenticationToClient::MsgProfileUpdateRequestAck::invalid_login ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,8 +93,9 @@ void AuthenticationToClient::Convert( const sword::ProfileDestruction& from, Msg
 // -----------------------------------------------------------------------------
 void AuthenticationToClient::Convert( const sword::ProfileDestructionRequestAck& from, MsgsAuthenticationToClient::MsgProfileDestructionRequestAck* to )
 {
-    CONVERT_ENUM( error_code, ( sword::ProfileDestructionRequestAck::success, MsgsAuthenticationToClient::MsgProfileDestructionRequestAck::success )
+    CONVERT_NON_INJECTIVE_ENUM( error_code, ( sword::ProfileDestructionRequestAck::success, MsgsAuthenticationToClient::MsgProfileDestructionRequestAck::success )
                               ( sword::ProfileDestructionRequestAck::invalid_profile, MsgsAuthenticationToClient::MsgProfileDestructionRequestAck::invalid_profile )
-                              ( sword::ProfileDestructionRequestAck::failure, MsgsAuthenticationToClient::MsgProfileDestructionRequestAck::failure ) );
+                              ( sword::ProfileDestructionRequestAck::failure, MsgsAuthenticationToClient::MsgProfileDestructionRequestAck::failure )
+                              ( sword::ProfileDestructionRequestAck::forbidden, MsgsAuthenticationToClient::MsgProfileDestructionRequestAck::invalid_profile ) );
     CONVERT( login );
 }
