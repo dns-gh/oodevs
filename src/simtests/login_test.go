@@ -190,6 +190,9 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 
 	_, err = user.UpdateProfile("user1", userProfile)
 	c.Assert(err, ErrorMatches, "forbidden")
+
+	err = user.DeleteProfile("user2")
+	c.Assert(err, ErrorMatches, "forbidden")
 	user.Close()
 
 	// An admin can create regular users
@@ -232,10 +235,39 @@ func (s *TestSuite) TestProfileEditing(c *C) {
 	profile, err = admin.UpdateProfile("missing", userProfile)
 	c.Assert(err, ErrorMatches, "invalid_profile")
 
+	// Delete myself
+	err = admin.DeleteProfile("admin")
+	c.Assert(err, ErrorMatches, "invalid_profile")
+
+	// Delete valid profile
+	err = admin.DeleteProfile("user2")
+	c.Assert(err, IsNil)
+	user2 := ConnectClient(c, sim)
+	err = user2.Login("user2", "user2")
+	c.Assert(err, ErrorMatches, "invalid_login")
+	user2.Close()
+
+	// Delete missing profile
+	err = admin.DeleteProfile("missing")
+	c.Assert(err, ErrorMatches, "invalid_profile")
+
 	admin.Close()
 	// Check the users are usable
-	admin = connectAndWait(c, sim, adminProfile.Login, adminProfile.Password)
-	admin.Close()
 	user = connectAndWait(c, sim, userProfile.Login, userProfile.Password)
+	user.Close()
+	admin = connectAndWait(c, sim, adminProfile.Login, adminProfile.Password)
+	// Check user creation/deletion are still applied
+	c.Assert(admin.Model.GetProfile("user2"), IsNil)
+	c.Assert(admin.Model.GetProfile(userProfile.Login), NotNil)
+	admin.Close()
+	// And taken in account for removed...
+	user2 = ConnectClient(c, sim)
+	err = user2.Login("user2", "user2")
+	c.Assert(err, ErrorMatches, "invalid_login")
+	user2.Close()
+	// ... and created profiles
+	user = ConnectClient(c, sim)
+	err = user.Login(userProfile.Login, userProfile.Password)
+	c.Assert(err, IsNil)
 	user.Close()
 }

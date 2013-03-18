@@ -211,3 +211,45 @@ func (c *Client) UpdateProfile(login string, profile *Profile) (*Profile, error)
 	err := <-quit
 	return updated, err
 }
+
+func (c *Client) DeleteProfile(login string) error {
+	msg := SwordMessage{
+		ClientToAuthentication: &sword.ClientToAuthentication{
+			Message: &sword.ClientToAuthentication_Content{
+				ProfileDestructionRequest: &sword.ProfileDestructionRequest{
+					Login: proto.String(login),
+				},
+			},
+		},
+	}
+	handler := func(msg *sword.AuthenticationToClient_Content, context int32,
+		err error, quit chan error) bool {
+
+		if reply := msg.GetProfileDestructionRequestAck(); reply != nil {
+			code := reply.GetErrorCode()
+			if code == sword.ProfileDestructionRequestAck_success {
+				err = nil
+				removed := c.Model.GetProfile(reply.GetLogin())
+				if removed != nil {
+					err = errors.New(fmt.Sprintf(
+						"Profile has not been destroyed: %v", removed))
+				}
+				err = nil
+			} else {
+				err = errors.New("unknown error")
+				name, ok := sword.ProfileDestructionRequestAck_ErrorCode_name[int32(code)]
+				if ok {
+					err = errors.New(name)
+				}
+			}
+		} else {
+			err = errors.New(fmt.Sprintf("Got unexpected %v", msg))
+		}
+		quit <- err
+		return true
+	}
+	quit := make(chan error)
+	c.postAuthRequest(msg, handler, quit)
+	err := <-quit
+	return err
+}
