@@ -80,9 +80,9 @@ private:
     std::auto_ptr< kernel::StaticModel >               staticModel_;
     std::auto_ptr< MemoryLogger_ABC >                  logger_;
     boost::shared_ptr< Model >                         model_;
-    CompositePlugin                                    handler_;
     dispatcher::CompositeRegistrable                   registrables_;
     boost::shared_ptr< ClientsNetworker >              clientsNetworker_;
+    CompositePlugin                                    handler_;
     boost::shared_ptr< SimulationDispatcher >          simulation_;
     std::auto_ptr< Loader >                            loader_;
     boost::shared_ptr< plugins::replay::ReplayPlugin > plugin_;
