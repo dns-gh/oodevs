@@ -12,7 +12,6 @@ import (
 	"code.google.com/p/goprotobuf/proto"
 	"errors"
 	"fmt"
-	"log"
 	"sword"
 )
 
@@ -30,7 +29,6 @@ func (c *Client) postAuthRequest(msg SwordMessage, handler authHandler,
 			quit <- err
 			return true
 		}
-		log.Println(msg)
 		if msg.AuthenticationToClient == nil ||
 			msg.AuthenticationToClient.GetMessage() == nil ||
 			msg.Context != context {

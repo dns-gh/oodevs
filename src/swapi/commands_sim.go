@@ -61,7 +61,6 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 			},
 		},
 	}
-	state := 0
 	formationId := uint32(0)
 	receivedTaskerId := uint32(0)
 	quit := make(chan error)
@@ -78,36 +77,26 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 			// Ignore this message, UnitMagicActionAck should be enough
 			return false
 		} else if reply := m.GetFormationCreation(); reply != nil {
-			// FormationCreation feedback
-			if state != 0 {
-				quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
-				return true
-			}
-			formationId = reply.GetFormation().GetId()
-			state = 1
+			// Ignore this message, its context should not be set anyway
 			return false
 		} else if reply := m.GetUnitMagicActionAck(); reply != nil {
 			// Wait for the final UnitMagicActionAck
-			id, err := GetUnitMagicActionAck(reply)
-			receivedTaskerId = id
-			if state == 0 {
-				if err == nil {
-					err = errors.New(fmt.Sprintf("Got unexpected success %v", m))
-				}
-				quit <- err
-			} else if state == 1 {
-				if err != nil {
-					quit <- errors.New(fmt.Sprintf(
-						"Got unexpected failure %v", m))
+			id, ret := GetUnitMagicActionAck(reply)
+			err = ret
+			if err == nil {
+				value := GetParameterValue(reply.GetResult(), 0)
+				if value != nil {
+					receivedTaskerId = id
+					formationId = value.GetFormation().GetId()
 				} else {
-					quit <- nil
+					err = errors.New(fmt.Sprintf("Invalid result: %v",
+						reply.GetResult()))
 				}
-			} else {
-				quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
 			}
 		} else {
-			quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
+			err = errors.New(fmt.Sprintf("Got unexpected %v", m))
 		}
+		quit <- err
 		return true
 	}
 	c.Post(msg, handler)

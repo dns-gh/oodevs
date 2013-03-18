@@ -48,3 +48,17 @@ func MakeString(value string) *sword.MissionParameter {
 			ACharStr: proto.String(value),
 		})
 }
+
+// Return the first value of the index-th parameter of params, or nil.
+func GetParameterValue(params *sword.MissionParameters,
+	index int) *sword.MissionParameter_Value {
+
+	elems := params.GetElem()
+	if elems != nil && len(elems) > index {
+		values := elems[index].GetValue()
+		if values != nil && len(values) > 0 {
+			return values[0]
+		}
+	}
+	return nil
+}
