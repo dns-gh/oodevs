@@ -213,7 +213,7 @@ void ADN_TableDelegate::AddBoldColumnIndex( int column )
 // Name: std::set<int> ADN_TableDelegate::GetRowIndexes
 // Created: NPT 2012-11-08
 // -----------------------------------------------------------------------------
-std::set<int> ADN_TableDelegate::GetBoldRowIndexes() const
+const std::set<int>& ADN_TableDelegate::GetBoldRowIndexes() const
 {
     return boldGridRowIndexes_;
 }
@@ -222,7 +222,7 @@ std::set<int> ADN_TableDelegate::GetBoldRowIndexes() const
 // Name: std::set<int> ADN_TableDelegate::GetColumnIndexes
 // Created: NPT 2012-11-08
 // -----------------------------------------------------------------------------
-std::set<int> ADN_TableDelegate::GetBoldColumnIndexes() const
+const std::set<int>& ADN_TableDelegate::GetBoldColumnIndexes() const
 {
     return boldGridColIndexes_;
 }

@@ -75,8 +75,8 @@ public:
     //@{
     void AddBoldRowIndex( int row );
     void AddBoldColumnIndex( int column );
-    std::set<int> GetBoldRowIndexes() const;
-    std::set<int> GetBoldColumnIndexes() const;
+    const std::set< int >& GetBoldRowIndexes() const;
+    const std::set< int >& GetBoldColumnIndexes() const;
     void SetGridPen( QPen gridPen );
     //@}
 
