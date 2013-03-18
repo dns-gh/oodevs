@@ -151,10 +151,11 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Add formation to party
-	id1, err := client.CreateFormation(1, 0, "newformation", 1, "")
+	f1, err := client.CreateFormation(1, 0, "newformation", 1, "")
+	c.Assert(f1, NotNil)
 
 	// Add formation to formation
-	_, err = client.CreateFormation(0, id1, "newformation2", 2, "aucun")
+	_, err = client.CreateFormation(0, f1.Id, "newformation2", 2, "aucun")
 	c.Assert(err, IsNil) // failed to create formation
 	dump := printParties(&prettyPrinter{}, model.GetData()).GetOutput()
 	expected := "" +
@@ -187,7 +188,7 @@ Party[2]
 				UnitMagicAction: &sword.UnitMagicAction{
 					Tasker: &sword.Tasker{
 						Formation: &sword.FormationId{
-							Id: proto.Uint32(id1),
+							Id: proto.Uint32(f1.Id),
 						},
 					},
 					Type:       &actionType,

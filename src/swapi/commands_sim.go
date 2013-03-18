@@ -31,7 +31,7 @@ func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
 }
 
 func (c *Client) CreateFormation(partyId uint32, parentId uint32,
-	name string, level int, logLevel string) (uint32, error) {
+	name string, level int, logLevel string) (*Formation, error) {
 	tasker := &sword.Tasker{}
 	taskerId := uint32(0)
 	if parentId != 0 {
@@ -61,7 +61,7 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 			},
 		},
 	}
-	formationId := uint32(0)
+	var created *Formation
 	receivedTaskerId := uint32(0)
 	quit := make(chan error)
 	handler := func(msg *SwordMessage, context int32, err error) bool {
@@ -87,7 +87,7 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 				value := GetParameterValue(reply.GetResult(), 0)
 				if value != nil {
 					receivedTaskerId = id
-					formationId = value.GetFormation().GetId()
+					created = c.Model.GetFormation(value.GetFormation().GetId())
 				} else {
 					err = errors.New(fmt.Sprintf("Invalid result: %v",
 						reply.GetResult()))
@@ -102,16 +102,14 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 	c.Post(msg, handler)
 	err := <-quit
 	if err == nil {
-		if formationId == 0 {
-			err = errors.New("invalid formation identifier: 0")
-		} else if receivedTaskerId == 0 {
+		if receivedTaskerId == 0 {
 			err = errors.New("invalid tasker identifier: 0")
 		} else if taskerId != receivedTaskerId {
 			err = errors.New(fmt.Sprintf(
 				"tasker identifier mismatch: %v != %v", taskerId, receivedTaskerId))
 		}
 	}
-	return formationId, err
+	return created, err
 }
 
 func (c *Client) DeleteUnit(unitId uint32) error {

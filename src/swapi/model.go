@@ -299,6 +299,17 @@ func (model *Model) GetProfile(login string) *Profile {
 	return p
 }
 
+func (model *Model) GetFormation(formationId uint32) *Formation {
+	var f *Formation
+	model.waitCommand(func(model *Model) {
+		formation := model.data.FindFormation(formationId)
+		if formation != nil {
+			f = formation.Copy()
+		}
+	})
+	return f
+}
+
 func (model *Model) WaitUntilTick(tick int32) bool {
 	return model.waitCond(model.WaitTimeout, func(model *Model) bool {
 		return tick <= model.data.Tick
