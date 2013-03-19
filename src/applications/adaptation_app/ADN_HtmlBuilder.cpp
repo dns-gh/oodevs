@@ -37,7 +37,11 @@ ADN_HtmlBuilder::~ADN_HtmlBuilder()
 // -----------------------------------------------------------------------------
 void ADN_HtmlBuilder::BeginHtml( const char* szTitle )
 {
-    strOutput_ << "<html><head><title>" << szTitle << "</title></head>" << std::endl;
+    strOutput_ << "<html>" << std::endl;
+    strOutput_ << "<head>" << std::endl;
+    strOutput_ << "<title>" << szTitle << "</title>" << std::endl;
+    strOutput_ << "<meta charset=\"utf-8\" />" << std::endl;
+    strOutput_ << "</head>" << std::endl;
     strOutput_ << "<h1>" << szTitle << "</h1><br>" << std::endl;
 }
 
@@ -209,14 +213,8 @@ std::stringstream& ADN_HtmlBuilder::Stream()
 // -----------------------------------------------------------------------------
 void ADN_HtmlBuilder::WriteToFile( const tools::Path& strFileName )
 {
-    QFile outputFile( strFileName.ToUTF8().c_str() );
-    if ( outputFile.open( QFile::WriteOnly ) )
-    {
-        QTextStream output( &outputFile );
-        output.setCodec("UTF-8");
-        output.setGenerateByteOrderMark( true );
-        output << QString::fromStdString( strOutput_.str() ).toUtf8();
-    }
+    tools::Ofstream output( strFileName );
+    output << strOutput_.str();
 }
 
 // -----------------------------------------------------------------------------
