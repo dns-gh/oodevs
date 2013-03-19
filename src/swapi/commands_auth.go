@@ -16,10 +16,6 @@ import (
 	"sword"
 )
 
-var (
-	ErrInvalidLogin = errors.New("invalid login")
-)
-
 // Send a DisconnectionRequest over link and wait for connection termination.
 func Disconnect(link io.ReadWriter) {
 	w := NewWriter(link)
@@ -40,11 +36,22 @@ func Disconnect(link io.ReadWriter) {
 	}
 }
 
-type authHandler func(msg *sword.AuthenticationToClient_Content,
-	context int32, err error, quit chan error) bool
+func unexpected(value interface{}) error {
+	return errors.New(fmt.Sprintf("got unexpected value %v", value))
+}
 
-func (c *Client) postAuthRequest(msg SwordMessage, handler authHandler,
-	quit chan error) int32 {
+func nameof(names map[int32]string, code int32) error {
+	name, ok := names[code]
+	if !ok {
+		return unexpected(code)
+	}
+	return errors.New(name)
+}
+
+type authHandler func(msg *sword.AuthenticationToClient_Content) error
+
+func (c *Client) postAuthRequest(msg SwordMessage, handler authHandler) <-chan error {
+	quit := make(chan error, 1)
 	wrapper := func(msg *SwordMessage, context int32, err error) bool {
 		if err != nil {
 			quit <- err
@@ -55,9 +62,11 @@ func (c *Client) postAuthRequest(msg SwordMessage, handler authHandler,
 			msg.Context != context {
 			return false
 		}
-		return handler(msg.AuthenticationToClient.GetMessage(), context, err, quit)
+		quit <- handler(msg.AuthenticationToClient.GetMessage())
+		return true
 	}
-	return c.Post(msg, wrapper)
+	c.Post(msg, wrapper)
+	return quit
 }
 
 func (c *Client) LoginWithVersion(username, password, version string) error {
@@ -74,31 +83,19 @@ func (c *Client) LoginWithVersion(username, password, version string) error {
 			},
 		},
 	}
-	handler := func(msg *sword.AuthenticationToClient_Content, context int32,
-		err error, quit chan error) bool {
-
-		// we cannot check context as sword always set it to 0
+	handler := func(msg *sword.AuthenticationToClient_Content) error {
 		reply := msg.GetAuthenticationResponse()
 		if reply == nil {
-			return false
+			return unexpected(msg)
 		}
 		code := reply.GetErrorCode()
-		if code == sword.AuthenticationResponse_success {
-			quit <- nil
-			return true
+		if code != sword.AuthenticationResponse_success {
+			return nameof(sword.AuthenticationResponse_ErrorCode_name,
+				int32(code))
 		}
-		err = ErrInvalidLogin
-		name, ok := sword.AuthenticationResponse_ErrorCode_name[int32(code)]
-		if ok {
-			err = errors.New(name)
-		}
-		quit <- err
-		return true
+		return nil
 	}
-	quit := make(chan error)
-	c.postAuthRequest(msg, handler, quit)
-	err := <-quit
-	return err
+	return <-c.postAuthRequest(msg, handler)
 }
 
 func (c *Client) Login(username, password string) error {
@@ -114,12 +111,10 @@ func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 		},
 	}
 	profiles := []*Profile{}
-	handler := func(msg *sword.AuthenticationToClient_Content, context int32,
-		err error, quit chan error) bool {
-
+	handler := func(msg *sword.AuthenticationToClient_Content) error {
 		reply := msg.GetConnectedProfileList()
 		if reply == nil {
-			return false
+			return unexpected(msg)
 		}
 		for _, p := range reply.GetElem() {
 			profile := NewProfile(
@@ -128,12 +123,9 @@ func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 				p.GetSupervisor())
 			profiles = append(profiles, profile)
 		}
-		quit <- err
-		return true
+		return nil
 	}
-	quit := make(chan error)
-	c.postAuthRequest(msg, handler, quit)
-	err := <-quit
+	err := <-c.postAuthRequest(msg, handler)
 	return profiles, err
 }
 
@@ -157,38 +149,28 @@ func (c *Client) CreateProfile(profile *Profile) (*Profile, error) {
 		},
 	}
 	var created *Profile
-	handler := func(msg *sword.AuthenticationToClient_Content, context int32,
-		err error, quit chan error) bool {
-
-		if reply := msg.GetProfileCreationRequestAck(); reply != nil {
-			code := reply.GetErrorCode()
-			if code == sword.ProfileCreationRequestAck_success {
-				// The profile should be available by now. It is safe to call
-				// GetProfile() here:
-				// - The model has its own goroutine, so no reentrancy issue
-				// - This handler block the others so there we are not racing
-				//   for profile creation.
-				// - GetProfile() posts on the model goroutine so all pending
-				//   pending messages will be processed before we try to
-				//   access profiles.
-				created = c.Model.GetProfile(reply.GetLogin())
-				err = nil
-			} else {
-				err = errors.New("unknown error")
-				name, ok := sword.ProfileCreationRequestAck_ErrorCode_name[int32(code)]
-				if ok {
-					err = errors.New(name)
-				}
-			}
-		} else {
-			err = errors.New(fmt.Sprintf("Got unexpected %v", msg))
+	handler := func(msg *sword.AuthenticationToClient_Content) error {
+		reply := msg.GetProfileCreationRequestAck()
+		if reply == nil {
+			return unexpected(msg)
 		}
-		quit <- err
-		return true
+		code := reply.GetErrorCode()
+		if code != sword.ProfileCreationRequestAck_success {
+			return nameof(sword.ProfileCreationRequestAck_ErrorCode_name,
+				int32(code))
+		}
+		// The profile should be available by now. It is safe to call
+		// GetProfile() here:
+		// - The model has its own goroutine, so no reentrancy issue
+		// - This handler block the others so there we are not racing
+		//   for profile creation.
+		// - GetProfile() posts on the model goroutine so all pending
+		//   pending messages will be processed before we try to
+		//   access profiles.
+		created = c.Model.GetProfile(reply.GetLogin())
+		return nil
 	}
-	quit := make(chan error)
-	c.postAuthRequest(msg, handler, quit)
-	err := <-quit
+	err := <-c.postAuthRequest(msg, handler)
 	return created, err
 }
 
@@ -204,30 +186,20 @@ func (c *Client) UpdateProfile(login string, profile *Profile) (*Profile, error)
 		},
 	}
 	var updated *Profile
-	handler := func(msg *sword.AuthenticationToClient_Content, context int32,
-		err error, quit chan error) bool {
-
-		if reply := msg.GetProfileUpdateRequestAck(); reply != nil {
-			code := reply.GetErrorCode()
-			if code == sword.ProfileUpdateRequestAck_success {
-				updated = c.Model.GetProfile(reply.GetLogin())
-				err = nil
-			} else {
-				err = errors.New("unknown error")
-				name, ok := sword.ProfileUpdateRequestAck_ErrorCode_name[int32(code)]
-				if ok {
-					err = errors.New(name)
-				}
-			}
-		} else {
-			err = errors.New(fmt.Sprintf("Got unexpected %v", msg))
+	handler := func(msg *sword.AuthenticationToClient_Content) error {
+		reply := msg.GetProfileUpdateRequestAck()
+		if reply == nil {
+			return unexpected(msg)
 		}
-		quit <- err
-		return true
+		code := reply.GetErrorCode()
+		if code != sword.ProfileUpdateRequestAck_success {
+			return nameof(sword.ProfileUpdateRequestAck_ErrorCode_name,
+				int32(code))
+		}
+		updated = c.Model.GetProfile(reply.GetLogin())
+		return nil
 	}
-	quit := make(chan error)
-	c.postAuthRequest(msg, handler, quit)
-	err := <-quit
+	err := <-c.postAuthRequest(msg, handler)
 	return updated, err
 }
 
@@ -241,34 +213,23 @@ func (c *Client) DeleteProfile(login string) error {
 			},
 		},
 	}
-	handler := func(msg *sword.AuthenticationToClient_Content, context int32,
-		err error, quit chan error) bool {
-
-		if reply := msg.GetProfileDestructionRequestAck(); reply != nil {
-			code := reply.GetErrorCode()
-			if code == sword.ProfileDestructionRequestAck_success {
-				err = nil
-				removed := c.Model.GetProfile(reply.GetLogin())
-				if removed != nil {
-					err = errors.New(fmt.Sprintf(
-						"Profile has not been destroyed: %v", removed))
-				}
-				err = nil
-			} else {
-				err = errors.New("unknown error")
-				name, ok := sword.ProfileDestructionRequestAck_ErrorCode_name[int32(code)]
-				if ok {
-					err = errors.New(name)
-				}
-			}
-		} else {
-			err = errors.New(fmt.Sprintf("Got unexpected %v", msg))
+	handler := func(msg *sword.AuthenticationToClient_Content) error {
+		reply := msg.GetProfileDestructionRequestAck()
+		if reply == nil {
+			return unexpected(msg)
 		}
-		quit <- err
-		return true
+		code := reply.GetErrorCode()
+		if code != sword.ProfileDestructionRequestAck_success {
+			return nameof(sword.ProfileDestructionRequestAck_ErrorCode_name,
+				int32(code))
+		}
+		removed := c.Model.GetProfile(reply.GetLogin())
+		if removed != nil {
+			return nil // FIXME
+			return errors.New(fmt.Sprintf(
+				"Profile has not been destroyed: %v", removed))
+		}
+		return nil
 	}
-	quit := make(chan error)
-	c.postAuthRequest(msg, handler, quit)
-	err := <-quit
-	return err
+	return <-c.postAuthRequest(msg, handler)
 }
