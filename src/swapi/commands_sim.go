@@ -15,6 +15,18 @@ import (
 	"sword"
 )
 
+var (
+	ErrContinue = errors.New("continue")
+)
+
+func mismatch(name string, a, b interface{}) error {
+	return errors.New(fmt.Sprintf("%v mismatch %v != %v", name, a, b))
+}
+
+func invalid(name string, value interface{}) error {
+	return errors.New(fmt.Sprintf("invalid %v: %v", name, value))
+}
+
 func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
 	// Wait for the final UnitMagicActionAck
 	code := msg.GetErrorCode()
@@ -22,12 +34,32 @@ func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
 		id := msg.GetUnit().GetId()
 		return id, nil
 	}
-	err := errors.New("unknown error")
-	name, ok := sword.UnitActionAck_ErrorCode_name[int32(code)]
-	if ok {
-		err = errors.New(name)
+	return 0, nameof(sword.UnitActionAck_ErrorCode_name, int32(code))
+}
+
+type simHandler func(msg *sword.SimToClient_Content) error
+
+func (c *Client) postSimRequest(msg SwordMessage, handler simHandler) <-chan error {
+	quit := make(chan error, 1)
+	wrapper := func(msg *SwordMessage, context int32, err error) bool {
+		if err != nil {
+			quit <- err
+			return true
+		}
+		if msg.SimulationToClient == nil ||
+			msg.SimulationToClient.GetMessage() == nil ||
+			msg.Context != context {
+			return false
+		}
+		err = handler(msg.SimulationToClient.GetMessage())
+		if err == ErrContinue {
+			return false
+		}
+		quit <- err
+		return true
 	}
-	return 0, err
+	c.Post(msg, wrapper)
+	return quit
 }
 
 func (c *Client) CreateFormation(partyId uint32, parentId uint32,
@@ -63,53 +95,43 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 	}
 	var created *Formation
 	receivedTaskerId := uint32(0)
-	quit := make(chan error)
-	handler := func(msg *SwordMessage, context int32, err error) bool {
-		if err != nil {
-			quit <- err
-			return true
-		}
-		if msg.SimulationToClient == nil || msg.Context != context {
-			return false
-		}
-		m := msg.SimulationToClient.GetMessage()
-		if reply := m.GetMagicActionAck(); reply != nil {
+	handler := func(msg *sword.SimToClient_Content) error {
+		if reply := msg.GetMagicActionAck(); reply != nil {
 			// Ignore this message, UnitMagicActionAck should be enough
-			return false
-		} else if reply := m.GetFormationCreation(); reply != nil {
+			return ErrContinue
+		}
+		if reply := msg.GetFormationCreation(); reply != nil {
 			// Ignore this message, its context should not be set anyway
-			return false
-		} else if reply := m.GetUnitMagicActionAck(); reply != nil {
-			// Wait for the final UnitMagicActionAck
-			id, ret := GetUnitMagicActionAck(reply)
-			err = ret
-			if err == nil {
-				value := GetParameterValue(reply.GetResult(), 0)
-				if value != nil {
-					receivedTaskerId = id
-					created = c.Model.GetFormation(value.GetFormation().GetId())
-				} else {
-					err = errors.New(fmt.Sprintf("Invalid result: %v",
-						reply.GetResult()))
-				}
-			}
-		} else {
-			err = errors.New(fmt.Sprintf("Got unexpected %v", m))
+			return ErrContinue
 		}
-		quit <- err
-		return true
-	}
-	c.Post(msg, handler)
-	err := <-quit
-	if err == nil {
-		if receivedTaskerId == 0 {
-			err = errors.New("invalid tasker identifier: 0")
-		} else if taskerId != receivedTaskerId {
-			err = errors.New(fmt.Sprintf(
-				"tasker identifier mismatch: %v != %v", taskerId, receivedTaskerId))
+		reply := msg.GetUnitMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
 		}
+		// Wait for the final UnitMagicActionAck
+		id, err := GetUnitMagicActionAck(reply)
+		if err != nil {
+			return err
+		}
+		value := GetParameterValue(reply.GetResult(), 0)
+		if value == nil {
+			return invalid("result", reply.GetResult())
+		}
+		receivedTaskerId = id
+		created = c.Model.GetFormation(value.GetFormation().GetId())
+		return nil
 	}
-	return created, err
+	err := <-c.postSimRequest(msg, handler)
+	if err != nil {
+		return nil, err
+	}
+	if receivedTaskerId == 0 {
+		return nil, invalid("tasker id", receivedTaskerId)
+	}
+	if taskerId != receivedTaskerId {
+		return nil, mismatch("tasker id", taskerId, receivedTaskerId)
+	}
+	return created, nil
 }
 
 func (c *Client) DeleteUnit(unitId uint32) error {
@@ -130,63 +152,39 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 			},
 		},
 	}
-	state := 0
-	quit := make(chan error)
-	handler := func(msg *SwordMessage, context int32, err error) bool {
+	destroyed := false
+	handler := func(msg *sword.SimToClient_Content) error {
+		if reply := msg.GetUnitDestruction(); reply != nil {
+			if destroyed {
+				return unexpected(msg)
+			}
+			destroyed = true
+			return ErrContinue
+		}
+		reply := msg.GetUnitMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		id, err := GetUnitMagicActionAck(reply)
 		if err != nil {
-			quit <- err
-			return true
+			return err
 		}
-		if msg.SimulationToClient == nil || msg.Context != context {
-			return false
+		if !destroyed {
+			return unexpected(msg)
 		}
-		m := msg.SimulationToClient.GetMessage()
-		if reply := m.GetUnitDestruction(); reply != nil {
-			if state != 0 {
-				quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
-				return true
-			}
-			state = 1
-			return false
-		} else if reply := m.GetUnitMagicActionAck(); reply != nil {
-			id, err := GetUnitMagicActionAck(reply)
-			if state == 0 {
-				if err == nil {
-					err = errors.New(fmt.Sprintf("Got unexpected success %v", m))
-				}
-			} else if state == 1 {
-				if err != nil {
-					err = errors.New(fmt.Sprintf("Got unexpected failure %v", m))
-				} else {
-					if id != unitId {
-						err = errors.New(fmt.Sprintf(
-							"Deleted unit identifier mismatch: %v != %v", unitId, id))
-					}
-				}
-			} else {
-				err = errors.New(fmt.Sprintf("Got unexpected %v", m))
-			}
-			quit <- err
-		} else {
-			quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
+		if id != unitId {
+			return mismatch("unit id", unitId, id)
 		}
-		return true
+		return nil
 	}
-	c.Post(msg, handler)
-	err := <-quit
-	return err
+	return <-c.postSimRequest(msg, handler)
 }
 
 func getControlAckError(code sword.ControlAck_ErrorCode) error {
 	if code == sword.ControlAck_no_error {
 		return nil
 	}
-	err := errors.New("unknown error")
-	name, ok := sword.ControlAck_ErrorCode_name[int32(code)]
-	if ok {
-		err = errors.New(name)
-	}
-	return err
+	return nameof(sword.ControlAck_ErrorCode_name, int32(code))
 }
 
 func (c *Client) Pause() error {
@@ -197,26 +195,14 @@ func (c *Client) Pause() error {
 			},
 		},
 	}
-	quit := make(chan error)
-	handler := func(msg *SwordMessage, context int32, err error) bool {
-		if err != nil {
-			quit <- err
-			return true
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetControlPauseAck()
+		if reply == nil {
+			return unexpected(msg)
 		}
-		if msg.SimulationToClient == nil || msg.Context != context {
-			return false
-		}
-		m := msg.SimulationToClient.GetMessage()
-		if reply := m.GetControlPauseAck(); reply != nil {
-			quit <- getControlAckError(reply.GetErrorCode())
-		} else {
-			quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
-		}
-		return true
+		return getControlAckError(reply.GetErrorCode())
 	}
-	c.Post(msg, handler)
-	err := <-quit
-	return err
+	return <-c.postSimRequest(msg, handler)
 }
 
 func (c *Client) Resume(nextPause uint32) error {
@@ -229,26 +215,14 @@ func (c *Client) Resume(nextPause uint32) error {
 			},
 		},
 	}
-	quit := make(chan error)
-	handler := func(msg *SwordMessage, context int32, err error) bool {
-		if err != nil {
-			quit <- err
-			return true
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetControlResumeAck()
+		if reply == nil {
+			return unexpected(msg)
 		}
-		if msg.SimulationToClient == nil || msg.Context != context {
-			return false
-		}
-		m := msg.SimulationToClient.GetMessage()
-		if reply := m.GetControlResumeAck(); reply != nil {
-			quit <- getControlAckError(reply.GetErrorCode())
-		} else {
-			quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
-		}
-		return true
+		return getControlAckError(reply.GetErrorCode())
 	}
-	c.Post(msg, handler)
-	err := <-quit
-	return err
+	return <-c.postSimRequest(msg, handler)
 }
 
 func (c *Client) Stop() error {
@@ -259,24 +233,12 @@ func (c *Client) Stop() error {
 			},
 		},
 	}
-	quit := make(chan error)
-	handler := func(msg *SwordMessage, context int32, err error) bool {
-		if err != nil {
-			quit <- err
-			return true
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetControlStopAck()
+		if reply == nil {
+			return unexpected(msg)
 		}
-		if msg.SimulationToClient == nil || msg.Context != context {
-			return false
-		}
-		m := msg.SimulationToClient.GetMessage()
-		if reply := m.GetControlStopAck(); reply != nil {
-			quit <- getControlAckError(reply.GetErrorCode())
-		} else {
-			quit <- errors.New(fmt.Sprintf("Got unexpected %v", m))
-		}
-		return true
+		return getControlAckError(reply.GetErrorCode())
 	}
-	c.Post(msg, handler)
-	err := <-quit
-	return err
+	return <-c.postSimRequest(msg, handler)
 }
