@@ -121,12 +121,17 @@ void RightsPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const
 // -----------------------------------------------------------------------------
 void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client, const std::string& /*link*/ )
 {
-    AuthenticationSender sender( client, clients_, 0 );
+    Logout( client );
+}
+
+void RightsPlugin::Logout( ClientPublisher_ABC& client )
+{
     for( IT_Profiles it = authenticated_.begin(); it != authenticated_.end(); ++it )
         if( &GetPublisher( it->first ) == &client )
         {
             authenticated_.erase( it );
             --currentConnections_;
+            AuthenticationSender sender( client, clients_, 0 );
             SendProfiles( sender );
             MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
             return;
@@ -140,7 +145,10 @@ void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client, const std::str
 void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuthentication& wrapper )
 {
     if( wrapper.message().has_disconnection_request() )
+    {
+        Logout( base_.GetPublisher( link ) );
         throw tools::DisconnectionRequest( "disconnection request from " + link );
+    }
 
     unsigned int ctx = wrapper.has_context() ? wrapper.context() : 0;
     AuthenticationSender sender( base_.GetPublisher( link ), clients_, ctx );

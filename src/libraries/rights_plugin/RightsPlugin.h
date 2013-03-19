@@ -93,6 +93,7 @@ private:
     void OnReceiveConnectedProfilesRequest(const sword::ConnectedProfilesRequest& message, AuthenticationSender& sender );
 
     bool IsAuthenticated( const std::string& login ) const;
+    void Logout( dispatcher::ClientPublisher_ABC& client );
     //@}
 
 private:
