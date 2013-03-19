@@ -264,8 +264,8 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
     message.set_type( type_->GetType().c_str() );
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
-        const std::string keyName = it->second->GetKeyName();
-        const std::string type = it->second->GetType();
+        const std::string keyName = boost::algorithm::to_lower_copy( it->second->GetKeyName() );
+        const std::string type = boost::algorithm::to_lower_copy( it->second->GetType() );
 
         if( type == "location" || type == "circle" || type == "rectangle" || type == "point" || type == "polygon" || type == "line" )
             static_cast< const Location* >( it->second )->CommitTo( *message.mutable_position() );
