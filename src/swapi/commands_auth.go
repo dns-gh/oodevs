@@ -225,7 +225,6 @@ func (c *Client) DeleteProfile(login string) error {
 		}
 		removed := c.Model.GetProfile(reply.GetLogin())
 		if removed != nil {
-			return nil // FIXME
 			return errors.New(fmt.Sprintf(
 				"Profile has not been destroyed: %v", removed))
 		}

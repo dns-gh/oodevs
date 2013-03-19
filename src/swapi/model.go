@@ -197,6 +197,9 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetProfile().GetSupervisor())
 			d.updateProfile(mm.GetLogin(), profile)
 			// XXX report error here
+		} else if mm := m.GetProfileDestruction(); mm != nil {
+			d.removeProfile(mm.GetLogin())
+			// XXX report error here
 		}
 	}
 }
