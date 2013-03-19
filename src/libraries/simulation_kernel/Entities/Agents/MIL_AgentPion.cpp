@@ -702,13 +702,15 @@ MIL_Army_ABC& MIL_AgentPion::GetArmy() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_KnowledgeGroup > MIL_AgentPion::GetKnowledgeGroup() const
 {
-    if( CallRole( &PHY_RoleInterface_Communications::CanEmit, true ) )
+    if( !CallRole( &PHY_RoleInterface_Communications::CanEmit, true ) )
     {
-        if( ! pAutomate_ )
-            throw MASA_EXCEPTION( MT_FormatString( "Automate is undefined for agent id %d ", GetID() ) );
-        return pAutomate_->GetKnowledgeGroup();
+        boost::shared_ptr< MIL_KnowledgeGroup > jamKg = CallRole( &PHY_RolePion_Communications::GetJammedKnowledgeGroup, boost::shared_ptr< MIL_KnowledgeGroup >() );
+        if( jamKg.get() )
+            return jamKg;
     }
-    return CallRole( &PHY_RolePion_Communications::GetKnowledgeGroup, boost::shared_ptr< MIL_KnowledgeGroup >() );
+    if( !pAutomate_ )
+        throw MASA_EXCEPTION( MT_FormatString( "Automate is undefined for agent id %d ", GetID() ) );
+    return pAutomate_->GetKnowledgeGroup();
 }
 
 // -----------------------------------------------------------------------------

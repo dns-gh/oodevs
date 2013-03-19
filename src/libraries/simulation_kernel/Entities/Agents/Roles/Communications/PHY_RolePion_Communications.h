@@ -103,7 +103,7 @@ public:
 
     //! @name Accessors
     //@{
-    boost::shared_ptr< MIL_KnowledgeGroup > GetKnowledgeGroup() const;
+    boost::shared_ptr< MIL_KnowledgeGroup > GetJammedKnowledgeGroup() const;
     bool IsJammed() const;
     bool IsInEmissionBlackout() const;
     bool IsInReceptionBlackout() const;
