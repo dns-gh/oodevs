@@ -16,39 +16,51 @@
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
 
-namespace
-{
-    void Copy( std::istream& file, std::ostream& output )
-    {
-        std::istreambuf_iterator< char > it( file );
-        std::istreambuf_iterator< char > end;
-        std::ostreambuf_iterator< char > out( output );
-        std::copy( it, end, out );
-    }
-}
-
 namespace tools
 {
-    namespace zipextractor
-    {
-
-// -----------------------------------------------------------------------------
-// Name: ExtractFile
-// Created: ABR 2013-01-21
-// -----------------------------------------------------------------------------
-void ExtractFile( zip::izipfile& archive, const char* inputName, const Path& outputName, const Path& destination )
+namespace zipextractor
 {
-    Path p = destination / outputName;
-    p.SystemComplete();
-    if( p.FileName() == "." )
+
+ZipExtractor::ZipExtractor( zip::izipfile& archive )
+    : archive_( archive )
+    , buffer_( 64*1024 )
+{
+    // Reset enumeration
+    archive_.closeInZip();
+}
+
+ZipExtractor::~ZipExtractor()
+{
+}
+
+bool ZipExtractor::Next()
+{
+    return archive_.isOk() && archive_.browse();
+}
+
+tools::Path ZipExtractor::GetCurrentFileName() const
+{
+    return Path::FromUTF8( archive_.getCurrentFileName() );
+}
+
+void ZipExtractor::ExtractCurrentFile( tools::Path dest )
+{
+    dest.SystemComplete();
+    if( dest.FileName() == "." )
         return;
-    zip::izipstream file( archive, inputName, std::ios_base::in | std::ios_base::binary );
-    if( file.good() )
+    if( archive_.getCurrentFileSize() < 0 )
+        return;
+
+    if( !dest.Parent().Exists() )
+        dest.Parent().CreateDirectories();
+    tools::Ofstream output( dest, std::ios_base::out | std::ios_base::binary );
+
+    for( ;; )
     {
-        if( !p.Parent().Exists() )
-            p.Parent().CreateDirectories();
-        tools::Ofstream output( p, std::ios_base::out | std::ios_base::binary );
-        Copy( file, output );
+        int read = archive_.read( &buffer_[0], static_cast< int >( buffer_.size() ));
+        if( read <= 0 )
+            break;
+        output.write( &buffer_[0], static_cast< std::streamsize >( read ));
     }
 }
 
@@ -59,9 +71,11 @@ void ExtractFile( zip::izipfile& archive, const char* inputName, const Path& out
 void ExtractArchive( const Path& archivePath, const Path& destination )
 {
     zip::izipfile archive( archivePath.ToUnicode() );
-    while( archive.isOk() && archive.browse() )
+    ZipExtractor extractor( archive );
+    while( extractor.Next() )
     {
-        tools::zipextractor::ExtractFile( archive, 0, Path::FromUTF8( archive.getCurrentFileName() ), destination );
+        auto output = destination / extractor.GetCurrentFileName();
+        extractor.ExtractCurrentFile( output );
     }
 }
 

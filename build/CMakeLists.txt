@@ -272,7 +272,7 @@ target_link_libraries( shield_test shield )
 
 # tools_test
 add_target( tools_test tests "tests/tools_test" OPTIONS test )
-target_link_libraries( tools_test sword_tools )
+target_link_libraries( tools_test sword_tools ${ZIPSTREAM_LIBRARIES} )
 
 function( add_plugin target )
     masa_extract_options( options ${ARGN} )

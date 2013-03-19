@@ -49,14 +49,15 @@ namespace frontend
         template< typename Functor >
         void InstallPackageFile( zip::izipfile& archive, const tools::Path& destination, Functor callback )
         {
-            while( archive.isOk() && archive.browse() )
+            tools::zipextractor::ZipExtractor ex( archive );
+            tools::Path name;
+            while( ex.Next() )
             {
-                const tools::Path name = tools::Path::FromUTF8( archive.getCurrentFileName() );
-                if( name != "content.xml" ) // $$$$ SBO 2008-03-17: hard coded!
-                {
-                    tools::zipextractor::ExtractFile( archive, 0, name, destination );
-                    callback();
-                }
+                name = ex.GetCurrentFileName();
+                if( name == "content.xml" )
+                    continue;
+                ex.ExtractCurrentFile( destination / name );
+                callback();
             }
         }
 

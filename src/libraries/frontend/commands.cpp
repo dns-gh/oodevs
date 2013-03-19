@@ -208,7 +208,14 @@ namespace frontend
 
         void InstallPackageFile( zip::izipfile& archive, const tools::Path& filename, const tools::Path& destination )
         {
-            tools::zipextractor::ExtractFile( archive, filename.ToUTF8().c_str(), filename, destination );
+            tools::zipextractor::ZipExtractor ex( archive );
+            while( ex.Next() )
+            {
+                if( ex.GetCurrentFileName() != filename )
+                    continue;
+                ex.ExtractCurrentFile( destination / filename );
+                break;
+            }
         }
 
         bool ExerciseExists( const tools::GeneralConfig& config, const tools::Path& exercise )
