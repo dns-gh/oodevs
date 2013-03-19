@@ -91,6 +91,9 @@ public:
     const std::string ToUTF8() const;
     const std::wstring ToUnicode() const;
     const boost::filesystem::path& ToBoost() const;
+    // Return a string version containing only ASCII-US characters, mostly
+    // for debugging purposes.
+    std::string ToDebug() const;
 
     unsigned int FileSize() const;
     std::time_t LastWriteTime() const;
