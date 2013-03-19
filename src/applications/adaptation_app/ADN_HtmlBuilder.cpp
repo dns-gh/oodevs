@@ -209,8 +209,14 @@ std::stringstream& ADN_HtmlBuilder::Stream()
 // -----------------------------------------------------------------------------
 void ADN_HtmlBuilder::WriteToFile( const tools::Path& strFileName )
 {
-    tools::Ofstream output( strFileName );
-    output << strOutput_.str();
+    QFile outputFile( strFileName.ToUTF8().c_str() );
+    if ( outputFile.open( QFile::WriteOnly ) )
+    {
+        QTextStream output( &outputFile );
+        output.setCodec("UTF-8");
+        output.setGenerateByteOrderMark( true );
+        output << QString::fromStdString( strOutput_.str() ).toUtf8();
+    }
 }
 
 // -----------------------------------------------------------------------------
