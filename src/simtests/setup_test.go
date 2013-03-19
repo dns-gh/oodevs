@@ -12,6 +12,8 @@ import (
 	"flag"
 	"fmt"
 	. "launchpad.net/gocheck"
+	"log"
+	"swapi"
 	"swapi/simu"
 	"testing"
 )
@@ -49,6 +51,17 @@ func MakeOpts() *simu.SimOpts {
 	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort+5)
 	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+6)
 	return &opts
+}
+
+func addClientLogger(client *swapi.Client) {
+	handler := func(msg *swapi.SwordMessage, context int32, err error) bool {
+		if err != nil {
+			return true
+		}
+		log.Println(msg)
+		return false
+	}
+	client.Register(handler)
 }
 
 func Test(t *testing.T) { TestingT(t) }
