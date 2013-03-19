@@ -29,7 +29,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
 {
     setModal( false );
     setCaption( tr( "Exercise" ) );
-    Q3GridLayout* grid = new Q3GridLayout( this, 6, 2, 0, 5 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 5, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 0, 1 );
     grid->setRowStretch( 1, 10 );
@@ -79,32 +79,8 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
     {
         Q3GroupBox* box = new Q3VGroupBox( tr( "Parameters" ), this );
         humanEvolutionCheckBox_ = new QCheckBox( tr( "Human factors automatic evolution" ), box );
-        melmilCheckBox_ = new QCheckBox( tr( "Melmil" ), box );
         grid->addMultiCellWidget( box, 3, 3, 0, 2 );
-    }
-    {
-        Q3GroupBox* box = new Q3GroupBox( tr( "SIC versions" ), this );
-        for( int i = 0; i < Exercise::eSicNbr; ++i )
-        {
-            QButtonGroup* group = new QButtonGroup( box );
-            sicVersions_[ 2 * i ] = new QRadioButton;
-            sicVersions_[ 2 * i + 1 ] = new QRadioButton;
-            group->addButton( sicVersions_[ 2 * i ] );
-            group->addButton( sicVersions_[ 2 * i + 1 ] );
-        }
-        QGridLayout* layout = new QGridLayout( box, 4, 3, 5, 5 );
-        layout->addWidget( new QLabel( "SICF" ), 0, 0, 1, 1 );
-        layout->addWidget( sicVersions_[ 2 * Exercise::eSicSICF ], 0, 1, 1, 1 );
-        layout->addWidget( sicVersions_[ 2 * Exercise::eSicSICF + 1 ], 0, 2, 1, 1 );
-        layout->addWidget( new QLabel( "SIR" ), 1, 0, 1, 1 );
-        layout->addWidget( sicVersions_[ 2 * Exercise::eSicSIR ], 1, 1, 1, 1 );
-        layout->addWidget( sicVersions_[ 2 * Exercise::eSicSIR + 1 ], 1, 2, 1, 1 );
-        layout->addWidget( new QLabel( "ATLAS" ), 2, 0, 1, 1 );
-        layout->addWidget( sicVersions_[ 2 * Exercise::eSicAtlas ], 2, 1, 1, 1 );
-        layout->addWidget( sicVersions_[ 2 * Exercise::eSicAtlas + 1 ], 2, 2, 1, 1 );
-        layout->addWidget( new QLabel( "DQP Manager" ), 3, 0, 1, 1 );
-        layout->addWidget( sicVersions_[ 2 * Exercise::eSicDQPManager ], 3, 1, 1, 1 );
-        layout->addWidget( sicVersions_[ 2 * Exercise::eSicDQPManager + 1 ], 3, 2, 1, 1 );
+        melmilCheckBox_ = new QCheckBox( tr( "Melmil" ), box );
         grid->addMultiCellWidget( box, 4, 4, 0, 2 );
     }
     {
@@ -160,18 +136,6 @@ void ExerciseDialog::VisitBriefing( const QString& lang, const QString& text )
         briefing_->setText( text );
     else
         briefing_->clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseDialog::VisitSicVersion
-// Created: JSR 2013-02-26
-// -----------------------------------------------------------------------------
-void ExerciseDialog::VisitSicVersion( Exercise::E_Sics sic, unsigned int revision, const std::string& name, bool selected )
-{
-    if( revision > 1 )
-        return;
-    sicVersions_[ 2 * sic + revision ]->setText( name.c_str() );
-    sicVersions_[ 2 * sic + revision ]->setChecked( selected );
 }
 
 // -----------------------------------------------------------------------------
@@ -254,13 +218,6 @@ void ExerciseDialog::OnAccept()
         exercise_.AddResource( it.current()->text( 0 ), it.current()->text( 1 ) );
     exercise_.GetSettings().SetValue< bool >( "human-evolution", humanEvolutionCheckBox_->isChecked() );
     exercise_.SetActionPlanning( melmilCheckBox_->isChecked() ? "melmil.xml" : std::string() ); // $$$$ LDC somewhat redundant with FilterCommand::Execute()
-    for( int i = 0; i < Exercise::eSicNbr; ++i )
-    {
-        if( sicVersions_[ 2 * i ]->isChecked() )
-            exercise_.SetSicVersion( static_cast< Exercise::E_Sics >( i ), 0 );
-        else
-            exercise_.SetSicVersion( static_cast< Exercise::E_Sics >( i ), 1 );
-    }
     accept();
 }
 

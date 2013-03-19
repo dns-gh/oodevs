@@ -1661,7 +1661,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Observation height</source>
-        <translation>Hauteur d&apos;observation</translation>
+        <translation>Hauteur d'observation</translation>
     </message>
 </context>
 <context>

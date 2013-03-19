@@ -14,14 +14,6 @@
 						<xs:documentation xml:lang="en">Defines the file to be used for orbat definition.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="sic" minOccurs="0">
-					<xs:complexType>
-						<xs:attribute name="atlas" type="xs:string" use="required"/>
-						<xs:attribute name="dqp-manager" type="xs:string" use="required"/>
-						<xs:attribute name="sicf" type="xs:string" use="required"/>
-						<xs:attribute name="sir" type="xs:string" use="required"/>
-					</xs:complexType>
-				</xs:element>
 				<xs:element name="profiles" type="T_FileReference">
 					<xs:annotation>
 						<xs:documentation xml:lang="en">Defines the file to be used for profiles definition.</xs:documentation>
