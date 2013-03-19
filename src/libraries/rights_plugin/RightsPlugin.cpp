@@ -147,6 +147,7 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
     if( wrapper.message().has_disconnection_request() )
     {
         Logout( base_.GetPublisher( link ) );
+        MT_LOG_INFO_MSG( "Logged out " + link );
         throw tools::DisconnectionRequest( "disconnection request from " + link );
     }
 
