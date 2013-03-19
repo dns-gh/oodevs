@@ -6,11 +6,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -29,11 +25,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="pointDislocation_" name="Point dislocation" optional="false" type="Point"/>
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
@@ -54,11 +46,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -80,11 +68,7 @@
       <parameter dia-name="pointDislocation_" name="Point dislocation" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Neutraliser" optional="false" type="Boolean"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
@@ -105,11 +89,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="uniteADetruire_" max-occurs="unbounded" min-occurs="1" name="Unite a detruire" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -129,11 +109,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -153,11 +129,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -178,11 +150,7 @@
       <parameter dia-name="unitesAEscorter_" max-occurs="unbounded" min-occurs="1" name="Unites a escorter" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -209,11 +177,7 @@
       <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Point embarquement" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="Avec materiel" optional="false" type="Boolean"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
@@ -229,11 +193,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="positionRegroupement_" name="Position regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -248,11 +208,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -266,11 +222,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -290,11 +242,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -315,11 +263,7 @@
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -340,11 +284,7 @@
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="unitesACouvrir_" max-occurs="unbounded" min-occurs="1" name="Unites a couvrir" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -364,11 +304,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -1888,11 +1824,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -1914,11 +1846,7 @@
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="pointDislocation_" name="Point dislocation" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Neutraliser" optional="false" type="Boolean"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
@@ -1941,11 +1869,7 @@
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="pointDislocation_" name="Point dislocation" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="neutraliser_" name="Neutraliser" optional="false" type="Boolean"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
@@ -1967,11 +1891,7 @@
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -1991,11 +1911,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="unitesAAttaquer_" max-occurs="unbounded" min-occurs="1" name="Unites a attaquer" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -2016,11 +1932,7 @@
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -2047,11 +1959,7 @@
       <parameter dia-name="pointDebarquement_" name="Point debarquement" optional="false" type="Point"/>
       <parameter dia-name="pointEmbarquement_" name="Point embarquement" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="avecMateriel_" name="Avec materiel" optional="false" type="Boolean"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
@@ -2072,11 +1980,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -2097,11 +2001,7 @@
       <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="pointDislocation_" name="Point dislocation" optional="false" type="Point"/>
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
@@ -2124,11 +2024,7 @@
       <parameter dia-name="unitesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="Agent"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -2148,11 +2044,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="pointLogistique_" name="Point logistique" optional="false" type="Point"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
@@ -2172,11 +2064,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="pointRegroupement_" name="PointRegroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -2196,11 +2084,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -2221,11 +2105,7 @@
       <parameter dia-name="unitesAEscorter_" max-occurs="unbounded" min-occurs="1" name="Unites a escorter" optional="false" type="Agent"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -2245,11 +2125,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge">
-        <objects>
-          <parameter type="plot ravitaillement"/>
-        </objects>
-      </parameter>
+      <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="true" type="ObjectKnowledge"/>
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
         <value id="1" name="moyenne_portee"/>
@@ -3678,4 +3554,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="0598648652" -->
+<!-- signature="0851003464" -->
