@@ -71,7 +71,9 @@ type Client struct {
 	events      chan SwordMessage
 	errors      chan HandlerError
 	quit        chan bool
-	eof         bool
+	// This channel is signaled by the write() goroutine to notify termination
+	writer chan bool
+	eof    bool
 }
 
 func NewClient(address string) (*Client, error) {
@@ -94,6 +96,7 @@ func NewClient(address string) (*Client, error) {
 		events:      make(chan SwordMessage, MaxPostMessages),
 		errors:      make(chan HandlerError, MaxPostMessages),
 		quit:        make(chan bool),
+		writer:      make(chan bool),
 	}
 	return client, nil
 }
@@ -126,6 +129,7 @@ func (c *Client) Close() {
 	c.quit <- true
 	// Close write() inputs and close the connection
 	close(c.posts)
+	<-c.writer
 	c.link.Close()
 }
 
@@ -261,6 +265,8 @@ func (c *Client) write() {
 			c.errors <- HandlerError{post.context, err}
 		}
 	}
+	Disconnect(c.link)
+	c.writer <- true
 }
 
 // Supplied handler will be called in two cases:

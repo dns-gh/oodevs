@@ -12,12 +12,33 @@ import (
 	"code.google.com/p/goprotobuf/proto"
 	"errors"
 	"fmt"
+	"io"
 	"sword"
 )
 
 var (
 	ErrInvalidLogin = errors.New("invalid login")
 )
+
+// Send a DisconnectionRequest over link and wait for connection termination.
+func Disconnect(link io.ReadWriter) {
+	w := NewWriter(link)
+	msg := &sword.ClientToAuthentication{
+		Message: &sword.ClientToAuthentication_Content{
+			DisconnectionRequest: &sword.DisconnectionRequest{},
+		},
+	}
+	err := w.Encode(ClientToAuthenticationTag, msg)
+	if err != nil {
+		buffer := make([]uint8, 128)
+		for {
+			_, err := link.Read(buffer)
+			if err != nil {
+				break
+			}
+		}
+	}
+}
 
 type authHandler func(msg *sword.AuthenticationToClient_Content,
 	context int32, err error, quit chan error) bool

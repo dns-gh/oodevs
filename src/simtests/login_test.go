@@ -147,6 +147,7 @@ func (s *TestSuite) TestListConnectedProfiles(c *C) {
 	client := connectAndWait(c, sim, "admin", "")
 	defer client.Close() // need to release a connection for graceful Stop()
 	client2 := connectAndWait(c, sim, "user1", "user1")
+	defer client2.Close()
 
 	// Admin can get itself
 	profiles, err := client.ListConnectedProfiles()

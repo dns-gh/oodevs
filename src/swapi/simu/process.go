@@ -182,6 +182,7 @@ func waitForNetwork(waitch chan error, host string, timeout time.Duration) {
 		start := time.Now()
 		conn, err := net.Dial("tcp", host)
 		if err == nil {
+			swapi.Disconnect(conn)
 			conn.Close()
 			waitch <- nil
 			return
