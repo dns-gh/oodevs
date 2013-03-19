@@ -369,7 +369,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_Agent_EstBrouille", &DEC_AgentFunctions::IsJammed );
     RegisterFunction( "DEC_Agent_EstEnSilenceRadioEmission", &DEC_AgentFunctions::IsInEmissionBlackout );
     RegisterFunction( "DEC_Agent_EstEnSilenceRadioReception", &DEC_AgentFunctions::IsInReceptionBlackout );
-    RegisterFunction( "DEC_Agent_AutomateForcerRedition",
+    RegisterFunction( "DEC_Agent_AutomateForcerReddition",
         boost::function< bool( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::SurrenderAutomat, boost::ref( GetPion() ), _1 ) ) );        
 
     // NBC

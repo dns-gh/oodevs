@@ -226,7 +226,7 @@ public:
     //@{
     void Engage();
     void Disengage();
-    void Surrender( const MIL_Army_ABC& amrySurrenderedTo );
+    void Surrender( const MIL_Army_ABC& armySurrenderedTo );
     //@}
 
 protected:
