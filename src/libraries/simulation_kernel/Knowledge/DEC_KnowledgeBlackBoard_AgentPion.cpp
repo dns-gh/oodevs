@@ -412,7 +412,6 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectDi
     for ( CIT_KnowledgeObjectCollisionVector itObjectColliding = objectsColliding.begin(); itObjectColliding != objectsColliding.end(); ++itObjectColliding )
     {
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pPion_->GetKnowledgeGroup()->GetKnowledge().ResolveKnowledgeObject( (**itObjectColliding).GetObject() );
-        assert( pKnowledge && pKnowledge->IsValid() );
         if( !pKnowledge || !pKnowledge->IsValid() )
         {
             MT_LOG_ERROR_MSG( "Invalid knowledge on object collision: " << (**itObjectColliding).GetObject().GetID() << " for agent " << pPion_->GetID() );

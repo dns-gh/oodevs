@@ -677,13 +677,15 @@ MIL_Army_ABC& MIL_AgentPion::GetArmy() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_KnowledgeGroup > MIL_AgentPion::GetKnowledgeGroup() const
 {
-    if( GetRole< PHY_RolePion_Communications >().CanEmit() )
+    if( !GetRole< PHY_RolePion_Communications >().CanEmit() )
     {
-        if( ! pAutomate_ )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automate is undefined for agent id %d ", GetID() ) );
-        return pAutomate_->GetKnowledgeGroup();
+        boost::shared_ptr< MIL_KnowledgeGroup > jamKg = GetRole< PHY_RolePion_Communications >().GetJammedKnowledgeGroup();
+        if( jamKg.get() )
+            return jamKg;
     }
-    return GetRole< PHY_RolePion_Communications >().GetKnowledgeGroup();
+    if( ! pAutomate_ )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automate is undefined for agent id %d ", GetID() ) );
+    return pAutomate_->GetKnowledgeGroup();
 }
 
 // -----------------------------------------------------------------------------

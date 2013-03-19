@@ -158,7 +158,7 @@ void PHY_RolePion_Communications::serialize( Archive& file, const unsigned int )
 void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 {
     // UAC ...
-    if( bIsAutonomous_ )
+    if( bIsAutonomous_ || entity_->IsDead() )
         return;
 
     // $$$$ >>>> MODIF FDS 2010-03-17
@@ -225,10 +225,14 @@ void PHY_RolePion_Communications::SendFullState( client::UnitAttributes& msg ) c
 {
     msg().mutable_communications()->set_jammed( !jammers_.empty() );
 
+    unsigned int jammedKgId = 0;
     if( !jammers_.empty() || bBlackoutEmmittedActivated_ )
-        msg().mutable_communications()->mutable_knowledge_group()->set_id( GetKnowledgeGroup()->GetId() );
-    else
-        msg().mutable_communications()->mutable_knowledge_group()->set_id( 0 );
+    {
+        boost::shared_ptr< MIL_KnowledgeGroup > kg = GetJammedKnowledgeGroup();
+        if( kg.get() )
+            jammedKgId = kg->GetId();
+    }
+    msg().mutable_communications()->mutable_knowledge_group()->set_id( jammedKgId );
 
     msg().set_radio_emitter_disabled( bBlackoutEmmittedActivated_ );
     msg().set_radio_receiver_disabled( bBlackoutReceivedActivated_ );
@@ -312,19 +316,18 @@ void PHY_RolePion_Communications::DeactivateBlackout()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Communications::GetKnowledgeGroup
+// Name: PHY_RolePion_Communications::GetJammedKnowledgeGroup
 // Returns the jamming knowledge group if it is defined, the caller must check with
 // CanCommunicate to check if the jamming knowledge group is defined.
-// Throws MT_ScipioException if the jamming knowledge group is undefined
 // Created: FDS 2010-03-15
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MIL_KnowledgeGroup > PHY_RolePion_Communications::GetKnowledgeGroup() const
+boost::shared_ptr< MIL_KnowledgeGroup > PHY_RolePion_Communications::GetJammedKnowledgeGroup() const
 {
     if( pJammingKnowledgeGroup_ ) // pion is jammed
         return pJammingKnowledgeGroup_;
     else if( entity_->IsDead() ) // if pion is dead, it cannot emit, but it is not jammed
         return entity_->GetAutomate().GetKnowledgeGroup();
-    throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Jamming knowledge group undefined for agent %d ", entity_->GetID() ) );
+    return boost::shared_ptr< MIL_KnowledgeGroup >();
 }
 
 // -----------------------------------------------------------------------------
