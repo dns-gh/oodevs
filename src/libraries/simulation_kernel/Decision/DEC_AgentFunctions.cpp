@@ -724,6 +724,22 @@ bool DEC_AgentFunctions::CanRelievePion( MIL_Agent_ABC& callerAgent, const DEC_D
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanRelievePion
+// Created: NLD 2004-12-09
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::SurrenderAutomat( MIL_Agent_ABC& callerAgent, DEC_Decision_ABC* automat )
+{
+    if( !automat )
+        throw MASA_EXCEPTION( "Invalid automat in DEC_AgentFunctions::SurrenderAutomat" );
+    if( automat->GetAutomate().GetArmy() == callerAgent.GetArmy() )
+        return false;
+    if( automat->GetAutomate().IsSurrendered() )
+        return false;
+    automat->GetAutomate().Surrender( callerAgent.GetArmy() );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetPionsWithPC
 // Created: JVT 2004-12-20
 // -----------------------------------------------------------------------------
