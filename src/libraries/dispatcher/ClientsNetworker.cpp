@@ -183,11 +183,11 @@ void ClientsNetworker::ConnectionFailed( const std::string& address, const std::
 // -----------------------------------------------------------------------------
 void ClientsNetworker::ConnectionError( const std::string& link, const std::string& reason )
 {
-    MT_LOG_INFO_MSG( "Connection to '" << link << "' lost (" << reason << ")" );
     ServerNetworker::ConnectionError( link, reason );
     auto it = clients_.find( link );
     if( it != clients_.end() && it->second )
     {
+        MT_LOG_INFO_MSG( "Connection to '" << link << "' lost (" << reason << ")" );
         plugin_.NotifyClientLeft( *it->second, it->first );
         clients_.erase( it );
     }
