@@ -636,7 +636,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Convoy mission not defined in Log/Supply</source>
-        <translation>La mission Convoi n&apos;est pas définei dans Log/Ravitaillement</translation>
+        <translation>La mission Convoi n&apos;est pas définie dans Log/Ravitaillement</translation>
     </message>
     <message>
         <source>No geometry defined for object %1</source>

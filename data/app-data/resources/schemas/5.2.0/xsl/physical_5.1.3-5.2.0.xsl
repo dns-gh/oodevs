@@ -27,6 +27,8 @@
           </xsl:if>
       </xsl:copy>
   </xsl:template>
+  
+  <xsl:template match="human-protections"/>
 
   <xsl:template match="node()|@*">
     <xsl:copy>

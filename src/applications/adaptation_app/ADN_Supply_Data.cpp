@@ -100,7 +100,7 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
     std::string dotationSupplyConvoyType( "virtual" );
     std::string stockSupplyConvoyType( "real" );
     input >> xml::start( "supply" )
-            >> xml::start( "convoys" )
+            >> xml::optional >> xml::start( "convoys" )
               >> xml::attribute( "unit-type", strUnit )
               >> xml::attribute( "mission", supplyMission )
               >> xml::optional >> xml::start( "type" )
@@ -137,13 +137,13 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
         throw MASA_EXCEPTION( tools::translate( "Breakdown_Data", "Logistic supply system - Invalid supply convoy type '%1'" ).arg( stockSupplyConvoyType.c_str() ).toStdString() );
 
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( strUnit );
-    if( pUnit == 0 )
+    if( !strUnit.empty() && pUnit == 0 )
         throw MASA_EXCEPTION( tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit '%1'" ).arg( strUnit.c_str() ).toStdString() );
     ptrUnit_ = pUnit;
 
     ADN_Missions_Data::T_Mission_Vector& missions = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
     ADN_Missions_ABC* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( missions, supplyMission );
-    if( mission == 0 )
+    if( !supplyMission.empty() && mission == 0 )
         throw MASA_EXCEPTION( tools::translate( "Supply_Data",  "Logistic supply system - Invalid mission '%1'" ).arg( supplyMission.c_str() ).toStdString() );
     ptrSupplyMission_ = mission;
 
@@ -228,53 +228,59 @@ void ADN_Supply_Data::SupplyDataInfos::CheckDatabaseValidity( ADN_ConsistencyChe
 // -----------------------------------------------------------------------------
 void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
 {
-    if( ptrUnit_.GetData() == 0 || ptrUnit_.GetData()->eTypeId_.GetData() != eAgentTypePionLOGConvoi )
-        return;
-
     output << xml::start( "supply" );
     ADN_Tools::AddSchema( output, "Supply" );
-    output  << xml::start( "convoys" )
-                << xml::attribute( "unit-type", ptrUnit_.GetData()->strName_ )
-                << xml::attribute( "mission", ptrSupplyMission_.GetData()->strName_ );
+    if( ptrUnit_.GetData() != 0 && ptrUnit_.GetData()->eTypeId_.GetData() == eAgentTypePionLOGConvoi )
     {
-        output << xml::start( "type" )
-                    << xml::start( "dotation-supply" )
-                        << xml::attribute( "type", dotationSupplyConvoyType_.Convert() )
-                    << xml::end
-                    << xml::start( "stock-supply" )
-                        << xml::attribute( "type", stockSupplyConvoyType_.Convert() )
-                    << xml::end
-               << xml::end;
-    }
-    {
-        output << xml::start( "constitution-times" );
-        for( IT_ConvoyTimeInfoVector it = vConvoySetupInfos_.begin(); it != vConvoySetupInfos_.end(); ++it )
-            (*it)->WriteArchive( "unit-time", "time", output );
+        output  << xml::start( "convoys" )
+                    << xml::attribute( "unit-type", ptrUnit_.GetData()->strName_ )
+                    << xml::attribute( "mission", ptrSupplyMission_.GetData()->strName_ );
+        {
+            output << xml::start( "type" )
+                        << xml::start( "dotation-supply" )
+                            << xml::attribute( "type", dotationSupplyConvoyType_.Convert() )
+                        << xml::end
+                        << xml::start( "stock-supply" )
+                            << xml::attribute( "type", stockSupplyConvoyType_.Convert() )
+                        << xml::end
+                   << xml::end;
+        }
+        {
+            output << xml::start( "constitution-times" );
+            for( IT_ConvoyTimeInfoVector it = vConvoySetupInfos_.begin(); it != vConvoySetupInfos_.end(); ++it )
+                (*it)->WriteArchive( "unit-time", "time", output );
+            output << xml::end;
+        }
+        {
+            output << xml::start( "loading-times" );
+            for( IT_ConvoyTimeInfoVector it = vConvoyLoadingInfos_.begin(); it != vConvoyLoadingInfos_.end(); ++it )
+                (*it)->WriteArchive( "unit-time", "time", output );
+            output << xml::end;
+        }
+        {
+            output << xml::start( "unloading-times" );
+            for( IT_ConvoyTimeInfoVector it = vConvoyUnloadingInfos_.begin(); it != vConvoyUnloadingInfos_.end(); ++it )
+                (*it)->WriteArchive( "unit-time", "time", output );
+            output << xml::end;
+        }
+        {
+            output << xml::start( "speed-modifiers" );
+            for( IT_ConvoyDoubleInfoVector it = vConvoySpeedModificatorInfos_.begin(); it != vConvoySpeedModificatorInfos_.end(); ++it )
+                (*it)->WriteArchive( "speed-modifier", "value", output );
+            output << xml::end;
+        }
         output << xml::end;
     }
-    {
-        output << xml::start( "loading-times" );
-        for( IT_ConvoyTimeInfoVector it = vConvoyLoadingInfos_.begin(); it != vConvoyLoadingInfos_.end(); ++it )
-            (*it)->WriteArchive( "unit-time", "time", output );
-        output << xml::end;
-    }
-    {
-        output << xml::start( "unloading-times" );
-        for( IT_ConvoyTimeInfoVector it = vConvoyUnloadingInfos_.begin(); it != vConvoyUnloadingInfos_.end(); ++it )
-            (*it)->WriteArchive( "unit-time", "time", output );
-        output << xml::end;
-    }
-    {
-        output << xml::start( "speed-modifiers" );
-        for( IT_ConvoyDoubleInfoVector it = vConvoySpeedModificatorInfos_.begin(); it != vConvoySpeedModificatorInfos_.end(); ++it )
-            (*it)->WriteArchive( "speed-modifier", "value", output );
-        output << xml::end;
-    }
-    output << xml::end;
 
     output << xml::start( "resource-availability-alerts" );
-    for( IT_AvailabilityWarning_Vector it = vVectorWarnings_.begin(); it != vVectorWarnings_.end(); ++it )
-        (*it)->WriteArchive( output );
+    if( vVectorWarnings_.empty() )
+    {
+        std::auto_ptr< ADN_AvailabilityWarning > pNew( new ADN_AvailabilityWarning() );
+        pNew->WriteArchive( output );
+    }
+    else
+        for( IT_AvailabilityWarning_Vector it = vVectorWarnings_.begin(); it != vVectorWarnings_.end(); ++it )
+            (*it)->WriteArchive( output );
     output << xml::end;
 
     output << xml::end;

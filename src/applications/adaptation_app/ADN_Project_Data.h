@@ -82,7 +82,6 @@ public:
         // $$$$ NLD 2007-01-15: files not loaded!
         tools::Path szPathfinder_;
         tools::Path szObjectNames_;
-        tools::Path szHumanProtections_;
         tools::Path szMedicalTreatment_;
         tools::Path szExtensions_;
         tools::Path szDrawingTemplates_;

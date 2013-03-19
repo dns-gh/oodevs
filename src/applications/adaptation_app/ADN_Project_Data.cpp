@@ -124,7 +124,6 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "volumes", szSizes_ );
     ReadFile( input, "protections", szArmors_ );
     ReadFile( input, "active-protections", szActiveProtections_ );
-    ReadFile( input, "human-protections", szHumanProtections_ );
     ReadFile( input, "resource-natures", szDotationNatures_ );
     ReadFile( input, "logistic-supply-classes", szLogisticSupplyClasses_ );
     ReadFile( input, "disasters", szDisasters_ );
@@ -188,7 +187,6 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "volumes", szSizes_ );
     WriteFile( output, "protections", szArmors_ );
     WriteFile( output, "active-protections", szActiveProtections_ );
-    WriteFile( output, "human-protections", szHumanProtections_ );
     WriteFile( output, "resource-natures", szDotationNatures_ );
     WriteFile( output, "logistic-supply-classes", szLogisticSupplyClasses_ );
     WriteFile( output, "disasters", szDisasters_ );
@@ -425,7 +423,6 @@ void ADN_Project_Data::Load( const tools::Loader_ABC& fileLoader )
     // Check XML Validity for files not loaded
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szPathfinder_ );
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szObjectNames_ );
-    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szHumanProtections_ );
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szMedicalTreatment_ );
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szStages_ );
 
@@ -525,6 +522,61 @@ void ADN_Project_Data::WritePathfind( xml::xistream& xis, const tools::Path& pat
     xis >> xml::list( boost::bind( &ADN_Project_Data::FilterNode, this, _2, _3, boost::ref( xos ) ) );
 }
 
+namespace
+{
+    void CreateNewPathfindFile( const tools::Path& path )
+    {
+        tools::Xofstream xos( path );
+        xos << xml::start( "pathfind" );
+        ADN_Tools::AddSchema( xos, "Pathfind" );
+        xos << xml::start( "configuration" )
+                << xml::attribute( "distance-threshold", 15000 )
+                << xml::attribute( "max-calculation-time", "15s" )
+                << xml::attribute( "max-end-connections", 8 )
+            << xml::end
+            << xml::start( "unit-rules" )
+            << xml::end
+            << xml::start( "population-rules" )
+            << xml::end;
+    }
+
+    void CreateObjectNames( const tools::Path& path )
+    {
+        tools::Xofstream xos( path );
+        xos << xml::start( "objects" );
+        ADN_Tools::AddSchema( xos, "ObjectNames" );
+        const ADN_Objects_Data::T_ObjectsInfos_Vector& objects = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos();
+        unsigned int objectId = 0;
+        for( auto it = objects.begin(); it != objects.end(); ++it, ++objectId )
+        {
+            xos << xml::start( "object" )
+                    << xml::attribute( "id", objectId )
+                    << xml::attribute( "type", ( *it )->strType_.GetData() )
+                << xml::end;
+        }
+    }
+
+    void CreateMedicalTreatment( const tools::Path& path )
+    {
+        tools::Xofstream xos( path );
+        xos << xml::start( "medical-treatments" );
+        ADN_Tools::AddSchema( xos, "MedicalTreatment" );
+    }
+
+    void CreateTemplatesFile( const tools::Path& path )
+    {
+        tools::Xofstream xos( path );
+        xos << xml::start( "templates" );
+    }
+
+    void CreateDrawingTemplatesFile( const tools::Path& path )
+    {
+        tools::Xofstream xos( path );
+        xos << xml::start( "templates" );
+        ADN_Tools::AddSchema( xos, "DrawingTemplates" );
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data::Save
 // Created: JDY 03-06-20
@@ -540,14 +592,26 @@ void ADN_Project_Data::Save( const tools::Loader_ABC& fileLoader )
         dataInfos_.WriteArchive( output );
     }
     // Update pathfind.xml
-    tools::Path path = workDir_.GetWorkingDirectory().GetData() / dataInfos_.szPathfinder_;
-    if( path.Exists() )
-        fileLoader.LoadFile( path, boost::bind( &ADN_Project_Data::WritePathfind, this, _1, boost::cref( path ) ) );
+    tools::Path pathfindFile = workDir_.GetWorkingDirectory().GetData() / dataInfos_.szPathfinder_;
+    if( pathfindFile.Exists() )
+        fileLoader.LoadFile( pathfindFile, boost::bind( &ADN_Project_Data::WritePathfind, this, _1, boost::cref( pathfindFile ) ) );
+    else
+        CreateNewPathfindFile( pathfindFile );
+    tools::Path objectNamesFile = workDir_.GetWorkingDirectory().GetData() / dataInfos_.szObjectNames_;
+    CreateObjectNames( objectNamesFile );
+    tools::Path medicalTreatmentFile = workDir_.GetWorkingDirectory().GetData() / dataInfos_.szMedicalTreatment_;
+    if( !medicalTreatmentFile.Exists() )
+        CreateMedicalTreatment( medicalTreatmentFile );
+    tools::Path templatesFile = workDir_.GetWorkingDirectory().GetData() / "templates.xml";
+    if( !templatesFile.Exists() )
+        CreateTemplatesFile( templatesFile );
+    tools::Path drawingTemplatesFile = workDir_.GetWorkingDirectory().GetData() / dataInfos_.szDrawingTemplates_;
+    if( !drawingTemplatesFile.Exists() )
+        CreateDrawingTemplatesFile( drawingTemplatesFile );
     addedObjects_.clear();
 
     // Save XML Signature for files not loaded, bypassing "temp" folder
     ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szObjectNames_, "ObjectNames" );
-    ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szHumanProtections_, "HumanProtections" );
     ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szMedicalTreatment_, "MedicalTreatment" );
     ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szExtensions_, "Extensions" );
     ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szStages_, "Stages" );

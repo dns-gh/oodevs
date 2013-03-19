@@ -29,7 +29,6 @@
         <xs:element name="fires" type="FileReference"/>
         <xs:element name="health" type="FileReference"/>
         <xs:element name="human-factors" type="FileReference"/>
-        <xs:element name="human-protections" type="FileReference"/>
         <xs:element name="inhabitants" type="FileReference" minOccurs="0"/>
         <xs:element name="knowledge-groups" type="FileReference"/>
         <xs:element name="launchers" type="FileReference"/>
