@@ -214,7 +214,22 @@
         </sequential>
     </macrodef>
 
-    <target name="adaptation_test" description="load and save adaptation main data then check that output is the same as input">
+    <macrodef name="test-adaptation-newbase">
+        <sequential>
+            <echo>Create new base</echo>
+            <delete dir="${out.dir}/test-adaptation-newbase"/>
+            <exec taskname="adn" executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
+                <arg value="-c"/>
+                <arg value="${out.dir}/test-adaptation-newbase/physical.xml"/>
+                <arg value="--silent"/>
+            </exec>
+            <test-adaptation input="${out.dir}/test-adaptation-newbase"/>
+            <delete dir="${out.dir}/test-adaptation-newbase"/>
+        </sequential>
+    </macrodef>
+
+    <target name="adaptation_test" description="create and reopen new base, then load and save adaptation main data then check that output is the same as input">
+        <test-adaptation-newbase/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/scipio"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
     </target>
