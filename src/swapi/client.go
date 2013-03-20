@@ -265,7 +265,7 @@ func (c *Client) write() {
 			c.errors <- HandlerError{post.context, err}
 		}
 	}
-	Disconnect(c.link)
+	Disconnect(c.link, c.PostTimeout)
 	c.writer <- true
 }
 

@@ -14,10 +14,12 @@ import (
 	"fmt"
 	"io"
 	"sword"
+	"time"
 )
 
 // Send a DisconnectionRequest over link and wait for connection termination.
-func Disconnect(link io.ReadWriter) {
+// Return true upon disconnection, false on timeout.
+func Disconnect(link io.ReadWriter, timeout time.Duration) bool {
 	w := NewWriter(link)
 	msg := &sword.ClientToAuthentication{
 		Message: &sword.ClientToAuthentication_Content{
@@ -26,6 +28,14 @@ func Disconnect(link io.ReadWriter) {
 	}
 	err := w.Encode(ClientToAuthenticationTag, msg)
 	if err != nil {
+		return true
+	}
+	wait := make(chan bool)
+	go func() {
+		time.Sleep(timeout)
+		wait <- false
+	}()
+	go func() {
 		buffer := make([]uint8, 128)
 		for {
 			_, err := link.Read(buffer)
@@ -33,7 +43,9 @@ func Disconnect(link io.ReadWriter) {
 				break
 			}
 		}
-	}
+		wait <- true
+	}()
+	return <-wait
 }
 
 func unexpected(value interface{}) error {
