@@ -7,6 +7,7 @@
     <var name="repositories" value="${repositories},${sword.repository}"/>
     <property name="sword_branch" value="trunk"/>
     <property name="test.port" value="35000"/>
+    <property name="licensepath" value="${run.dir}/license.dat"/>
 
     <target name="update">
         <update name="gocheck"/>
@@ -42,6 +43,7 @@
             <arg value="-i"/>
         </go>
         <go cmd="test">
+            <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
             <!-- We currently need this to avoid port collisions in tests
                  belonging to the same module. Note that it does not prevent
                  tests belonging to different modules to run concurrently. We
