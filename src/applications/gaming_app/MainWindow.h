@@ -152,10 +152,10 @@ private:
     std::auto_ptr< gui::AddRasterDialog > addRasterDialog_;
     std::auto_ptr< gui::PreferencesDialog > preferenceDialog_;
     std::auto_ptr< gui::EntitySymbols > icons_;
-    gui::GlProxy* glProxy_;
-    gui::ColorStrategy* strategy_;
-    gui::LightingProxy* lighting_;
-    gui::GlSelector* selector_;
+    std::auto_ptr< gui::GlProxy > glProxy_;
+    std::auto_ptr< gui::ColorStrategy > strategy_;
+    std::auto_ptr< gui::LightingProxy > lighting_;
+    std::auto_ptr< gui::GlSelector > selector_;
     gui::OptionsPanel* pOptionsPanel_;
     gui::ParametersLayer* parameters_;
     gui::AgentsLayer* agents_;
