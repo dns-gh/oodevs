@@ -101,6 +101,12 @@ protected:
     virtual void ExtractElements( T_LayerElements& extractedElement, const geometry::Point2f& point );
     //@}
 
+private:
+    //! @name Helpers
+    //@{
+    void CreateTooltiped();
+    //@}
+
 protected:
     //! @name Types
     //@{

@@ -40,8 +40,6 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
     , selected_   ( controllers )
     , name_       ( name )
 {
-    if( tooltiped_.get() == 0 )
-        tooltiped_.reset( new kernel::SafePointer< kernel::Entity_ABC >( controllers ) );
     // NOTHING
 }
 
@@ -51,7 +49,17 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
 // -----------------------------------------------------------------------------
 EntityLayerBase::~EntityLayerBase()
 {
-    // NOTHING
+    tooltiped_.reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayerBase::CreateTooltiped
+// Created: JSR 2013-03-20
+// -----------------------------------------------------------------------------
+void EntityLayerBase::CreateTooltiped()
+{
+    if( tooltiped_.get() == 0 )
+        tooltiped_.reset( new kernel::SafePointer< kernel::Entity_ABC >( controllers_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,6 +77,7 @@ void EntityLayerBase::Initialize( const geometry::Rectangle2f& extent )
 // -----------------------------------------------------------------------------
 void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
 {
+    CreateTooltiped();
     strategy_.SetAlpha( GetAlpha() );
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
         if( *it != &*selected_ )
@@ -147,6 +156,7 @@ void EntityLayerBase::ContextMenu( const kernel::GraphicalEntity_ABC& selectable
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::HandleMouseMove( QMouseEvent* , const geometry::Point2f& point )
 {
+    CreateTooltiped();
     if( ! tooltiped_.get() )
         return false;
     kernel::SafePointer< kernel::Entity_ABC >& sf = *tooltiped_;
@@ -179,6 +189,7 @@ bool EntityLayerBase::ShouldDisplayTooltip( const kernel::Entity_ABC& entity, co
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::DisplayTooltip( const kernel::Entity_ABC& entity, const geometry::Point2f& point )
 {
+    CreateTooltiped();
     if( !tooltip_.get() )
     {
         std::auto_ptr< kernel::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
@@ -236,6 +247,7 @@ void EntityLayerBase::AddEntity( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::RemoveEntity( const Entity_ABC& entity )
 {
+    CreateTooltiped();
     auto it = std::find( entities_.begin(), entities_.end(), &entity );
     if( it != entities_.end() )
     {
@@ -283,6 +295,7 @@ void EntityLayerBase::SelectColor( const Entity_ABC& )
 // -----------------------------------------------------------------------------
 void EntityLayerBase::SelectInRectangle( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight )
 {
+    CreateTooltiped();
     if( entities_.empty() )
         return;
     if( controllers_.actions_.IsSingleSelection( entities_.front() ) )

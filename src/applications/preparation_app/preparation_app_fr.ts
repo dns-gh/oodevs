@@ -1503,7 +1503,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>The following object is invalid and will be deleted at next save: %1</source>
-        <translation>L'objet suivant est invalide et sera supprimé à la prochaine sauvegarde : %1</translation>
+        <translation>L&apos;objet suivant est invalide et sera supprimé à la prochaine sauvegarde : %1</translation>
     </message>
 </context>
 <context>
