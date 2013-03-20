@@ -154,7 +154,7 @@
     </message>
     <message>
         <source>New base creation and input/output file options cannot be used together.</source>
-        <translation>Les options de création de base et d'entrée/sortie ne peuvent pas être utilisées conjointement.</translation>
+        <translation>Les options de création de base et d&apos;entrée/sortie ne peuvent pas être utilisées conjointement.</translation>
     </message>
 </context>
 <context>
