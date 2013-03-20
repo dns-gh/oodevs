@@ -21,7 +21,7 @@ $(".log_in").click ->
         err = true
     return if err
 
-    pajax "/api/login", {}
+    pajax "/api/login", {},
         username: usr.val()
         password: pwd.val(),
         (obj) ->
