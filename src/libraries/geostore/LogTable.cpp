@@ -13,17 +13,13 @@
 
 using namespace geostore;
 
-// -----------------------------------------------------------------------------
-// Name: LogTable constructor
-// Created: AME 2010-07-28
-// -----------------------------------------------------------------------------
 LogTable::LogTable( sqlite3* db )
     : Table( db, "MasaLog" )
 {
     ExecuteQuery( "CREATE TABLE IF NOT EXISTS " + GetName() + " ( table_name TEXT PRIMARY KEY, last_modification INTEGER );" );
 }
 
-bool LogTable::GetLastAccessTime( const std::string& layerName, std::time_t& time )
+bool LogTable::GetLastAccessTime( const std::string& layerName, std::time_t& time ) const
 {
     bool result = false;
     time = 0;

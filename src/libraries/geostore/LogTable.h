@@ -26,12 +26,8 @@ class LogTable : private Table
 public:
     explicit LogTable( sqlite3* db );
 
-    bool GetLastAccessTime( const std::string& layerName, std::time_t& time );
+    bool GetLastAccessTime( const std::string& layerName, std::time_t& time ) const;
     void SetLastAccessTime( const std::string& layerName, const std::time_t& time );
-
-private:
-    bool GetLastAccessTimeImpl( const std::string& layerName, std::time_t& time );
-    void SetLastAccessTimeImpl( const std::string& layerName, const std::time_t& time );
 };
 
 }

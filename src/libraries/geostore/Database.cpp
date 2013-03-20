@@ -10,7 +10,6 @@
 #include "geostore_pch.h"
 #include "Database.h"
 #include "DatabaseException.h"
-#include "ProjectionTable.h"
 #include "GeoTable.h"
 #include "LogTable.h"
 #include <terrain/TerrainFileReader.h>
@@ -37,6 +36,23 @@ namespace
         sqlite3_enable_load_extension( db, 1 );
         return db;
     }
+    struct ProjectionTable : Table
+    {
+        ProjectionTable( sqlite3* db )
+            : Table( db, "spatial_ref_sys" )
+        {
+            if( ExecuteQuery( "SELECT name FROM sqlite_master WHERE type='table' AND name='spatial_ref_sys'" ).empty() )
+            {
+                ExecuteQuery( "SELECT InitSpatialMetadata()" );
+                ExecuteQuery(
+                    "REPLACE INTO"
+                    "   spatial_ref_sys ( srid, auth_name, auth_srid, ref_sys_name, proj4text ) "
+                    "VALUES"
+                    "   ( 4326, 'epgs', 4326, 'WGS 84', '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs' )"
+                    );
+            }
+        }
+    };
 }
 
 Database::Database( const tools::Path& dbFile, const tools::Path& layersDir, PointProjector_ABC& projector )
@@ -46,7 +62,7 @@ Database::Database( const tools::Path& dbFile, const tools::Path& layersDir, Poi
     spatialite_init( 0 );
     if( sqlite3_exec( db_.get(), "SELECT load_extension('spatialite.dll')", 0, 0, 0 ) != SQLITE_OK )
         throw std::runtime_error( "cannot find spatialite DLL to load as sqlite extension" );
-    ProjectionTable projection( db_.get() ); // Just used to initialize the projection table
+    ProjectionTable( db_.get() );
     LoadLayers( projector, layersDir );
 }
 
@@ -70,9 +86,7 @@ void Database::LoadLayer( std::string layer, PointProjector_ABC& projector, cons
     std::time_t time;
     log_->GetLastAccessTime( layer, time );
     if( file.LastWriteTime() <= time )
-    {
         tables_.insert( layer, new GeoTable( db_.get(), layer ) );
-    }
     else
     {
         const TerrainFileReader reader( file.ToLocal(), projector );

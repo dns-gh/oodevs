@@ -5,12 +5,6 @@
       <UniqueIdentifier>{f5481839-300c-4cf2-abbb-be1826a6d346}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Source Files\Structure">
-      <UniqueIdentifier>{01b35470-1121-4df3-a8da-f8d609c58212}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\SpatialProcess">
-      <UniqueIdentifier>{69314cb8-a9e0-4228-9d83-0ea94400bc06}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\geostore\geostore_pch.h">
@@ -19,41 +13,38 @@
     <ClInclude Include="..\..\src\libraries\geostore\GeoStoreManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\geostore\Database.h">
-      <Filter>Source Files\Structure</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\geostore\GeoTable.h">
-      <Filter>Source Files\Structure</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\geostore\ProjectionTable.h">
-      <Filter>Source Files\Structure</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\geostore\CreateBlockAutoProcess.h">
-      <Filter>Source Files\SpatialProcess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\geostore\CreateBlockProcess.h">
-      <Filter>Source Files\SpatialProcess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\geostore\GeometryFactory.h">
-      <Filter>Source Files\SpatialProcess</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\geostore\SpatialIndexer.h">
-      <Filter>Source Files\SpatialProcess</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\geostore\Table.h">
-      <Filter>Source Files\Structure</Filter>
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\geostore\Database.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\geostore\DatabaseException.h">
-      <Filter>Source Files\Structure</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\geostore\LogTable.h">
-      <Filter>Source Files\Structure</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\geostore\GeometryCollection.h">
-      <Filter>Source Files\Structure</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\geostore\GeometryType.h">
-      <Filter>Source Files\Structure</Filter>
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\geostore\GeoTable.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\geostore\LogTable.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\geostore\SpatialIndexer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\geostore\CreateBlockAutoProcess.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\geostore\CreateBlockProcess.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\geostore\GeometryFactory.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -64,28 +55,25 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\geostore\Database.cpp">
-      <Filter>Source Files\Structure</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\geostore\GeoTable.cpp">
-      <Filter>Source Files\Structure</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\geostore\ProjectionTable.cpp">
-      <Filter>Source Files\Structure</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\geostore\CreateBlockAutoProcess.cpp">
-      <Filter>Source Files\SpatialProcess</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\geostore\CreateBlockProcess.cpp">
-      <Filter>Source Files\SpatialProcess</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\geostore\GeometryFactory.cpp">
-      <Filter>Source Files\SpatialProcess</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\geostore\Table.cpp">
-      <Filter>Source Files\Structure</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\geostore\LogTable.cpp">
-      <Filter>Source Files\Structure</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\geostore\Table.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\geostore\CreateBlockAutoProcess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\geostore\CreateBlockProcess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\geostore\GeometryFactory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

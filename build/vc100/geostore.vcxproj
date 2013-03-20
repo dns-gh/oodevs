@@ -107,7 +107,6 @@
     <ClInclude Include="..\..\src\libraries\geostore\Database.h" />
     <ClInclude Include="..\..\src\libraries\geostore\GeoTable.h" />
     <ClInclude Include="..\..\src\libraries\geostore\LogTable.h" />
-    <ClInclude Include="..\..\src\libraries\geostore\ProjectionTable.h" />
     <ClInclude Include="..\..\src\libraries\geostore\CreateBlockAutoProcess.h" />
     <ClInclude Include="..\..\src\libraries\geostore\CreateBlockProcess.h" />
     <ClInclude Include="..\..\src\libraries\geostore\GeometryFactory.h" />
@@ -125,7 +124,6 @@
     <ClCompile Include="..\..\src\libraries\geostore\Database.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\GeoTable.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\LogTable.cpp" />
-    <ClCompile Include="..\..\src\libraries\geostore\ProjectionTable.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\CreateBlockAutoProcess.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\CreateBlockProcess.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\GeometryFactory.cpp" />
