@@ -56,6 +56,7 @@ ADN_App::ADN_App( gui::ApplicationMonitor& monitor, int argc, char** argv )
     desc.add_options()
         ( "input,i" , po::value( &inputFile_  )->default_value( "" ), "specify root input file (physical.xml)" )
         ( "output,o", po::value( &outputFile_ )->default_value( "" ), "specify output file (physical.xml) (open/save-mode: input must be specified)" )
+        ( "create,c", po::value( &newFile_    )->default_value( "" ), "specify root file for creating new base (physical.xml)" )
         ( "silent", "silent mode" )
         ( "nosymbols,n", "turn off unit symbols view" )
         ( "noreadonly", "disable read-only protection" )
@@ -133,6 +134,15 @@ int ADN_App::Run()
         if( IsInvalidLicense() )
             return EXIT_FAILURE;
 
+        if( !newFile_.IsEmpty() && ( !inputFile_.IsEmpty() || !outputFile_.IsEmpty() ) )
+            throw MASA_EXCEPTION( tools::translate( "ADN_App" , "New base creation and input/output file options cannot be used together." ).toStdString() );
+
+        if( !newFile_.IsEmpty() )
+        {
+            mainWindow_->NewProject( newFile_ );
+            mainWindow_->SaveProjectAs( newFile_ );
+            return EXIT_SUCCESS;
+        }
         if( !inputFile_.IsEmpty() )
             mainWindow_->OpenProject( inputFile_, true );
         if( !outputFile_.IsEmpty() )

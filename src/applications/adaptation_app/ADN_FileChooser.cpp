@@ -20,9 +20,11 @@ class ADN_FileChooser_Connector : public ADN_Connector_ABC
 {
 public:
 
-    typedef void (ADN_FileChooser::*T_OpSet)(const tools::Path& file);
+    typedef void( ADN_FileChooser::*T_OpSet )( const tools::Path& file );
 
-    ADN_FileChooser_Connector(ADN_FileChooser& flc,T_OpSet op): ADN_Connector_ABC() , flc_(flc), op_(op)
+    ADN_FileChooser_Connector( ADN_FileChooser& flc, T_OpSet op )
+        : flc_( flc )
+        , op_( op )
     {}
 
     virtual ~ADN_FileChooser_Connector()
@@ -30,14 +32,13 @@ public:
 
     void SetDataPrivate( void *data )
     {
-        assert(data);
-        ( flc_.*op_ )( tools::Path::FromUTF8( *(std::string*) data ) );
+        assert( data );
+        ( flc_.*op_ )( *reinterpret_cast< tools::Path* >( data ) );
     }
 
-    void SetDataChanged( const QString& string )
+    void SetDataChanged( const tools::Path& p )
     {
-        std::string newval = string.toStdString();
-        emit DataChanged( (void*)&newval );
+        emit DataChanged( ( void* ) &p );
     }
 
 private:
@@ -53,14 +54,14 @@ private:
 // Name: ADN_FileChooser constructor
 // Created: JDY 03-07-01
 //-----------------------------------------------------------------------------
-ADN_FileChooser::ADN_FileChooser(QWidget *parent,const QString& filter,const char *name)
-:   QWidget(parent,name)
-,   eMode_(eFile)
-,   szFilter_(filter)
-,   szDirectory_( "" )
-,   pButton_(0)
-,   pLineEdit_(0)
-,   vConnectors_(2,static_cast< ADN_Connector_ABC* >( 0 ) )
+ADN_FileChooser::ADN_FileChooser( QWidget *parent, const QString& filter, const char *name )
+    : QWidget( parent,name )
+    , eMode_( eFile )
+    , szFilter_( filter )
+    , szDirectory_( "" )
+    , pButton_( 0 )
+    , pLineEdit_( 0 )
+    , vConnectors_( 2, static_cast< ADN_Connector_ABC* >( 0 ) )
 {
     // objects
     Q3HBoxLayout *pLayout = new Q3HBoxLayout( this );
@@ -76,15 +77,11 @@ ADN_FileChooser::ADN_FileChooser(QWidget *parent,const QString& filter,const cha
     setFocusProxy( pLineEdit_ );
 
     // connectors
-    vConnectors_[eFile]     =new ADN_FileChooser_Connector(*this,&ADN_FileChooser::SetFilename);
-    vConnectors_[eDirectory]=new ADN_FileChooser_Connector(*this,&ADN_FileChooser::SetDirectory);
+    vConnectors_[ eFile ] = new ADN_FileChooser_Connector( *this, &ADN_FileChooser::SetFilename );
+    vConnectors_[ eDirectory ] = new ADN_FileChooser_Connector( *this, &ADN_FileChooser::SetDirectory );
 
-    connect( pLineEdit_             , SIGNAL( textChanged( const QString & ) ),
-             this                   , SLOT( FilenameChanged( const QString & ) ) );
-
-    connect( pButton_   , SIGNAL( clicked() ),
-             this       , SLOT( ChooseFile() ) );
-
+    connect( pLineEdit_, SIGNAL( textChanged( const QString & ) ), this, SLOT( FilenameChanged( const QString & ) ) );
+    connect( pButton_, SIGNAL( clicked() ), this, SLOT( ChooseFile() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -93,7 +90,7 @@ ADN_FileChooser::ADN_FileChooser(QWidget *parent,const QString& filter,const cha
 //-----------------------------------------------------------------------------
 ADN_FileChooser::~ADN_FileChooser()
 {
-    clear_owned_ptrs(vConnectors_);
+    clear_owned_ptrs( vConnectors_ );
     vConnectors_.clear();
 }
 
@@ -115,9 +112,10 @@ void ADN_FileChooser::ChooseFile()
 // Name: ADN_FileChooser::FilenameChanged
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-void ADN_FileChooser::FilenameChanged(const QString& file)
+void ADN_FileChooser::FilenameChanged( const QString& file )
 {
-    static_cast<ADN_FileChooser_Connector*>(vConnectors_[eFile])->SetDataChanged(file);
+    tools::Path p = tools::Path::FromUnicode( file.toStdWString() );
+    static_cast< ADN_FileChooser_Connector* >( vConnectors_[ eFile ] )->SetDataChanged( p );
 }
 
 //-----------------------------------------------------------------------------
@@ -144,7 +142,7 @@ tools::Path ADN_FileChooser::GetFilename() const
 // Name: ADN_FileChooser::SetWorkingDir
 // Created: JDY 03-07-01
 //-----------------------------------------------------------------------------
-void ADN_FileChooser::SetDirectory(const tools::Path& szDir)
+void ADN_FileChooser::SetDirectory( const tools::Path& szDir )
 {
     szDirectory_ = szDir;
 }
@@ -157,4 +155,3 @@ void ADN_FileChooser::SetMode( ADN_FileChooser::E_Mode m )
 {
     eMode_=m;
 }
-

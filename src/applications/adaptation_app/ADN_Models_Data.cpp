@@ -294,13 +294,10 @@ void ADN_Models_Data::ModelInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ModelInfos::WriteArchive( const std::string& type, xml::xostream& output )
 {
-    std::string strFileName = strFile_.GetData();
-    std::replace( strFileName.begin(), strFileName.end(), '/', '\\' );
-
     output << xml::start( type )
             <<  xml::attribute( "name", strName_ )
             <<  xml::attribute( "dia-type", strDiaType_ )
-            <<  xml::attribute( "file", strFileName )
+            <<  xml::attribute( "file", strFile_.GetData().Normalize() )
             <<  xml::attribute( "masalife", isMasalife_ )
             <<  xml::start( "missions" );
     for( IT_MissionInfos_Vector it = vMissions_.begin(); it != vMissions_.end(); ++it )

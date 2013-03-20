@@ -341,6 +341,31 @@ void ADN_MainWindow::SaveAsProject()
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::NewProject
+// Created: JSR 2013-03-20
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::NewProject( const tools::Path& filename )
+{
+    filename.Parent().CreateDirectories();
+
+    workspace_.SetOpenMode( eOpenMode_Admin );
+    emit OpenModeToggled();
+
+    if( ! SelectOpenMode() )
+        return;
+
+    SetMenuEnabled( false );
+    mainTabWidget_->hide();
+
+    workspace_.Reset( filename );
+
+    SetMenuEnabled( true );
+    mainTabWidget_->show();
+    setCaption( tr( "Sword Adaptation Tool - " ) + filename.ToUTF8().c_str() + "[*]" );
+    pProjectLoadAction_->setVisible( false );
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow::NewProject
 // Created: JDY 03-06-19
@@ -353,21 +378,7 @@ void ADN_MainWindow::NewProject()
 
     path /= "physical.xml";
 
-    workspace_.SetOpenMode( eOpenMode_Admin );
-    emit OpenModeToggled();
-
-    if( ! SelectOpenMode() )
-        return;
-
-    SetMenuEnabled(false);
-    mainTabWidget_->hide();
-
-    workspace_.Reset( path );
-
-    SetMenuEnabled(true);
-    mainTabWidget_->show();
-    setCaption( tr( "Sword Adaptation Tool - " ) + path.ToUTF8().c_str() + "[*]" );
-    pProjectLoadAction_->setVisible( false );
+    NewProject( path );
 }
 
 //-----------------------------------------------------------------------------

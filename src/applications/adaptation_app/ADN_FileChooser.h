@@ -21,45 +21,44 @@ class QPushButton;
 //*****************************************************************************
 // Created: JDY 03-07-01
 //*****************************************************************************
-class ADN_FileChooser
-:   public QWidget
+class ADN_FileChooser : public QWidget
 {
     Q_OBJECT
 
 public:
     enum E_Mode
     {
-        eFile       =0,
-        eDirectory  =1
+        eFile       = 0,
+        eDirectory  = 1
     };
 
 public:
-    explicit ADN_FileChooser(QWidget *parent,const QString& filter=szDefaultFilter_,const char* szName = 0);
+    explicit ADN_FileChooser( QWidget* parent, const QString& filter = szDefaultFilter_, const char* szName = 0 );
     virtual ~ADN_FileChooser();
 
-    tools::Path         GetFilename() const;
+    tools::Path GetFilename() const;
     const tools::Path&  GetDirectory() const;
-    E_Mode              GetMode() const;
-    void                SetFilter(const QString& filter);
-    ADN_Connector_ABC&  GetConnector(E_Mode type);
+    E_Mode GetMode() const;
+    void SetFilter( const QString& filter );
+    ADN_Connector_ABC&  GetConnector( E_Mode type );
 
 public slots:
-    void        SetMode( E_Mode m );
-    void        SetFilename(const tools::Path& file);
-    void        SetDirectory(const tools::Path& dir);
+    void SetMode( E_Mode m );
+    void SetFilename( const tools::Path& file );
+    void SetDirectory( const tools::Path& dir );
 
 private slots:
     void ChooseFile();
-    void FilenameChanged(const QString& file);
+    void FilenameChanged( const QString& file );
 
 private:
-    QLineEdit*          pLineEdit_;
-    QPushButton*        pButton_;
-    E_Mode              eMode_;
-    T_ConnectorVector   vConnectors_;
-    QString             szFilter_;
-    tools::Path         szDirectory_;
-    static QString      szDefaultFilter_;
+    QLineEdit* pLineEdit_;
+    QPushButton* pButton_;
+    E_Mode eMode_;
+    T_ConnectorVector vConnectors_;
+    QString szFilter_;
+    tools::Path szDirectory_;
+    static QString szDefaultFilter_;
 };
 
 //-----------------------------------------------------------------------------
@@ -87,9 +86,9 @@ ADN_FileChooser::E_Mode  ADN_FileChooser::GetMode() const
 // Created: JDY 03-07-01
 //-----------------------------------------------------------------------------
 inline
-void ADN_FileChooser::SetFilter(const QString& filter)
+void ADN_FileChooser::SetFilter( const QString& filter )
 {
-    szFilter_=filter;
+    szFilter_ = filter;
 }
 
 //-----------------------------------------------------------------------------
@@ -97,9 +96,9 @@ void ADN_FileChooser::SetFilter(const QString& filter)
 // Created: JDY 03-07-01
 //-----------------------------------------------------------------------------
 inline
-ADN_Connector_ABC& ADN_FileChooser::GetConnector(ADN_FileChooser::E_Mode type)
+ADN_Connector_ABC& ADN_FileChooser::GetConnector( ADN_FileChooser::E_Mode type )
 {
-    return *vConnectors_[type];
+    return *vConnectors_[ type ];
 }
 
 #endif // __ADN_FileChooser_h_

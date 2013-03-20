@@ -152,6 +152,10 @@
         <source>Error</source>
         <translation>Error</translation>
     </message>
+    <message>
+        <source>New base creation and input/output file options cannot be used together.</source>
+        <translation>New base creation and input/output file options cannot be used together.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>

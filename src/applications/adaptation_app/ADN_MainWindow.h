@@ -58,6 +58,7 @@ public:
     void AddListView( const QString& strTableName, ADN_Callback_ABC<ADN_ListView*>* pCallback );
 
     void OpenProject( const tools::Path& filename, bool isAdminMode = false );
+    void NewProject( const tools::Path& filename );
     void SaveProjectAs( const tools::Path& filename );
 
 protected:

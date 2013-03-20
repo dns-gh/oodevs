@@ -89,7 +89,7 @@ public:
     public:
         ADN_Missions_Data::T_Mission_Vector& missions_;
         ADN_Type_String                     strDiaType_;
-        ADN_Type_String                     strFile_;
+        ADN_Type_Path                       strFile_;
         ADN_Type_Bool                       isMasalife_;
         T_MissionInfos_Vector               vMissions_;
         T_OrderInfos_Vector                 vFragOrders_;
