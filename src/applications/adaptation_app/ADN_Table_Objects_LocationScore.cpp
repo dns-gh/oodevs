@@ -93,9 +93,12 @@ void ADN_Table_Objects_LocationScore::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 void ADN_Table_Objects_LocationScore::AddNewElement( int n )
 {
-    ScoreLocationInfos* pNewInfo = CreateNewElement< ScoreLocationInfos >();
-    if( pNewInfo )
-        pNewInfo->nLocation_ = (E_Location)n;
+    ScoreLocationInfos* newElement = new ScoreLocationInfos();
+    if( newElement )
+        newElement->nLocation_ = (E_Location)n;
+    ADN_Connector_Vector_ABC& connector = static_cast< ADN_Connector_Vector_ABC& >( GetConnector() );
+    connector.AddItem( newElement );
+    connector.AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
