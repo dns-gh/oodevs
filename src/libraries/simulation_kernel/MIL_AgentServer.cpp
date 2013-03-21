@@ -578,16 +578,8 @@ MIL_ObjectFactory& MIL_AgentServer::GetObjectFactory() const
 void MIL_AgentServer::CreateWorkspace( MIL_Config& config )
 {
     assert( pTheAgentServer_ == 0 );
-    try
-    {
-        new MIL_AgentServer( config );
-    }
-    catch(...)
-    {
-        // MIL_AgentServer constructor sets pTheAgentServer_ to this
-        pTheAgentServer_ = 0;
-        throw;
-    }
+    // MIL_AgentServer constructor sets pTheAgentServer_ to this
+    new MIL_AgentServer( config );
 }
 
 //-----------------------------------------------------------------------------
