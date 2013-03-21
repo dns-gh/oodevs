@@ -395,6 +395,6 @@ unsigned long ADN_Categories_Data::GetNewIdentifier()
 // -----------------------------------------------------------------------------
 void ADN_Categories_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    if( vArmors_.size() == 1 )
+    if( vArmors_.size() == 0 )
         checker.AddError( eMissingArmor, "", eCategories );
 }
