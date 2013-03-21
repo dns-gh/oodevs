@@ -10,7 +10,7 @@
 #ifndef __dispatcher_RotatingLog_h_
 #define __dispatcher_RotatingLog_h_
 
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
 #include <memory>

@@ -11,7 +11,7 @@
 #define FileMatcher_ABC_h
 
 #include <boost/noncopyable.hpp>
-#include "Path.h"
+#include <tools/Path.h>
 
 namespace xml
 {

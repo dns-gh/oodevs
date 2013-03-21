@@ -31,7 +31,8 @@
 #include <string>
 
 #include <tools/Exception.h>
+#include <tools/Path.h>
 #include "tools/FileWrapper.h"
-#include "tools/Path.h"
+#include "tools/XmlStreamOperators.h"
 
 #endif // __frontend_pch_h_

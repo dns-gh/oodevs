@@ -12,7 +12,7 @@
 
 #include "dispatcher/Frames.h"
 #include "tools/FileWrapper.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <boost/noncopyable.hpp>
 
 namespace dispatcher

@@ -12,7 +12,7 @@
 
 #include "frontend/ProcessObserver_ABC.h"
 #include "protocol/LauncherSenders.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #pragma warning( push, 0 )
 #pragma warning( disable : 4244 )
 #include <boost/enable_shared_from_this.hpp>

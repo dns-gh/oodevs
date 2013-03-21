@@ -11,7 +11,7 @@
 #define __SubTypes_h_
 
 #include "StrongType.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 
 namespace kernel
 {

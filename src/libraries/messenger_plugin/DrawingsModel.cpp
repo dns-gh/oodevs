@@ -17,6 +17,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "tools/IdManager.h"
 #include "tools/FileWrapper.h"
+#include "tools/XmlStreamOperators.h"
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>

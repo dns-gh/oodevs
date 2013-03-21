@@ -49,9 +49,6 @@
     <ClCompile Include="..\..\src\tests\tools_test\IpcQueueTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\tools_test\PathTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\tools_test\ZipStreamTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

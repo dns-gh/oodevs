@@ -13,7 +13,7 @@
 #include "dispatcher/Registrable_ABC.h"
 #include "protocol/MessengerSenders.h"
 #include "tools/Resolver.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <boost/noncopyable.hpp>
 #include <ostream>
 #include <list>

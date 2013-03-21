@@ -19,7 +19,7 @@
 #include "clients_kernel/ModeController.h"
 #include "ParamComboBox.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <QtWebKit/qwebview.h>
 
 using namespace actions::gui;

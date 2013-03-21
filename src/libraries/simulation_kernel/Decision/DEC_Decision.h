@@ -12,7 +12,7 @@
 
 #include "MIL.h"
 #include "Decision/DEC_Decision_ABC.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <boost/scoped_ptr.hpp>
 
 class DEC_Knowledge_Object;

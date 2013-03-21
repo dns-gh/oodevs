@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "tools_pch.h"
-
 #include "FileMatcherNonVersionedSchema.h"
+#include "XmlStreamOperators.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 

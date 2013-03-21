@@ -25,7 +25,7 @@
 #include <turtle/mock.hpp>
 #pragma warning( disable : 4505 )
 
-#include "tools/Path.h"
+#include <tools/Path.h>
 
 tools::Path BOOST_RESOLVE( const tools::Path& filename );
 

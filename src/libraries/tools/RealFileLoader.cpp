@@ -16,6 +16,7 @@
 #include "FileMatcher_ABC.h"
 #include "FileWrapper.h"
 #include "SchemaVersionExtractor_ABC.h"
+#include "XmlStreamOperators.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>

@@ -11,7 +11,7 @@
 #include "ExerciseSettings.h"
 #include "FileWrapper.h"
 #include "Loader_ABC.h"
-#include "Path.h"
+#include <tools/Path.h>
 #include "SchemaWriter_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>

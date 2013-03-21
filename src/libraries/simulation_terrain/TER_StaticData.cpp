@@ -9,7 +9,7 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_StaticData.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <spatialcontainer/StaticTerrainGraph.h>
 
 // -----------------------------------------------------------------------------

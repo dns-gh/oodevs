@@ -10,7 +10,7 @@
 #include "LicenseDialog.h"
 #include "tools/win32/FlexLm.h"
 #include "tools/FileWrapper.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <tchar.h>
 #include <sstream>
 #include <xeumeuleu/xml.hpp>

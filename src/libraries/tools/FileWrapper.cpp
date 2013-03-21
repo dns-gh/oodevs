@@ -9,81 +9,10 @@
 
 #include "tools_pch.h"
 #include "FileWrapper.h"
-#include "Path.h"
+#include <tools/Path.h>
 
 namespace tools
 {
-
-// -----------------------------------------------------------------------------
-// STD
-// -----------------------------------------------------------------------------
-Fstream::Fstream()
-{
-    // NOTHING
-}
-
-Fstream::Fstream( const tools::Path& path, std::ios_base::openmode mode /*= std::ios_base::in | std::ios_base::out*/ )
-    : std::fstream( path.ToUnicode().c_str(), mode )
-{
-    // NOTHING
-}
-
-Fstream::~Fstream()
-{
-    // NOTHING
-}
-
-void Fstream::open( const tools::Path& path, std::ios_base::openmode mode /*= std::ios_base::in | std::ios_base::out*/ )
-{
-    std::fstream::open( path.ToUnicode().c_str(), mode );
-}
-
-// -----------------------------------------------------------------------------
-Ifstream::Ifstream()
-    : std::ifstream()
-{
-    // NOTHING
-}
-
-Ifstream::Ifstream( const tools::Path& path, std::ios_base::openmode mode /* = std::ios_base::in */ )
-    : std::ifstream( path.ToUnicode().c_str(), mode )
-{
-    // NOTHING
-}
-
-Ifstream::~Ifstream()
-{
-    // NOTHING
-}
-
-void Ifstream::open( const tools::Path& path, std::ios_base::openmode mode /*= std::ios_base::in*/ )
-{
-    std::ifstream::open( path.ToUnicode().c_str(), mode );
-}
-
-// -----------------------------------------------------------------------------
-Ofstream::Ofstream()
-    : std::ofstream()
-{
-    // NOTHING
-}
-
-Ofstream::Ofstream( const tools::Path& path, std::ios_base::openmode mode /* = std::ios_base::out */ )
-    : std::ofstream( path.ToUnicode().c_str(), mode )
-{
-    // NOTHING
-}
-
-Ofstream::~Ofstream()
-{
-    // NOTHING
-}
-
-void Ofstream::open( const tools::Path& path, std::ios_base::openmode mode /*= std::ios_base::out*/ )
-{
-    std::ofstream::open( path.ToUnicode().c_str(), mode );
-}
-
 
 // -----------------------------------------------------------------------------
 // XML

@@ -71,8 +71,9 @@
 #include <cassert>
 
 #include <tools/Exception.h>
+#include <tools/Path.h>
 #include "tools/FileWrapper.h"
-#include "tools/Path.h"
+#include "tools/XmlStreamOperators.h"
 
 #include <geometry/Types.h>
 

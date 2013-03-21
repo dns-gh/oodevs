@@ -13,6 +13,7 @@
 #include "Loader_ABC.h"
 #include "SchemaWriter_ABC.h"
 #include "FileWrapper.h"
+#include "XmlStreamOperators.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
 

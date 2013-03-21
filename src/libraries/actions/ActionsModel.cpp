@@ -17,7 +17,7 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/Loader_ABC.h"
 #include "tools/FileWrapper.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <boost/bind.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <xeumeuleu/xml.hpp>

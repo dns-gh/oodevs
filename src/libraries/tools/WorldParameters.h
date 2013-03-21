@@ -10,7 +10,7 @@
 #ifndef __WorldParameters_h_
 #define __WorldParameters_h_
 
-#include "Path.h"
+#include <tools/Path.h>
 
 namespace xml
 {

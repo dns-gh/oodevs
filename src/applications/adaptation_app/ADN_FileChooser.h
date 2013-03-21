@@ -13,7 +13,7 @@
 
 #include "ADN_Connector_ABC.h"
 #include <QtGui/qwidget.h>
-#include "tools/Path.h"
+#include <tools/Path.h>
 
 class QLineEdit;
 class QPushButton;

@@ -12,7 +12,7 @@
 #include "GaugeNormalizer.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "tools/GeneralConfig.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace indicators;

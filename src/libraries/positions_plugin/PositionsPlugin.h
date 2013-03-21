@@ -12,7 +12,7 @@
 
 #include "TeamResolver.h"
 #include "dispatcher/Plugin_ABC.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <string>
 #include <vector>

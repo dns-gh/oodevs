@@ -9,7 +9,7 @@
 
 #include "LoggerApplication.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <iostream>
 
 int main( int argc, char** argv )

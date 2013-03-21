@@ -144,12 +144,10 @@
     <ClCompile Include="..\..\src\libraries\tools\EndpointResolver.cpp">
       <Filter>Source Files\Network\internal</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\tools\Path.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\tools\FileWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\XmlStreamOperators.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h">
@@ -347,11 +345,9 @@
     <ClInclude Include="..\..\src\libraries\tools\ConnectionError.h">
       <Filter>Source Files\Network\internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\tools\Path.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\FileWrapper.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\XmlStreamOperators.h" />
   </ItemGroup>
 </Project>

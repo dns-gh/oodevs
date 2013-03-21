@@ -16,6 +16,7 @@
 #include "simulation_terrain/TER_World.h"
 #include "protocol/Protocol.h"
 #include "tools/FileWrapper.h"
+#include "tools/XmlStreamOperators.h"
 #include <geodata/Feature_ABC.h>
 #include <geodata/FeatureHandler_ABC.h>
 #pragma warning( push, 0 )

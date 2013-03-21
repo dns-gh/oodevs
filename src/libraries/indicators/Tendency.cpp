@@ -10,7 +10,7 @@
 #include "indicators_pch.h"
 #include "Tendency.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include "tools/GeneralConfig.h"
 #pragma warning( push, 0 )
 #include <QtGui/qpixmap.h>

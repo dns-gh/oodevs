@@ -13,7 +13,7 @@
 #include <boost/noncopyable.hpp>
 #include <windows.h>
 #include <string>
-#include "tools/Path.h"
+#include <tools/Path.h>
 
 class LauncherFacade;
 

@@ -27,6 +27,7 @@
 #include "score_plugin/ScorePlugin.h"
 #include "order_plugin/OrderPlugin.h"
 #include "tools/FileWrapper.h"
+#include "tools/XmlStreamOperators.h"
 #include <xeumeuleu/xml.hpp>
 #include <windows.h>
 

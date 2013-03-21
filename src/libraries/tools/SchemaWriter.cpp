@@ -9,8 +9,9 @@
 
 #include "tools_pch.h"
 #include "SchemaWriter.h"
-#include "Path.h"
 #include "version.h"
+#include "XmlStreamOperators.h"
+#include <tools/Path.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace tools;

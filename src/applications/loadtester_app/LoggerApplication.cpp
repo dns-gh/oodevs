@@ -15,7 +15,7 @@
 #include "protocol/ReplaySenders.h"
 #include "protocol/DispatcherSenders.h"
 #include "protocol/MessengerSenders.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
 #pragma warning( pop )

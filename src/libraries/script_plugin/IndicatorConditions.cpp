@@ -13,7 +13,7 @@
 #include "MiscEvents.h"
 #include "directia/brain/Brain.h"
 #include "dispatcher/Config.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 
 using namespace plugins::script;
 

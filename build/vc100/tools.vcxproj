@@ -106,7 +106,6 @@
     <ClCompile Include="..\..\src\libraries\tools\FileWrapper.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\IdManager.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\IpcQueue.cpp" />
-    <ClCompile Include="..\..\src\libraries\tools\Path.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\ThreadPool.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\tools_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -142,6 +141,7 @@
     <ClCompile Include="..\..\src\libraries\tools\FileMatcherNonVersionedSchema.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\FileMatcherRootNode.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\SchemaWriter.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\XmlStreamOperators.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\ZipExtractor.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,7 +156,6 @@
     <ClInclude Include="..\..\src\libraries\tools\IpcQueue.h" />
     <ClInclude Include="..\..\src\libraries\tools\IpcWatch.h" />
     <ClInclude Include="..\..\src\libraries\tools\ObjectMessageCallback_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\tools\Path.h" />
     <ClInclude Include="..\..\src\libraries\tools\ThreadPool.h" />
     <ClInclude Include="..\..\src\libraries\tools\tools_pch.h" />
     <ClInclude Include="..\..\src\libraries\tools\Version.h" />
@@ -211,6 +210,7 @@
     <ClInclude Include="..\..\src\libraries\tools\FileMatcherRootNode.h" />
     <ClInclude Include="..\..\src\libraries\tools\SchemaWriter.h" />
     <ClInclude Include="..\..\src\libraries\tools\SchemaWriter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\XmlStreamOperators.h" />
     <ClInclude Include="..\..\src\libraries\tools\ZipExtractor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

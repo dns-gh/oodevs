@@ -13,6 +13,7 @@
 #include "WorldParameters.h"
 #include "MT_Tools/MT_Logger.h"
 #include "FileWrapper.h"
+#include "XmlStreamOperators.h"
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #include <boost/program_options.hpp>

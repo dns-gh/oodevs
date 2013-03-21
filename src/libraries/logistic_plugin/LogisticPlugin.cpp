@@ -18,7 +18,8 @@
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/SessionConfig.h"
-#include "tools/Path.h"
+#include "tools/XmlStreamOperators.h"
+#include <tools/Path.h>
 #pragma warning( push, 0 )
 #include <QtCore/qsettings.h>
 #include <QtCore/qtextcodec.h>

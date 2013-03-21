@@ -16,6 +16,7 @@
 #include "simulation_terrain/TER_World.h"
 #include "propagation/PropagationManager.h"
 #include "propagation/ASCExtractor.h"
+#include "tools/XmlStreamOperators.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
 

@@ -18,7 +18,7 @@
 #include <boost/CRC.hpp>
 #pragma warning ( pop )
 #include <queue>
-#include "tools/Path.h"
+#include <tools/Path.h>
 
 namespace sword
 {

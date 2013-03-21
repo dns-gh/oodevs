@@ -9,7 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "ImageWrapper.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 
 namespace gui
 {

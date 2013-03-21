@@ -11,7 +11,7 @@
 #define __MT_FileLogger_h_
 
 #include "MT_Logger_ABC.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #pragma warning( push, 0 )
 #include <boost/thread/mutex.hpp>
 #pragma warning( pop )

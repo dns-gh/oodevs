@@ -14,7 +14,7 @@
 #include "UpdatableAttribute_ABC.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "MIL.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <boost/shared_ptr.hpp>
 #include <vector>
 #include <memory>

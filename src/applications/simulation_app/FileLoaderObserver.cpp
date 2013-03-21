@@ -11,7 +11,7 @@
 #include "FileLoaderObserver.h"
 #include "MT_Tools/MT_Logger.h"
 #include "xeumeuleu/xml.hpp"
-#include "tools/Path.h"
+#include <tools/Path.h>
 
 // -----------------------------------------------------------------------------
 // Name: FileLoaderObserver constructor

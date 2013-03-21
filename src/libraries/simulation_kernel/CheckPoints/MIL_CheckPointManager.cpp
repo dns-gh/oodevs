@@ -18,6 +18,7 @@
 #include "Tools/MIL_Config.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
+#include "tools/XmlStreamOperators.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>

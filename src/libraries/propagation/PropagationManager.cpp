@@ -9,6 +9,7 @@
 
 #include "PropagationManager.h"
 #include "tools/FileWrapper.h"
+#include "tools/XmlStreamOperators.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

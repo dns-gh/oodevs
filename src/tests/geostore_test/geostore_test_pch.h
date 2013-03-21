@@ -25,7 +25,7 @@
 
 extern std::string temp_directory;
 
-#include "tools/Path.h"
+#include <tools/Path.h>
 
 tools::Path BOOST_RESOLVE( const tools::Path& filename );
 

@@ -11,7 +11,7 @@
 #include "FederateFactory.h"
 #include "FederateAmbassadorFactory_ABC.h"
 #include "Federate_ABC.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <hla/RtiAmbassador_ABC.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/algorithm/string.hpp>

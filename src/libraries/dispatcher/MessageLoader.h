@@ -12,7 +12,7 @@
 
 #include "Frames.h"
 #include "MessageLoader_ABC.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include "tools/FileWrapper.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/thread/mutex.hpp>

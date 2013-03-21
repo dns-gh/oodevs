@@ -10,7 +10,7 @@
 #ifndef __Database_h_
 #define __Database_h_
 
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include "GeometryType.h"
 #include <boost/noncopyable.hpp>
 #include <boost/smart_ptr.hpp>

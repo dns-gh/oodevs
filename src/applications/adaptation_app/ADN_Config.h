@@ -12,7 +12,7 @@
 #ifndef __ADN_Config_h_
 #define __ADN_Config_h_
 
-#include "tools/Path.h"
+#include <tools/Path.h>
 
 class ADN_ConfigDialog;
 

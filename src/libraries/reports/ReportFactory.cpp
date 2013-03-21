@@ -22,7 +22,8 @@
 #include "protocol/Protocol.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/FileWrapper.h"
-#include "tools/Path.h"
+#include "tools/XmlStreamOperators.h"
+#include <tools/Path.h>
 #include <tools/Exception.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/smart_ptr/make_shared.hpp>

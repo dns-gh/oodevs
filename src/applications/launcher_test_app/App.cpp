@@ -12,7 +12,7 @@
 #include "ResponseHandler.h"
 #include "PBTools.h"
 
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include "protocol/LauncherSenders.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 )

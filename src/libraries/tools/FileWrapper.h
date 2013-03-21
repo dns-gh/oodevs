@@ -10,7 +10,7 @@
 #ifndef __FileWrapper_h_
 #define __FileWrapper_h_
 
-#include <iostream>
+#include <tools/StdFileWrapper.h>
 #include <xeumeuleu/xml.hpp>
 
 // $$$$ ABR 2013-03-13: Multiple warning in xutilily if include xeuseuleu here
@@ -21,40 +21,6 @@
 namespace tools
 {
     class Path;
-    // -----------------------------------------------------------------------------
-    // STD
-    // -----------------------------------------------------------------------------
-    class Fstream : public std::fstream
-    {
-    public:
-                 Fstream();
-        explicit Fstream( const Path& path, std::ios_base::openmode mode = std::ios_base::in | std::ios_base::out );
-        virtual ~Fstream();
-
-        void open( const Path& path, std::ios_base::openmode mode = std::ios_base::in | std::ios_base::out );
-    };
-
-    // -----------------------------------------------------------------------------
-    class Ifstream : public std::ifstream
-    {
-    public:
-                 Ifstream();
-        explicit Ifstream( const Path& path, std::ios_base::openmode mode = std::ios_base::in );
-        virtual ~Ifstream();
-
-        void open( const Path& path, std::ios_base::openmode mode = std::ios_base::in );
-    };
-
-    // -----------------------------------------------------------------------------
-    class Ofstream : public std::ofstream
-    {
-    public:
-                 Ofstream();
-        explicit Ofstream( const Path& path, std::ios_base::openmode mode = std::ios_base::out );
-        virtual ~Ofstream();
-
-        void open( const Path& path, std::ios_base::openmode mode = std::ios_base::out );
-    };
 
     // -----------------------------------------------------------------------------
     // XML

@@ -11,7 +11,7 @@
 #define __ScoresModel_h_
 
 #include "dispatcher/Registrable_ABC.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #pragma warning( push, 0 )
 #pragma warning( disable : 4996 )
 #include <QtCore/qdatetime.h>

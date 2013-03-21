@@ -24,7 +24,7 @@
 #include <turtle/mock.hpp>
 
 #include <tools/Exception.h>
-#include "tools/Path.h"
+#include <tools/Path.h>
 
 namespace mock
 {

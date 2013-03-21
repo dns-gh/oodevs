@@ -12,6 +12,7 @@
 #include "tools/SessionConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
 #include "tools/Resolver.h"
+#include "tools/XmlStreamOperators.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"

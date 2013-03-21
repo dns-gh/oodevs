@@ -60,8 +60,9 @@
 #undef max
 
 #include <tools/Exception.h>
+#include <tools/Path.h>
 #include "tools/FileWrapper.h"
-#include "tools/Path.h"
+#include "tools/XmlStreamOperators.h"
 #include <cassert>
 #include "MT_Tools/MT_Logger.h"
 #include "ADN_Type_ABC.h"

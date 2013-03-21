@@ -16,7 +16,7 @@
 #include "protocol/LauncherSenders.h"
 #include "protocol/AuthenticationSenders.h"
 #include "protocol/DispatcherSenders.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 
 namespace launcher
 {

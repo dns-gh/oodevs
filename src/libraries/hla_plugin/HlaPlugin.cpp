@@ -48,6 +48,7 @@
 #include "SideResolver.h"
 #include "tools/FileWrapper.h"
 #include "tools/MessageController.h"
+#include "tools/XmlStreamOperators.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AutomatType.h"

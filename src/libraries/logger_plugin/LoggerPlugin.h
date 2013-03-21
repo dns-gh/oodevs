@@ -14,7 +14,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "reports/ReportFactory.h"
 #include "RcEntityResolver.h"
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <set>
 
 namespace tools

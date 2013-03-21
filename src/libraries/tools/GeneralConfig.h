@@ -11,7 +11,7 @@
 #define __GeneralConfig_h_
 
 #include "CommandLineConfig_ABC.h"
-#include "Path.h"
+#include <tools/Path.h>
 
 namespace tools
 {

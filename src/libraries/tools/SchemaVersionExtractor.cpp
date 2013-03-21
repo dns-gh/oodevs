@@ -9,7 +9,7 @@
 
 #include "tools_pch.h"
 #include "SchemaVersionExtractor.h"
-#include "Path.h"
+#include <tools/Path.h>
 
 using namespace tools;
 

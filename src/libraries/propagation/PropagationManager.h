@@ -10,7 +10,7 @@
 #ifndef PropagationManager_h
 #define PropagationManager_h
 
-#include "tools/Path.h"
+#include <tools/Path.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/noncopyable.hpp>
 #include <string>
