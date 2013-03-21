@@ -222,10 +222,10 @@
         <attribute name="directory"/>
         <sequential>
             <local name="unicode name"/>
-            <property name="unicode name" value="@{out.dir}/physical base with unicode"/>
+            <property name="unicode name" value="${out.dir}/physical base with unicode"/>
             <!--
             Java lost unicode when calling exec or echo, so no unicode char in the physical base path for now
-            <property name="unicode name" value="@{out.dir}/physical base with unicode ひらがな"/>
+            <property name="unicode name" value="${out.dir}/physical base with unicode ひらがな"/>
             -->
             <delete dir="${unicode name}"/>
 
