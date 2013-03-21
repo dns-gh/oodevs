@@ -430,7 +430,7 @@ void ADN_Table::SaveToXls( const tools::Path& path, const QString& sheetName ) c
             format.set_background( palette.GetColor( 0 ) );
 
             BasicExcelCell* cell = sheet->Cell( 0, col );
-            cell->Set( content.toStdString().c_str() );
+            cell->Set( content.toStdWString().c_str() );
 
             // Column size
             if( columnMaxContentSize[ col ] < content.size() )
@@ -484,7 +484,7 @@ void ADN_Table::SaveToXls( const tools::Path& path, const QString& sheetName ) c
                 if( ok )
                     cell->Set( content.toDouble() );
                 else
-                    cell->Set( content.toUtf8().constData() );
+                    cell->Set( content.toStdWString().c_str() );
             }
 
             // Column size

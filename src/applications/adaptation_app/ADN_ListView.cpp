@@ -715,7 +715,7 @@ void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int shee
             if( !cell )
                 return;
             QString content = dataModel_.headerData( col, Qt::Horizontal ).toString();
-            cell->Set( content.toStdString().c_str() );
+            cell->Set( content.toStdWString().c_str() );
             cell->SetFormat( format );
             if( col == 0 )
             {
@@ -819,7 +819,7 @@ void ADN_ListView::FillSheetFromItem( QStandardItem* qItem, BasicExcelWorksheet&
             if( ok )
                 cell->Set( content.toDouble() );
             else
-                cell->Set( content.toStdString().c_str() );
+                cell->Set( content.toStdWString().c_str() );
         }
 
         // Column size
