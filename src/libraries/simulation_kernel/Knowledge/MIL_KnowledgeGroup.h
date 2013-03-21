@@ -128,7 +128,7 @@ public:
     const MIL_KnowledgeGroupType& GetType() const;
     MIL_Army_ABC& GetArmy() const;
     const T_AutomateVector& GetAutomates() const;
-    const DEC_KnowledgeBlackBoard_KnowledgeGroup& GetKnowledge() const;
+    const DEC_KnowledgeBlackBoard_KnowledgeGroup* GetKnowledge() const;
     DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer() const;
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int ) const;
     boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const MIL_Object_ABC& object ) const;
@@ -163,13 +163,15 @@ public:
     template < class UnaryFunction >
     void ApplyOnKnowledgesAgent( UnaryFunction& fct ) const
     {
-        GetKnowledge().ApplyOnKnowledgesAgent( fct );
+        if( knowledgeBlackBoard_ )
+            knowledgeBlackBoard_->ApplyOnKnowledgesAgent( fct );
     }
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesPopulation( UnaryFunction& fct ) const
     {
-        GetKnowledge().ApplyOnKnowledgesPopulation( fct );
+        if( knowledgeBlackBoard_ )
+            knowledgeBlackBoard_->ApplyOnKnowledgesPopulation( fct );
     }
     //@}
 

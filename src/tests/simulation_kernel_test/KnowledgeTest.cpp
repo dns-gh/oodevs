@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
         // TestAgentKnowledgeIsCreated
         boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( group1, mockAgent, 0.5 ) );
 
-        DEC_BlackBoard_CanContainKnowledgeAgent& test1 = group1->GetKnowledge().GetKnowledgeAgentContainer();
+        DEC_BlackBoard_CanContainKnowledgeAgent& test1 = group1->GetKnowledge()->GetKnowledgeAgentContainer();
         MOCK_EXPECT( mockAgent.CreateKnowledge ).with( mock::same( group1 ) ).once().returns( knowledge );
 
         DEC_Knowledge_Agent& obj = test1.CreateKnowledgeAgent( group1, mockAgent );
@@ -132,7 +132,7 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
         boost::shared_ptr< DEC_Knowledge_Agent > knowledgeJammed1( new DEC_Knowledge_Agent( groupJammed1, mockAgentJammed1, 0.5 ) );
 
         MOCK_EXPECT( mockAgentJammed1.CreateKnowledge ).with( mock::same( groupJammed1 ) ).once().returns( knowledgeJammed1 );
-        DEC_BlackBoard_CanContainKnowledgeAgent& testjammed1 = groupJammed1->GetKnowledge().GetKnowledgeAgentContainer();
+        DEC_BlackBoard_CanContainKnowledgeAgent& testjammed1 = groupJammed1->GetKnowledge()->GetKnowledgeAgentContainer();
         DEC_Knowledge_Agent& objJammed1 = testjammed1.CreateKnowledgeAgent( groupJammed1, mockAgentJammed1 );
 
         BOOST_CHECK_EQUAL( &objJammed1, knowledgeJammed1.get() );
@@ -142,7 +142,7 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     //}
     //{
         // TestKnowledgePropagationNeedsUpdate
-        DEC_BlackBoard_CanContainKnowledgeAgent& test2 = group2->GetKnowledge().GetKnowledgeAgentContainer();
+        DEC_BlackBoard_CanContainKnowledgeAgent& test2 = group2->GetKnowledge()->GetKnowledgeAgentContainer();
         BOOST_CHECK_EQUAL( false, test2.HasKnowledgeAgent( mockAgent ) );
         BOOST_CHECK_EQUAL( false, test1.HasKnowledgeAgent( mockAgentJammed1 ) );
         BOOST_CHECK_EQUAL( false, test2.HasKnowledgeAgent( mockAgentJammed1 ) );
@@ -171,7 +171,7 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     //}
     //{
         // TestKnowledgeIsNotPropagatedWhenSourceIsJammed
-        DEC_BlackBoard_CanContainKnowledgeAgent& test3 = armyGroup->GetKnowledge().GetKnowledgeAgentContainer();
+        DEC_BlackBoard_CanContainKnowledgeAgent& test3 = armyGroup->GetKnowledge()->GetKnowledgeAgentContainer();
         MOCK_EXPECT( mockAgent.CreateKnowledge ).once().returns( knowledge );
 //        MOCK_EXPECT( mockAgentJammed1.CreateKnowledge ).once().returns( knowledgeJammed1 );
         armyGroup->UpdateKnowledges( 1 );
@@ -242,7 +242,7 @@ BOOST_AUTO_TEST_CASE( TestLatentRelevance )
         // TestAgentKnowledgeIsCreatedWithRelevanceMax
         boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( knowledgeGroup, mockAgent, 1. ) ); // 1 for relevance
 
-        DEC_BlackBoard_CanContainKnowledgeAgent& knowledgeAgentContainer = knowledgeGroup->GetKnowledge().GetKnowledgeAgentContainer();
+        DEC_BlackBoard_CanContainKnowledgeAgent& knowledgeAgentContainer = knowledgeGroup->GetKnowledge()->GetKnowledgeAgentContainer();
         MOCK_EXPECT( mockAgent.CreateKnowledge ).once().returns( knowledge );
 
         DEC_Knowledge_Agent& obj = knowledgeAgentContainer.CreateKnowledgeAgent( knowledgeGroup, mockAgent );

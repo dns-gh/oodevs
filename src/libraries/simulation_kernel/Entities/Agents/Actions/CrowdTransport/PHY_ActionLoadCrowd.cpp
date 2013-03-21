@@ -26,7 +26,10 @@ PHY_ActionLoadCrowd::PHY_ActionLoadCrowd( MIL_AgentPion& pion, int knowledgeId, 
     , role_           ( pion.GetRole< PHY_RoleAction_CrowdTransport >() )
     , concentrationId_( concentrationId )
 {
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pion.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    auto bbKg = pion.GetKnowledgeGroup()->GetKnowledge();
+    if( !bbKg )
+        throw std::runtime_error( __FUNCTION__ " Unknown blackboard" );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
     if( !pKnowledge )
         throw MASA_EXCEPTION( "Unknown crowd knowledge." );
     crowd_ = &pKnowledge->GetPopulationKnown();

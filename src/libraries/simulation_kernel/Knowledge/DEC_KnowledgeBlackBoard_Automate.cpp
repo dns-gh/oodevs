@@ -67,7 +67,10 @@ void DEC_KnowledgeBlackBoard_Automate::serialize( Archive& archive, const unsign
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( const sword::UnitKnowledgeId& asn ) const
 {
-    return pAutomate_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgentFromID( asn.id() );
+    auto bbKg = pAutomate_->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        return bbKg->GetKnowledgeAgentFromID( asn.id() );
+    return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +79,10 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Automate::Resol
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( const MIL_Agent_ABC& agent ) const
 {
-    return pAutomate_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgent( agent );
+    auto bbKg = pAutomate_->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        return bbKg->GetKnowledgeAgent( agent );
+    return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +91,10 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Automate::Resol
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( unsigned int nID ) const
 {
-    return pAutomate_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgentFromID( nID );
+    auto bbKg = pAutomate_->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        return bbKg->GetKnowledgeAgentFromID( nID );
+    return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
 
 // -----------------------------------------------------------------------------
@@ -130,7 +139,10 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_Automate::Reso
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const
 {
-    return pAutomate_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( asn.id() );
+    auto bbKg = pAutomate_->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        return bbKg->GetKnowledgePopulationFromID( asn.id() );
+    return boost::shared_ptr< DEC_Knowledge_Population >();
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +151,10 @@ boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_Automate::
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( const MIL_Population& population ) const
 {
-    return pAutomate_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulation( population );
+    auto bbKg = pAutomate_->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        return bbKg->GetKnowledgePopulation( population );
+    return boost::shared_ptr< DEC_Knowledge_Population >();
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +163,10 @@ boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_Automate::
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Population > DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( unsigned int nID ) const
 {
-    return pAutomate_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( nID );
+    auto bbKg = pAutomate_->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        return bbKg->GetKnowledgePopulationFromID( nID );
+    return boost::shared_ptr< DEC_Knowledge_Population >();
 }
 
 // -----------------------------------------------------------------------------

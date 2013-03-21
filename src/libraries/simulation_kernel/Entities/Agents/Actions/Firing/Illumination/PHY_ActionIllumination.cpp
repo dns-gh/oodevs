@@ -65,8 +65,9 @@ void PHY_ActionIllumination::Execute()
     int nResult = role_.IlluminatePion( pEnemy_ );
     if( nResult == 4 || nResult == 5 )
     {
-        if( !knowledgeGroup_->GetKnowledge().IsKnown( pEnemy_->GetAgentKnown() ) )
-          knowledgeGroup_->GetKnowledge().GetKnowledgeAgentContainer().CreateKnowledgeAgent( knowledgeGroup_, pEnemy_->GetAgentKnown() );
+        auto bbKg = knowledgeGroup_->GetKnowledge();
+        if( bbKg && !bbKg->IsKnown( pEnemy_->GetAgentKnown() ) )
+            bbKg->GetKnowledgeAgentContainer().CreateKnowledgeAgent( knowledgeGroup_, pEnemy_->GetAgentKnown() );
     }
     Callback( nResult );
 }

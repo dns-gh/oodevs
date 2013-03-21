@@ -56,7 +56,10 @@ PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, int knowled
     , caller_      ( caller )
 {
     unsigned int callerTeamID = caller.GetArmy().GetID();
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = caller.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( knowledgeCrowdId );
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( !bbKg )
+        throw std::runtime_error( __FUNCTION__ " Unknown blackboard" );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeCrowdId );
     if( !pKnowledge )
         throw MASA_EXCEPTION( "Unknown crowd knowledge." );
     MIL_Population& crowd = pKnowledge->GetPopulationKnown();

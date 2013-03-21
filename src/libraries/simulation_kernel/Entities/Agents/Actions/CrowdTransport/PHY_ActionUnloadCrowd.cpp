@@ -28,7 +28,10 @@ PHY_ActionUnloadCrowd::PHY_ActionUnloadCrowd( MIL_AgentPion& pion, int knowledge
 {
     if( !position )
         throw MASA_EXCEPTION( "Invalid position." );
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pion.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    auto bbKg = pion.GetKnowledgeGroup()->GetKnowledge();
+    if( !bbKg )
+        throw std::runtime_error( __FUNCTION__ " Unknown blackboard" );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
     if( !pKnowledge )
         throw MASA_EXCEPTION( "Unknown crowd knowledge." );
     crowd_ = &pKnowledge->GetPopulationKnown();

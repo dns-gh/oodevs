@@ -71,9 +71,13 @@ void DEC_Knowledge_RapForLocal::Update()
     if( nLastCacheUpdateTick_ >= MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
         return;
     nLastCacheUpdateTick_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
-    assert( pPion_ );
-    const T_KnowledgeAgentVector& enemies = pPion_->GetKnowledgeGroup()->GetKnowledge().GetEnemies();
-    const T_KnowledgeAgentVector& friends = pPion_->GetKnowledgeGroup()->GetKnowledge().GetFriends();
+    if( !pPion_ )
+        return;
+    auto bbKg = pPion_->GetKnowledgeGroup()->GetKnowledge();
+    if( !bbKg )
+        return;
+    const T_KnowledgeAgentVector& enemies = bbKg->GetEnemies();
+    const T_KnowledgeAgentVector& friends = bbKg->GetFriends();
     dangerousEnemies_.clear();
     double rTotalFightScoreEnemy  = 0;
     double rTotalFightScoreFriend = 0;

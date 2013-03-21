@@ -33,8 +33,9 @@
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau( const MIL_AgentPion& callerAgent )
 {
     T_ConstKnowledgeAgentVector knowledges;
-    callerAgent.GetKnowledgeGroup()->GetKnowledge().GetDetectedAgentsInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
-
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        bbKg->GetDetectedAgentsInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
     return knowledges;
 }
 
@@ -47,7 +48,9 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetDetectedAgentsInZone( con
     if( !area )
         throw MASA_EXCEPTION( "invalid parameter." );
     T_ConstKnowledgeAgentVector knowledges;
-    callerAgent.GetKnowledgeGroup()->GetKnowledge().GetDetectedAgentsInZone( knowledges, *area );
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        bbKg->GetDetectedAgentsInZone( knowledges, *area );
     return knowledges;
 }
 
@@ -60,7 +63,9 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetEnemyAgentsInZone( const 
     T_ConstKnowledgeAgentVector knowledges;
     if( !callerAgent )
         throw MASA_EXCEPTION( "invalid parameter." );
-    callerAgent->GetPion().GetKnowledgeGroup()->GetKnowledge().GetEnemyAgentsInZone( knowledges, *area );
+    auto bbKg = callerAgent->GetPion().GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        bbKg->GetEnemyAgentsInZone( knowledges, *area );
     return knowledges;
 }
 
@@ -181,7 +186,6 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInF
 {
     T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledge().GetLivingEnemiesPerceivedInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
-
     return knowledges;
 }
 
@@ -193,10 +197,10 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInZone( cons
 {
     if( !pZone )
         throw MASA_EXCEPTION( "invalid parameter." );
-
     T_ConstKnowledgeAgentVector knowledges;
-    callerAgent.GetKnowledgeGroup()->GetKnowledge().GetLivingEnemiesInZone( knowledges, *pZone );
-
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        bbKg->GetLivingEnemiesInZone( knowledges, *pZone );
     return knowledges;
 }
 
@@ -208,10 +212,10 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetWoundedUnitsInZone( const
 {
     if( !pZone )
         throw MASA_EXCEPTION( "invalid parameter." );
-
     T_ConstKnowledgeAgentVector knowledges;
-    callerAgent.GetKnowledgeGroup()->GetKnowledge().GetWoundedUnitsInZone( knowledges, *pZone );
-
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg)
+        bbKg->GetWoundedUnitsInZone( knowledges, *pZone );
     return knowledges;
 }
 
@@ -223,10 +227,10 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetCiviliansInZone( const MI
 {
     if( !pZone )
         throw MASA_EXCEPTION( "invalid parameter." );
-
     T_ConstKnowledgeAgentVector knowledges;
-    callerAgent.GetKnowledgeGroup()->GetKnowledge().GetCiviliansInZone( knowledges, *pZone );
-
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg)
+        bbKg->GetCiviliansInZone( knowledges, *pZone );
     return knowledges;
 }
 
@@ -237,8 +241,9 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetCiviliansInZone( const MI
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau( const MIL_AgentPion& callerAgent )
 {
     T_ConstKnowledgeAgentVector knowledges;
-    callerAgent.GetKnowledgeGroup()->GetKnowledge().GetLivingEnemiesInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
-
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        bbKg->GetLivingEnemiesInZone( knowledges, callerAgent.GetOrderManager().GetFuseau() );
     return knowledges;
 }
 
@@ -250,10 +255,10 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInCircle( co
 {
     if( !pCenter )
         throw MASA_EXCEPTION( "invalid parameter." );
-
     T_ConstKnowledgeAgentVector knowledges;
-    callerAgent.GetKnowledgeGroup()->GetKnowledge().GetLivingEnemiesInCircle( knowledges, *pCenter, radius );
-
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        bbKg->GetLivingEnemiesInCircle( knowledges, *pCenter, radius );
     return knowledges;
 }
 
@@ -265,10 +270,10 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetWoundedOrDeadUnitsInCircl
 {
     if( !pCenter )
         throw MASA_EXCEPTION( "invalid parameter." );
-
     T_ConstKnowledgeAgentVector knowledges;
-    callerAgent.GetKnowledgeGroup()->GetKnowledge().GetWoundedOrDeadUnitsInCircle( knowledges, *pCenter, radius );
-
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg)
+        bbKg->GetWoundedOrDeadUnitsInCircle( knowledges, *pCenter, radius );
     return knowledges;
 }
 
@@ -278,8 +283,12 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetWoundedOrDeadUnitsInCircl
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeFunctions::GetObservableKnowledge( sword::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
+    auto bbKg = pion.GetKnowledgeGroup()->GetKnowledge();
+    if( !bbKg )
+        return;
+
     //Agents
-    knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.agentKnowledge" ), pion.GetKnowledgeGroup()->GetKnowledge().GetEnemies(), true );
+    knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.agentKnowledge" ), bbKg->GetEnemies(), true );
 
     //Object
     T_KnowledgeObjectVector objectsKn;
@@ -362,7 +371,9 @@ T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInZone( const MIL_Agent
 void DEC_KnowledgeFunctions::GetDestroyableKnowledge( sword::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     //Agents //@TODO Add private tools function
-    knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.agentKnowledge" ), pion.GetKnowledgeGroup()->GetKnowledge().GetEnemies(), true );
+    auto bbKg = pion.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.agentKnowledge" ),bbKg->GetEnemies(), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -372,7 +383,9 @@ void DEC_KnowledgeFunctions::GetDestroyableKnowledge( sword::Brain& brain, const
 void DEC_KnowledgeFunctions::GetIdentifiableKnowledge( sword::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     //Agents //@TODO Add private tools function
-    knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.agentKnowledge" ), pion.GetKnowledgeGroup()->GetKnowledge().GetEnemies(), true );
+    auto bbKg = pion.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.agentKnowledge" ),bbKg->GetEnemies(), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -382,7 +395,9 @@ void DEC_KnowledgeFunctions::GetIdentifiableKnowledge( sword::Brain& brain, cons
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbyRefugees( const MIL_AgentPion& callerAgent, double radius )
 {
     T_ConstKnowledgeAgentVector knowledges;
-    callerAgent.GetKnowledgeGroup()->GetKnowledge().GetRefugeesInCircle( knowledges, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), radius );
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        bbKg->GetRefugeesInCircle( knowledges, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), radius );
     return knowledges;
 }
 
@@ -392,8 +407,10 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbyRefugees( const MIL
 // -----------------------------------------------------------------------------
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbyTerrorists( const MIL_AgentPion& callerAgent, double radius )
 {
-    T_ConstKnowledgeAgentVector knowledges; 
-    callerAgent.GetKnowledgeGroup()->GetKnowledge().GetTerroristsInCircle( knowledges, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), radius );
+    T_ConstKnowledgeAgentVector knowledges;
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        bbKg->GetTerroristsInCircle( knowledges, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), radius );
     return knowledges;
 }
 
@@ -404,8 +421,9 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbyTerrorists( const M
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbySurrenderedAgents( const MIL_AgentPion& callerAgent, double radius )
 {
     T_ConstKnowledgeAgentVector knowledges;
-    callerAgent.GetKnowledgeGroup()->GetKnowledge().GetSurrenderedAgentsInCircle( knowledges, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), radius );
-
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        bbKg->GetSurrenderedAgentsInCircle( knowledges, callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), radius );
     return knowledges;
 }
 
@@ -417,7 +435,10 @@ bool DEC_KnowledgeFunctions::EnemyPresenceInCircle( const MIL_AgentPion& callerA
 {
     if( !center )
         throw MASA_EXCEPTION( "invalid parameter." );
-    return callerAgent.GetKnowledgeGroup()->GetKnowledge().EnemyPresenceInCircle( *center, radius );
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        return bbKg->EnemyPresenceInCircle( *center, radius );
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -576,8 +597,12 @@ T_KnowledgePopulationDiaIDVector DEC_KnowledgeFunctions::GetPopulationsAttacking
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeFunctions::IsPopulationAttacking( const MIL_AgentPion& callerAgent, int knowledgeId )
 {
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = callerAgent.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
-    if( !pKnowledge )
-        return false;
-    return callerAgent.GetKnowledge().IsPopulationAttacking( *pKnowledge );
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return callerAgent.GetKnowledge().IsPopulationAttacking( *pKnowledge );
+    }
+    return false;
 }

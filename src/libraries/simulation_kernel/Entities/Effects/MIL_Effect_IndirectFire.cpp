@@ -90,13 +90,17 @@ void MIL_Effect_IndirectFire::UpdateTargetPositionFromKnowledge()
 {
     if( nTargetKnowledgeID_ == 0 )
         return;
-    boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
-    if( !pTargetKnowledge || !pTargetKnowledge->IsValid() )
+    auto bbKg = firer_.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
     {
-        nTargetKnowledgeID_ = 0;
-        return;
+        boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = bbKg->GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
+        if( pTargetKnowledge && pTargetKnowledge->IsValid() )
+        {
+            vTargetPosition_ = pTargetKnowledge->GetPosition();
+            return;
+        }
     }
-    vTargetPosition_ = pTargetKnowledge->GetPosition();
+    nTargetKnowledgeID_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -164,10 +168,12 @@ bool MIL_Effect_IndirectFire::Execute()
         //LTO begin
         if( indirectDotationCategory_.GetDotationCategory().IsGuided() )
         {
-            boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
-            if( pTargetKnowledge && pTargetKnowledge->IsValid() )
+            auto bbKg = firer_.GetKnowledgeGroup()->GetKnowledge();
+            if( bbKg )
             {
-                indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, pTargetKnowledge->GetAgentKnown(), nNbrAmmoFired_, *pFireResult_ );
+                boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = bbKg->GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
+                if( pTargetKnowledge && pTargetKnowledge->IsValid() )
+                    indirectDotationCategory_.GetDotationCategory().ApplyIndirectFireEffect( firer_, pTargetKnowledge->GetAgentKnown(), nNbrAmmoFired_, *pFireResult_ );
             }
         }
         //LTO end
@@ -270,13 +276,15 @@ bool MIL_Effect_IndirectFire::IsTargetValid() const
 {
     if( indirectDotationCategory_.GetDotationCategory().IsGuided() && nTargetKnowledgeID_ != 0 )
     {
-        boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup()->GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
-        if( pTargetKnowledge && pTargetKnowledge->IsValid() )
+        auto bbKg = firer_.GetKnowledgeGroup()->GetKnowledge();
+        if( bbKg )
         {
-            if( pTargetKnowledge->GetPosition().Distance( firer_.GetRole< PHY_RoleInterface_Location >().GetPosition() ) > indirectDotationCategory_.GetDotationCategory().GetGuidanceRange()
-            || !pTargetKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
+            boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = bbKg->GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
+            if( pTargetKnowledge && pTargetKnowledge->IsValid() )
             {
-                return false;
+                if( pTargetKnowledge->GetPosition().Distance( firer_.GetRole< PHY_RoleInterface_Location >().GetPosition() ) > indirectDotationCategory_.GetDotationCategory().GetGuidanceRange()
+                || !pTargetKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
+                    return false;
             }
         }
     }

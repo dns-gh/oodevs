@@ -377,7 +377,10 @@ namespace
     void UpdateAgentKnowledgeGroupBlackBoard(
         core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
     {
-        BOOST_FOREACH( const auto& agent, group.GetKnowledge().GetKnowledgeAgentContainer().GetKnowledgeAgents() )
+        auto bbKg = group.GetKnowledge();
+        if( !bbKg )
+            return;
+        BOOST_FOREACH( const auto& agent, bbKg->GetKnowledgeAgentContainer().GetKnowledgeAgents() )
         {
             boost::shared_ptr< DEC_Knowledge_Agent > knowledge = agent.second;
             UpdateAgentKnowledge( entities[ knowledge->GetAgentKnown().GetID() ], knowledges[ "agents" ][ knowledge->GetID() ], knowledge );

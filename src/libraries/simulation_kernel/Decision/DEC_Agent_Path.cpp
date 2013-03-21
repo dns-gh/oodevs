@@ -233,16 +233,20 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
 {
     if( pathClass_.AvoidEnemies() )
     {
-        const T_KnowledgeAgentVector& enemies = queryMaker_.GetKnowledgeGroup()->GetKnowledge().GetEnemies();
-        for( auto itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
+        auto bbKg = queryMaker_.GetKnowledgeGroup()->GetKnowledge();
+        if( bbKg )
         {
-            const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
-            if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
+            const T_KnowledgeAgentVector& enemies = bbKg->GetEnemies();
+            for( auto itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
             {
-                const double factor = pathClass_.GetEnemyCostOnContact();
-                if( factor > 0 )
-                    pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( knowledge.GetPosition(),
-                        pathClass_.GetEnemyCostAtSecurityRange(), factor, knowledge.GetMaxRangeToFireOn( queryMaker_, 0 ) ) );
+                const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
+                if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
+                {
+                    const double factor = pathClass_.GetEnemyCostOnContact();
+                    if( factor > 0 )
+                        pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( knowledge.GetPosition(),
+                            pathClass_.GetEnemyCostAtSecurityRange(), factor, knowledge.GetMaxRangeToFireOn( queryMaker_, 0 ) ) );
+                }
             }
         }
     }
@@ -294,11 +298,16 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     // Populations
     if( pathClass_.HandlePopulations() )
     {
-        T_KnowledgePopulationVector knowledgesPopulation;
-        queryMaker_.GetKnowledgeGroup()->GetKnowledge().GetPopulations( knowledgesPopulation );
-        pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
-        for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
-            pathKnowledgePopulations_.push_back( boost::make_shared< DEC_Path_KnowledgePopulation >( boost::cref( **it ), boost::cref( pathClass_ ), !queryMaker_.GetType().IsTerrorist() ) );
+        auto bbKg = queryMaker_.GetKnowledgeGroup()->GetKnowledge();
+        if( bbKg )
+        {
+            T_KnowledgePopulationVector knowledgesPopulation;
+            bbKg->GetPopulations( knowledgesPopulation );
+            pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
+            for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
+                pathKnowledgePopulations_.push_back( boost::make_shared< DEC_Path_KnowledgePopulation >( boost::cref( **it ), boost::cref( pathClass_ ), !queryMaker_.GetType().IsTerrorist() ) );
+        }
+
     }
 }
 

@@ -280,7 +280,10 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePopulationKnowledge( DEC_Decision_ABC* caller, int knowledgeId )
 {
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = caller->GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge;
+    auto bbKg = caller->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
     return CreatePopulationKnowledge( pKnowledge );
 }
 

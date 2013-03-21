@@ -299,16 +299,20 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
     // Enemies
     if( GET_HOOK( AvoidEnemies )( GetID() ) )
     {
-        const T_KnowledgeAgentVector& enemies = pion.GetKnowledgeGroup()->GetKnowledge().GetEnemies();
-        for( auto itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
+        auto bbKg = pion.GetKnowledgeGroup()->GetKnowledge();
+        if( bbKg )
         {
-            const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
-            if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
+            const T_KnowledgeAgentVector& enemies = bbKg->GetEnemies();
+            for( auto itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
             {
-                const double factor = GET_HOOK( GetEnemyCostOnContact )( GetID() );
-                if( factor > 0 )
-                    pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( knowledge.GetPosition(),
-                        GET_HOOK( GetEnemyCostAtSecurityRange )( GetID() ), factor, knowledge.GetMaxRangeToFireOn( pion, 0 ) ) );
+                const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
+                if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
+                {
+                    const double factor = GET_HOOK( GetEnemyCostOnContact )( GetID() );
+                    if( factor > 0 )
+                        pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( knowledge.GetPosition(),
+                            GET_HOOK( GetEnemyCostAtSecurityRange )( GetID() ), factor, knowledge.GetMaxRangeToFireOn( pion, 0 ) ) );
+                }
             }
         }
     }
@@ -358,10 +362,14 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
     if( GET_HOOK( HandlePopulations )( GetID() ) )
     {
         T_KnowledgePopulationVector knowledgesPopulation;
-        pion.GetKnowledgeGroup()->GetKnowledge().GetPopulations( knowledgesPopulation );
-        pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
-        for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
-            pathKnowledgePopulations_.push_back( boost::shared_ptr< DEC_Path_KnowledgePopulation >( new DEC_Path_KnowledgePopulation( **it, *this, !pion.GetType().IsTerrorist() ) ) );
+        auto bbKg = pion.GetKnowledgeGroup()->GetKnowledge();
+        if( bbKg )
+        {
+            bbKg->GetPopulations( knowledgesPopulation );
+            pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
+            for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
+                pathKnowledgePopulations_.push_back( boost::shared_ptr< DEC_Path_KnowledgePopulation >( new DEC_Path_KnowledgePopulation( **it, *this, !pion.GetType().IsTerrorist() ) ) );
+        }
     }
 }
 

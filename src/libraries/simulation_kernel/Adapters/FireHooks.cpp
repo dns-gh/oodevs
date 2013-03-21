@@ -223,15 +223,23 @@ namespace
     DEFINE_HOOK( IsPopulationKnowledgeValid, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* knowledge ) )
     {
         const MIL_AgentPion& pion = GET_PION( entity );
-        unsigned int nTargetKnowledgeID = (*core::Convert( knowledge ));
-        const boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pion.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( nTargetKnowledgeID );
-        return pKnowledge;
+        unsigned int nTargetKnowledgeID = ( *core::Convert( knowledge ) );
+        auto bbKg = pion.GetKnowledgeGroup()->GetKnowledge();
+        if( bbKg )
+        {
+            const boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( nTargetKnowledgeID );
+            return pKnowledge;
+        }
+        return boost::shared_ptr< DEC_Knowledge_Population >();
     }
     DEFINE_HOOK( GetClosestAlivePopulationElement, 3, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* population, const SWORD_Model* entity ) )
     {
         const MIL_AgentPion& pion = GET_PION( entity );
-        unsigned int nTargetKnowledgeID = (*core::Convert( population ));
-        const boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pion.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( nTargetKnowledgeID );
+        unsigned int nTargetKnowledgeID = ( *core::Convert( population ) );
+        auto bbKg = pion.GetKnowledgeGroup()->GetKnowledge();
+        if( !bbKg )
+            return 0;
+        const boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( nTargetKnowledgeID );
         if( ! pKnowledge )
             return 0;
         const MIL_Population& target = pKnowledge->GetPopulationKnown();

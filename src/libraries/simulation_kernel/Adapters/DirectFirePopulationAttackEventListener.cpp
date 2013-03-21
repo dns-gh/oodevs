@@ -48,7 +48,10 @@ void DirectFirePopulationAttackEventListener::Notify( const core::Model& event )
     {
         MIL_AgentPion& pion = event[ "entity/data" ].GetUserData< MIL_AgentPion >();
         unsigned int nTargetKnowledgeID = event[ "population" ];
-        const boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pion.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( nTargetKnowledgeID );
+        auto bbKg = pion.GetKnowledgeGroup()->GetKnowledge();
+        if( !bbKg )
+            return;
+        const boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( nTargetKnowledgeID );
         if( ! pKnowledge )
         {
             MT_LOG_ERROR_MSG( "Error in " << __FUNCTION__ << " : no population associated to knowldge identifier" );

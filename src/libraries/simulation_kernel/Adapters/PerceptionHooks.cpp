@@ -338,7 +338,8 @@ namespace
     }
     DEFINE_HOOK( IsKnown, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
     {
-        return GET_PION( perceiver ).GetKnowledgeGroup()->GetKnowledge().IsKnown( GET_PION( target ) );
+        auto bbKg = GET_PION( perceiver ).GetKnowledgeGroup()->GetKnowledge();
+        return bbKg ? bbKg->IsKnown( GET_PION( target ) ) : false;
     }
     DEFINE_HOOK( ComputeAgentRatioInsidePerceptionPolygon, 4, double, ( const SWORD_Model* perceiver, const SWORD_Model* target, double distance, double roll ) )
     {
