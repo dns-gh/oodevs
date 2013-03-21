@@ -230,6 +230,7 @@ void ADN_Missions_ABC::RenameDifferentNamedMissionSheet( const tools::Path& miss
         {
             ( oldPath + ".xml" ).Rename( newPath + ".xml" );
             ( oldPath + ".html" ).Rename( newPath + ".html" );
+            missionSheetPath_ = newPath.ToUTF8() + ".html";
         }
     }
 }

@@ -173,7 +173,22 @@ namespace
         if( tempDir.Exists() )
         {
             ( missionPath / ADN_Missions_Data::imagePath_ ).RemoveAll();
-            tempDir.Copy( missionPath / ADN_Missions_Data::imagePath_, tools::Path::OverwriteIfExists );
+            bool copyDone = false;
+            int attemptNumber = 0;
+            while( !copyDone )
+            {
+                try
+                {
+                    ++attemptNumber;
+                    tempDir.Copy( missionPath / ADN_Missions_Data::imagePath_, tools::Path::OverwriteIfExists );
+                    copyDone = true;
+                }
+                catch( std::exception& )
+                {
+                    if( attemptNumber == 42 )
+                        throw;
+                }
+            }
         }
     }
 }
