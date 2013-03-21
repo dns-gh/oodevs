@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<equipments model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/Equipments.xsd">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="1" name="Test equipment unicode المكتبة" protection="Test armor unicode 他看過" size="Test volume unicode 共通語" weight="100">
+    <speeds max="100">
+      <speed terrain="unknown" value="0"/>
+      <speed terrain="forest" value="0"/>
+      <speed terrain="orchard" value="0"/>
+      <speed terrain="swamp" value="0"/>
+      <speed terrain="dune" value="0"/>
+      <speed terrain="urban area" value="0"/>
+      <speed terrain="lake" value="0"/>
+      <speed terrain="glacier" value="0"/>
+      <speed terrain="forest edge" value="0"/>
+      <speed terrain="suburb" value="0"/>
+      <speed terrain="waterfront" value="0"/>
+      <speed terrain="orchard edge" value="0"/>
+      <speed terrain="swamp edge" value="0"/>
+      <speed terrain="dune edge" value="0"/>
+      <speed terrain="glacier edge" value="0"/>
+      <speed terrain="country road" value="0"/>
+      <speed terrain="highway" value="0"/>
+      <speed terrain="main road" value="0"/>
+      <speed terrain="secondary road" value="0"/>
+      <speed terrain="stream" value="0"/>
+      <speed terrain="river" value="0"/>
+      <speed terrain="main river" value="0"/>
+      <speed terrain="bridge" value="0"/>
+      <speed terrain="cliff" value="0"/>
+      <speed terrain="railroad" value="0"/>
+      <speed terrain="crossroad" value="0"/>
+      <speed terrain="mountain" value="0"/>
+      <speed terrain="mountain edge" value="0"/>
+    </speeds>
+    <composition>
+      <category name="munition">
+        <resource capacity="1" logistic-threshold="0" name="Test ammunition unicode 共通語" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="1" logistic-threshold="0" name="Test mine unicode 共通語" normalized-consumption="0"/>
+      </category>
+    </composition>
+    <sensors>
+      <sensor height="5" type="Test sensor unicode المكتبة"/>
+    </sensors>
+    <radars>
+      <radar type="Test special sensor unicode المكتبة"/>
+    </radars>
+    <transports>
+      <crew man-boarding-time="12s" man-unloading-time="12s"/>
+      <unit capacity="2" ton-loading-time="12s" ton-unloading-time="12s"/>
+      <crowd capacity="3" man-boarding-time="12s" man-unloading-time="12s"/>
+    </transports>
+    <consumptions/>
+    <weapon-systems>
+      <weapon-system launcher="Test launcher unicode المكتبة" munition="Test ammunition unicode 共通語"/>
+    </weapon-systems>
+    <active-protections>
+      <protection name="Test active protection unicode المكتبة"/>
+    </active-protections>
+    <human-protections/>
+    <objects>
+      <object construction-time-factor="12s" extinguishing-time="12s" type="Test object unicode الكتاب "/>
+    </objects>
+    <logistic-functions>
+      <health-functions>
+        <collecting capacity="0" man-loading-time="0s" man-unloading-time="0s" wounded-transport=""/>
+        <relieving capacity="0" man-loading-time="0s" man-unloading-time="0s" wounded-transport=""/>
+        <caring/>
+      </health-functions>
+      <supply-functions>
+        <carrying mass="0" nature="Test nature unicode 共通" volume="0"/>
+      </supply-functions>
+    </logistic-functions>
+    <breakdowns>
+      <breakdown origin="random" percentage="100" type="Test breakdown unicode المكتبة"/>
+      <breakdown origin="attrition" percentage="100" type="Test breakdown unicode المكتبة"/>
+    </breakdowns>
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+</equipments>

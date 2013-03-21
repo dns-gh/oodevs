@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<breakdowns model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/Breakdowns.xsd">
+  <diagnosis time="10m"/>
+  <category name="NTI1">
+    <breakdown average-repairing-time="0s" id="1" name="Test breakdown unicode المكتبة" type="EA" variance="0s">
+      <part quantity="2" resource="Test piece unicode 共通語"/>
+    </breakdown>
+  </category>
+  <category name="NTI2"/>
+  <category name="NTI3"/>
+</breakdowns>

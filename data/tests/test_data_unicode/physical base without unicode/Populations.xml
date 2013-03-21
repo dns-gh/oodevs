@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<populations model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/Crowds.xsd">
+  <reloading-time-effect modifier="1" population-density="1"/>
+  <time-between-nbc-applications delay="1h"/>
+  <population armed-individuals="0" concentration-density="0" decisional-model="Test model crowd unicode أردت أن أقرأ كتابا عن تاريخ المرأة في فرن" id="1" moving-base-density="0" moving-speed="0" name="Test crowd unicode 片仮名">
+    <slowing-effects>
+      <slowing-effect population-attitude="calme"/>
+      <slowing-effect population-attitude="agitee"/>
+      <slowing-effect population-attitude="excitee"/>
+      <slowing-effect population-attitude="agressive">
+        <unit max-speed="2" population-density="12" unit-size="Test volume unicode 共通語"/>
+      </slowing-effect>
+    </slowing-effects>
+    <attrition-effects>
+      <attrition-effect intensity="2" population-attitude="agressive" population-density="12">
+        <protection name="Test armor unicode 他看過">
+          <unarmed destruction="0.12" repairable-with-evacuation="0.12" repairable-without-evacuation="0.12"/>
+          <armed destruction="0.12" repairable-with-evacuation="0.12" repairable-without-evacuation="0.12"/>
+        </protection>
+      </attrition-effect>
+    </attrition-effects>
+    <unit-fire-effects/>
+    <urban-destruction-effects>
+      <urban-destruction-effect attitude="calme" density="0" time="0s"/>
+      <urban-destruction-effect attitude="agitee" density="0" time="0s"/>
+      <urban-destruction-effect attitude="excitee" density="12" time="0s"/>
+      <urban-destruction-effect attitude="agressive" density="0" time="0s"/>
+    </urban-destruction-effects>
+    <repartition children="0" female="0" male="1"/>
+    <nbc decontaminationDelay="300s"/>
+  </population>
+</populations>

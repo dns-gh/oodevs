@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<units model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/Units.xsd">
+  <unit decisional-model="Test model unicode  даторíйлє" id="1" name="Test pion unicode 沙发／沙發" type="Pion LOG TC2">
+    <nature atlas-nature="PC" level="none" nature-app6="emergency/firefighter"/>
+    <equipments>
+      <equipment count="1" crew="2" type="Test equipment unicode المكتبة"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="mine">
+        <resource capacity="1" logistic-threshold="0" name="Test mine unicode 共通語" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <stocks>
+      <stock logistic-supply-class="Test log cat unicode 共通語" threshold="10"/>
+    </stocks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s" tear-down-time="0s"/>
+      <posture name="Poste" setup-time="0s" tear-down-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s" tear-down-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s" tear-down-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1s" suit="level2"/>
+    <distance-before-points>
+      <distance-before-point type="urban area" value="100"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+</units>

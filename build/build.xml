@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <project name="csword" default="all">
 
     <!-- Generate 3 months evaluation license -->
@@ -181,36 +181,92 @@
 
     <macrodef name="test-adaptation">
         <attribute name="input"/>
+        <attribute name="mission-sheet-path" default="Mission sheets"/>
         <sequential>
             <echo>Testing models: @{input}</echo>
             <!-- HTML files are not versioned, there is no easy way to test for 
                  non-regressions, this is someone else job.
             -->
             <local name="excluded"/>
-            <property name="excluded" value="*/Mission sheets/*.html"/>
+            <property name="excluded" value="*/@{mission-sheet-path}/*.html"/>
             <delete dir="${out.dir}/test-adaptation"/>
             <tempfile property="@{input}.temp" destdir="${out.dir}" deleteonexit="true"/>
-            <python taskname="checksum" output="${@{input}.temp}" failonerror="true">
+            <python taskname="checksum" failonerror="true">
                 <arg value="checksum.py"/>
-                <arg value="--exclude=${excluded}"/>
+                <arg value="write"/>
                 <arg value="@{input}"/>
+                <arg value="${@{input}.temp}"/>
+                <arg value="--exclude=${excluded}"/>
             </python>
             <run-adaptation input="@{input}" output="${out.dir}/test-adaptation"/>
             <python taskname="checksum" failonerror="true">
                 <arg value="checksum.py"/>
-                <arg value="--exclude=${excluded}"/>
+                <arg value="read"/>
                 <arg value="@{input}"/>
-                <arg value="--check"/>
                 <arg value="${@{input}.temp}"/>
+                <arg value="--exclude=${excluded}"/>
             </python>
             <python taskname="checksum" failonerror="true">
                 <arg value="checksum.py"/>
-                <arg value="--exclude=${excluded}"/>
+                <arg value="read"/>
                 <arg value="${out.dir}/test-adaptation"/>
-                <arg value="--check"/>
                 <arg value="${@{input}.temp}"/>
+                <arg value="--exclude=${excluded}"/>
             </python>
             <delete dir="${out.dir}/test-adaptation"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="test-adaptation-unicode">
+        <attribute name="input"/>
+        <attribute name="directory"/>
+        <sequential>
+            <local name="unicode name"/>
+            <property name="unicode name" value="@{out.dir}/physical base with unicode"/>
+            <!--
+            Java lost unicode when calling exec or echo, so no unicode char in the physical base path for now
+            <property name="unicode name" value="@{out.dir}/physical base with unicode ひらがな"/>
+            -->
+            <delete dir="${unicode name}"/>
+
+            <!-- SVN and HG work poorly together with versioned unicode paths, so let ant generate them -->
+            <copy todir="${unicode name}">
+                <fileset dir="@{directory}@{input}">
+                    <depth max="0"/>
+                    <exclude name="**/physical.xml"/>
+                </fileset>
+                <firstmatchmapper>
+                    <globmapper from="templates.xml" to="templates.xml"/>
+                    <globmapper from="*.xml" to="*ひらがな.xml"/>
+                </firstmatchmapper>
+            </copy>
+            <copy todir="${unicode name}">
+                <fileset dir="@{directory}@{input}">
+                    <depth min="1"/>
+                </fileset>
+                <firstmatchmapper>
+                    <globmapper from="*.png" to="* зи́лєлє, дънєѡ но́аѡ а́стъзй.png"/>
+                    <globmapper from="*.xml" to="* 平仮.xml"/>
+                    <globmapper from="*.html" to="* 平仮.html"/>
+                    <globmapper from="*.css" to="* 平仮.css"/>
+                    <identitymapper/>
+                </firstmatchmapper>
+            </copy>
+
+            <copy file="@{directory}@{input}/../physical with unicode.xml" toFile="${unicode name}/physical.xml" />
+            <copy file="@{directory}@{input}/../missionSheets with unicode.xslt" toFile="${unicode name}/missionSheetsひらがな.xslt" />
+
+            <move todir="${unicode name}/Mission sheetsひらがな">
+                <fileset dir="${unicode name}/Mission sheets"/>
+            </move>
+            <move todir="${unicode name}/Symbolsひらがな">
+                <fileset dir="${unicode name}/Symbols"/>
+            </move>
+
+            <test-adaptation input="${unicode name}" mission-sheet-path="Mission sheetsひらがな"/>
+
+            <delete dir="${unicode name}"/>
+
         </sequential>
     </macrodef>
 
@@ -232,6 +288,7 @@
         <test-adaptation-newbase/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/scipio"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
+        <test-adaptation-unicode directory="${data.dir}/tests/test_data_unicode/" input="physical base without unicode"/>
     </target>
 
     <macrodef name="test-exercise">

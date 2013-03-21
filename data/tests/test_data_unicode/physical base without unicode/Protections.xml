@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<protections model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/Armors.xsd">
+  <protection name="Test armor unicode 他看過" type="materiel">
+    <neutralization average-time="12s" variance="12s"/>
+    <random-breakdown-probability eva="12" neva="12"/>
+    <attrition-effects>
+      <attrition-effect dead-percentage="12" equipment-state="ReparableAvecEvacuation" injured-percentage="12"/>
+      <attrition-effect dead-percentage="12" equipment-state="ReparableSurPlace" injured-percentage="12"/>
+      <attrition-effect dead-percentage="12" equipment-state="Detruit" injured-percentage="12"/>
+    </attrition-effects>
+  </protection>
+</protections>

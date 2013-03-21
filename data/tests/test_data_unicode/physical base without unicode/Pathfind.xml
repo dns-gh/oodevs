@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<pathfind model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/Pathfind.xsd">
+  <configuration distance-threshold="15000" max-calculation-time="15s" max-end-connections="8"/>
+  <unit-rules/>
+  <population-rules/>
+</pathfind>

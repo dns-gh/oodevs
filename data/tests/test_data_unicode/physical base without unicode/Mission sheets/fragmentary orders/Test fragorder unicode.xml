@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mission-sheet name="Test fragorder unicode 平仮">
+  <context>
+    <line>
+      <text>المكتبة</text>
+    </line>
+  </context>
+  <parameters>
+    <parameter name="المكتبة"/>
+  </parameters>
+  <behavior>
+    <line>
+      <text>المكتبة</text>
+    </line>
+  </behavior>
+  <specific-cases>
+    <line>
+      <text>المكتبة</text>
+    </line>
+  </specific-cases>
+  <comments>
+    <line>
+      <text>المكتبة</text>
+    </line>
+  </comments>
+  <mission-end>
+    <line>
+      <text>المكتبة</text>
+    </line>
+  </mission-end>
+  <attachments/>
+</mission-sheet>

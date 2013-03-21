@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<logistic-supply-classes model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/LogisticSupplyClasses.xsd">
+  <logistic-supply-class id="2" type="Test log cat unicode 共通語"/>
+</logistic-supply-classes>

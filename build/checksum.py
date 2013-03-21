@@ -11,13 +11,28 @@ helpstring="""\
     if --check <file> is specified, it compares <src_dir> and snapshots in
     <file> instead, and prints differences if any
 """
+usage = "checksum.py <command> <src_dir> <temp_file>"
+
 parser = optparse.OptionParser(
-        usage = "checksum.py <src_dir> [--check <file>]",
+        usage = usage,
         description = helpstring )
-parser.add_option("-c", "--check", action="store", type="string",
-        dest="filename", help="Directory checksum snapshot file")
 parser.add_option("-X", "--exclude", action="append", default=[],
         help="ignore files matching a glob expression")
+
+def writeinfo(s):
+    sys.stdout.write(s.encode('ascii', 'ignore'))
+    sys.stdout.flush()
+
+def writeerr(s):
+    sys.stdout.flush()
+    sys.stderr.write(s.encode('ascii', 'ignore'))
+    sys.stderr.flush()
+
+def writeerrlines(lines):
+    sys.stdout.flush()
+    for line in lines:
+        sys.stderr.write(line.encode('ascii', 'ignore'))
+    sys.stderr.flush()
 
 def get_checksum(filename):
     checksum = hashlib.md5()
@@ -35,14 +50,15 @@ def parse_paths(src, root, filename):
     key = os.path.normpath(prefix + "/" + filename)
     return full, key
 
-def parse_checksums(src, matcher):
-    print os.path.abspath(src)
-    for root, dirs, files in os.walk(src):
+def parse_checksums(src, outpath, matcher):
+    fp = file(outpath, 'wb')
+    fp.write('%s\n' % os.path.abspath(src).encode('utf-8') )
+    for root, dirs, files in os.walk(unicode(src)):
         for filename in sorted(files):
             full, key = parse_paths(src, root, filename)
             if not matcher(full):
                 continue
-            print key + ";" + get_checksum(full)
+            fp.write('%s;%s\n' % (key.encode('utf-8'), get_checksum(full)))
     return 0
 
 def get_lines(src):
@@ -57,7 +73,7 @@ def print_diff(src, dst):
     src = get_lines(src)
     dst = get_lines(dst)
     diff = difflib.unified_diff(src, dst)
-    sys.stderr.writelines(diff)
+    writeerrlines(diff)
 
 def check_checksums(src, filename, matcher):
     fh = open(filename, "rb")
@@ -65,7 +81,7 @@ def check_checksums(src, filename, matcher):
     dst = fh.readline().rstrip("\r\n")
     for line in fh:
         name, checksum = line.rstrip("\r\n").split(";")
-        checksums[name] = checksum
+        checksums[name.decode('utf-8')] = checksum
     fh.close()
     err = 0
     for root, dirs, files in os.walk(src):
@@ -75,17 +91,17 @@ def check_checksums(src, filename, matcher):
                 checksums.pop(key, None)
                 continue
             if key not in checksums:
-                sys.stderr.write("Unknown file " + full + "\n")
+                writeerr("Unknown file " + full + "\n")
                 err = -1
                 continue
             if checksums[key] != get_checksum(full):
-                sys.stderr.write("Invalid file " + full + "\n")
+                writeerr("Invalid file " + full + "\n")
                 print_diff(os.path.join(dst, key), full)
                 err = -1
             del checksums[key]
     for it in checksums:
         full = os.path.join(src, it)
-        sys.stderr.write("Missing file " + full + "\n")
+        writeerr("Missing file " + full + "\n")
         err = -1
     return err
 
@@ -98,14 +114,23 @@ if __name__ == '__main__':
     opts, args = parser.parse_args()
     matcher = getmatcher(opts.exclude)
 
-    if len(args) != 1:
-        parser.error("checksum: missing <src_dir> argument")
+    if len(args) != 3:
+        parser.error( usage )
 
-    if not os.path.isdir(args[0]):
-        sys.stderr.write("Invalid directory: " + args[0])
-        sys.exit(-1)
+    cmd = args[0]
+    inputdir = unicode(args[1])
+    filename = unicode(args[2])
 
-    if opts.filename:
-        sys.exit(check_checksums(args[0], opts.filename, matcher))
+    ret = -1
+    if not os.path.isdir(inputdir):
+        writeerr("Invalid directory: " + inputdir)
+        sys.exit(ret)
+
+    if cmd == 'read':
+        ret = check_checksums(inputdir, filename, matcher)
+    elif cmd == 'write':
+        ret = parse_checksums(inputdir, filename, matcher)
     else:
-        sys.exit(parse_checksums(args[0], matcher))
+        writeerr('unknown command %s\n' % cmd)
+        ret = 1
+    sys.exit(ret)

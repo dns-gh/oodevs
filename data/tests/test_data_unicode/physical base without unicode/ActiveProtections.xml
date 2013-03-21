@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<protections model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/ActiveProtections.xsd">
+  <protection coefficient="0" hard-kill="false" name="Test active protection unicode المكتبة">
+    <resource name="Test ammunition unicode 共通語" usage="0"/>
+    <weapon coefficient="0.5" name="Test ammunition unicode 共通語"/>
+  </protection>
+</protections>

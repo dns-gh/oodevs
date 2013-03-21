@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<fires model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/Fires.xsd">
+  <cell-size value="50"/>
+  <fire decrease-rate="0" increase-rate="0" initial-heat="0" max-heat="0" name="Test fire unicode المكتبة">
+    <extinguisher-agents>
+      <extinguisher-agent agent="Test extinguisher agent unicode 共通語" heat-decrease-rate="5"/>
+    </extinguisher-agents>
+    <weather-effects>
+      <weather-effect heat-decrease-rate="0" weather="PasDePrecipitation"/>
+      <weather-effect heat-decrease-rate="0" weather="TempeteDeSable"/>
+      <weather-effect heat-decrease-rate="0" weather="Brouillard"/>
+      <weather-effect heat-decrease-rate="0" weather="Crachin"/>
+      <weather-effect heat-decrease-rate="0" weather="Pluie"/>
+      <weather-effect heat-decrease-rate="0" weather="Neige"/>
+      <weather-effect heat-decrease-rate="0" weather="Fumigene"/>
+    </weather-effects>
+    <injuries>
+      <injury percentage="0" type="u1"/>
+      <injury percentage="0" type="u2"/>
+      <injury percentage="0" type="u3"/>
+      <injury percentage="0" type="ue"/>
+      <injury percentage="0" type="dead"/>
+    </injuries>
+    <urban-modifiers>
+      <urban-modifier material-type="Test material unicode 共通語" value="0.69"/>
+    </urban-modifiers>
+    <surfaces>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="unknown"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="forest"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="orchard"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="swamp"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="dune"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="urban area"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="lake"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="glacier"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="forest edge"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="suburb"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="waterfront"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="orchard edge"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="swamp edge"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="dune edge"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="glacier edge"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="country road"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="highway"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="main road"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="secondary road"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="stream"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="river"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="main river"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="bridge"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="cliff"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="railroad"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="crossroad"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="mountain"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="mountain edge"/>
+    </surfaces>
+  </fire>
+</fires>

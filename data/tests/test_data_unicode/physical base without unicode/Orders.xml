@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<missions model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/Missions.xsd">
+  <units>
+    <mission dia-behavior="MIS_Pion_Test_missionpionunicode平仮" dia-type="T_Mission_Pion_Test_missionpionunicode平仮" id="1" name="Test mission pion unicode 平仮">
+      <parameter dia-name="dangerDirection_" is-context="true" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" is-context="true" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" is-context="true" name="Limite 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" is-context="true" name="Limite 2" optional="true" type="Limit"/>
+      <parameter dia-name=" " name="المكتبة" optional="false" type="Agent"/>
+    </mission>
+  </units>
+  <automats>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_Test_missionautomatunicode平仮" dia-type="T_Mission_Automate_Test_missionautomatunicode平仮" id="2" mrt-dia-behavior="MIS_Automate_MRT_Test_missionautomatunicode平仮" name="Test mission automat unicode 平仮">
+      <parameter dia-name="dangerDirection_" is-context="true" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" is-context="true" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" is-context="true" name="Limite 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" is-context="true" name="Limite 2" optional="false" type="Limit"/>
+      <parameter dia-name="المكتبة_" name="المكتبة" optional="false" type="Agent"/>
+    </mission>
+  </automats>
+  <populations>
+    <mission dia-behavior="MIS_Population_Test_missionfouleunicode平仮" dia-type="T_Mission_Population_Test_missionfouleunicode平仮" id="3" name="Test mission foule unicode 平仮">
+      <parameter dia-name="المكتبة_" name="المكتبة" optional="false" type="Agent"/>
+    </mission>
+  </populations>
+  <fragorders>
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Testfragorderunicode平仮" id="4" name="Test fragorder unicode 平仮">
+      <parameter dia-name="المكتبة_" name="المكتبة" optional="false" type="Agent"/>
+    </fragorder>
+  </fragorders>
+</missions>

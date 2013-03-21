@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<objects model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/Objects.xsd">
+  <object name="Test object unicode الكتاب " type="Test object unicode الكتاب ">
+    <geometries>
+      <geometry symbol="" type="polygon"/>
+      <geometry symbol="" type="point"/>
+      <geometry symbol="" type="line"/>
+      <geometry symbol="" type="circle"/>
+    </geometries>
+    <activable/>
+    <altitude-modifier/>
+    <attitude-modifier attitude="calme"/>
+    <attrition attrition-surface="12" category="Test ammunition unicode 共通語" ph="1"/>
+    <avoidable distance="0"/>
+    <border/>
+    <bridging type="bridge"/>
+    <burn/>
+    <bypassable bypass-speed="0"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable>
+        <resources>
+          <resource count="1" name="Test explo unicode 共通語"/>
+        </resources>
+      </buildable>
+      <improvable>
+        <resources>
+          <resource count="1" name="Test piece unicode 共通語"/>
+        </resources>
+      </improvable>
+    </constructor>
+    <contamination max-toxic="0"/>
+    <decontamination/>
+    <delay/>
+    <detection>
+      <acquisition-times>
+        <acquisition-time level="recognition" time="12s"/>
+      </acquisition-times>
+    </detection>
+    <disaster model="Test disaster unicode المكتبة"/>
+    <fire-forbidden/>
+    <fire-propagation-modifier>
+      <modifier fire-class="Test fire unicode المكتبة" ignition-threshold="0" max-combustion-energy="0"/>
+    </fire-propagation-modifier>
+    <flood>
+      <injuries>
+        <injury percentage="0.12" type="u1"/>
+        <injury percentage="0.12" type="u2"/>
+        <injury percentage="0.12" type="u3"/>
+        <injury percentage="0.02" type="ue"/>
+        <injury percentage="0.12" type="dead"/>
+      </injuries>
+    </flood>
+    <heuristic>
+      <terrain type="highway" value="12"/>
+    </heuristic>
+    <interact-with-enemy enemy="true"/>
+    <interaction-height height="12"/>
+    <interference/>
+    <lodging/>
+    <logistic/>
+    <medical/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <perception blinded="false"/>
+    <population-filter density="0"/>
+    <propagation model="fire"/>
+    <protection geniePrepared="false" max-size="1"/>
+    <resources/>
+    <scattering human-by-time-step="1"/>
+    <spawn action-range="12" nbc="true" object="Test object unicode الكتاب "/>
+    <stock/>
+    <structural value="100"/>
+    <supply/>
+    <supply-route/>
+    <time-limited/>
+    <trafficability default="false"/>
+    <underground-network/>
+    <universal/>
+    <urban-destruction>
+      <urban-modifier material-type="Test material unicode 共通語" value="1"/>
+    </urban-destruction>
+    <workable max-animator="12"/>
+  </object>
+</objects>

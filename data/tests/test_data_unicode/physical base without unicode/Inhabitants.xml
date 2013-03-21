@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<populations model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/Inhabitants.xsd">
+  <population associated-crowd="Test crowd unicode 片仮名" id="1" name="Test population unicode 他看過三場球賽">
+    <repartition children="0" female="0" male="1"/>
+    <schedule transfer-time="0h"/>
+    <safety-level gain-per-hour="0" loss-on-fire="0"/>
+    <health-need people-per-facility="0"/>
+    <consumption/>
+  </population>
+</populations>

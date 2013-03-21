@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<disasters model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/Disasters.xsd">
+  <disaster name="Test disaster unicode المكتبة" toxicity-exponent="0">
+    <contamination>
+      <threshold color="0x000000" name="المكتبة" value="0"/>
+    </contamination>
+    <attrition>
+      <threshold contamination="false" dead="0" name="المكتبة" u1="0" u2="0" u3="0" ue="0" value="0"/>
+    </attrition>
+    <protections>
+      <protection type="level1" value="0"/>
+      <protection type="level2" value="0"/>
+      <protection type="level3" value="0"/>
+      <protection type="level4" value="0"/>
+      <protection type="level5" value="0"/>
+    </protections>
+  </disaster>
+</disasters>

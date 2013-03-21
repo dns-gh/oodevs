@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<weapons model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/WeaponSystems.xsd">
+  <weapon-system launcher="Test launcher unicode المكتبة" munition="Test ammunition unicode 共通語">
+    <burst duration="1s" munition="1"/>
+    <reloading duration="1s" munition="1"/>
+    <direct-fire>
+      <hit-probabilities target="Test volume unicode 共通語"/>
+    </direct-fire>
+    <indirect-fire average-speed="0" max-range="0" min-range="0"/>
+  </weapon-system>
+</weapons>
