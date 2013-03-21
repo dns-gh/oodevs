@@ -386,7 +386,10 @@ void PHY_RolePion_Communications::UpdateKnowledgesFromObjectPerception( const DE
     MIL_Object_ABC& object = perception.GetObjectPerceived();
     if( object.IsMarkedForDestruction() || !pJammingKnowledgeGroup_ )
         return;
-    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pJammingKnowledgeGroup_->GetKnowledge().ResolveKnowledgeObject( object );
+    auto bbKg = pJammingKnowledgeGroup_->GetKnowledge();
+    if( !bbKg )
+        return;
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = bbKg->ResolveKnowledgeObject( object );
 
     if( !pKnowledge || !pKnowledge->IsValid() )
         pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( entity_->GetArmy(), perception.GetObjectPerceived() );
@@ -401,7 +404,12 @@ void PHY_RolePion_Communications::UpdateKnowledgesFromObjectPerception( const DE
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::UpdateKnowledgesFromObjectCollision( const DEC_Knowledge_ObjectCollision& collision )
 {
-    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pJammingKnowledgeGroup_->GetKnowledge().ResolveKnowledgeObject( collision.GetObject() );
+    if( !pJammingKnowledgeGroup_ )
+        return;
+    auto bbKg = pJammingKnowledgeGroup_->GetKnowledge();
+    if( !bbKg )
+        return;
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = bbKg->ResolveKnowledgeObject( collision.GetObject() );
 
     if( collision.GetObject().IsMarkedForDestruction() )
         return;

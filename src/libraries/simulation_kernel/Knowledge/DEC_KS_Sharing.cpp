@@ -141,13 +141,18 @@ namespace
 // -----------------------------------------------------------------------------
 void DEC_KS_Sharing::Talk( int currentTimeStep )
 {
-    assert( pBlackBoard_ );
+    if( !pBlackBoard_ )
+        return;
 
     IT_ShareSourceMMap itShareSourceEnd = shareSources_.upper_bound( currentTimeStep );
     for( IT_ShareSourceMMap itShareSource = shareSources_.begin(); itShareSource != itShareSourceEnd; ++itShareSource )
     {
-        sKnowledgeSharer func( pBlackBoard_->GetKnowledgeGroup(), pBlackBoard_->GetKnowledgeAgentContainer(), itShareSource->second );
-        itShareSource->second.pShareSource_->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( func, currentTimeStep );
+        auto bbKg = itShareSource->second.pShareSource_->GetKnowledge();
+        if( bbKg )
+        {
+            sKnowledgeSharer func( pBlackBoard_->GetKnowledgeGroup(), pBlackBoard_->GetKnowledgeAgentContainer(), itShareSource->second );
+            bbKg->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( func, currentTimeStep );
+        }
     }
     shareSources_.erase( shareSources_.begin(), itShareSourceEnd );
 }

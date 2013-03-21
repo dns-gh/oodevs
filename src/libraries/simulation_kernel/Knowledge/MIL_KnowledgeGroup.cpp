@@ -155,7 +155,8 @@ void MIL_KnowledgeGroup::Clone( const MIL_KnowledgeGroup& source )
     source.ApplyOnKnowledgesAgent( functorAgent );
     boost::function< void( DEC_Knowledge_Population& ) > functorPopulation = boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromPopulationPerception, this, _1 );
     source.ApplyOnKnowledgesPopulation( functorPopulation );
-    knowledgeBlackBoard_->Jam();
+    if( knowledgeBlackBoard_ )
+        knowledgeBlackBoard_->Jam();
 }
 
 // -----------------------------------------------------------------------------
@@ -187,8 +188,7 @@ void MIL_KnowledgeGroup::CreateKnowledgeFromPopulationPerception( const DEC_Know
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
 {
-    if( knowledgeBlackBoard_)
-        delete knowledgeBlackBoard_;
+    delete knowledgeBlackBoard_;
     if( army_ )
     {
         try
@@ -302,17 +302,19 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
 void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
 {
     for( auto it = automates_.begin(); it != automates_.end(); ++it )
-        (**it).UpdateKnowledges(currentTimeStep);
+        (**it).UpdateKnowledges( currentTimeStep );
     for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
-        (**it).UpdateKnowledges(currentTimeStep); // LTO
-    assert( knowledgeBlackBoard_ );
-    if( createdByJamming_ )
+        (**it).UpdateKnowledges( currentTimeStep ); // LTO
+    if( knowledgeBlackBoard_ )
     {
-        knowledgeBlackBoard_->SendChangedState();
-        createdByJamming_ = false;
+        if( createdByJamming_ )
+        {
+            knowledgeBlackBoard_->SendChangedState();
+            createdByJamming_ = false;
+        }
+        else
+            knowledgeBlackBoard_->Update( currentTimeStep );
     }
-    else
-        knowledgeBlackBoard_->Update(currentTimeStep);
 }
 
 // -----------------------------------------------------------------------------
@@ -321,10 +323,12 @@ void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateObjectKnowledges(int currentTimeStep)
 {
-    knowledgeBlackBoard_->UpdateUniversalObjects();
+    if( knowledgeBlackBoard_ )
+        knowledgeBlackBoard_->UpdateUniversalObjects();
     for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).UpdateObjectKnowledges( currentTimeStep );
-    knowledgeBlackBoard_->SendObjectChangedState();
+    if( knowledgeBlackBoard_ )
+        knowledgeBlackBoard_->SendObjectChangedState();
 }
 
 // -----------------------------------------------------------------------------
@@ -333,8 +337,8 @@ void MIL_KnowledgeGroup::UpdateObjectKnowledges(int currentTimeStep)
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::CleanKnowledges()
 {
-    assert( knowledgeBlackBoard_ );
-    knowledgeBlackBoard_->Clean();
+    if( knowledgeBlackBoard_ )
+        knowledgeBlackBoard_->Clean();
     for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).CleanKnowledges(); // LTO
     for( auto it = automates_.begin(); it != automates_.end(); ++it )
@@ -378,11 +382,13 @@ bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Object& knowledge ) co
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::IsPerceptionDistanceHacked( MIL_Agent_ABC& agentKnown ) const
 {
-    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = GetKnowledge().GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );
-    if( !pKnowledge.get() )
-        return false;
-    
-    return pKnowledge->IsPerceptionDistanceHacked();
+    if( knowledgeBlackBoard_ )
+    {
+        boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = knowledgeBlackBoard_->GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );
+        if( pKnowledge.get() )
+            return pKnowledge->IsPerceptionDistanceHacked();
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -404,11 +410,13 @@ bool MIL_KnowledgeGroup::IsPerceptionDistanceHacked( MIL_Object_ABC& objectKnown
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::IsPerceptionDistanceHacked( MIL_Population& populationKnown ) const
 {
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = GetKnowledge().GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
-    if( !pKnowledge )
-        return false;
-
-    return pKnowledge->IsPerceptionDistanceHacked();
+    if( knowledgeBlackBoard_ )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = knowledgeBlackBoard_->GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
+        if( pKnowledge )
+            return pKnowledge->IsPerceptionDistanceHacked();
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -417,11 +425,13 @@ bool MIL_KnowledgeGroup::IsPerceptionDistanceHacked( MIL_Population& populationK
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& MIL_KnowledgeGroup::GetPerceptionLevel( MIL_Agent_ABC& agentKnown ) const
 {
-    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = GetKnowledge().GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );
-    if( !pKnowledge.get() )
-        return PHY_PerceptionLevel::notSeen_;
-
-    return pKnowledge->GetCurrentPerceptionLevel();
+    if( knowledgeBlackBoard_ )
+    {
+        boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = knowledgeBlackBoard_->GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );
+        if( pKnowledge.get() )
+            return pKnowledge->GetCurrentPerceptionLevel();
+    }
+    return PHY_PerceptionLevel::notSeen_;
 }
 
 // -----------------------------------------------------------------------------
@@ -444,11 +454,13 @@ const PHY_PerceptionLevel& MIL_KnowledgeGroup::GetPerceptionLevel( MIL_Object_AB
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& MIL_KnowledgeGroup::GetPerceptionLevel( MIL_Population& populationKnown ) const
 {
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = GetKnowledge().GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
-    if( !pKnowledge)
-        return PHY_PerceptionLevel::notSeen_;
-
-    return *pKnowledge->GetHackedPerceptionLevel();
+    if( knowledgeBlackBoard_ )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = knowledgeBlackBoard_->GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
+        if( pKnowledge)
+            return *pKnowledge->GetHackedPerceptionLevel();
+    }
+    return PHY_PerceptionLevel::notSeen_;
 }
 
 // -----------------------------------------------------------------------------
@@ -534,8 +546,8 @@ void MIL_KnowledgeGroup::MoveKnowledgeGroup( MIL_KnowledgeGroup *newParent )
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::SendKnowledge( unsigned int context ) const
 {
-    assert( knowledgeBlackBoard_ );
-    knowledgeBlackBoard_->SendFullState( context );
+    if( knowledgeBlackBoard_ )
+        knowledgeBlackBoard_->SendFullState( context );
     for( auto it = automates_.begin(); it != automates_.end(); ++it )
         (**it).SendKnowledge( context );
     for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
@@ -592,10 +604,9 @@ const MIL_KnowledgeGroup::T_KnowledgeGroupVector& MIL_KnowledgeGroup::GetKnowled
 // Name: MIL_KnowledgeGroup::GetKnowledge
 // Created: NLD 2004-11-08
 // -----------------------------------------------------------------------------
-const DEC_KnowledgeBlackBoard_KnowledgeGroup& MIL_KnowledgeGroup::GetKnowledge() const
+const DEC_KnowledgeBlackBoard_KnowledgeGroup* MIL_KnowledgeGroup::GetKnowledge() const
 {
-    assert( knowledgeBlackBoard_ );
-    return *knowledgeBlackBoard_;
+    return knowledgeBlackBoard_;
 }
 
 // -----------------------------------------------------------------------------
@@ -604,7 +615,9 @@ const DEC_KnowledgeBlackBoard_KnowledgeGroup& MIL_KnowledgeGroup::GetKnowledge()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeObject( unsigned int id ) const
 {
-    boost::shared_ptr< DEC_Knowledge_Object > result = GetKnowledge().ResolveKnowledgeObject( id );
+    if( !knowledgeBlackBoard_ )
+        return boost::shared_ptr< DEC_Knowledge_Object >();
+    boost::shared_ptr< DEC_Knowledge_Object > result = knowledgeBlackBoard_->ResolveKnowledgeObject( id );
     if( !result && parent_ )
         result = parent_->ResolveKnowledgeObject( id );
     return result;
@@ -616,7 +629,9 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeOb
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeObject( const MIL_Object_ABC& object ) const
 {
-    boost::shared_ptr< DEC_Knowledge_Object > result = GetKnowledge().ResolveKnowledgeObject( object );
+    if( !knowledgeBlackBoard_ )
+        return boost::shared_ptr< DEC_Knowledge_Object >();
+    boost::shared_ptr< DEC_Knowledge_Object > result = knowledgeBlackBoard_->ResolveKnowledgeObject( object );
     if( !result && parent_ )
         result = parent_->ResolveKnowledgeObject( object );
     return result;
@@ -628,7 +643,9 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeOb
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeObjectByObjectID( unsigned int id ) const
 {
-    boost::shared_ptr< DEC_Knowledge_Object > result = GetKnowledge().ResolveKnowledgeObjectByObjectID( id );
+    if( !knowledgeBlackBoard_ )
+        return boost::shared_ptr< DEC_Knowledge_Object >();
+    boost::shared_ptr< DEC_Knowledge_Object > result = knowledgeBlackBoard_->ResolveKnowledgeObjectByObjectID( id );
     if( !result && parent_ )
         result = parent_->ResolveKnowledgeObjectByObjectID( id );
     return result;
@@ -1001,7 +1018,9 @@ bool MIL_KnowledgeGroup::IsJammed() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown )
 {
-    return knowledgeBlackBoard_->CreateKnowledgeObject( teamKnowing, objectKnown );
+    if( knowledgeBlackBoard_ )
+        return knowledgeBlackBoard_->CreateKnowledgeObject( teamKnowing, objectKnown );
+    return boost::shared_ptr< DEC_Knowledge_Object >();
 }
 
 // -----------------------------------------------------------------------------
@@ -1082,10 +1101,10 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
         for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
         {
             const MIL_KnowledgeGroup& innerKg = **itKG;
-            if( innerKg.IsEnabled() && IsEnabled() && !innerKg.IsJammed() )
+            if( innerKg.IsEnabled() && IsEnabled() && !innerKg.IsJammed() && innerKg.GetKnowledge() )
             {
                 boost::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
-                innerKg.GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( functorAgent );
+                innerKg.GetKnowledge()->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( functorAgent );
             }
         }
         // LTO end
@@ -1097,11 +1116,11 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
         //mis à jour des groupes de connaissances depuis leur parent avec un délai
         if( GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
         {
-            if( parent_ && IsEnabled() )
+            if( parent_ && IsEnabled() && parent_->GetKnowledge() )
             {
                 boost::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
-                parent_->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnPreviousKnowledgesAgent( functorAgent );
-                parent_->GetKnowledge().GetKnowledgeAgentContainer().SaveAllCurrentKnowledgeAgent();
+                parent_->GetKnowledge()->GetKnowledgeAgentContainer().ApplyOnPreviousKnowledgesAgent( functorAgent );
+                parent_->GetKnowledge()->GetKnowledgeAgentContainer().SaveAllCurrentKnowledgeAgent();
             }
             RefreshTimeToDiffuseToKnowledgeGroup();
         }
@@ -1120,9 +1139,12 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population& MIL_KnowledgeGroup::GetPopulationKnowledgeToUpdate( MIL_Population& populationKnown )
 {
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = GetKnowledge().GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
-    if( pKnowledge )
-        return *pKnowledge;
+    if( knowledgeBlackBoard_ )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = knowledgeBlackBoard_->GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
+        if( pKnowledge )
+            return *pKnowledge;
+    }
     return CreateKnowledgePopulation( populationKnown );
 }
 
@@ -1173,9 +1195,12 @@ void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC
 inline
 DEC_Knowledge_Agent& MIL_KnowledgeGroup::GetAgentKnowledgeToUpdate( const MIL_Agent_ABC& agentKnown )
 {
-    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = GetKnowledge().GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );
-    if( pKnowledge.get() )
-        return *pKnowledge;
+    if( knowledgeBlackBoard_ )
+    {
+        boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = knowledgeBlackBoard_->GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );
+        if( pKnowledge.get() )
+            return *pKnowledge;
+    }
     return CreateKnowledgeAgent( agentKnown );
 }
 
@@ -1229,9 +1254,12 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::GetObjectKnowledge
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObject& MIL_KnowledgeGroup::GetKnowledgeObjectContainer() const
 {
-    DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer = GetKnowledge().GetKnowledgeObjectContainer();
-    if ( pKnowledgeObjectContainer )
-        return *pKnowledgeObjectContainer;
+    if( knowledgeBlackBoard_ )
+    {
+        DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer = knowledgeBlackBoard_->GetKnowledgeObjectContainer();
+        if ( pKnowledgeObjectContainer )
+            return *pKnowledgeObjectContainer;
+    }
     return army_->GetKnowledge().GetKnowledgeObjectContainer();
 }
 
@@ -1241,7 +1269,8 @@ DEC_BlackBoard_CanContainKnowledgeObject& MIL_KnowledgeGroup::GetKnowledgeObject
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::Accept( KnowledgesVisitor_ABC& visitor ) const
 {
-    knowledgeBlackBoard_->Accept( visitor );
+    if( knowledgeBlackBoard_ )
+        knowledgeBlackBoard_->Accept( visitor );
 }
 
 namespace

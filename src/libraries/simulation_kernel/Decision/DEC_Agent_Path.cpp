@@ -229,12 +229,16 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
 {
     if( pathClass_.AvoidEnemies() )
     {
-        const T_KnowledgeAgentVector& enemies = queryMaker_.GetKnowledgeGroup()->GetKnowledge().GetEnemies();
-        for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
+        auto bbKg = queryMaker_.GetKnowledgeGroup()->GetKnowledge();
+        if( bbKg )
         {
-            const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
-            if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
-                pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( pathClass_, knowledge, queryMaker_ ) );
+            const T_KnowledgeAgentVector& enemies = bbKg->GetEnemies();
+            for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
+            {
+                const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
+                if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
+                    pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( pathClass_, knowledge, queryMaker_ ) );
+            }
         }
     }
 
@@ -285,11 +289,15 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     // Populations
     if( pathClass_.HandlePopulations() )
     {
-        T_KnowledgePopulationVector knowledgesPopulation;
-        queryMaker_.GetKnowledgeGroup()->GetKnowledge().GetPopulations( knowledgesPopulation );
-        pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
-        for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
-            pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( pathClass_, **it, !queryMaker_.GetType().IsTerrorist() ) );
+        auto bbKg = queryMaker_.GetKnowledgeGroup()->GetKnowledge();
+        if( bbKg )
+        {
+            T_KnowledgePopulationVector knowledgesPopulation;
+            bbKg->GetPopulations( knowledgesPopulation );
+            pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
+            for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
+                pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( pathClass_, **it, !queryMaker_.GetType().IsTerrorist() ) );
+        }
     }
 }
 

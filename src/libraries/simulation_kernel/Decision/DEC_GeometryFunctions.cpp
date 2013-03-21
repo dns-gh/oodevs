@@ -573,9 +573,13 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( c
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation( const MIL_AgentPion& callerAgent, unsigned int nPopulationKnowledgeID, double rMinDistance )
 {
     boost::shared_ptr< MT_Vector2D > pResult;
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = callerAgent.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( nPopulationKnowledgeID );
-    if( pKnowledge )
-        pResult.reset( new MT_Vector2D( pKnowledge->GetSafetyPosition( callerAgent, rMinDistance ) ) );
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( nPopulationKnowledgeID );
+        if( pKnowledge )
+            pResult.reset( new MT_Vector2D( pKnowledge->GetSafetyPosition( callerAgent, rMinDistance ) ) );
+    }
     return pResult;
 }
 

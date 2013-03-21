@@ -21,10 +21,14 @@
 template< typename T > 
 std::pair< float, int > DEC_KnowledgePopulationFunctions::GetDominationState( const T& caller, unsigned int knowledgeId )
 {
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = caller.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
-    if( !pKnowledge )
-        return std::pair< float, int >( 0.f, knowledgeId );
-    return std::pair< float, int >( float( pKnowledge->GetDominationState() ), knowledgeId );
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return std::pair< float, int >( float( pKnowledge->GetDominationState() ), knowledgeId );
+    }
+    return std::pair< float, int >( 0.f, knowledgeId );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,10 +38,14 @@ std::pair< float, int > DEC_KnowledgePopulationFunctions::GetDominationState( co
 template< typename T >
 unsigned int DEC_KnowledgePopulationFunctions::GetAttitude( const T& caller, unsigned int knowledgeId )
 {
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = caller.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
-    if( !pKnowledge )
-        return 0;
-    return pKnowledge->GetAttitude().GetID();
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return pKnowledge->GetAttitude().GetID();
+    }
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -47,10 +55,14 @@ unsigned int DEC_KnowledgePopulationFunctions::GetAttitude( const T& caller, uns
 template< typename T > 
 bool DEC_KnowledgePopulationFunctions::IsRecon( const T& caller, unsigned int knowledgeId )
 {
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = caller.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
-    if( !pKnowledge )
-        return false;
-    return pKnowledge->IsRecon();
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return pKnowledge->IsRecon();
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -60,8 +72,12 @@ bool DEC_KnowledgePopulationFunctions::IsRecon( const T& caller, unsigned int kn
 template< typename T > 
 bool DEC_KnowledgePopulationFunctions::IsInZone( const T& caller, unsigned int knowledgeId, TER_Localisation* pLoc )
 {
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = caller.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
-    if( !pKnowledge )
-        return false;
-    return  pKnowledge->IsInZone( *pLoc );
+    auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return  pKnowledge->IsInZone( *pLoc );
+    }
+    return false;
 }

@@ -1120,7 +1120,10 @@ boost::shared_ptr< MIL_KnowledgeGroup > PHY_RolePion_Perceiver::GetKnowledgeGrou
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Perceiver::IsKnown( const MIL_Agent_ABC& agent ) const
 {
-    return pion_->GetKnowledgeGroup()->GetKnowledge().IsKnown( agent );
+    auto bbKg = pion_->GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+        return bbKg->IsKnown( agent );
+    return false;
 }
 
 // -----------------------------------------------------------------------------
