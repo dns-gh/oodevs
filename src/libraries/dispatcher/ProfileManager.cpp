@@ -161,22 +161,25 @@ void ProfileManager::Reset()
 // Created: NLD 2006-10-06
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Profile > ProfileManager::Authenticate( const std::string& strName,
-        const std::string& strPassword ) const
+        const std::string& strPassword, const std::string& link ) const
 {
     auto it = profiles_.find( strName );
     if( it == profiles_.end() )
     {
-        MT_LOG_INFO_MSG( "Auth - Profile '" << strName << "' doesn't exists" );
+        MT_LOG_INFO_MSG( "Auth - Profile '" << strName << "' doesn't exists ("
+            << link << ")" );
         return boost::shared_ptr< Profile >();
     }
 
     if( !it->second->CheckPassword( strPassword ) )
     {
-        MT_LOG_INFO_MSG( "Auth - Profile '" << strName << "' invalid password" );
+        MT_LOG_INFO_MSG( "Auth - Profile '" << strName << "' invalid password ("
+            << link << ")" );
         return boost::shared_ptr< Profile >();
     }
 
-    MT_LOG_INFO_MSG( "Auth - Profile '" << strName << "' authenticated" );
+    MT_LOG_INFO_MSG( "Auth - Profile '" << strName << "' authenticated ("
+        << link << ")" );
     return it->second;
 }
 

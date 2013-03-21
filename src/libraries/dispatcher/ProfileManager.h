@@ -64,7 +64,7 @@ public:
     //@{
     void Reset();
     boost::shared_ptr< Profile > Authenticate( const std::string& strName,
-            const std::string& strPassword ) const;
+            const std::string& strPassword, const std::string& link ) const;
 
     void Send( ClientPublisher_ABC& publisher ) const;
     void Send( sword::AuthenticationResponse& message ) const;
