@@ -65,6 +65,10 @@ func (o *SimOpts) GetDispatcherLogPath() string {
 	return filepath.Join(o.GetSessionDir(), "Dispatcher.log")
 }
 
+func (sim *SimProcess) GetLogPath() string {
+	return filepath.Join(sim.sessionDir, "Sim.log")
+}
+
 // Write the input session at a suitable place in the configured exercise
 // and set SimOpts.SessionName accordingly
 func (o *SimOpts) WriteSession(session *Session) error {
@@ -143,10 +147,6 @@ func (sim *SimProcess) Stop() error {
 	}
 	sim.Kill()
 	return err
-}
-
-func (sim *SimProcess) GetLogPath() string {
-	return filepath.Join(sim.sessionDir, "Sim.log")
 }
 
 // Return true if the simulation stopped before the timeout. Wait indefinitely
@@ -313,7 +313,9 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 		}
 		break
 	case <-procch:
-		return &sim, errors.New("failed to start simulation")
+		if !sim.Success(){
+			return &sim, errors.New("failed to start simulation")
+		}
 	}
 	return &sim, err
 }

@@ -108,10 +108,10 @@ func (s *TestSuite) TestDelayedStartupFailure(c *C) {
 	opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
 	sim, err := StartSim(opts)
 	defer sim.Kill()
-	c.Assert(err, ErrorMatches, "failed to start simulation")
 
 	/* Probably SWORD-1549 
 
+	c.Assert(err, ErrorMatches, "failed to start simulation")
 	if sim.Success() {
 		t.Fatal("simulation should have exited on error")
 	}

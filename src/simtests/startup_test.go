@@ -19,10 +19,9 @@ import (
 )
 
 func CheckSimFailed(c *C, err error, sim *simu.SimProcess) {
+	/* Probably SWORD-1549
 	c.Assert(err, NotNil) // simulation should not have started
 	c.Assert(err, ErrorMatches, "(?s).*failed to start simulation.*")
-
-	/* Probably SWORD-1549
 
 	if sim.Success() {
 		t.Fatal("simulation should have exited on error")
@@ -153,7 +152,8 @@ func (s *TestSuite) TestLowEndTickValues(c *C) {
 		session.EndTick = endTick
 		opts := MakeOpts()
 		WriteSession(c, opts, session)
-		sim, _ := simu.StartSim(opts)
+		sim, err := simu.StartSim(opts)
+		c.Assert(err, IsNil) // simulation failed to start"
 		c.Assert(sim, NotNil) // simulation failed to start"
 		defer sim.Stop()
 
@@ -168,8 +168,8 @@ func (s *TestSuite) TestLowEndTickValues(c *C) {
 		if ok {
 			// SWBUG-10020:
 			//
-			// t.Fatalf("simulation ticked up to %d with end-tick=%d",
-			//    endTick + 1, endTick)
+			c.Fatalf("simulation ticked up to %d with end-tick=%d",
+				endTick + 1, endTick)
 		}
 	}
 	// Simulation should tick only once
