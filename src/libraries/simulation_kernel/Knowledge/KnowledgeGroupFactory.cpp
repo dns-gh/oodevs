@@ -61,7 +61,8 @@ boost::shared_ptr< MIL_KnowledgeGroup > KnowledgeGroupFactory::Create( xml::xist
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_KnowledgeGroup > KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup > parent )
 {
-    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup( new MIL_KnowledgeGroup( xis, army, parent, *this ) );
+    boost::shared_ptr< MIL_KnowledgeGroup > knowledgeGroup( new MIL_KnowledgeGroup( xis, army, parent ) );
+    xis >> xml::list( "knowledge-group", *knowledgeGroup, &MIL_KnowledgeGroup::InitializeKnowledgeGroup, *this );
     if( parent.get() )
         parent->RegisterKnowledgeGroup( knowledgeGroup );
     else

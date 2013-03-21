@@ -70,7 +70,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army );
-             MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, const boost::shared_ptr< MIL_KnowledgeGroup >& parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
+             MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, const boost::shared_ptr< MIL_KnowledgeGroup >& parent ); // LTO
              MIL_KnowledgeGroup();
              MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, const boost::shared_ptr< MIL_KnowledgeGroup >& parent );
     virtual ~MIL_KnowledgeGroup();

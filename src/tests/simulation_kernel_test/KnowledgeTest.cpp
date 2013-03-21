@@ -82,7 +82,7 @@ namespace
         xml::xistringstream xis( "<root id='" + boost::lexical_cast< std::string >( id ) + "' type='" + type + "' name='group'/>" );
         xis >> xml::start( "root" );
 //        MOCK_EXPECT( group.RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration of nested KG
-        boost::shared_ptr< MIL_KnowledgeGroup > result( new MIL_KnowledgeGroup( xis, army, group, factory ) );
+        boost::shared_ptr< MIL_KnowledgeGroup > result( new MIL_KnowledgeGroup( xis, army, group ) );
         group->RegisterKnowledgeGroup( result );
         return result;
     }

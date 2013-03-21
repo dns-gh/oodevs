@@ -79,7 +79,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
 // Created: SLG 2009-11-11
 // LTO
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, const boost::shared_ptr< MIL_KnowledgeGroup >& parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, const boost::shared_ptr< MIL_KnowledgeGroup >& parent )
     : id_                 ( xis.attribute< unsigned int >( "id" ) )
     , type_               ( MIL_KnowledgeGroupType::FindType( xis.attribute< std::string >( "type" ) ) )
     , name_               ( xis.attribute< std::string >( "name" ) )
@@ -99,7 +99,6 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     idManager_.Lock( id_ );
     if( parent_.get() )
         timeToDiffuse_ = parent_->GetType().GetKnowledgeCommunicationDelay();
-    xis >> xml::list( "knowledge-group", *this, &MIL_KnowledgeGroup::InitializeKnowledgeGroup, knowledgeGroupFactory );
 }
 
 // -----------------------------------------------------------------------------
