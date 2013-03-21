@@ -241,6 +241,7 @@ void ADN_Missions_ABC::RenameDifferentNamedMissionSheet( const tools::Path& miss
 // -----------------------------------------------------------------------------
 bool ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const tools::Path& fileName, int type )
 {
+    bool result = false;
     tools::Path filePath = missionDir / fileName;
     if( !( missionDir / "obsolete" ).IsDirectory() )
         ( missionDir / "obsolete" ).CreateDirectories();
@@ -287,20 +288,20 @@ bool ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const t
         fileStream.close();
         if( missionSheetPath_.GetData().empty() )
             missionSheetPath_ = filePath.ToUTF8() + ".html";
-        if( fileName.ToUTF8() == strName_.GetData() )
-        {
-            needSheetSaving_ = false;
-            tools::Path tempXML = missionDir / ADN_Missions_Data::missionSheetTemporaryFile_ + ".xml";
-            tools::Path tempHTML = missionDir / ADN_Missions_Data::missionSheetTemporaryFile_ + ".html";
-            if( tempXML.Exists() || tempHTML.Exists() )
-            {
-                tempXML.Remove();
-                tempHTML.Remove();
-            }
-        }
-        return true;
+        result = true;
     }
-    return false;
+    if( fileName.ToUTF8() == strName_.GetData() )
+    {
+        needSheetSaving_ = false;
+        tools::Path tempXML = missionDir / ADN_Missions_Data::missionSheetTemporaryFile_ + ".xml";
+        tools::Path tempHTML = missionDir / ADN_Missions_Data::missionSheetTemporaryFile_ + ".html";
+        if( tempXML.Exists() || tempHTML.Exists() )
+        {
+            tempXML.Remove();
+            tempHTML.Remove();
+        }
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
