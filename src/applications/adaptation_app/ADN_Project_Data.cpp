@@ -555,25 +555,12 @@ namespace
                 << xml::end;
         }
     }
-
-    void CreateMedicalTreatment( const tools::Path& path )
+    void CreateEmptyFile( const tools::Path& path, const std::string& openning, const std::string& schema = "" )
     {
         tools::Xofstream xos( path );
-        xos << xml::start( "medical-treatments" );
-        ADN_Tools::AddSchema( xos, "MedicalTreatment" );
-    }
-
-    void CreateTemplatesFile( const tools::Path& path )
-    {
-        tools::Xofstream xos( path );
-        xos << xml::start( "templates" );
-    }
-
-    void CreateDrawingTemplatesFile( const tools::Path& path )
-    {
-        tools::Xofstream xos( path );
-        xos << xml::start( "templates" );
-        ADN_Tools::AddSchema( xos, "DrawingTemplates" );
+        xos << xml::start( openning );
+        if( !schema.empty() )
+            ADN_Tools::AddSchema( xos, schema );
     }
 }
 
@@ -601,13 +588,17 @@ void ADN_Project_Data::Save( const tools::Loader_ABC& fileLoader )
     CreateObjectNames( objectNamesFile );
     tools::Path medicalTreatmentFile = workDir_.GetWorkingDirectory().GetData() / dataInfos_.szMedicalTreatment_;
     if( !medicalTreatmentFile.Exists() )
-        CreateMedicalTreatment( medicalTreatmentFile );
+        CreateEmptyFile( medicalTreatmentFile, "medical-treatments", "MedicalTreatment" );
     tools::Path templatesFile = workDir_.GetWorkingDirectory().GetData() / "templates.xml";
     if( !templatesFile.Exists() )
-        CreateTemplatesFile( templatesFile );
+        CreateEmptyFile( templatesFile, "templates" );
     tools::Path drawingTemplatesFile = workDir_.GetWorkingDirectory().GetData() / dataInfos_.szDrawingTemplates_;
     if( !drawingTemplatesFile.Exists() )
-        CreateDrawingTemplatesFile( drawingTemplatesFile );
+        CreateEmptyFile( drawingTemplatesFile, "templates", "DrawingTemplates" );
+    tools::Path stageFile = workDir_.GetWorkingDirectory().GetData() / dataInfos_.szStages_;
+    if( !stageFile.Exists() )
+        CreateEmptyFile( stageFile, "stages", "Stages" );
+
     addedObjects_.clear();
 
     // Save XML Signature for files not loaded, bypassing "temp" folder
