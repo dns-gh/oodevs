@@ -16,7 +16,6 @@
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 #include <new.h>
-#include <dbghelp.h>
 #include <direct.h>
 
 namespace
@@ -38,11 +37,6 @@ int __cdecl NoMoreMemoryHandler( std::size_t nSize )
 int __cdecl SilentNoMoreMemoryHandler( std::size_t /*nSize*/ )
 {
     throw std::bad_alloc();
-}
-
-void PureCallHandler( void )
-{
-    ::RaiseException( 1, EXCEPTION_NONCONTINUABLE, 0, 0 );
 }
 
 void CrashHandler( EXCEPTION_POINTERS* exception )
@@ -72,7 +66,7 @@ int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
     tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
     MT_CrashHandler::SetRootDirectory( debugDir );
     tools::InitCrashHandler( &CrashHandler );
-    _set_purecall_handler( PureCallHandler );
+    tools::InitPureCallHandler();
 
     // Init logger
     debugDir.CreateDirectories();
