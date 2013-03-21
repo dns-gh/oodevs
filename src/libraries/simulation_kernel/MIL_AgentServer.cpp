@@ -205,8 +205,9 @@ void MIL_AgentServer::OnTimer()
     lastStep_ = clock();
     MainSimLoop();
     ++nCurrentTimeStep_;
-    if( config_.GetEndTick() == nCurrentTimeStep_ )
+    if( config_.GetEndTick() && nCurrentTimeStep_ > config_.GetEndTick() )
         nSimState_ = eSimStopped;
+
     if( nextPause_ > 0 && --nextPause_ == 0 )
         Pause( 0 );
 }
