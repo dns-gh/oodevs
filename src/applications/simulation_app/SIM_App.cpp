@@ -177,18 +177,6 @@ void RunDispatcher( const tools::WinArguments* winArguments, int maxConnections,
     quit->Signal();
 }
 
-void RunDispatcherWrapper( const tools::WinArguments* winArguments, int maxConnections,
-        tools::WaitEvent* quit )
-{
-    __try
-    {
-        return RunDispatcher( winArguments, maxConnections, quit );
-    }
-    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
-    {
-    }
-}
-
 }  // namespace
 
 // -----------------------------------------------------------------------------
@@ -293,7 +281,7 @@ void SIM_App::Initialize()
     if( config_->IsDispatcherEmbedded() )
     {
         MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
-        dispatcher_.reset( new boost::thread( boost::bind( &RunDispatcherWrapper,
+        dispatcher_.reset( new boost::thread( boost::bind( &RunDispatcher,
             winArguments_.get(), maxConnections_, quit_.get() ) ) );
     }
     MIL_Random::Initialize( config_->GetRandomSeed(), config_->GetRandomGaussian(), config_->GetRandomDeviation(), config_->GetRandomMean() );

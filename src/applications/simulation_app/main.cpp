@@ -9,6 +9,7 @@
 #include "tools/Version.h"
 #include "tools/WinArguments.h"
 #include <tools/win32/FlexLm.h>
+#include <tools/win32/CrashHandler.h>
 #include <masalloc/masalloc.h>
 #pragma warning( push, 0 )
 #include <google/protobuf/message.h>
@@ -17,6 +18,9 @@
 #include <new.h>
 #include <dbghelp.h>
 #include <direct.h>
+
+namespace
+{
 
 int __cdecl NoMoreMemoryHandler( std::size_t nSize )
 {
@@ -36,6 +40,18 @@ int __cdecl SilentNoMoreMemoryHandler( std::size_t /*nSize*/ )
     throw std::bad_alloc();
 }
 
+void PureCallHandler( void )
+{
+    ::RaiseException( 1, EXCEPTION_NONCONTINUABLE, 0, 0 );
+}
+
+void CrashHandler( EXCEPTION_POINTERS* exception )
+{
+    MT_CrashHandler::ExecuteHandler( exception );
+}
+
+}  // namespace
+
 //-----------------------------------------------------------------------------
 // Name: SetLowFragmentationHeapAlgorithm
 // Created: NLD 2006-01-20
@@ -50,11 +66,13 @@ void SetLowFragmentationHeapAlgorithm()
 // Name: Run()
 // Created: NLD 2004-02-04
 //-----------------------------------------------------------------------------
-int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
+int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
     tools::WinArguments winArgs( lpCmdLine );
     tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
     MT_CrashHandler::SetRootDirectory( debugDir );
+    tools::InitCrashHandler( &CrashHandler );
+    _set_purecall_handler( PureCallHandler );
 
     // Init logger
     debugDir.CreateDirectories();
@@ -107,46 +125,13 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCm
     {
         MT_LOG_ERROR_MSG( e.CreateLoggerMsg() );
     }
-    catch( const tools::Exception& e )
-    {
-        std::string errorMsg = e.CreateLoggerMsg();
-        MT_LOG_ERROR_MSG( errorMsg );
-        if( verbose )
-            MessageBox( 0, errorMsg.c_str(), "SWORD - Internal exception", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
-    }
     catch( const xml::exception& e )
     {
         MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
-        if( verbose )
-            MessageBox( 0, tools::GetExceptionMsg( e ).c_str(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
-    }
-    catch( const std::bad_alloc& /*e*/ )
-    {
-        MT_LOG_ERROR_MSG( "Bad alloc" );
-        if( verbose )
-            MessageBox( 0, "Allocation error : not enough memory", "Simulation - Memory error", MB_ICONERROR | MB_OK | MB_TOPMOST );
-    }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
-        if( verbose )
-            MessageBox( 0, tools::GetExceptionMsg( e ).c_str(), "SWORD - Exception standard", MB_ICONERROR | MB_OK | MB_TOPMOST );
     }
     google::protobuf::ShutdownProtobufLibrary();
     delete app;
     MT_LOG_UNREGISTER_LOGGER( crashFileLogger );
     MT_LOG_UNREGISTER_LOGGER( fileLogger );
     return nResult;
-}
-
-int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
-{
-    __try
-    {
-        return Run( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
-    }
-    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
-    {
-    }
-    return EXIT_FAILURE;
 }
