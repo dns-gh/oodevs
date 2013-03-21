@@ -69,7 +69,6 @@ func (s *TestSuite) TestLogin(c *C) {
 }
 
 func waitForMessages(client *swapi.Client, timeout time.Duration) bool {
-	waitch := make(chan int)
 	msgch := make(chan int, 32)
 
 	handler := func(msg *swapi.SwordMessage, ctx int32, err error) bool {
@@ -84,12 +83,8 @@ func waitForMessages(client *swapi.Client, timeout time.Duration) bool {
 		return false
 	}
 	client.Register(handler)
-	go func() {
-		time.Sleep(timeout)
-		waitch <- 1
-	}()
 	select {
-	case <-waitch:
+	case <-time.After(timeout):
 		return false
 	case <-msgch:
 		break

@@ -43,10 +43,10 @@ func (s *TestSuite) TestPostTimeout(c *C) {
 		}
 		return false
 	})
-	go func() {
-		time.Sleep(2 * client.PostTimeout)
-		quit <- nil
-	}()
-	err = <-quit
-	c.Assert(err, ErrorMatches, "(?i).*timeout.*")
+	select {
+	case err := <-quit:
+		c.Assert(err, ErrorMatches, "(?i).*timeout.*")
+	case <-time.After(2 * client.PostTimeout):
+		c.Fatal("handler should have quit on timeout")
+	}
 }

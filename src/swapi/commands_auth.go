@@ -32,10 +32,6 @@ func Disconnect(link io.ReadWriter, timeout time.Duration) bool {
 	}
 	wait := make(chan bool)
 	go func() {
-		time.Sleep(timeout)
-		wait <- false
-	}()
-	go func() {
 		buffer := make([]uint8, 128)
 		for {
 			_, err := link.Read(buffer)
@@ -45,7 +41,13 @@ func Disconnect(link io.ReadWriter, timeout time.Duration) bool {
 		}
 		wait <- true
 	}()
-	return <-wait
+	select {
+	case <-time.After(timeout):
+		return false
+	case <-wait:
+		break
+	}
+	return true
 }
 
 func unexpected(value interface{}) error {
