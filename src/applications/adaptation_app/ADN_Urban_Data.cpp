@@ -130,9 +130,9 @@ void ADN_Urban_Data::Save()
         tools::Path file = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() / *it;
         file.Parent().CreateDirectories();
         tools::Xofstream output( file );
-        if( *it == "Urban.xml" )
+        if( *it == ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_ )
             WriteArchive( output );
-        if( *it == "UrbanTemplates.xml" )
+        if( *it == ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrbanTemplates_ )
             WriteTemplates( output );
     }
 }
@@ -148,9 +148,9 @@ void ADN_Urban_Data::Load( const tools::Loader_ABC& fileLoader )
     for( auto it = fileList.begin(); it != fileList.end(); ++it )
     {
         const tools::Path file = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() / (*it);
-        if( *it == "Urban.xml" )
+        if( *it == ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_ )
             fileLoader.LoadFile( file, boost::bind( &ADN_Urban_Data::ReadArchive, this, _1 ) );
-        if( *it == "UrbanTemplates.xml" )
+        if( *it == ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrbanTemplates_ )
             fileLoader.LoadFile( file, boost::bind( &ADN_Urban_Data::ReadTemplates, this, _1 ) );
     }
 }
