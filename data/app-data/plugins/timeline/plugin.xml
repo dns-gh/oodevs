@@ -62,7 +62,7 @@
                 <description lang="fr" name="Info Acteur"><![CDATA[]]></description>
             </descriptions>
             <settings>
-                <setting attribute="scenario/actor/@id" type="integer">
+                <setting attribute="scenario/actor/@id" type="integer" max="1000000000">
                     <descriptions>
                         <description lang="en" name="Actor's reference ID"><![CDATA[]]></description>
                         <description lang="fr" name="ID de l'Acteur"><![CDATA[]]></description>
