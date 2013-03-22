@@ -71,8 +71,7 @@ MIL_Object_ABC::MIL_Object_ABC()
 //-----------------------------------------------------------------------------
 MIL_Object_ABC::~MIL_Object_ABC()
 {
-    if( !bMarkedForDestruction_ ) // Should already be done
-        MarkForDestruction();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

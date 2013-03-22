@@ -36,7 +36,7 @@ MIL_ObjectInteraction::MIL_ObjectInteraction()
 // -----------------------------------------------------------------------------
 MIL_ObjectInteraction::~MIL_ObjectInteraction()
 {
-    assert( agentInsideSet_.empty() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -208,6 +208,12 @@ void MIL_ObjectInteraction::ClearInteraction( MIL_Object_ABC& object )
 {
     while( !agentInsideSet_.empty() )
         (**agentInsideSet_.begin()).GetRole< PHY_RoleInterface_Location >().NotifyTerrainPutOutsideObject( object );
+    agentInsideSet_.clear();
+    agentEnteringSet_.clear();
+    agentMovingInsideSet_.clear();
+    agentDelayedEnteringSet_.clear();
+    populationInsideSet_.clear();
+    ProcessInteractionEvents( object );
 }
 
 // -----------------------------------------------------------------------------
