@@ -18,7 +18,7 @@
 
 #define MOCK_USE_CONVERSIONS
 #include <turtle/mock.hpp>
-#pragma warning( disable : 4505 )
+#pragma warning( disable : 4505 4714 )
 
 #include <sqlite/sqlite3.h>
 #include <spatialite.h>

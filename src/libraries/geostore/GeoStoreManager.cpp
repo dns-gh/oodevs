@@ -13,29 +13,44 @@
 #include "CreateBlockAutoProcess.h"
 #include "CreateBlockProcess.h"
 #include <terrain/PointProjector.h>
+#include <boost/bind.hpp>
 
 using namespace geostore;
 
-GeoStoreManager::GeoStoreManager( const tools::Path& path, const SpatialIndexer& index )
-    : index_    ( index )
-    , projector_( new PointProjector( path.ToBoost() ) )
+namespace
 {
-    tools::Path layersDir = path / "Graphics";
-    tools::Path dbFile = layersDir / "geostore.sqlite";
-    try
+    Database* Load( const tools::Path& layers, tools::Path& file, PointProjector_ABC& projector )
     {
-        database_.reset( new Database( dbFile, layersDir, *projector_ ) );
+        try
+        {
+            return new Database( file, layers, projector );
+        }
+        catch( ... )
+        {
+            file = tools::Path::TemporaryFile();
+            return new Database( file, layers, projector );
+        }
     }
-    catch( ... )
-    {
-        dbFile.Remove();
-        database_.reset( new Database( dbFile, layersDir, *projector_ ) );
-    }
+}
+
+GeoStoreManager::GeoStoreManager( const tools::Path& terrain, const SpatialIndexer& index )
+    : index_    ( index )
+    , file_     ( terrain / "Graphics/geostore.sqlite" )
+    , temporary_( file_ )
+    , projector_( new PointProjector( terrain.ToBoost() ) )
+    , database_ ( Load( terrain / "Graphics", temporary_, *projector_ ) )
+{
+    // NOTHING
 }
 
 GeoStoreManager::~GeoStoreManager()
 {
-    // NOTHING
+    try
+    {
+        temporary_.Rename( file_ );
+    }
+    catch( ... )
+    {}
 }
 
 const Database& GeoStoreManager::GetDatabase() const
