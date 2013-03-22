@@ -100,7 +100,7 @@ void MIL_Config::Parse( int argc, char** argv )
         bPausedAtStartup_ = false;
         endTick_ = 8;
         if( IsSaveCheckpointTestMode() )
-            checkPointsFrequency_ = endTick_ / 2 * timeStep_;
+            checkPointsFrequency_ = ( endTick_ / 2 + 1 ) * timeStep_;
     }
 }
 
