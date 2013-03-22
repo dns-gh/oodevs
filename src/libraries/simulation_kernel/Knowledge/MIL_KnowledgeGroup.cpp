@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_KnowledgeGroup.h"
 #include "MIL_AgentServer.h"
-#include "KnowledgeGroupFactory_ABC.h" // LTO
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -121,7 +120,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupFactory::Create
+// Name: MIL_KnowledgeGroup::Create
 // Created: FDS 2010-03-17
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, const boost::shared_ptr< MIL_KnowledgeGroup >& parent )
@@ -229,16 +228,6 @@ void MIL_KnowledgeGroup::Merge( const MIL_KnowledgeGroup& subGroup )
     knowledgeBlackBoard_->GetKnowledgeAgentContainer().Merge( subGroup.knowledgeBlackBoard_->GetKnowledgeAgentContainer() );
     GetKnowledgeObjectContainer().Merge( subGroup.knowledgeBlackBoard_->GetKnowledgeObjectContainer() );
     knowledgeBlackBoard_->GetKnowledgePopulationContainer().Merge( subGroup.knowledgeBlackBoard_->GetKnowledgePopulationContainer() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::InitializeKnowledgeGroup
-// Created: SLG 2009-11-11
-// LTO
-// -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::InitializeKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
-{
-    knowledgeGroupFactory.Create( xis, *army_, shared_from_this() );
 }
 
 // -----------------------------------------------------------------------------

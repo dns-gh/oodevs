@@ -35,7 +35,6 @@ class DEC_Knowledge_AgentPerception;
 class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationCollision;
 class DEC_Knowledge_PopulationPerception;
-class KnowledgeGroupFactory_ABC;
 class MIL_Agent_ABC;
 class MIL_Army_ABC;
 class MIL_Automate;
@@ -91,7 +90,6 @@ public:
     //@{
     void Clone( const MIL_KnowledgeGroup& source );
     void RegisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup );
-    void InitializeKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
     void UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup );
     boost::shared_ptr< MIL_KnowledgeGroup > FindKnowledgeGroup ( unsigned int id ) const;
     void SetType( const MIL_KnowledgeGroupType *type ){ type_ = type; }

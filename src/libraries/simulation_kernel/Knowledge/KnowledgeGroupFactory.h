@@ -31,7 +31,6 @@ public:
     //@{
     virtual boost::shared_ptr< MIL_KnowledgeGroup > Create( xml::xistream& xis, MIL_Army_ABC& army );
     virtual boost::shared_ptr< MIL_KnowledgeGroup > Create( xml::xistream& xis, MIL_Army_ABC& army, boost::shared_ptr< MIL_KnowledgeGroup > parent );
-    boost::shared_ptr< MIL_KnowledgeGroup > Create2( xml::xistream& xis, MIL_Army_ABC& army );
     //@}
 
     //! @name CheckPoint
