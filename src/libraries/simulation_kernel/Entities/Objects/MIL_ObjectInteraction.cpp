@@ -257,9 +257,14 @@ void MIL_ObjectInteraction::NotifyAgentPutOutside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::ClearInteraction( MIL_Object_ABC& object )
 {
-    T_Agents agents;
-    agents.swap( agentsInside_ );
+    T_Agents agents = agentsInside_;
     boost::for_each( agents, boost::bind( &NotifyTerrainPutOutsideObject, _1, boost::ref( object ) ) );
+    agentsInside_.clear();
+    agentsEntering_.clear();
+    agentsMovingInside_.clear();
+    agentsDelayedEntering_.clear();
+    populationsInside_.clear();
+    ProcessInteractionEvents( object );
 }
 
 // -----------------------------------------------------------------------------
