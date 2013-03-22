@@ -227,9 +227,9 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         profile->Send( *ack->mutable_profile() );
         sender.Send( reply );
         authenticated_[ link ] = profile;
-        container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile );
         ++currentConnections_;
         SendProfiles( sender );
+        container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile );
         MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
     }
 }
@@ -337,6 +337,8 @@ void RightsPlugin::SendProfiles( AuthenticationSender& sender ) const
     auto response = reply.mutable_message()->mutable_connected_profile_list();
     for( T_Profiles::const_iterator it = authenticated_.begin(); it != authenticated_.end(); ++it )
         it->second->Send( *response->add_elem() );
+    auto ack = reply.mutable_message()->mutable_authentication_response();
+    ack->set_error_code( sword::AuthenticationResponse::success );
     sender.Broadcast( reply );
 }
 
