@@ -810,7 +810,7 @@
         <cmake_msvc input="${root.dir}/build"
             version="${version.version}"/>
         <python taskname="fixmsvc" failonerror="true">
-            <arg value="fixmsvc.py"/>
+            <arg value="${bin.dir}/buildtools/fixmsvc.py"/>
             <arg value="${out.dir}/msvc"/>
         </python>
     </target>
