@@ -32,7 +32,7 @@ func startSimOnExercise(c *C, exercise string, endTick int,
 
 func ConnectClient(c *C, sim *simu.SimProcess) *swapi.Client {
 	client, err := swapi.Connect(sim.DispatcherAddr)
-	client.PostTimeout = 3 * time.Minute
+	client.PostTimeout = 10 * time.Second
 	c.Assert(err, IsNil) // failed to connect to simulation
 	return client
 }
@@ -79,6 +79,10 @@ func waitForMessages(client *swapi.Client, timeout time.Duration) bool {
 				return false
 			}
 		}
+		if msg != nil && msg.DispatcherToClient != nil && msg.DispatcherToClient.GetMessage() != nil && msg.DispatcherToClient.GetMessage().ServicesDescription != nil {
+			return false
+		}
+
 		msgch <- 1
 		return false
 	}
@@ -94,25 +98,20 @@ func waitForMessages(client *swapi.Client, timeout time.Duration) bool {
 
 func (s *TestSuite) TestNoDataSentUntilSuccessfulLogin(c *C) {
 	sim := startSimOnExercise(c, "crossroad-small-empty", 1000, false)
-	defer sim.Stop()
+	defer sim.Kill()
 
 	// Connect and watch incoming messages
 	client := ConnectClient(c, sim)
 	seen := waitForMessages(client, 5*time.Second)
 	if seen {
-		/* SWBUG-10026
-
-		   t.Fatal("messages seen before any client action")
-		*/
+		c.Fatal("messages seen before any client action")
 	}
+
 	err := client.Login("foo", "bar")
 	c.Assert(err, NotNil) // login with invalid credentials should have failed
 	seen = waitForMessages(client, 5*time.Second)
 	if seen {
-		/* SWBUG-10026
-
-		   t.Fatal("message seen after invalid login")
-		*/
+		c.Fatal("message seen after invalid login")
 	}
 }
 
