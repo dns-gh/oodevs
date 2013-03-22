@@ -25,7 +25,7 @@
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include "geometry/Types.h"
-#include "geostore/GeoStoreManager.h"
+#include "geostore/Geostore.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter_ABC.h"
 
@@ -198,7 +198,7 @@ void UrbanModel::Load()
 void UrbanModel::CreateGeostoreManager( const tools::ExerciseConfig& config )
 {
     CreateQuadTree( config.GetTerrainWidth(), config.GetTerrainHeight() );
-    geostore_.reset( new geostore::GeoStoreManager( config.GetTerrainDir( config.GetTerrainName() ), *this ) );
+    geostore_.reset( new geostore::Geostore( config.GetTerrainDir( config.GetTerrainName() ), *this ) );
 }
 
 // -----------------------------------------------------------------------------

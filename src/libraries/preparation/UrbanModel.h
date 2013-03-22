@@ -18,7 +18,7 @@
 
 namespace geostore
 {
-    class GeoStoreManager;
+    class Geostore;
 }
 
 namespace kernel
@@ -113,7 +113,7 @@ private:
     const tools::Resolver< kernel::Object_ABC >& objects_;
     std::auto_ptr< gui::UrbanDisplayOptions >    urbanDisplayOptions_;
     std::auto_ptr< UrbanFactory_ABC >            factory_;
-    std::auto_ptr< geostore::GeoStoreManager >   geostore_;
+    std::auto_ptr< geostore::Geostore >          geostore_;
     std::auto_ptr< T_QuadTree >                  quadTree_;
     std::auto_ptr< UrbanMenuManager >            menuManager_;
     float                                        precision_;

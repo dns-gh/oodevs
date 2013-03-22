@@ -27,18 +27,18 @@ namespace geostore
     class SpatialIndexer;
 
 // =============================================================================
-/** @class  GeoStoreManager
-    @brief  GeoStoreManager
+/** @class  Geostore
+    @brief  Geostore
 */
 // Created: AME 2010-07-19
 // =============================================================================
-class GeoStoreManager : private boost::noncopyable
+class Geostore : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             GeoStoreManager( const tools::Path& terrain, const SpatialIndexer& index );
-    virtual ~GeoStoreManager();
+             Geostore( const tools::Path& terrain, const SpatialIndexer& index );
+    virtual ~Geostore();
     //@}
 
     const Database& GetDatabase() const;

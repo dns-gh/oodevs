@@ -10,9 +10,6 @@
     <ClInclude Include="..\..\src\libraries\geostore\geostore_pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\geostore\GeoStoreManager.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\geostore\Table.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -46,12 +43,12 @@
     <ClInclude Include="..\..\src\libraries\geostore\GeometryFactory.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\geostore\Geostore.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\geostore\geostore_pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\geostore\GeoStoreManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\geostore\Database.cpp">
@@ -73,6 +70,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\geostore\GeometryFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\geostore\Geostore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

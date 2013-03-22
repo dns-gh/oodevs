@@ -102,8 +102,8 @@
     <ClInclude Include="..\..\src\libraries\geostore\DatabaseException.h" />
     <ClInclude Include="..\..\src\libraries\geostore\GeometryCollection.h" />
     <ClInclude Include="..\..\src\libraries\geostore\GeometryType.h" />
+    <ClInclude Include="..\..\src\libraries\geostore\Geostore.h" />
     <ClInclude Include="..\..\src\libraries\geostore\geostore_pch.h" />
-    <ClInclude Include="..\..\src\libraries\geostore\GeoStoreManager.h" />
     <ClInclude Include="..\..\src\libraries\geostore\Database.h" />
     <ClInclude Include="..\..\src\libraries\geostore\GeoTable.h" />
     <ClInclude Include="..\..\src\libraries\geostore\LogTable.h" />
@@ -114,13 +114,13 @@
     <ClInclude Include="..\..\src\libraries\geostore\Table.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\geostore\Geostore.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\geostore_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\geostore\GeoStoreManager.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\Database.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\GeoTable.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\LogTable.cpp" />

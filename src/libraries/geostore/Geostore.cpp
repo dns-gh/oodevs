@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "geostore_pch.h"
-#include "GeoStoreManager.h"
+#include "Geostore.h"
 #include "Database.h"
 #include "CreateBlockAutoProcess.h"
 #include "CreateBlockProcess.h"
@@ -33,7 +33,7 @@ namespace
     }
 }
 
-GeoStoreManager::GeoStoreManager( const tools::Path& terrain, const SpatialIndexer& index )
+Geostore::Geostore( const tools::Path& terrain, const SpatialIndexer& index )
     : index_    ( index )
     , file_     ( terrain / "Graphics/geostore.sqlite" )
     , temporary_( file_ )
@@ -43,7 +43,7 @@ GeoStoreManager::GeoStoreManager( const tools::Path& terrain, const SpatialIndex
     // NOTHING
 }
 
-GeoStoreManager::~GeoStoreManager()
+Geostore::~Geostore()
 {
     try
     {
@@ -53,12 +53,12 @@ GeoStoreManager::~GeoStoreManager()
     {}
 }
 
-const Database& GeoStoreManager::GetDatabase() const
+const Database& Geostore::GetDatabase() const
 {
     return *database_;
 }
 
-void GeoStoreManager::CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, double roadWidth, std::vector< geometry::Polygon2f >& urbanBlocks )
+void Geostore::CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, double roadWidth, std::vector< geometry::Polygon2f >& urbanBlocks )
 {
     try
     {
@@ -71,7 +71,7 @@ void GeoStoreManager::CreateUrbanBlocksOnCities( const geometry::Polygon2f& foot
     }
 }
 
-std::vector< const kernel::UrbanObject_ABC* > GeoStoreManager::IntersectedBlocks( const geometry::Polygon2f& footprint )
+std::vector< const kernel::UrbanObject_ABC* > Geostore::IntersectedBlocks( const geometry::Polygon2f& footprint )
 {
     CreateBlockProcess process;
     return process.IntersectedBlocks( index_, footprint, *projector_ );
