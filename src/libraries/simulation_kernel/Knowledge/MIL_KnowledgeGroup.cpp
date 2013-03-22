@@ -1180,12 +1180,15 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
         boost::shared_ptr< MIL_KnowledgeGroup > parent = GetParent();
         if( GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
         {
-            auto bbKg = parent->GetKnowledge();
-            if( bbKg && parent.get() && IsEnabled() )
+            if( parent.get() && IsEnabled() )
             {
-                boost::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
-                bbKg->GetKnowledgeAgentContainer().ApplyOnPreviousKnowledgesAgent( functorAgent );
-                bbKg->GetKnowledgeAgentContainer().SaveAllCurrentKnowledgeAgent();
+                auto bbKg = parent->GetKnowledge();
+                if( bbKg )
+                {
+                    boost::function< void( DEC_Knowledge_Agent& ) > functorAgent = boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+                    bbKg->GetKnowledgeAgentContainer().ApplyOnPreviousKnowledgesAgent( functorAgent );
+                    bbKg->GetKnowledgeAgentContainer().SaveAllCurrentKnowledgeAgent();
+                }
             }
             RefreshTimeToDiffuseToKnowledgeGroup();
         }
