@@ -153,7 +153,7 @@ func (s *TestSuite) TestLowEndTickValues(c *C) {
 		opts := MakeOpts()
 		WriteSession(c, opts, session)
 		sim, err := simu.StartSim(opts)
-		c.Assert(err, IsNil) // simulation failed to start"
+		c.Assert(err, IsNil)  // simulation failed to start"
 		c.Assert(sim, NotNil) // simulation failed to start"
 		defer sim.Stop()
 
@@ -166,10 +166,8 @@ func (s *TestSuite) TestLowEndTickValues(c *C) {
 	testLowTick := func(c *C, endTick int) {
 		ok := runSim(c, endTick)
 		if ok {
-			// SWBUG-10020:
-			//
 			c.Fatalf("simulation ticked up to %d with end-tick=%d",
-				endTick + 1, endTick)
+				endTick+1, endTick)
 		}
 	}
 	// Simulation should tick only once

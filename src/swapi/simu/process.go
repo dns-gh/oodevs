@@ -313,7 +313,7 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 		}
 		break
 	case <-procch:
-		if !sim.Success(){
+		if !sim.Success() {
 			return &sim, errors.New("failed to start simulation")
 		}
 	}
