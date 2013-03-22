@@ -178,7 +178,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <Link>
       <AdditionalDependencies>glew-vc100-mt.lib;psapi.lib;dbghelp.lib;htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
     </Link>
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
