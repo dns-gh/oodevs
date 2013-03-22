@@ -65,10 +65,6 @@ func (o *SimOpts) GetDispatcherLogPath() string {
 	return filepath.Join(o.GetSessionDir(), "Dispatcher.log")
 }
 
-func (sim *SimProcess) GetLogPath() string {
-	return filepath.Join(sim.sessionDir, "Sim.log")
-}
-
 // Write the input session at a suitable place in the configured exercise
 // and set SimOpts.SessionName accordingly
 func (o *SimOpts) WriteSession(session *Session) error {
