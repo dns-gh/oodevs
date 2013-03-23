@@ -12,17 +12,17 @@
     <libTools>tools.lib</libTools>
     <libZip>zipstream.lib;zlib1.lib</libZip>
     <libDirectIA>directia-$(CurrentPlatform)-mt-4_6.lib</libDirectIA>
-    <libGdal>gdal_i.lib;gdal_ogr.lib</libGdal>
-    <libGraphics>graphics.lib</libGraphics>
+    <libGdal>gdal_i.lib;libgdal_ogr-$(CurrentPlatform)-mt.lib</libGdal>
+    <libGraphics>libgraphics-$(CurrentPlatform)-mt.lib</libGraphics>
     <libLog4cxx>log4cxx.lib</libLog4cxx>
     <libGlu>glu32.lib</libGlu>
     <libGeoStore>geostore.lib</libGeoStore>
-    <libGeoData>geodata.lib</libGeoData>
-    <libPathfind>pathfind.lib</libPathfind>
-    <libSpatialContainer>spatialcontainer.lib</libSpatialContainer>
+    <libGeoData>libgeodata-$(CurrentPlatform)-mt.lib</libGeoData>
+    <libPathfind>libpathfind-$(CurrentPlatform)-mt.lib</libPathfind>
+    <libSpatialContainer>libspatialcontainer-$(CurrentPlatform)-mt.lib</libSpatialContainer>
     <libSpatialite>spatialite_i.lib</libSpatialite>
-    <libTerrain>terrain.lib</libTerrain>
-    <libAnalysis>analysis.lib</libAnalysis>
+    <libTerrain>libterrain-$(CurrentPlatform)-mt.lib</libTerrain>
+    <libAnalysis>libanalysis-$(CurrentPlatform)-mt.lib</libAnalysis>
     <libSvgl>svgl.lib</libSvgl>
     <SrcDir>..\..\src\samples\$(ProjectName)</SrcDir>
   </PropertyGroup>

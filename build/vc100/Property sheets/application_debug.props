@@ -13,21 +13,21 @@
     <libTools>tools_d.lib</libTools>
     <libZip>zipstream_d.lib;zlib1d.lib</libZip>
     <libDirectIA>directia-$(CurrentPlatform)-mt-gd-4_6.lib</libDirectIA>
-    <libGdal>gdal_i_d.lib;gdal_ogr_d.lib</libGdal>
-    <libGraphics>graphics_d.lib</libGraphics>
+    <libGdal>gdal_i_d.lib;libgdal_ogr-$(CurrentPlatform)-mt-gd.lib</libGdal>
+    <libGraphics>libgraphics-$(CurrentPlatform)-mt-gd.lib</libGraphics>
     <libLog4cxx>log4cxxd.lib</libLog4cxx>
     <libGlu>glu32.lib</libGlu>
     <libGeoStore>geostore_d.lib</libGeoStore>
-    <libGeoData>geodata_d.lib</libGeoData>
-    <libPathfind>pathfind_d.lib</libPathfind>
-    <libSpatialContainer>spatialcontainer_d.lib</libSpatialContainer>
+    <libGeoData>libgeodata-$(CurrentPlatform)-mt-gd.lib</libGeoData>
+    <libPathfind>libpathfind-$(CurrentPlatform)-mt-gd.lib</libPathfind>
+    <libSpatialContainer>libspatialcontainer-$(CurrentPlatform)-mt-gd.lib</libSpatialContainer>
     <libSpatialite>spatialite_i_d.lib</libSpatialite>
-    <libTerrain>terrain_d.lib</libTerrain>
-    <libAnalysis>analysis_d.lib</libAnalysis>
+    <libTerrain>libterrain-$(CurrentPlatform)-mt-gd.lib</libTerrain>
+    <libAnalysis>libanalysis-$(CurrentPlatform)-mt-gd.lib</libAnalysis>
     <libSvgl>svgl_d.lib</libSvgl>
     <SrcDir>..\..\src\applications\$(ProjectName)</SrcDir>
     <Suffix>-gd</Suffix>
-    <libExtractor>extractor_d.lib</libExtractor>
+    <libExtractor>libextractor-$(CurrentPlatform)-mt-gd.lib</libExtractor>
     <libSqlite>sqlite3-$(CurrentPlatform)-mt-gd.lib</libSqlite>
   </PropertyGroup>
   <PropertyGroup>

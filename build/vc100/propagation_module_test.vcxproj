@@ -44,6 +44,7 @@
     <Import Project="Property sheets\precompiled_header.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -52,6 +53,7 @@
     <Import Project="Property sheets\precompiled_header.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -60,6 +62,7 @@
     <Import Project="Property sheets\precompiled_header.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -68,6 +71,7 @@
     <Import Project="Property sheets\precompiled_header.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -85,7 +89,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>core_d.lib;spatialcontainer_d.lib;tools_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>core_d.lib;tools_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
@@ -98,7 +102,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>core_d.lib;spatialcontainer_d.lib;tools_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>core_d.lib;tools_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
@@ -113,14 +117,14 @@
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>core.lib;spatialcontainer.lib;tools.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>core.lib;tools.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile />
     <Link>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
-      <AdditionalDependencies>core.lib;spatialcontainer.lib;tools.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>core.lib;tools.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <ClCompile>

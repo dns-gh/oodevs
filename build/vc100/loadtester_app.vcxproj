@@ -53,6 +53,8 @@
     <Import Project="Property sheets\link_zip.props" />
     <Import Project="Property sheets\include_out_directory.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
+    <Import Project="Property sheets\link_terrain.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -66,6 +68,8 @@
     <Import Project="Property sheets\link_zip.props" />
     <Import Project="Property sheets\include_out_directory.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
+    <Import Project="Property sheets\link_terrain.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -79,6 +83,8 @@
     <Import Project="Property sheets\link_zip.props" />
     <Import Project="Property sheets\include_out_directory.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
+    <Import Project="Property sheets\link_terrain.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -92,6 +98,8 @@
     <Import Project="Property sheets\link_zip.props" />
     <Import Project="Property sheets\include_out_directory.props" />
     <Import Project="Property sheets\link_graphics.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
+    <Import Project="Property sheets\link_terrain.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -99,7 +107,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <Link>
-      <AdditionalDependencies>spatialcontainer.lib;terrain.lib;glu32.lib;psapi.lib;dbghelp.lib;svgl.lib;Htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glu32.lib;psapi.lib;dbghelp.lib;svgl.lib;Htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -107,7 +115,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <Link>
-      <AdditionalDependencies>spatialcontainer.lib;terrain.lib;glu32.lib;psapi.lib;dbghelp.lib;svgl.lib;Htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glu32.lib;psapi.lib;dbghelp.lib;svgl.lib;Htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -115,7 +123,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <Link>
-      <AdditionalDependencies>spatialcontainer_d.lib;terrain_d.lib;glu32.lib;psapi.lib;dbghelp.lib;svgl_d.lib;htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glu32.lib;psapi.lib;dbghelp.lib;svgl_d.lib;htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -123,7 +131,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <Link>
-      <AdditionalDependencies>spatialcontainer_d.lib;terrain_d.lib;glu32.lib;psapi.lib;dbghelp.lib;svgl_d.lib;htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glu32.lib;psapi.lib;dbghelp.lib;svgl_d.lib;htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
