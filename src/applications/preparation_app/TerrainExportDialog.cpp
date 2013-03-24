@@ -15,8 +15,8 @@
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/resources.h"
 #include "tools/ExerciseConfig.h"
+#include <extractor/TerrainExportManager.h>
 #include <terrain/PlanarCartesianProjector.h>
-#include <terrain/TerrainExportManager.h>
 #include <terrain/Translator.h>
 
 // -----------------------------------------------------------------------------

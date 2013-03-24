@@ -20,11 +20,11 @@
 #include "clients_kernel/OptionVariant.h"
 #include "tools/ExerciseConfig.h"
 
-#include <graphics/DataFactory.h>
 #include <graphics/extensions.h>
 #include <graphics/NoVBOShapeLayer.h>
 #include <graphics/RawShapeLayer.h>
 #include <graphics/ShapeCollector.h>
+#include <terrain/DataFactory.h>
 
 using namespace kernel;
 using namespace gui;
