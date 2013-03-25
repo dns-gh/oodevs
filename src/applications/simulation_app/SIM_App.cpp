@@ -167,7 +167,7 @@ void RunDispatcher( const tools::WinArguments* winArguments, int maxConnections,
         while( !quit->IsSignaled() )
         {
             if( !loader.Update() )
-                break;
+                throw MASA_EXCEPTION( "An error occured in dispatcher, see dispatcher.log for more information" );
             quit->Wait( boost::posix_time::milliseconds( 25 ) );
         }
     }
