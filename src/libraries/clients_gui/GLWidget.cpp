@@ -1011,12 +1011,22 @@ void GlWidget::OptionChanged( const std::string& name, const kernel::OptionVaria
 }
 
 // -----------------------------------------------------------------------------
+// Name: GLWidget::IsInSelectionViewport
+// Created: LGY 2013-03-25
+// -----------------------------------------------------------------------------
+bool GlWidget::IsInSelectionViewport( const geometry::Point2f& point ) const
+{
+    // Is in the scene && Is in the terrain
+    return rect().contains( mapFromGlobal( QCursor::pos() ) ) && extent_.IsInside( point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GLWidget::FillSelection
 // Created: LGY 2013-02-15
 // -----------------------------------------------------------------------------
 void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection )
 {
-    if( !extent_.IsInside( point ) )
+    if( !IsInSelectionViewport( point ) )
         return;
     point_ = CoordinatesToClient( point );
     pPickingSelector_->FillSelection( selection, boost::bind( &GlWidget::PickGL, this ) );
@@ -1028,7 +1038,7 @@ void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& 
 // -----------------------------------------------------------------------------
 void GlWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type )
 {
-    if( !extent_.IsInside( point ) )
+    if( !IsInSelectionViewport( point ) )
         return;
     point_ = CoordinatesToClient( point );
     pPickingSelector_->FillSelection( selection, type, boost::bind( &GlWidget::PickGL, this ) );

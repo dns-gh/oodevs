@@ -750,12 +750,22 @@ void Gl3dWidget::SetCurrentCursor( const QCursor& cursor )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GL3DWidget::IsInSelectionViewport
+// Created: LGY 2013-03-25
+// -----------------------------------------------------------------------------
+bool Gl3dWidget::IsInSelectionViewport( const geometry::Point2f& point ) const
+{
+    // Is in the scene && Is in the terrain
+    return rect().contains( mapFromGlobal( QCursor::pos() ) ) && current_.IsVisible( point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GL3DWidget::FillSelection
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------
 void Gl3dWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection )
 {
-    if( !current_.IsVisible( point ) )
+    if( !IsInSelectionViewport( point ) )
         return;
 
     glDisable( GL_DEPTH_TEST );
@@ -772,7 +782,7 @@ void Gl3dWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking
 // -----------------------------------------------------------------------------
 void Gl3dWidget::FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type )
 {
-    if( !current_.IsVisible( point ) )
+    if( !IsInSelectionViewport( point ) )
         return;
     glDisable( GL_DEPTH_TEST );
 

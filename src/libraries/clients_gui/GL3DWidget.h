@@ -132,6 +132,12 @@ protected:
     void UndoRotations() const;
     //@}
 
+private:
+    //! @name Helpers
+    //@{
+    bool IsInSelectionViewport( const geometry::Point2f& point ) const;
+    //@}
+
     //! @name Types
     //@{
     typedef std::vector< Layer* >      T_Layers;

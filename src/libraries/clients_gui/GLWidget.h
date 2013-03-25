@@ -168,6 +168,7 @@ private:
 
     void RenderPass( GlRenderPass_ABC& pass );
     void PickingPass( GlRenderPass_ABC& pass );
+    bool IsInSelectionViewport( const geometry::Point2f& point ) const;
     //@}
 
 private:
