@@ -110,6 +110,7 @@ Section "!${PRODUCT_NAME}"
     File "${OUTDIR}\release\applications\simulation_app\*.pdb"
     File "${OUTDIR}\release\libraries\dispatcher_dll\*.pdb"
     File "${OUTDIR}\release\libraries\launcher_dll\*.pdb"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ; Qt imageformats plugins
     SetOutPath "$INSTDIR\applications\imageformats"
@@ -125,9 +126,10 @@ Section "!${PRODUCT_NAME}"
 
     ; evaluation licence
     !ifdef EVALUATION
+        !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File "${RUNDIR}\evaluation.lic"
+        !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     !endif
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ;plugin definitions
     SetOutPath "$INSTDIR\applications\plugins"
