@@ -383,15 +383,15 @@
 ;------------------------------------------------------------------------------
 ; Additional Component Installation helper
 ;------------------------------------------------------------------------------
-!macro OT.AddOptionalComponent ComponentName
+!macro OT.AddTerraintools
 
-    Section "${ComponentName}"
-        SetOutPath "$INSTDIR\${ComponentName}"
+    Section "Terrain"
+        SetOutPath "$INSTDIR\Terrain"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r "${OUTDIR}\terraintools\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-        SetOutPath "$INSTDIR\${ComponentName}\applications"
-        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_GEN).lnk" "$INSTDIR\${ComponentName}\applications\generation_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+        SetOutPath "$INSTDIR\Terrain\applications"
+        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_GEN).lnk" "$INSTDIR\Terrain\applications\generation_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
 
 !macroend

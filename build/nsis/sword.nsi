@@ -157,7 +157,7 @@ SectionEnd
 
 ; ------------------------------------------------------------------------------
 SectionGroup "Additional components"
-    !insertmacro OT.AddOptionalComponent "Terrain"
+    !insertmacro OT.AddTerraintools
     !insertmacro OT.AddMasaLifeIde
 SectionGroupEnd
 
