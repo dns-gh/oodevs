@@ -154,6 +154,7 @@ Section "!${PRODUCT_NAME}"
     IfErrors 0 +3
         MessageBox MB_OK "$(OT_ABORTING_INSTALLATION_NOT_ADMIN)"
         Abort
+    Delete "vcredist_${PLATFORM}.exe"
 
 SectionEnd
 
