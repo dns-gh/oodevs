@@ -14,6 +14,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
@@ -247,9 +248,12 @@ bool UnitFilter::IsInKnowledgeGroup( const Entity_ABC& other ) const
         }
         return &pHierarchy->GetTop() == &selfHierarchy->GetTop();
     }
-    else if( other.GetTypeName() == Formation_ABC::typeName_ )
+    else
     {
-        if( const TacticalHierarchies* tacticalHierarchies = other.Retrieve< kernel::TacticalHierarchies >() )
+        const TacticalHierarchies* tacticalHierarchies = other.Retrieve< kernel::TacticalHierarchies >();
+        if( !tacticalHierarchies )
+            return false;
+        if( other.GetTypeName() == Formation_ABC::typeName_ )
         {
             bool hasAnyChildInTheSameKnowledgeGroup = false;
             tools::Iterator< const Entity_ABC& > children = tacticalHierarchies->CreateSubordinateIterator();
@@ -259,6 +263,11 @@ bool UnitFilter::IsInKnowledgeGroup( const Entity_ABC& other ) const
                 hasAnyChildInTheSameKnowledgeGroup |= IsInKnowledgeGroup( child );
             }
             return hasAnyChildInTheSameKnowledgeGroup;
+        }
+        else if( other.GetTypeName() == TacticalLine_ABC::typeName_ )
+        {
+            if( const Entity_ABC* pSuperior = tacticalHierarchies->GetSuperior() )
+                return IsInHierarchy( *pSuperior );
         }
     }
     return false;
