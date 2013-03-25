@@ -247,7 +247,7 @@ add_target( geostore_test tests "tests/geostore_test" OPTIONS test )
 masa_add_target_include( geostore_test "${MASA_INCLUDE}/spatialite" )
 target_link_libraries( geostore_test
     geostore
-    sword_tools
+    ${TOOLS_LIBRARIES}
 )
 
 # 3a_test
@@ -321,7 +321,7 @@ target_link_libraries( web_control_plugin
 add_target( positions_plugin_test tests "tests/positions_plugin_test" OPTIONS protocol test )
 target_link_libraries( positions_plugin_test
     positions_plugin
-    sword_tools
+    ${TOOLS_LIBRARIES}
 )
 
 # plugins_test
@@ -627,7 +627,7 @@ add_target( launcher_test_app clients "applications/launcher_test_app" OPTIONS p
 masa_add_target_include( launcher_test_app "${CMAKE_CURRENT_BINARY_DIR}/shield.out" )
 target_link_libraries( launcher_test_app
     launcher_dll
-    sword_tools
+    ${TOOLS_LIBRARIES}
 )
 
 # preparation
