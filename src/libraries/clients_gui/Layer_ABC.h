@@ -28,7 +28,6 @@ namespace gui
 class Layer_ABC : public MapLayer_ABC
                 , public tools::Observer_ABC
                 , public kernel::DisplayableModesObserver_ABC
-                , public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

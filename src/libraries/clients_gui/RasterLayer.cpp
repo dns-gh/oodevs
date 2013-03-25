@@ -67,7 +67,7 @@ void RasterLayer::GenerateTexture()
 {
     try
     {
-        textures_.reset( new TextureSet( ( graphicsDirectory_ / textureName_ ).ToLocal() ) );
+        textures_.reset( new TextureSet( graphicsDirectory_ / textureName_ ) );
     }
     catch( ... )
     {

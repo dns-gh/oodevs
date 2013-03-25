@@ -169,7 +169,7 @@ class TerrainLayer::MyLayer : public Base
 {
 public:
     MyLayer( TerrainLayer& parent, const tools::Path& filename )
-        : Base( parent.setup_, filename.ToLocal() )
+        : Base( parent.setup_, filename )
         , parent_( parent ) {}
 
     virtual bool ShouldDisplay( const TerrainData& data, const geometry::Rectangle2f& /*viewport*/ )
@@ -245,8 +245,8 @@ void TerrainLayer::LoadGraphics()
         {
             DataFactory factory;
             ShapeCollector collector( factory );
-            collector.LoadGraphicDirectory( graphicsDirectory_.ToLocal() );
-            collector.Finalize( aggregated.ToLocal() );
+            collector.LoadGraphicDirectory( graphicsDirectory_ );
+            collector.Finalize( aggregated );
         }
         else
         {

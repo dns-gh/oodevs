@@ -62,7 +62,7 @@ void DetectionMap::Load( const tools::ExerciseConfig& config )
 
     const tools::Path& detection = config.GetDetectionFile();
 
-    map_ = new ElevationMap( detection.ToLocal() );
+    map_ = new ElevationMap( detection );
 
     tools::InputBinaryStream archive( detection );
     double rcs; unsigned uDummy;
