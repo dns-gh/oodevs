@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    void Execute();
+    int Execute();
     //@}
 
 private:
@@ -78,7 +78,7 @@ private:
     std::auto_ptr< tools::WaitEvent > quit_;
     std::auto_ptr< boost::thread > gui_;
     std::auto_ptr< boost::thread > dispatcher_;
-
+    int result_;
     HWND hWnd_;
     HINSTANCE hInstance_;
     NOTIFYICONDATA TrayIcon_;

@@ -112,8 +112,7 @@ int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
         GOOGLE_PROTOBUF_VERIFY_VERSION;
         app = new SIM_App( hinstance, hPrevInstance, lpCmdLine, nCmdShow, maxConnections, verbose );
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
-        app->Execute();
-        nResult = EXIT_SUCCESS;
+        nResult = app->Execute();
     }
     catch( const FlexLmLicense::LicenseError& e )
     {

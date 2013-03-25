@@ -56,6 +56,7 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPWSTR lpC
     , config_        ( new MIL_Config( *observer_ ) )
     , winArguments_  ( new tools::WinArguments( lpCmdLine ) )
     , quit_          ( new tools::WaitEvent() )
+    , result_        ( EXIT_SUCCESS )
     , hWnd_          ( 0 )
     , hInstance_     ( hinstance )
     , nIconIndex_    ( 0 )
@@ -157,7 +158,7 @@ namespace
 {
 
 void RunDispatcher( const tools::WinArguments* winArguments, int maxConnections,
-        tools::WaitEvent* quit )
+                    tools::WaitEvent* quit, int& result )
 {
     try
     {
@@ -173,6 +174,7 @@ void RunDispatcher( const tools::WinArguments* winArguments, int maxConnections,
     catch( const std::exception& e )
     {
         MT_LOG_ERROR_MSG( "dispatcher: " << tools::GetExceptionMsg( e ) );
+        result = EXIT_FAILURE;
     }
     quit->Signal();
 }
@@ -282,7 +284,7 @@ void SIM_App::Initialize()
     {
         MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
         dispatcher_.reset( new boost::thread( boost::bind( &RunDispatcher,
-            winArguments_.get(), maxConnections_, quit_.get() ) ) );
+                           winArguments_.get(), maxConnections_, quit_.get(), boost::ref( result_ ) ) ) );
     }
     MIL_Random::Initialize( config_->GetRandomSeed(), config_->GetRandomGaussian(), config_->GetRandomDeviation(), config_->GetRandomMean() );
     MIL_AgentServer::CreateWorkspace( *config_ );
@@ -306,10 +308,11 @@ void SIM_App::Run()
 // Name: SIM_App::Execute
 // Created: NLD 2002-08-07
 //-----------------------------------------------------------------------------
-void SIM_App::Execute()
+int SIM_App::Execute()
 {
     Initialize();
     Run();
+    return result_;
 }
 
 namespace
