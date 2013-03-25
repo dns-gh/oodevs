@@ -120,7 +120,7 @@ void SessionConfigPanel::Commit( const tools::Path& exercise, const tools::Path&
     {
         action.SetOption( "session/config/dispatcher/network/@client", "localhost:" +  // $$$$ AGE 2007-10-09:
                             boost::lexical_cast< std::string >( frontend::SimulationPort( exerciseNumber_->value() ) ) );
-        action.SetOption( "session/config/dispatcher/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09:
+        action.SetOption( "session/config/dispatcher/network/@server", "0.0.0.0:" +  // $$$$ AGE 2007-10-09:
                             boost::lexical_cast< std::string >( frontend::DispatcherPort( exerciseNumber_->value() ) ) );
     }
     {
