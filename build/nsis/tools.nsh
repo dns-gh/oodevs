@@ -248,7 +248,7 @@
     ; Write Register entry
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallLocation" "$INSTDIR"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${PRODUCT_NAME}"
-    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayIcon" "$INSTDIR\applications\sword-ot.ico"
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayIcon" "$INSTDIR\applications\sword.ico"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayVersion" "${APP_VERSION_MINOR}"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString" "${UNINST_EXE} /$MultiUser.InstallMode"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "QuietUninstallString" "${UNINST_EXE} /$MultiUser.InstallMode /S"
@@ -276,7 +276,7 @@
     ; register .otpak extension association
     WriteRegStr HKCR ".otpak" "" "Officer Training Package"
     WriteRegStr HKCR "Officer Training Package\shell" "" "open"
-    WriteRegStr HKCR "Officer Training Package\DefaultIcon" "" "$INSTDIR\applications\sword-ot.ico"
+    WriteRegStr HKCR "Officer Training Package\DefaultIcon" "" "$INSTDIR\applications\sword.ico"
     WriteRegStr HKCR "Officer Training Package\shell\open\command" "" '"$INSTDIR\applications\selftraining_app.exe" --cwd "$INSTDIR\applications" --install="%1"'
 
 !macroend
@@ -391,7 +391,7 @@
         File /r "${OUTDIR}\terraintools\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
         SetOutPath "$INSTDIR\Terrain\applications"
-        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_GEN).lnk" "$INSTDIR\Terrain\applications\generation_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_GEN).lnk" "$INSTDIR\Terrain\applications\generation_app.exe" "" "$INSTDIR\applications\sword.ico"
     SectionEnd
 
 !macroend
