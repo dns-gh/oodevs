@@ -24,7 +24,6 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
 #include "tools/Codec.h"
-#include "tools/InputBinaryStream.h"
 #include "tools/Loader_ABC.h"
 #include "Tools/MIL_AffinitiesMap.h"
 #include "tools/Version.h"

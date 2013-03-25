@@ -199,7 +199,7 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
 //-----------------------------------------------------------------------------
 bool PHY_RawVisionData::Read( const tools::Path& path )
 {
-    tools::InputBinaryStream archive( path.ToLocal() );
+    tools::InputBinaryStream archive( path );
     if( !archive )
         throw MASA_EXCEPTION( "Cannot open file " + path.ToUTF8() );
     if( !( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )

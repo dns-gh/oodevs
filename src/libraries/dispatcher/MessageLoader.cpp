@@ -11,7 +11,7 @@
 #include "MessageLoader.h"
 #include "MessageHandler_ABC.h"
 #include "tools/WaitEvent.h"
-#include "tools/InputBinaryStream.h"
+#include "tools/InputBinaryWrapper.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Protocol.h"
 #include "protocol/ReplaySenders.h"

@@ -64,7 +64,7 @@ void DetectionMap::Load( const tools::ExerciseConfig& config )
 
     map_ = new ElevationMap( detection.ToLocal() );
 
-    tools::InputBinaryStream archive( detection.ToLocal() );
+    tools::InputBinaryStream archive( detection );
     double rcs; unsigned uDummy;
     archive >> rcs >> uDummy >> uDummy;
     cellsize_ = static_cast< float >( rcs );
