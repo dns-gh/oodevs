@@ -26,9 +26,10 @@ WeatherLayer::WeatherLayer( gui::GlTools_ABC& tools, gui::ExclusiveEventStrategy
     , controllers_ ( controllers )
     , meteoModel_  ( meteoModel )
     , currentMeteo_( new weather::Meteo( 0 , weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_, 0, 0 ) )
+    , picker_( picker )
 {
     controllers_.Register( *this );
-    picker.RegisterLayer( *this );
+    picker_.RegisterLayer( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +38,7 @@ WeatherLayer::WeatherLayer( gui::GlTools_ABC& tools, gui::ExclusiveEventStrategy
 // -----------------------------------------------------------------------------
 WeatherLayer::~WeatherLayer()
 {
-    delete currentMeteo_;
+    picker_.UnregisterLayer( *this );
     controllers_.Unregister( *this );
 }
 
@@ -62,14 +63,14 @@ void WeatherLayer::Paint( const geometry::Rectangle2f& viewport )
 // -----------------------------------------------------------------------------
 const weather::Meteo* WeatherLayer::Pick( const geometry::Point2f& terrainCoordinates ) const
 {
-    assert( currentMeteo_ );
+    assert( currentMeteo_.get() );
     const weather::Meteo* meteo = meteoModel_.GetMeteo( terrainCoordinates );
     if( meteo )
         currentMeteo_->Update( *meteo );
     for( auto it = effects_.begin(); it != effects_.end(); ++it )
         if( (*it)->IsInside( terrainCoordinates ) )
             (*it)->ApplyEffect( *currentMeteo_ );
-    return currentMeteo_;
+    return currentMeteo_.get();
 }
 
 // -----------------------------------------------------------------------------

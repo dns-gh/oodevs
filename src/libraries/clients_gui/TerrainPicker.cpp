@@ -55,11 +55,50 @@ void TerrainPicker::RegisterLayer( TerrainLayer& terrain )
 
 // -----------------------------------------------------------------------------
 // Name: TerrainPicker::RegisterLayer
+// Created: HBD 2010-04-01
+// -----------------------------------------------------------------------------
+void TerrainPicker::RegisterLayer( WeatherLayer& weather )
+{
+    weather_ = &weather;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainPicker::RegisterLayer
 // Created: BCI 2011-01-04
 // -----------------------------------------------------------------------------
 void TerrainPicker::RegisterLayer( ObjectsLayer& objects )
 {
     objects_ = &objects;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainPicker::UnregisterLayer
+// Created: JSR 2013-03-25
+// -----------------------------------------------------------------------------
+void TerrainPicker::UnregisterLayer( TerrainLayer& terrain )
+{
+    if( &terrain == terrain_ )
+        terrain_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainPicker::UnregisterLayer
+// Created: JSR 2013-03-25
+// -----------------------------------------------------------------------------
+void TerrainPicker::UnregisterLayer( WeatherLayer& weather )
+{
+    if( &weather == weather_ )
+        weather_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainPicker::UnregisterLayer
+// Created: JSR 2013-03-25
+// -----------------------------------------------------------------------------
+void TerrainPicker::UnregisterLayer( ObjectsLayer& objects )
+{
+    if( &objects == objects_ )
+        objects_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,13 +142,4 @@ void TerrainPicker::OnTimeOut()
         timer_->start( 250, true );
     }
     terrainPickChange_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainPicker::RegisterLayer
-// Created: HBD 2010-04-01
-// -----------------------------------------------------------------------------
-void TerrainPicker::RegisterLayer( WeatherLayer& weather )
-{
-    weather_ = &weather;
 }

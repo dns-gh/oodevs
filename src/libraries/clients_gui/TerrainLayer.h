@@ -30,10 +30,7 @@ namespace gui
     class GlTools_ABC;
     class GraphicPreferences;
     class TerrainPicker;
-}
 
-namespace gui
-{
 // =============================================================================
 /** @class  TerrainLayer
     @brief  TerrainLayer

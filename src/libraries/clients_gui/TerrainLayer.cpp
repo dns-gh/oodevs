@@ -50,6 +50,7 @@ TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, 
 // -----------------------------------------------------------------------------
 TerrainLayer::~TerrainLayer()
 {
+    picker_.UnregisterLayer( *this );
     controllers_.Unregister( *this );
 }
 

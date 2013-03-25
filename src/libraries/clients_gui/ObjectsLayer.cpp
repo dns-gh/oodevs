@@ -25,8 +25,9 @@ using namespace gui;
 ObjectsLayer::ObjectsLayer( Controllers& controllers, GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view,
                             const Profile_ABC& profile, TerrainPicker& picker )
     : EntityLayer< Object_ABC >( controllers, tools, strategy, view, profile, eLayerTypes_Objects )
+    , picker_( picker )
 {
-    picker.RegisterLayer( *this );
+    picker_.RegisterLayer( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +36,7 @@ ObjectsLayer::ObjectsLayer( Controllers& controllers, GlTools_ABC& tools, ColorS
 // ------------------------------------------------------------------------------
 ObjectsLayer::~ObjectsLayer()
 {
-    // NOTHING
+    picker_.UnregisterLayer( *this );
 }
 
 // -----------------------------------------------------------------------------

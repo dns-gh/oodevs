@@ -36,8 +36,11 @@ public:
     //! @name Operations
     //@{
     void RegisterLayer( TerrainLayer& terrain );
-    void RegisterLayer( WeatherLayer& terrain );
+    void RegisterLayer( WeatherLayer& weather );
     void RegisterLayer( ObjectsLayer& objects );
+    void UnregisterLayer( TerrainLayer& terrain );
+    void UnregisterLayer( WeatherLayer& weather );
+    void UnregisterLayer( ObjectsLayer& objects );
     void Pick( int x, int y, const geometry::Point2f& terrainCoordinates );
     //@}
 

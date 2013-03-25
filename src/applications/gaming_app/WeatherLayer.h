@@ -68,9 +68,10 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const MeteoModel&    meteoModel_;
-    T_Effects            effects_;
-    weather::Meteo*      currentMeteo_;
+    const MeteoModel& meteoModel_;
+    T_Effects effects_;
+    std::auto_ptr< weather::Meteo > currentMeteo_;
+    gui::TerrainPicker& picker_;
     //@}
 };
 
