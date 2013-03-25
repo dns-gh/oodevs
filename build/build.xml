@@ -659,7 +659,6 @@
 
      <!-- Package Application -->
     <target name="package.app" description="package des applications runtime">
-        <check-depends file="${out.dir}/terraintools_${platform}.zip"/>
         <safe-move file="${out.dir}/SWORD_${platform}_${version.project}.exe">
             <nsis name="sword" script="sword.nsi" nsh="config.nsh" todir="${out.dir}">
                 <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
@@ -804,7 +803,7 @@
         <update name="sword-proto" package="sword-protobuf" todir="${bin.dir}"/>
         <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>
         <update name="terrain"/>
-        <update name="terrain" package="terraintools_${platform}.zip"/>
+        <update name="terrain" package="terraintools_${platform}" todir="${out.dir}/terraintools"/>
         <update name="tools"/>
         <update name="turtle"/>
         <update name="vcredist" package="vcredist"/>

@@ -386,13 +386,12 @@
 !macro OT.AddOptionalComponent ComponentName
 
     Section "${ComponentName}"
-        SetOutPath "$INSTDIR\installation files"
+        SetOutPath "$INSTDIR\${ComponentName}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File "${OUTDIR}\terraintools_${PLATFORM}.zip"
+        File /r "${OUTDIR}\terraintools\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-        nsisunz::Unzip "$INSTDIR\installation files\terraintools_${PLATFORM}.zip" "$INSTDIR\${ComponentName}"
-        SetOutPath "$INSTDIR\Terrain\applications"
-        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_GEN).lnk" "$INSTDIR\Terrain\applications\generation_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+        SetOutPath "$INSTDIR\${ComponentName}\applications"
+        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_GEN).lnk" "$INSTDIR\${ComponentName}\applications\generation_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
 
 !macroend
