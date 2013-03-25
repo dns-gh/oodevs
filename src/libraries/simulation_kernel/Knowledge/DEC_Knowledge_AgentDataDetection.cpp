@@ -309,7 +309,7 @@ void DEC_Knowledge_AgentDataDetection::SendFullState( sword::UnitKnowledgeUpdate
 {
     NET_ASN_Tools::WritePoint( *vPosition_, *msg.mutable_position() );
     NET_ASN_Tools::WriteDirection( vDirection_, *msg.mutable_direction() );
-    msg.set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
+    msg.set_speed( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
     msg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
     msg.set_prisoner( bPrisoner_ );
     msg.set_refugees_managed( bRefugeeManaged_ );
@@ -327,7 +327,7 @@ void DEC_Knowledge_AgentDataDetection::SendChangedState( sword::UnitKnowledgeUpd
     if( bDirectionUpdated_ )
         NET_ASN_Tools::WriteDirection( vDirection_, *msg.mutable_direction() );
     if( bSpeedUpdated_ )
-        msg.set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
+        msg.set_speed( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
     if( bSurrenderedUpdated_ )
         msg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
     if( bPrisonerUpdated_ )

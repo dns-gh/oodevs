@@ -27,11 +27,11 @@ double MIL_Tools::ConvertSpeedMosToSim( double v )
 // Created: JVT 02-08-08
 //-----------------------------------------------------------------------------
 inline
-double MIL_Tools::ConvertSpeedSimToMos( double v )
+unsigned int MIL_Tools::ConvertSpeedSimToMos( double v )
 {
     static double rConvertionFactor = 3600. / MIL_Time_ABC::GetTime().GetTickDuration() / 1000.;
     // conversion des vitesses de pixel/deltaT en Km/H
-    return v * rConvertionFactor;
+    return static_cast< unsigned int >( std::floor( v * rConvertionFactor + 0.5f ) );
 }
 
 // -----------------------------------------------------------------------------

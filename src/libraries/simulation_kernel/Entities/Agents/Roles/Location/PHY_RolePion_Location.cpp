@@ -364,7 +364,7 @@ void PHY_RolePion_Location::SendChangedState( client::UnitAttributes& msg ) cons
     if( bHeightHasChanged_ || bPositionHasChanged_ )
         msg().set_altitude( (unsigned int)( rHeight_ + MIL_Tools::GetAltitude( *pvPosition_ ) ) );
     if( bCurrentSpeedHasChanged_ )
-        msg().set_speed( (unsigned int)MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ ) );
+        msg().set_speed( MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -377,7 +377,7 @@ void PHY_RolePion_Location::SendFullState( client::UnitAttributes& msg ) const
     NET_ASN_Tools::WriteDirection( vDirection_, *msg().mutable_direction() );
     msg().set_height( (unsigned int)rHeight_ );
     msg().set_altitude( (unsigned int)( rHeight_ + MIL_Tools::GetAltitude( *pvPosition_ ) ) );
-    msg().set_speed( (unsigned int)MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ ) );
+    msg().set_speed( MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ ) );
 }
 
 // -----------------------------------------------------------------------------

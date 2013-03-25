@@ -209,7 +209,7 @@ namespace
         }
         virtual void SendFullState( client::UnitAttributes& message )
         {
-            message().set_speed( static_cast< unsigned int >( MIL_Tools::ConvertSpeedSimToMos( *speed_ ) ) );
+            message().set_speed( MIL_Tools::ConvertSpeedSimToMos( *speed_ ) );
         }
     private:
         void Changed()

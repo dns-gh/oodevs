@@ -664,7 +664,7 @@ void MIL_PopulationFlow::SendFullState() const
         asnMsg().clear_path();
     NET_ASN_Tools::WritePath( flowShape_, *asnMsg().mutable_parts() );
     NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
-    asnMsg().set_speed( static_cast< unsigned int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
+    asnMsg().set_speed( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
     asnMsg().set_healthy( GetHealthyHumans() );
     asnMsg().set_wounded( GetWoundedHumans() );
     asnMsg().set_contaminated( GetContaminatedHumans() );
@@ -691,7 +691,7 @@ void MIL_PopulationFlow::SendChangedState() const
     if( bDirectionUpdated_ )
         NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     if( bSpeedUpdated_ )
-        asnMsg().set_speed( static_cast< unsigned int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
+        asnMsg().set_speed( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
     if( HasHumansChanged() )
     {
         asnMsg().set_healthy( GetHealthyHumans() );

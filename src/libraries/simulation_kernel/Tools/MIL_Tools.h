@@ -65,7 +65,7 @@ public:
     static void ConvertCoordSimToMos( const MT_Vector2D& vSimPos, sword::CoordLatLong& asnCoordUTM );
 
     static double ConvertSpeedMosToSim( double ); // km/h         -> pixel/DeltaT
-    static double ConvertSpeedSimToMos( double ); // pixel/DeltaT -> km/h
+    static unsigned int ConvertSpeedSimToMos( double ); // pixel/DeltaT -> km/h
     static double ConvertSecondsToSim( double ); // s            -> DeltaT
     static double ConvertSecondsToSim( double v, const MIL_Time_ABC& time );
     static double ConvertMinutesToSim( double ); // min          -> DeltaT
