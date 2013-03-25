@@ -179,6 +179,47 @@ integration.getCrowds = function()
     return DEC_Connaissances_Populations()
 end
 
+-- ******************************************************************************** 
+-- CROWD AGENT
+-- All methods used to compute force ratio
+-- ******************************************************************************** 
+-- -------------------------------------------------------------------------------- 
+-- Manage interactions with units (compute the local ratio of forces = "domination").
+-- --------------------------------------------------------------------------------
+integration.manageInteractionsWithUnits = function( nonLethalWeaponsAuthorizedFactor, 
+                                                    lethalWeaponsAuthorizedFactor )
+    myself.domination = myself.domination or {}
+    if not myself.domination.default then
+        myself.domination.default = 1
+    end
+    
+    -- Compute domination regarding 
+    integration.FouleEstSecurisee( nonLethalWeaponsAuthorizedFactor, lethalWeaponsAuthorizedFactor )
+    
+    -- Compute average domination with all interacting units.
+    local number = 0
+    local finalDomination = 0
+    for i, domination in pairs( myself.domination ) do
+        finalDomination = finalDomination + domination
+        number = number + 1
+    end
+    finalDomination = finalDomination / number
+    integration.setDomination( finalDomination )
+
+    -- report
+    if finalDomination == 0 then
+        if not myself.reportUnderControl then
+            meKnowledge:RC( eRC_PopulationTemporairementControlee )
+            myself.reportUnderControl = true
+        end
+    else
+        myself.reportUnderControl = nil
+    end
+end
+
+-- -------------------------------------------------------------------------------- 
+-- ROE effects on crowd domination
+-- --------------------------------------------------------------------------------
 function S_EffetSecurisationSurDomination( roe, nonLethalWeaponsAuthorizedFactor, lethalWeaponsAuthorizedFactor )
     local nbrPersonne = DEC_GetNombrePersonne()
     local valeurNominale = -10
@@ -196,29 +237,132 @@ function S_EffetSecurisationSurDomination( roe, nonLethalWeaponsAuthorizedFactor
     elseif attitude == eAttitudePopulation_Agressive then
         valeurNominale = valeurNominale / 100
     end
-
+    
     if roe == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
         valeurNominale = valeurNominale * nonLethalWeaponsAuthorizedFactor
     elseif roe == eEtatROEPopulation_ArmesLetalesAutorisees then
         valeurNominale = valeurNominale * lethalWeaponsAuthorizedFactor
     end
-
+    
     return math.max( -0.1, valeurNominale )
 end
 
+-- -------------------------------------------------------------------------------- 
+-- Domination management for crowd agent
+-- --------------------------------------------------------------------------------
 integration.FouleEstSecurisee = function( nonLethalWeaponsAuthorizedFactor, lethalWeaponsAuthorizedFactor )
     local pions = DEC_Connaissances_PionsSecurisant()
+    
+    -- Reports
+    if next( pions ) then
+        if not myself.reportControllingUnits then
+            meKnowledge:RC( eRC_UnitsTryingToControl )
+            myself.reportControllingUnits = true
+        end
+    else 
+        myself.reportControllingUnits = nil 
+    end
+
+    -- Domination computation
     local calculDomination = 0
     for _,pion in pairs( pions ) do
-        calculDomination = calculDomination + S_EffetSecurisationSurDomination( DEC_ConnaissanceAgent_RoePopulation( pion ), nonLethalWeaponsAuthorizedFactor, lethalWeaponsAuthorizedFactor )
+        calculDomination = calculDomination 
+                           + S_EffetSecurisationSurDomination( DEC_ConnaissanceAgent_RoePopulation( pion ), 
+                                                               nonLethalWeaponsAuthorizedFactor, 
+                                                               lethalWeaponsAuthorizedFactor )
     end
-    if next( pions ) then
+    if next( pions ) then -- units try to control the crowd
         myself.domination.default = myself.domination.default + calculDomination
-    else
+    else -- no unit control the crowd, domination increase to reach the default value
         myself.domination.default = myself.domination.default + g_NaturalEvolutionDomination
     end
     myself.domination.default = math.min( 1, myself.domination.default )
     myself.domination.default = math.max( myself.domination.default, 0 )
+end
+
+
+-- ******************************************************************************** 
+-- AGENT --> control a crowd
+-- All methods used to control crowds.
+-- ******************************************************************************** 
+-- -------------------------------------------------------------------------------- 
+-- Controling crowd
+-- --------------------------------------------------------------------------------
+integration.startControlCrowd = function( crowd, periodicity, decreaseRate )
+    myself.prevDomination   = integration.getDomination( crowd )
+    myself.rTempsDebut      = getSimulationTime()
+    myself.delayExceeded    = false
+    myself.bDerniereChance  = false
+    meKnowledge:RC( eRC_MiseEnPlaceControleDeFoule )
+end
+integration.updateControlCrowd = function( crowd, periodicity, decreaseRate )
+    -- periodicity in SECONDE
+    -- decreaseRate % per periodicity.
+    -- Check if the domination has decreased more than the given  on the period
+    if myself.delayExceeded then
+        local domination = integration.getDomination( crowd )
+        if domination < ( myself.prevDomination - ( decreaseRate / 100 ) ) or domination == 0 then
+            myself.prevDomination = domination
+            myself.delayExceeded = false
+            myself.rTempsDebut = getSimulationTime()
+        elseif not myself.bDerniereChance then
+            myself.bDerniereChance = true
+            myself.prevDomination = domination
+            myself.delayExceeded = false
+            myself.rTempsDebut = getSimulationTime()
+            meKnowledge:RC( eRC_SituationDifficilementTenableFaceAPopulation )
+        else
+            meKnowledge:RC( eRC_CannotControlTheCrowd )
+            return false -- FAILED
+        end
+    end
+    -- Check periodicity to monitor how the domination is evolving.
+    if periodicity <= getSimulationTime() - myself.rTempsDebut then
+        myself.delayExceeded = true -- SUCCEED
+    end
+
+    integration.controlItCrowd( crowd ) -- add the agent into the list of controlling agents 
+
+    if integration.getDomination( crowd ) == 0 then -- crowd is under control
+        if not myself.hasReport then
+            myself.hasReport = true
+            meKnowledge:RC( eRC_CrowdIsUnderControl )
+        end
+        integration.getCrowdInformations( crowd )
+        return true -- returns "true" meaning the action is running.
+    end
+    myself.hasReport = nil
+    return nil
+end
+
+-- -------------------------------------------------------------------------------- 
+-- Safeguarding on crowd.
+-- --------------------------------------------------------------------------------
+integration.startInterveneOnCrowd = function( crowd )
+    myself.respond = true
+    myself.rTempsDebut = getSimulationTime()
+end
+
+integration.updateInterveneOnCrowd = function( crowd, periodicity )
+    if myself.respond then
+        
+        meKnowledge:RC( eRC_RiposteContrePopulation, crowd.source )
+        integration.startShootingOnCrowd( crowd )
+        myself.rTempsDebut = getSimulationTime()
+        myself.respond = false
+    else
+        integration.stopShootingOnCrowd( crowd )
+    end
+    if ( periodicity * 60 ) <= ( getSimulationTime() - myself.rTempsDebut ) then
+        myself.respond = true
+    end
+    return true
+end
+
+integration.stopInterveneOnCrowd = function( crowd )
+    myself.respond = nil
+    myself.rTempsDebut = nil
+    integration.stopShootingOnCrowd( crowd )
 end
 
 -- crowd asks its domination
@@ -228,16 +372,15 @@ end
 
 -- unit asks crowd's domination
 integration.getDomination = function( entity )
-    if masalife.brain.core.class.isOfType( entity, integration.ontology.types.population) then
+    if masalife.brain.core.class.isOfType( entity, integration.ontology.types.population ) then
         return DEC_KnowledgePopulation_Domination( entity.source ).first
     end
     return nil
 end
 
-integration.setDomination = function( domination )
-    if masalife.brain.core.class.isOfType( meKnowledge, sword.military.crowd.world.classes.CrowdBody ) then 
-        DEC_Population_ChangeEtatDomination( domination )
-    end
+-- for Crowd agent:
+integration.setDomination = function( domination ) 
+    DEC_Population_ChangeEtatDomination( domination )
 end
 
 integration.getDangerosityLevel = function( crowd )
