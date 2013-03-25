@@ -403,11 +403,9 @@
 
     Section "MasaLife Brain IDE" s_brain
     
-        SetOutPath "$INSTDIR\installation files"
+        SetOutPath "$INSTDIR\MasaLife Brain IDE"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File "${OUTDIR}\net.masagroup.life.brain.ide-win32.win32.x86.zip"
-        CreateDirectory "$INSTDIR\MasaLife Brain IDE"
-        nsisunz::Unzip "$INSTDIR\installation files\net.masagroup.life.brain.ide-win32.win32.x86.zip" "$INSTDIR\MasaLife Brain IDE"
+        File /r "${OUTDIR}\masalife\*"
         CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MasaLife Brain IDE.lnk" "$INSTDIR\MasaLife Brain IDE\masalife-ide.exe"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
         WriteRegExpandStr "HKLM" "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "BRAIN_CORE" "$INSTDATADIR\data\models\ada\decisional\directia5\models\directia.core"

@@ -784,7 +784,7 @@
         <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
         <update name="iconv"/>
         <update name="log4cxx"/>
-        <update name="masalife/ide" package="net.masagroup.life.brain.ide-win32.win32.x86.zip" todir="${out.dir}"/>
+        <update name="masalife/ide" package="net.masagroup.life.brain.ide-win32.win32.x86" todir="${out.dir}/masalife"/>
         <update name="masalife/brain"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="exercises-dev" todir="${data.dir}/exercises"/>
