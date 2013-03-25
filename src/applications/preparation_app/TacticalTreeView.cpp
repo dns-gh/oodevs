@@ -119,7 +119,7 @@ namespace
 // -----------------------------------------------------------------------------
 bool TacticalTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
 {
-    if( !superior.Retrieve< TacticalHierarchies >() )
+    if( !superior.Retrieve< kernel::TacticalHierarchies >() )
         return false;
     if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
         return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0;
