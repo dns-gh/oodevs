@@ -8,6 +8,9 @@ integration.dischargeAgent = function( unit, camp )
             DEC_Agent_DebarquerRefugiesDansCamp( meKnowledge.source, unit.source, camp.source )
             return true
         end
+    else
+        DEC_Transport_DebarquerPionSansDelais( unit.source )
+        return true
     end
     return false
 end
