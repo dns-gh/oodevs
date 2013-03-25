@@ -23,9 +23,9 @@
 #include <sqlite/sqlite3.h>
 #include <spatialite.h>
 
-extern std::string temp_directory;
-
 #include <tools/Path.h>
+
+extern tools::Path temp_directory;
 
 tools::Path BOOST_RESOLVE( const tools::Path& filename );
 

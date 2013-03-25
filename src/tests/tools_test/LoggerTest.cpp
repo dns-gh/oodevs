@@ -56,7 +56,7 @@ void CheckLines( const char** expected, const tools::Path& path )
 BOOST_AUTO_TEST_CASE( filelogger_basics )
 {
     tools::TemporaryDirectory temp( "filelogger-", temp_directory );
-    tools::Path loggerFile = tools::Path::FromUnicode( temp.path().wstring() ) / "log.txt";
+    tools::Path loggerFile = temp.Path() / "log.txt";
     {
         MT_FileLogger logger( loggerFile, 1, 1000, MT_Logger_ABC::eLogLevel_All, false, MT_Logger_ABC::eSimulation, false );
         logger.Log( MT_Logger_ABC::eLogLevel_Info, "message", "context", 42 );

@@ -15,11 +15,11 @@
 #include <cstdlib>
 
 unsigned short PORT = 30000;
-std::string temp_directory;
+tools::Path temp_directory;
 
 namespace
 {
-    std::string data_directory;
+    tools::Path data_directory;
 
     unsigned short GetMasaPort( unsigned short defval )
     {
@@ -37,9 +37,9 @@ namespace
             const std::string argument = argv[argc];
             const std::string::size_type n = argument.find( '=' );
             if( n != std::string::npos && argument.substr( 0, n ) == "--data_directory" )
-                data_directory = argument.substr( n+1 );
+                data_directory = argument.substr( n+1 ).c_str();
             if( n != std::string::npos && argument.substr( 0, n ) == "--temp_directory" )
-                temp_directory = argument.substr( n+1 );
+                temp_directory = argument.substr( n+1 ).c_str();
             if( n != std::string::npos && argument.substr( 0, n ) == "--port_number" )
                 PORT = boost::lexical_cast< unsigned short >( argument.substr( n+1 ) );
         }
@@ -49,7 +49,7 @@ namespace
 ::boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] )
 {
     set_data_directory( argc, argv );
-    if( temp_directory.empty() )
+    if( temp_directory.IsEmpty() )
         throw MASA_EXCEPTION( "Test --temp_directory option was not supplied" );
     BOOST_MESSAGE( "launcher_test test port: " << PORT );
     return 0;
@@ -57,9 +57,9 @@ namespace
 
 tools::Path BOOST_RESOLVE( const tools::Path& filename )
 {
-    if( data_directory.empty() )
+    if( data_directory.IsEmpty() )
         return filename;
-    return ( tools::Path::FromUTF8( data_directory ) / filename ).Normalize();
+    return ( data_directory / filename ).Normalize();
 }
 
 struct ProtobufConfig {

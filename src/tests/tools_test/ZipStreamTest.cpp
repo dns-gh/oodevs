@@ -18,11 +18,10 @@ BOOST_AUTO_TEST_CASE( zipstream_extract_archive )
 {
     tools::TemporaryDirectory dir( "zipstream-", temp_directory );
     auto path = BOOST_RESOLVE( "emptyfile.zip" );
-    auto dest = tools::Path::FromUnicode( dir.path().wstring() );
-    tools::zipextractor::ExtractArchive( path, dest );
+    tools::zipextractor::ExtractArchive( path, dir.Path() );
 
-    auto nonempty = dest / tools::Path::FromUTF8( "zipdir/nonempty" );
+    auto nonempty = dir.Path() / tools::Path::FromUTF8( "zipdir/nonempty" );
     BOOST_CHECK( nonempty.Exists() );
-    auto empty = dest / tools::Path::FromUTF8( "zipdir/empty" );
+    auto empty = dir.Path() / tools::Path::FromUTF8( "zipdir/empty" );
     BOOST_CHECK( empty.Exists() );
 }

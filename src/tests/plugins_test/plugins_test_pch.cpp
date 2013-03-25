@@ -15,8 +15,8 @@
 
 namespace
 {
-    std::string data_directory;
-    std::string temp_directory;
+    tools::Path data_directory;
+    tools::Path temp_directory;
 
     std::string get_option( int argc, char* argv[], const char* name )
     {
@@ -35,7 +35,7 @@ namespace
 {
     std::string value = get_option( argc, argv, "--data_directory" );
     if( !value.empty() )
-        data_directory = value;
+        data_directory = value.c_str();
     
     value = get_option( argc, argv, "--temp_directory" );
     if( value.empty() )
@@ -43,19 +43,19 @@ namespace
         const char message[] = "test --temp_directory option was not supplied";
         throw MASA_EXCEPTION( message );
     }
-    temp_directory = value;
+    temp_directory = value.c_str();
 
     return 0;
 }
 
 tools::Path BOOST_RESOLVE( const tools::Path& filename )
 {
-    if( data_directory.empty() )
+    if( data_directory.IsEmpty() )
         return filename;
-    return ( tools::Path( data_directory.c_str() ) / filename ).Normalize();
+    return ( data_directory / filename ).Normalize();
 }
 
-std::string GetTestTempDirectory()
+const tools::Path& GetTestTempDirectory()
 {
     return temp_directory;
 }

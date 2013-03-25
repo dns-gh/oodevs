@@ -140,8 +140,7 @@ void CheckRegexps( const std::vector< LogFile >& logFiles, const tools::Path::T_
 BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
 {
     tools::TemporaryDirectory tempDir( "testlogisticplugin-", ::GetTestTempDirectory() );
-    tools::Path tmpDir = tools::Path::FromUnicode( tempDir.path().wstring() );
-    boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tmpDir );
+    boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tempDir.Path() );
 
     {
         bg::date day1( bg::from_string( "2001/05/17" ) );
@@ -458,7 +457,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 0 );
     }
 
-    tools::Path::T_Paths files = tmpDir.ListElements( tools::Path::T_Functor(), true, false, true );
+    tools::Path::T_Paths files = tempDir.Path().ListElements( tools::Path::T_Functor(), true, false, true );
     std::vector< LogFile > expecteds;
     {
         T_Lines expectedLines;
@@ -557,18 +556,17 @@ void PushFuneralMessage( LogisticPlugin* plugin )
 BOOST_AUTO_TEST_CASE( TestLogisticPluginRestart )
 {
     tools::TemporaryDirectory tempDir( "testlogisticplugin-", ::GetTestTempDirectory() );
-    tools::Path tmpDir = tools::Path::FromUnicode( tempDir.path().wstring() );
-    boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tmpDir );
+    boost::shared_ptr<LogisticPlugin> plugin = CreateLogisticPlugin( tempDir.Path() );
 
     plugin->SetMaxLinesInFile( 1 );
     for( int i = 0; i < 2; ++i )
         PushFuneralMessage( plugin.get() );
 
     // Recreate it on multiple files
-    plugin = CreateLogisticPlugin( tmpDir );
+    plugin = CreateLogisticPlugin( tempDir.Path() );
     PushFuneralMessage( plugin.get() );
 
-    tools::Path::T_Paths files = tmpDir.ListElements( tools::Path::T_Functor(), true, false, true );
+    tools::Path::T_Paths files = tempDir.Path().ListElements( tools::Path::T_Functor(), true, false, true );
     std::vector< LogFile > expected;
     {
         T_Lines expectedLines;

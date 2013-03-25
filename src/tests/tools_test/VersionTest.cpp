@@ -11,7 +11,6 @@
 #include "tools/Version.h"
 #include <tools/Path.h>
 #include "tools/zipextractor.h"
-#include <tools/TemporaryDirectory.h>
 
 BOOST_AUTO_TEST_CASE( version_comparison )
 {

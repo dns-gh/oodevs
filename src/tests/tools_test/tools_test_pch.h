@@ -32,7 +32,7 @@
 tools::Path BOOST_RESOLVE( const tools::Path& filename );
 
 extern unsigned short PORT;
-extern std::string temp_directory;
+extern tools::Path temp_directory;
 
 void BOOST_CHECK_XML_EQUAL( const std::string& expected, const std::string& actual );
 

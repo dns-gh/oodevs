@@ -20,14 +20,6 @@ namespace xml
     class xostream;
 }
 
-namespace boost
-{
-    namespace filesystem
-    {
-        class path;
-    }
-}
-
 template< typename T > class ADN_Type_Vector_ABC;
 
 enum E_UnitPosture;

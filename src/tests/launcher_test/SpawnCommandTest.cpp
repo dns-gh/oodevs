@@ -10,11 +10,8 @@
 #include "launcher_test_pch.h"
 #include "frontend/SpawnCommand.h"
 #include "tools/GeneralConfig.h"
+#include <tools/StdFileWrapper.h>
 #include <tools/TemporaryDirectory.h>
-#include <boost/filesystem.hpp>
-#include <boost/algorithm/string.hpp>
-
-namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -40,27 +37,25 @@ BOOST_AUTO_TEST_CASE( TestSpawnCommand )
     tools::TemporaryDirectory tempDir( "launcher_test-", temp_directory );
 
     // Try to run some python command from the packaged python
-    bfs::path rootDir = BOOST_RESOLVE( "../../.." ).ToBoost();
-    bfs::path python = rootDir / "bin/python/python.exe";
-    BOOST_REQUIRE( bfs::exists( python ));
+    tools::Path rootDir = BOOST_RESOLVE( "../../.." );
+    tools::Path python = rootDir / "bin/python/python.exe";
+    BOOST_REQUIRE( python.Exists() );
 
     tools::GeneralConfig config( "c:/foobar" );
 
-    bfs::path output = tempDir.path() / "output.txt";
-    std::string arg = output.string();
-    boost::replace_all(arg, "\\", "/");
-    tools::Path exe = tools::Path::FromUTF8( python.string() );
+    tools::Path output = tempDir.Path() / "output.txt";
+
     // Fill output.txt with python command line arguments after -c
-    DummyCommand cmd( config, exe );
+    DummyCommand cmd( config, python );
     cmd.AddArgument( "-c" );
-    cmd.AddArgument( "\"import sys; file('" + arg + "', 'wb').write(" + "' '.join(sys.argv[1:]))\"" );
+    cmd.AddArgument( "\"import sys; file('" + output.Normalize().ToUTF8() + "', 'wb').write(" + "' '.join(sys.argv[1:]))\"" );
     cmd.AddArgument( "arg1" );
     cmd.AddArgument( "arg2" );
 
     cmd.Start();
     bool stopped = !cmd.Wait( boost::posix_time::minutes(1) );
     BOOST_CHECK( stopped );
-    std::fstream f( output.string(), std::ios::in );
+    tools::Fstream f( output, std::ios::in );
     std::string line;
     BOOST_CHECK( std::getline( f, line ));
     BOOST_CHECK_EQUAL( "arg1 arg2", line );

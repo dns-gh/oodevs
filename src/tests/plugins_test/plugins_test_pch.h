@@ -24,7 +24,7 @@
 #include <tools/Path.h>
 
 tools::Path BOOST_RESOLVE( const tools::Path& filename );
-std::string GetTestTempDirectory();
+const tools::Path& GetTestTempDirectory();
 
 #undef max
 

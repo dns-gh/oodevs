@@ -30,7 +30,7 @@
 tools::Path BOOST_RESOLVE( const tools::Path& filename );
 
 extern unsigned short PORT;
-extern std::string temp_directory;
+extern tools::Path temp_directory;
 
 #include <tools/Exception.h>
 

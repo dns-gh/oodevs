@@ -24,7 +24,7 @@ namespace
     {
         Fixture()
             : dir( "geostoretest-", temp_directory )
-            , db ( tools::Path::FromUnicode( dir.path().wstring() ) / "geostore.sqlite", tools::Path::FromUnicode( dir.path().wstring() ), proj )
+            , db ( dir.Path() / "geostore.sqlite", dir.Path(), proj )
         {}
         void AddLayer( const std::string& name, GeometryType geomType, float top, float left, float bottom, float right )
         {
