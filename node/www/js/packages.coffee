@@ -41,7 +41,7 @@ class PackageView extends Backbone.View
         next = []
         for it in list
             next.push $(it).parent().attr "data-rel"
-        ajax "/api/delete_install", id: uuid, items: next.join ',',
+        ajax "/api/delete_install", id: uuid, items: next.join(','),
             (item) =>
                 @toggle_load list
                 @model.set item
