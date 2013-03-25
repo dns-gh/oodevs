@@ -148,7 +148,7 @@ namespace
         {
             const bool dump = !dump_.IsEmpty() && ( filter_.empty() || filter_.count( id_ ) );
             if( dump )
-                return root_.ComputePath( from, to, rule, handler, GetFilename().ToBoost() );
+                return root_.ComputePath( from, to, rule, handler, GetFilename() );
             return root_.ComputePath( from, to, rule, handler );
         }
     private:
