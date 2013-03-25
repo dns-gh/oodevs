@@ -87,7 +87,7 @@ void CreateSession::SetDefaultValues()
         setter_->SetValue( "session/config/simulation/debug/@networklogger"    , false );
         setter_->SetValue( "session/config/simulation/debug/@networkloggerport", 20000 );
         setter_->SetValue( "session/config/simulation/dispatcher/@embedded"    , true );
-        setter_->SetValue( "session/config/simulation/network/@port"           , SimulationPort( 1 ) );
+        setter_->SetValue( "session/config/simulation/network/@port"           , "localhost:" +  boost::lexical_cast< std::string >( SimulationPort( 1 ) ) );
         setter_->SetValue( "session/config/simulation/orbat/@checkcomposition" , false );
         setter_->SetValue( "session/config/simulation/profiling/@enabled"      , false );
         setter_->SetValue( "session/config/simulation/time/@step"              , 10 );
@@ -102,7 +102,7 @@ void CreateSession::SetDefaultValues()
     {
         setter_->SetValue( "session/config/dispatcher/network/@client", "localhost:" +  // $$$$ AGE 2007-10-09:
                             boost::lexical_cast< std::string >( SimulationPort( 1 ) ) );
-        setter_->SetValue( "session/config/dispatcher/network/@server", DispatcherPort( 1 ) );
+        setter_->SetValue( "session/config/dispatcher/network/@server", "0.0.0.0:" +  boost::lexical_cast< std::string >( DispatcherPort( 1 ) ) );
         setter_->SetValue( "session/config/dispatcher/plugins/recorder/@fragmentfreq", 200 );
         setter_->SetValue( "session/config/dispatcher/plugins/recorder/@keyframesfreq", 100 );
     }
