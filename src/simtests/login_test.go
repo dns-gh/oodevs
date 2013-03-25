@@ -79,7 +79,9 @@ func waitForMessages(client *swapi.Client, timeout time.Duration) bool {
 				return false
 			}
 		}
-		if msg != nil && msg.DispatcherToClient != nil && msg.DispatcherToClient.GetMessage() != nil && msg.DispatcherToClient.GetMessage().ServicesDescription != nil {
+		if msg != nil && msg.DispatcherToClient != nil &&
+			msg.DispatcherToClient.GetMessage() != nil &&
+			msg.DispatcherToClient.GetMessage().ServicesDescription != nil {
 			return false
 		}
 
