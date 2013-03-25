@@ -14,7 +14,7 @@
 
     <property name="version.project" value="trunk"/>
     <property name="version.major" value="5.2.0"/>
-    <property name="svn.revision" value="0"/>    
+    <property name="svn.revision" value="0"/>
     <property name="version.version" value="${version.major}.${svn.revision}"/>
 
     <!-- local extensions -->
@@ -184,7 +184,7 @@
         <attribute name="mission-sheet-path" default="Mission sheets"/>
         <sequential>
             <echo>Testing models: @{input}</echo>
-            <!-- HTML files are not versioned, there is no easy way to test for 
+            <!-- HTML files are not versioned, there is no easy way to test for
                  non-regressions, this is someone else job.
             -->
             <local name="excluded"/>
@@ -664,13 +664,27 @@
             <nsis name="sword" script="sword.nsi" nsh="config.nsh" todir="${out.dir}">
                 <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
                 <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
-                <arg value="/DOUTFILE=@{file}"/>
+                <arg value="/DOUTFILE=${out.dir}/setup.exe"/>
                 <arg value="/X!include sword.nsh"/>
             </nsis>
-            <check-depends file="@{file}">
+            <check-depends file="${out.dir}/setup.exe">
                 <arg value="*.exe"/>
                 <arg value="*_module.dll"/>
             </check-depends>
+            <exec taskname="7z" executable="${bin.dir}/7z/7z" dir="${out.dir}">
+                <arg value="a"/>
+                <arg value="setup.7z"/>
+                <arg value="setup.exe"/>
+            </exec>
+            <delete file="${out.dir}/setup.exe"/>
+            <concat destfile="@{file}" binary="true">
+                <filelist>
+                    <file name="${bin.dir}/7z/7zS.sfx"/>
+                    <file name="config.txt"/>
+                    <file name="${out.dir}/setup.7z"/>
+                </filelist>
+            </concat>
+            <delete file="${out.dir}/setup.7z"/>
         </safe-move>
     </target>
 

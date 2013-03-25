@@ -1,0 +1,6 @@
+;!@Install@!UTF-8!
+Title="MASA Sword"
+Progress="yes"
+ExecuteFile="setup.exe"
+ExecuteParameters="/frompackage"
+;!@InstallEnd@!
