@@ -19,14 +19,13 @@ import (
 )
 
 func CheckSimFailed(c *C, err error, sim *simu.SimProcess) {
-	/* Probably SWORD-1549
 	c.Assert(err, NotNil) // simulation should not have started
 	c.Assert(err, ErrorMatches, "(?s).*failed to start simulation.*")
 
 	if sim.Success() {
-		t.Fatal("simulation should have exited on error")
+		c.Fatal("simulation should have exited on error")
 	}
-	*/
+
 }
 
 func ReadTextFile(c *C, path string) string {
@@ -92,11 +91,10 @@ func (s *TestSuite) TestDispatcherAddressCollision(c *C) {
 	sim2, err := startSim(1)
 	defer sim2.Stop()
 	sim2.Wait(60 * time.Second)
-	// This should be fixed by SWORD-1549
-	//
-	//if sim2.Success() {
-	//	    t.Fatal("simulation with colliding dispatcher should have failed")
-	//    }
+
+	if sim2.Success() {
+		c.Fatal("simulation with colliding dispatcher should have failed")
+	}
 	logData := ReadTextFile(c, sim2.Opts.GetDispatcherLogPath())
 	c.Assert(logData, Matches, "(?s).*Une seule utilisation de chaque.*")
 }
