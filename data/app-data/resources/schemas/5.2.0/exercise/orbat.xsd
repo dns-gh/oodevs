@@ -34,6 +34,12 @@
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
+									<xs:attribute name="color" type="T_ColorRGB" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
+											<xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
@@ -430,6 +436,12 @@
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Defines the type of the object. This is a reference to an existing object type from "Objects.xml".</xs:documentation>
 							<xs:documentation xml:lang="fr">Définit le type d'objet tactique. Renvoie vers "Objects.xml".</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="color" type="T_ColorRGB" use="optional">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Overrides party color.</xs:documentation>
+							<xs:documentation xml:lang="fr">Surdéfinit la couleur du camp</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:extension>
