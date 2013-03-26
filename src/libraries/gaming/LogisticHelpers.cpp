@@ -154,7 +154,7 @@ namespace logistic_helpers
     // Name: GetLogisticPosition
     // Created: MMC 2013-01-29
     // -----------------------------------------------------------------------------
-    geometry::Point2f GetLogisticPosition( const Entity_ABC& entity, bool onlySupply )
+    geometry::Point2f GetLogisticPosition( const Entity_ABC& entity, bool onlySupply /*= false*/ )
     {
         const kernel::Automat_ABC* pAutomat = dynamic_cast< const Automat_ABC* >( &entity );
         if( pAutomat && pAutomat->GetLogisticLevel() == LogisticLevel::logistic_base_ )
@@ -171,6 +171,8 @@ namespace logistic_helpers
             if( count > 0 )
                 return geometry::Point2f( aggregatedPos.X() / count, aggregatedPos.Y() / count );
         }
-        return entity.Get< kernel::Positions >().GetPosition();
+        if( const kernel::Positions* pPositions = entity.Retrieve< kernel::Positions >() )
+            return pPositions->GetPosition();
+        return geometry::Point2f();
     }
 }

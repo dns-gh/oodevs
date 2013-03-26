@@ -200,7 +200,9 @@ void LogisticLinks::Draw( const geometry::Point2f& where, const gui::Viewport_AB
     {
         BOOST_FOREACH( boost::shared_ptr< LogisticLink > link, superiorLinks_ )
         {
-            link->Draw( logistic_helpers::GetLogisticPosition( entity_ ), viewport, tools );
+            geometry::Point2f pos = logistic_helpers::GetLogisticPosition( entity_ );
+            if( pos != geometry::Point2f() )
+                link->Draw( pos, viewport, tools );
             glColor4f( COLOR_LIGHT_YELLOW );
         }
     }

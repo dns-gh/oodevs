@@ -53,5 +53,7 @@ void LogisticLink::Update( const sword::SeqOfDotationQuota& message, const tools
 // -----------------------------------------------------------------------------
 void LogisticLink::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& /*viewport*/, gui::GlTools_ABC& tools ) const
 {
-    tools.DrawCurvedArrow( where, logistic_helpers::GetLogisticPosition( superior_ ), 0.3f );
+    geometry::Point2f pos = logistic_helpers::GetLogisticPosition( superior_ );
+    if( pos != geometry::Point2f() )
+        tools.DrawCurvedArrow( where, pos, 0.3f );
 }

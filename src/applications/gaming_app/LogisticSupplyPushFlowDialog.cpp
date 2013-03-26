@@ -455,14 +455,23 @@ void LogisticSupplyPushFlowDialog::UpdateRouteDrawpoints()
     T_Route route;
     ComputeRoute( route );
 
-    geometry::Point2f startPos = logistic_helpers::GetLogisticPosition( *selected_, true );
-    routeDrawpoints_.push_back( startPos );
+    geometry::Point2f startPos;
+    if( selected_ )
+        startPos = logistic_helpers::GetLogisticPosition( *selected_, true );
+    if( startPos != geometry::Point2f() )
+        routeDrawpoints_.push_back( startPos );
 
     for( std::size_t i = 0; i < route.size(); ++i )
         if( route[i].isPoint() )
             routeDrawpoints_.push_back( route[i].point_ );
         else
-            routeDrawpoints_.push_back( logistic_helpers::GetLogisticPosition( *route[i].pRecipient_, true ) );
+        {
+            geometry::Point2f pos;
+            if( route[i].pRecipient_ )
+                pos = logistic_helpers::GetLogisticPosition( *route[i].pRecipient_, true );
+            if( pos != geometry::Point2f() )
+                routeDrawpoints_.push_back( pos );
+        }
 
     routeDrawpoints_.push_back( startPos );
 }
