@@ -20,6 +20,7 @@ namespace sword
 
 class MIL_Army_ABC;
 class MIL_ObjectType_ABC;
+class MIL_Color;
 
 // =============================================================================
 /** @class  Object
@@ -82,6 +83,7 @@ private:
     //@{
     std::string name_;
     unsigned int externalIdentifier_;
+    std::auto_ptr< MIL_Color > pColor_;
     //@}
 };
 

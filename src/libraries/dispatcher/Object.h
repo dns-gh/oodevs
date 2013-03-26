@@ -14,6 +14,7 @@
 #include "Object_ABC.h"
 #include "ObjectAttributeContainer.h"
 #include "tools/Resolver.h"
+#include "protocol/SimulationSenders.h"
 
 namespace sword
 {
@@ -82,6 +83,7 @@ private:
     ObjectAttributeContainer attributes_;
     T_Optionals optionals_;
     std::map< std::string, std::string >       extensions_;
+    sword::RgbColor                            color_;
 };
 
 }

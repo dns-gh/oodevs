@@ -1941,6 +1941,8 @@ message ObjectCreation {
     optional int32            external_identifier = 7;
     //! The extension fields
     optional Extension        extension           = 8;
+    //! The object color @see RgbColor
+    optional RgbColor      color                  = 9;
 }
 
 /** @struct ObjectDestruction

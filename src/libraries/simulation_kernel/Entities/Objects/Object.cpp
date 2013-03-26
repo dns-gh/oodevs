@@ -17,6 +17,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Tools/MIL_DictionaryExtensions.h"
+#include "Tools/MIL_Color.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -30,6 +31,7 @@ Object::Object( xml::xistream& xis, const MIL_ObjectType_ABC& type, MIL_Army_ABC
     : MIL_Object( army, type, xis.attribute< unsigned long >( "id" ) )
     , name_( xis.attribute< std::string >( "name", "" ) )
     , externalIdentifier_( 0 )
+    , pColor_( new MIL_Color( xis ) )
 {
     MIL_Object_ABC::Register();
     if( pLocation )
@@ -49,6 +51,8 @@ Object::Object( const MIL_ObjectType_ABC& type, MIL_Army_ABC* army, const TER_Lo
     MIL_Object_ABC::Register();
     if( pLocation )
         Initialize( *pLocation );
+    if( army )
+        pColor_.reset( new MIL_Color( army->GetColor() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +62,7 @@ Object::Object( const MIL_ObjectType_ABC& type, MIL_Army_ABC* army, const TER_Lo
 Object::Object()
     : MIL_Object()
     , externalIdentifier_( 0 )
+    , pColor_( 0 )
 {
     // NOTHING
 }
@@ -86,9 +91,12 @@ const std::string& Object::GetName() const
 // -----------------------------------------------------------------------------
 void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    MIL_Color* pColor;
     file >> boost::serialization::base_object< MIL_Object >( *this );
     file >> name_
-         >> externalIdentifier_;
+         >> externalIdentifier_
+         >> pColor;
+    pColor_.reset( pColor );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,9 +105,11 @@ void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
+    const MIL_Color* const pColor = pColor_.get();
     file << boost::serialization::base_object< MIL_Object >( *this );
     file << name_
-         << externalIdentifier_;
+         << externalIdentifier_
+         << pColor;
 }
 
 // -----------------------------------------------------------------------------
@@ -115,6 +125,7 @@ void Object::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "id"  , GetID() )
             << xml::attribute( "name", name_ )
             << xml::attribute( "type", type );
+    pColor_->WriteODB( xos );
     GetLocalisation().Write( xos );
     MIL_Object::WriteODB( xos );
     xos << xml::end; // object
@@ -179,6 +190,7 @@ void Object::SendCreation() const
         asn().set_external_identifier( externalIdentifier_ );
     if( GetExtensions() )
         GetExtensions()->SendFullState( asn );
+    pColor_->SendFullState( asn );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

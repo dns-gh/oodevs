@@ -32,6 +32,8 @@ Object::Object( Model_ABC& model, const sword::ObjectCreation& msg, const tools:
     side_.Register( *this );
     AddExtension( *this );
     optionals_.localisationPresent = 0;
+    if( msg.has_color() )
+        color_ = msg.color();
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
@@ -72,6 +74,8 @@ void Object::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().set_name( GetName().toStdString() );
     asn().mutable_party()->set_id( side_.GetId() );
     localisation_.Send( *asn().mutable_location() );
+    if( color_.IsInitialized() )
+        *asn().mutable_color() = color_;
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation ne doit PAS envoyer les attributs
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {
