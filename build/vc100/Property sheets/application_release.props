@@ -25,6 +25,7 @@
     <libTerrain>libterrain-$(CurrentPlatform)-mt.lib</libTerrain>
     <libAnalysis>libanalysis-$(CurrentPlatform)-mt.lib</libAnalysis>
     <libSvgl>svgl.lib</libSvgl>
+	<libLicenseGui>license_gui.lib</libLicenseGui>
     <SrcDir>..\..\src\applications\$(ProjectName)</SrcDir>
     <Suffix />
     <libExtractor>libextractor-$(CurrentPlatform)-mt.lib</libExtractor>
@@ -136,6 +137,9 @@
     </BuildMacro>
     <BuildMacro Include="libSvgl">
       <Value>$(libSvgl)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libLicenseGui">
+      <Value>$(libLicenseGui)</Value>
     </BuildMacro>
     <BuildMacro Include="SrcDir">
       <Value>$(SrcDir)</Value>

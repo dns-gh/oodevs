@@ -54,6 +54,7 @@
     <Import Project="Property sheets\include_out_directory.props" />
     <Import Project="Property sheets\link_qt3.props" />
     <Import Project="Property sheets\include_qt3.props" />
+    <Import Project="Property sheets\link_license_gui.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -70,6 +71,7 @@
     <Import Project="Property sheets\include_out_directory.props" />
     <Import Project="Property sheets\link_qt3.props" />
     <Import Project="Property sheets\include_qt3.props" />
+    <Import Project="Property sheets\link_license_gui.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -86,6 +88,7 @@
     <Import Project="Property sheets\include_out_directory.props" />
     <Import Project="Property sheets\link_qt3.props" />
     <Import Project="Property sheets\include_qt3.props" />
+    <Import Project="Property sheets\link_license_gui.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -102,6 +105,7 @@
     <Import Project="Property sheets\include_out_directory.props" />
     <Import Project="Property sheets\link_qt3.props" />
     <Import Project="Property sheets\include_qt3.props" />
+    <Import Project="Property sheets\link_license_gui.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -728,9 +732,6 @@
     </ProjectReference>
     <ProjectReference Include="launcher_dll.vcxproj">
       <Project>{ecedf507-1d11-47cf-85b4-48a95cb26731}</Project>
-    </ProjectReference>
-    <ProjectReference Include="license_gui.vcxproj">
-      <Project>{18cfec8a-e69c-433a-8959-faafd82f9b7f}</Project>
     </ProjectReference>
     <ProjectReference Include="MT_Tools.vcxproj">
       <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>

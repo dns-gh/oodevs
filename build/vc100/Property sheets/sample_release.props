@@ -24,6 +24,7 @@
     <libTerrain>libterrain-$(CurrentPlatform)-mt.lib</libTerrain>
     <libAnalysis>libanalysis-$(CurrentPlatform)-mt.lib</libAnalysis>
     <libSvgl>svgl.lib</libSvgl>
+	<libLicenseGui>license_gui.lib</libLicenseGui>
     <SrcDir>..\..\src\samples\$(ProjectName)</SrcDir>
   </PropertyGroup>
   <PropertyGroup>
@@ -124,6 +125,9 @@
     </BuildMacro>
     <BuildMacro Include="libSvgl">
       <Value>$(libSvgl)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libLicenseGui">
+      <Value>$(libLicenseGui)</Value>
     </BuildMacro>
     <BuildMacro Include="SrcDir">
       <Value>$(SrcDir)</Value>

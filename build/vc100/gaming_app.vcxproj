@@ -65,6 +65,7 @@
     <Import Project="Property sheets\link_qtweb.props" />
     <Import Project="Property sheets\link_terrain.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
+    <Import Project="Property sheets\link_license_gui.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -88,6 +89,7 @@
     <Import Project="Property sheets\link_qtweb.props" />
     <Import Project="Property sheets\link_terrain.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
+    <Import Project="Property sheets\link_license_gui.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -111,6 +113,7 @@
     <Import Project="Property sheets\link_qtweb.props" />
     <Import Project="Property sheets\link_terrain.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
+    <Import Project="Property sheets\link_license_gui.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -134,6 +137,7 @@
     <Import Project="Property sheets\link_qtweb.props" />
     <Import Project="Property sheets\link_terrain.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
+    <Import Project="Property sheets\link_license_gui.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -2336,9 +2340,6 @@
     </ProjectReference>
     <ProjectReference Include="indicators.vcxproj">
       <Project>{a95887c7-751e-43ea-b541-38b573587c7b}</Project>
-    </ProjectReference>
-    <ProjectReference Include="license_gui.vcxproj">
-      <Project>{18cfec8a-e69c-433a-8959-faafd82f9b7f}</Project>
     </ProjectReference>
     <ProjectReference Include="meteo.vcxproj">
       <Project>{b03a3fb8-fad3-4d51-96ba-91ff6b63ec1d}</Project>

@@ -9,12 +9,11 @@
 
 #include "selftraining_app_pch.h"
 #include "Config.h"
-#include "license_gui/LicenseDialog.h"
-
 #pragma warning( push, 0 )
 #include <boost/foreach.hpp>
 #include <boost/program_options.hpp>
 #pragma warning( pop )
+#include <license_gui/LicenseDialog.h>
 
 namespace po = boost::program_options;
 

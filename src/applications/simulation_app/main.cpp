@@ -1,13 +1,13 @@
 #include "simulation_app_pch.h"
 #include "SIM_App.h"
 #include "SIM_NetworkLogger.h"
-#include "license_gui/LicenseDialog.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Version.h"
 #include "tools/WinArguments.h"
+#include <license_gui/LicenseDialog.h>
 #include <tools/win32/FlexLm.h>
 #include <tools/win32/CrashHandler.h>
 #include <masalloc/masalloc.h>

@@ -51,6 +51,7 @@ masa_set_external_library( TOOLS_LIBRARIES            tools_d tools )
 masa_set_external_library( XALAN_LIBRARIES            Xalan-C_1D Xalan-C_1 )
 masa_set_external_library( XERCES_LIBRARIES           xerces-c_3D xerces-c_3 )
 masa_set_external_library( ZIPSTREAM_LIBRARIES        zipstream_d zipstream )
+masa_set_external_library( LICENSE_GUI_LIBRARIES      license_gui_d license_gui )
 
 masa_set_internal_library( ANALYSYS_LIBRARIES         libanalysis )
 masa_set_internal_library( EXTRACTOR_LIBRARIES        libextractor )
@@ -204,14 +205,6 @@ target_link_libraries( reports clients_kernel )
 add_target( indicators common "libraries/indicators" OPTIONS qt )
 target_link_libraries( indicators clients_kernel )
 
-# license_gui
-add_target( license_gui common "libraries/license_gui" )
-target_link_libraries( license_gui
-    ${FLEX_LIBRARIES}
-    ${TOOLS_LIBRARIES}
-    ${XERCES_LIBRARIES}
-)
-
 # shield
 add_target( shield common "libraries/shield" OPTIONS protobuf protocol )
 masa_add_target_compile_flag( shield "/bigobj" )
@@ -362,7 +355,7 @@ target_link_libraries( dispatcher
 add_target( dispatcher_app server "applications/dispatcher_app" OPTIONS win32 executable )
 target_link_libraries( dispatcher_app
     dispatcher
-    license_gui
+    ${LICENSE_GUI_LIBRARIES}
 )
 add_dependencies( dispatcher_app dispatcher_dll )
 
@@ -471,7 +464,7 @@ target_link_libraries( simulation_kernel_test
 add_target( replayer_app server "applications/replayer_app" OPTIONS win32 executable )
 target_link_libraries( replayer_app
     dispatcher
-    license_gui
+    ${LICENSE_GUI_LIBRARIES}
 )
 add_dependencies( replayer_app
     dispatcher_dll
@@ -533,7 +526,7 @@ set_property( TARGET simulation_app APPEND PROPERTY LINK_FLAGS "/LARGEADDRESSAWA
 target_link_libraries( simulation_app
     simulation_kernel
     dispatcher
-    license_gui
+    ${LICENSE_GUI_LIBRARIES}
 )
 add_dependencies( simulation_app
     dispatcher_dll
@@ -564,10 +557,10 @@ add_target( clients_gui clients "libraries/clients_gui" OPTIONS qt3 qt protocol 
 target_link_libraries( clients_gui
     clients_kernel
     htmlhelp
-    license_gui
     meteo
     ${GDAL_I_LIBRARIES}
     ${GLEW_LIBRARIES}
+    ${LICENSE_GUI_LIBRARIES}
     ${OPENGL_LIBRARIES}
     ${SPATIALCONTAINER_LIBRARIES}
     ${SVGL_LIBRARIES}

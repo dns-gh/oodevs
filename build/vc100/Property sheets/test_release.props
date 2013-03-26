@@ -24,6 +24,7 @@
     <libTerrain>libterrain-$(CurrentPlatform)-mt.lib</libTerrain>
     <libAnalysis>libanalysis-$(CurrentPlatform)-mt.lib</libAnalysis>
     <libSvgl>svgl.lib</libSvgl>
+	<libLicenseGui>license_gui.lib</libLicenseGui>
     <SrcDir>..\..\src\tests\$(ProjectName)</SrcDir>
     <libSqlite>sqlite3-$(CurrentPlatform)-mt.lib</libSqlite>
   </PropertyGroup>
@@ -129,6 +130,9 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     </BuildMacro>
     <BuildMacro Include="libSvgl">
       <Value>$(libSvgl)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libLicenseGui">
+      <Value>$(libLicenseGui)</Value>
     </BuildMacro>
     <BuildMacro Include="SrcDir">
       <Value>$(SrcDir)</Value>

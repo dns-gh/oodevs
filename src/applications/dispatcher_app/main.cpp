@@ -8,12 +8,12 @@
 // *****************************************************************************
 
 #include "Application.h"
-#include "license_gui/LicenseDialog.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Codec.h"
 #include "tools/WinArguments.h"
+#include <license_gui/LicenseDialog.h>
 #include <tools/Exception.h>
 #include <windows.h>
 

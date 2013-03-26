@@ -12,11 +12,11 @@
 #include "ApplicationMonitor.h"
 #include "VerticalHeaderTableView.h"
 #include "clients_kernel/Tools.h"
-#include "license_gui/LicenseDialog.h"
 #include "tools/Codec.h"
 #include "tools/Version.h"
 #include "tools/Win32/BugTrap.h"
 #include "moc_Application_ABC.cpp"
+#include <license_gui/LicenseDialog.h>
 
 //#define NO_LICENSE_CHECK
 
