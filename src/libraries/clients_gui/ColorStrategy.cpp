@@ -238,7 +238,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Object_ABC& object )
 {
-    Process( object, FindSuperiorColor( object, colorController_, FindBaseColor( object ) ) );
+    Process( object );
 }
 
 // -----------------------------------------------------------------------------
