@@ -106,11 +106,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< unsigned int, std::string > T_Schedule;
-    typedef T_Schedule::const_iterator          CIT_Schedule;
-
+    typedef std::map< unsigned int, tools::Path > T_Schedule;
     typedef std::vector< T_Quantity >             T_QuantityContainer;
-    typedef T_QuantityContainer::const_iterator CIT_QuantityContainer;
     //@}
 
 private:
@@ -123,7 +120,7 @@ private:
 
     //! @name
     //@{
-    void LoadShape( const std::string& name );
+    void LoadShape( const tools::Path& name );
     void BuildConvexHull( TER_Polygon& polygon ) const;
     //@}
 

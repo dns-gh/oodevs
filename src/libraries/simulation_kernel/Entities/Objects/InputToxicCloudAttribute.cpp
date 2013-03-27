@@ -202,7 +202,7 @@ void InputToxicCloudAttribute::ReadFiles( xml::xistream& xis )
     {
         const unsigned int eventTime = ReadGDH( eventGDH );
         const unsigned int simTime = MIL_AgentServer::GetWorkspace().RealTimeToTick( eventTime );
-        (*schedule_)[ simTime ] = schedule;
+        (*schedule_)[ simTime ] = tools::Path::FromUTF8( schedule );
     }
 }
 
@@ -316,11 +316,9 @@ namespace
 // Name: InputToxicCloudAttribute::LoadShape
 // Created: JCR 2008-06-11
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::LoadShape( const std::string& name )
+void InputToxicCloudAttribute::LoadShape( const tools::Path& name )
 {
-    const tools::Path fdir( tools::GeneralConfig::BuildChildPath( filename_, "propagation" ) );
-
-    gdal_ogr::VectorOgrDirectory dir( "", fdir.ToLocal() );
+    gdal_ogr::VectorOgrDirectory dir( "", tools::GeneralConfig::BuildChildPath( filename_, "propagation" ) );
     Handler handler( field_, *quantities_, export_ );
     quantities_->Clear();
     export_.clear();
@@ -346,7 +344,7 @@ void InputToxicCloudAttribute::BuildConvexHull( TER_Polygon& polygon ) const
 // -----------------------------------------------------------------------------
 bool InputToxicCloudAttribute::Update( unsigned int time, TER_Polygon& polygon )
 {
-    CIT_Schedule it = schedule_->find( time );
+    auto it = schedule_->find( time );
     if( it != schedule_->end() )
     {
         LoadShape( it->second );
