@@ -40,9 +40,9 @@ ParamLocation_ABC< BaseParameter >::~ParamLocation_ABC()
 // Created: ABR 2012-01-03
 // -----------------------------------------------------------------------------
 template< typename BaseParameter >
-QWidget* ParamLocation_ABC< BaseParameter >::BuildInterface( QWidget* parent )
+QWidget* ParamLocation_ABC< BaseParameter >::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
     layout->addWidget( pPosLabel_ );
     return group_;

@@ -39,9 +39,9 @@ ParamStringField::~ParamStringField()
 // Name: ParamStringField::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QWidget* ParamStringField::BuildInterface( QWidget* parent )
+QWidget* ParamStringField::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
     pEdit_ = new QLineEdit( parent );
     pEdit_->setPlaceholderText( "Enter your text here" );

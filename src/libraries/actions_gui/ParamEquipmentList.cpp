@@ -52,9 +52,9 @@ ParamEquipmentList::~ParamEquipmentList()
 // Name: ParamEquipmentList::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
+QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( objectName, parent );
     kernel::MaintenanceStates_ABC* maintenance = builder_.HasCurrentEntity() ? builder_.GetCurrentEntity().Retrieve< kernel::MaintenanceStates_ABC >() : 0;
     QGridLayout* layout = new QGridLayout( group_ );
     {

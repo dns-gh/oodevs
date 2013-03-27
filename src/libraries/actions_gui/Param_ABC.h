@@ -86,7 +86,7 @@ public:
     virtual void RemoveFromController();
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
-    virtual QWidget* BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual bool CheckValidity();
     virtual bool InternalCheckValidity() const;
     virtual void CommitTo( actions::ParameterContainer_ABC& ) const = 0;
@@ -143,15 +143,15 @@ private:
 protected:
     //! @name Member data
     //@{
-    const ParamInterface_ABC&           paramInterface_;
-    ListParameterBase*                  parentList_;
-    Param_ABC*                          parentParameter_;
-    QString                             name_;
-    std::string                         type_;
-    ::gui::RichGroupBox*                group_;
-    kernel::OrderParameter              parameter_;
-    kernel::ActionController*           controller_;
-    kernel::ContextMenu::T_MenuVariant  internalMenu_;
+    const ParamInterface_ABC& paramInterface_;
+    ListParameterBase* parentList_;
+    Param_ABC* parentParameter_;
+    QString name_;
+    std::string type_;
+    ::gui::RichGroupBox* group_;
+    kernel::OrderParameter parameter_;
+    kernel::ActionController* controller_;
+    kernel::ContextMenu::T_MenuVariant internalMenu_;
     //@}
 };
 

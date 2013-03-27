@@ -73,7 +73,7 @@ public:
     //@{
     void Draw( ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
-    void AddParameter( Param_ABC& parameter );
+    void AddParameter(  const QString& objectName, Param_ABC& parameter );
     //@}
 
     //! @name ParamInterface_ABC implementation

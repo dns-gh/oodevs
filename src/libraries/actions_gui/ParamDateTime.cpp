@@ -41,9 +41,9 @@ ParamDateTime::~ParamDateTime()
 // Name: ParamDateTime::BuildInterface
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-QWidget* ParamDateTime::BuildInterface( QWidget* parent )
+QWidget* ParamDateTime::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
     QDateTimeEdit* edit = new QDateTimeEdit( parent );
     edit->setDateTime( date_ );

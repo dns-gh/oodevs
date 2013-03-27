@@ -45,9 +45,9 @@ ParamQuantity::~ParamQuantity()
 // Name: ParamQuantity::BuildInterface
 // Created: MMC 2012-05-15
 // -----------------------------------------------------------------------------
-QWidget* ParamQuantity::BuildInterface( QWidget* parent )
+QWidget* ParamQuantity::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
     spinBox_ = new QSpinBox( min_, max_, 1, parent );
     spinBox_->setValue( min_ );

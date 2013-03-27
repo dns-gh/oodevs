@@ -17,6 +17,7 @@
 #include "actions_gui/MissionInterface_ABC.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_gui/RichLabel.h"
+#include "clients_gui/SubObjectName.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -53,9 +54,10 @@ ParamResourceNetworkNode::~ParamResourceNetworkNode()
 // Name: ParamResourceNetworkNode::BuildInterface
 // Created: JSR 2011-05-02
 // -----------------------------------------------------------------------------
-QWidget* ParamResourceNetworkNode::BuildInterface( QWidget* parent )
+QWidget* ParamResourceNetworkNode::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( objectName, parent );
+    //gui::SubObjectName subObject( "ScoreVariableCreationWizard" );
     QGridLayout* layout = new QGridLayout( group_ );
 
     objectName_->setMinimumWidth( 100 );

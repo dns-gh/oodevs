@@ -18,6 +18,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/tools.h"
+#include "clients_gui/SubObjectName.h"
 #include <QtGui/QStackedWidget.h>
 #include "MissionInterface_ABC.h"
 
@@ -130,9 +131,10 @@ void ParamLocationComposite::Draw( const geometry::Point2f& point, const ::gui::
 // Name: ParamLocationComposite::BuildInterface
 // Created: LDC 2010-08-18
 // -----------------------------------------------------------------------------
-QWidget* ParamLocationComposite::BuildInterface( QWidget* parent )
+QWidget* ParamLocationComposite::BuildInterface( const QString& objectName, QWidget* parent )
 {
     stack_ = new QStackedWidget( parent );
+    ::gui::SubObjectName subObject( objectName );
     InternalBuildInterface();
     return stack_;
 }
@@ -145,7 +147,7 @@ void ParamLocationComposite::InternalBuildInterface()
 {
     for( auto it = params_.begin(); it != params_.end(); ++it )
     {
-        QWidget* widget = (*it)->BuildInterface( stack_ );
+        QWidget* widget = (*it)->BuildInterface( (*it)->GetType().c_str(), stack_ );
         stack_->addWidget( widget );
         connect( static_cast< QGroupBox* >( widget ), SIGNAL( clicked( bool ) ), this, SLOT( OnChecked( bool ) ) );
         widgets_.push_back( widget );

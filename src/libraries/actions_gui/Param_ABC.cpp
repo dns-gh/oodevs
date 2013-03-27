@@ -14,6 +14,7 @@
 #include "ListParameter.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/ObjectNameManager.h"
 
 using namespace actions::gui;
 
@@ -150,9 +151,11 @@ void Param_ABC::NotifyChanged( Param_ABC& /*param*/ )
 // Name: Param_ABC::BuildInterface
 // Created: ABR 2011-11-21
 // -----------------------------------------------------------------------------
-QWidget* Param_ABC::BuildInterface( QWidget* parent )
+QWidget* Param_ABC::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    group_ = new ::gui::RichGroupBox( GetName(), parent );
+    if( group_ )
+        ObjectNameManager::getInstance()->RemoveRegisteredName( group_->objectName() );
+    group_ = new ::gui::RichGroupBox( objectName, parent );
     group_->setCheckable( IsOptional() );
     if( group_->isCheckable() )
         group_->setChecked( false );

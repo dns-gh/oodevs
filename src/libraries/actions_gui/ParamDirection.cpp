@@ -54,9 +54,9 @@ ParamDirection::~ParamDirection()
 // Name: ParamDirection::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QWidget* ParamDirection::BuildInterface( QWidget* parent )
+QWidget* ParamDirection::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( objectName, parent );
     QHBoxLayout* layout = new QHBoxLayout( group_ );
     QDial* dial = new QDial( 0, turnDegrees - 1, 1, 0, parent );
     layout->addWidget( dial );

@@ -41,9 +41,9 @@ ParamTime::~ParamTime()
 // Name: ParamTime::BuildInterface
 // Created: MMC 2012-05-15
 // -----------------------------------------------------------------------------
-QWidget* ParamTime::BuildInterface( QWidget* parent )
+QWidget* ParamTime::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
     QTimeEdit* edit = new QTimeEdit( parent );
     edit->setTime( time_ );

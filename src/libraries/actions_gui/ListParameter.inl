@@ -79,9 +79,9 @@ bool ListParameter< ConcreteElement >::InternalCheckValidity() const
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
 template< typename ConcreteElement >
-QWidget* ListParameter< ConcreteElement >::BuildInterface( QWidget* parent )
+QWidget* ListParameter< ConcreteElement >::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
     Q3VBox* vbox = new Q3VBox( parent );
 
@@ -147,7 +147,7 @@ void ListParameter< ConcreteElement >::AddElement( Param_ABC& param )
     param.SetOptional( false );
     Q3VBox* widget = new Q3VBox( list_->parentWidget() );
     widgets_[ &param ] = widget;
-    param.BuildInterface( widget );
+    param.BuildInterface( param.GetName(), widget );
 
     //add element to list
     QStandardItem* item = new QStandardItem( param.GetName() );

@@ -45,9 +45,9 @@ ParamNumericField< NumericType >::~ParamNumericField()
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
 template< typename NumericType >
-QWidget* ParamNumericField< NumericType >::BuildInterface( QWidget* parent )
+QWidget* ParamNumericField< NumericType >::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( objectName, parent );
     QHBoxLayout* layout = new QHBoxLayout( group_ );
     pEdit_ = new QLineEdit( parent );
     layout->addWidget( pEdit_ );

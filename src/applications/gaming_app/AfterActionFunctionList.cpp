@@ -240,7 +240,7 @@ void AfterActionFunctionList::CreateParameter( const AfterActionParameter& param
     if( pParameter )
     {
         paramList_.push_back( pParameter );
-        pParameter->BuildInterface( parameters_ );
+        pParameter->BuildInterface( "parameters", parameters_ );
         pParameter->RegisterIn( controllers_.actions_ );
     }
     else

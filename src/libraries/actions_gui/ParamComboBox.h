@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QWidget* BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     void AddItem( const QString& name, T value );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     T GetValue() const;

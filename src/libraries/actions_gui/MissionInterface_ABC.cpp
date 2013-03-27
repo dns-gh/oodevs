@@ -175,10 +175,10 @@ void MissionInterface_ABC::CreateTitle( const QString& title )
 // Name: MissionInterface_ABC::AddParameter
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::AddParameter( Param_ABC& parameter )
+void MissionInterface_ABC::AddParameter( const QString& objectName, Param_ABC& parameter )
 {
     parameters_.push_back( &parameter );
-    parameter.BuildInterface( parameter.IsOptional() ? optionalTab_ : mainTab_ );
+    parameter.BuildInterface( objectName, parameter.IsOptional() ? optionalTab_ : mainTab_ );
     parameter.RegisterIn( controllers_.actions_ );
 }
 

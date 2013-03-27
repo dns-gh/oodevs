@@ -50,7 +50,7 @@ public:
     //@{
     virtual void Show();
     virtual void Hide();
-    virtual QWidget* BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     //@}
 
 protected:

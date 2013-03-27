@@ -102,7 +102,7 @@ public:
 
     //! @name Param_ABC implementation
     //@{
-    virtual QWidget* BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual Param_ABC* CreateElement();
     //@}

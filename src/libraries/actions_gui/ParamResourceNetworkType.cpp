@@ -42,7 +42,7 @@ ParamResourceNetworkType::~ParamResourceNetworkType()
 // Name: ParamResourceNetworkType::BuildInterface
 // Created: ABR 2012-02-15
 // -----------------------------------------------------------------------------
-QWidget* ParamResourceNetworkType::BuildInterface( QWidget* parent )
+QWidget* ParamResourceNetworkType::BuildInterface( const QString& objectName, QWidget* parent )
 {
     tools::Iterator< const kernel::ResourceNetworkType& > it = resolver_.CreateIterator();
     int i = 0;
@@ -52,7 +52,7 @@ QWidget* ParamResourceNetworkType::BuildInterface( QWidget* parent )
         internalId_[ ++i ] = type.GetName();
         AddItem( type.GetName().c_str(), i );
     }
-    return ParamComboBox< int >::BuildInterface( parent );
+    return ParamComboBox< int >::BuildInterface( objectName, parent );
 }
 
 // -----------------------------------------------------------------------------

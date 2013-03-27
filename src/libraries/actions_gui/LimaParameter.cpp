@@ -66,9 +66,9 @@ bool LimaParameter::InternalCheckValidity() const
 // Name: LimaParameter::BuildInterface
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-QWidget* LimaParameter::BuildInterface( QWidget* parent )
+QWidget* LimaParameter::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( objectName, parent );
     QGridLayout* layout = new QGridLayout( group_ );
 
     entityLabel_ = new QLabel( "---", parent );
@@ -79,7 +79,7 @@ QWidget* LimaParameter::BuildInterface( QWidget* parent )
     for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
         functions_->insertItem( i, tools::ToShortString( (kernel::E_FuncLimaType)i ) );
 
-    QWidget* scheduleBox = schedule_->BuildInterface( parent );
+    QWidget* scheduleBox = schedule_->BuildInterface( objectName, parent );
     layout->addWidget( new QLabel( tools::translate( "LimaParameter", "Line" ), parent ), 0, 0 );
     layout->addWidget( entityLabel_, 0, 1 );
     layout->addWidget( new QLabel( tools::translate( "LimaParameter", "Functions" ), parent ), 1, 0 );

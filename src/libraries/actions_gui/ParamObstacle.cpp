@@ -121,9 +121,9 @@ void ParamObstacle::RemoveFromController()
 // Name: ParamObstacle::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QWidget* ParamObstacle::BuildInterface( QWidget* parent )
+QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
 
     // Type
@@ -155,7 +155,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // Density
     {
-        QGroupBox* densityBox = static_cast< QGroupBox* >( density_->BuildInterface( parent ) );
+        QGroupBox* densityBox = static_cast< QGroupBox* >( density_->BuildInterface( "densityBox", parent ) );
         density_->SetLimits( 0.f, 5.f );
         densityBox->layout()->setMargin( 0 );
         densityBox->layout()->setSpacing( 0 );
@@ -164,7 +164,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // TC2
     {
-        QGroupBox* tc2Box = static_cast< QGroupBox* >( tc2_->BuildInterface( parent ) );
+        QGroupBox* tc2Box = static_cast< QGroupBox* >( tc2_->BuildInterface( "tc2Box", parent ) );
         tc2Box->layout()->setMargin( 0 );
         tc2Box->layout()->setSpacing( 0 );
         layout->addWidget( tc2Box );
@@ -172,25 +172,25 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // Location
     {
-        QGroupBox* locationBox = static_cast< QGroupBox* >( location_->BuildInterface( parent ) );
+        QGroupBox* locationBox = static_cast< QGroupBox* >( location_->BuildInterface( "locationBox", parent ) );
         locationBox->layout()->setMargin( 0 );
         locationBox->layout()->setSpacing( 0 );
         layout->addWidget( locationBox );
     }
     // Name
     {
-        QGroupBox* nameBox = static_cast< QGroupBox* >( name_->BuildInterface( parent ) );
+        QGroupBox* nameBox = static_cast< QGroupBox* >( name_->BuildInterface( "nameBox", parent ) );
         nameBox->layout()->setMargin( 0 );
         nameBox->layout()->setSpacing( 0 );
         layout->addWidget( nameBox );
     }
     // Activity/Activation Times
     {
-        QGroupBox* activityTimeBox = static_cast< QGroupBox* >( activityTime_->BuildInterface( parent ) );
+        QGroupBox* activityTimeBox = static_cast< QGroupBox* >( activityTime_->BuildInterface( "activityTimeBox", parent ) );
         activityTimeBox->layout()->setMargin( 0 );
         activityTimeBox->layout()->setSpacing( 0 );
         layout->addWidget( activityTimeBox );
-        QGroupBox* activationTimeBox = static_cast< QGroupBox* >( activationTime_->BuildInterface( parent ) );
+        QGroupBox* activationTimeBox = static_cast< QGroupBox* >( activationTime_->BuildInterface( "activationTimeBox", parent ) );
         activationTimeBox->layout()->setMargin( 0 );
         activationTimeBox->layout()->setSpacing( 0 );
         layout->addWidget( activationTimeBox );
@@ -198,7 +198,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // Altitude modifier
     {
-        QGroupBox* altitudeBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( altitudeModifier_ )->BuildInterface( parent ) );
+        QGroupBox* altitudeBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( altitudeModifier_ )->BuildInterface( "altitudeBox", parent ) );
         altitudeBox->layout()->setMargin( 0 );
         altitudeBox->layout()->setSpacing( 0 );
         layout->addWidget( altitudeBox );
@@ -206,7 +206,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // Time limit
     {
-        QGroupBox* timeLimitBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( timeLimit_ )->BuildInterface( parent ) );
+        QGroupBox* timeLimitBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( timeLimit_ )->BuildInterface( "timeLimit", parent ) );
         timeLimitBox->layout()->setMargin( 0 );
         timeLimitBox->layout()->setSpacing( 0 );
         layout->addWidget( timeLimitBox );
@@ -214,7 +214,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // Mining
     {
-        QGroupBox* miningBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( mining_ )->BuildInterface( parent ) );
+        QGroupBox* miningBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( mining_ )->BuildInterface( "miningBox", parent ) );
         miningBox->layout()->setMargin( 0 );
         miningBox->layout()->setSpacing( 0 );
         layout->addWidget( miningBox );
@@ -222,7 +222,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // Lodging
     {
-        QGroupBox* lodgingBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( lodging_ )->BuildInterface( parent ) );
+        QGroupBox* lodgingBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( lodging_ )->BuildInterface( "lodgingBox", parent ) );
         lodgingBox->layout()->setMargin( 0 );
         lodgingBox->layout()->setSpacing( 0 );
         layout->addWidget( lodgingBox );

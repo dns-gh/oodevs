@@ -156,7 +156,10 @@ void InterfaceBuilder::BuildAll( actions::gui::MissionInterface_ABC& missionInte
     entity_ = &entity;
     tools::Iterator< const kernel::OrderParameter& > it = order.CreateIterator();
     while( it.HasMoreElements() )
-        BuildOne( it.NextElement() );
+    {
+        const kernel::OrderParameter& order = it.NextElement();
+        BuildOne( order );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +176,7 @@ actions::gui::Param_ABC& InterfaceBuilder::BuildOne( const kernel::OrderParamete
         T_BuilderFunctor functor = it->second;
         actions::gui::Param_ABC& param = (this->*functor)( parameter );
         if( isRegistered )
-            missionInterface_->AddParameter( param );
+            missionInterface_->AddParameter( param.GetType().c_str(), param );
         return param;
     }
     else

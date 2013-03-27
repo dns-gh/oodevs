@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QWidget* BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     void SetValue( bool value );
     virtual void Show() { if( group_ ) group_->show(); }
