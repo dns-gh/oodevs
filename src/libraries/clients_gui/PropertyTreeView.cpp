@@ -18,7 +18,8 @@ using namespace gui;
 // Name: PropertyTreeView constructor
 // Created: LGY 2012-08-09
 // -----------------------------------------------------------------------------
-PropertyTreeView::PropertyTreeView()
+PropertyTreeView::PropertyTreeView( const QString& objectName )
+    : RichTreeView( objectName )
 {
     header()->hide();
     setAnimated( true );

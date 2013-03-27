@@ -985,6 +985,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\TerrainPreference.cpp">
       <Filter>Source Files\Preferences</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichMenuBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1625,6 +1628,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichMenuBar.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

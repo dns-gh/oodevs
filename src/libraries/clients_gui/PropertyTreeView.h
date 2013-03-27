@@ -10,6 +10,8 @@
 #ifndef gui_PropertyTreeView_h
 #define gui_PropertyTreeView_h
 
+#include "RichTreeView.h"
+
 namespace gui
 {
     class PropertyModel;
@@ -19,12 +21,12 @@ namespace gui
 */
 // Created: LGY 2012-08-09
 // =============================================================================
-class PropertyTreeView : public QTreeView
+class PropertyTreeView : public RichTreeView
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertyTreeView();
+             PropertyTreeView( const QString& objectName );
     virtual ~PropertyTreeView();
     //@}
 

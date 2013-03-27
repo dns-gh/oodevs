@@ -19,8 +19,8 @@ using namespace gui;
 // Name: PreferencesList constructor
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-PreferencesList::PreferencesList( QWidget* parent, QStackedWidget& pages )
-    : QTreeView( parent )
+PreferencesList::PreferencesList( const QString& objectName, QWidget* parent, QStackedWidget& pages )
+    : RichTreeView( objectName, parent )
     , pages_( pages )
     , model_( new KeyModel() )
 {

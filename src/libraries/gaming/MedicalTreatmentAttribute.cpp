@@ -177,7 +177,7 @@ void MedicalTreatmentAttribute::Display( Displayer_ABC& displayer ) const
                 // Cannot display this stuff because it is dependant on the physical database and the displayer has been built before the database is loaded...
                 gui::GroupDisplayer* group = dynamic_cast< gui::GroupDisplayer* >( &services );
                 if( group )
-                    group->AddLabel( name.c_str() );
+                    group->AddLabel( name.c_str(), name.c_str() );
                 services.Display( name.c_str(),
                            std::string( boost::lexical_cast<std::string>( it->second.available_ ) + " (" + boost::lexical_cast<std::string>( it->second.baseline_ ) + ")" ) );
             }

@@ -14,6 +14,7 @@
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/ParametersLayer.h"
+#include "clients_gui/RichSpinBox.h"
 #include "clients_gui/RichToolButton.h"
 #include "clients_gui/SymbolSizeOptionChooser.h"
 #include "clients_kernel/Controllers.h"
@@ -47,7 +48,7 @@ namespace
         hLayout->addWidget( new QLabel( button->tr( "Road width (m):" ) ) );
 
         // Spin box
-        QDoubleSpinBox* spinBox = new QDoubleSpinBox;
+        gui::RichDoubleSpinBox* spinBox = new gui::RichDoubleSpinBox( "doubleSpinBox" );
         spinBox->setRange( 2.0, 100.0 );
         spinBox->setValue( 10.0 );
         spinBox->setSingleStep( 1.0 );

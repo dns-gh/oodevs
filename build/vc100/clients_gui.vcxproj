@@ -151,6 +151,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichListWidget.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichMenuBar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichRadioButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTableView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTableWidget.cpp" />
@@ -779,6 +780,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichListView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichListWidget.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichMenuBar.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichRadioButton.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichTableView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichTableWidget.h" />

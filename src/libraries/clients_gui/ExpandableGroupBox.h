@@ -27,7 +27,7 @@ class ExpandableGroupBox : public QFrame
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ExpandableGroupBox( QWidget* parent = 0, const QString& title = "", Qt::Orientation orientation = Qt::Vertical );
+    explicit ExpandableGroupBox( const QString& objectName, QWidget* parent = 0, const QString& title = "", Qt::Orientation orientation = Qt::Vertical );
     virtual ~ExpandableGroupBox();
     //@}
 

@@ -33,7 +33,7 @@ PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controll
     , controllers_     ( controllers )
     , glProxy_         ( glProxy )
     , selected_        ( 0 )
-    , view_            ( new PropertyTreeView() )
+    , view_            ( new PropertyTreeView( "propertyView" ) )
     , delegate_        ( new PropertyDelegate( controllers.actions_, factory ) )
     , model_           ( new PropertyModel( displayer ) )
     , pMultiProperties_( new kernel::PropertiesGroupDictionary( controllers.controller_, comparator ) )

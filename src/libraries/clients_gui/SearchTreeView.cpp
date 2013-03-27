@@ -68,7 +68,7 @@ void SearchTreeView_ABC::CreateGUI( const QString& objectName )
     filtersLayout_->setContentsMargins( 5, 2, 5, 2 );
     filtersLayout_->addWidget( clearButton_, 0, 0, 1, 2, Qt::AlignLeft );
 
-    filtersWidget_ = new ExpandableGroupBox( 0, tr( "Filters" ) );
+    filtersWidget_ = new ExpandableGroupBox( "filtersWidget", 0, tr( "Filters" ) );
     filtersWidget_->setVisible( false ); // $$$$ ABR 2012-06-22: Visible after the first AddFilter
     filtersWidget_->AddComponent( filtersContainer_ );
 

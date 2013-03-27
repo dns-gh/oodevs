@@ -10,6 +10,8 @@
 #ifndef __PreferencesList_h_
 #define __PreferencesList_h_
 
+#include "RichTreeView.h"
+
 namespace gui
 {
     class KeyModel;
@@ -19,14 +21,14 @@ namespace gui
 */
 // Created: SBO 2007-01-03
 // =============================================================================
-class PreferencesList : public QTreeView
+class PreferencesList : public RichTreeView
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PreferencesList( QWidget* parent, QStackedWidget& pages );
+             PreferencesList( const QString& objectName, QWidget* parent, QStackedWidget& pages );
     virtual ~PreferencesList();
     //@}
 

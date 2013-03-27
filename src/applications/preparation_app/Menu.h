@@ -11,6 +11,7 @@
 #define __Menu_h_
 
 #include "tools/ElementObserver_ABC.h"
+#include "clients_gui/RichMenuBar.h"
 
 class QMainWindow;
 class QDialog;
@@ -39,7 +40,7 @@ class DialogContainer;
 */
 // Created: SBO 2006-04-28
 // =============================================================================
-class Menu : public QMenuBar
+class Menu : public gui::RichMenuBar
 {
     Q_OBJECT
 

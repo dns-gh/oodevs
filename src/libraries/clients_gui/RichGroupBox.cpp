@@ -51,8 +51,7 @@ RichGroupBox::RichGroupBox( const QString& objectName, const QString& title, QWi
 // -----------------------------------------------------------------------------
 RichGroupBox::~RichGroupBox()
 {
-    QString objectname = objectName();
-    ObjectNameManager::getInstance()->RemoveRegisteredName( objectname );
+    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
 }
 
 // -----------------------------------------------------------------------------

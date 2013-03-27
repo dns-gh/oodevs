@@ -36,7 +36,8 @@ public:
     //! @name Accessor
     //@{
     bool HasGenerateScores() const;
-    const tools::Path& GetFolderToMigrate();
+    const tools::Path& GetFolderToMigrate() const;
+    const tools::Path& GetQtNamesPath() const;
     //@}
 
 private:
@@ -44,6 +45,7 @@ private:
     //@{
     bool generateScores_;
     tools::Path folderToMigrate_;
+    tools::Path qtNamesPath_;
     //@}
 };
 

@@ -12,6 +12,7 @@
 #include "moc_ExpandableGroupBox.cpp"
 #include "ImageWrapper.h"
 #include "RichPushButton.h"
+#include "SubObjectName.h"
 
 using namespace gui;
 
@@ -19,13 +20,14 @@ using namespace gui;
 // Name: ExpandableGroupBox constructor
 // Created: ABR 2012-06-21
 // -----------------------------------------------------------------------------
-ExpandableGroupBox::ExpandableGroupBox( QWidget* parent /* = 0 */, const QString& title /* = "" */, Qt::Orientation orientation /* = Qt::Vertical */ )
+ExpandableGroupBox::ExpandableGroupBox( const QString& objectName, QWidget* parent /* = 0 */, const QString& title /* = "" */, Qt::Orientation orientation /* = Qt::Vertical */ )
     : QFrame( parent )
     , title_       ( title )
     , orientation_ ( orientation )
     , expandIcon_  ( gui::Icon( "resources/images/gui/toggle-expand.png" ) )
     , collapseIcon_( gui::Icon( "resources/images/gui/toggle-collapse.png" ) )
 {
+    SubObjectName subObject( objectName );
     titleWidget_ = new QFrame();
     titleWidget_->setFrameStyle( QFrame::StyledPanel );
 

@@ -77,7 +77,7 @@ namespace
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
 Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs, gui::ItemFactory_ABC& factory, const QString& license )
-    : QMenuBar    ( pParent )
+    : RichMenuBar ( objectName, pParent )
     , controllers_( controllers )
 {
     // File
@@ -175,7 +175,7 @@ Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers
         addMenu( menu->FillMenu() );
     }
     // Windows
-    if( QMenu* menu = pParent->createPopupMenu() )
+    if( gui::RichMenu* menu = new gui::RichMenu( "windowMenu", pParent, controllers_ ) )
     {
         if( QAction* action = addMenu( menu ) )
         {

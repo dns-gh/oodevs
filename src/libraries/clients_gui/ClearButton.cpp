@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "ClearButton.h"
 #include "moc_ClearButton.cpp"
+#include "ObjectNameManager.h"
 
 using namespace gui;
 
@@ -20,6 +21,7 @@ using namespace gui;
 ClearButton::ClearButton( QWidget *parent /* = 0*/ )
     : QAbstractButton(parent)
 {
+    ObjectNameManager::getInstance()->SetObjectName( this, "clearButton" );
     setCursor( Qt::ArrowCursor );
     setFocusPolicy( Qt::NoFocus );
     setToolTip( tr( "Clear" ) );
@@ -33,7 +35,7 @@ ClearButton::ClearButton( QWidget *parent /* = 0*/ )
 // -----------------------------------------------------------------------------
 ClearButton::~ClearButton()
 {
-    // NOTHING
+    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
 }
 
 // -----------------------------------------------------------------------------

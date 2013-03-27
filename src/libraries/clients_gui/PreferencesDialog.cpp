@@ -68,7 +68,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     grid->addWidget( pages, 1, 1 );
     box = new Q3HBox( this );
     box->setMargin( 5 );
-    list_ = new PreferencesList( box, *pages );
+    list_ = new PreferencesList( "preferencesList", box, *pages );
     grid->addWidget( box, 1, 0 );
 
     pGraphicPrefPanel_       = new GraphicsPanel( this, controllers );
