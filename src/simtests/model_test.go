@@ -19,8 +19,11 @@ import (
 )
 
 type prettyPrinter struct {
-	shift string
-	lines []string
+	// Rewrite unstable properties so random variations do not impact the
+	// output.
+	HideUnstable bool
+	shift        string
+	lines        []string
 }
 
 func (p *prettyPrinter) Shift() {
@@ -36,33 +39,40 @@ func (p *prettyPrinter) P(format string, a ...interface{}) {
 	p.lines = append(p.lines, p.shift+s)
 }
 
+func (p *prettyPrinter) Unstable(value interface{}) string {
+	if p.HideUnstable {
+		return "-"
+	}
+	return fmt.Sprintf("%v", value)
+}
+
 func (p *prettyPrinter) GetOutput() string {
 	return strings.Join(p.lines, "\n") + "\n"
 }
 
 func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 	printPopulation := func(p *prettyPrinter, pop *swapi.Population) {
-		p.P("Id: %d", pop.Id)
-		p.P("PartyId: %d", pop.PartyId)
+		p.P("Id: %s", p.Unstable(pop.Id))
+		p.P("PartyId: %s", p.Unstable(pop.PartyId))
 		p.P("Name: %s", pop.Name)
 	}
 
 	printCrowd := func(p *prettyPrinter, c *swapi.Crowd) {
-		p.P("Id: %d", c.Id)
-		p.P("PartyId: %d", c.PartyId)
+		p.P("Id: %s", p.Unstable(c.Id))
+		p.P("PartyId: %s", p.Unstable(c.PartyId))
 		p.P("Name: %s", c.Name)
 	}
 
 	printUnit := func(p *prettyPrinter, u *swapi.Unit) {
-		p.P("Id: %d", u.Id)
-		p.P("AutomatId: %d", u.AutomatId)
+		p.P("Id: %s", p.Unstable(u.Id))
+		p.P("AutomatId: %s", p.Unstable(u.AutomatId))
 		p.P("Name: %s", u.Name)
 	}
 
 	var printAutomat func(p *prettyPrinter, a *swapi.Automat)
 	printAutomat = func(p *prettyPrinter, a *swapi.Automat) {
-		p.P("Id: %d", a.Id)
-		p.P("PartyId: %d", a.PartyId)
+		p.P("Id: %s", p.Unstable(a.Id))
+		p.P("PartyId: %s", p.Unstable(a.PartyId))
 		p.P("Name: %s", a.Name)
 		keys := []int{}
 		for k := range a.Automats {
@@ -72,7 +82,7 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 		for _, k := range keys {
 			child := a.Automats[uint32(k)]
 			p.Shift()
-			p.P("Automat[%d]", k)
+			p.P("Automat[%s]", p.Unstable(k))
 			p.Shift()
 			printAutomat(p, child)
 			p.Unshift()
@@ -86,7 +96,7 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 		for _, k := range keys {
 			child := a.Units[uint32(k)]
 			p.Shift()
-			p.P("Unit[%d]", k)
+			p.P("Unit[%s]", p.Unstable(k))
 			p.Shift()
 			printUnit(p, child)
 			p.Unshift()
@@ -96,10 +106,10 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 
 	var printFormation func(p *prettyPrinter, f *swapi.Formation)
 	printFormation = func(p *prettyPrinter, f *swapi.Formation) {
-		p.P("Id: %d", f.Id)
+		p.P("Id: %s", p.Unstable(f.Id))
 		p.P("Name: %s", f.Name)
-		p.P("ParentId: %d", f.ParentId)
-		p.P("PartyId: %d", f.PartyId)
+		p.P("ParentId: %s", p.Unstable(f.ParentId))
+		p.P("PartyId: %s", p.Unstable(f.PartyId))
 		p.P("Level: %s", f.Level)
 		p.P("LogLevel: %s", f.LogLevel)
 		keys := []int{}
@@ -110,7 +120,7 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 		for _, k := range keys {
 			child := f.Formations[uint32(k)]
 			p.Shift()
-			p.P("Formation[%d]", k)
+			p.P("Formation[%s]", p.Unstable(k))
 			p.Shift()
 			printFormation(p, child)
 			p.Unshift()
@@ -125,7 +135,7 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 		for _, k := range keys {
 			child := f.Automats[uint32(k)]
 			p.Shift()
-			p.P("Automat[%d]", k)
+			p.P("Automat[%s]", p.Unstable(k))
 			p.Shift()
 			printAutomat(p, child)
 			p.Unshift()
@@ -143,7 +153,7 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 		for _, k := range keys {
 			child := party.Formations[uint32(k)]
 			p.Shift()
-			p.P("Formation[%d]", k)
+			p.P("Formation[%s]", p.Unstable(k))
 			p.Shift()
 			printFormation(p, child)
 			p.Unshift()
@@ -158,7 +168,7 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 		for _, k := range keys {
 			child := party.Crowds[uint32(k)]
 			p.Shift()
-			p.P("Crowds[%d]", k)
+			p.P("Crowds[%s]", p.Unstable(k))
 			p.Shift()
 			printCrowd(p, child)
 			p.Unshift()
@@ -173,7 +183,7 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 		for _, k := range keys {
 			child := party.Populations[uint32(k)]
 			p.Shift()
-			p.P("Population[%d]", k)
+			p.P("Population[%s]", p.Unstable(k))
 			p.Shift()
 			printPopulation(p, child)
 			p.Unshift()
@@ -189,7 +199,7 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 
 	for _, k := range keys {
 		party := model.Parties[uint32(k)]
-		p.P("Party[%v]", k)
+		p.P("Party[%v]", p.Unstable(k))
 		p.Shift()
 		printParty(p, party)
 		p.Unshift()
@@ -218,71 +228,72 @@ func (s *TestSuite) TestModelInitialization(c *C) {
 	defer sim.Stop()
 	model := client.Model
 
-	dump := printParties(&prettyPrinter{}, model.GetData()).GetOutput()
+	dump := printParties(&prettyPrinter{HideUnstable: true},
+		model.GetData()).GetOutput()
 	expected := "" +
-		`Party[1]
+		`Party[-]
   Name: party
-    Formation[5]
-      Id: 5
+    Formation[-]
+      Id: -
       Name: formation-1
-      ParentId: 0
-      PartyId: 1
+      ParentId: -
+      PartyId: -
       Level: xxxxx
       LogLevel: none
-        Formation[7]
-          Id: 7
+        Formation[-]
+          Id: -
           Name: formation-1.1
-          ParentId: 5
-          PartyId: 1
+          ParentId: -
+          PartyId: -
           Level: xxxx
           LogLevel: none
-        Formation[8]
-          Id: 8
+        Formation[-]
+          Id: -
           Name: formation-1.2
-          ParentId: 5
-          PartyId: 1
+          ParentId: -
+          PartyId: -
           Level: xxxx
           LogLevel: none
-            Automat[9]
-              Id: 9
-              PartyId: 1
+            Automat[-]
+              Id: -
+              PartyId: -
               Name: ARMOR.MBT squadron
-                Unit[10]
-                  Id: 10
-                  AutomatId: 9
+                Unit[-]
+                  Id: -
+                  AutomatId: -
                   Name: ARMOR.Armored squadron CP
-                Unit[11]
-                  Id: 11
-                  AutomatId: 9
+                Unit[-]
+                  Id: -
+                  AutomatId: -
                   Name: ARMOR.MBT platoon
-                Unit[12]
-                  Id: 12
-                  AutomatId: 9
+                Unit[-]
+                  Id: -
+                  AutomatId: -
                   Name: ARMOR.MBT platoon
-                Unit[13]
-                  Id: 13
-                  AutomatId: 9
+                Unit[-]
+                  Id: -
+                  AutomatId: -
                   Name: ARMOR.MBT platoon
-                Unit[14]
-                  Id: 14
-                  AutomatId: 9
+                Unit[-]
+                  Id: -
+                  AutomatId: -
                   Name: ARMOR.MBT platoon
-    Formation[6]
-      Id: 6
+    Formation[-]
+      Id: -
       Name: empty
-      ParentId: 0
-      PartyId: 1
+      ParentId: -
+      PartyId: -
       Level: xxxxx
       LogLevel: none
-    Crowds[17]
-      Id: 17
-      PartyId: 1
+    Crowds[-]
+      Id: -
+      PartyId: -
       Name: Standard Crowd
-    Population[22]
-      Id: 22
-      PartyId: 1
+    Population[-]
+      Id: -
+      PartyId: -
       Name: population
-Party[2]
+Party[-]
   Name: empty-party
 `
 	c.Assert(dump, Equals, expected)

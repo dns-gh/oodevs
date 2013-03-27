@@ -157,25 +157,26 @@ func (s *TestSuite) TestCreateFormation(c *C) {
 	// Add formation to formation
 	_, err = client.CreateFormation(0, f1.Id, "newformation2", 2, "aucun")
 	c.Assert(err, IsNil) // failed to create formation
-	dump := printParties(&prettyPrinter{}, model.GetData()).GetOutput()
+	dump := printParties(&prettyPrinter{HideUnstable: true},
+		model.GetData()).GetOutput()
 	expected := "" +
-		`Party[1]
+		`Party[-]
   Name: party1
-    Formation[528]
-      Id: 528
+    Formation[-]
+      Id: -
       Name: newformation
-      ParentId: 0
-      PartyId: 1
+      ParentId: -
+      PartyId: -
       Level: b
       LogLevel: none
-        Formation[529]
-          Id: 529
+        Formation[-]
+          Id: -
           Name: newformation2
-          ParentId: 528
-          PartyId: 1
+          ParentId: -
+          PartyId: -
           Level: o
           LogLevel: none
-Party[2]
+Party[-]
   Name: party2
 `
 	c.Assert(dump, Equals, expected)
