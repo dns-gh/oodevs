@@ -13,7 +13,6 @@
 #include "GlTools_ABC.h"
 #include "Viewport_ABC.h"
 #include "clients_kernel/Hierarchies.h"
-#include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 
 using namespace kernel;
