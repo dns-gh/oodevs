@@ -703,7 +703,7 @@ void MainWindow::NotifyModeChanged( E_Modes newMode )
 // -----------------------------------------------------------------------------
 void MainWindow::SetWindowTitle( bool needsSaving )
 {
-    if( QThread::currentThread() != thread() ) // si setCaption est appelé par un autre thread -> assert QT.
+    if( QThread::currentThread() != thread() || !isVisible() ) // si setCaption est appelé par un autre thread -> assert QT.
         return;
     SetNeedsSaving( needsSaving );
     QString filename = "";
