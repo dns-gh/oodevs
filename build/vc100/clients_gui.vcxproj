@@ -146,6 +146,16 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LongNameHelper.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ModalDialog.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichComboBox.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichListView.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichListWidget.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichRadioButton.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTableView.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTableWidget.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichToolButton.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTreeWidget.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\SubObjectName.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectNameManager.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionCategory.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionWidget.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Logger.cpp" />
@@ -162,10 +172,14 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\ResourceNetworkSelectionObserver.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\resources.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichAction.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichCheckBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDockWidget.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichGroupBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichLineEdit.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichMenu.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichPushButton.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTabWidget.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTextEdit.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichToolBar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchButton.cpp" />
@@ -757,6 +771,16 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\ModelObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichComboBox.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichListView.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichListWidget.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichRadioButton.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichTableView.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichTableWidget.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichToolButton.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichTreeWidget.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\SubObjectName.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\ObjectNameManager.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ObjectTreeView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\PickingSelector.h" />
@@ -928,9 +952,13 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichAction.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichCheckBox.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDockWidget.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichMenu.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichPushButton.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichSpinBox.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichTabWidget.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichTextEdit.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichToolBar.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\RichTreeView.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
