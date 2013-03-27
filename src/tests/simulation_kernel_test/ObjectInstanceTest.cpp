@@ -18,6 +18,7 @@
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
 #include "simulation_kernel/Entities/Objects/BuildableCapacity.h"
 #include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
+#include "simulation_kernel/Tools/MIL_Color.h"
 #include "StubTER_World.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -42,8 +43,11 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "object" );
 
+    MIL_Color color;
     MockArmy army;
     MOCK_EXPECT( army.RegisterObject ).once();
+    MOCK_EXPECT( army.GetColor ).once().returns( boost::cref( color ) );
+
     std::auto_ptr< MIL_Object_ABC > pObject;
     {
         MockSink sink;
