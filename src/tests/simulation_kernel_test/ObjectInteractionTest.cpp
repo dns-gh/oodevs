@@ -33,6 +33,7 @@
 #include "simulation_kernel/Entities/Orders/MIL_Mission_ABC.h"
 #include "simulation_kernel/Entities/Populations/MIL_PopulationConcentration.h"
 #include "simulation_kernel/Entities/Populations/MIL_PopulationAttitude.h"
+#include "simulation_kernel/Tools/MIL_Color.h"
 #include "StubTER_World.h"
 #include "StubMIL_Population.h"
 #include "StubMIL_PopulationType.h"
@@ -79,12 +80,18 @@ namespace
             : factory( false )
         {
             WorldInitialize( "worldwide/Paris" );
+            MOCK_EXPECT( army.RegisterObject ).once();
+            MOCK_EXPECT( army.GetColor ).once().returns( boost::cref( color ) );
+            MOCK_EXPECT( army.UnregisterObject ).once();
         }
         ~ObjectCapacityFixture()
         {
             TER_World::DestroyWorld();
         }
         MIL_ObjectFactory factory;
+        MockArmy army;
+        MIL_Color color;
+
     };
 }
 
@@ -108,8 +115,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC, O
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "object" );
 
-    MockArmy army;
-    MOCK_EXPECT( army.RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< ContaminationCapacity >( *pObject );
 
@@ -123,7 +128,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC, O
     MOCK_EXPECT( agent.GetRole< MockRoleNBC >().Contaminate ).never();
 
     BOOST_CHECK_NO_THROW( pObject->ProcessAgentInside( agent ) );
-    MOCK_EXPECT( army.UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -146,8 +150,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC, Obj
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "object" );
 
-    MockArmy army;
-    MOCK_EXPECT( army.RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< ContaminationCapacity >( *pObject );
 
@@ -165,7 +167,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC, Obj
     MOCK_EXPECT( agent.GetRole< MockRoleNBC >().Contaminate ).never();
 
     BOOST_CHECK_NO_THROW( pObject->ProcessAgentInside( agent ) );
-    MOCK_EXPECT( army.UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -188,8 +189,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Protection, ObjectCapa
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "implantationArea" );
 
-    MockArmy army;
-    MOCK_EXPECT( army.RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< ProtectionCapacity >( *pObject );
 
@@ -209,8 +208,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Protection, ObjectCapa
 
     pObject->ProcessAgentEntering( agent );
     BOOST_CHECK_NO_THROW( pObject->ProcessAgentInside( agent ) );
-
-    MOCK_EXPECT( army.UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -232,8 +229,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped, Ob
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "itineraire logistique" );
 
-    MockArmy army;
-    MOCK_EXPECT( army.RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< InteractIfEquippedCapacity >( *pObject );
 
@@ -241,8 +236,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped, Ob
     // Force creation of attribute SupplyRouteAttribute...
     BOOST_CHECK_NO_THROW( ( static_cast< Object& >( *pObject ).GetAttribute< SupplyRouteAttribute >() ) );
     BOOST_CHECK_EQUAL( pObject->GetAttribute< SupplyRouteAttribute >().IsEquipped(), pObject->CanInteractWith( agent ) );
-
-    MOCK_EXPECT( army.UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -265,8 +258,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Supply, ObjectCapacity
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "plot ravitaillement" );
 
-    MockArmy army;
-    MOCK_EXPECT( army.RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, factory ) );
     CheckCapacity< SupplyCapacity >( *pObject );
 
@@ -281,7 +272,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Supply, ObjectCapacity
 //        MOCK_EXPECT( agent.GetRole< MockRoleLocation >().GetPosition ).once().returns( position );
     }
     BOOST_CHECK_NO_THROW( pObject->ProcessAgentEntering( agent ) );
-    MOCK_EXPECT( army.UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -299,8 +289,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection, ObjectCapac
         factory.Initialize( xis );
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "checkpoint" );
-    MockArmy army;
-    MOCK_EXPECT( army.RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
     CheckCapacity< DetectionCapacity >( *object );
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< AnimatorAttribute >() );
@@ -318,7 +306,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection, ObjectCapac
 
     MOCK_EXPECT( animator.GetRole< MockRolePerceiver >().NotifyExternalPerception )
                 .with( mock::same( intruder ), mock::same( PHY_PerceptionLevel::identified_ ) );
-    MOCK_EXPECT( army.UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -344,8 +331,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2, ObjectCapa
         BOOST_CHECK_NO_THROW( factory.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = factory.FindType( "sensors" );
-    MockArmy army;
-    MOCK_EXPECT( army.RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
     CheckCapacity< DetectionCapacity >( *object );
 
@@ -354,7 +339,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2, ObjectCapa
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetCurrentTimeStep ).once().returns( 1u );
     BOOST_CHECK_NO_THROW( object->ProcessAgentEntering( intruder ) );
-    mock::verify( army );
     mock::verify( intruder );
 
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< DetectorAttribute >() );
@@ -371,7 +355,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2, ObjectCapa
     MOCK_EXPECT( detector.GetRole< MockRolePerceiver >().NotifyExternalPerception ).with( mock::same( intruder ), mock::same( PHY_PerceptionLevel::identified_ ) );
 
     BOOST_CHECK_NO_THROW( object->ProcessAgentInside( intruder ) );
-    MOCK_EXPECT( army.UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -401,15 +384,11 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Mine, ObjectCapacityFi
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time.GetRealTime ).once().returns( 3u );
     const MIL_ObjectType_ABC& type = factory.FindType( "mines" );
-    MockArmy army;
-    MOCK_EXPECT( army.RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
 
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< ObstacleAttribute >() );
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< TimeLimitedAttribute >() );
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< MineAttribute >() );
-
-    MOCK_EXPECT( army.UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -431,8 +410,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier, Objec
     }
 
     const MIL_ObjectType_ABC& type = factory.FindType( "paralyzing area" );
-    MockArmy army;
-    MOCK_EXPECT( army.RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
 
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
@@ -449,7 +426,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier, Objec
     BOOST_CHECK( &concentration.GetAttitude() == MIL_PopulationAttitude::Find("calme") );
     object->ProcessPopulationInside( concentration );
     BOOST_CHECK( &concentration.GetAttitude() == MIL_PopulationAttitude::Find("agressive") );
-    MOCK_EXPECT( army.UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -471,8 +447,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionPerception, ObjectCapac
     }
 
     const MIL_ObjectType_ABC& type = factory.FindType( "blinding area" );
-    MockArmy army;
-    MOCK_EXPECT( army.RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
 
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
@@ -489,7 +463,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionPerception, ObjectCapac
     BOOST_CHECK( !population.IsBlinded() );
     object->ProcessPopulationInside( concentration );
     BOOST_CHECK( population.IsBlinded() );
-    MOCK_EXPECT( army.UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -511,8 +484,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionScattering, ObjectCapac
     }
 
     const MIL_ObjectType_ABC& type = factory.FindType( "scattering area" );
-    MockArmy army;
-    MOCK_EXPECT( army.RegisterObject ).once();
     std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, factory ) );
 
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
@@ -529,5 +500,4 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionScattering, ObjectCapac
     unsigned int before = concentration.GetTotalLivingHumans();
     object->ProcessPopulationInside( concentration );
     BOOST_CHECK( before > concentration.GetTotalLivingHumans() );
-    MOCK_EXPECT( army.UnregisterObject ).once();
 }

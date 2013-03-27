@@ -21,6 +21,7 @@
 #include "simulation_kernel/Entities/Objects/Object.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "simulation_kernel/Tools/MIL_Color.h"
 #include <xeumeuleu/xml.hpp>
 
 /**
@@ -94,6 +95,8 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
         MOCK_EXPECT( builder.GetType ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( builder.Build ).once();
         MOCK_EXPECT( army.RegisterObject ).once();
+        MIL_Color color;
+        MOCK_EXPECT( army.GetColor ).once().returns( boost::cref( color ) );
         pObject.reset( factory.CreateObject( sink, builder, &army ) );
         mock::verify( builder );
         mock::verify( army );
