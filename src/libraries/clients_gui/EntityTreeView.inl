@@ -79,14 +79,3 @@ bool EntityTreeView< Entity >::IsTypeRejected( const kernel::Entity_ABC& entity 
 {
     return entity.GetTypeName() != Entity::typeName_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: EntityTreeView::CanShowContextMenu
-// Created: NPT 2013-03-06
-// -----------------------------------------------------------------------------
-template< typename Entity >
-inline
-bool EntityTreeView< Entity >::CanShowContextMenu( const kernel::Entity_ABC& entity )
-{
-    return entity.GetId() != 0;
-}

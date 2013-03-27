@@ -229,7 +229,7 @@ void EntityTreeView_ABC::contextMenuEvent( QContextMenuEvent* event )
         if( index.isValid() )
         {
             const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( dataModel_.GetMainModelIndex( indexAt( event->pos() ) ) );
-            if( entity && CanShowContextMenu( *entity ) )
+            if( entity )
             {
                 entity->ContextMenu( controllers_.actions_, event->globalPos() );
                 return;
@@ -237,15 +237,6 @@ void EntityTreeView_ABC::contextMenuEvent( QContextMenuEvent* event )
         }
         ContextMenuRequested( event->globalPos() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityTreeView_ABC::CanShowMenu
-// Created: NPT 2013-03-06
-// -----------------------------------------------------------------------------
-bool EntityTreeView_ABC::CanShowContextMenu( const kernel::Entity_ABC& /*entity*/ )
-{
-    return true;
 }
 
 // -----------------------------------------------------------------------------

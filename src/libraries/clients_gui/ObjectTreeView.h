@@ -50,16 +50,6 @@ protected:
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
     //@}
-
-    //! @name QWidget
-    //@{
-    virtual bool CanShowContextMenu( const kernel::Entity_ABC& entity );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 }

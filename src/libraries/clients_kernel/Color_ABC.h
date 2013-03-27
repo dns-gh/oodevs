@@ -44,6 +44,7 @@ public:
     virtual bool IsOverriden() const = 0;
     virtual const T_Color& GetColor() const = 0;
     virtual void ChangeColor( const T_Color& color ) = 0;
+    virtual void ChangeColor( xml::xistream& /*xis*/ ) {};
     virtual void Clear() = 0;
 
     inline void ChangeColor( const QColor& color ) { ChangeColor( T_Color( color.red(), color.green(), color.blue() ) ); }

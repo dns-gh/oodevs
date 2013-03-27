@@ -62,6 +62,15 @@ Color::Color( const kernel::Entity_ABC& parent )
 // -----------------------------------------------------------------------------
 Color::Color( xml::xistream& xis )
 {
+    ChangeColor( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Color::ChangeColor
+// Created: LGY 2013-03-26
+// -----------------------------------------------------------------------------
+void Color::ChangeColor( xml::xistream& xis )
+{
     std::string color;
     xis >> xml::optional
         >> xml::attribute< std::string >( "color", color );

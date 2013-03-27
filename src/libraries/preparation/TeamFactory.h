@@ -45,6 +45,7 @@ public:
     virtual kernel::Team_ABC* CreateTeam();
     virtual kernel::Team_ABC* CreateTeam( xml::xistream& xis );
     virtual kernel::Team_ABC* CreateNoSideTeam();
+    virtual void ConfigureNoSideTeam( kernel::Team_ABC& team, xml::xistream& xis );
     //@}
 
 private:

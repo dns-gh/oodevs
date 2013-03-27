@@ -116,7 +116,16 @@ kernel::Team_ABC* TeamFactory::CreateNoSideTeam()
 {
     kernel::Team_ABC* result = new gui::EntityImplementation< kernel::Team_ABC >( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ) );
     result->Attach( *new Objects() );
+    result->Attach< kernel::Color_ABC >( *new Color() );
     result->Attach< kernel::Diplomacies_ABC >( *new NoSideDiplomacy() );
-    // TODO other extensions needed?
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamFactory::ConfigureNoSideTeam
+// Created: LGY 2013-03-26
+// -----------------------------------------------------------------------------
+void TeamFactory::ConfigureNoSideTeam( kernel::Team_ABC& team, xml::xistream& xis )
+{
+    team.Get< kernel::Color_ABC >().ChangeColor( xis );
 }

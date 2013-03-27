@@ -191,7 +191,12 @@ void TeamsModel::ReadTeam( const std::string& tag, xml::xistream& xis, Model& mo
         Register( team->GetId(), *team );
     }
     else if( tag == "no-party" )
+    {
+        factory_.ConfigureNoSideTeam( *noSideTeam_, xis );
+        // Notify creation for color controller
+        controllers_.controller_.Create( *( kernel::Entity_ABC*)noSideTeam_.get() );
         team = noSideTeam_.get();
+    }
     else
         xis.error( "Unknown tag in \"parties\"" );
 

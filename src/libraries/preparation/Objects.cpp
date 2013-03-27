@@ -50,7 +50,6 @@ void Objects::SerializeAttributes( xml::xostream& xos ) const
     {
         xos << xml::start( "object" );
         it->second->SerializeAttributes( xos );
-        it->second->SerializePositions( xos );
         xos     << xml::start( "attributes" );
             it->second->GetInterfaces().Apply( &Serializable_ABC::SerializeObjectAttributes, xos );
         xos     << xml::end

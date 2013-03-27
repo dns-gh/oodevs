@@ -42,6 +42,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void ChangeColor( xml::xistream& xis );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 };

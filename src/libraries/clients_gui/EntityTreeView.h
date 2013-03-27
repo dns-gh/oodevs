@@ -55,7 +55,6 @@ public:
     virtual void NotifyCreated( const Entity& entity );
     virtual void NotifyDeleted( const Entity& entity );
     virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
-    virtual bool CanShowContextMenu( const kernel::Entity_ABC& entity );
     //@}
 
 private:

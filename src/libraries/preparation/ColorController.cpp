@@ -11,8 +11,11 @@
 #include "ColorController.h"
 #include "LogisticHierarchiesBase.h"
 #include "LogisticBaseStates.h"
+#include "Objects.h"
+#include "Object.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controller.h"
@@ -48,6 +51,7 @@ void ColorController::Add( const kernel::Entity_ABC& entity, const QColor& newCo
     if( it != colors_.end() )
         oldColor = it->second;
     AddSubordinate( entity, newColor, oldColor );
+    AddObjects( entity, newColor );
     UpdateHierarchies( entity );
 }
 
@@ -57,16 +61,31 @@ void ColorController::Add( const kernel::Entity_ABC& entity, const QColor& newCo
 // -----------------------------------------------------------------------------
 void ColorController::AddSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor, const boost::optional< QColor >& oldColor )
 {
-    colors_[ entity.GetId() ] = newColor;
-    if( const kernel::Color_ABC* pColor = entity.Retrieve< kernel::Color_ABC >() )
-        const_cast< kernel::Color_ABC* >( pColor )->ChangeColor( newColor );
-    tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
+    AddColor( entity, newColor );
+    if( const kernel::TacticalHierarchies* pTacticalHierarchies =  entity.Retrieve< kernel::TacticalHierarchies >() )
     {
-        const kernel::Entity_ABC& child = it.NextElement();
-        CIT_Colors it = colors_.find( child.GetId() );
-        if( it == colors_.end() || ( it != colors_.end() && oldColor && it->second == *oldColor ) )
-            AddSubordinate( child, newColor, oldColor );
+        tools::Iterator< const kernel::Entity_ABC& > it = pTacticalHierarchies->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const kernel::Entity_ABC& child = it.NextElement();
+            CIT_Colors it = colors_.find( child.GetId() );
+            if( it == colors_.end() || ( it != colors_.end() && oldColor && it->second == *oldColor ) )
+                AddSubordinate( child, newColor, oldColor );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorController::AddObjects
+// Created: LGY 2013-03-26
+// -----------------------------------------------------------------------------
+void ColorController::AddObjects( const kernel::Entity_ABC& entity, const QColor& newColor )
+{
+    if( const Objects* pObjects = entity.Retrieve< Objects >() )
+    {
+        tools::Iterator< const Object& > it = pObjects->CreateIterator();
+        while( it.HasMoreElements() )
+            AddColor( it.NextElement(), newColor );
     }
 }
 
@@ -81,6 +100,7 @@ void ColorController::Remove( const kernel::Entity_ABC& entity )
     {
         QColor color = it->second;
         RemoveSubordinate( entity, color );
+        RemoveObjects( entity );
         if( const kernel::TacticalHierarchies* pHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
             if( const kernel::Entity_ABC* pSuperior = pHierarchies->GetSuperior() )
                 if( const kernel::Color_ABC* pColor = pSuperior->Retrieve< kernel::Color_ABC >() )
@@ -96,16 +116,31 @@ void ColorController::Remove( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void ColorController::RemoveSubordinate( const kernel::Entity_ABC& entity, const QColor& color )
 {
-    colors_.erase( entity.GetId() );
-    if( const kernel::Color_ABC* pColor = entity.Retrieve< kernel::Color_ABC >() )
-        const_cast< kernel::Color_ABC* >( pColor )->Clear();
-    tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
+    ClearColor( entity );
+    if( const kernel::TacticalHierarchies* pHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
     {
-        const kernel::Entity_ABC& child = it.NextElement();
-        CIT_Colors it = colors_.find( child.GetId() );
-        if( it != colors_.end() && it->second == color )
-            RemoveSubordinate( child, color );
+        tools::Iterator< const kernel::Entity_ABC& > it = pHierarchies->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const kernel::Entity_ABC& child = it.NextElement();
+            CIT_Colors it = colors_.find( child.GetId() );
+            if( it != colors_.end() && it->second == color )
+                RemoveSubordinate( child, color );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorController::RemoveObjects
+// Created: LGY 2013-03-26
+// -----------------------------------------------------------------------------
+void ColorController::RemoveObjects( const kernel::Entity_ABC& entity )
+{
+    if( const Objects* pObjects = entity.Retrieve< Objects >() )
+    {
+        tools::Iterator< const Object& > it = pObjects->CreateIterator();
+        while( it.HasMoreElements() )
+            ClearColor( it.NextElement() );
     }
 }
 
@@ -115,17 +150,19 @@ void ColorController::RemoveSubordinate( const kernel::Entity_ABC& entity, const
 // -----------------------------------------------------------------------------
 void ColorController::UpdateHierarchies( const kernel::Entity_ABC& entity )
 {
-    if( const kernel::TacticalHierarchies* pTactical = entity.Retrieve< kernel::TacticalHierarchies >() )
-    {
-        controllers_.controller_.Update( *pTactical );
-        if( const kernel::CommunicationHierarchies* pCommunication = entity.Retrieve< kernel::CommunicationHierarchies >() )
-            controllers_.controller_.Update( *pCommunication );
-        else if( const kernel::CommunicationHierarchies* pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
-            controllers_.controller_.Update( *pCommunication );
-        if( const LogisticBaseStates* pLogistic = static_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() ) )
-            controllers_.controller_.Update( *pLogistic );
-        UpdateLogisticBaseStates( *pTactical );
-    }
+    controllers_.controller_.Update( entity );
+    if( entity.GetTypeName() != kernel::Object_ABC::typeName_ )
+        if( const kernel::TacticalHierarchies* pTactical = entity.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            controllers_.controller_.Update( *pTactical );
+            if( const kernel::CommunicationHierarchies* pCommunication = entity.Retrieve< kernel::CommunicationHierarchies >() )
+                controllers_.controller_.Update( *pCommunication );
+            else if( const kernel::CommunicationHierarchies* pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
+                controllers_.controller_.Update( *pCommunication );
+            if( const LogisticBaseStates* pLogistic = static_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() ) )
+                controllers_.controller_.Update( *pLogistic );
+            UpdateLogisticBaseStates( *pTactical );
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -163,13 +200,30 @@ void ColorController::Reset( const kernel::Entity_ABC& entity, const QColor& new
 // -----------------------------------------------------------------------------
 void ColorController::ResetSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor )
 {
-    colors_[ entity.GetId() ] = newColor;
-    if( const kernel::Color_ABC* pColor = entity.Retrieve< kernel::Color_ABC >() )
-        const_cast< kernel::Color_ABC* >( pColor )->ChangeColor( newColor );
+    AddColor( entity, newColor );
     tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
     while( it.HasMoreElements() )
-    {
-        const kernel::Entity_ABC& child = it.NextElement();
-        ResetSubordinate( child, newColor );
-    }
+        ResetSubordinate( it.NextElement(), newColor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorController::AddColor
+// Created: LGY 2013-03-27
+// -----------------------------------------------------------------------------
+void ColorController::AddColor( const kernel::Entity_ABC& entity, const QColor& color )
+{
+    colors_[ entity.GetId() ] = color;
+    if( const kernel::Color_ABC* pColor = entity.Retrieve< kernel::Color_ABC >() )
+        const_cast< kernel::Color_ABC* >( pColor )->ChangeColor( color );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorController::ClearColor
+// Created: LGY 2013-03-27
+// -----------------------------------------------------------------------------
+void ColorController::ClearColor( const kernel::Entity_ABC& entity )
+{
+    colors_.erase( entity.GetId() );
+    if( const kernel::Color_ABC* pColor = entity.Retrieve< kernel::Color_ABC >() )
+        const_cast< kernel::Color_ABC* >( pColor )->Clear();
 }
