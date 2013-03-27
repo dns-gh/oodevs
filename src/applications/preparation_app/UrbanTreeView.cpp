@@ -44,8 +44,8 @@ const QString UrbanTreeView::mimeType_( typeid( kernel::UrbanObject_ABC ).name()
 // Name: UrbanTreeView constructor
 // Created: JSR 2012-09-14
 // -----------------------------------------------------------------------------
-UrbanTreeView::UrbanTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, gui::SymbolIcons& symbols, const StaticModel& staticModel, QWidget* parent /*= 0*/ )
-    : gui::EntityTreeView_ABC( controllers, profile, modelObserver, parent )
+UrbanTreeView::UrbanTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, gui::SymbolIcons& symbols, const StaticModel& staticModel, QWidget* parent /*= 0*/ )
+    : gui::EntityTreeView_ABC( objectName, controllers, profile, modelObserver, parent )
     , symbols_( symbols )
     , staticModel_( staticModel )
 {

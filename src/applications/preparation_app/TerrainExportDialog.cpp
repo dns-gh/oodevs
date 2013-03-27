@@ -14,6 +14,10 @@
 #include "preparation/UrbanFileExporter.h"
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/resources.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichGroupBox.h"
+#include "clients_gui/RichLineEdit.h"
+#include "clients_gui/RichCheckBox.h"
 #include "tools/ExerciseConfig.h"
 #include <extractor/TerrainExportManager.h>
 #include <terrain/PlanarCartesianProjector.h>
@@ -29,18 +33,19 @@ TerrainExportDialog::TerrainExportDialog( QWidget* parent, const tools::Exercise
     , config_    ( config )
 {
     setCaption( tr( "Terrain Export" ) );
+    gui::SubObjectName subObject( "TerrainExportDialog" );
 
     QVBoxLayout* mainLayout = new QVBoxLayout();
     mainLayout->setMargin( 5 );
 
-    QGroupBox* exportGroupBox = new QGroupBox();
+    gui::RichGroupBox* exportGroupBox = new gui::RichGroupBox( "export" );
     QHBoxLayout* layoutExportFolder = new QHBoxLayout();
     QLabel* labelshp = new QLabel( tr( "Export directory:"), this );
-    exportPathEditor_ = new QLineEdit( );
+    exportPathEditor_ = new gui::RichLineEdit( "exportPathEditor" );
     exportPathEditor_->setReadOnly( true );
     exportPathEditor_->setMinimumWidth( 250 );
 
-    QPushButton* pBrowseExport = new QPushButton( tr( "..." ) );
+    gui::RichPushButton* pBrowseExport = new gui::RichPushButton( "browseExport", tr( "..." ) );
     pBrowseExport->setFixedWidth( 20 );
     pBrowseExport->setFixedHeight( 20 );
 
@@ -50,20 +55,20 @@ TerrainExportDialog::TerrainExportDialog( QWidget* parent, const tools::Exercise
     exportGroupBox->setLayout( layoutExportFolder );
 
     QHBoxLayout* layoutButton = new QHBoxLayout();
-    okButton_ = new QPushButton( tr( "Ok" ) );
+    okButton_ = new gui::RichPushButton( "ok", tr( "Ok" ) );
     okButton_->adjustSize();
-    QPushButton* pCancel = new QPushButton( tr( "Cancel" ) );
+    gui::RichPushButton* pCancel = new gui::RichPushButton( "cancel", tr( "Cancel" ) );
     layoutButton->addWidget( okButton_ );
     layoutButton->addWidget( pCancel );
     layoutButton->setAlignment( Qt::AlignRight );
 
-    shapeCheck_ = new QCheckBox( tr( "Export vector data (Shapefile)" ) );
+    shapeCheck_ = new gui::RichCheckBox( "shapeCheck", tr( "Export vector data (Shapefile)" ) );
     connect( shapeCheck_, SIGNAL( clicked( bool ) ), SLOT( CheckExportReady() ) );
     shapeCheck_->setChecked( true );
-    rasterCheck_ = new QCheckBox( tr( "Export raster data (GeoTIFF)" ) );
+    rasterCheck_ = new gui::RichCheckBox( "rasterCheck", tr( "Export raster data (GeoTIFF)" ) );
     connect( rasterCheck_, SIGNAL( clicked( bool ) ), SLOT( CheckExportReady() ) );
     rasterCheck_->setChecked( true );
-    elevationCheck_ = new QCheckBox( tr( "Export elevation data (ESRI Ascii GRID)" ) );
+    elevationCheck_ = new gui::RichCheckBox( "elevationCheck", tr( "Export elevation data (ESRI Ascii GRID)" ) );
     connect( elevationCheck_, SIGNAL( clicked( bool ) ), SLOT( CheckExportReady() ) );
     elevationCheck_->setChecked( true );
 
@@ -78,6 +83,8 @@ TerrainExportDialog::TerrainExportDialog( QWidget* parent, const tools::Exercise
     connect( pBrowseExport, SIGNAL( clicked() ), this, SLOT( OnBrowseExport() ) );
     connect( okButton_, SIGNAL( clicked() ), this, SLOT( accept() ) );
     connect( pCancel, SIGNAL( clicked() ), this, SLOT( reject() ) );
+
+
 }
 
 // -----------------------------------------------------------------------------

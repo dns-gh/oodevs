@@ -25,6 +25,8 @@ namespace gui
     class PanelStack_ABC;
     template< typename T > class ValuedComboBox;
     class WeatherLayer;
+    class RichTimeEdit;
+    class RichDateTimeEdit;
 }
 namespace weather
 {
@@ -75,9 +77,9 @@ private:
     kernel::Controllers& controllers_;
     WeatherModel* currentModel_;
 
-    QDateTimeEdit* time_;
-    QTimeEdit* sunrise_;
-    QTimeEdit* sunset_;
+    gui::RichDateTimeEdit* time_;
+    gui::RichTimeEdit* sunrise_;
+    gui::RichTimeEdit* sunset_;
     gui::ValuedComboBox< E_LightingType >* dayLighting_;
     gui::ValuedComboBox< E_LightingType >* nightLighting_;
     QDateTimeEdit* endTime_;

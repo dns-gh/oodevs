@@ -20,8 +20,8 @@
 // Name: PopulationTreeView constructor
 // Created: JSR 2012-09-21
 // -----------------------------------------------------------------------------
-PopulationTreeView::PopulationTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
-    : gui::PopulationTreeView( controllers, profile, modelObserver, parent )
+PopulationTreeView::PopulationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
+    : gui::PopulationTreeView( objectName, controllers, profile, modelObserver, parent )
 {
     EnableDragAndDrop( true );
 }

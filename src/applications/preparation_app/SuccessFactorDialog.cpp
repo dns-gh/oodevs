@@ -13,6 +13,9 @@
 #include "SuccessFactorList.h"
 #include "preparation/ScoresModel.h"
 #include "preparation/SuccessFactorsModel.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichLineEdit.h"
+#include "clients_gui/RichGroupBox.h"
 
 namespace
 {
@@ -41,6 +44,7 @@ SuccessFactorDialog::SuccessFactorDialog( QWidget* parent, kernel::Controllers& 
     , model_( model )
     , scores_( scores )
 {
+    gui::SubObjectName subObject( "SuccessFactorDialog" );
     setModal( false );
     setCaption( tr( "Success factors" ) );
     Q3GridLayout* grid = new Q3GridLayout( this, 3, 1, 0, 5 );
@@ -52,21 +56,30 @@ SuccessFactorDialog::SuccessFactorDialog( QWidget* parent, kernel::Controllers& 
         connect( factors, SIGNAL( Deleted( const SuccessFactor& ) ), SLOT( OnDelete( const SuccessFactor& ) ) );
     }
     {
-        Q3GroupBox* box = new Q3HGroupBox( tr( "Create new factor" ), this );
-        new QLabel( tr( "Name: " ), box );
-        editor_ = new QLineEdit( box );
+        //label
+        QLabel* factorNamelabel = new QLabel( tr( "Name: " ) );
+        //Richlineedit
+        editor_ = new gui::RichLineEdit( "editor" );
         editor_->setValidator( new NameValidator( editor_, model_ ) );
-        createButton_ = new QPushButton( tr( "Create" ), box );
-        createButton_->setEnabled( false );
-        grid->addWidget( box, 1, 0 );
         connect( editor_, SIGNAL( textChanged( const QString& ) ), SLOT( OnCreateTextChanged( const QString& ) ) );
+        //RichPushButton
+        createButton_ = new gui::RichPushButton( "create", tr( "Create" ) );
+        createButton_->setEnabled( false );
         connect( createButton_, SIGNAL( clicked() ), SLOT( OnCreateButtonClicked() ) );
+        //container
+        gui::RichGroupBox* successFactorBox = new gui::RichGroupBox( "successFactorBox", tr( "Create new factor" ), this );
+        QHBoxLayout* succesFactorLayout = new QHBoxLayout( successFactorBox );
+        succesFactorLayout->addWidget( factorNamelabel );
+        succesFactorLayout->addWidget( editor_ );
+        succesFactorLayout->addWidget( createButton_ );
+        grid->addWidget( successFactorBox, 1, 0 );
     }
     {
-        QPushButton* ok = new QPushButton( tr( "Ok" ), this );
+        gui::RichPushButton* ok = new gui::RichPushButton( "ok", tr( "Ok" ), this );
         grid->addWidget( ok, 2, 0 );
         connect( ok, SIGNAL( clicked() ), SLOT( accept() ) );
     }
+
 }
 
 // -----------------------------------------------------------------------------

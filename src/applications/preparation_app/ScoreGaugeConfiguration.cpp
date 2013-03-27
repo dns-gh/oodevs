@@ -10,7 +10,11 @@
 #include "preparation_app_pch.h"
 #include "ScoreGaugeConfiguration.h"
 #include "moc_ScoreGaugeConfiguration.cpp"
+#include "clients_gui/RichGroupBox.h"
+#include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichSpinBox.h"
+#include "clients_gui/RichLineEdit.h"
+#include "clients_gui/RichTableWidget.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "indicators/Gauge.h"
@@ -53,27 +57,27 @@ ScoreGaugeConfiguration::ScoreGaugeConfiguration( QWidget* parent, kernel::Contr
     , controllers_( controllers )
     , gaugeTypes_( gaugeTypes )
 {
+    gui::SubObjectName subObject( "ScoreGaugeConfiguration" );
     setMargin( 5 );
     {
         Q3HBox* box = new Q3HBox( this );
         new QLabel( tr( "Representation type: " ), box );
-        type_ = new gui::ValuedComboBox< const indicators::GaugeType* >( box );
+        type_ = new gui::ValuedComboBox< const indicators::GaugeType* >( "type", box );
         connect( type_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
     }
     {
-        Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tr( "Value normalization" ), this );
-        box->setMargin( 5 );
+        Q3HBox* hbox = new Q3HBox();
+        hbox->setSpacing( 5 );
         {
-            Q3HBox* hbox = new Q3HBox( box );
             {
                 QLabel* label = new QLabel( tr( "Steps: " ), hbox );
-                steps_ = new gui::RichSpinBox( hbox, 1, 100, 1 );
+                steps_ = new gui::RichSpinBox( "steps", hbox, 1, 100, 1 );
                 label->setBuddy( steps_ );
                 connect( steps_, SIGNAL( valueChanged( int ) ), SLOT( OnChangeStep( int ) ) );
             }
             {
                 QLabel* label = new QLabel( tr( "Min: " ), hbox );
-                min_ = new QLineEdit( hbox );
+                min_ = new gui::RichLineEdit( "min", hbox );
                 min_->setValidator( new QDoubleValidator( min_ ) );
                 label->setBuddy( min_ );
                 min_->setText( "0" );
@@ -81,30 +85,37 @@ ScoreGaugeConfiguration::ScoreGaugeConfiguration( QWidget* parent, kernel::Contr
             }
             {
                 QLabel* label = new QLabel( tr( "Max: " ), hbox );
-                max_ = new QLineEdit( hbox );
+                max_ = new gui::RichLineEdit( "max", hbox );
                 max_->setValidator( new QDoubleValidator( max_ ) );
                 label->setBuddy( max_ );
                 max_->setText( "100" );
                 connect( max_, SIGNAL( textChanged( const QString& ) ), SLOT( OnChangeBoundaries() ) );
             }
             {
-                QPushButton* reverse = new QPushButton( tr( "Reverse" ), hbox );
+                gui::RichPushButton* reverse = new gui::RichPushButton( "reverse", tr( "Reverse" ), hbox );
                 connect( reverse, SIGNAL( clicked() ), SLOT( OnReverseSymbols() ) );
             }
         }
+        intervals_ = new gui::RichTableWidget("intervalsTable" );
         {
-            intervals_ = new QTableWidget( box );
             intervals_->setColumnCount( 3 );
             QStringList headers;
             headers << tr( "Min" ) << tr( "Max" ) << tr( "Symbol" );
             intervals_->setHorizontalHeaderLabels( headers );
+            intervals_->resizeColumnsToContents();
             intervals_->setFixedHeight( 150 );
             intervals_->verticalHeader()->hide();
             AddInterval();
             connect( intervals_, SIGNAL( cellChanged( int, int ) ), SLOT( OnChangeValue( int, int ) ) );
         }
+        gui::RichGroupBox* valueNormalizationBox = new gui::RichGroupBox( "valueNormalizationBox", tr( "Value normalization" ), this );
+        QVBoxLayout* valueNormalizationBoxLayout = new QVBoxLayout( valueNormalizationBox );
+        valueNormalizationBoxLayout->addWidget( hbox );
+        valueNormalizationBoxLayout->addWidget( intervals_ );
+        valueNormalizationBoxLayout->setMargin( 5 );
     }
     controllers_.Register( *this );
+
 }
 
 // -----------------------------------------------------------------------------

@@ -28,6 +28,8 @@ namespace gui
     class GlTools_ABC;
     class ParametersLayer;
     class Viewport_ABC;
+    class RichPushButton;
+    class RichLineEdit;
 }
 
 namespace kernel
@@ -102,8 +104,8 @@ private:
     kernel::Controllers& controllers_;
     gui::GlTools_ABC& tools_;
     actions::gui::InterfaceBuilder_ABC& builder_;
-    QLineEdit* name_;
-    QPushButton* ok_;
+    gui::RichLineEdit* name_;
+    gui::RichPushButton* ok_;
     gui::ValuedComboBox< std::string >* type_;
     Q3VBox* paramBox_;
     boost::shared_ptr< actions::gui::Param_ABC > parameter_;

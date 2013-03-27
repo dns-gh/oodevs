@@ -12,6 +12,12 @@
 #include "moc_ExerciseDialog.cpp"
 #include "clients_gui/FileDialog.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/RichCheckBox.h"
+#include "clients_gui/RichGroupBox.h"
+#include "clients_gui/RichLineEdit.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichTextEdit.h"
+#include "clients_gui/RichTreeView.h"
 #include <boost/algorithm/string.hpp>
 #include "tools/ExerciseConfig.h"
 
@@ -27,6 +33,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
     , resources_( new QStandardItemModel( this) )
     , orderFiles_( new QStandardItemModel( this) )
 {
+    gui::SubObjectName subObject( "ExerciseDialog" );
     setModal( false );
     setCaption( tr( "Exercise" ) );
     QGridLayout* grid = new QGridLayout( this );
@@ -37,22 +44,24 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
     grid->setRowStretch( 3, 1 );
     grid->setRowStretch( 4, 1 );
     {
-        QGroupBox* box = new QGroupBox( tr( "Information" ), this );
+        gui::RichGroupBox* box = new gui::RichGroupBox( "information", tr( "Information" ), this );
+        gui::SubObjectName subObject( "information" );
         QHBoxLayout* layout = new QHBoxLayout();
         box->setLayout( layout );
         layout->addWidget( new QLabel( tr( "Name:" ) ) );
-        name_ = new QLineEdit( box );
+        name_ = new gui::RichLineEdit( "name", box );
         layout->addWidget( name_ );
         grid->addWidget( box, 0, 0, 1, 2 );
     }
     {
-        QGroupBox* box = new QGroupBox( tr( "Briefing" ), this );
+        gui::RichGroupBox* box = new gui::RichGroupBox( "briefingBox", tr( "Briefing" ), this );
+        gui::SubObjectName subObject( "briefingBox" );
         QVBoxLayout* vLayout = new QVBoxLayout();
         box->setLayout( vLayout );
         QHBoxLayout* hLayout = new QHBoxLayout();
         vLayout->addLayout( hLayout );
         hLayout->addWidget( new QLabel( tr( "Language" ) ) );
-        lang_ = new gui::ValuedComboBox< QString >();
+        lang_ = new gui::ValuedComboBox< QString >( "lang" );
         hLayout->addWidget( lang_ );
 
         lang_->AddItem( tr( "English" ), "en" );
@@ -61,20 +70,21 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         lang_->AddItem( tr( "Arabic" ), "ar" );
 
         connect( lang_, SIGNAL( activated( int ) ), this, SLOT( OnChangeLang() ) );
-        QPushButton* textFormat = new QPushButton( tr( "source" ) );
+        gui::RichPushButton* textFormat = new gui::RichPushButton( "source", tr( "source" ) );
         hLayout->addWidget( textFormat );
         textFormat->setToggleButton( true );
         connect( textFormat, SIGNAL( toggled( bool ) ), this, SLOT( OnToggleDisplayMode( bool ) ) );
-        briefing_ = new QTextEdit();
+        briefing_ = new gui::RichTextEdit( "briefing" );
         vLayout->addWidget( briefing_ );
         briefing_->setTextFormat( Qt::RichText );
         grid->addWidget( box, 1, 0, 1, 2 );
     }
     {
-        QGroupBox* box = new QGroupBox( tr( "Files" ) );
+        gui::RichGroupBox* box = new gui::RichGroupBox( "filesBox", tr( "Files" ) );
+        gui::SubObjectName subObject( "filesBox" );
         QHBoxLayout* layout = new QHBoxLayout();
         box->setLayout( layout );
-        resourcesView_ = new QTreeView();
+        resourcesView_ = new gui::RichTreeView( "resourcesView" );
         layout->addWidget( resourcesView_ );
         resourcesView_->setModel( resources_ );
         resources_->setColumnCount( 2 );
@@ -84,21 +94,22 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         resourcesView_->header()->setMovable( false );
         QVBoxLayout* vLayout = new QVBoxLayout();
         layout->addLayout( vLayout );
-        QPushButton* add = new QPushButton( tr( "+" ) );
+        gui::RichPushButton* add = new gui::RichPushButton( "add", tr( "+" ) );
         vLayout->addWidget( add );
         add->setMaximumWidth( 40 );
         connect( add, SIGNAL( clicked() ), this, SLOT( OnAddResource() ) );
-        QPushButton* del = new QPushButton( tr( "-" ) );
+        gui::RichPushButton* del = new gui::RichPushButton( "del", tr( "-" ) );
         vLayout->addWidget( del );
         del->setMaximumWidth( 40 );
         connect( del, SIGNAL( clicked() ), this, SLOT( OnDeleteResource() ) );
         grid->addWidget( box, 2, 0, 1, 2 );
     }
     {
-        QGroupBox* box = new QGroupBox( tr( "Order files" ) );
+        gui::RichGroupBox* box = new gui::RichGroupBox( "orderFilesBox", tr( "Order files" ) );
+        gui::SubObjectName subObject( "orderFilesBox" );
         QHBoxLayout* layout = new QHBoxLayout();
         box->setLayout( layout );
-        orderFilesView_ = new QTreeView();
+        orderFilesView_ = new gui::RichTreeView( "orderFilesView" );
         layout->addWidget( orderFilesView_ );
         orderFilesView_->setModel( orderFiles_ );
         QStringList headers( tr( "File" ) );
@@ -106,30 +117,31 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         orderFilesView_->header()->setMovable( false );
         QVBoxLayout* vLayout = new QVBoxLayout();
         layout->addLayout( vLayout );
-        QPushButton* add = new QPushButton( tr( "+" ) );
+        gui::RichPushButton* add = new gui::RichPushButton( "add", tr( "+" ) );
         vLayout->addWidget( add );
         add->setMaximumWidth( 40 );
         connect( add, SIGNAL( clicked() ), this, SLOT( OnAddOrderFile() ) );
-        QPushButton* del = new QPushButton( tr( "-" ) );
+        gui::RichPushButton* del = new gui::RichPushButton( "delete", tr( "-" ) );
         vLayout->addWidget( del );
         del->setMaximumWidth( 40 );
         connect( del, SIGNAL( clicked() ), this, SLOT( OnDeleteOrderFile() ) );
         grid->addWidget( box, 3, 0, 1, 2 );
     }
     {
-        QGroupBox* box = new QGroupBox( tr( "Parameters" ) );
+        gui::RichGroupBox* box = new gui::RichGroupBox( "parameters", tr( "Parameters" ) );
+        gui::SubObjectName subObject( "parameters" );
         QVBoxLayout* vLayout = new QVBoxLayout();
         box->setLayout( vLayout );
-        infiniteDotationsCheckBox_ = new QCheckBox( tr( "Infinite resources" ) );
+        infiniteDotationsCheckBox_ = new gui::RichCheckBox( tr( "Infinite resources" ) );
         vLayout->addWidget( infiniteDotationsCheckBox_ );
-        humanEvolutionCheckBox_ = new QCheckBox( tr( "Human factors automatic evolution" ) );
+        humanEvolutionCheckBox_ = new gui::RichCheckBox( tr( "Human factors automatic evolution" ) );
         vLayout->addWidget( humanEvolutionCheckBox_ );
         grid->addWidget( box, 4, 0, 1, 2 );
     }
     {
         QHBoxLayout* box = new QHBoxLayout();
-        QPushButton* ok = new QPushButton( tr( "Ok" ) );
-        QPushButton* cancel = new QPushButton( tr( "Cancel" ) );
+        gui::RichPushButton* ok = new gui::RichPushButton( "ok", tr( "Ok" ) );
+        gui::RichPushButton* cancel = new gui::RichPushButton( "cancel", tr( "Cancel" ) );
         box->addWidget( ok );
         box->addWidget( cancel );
         grid->addLayout( box, 5, 1 );
@@ -137,6 +149,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
     }
     controllers_.Register( *this );
+
 }
 
 // -----------------------------------------------------------------------------

@@ -18,11 +18,11 @@
 // Name: SuccessFactorActionsEditor constructor
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-SuccessFactorActionsEditor::SuccessFactorActionsEditor( QWidget* parent, const SuccessFactorActionTypes& actionTypes )
-    : Q3ScrollView( parent )
-    , mainWidget_( 0 )
+SuccessFactorActionsEditor::SuccessFactorActionsEditor( const QString& objectName, const SuccessFactorActionTypes& actionTypes )
+    : mainWidget_( 0 )
     , actionTypes_( actionTypes )
 {
+    gui::ObjectNameManager::getInstance()->SetObjectName( this, objectName );
     setHScrollBarMode( Q3ScrollView::AlwaysOff );
     setResizePolicy( Q3ScrollView::AutoOneFit );
     setFrameStyle( Q3Frame::Panel | Q3Frame::Sunken );
@@ -34,7 +34,7 @@ SuccessFactorActionsEditor::SuccessFactorActionsEditor( QWidget* parent, const S
 // -----------------------------------------------------------------------------
 SuccessFactorActionsEditor::~SuccessFactorActionsEditor()
 {
-    // NOTHING
+    gui::ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,8 @@ void SuccessFactorActionsEditor::CommitTo( SuccessFactorActions& actions ) const
 // -----------------------------------------------------------------------------
 SuccessFactorActionItem* SuccessFactorActionsEditor::CreateItem()
 {
-    SuccessFactorActionItem* item = new SuccessFactorActionItem( mainWidget_, actionTypes_ );
+    gui::SubObjectName subObject( "SuccessFactorActionsEditor" );
+    SuccessFactorActionItem* item = new SuccessFactorActionItem( "SuccessFactorActionItem" + QString::number( items_.size() ), mainWidget_, actionTypes_ );
     addChild( mainWidget_ );
     items_.push_back( item );
     items_.front()->EnableDeletion( items_.size() > 1 );

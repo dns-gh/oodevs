@@ -17,7 +17,9 @@
 #include "clients_kernel/VariantPointer.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichSpinBox.h"
+#include "clients_gui/RichTableView.h"
 #include "preparation/UrbanHierarchies.h"
 #include "preparation/UrbanModel.h"
 
@@ -31,6 +33,7 @@ RemoveBlocksDialog::RemoveBlocksDialog( QWidget* parent, kernel::Controllers& co
     , controllers_( controllers )
     , processing_ ( false )
 {
+    gui::SubObjectName subObject( "RemoveBlocksDialog" );
     setCaption( tr( "Remove urban blocks" ) );
     setMinimumSize( 400, 500 );
 
@@ -41,7 +44,7 @@ RemoveBlocksDialog::RemoveBlocksDialog( QWidget* parent, kernel::Controllers& co
     sizeLayout->setMargin( 10 );
     sizeLayout->setSpacing( 10 );
     sizeLayout->addWidget( new QLabel( tr( "Minimum size:" ) ) );
-    sizeEditor_ = new gui::RichSpinBox();
+    sizeEditor_ = new gui::RichSpinBox( "sizeEditor" );
     sizeLayout->addWidget( sizeEditor_, 1 );
     sizeLayout->addWidget( new QLabel( tr( "m²" ) ) );
     connect( sizeEditor_, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
@@ -49,7 +52,7 @@ RemoveBlocksDialog::RemoveBlocksDialog( QWidget* parent, kernel::Controllers& co
     // List view
     horizontalHeaders_ << "" << tr( "ID" ) << tr( "Name" ) << tr( "Area (m²)" );
     dataModel_ = new QStandardItemModel( this );
-    tableView_ = new QTableView();
+    tableView_ = new gui::RichTableView( "tableView" );
     tableView_->setSortingEnabled( true );
     tableView_->setSelectionBehavior( QAbstractItemView::SelectRows );
     tableView_->setSelectionMode( QAbstractItemView::SingleSelection );
@@ -63,7 +66,7 @@ RemoveBlocksDialog::RemoveBlocksDialog( QWidget* parent, kernel::Controllers& co
     proxyModel->setSourceModel( dataModel_ );
     proxyModel->setSortRole( Qt::UserRole + 2 );
     tableView_->setModel( proxyModel );
-    tableView_->setEditTriggers( QTableView::AllEditTriggers );
+    tableView_->setEditTriggers( gui::RichTableView::AllEditTriggers );
 
     // Label layout
     QLabel* selectAllLabel = new QLabel();
@@ -82,9 +85,9 @@ RemoveBlocksDialog::RemoveBlocksDialog( QWidget* parent, kernel::Controllers& co
     labelLayout->addStretch();
 
     // Buttons
-    deleteButton_ = new QPushButton( tr( "Delete" ) );
+    deleteButton_ = new gui::RichPushButton( "delete", tr( "Delete" ) );
     connect( deleteButton_, SIGNAL( pressed() ), SLOT( accept() ) );
-    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ) );
+    gui::RichPushButton* cancelButton = new gui::RichPushButton( "cancel", tr( "Cancel" ) );
     connect( cancelButton, SIGNAL( pressed() ), SLOT( reject() ) );
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     buttonLayout->addWidget( deleteButton_ );
@@ -103,6 +106,8 @@ RemoveBlocksDialog::RemoveBlocksDialog( QWidget* parent, kernel::Controllers& co
     // Help
     QShortcut* s = new QShortcut( QKeySequence( Qt::Key_F1 ), this );
     connect( s, SIGNAL( activated() ), parent, SIGNAL( ShowHelp() ) );
+
+
 }
 
 // -----------------------------------------------------------------------------

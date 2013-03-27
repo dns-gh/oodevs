@@ -17,9 +17,11 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/Tools.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichLineEdit.h"
 #include "indicators/DataTypeFactory.h"
 #include "indicators/Variable.h"
-#include "clients_kernel/Tools.h"
 #include "preparation/StaticModel.h"
 #include <boost/assign/list_of.hpp>
 
@@ -38,18 +40,22 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Contr
     builder_.SetParamInterface( *this );
     builder_.SetParentObject( this );
 
+    gui::SubObjectName subObject( "ScoreVariableCreationWizard" );
     setCaption( tr( "Create variable" ) );
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     QGridLayout* grid = new QGridLayout( this, 3, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 1, 5 );
     {
-        Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, tr( "Information" ), this );
-        new QLabel( tr( "Name: " ), box );
-        name_ = new QLineEdit( box );
+
+        gui::SubObjectName subObject( "Information" );
+
+        QLabel* nameLabel = new QLabel( tr( "Name: " ) );
+        name_ = new gui::RichLineEdit( "name" );
         connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( OnChangeName() ) );
-        new QLabel( tr( "Type: " ), box );
-        type_ = new gui::ValuedComboBox< std::string >( box );
+
+        QLabel* typeLabel = new QLabel( tr( "Type: " ) );
+        type_ = new gui::ValuedComboBox< std::string >( "type" );
         type_->AddItem( tr( "Ambulance types" ), "ambulance types" );
         type_->AddItem( tr( "Crowd states" ), "crowd states" );
         type_->AddItem( tr( "Equipment list" ), "equipment list" );
@@ -68,9 +74,16 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Contr
         type_->AddItem( tr( "Unit list" ), "unit list" );
         type_->AddItem( tr( "Urban blocks" ), "urban block list" );
         type_->AddItem( tr( "Zone" ), "zone" );
-
         connect( type_, SIGNAL( activated( int ) ), SLOT( OnChangeType() ) );
-        grid->addWidget( box, 0, 0 );
+        connect( type_, SIGNAL( activated( int ) ), SLOT( OnChangeType() ) );
+
+        gui::RichGroupBox* informationBox = new gui::RichGroupBox( "Information", tr( "Information" ), this );
+        QVBoxLayout* informationBoxLayout = new QVBoxLayout( informationBox );
+        informationBoxLayout->addWidget( nameLabel );
+        informationBoxLayout->addWidget( name_ );
+        informationBoxLayout->addWidget( typeLabel );
+        informationBoxLayout->addWidget( type_ );
+        grid->addWidget( informationBox, 0, 0 );
     }
     {
         paramBox_ = new Q3VBox( this );
@@ -78,13 +91,14 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Contr
     }
     {
         Q3HBox* box = new Q3HBox( this );
-        ok_ = new QPushButton( tr( "Ok" ), box );
-        QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
+        ok_ = new gui::RichPushButton( "ok", tr( "Ok" ), box );
+        gui::RichPushButton* cancel = new gui::RichPushButton( "cancel", tr( "Cancel" ), box );
         grid->addWidget( box, 2, 0 );
         connect( ok_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
     }
     hide();
+
 }
 
 // -----------------------------------------------------------------------------
@@ -203,6 +217,7 @@ void ScoreVariableCreationWizard::OnChangeType()
         paramBox_ = new Q3VBox( this );
         static_cast< Q3GridLayout* >( layout() )->addWidget( paramBox_, 1, 0, 1, 2 );
     }
+    gui::SubObjectName subObject( "paramBox" );
 
     parameter_ = CreateParameter( type_->GetValue(), name_->text() );
     if( parameter_ )

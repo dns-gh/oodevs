@@ -15,6 +15,7 @@
 #include "ProfilesChecker.h"
 #include "icons.h"
 #include "preparation/Model.h"
+#include "clients_gui/RichPushButton.h"
 
 // -----------------------------------------------------------------------------
 // Name: ProfileDialog constructor
@@ -25,6 +26,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
     : ModalDialog( parent, "ProfileDialog" )
     , pChecher_( new ProfilesChecker() )
 {
+    gui::SubObjectName subObject( "UsersProfile" );
     setCaption( tr( "User profiles" ) );
     Q3GridLayout* grid = new Q3GridLayout( this, 3, 2 );
     grid->setColStretch( 0, 1 );
@@ -50,7 +52,7 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    pages_ = new UserProfileWidget( box, controllers, icons, extensions, *pChecher_, model );
+    pages_ = new UserProfileWidget( "UserProfileWidget", box, controllers, icons, extensions, *pChecher_, model );
     pages_->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
 
@@ -64,14 +66,15 @@ ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers,
     box->setMargin( 5 );
     box->setSpacing( 5 );
     box->setMaximumHeight( 40 );
-    QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
+    gui::RichPushButton* okBtn = new gui::RichPushButton( "ok", tr( "Ok" ), box );
     okBtn->setDefault( true );
-    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
+    gui::RichPushButton* cancelBtn = new gui::RichPushButton( "cancel", tr( "Cancel" ), box );
     grid->addWidget( box, 2, 1, Qt::AlignRight );
 
     connect( okBtn, SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
     hide();
+
 }
 
 // -----------------------------------------------------------------------------

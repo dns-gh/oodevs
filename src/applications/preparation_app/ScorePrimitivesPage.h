@@ -26,6 +26,11 @@ namespace indicators
     class Primitives;
 }
 
+namespace gui
+{
+    class RichTreeWidget;
+}
+
 // =============================================================================
 /** @class  ScorePrimitivesPage
     @brief  ScorePrimitivesPage
@@ -48,7 +53,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, const indicators::Primitives& primitives, const T_Filter& filter );
+             ScorePrimitivesPage( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const indicators::Primitives& primitives, const T_Filter& filter );
     virtual ~ScorePrimitivesPage();
     //@}
 
@@ -79,7 +84,7 @@ private:
     kernel::Controllers& controllers_;
     T_Filter filter_;
     const indicators::Primitives& primitives_;
-    QTreeWidget* list_;
+    gui::RichTreeWidget* list_;
     //@}
 };
 

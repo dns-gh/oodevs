@@ -11,6 +11,8 @@
 #include "LogisticStockEditor.h"
 #include "moc_LogisticStockEditor.cpp"
 #include "clients_gui/CommonDelegate.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichTableView.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
@@ -50,6 +52,7 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, Controllers& controll
 {
     controllers_.Register( *this );
     setCaption( tools::translate( "StocksEditionDialog", "Stocks Edition" ) );
+    gui::SubObjectName subObject( "LogisticStockEditor" );
     setMinimumSize( 350, 300 );
 
     dataModel_ = new QStandardItemModel( this );
@@ -57,7 +60,7 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, Controllers& controll
     delegate_ = new gui::CommonDelegate( this );
     delegate_->AddSpinBoxOnColumn( eDays, 0, std::numeric_limits< int >::max() );
 
-    tableView_ = new QTableView( this );
+    tableView_ = new gui::RichTableView( "tableView", this );
     tableView_->setModel( dataModel_ );
     tableView_->setItemDelegate( delegate_ );
     tableView_->setSelectionBehavior( QAbstractItemView::SelectRows );
@@ -65,8 +68,8 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, Controllers& controll
     tableView_->setAlternatingRowColors( true );
     tableView_->verticalHeader()->setVisible( false );
 
-    validateButton_ = new QPushButton( tr( "Ok" ), this );
-    cancelButton_   = new QPushButton( tr( "Cancel" ), this );
+    validateButton_ = new gui::RichPushButton( "ok", tr( "Ok" ), this );
+    cancelButton_   = new gui::RichPushButton( "cancel", tr( "Cancel" ), this );
 
     QGridLayout* layout = new QGridLayout( this, 2, 2, 10 );
     layout->addMultiCellWidget( tableView_, 0, 0, 0, 1 );

@@ -48,6 +48,7 @@ FilterDialogs::~FilterDialogs()
 // -----------------------------------------------------------------------------
 void FilterDialogs::Load()
 {
+    gui::SubObjectName subObject( "FilterDialogs" );
     assert( elements_.empty() );
     config_.GetLoader().LoadOptionalPhysicalFile( "filters", boost::bind( &FilterDialogs::Load, this, _1 ) );
     if( !Find( "import" ) )
@@ -99,7 +100,7 @@ void FilterDialogs::ReadSection( xml::xistream& xis )
     std::transform( name.begin(), name.end(), name.begin(), std::tolower );
     if( name != "export" && name != "import" )
         throw MASA_EXCEPTION( tools::translate( "FilterDialogs", "Unknown section: %1." ).arg( name.c_str() ).toStdString() );
-    Register( name, *new FilterDialog( parent_, xis, config_ ) );
+    Register( name, *new FilterDialog( name.c_str(), parent_, xis, config_ ) );
 }
 
 // -----------------------------------------------------------------------------

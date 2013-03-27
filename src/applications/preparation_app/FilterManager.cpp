@@ -13,13 +13,14 @@
 #include "FilterCommand.h"
 #include "FilterXsl.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/RichListWidget.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: FilterManager constructor
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
-FilterManager::FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, QListWidget& list, Q3WidgetStack& stack, QWidget& parent )
+FilterManager::FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, gui::RichListWidget& list, Q3WidgetStack& stack, QWidget& parent )
     : description_( xis, tools::readLang() )
     , config_     ( config )
     , id_         ( xis.attribute< std::string >( "id" ) )
@@ -63,8 +64,9 @@ const std::string FilterManager::GetId() const
 // Name: FilterManager::ReadFilter
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
-void FilterManager::ReadFilter( xml::xistream& xis, QListWidget& list, Q3WidgetStack& stack )
+void FilterManager::ReadFilter( xml::xistream& xis, gui::RichListWidget& list, Q3WidgetStack& stack )
 {
+    gui::SubObjectName subObject( "FilterManager" );
     Filter_ABC* filter;
     if( xis.has_attribute( "command" ) )
     {
@@ -84,10 +86,10 @@ void FilterManager::ReadFilter( xml::xistream& xis, QListWidget& list, Q3WidgetS
 // Name: FilterManager::AddFilter
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
-void FilterManager::AddFilter( Filter_ABC& filter, QListWidget& list, Q3WidgetStack& stack )
+void FilterManager::AddFilter( Filter_ABC& filter, gui::RichListWidget& list, Q3WidgetStack& stack )
 {
     list.addItem( filter.GetName().c_str() );
-    stack.addWidget( filter.CreateParametersWidget( &stack ), static_cast< int >( filters_.size() ) );
+    stack.addWidget( filter.CreateParametersWidget( filter.GetName().c_str(), &stack ), static_cast< int >( filters_.size() ) );
     filters_.push_back( &filter );
 }
 

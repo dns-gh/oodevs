@@ -14,6 +14,8 @@
 #include "preparation/Model.h"
 #include "preparation/ProfilesGenerator.h"
 #include "preparation/ProfilesModel.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichRadioButton.h"
 
 // -----------------------------------------------------------------------------
 // Name: ProfileWizardDialog constructor
@@ -24,6 +26,7 @@ ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model )
     , generator_   ( new ProfilesGenerator( model, model.profiles_ ) )
     , profiles_    ( model.profiles_ )
 {
+    gui::SubObjectName subObject( "ProfileWizardDialog" );
     setCaption( tr( "User profiles creation wizard" ) );
 
     Q3GridLayout* grid = new Q3GridLayout( this, 3, 1 );
@@ -50,21 +53,21 @@ ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model )
         box->setMargin( 5 );
         profileTypes_ = new Q3VButtonGroup( tr( "Select profiles to generate: " ), box );
         profileTypes_->setRadioButtonExclusive( true );
-        profileTypes_->insert( new QRadioButton( tr( "one profile per side" ), profileTypes_ )               , 0 );
-        profileTypes_->insert( new QRadioButton( tr( "one profile per top-level formation" ), profileTypes_ ), 1 );
-        profileTypes_->insert( new QRadioButton( tr( "one profile per formation" ), profileTypes_ )          , 2 );
+        profileTypes_->insert( new gui::RichRadioButton( "oneProfileSide", tr( "one profile per side" ), profileTypes_ )               , 0 );
+        profileTypes_->insert( new gui::RichRadioButton( "oneProfileTopLevel", tr( "one profile per top-level formation" ), profileTypes_ ), 1 );
+        profileTypes_->insert( new gui::RichRadioButton( "oneProfileFormation", tr( "one profile per formation" ), profileTypes_ )          , 2 );
         profileTypes_->setButton( 0 );
 
         creationMode_ = new Q3HButtonGroup( tr( "Select creation mode: " ), box );
         creationMode_->setRadioButtonExclusive( true );
-        creationMode_->insert( new QRadioButton( tr( "clear existing profiles" ), creationMode_ )     , 0 );
-        creationMode_->insert( new QRadioButton( tr( "add new profiles to existing" ), creationMode_ ), 1 );
+        creationMode_->insert( new gui::RichRadioButton( "clearProfile", tr( "clear existing profiles" ), creationMode_ )     , 0 );
+        creationMode_->insert( new gui::RichRadioButton( "addNewProfile", tr( "add new profiles to existing" ), creationMode_ ), 1 );
         creationMode_->setButton( 0 );
 
         creationRight_ = new Q3HButtonGroup( tr( "Select creation permissions: " ), box );
         creationRight_->setRadioButtonExclusive( true );
-        creationRight_->insert( new QRadioButton( tr( "writeable" ), creationRight_ ), 0 );
-        creationRight_->insert( new QRadioButton( tr( "readonly" ) , creationRight_ ), 1 );
+        creationRight_->insert( new gui::RichRadioButton( "writeable", tr( "writeable" ), creationRight_ ), 0 );
+        creationRight_->insert( new gui::RichRadioButton( "readonly", tr( "readonly" ) , creationRight_ ), 1 );
         creationRight_->setButton( 0 );
 
         grid->addWidget( box, 1, 0 );
@@ -74,15 +77,16 @@ ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model )
         Q3HBox* box = new Q3HBox( this );
         box->setMargin( 5 );
         box->setMaximumHeight( 40 );
-        QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
+        gui::RichPushButton* okBtn = new gui::RichPushButton( "ok", tr( "Ok" ), box );
         okBtn->setDefault( true );
-        QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
+        gui::RichPushButton* cancelBtn = new gui::RichPushButton( "cancel", tr( "Cancel" ), box );
         grid->addWidget( box, 2, 0, Qt::AlignRight );
 
         connect( okBtn, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancelBtn, SIGNAL( clicked() ), SLOT( reject() ) );
     }
     hide();
+
 }
 
 // -----------------------------------------------------------------------------

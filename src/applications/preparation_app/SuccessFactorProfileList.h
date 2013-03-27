@@ -11,6 +11,7 @@
 #define __SuccessFactorProfileList_h_
 
 #include "tools/ElementObserver_ABC.h"
+#include "clients_gui/RichListWidget.h"
 
 namespace kernel
 {
@@ -26,14 +27,14 @@ class UserProfile;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorProfileList : public QListWidget
+class SuccessFactorProfileList : public gui::RichListWidget
                                , public tools::Observer_ABC
                                , public tools::ElementObserver_ABC< UserProfile >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SuccessFactorProfileList( QWidget* parent, kernel::Controllers& controllers );
+    SuccessFactorProfileList( const QString& objectName, kernel::Controllers& controllers );
     virtual ~SuccessFactorProfileList();
     //@}
 

@@ -17,6 +17,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace gui
+{
+    class RichListView;
+}
+
 class UserProfile;
 class UserProfileWidget;
 class ProfilesModel;
@@ -91,7 +96,7 @@ private:
     T_Profiles             profiles_;
     T_ProfileEditors       editors_;
     UserProfileWidget&     pages_;
-    QListView*             list_;
+    gui::RichListView*          list_;
     QSortFilterProxyModel* proxyModel_;
     QStandardItemModel*    dataModel_;
     std::auto_ptr< NewProfileDialog > pNewProfileDialog_;

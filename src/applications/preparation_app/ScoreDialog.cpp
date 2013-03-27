@@ -13,6 +13,9 @@
 #include "moc_ScoreDialog.cpp"
 #include "actions_gui/InterfaceBuilder.h"
 #include "clients_gui/SimpleLocationDrawer.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichLineEdit.h"
+#include "clients_gui/RichGroupBox.h"
 #include "preparation/ScoresModel.h"
 #include "preparation/StaticModel.h"
 
@@ -40,7 +43,7 @@ namespace
 // Name: ScoreDialog constructor
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
+ScoreDialog::ScoreDialog( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
                           gui::ParametersLayer& layer, const ::StaticModel& staticModel, const tools::ExerciseConfig& config,
                           gui::GlTools_ABC& tools)
     : QDialog( parent, "ScoreDialog" )
@@ -48,35 +51,51 @@ ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, Sco
     , model_  ( model )
     , tools_  ( tools )
 {
+    gui::SubObjectName subObject( objectName );
     setModal( false );
     setCaption( tr( "Scores" ) );
     Q3GridLayout* grid = new Q3GridLayout( this, 3, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 0, 4 );
     {
-        Q3GroupBox* box = new Q3HGroupBox( tr( "Scores" ), this );
-        scores_ = new ScoreList( box, controllers, model, config, staticModel, tools, *builder_ );
-        grid->addMultiCellWidget( box, 0, 0, 0, 2 );
+        //score list
+        scores_ = new ScoreList( controllers, model, config, staticModel, tools, *builder_ );
         connect( scores_, SIGNAL( ScoreDeleted( const Score_ABC& ) ), SLOT( OnDeleteScore( const Score_ABC& ) ) );
         connect( scores_, SIGNAL( Show() ), SLOT( show() ) );
         connect( scores_, SIGNAL( Hide() ), SLOT( hide() ) );
+
+        //container
+        gui::RichGroupBox* scoreBox = new gui::RichGroupBox( "scoreBox", tr( "Scores" ), this );
+        QHBoxLayout* scoreBoxLayout = new QHBoxLayout( scoreBox );
+        scoreBoxLayout->addWidget( scores_ );
+        grid->addMultiCellWidget( scoreBox, 0, 0, 0, 2 );
     }
     {
-        Q3GroupBox* box = new Q3HGroupBox( tr( "Create new score" ), this );
-        new QLabel( tr( "Name: " ), box );
-        editor_ = new QLineEdit( box );
+        //label
+        QLabel* nameLabel = new QLabel( tr( "Name: " ) );
+        //RichLineEdit
+        editor_ = new gui::RichLineEdit( "editor" );
         editor_->setValidator( new NameValidator( editor_, model_ ) );
-        createButton_ = new QPushButton( tr( "Create" ), box );
-        createButton_->setEnabled( false );
-        grid->addMultiCellWidget( box, 1, 1, 0, 2 );
         connect( editor_, SIGNAL( textChanged( const QString& ) ), SLOT( OnCreateTextChanged( const QString& ) ) );
+        //create button
+        createButton_ = new gui::RichPushButton( "create", tr( "Create" ) );
+        createButton_->setEnabled( false );
         connect( createButton_, SIGNAL( clicked() ), SLOT( OnCreateButtonClicked() ) );
+
+        //container
+        gui::RichGroupBox* createNewScoreBox = new gui::RichGroupBox( "createNewScoreBox", tr( "Create new score" ), this );
+        QHBoxLayout* createNewScoreBoxLayout = new QHBoxLayout( createNewScoreBox );
+        createNewScoreBoxLayout->addWidget( nameLabel );
+        createNewScoreBoxLayout->addWidget( editor_ );
+        createNewScoreBoxLayout->addWidget( createButton_ );
+        grid->addMultiCellWidget( createNewScoreBox, 1, 1, 0, 2 );
     }
     {
-        QPushButton* ok = new QPushButton( tr( "Ok" ), this );
+        gui::RichPushButton* ok = new gui::RichPushButton( "ok", tr( "Ok" ), this );
         grid->addWidget( ok, 2, 2 );
         connect( ok, SIGNAL( clicked() ), SLOT( accept() ) );
     }
+
 }
 
 // -----------------------------------------------------------------------------

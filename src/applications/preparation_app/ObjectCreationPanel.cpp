@@ -13,6 +13,7 @@
 #include "ObjectPrototype.h"
 #include "clients_kernel/Controllers.h"
 #include "tools/GeneralConfig.h"
+#include "clients_gui/RichPushButton.h"
 
 #pragma warning( disable : 4355 )
 
@@ -25,17 +26,21 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& 
     , controllers_( controllers )
     , tools_      ( tools )
 {
+    gui::SubObjectName subObject( "ObjectCreationPanel" );
+    this->setObjectName( "ObjectCreationPanel" );
     QWidget* box = new QWidget( this );
-    QBoxLayout* layout = new QBoxLayout( box, QBoxLayout::TopToBottom, 0, 5 );
+    QVBoxLayout* layout = new QVBoxLayout( box );
     layout->setMargin( 5 );
     layout->setAlignment( Qt::AlignTop );
     {
-        created_ = new ObjectPrototype( this, controllers, model, objectsModel, urbanModel, noSideTeam, layer, config );
+        created_ = new ObjectPrototype( "created", this, controllers, model, objectsModel, urbanModel, noSideTeam, layer, config );
         layout->addWidget( created_ );
-        QPushButton* ok = new QPushButton( tr( "Create" ), this );
+        gui::RichPushButton* ok = new gui::RichPushButton( "ok", tr( "Create" ), this );
+        layout->addWidget( created_ );
         layout->addWidget( ok );
         connect( ok, SIGNAL( clicked() ), created_, SLOT( Commit() ) );
     }
+    layout->addStretch( 1 );
     setWidget( box );
     controllers_.Register( *this );
 }

@@ -17,6 +17,10 @@
 #include "ScoreVariablesList.h"
 #include "ScoreSyntaxHighlighter.h"
 
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichGroupBox.h"
+#include "clients_gui/RichLineEdit.h"
+#include "clients_gui/RichTabWidget.h"
 #include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "indicators/Gauge.h"
@@ -33,11 +37,11 @@ using namespace kernel;
 
 namespace
 {
-    class FormulaLineEdit : public QTextEdit
+    class FormulaLineEdit : public gui::RichTextEdit
     {
     public:
-        explicit FormulaLineEdit( QWidget* parent )
-            : QTextEdit( parent )
+        explicit FormulaLineEdit()
+            : gui::RichTextEdit( "FormulaLineEdit" )
         {
             setMaximumHeight( 50 );
         }
@@ -50,18 +54,18 @@ namespace
                 QTextCursor cursor = textCursor();
                 int selectionStart = cursor.selectionStart();
                 int selectionEnd = cursor.selectionEnd();
-                QTextEdit::focusOutEvent( e );
+                gui::RichTextEdit::focusOutEvent( e );
                 cursor.setPosition( selectionStart );
                 cursor.setPosition( selectionEnd, QTextCursor::KeepAnchor );
                 setTextCursor( cursor );
             }
             else
-                QTextEdit::focusOutEvent( e );
+                gui::RichTextEdit::focusOutEvent( e );
         }
 
         virtual void mousePressEvent( QMouseEvent* e )
         {
-            QTextEdit::mousePressEvent( e );
+            gui::RichTextEdit::mousePressEvent( e );
             mouseDoubleClickEvent( e );
         }
 
@@ -93,7 +97,7 @@ namespace
     class NameValidator : public QValidator
     {
     public:
-                 NameValidator( QLineEdit* parent, const ScoresModel& model, Score_ABC* const& score )
+                 NameValidator( gui::RichLineEdit* parent, const ScoresModel& model, Score_ABC* const& score )
                      : QValidator( parent )
                      , model_( &model )
                      , parent_( parent )
@@ -114,7 +118,7 @@ namespace
     private:
         NameValidator& operator=( const NameValidator& );
         const ScoresModel* model_;
-        QLineEdit* parent_;
+        gui::RichLineEdit* parent_;
         Score_ABC* const& score_;
     };
 }
@@ -131,33 +135,47 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, Sco
     , tools_( tools )
     , nameChanged_( false )
 {
+    gui::SubObjectName subObject( "ScoreEditor" );
     setCaption( tr( "Score editor" ) );
     Q3GridLayout* grid = new Q3GridLayout( this, 3, 1, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 1, 4 );
     {
-        Q3GroupBox* box = new Q3HGroupBox( tr( "Information" ), this );
-        new QLabel( tr( "Name:" ), box );
-        name_ = new QLineEdit( box );
+        QLabel* nameLabel = new QLabel( tr( "Name:" ) );
+        name_ = new gui::RichLineEdit( "name" );
         name_->setValidator( new NameValidator( name_, model, current_ ) );
-        grid->addWidget( box, 0, 0 );
+
+        gui::RichGroupBox* informationBox = new gui::RichGroupBox( tr( "Information" ), this );
+        gui::SubObjectName subObject( "informationBox" );
+        QHBoxLayout* informationBoxLayout = new QHBoxLayout( informationBox );
+        informationBoxLayout->addWidget( nameLabel );
+        informationBoxLayout->addWidget( name_ );
+        grid->addWidget( informationBox, 0, 0 );
     }
     {
-        QTabWidget* tabs = new QTabWidget( this );
+        gui::RichTabWidget* tabs = new gui::RichTabWidget( "tabs", this );
         {
+            gui::SubObjectName subObject( "tabs" );
             QWidget* page = new QWidget( tabs );
             Q3GridLayout* pageLayout = new Q3GridLayout( page, 6, 2, 0, 5 );
             pageLayout->setRowStretch( 1, 3 );
             pageLayout->setColStretch( 0, 2 );
             pageLayout->setColStretch( 1, 3 );
             {
-                Q3GroupBox* box = new Q3GroupBox( 2, Qt::Vertical, tr( "Formula" ), page );
-                formula_ = new FormulaLineEdit( box );
-                new ScoreSyntaxHighlighter( formula_, controllers, staticModel.indicators_ );
-                checkResult_ = new QLabel( box );
-                checkResult_->setMinimumHeight( 30 );
-                pageLayout->addMultiCellWidget( box, 0, 0, 0, 1 );
+                gui::SubObjectName subObject( "FormulaBox" );
+                formula_ = new FormulaLineEdit();
                 connect( formula_, SIGNAL( textChanged() ), SLOT( CheckFormula() ) );
+                new ScoreSyntaxHighlighter( formula_, controllers, staticModel.indicators_ );
+
+                checkResult_ = new QLabel();
+                checkResult_->setMinimumHeight( 30 );
+
+                gui::RichGroupBox* formulaBox = new gui::RichGroupBox( "FormulaBox", tr( "Formula" ), page );
+                QVBoxLayout* informationBoxLayout = new QVBoxLayout( formulaBox );
+                informationBoxLayout->addWidget( formula_ );
+                informationBoxLayout->addWidget( checkResult_ );
+
+                pageLayout->addMultiCellWidget( formulaBox, 0, 0, 0, 1 );
             }
             {
                 ScorePrimitivesLibrary* library = new ScorePrimitivesLibrary( page, controllers, staticModel.indicators_ );
@@ -166,19 +184,29 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, Sco
                 connect( library, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
             }
             {
-                Q3GroupBox* box = new Q3HGroupBox( tr( "Variables" ), page );
-                variables_ = new ScoreVariablesList( box, controllers, staticModel, tools, builder );
-                pageLayout->addWidget( box, 1, 1 );
+                variables_ = new ScoreVariablesList( controllers, staticModel, tools, builder );
                 connect( variables_, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
                 connect( variables_, SIGNAL( Updated() ), SLOT( CheckFormula() ) );
                 connect( variables_, SIGNAL( StartEdit() ), SLOT( hide() ) );
                 connect( variables_, SIGNAL( EndEdit() ), SLOT( show() ) );
+
+                gui::SubObjectName subObject( "VariablesBox" );
+                gui::RichGroupBox* variablesBox = new gui::RichGroupBox( "variablesBox", tr( "Variables" ), page );
+                QVBoxLayout* variablesBoxLayout = new QVBoxLayout( variablesBox );
+                variablesBoxLayout->addWidget( variables_ );
+                pageLayout->addWidget( variablesBox, 1, 1 );
             }
             {
-                Q3GroupBox* box = new Q3HGroupBox( page );
-                box->setMinimumHeight( 80 );
-                help_ = new QLabel( box );
-                pageLayout->addMultiCellWidget( box, 2, 2, 0, 1 );
+                gui::SubObjectName subObject( "helpBox" );
+
+                help_ = new QLabel();
+
+                gui::RichGroupBox* helpBox = new gui::RichGroupBox( "helpBox", page );
+                QHBoxLayout* helpBoxLayout = new QHBoxLayout( helpBox );
+                helpBoxLayout->addWidget( help_ );
+
+                helpBox->setMinimumHeight( 80 );
+                pageLayout->addMultiCellWidget( helpBox, 2, 2, 0, 1 );
             }
             tabs->addTab( page, tr( "Definition" ) );
         }
@@ -194,8 +222,8 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, Sco
     }
     {
         Q3HBox* box = new Q3HBox( this );
-        ok_ = new QPushButton( tr( "Ok" ), box );
-        QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
+        ok_ = new gui::RichPushButton( "ok", tr( "Ok" ), box );
+        gui::RichPushButton* cancel = new gui::RichPushButton( "cancel", tr( "Cancel" ), box );
         grid->addWidget( box, 2, 0, Qt::AlignRight );
         connect( ok_, SIGNAL( clicked() ), SLOT( Commit() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( Cancel() ) );

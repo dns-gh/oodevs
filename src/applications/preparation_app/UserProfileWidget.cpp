@@ -27,62 +27,98 @@
 #include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
 #include "preparation/Model.h"
+#include "clients_gui/RichCheckBox.h"
+#include "clients_gui/RichLineEdit.h"
+#include "clients_gui/RichTabWidget.h"
+#include "clients_gui/RichGroupBox.h"
 
 using namespace kernel;
+
+namespace
+{
+    QHBoxLayout* CreateLinelayout( const QString& text, gui::RichLineEdit* lineEdit )
+    {
+        QHBoxLayout* layout = new QHBoxLayout();
+        layout->addWidget( new QLabel( text ) );
+        layout->addWidget( lineEdit );
+        return layout;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileWidget constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers, const gui::EntitySymbols& icons,
+UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent, Controllers& controllers, const gui::EntitySymbols& icons,
                                       const ExtensionTypes& extensions, ProfilesChecker_ABC& checker, Model& model )
-    : QTabWidget( parent, "UserProfileWidget" )
+    : gui::RichTabWidget( objectName, parent )
     , controllers_( controllers )
     , extensions_ ( extensions )
     , checker_    ( checker )
     , model_      ( model )
     , profile_    ( 0 )
 {
+    gui::SubObjectName subObject( "UserProfileWidget" );
     {
-        Q3VBox* box = new Q3VBox( this );
-        box->setSpacing( 5 );
-        Q3GroupBox* group = new Q3GroupBox( 2,  Qt::Horizontal, tr( "Profile information" ), box );
-        group->setMargin( 5 );
-        new QLabel( tr( "Login:" ), group );
-        login_ = new QLineEdit( group );
-        new QLabel( tr( "Password:" ), group );
-        password_ = new QLineEdit( group );
-        new QLabel( tr( "Automats:" ), group );
-        automats_= new QLineEdit( group );
+        gui::SubObjectName subObject( "ProfileInformation" );
+        //profile
+        login_ = new gui::RichLineEdit( "login" );
+        QHBoxLayout* loginLayout = CreateLinelayout( tr( "Login:" ), login_ );
+        connect( login_, SIGNAL( editingFinished() ), this, SLOT( OnLoginChanged() ) );
+
+        //password
+        password_ = new gui::RichLineEdit( "password" );
+        QHBoxLayout* passwordLayout = CreateLinelayout( tr( "Password:" ), password_ );
+        connect( password_, SIGNAL( textChanged( const QString& ) ), SLOT( OnPasswordChanged( const QString& ) ) );
+
+        //automat
+        automats_= new gui::RichLineEdit( "automats" );
+        QHBoxLayout* automatLayout = CreateLinelayout( tr( "Automats:" ), automats_ );
         automats_->setReadOnly( true );
-        new QLabel( tr( "Knowledge groups:" ), group );
-        knowledgeGroups_ = new QLineEdit( group );
+
+        //knowledge group
+        knowledgeGroups_ = new gui::RichLineEdit( "knowledgeGroups" );
+        QHBoxLayout* knowledgeLayout = CreateLinelayout( tr( "Knowledge groups:" ), knowledgeGroups_ );
         knowledgeGroups_->setReadOnly( true );
 
+        Q3VBox* box = new Q3VBox( this );
+        box->setSpacing( 5 );
+        gui::RichGroupBox* profileInformationGroup = new gui::RichGroupBox( "ProfileInformation", tr( "Profile information" ), box );
+        QVBoxLayout* profileInformationGroupLayout = new QVBoxLayout( profileInformationGroup );
+        profileInformationGroupLayout->addLayout( loginLayout );
+        profileInformationGroupLayout->addLayout( passwordLayout );
+        profileInformationGroupLayout->addLayout( automatLayout );
+        profileInformationGroupLayout->addLayout( knowledgeLayout );
+        profileInformationGroupLayout->setMargin( 5 );
+
         addTab( box, tr( "General" ) );
-        connect( login_, SIGNAL( editingFinished() ), this, SLOT( OnLoginChanged() ) );
-        connect( password_, SIGNAL( textChanged( const QString& ) ), SLOT( OnPasswordChanged( const QString& ) ) );
     }
     {
         Q3VBox* box = new Q3VBox( this );
-        Q3GroupBox* group = new Q3GroupBox( 3, Qt::Vertical, tr( "Access permissions" ), box );
-        group->setMargin( 5 );
-        Q3HBox* holder = new Q3HBox( group );
-        supervisor_ = new QCheckBox( tr( "Supervisor actions" ), holder );
-        QTabWidget* tabs = new QTabWidget( group );
 
-        UserProfileUnitRights* unitRights = new UserProfileUnitRights( tabs, controllers, icons, tr( "Units" ) );
+        Q3HBox* holder = new Q3HBox();
+        supervisor_ = new gui::RichCheckBox( "supervisorActions", tr( "Supervisor actions" ), holder );
+        gui::RichTabWidget* tabs = new gui::RichTabWidget( "RichTabWidget" );
+
+        UserProfileUnitRights* unitRights = new UserProfileUnitRights( "unitRights", tabs, controllers, icons, tr( "Units" ) );
         tabs->addTab( unitRights, tr( "Units" ) );
         unitRights_ = unitRights;
 
-        UserProfilePopulationRights* populationRights = new UserProfilePopulationRights( tabs, controllers, tr( "Crowds" ) );
+        UserProfilePopulationRights* populationRights = new UserProfilePopulationRights( "populationRights", tabs, controllers, tr( "Crowds" ) );
         tabs->addTab( populationRights, tr( "Crowds" ) );
         populationRights_ = populationRights;
 
         addTab( box, tr( "Permissions" ) );
         connect( supervisor_, SIGNAL( toggled( bool ) ), SLOT( OnSupervisorChanged( bool ) ) );
-        new QLabel( tr( "'Read' permission allows you to see a unit.\n"
-                        "'Write' permission allows you to control a unit." ), group );
+        QLabel* readPermissionlabel = new QLabel( tr( "'Read' permission allows you to see a unit.\n"
+                        "'Write' permission allows you to control a unit." ) );
+
+        gui::RichGroupBox* permissionsGroup = new gui::RichGroupBox( "permissionsGroup", tr( "Access permissions" ), box );
+        QHBoxLayout* permissionsGroupLayout = new QHBoxLayout( permissionsGroup );
+        permissionsGroupLayout->addWidget( holder );
+        permissionsGroupLayout->addWidget( tabs );
+        permissionsGroupLayout->addWidget( readPermissionlabel );
+        permissionsGroupLayout->setMargin( 5 );
     }
     SetEnabled( false );
 }

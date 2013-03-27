@@ -20,6 +20,12 @@ namespace kernel
     class XmlDescription;
 }
 
+
+namespace gui
+{
+    class RichLineEdit;
+}
+
 class FilterPartiesListView;
 
 // =============================================================================
@@ -71,7 +77,7 @@ private:
     //@{
     const tools::ExerciseConfig& config_;
     E_ArgumentType               type_;
-    QLineEdit*                   line_;
+    gui::RichLineEdit*           line_;
     FilterPartiesListView*       listView_;
     QLabel*                      errorLabel_;
     const tools::Path            exerciseDir_;

@@ -28,8 +28,8 @@
 // Name: CommunicationTreeView constructor
 // Created: JSR 2012-09-11
 // -----------------------------------------------------------------------------
-CommunicationTreeView::CommunicationTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, QWidget* parent )
-    : gui::HierarchyTreeView< kernel::CommunicationHierarchies >( controllers, profile, modelObserver, symbols, parent )
+CommunicationTreeView::CommunicationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, QWidget* parent )
+    : gui::HierarchyTreeView< kernel::CommunicationHierarchies >( objectName, controllers, profile, modelObserver, symbols, parent )
     , changeSuperiorDialog_( 0 )
 {
     controllers_.Update( *this );

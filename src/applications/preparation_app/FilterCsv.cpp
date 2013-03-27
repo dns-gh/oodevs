@@ -14,6 +14,9 @@
 #include "tools/ExerciseConfig.h"
 #include "clients_gui/FileDialog.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichLineEdit.h"
+#include "clients_gui/RichGroupBox.h"
 
 // -----------------------------------------------------------------------------
 // Name: FilterCsv constructor
@@ -93,14 +96,21 @@ const std::string FilterCsv::GetDescription() const
 // Name: FilterCsv::CreateParametersWidget
 // Created: LGY 2011-10-17
 // -----------------------------------------------------------------------------
-QWidget* FilterCsv::CreateParametersWidget( QWidget* parent )
+QWidget* FilterCsv::CreateParametersWidget( const QString& objectName,  QWidget* parent )
 {
-    Q3GroupBox* parametersWidget = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "FilterCsv", "Select output directory" ), parent );
-    new QLabel( tools::translate( "FilterCsv", "Output to:" ), parametersWidget );
-    output_ = new QLineEdit( tools::translate( "FilterCsv", "Enter output directory here" ), parametersWidget );
+    gui::SubObjectName subObject( objectName );
+
+    output_ = new gui::RichLineEdit( "output", tools::translate( "FilterCsv", "Enter output directory here" ) );
     connect( output_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnTextChanged() ) );
-    QPushButton* browseBtn = new QPushButton( tools::translate( "FilterCsv", "Browse..." ), parametersWidget );
+
+    gui::RichPushButton* browseBtn = new gui::RichPushButton( "browseBtn", tools::translate( "FilterCsv", "Browse..." ) );
     connect( browseBtn, SIGNAL( clicked() ), this, SLOT( OnBrowse() ) );
+
+    gui::RichGroupBox* parametersWidget = new gui::RichGroupBox( "parametersWidget", tools::translate( "FilterCsv", "Select output directory" ), parent );
+    QHBoxLayout* parametersLayout = new QHBoxLayout( parametersWidget );
+    parametersLayout->addWidget( new QLabel( tools::translate( "FilterCsv", "Output to:" ) ) );
+    parametersLayout->addWidget( output_ );
+    parametersLayout->addWidget( browseBtn );
     return parametersWidget;
 }
 

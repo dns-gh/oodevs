@@ -17,6 +17,11 @@ class ScoresModel;
 class SuccessFactorCondition;
 class SuccessFactorConditions;
 
+namespace gui
+{
+    class RichPushButton;
+}
+
 // =============================================================================
 /** @class  SuccessFactorConditionItem
     @brief  SuccessFactorConditionItem
@@ -30,7 +35,7 @@ class SuccessFactorConditionItem : public Q3HBox
 public:
     //! @name Constructors/Destructor
     //@{
-             SuccessFactorConditionItem( QWidget* parent, const ScoresModel& scores );
+             SuccessFactorConditionItem( const QString& objectName, QWidget* parent, const ScoresModel& scores );
     virtual ~SuccessFactorConditionItem();
     //@}
 
@@ -71,7 +76,7 @@ private:
     gui::ValuedComboBox< const Score_ABC* >* score_;
     gui::ValuedComboBox< QString >* operator_;
     QDoubleSpinBox* value_;
-    QPushButton* deleteButton_;
+    gui::RichPushButton* deleteButton_;
     //@}
 };
 

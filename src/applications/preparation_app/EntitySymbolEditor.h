@@ -29,6 +29,7 @@ namespace gui
     class NatureEditionWidget;
     class SymbolIcons;
     class UnitPreviewIcon;
+    class RichComboBox;
 }
 
 // =============================================================================
@@ -88,18 +89,18 @@ private slots:
 private:
     //! @name Member data
     //@{
-    kernel::SymbolFactory&          symbolsFactory_;
+    kernel::SymbolFactory& symbolsFactory_;
     // Level
-    E_GhostType                     ghostType_;
-    std::string                     level_;
-    QString                         levelBase_;
-    QComboBox*                      levelComboBox_;
-    QStringList                     levelNames_;
+    E_GhostType ghostType_;
+    std::string level_;
+    QString levelBase_;
+    gui::RichComboBox* levelComboBox_;
+    QStringList levelNames_;
     // Nature
-    gui::NatureEditionWidget*       natureWidget_;
-    std::string                     nature_;
+    gui::NatureEditionWidget* natureWidget_;
+    std::string nature_;
     // Icon
-    gui::UnitPreviewIcon*           icon_;
+    gui::UnitPreviewIcon* icon_;
     //@}
 };
 

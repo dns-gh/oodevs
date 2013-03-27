@@ -12,6 +12,8 @@
 #include "moc_FilterCommand.cpp"
 #include "FilterInputArgument.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/RichCheckBox.h"
+#include "clients_gui/RichGroupBox.h"
 #include "frontend/SpawnCommand.h"
 #include "frontend/ProcessWrapper.h"
 #include "tools/ExerciseConfig.h"
@@ -234,10 +236,14 @@ void FilterCommand::ComputePath()
 // Name: FilterCommand::CreateParametersWidget
 // Created: ABR 2011-06-21
 // -----------------------------------------------------------------------------
-QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
+QWidget* FilterCommand::CreateParametersWidget( const QString& objectName, QWidget* parent )
 {
-    Q3GroupBox* parametersWidget = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "FilterCommand", "Command overview" ), parent, "FilterCommand_ParameterGroupBox" );
-    QWidget* widget = new QWidget( parametersWidget, "FilterCommand_BaseWidget" );
+    gui::SubObjectName subObject( objectName );
+    QWidget* widget = new QWidget();
+
+    gui::RichGroupBox* parametersWidget = new gui::RichGroupBox( "ParameterGroupBox", tools::translate( "FilterCommand", "Command overview" ), parent );
+    parametersWidget->setLayout( new QHBoxLayout() );
+    parametersWidget->layout()->addWidget( widget );
 
     int row = ( !minimalDisplay_ ) ? 3 : ( path_.IsEmpty() ) ? 2 : 1;
     QGridLayout* grid = new QGridLayout( widget, ( inputArguments_.empty() ) ? row : row + static_cast< int >( inputArguments_.size() ), 2, 0, 5, "FilterCommand_GridLayout" );
@@ -264,7 +270,7 @@ QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
     // Reload-Exercise
     {
         grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Reload exercise:" ), widget, "FilterCommand_ReloadTitle" ), row, 0 );
-        QCheckBox* checkBox = new QCheckBox( widget, "FilterCommand_ReloadCheckBox" );
+        gui::RichCheckBox* checkBox = new gui::RichCheckBox( "ReloadCheckBox", widget );
         checkBox->setChecked( reloadExercise_ );
         checkBox->setEnabled( false );
         grid->addWidget( checkBox, row++, 1 );
@@ -272,7 +278,7 @@ QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
     // Non blocking
     {
         grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Is blocking:" ), widget, "FilterCommand_ReloadTitle" ), row, 0 );
-        QCheckBox* checkBox = new QCheckBox( widget, "FilterCommand_ReloadCheckBox" );
+        gui::RichCheckBox* checkBox = new gui::RichCheckBox( "ReloadCheckBox", widget );
         checkBox->setChecked( !nonBlocking_ );
         checkBox->setEnabled( false );
         grid->addWidget( checkBox, row++, 1 );

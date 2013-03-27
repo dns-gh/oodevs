@@ -43,7 +43,7 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
                                                 const tools::Resolver_ABC< Formation_ABC >& formationResolver,
                                                 const tools::Resolver_ABC< kernel::Ghost_ABC >& ghostResolver,
                                                 const Entity_ABC& selected )
-    : gui::ValuedComboBox< const kernel::Entity_ABC* >( parent )
+    : gui::ValuedComboBox< const kernel::Entity_ABC* >( "LogisticSuperiorEditor", parent )
     , controllers_( controllers )
     , selected_( selected )
 {

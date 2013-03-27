@@ -23,6 +23,11 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
+namespace gui
+{
+    class RichLineEdit;
+}
+
 class Model;
 class CsvExport;
 
@@ -50,7 +55,7 @@ public:
     virtual void Execute();
     virtual const std::string GetName() const;
     virtual const std::string GetDescription() const;
-    virtual QWidget* CreateParametersWidget( QWidget* parent );
+    virtual QWidget* CreateParametersWidget( const QString& objectName, QWidget* parent );
     virtual bool IsValid() const;
     virtual bool NeedToReloadExercise() const;
     virtual void Update( unsigned int value );
@@ -68,7 +73,7 @@ private:
     //@{
     QProgressDialog* progressDialog_;
     std::auto_ptr< CsvExport > pExport_;
-    QLineEdit* output_;
+    gui::RichLineEdit* output_;
     const tools::Path exerciseFile_;
     //@}
 };

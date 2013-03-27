@@ -10,6 +10,13 @@
 #ifndef __ExerciseCreationDialog_h_
 #define __ExerciseCreationDialog_h_
 
+namespace gui
+{
+    class RichPushButton;
+    class RichLineEdit;
+    class RichComboBox;
+}
+
 namespace tools
 {
     class GeneralConfig;
@@ -48,11 +55,11 @@ private slots:
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig&  config_;
-    QLineEdit*                   exerciseName_;
-    QComboBox*                   editTerrainList_;
-    QComboBox*                   editModelList_;
-    QPushButton*                     ok_;
+    const tools::GeneralConfig& config_;
+    gui::RichLineEdit* exerciseName_;
+    gui::RichComboBox* editTerrainList_;
+    gui::RichComboBox* editModelList_;
+    gui::RichPushButton* ok_;
     //@}
 };
 

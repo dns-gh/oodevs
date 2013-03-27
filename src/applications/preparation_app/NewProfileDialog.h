@@ -13,6 +13,11 @@
 class ProfilesModel;
 class ProfilesChecker_ABC;
 
+namespace gui
+{
+    class RichLineEdit;
+}
+
 // =============================================================================
 /** @class  NewProfileDialog
     @brief  New profile dialog
@@ -53,7 +58,7 @@ private:
     //@{
     ProfilesModel& model_;
     ProfilesChecker_ABC& checker_;
-    QLineEdit* value_;
+    gui::RichLineEdit* value_;
     QDialogButtonBox* okButton_;
     QLabel* warningLabel_;
     //@}

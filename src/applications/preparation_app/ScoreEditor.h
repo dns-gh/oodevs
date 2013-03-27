@@ -10,11 +10,14 @@
 #ifndef __ScoreEditor_h_
 #define __ScoreEditor_h_
 
+#include "clients_gui/RichTextEdit.h"
+
 namespace actions
 {
     namespace gui
     {
         class InterfaceBuilder_ABC;
+        class RichPushButton;
     }
 }
 
@@ -35,6 +38,8 @@ namespace gui
     class GlTools_ABC;
     class ParametersLayer;
     class Viewport_ABC;
+    class RichPushButton;
+    class RichLineEdit;
 }
 
 class Score_ABC;
@@ -99,10 +104,10 @@ private:
     //@{
     ScoresModel& model_;
     Score_ABC* current_;
-    QLineEdit* name_;
-    QTextEdit* formula_;
+    gui::RichLineEdit* name_;
+    gui::RichTextEdit* formula_;
     QLabel* checkResult_;
-    QPushButton* ok_;
+    gui::RichPushButton* ok_;
     QLabel* help_;
     ScoreVariablesList* variables_;
     ScoreGaugeConfiguration* gauge_;

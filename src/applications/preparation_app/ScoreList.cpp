@@ -12,6 +12,8 @@
 #include "moc_ScoreList.cpp"
 #include "ScoreEditor.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichTreeWidget.h"
 #include "indicators/Primitives.h"
 #include "preparation/Score_ABC.h"
 #include "preparation/ScoresModel.h"
@@ -23,35 +25,42 @@ Q_DECLARE_METATYPE( const Score_ABC* )
 // Name: ScoreList constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model, const tools::ExerciseConfig& config,
+ScoreList::ScoreList( kernel::Controllers& controllers, ScoresModel& model, const tools::ExerciseConfig& config,
                       const StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
-    : Q3VBox       ( parent )
-    , controllers_( controllers )
+    : controllers_( controllers )
     , model_      ( model )
-    , scores_     ( new QTreeWidget( this ) )
+    , scores_     ( new gui::RichTreeWidget( "scores", this ) )
     , editor_     ( new ScoreEditor( this, controllers, model, staticModel, tools, builder ) )
     , config_     ( config )
 {
-    layout()->setAlignment( Qt::AlignRight );
     scores_->setHeaderLabels( QStringList( tr( "Name" ) ) );
     scores_->setRootIsDecorated( false );
-    {
-        Q3HBox* box = new Q3HBox( this );
-        QPushButton* editButton = new QPushButton( tr( "Edit..." ), box );
-        QPushButton* deleteButton = new QPushButton( tr( "Delete" ), box );
-        connect( editButton, SIGNAL( clicked() ), SLOT( OnEdit() ) );
-        connect( deleteButton, SIGNAL( clicked() ), SLOT( OnDelete() ) );
-    }
-    {
-        generatorBox_ = new Q3HBox( this );
-        QPushButton* defaultIndicators = new QPushButton( tr( "Generate default indicators" ), generatorBox_ );
-        connect( defaultIndicators, SIGNAL( clicked() ), SLOT( OnGenerate() ) );
-        generatorBox_->hide();
-    }
+
+    //edit delete box
+    Q3HBox* box = new Q3HBox( this );
+    gui::RichPushButton* editButton = new gui::RichPushButton( "edit", tr( "Edit..." ), box );
+    gui::RichPushButton* deleteButton = new gui::RichPushButton( "delete", tr( "Delete" ), box );
+    connect( editButton, SIGNAL( clicked() ), SLOT( OnEdit() ) );
+    connect( deleteButton, SIGNAL( clicked() ), SLOT( OnDelete() ) );
+
+    //generate box
+    generatorBox_ = new Q3HBox( this );
+    gui::RichPushButton* defaultIndicators = new gui::RichPushButton( "defaultIndicators", tr( "Generate default indicators" ), generatorBox_ );
+    connect( defaultIndicators, SIGNAL( clicked() ), SLOT( OnGenerate() ) );
+    generatorBox_->hide();
+
+    QVBoxLayout* mainLayout = new QVBoxLayout( this );
+    gui::SubObjectName subObject( "ScoreList" );
+    mainLayout->setAlignment( Qt::AlignRight );
+    mainLayout->addWidget( scores_ );
+    mainLayout->addWidget( box );
+    mainLayout->addWidget( generatorBox_ );
+
     connect( scores_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnEdit() ) );
     connect( editor_, SIGNAL( Show() ), SIGNAL( Hide() ) );
     connect( editor_, SIGNAL( Hide() ), SIGNAL( Show() ) );
     controllers_.Register( *this );
+
 }
 
 // -----------------------------------------------------------------------------

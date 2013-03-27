@@ -12,6 +12,8 @@
 #include "moc_NewProfileDialog.cpp"
 #include "ProfilesChecker_ABC.h"
 #include "preparation/ProfilesModel.h"
+#include "clients_gui/RichDialogButtonBox.h"
+#include "clients_gui/RichLineEdit.h"
 
 // -----------------------------------------------------------------------------
 // Name: NewProfileDialog constructor
@@ -22,10 +24,11 @@ NewProfileDialog::NewProfileDialog( QWidget* parent, ProfilesModel& model, Profi
     , model_  ( model )
     , checker_( checker )
 {
+    gui::SubObjectName subObject( "NewProfileDialog" );
     setCaption( tr( "New profile") );
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
     QHBoxLayout* editLayout = new QHBoxLayout();
-    value_ = new QLineEdit();
+    value_ = new gui::RichLineEdit( "value" );
     connect( value_, SIGNAL( textChanged( const QString& ) ), this, SLOT( UpdateText() ) );
     editLayout->addWidget( new QLabel( tr( "Profile name:" ) ) );
     editLayout->addWidget( value_ );
@@ -33,10 +36,10 @@ NewProfileDialog::NewProfileDialog( QWidget* parent, ProfilesModel& model, Profi
     warningLabel_ = new QLabel();
     warningLayout->addWidget( warningLabel_, Qt::AlignCenter );
     QHBoxLayout* buttonLayout = new QHBoxLayout();
-    okButton_ = new QDialogButtonBox( QDialogButtonBox::Ok );
+    okButton_ = new gui::RichDialogButtonBox( "okButton", QDialogButtonBox::Ok );
     connect( okButton_, SIGNAL( accepted() ), this, SLOT( Validate() ) );
     okButton_->setFocus();
-    QDialogButtonBox* cancelButton = new QDialogButtonBox( QDialogButtonBox::Cancel );
+    gui::RichDialogButtonBox* cancelButton = new gui::RichDialogButtonBox( "cancelButton", QDialogButtonBox::Cancel );
     connect( cancelButton, SIGNAL( rejected() ), this, SLOT( reject() ) );
     buttonLayout->addWidget( okButton_ );
     buttonLayout->addWidget( cancelButton );

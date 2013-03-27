@@ -9,20 +9,23 @@
 
 #include "preparation_app_pch.h"
 #include "MultipleResolverEditor.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichListWidget.h"
 
 // -----------------------------------------------------------------------------
 // Name: MultipleResolverEditor constructor
 // Created: ABR 2011-11-29
 // -----------------------------------------------------------------------------
 template< typename Entity, typename Resolver >
-MultipleResolverEditor< Entity, Resolver >::MultipleResolverEditor( QWidget* parent, const Resolver& resolver )
+MultipleResolverEditor< Entity, Resolver >::MultipleResolverEditor( const QString& objectName, QWidget* parent, const Resolver& resolver )
     : gui::PropertyDialog( parent )
     , values_( 0 )
 {
+    gui::SubObjectName subObject( objectName );
     setMinimumSize( 250, 250 );
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
     // List
-    listBox_ = new QListWidget();
+    listBox_ = new gui::RichListWidget( "listBox" );
     listBox_->setSelectionMode( QAbstractItemView::MultiSelection );
     tools::Iterator< const Entity& > it = resolver.CreateIterator();
     while( it.HasMoreElements() )
@@ -33,8 +36,8 @@ MultipleResolverEditor< Entity, Resolver >::MultipleResolverEditor( QWidget* par
     }
     // Buttons
     QHBoxLayout* buttonLayout = new QHBoxLayout();
-    QPushButton* okButton = new QPushButton( tr( "Ok" ) );
-    QPushButton* cancel = new QPushButton( tr( "Cancel" ) );
+    gui::RichPushButton* okButton = new gui::RichPushButton( "ok", tr( "Ok" ) );
+    gui::RichPushButton* cancel = new gui::RichPushButton( "cancel", tr( "Cancel" ) );
     connect( okButton, SIGNAL( clicked() ), SLOT( accept() ) );
     connect( cancel, SIGNAL( clicked() ), SLOT( reject() ) );
     // Layouts

@@ -18,8 +18,8 @@
 // Name: UserProfileUnitRights constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileUnitRights::UserProfileUnitRights( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, const QString& name )
-    : HierarchyTreeView< kernel::TacticalHierarchies >( controllers, PreparationProfile::GetProfile(), observer_, icons, parent )
+UserProfileUnitRights::UserProfileUnitRights( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, const QString& name )
+    : HierarchyTreeView< kernel::TacticalHierarchies >( objectName, controllers, PreparationProfile::GetProfile(), observer_, icons, parent )
     , UserProfileRights_ABC( *this, dataModel_, name )
 {
     controllers_.Update( *this );

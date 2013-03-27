@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "StringQVButtonGroup.h"
 #include "moc_StringQVButtonGroup.cpp"
+#include "clients_gui/RichCheckBox.h"
 
 // -----------------------------------------------------------------------------
 // Name: StringQVButtonGroup constructor
@@ -34,10 +35,10 @@ StringQVButtonGroup::~StringQVButtonGroup()
 // Name: StringQVButtonGroup::insert
 // Created: HBD 2010-09-16
 // -----------------------------------------------------------------------------
-void StringQVButtonGroup::InsertCheckbox(const std::string& name  )
+void StringQVButtonGroup::InsertCheckbox( const std::string& objectName, const std::string& text )
 {
-    new QCheckBox( name.c_str(), this );
-    values_.push_back( name );
+    new gui::RichCheckBox( objectName.c_str(), text.c_str(), this );
+    values_.push_back( text );
 }
 
 // -----------------------------------------------------------------------------

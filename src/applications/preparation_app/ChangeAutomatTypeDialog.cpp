@@ -11,6 +11,8 @@
 #include "ChangeAutomatTypeDialog.h"
 #include "moc_ChangeAutomatTypeDialog.cpp"
 #include "ModelBuilder.h"
+#include "clients_gui/SubObjectName.h"
+#include "clients_gui/RichPushButton.h"
 #include "clients_gui/UnitTreeView.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
@@ -25,18 +27,19 @@ ChangeAutomatTypeDialog::ChangeAutomatTypeDialog( QWidget* parent, kernel::Contr
     , builder_    ( builder )
     , entity_     ( entity )
 {
+    gui::SubObjectName subObject( "ChangeAutomatType" );
     setModal( true );
     setCaption( tr( "Replace by a new automat" ) );
 
     QLabel* label1 = new QLabel( tr( "Select new automat type for ") + entity_.GetName() );
     QLabel* label2 = new QLabel( tr( "Current type: ") + typeName.c_str() );
-    list_ = new gui::UnitTreeView( controllers, list, this, true );
+    list_ = new gui::UnitTreeView( "unitTreeView", controllers, list, this, true );
     list_->SetSorting( "" );
     list_->setFixedSize( 300, 600 );
-    okBtn_ = new QPushButton( tr( "Ok" ) );
+    okBtn_ = new gui::RichPushButton( "ok", tr( "Ok" ) );
     okBtn_->setEnabled( false );
     okBtn_->setDefault( true );
-    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ) );
+    gui::RichPushButton* cancelBtn = new gui::RichPushButton( "cancel", tr( "Cancel" ) );
 
     connect( list_->selectionModel() , SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), SLOT( SelectionChanged() ) );
     connect( okBtn_, SIGNAL( clicked() ), SLOT( OnOk() ) );
@@ -52,6 +55,7 @@ ChangeAutomatTypeDialog::ChangeAutomatTypeDialog( QWidget* parent, kernel::Contr
     layout->addWidget( cancelBtn, 3, 1 );
 
     exec();
+
 }
 
 // -----------------------------------------------------------------------------

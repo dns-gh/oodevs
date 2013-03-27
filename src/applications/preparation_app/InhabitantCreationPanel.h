@@ -34,6 +34,8 @@ namespace gui
     class ParametersLayer;
     class RichLabel;
     class Viewport_ABC;
+    class RichSpinBox;
+    class RichLineEdit;
 }
 
 class AgentsModel;
@@ -110,8 +112,8 @@ private:
     kernel::Location_ABC* location_;
     gui::ValuedComboBox< const kernel::Team_ABC* >* teams_;
     gui::ValuedComboBox< const kernel::InhabitantType* >* inhabitantTypes_;
-    QLineEdit* name_;
-    QSpinBox* number_;
+    gui::RichLineEdit* name_;
+    gui::RichSpinBox* number_;
     gui::RichLabel* position_;
     QLabel* locationLabel_;
     gui::LocationCreator* locationCreator_;

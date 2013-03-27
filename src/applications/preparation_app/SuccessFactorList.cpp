@@ -12,6 +12,8 @@
 #include "moc_SuccessFactorList.cpp"
 #include "SuccessFactorEditor.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichTreeWidget.h"
 #include "preparation/SuccessFactor.h"
 
 Q_DECLARE_METATYPE( const SuccessFactor* )
@@ -23,16 +25,17 @@ Q_DECLARE_METATYPE( const SuccessFactor* )
 SuccessFactorList::SuccessFactorList( QWidget* parent, kernel::Controllers& controllers, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores, SuccessFactorsModel& success )
     : Q3VBox( parent )
     , controllers_( controllers )
-    , factors_( new QTreeWidget( this ) )
+    , factors_( new gui::RichTreeWidget( "factors", this ) )
     , editor_( new SuccessFactorEditor( this, controllers_, actionTypes, scores, success ) )
 {
+    gui::SubObjectName subObject( "SuccessFactorList" );
     layout()->setAlignment( Qt::AlignRight );
     factors_->setHeaderLabels( QStringList( tr( "Name" ) ) );
     factors_->setRootIsDecorated( false );
     {
         Q3HBox* box = new Q3HBox( this );
-        editButton_ = new QPushButton( tr( "Edit..." ), box );
-        deleteButton_ = new QPushButton( tr( "Delete" ), box );
+        editButton_ = new gui::RichPushButton( "edit", tr( "Edit..." ), box );
+        deleteButton_ = new gui::RichPushButton( "delete", tr( "Delete" ), box );
         connect( editButton_, SIGNAL( clicked() ), SLOT( OnEdit() ) );
         connect( deleteButton_, SIGNAL( clicked() ), SLOT( OnDelete() ) );
     }

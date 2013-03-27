@@ -15,6 +15,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace gui
+{
+    class RichTextEdit;
+}
+
 class Model;
 class StaticModel;
 
@@ -82,7 +87,7 @@ private:
     QLabel* limitValueMulti_;
     QLabel* limitLineSingle_;
     QLabel* limitLineMulti_;
-    QTextEdit* textEdit_;
+    gui::RichTextEdit* textEdit_;
 
     const int progressLimit_;
 };

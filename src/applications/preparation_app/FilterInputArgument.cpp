@@ -14,6 +14,8 @@
 #include "clients_gui/FileDialog.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/XmlDescription.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichLineEdit.h"
 #include "tools/ExerciseConfig.h"
 
 // -----------------------------------------------------------------------------
@@ -66,10 +68,11 @@ bool FilterInputArgument::IsValid()
 // -----------------------------------------------------------------------------
 QWidget* FilterInputArgument::CreateWidget( QWidget* parent )
 {
+    gui::SubObjectName subObject( "FilterInputArgument" );
     QWidget* result = 0;
     if( type_ == eInput )
     {
-        line_ = new QLineEdit( parent );
+        line_ = new gui::RichLineEdit( "line", parent );
         result = line_;
     }
     else if( type_ == eTeamList )
@@ -87,8 +90,8 @@ QWidget* FilterInputArgument::CreateWidget( QWidget* parent )
     {
         result = new Q3HBox( parent );
         static_cast< Q3HBox* >( result )->setSpacing( 5 );
-        line_ = new QLineEdit( result );
-        QPushButton* browseBtn = new QPushButton( tools::translate( "FilterInputArgument", "Browse..." ), result, "FilterInputArgument_BrowseButton" );
+        line_ = new gui::RichLineEdit( "line", result );
+        gui::RichPushButton* browseBtn = new gui::RichPushButton( "browseBtn", tools::translate( "FilterInputArgument", "Browse..." ), result );
         connect( browseBtn, SIGNAL( clicked() ), SLOT( OnBrowse() ) );
     }
     if( line_ )

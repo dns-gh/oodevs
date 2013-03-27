@@ -24,7 +24,7 @@ class InhabitantTreeView : public gui::InhabitantTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
+             InhabitantTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
     virtual ~InhabitantTreeView();
     //@}
 

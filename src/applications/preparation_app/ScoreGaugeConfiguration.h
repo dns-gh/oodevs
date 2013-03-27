@@ -27,6 +27,14 @@ namespace kernel
     class ModelUnLoaded;
 }
 
+namespace gui
+{
+    class RichSpinBox;
+    class RichLineEdit;
+    class RichGroupBox;
+    class RichTableWidget;
+}
+
 // =============================================================================
 /** @class  ScoreGaugeConfiguration
     @brief  ScoreGaugeConfiguration
@@ -82,11 +90,11 @@ private:
     kernel::Controllers& controllers_;
     const indicators::GaugeTypes& gaugeTypes_;
     gui::ValuedComboBox< const indicators::GaugeType* >* type_;
-    Q3GroupBox* normalizationBox_;
-    QSpinBox* steps_;
-    QLineEdit* min_;
-    QLineEdit* max_;
-    QTableWidget* intervals_;
+    gui::RichGroupBox* normalizationBox_;
+    gui::RichSpinBox* steps_;
+    gui::RichLineEdit* min_;
+    gui::RichLineEdit* max_;
+    gui::RichTableWidget* intervals_;
     //@}
 };
 

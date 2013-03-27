@@ -63,7 +63,7 @@ class SuccessFactorConditionsEditor : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             SuccessFactorConditionsEditor( QWidget* parent, const ScoresModel& scores );
+             SuccessFactorConditionsEditor( const QString& objectName, const ScoresModel& scores );
     virtual ~SuccessFactorConditionsEditor();
     //@}
 
@@ -81,12 +81,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SuccessFactorConditionsEditor( const SuccessFactorConditionsEditor& );            //!< Copy constructor
-    SuccessFactorConditionsEditor& operator=( const SuccessFactorConditionsEditor& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< SuccessFactorConditionItem* > T_Items;

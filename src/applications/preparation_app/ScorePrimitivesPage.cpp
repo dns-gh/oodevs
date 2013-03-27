@@ -13,6 +13,8 @@
 #include "clients_kernel/Controllers.h"
 #include "indicators/Primitive.h"
 #include "indicators/Primitives.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichTreeWidget.h"
 
 Q_DECLARE_METATYPE( const indicators::Primitive* )
 
@@ -20,24 +22,26 @@ Q_DECLARE_METATYPE( const indicators::Primitive* )
 // Name: ScorePrimitivesPage constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScorePrimitivesPage::ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, const indicators::Primitives& primitives, const T_Filter& filter )
+ScorePrimitivesPage::ScorePrimitivesPage( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const indicators::Primitives& primitives, const T_Filter& filter )
     : Q3VBox( parent )
     , controllers_( controllers )
     , filter_( filter )
     , primitives_( primitives )
-    , list_( new QTreeWidget( this ) )
 {
+    gui::SubObjectName subObject( objectName );
     {
+        list_ = new gui::RichTreeWidget( "list", this );
         list_->setRootIsDecorated( false );
         list_->setHeaderHidden( true );
         connect( list_, SIGNAL( itemSelectionChanged() ), SLOT( OnSelectionChanged() ) );
         connect( list_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnInsert() ) );
     }
     {
-        QPushButton* insert = new QPushButton( tr( "Insert" ), this );
+        gui::RichPushButton* insert = new gui::RichPushButton( "insert", tr( "Insert" ), this );
         connect( insert, SIGNAL( clicked() ), SLOT( OnInsert() ) );
     }
     controllers_.Register( *this );
+
 }
 
 // -----------------------------------------------------------------------------

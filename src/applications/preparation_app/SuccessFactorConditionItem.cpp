@@ -12,6 +12,7 @@
 #include "SuccessFactorConditionsEditor.h"
 #include "moc_SuccessFactorConditionItem.cpp"
 #include "clients_gui/resources.h"
+#include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichSpinBox.h"
 #include "preparation/Score_ABC.h"
 #include "preparation/ScoresModel.h"
@@ -22,15 +23,16 @@
 // Name: SuccessFactorConditionItem constructor
 // Created: SBO 2009-06-16
 // -----------------------------------------------------------------------------
-SuccessFactorConditionItem::SuccessFactorConditionItem( QWidget* parent, const ScoresModel& scores )
+SuccessFactorConditionItem::SuccessFactorConditionItem( const QString& objectName, QWidget* parent, const ScoresModel& scores )
     : Q3HBox( parent )
 {
+    gui::SubObjectName subObject( objectName  );
     setFixedHeight( 45 );
     setSpacing( 2 );
     setFrameStyle( Q3Frame::Panel | Q3Frame::Raised );
 
     {
-        score_ = new gui::ValuedComboBox< const Score_ABC* >( this );
+        score_ = new gui::ValuedComboBox< const Score_ABC* >( "score", this );
         tools::Iterator< const Score_ABC& > it( scores.CreateIterator() );
         while( it.HasMoreElements() )
         {
@@ -39,18 +41,19 @@ SuccessFactorConditionItem::SuccessFactorConditionItem( QWidget* parent, const S
         }
     }
     {
-        operator_ = new gui::ValuedComboBox< QString >( this );
+        operator_ = new gui::ValuedComboBox< QString >( "operator", this );
         FillOperators();
     }
     {
-        value_ = new gui::RichDoubleSpinBox( this, std::numeric_limits< double >::min() );
+        value_ = new gui::RichDoubleSpinBox( "value", this, std::numeric_limits< double >::min() );
         value_->setAlignment( Qt::AlignRight );
     }
     {
-        deleteButton_ = new QPushButton( MAKE_PIXMAP( trash ), "", this );
+        deleteButton_ = new gui::RichPushButton( "delete", MAKE_PIXMAP( trash ), "", this );
         deleteButton_->setMaximumWidth( 30 );
         connect( deleteButton_, SIGNAL( clicked() ), SLOT( OnDelete() ) );
     }
+
 }
 
 // -----------------------------------------------------------------------------

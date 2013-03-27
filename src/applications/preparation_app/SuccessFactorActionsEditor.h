@@ -27,7 +27,7 @@ class SuccessFactorActionsEditor : public Q3ScrollView
 public:
     //! @name Constructors/Destructor
     //@{
-             SuccessFactorActionsEditor( QWidget* parent, const SuccessFactorActionTypes& actionTypes );
+             SuccessFactorActionsEditor( const QString& objectName, const SuccessFactorActionTypes& actionTypes );
     virtual ~SuccessFactorActionsEditor();
     //@}
 

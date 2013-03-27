@@ -47,6 +47,7 @@ public:
     //@{
     virtual int Run();
     virtual void CreateTranslators();
+    void CheckInterfaceComponentNaming();
     //@}
 
 private:

@@ -14,6 +14,9 @@
 #include "clients_gui/FileDialog.h"
 #include "clients_kernel/Tools.h"
 #include "tools/ExerciseConfig.h"
+#include "clients_gui/RichGroupBox.h"
+#include "clients_gui/RichLineEdit.h"
+#include "clients_gui/RichPushButton.h"
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
 
@@ -131,14 +134,24 @@ bool FilterXsl::IsValid() const
 // Name: FilterXsl::CreateParametersWidget
 // Created: ABR 2011-06-21
 // -----------------------------------------------------------------------------
-QWidget* FilterXsl::CreateParametersWidget( QWidget* parent )
+QWidget* FilterXsl::CreateParametersWidget( const QString& objectName, QWidget* parent )
 {
-    Q3GroupBox* parametersWidget = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "FilterXsl", "Select output directory" ), parent, "FilterXsl_ParameterGroupBox" );
-    new QLabel( tools::translate( "FilterXsl", "Output to:" ), parametersWidget, "FilterXsl_ParameterLabel" );
-    output_ = new QLineEdit( tools::translate( "FilterXsl", "Enter output directory here" ), parametersWidget, "FilterXsl_ParameterLineEdit" );
+    gui::SubObjectName subObject( objectName );
+
+    QLabel* outputLabel  = new QLabel( tools::translate( "FilterXsl", "Output to:" ) );
+
+    output_ = new gui::RichLineEdit( "output", tools::translate( "FilterXsl", "Enter output directory here" ) );
     connect( output_, SIGNAL( textChanged( const QString& ) ), SLOT( OnTextChanged() ) );
-    QPushButton* browseBtn = new QPushButton( tools::translate( "FilterXsl", "Browse..." ), parametersWidget, "FilterXsl_ParameterBrowseButton" );
+
+    gui::RichPushButton* browseBtn = new gui::RichPushButton( "browse", tools::translate( "FilterXsl", "Browse..." ) );
     connect( browseBtn, SIGNAL( clicked() ), SLOT( OnBrowse() ) );
+
+    gui::RichGroupBox* parametersWidget = new gui::RichGroupBox( "ParameterGroupBox", tools::translate( "FilterXsl", "Select output directory" ), parent );
+    QHBoxLayout* parametersWidgetLayout = new QHBoxLayout( parametersWidget );
+    parametersWidgetLayout->addWidget( outputLabel );
+    parametersWidgetLayout->addWidget( output_ );
+    parametersWidgetLayout->addWidget( browseBtn );
+
     return parametersWidget;
 }
 

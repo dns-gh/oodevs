@@ -37,7 +37,7 @@ class UrbanTreeView: public gui::EntityTreeView_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, gui::SymbolIcons& symbols, const StaticModel& staticModel, QWidget* parent = 0 );
+    UrbanTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, gui::SymbolIcons& symbols, const StaticModel& staticModel, QWidget* parent = 0 );
     virtual ~UrbanTreeView();
     //@}
 

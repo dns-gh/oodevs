@@ -18,7 +18,7 @@
 // Created: LGY 2011-03-14
 // -----------------------------------------------------------------------------
 AgentAffinitiesDialog::AgentAffinitiesDialog( QWidget* parent, kernel::Controllers& controllers )
-    : AffinitiesDialog( parent, controllers, true )
+    : AffinitiesDialog( "AgentAffinitiesDialog", parent, controllers, true )
     , controllers_( controllers )
 {
     controllers_.Register( *this );

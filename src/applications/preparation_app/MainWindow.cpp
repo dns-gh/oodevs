@@ -63,6 +63,7 @@
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RasterLayer.h"
 #include "clients_gui/RichItemFactory.h"
+#include "clients_gui/RichLineEdit.h"
 #include "clients_gui/SelectionColorModifier.h"
 #include "clients_gui/SelectionLayer.h"
 #include "clients_gui/SelectionMenu.h"
@@ -136,6 +137,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , menu_             ( 0 )
     , icons_            ( 0 )
 {
+    gui::SubObjectName subObject( "MainWindow" );
     controllers_.modes_.SetMainWindow( this );
     controllers_.modes_.AddRegistryEntry( eModes_Prepare, "Preparation" );
 
@@ -201,7 +203,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     connect( this, SIGNAL( ShowHelp() ), help, SLOT( ShowHelp() ) );
 
     // Menu (must be created after DockWidgets and ToolBars for 'Windows' menu)
-    menu_.reset( new Menu( this, controllers, *dialogContainer_, *factory, expiration ) );
+    menu_.reset( new Menu( "mainMenu", this, controllers, *dialogContainer_, *factory, expiration ) );
     toolbarContainer_->GetFileToolbar().Fill( *menu_ );
     setMenuBar( menu_.get() );
 
@@ -595,7 +597,7 @@ void MainWindow::SaveAs()
         bool ok = false;
         QString name = QInputDialog::getText( tr( "Save exercise as ..." ),
             ( exist ) ? tr( "The exercise '%1' already exists. Please, enter a new exercise name:" ).arg( name ) : tr( "Enter an exercise name:" ),
-            QLineEdit::Normal, tr( "Type exercise name here" ), &ok, this );
+            gui::RichLineEdit::Normal, tr( "Type exercise name here" ), &ok, this );
         if( ok && !name.isEmpty() )
         {
             exerciseName = tools::Path::FromUnicode( name.toStdWString() );

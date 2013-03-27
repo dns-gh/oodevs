@@ -19,7 +19,7 @@
 // Created: LGY 2011-03-16
 // -----------------------------------------------------------------------------
 PeopleAffinitiesDialog::PeopleAffinitiesDialog( QWidget* parent, kernel::Controllers& controllers )
-    : AffinitiesDialog( parent, controllers, false )
+    : AffinitiesDialog( "PeopleAffinitiesDialog", parent, controllers, false )
     , controllers_( controllers )
 {
     controllers_.Register( *this );

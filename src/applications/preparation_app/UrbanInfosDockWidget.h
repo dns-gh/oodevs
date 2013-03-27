@@ -20,6 +20,11 @@ namespace kernel
     class UrbanObject_ABC;
 }
 
+namespace gui
+{
+    class RichTextEdit;
+}
+
 class StaticModel;
 class UrbanModel;
 
@@ -63,7 +68,7 @@ private:
     kernel::Controllers& controllers_;
     UrbanModel&          model_;
     QLabel*              urbanBlocksCount_;
-    QTextEdit*           infoEditText_;
+    gui::RichTextEdit*   infoEditText_;
     QStringList          infos_;
     QStringList          values_;
     T_Elements           selectedElements_;

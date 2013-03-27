@@ -12,13 +12,16 @@
 
 #include "Filter.h"
 
-class QCheckBox;
-class QLineEdit;
-
 namespace xml
 {
     class xistream;
     class xostream;
+}
+
+namespace gui
+{
+    class RichLineEdit;
+    class RichCheckBox;
 }
 
 class FilterPartiesListView;
@@ -46,7 +49,7 @@ public:
     virtual void Execute();
     virtual const std::string GetName() const;
     virtual const std::string GetDescription() const;
-    virtual QWidget* CreateParametersWidget( QWidget* parent );
+    virtual QWidget* CreateParametersWidget( const QString& objectName, QWidget* parent );
    //@}
 
 signals:
@@ -77,16 +80,16 @@ private:
     //@{
     Model&             model_;
     const tools::Path  orbatFile_;
-    QLineEdit*         filename_;
+    gui::RichLineEdit* filename_;
     bool               isUrbanBlock_;
 
-    QCheckBox*         objectsCheckBox_;
-    QCheckBox*         crowdsCheckBox_;
-    QCheckBox*         populationsCheckBox_;
-    QCheckBox*         initialStateCheckBox_;
-    QCheckBox*         logisticLinksCheckBox_;
-    QCheckBox*         stocksCheckBox_;
-    QCheckBox*         diplomacyCheckBox_;
+    gui::RichCheckBox* objectsCheckBox_;
+    gui::RichCheckBox* crowdsCheckBox_;
+    gui::RichCheckBox* populationsCheckBox_;
+    gui::RichCheckBox* initialStateCheckBox_;
+    gui::RichCheckBox* logisticLinksCheckBox_;
+    gui::RichCheckBox* stocksCheckBox_;
+    gui::RichCheckBox* diplomacyCheckBox_;
 
     FilterPartiesListView* partiesListView_;
 

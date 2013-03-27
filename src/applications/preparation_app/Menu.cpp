@@ -76,13 +76,14 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs, gui::ItemFactory_ABC& factory, const QString& license )
+Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs, gui::ItemFactory_ABC& factory, const QString& license )
     : QMenuBar    ( pParent )
     , controllers_( controllers )
 {
     // File
+    gui::SubObjectName subObject( objectName );
     {
-        fileMenu_ = new gui::RichMenu( this, controllers, tools::translate( "Menu", "&File" ) );
+        fileMenu_ = new gui::RichMenu( "fileMenu", this, controllers, tools::translate( "Menu", "&File" ) );
         fileMenu_->SetModes( eModes_LivingArea, eModes_All ^ eModes_LivingArea, true );
         newAction_ = fileMenu_->InsertItem( "1", tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , QKeySequence( Qt::CTRL + Qt::Key_N ) );
         newAction_->setIcon( MAKE_ICON( new ) );
@@ -111,7 +112,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const Dialog
     }
     // Profile
     {
-        gui::RichMenu* menu = new gui::RichMenu( this, controllers, tools::translate( "Menu", "&Profiles" ) );
+        gui::RichMenu* menu = new gui::RichMenu( "profiles", this, controllers, tools::translate( "Menu", "&Profiles" ) );
         menu->SetModes( eModes_All ^ eModes_Prepare, eModes_Prepare, true );
         QAction* action = menu->InsertItem( "1", tools::translate( "Menu", "View/Edit..." ), &dialogs.GetProfileDialog(), SLOT( exec() ) );
         action->setIcon( MAKE_ICON( profile ) );
@@ -120,7 +121,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const Dialog
     }
     // Display
     {
-        gui::RichMenu* menu = new gui::RichMenu( this, controllers, tools::translate( "Menu", "&Display" ) );
+        gui::RichMenu* menu = new gui::RichMenu( "Display", this, controllers, tools::translate( "Menu", "&Display" ) );
         menu->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
         kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
         AddSubMenu4( subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" ), controllers.options_, "LogisticLinks" );
@@ -164,7 +165,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const Dialog
     }
     // Exercise
     {
-        gui::RichMenu* menu = new gui::RichMenu( this, controllers_, tools::translate( "Menu", "&Exercise" ) );
+        gui::RichMenu* menu = new gui::RichMenu( "Exercise", this, controllers_, tools::translate( "Menu", "&Exercise" ) );
         menu->SetModes( eModes_All ^ eModes_Prepare, eModes_Prepare, true );
         menu->InsertItem( "", tools::translate( "Menu", "Properties..." ), &dialogs.GetExerciseDialog(), SLOT( exec() ) );
         menu->InsertItem( "", tools::translate( "Menu", "Scores..." ), &dialogs.GetScoreDialog(), SLOT( exec() ) );
@@ -184,7 +185,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, const Dialog
     }
     // Help
     {
-        gui::RichMenu* menu = new gui::RichMenu( this, controllers_, tools::translate( "Menu", "&?" ) );
+        gui::RichMenu* menu = new gui::RichMenu( "aide", this, controllers_, tools::translate( "Menu", "&?" ) );
         menu->SetModes( eModes_None, eModes_All, true );
         menu->InsertItem( "1", tools::translate( "Menu", "Help" ), pParent, SIGNAL( ShowHelp() ) );
         gui::AboutDialog* about = new gui::AboutDialog( this, factory, tools::translate( "Application", "Preparation" ) + " " + QString( tools::AppProjectVersion() ), license );

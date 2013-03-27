@@ -15,6 +15,12 @@ namespace kernel
     class Controllers;
 }
 
+namespace gui
+{
+    class RichPushButton;
+    class RichLineEdit;
+}
+
 class ScoresModel;
 class SuccessFactor;
 class SuccessFactorsModel;
@@ -70,11 +76,11 @@ private:
     //@{
     SuccessFactorsModel& success_;
     SuccessFactor* current_;
-    QLineEdit* name_;
+    gui::RichLineEdit* name_;
     SuccessFactorProfileList* profiles_;
     SuccessFactorConditionsEditor* conditions_;
     SuccessFactorActionsEditor* actions_;
-    QPushButton* ok_;
+    gui::RichPushButton* ok_;
     bool nameChanged_;
     //@}
 };

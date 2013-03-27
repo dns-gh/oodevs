@@ -24,6 +24,7 @@ namespace gui
     class EntitySymbols;
     class SearchTreeView_ABC;
     class SymbolIcons;
+    class RichToolButton;
 }
 
 class Model;
@@ -69,7 +70,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QToolButton* expandButton_;
+    gui::RichToolButton* expandButton_;
     TreeViewsPanel* pTreeViewPanel_;
     QIcon expandIcon_;
     QIcon collapseIcon_;

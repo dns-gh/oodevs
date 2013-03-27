@@ -18,8 +18,8 @@
 // Name: LogisticTreeView constructor
 // Created: ABR 2012-09-19
 // -----------------------------------------------------------------------------
-LogisticTreeView::LogisticTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, QWidget* parent /*= 0*/ )
-    : gui::LogisticTreeView( controllers, profile, modelObserver, symbols, parent )
+LogisticTreeView::LogisticTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, QWidget* parent /*= 0*/ )
+    : gui::LogisticTreeView( objectName, controllers, profile, modelObserver, symbols, parent )
 {
     controllers_.Update( *this );
 }

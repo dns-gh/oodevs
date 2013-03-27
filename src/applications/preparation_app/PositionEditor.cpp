@@ -11,6 +11,7 @@
 #include "PositionEditor.h"
 #include "moc_PositionEditor.cpp"
 #include "clients_gui/LocationEditorBox.h"
+#include "clients_gui/RichPushButton.h"
 #include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -24,6 +25,7 @@ PositionEditor::PositionEditor( QWidget* parent, kernel::Controllers& controller
     , converter_( converter )
     , value_( 0 )
 {
+    gui::SubObjectName subObject( "PositionEditor" );
     setCaption( tr( "Position Editor" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
     pMainLayout->setMargin( 10 );
@@ -33,8 +35,8 @@ PositionEditor::PositionEditor( QWidget* parent, kernel::Controllers& controller
     pMainLayout->addWidget( locBox_ );
 
     QHBoxLayout* pbuttonBox = new QHBoxLayout();
-    QPushButton* okBtn = new QPushButton( tr( "Ok" ) );
-    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ) );
+    gui::RichPushButton* okBtn = new gui::RichPushButton( "ok", tr( "Ok" ) );
+    gui::RichPushButton* cancelBtn = new gui::RichPushButton( "cancel", tr( "Cancel" ) );
     okBtn->setDefault( true );
     okBtn->setMaximumWidth( 100 );
     cancelBtn->setMaximumWidth( 100 );

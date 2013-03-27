@@ -17,8 +17,8 @@
 // Name: TemplateListView constructor
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-TemplateListView::TemplateListView( QWidget* parent, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController )
-    : gui::RichTreeView( parent, &controllers )
+TemplateListView::TemplateListView( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController )
+    : gui::RichTreeView( objectName, parent, &controllers )
     , agents_         ( agents )
     , formations_     ( formations )
     , types_          ( types )

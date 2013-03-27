@@ -40,6 +40,7 @@ namespace gui
 {
     class GlTools_ABC;
     class Viewport_ABC;
+    class RichTreeWidget;
 }
 
 namespace tools
@@ -58,7 +59,7 @@ class StaticModel;
 */
 // Created: SBO 2009-04-16
 // =============================================================================
-class ScoreList : public Q3VBox
+class ScoreList : public QWidget
                 , public tools::Observer_ABC
                 , public tools::ElementObserver_ABC< Score_ABC >
 {
@@ -67,7 +68,7 @@ class ScoreList : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreList( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model, const tools::ExerciseConfig& config,
+             ScoreList( kernel::Controllers& controllers, ScoresModel& model, const tools::ExerciseConfig& config,
                         const StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreList();
     //@}
@@ -108,7 +109,7 @@ private:
     //@{
     kernel::Controllers&             controllers_;
     ScoresModel&                     model_;
-    QTreeWidget*                     scores_;
+    gui::RichTreeWidget*                  scores_;
     ScoreEditor*                     editor_;
     const tools::ExerciseConfig&     config_;
     Q3HBox*                          generatorBox_;

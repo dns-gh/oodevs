@@ -21,6 +21,7 @@
 #include "preparation/TeamKarmas.h"
 #include "preparation/LogisticLevel.h"
 #include "clients_gui/CriticalIntelligenceDialog.h"
+#include "clients_gui/RichComboBox.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/AgentTypes.h"
@@ -96,7 +97,7 @@ namespace
     {
     public:
         SimpleResolverEditor( QWidget* parent, const Resolver& resolver, bool selectionField = false, const QString& selectionText = " - " )
-            : gui::ValuedComboBox< const Entity* >( parent )
+            : gui::ValuedComboBox< const Entity* >( "SimpleResolverEditor", parent )
         {
             if( selectionField )
                 AddItem( selectionText, 0 );
@@ -179,12 +180,12 @@ void EditorFactory::Call( kernel::NBCAgent** const& value )
 namespace
 {
     template< typename Enum >
-    class EnumEditor : public QComboBox
+    class EnumEditor : public gui::RichComboBox
                      , public kernel::ValueEditor< Enum >
     {
     public:
         explicit EnumEditor( QWidget* parent )
-            : QComboBox( parent )
+            : gui::RichComboBox( "EnumEditor", parent )
         {
             for( int i = 0; i < int( Enum::max() ); ++i )
                 insertItem( Enum( i ).ToString() );
@@ -243,8 +244,8 @@ namespace
     class NBCAgentEditor : public MultipleResolverEditor< kernel::NBCAgent, T_NBCResolver >
     {
     public:
-        NBCAgentEditor( QWidget* parent, const T_NBCResolver& resolver )
-            : MultipleResolverEditor< kernel::NBCAgent, T_NBCResolver >( parent, resolver )
+        NBCAgentEditor( const QString& objectName, QWidget* parent, const T_NBCResolver& resolver )
+            : MultipleResolverEditor< kernel::NBCAgent, T_NBCResolver >( objectName, parent, resolver )
         {
             setCaption( tools::translate( "EditorFactory", "NBC agent(s) editor" ) );
         }
@@ -258,7 +259,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( std::vector< kernel::NBCAgent* >* const& value )
 {
-    NBCAgentEditor* editor = new NBCAgentEditor( parent_, static_cast< T_NBCResolver& >( staticModel_.objectTypes_ ) );
+    NBCAgentEditor* editor = new NBCAgentEditor( "NBCAgentEditor", parent_, static_cast< T_NBCResolver& >( staticModel_.objectTypes_ ) );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }
@@ -375,7 +376,7 @@ namespace
     {
     public:
                 DisasterEditor( QWidget* parent, const tools::GeneralConfig& config )
-            : gui::ValuedComboBox< std::string >( parent )
+            : gui::ValuedComboBox< std::string >( "DisasterEditor", parent )
         {
             const tools::Path::T_Paths result = ( config.GetRootDir() / "data/propagations" ).ListElements( &gui::IsPropagationDir );
             for( auto it = result.begin(); it != result.end(); ++it )

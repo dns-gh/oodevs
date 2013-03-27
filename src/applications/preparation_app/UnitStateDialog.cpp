@@ -18,6 +18,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_gui/RichTabWidget.h"
 #include "preparation/InitialState.h"
 #include <boost/smart_ptr/make_shared.hpp>
 
@@ -28,6 +29,7 @@
 UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel )
     : gui::UnitStateDialog( parent, controllers )
 {
+    gui::SubObjectName subObject( "UnitStateDialog" );
     setCaption( tools::translate( "UnitStateDialog", "Initial state" ) );
     assert( tabWidget_ );
     tabs_.push_back( boost::make_shared< UnitStateTableCrew >( tabWidget_ ) );

@@ -11,6 +11,7 @@
 #include "OrbatPanel.h"
 #include "moc_OrbatPanel.cpp"
 #include "clients_gui/ColorButton.h"
+#include "clients_gui/RichGroupBox.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 
@@ -25,16 +26,17 @@ OrbatPanel::OrbatPanel( QWidget* parent, kernel::Controllers& controllers )
 {
     QWidget* main = new QWidget( this );
     QBoxLayout* layout = new QBoxLayout( QBoxLayout::TopToBottom, main );
-    QGroupBox* box = new QGroupBox( tr( "Edition" ), this );
+    gui::RichGroupBox* box = new gui::RichGroupBox( "Edition", tr( "Edition" ), this );
     layout->setAlignment( Qt::AlignTop );
     layout->addWidget( box );
     QVBoxLayout* mainLayout = new QVBoxLayout( box );
     // ghost
     QHBoxLayout* ghostLayout = new QHBoxLayout();
     ghostLayout->addWidget( new QLabel( tr( "Ghost:" ) ) );
-    pGhostColor_ = new gui::ColorButton( main, "", QColor( 60, 180, 90 ) );
+    pGhostColor_ = new gui::ColorButton( "GhostColor", main, "", QColor( 60, 180, 90 ) );
     ghostLayout->addWidget( pGhostColor_ );
     mainLayout->addLayout( ghostLayout );
+    layout->addStretch( 1 );
 
     if( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() == "" )
         controllers_.options_.Change( "Color/Phantom", pGhostColor_->GetColor().name() );

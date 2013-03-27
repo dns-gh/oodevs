@@ -18,6 +18,13 @@ namespace tools
     class ExerciseConfig;
 }
 
+namespace gui
+{
+    class RichPushButton;
+    class RichLineEdit;
+    class RichCheckBox;
+}
+
 class UrbanModel;
 
 // =============================================================================
@@ -56,11 +63,11 @@ private:
     //@{
     const UrbanModel&            urbanModel_;
     const tools::ExerciseConfig& config_;
-    QLineEdit*                   exportPathEditor_;
-    QCheckBox*                   shapeCheck_;
-    QCheckBox*                   elevationCheck_;
-    QCheckBox*                   rasterCheck_;
-    QPushButton*                 okButton_;
+    gui::RichLineEdit*                   exportPathEditor_;
+    gui::RichCheckBox*                   shapeCheck_;
+    gui::RichCheckBox*                   elevationCheck_;
+    gui::RichCheckBox*                   rasterCheck_;
+    gui::RichPushButton*                 okButton_;
     //@}
 };
 

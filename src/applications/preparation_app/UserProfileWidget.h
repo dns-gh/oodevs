@@ -10,6 +10,9 @@
 #ifndef __UserProfileWidget_h_
 #define __UserProfileWidget_h_
 
+#include <boost/noncopyable.hpp>
+#include "clients_gui/RichTabWidget.h"
+
 namespace kernel
 {
     class Controllers;
@@ -21,6 +24,8 @@ namespace kernel
 namespace gui
 {
     class EntitySymbols;
+    class RichLineEdit;
+    class RichCheckBox;
 }
 
 class UserProfile;
@@ -34,14 +39,14 @@ class ProfilesChecker_ABC;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class UserProfileWidget : public QTabWidget
+class UserProfileWidget : public gui::RichTabWidget
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons,
+             UserProfileWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons,
                                 const kernel::ExtensionTypes& extensions, ProfilesChecker_ABC& checker, Model& model );
     virtual ~UserProfileWidget();
     //@}
@@ -61,13 +66,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UserProfileWidget( const UserProfileWidget& );            //!< Copy constructor
-    UserProfileWidget& operator=( const UserProfileWidget& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
@@ -75,11 +73,11 @@ private:
     ProfilesChecker_ABC& checker_;
     Model& model_;
     UserProfile* profile_;
-    QLineEdit* login_;
-    QLineEdit* password_;
-    QLineEdit* automats_;
-    QLineEdit* knowledgeGroups_;
-    QCheckBox* supervisor_;
+    gui::RichLineEdit* login_;
+    gui::RichLineEdit* password_;
+    gui::RichLineEdit* automats_;
+    gui::RichLineEdit* knowledgeGroups_;
+    gui::RichCheckBox* supervisor_;
     UserProfileRights_ABC* unitRights_;
     UserProfileRights_ABC* populationRights_;
     //@}

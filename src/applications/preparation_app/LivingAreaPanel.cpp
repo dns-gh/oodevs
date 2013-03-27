@@ -12,6 +12,8 @@
 #include "moc_LivingAreaPanel.cpp"
 
 #include "clients_gui/ParametersLayer.h"
+#include "clients_gui/RichDialogButtonBox.h"
+#include "clients_gui/RichGroupBox.h"
 #include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Inhabitant_ABC.h"
@@ -45,9 +47,10 @@ LivingAreaPanel::LivingAreaPanel( QMainWindow* parent, kernel::Controllers& cont
     , mode_         ( LivingAreaPanel::add )
     , location_     ( 0 )
 {
+    gui::SubObjectName subObject( this->objectName() );
     QWidget* main = new QWidget( this );
     QHBoxLayout* mainLayout = new QHBoxLayout( main );
-    QGroupBox* instruction = new QGroupBox();
+    gui::RichGroupBox* instruction = new gui::RichGroupBox( "instruction" );
     QVBoxLayout* instructionLayout = new QVBoxLayout( instruction );
     QHBoxLayout* iconLayout = new QHBoxLayout();
     QPixmap pixmap( "resources/images/preparation/livingArea.png" );
@@ -59,13 +62,13 @@ LivingAreaPanel::LivingAreaPanel( QMainWindow* parent, kernel::Controllers& cont
     iconLayout->addWidget( text_, Qt::AlignLeft );
     instructionLayout->addLayout( iconLayout );
     instructionLayout->addLayout( textLayout );
-    QGroupBox* buttons = new QGroupBox();
+    gui::RichGroupBox* buttons = new gui::RichGroupBox( "buttons" );
     buttons->setTitle( tools::translate( "LivingAreaPanel", "Validation" ) );
     QHBoxLayout* buttonsLayout = new QHBoxLayout( buttons );
-    QDialogButtonBox* okButton = new QDialogButtonBox( QDialogButtonBox::Ok );
+    gui::RichDialogButtonBox* okButton = new gui::RichDialogButtonBox( "ok", QDialogButtonBox::Ok );
     connect( okButton, SIGNAL( accepted() ), this, SLOT( Accept() ) );
     okButton->setFocus();
-    QDialogButtonBox* cancelButton = new QDialogButtonBox( QDialogButtonBox::Cancel );
+    gui::RichDialogButtonBox* cancelButton = new gui::RichDialogButtonBox( "cancel", QDialogButtonBox::Cancel );
     connect( cancelButton, SIGNAL( rejected() ), this, SLOT( Reject() ) );
     buttonsLayout->addWidget( okButton );
     buttonsLayout->addWidget( cancelButton );

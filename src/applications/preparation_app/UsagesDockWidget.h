@@ -20,6 +20,13 @@ namespace kernel
     class UrbanObject_ABC;
 }
 
+namespace gui
+{
+    class RichPushButton;
+    class RichComboBox;
+    class RichTableWidget;
+}
+
 class StaticModel;
 
 // =============================================================================
@@ -81,12 +88,12 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    StaticModel&         staticModel_;
-    QComboBox*           pMotivations_;
-    QPushButton*         pButton_;
-    QTableWidget*        pTable_;
-    bool                 isEditing_;
-    T_Elements           selectedElements_;
+    StaticModel& staticModel_;
+    gui::RichComboBox* pMotivations_;
+    gui::RichPushButton* pButton_;
+    gui::RichTableWidget* pTable_;
+    bool isEditing_;
+    T_Elements selectedElements_;
     //@}
 };
 

@@ -11,6 +11,9 @@
 #include "DotationsEditor.h"
 #include "moc_DotationsEditor.cpp"
 #include "clients_gui/CommonDelegate.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichTableWidget.h"
+#include "clients_gui/SubObjectName.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
@@ -34,11 +37,12 @@ DotationsEditor::DotationsEditor( QWidget* parent, const kernel::ObjectTypes& ob
     , dotations_( objectTypes )
     , value_( 0 )
 {
+    gui::SubObjectName subObject( "DotationsEditor" );
     setCaption( tr( "Resources editor" ) );
     setMinimumSize( 500, 500 );
 
     // Table
-    table_ = new QTableWidget;
+    table_ = new gui::RichTableWidget( "table" );
     gui::CommonDelegate* delegate = new gui::CommonDelegate( this );
     table_->setItemDelegate( delegate );
     table_->setColumnCount( 2 );
@@ -52,7 +56,7 @@ DotationsEditor::DotationsEditor( QWidget* parent, const kernel::ObjectTypes& ob
 
     // Info Panel
     infosLabel_ = new QLabel( this );
-    infosTable_ = new QTableWidget();
+    infosTable_ = new gui::RichTableWidget( "infoTable" );
     infosTable_->setSelectionMode( QAbstractItemView::NoSelection );
     infosTable_->setColumnCount( 4 );
     infosTable_->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
@@ -63,9 +67,9 @@ DotationsEditor::DotationsEditor( QWidget* parent, const kernel::ObjectTypes& ob
     // Buttons
     Q3HBox* buttonBox = new Q3HBox( this );
     buttonBox->setSpacing( 5 );
-    QPushButton* clear  = new QPushButton( tr( "Clear" ), buttonBox );
-    QPushButton* ok     = new QPushButton( tr( "Ok" ), buttonBox );
-    QPushButton* cancel = new QPushButton( tr( "Cancel" ), buttonBox );
+    gui::RichPushButton* clear  = new gui::RichPushButton( "clear", tr( "Clear" ), buttonBox );
+    gui::RichPushButton* ok     = new gui::RichPushButton( "ok", tr( "Ok" ), buttonBox );
+    gui::RichPushButton* cancel = new gui::RichPushButton( "cancel", tr( "Cancel" ), buttonBox );
 
     // Layout
     Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( this, 10, 5 );
@@ -88,6 +92,7 @@ DotationsEditor::DotationsEditor( QWidget* parent, const kernel::ObjectTypes& ob
     connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
     connect( table_, SIGNAL( cellChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
     OnLinkActivated( "hide" );
+
 }
 
 // -----------------------------------------------------------------------------

@@ -11,6 +11,9 @@
 #include "PopulationRepartitionEditor.h"
 #include "moc_PopulationRepartitionEditor.cpp"
 #include "clients_kernel/Controller.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichLineEdit.h"
+#include "clients_gui/RichGroupBox.h"
 #include "preparation/PopulationRepartition.h"
 
 // -----------------------------------------------------------------------------
@@ -21,47 +24,67 @@ PopulationRepartitionEditor::PopulationRepartitionEditor( QWidget* parent, kerne
     : gui::PropertyDialog( parent )
     , controller_( controller )
 {
+    gui::SubObjectName subObject( "PopulationRepartitionEditor" );
     setCaption( tr( "Repartition Editor" ) );
-    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
-    pMainLayout->setMargin( 10 );
-    pMainLayout->setSpacing( 10 );
-    Q3GroupBox* vBox = new Q3GroupBox( 2, Qt::Horizontal, this );
-    pMainLayout->addWidget( vBox );
+
+    gui::RichGroupBox* repartitionBox = new gui::RichGroupBox( "repartitionBox", this );
+    QHBoxLayout* repartitionBoxLayout = new QHBoxLayout( repartitionBox );
     {
-        new QLabel( tr( "Male (%)" ), vBox );
-        male_ = new QLineEdit( vBox );
+        QLabel* maleLabel = new QLabel( tr( "Male (%)" ) );
+
+        male_ = new gui::RichLineEdit( "male" );
         male_->setValidator( new QIntValidator( 0, 100, male_ ) );
         male_->setFixedWidth( 40 );
         connect( male_, SIGNAL( textChanged( const QString& ) ), SLOT( OnValueChanged() ) );
+
+        repartitionBoxLayout->addWidget( maleLabel );
+        repartitionBoxLayout->addWidget( male_ );
     }
     {
-        new QLabel( tr( "Female (%)" ), vBox );
-        female_ = new QLineEdit( vBox );
+        QLabel* femaleLabel = new QLabel( tr( "Female (%)" ) );
+        female_ = new gui::RichLineEdit( "female" );
         female_->setValidator( new QIntValidator( 0, 100, female_ ) );
         female_->setFixedWidth( 40 );
         connect( female_, SIGNAL( textChanged( const QString& ) ), SLOT( OnValueChanged() ) );
+
+        repartitionBoxLayout->addWidget( femaleLabel );
+        repartitionBoxLayout->addWidget( female_ );
     }
     {
-        new QLabel( tr( "Children (%)" ), vBox );
-        children_ = new QLineEdit( vBox );
+        QLabel* childrenLabel = new QLabel( tr( "Children (%)" ) );
+        children_ = new gui::RichLineEdit( "children" );
         children_->setValidator( new QIntValidator( 0, 100, children_ ) );
         children_->setFixedWidth( 40 );
         connect( children_, SIGNAL( textChanged( const QString& ) ), SLOT( OnValueChanged() ) );
+
+        repartitionBoxLayout->addWidget( childrenLabel );
+        repartitionBoxLayout->addWidget( children_ );
     }
     warning_ = new QLabel( this );
-    pMainLayout->addWidget( warning_ );
 
+
+    //button box
     Q3HBox* pbuttonBox = new Q3HBox( this );
-    okBtn_ = new QPushButton( tr( "Ok" ), pbuttonBox );
-    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), pbuttonBox );
+
+    okBtn_ = new gui::RichPushButton( "ok", tr( "Ok" ), pbuttonBox );
     okBtn_->setDefault( true );
     okBtn_->setMaximumWidth( 60 );
-    cancelBtn->setMaximumWidth( 60 );
+    connect( okBtn_   , SIGNAL( clicked() ), SLOT( OnAccept() ) );
 
+    gui::RichPushButton* cancelBtn = new gui::RichPushButton( "cancel", tr( "Cancel" ), pbuttonBox );
+    cancelBtn->setMaximumWidth( 60 );
+    connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
+
+    //main Layout
+    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
+    pMainLayout->setMargin( 10 );
+    pMainLayout->setSpacing( 10 );
+    pMainLayout->addWidget( repartitionBox );
+    pMainLayout->addWidget( warning_ );
     pMainLayout->addWidget( pbuttonBox, 0, Qt::AlignRight );
 
-    connect( okBtn_   , SIGNAL( clicked() ), SLOT( OnAccept() ) );
-    connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
+
+
 }
 
 // -----------------------------------------------------------------------------

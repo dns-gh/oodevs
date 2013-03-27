@@ -37,7 +37,7 @@ public:
     //@{
     virtual void Execute();
     virtual const std::string GetName() const;
-    virtual QWidget* CreateParametersWidget( QWidget* parent );
+    virtual QWidget* CreateParametersWidget( const QString& objectName, QWidget* parent );
     virtual bool IsValid() const;
     virtual bool NeedToReloadExercise() const;
     virtual void Update();

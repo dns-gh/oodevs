@@ -18,6 +18,8 @@
 #include "preparation/UserProfile.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichListView.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileList constructor
@@ -32,6 +34,7 @@ UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, ker
     , checker_          ( checker )
     , pNewProfileDialog_( new NewProfileDialog( this, model, checker ) )
 {
+    gui::SubObjectName subObject( "UserProfileList" );
     QVBoxLayout* layout = new QVBoxLayout( this );
 
     dataModel_ = new QStandardItemModel();
@@ -40,14 +43,14 @@ UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, ker
     proxyModel_->setDynamicSortFilter( true );
     proxyModel_->setSortCaseSensitivity( Qt::CaseInsensitive );
     proxyModel_->setSourceModel( dataModel_ );
-    list_ = new QListView( this );
-    list_->setViewMode( QListView::ListMode );
+    list_ = new gui::RichListView( "list", this );
+    list_->setViewMode( gui::RichListView::ListMode );
     list_->setSelectionMode( QAbstractItemView::SingleSelection );
     list_->setModel( proxyModel_ );
 
     QHBoxLayout* box = new QHBoxLayout();
-    QPushButton* createBtn = new QPushButton( tr( "Create" ) );
-    QPushButton* deleteBtn = new QPushButton( tr( "Delete" ) );
+    gui::RichPushButton* createBtn = new gui::RichPushButton( "create", tr( "Create" ) );
+    gui::RichPushButton* deleteBtn = new gui::RichPushButton( "delete", tr( "Delete" ) );
     connect( createBtn, SIGNAL( clicked() ), SLOT( OnCreate() ) );
     connect( deleteBtn, SIGNAL( clicked() ), SLOT( OnDelete() ) );
     connect( list_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelectionChanged() ) );
@@ -57,6 +60,7 @@ UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, ker
     layout->addWidget( list_ );
     layout->addLayout( box );
     controllers_.Register( *this );
+
 }
 
 // -----------------------------------------------------------------------------

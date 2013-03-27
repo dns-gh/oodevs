@@ -18,6 +18,13 @@ class SuccessFactorActionType;
 class SuccessFactorActionTypes;
 class SuccessFactorActionTypeParameter;
 
+namespace gui
+{
+    class RichPushButton;
+    class RichLineEdit;
+    class RichGroupBox;
+}
+
 // =============================================================================
 /** @class  SuccessFactorActionItem
     @brief  SuccessFactorActionItem
@@ -31,7 +38,7 @@ class SuccessFactorActionItem : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             SuccessFactorActionItem( QWidget* parent, const SuccessFactorActionTypes& actions );
+             SuccessFactorActionItem( const QString& objectName, QWidget* parent, const SuccessFactorActionTypes& actions );
     virtual ~SuccessFactorActionItem();
     //@}
 
@@ -71,16 +78,16 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< QString, QLineEdit* > T_ParameterEditors;
+    typedef std::map< QString, gui::RichLineEdit* > T_ParameterEditors;
     //@}
 
 private:
     //! @name Member data
     //@{
     gui::ValuedComboBox< const SuccessFactorActionType* >* type_;
-    Q3GroupBox* parameters_;
+    gui::RichGroupBox* parameters_;
     T_ParameterEditors editors_;
-    QPushButton* deleteButton_;
+    gui::RichPushButton* deleteButton_;
     //@}
 };
 

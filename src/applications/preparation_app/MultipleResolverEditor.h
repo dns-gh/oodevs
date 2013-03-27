@@ -13,6 +13,11 @@
 #include "clients_gui/PropertyDialog.h"
 #include "clients_kernel/ValueEditor.h"
 
+namespace gui
+{
+    class RichListWidget;
+}
+
 // =============================================================================
 /** @class  MultipleResolverEditor
     @brief  Multiple resolver editor
@@ -27,7 +32,7 @@ class MultipleResolverEditor : public gui::PropertyDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             MultipleResolverEditor( QWidget* parent, const Resolver& resolver );
+    MultipleResolverEditor( const QString& objectName, QWidget* parent, const Resolver& resolver );
     virtual ~MultipleResolverEditor();
     //@}
 
@@ -48,7 +53,7 @@ protected:
     //@{
     std::vector< const Entity* > entities_;
     std::vector< Entity* >* values_;
-    QListWidget* listBox_;
+    gui::RichListWidget* listBox_;
     //@}
 };
 

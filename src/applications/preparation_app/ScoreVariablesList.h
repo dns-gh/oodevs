@@ -24,6 +24,7 @@ namespace gui
     class ParametersLayer;
     class UtmParser;
     class Viewport_ABC;
+    class RichTreeWidget;
 }
 
 namespace indicators
@@ -54,7 +55,7 @@ class ScoreVariablesList : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreVariablesList( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel,
+             ScoreVariablesList( kernel::Controllers& controllers, const StaticModel& staticModel,
                                  gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreVariablesList();
     //@}
@@ -95,7 +96,7 @@ private:
     //@{
     const gui::GlTools_ABC& tools_;
     ScoreVariableCreationWizard* wizard_;
-    QTreeWidget* list_;
+    gui::RichTreeWidget* list_;
     std::auto_ptr< kernel::Location_ABC > location_;
     std::auto_ptr< gui::UtmParser > parser_;
     //@}

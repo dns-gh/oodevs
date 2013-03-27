@@ -15,6 +15,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/LoadableTimeEdit.h"
+#include "clients_gui/RichCheckBox.h"
 
 using namespace kernel;
 

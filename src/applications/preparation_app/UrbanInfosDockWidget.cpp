@@ -12,6 +12,7 @@
 
 #include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
+#include "clients_gui/RichTextEdit.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
@@ -33,9 +34,10 @@ UrbanInfosDockWidget::UrbanInfosDockWidget( QWidget* parent, kernel::Controllers
     , controllers_( controllers )
     , model_      ( model )
 {
-    infoEditText_ = new QTextEdit( this );
+    gui::SubObjectName subObject( this->objectName() );
+    infoEditText_ = new gui::RichTextEdit( "infoEditText", this );
     infoEditText_->setReadOnly( true );
-    infoEditText_->setLineWrapMode( QTextEdit::NoWrap );
+    infoEditText_->setLineWrapMode( gui::RichTextEdit::NoWrap );
     QTextCharFormat textCharFormat;
     textCharFormat.setFont( QFont( "Courrier" ) );
     textCharFormat.setFontFixedPitch( true );

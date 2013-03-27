@@ -15,6 +15,8 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/DecimalSpinBoxAndSlider.h"
+#include "Clients_gui/RichPushButton.h"
+#include "clients_gui/RichCheckBox.h"
 #include "preparation/Affinities.h"
 #include <boost/foreach.hpp>
 
@@ -22,23 +24,24 @@
 // Name: AffinitiesDialog constructor
 // Created: LGY 2011-03-16
 // -----------------------------------------------------------------------------
-AffinitiesDialog::AffinitiesDialog( QWidget* parent, kernel::Controllers& controllers, bool optional )
-    : QDialog( parent, "AffinitiesDialog" )
+AffinitiesDialog::AffinitiesDialog( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, bool optional )
+    : QDialog( parent )
     , controllers_( controllers )
     , pGrid_      ( 0 )
     , selected_   ( controllers )
 {
+    gui::SubObjectName subObject( objectName );
     setCaption( tools::translate( "AffinitiesDialog", "Change affinities" ) );
     resize( 320, 150 );
     pMainLayout_ = new QVBoxLayout( this );
-    pCheckBox_ = new QCheckBox( tools::translate( "AffinitiesDialog", "Activate" ), this );
+    pCheckBox_ = new gui::RichCheckBox( "activate", tools::translate( "AffinitiesDialog", "Activate" ), this );
     connect( pCheckBox_, SIGNAL( toggled( bool ) ), this, SLOT( Activated( bool ) ) );
     pCheckBox_->setChecked( false );
     pCheckBox_->setVisible( optional );
     pMainLayout_->addWidget( pCheckBox_ );
     pButtonLayout_ = new Q3HBox( this );
-    QPushButton* okButton = new QPushButton( tr( "Ok" ), pButtonLayout_ );
-    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), pButtonLayout_ );
+    gui::RichPushButton* okButton = new gui::RichPushButton( "ok", tr( "Ok" ), pButtonLayout_ );
+    gui::RichPushButton* cancelButton = new gui::RichPushButton( "cancel", tr( "Cancel" ), pButtonLayout_ );
     okButton->setDefault( TRUE );
     connect( okButton, SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );

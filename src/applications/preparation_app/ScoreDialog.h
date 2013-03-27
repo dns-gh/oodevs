@@ -34,6 +34,8 @@ namespace gui
     class GlTools_ABC;
     class ParametersLayer;
     class Viewport_ABC;
+    class RichPushButton;
+    class RichLineEdit;
 }
 
 namespace tools
@@ -59,7 +61,7 @@ class ScoreDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreDialog( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
+             ScoreDialog( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
                           gui::ParametersLayer& layer, const StaticModel& staticModel, const tools::ExerciseConfig& config,
                           gui::GlTools_ABC& tools );
     virtual ~ScoreDialog();
@@ -91,8 +93,8 @@ private:
     ScoresModel& model_;
     actions::gui::InterfaceBuilder_ABC* builder_;
     ScoreList* scores_;
-    QLineEdit* editor_;
-    QPushButton* createButton_;
+    gui::RichLineEdit* editor_;
+    gui::RichPushButton* createButton_;
     const gui::GlTools_ABC& tools_;
     //@}
 };

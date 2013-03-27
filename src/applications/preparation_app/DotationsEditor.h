@@ -23,6 +23,11 @@ namespace kernel
     class ObjectTypes;
 }
 
+namespace gui
+{
+    class RichTableWidget;
+}
+
 class Dotation;
 class DotationsItem;
 
@@ -84,8 +89,8 @@ private:
     const kernel::Resolver2< kernel::DotationType >& dotations_;
     const kernel::Entity_ABC* current_;
     DotationsItem** value_;
-    QTableWidget* table_;
-    QTableWidget* infosTable_;
+    gui::RichTableWidget* table_;
+    gui::RichTableWidget* infosTable_;
     QLabel* infosLabel_;
     //@}
 };

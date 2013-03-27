@@ -32,7 +32,7 @@ public:
     virtual void Execute() = 0;
     virtual const std::string GetName() const = 0;
     virtual const std::string GetDescription() const = 0;
-    virtual QWidget* CreateParametersWidget( QWidget* parent ) = 0;
+    virtual QWidget* CreateParametersWidget( const QString& objectName, QWidget* parent ) = 0;
     virtual bool IsValid() const = 0;
     virtual bool NeedToReloadExercise() const = 0;
     virtual void Update() {}

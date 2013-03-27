@@ -19,6 +19,8 @@ class LogisticHierarchiesBase;
 namespace gui
 {
     class CommonDelegate;
+    class RichPushButton;
+    class RichTableView;
 }
 
 namespace kernel
@@ -115,9 +117,9 @@ private:
     const ::StaticModel& staticModel_;
     QStandardItemModel* dataModel_;
     gui::CommonDelegate* delegate_;
-    QTableView* tableView_;
-    QPushButton* validateButton_;
-    QPushButton* cancelButton_;
+    gui::RichTableView* tableView_;
+    gui::RichPushButton* validateButton_;
+    gui::RichPushButton* cancelButton_;
     bool showStocks_;
     //@}
 };

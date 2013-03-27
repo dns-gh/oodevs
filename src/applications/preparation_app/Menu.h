@@ -46,7 +46,7 @@ class Menu : public QMenuBar
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs, gui::ItemFactory_ABC& factory, const QString& license );
+             Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs, gui::ItemFactory_ABC& factory, const QString& license );
     virtual ~Menu();
     //@}
 

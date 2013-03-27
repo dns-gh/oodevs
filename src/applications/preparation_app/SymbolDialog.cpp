@@ -13,6 +13,7 @@
 #include "EntitySymbolEditor.h"
 #include "clients_gui/NatureEditionCategory.h"
 #include "clients_gui/NatureEditionWidget.h"
+#include "clients_gui/RichPushButton.h"
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/Controller.h"
@@ -37,6 +38,7 @@ SymbolDialog::SymbolDialog( QWidget* parent, kernel::Controllers& controllers, k
     , symbolsFactory_( symbolsFactory )
 {
     // Initialize dialog
+    gui::SubObjectName subObject( "SymbolDialog" );
     setCaption( tr( "Symbol and hierarchy level editor" ) );
     setMinimumSize( 400, 400 );
 
@@ -49,8 +51,8 @@ SymbolDialog::SymbolDialog( QWidget* parent, kernel::Controllers& controllers, k
     symbolEditor_ = new EntitySymbolEditor( editorLayout, 0, controllers, symbolsFactory, icons, colorStrategy );
 
     // Buttons
-    QPushButton* okButton = new QPushButton( tr( "Ok" ) );
-    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ) );
+    gui::RichPushButton* okButton = new gui::RichPushButton( "ok", tr( "Ok" ) );
+    gui::RichPushButton* cancelButton = new gui::RichPushButton( "cancel", tr( "Cancel" ) );
     okButton->setDefault( TRUE );
     connect( okButton, SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
@@ -65,6 +67,7 @@ SymbolDialog::SymbolDialog( QWidget* parent, kernel::Controllers& controllers, k
 
     hide();
     controllers_.Register( *this );
+
 }
 
 // -----------------------------------------------------------------------------

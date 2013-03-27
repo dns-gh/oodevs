@@ -14,6 +14,7 @@
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/ParametersLayer.h"
+#include "clients_gui/RichToolButton.h"
 #include "clients_gui/SymbolSizeOptionChooser.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -23,9 +24,9 @@
 
 namespace
 {
-    QToolButton* AddButton( QWidget* parent, const QObject *receiver, const char *member, const QString& toolTip = "", const tools::Path& iconPath = "", bool isCheckable = false )
+    gui::RichToolButton* AddButton( const QString& objectName, QWidget* parent, const QObject *receiver, const char *member, const QString& toolTip = "", const tools::Path& iconPath = "", bool isCheckable = false )
     {
-        QToolButton* button = new QToolButton( parent );
+        gui::RichToolButton* button = new gui::RichToolButton( objectName, parent );
         QObject::connect( button, SIGNAL( clicked() ), receiver, member );
         if( !toolTip.isEmpty() )
             button->setToolTip( toolTip );
@@ -35,7 +36,7 @@ namespace
         return button;
     }
 
-    QDoubleSpinBox* CreateSwitchModeButtonContextMenu( QToolButton* button )
+    QDoubleSpinBox* CreateSwitchModeButtonContextMenu( gui::RichToolButton* button )
     {
         QWidget* holder = new QWidget;
         QHBoxLayout* hLayout = new QHBoxLayout;
@@ -58,7 +59,7 @@ namespace
         menu->addAction( action );
 
         button->setPopupDelay( 0 );
-        button->setPopupMode( QToolButton::MenuButtonPopup );
+        button->setPopupMode( gui::RichToolButton::MenuButtonPopup );
         button->setPopup( menu );
 
         return spinBox;
@@ -84,16 +85,17 @@ TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controller
     , isAuto_       ( false )
     , changingGeom_ ( false )
 {
+    gui::SubObjectName subObject( "TerrainToolBar" );
     // Terrain button
-    switchModeButton_ = AddButton( this, this, SLOT( OnSwitchMode() ), tr( "Edit urban area" ), "resources/images/preparation/livingArea.png", true );
+    switchModeButton_ = AddButton( "switchModeButton", this, this, SLOT( OnSwitchMode() ), tr( "Edit urban area" ), "resources/images/preparation/livingArea.png", true );
     roadWidthSpinBox_ = CreateSwitchModeButtonContextMenu( switchModeButton_ );
 
     // Block creation button
-    blockCreationButton_ = AddButton( this, this, SLOT( OnBlockCreation() ), tr( "Manual block creation" ), "resources/images/preparation/CreateBlock.png", true );
+    blockCreationButton_ = AddButton( "blockCreationButton", this, this, SLOT( OnBlockCreation() ), tr( "Manual block creation" ), "resources/images/preparation/CreateBlock.png", true );
     // Multi blocks creation button
-    blockCreationAutoButton_ = AddButton( this, this, SLOT( OnBlockCreationAuto() ), tr( "Automatic block creation on built-up area" ), "resources/images/preparation/CreateBlockAuto.png", true );
+    blockCreationAutoButton_ = AddButton( "blockCreationAutoButton", this, this, SLOT( OnBlockCreationAuto() ), tr( "Automatic block creation on built-up area" ), "resources/images/preparation/CreateBlockAuto.png", true );
     // Remove blocks button
-    blockRemoveButton_ = AddButton( this, &removeBlocksDialog, SLOT( show() ), tr( "Remove urban blocks" ), "resources/images/preparation/RemoveBlockAuto.png", false );
+    blockRemoveButton_ = AddButton( "blockRemoveButton", this, &removeBlocksDialog, SLOT( show() ), tr( "Remove urban blocks" ), "resources/images/preparation/RemoveBlockAuto.png", false );
     // Layout
     addWidget( switchModeButton_ );
     addSeparator();

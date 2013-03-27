@@ -13,6 +13,7 @@
 #include "EntitySymbolEditor.h"
 #include "clients_gui/UnitPreviewIcon.h"
 #include "clients_gui/DragAndDropHelpers.h"
+#include "clients_gui/RichLineEdit.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -33,6 +34,7 @@ GhostsPanel::GhostsPanel( QWidget* parent, gui::PanelStack_ABC& panel, Controlle
     , controllers_        ( controllers )
     , symbolsFactory_     ( symbolsFactory )
 {
+    gui::SubObjectName subObject( "GhostsPanel" );
     // Base
     QWidget* box = new QWidget( this );
     QGridLayout* layout = new QGridLayout( box );
@@ -42,12 +44,12 @@ GhostsPanel::GhostsPanel( QWidget* parent, gui::PanelStack_ABC& panel, Controlle
     setWidget( box );
     // Name
     layout->addWidget( new QLabel( tr( "Name:" ), this ), 0, 0 );
-    nameLineEdit_ = new QLineEdit( this );
+    nameLineEdit_ = new gui::RichLineEdit( "nameLineEdit", this );
     connect( nameLineEdit_, SIGNAL( textChanged( const QString& ) ), SLOT( UpdateWarning() ) );
     layout->addWidget( nameLineEdit_, 0, 1 );
     // Type
     layout->addWidget( new QLabel( tr( "Type:" ), this ), 1, 0 );
-    typeLineEdit_ = new QLineEdit( this );
+    typeLineEdit_ = new gui::RichLineEdit( "typeLineEdit", this );
     connect( typeLineEdit_, SIGNAL( textChanged( const QString& ) ), SLOT( UpdateWarning() ) );
     layout->addWidget( typeLineEdit_, 1, 1 );
 

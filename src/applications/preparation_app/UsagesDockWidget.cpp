@@ -12,6 +12,9 @@
 #include "moc_UsagesDockWidget.cpp"
 
 #include "clients_gui/RichSpinBox.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichComboBox.h"
+#include "clients_gui/RichTableWidget.h"
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/Controller.h"
@@ -33,14 +36,14 @@ UsagesDockWidget::UsagesDockWidget( QWidget* parent, kernel::Controllers& contro
     , staticModel_( staticModel )
     , isEditing_  ( false )
 {
-
+    gui::SubObjectName subObject( this->objectName() );
     QHBoxLayout* buttonLayout = new QHBoxLayout();
-    pMotivations_ = new QComboBox();
-    pButton_ = new QPushButton( tr( "Add" ) );
+    pMotivations_ = new gui::RichComboBox( "motivations" );
+    pButton_ = new gui::RichPushButton( "add", tr( "Add" ) );
     buttonLayout->addWidget( pMotivations_ );
     buttonLayout->addWidget( pButton_ );
 
-    pTable_ = new QTableWidget();
+    pTable_ = new gui::RichTableWidget( "usageDockTable" );
     pTable_->setColumnCount( 2 );
     QStringList labels;
     labels.append( tr( "Usages" ) );
@@ -61,6 +64,7 @@ UsagesDockWidget::UsagesDockWidget( QWidget* parent, kernel::Controllers& contro
 
     Clean();
     controllers_.Update( *this );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +137,7 @@ void UsagesDockWidget::AddItem( const std::string& name, int value )
     pTable_->insertRow( row );
     QTableWidgetItem* pName = new QTableWidgetItem( name.c_str() );
     pName->setFlags( pName->flags() & ~Qt::ItemIsEditable );
-    QSpinBox* pValue = new gui::RichSpinBox( 0, 0, 100 );
+    gui::RichSpinBox* pValue = new gui::RichSpinBox( name.c_str(), 0, 0, 100 );
     pValue->setValue( value );
     connect( pValue, SIGNAL( valueChanged( int ) ), this, SLOT( OnItemValueChanged() ) );
     pTable_->setItem( row, 0, pName );
@@ -154,11 +158,11 @@ void UsagesDockWidget::Validate()
         for( int j = 0; j < count; ++j )
             if( i != j )
             {
-                QSpinBox* pValue = static_cast< QSpinBox* >( pTable_->cellWidget( j, 1 ) );
+                gui::RichSpinBox* pValue = static_cast< gui::RichSpinBox* >( pTable_->cellWidget( j, 1 ) );
                 if( pValue )
                     total += pValue->value();
             }
-            QSpinBox* pValue = static_cast< QSpinBox* >( pTable_->cellWidget( i, 1 ) );
+            gui::RichSpinBox* pValue = static_cast< gui::RichSpinBox* >( pTable_->cellWidget( i, 1 ) );
             if( pValue )
                 pValue->setRange( 0, 100 - total );
     }
@@ -279,7 +283,7 @@ void UsagesDockWidget::OnItemValueChanged()
     for( int i = 0; i < pTable_->rowCount(); ++i )
     {
         QTableWidgetItem* pName = pTable_->item( i, 0 );
-        QSpinBox* pValue = static_cast< QSpinBox* >( pTable_->cellWidget( i, 1 ) );
+        gui::RichSpinBox* pValue = static_cast< gui::RichSpinBox* >( pTable_->cellWidget( i, 1 ) );
         if( pName && pValue )
             AddMotivation( pName->text().toStdString(), pValue->value() );
     }

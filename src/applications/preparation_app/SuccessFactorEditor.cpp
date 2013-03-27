@@ -15,6 +15,9 @@
 #include "SuccessFactorProfileList.h"
 #include "preparation/SuccessFactor.h"
 #include "preparation/SuccessFactorsModel.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichLineEdit.h"
+#include "clients_gui/RichGroupBox.h"
 
 // -----------------------------------------------------------------------------
 // Name: SuccessFactorEditor constructor
@@ -26,41 +29,69 @@ SuccessFactorEditor::SuccessFactorEditor( QWidget* parent, kernel::Controllers& 
     , current_( 0 )
     , nameChanged_( false )
 {
+    gui::SubObjectName subObject( "SuccessFactorEditor" );
     setCaption( tr( "Success factor editor" ) );
-    Q3GridLayout* grid = new Q3GridLayout( this, 3, 2, 0, 5 );
+    QGridLayout* grid = new QGridLayout( this, 3, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setColStretch( 1, 5 );
     grid->setRowStretch( 1, 5 );
     {
-        Q3GroupBox* box = new Q3HGroupBox( tr( "Information" ), this );
-        new QLabel( tr( "Name:" ), box );
-        name_ = new QLineEdit( box );
-        grid->addMultiCellWidget( box, 0, 0, 0, 1 );
+        gui::SubObjectName subObject( "information" );
+        QLabel* nameLabel = new QLabel( tr( "Name:" ) );
+
+        name_ = new gui::RichLineEdit( "name" );
         connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( NameChanged() ) );
+
+        gui::RichGroupBox* informationBox = new gui::RichGroupBox( "information", tr( "Information" ), this );
+        QHBoxLayout* informationBoxLayout = new QHBoxLayout( informationBox );
+        informationBoxLayout->addWidget( nameLabel );
+        informationBoxLayout->addWidget( name_ );
+        grid->addWidget( informationBox, 0, 0, 1, 5 );
     }
     {
-        Q3GroupBox* box = new Q3HGroupBox( tr( "Profiles" ), this );
-        profiles_ = new SuccessFactorProfileList( box, controllers );
-        grid->addMultiCellWidget( box, 1, 2, 0, 0 );
+        gui::SubObjectName subObject( "profiles" );
+        profiles_ = new SuccessFactorProfileList( "profilesList", controllers );
+
+        gui::RichGroupBox* profilesBox = new gui::RichGroupBox( "profiles", tr( "Profiles" ), this );
+        QHBoxLayout* profilesBoxLayout = new QHBoxLayout( profilesBox );
+        profilesBoxLayout->addWidget( profiles_ );
+        grid->addWidget( profilesBox, 1, 0, 2, 1 );
     }
     {
-        Q3GroupBox* box = new Q3HGroupBox( tr( "Conditions" ), this );
-        conditions_ = new SuccessFactorConditionsEditor( box, scores );
-        grid->addWidget( box, 1, 1 );
+        gui::SubObjectName subObject( "conditions" );
+        conditions_ = new SuccessFactorConditionsEditor( "conditionsList", scores );
+
+        gui::RichGroupBox* conditionsBox = new gui::RichGroupBox( "conditions", tr( "Conditions" ), this );
+        QHBoxLayout* conditionsBoxLayout = new QHBoxLayout( conditionsBox );
+        conditionsBoxLayout->addWidget( conditions_ );
+        grid->addWidget( conditionsBox, 1, 1, 1, 4 );
     }
     {
-        Q3GroupBox* box = new Q3HGroupBox( tr( "Actions" ), this );
-        actions_ = new SuccessFactorActionsEditor( box, actionTypes );
-        grid->addWidget( box, 2, 1 );
+        gui::SubObjectName subObject( "actions" );
+        actions_ = new SuccessFactorActionsEditor( "actionsEditor", actionTypes );
+
+        gui::RichGroupBox* actionsBox = new gui::RichGroupBox( "actions", tr( "Actions" ), this );
+        QHBoxLayout* actionsBoxLayout = new QHBoxLayout( actionsBox );
+        actionsBoxLayout->addWidget( actions_ );
+        grid->addWidget( actionsBox, 2, 1, 1, 4 );
     }
     {
         Q3HBox* box = new Q3HBox( this );
-        ok_ = new QPushButton( tr( "Ok" ), box );
-        QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
-        grid->addWidget( box, 3, 1, Qt::AlignRight );
+
+
+        ok_ = new gui::RichPushButton( "ok", tr( "Ok" ), box );
         connect( ok_, SIGNAL( clicked() ), SLOT( Commit() ) );
+
+        gui::RichPushButton* cancel = new gui::RichPushButton( "cancel", tr( "Cancel" ), box );
+        connect( ok_, SIGNAL( clicked() ), SLOT( Commit() ) );
+
         connect( cancel, SIGNAL( clicked() ), SLOT( Cancel() ) );
+
+        connect( cancel, SIGNAL( clicked() ), SLOT( Cancel() ) );
+
+        grid->addWidget( box, 3, 1, Qt::AlignRight );
     }
+
 }
 
 // -----------------------------------------------------------------------------

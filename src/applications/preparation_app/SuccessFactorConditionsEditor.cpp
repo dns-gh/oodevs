@@ -13,31 +13,34 @@
 #include "SuccessFactorConditionItem.h"
 #include "preparation/SuccessFactorCondition.h"
 #include "preparation/SuccessFactorConditions.h"
+#include "clients_gui/RichPushButton.h"
+#include "clients_gui/RichRadioButton.h"
 #include <boost/foreach.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: SuccessFactorConditionsEditor constructor
 // Created: SBO 2009-06-16
 // -----------------------------------------------------------------------------
-SuccessFactorConditionsEditor::SuccessFactorConditionsEditor( QWidget* parent, const ScoresModel& scores )
-    : Q3VBox( parent )
-    , scores_( scores )
+SuccessFactorConditionsEditor::SuccessFactorConditionsEditor( const QString& objectName, const ScoresModel& scores )
+    : scores_( scores )
     , scrollView_( 0 )
 {
+    gui::SubObjectName subObject( objectName );
     setSpacing( 3 );
     Q3HBox* box = new Q3HBox( this );
     box->setSpacing( 5 );
     {
         operator_ = new Q3HButtonGroup( tr( "Actions must be executed when: " ), box );
         operator_->setRadioButtonExclusive( true );
-        new QRadioButton( tr( "at least one condition is verified" ), operator_ ); //!< or
-        new QRadioButton( tr( "all conditions are verified" ), operator_ ); //!< and
+        new gui::RichRadioButton( "oneConditionVerified", tr( "at least one condition is verified" ), operator_ ); //!< or
+        new gui::RichRadioButton( "allConditionsVerified", tr( "all conditions are verified" ), operator_ ); //!< and
     }
     {
-        QPushButton* add = new QPushButton( tr( "Add" ), box );
+        gui::RichPushButton* add = new gui::RichPushButton( "add", tr( "Add" ), box );
         add->setMaximumWidth( 60 );
         connect( add, SIGNAL( clicked() ), SLOT( CreateItem() ) );
     }
+
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +87,8 @@ void SuccessFactorConditionsEditor::CommitTo( SuccessFactorConditions& condition
 // -----------------------------------------------------------------------------
 SuccessFactorConditionItem* SuccessFactorConditionsEditor::CreateItem()
 {
-    SuccessFactorConditionItem* item = new SuccessFactorConditionItem( scrollView_->getMainWidget(), scores_ );
+    gui::SubObjectName subObject( "SuccessFactorConditionsEditor" );
+    SuccessFactorConditionItem* item = new SuccessFactorConditionItem( "SuccessFactorConditionsEditor" + QString::number( items_.size() ) , scrollView_->getMainWidget(), scores_ );
     scrollView_->addChild( scrollView_->getMainWidget() );
     items_.push_back( item );
     items_.front()->EnableDeletion( items_.size() > 1 );

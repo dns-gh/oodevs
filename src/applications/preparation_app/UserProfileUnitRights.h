@@ -34,7 +34,7 @@ class UserProfileUnitRights : public ::T_Parent
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileUnitRights( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, const QString& name );
+    UserProfileUnitRights( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, const QString& name );
     virtual ~UserProfileUnitRights();
     //@}
 

@@ -12,8 +12,11 @@
 #include "moc_InhabitantCreationPanel.cpp"
 
 #include "clients_gui/LocationCreator.h"
+#include "clients_gui/RichGroupBox.h"
 #include "clients_gui/RichLabel.h"
+#include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichSpinBox.h"
+#include "clients_gui/RichLineEdit.h"
 #include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
@@ -38,42 +41,61 @@ InhabitantCreationPanel::InhabitantCreationPanel( QWidget* parent, gui::PanelSta
     , agentsModel_( agentsModel )
     , location_   ( 0 )
 {
-    QWidget* box = new QWidget( this );
-    QBoxLayout* layout = new QBoxLayout( box, QBoxLayout::TopToBottom, 0, 5 );
-    layout->setMargin( 5 );
-    layout->setAlignment( Qt::AlignTop );
+    gui::SubObjectName subObject( "InhabitantCreationPanel" );
 
-    Q3GroupBox* groupBox = new Q3GroupBox( 2, Qt::Horizontal, tr( "Information" ), this );
-    layout->addWidget( groupBox );
-    new QLabel( tr( "Name:" ), groupBox );
-    name_ = new QLineEdit( groupBox );
+    QLabel* nameLabel = new QLabel( tr( "Name:" ) );
+    name_ = new gui::RichLineEdit( "name" );
 
-    new QLabel( tr( "Side:" ), groupBox );
-    teams_ = new gui::ValuedComboBox< const Team_ABC* >( groupBox );
+    QLabel* sideLabel = new QLabel( tr( "Side:" ) );
+    teams_ = new gui::ValuedComboBox< const Team_ABC* >( "teams" );
 
-    new QLabel( tr( "Type:" ), groupBox );
-    inhabitantTypes_ = new gui::ValuedComboBox< const InhabitantType* >( groupBox );
+    QLabel* typeLabel = new QLabel( tr( "Type:" ) );
+    inhabitantTypes_ = new gui::ValuedComboBox< const InhabitantType* >( "inhabitantTypes" );
     inhabitantTypes_->setSorting( true );
+    connect( inhabitantTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 
-    new QLabel( tr( "Number:" ), groupBox );
-    number_ = new gui::RichSpinBox( groupBox, 1 );
+    QLabel* numberLabel = new QLabel( tr( "Number:" ) );
+    number_ = new gui::RichSpinBox( "number", 0, 1 );
     number_->setValue( 1000 );
 
-    position_ = new gui::RichLabel( tr( "Location:" ), groupBox );
-    locationLabel_ = new QLabel( tr( "---" ), groupBox );
+    position_ = new gui::RichLabel( "position", tr( "Location:" ) );
+    position_->setMaximumHeight( 20 );
+    locationCreator_ = new gui::LocationCreator( position_, tr( "New Population" ), layer, *this );
+
+    locationLabel_ = new QLabel( tr( "---" ) );
     locationLabel_->setMinimumWidth( 100 );
+    locationLabel_->setMaximumHeight( 50 );
     locationLabel_->setAlignment( Qt::AlignCenter );
     locationLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
-    locationCreator_ = new gui::LocationCreator( position_, tr( "New Population" ), layer, *this );
+    gui::RichGroupBox* informationGroupBox = new gui::RichGroupBox( "Information", tr( "Information" ), this );
+    QGridLayout* informationBoxLayout = new QGridLayout( informationGroupBox );
+    informationBoxLayout->addWidget( nameLabel , 0, 0 );
+    informationBoxLayout->addWidget( name_ , 0, 1 );
+    informationBoxLayout->addWidget( sideLabel , 1, 0 );
+    informationBoxLayout->addWidget( teams_ , 1, 1 );
+    informationBoxLayout->addWidget( typeLabel , 2, 0 );
+    informationBoxLayout->addWidget( inhabitantTypes_ , 2, 1 );
+    informationBoxLayout->addWidget( numberLabel , 3, 0 );
+    informationBoxLayout->addWidget( number_ , 3, 1 );
+    informationBoxLayout->addWidget( position_ , 4, 0 );
+    informationBoxLayout->addWidget( locationLabel_ , 4, 1 );
+    informationBoxLayout->setAlignment( Qt::AlignTop );
+    informationBoxLayout->setMargin( 5 );
 
-    connect( inhabitantTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
-
-    QPushButton* ok = new QPushButton( tr( "Create" ), this );
-    layout->addWidget( ok );
+    gui::RichPushButton* ok = new gui::RichPushButton( "create", tr( "Create" ), this );
     connect( ok, SIGNAL( clicked() ), this, SLOT( Commit2() ) );
+
+    QWidget* box = new QWidget( this );
+    QBoxLayout* layout = new QBoxLayout( box, QBoxLayout::TopToBottom, 0, 5 );
+    layout->addWidget( informationGroupBox );
+    layout->addWidget( ok );
+    layout->addStretch( 1 );
+    layout->setAlignment( Qt::AlignTop );
     setWidget( box );
+
     controllers_.Register( *this );
+
 }
 
 // -----------------------------------------------------------------------------

@@ -37,7 +37,7 @@ class TemplateListView : public gui::RichTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             TemplateListView( QWidget* parent, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController );
+             TemplateListView( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController );
     virtual ~TemplateListView();
     //@}
 

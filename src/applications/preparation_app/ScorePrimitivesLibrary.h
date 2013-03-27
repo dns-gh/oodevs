@@ -10,6 +10,8 @@
 #ifndef __ScorePrimitivesLibrary_h_
 #define __ScorePrimitivesLibrary_h_
 
+#include "clients_gui/RichTabWidget.h"
+
 namespace kernel
 {
     class Controllers;
@@ -29,7 +31,7 @@ class ScorePrimitivesPage;
 */
 // Created: SBO 2009-04-20
 // =============================================================================
-class ScorePrimitivesLibrary : public QTabWidget
+class ScorePrimitivesLibrary : public gui::RichTabWidget
 {
     Q_OBJECT
 

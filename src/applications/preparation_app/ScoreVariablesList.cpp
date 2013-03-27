@@ -13,8 +13,10 @@
 
 #include "ScoreVariableCreationWizard.h"
 
+#include "clients_gui/RichTreeWidget.h"
 #include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_gui/UtmParser.h"
+#include "clients_gui/RichPushButton.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Circle.h"
 #include "indicators/DataTypeFactory.h"
@@ -29,14 +31,14 @@
 // Name: ScoreVariablesList constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreVariablesList::ScoreVariablesList( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel,
+ScoreVariablesList::ScoreVariablesList( kernel::Controllers& controllers, const StaticModel& staticModel,
                                         gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
-    : Q3VBox( parent )
-    , tools_( tools )
+    : tools_( tools )
     , wizard_( new ScoreVariableCreationWizard( this, controllers, tools, builder ) )
-    , list_( new QTreeWidget( this) )
+    , list_( new gui::RichTreeWidget( "scoreList", this ) )
     , parser_( new gui::UtmParser( controllers, staticModel.coordinateConverter_ ) )
 {
+    gui::SubObjectName subObject( "ScoreVariablesList" );
     setMargin( 5 );
     {
         list_->setColumnCount( 3 );
@@ -48,9 +50,9 @@ ScoreVariablesList::ScoreVariablesList( QWidget* parent, kernel::Controllers& co
     }
     {
         Q3HBox* box = new Q3HBox( this );
-        QPushButton* add = new QPushButton( tr( "Add" ), box );
-        QPushButton* del = new QPushButton( tr( "Del" ), box );
-        QPushButton* paste = new QPushButton( tr( "Paste" ), box );
+        gui::RichPushButton* add = new gui::RichPushButton( "add", tr( "Add" ), box );
+        gui::RichPushButton* del = new gui::RichPushButton( "del", tr( "Del" ), box );
+        gui::RichPushButton* paste = new gui::RichPushButton( "paste",  tr( "Paste" ), box );
         connect( add, SIGNAL( clicked() ), SLOT( OnAdd() ) );
         connect( del, SIGNAL( clicked() ), SLOT( OnDelete() ) );
         connect( paste, SIGNAL( clicked() ), SLOT( OnPaste() ) );
@@ -58,6 +60,7 @@ ScoreVariablesList::ScoreVariablesList( QWidget* parent, kernel::Controllers& co
     connect( wizard_, SIGNAL( VariableCreated( const indicators::Element_ABC& ) ), SLOT( AddVariable( const indicators::Element_ABC& ) ) );
     connect( wizard_, SIGNAL( Closed() ), SIGNAL( EndEdit() ) );
     connect( list_, SIGNAL( itemSelectionChanged() ), SLOT( OnItemClick() ) );
+
 }
 
 // -----------------------------------------------------------------------------

@@ -12,6 +12,8 @@
 #include "clients_kernel/Controllers.h"
 #include "preparation/ProfileSelection.h"
 #include "preparation/UserProfile.h"
+#include "clients_gui/RichGroupBox.h"
+#include "clients_gui/RichTreeView.h"
 
 Q_DECLARE_METATYPE( const UserProfile* )
 
@@ -23,17 +25,26 @@ ScoreProfilesPage::ScoreProfilesPage( QWidget* parent, kernel::Controllers& cont
     : Q3VBox( parent )
     , controllers_( controllers )
 {
+    gui::SubObjectName subObject( "ScoreProfilesPage" );
     setMargin( 5 );
     {
-        Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tr( "Access rights" ), this );
-        box->setMargin( 5 );
-        new QLabel( tr( "Selected profiles will have access to the score during the exercise." ), box );
-        QTreeView* view = new QTreeView( box );
-        view->setRootIsDecorated( false );
-        view->setEditTriggers( 0 );
+
+        //label
+        QLabel* scoreProfilesLabel = new QLabel( tr( "Selected profiles will have access to the score during the exercise." ) );
+        //tree view
+        gui::RichTreeView* scoreProfilesView = new gui::RichTreeView( "scoreProfilesView" );
+        scoreProfilesView->setRootIsDecorated( false );
+        scoreProfilesView->setEditTriggers( 0 );
         model_ = new QStandardItemModel( this );
-        view->setModel( model_ );
+        scoreProfilesView->setModel( model_ );
         model_->setHorizontalHeaderLabels( QStringList( tr( "Profile" ) ) );
+
+        //group box parent
+        gui::RichGroupBox* scoreProfilesBox = new gui::RichGroupBox( "scoreProfilesBox", tr( "Access rights" ), this );
+        QVBoxLayout* scoreProfileLayout = new QVBoxLayout( scoreProfilesBox );
+        scoreProfileLayout->addWidget( scoreProfilesLabel );
+        scoreProfileLayout->addWidget( scoreProfilesView );
+        scoreProfileLayout->setMargin( 5 );
     }
     controllers_.Register( *this );
 }

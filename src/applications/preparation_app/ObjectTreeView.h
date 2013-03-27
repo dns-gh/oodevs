@@ -24,7 +24,7 @@ class ObjectTreeView : public gui::ObjectTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
+    ObjectTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
     virtual ~ObjectTreeView();
     //@}
 

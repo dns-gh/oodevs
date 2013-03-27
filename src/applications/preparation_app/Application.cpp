@@ -94,3 +94,70 @@ int Application::Run()
     observer_->DisplayErrors();
     return qApp->exec();
 }
+
+namespace
+{
+#define INHERIT( name ) \
+    if( o->inherits( name ) ) \
+    {\
+        className = name;\
+        return true;\
+    }
+
+    bool GetClassName( std::string& className, QObject* o )
+    {
+        INHERIT( "QSpinBox" )
+        INHERIT( "QLineEdit" )
+        INHERIT( "QTextEdit" )
+        INHERIT( "QComboBox" )
+        INHERIT( "QCheckBox" )
+        INHERIT( "QTabWidget" )
+        INHERIT( "QTableWidget" )
+        INHERIT( "QTableView" )
+        INHERIT( "QListWidget" )
+        INHERIT( "QListView" )
+        INHERIT( "QToolButton" )
+        INHERIT( "QPushButton" )
+        INHERIT( "QRadioButton" )
+        INHERIT( "QdateTimeEdit" )
+        INHERIT( "QTimeEdit" )
+        INHERIT( "QTreeWidget" )
+        INHERIT( "Q3GroupBox" )
+        INHERIT( "QGroupBox" )
+        return false;
+    }
+
+    void CheckNamingHierarchy( QObject* parent, std::map< std::string, std::pair< unsigned int, unsigned int > >& map )
+    {
+        if( !parent )
+            return;
+
+        for( auto it  = parent->children().begin(); it != parent->children().end(); ++it )
+        {
+            std::string className;
+            if( GetClassName( className, *it ) )
+                if( !( *it )->objectName().isEmpty() )
+                    ++map[ className ].first;
+                else
+                    ++map[ className ].second;
+            CheckNamingHierarchy( *it, map );
+        }
+    }
+
+    void DisplayList( std::map< std::string, std::pair< unsigned int, unsigned int > > map )
+    {
+        for( auto it = map.begin(); it != map.end(); ++it )
+            std::cout << it->first << " - named : " << it->second.first << " / unnamed : " << it->second.second << std::endl;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Application::CheckInterfaceComponentNaming
+// Created: NPT 2013-03-21
+// -----------------------------------------------------------------------------
+void Application::CheckInterfaceComponentNaming()
+{
+    std::map< std::string, std::pair< unsigned int, unsigned int > > map;
+    CheckNamingHierarchy( mainWindow_, map );
+    DisplayList( map );
+}

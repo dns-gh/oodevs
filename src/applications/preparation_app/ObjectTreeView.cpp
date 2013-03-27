@@ -41,8 +41,8 @@ namespace
 // Name: ObjectTreeView constructor
 // Created: JSR 2012-09-20
 // -----------------------------------------------------------------------------
-ObjectTreeView::ObjectTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
-    : gui::ObjectTreeView( controllers, profile, modelObserver, parent)
+ObjectTreeView::ObjectTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
+    : gui::ObjectTreeView( objectName, controllers, profile, modelObserver, parent)
 {
     EnableDragAndDrop( true );
 }

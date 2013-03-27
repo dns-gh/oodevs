@@ -24,6 +24,11 @@ namespace indicators
     class Primitives;
 }
 
+namespace gui
+{
+    class RichTextEdit;
+}
+
 // =============================================================================
 /** @class  ScoreSyntaxHighlighter
     @brief  ScoreSyntaxHighlighter
@@ -38,7 +43,7 @@ class ScoreSyntaxHighlighter : public QSyntaxHighlighter
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreSyntaxHighlighter( QTextEdit* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives );
+             ScoreSyntaxHighlighter( gui::RichTextEdit* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives );
     virtual ~ScoreSyntaxHighlighter();
     //@}
 

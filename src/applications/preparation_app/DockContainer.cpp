@@ -41,6 +41,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     : pCreationPanel_  ( 0 )
     , pLivingAreaPanel_( 0 )
 {
+    gui::SubObjectName subObject( "DockContainer" );
     // Agent list panel
     {
         gui::RichDockWidget* pListDockWnd = new OrbatDockWidget( controllers, parent, "orbat", tools::translate( "DockContainer", "ORBAT" ),

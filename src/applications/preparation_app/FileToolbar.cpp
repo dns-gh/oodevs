@@ -9,13 +9,14 @@
 
 #include "preparation_app_pch.h"
 #include "FileToolbar.h"
+#include "clients_gui/RichToolButton.h"
 #include "Menu.h"
 
 namespace
 {
-    void AddToolButton( QToolBar* parent, QAction* action )
+    void AddToolButton( const QString& objectName, QToolBar* parent, QAction* action )
     {
-        QToolButton* button = new QToolButton( parent );
+        gui::RichToolButton* button = new gui::RichToolButton( objectName, parent );
         button->setDefaultAction( action );
         parent->addWidget( button );
     }
@@ -46,8 +47,9 @@ FileToolbar::~FileToolbar()
 // -----------------------------------------------------------------------------
 void FileToolbar::Fill( Menu& menu )
 {
-    AddToolButton( this, menu.GetNewAction() );
-    AddToolButton( this, menu.GetOpenAction() );
-    AddToolButton( this, menu.GetSaveAction() );
-    AddToolButton( this, menu.GetSaveAsAction() );
+    gui::SubObjectName subObject( "FileToolbar" );
+    AddToolButton( "NewAction", this, menu.GetNewAction() );
+    AddToolButton( "OpenAction", this, menu.GetOpenAction() );
+    AddToolButton( "SaveAction", this, menu.GetSaveAction() );
+    AddToolButton( "SaveAsAction", this, menu.GetSaveAsAction() );
 }

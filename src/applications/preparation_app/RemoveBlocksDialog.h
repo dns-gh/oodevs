@@ -19,6 +19,13 @@ namespace kernel
     class UrbanObject_ABC;
 }
 
+namespace gui
+{
+    class RichPushButton;
+    class RichSpinBox;
+    class RichTableView;
+}
+
 class UrbanModel;
 
 // =============================================================================
@@ -66,10 +73,10 @@ private:
     UrbanModel&                             urbanModel_;
     kernel::GraphicalEntity_ABC::T_GraphicalEntities selectables_;
     T_Elements                              urbanObjects_;
-    QSpinBox*                               sizeEditor_;
-    QPushButton*                            deleteButton_;
+    gui::RichSpinBox*                       sizeEditor_;
+    gui::RichPushButton*                    deleteButton_;
     QWidget*                                listWidget_;
-    QTableView*                             tableView_;
+    gui::RichTableView*                             tableView_;
     QStandardItemModel*                     dataModel_;
     QStringList                             horizontalHeaders_;
     bool                                    processing_;

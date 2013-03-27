@@ -13,6 +13,8 @@
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
 #include "preparation/performanceIndicator.h"
+#include "clients_gui/RichTextEdit.h"
+#include "clients_gui/RichTableView.h"
 #include <QtGui/QGridLayout.h>
 #include <QtGui/QPalette.h>
 #include <QtGui/QProgressBar.h>
@@ -34,9 +36,10 @@ PerformanceDialog::PerformanceDialog( QWidget* parent, Model& model, const Stati
     , limitValueMulti_    ( new QLabel( this ) )
     , limitLineSingle_    ( new QLabel( this ) )
     , limitLineMulti_     ( new QLabel( this ) )
-    , textEdit_           ( new QTextEdit( this ) )
+    , textEdit_           ( new gui::RichTextEdit( "textEdit", this ) )
     , progressLimit_      ( 40 )
 {
+    gui::SubObjectName subObject( "PerformanceDialog" );
     setCaption( tr( "Performance dialog" ) );
     setFixedSize( 600, 700 );
 
@@ -75,7 +78,7 @@ PerformanceDialog::PerformanceDialog( QWidget* parent, Model& model, const Stati
         dataModel_->item( ePerformanceData_MultiStationLoadLevel, i )->setFont( boldFont );
     }
 
-    QTableView* dataTable = new QTableView( this );
+    gui::RichTableView* dataTable = new gui::RichTableView( "dataTable", this );
     dataTable->setModel( dataModel_ );
     dataTable->horizontalHeader()->setVisible( false );
     dataTable->verticalHeader()->setVisible( false );
@@ -98,7 +101,7 @@ PerformanceDialog::PerformanceDialog( QWidget* parent, Model& model, const Stati
     layout->addWidget( textEdit_, 3, 0, 1, 2 );
 
     textEdit_->setReadOnly( true );
-    textEdit_->setLineWrapMode( QTextEdit::NoWrap );
+    textEdit_->setLineWrapMode( gui::RichTextEdit::NoWrap );
     loadLevelSingle_->setMinimumWidth( 280 );
     loadLevelSingle_->setMinimumHeight( 25 );
     loadLevelSingle_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );

@@ -20,6 +20,7 @@
 namespace gui
 {
     class DecimalSpinBoxAndSlider;
+    class RichCheckBox;
 }
 
 namespace kernel
@@ -44,7 +45,7 @@ class AffinitiesDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             AffinitiesDialog( QWidget* parent, kernel::Controllers& controllers, bool optional );
+             AffinitiesDialog( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, bool optional );
     virtual ~AffinitiesDialog();
     //@}
 
@@ -92,7 +93,7 @@ private:
     kernel::Controllers& controllers_;
     QVBoxLayout* pMainLayout_;
     Q3HBox* pButtonLayout_;
-    QCheckBox* pCheckBox_;
+    gui::RichCheckBox* pCheckBox_;
     Q3Grid* pGrid_;
     T_Teams teams_;
     T_Affinities affinities_;

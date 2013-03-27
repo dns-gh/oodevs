@@ -42,9 +42,10 @@ ParamStringEnumeration::~ParamStringEnumeration()
 // Name: ParamStringEnumeration::BuildInterface
 // Created: SBO 2009-08-05
 // -----------------------------------------------------------------------------
-QWidget* ParamStringEnumeration::BuildInterface( QWidget* parent )
+QWidget* ParamStringEnumeration::BuildInterface( const QString& objectName, QWidget* parent )
 {
     StringQVButtonGroup* group = new StringQVButtonGroup( title_, parent );
+    gui::SubObjectName subObject( objectName );
     std::for_each( values_.begin(), values_.end(), boost::bind( &ParamStringEnumeration::AddItem, this, boost::ref( group ), _1 ) );
     connect( group, SIGNAL( clicked( const std::string& ) ), SLOT( OnToggle( const std::string& ) ) );
     return group;
@@ -104,7 +105,7 @@ void ParamStringEnumeration::CommitTo( actions::ParameterContainer_ABC& action )
 // -----------------------------------------------------------------------------
 void ParamStringEnumeration::AddItem( StringQVButtonGroup* group, const std::pair<std::string, std::string>& name )
 {
-    group->InsertCheckbox( name.first );
+    group->InsertCheckbox( name.second, name.first );
     selected_[ name.first ] = false;
 }
 

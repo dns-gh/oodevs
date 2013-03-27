@@ -17,6 +17,12 @@ namespace kernel
     class Controllers;
 }
 
+namespace gui
+{
+    class RichPushButton;
+    class RichTreeWidget;
+}
+
 class ScoresModel;
 class SuccessFactor;
 class SuccessFactorActionTypes;
@@ -68,10 +74,10 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    QTreeWidget* factors_;
+    gui::RichTreeWidget* factors_;
     SuccessFactorEditor* editor_;
-    QPushButton* editButton_;
-    QPushButton* deleteButton_;
+    gui::RichPushButton* editButton_;
+    gui::RichPushButton* deleteButton_;
     //@}
 };
 

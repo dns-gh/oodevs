@@ -18,6 +18,12 @@ namespace kernel
     class Controller;
 }
 
+namespace gui
+{
+    class RichPushButton;
+    class RichLineEdit;
+}
+
 class PopulationRepartition;
 
 // =============================================================================
@@ -63,10 +69,10 @@ private:
     //@{
     kernel::Controller& controller_;
     PopulationRepartition** value_;
-    QLineEdit* male_;
-    QLineEdit* female_;
-    QLineEdit* children_;
-    QPushButton* okBtn_;
+    gui::RichLineEdit* male_;
+    gui::RichLineEdit* female_;
+    gui::RichLineEdit* children_;
+    gui::RichPushButton* okBtn_;
     QLabel* warning_;
     //@}
 };

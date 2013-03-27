@@ -16,8 +16,8 @@
 // Name: UserProfilePopulationRights constructor
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-UserProfilePopulationRights::UserProfilePopulationRights( QWidget* pParent, kernel::Controllers& controllers, const QString& name )
-    : gui::PopulationTreeView(  controllers, PreparationProfile::GetProfile(), observer_, pParent )
+UserProfilePopulationRights::UserProfilePopulationRights( const QString& objectName, QWidget* pParent, kernel::Controllers& controllers, const QString& name )
+    : gui::PopulationTreeView(objectName, controllers, PreparationProfile::GetProfile(), observer_, pParent )
     , UserProfileRights_ABC( *this, dataModel_, name )
 {
     connect( this, SIGNAL( clicked( const QModelIndex& ) ), SLOT( OnItemClicked( const QModelIndex& ) ) );

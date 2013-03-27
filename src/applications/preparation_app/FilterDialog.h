@@ -20,6 +20,12 @@ namespace xml
     class xistream;
 }
 
+namespace gui
+{
+    class RichPushButton;
+    class RichListWidget;
+}
+
 class Filter_ABC;
 class FilterManager;
 class Menu;
@@ -38,7 +44,7 @@ class FilterDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterDialog( QWidget* parent, xml::xistream& xis, const tools::ExerciseConfig& config );
+             FilterDialog( const QString& objectName, QWidget* parent, xml::xistream& xis, const tools::ExerciseConfig& config );
     virtual ~FilterDialog();
     //@}
 
@@ -77,9 +83,9 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< FilterManager > filterManager_;
-    QListWidget*                   list_;
+    gui::RichListWidget*           list_;
     QLabel*                        description_;
-    QPushButton*                   okButton_;
+    gui::RichPushButton*           okButton_;
     Q3WidgetStack*                 stack_;
     //@}
 };

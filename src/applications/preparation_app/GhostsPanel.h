@@ -33,6 +33,8 @@ namespace gui
 
     class UnitPreviewIcon;
     class NatureEditionWidget;
+
+    class RichLineEdit;
 }
 
 class EntitySymbolEditor;
@@ -82,12 +84,12 @@ private:
     kernel::SymbolFactory& symbolsFactory_;
     kernel::GhostPrototype protoType_;
     // Name and type
-    QLineEdit*             nameLineEdit_;
-    QLineEdit*             typeLineEdit_;
+    gui::RichLineEdit* nameLineEdit_;
+    gui::RichLineEdit* typeLineEdit_;
     // Symbol
-    EntitySymbolEditor*    symbolEditor_;
+    EntitySymbolEditor* symbolEditor_;
     // Warning
-    QLabel*                warningLabel_;
+    QLabel* warningLabel_;
     //@}
 };
 

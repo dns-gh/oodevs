@@ -12,14 +12,15 @@
 #include "clients_kernel/Controllers.h"
 #include "preparation/ProfileSelection.h"
 #include "preparation/UserProfile.h"
+#include "clients_gui/ObjectNameManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: SuccessFactorProfileList constructor
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-SuccessFactorProfileList::SuccessFactorProfileList( QWidget* parent, kernel::Controllers& controllers )
-    : QListWidget( parent )
-    , controllers_( controllers )
+SuccessFactorProfileList::SuccessFactorProfileList( const QString& objectName, kernel::Controllers& controllers )
+    : controllers_( controllers )
+    , RichListWidget( objectName )
 {
     setSelectionMode( QAbstractItemView::MultiSelection );
     controllers_.Register( *this );

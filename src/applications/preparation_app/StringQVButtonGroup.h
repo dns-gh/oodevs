@@ -30,7 +30,7 @@ public:
 
     //! @name Operations
     //@{
-    void InsertCheckbox( const std::string& name );
+    void InsertCheckbox( const std::string& objectName, const std::string& text );
    //@}
 
 signals:

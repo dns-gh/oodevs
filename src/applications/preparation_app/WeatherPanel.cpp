@@ -10,6 +10,9 @@
 #include "preparation_app_pch.h"
 #include "WeatherPanel.h"
 #include "moc_WeatherPanel.cpp"
+#include "clients_gui/RichGroupBox.h"
+#include "clients_gui/RichDateTimeEdit.h"
+#include "clients_gui/RichTimeEdit.h"
 #include "clients_gui/WeatherWidget.h"
 #include "clients_gui/WeatherLayer.h"
 #include "clients_kernel/Controllers.h"
@@ -31,36 +34,53 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Control
     , controllers_ ( controllers )
     , currentModel_( 0 )
 {
+    gui::SubObjectName subObject( "WeatherPanel" );
     // Current date & Time
-    Q3HBox* timeBox = new Q3HBox( headerLayout_ );
+    Q3HBox* timeBox = new Q3HBox();
+    headerLayout_->addWidget( timeBox );
     timeBox->layout()->setMargin( 5 );
     new QLabel( tr( "Exercise date:" ), timeBox );
-    time_ = new QDateTimeEdit( timeBox );
+    time_ = new gui::RichDateTimeEdit( "time", timeBox );
     time_->setDateTime( QDateTime::currentDateTime() );
 
     // Ephemerides
     {
-        Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tr( "Ephemerides" ), headerLayout_ );
-        new QLabel( tr( "Sunrise:" ), group );
-        sunrise_ = new QTimeEdit( group );
-        new QLabel( tr( "Sunset:" ), group );
-        sunset_ = new QTimeEdit( group );
-        new QLabel( tr( "Day lighting:" ), group );
-        dayLighting_ = new gui::ValuedComboBox< E_LightingType >( group );
+        gui::SubObjectName subObject( "Ephemerides" );
+        QLabel* sunriseLabel = new QLabel( tr( "Sunrise:" ) );
+        sunrise_ = new gui::RichTimeEdit( "sunrise");
+
+        QLabel* sunsetLabel = new QLabel( tr( "Sunset:" ) );
+        sunset_ = new gui::RichTimeEdit( "sunset" );
+
+        QLabel* dayLabel = new QLabel( tr( "Day lighting:" ) );
+        dayLighting_ = new gui::ValuedComboBox< E_LightingType >( "dayLighting" );
         for( int i = 0; i < static_cast< int >( eLightingType_NuitPleineLune ); ++i )
             dayLighting_->AddItem( ENT_Tr::ConvertFromLightingType( static_cast< E_LightingType >( i ), ENT_Tr::eToTr ), static_cast< E_LightingType >( i ) );
-        new QLabel( tr( "Night lighting:" ), group );
-        nightLighting_ = new gui::ValuedComboBox< E_LightingType >( group );
+
+        QLabel* nightLabel = new QLabel( tr( "Night lighting:" ) );
+        nightLighting_ = new gui::ValuedComboBox< E_LightingType >( "nightLighting" );
         for( int i = static_cast< int >( eLightingType_NuitPleineLune ); i < static_cast< int >( eLightingType_Eclairant ); ++i )
             nightLighting_->AddItem( ENT_Tr::ConvertFromLightingType( static_cast< E_LightingType >( i ), ENT_Tr::eToTr ), static_cast< E_LightingType >( i ) );
+
+        gui::RichGroupBox* ephemeridesGroup = new gui::RichGroupBox( "ephemeridesGroup", tr( "Ephemerides" ) );
+        QGridLayout* ephemeridesGroupLayout = new QGridLayout( ephemeridesGroup );
+        ephemeridesGroupLayout->addWidget( sunriseLabel, 0, 0 );
+        ephemeridesGroupLayout->addWidget( sunrise_, 0, 1 );
+        ephemeridesGroupLayout->addWidget( sunsetLabel, 1, 0 );
+        ephemeridesGroupLayout->addWidget( sunset_, 1, 1 );
+        ephemeridesGroupLayout->addWidget( dayLabel, 2, 0 );
+        ephemeridesGroupLayout->addWidget( dayLighting_, 2, 1 );
+        ephemeridesGroupLayout->addWidget( nightLabel, 3, 0 );
+        ephemeridesGroupLayout->addWidget( nightLighting_, 3, 1 );
+        headerLayout_->addWidget( ephemeridesGroup );
     }
 
     // Global Weather
-    globalWidget_ = new gui::WeatherWidget( globalLayout_, tr( "Weather parameters" ) );
+    globalWeatherWidget_ = new gui::WeatherWidget( "globalWidget", globalWidget_, tr( "Weather parameters" ) );
     // Local Weather
-    localWidget_ = new gui::WeatherWidget( localLayout_, tr( "Weather parameters" ) );
+    localWeatherWidget_ = new gui::WeatherWidget( "localWidget", localWidget_, tr( "Weather parameters" ) );
     CreateLocalParameters();
-    localWeathers_ = new WeatherListView( localLayout_, converter );
+    localWeathers_ = new WeatherListView( localWidget_, converter );
     connect( localWeathers_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( LocalSelectionChanged() ) );
     connect( sunrise_, SIGNAL( timeChanged( const QTime& ) ), SLOT( OnSunRiseChanged( const QTime& ) ) );
     connect( sunset_, SIGNAL( timeChanged( const QTime& ) ), SLOT( OnSunSetChanged( const QTime& ) ) );
@@ -89,7 +109,7 @@ void WeatherPanel::NotifyUpdated( const WeatherModel& model )
     sunset_ ->setTime( currentModel_->sunset_  );
     dayLighting_->SetCurrentItem( currentModel_->dayLighting_ );
     nightLighting_->SetCurrentItem( currentModel_->nightLighting_ );
-    globalWidget_->Update( *currentModel_->globalWeather_ );
+    globalWeatherWidget_->Update( *currentModel_->globalWeather_ );
     static_cast< WeatherListView* >( localWeathers_ )->Update( *currentModel_ );
     Show();
 }
@@ -118,7 +138,7 @@ void WeatherPanel::Commit()
     currentModel_->sunset_   = sunset_ ->time();
     currentModel_->dayLighting_ = dayLighting_->GetValue();
     currentModel_->nightLighting_ = nightLighting_->GetValue();
-    globalWidget_->CommitTo( *currentModel_->globalWeather_ );
+    globalWeatherWidget_->CommitTo( *currentModel_->globalWeather_ );
     static_cast< WeatherListView* >( localWeathers_ )->CommitTo( *currentModel_ );
     controllers_.controller_.Create( this );
 }

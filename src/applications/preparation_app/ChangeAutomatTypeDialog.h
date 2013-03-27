@@ -14,6 +14,7 @@ namespace gui
 {
     class ModelObserver_ABC;
     class UnitTreeView;
+    class RichPushButton;
 }
 
 namespace kernel
@@ -54,7 +55,7 @@ private:
     gui::ModelObserver_ABC& builder_;
     kernel::Entity_ABC& entity_;
     gui::UnitTreeView* list_;
-    QPushButton* okBtn_;
+    gui::RichPushButton* okBtn_;
     //@}
 };
 

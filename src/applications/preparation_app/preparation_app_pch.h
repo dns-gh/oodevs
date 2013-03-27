@@ -50,6 +50,8 @@
 #include <Qt3Support/q3gridlayout.h>
 #include <Qt3Support/q3vgroupbox.h>
 
+#include "clients_gui/SubObjectName.h"
+
 #pragma warning( pop )
 
 #include <map>

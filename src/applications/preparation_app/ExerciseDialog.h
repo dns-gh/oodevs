@@ -14,6 +14,14 @@
 #include "tools/ElementObserver_ABC.h"
 #include "preparation/Exercise.h"
 
+namespace gui
+{
+    class RichCheckBox;
+    class RichLineEdit;
+    class RichTextEdit;
+    class RichTreeView;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -93,17 +101,17 @@ private:
     kernel::Controllers& controllers_;
     Exercise& exercise_;
     const tools::ExerciseConfig& config_;
-    QLineEdit* name_;
+    gui::RichLineEdit* name_;
     gui::ValuedComboBox< QString >* lang_;
     QString selectedLang_;
-    QTextEdit* briefing_;
+    gui::RichTextEdit* briefing_;
     T_Briefings briefings_;
     QStandardItemModel* resources_;
     QStandardItemModel* orderFiles_;
-    QTreeView* resourcesView_;
-    QTreeView* orderFilesView_;
-    QCheckBox* infiniteDotationsCheckBox_;
-    QCheckBox* humanEvolutionCheckBox_;
+    gui::RichTreeView* resourcesView_;
+    gui::RichTreeView* orderFilesView_;
+    gui::RichCheckBox* infiniteDotationsCheckBox_;
+    gui::RichCheckBox* humanEvolutionCheckBox_;
     //@}
 };
 

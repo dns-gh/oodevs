@@ -21,8 +21,10 @@ namespace xml
 {
     class xistream;
 }
-
-class QLineEdit;
+namespace gui
+{
+    class RichLineEdit;
+}
 
 // =============================================================================
 /** @class  FilterXsl
@@ -45,7 +47,7 @@ public:
     //@{
     virtual void Execute();
     virtual const std::string GetName() const;
-    virtual QWidget* CreateParametersWidget( QWidget* parent );
+    virtual QWidget* CreateParametersWidget( const QString& objectName, QWidget* parent );
     virtual bool IsValid() const;
     //@}
 
@@ -64,8 +66,8 @@ private:
     const tools::Path inputFile_;
     const tools::Path exerciseFile_;
     const tools::Path outputExtension_;
-    tools::Path       outputFile_;
-    QLineEdit*        output_;
+    tools::Path outputFile_;
+    gui::RichLineEdit* output_;
     //@}
 };
 

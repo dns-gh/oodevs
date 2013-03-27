@@ -12,6 +12,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "preparation/InputToxicCloudAttribute.h"
+#include "clients_gui/RichCheckBox.h"
 
 using namespace kernel;
 
