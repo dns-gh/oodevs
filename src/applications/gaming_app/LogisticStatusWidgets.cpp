@@ -19,10 +19,10 @@ MaintenanceStatusWidget::MaintenanceStatusWidget( QWidget* parent, kernel::Contr
     : LogisticStatusWidget_ABC< kernel::MaintenanceStates_ABC >( parent, controllers, factory )
 {
     display_->AddGroup( "" )
-                .AddLabel( tools::findTranslation( "MaintenanceStates", "System status" ) )
-                .AddLabel( tools::findTranslation( "MaintenanceStates", "Working scheme" ) )
-                .AddLabel( tools::findTranslation( "MaintenanceStates", "Priorities" ) )
-                .AddLabel( tools::findTranslation( "MaintenanceStates", "Tactical priorities" ) );
+                .AddLabel( "SystemStatus", tools::findTranslation( "MaintenanceStates", "System status" ) )
+                .AddLabel( "Working", tools::findTranslation( "MaintenanceStates", "Working scheme" ) )
+                .AddLabel( "Priorities", tools::findTranslation( "MaintenanceStates", "Priorities" ) )
+                .AddLabel( "Tactical", tools::findTranslation( "MaintenanceStates", "Tactical priorities" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,9 +42,9 @@ MedicalStatusWidget::MedicalStatusWidget( QWidget* parent, kernel::Controllers& 
     : LogisticStatusWidget_ABC< MedicalStates >( parent, controllers, factory )
 {
     display_->AddGroup( "" )
-                .AddLabel( tools::findTranslation( "MedicalStates", "System status" ) )
-                .AddLabel( tools::findTranslation( "MedicalStates", "Priorities" ) )
-                .AddLabel( tools::findTranslation( "MedicalStates", "Tactical priorities" ) );
+                .AddLabel( "Priorities", tools::findTranslation( "MedicalStates", "Priorities" ) )
+                .AddLabel( "Tactical", tools::findTranslation( "MedicalStates", "Tactical priorities" ) )
+                .AddLabel( "Systemstatus", tools::findTranslation( "MedicalStates", "System status" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ SupplyStatusWidget::SupplyStatusWidget( QWidget* parent, kernel::Controllers& co
     : LogisticStatusWidget_ABC< SupplyStates >( parent, controllers, factory )
 {
     display_->AddGroup( "" )
-                .AddLabel( tools::findTranslation( "SupplyStates", "System status" ) );
+                .AddLabel( "SystemStatus", tools::findTranslation( "SupplyStates", "System status" ) );
 }
 
 // -----------------------------------------------------------------------------

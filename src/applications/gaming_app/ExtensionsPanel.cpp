@@ -20,6 +20,7 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/DiffusionListDialog.h"
+#include "clients_gui/RichGroupBox.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/DictionaryExtensions.h"
 #include "gaming/Model.h"

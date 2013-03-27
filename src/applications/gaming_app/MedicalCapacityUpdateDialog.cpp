@@ -41,11 +41,11 @@ MedicalCapacityUpdateDialog::Capacity::Capacity( QWidget* parent, const MedicalT
     new QLabel( QString( name_.c_str() ), lhs );
 
     Q3HBox* rhs = new Q3HBox( box );
-    patients_ = new gui::RichSpinBox( rhs, 0, capacity.baseline_ );
+    patients_ = new gui::RichSpinBox( "patients", rhs, 0, capacity.baseline_ );
     patients_->setValue( capacity.baseline_ - capacity.available_ );
 
     new QLabel( QString( " / " ), rhs );
-    baseline_ = new gui::RichSpinBox( rhs, 0, std::max( (int)capacity.baseline_, 500 ) );
+    baseline_ = new gui::RichSpinBox( "baseline", rhs, 0, std::max( (int)capacity.baseline_, 500 ) );
     baseline_->setValue( capacity.baseline_ );
     baseline_->setDisabled( true );
 }
@@ -106,14 +106,14 @@ void MedicalCapacityUpdateDialog::CreateCanvas()
     {
         Q3GroupBox* canvas = new Q3GroupBox( 1, Qt::Horizontal, tr( "Status" ), this );
         new QLabel( tr( "Status:" ), canvas );
-        status_ = new gui::ValuedComboBox< std::string >( canvas );
+        status_ = new gui::ValuedComboBox< std::string >( "status", canvas );
         status_->setDisabled( true );
         layout->add( canvas );
     }
     {
         Q3GroupBox* canvas = new Q3GroupBox( 1, Qt::Horizontal, tr( "Doctors" ), this );
         new QLabel( tr( "Doctors:" ), canvas );
-        doctors_ = new gui::RichSpinBox( canvas, 0, 1000 );
+        doctors_ = new gui::RichSpinBox( "doctors", canvas, 0, 1000 );
         layout->add( canvas );
     }
     {

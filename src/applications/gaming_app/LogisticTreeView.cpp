@@ -24,10 +24,10 @@
 // Name: LogisticTreeView constructor
 // Created: ABR 2012-09-21
 // -----------------------------------------------------------------------------
-LogisticTreeView::LogisticTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver,
+LogisticTreeView::LogisticTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver,
                                     const gui::EntitySymbols& symbols, const StaticModel& staticModel,
                                     const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent /*= 0*/ )
-    : gui::LogisticTreeView( controllers, profile, modelObserver, symbols, parent )
+    : gui::LogisticTreeView( objectName, controllers, profile, modelObserver, symbols, parent )
     , actionsModel_( actionsModel )
     , static_      ( staticModel )
     , simulation_  ( simulation )

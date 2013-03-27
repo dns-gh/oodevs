@@ -49,7 +49,7 @@ protected :
     //! @name Helpers
     //@{
     void DoNotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
-    void AddLine( unsigned int line, const QString& label );
+    void AddLine( unsigned int line, const QString& objectName, const QString& label );
     unsigned int GetSpinboxValue( unsigned int line ) const;
     const kernel::Entity_ABC& GetSelected() const;
     //@}

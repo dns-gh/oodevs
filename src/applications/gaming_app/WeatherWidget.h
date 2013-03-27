@@ -38,7 +38,7 @@ class WeatherWidget : public gui::WeatherWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherWidget( QWidget* parent, const QString& title );
+             WeatherWidget( const QString& objectName, QWidget* parent, const QString& title );
     virtual ~WeatherWidget();
     //@}
 

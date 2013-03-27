@@ -93,7 +93,7 @@ ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controller
     , exportDialog_( exportDialog )
     , reportDialog_( new IndicatorReportDialog( this, model_, config, interpreter ) )
 {
-    setObjectName( "score" );
+    setObjectName( "scores" );
     setCaption( tools::translate( "ScorePanel", "Scores" ) );
     scores_ = new MyList( this, reportDialog_, model_ );
     connect( scores_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnShowGraph() ) );

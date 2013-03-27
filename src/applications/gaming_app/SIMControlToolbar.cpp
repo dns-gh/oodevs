@@ -32,8 +32,8 @@ namespace
     class SpinBox : public gui::RichSpinBox
     {
     public:
-        SpinBox( int minValue, int maxValue, int step, QWidget* parent, SIMControlToolbar& toolbar )
-            : gui::RichSpinBox( parent, minValue, maxValue, step )
+        SpinBox( const QString& objectName, int minValue, int maxValue, int step, QWidget* parent, SIMControlToolbar& toolbar )
+            : gui::RichSpinBox( objectName, parent, minValue, maxValue, step )
             , toolBar_( toolbar )
         {
             // NOTHING
@@ -135,7 +135,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pStepButton_->setEnabled( false );
     pStepButton_->setShortcut( QKeySequence( Qt::ALT + Qt::Key_S ) );
 
-    pSpeedSpinBox_ = new SpinBox( 1, 100000, 1, this, *this );
+    pSpeedSpinBox_ = new SpinBox( "pSpeedSpinBox", 1, 100000, 1, this, *this );
     pSpeedSpinBox_->setButtonSymbols( QSpinBox::PlusMinus );
     pSpeedSpinBox_->setValue( 1 );
     pSpeedSpinBox_->setEnabled( false );

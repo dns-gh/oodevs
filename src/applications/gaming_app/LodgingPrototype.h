@@ -31,7 +31,7 @@ class LodgingPrototype : public gui::LodgingPrototype_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-    LodgingPrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList );
+             LodgingPrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList );
     virtual ~LodgingPrototype();
     //@}
 

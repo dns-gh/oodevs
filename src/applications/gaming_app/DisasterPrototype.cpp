@@ -11,6 +11,7 @@
 #include "DisasterPrototype.h"
 #include "gaming/Simulation.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/RichCheckBox.h"
 #include "actions/ParameterList.h"
 
 // -----------------------------------------------------------------------------

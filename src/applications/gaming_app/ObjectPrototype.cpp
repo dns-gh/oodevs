@@ -186,6 +186,7 @@ namespace
     std::auto_ptr< ObjectAttributePrototypeFactory_ABC > CreateFactory( kernel::Controllers& controllers, const kernel::ObjectTypes& resolver,
                                                                         ParameterList*& attributesList, const tools::GeneralConfig& config )
     {
+        gui::SubObjectName subobject( "CreateFactory" );
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
         factory->Register( "constructor"               , boost::bind( &ConstructorAttribute, _1, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "activable"                 , boost::bind( &Capacity< ObstaclePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
@@ -226,7 +227,7 @@ namespace
 // -----------------------------------------------------------------------------
 ObjectPrototype::ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, const kernel::Team_ABC& noSideTeam,
                                   gui::ParametersLayer& layer, const tools::GeneralConfig& config )
-    : ObjectPrototype_ABC( parent, controllers, model.coordinateConverter_, model.objectTypes_, noSideTeam, layer,
+    : ObjectPrototype_ABC( "ObjectPrototype", parent, controllers, model.coordinateConverter_, model.objectTypes_, noSideTeam, layer,
                            CreateFactory( controllers, model.objectTypes_, attributesList_, config ) )
     , attributesList_( 0 )
     , static_               ( model )

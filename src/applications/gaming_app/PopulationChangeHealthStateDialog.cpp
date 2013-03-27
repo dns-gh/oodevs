@@ -20,10 +20,11 @@
 PopulationChangeHealthStateDialog::PopulationChangeHealthStateDialog( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
     : ChangeHealthStateDialog_ABC( pParent, controllers, actionsModel, simulation, profile, 4 )
 {
-    AddLine( 0, tools::translate( "PopulationChangeHealthStateDialog", "Healthy:" ) );
-    AddLine( 1, tools::translate( "PopulationChangeHealthStateDialog", "Wounded:" ) );
-    AddLine( 2, tools::translate( "PopulationChangeHealthStateDialog", "Contaminated:" ) );
-    AddLine( 3, tools::translate( "PopulationChangeHealthStateDialog", "Dead:" ) );
+    gui::SubObjectName subObject( "PopulationChangeHealthStateDialog" );
+    AddLine( 0, "Healthy", tools::translate( "PopulationChangeHealthStateDialog", "Healthy:" ) );
+    AddLine( 1, "Wounded", tools::translate( "PopulationChangeHealthStateDialog", "Wounded:" ) );
+    AddLine( 2, "Contaminated", tools::translate( "PopulationChangeHealthStateDialog", "Contaminated:" ) );
+    AddLine( 3, "Dead", tools::translate( "PopulationChangeHealthStateDialog", "Dead:" ) );
 }
 
 // -----------------------------------------------------------------------------

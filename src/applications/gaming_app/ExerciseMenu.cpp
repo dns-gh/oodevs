@@ -22,7 +22,7 @@
 // Created: SBO 2008-08-27
 // -----------------------------------------------------------------------------
 ExerciseMenu::ExerciseMenu( QWidget* parent, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter, const QString& title /* = "" */ )
-    : gui::RichMenu( parent, controllers, title )
+    : gui::RichMenu( "exerciseMenu", parent, controllers, title )
     , controllers_( controllers )
     , interpreter_( interpreter )
 {

@@ -62,14 +62,14 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     color->setMaximumWidth( 10 );
     QLabel* label = new QLabel( tr( "Nominal superior" ), grid );
     label->setMaximumWidth( 150 );
-    nominalSuperiorCombo_ = new ValuedComboBox< const Entity_ABC* >( grid );
+    nominalSuperiorCombo_ = new ValuedComboBox< const Entity_ABC* >( "nominalSuperiorCombo", grid );
     nominalSuperiorCombo_->setMinimumWidth( 200 );
 
     color = new QLabel( grid );
     tmp.fill( QColor( "yellow" ) );
     color->setPixmap( tmp );
     label = new QLabel( tr( "Current superior" ), grid );
-    currentSuperiorCombo_ = new ValuedComboBox< const Entity_ABC* >( grid );
+    currentSuperiorCombo_ = new ValuedComboBox< const Entity_ABC* >( "currentSuperiorCombo", grid );
 
     Q3HBox* box = new Q3HBox( this );
     layout->addWidget( box );

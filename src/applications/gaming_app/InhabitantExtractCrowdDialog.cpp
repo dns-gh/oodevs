@@ -46,13 +46,13 @@ InhabitantExtractCrowdDialog::InhabitantExtractCrowdDialog( QWidget* pParent, ke
     crowdTypeLabel_ = new QLabel( "0", this );
     grid->addWidget( crowdTypeLabel_, 0, 1 );
     grid->addWidget( new QLabel( tools::translate( "InhabitantExtractCrowdDialog", "Alive:" ), this ), 1, 0 );
-    healthySpinBox_ = new gui::RichSpinBox( this, 0, std::numeric_limits< int >::max(), 10 );
+    healthySpinBox_ = new gui::RichSpinBox( "healthySpinBox", this, 0, std::numeric_limits< int >::max(), 10 );
     grid->addWidget( healthySpinBox_, 1, 1 );
     grid->addWidget( new QLabel( tools::translate( "InhabitantExtractCrowdDialog", "Wounded:" ), this ), 2, 0 );
-    woundedSpinBox_ = new gui::RichSpinBox( this, 0, std::numeric_limits< int >::max(), 10 );
+    woundedSpinBox_ = new gui::RichSpinBox( "woundedSpinBox", this, 0, std::numeric_limits< int >::max(), 10 );
     grid->addWidget( woundedSpinBox_, 2, 1 );
     grid->addWidget( new QLabel( tools::translate( "InhabitantExtractCrowdDialog", "Dead:" ), this ), 3, 0 );
-    deadSpinBox_ = new gui::RichSpinBox( this, 0, std::numeric_limits< int >::max(), 10 );
+    deadSpinBox_ = new gui::RichSpinBox( "deadSpinBox", this, 0, std::numeric_limits< int >::max(), 10 );
     grid->addWidget( deadSpinBox_, 3, 1 );
     // Separator
     Q3Frame* hline = new Q3Frame( this );

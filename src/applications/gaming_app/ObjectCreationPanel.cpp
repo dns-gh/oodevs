@@ -30,6 +30,7 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& 
     , simulation_  ( simulation )
     , tools_       ( tools )
 {
+    gui::SubObjectName subObject( "ObjectCreationPanel" );
     QWidget* box = new QWidget( this );
     QBoxLayout* layout = new QBoxLayout( box, QBoxLayout::TopToBottom, 0, 5 );
     layout->setMargin( 5 );

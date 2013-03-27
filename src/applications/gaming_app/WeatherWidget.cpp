@@ -18,8 +18,8 @@
 // Name: WeatherWidget constructor
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
-WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
-    : gui::WeatherWidget( parent, title )
+WeatherWidget::WeatherWidget( const QString& objectName, QWidget* parent, const QString& title )
+    : gui::WeatherWidget( objectName, parent, title )
 {
     // NOTHING
 }

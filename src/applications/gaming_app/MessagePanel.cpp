@@ -36,7 +36,7 @@ MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& contro
     setAllowedAreas( Qt::TopToolBarArea );
 
     //text layout
-    text_ = factory_.CreateLabel();
+    text_ = factory_.CreateLabel( "text" );
     QFont font( text_->font() );
     font.setPixelSize( 14 );
     text_->setFont( font );

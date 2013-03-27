@@ -47,7 +47,7 @@ class TacticalTreeView  : public gui::TacticalTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent = 0 );
+    TacticalTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent = 0 );
     virtual ~TacticalTreeView();
     //@}
 

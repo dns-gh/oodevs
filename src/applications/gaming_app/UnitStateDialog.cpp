@@ -16,6 +16,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Dotations_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_gui/RichTabWidget.h"
 #include "gaming/Equipments.h"
 #include "gaming/Troops.h"
 #include <boost/ref.hpp>

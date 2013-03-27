@@ -24,7 +24,7 @@ class PopulationTreeView : public gui::PopulationTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
+             PopulationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
     virtual ~PopulationTreeView();
     //@}
 

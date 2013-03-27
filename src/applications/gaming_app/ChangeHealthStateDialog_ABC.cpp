@@ -80,10 +80,10 @@ ChangeHealthStateDialog_ABC::~ChangeHealthStateDialog_ABC()
 // Name: ChangeHealthStateDialog_ABC::AddLine
 // Created: JSR 2011-03-15
 // -----------------------------------------------------------------------------
-void ChangeHealthStateDialog_ABC::AddLine( unsigned int line, const QString& label )
+void ChangeHealthStateDialog_ABC::AddLine( unsigned int line, const QString& objectName, const QString& label )
 {
     grid_->addWidget( new QLabel( label, this ), line, 0 );
-    spinboxes_[ line ] = new gui::RichSpinBox( this, 0, std::numeric_limits< int >::max(), 10 );
+    spinboxes_[ line ] = new gui::RichSpinBox( objectName, this, 0, std::numeric_limits< int >::max(), 10 );
     grid_->addWidget( spinboxes_[ line ], line, 1 );
     connect( spinboxes_[ line ], SIGNAL( valueChanged( int ) ), SLOT( OnValuesChanged() ) );
 }

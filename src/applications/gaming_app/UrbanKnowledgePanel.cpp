@@ -51,11 +51,11 @@ UrbanKnowledgePanel::UrbanKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
 
     display_ = new DisplayBuilder( view, factory );
     display_->AddGroup( tr( "Details" ) )
-                .AddLabel( tr( "Identifier:" ) )
-                .AddLabel( tr( "Associated block:" ) )
-                .AddLabel( tr( "Perceived:" ) )
-                .AddLabel( tr( "Progress:" ) )
-                .AddLabel( tr( "Maximum Progress:" ) );
+                .AddLabel( "identifier", tr( "Identifier:" ) )
+                .AddLabel( "associatedBlock", tr( "Associated block:" ) )
+                .AddLabel( "Perceived", tr( "Perceived:" ) )
+                .AddLabel( "Progress", tr( "Progress:" ) )
+                .AddLabel( "MaxProgress", tr( "Maximum Progress:" ) );
 
     pPerceptionListView_ = new QTreeView();
     pPerceptionListView_->setRootIsDecorated( false );

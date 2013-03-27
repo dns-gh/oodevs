@@ -36,7 +36,7 @@ EfficientRangeDialog::EfficientRangeDialog( QWidget* parent, kernel::Controllers
     pMainLayout->addMultiCellWidget( box, 0, 1, 0, 2 );
 
     new QLabel( tr( "Percentage (PH):" ), box );
-    phSpinbox_ = new gui::RichSpinBox( box, 0, 100 );
+    phSpinbox_ = new gui::RichSpinBox( "phSpinbox", box, 0, 100 );
 
     new QLabel( tr( "Size:" ), box );
     volumeCombo_ = new QComboBox( box );

@@ -61,8 +61,8 @@ namespace
 // Name: CommunicationTreeView constructor
 // Created: JSR 2012-09-28
 // -----------------------------------------------------------------------------
-CommunicationTreeView::CommunicationTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent /*= 0*/ )
-    : gui::HierarchyTreeView< kernel::CommunicationHierarchies >( controllers, profile, modelObserver, symbols, parent )
+CommunicationTreeView::CommunicationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent /*= 0*/ )
+    : gui::HierarchyTreeView< kernel::CommunicationHierarchies >( objectName, controllers, profile, modelObserver, symbols, parent )
     , static_( staticModel )
     , simulation_( simulation )
     , actionsModel_( actionsModel )

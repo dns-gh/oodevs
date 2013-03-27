@@ -59,7 +59,7 @@ SupplyQuotasWidget::SupplyQuotasWidget( QWidget* parent, kernel::Controllers& co
 
     hboxSuperior_= new Q3HBox( (Q3VBox*)this );
     new QLabel( tr( "Logistic superior" ), hboxSuperior_ );
-    superior_ = new ValuedComboBox< const Entity_ABC* >( hboxSuperior_ );
+    superior_ = new ValuedComboBox< const Entity_ABC* >( "superior", hboxSuperior_ );
     superior_->setMinimumWidth( 200 );
     connect( superior_, SIGNAL( currentIndexChanged( int ) ), SLOT( UpdateQuotas() ) );
 }

@@ -27,7 +27,7 @@ InfoPanels::InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::
     : gui::RichDockWidget( controllers, parent, "info-panels" )
 {
     setWindowTitle( tools::translate( "InfoPanels", "Knowledge" ) );
-    gui::Panels* panels = new gui::Panels( this );
+    gui::Panels* panels = new gui::Panels( "InfoPanels", this );
     setWidget( panels );
 
     panels->setMinimumWidth( 200 );

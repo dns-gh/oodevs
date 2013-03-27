@@ -44,18 +44,18 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
     {
         QTabWidget* pUnit = new QTabWidget();
         {
-            searchTreeView = new gui::SearchTreeView< TacticalTreeView >( pUnit, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
+            searchTreeView = new gui::SearchTreeView< TacticalTreeView >( "SearchTacticalTreeView", pUnit, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
             searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
             searchTreeView->connect( aggregateToolbar, SIGNAL( ChangeDisplay( int ) ), searchTreeView->GetRichTreeView(), SLOT( ChangeDisplay( int ) ) );
             pUnit->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Tactical" ) );
         }
         {
-            searchTreeView = new gui::SearchTreeView< CommunicationTreeView >( pUnit, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
+            searchTreeView = new gui::SearchTreeView< CommunicationTreeView >( "SearchCommunicationTreeView", pUnit, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
             searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
             pUnit->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Communication" ) );
         }
         {
-            gui::SearchTreeView< LogisticTreeView >* logisticSearchListView = new gui::SearchTreeView< LogisticTreeView >( pListsTabWidget, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
+            gui::SearchTreeView< LogisticTreeView >* logisticSearchListView = new gui::SearchTreeView< LogisticTreeView >( "SearchLogisticTreeView", pListsTabWidget, controllers, filter, observer_, icons, staticModel, simulation, actionsModel );
             logisticSearchListView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), logisticSearchListView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
             logisticListView_ = logisticSearchListView->GetTreeView();
             pUnit->addTab( logisticSearchListView, tools::translate( "OrbatDockWidget", "Logistic" ) );
@@ -63,17 +63,17 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
         pListsTabWidget->addTab( pUnit, tools::translate( "OrbatDockWidget", "Units" ) );
     }
     {
-        searchTreeView = new gui::SearchTreeView< gui::ObjectTreeView >( pListsTabWidget, controllers, filter, observer_ );
+        searchTreeView = new gui::SearchTreeView< gui::ObjectTreeView >( "ObjectTreeView", pListsTabWidget, controllers, filter, observer_ );
         searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
         pListsTabWidget->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Objects" ) );
     }
     {
-        searchTreeView = new gui::SearchTreeView< PopulationTreeView >( pListsTabWidget, controllers, filter, observer_ );
+        searchTreeView = new gui::SearchTreeView< PopulationTreeView >( "PopulationTreeView", pListsTabWidget, controllers, filter, observer_ );
         searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
         pListsTabWidget->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Crowds" ) );
     }
     {
-        searchTreeView = new gui::SearchTreeView< gui::InhabitantTreeView >( pListsTabWidget, controllers, filter, observer_ );
+        searchTreeView = new gui::SearchTreeView< gui::InhabitantTreeView >( "InhabitantTreeView", pListsTabWidget, controllers, filter, observer_ );
         searchTreeView->connect( aggregateToolbar, SIGNAL( LockDragAndDrop( bool ) ), searchTreeView->GetRichTreeView(), SLOT( LockDragAndDrop( bool ) ) );
         pListsTabWidget->addTab( searchTreeView, tools::translate( "OrbatDockWidget", "Populations" ) );
     }

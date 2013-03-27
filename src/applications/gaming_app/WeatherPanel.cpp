@@ -44,11 +44,11 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
     , currentModel_( 0 )
 {
     // Global Weather
-    globalWidget_ = new WeatherWidget( globalLayout_, tr( "Weather parameters" ) );
+    globalWeatherWidget_ = new WeatherWidget( "globalWidget", globalWidget_, tr( "Weather parameters" ) );
     // Local Weather
-    localWidget_ = new WeatherWidget( localLayout_, tr( "Weather parameters" ) );
+    localWeatherWidget_ = new WeatherWidget( "localWidget", localWidget_, tr( "Weather parameters" ) );
     CreateLocalParameters();
-    localWeathers_ = new WeatherListView( localLayout_, model.coordinateConverter_, simulation_ );
+    localWeathers_ = new WeatherListView( localWidget_, model.coordinateConverter_, simulation_ );
     connect( localWeathers_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( LocalSelectionChanged() ) );
 
     controllers_.Register( *this );
@@ -85,7 +85,7 @@ void WeatherPanel::Reset()
 void WeatherPanel::NotifyUpdated( const MeteoModel& model )
 {
     currentModel_ = const_cast< MeteoModel* >( &model );
-    globalWidget_->Update( *currentModel_->GetGlobalMeteo() );
+    globalWeatherWidget_->Update( *currentModel_->GetGlobalMeteo() );
     static_cast< WeatherListView* >( localWeathers_ )->Update( *currentModel_ );
 }
 
@@ -101,7 +101,7 @@ void WeatherPanel::Commit()
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( "global_weather" );
         actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, tr( "Change Global Weather" ), true );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-        static_cast< WeatherWidget* >( globalWidget_ )->CreateParameters( *action, it );
+        static_cast< WeatherWidget* >( globalWeatherWidget_ )->CreateParameters( *action, it );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->RegisterAndPublish( actionsModel_ );
         const_cast< weather::Meteo* >( currentModel_->GetGlobalMeteo() )->SetModified( false );
@@ -125,8 +125,8 @@ void WeatherPanel::Commit()
                     actions::MagicAction* action = new actions::MagicAction( actionType, controllers_.controller_, tr( "Change Local Weather" ), true );
                     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
-                    localWidget_->Update( *local );
-                    static_cast< WeatherWidget* >( localWidget_ )->CreateParameters( *action, it );
+                    localWeatherWidget_->Update( *local );
+                    static_cast< WeatherWidget* >( localWeatherWidget_ )->CreateParameters( *action, it );
                     action->AddParameter( *new actions::parameters::DateTime( it.NextElement(), tools::BoostTimeToQTime( local->GetStartTime() ) ) );
                     action->AddParameter( *new actions::parameters::DateTime( it.NextElement(), tools::BoostTimeToQTime( local->GetEndTime() ) ) );
                     kernel::Rectangle rectangle;

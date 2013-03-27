@@ -159,7 +159,7 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
     QGridLayout* layout = new QGridLayout( this, 3, 2, 5 );
     layout->setRowMinimumHeight( 0, 25 );
     layout->setColumnMinimumWidth( 0, 110 );
-    targetCombo_ = new ValuedComboBox< const Entity_ABC* >( this );
+    targetCombo_ = new ValuedComboBox< const Entity_ABC* >( "targetCombo", this );
     targetCombo_->setMinimumWidth( 150 );
 
     QStringList header;

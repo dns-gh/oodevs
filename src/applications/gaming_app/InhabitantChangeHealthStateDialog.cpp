@@ -20,9 +20,9 @@
 InhabitantChangeHealthStateDialog::InhabitantChangeHealthStateDialog( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
     : ChangeHealthStateDialog_ABC( pParent, controllers, actionsModel, simulation, profile, 3 )
 {
-    AddLine( 0, tools::translate( "InhabitantChangeHealthStateDialog", "Healthy:" ) );
-    AddLine( 1, tools::translate( "InhabitantChangeHealthStateDialog", "Wounded:" ) );
-    AddLine( 2, tools::translate( "InhabitantChangeHealthStateDialog", "Dead:" ) );
+    AddLine( 0, "healthy", tools::translate( "InhabitantChangeHealthStateDialog", "Healthy:" ) );
+    AddLine( 1, "Wounded", tools::translate( "InhabitantChangeHealthStateDialog", "Wounded:" ) );
+    AddLine( 2, "Dead", tools::translate( "InhabitantChangeHealthStateDialog", "Dead:" ) );
 
 }
 

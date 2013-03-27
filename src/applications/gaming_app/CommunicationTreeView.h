@@ -47,7 +47,7 @@ class CommunicationTreeView : public gui::HierarchyTreeView< kernel::Communicati
 public:
     //! @name Constructors/Destructor
     //@{
-             CommunicationTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent = 0 );
+             CommunicationTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::ModelObserver_ABC& modelObserver, const gui::EntitySymbols& symbols, const StaticModel& staticModel, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, QWidget* parent = 0 );
     virtual ~CommunicationTreeView();
     //@}
 

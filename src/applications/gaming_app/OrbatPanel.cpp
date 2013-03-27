@@ -34,21 +34,22 @@ OrbatPanel::OrbatPanel( QWidget* parent, kernel::Controllers& controllers )
     // Neutralized
     QHBoxLayout* neutralizedLayout = new QHBoxLayout();
     neutralizedLayout->addWidget( new QLabel( tr( "Neutralized:" ) ) );
-    pNColor_ = new gui::ColorButton( main, "", QColor( 235, 230, 101 ) );
+    pNColor_ = new gui::ColorButton( "pNColor", main, "", QColor( 235, 230, 101 ) );
     neutralizedLayout->addWidget( pNColor_ );
     mainLayout->addLayout( neutralizedLayout );
     // Tactically destroyed
     QHBoxLayout* tacticallyDestroyedLayout = new QHBoxLayout();
     tacticallyDestroyedLayout->addWidget( new QLabel( tr( "Tactically destroyed:" ) ) );
-    pADColor_ = new gui::ColorButton( main, "", QColor( 235, 185, 101 ) );
+    pADColor_ = new gui::ColorButton( "pADColor", main, "", QColor( 235, 185, 101 ) );
     tacticallyDestroyedLayout->addWidget( pADColor_ );
     mainLayout->addLayout( tacticallyDestroyedLayout );
     // Totally destroyed
     QHBoxLayout* totallyDestroyedLayout = new QHBoxLayout();
     totallyDestroyedLayout->addWidget( new QLabel( tr( "Totally destroyed:" ) ) );
-    pODColor_ = new gui::ColorButton( main, "", QColor( 235, 106, 101 ) );
+    pODColor_ = new gui::ColorButton( "pODColor", main, "", QColor( 235, 106, 101 ) );
     totallyDestroyedLayout->addWidget( pODColor_ );
     mainLayout->addLayout( totallyDestroyedLayout );
+    layout->addStretch( 1 );
 
     if( controllers_.options_.GetOption( "Color/Neutralized", QString( "" ) ).To< QString >() == "" )
         controllers_.options_.Change( "Color/Neutralized", pNColor_->GetColor().name() );

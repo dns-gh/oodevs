@@ -50,12 +50,12 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Contr
     {
         Q3HBox* box = new Q3HBox( timeGroup_ );
         new QLabel( tr( "First tick" ), box );
-        firstTick_ = new gui::RichSpinBox( box );
+        firstTick_ = new gui::RichSpinBox( "firstTick", box );
     }
     {
         Q3HBox* box = new Q3HBox( timeGroup_ );
         new QLabel( tr( "Duration" ), box );
-        duration_ = new gui::RichSpinBox( box );
+        duration_ = new gui::RichSpinBox( "duration", box );
     }
     connect( functions_, SIGNAL( itemSelectionChanged() ), SLOT( OnSelectionChange() ) );
 

@@ -147,7 +147,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     , profileDialog_( profileDialog )
 {
     // File
-    gui::RichMenu* menu = new gui::RichMenu( this, controllers_, tools::translate( "Menu", "&File" ) );
+    gui::RichMenu* menu = new gui::RichMenu( "file", this, controllers_, tools::translate( "Menu", "&File" ) );
     menu->SetModes( eModes_None, eModes_All, true );
     new ConnectionMenu( menu, controllers, network, logger );
     menu->insertSeparator();
@@ -155,7 +155,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     addMenu( menu );
 
     // Display
-    menu = new gui::RichMenu( this, controllers_, tools::translate( "Menu", "&Display" ) );
+    menu = new gui::RichMenu( "display", this, controllers_, tools::translate( "Menu", "&Display" ) );
     menu->SetModes( eModes_None, eModes_All, true );
     kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
     gui::RichToolBar* toolBar = new gui::RichToolBar( controllers, pParent, "units toolbar" );
@@ -256,7 +256,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     addMenu( menu );
 
     // Profiles
-    menu = new gui::RichMenu( this, controllers_, tools::translate( "Menu", "Profiles..." ) );
+    menu = new gui::RichMenu( "profiles", this, controllers_, tools::translate( "Menu", "Profiles..." ) );
     menu->SetModes( eModes_Default | eModes_Replay, eModes_All ^ ( eModes_Default | eModes_Replay ), true );
     menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "Profiles..." ), &profileDialog_, SLOT( exec() ) );
     profileMenu_ = insertItem( tools::translate( "Menu", "Profi&les" ), menu );
@@ -280,7 +280,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     }
 
     // Help
-    menu = new gui::RichMenu( this, controllers, tools::translate( "Menu", "&?" ) );
+    menu = new gui::RichMenu( "help", this, controllers, tools::translate( "Menu", "&?" ) );
     menu->SetModes( eModes_None, eModes_All, true );
     menu->insertItem( tools::translate( "Menu", "Help" ), pParent, SIGNAL( ShowHelp() ) );
     menu->insertSeparator();

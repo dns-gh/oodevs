@@ -63,7 +63,7 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, ::gui::PanelStack_ABC& pa
     Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "FireCreationPanel", "Strike order description" ), box );
     {
         new QLabel( tools::translate( "FireCreationPanel", "Strike type:" ), group );
-        strikeCombo_ = new ::gui::ValuedComboBox< E_StrikeType >( group );
+        strikeCombo_ = new ::gui::ValuedComboBox< E_StrikeType >( "strikeCombo", group );
         strikeCombo_->AddItem( tools::translate( "FireCreationPanel", "Strike on unit" ), eStrikeOnUnit);
         strikeCombo_->AddItem( tools::translate( "FireCreationPanel", "Strike on position" ), eStrikeOnPosition);
         connect( strikeCombo_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
@@ -95,7 +95,7 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, ::gui::PanelStack_ABC& pa
         reporterLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
 
         new QLabel( tools::translate( "FireCreationPanel", "Ammunition:" ), group );
-        ammunitionsBox_ = new ::gui::ValuedComboBox< int >( group );
+        ammunitionsBox_ = new ::gui::ValuedComboBox< int >( "ammunitionsBox", group );
         ammunitionsBox_->setSorting( true );
 
         new QLabel( tools::translate( "FireCreationPanel", "Iteration:" ), group );

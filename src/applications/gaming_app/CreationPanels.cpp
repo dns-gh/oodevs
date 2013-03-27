@@ -39,8 +39,9 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
                                 ColorStrategy_ABC& colorStrategy, const tools::ExerciseConfig& config )
     : gui::RichDockWidget( controllers, parent, "creation-panel" )
 {
+    gui::SubObjectName subObject( "CreationPanels" );
     setWindowTitle( tools::translate( "CreationPanels", "Creation" ) );
-    panels_ = new gui::Panels( this );
+    panels_ = new gui::Panels( "panels", this );
     setWidget( panels_ );
 
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
