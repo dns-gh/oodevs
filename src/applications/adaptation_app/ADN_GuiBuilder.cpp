@@ -38,6 +38,7 @@ ADN_GuiBuilder::ADN_GuiBuilder( const QString& name )
     , nameCount_            ( 0 )
 {
     assert( !name_.isEmpty() );
+    gui::ObjectNameManager::getInstance()->AddSubLevel( name );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +47,7 @@ ADN_GuiBuilder::ADN_GuiBuilder( const QString& name )
 // -----------------------------------------------------------------------------
 ADN_GuiBuilder::~ADN_GuiBuilder()
 {
-    // NOTHING
+    gui::ObjectNameManager::getInstance()->RemoveSubLevel();
 }
 
 // -----------------------------------------------------------------------------
@@ -254,7 +255,7 @@ const QString& ADN_GuiBuilder::GetName() const
 void ADN_GuiBuilder::PushSubName( QString subName )
 {
     assert( !subName.isEmpty() );
-
+    gui::ObjectNameManager::getInstance()->AddSubLevel( subName );
     ++nameCount_;
     name_ += "_";
     name_ += subName;
@@ -272,6 +273,7 @@ void ADN_GuiBuilder::PopSubName()
         int index = name_.lastIndexOf( '_' );
         if( index != -1 )
             name_.truncate( index );
+        gui::ObjectNameManager::getInstance()->RemoveSubLevel();
     }
     else
         std::cerr << "ADN_GuiBuilder: Error: The number of pushes ands pops are different: " << name_.toStdString() << std::endl;

@@ -67,6 +67,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "ADN_Type_ABC.h"
 #include <xeumeuleu/xml.hpp>
+#include "clients_gui/ObjectNameManager.h"
 
 namespace xml
 {

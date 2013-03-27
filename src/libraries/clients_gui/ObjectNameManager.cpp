@@ -65,11 +65,7 @@ void ObjectNameManager::AddSubLevel( const QString& name )
         DisplayErrorMessage( "this parent doesn't have a name" );
         return;
     }
-
-    if( !objectNamePath_.contains( name ) )
-        objectNamePath_.append( name );
-    else
-        DisplayErrorMessage( name + " : Name already given" );
+    objectNamePath_.append( name );
 }
 
 // -----------------------------------------------------------------------------

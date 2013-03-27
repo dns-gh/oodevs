@@ -36,8 +36,7 @@ ADN_SearchListView::ADN_SearchListView( const QString& objectName, ADN_GUI_ABC* 
     connect( gui, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), this, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
 
     // Search box
-    lineEdit_ = new gui::SearchLineEdit( this );
-    lineEdit_->setObjectName( objectName + "-search-field" );
+    lineEdit_ = new gui::SearchLineEdit( objectName + "-search-field", this );
 
     connect( lineEdit_, SIGNAL( textChanged( const QString& ) ), listView_, SLOT( OnFilterChanged( const QString& ) ) );
     connect( listView_, SIGNAL( PurgeLineEdit() ), lineEdit_, SLOT( clear() ) );

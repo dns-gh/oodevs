@@ -349,6 +349,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
 
     // Main page
     pParent->addTab( CreateScrollArea( builder.GetName(), *pContent, pSearchListView ), tr( "Sensors" ) );
+    builder.PopSubName(); //! regular-tab
 
     // Connection
     connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void * ) ), algorithmPreview, SLOT( OnSelectSensor( void* ) ) );

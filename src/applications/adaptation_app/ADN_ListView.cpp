@@ -64,7 +64,7 @@ namespace
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, const QString title /*= ""*/ ) // flags à virer
-    : gui::RichTreeView( pParent )
+    : gui::RichTreeView( szName, pParent )
     , ADN_Gfx_ABC       ()
     , pCurData_         ( 0 )
     , title_            ( title )
@@ -74,7 +74,6 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, const QString 
     , bPrinting_        ( false )
     , usedByMapper_     ( this )
 {
-    setObjectName( szName );
     setRootIsDecorated( false );
     if( !title.isEmpty() )
         dataModel_.setHorizontalHeaderLabels( QStringList( title ) );

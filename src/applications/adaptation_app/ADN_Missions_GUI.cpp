@@ -350,6 +350,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
         generateMapper_->setMapping( pSearchListView->GetListView(), eMissionType );
     }
     // Main page
+    builder.PopSubName(); //! eMissionType-tab
     connect( pSearchListView->GetListView(), SIGNAL( SelectionChanged() ), missionChangedMapper_, SLOT( map() ) );
     missionChangedMapper_->setMapping( pSearchListView->GetListView(), eMissionType );
 

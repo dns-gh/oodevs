@@ -75,7 +75,7 @@ private:
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
 ADN_Weapons_PhSizeListView::ADN_Weapons_PhSizeListView( GQ_Plot& plot, const std::map< void*, unsigned int >& userIds )
-    : ADN_ListView( 0, "", tools::translate( "ADN_Weapons_PhSizeListView", "Target size" ) )
+    : ADN_ListView( 0, "ADNWeaponsPhSizeListView", tools::translate( "ADN_Weapons_PhSizeListView", "Target size" ) )
 {
     this->setMaximumHeight( 300 );
 

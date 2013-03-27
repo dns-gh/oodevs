@@ -123,6 +123,7 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
     QWidget* pSearchListView = builder.AddSearchListView< ADN_ListView_Models >( this, eEntityType, model, vInfosConnectors, static_cast< int >( eEntityType ) );
 
     // Main page
+    builder.PopSubName(); //eEntityType-tab
     return CreateScrollArea( builder.GetName(), *pWidgets_[ eEntityType ], pSearchListView );
 }
 

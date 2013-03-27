@@ -48,7 +48,7 @@ namespace
 // Created: ABR 2012-06-06
 // -----------------------------------------------------------------------------
 ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
-    : T_Parent( parent, *new ADN_ConsistencyChecker(), *new gui::FilterProxyModel< E_ConsistencyCheck >( IsError, Convert ) )
+    : T_Parent( "ADNConsistencyDialog", parent, *new ADN_ConsistencyChecker(), *new gui::FilterProxyModel< E_ConsistencyCheck >( IsError, Convert ) )
 {
     // Base size
     setMinimumSize( 600, 500 );
