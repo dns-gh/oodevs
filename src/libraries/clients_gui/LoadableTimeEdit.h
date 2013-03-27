@@ -27,7 +27,7 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-             LoadableTimeEdit( QWidget* parent, const QString& probableName = QString() );
+             LoadableTimeEdit( const QString& objectName, QWidget* parent );
     virtual ~LoadableTimeEdit();
     //@}
 

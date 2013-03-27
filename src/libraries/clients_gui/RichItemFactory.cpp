@@ -56,25 +56,25 @@ void RichItemFactory::DealWithLink( const QString& anchor )
 // Name: RichItemFactory::CreateLabel
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-RichLabel* RichItemFactory::CreateLabel( QWidget* parent /* = 0*/, const char* name /* = 0*/ )
+RichLabel* RichItemFactory::CreateLabel( const QString& objectName, QWidget* parent /* = 0*/ )
 {
-    return Connect( new RichLabel( parent, name ) );
+    return Connect( new RichLabel( objectName, parent ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RichItemFactory::CreateLabel
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-RichLabel* RichItemFactory::CreateLabel( const QString& text, QWidget* parent /* = 0*/, const char* name /* = 0*/ )
+RichLabel* RichItemFactory::CreateLabel( const QString& objectName, const QString& text, QWidget* parent /* = 0*/ )
 {
-    return Connect( new RichLabel( text, parent, name ) );
+    return Connect( new RichLabel( objectName, text, parent ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RichItemFactory::CreateLabel
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-RichLabel* RichItemFactory::CreateLabel( const QString& text, bool required, QWidget* parent /* = 0*/, const char* name /* = 0*/ )
+RichLabel* RichItemFactory::CreateLabel( const QString& objectName, const QString& text, bool required, QWidget* parent /* = 0*/ )
 {
-    return Connect( new RichLabel( text, required, parent, name ) );
+    return Connect( new RichLabel( objectName, text, required, parent ) );
 }

@@ -12,6 +12,7 @@
 #include "moc_DrawingCategoryItem.cpp"
 #include "DrawingTemplate.h"
 #include "DrawingCategory.h"
+#include "RichPushButton.h"
 #include "tools/Iterator.h"
 
 using namespace gui;
@@ -58,7 +59,7 @@ void DrawingCategoryItem::FillStyles( const DrawingCategory& category )
 // -----------------------------------------------------------------------------
 void DrawingCategoryItem::AddStyle( const DrawingTemplate& style )
 {
-    QPushButton* button = new QPushButton( style.GetPixmap(), style.GetName(), this, style.GetName() );
+    RichPushButton* button = new RichPushButton( style.GetName(), style.GetPixmap(), style.GetName(), this );
     button->setToggleButton( true );
     button->setBackgroundColor( Qt::white );
     button->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Preferred );

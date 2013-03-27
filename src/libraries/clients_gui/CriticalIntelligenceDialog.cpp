@@ -13,6 +13,8 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
+#include "RichPushButton.h"
+#include "SubObjectName.h"
 
 using namespace gui;
 
@@ -25,12 +27,13 @@ CriticalIntelligenceDialog::CriticalIntelligenceDialog( QWidget* parent, kernel:
     , controllers_         ( controllers )
     , criticalIntelligence_( 0 )
 {
+    SubObjectName subObject( "CriticalIntelligenceDialog" );
     setCaption( tr( "Change critical intelligence" ) );
     resize( 300, 150 );
 
     textEdit_ = new QTextEdit();
-    QPushButton* okButton = new QPushButton( tr( "Ok" ) );
-    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ) );
+    RichPushButton* okButton = new RichPushButton( "ok", tr( "Ok" ) );
+    RichPushButton* cancelButton = new RichPushButton( "cancel", tr( "Cancel" ) );
     okButton->setDefault( true );
     connect( okButton, SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( OnReject() ) );

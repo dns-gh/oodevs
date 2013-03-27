@@ -11,6 +11,7 @@
 #include "BypassPrototype_ABC.h"
 #include "LoadableSpinBox.h"
 #include "Tools.h"
+#include "SubObjectName.h"
 #include "clients_kernel/Units.h"
 
 using namespace gui;
@@ -20,11 +21,13 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 BypassPrototype_ABC::BypassPrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::BypassPrototype_ABC", "Bypass" ) )
+    : ObjectAttributePrototype_ABC( parent, "BypassPrototypeABC", tools::translate( "gui::BypassPrototype_ABC", "Bypass" ) )
 {
+    SubObjectName subObject( "BypassPrototypeABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->setMargin( 5 );
     layout->addWidget( new QLabel( tools::translate( "gui::ByPassPrototype_ABC", "Value:" ) ) );
-    bypassConstructionPercentage_ = new LoadableSpinBox( 0, 100, 1, 0 );
+    bypassConstructionPercentage_ = new LoadableSpinBox( "bypassConstructionPercentage", 0, 100, 1, 0 );
     bypassConstructionPercentage_->setSpecialValueText( QString::null );
     bypassConstructionPercentage_->setSuffix( kernel::Units::percentage.AsString() );
     layout->addWidget( bypassConstructionPercentage_ );

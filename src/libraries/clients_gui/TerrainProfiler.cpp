@@ -11,6 +11,7 @@
 #include "TerrainProfiler.h"
 #include "moc_TerrainProfiler.cpp"
 #include "RichSpinBox.h"
+#include "SubObjectName.h"
 #include "TerrainProfile.h"
 #include "TerrainProfilerLayer.h"
 #include "Tools.h"
@@ -32,9 +33,10 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
     , detection_  ( detection )
     , layer_      ( layer )
 {
+    gui::SubObjectName subObject( this->objectName() );
     {
         QLabel* heightLabel = new QLabel( tools::translate( "gui::TerrainProfiler", "Observation height" ) );
-        heightValue_ = new RichSpinBox( 0, 0 );
+        heightValue_ = new RichSpinBox( "heightValue", 0, 0 );
         heightValue_->setFixedSize( 100, 30 );
         heightValue_->setLineStep( 50 );
         heightValue_->setSuffix( QString( " %L1" ).arg( kernel::Units::meters.AsString() ) );

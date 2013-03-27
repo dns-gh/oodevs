@@ -20,7 +20,7 @@ using namespace gui;
 // Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
 UnitStateTableCrew::UnitStateTableCrew( QWidget* parent )
-    : UnitStateTable_ABC( parent, 7 )
+    : UnitStateTable_ABC( "UnitStateTableCrew", parent, 7 )
     , updating_( false )
 {
     horizontalHeaders_ << tr( "Rank" )

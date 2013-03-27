@@ -19,8 +19,8 @@ using namespace gui;
 // Name: PopulationTypesListView constructor
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-PopulationTypesListView::PopulationTypesListView( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, const QSpinBox& number )
-    : RichTreeView( parent, &controllers )
+PopulationTypesListView::PopulationTypesListView( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, const QSpinBox& number )
+    : RichTreeView( objectName, parent, &controllers )
     , controllers_( controllers )
     , types_( types )
     , number_( number )

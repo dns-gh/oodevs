@@ -20,6 +20,7 @@ namespace tools
 
 namespace gui
 {
+    class RichCheckBox;
     class RichLabel;
     class LoadableTimeEdit;
 
@@ -62,7 +63,7 @@ protected:
     //@{
     gui::RichLabel* sourceLabel_;
     ValuedComboBox< std::string >* propagationFiles_;
-    QCheckBox* checkbox_;
+    RichCheckBox* checkbox_;
     QDateTimeEdit* date_;
     //@}
 };

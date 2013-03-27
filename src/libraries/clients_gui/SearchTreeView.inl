@@ -6,6 +6,7 @@
 // Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
+#include "SubObjectName.h"
 
 namespace gui
 {
@@ -49,9 +50,10 @@ namespace gui
                                                 CheckComboBox::T_Extractor extractor, const std::string& ( KernelType::* converter )() const, const QString& noneText /* = "" */ )
     {
         // Label
+        SubObjectName subObject( "ResolverFilter" + text );
         QLabel* label = new QLabel( text );
         // Combo
-        CheckComboBox* combo = new CheckComboBox( this );
+        CheckComboBox* combo = new CheckComboBox( "combo", this );
         combo->SetExtractor( extractor );
         combo->SetAllText( tr( "All" ) );
         if( !noneText.isEmpty() )
@@ -100,11 +102,11 @@ namespace gui
     // Created: ABR 2012-03-27
     // -----------------------------------------------------------------------------
     template< typename BaseTreeView >
-    SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent )
+    SearchTreeView< BaseTreeView >::SearchTreeView( const QString& objectName, QWidget* parent )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( this );
-        CreateGUI();
+        treeView_ = new BaseTreeView( objectName, this );
+        CreateGUI( objectName );
     }
 
     // -----------------------------------------------------------------------------
@@ -113,11 +115,11 @@ namespace gui
     // -----------------------------------------------------------------------------
     template< typename BaseTreeView >
     template< typename _1 >
-    SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first )
+    SearchTreeView< BaseTreeView >::SearchTreeView( const QString& objectName, QWidget* parent, _1& first )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( first, this );
-        CreateGUI();
+        treeView_ = new BaseTreeView( objectName, first, this );
+        CreateGUI( objectName );
     }
 
     // -----------------------------------------------------------------------------
@@ -126,11 +128,11 @@ namespace gui
     // -----------------------------------------------------------------------------
     template< typename BaseTreeView >
     template< typename _1, typename _2 >
-    SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first, _2& second )
+    SearchTreeView< BaseTreeView >::SearchTreeView( const QString& objectName, QWidget* parent, _1& first, _2& second )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( first, second, this );
-        CreateGUI();
+        treeView_ = new BaseTreeView( objectName, first, second, this );
+        CreateGUI( objectName );
     }
 
     // -----------------------------------------------------------------------------
@@ -139,11 +141,11 @@ namespace gui
     // -----------------------------------------------------------------------------
     template< typename BaseTreeView >
     template< typename _1, typename _2, typename _3 >
-    SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third )
+    SearchTreeView< BaseTreeView >::SearchTreeView( const QString& objectName, QWidget* parent, _1& first, _2& second, _3& third )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( first, second, third, this );
-        CreateGUI();
+        treeView_ = new BaseTreeView( objectName, first, second, third, this );
+        CreateGUI( objectName );
     }
 
     // -----------------------------------------------------------------------------
@@ -152,11 +154,11 @@ namespace gui
     // -----------------------------------------------------------------------------
     template< typename BaseTreeView >
     template< typename _1, typename _2, typename _3, typename _4 >
-    SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth )
+    SearchTreeView< BaseTreeView >::SearchTreeView( const QString& objectName, QWidget* parent, _1& first, _2& second, _3& third, _4& fourth )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( first, second, third, fourth, this );
-        CreateGUI();
+        treeView_ = new BaseTreeView( objectName, first, second, third, fourth, this );
+        CreateGUI( objectName );
     }
 
     // -----------------------------------------------------------------------------
@@ -165,11 +167,11 @@ namespace gui
     // -----------------------------------------------------------------------------
     template< typename BaseTreeView >
     template< typename _1, typename _2, typename _3, typename _4, typename _5 >
-    SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth )
+    SearchTreeView< BaseTreeView >::SearchTreeView( const QString& objectName, QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( first, second, third, fourth, fifth, this );
-        CreateGUI();
+        treeView_ = new BaseTreeView( objectName, first, second, third, fourth, fifth, this );
+        CreateGUI( objectName );
     }
 
     // -----------------------------------------------------------------------------
@@ -178,11 +180,11 @@ namespace gui
     // -----------------------------------------------------------------------------
     template< typename BaseTreeView >
     template< typename _1, typename _2, typename _3, typename _4, typename _5, typename _6 >
-    SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth )
+    SearchTreeView< BaseTreeView >::SearchTreeView( const QString& objectName, QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( first, second, third, fourth, fifth, sixth, this );
-        CreateGUI();
+        treeView_ = new BaseTreeView( objectName, first, second, third, fourth, fifth, sixth, this );
+        CreateGUI( objectName );
     }
 
     // -----------------------------------------------------------------------------
@@ -191,11 +193,11 @@ namespace gui
     // -----------------------------------------------------------------------------
     template< typename BaseTreeView >
     template< typename _1, typename _2, typename _3, typename _4, typename _5, typename _6, typename _7 >
-    SearchTreeView< BaseTreeView >::SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth, _7& seventh )
+    SearchTreeView< BaseTreeView >::SearchTreeView( const QString& objectName, QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth, _7& seventh )
         : SearchTreeView_ABC( parent )
     {
-        treeView_ = new BaseTreeView( first, second, third, fourth, fifth, sixth, seventh, this );
-        CreateGUI();
+        treeView_ = new BaseTreeView( objectName, first, second, third, fourth, fifth, sixth, seventh, this );
+        CreateGUI( objectName );
     }
 
     // -----------------------------------------------------------------------------

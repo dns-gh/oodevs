@@ -22,6 +22,7 @@ namespace kernel
 
 namespace gui
 {
+    class RichComboBox;
 // =============================================================================
 /** @class  CoordinateSystemsPanel
     @brief  CoordinateSystemsPanel
@@ -53,7 +54,7 @@ private:
      kernel::Options& options_;
      kernel::Controllers& controllers_;
      kernel::CoordinateSystems& coordinateSystems_;
-     QComboBox* listCoordSys_;
+     RichComboBox* listCoordSys_;
      kernel::CoordinateSystems::Projection previousCoordinateSystem_;
     //@}
 };

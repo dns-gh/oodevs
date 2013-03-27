@@ -11,6 +11,10 @@
 #define __NamingManager_h_
 
 #include <boost/noncopyable.hpp>
+
+namespace gui
+{
+
 // =============================================================================
 /** @class  NamingManager
     @brief  NamingManager
@@ -35,6 +39,7 @@ public:
     void RemoveSubLevel();
     void SetObjectName( QObject* obj, const QString& name );
     void RemoveRegisteredName( const QString& name );
+    void CheckErrors();
     //@}
 
 private:
@@ -46,9 +51,11 @@ private:
     //! @name Member data
     //@{
     static ObjectNameManager* instance_;
-    QStringList* objectNamePath_;
-    QStringList* paths_;
+    QStringList objectNamePath_;
+    QStringList paths_;
     //@}
 };
+
+}
 
 #endif // __NamingManager_h_

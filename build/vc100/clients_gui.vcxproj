@@ -147,11 +147,14 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\LongNameHelper.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ModalDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichComboBox.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichListWidget.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichRadioButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTableView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTableWidget.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTimeEdit.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichToolButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTreeWidget.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SubObjectName.cpp" />
@@ -772,11 +775,14 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\ModelObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichComboBox.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichListView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichListWidget.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichRadioButton.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichTableView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichTableWidget.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichTimeEdit.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichToolButton.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichTreeWidget.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SubObjectName.h" />
@@ -2179,7 +2185,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\TerrainPreference.h" />
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\TerrainPreference.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\CoordinateSystemsPanel.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>

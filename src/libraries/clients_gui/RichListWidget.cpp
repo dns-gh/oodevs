@@ -17,7 +17,8 @@ using namespace gui;
 // Name: RichListWidget constructor
 // Created: NPT 2013-03-18
 // -----------------------------------------------------------------------------
-RichListWidget::RichListWidget( const QString& objectName )
+RichListWidget::RichListWidget( const QString& objectName, QWidget* parent /*= 0*/ )
+    : QListWidget( parent )
 {
     ObjectNameManager::getInstance()->SetObjectName( this, objectName );
 }

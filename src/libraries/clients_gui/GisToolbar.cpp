@@ -16,6 +16,7 @@
 #include "RichSpinBox.h"
 #include "Tools.h"
 #include "TerrainProfiler.h"
+#include "SubObjectName.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Options.h"
@@ -43,20 +44,21 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
     , controllers_      ( controllers )
     , detection_        ( detection )
 {
+    SubObjectName subObject( "GisToolbar" );
     {
         Q3HBox* waterShedBox = new Q3HBox( this );
-        watershedEnabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Watershed" ), waterShedBox );
+        watershedEnabled_ = new RichCheckBox( "watershedEnabled", tools::translate( "gui::GisToolBar", "Watershed" ), waterShedBox );
         QToolTip::add( watershedEnabled_, tools::translate( "gui::GisToolBar", "Enable/disable watershed display" ) );
-        mode_ = new QComboBox( waterShedBox );
+        mode_ = new RichComboBox( "mode", waterShedBox );
         mode_->insertItem( tools::translate( "gui::GisToolBar", "<" ) );
         mode_->insertItem( tools::translate( "gui::GisToolBar", ">" ) );
         mode_->setMaximumWidth( 60 );
         QToolTip::add( mode_, tools::translate( "gui::GisToolBar", "Display water below or above specified height" ) );
-        height_ = new RichSpinBox( waterShedBox, 0, 10000, 1 );
+        height_ = new RichSpinBox( "height", waterShedBox, 0, 10000, 1 );
         height_->setSuffix( kernel::Units::meters.AsString() );
         height_->setEnabled( false );
         QToolTip::add( height_, tools::translate( "gui::GisToolBar", "Set water height limit" ) );
-        color_ = new ColorButton( this );
+        color_ = new ColorButton( "color", this );
         color_->SetColor( QColor( 20, 164, 218 ) ); // $$$$ SBO 2010-03-23: default from layer
         QToolTip::add( color_, tools::translate( "gui::GisToolBar", "Change watershed color" ) );
 
@@ -65,7 +67,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         connect( height_, SIGNAL( valueChanged( int ) ), SLOT( OnHeightChanged( int ) ) );
         connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
 
-        terrainProfilerButton_ = new QToolButton( this );
+        terrainProfilerButton_ = new RichToolButton( "terrainProfilerButton", this );
         terrainProfilerButton_->setIconSet( MakePixmap( "gis_terrainprofiler" ) );
         QToolTip::add( terrainProfilerButton_, tools::translate( "gui::GisToolBar", "Show terrain profiler tool" ) );
         terrainProfilerButton_->setToggleButton( true );
@@ -74,15 +76,15 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         connect( &terrainProfiler, SIGNAL( visibilityChanged( bool ) ), terrainProfilerButton_, SLOT( setOn( bool ) ) );
 
         Q3HBox* contourBox = new Q3HBox( this );
-        contourBoxEnabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Contour lines" ), contourBox );
+        contourBoxEnabled_ = new RichCheckBox( "contourBoxEnabled", tools::translate( "gui::GisToolBar", "Contour lines" ), contourBox );
         QToolTip::add( contourBoxEnabled_, tools::translate( "gui::GisToolBar", "Enable/disable contour lines display" ) );
 
-        linesHeight_ = new RichSpinBox( contourBox, 1, 10000, 1 );
+        linesHeight_ = new RichSpinBox( "linesHeight", contourBox, 1, 10000, 1 );
         linesHeight_->setValue( 100 );
         linesHeight_->setSuffix( kernel::Units::meters.AsString() );
         linesHeight_->setEnabled( false );
         QToolTip::add( linesHeight_, tools::translate( "gui::GisToolBar", "Set contour lines height" ) );
-        colorContourLines_ = new ColorButton( this );
+        colorContourLines_ = new ColorButton( "colorContourLines", this );
         colorContourLines_->SetColor( QColor( 245, 245, 220 ) ); // $$$$ SBO 2010-03-23: default from layer
         QToolTip::add( colorContourLines_, tools::translate( "gui::GisToolBar", "Change contour lines color" ) );
 
@@ -259,7 +261,7 @@ void GisToolbar::OnColorChanged( const QColor& color )
 // Name: GisToolbar::GetTerrainProfilerButton
 // Created: ABR 2012-05-15
 // -----------------------------------------------------------------------------
-QToolButton* GisToolbar::GetTerrainProfilerButton() const
+RichToolButton* GisToolbar::GetTerrainProfilerButton() const
 {
     return terrainProfilerButton_;
 }

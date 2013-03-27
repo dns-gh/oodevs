@@ -10,6 +10,7 @@
 #ifndef __gui_WeatherWidget_h_
 #define __gui_WeatherWidget_h_
 
+#include "RichGroupBox.h"
 #include "ValuedComboBox.h"
 #include "clients_kernel/Types.h"
 
@@ -28,12 +29,12 @@ namespace gui
 */
 // Created: ABR 2011-05-30
 // =============================================================================
-class WeatherWidget : public Q3GroupBox
+class WeatherWidget : public gui::RichGroupBox
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherWidget( QWidget* parent, const QString& title );
+             WeatherWidget( const QString& objectName, QWidget* parent, const QString& title );
     virtual ~WeatherWidget();
     //@}
 

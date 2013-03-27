@@ -20,8 +20,8 @@ using namespace gui;
 // Name: ObjectTreeView constructor
 // Created: JSR 2012-09-13
 // -----------------------------------------------------------------------------
-ObjectTreeView::ObjectTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
-    : EntityTreeView_ABC( controllers, profile, modelObserver, parent )
+ObjectTreeView::ObjectTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
+    : EntityTreeView_ABC( objectName, controllers, profile, modelObserver, parent )
 {
     controllers.Update( *this );
 }

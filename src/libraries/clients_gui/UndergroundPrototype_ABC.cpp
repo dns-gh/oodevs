@@ -11,7 +11,9 @@
 #include "UndergroundPrototype_ABC.h"
 
 #include "LoadableComboBox.h"
+#include "RichComboBox.h"
 #include "RichLabel.h"
+#include "SubObjectName.h"
 #include "Tools.h"
 
 #include "clients_kernel/Controller.h"
@@ -24,13 +26,15 @@ using namespace gui;
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
 UndergroundPrototype_ABC::UndergroundPrototype_ABC( QWidget* parent, kernel::Controller& controller )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::UndergroundPrototype_ABC", "Underground" ) )
+    : ObjectAttributePrototype_ABC( parent, "UndergroundPrototypeABC", tools::translate( "gui::UndergroundPrototype_ABC", "Underground" ) )
     , controller_( controller )
 {
+    SubObjectName subObject( "UndergroundPrototypeABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
-    networkLabel_ = new RichLabel( tools::translate( "gui::UndergroundPrototype_ABC", "Network:" ) );
+    layout->setMargin( 5 );
+    networkLabel_ = new RichLabel( "networkLabel", tools::translate( "gui::UndergroundPrototype_ABC", "Network:" ) );
     layout->addWidget( networkLabel_ );
-    network_ = new LoadableComboBox( true, 0 );
+    network_ = new LoadableComboBox( "network", true, 0 );
     layout->addWidget( network_ );
     controller_.Register( *this );
 }
@@ -73,7 +77,7 @@ void UndergroundPrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
 // -----------------------------------------------------------------------------
 void UndergroundPrototype_ABC::NotifyUpdated( const kernel::UndergroundAttribute_ABC& attribute )
 {
-    QComboBox* combo = network_->GetDefaultValueWidget();
+    RichComboBox* combo = network_->GetDefaultValueWidget();
     if( combo )
     {
         const std::string& network = attribute.GetNetwork();

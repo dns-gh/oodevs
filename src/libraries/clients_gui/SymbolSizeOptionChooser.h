@@ -16,7 +16,10 @@ namespace kernel
 {
     class Controllers;
 }
-
+namespace gui
+{
+    class RichToolButton;
+}
 class StaticModel;
 
 // =============================================================================
@@ -59,8 +62,8 @@ private:
 private:
     //! @name Member data
     //@{
-    QToolButton* increaseButton_;
-    QToolButton* decreaseButton_;
+    gui::RichToolButton* increaseButton_;
+    gui::RichToolButton* decreaseButton_;
     kernel::Controllers& controllers_;
     const float min_;
     const float max_;

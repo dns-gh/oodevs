@@ -28,7 +28,7 @@ class RichTextEdit : public QTextEdit
 public:
     //! @name Constructors/Destructor
     //@{
-    RichTextEdit( const QString& objectName );
+    RichTextEdit( const QString& objectName, QWidget* parent = 0 );
     virtual ~RichTextEdit();
     //@}
 

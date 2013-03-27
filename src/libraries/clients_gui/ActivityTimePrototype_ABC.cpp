@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "ActivityTimePrototype_ABC.h"
+#include "SubObjectName.h"
 #include "Tools.h"
 #include "LoadableTimeEdit.h"
 
@@ -19,11 +20,13 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 ActivityTimePrototype_ABC::ActivityTimePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ActivityTimePrototype_ABC", "Life time:" ) )
+    : ObjectAttributePrototype_ABC( parent, "ActivityTimePrototype_ABC", tools::translate( "gui::ActivityTimePrototype_ABC", "Life time:" ) )
 {
-    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    SubObjectName subObject( "ActivityTimePrototype_ABC" );
+    QGridLayout* layout = new QGridLayout( this );
+    layout->setMargin( 5 );
     layout->addWidget( new QLabel( tools::translate( "gui::ActivityTimePrototype_ABC", "Life time:" ) ) );
-    activityTime_ = new LoadableTimeEdit( 0 );
+    activityTime_ = new LoadableTimeEdit( "activityTimeEdit", 0 );
     layout->addWidget( activityTime_ );
 }
 

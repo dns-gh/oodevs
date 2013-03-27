@@ -22,6 +22,9 @@ namespace gui
 {
      class LocationParsers;
      class LocationParser_ABC;
+     class RichPushButton;
+     class RichLineEdit;
+     class RichListWidget;
 // =============================================================================
 /** @class  LocationEditorBox
     @brief  LocationEditorBox
@@ -66,15 +69,15 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     std::auto_ptr< LocationParsers > parsers_;
-    QLineEdit* latitude_;
-    QLineEdit* longitude_;
+    RichLineEdit* latitude_;
+    RichLineEdit* longitude_;
     QLabel* latitudeLabel_;
     QLabel* longitudeLabel_;
-    QPushButton* choiceParserButton_;
+    RichPushButton* choiceParserButton_;
     kernel::ContextMenu* parserMenu_;
-    QLineEdit* singleField_;
+    RichLineEdit* singleField_;
     QMenu* subMenu_;
-    QListWidget* list_;
+    RichListWidget* list_;
     QWidget* coordBox_;
     int parserSelected_;
     //@}

@@ -631,9 +631,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SizeButton.cpp">
       <Filter>Source Files\Preferences</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\TerrainPreference.cpp">
-      <Filter>Source Files\Preferences</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\CoordinateSystemsPanel.cpp">
       <Filter>Source Files\Preferences\Panels</Filter>
     </ClCompile>
@@ -975,6 +972,18 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTableWidget.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTimeEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\TerrainPreference.cpp">
+      <Filter>Source Files\Preferences</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1344,9 +1353,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\XyParser.h">
       <Filter>Source Files\Locations\Parsers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\TerrainPreference.h">
-      <Filter>Source Files\Preferences</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\PreferencePanel_ABC.h">
       <Filter>Source Files\Preferences\Panels</Filter>
     </ClInclude>
@@ -1610,6 +1616,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichTableWidget.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichTimeEdit.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.h">
+      <Filter>Source Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1991,6 +2006,9 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\InformationToolTip.h">
       <Filter>Source Files\gl</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\TerrainPreference.h">
+      <Filter>Source Files\Preferences</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

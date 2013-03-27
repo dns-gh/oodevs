@@ -24,7 +24,7 @@ SpinBoxDisplayer::SpinBoxDisplayer( QBoxLayout* parent, const QString& name, int
     QHBoxLayout* layout = new QHBoxLayout();
     parent->addLayout( layout );
     layout->addWidget( new QLabel( name ) );
-    edit_ = new RichSpinBox( 0, min, max, step );
+    edit_ = new RichSpinBox( "edit", 0, min, max, step );
     layout->addWidget( edit_ );
 }
 

@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Tools.h"
 #include "CommonDelegate.h"
+#include "RichTableView.h"
 
 namespace kernel
 {
@@ -20,19 +21,18 @@ namespace kernel
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  UnitStateTable_ABC
     @brief  UnitStateTable_ABC
 */
 // Created: ABR 2011-07-05
 // =============================================================================
-class UnitStateTable_ABC : public QTableView
+class UnitStateTable_ABC : public RichTableView
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateTable_ABC( QWidget* parent, int numCols );
+             UnitStateTable_ABC( const QString& objectName, QWidget* parent, int numCols );
     virtual ~UnitStateTable_ABC();
     //@}
 

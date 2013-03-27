@@ -17,8 +17,8 @@ using namespace gui;
 // Name: RichTextEdit constructor
 // Created: NPT 2013-03-12
 // -----------------------------------------------------------------------------
-RichTextEdit::RichTextEdit( const QString& objectName )
-    : QTextEdit()
+RichTextEdit::RichTextEdit( const QString& objectName, QWidget* parent /*= 0*/ )
+    : QTextEdit( parent )
 {
     ObjectNameManager::getInstance()->SetObjectName( this, objectName );
 }

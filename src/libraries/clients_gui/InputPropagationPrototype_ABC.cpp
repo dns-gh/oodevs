@@ -9,6 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "InputPropagationPrototype_ABC.h"
+#include "RichCheckBox.h"
+#include "SubObjectName.h"
 #include "Tools.h"
 #include "tools/GeneralConfig.h"
 #include <boost/bind.hpp>
@@ -21,23 +23,25 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent, const tools::GeneralConfig& config )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation" ) )
+    : ObjectAttributePrototype_ABC( parent, "InputPropagationPrototypeABC", tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation" ) )
     , root_( config.GetRootDir() )
 {
+    SubObjectName subObject( "InputPropagationPrototypeABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2, 6, 10 );
+    layout->setMargin( 5 );
     layout->addWidget( new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation Model:" ) ) );
-    propagationFiles_ = new ValuedComboBox< std::string >( 0 );
+    propagationFiles_ = new ValuedComboBox< std::string >( "propagationFiles", 0 );
     layout->addWidget( propagationFiles_ );
     FillInPaths();
 
     layout->addWidget( new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Lookup data:" ) ) );
-    dataField_ = new ValuedComboBox< std::string >( this );
+    dataField_ = new ValuedComboBox< std::string >( "dataField", this );
     dataField_->AddItem( tools::translate( "gui::InputPropagationPrototype_ABC", "Mesure C" ), std::string( "nom_var_shp_mesure_C" ) );
     dataField_->AddItem( tools::translate( "gui::InputPropagationPrototype_ABC", "Mesure Ct" ), std::string( "nom_var_shp_mesure_Ct" ) );
     layout->addWidget( dataField_ );
 
     layout->addWidget( new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Send data:" ) ) );
-    exportData_ = new QCheckBox();
+    exportData_ = new RichCheckBox( "exportData" );
     layout->addWidget( exportData_ );
 }
 

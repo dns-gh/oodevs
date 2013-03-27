@@ -24,7 +24,7 @@ class RichListWidget : public QListWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             RichListWidget( const QString& objectName );
+             RichListWidget( const QString& objectName, QWidget* parent = 0 );
     virtual ~RichListWidget();
     //@}
 

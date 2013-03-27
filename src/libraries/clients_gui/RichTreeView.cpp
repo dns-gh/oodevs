@@ -12,6 +12,7 @@
 #include "moc_RichTreeView.cpp"
 #include "StandardModelVisitor_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_gui/ObjectNameManager.h"
 
 using namespace gui;
 
@@ -64,12 +65,13 @@ namespace
 // Name: RichTreeView constructor
 // Created: ABR 2012-08-13
 // -----------------------------------------------------------------------------
-RichTreeView::RichTreeView( QWidget* parent /*= 0*/, kernel::Controllers* controllers /*= 0*/ )
+RichTreeView::RichTreeView( const QString& objectName, QWidget* parent /*= 0*/, kernel::Controllers* controllers /*= 0*/ )
     : QTreeView( parent )
     , proxyModel_( new CustomSortFilterProxyModel( *this ) )
     , dataModel_( controllers, *proxyModel_, this )
     , dropAction_( Qt::MoveAction )
 {
+    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
     setSortingEnabled( true );
     setDropIndicatorShown( false );
     setItemDelegate( new HeightDelegate( this ) );

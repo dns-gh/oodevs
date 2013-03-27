@@ -11,6 +11,7 @@
 #define __BooleanOptionButton_h_
 
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include "RichToolButton.h"
 
 namespace kernel
 {
@@ -19,20 +20,19 @@ namespace kernel
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  BooleanOptionButton
     @brief  BooleanOptionButton
 */
 // Created: AGE 2006-03-30
 // =============================================================================
-class BooleanOptionButton : public QToolButton, public tools::Observer_ABC, public kernel::OptionsObserver_ABC
+class BooleanOptionButton : public RichToolButton, public tools::Observer_ABC, public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
-             BooleanOptionButton( const QIcon& iconSet, const QString& toolTip, QWidget* parent, kernel::Options& options,
+             BooleanOptionButton( const QString& objectName, const QIcon& iconSet, const QString& toolTip, QWidget* parent, kernel::Options& options,
                                   const std::string& option, bool savable = true );
     virtual ~BooleanOptionButton();
     //@}

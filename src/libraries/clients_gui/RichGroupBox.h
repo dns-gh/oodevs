@@ -26,8 +26,8 @@ class RichGroupBox : public QGroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RichGroupBox( QWidget* parent );
-             RichGroupBox( const QString& title, QWidget* parent );
+    explicit RichGroupBox( const QString& objectName, QWidget* parent = 0 );
+             RichGroupBox( const QString& objectName, const QString& title, QWidget* parent = 0 );
     virtual ~RichGroupBox();
     //@}
 

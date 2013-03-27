@@ -15,6 +15,9 @@
 #include "Gradient.h"
 #include "GradientButton.h"
 #include "Painter_ABC.h"
+#include "RichLineEdit.h"
+#include "RichPushButton.h"
+#include "SubObjectName.h"
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
@@ -51,7 +54,7 @@ namespace
 // Name: GradientWidget constructor
 // Created: LGY 2011-06-01
 // -----------------------------------------------------------------------------
-DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers, const std::string& category )
+DensityWidget::DensityWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const std::string& category )
     : Q3VBox( parent, "DensityWidget" )
     , category_   ( category )
     , pPainter_   ( new Painter() )
@@ -61,17 +64,18 @@ DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers,
     , minLoaded_  ( false )
     , maxLoaded_  ( false )
 {
+    SubObjectName subObject( objectName );
     setMaximumHeight( 150 );
 
     Q3HBox* valueBox = new Q3HBox( this );
     valueBox->setSpacing( 4 );
     new QLabel( "Min : ", valueBox );
 
-    min_ = new QLineEdit( valueBox );
+    min_ = new RichLineEdit( "min", valueBox );
     min_->setValidator( new QDoubleValidator( 0., 100.f, 2, valueBox ) );
     min_->setText( "0" );
     new QLabel( "Max : ", valueBox );
-    max_ = new QLineEdit( valueBox );
+    max_ = new RichLineEdit( "max", valueBox );
     max_->setValidator( new QDoubleValidator( 0., 100.f, 2, valueBox ) );
     max_->setText( "1" );
 
@@ -79,14 +83,14 @@ DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers,
     graphicBox->layout()->setAlignment( Qt::AlignCenter );
     graphicBox->setMaximumHeight( 100 );
     densityEditor_ = new GradientButton( graphicBox, *pPainter_, false, Qt::green, Qt::red );
-    color_ = new ColorButton( graphicBox );
+    color_ = new ColorButton( "color",graphicBox );
     color_->setMaximumHeight( 30 );
     Q3HBox* unoccupiedBox = new Q3HBox( this );
     QLabel* label = new QLabel( unoccupiedBox );
     label->setText( tr( "Unoccupied:" ) );
-    unoccupiedColor_ = new ColorButton( unoccupiedBox );
+    unoccupiedColor_ = new ColorButton( "unoccupiedColor", unoccupiedBox );
     unoccupiedColor_->setMaximumHeight( 30 );
-    QPushButton* button = new QPushButton( tr( "Reset" ), this );
+    RichPushButton* button = new RichPushButton( "reset", tr( "Reset" ), this );
 
     connect( densityEditor_, SIGNAL( SelectionChanged( const QColor& ) ), SLOT( OnSelectionChanged( const QColor& ) ) );
     connect( densityEditor_, SIGNAL( GradientChanged( Gradient& ) ), SLOT( OnGradientEdited( Gradient& ) ) );

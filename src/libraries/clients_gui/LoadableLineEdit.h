@@ -11,6 +11,7 @@
 #define __LoadableLineEdit_h_
 
 #include "LoadableField.h"
+#include "RichLineEdit.h"
 
 namespace gui
 {
@@ -21,13 +22,13 @@ namespace gui
 */
 // Created: BCI 2011-05-09
 // =============================================================================
-class LoadableLineEdit : public LoadableFieldTemplate< QLineEdit >
+class LoadableLineEdit : public LoadableFieldTemplate< RichLineEdit >
 {
 public:
 
     //! @name Constructors/Destructor
     //@{
-             LoadableLineEdit( QWidget* parent, const QString& probableName = QString() );
+             LoadableLineEdit( const QString& objectName, QWidget* parent = 0 );
     virtual ~LoadableLineEdit();
     //@}
 

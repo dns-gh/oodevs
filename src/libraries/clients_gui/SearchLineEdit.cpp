@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "SearchLineEdit.h"
 #include "SearchButton.h"
+#include "SubObjectName.h"
 #include "ClearButton.h"
 #include "Tools.h"
 
@@ -19,11 +20,12 @@ using namespace gui;
 // Name: SearchLineEdit constructor
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-SearchLineEdit::SearchLineEdit( QWidget* parent /* = 0*/ )
-    : RichLineEdit( parent )
+SearchLineEdit::SearchLineEdit( const QString& objectName, QWidget* parent /* = 0*/ )
+    : RichLineEdit( objectName, parent )
 {
+    SubObjectName subObject( objectName );
     // search icon on the left
-    AddWidget( new SearchButton( this ), RichLineEdit::LeftSide );
+    AddWidget( new SearchButton( "SearchButton", this ), RichLineEdit::LeftSide );
 
     // clear button on the right
     ClearButton* clearButton = new ClearButton( this );

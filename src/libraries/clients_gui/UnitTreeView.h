@@ -46,7 +46,7 @@ class UnitTreeView : public gui::RichTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitTreeView( kernel::Controllers& controllers, const kernel::AgentTypes& types, QWidget* parent, bool selectOnlyAutomats = false );
+             UnitTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::AgentTypes& types, QWidget* parent, bool selectOnlyAutomats = false );
     virtual ~UnitTreeView();
     //@}
 

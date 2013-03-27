@@ -12,8 +12,8 @@
 // Created: ABR 2012-08-13
 // -----------------------------------------------------------------------------
 template< typename Entity >
-EntityTreeView< Entity >::EntityTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
-    : EntityTreeView_ABC( controllers, profile, modelObserver, parent )
+EntityTreeView< Entity >::EntityTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
+    : EntityTreeView_ABC( objectName, controllers, profile, modelObserver, parent )
 {
     dataModel_.setColumnCount( 1 );
     controllers_.Update( *this );

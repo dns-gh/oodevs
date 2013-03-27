@@ -13,19 +13,22 @@
 
 #include "DragAndDropHelpers.h"
 #include "Tools.h"
+#include "RichPushButton.h"
 #include "UnitTreeView.h"
 #include "UnitPreviewIcon.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_gui/SubObjectName.h"
+
 
 using namespace kernel;
 using namespace gui;
 
 namespace
 {
-    ValuedComboBox< std::string >* BuildNatureFieldsCombo( QWidget* parent )
+    ValuedComboBox< std::string >* BuildNatureFieldsCombo( const QString& objectName, QWidget* parent )
     {
-        ValuedComboBox< std::string >* combo = new ValuedComboBox< std::string >( parent );
+        ValuedComboBox< std::string >* combo = new ValuedComboBox< std::string >( objectName, parent );
         combo->AddItem( tools::translate( "gui::UnitsPanel", "Hierarchical view" ), "" );
         combo->AddItem( tools::translate( "gui::UnitsPanel", "Level" ), "level" );
         combo->AddItem( tools::translate( "gui::UnitsPanel", "Nature" ), "nature" );
@@ -42,22 +45,23 @@ UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& con
     : InfoPanel_ABC( parent, panel, tr( "Units" ), "UnitsPanel" )
     , controllers_( controllers )
 {
+    gui::SubObjectName subObject( "unitPanel" );
     Q3VBox* vbox = new Q3VBox( this );
     vbox->setMargin( 5 );
     vbox->setSpacing( 5 );
     {
         Q3HBox* box = new Q3HBox( vbox );
-        QPushButton* openAll  = new QPushButton( "+", box );
+        RichPushButton* openAll  = new RichPushButton( "openAll", "+", box );
         openAll->setMaximumSize( 20, 20 );
-        QPushButton* closeAll = new QPushButton( "-", box );
+        RichPushButton* closeAll = new RichPushButton( "closeAll", "-", box );
         closeAll->setMaximumSize( 20, 20 );
         connect( openAll , SIGNAL( clicked() ), SLOT( OpenList() ) );
         connect( closeAll, SIGNAL( clicked() ), SLOT( CloseList() ) );
 
         QLabel* label = new QLabel( tr( "Display type: " ), box );
         label->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
-        combo_ = BuildNatureFieldsCombo( box );
-        list_ = new UnitTreeView( controllers_, types, vbox );
+        combo_ = BuildNatureFieldsCombo( "combo", box );
+        list_ = new UnitTreeView( "unitTreeView", controllers_, types, vbox );
         connect( combo_, SIGNAL( activated( int ) ), SLOT( Sort() ) );
         connect( list_->selectionModel() , SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), SLOT( SelectionChanged() ) );
     }
@@ -67,6 +71,7 @@ UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& con
     }
     setWidget( vbox );
     controllers_.Register( *this );
+
 }
 
 // -----------------------------------------------------------------------------

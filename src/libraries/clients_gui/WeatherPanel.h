@@ -23,6 +23,9 @@ namespace gui
     class WeatherLayer;
     class WeatherListView;
     class WeatherWidget;
+    class RichPushButton;
+    class RichGroupBox;
+    class RichDateTimeEdit;
 
 // =============================================================================
 /** @class  WeatherPanel
@@ -86,18 +89,18 @@ protected:
     WeatherLayer&           layer_;
     E_WeatherType           currentType_;
 
-    Q3VBox*                 headerLayout_;
-    Q3VBox*                 localLayout_;
-    Q3VBox*                 globalLayout_;
-    Q3GroupBox*             parametersGroup_;
-    QPushButton*            locationButton_;
+    QVBoxLayout*            headerLayout_;
+    QWidget*                localWidget_;
+    QWidget*                globalWidget_;
+    RichGroupBox*           parametersGroup_;
+    RichPushButton*         locationButton_;
     WeatherListView*        localWeathers_;
-    WeatherWidget*          localWidget_;
-    WeatherWidget*          globalWidget_;
+    WeatherWidget*          localWeatherWidget_;
+    WeatherWidget*          globalWeatherWidget_;
 
     weather::MeteoLocal*    selectedLocal_;
-    QDateTimeEdit*          startTime_;
-    QDateTimeEdit*          endTime_;
+    RichDateTimeEdit*       startTime_;
+    RichDateTimeEdit*       endTime_;
     //@}
 
 };

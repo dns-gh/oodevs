@@ -32,7 +32,12 @@ namespace kernel
 
 namespace gui
 {
-
+    class RichPushButton;
+    class RichTableWidget;
+    class RichListWidget;
+    class RichGroupBox;
+    class RichSpinBox;
+    class RichCheckBox;
 // =============================================================================
 /** @class  ResourceLinksDialog_ABC
     @brief  ResourceLinksDialog_ABC
@@ -109,17 +114,17 @@ protected:
     unsigned int id_;
     gui::ResourceNetwork_ABC::T_ResourceNodes resourceNodes_;
     Q3VBox* pMainLayout_;
-    QListWidget* dotationList_;
-    Q3GroupBox* groupBox_;
+    RichListWidget* dotationList_;
+    RichGroupBox* groupBox_;
     QSpinBox* production_;
-    QPushButton* generateProduction_;
-    QSpinBox* consumption_;
-    QCheckBox* critical_;
+    RichPushButton* generateProduction_;
+    RichSpinBox* consumption_;
+    RichCheckBox* critical_;
     Q3HBox* stockBox_;
-    QSpinBox* maxStock_;
-    QSpinBox* stock_;
-    QTableWidget* table_;
-    QPushButton* okButton_;
+    RichSpinBox* maxStock_;
+    RichSpinBox* stock_;
+    RichTableWidget* table_;
+    RichPushButton* okButton_;
     //@}
 };
 

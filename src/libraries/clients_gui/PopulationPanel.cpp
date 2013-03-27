@@ -32,11 +32,11 @@ PopulationPanel::PopulationPanel( QWidget* parent, PanelStack_ABC& panel, Contro
     QVBoxLayout* layout = new QVBoxLayout( this );
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( tools::translate( "gui::PopulationPanel", "Information" ) )
-                .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Name:" ), true )
-                .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Healthy people:" ) )
-                .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Wounded people:" ) )
-                .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Contaminated people:" ) )
-                .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Dead people:" ) );
+                .AddLabel( "name", tools::findTranslation( "gui::PopulationPanel", "Name:" ), true )
+                .AddLabel( "healthy", tools::findTranslation( "gui::PopulationPanel", "Healthy people:" ) )
+                .AddLabel( "wounded", tools::findTranslation( "gui::PopulationPanel", "Wounded people:" ) )
+                .AddLabel( "contaminated", tools::findTranslation( "gui::PopulationPanel", "Contaminated people:" ) )
+                .AddLabel( "dead", tools::findTranslation( "gui::PopulationPanel", "Dead people:" ) );
 
     pPartsListView_ = new QTreeView();
     pPartsListView_->setRootIsDecorated( false );

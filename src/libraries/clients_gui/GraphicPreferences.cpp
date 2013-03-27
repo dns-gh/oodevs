@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "GraphicPreferences.h"
+#include "RichGroupBox.h"
 #include "TerrainPreference.h"
 #include "clients_kernel/Tools.h"
 #include <terrain/GraphicData.h>
@@ -58,7 +59,8 @@ void GraphicPreferences::ReadTerrainPreference( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Display( QWidget* parent ) const
 {
-    Q3GroupBox* colorBox = new Q3GroupBox( static_cast< int >( displays_.size() ), Qt::Vertical, tools::translate( "gui::GraphicPreferences", "Colors" ), parent );
+    RichGroupBox* colorBox = new RichGroupBox( "colorBox", tools::translate( "gui::GraphicPreferences", "Colors and line thickness" ), parent );
+    colorBox->setLayout( new QVBoxLayout() );
     std::for_each( displays_.begin(), displays_.end(), boost::bind( &TerrainPreference::Display, _1, colorBox ) );
 }
 

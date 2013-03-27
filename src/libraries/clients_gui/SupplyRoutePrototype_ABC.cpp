@@ -13,6 +13,7 @@
 #include "Tools.h"
 #include "LoadableSpinBox.h"
 #include "LoadableCheckBox.h"
+#include "SubObjectName.h"
 
 using namespace gui;
 
@@ -21,30 +22,32 @@ using namespace gui;
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 SupplyRoutePrototype_ABC::SupplyRoutePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::SupplyRoutePrototype_ABC", "Logistic route" ) )
+    : ObjectAttributePrototype_ABC( parent, "SupplyRoutePrototype_ABC", tools::translate( "gui::SupplyRoutePrototype_ABC", "Logistic route" ) )
 {
+    SubObjectName subObject( "SupplyRoutePrototype_ABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->setMargin( 5 );
     layout->addWidget( new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Flow:" ) ) );
-    flow_ = new LoadableSpinBox( 1, 10000, 1, 0 );
+    flow_ = new LoadableSpinBox( "flow", 1, 10000, 1, 0 );
     flow_->setSuffix( kernel::Units::vehiclesPerHour.AsString() );
     layout->addWidget( flow_ );
 
     layout->addWidget( new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Width:" ) ) );
-    width_ = new LoadableSpinBox( 1, 10000, 1, 0 );
+    width_ = new LoadableSpinBox( "width", 1, 10000, 1, 0 );
     width_->setSuffix( kernel::Units::meters.AsString() );
     layout->addWidget( width_ );
 
     layout->addWidget( new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Length:" ) ) );
-    length_ = new LoadableSpinBox( 1, 10000, 1, 0 );
+    length_ = new LoadableSpinBox( "length", 1, 10000, 1, 0 );
     length_->setSuffix( kernel::Units::meters.AsString() );
     layout->addWidget( length_ );
 
     layout->addWidget( new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Maximum weight:" ) ) );
-    maxWeight_ = new LoadableSpinBox( 1, 10000, 1, 0 );
+    maxWeight_ = new LoadableSpinBox( "maxWeight", 1, 10000, 1, 0 );
     maxWeight_->setSuffix( kernel::Units::tons.AsString() );
     layout->addWidget( maxWeight_ );
 
-    equipped_ = new LoadableCheckBox( tools::translate( "gui::SupplyRoutePrototype_ABC", "Equipped:" ), 0 );
+    equipped_ = new LoadableCheckBox( "equipped", tools::translate( "gui::SupplyRoutePrototype_ABC", "Equipped:" ), 0 );
     layout->addWidget( equipped_ );
 }
 

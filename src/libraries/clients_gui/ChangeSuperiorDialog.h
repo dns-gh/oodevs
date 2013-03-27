@@ -21,7 +21,8 @@ namespace kernel
 
 namespace gui
 {
-class ChangeSuperior_ABC;
+    class ChangeSuperior_ABC;
+    class RichPushButton;
 
 // =============================================================================
 /** @class  ChangeSuperiorDialog
@@ -64,7 +65,7 @@ private:
     kernel::Controllers& controllers_;
     QLabel* name_;
     QLabel* superiorLabel_;
-    QPushButton* okButton_;
+    RichPushButton* okButton_;
     kernel::Entity_ABC* entity_;
     kernel::Entity_ABC* selected_;
     //@}

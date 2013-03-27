@@ -25,6 +25,7 @@ namespace gui
     class Gradient;
     class GradientButton;
     class Painter_ABC;
+    class RichLineEdit;
 }
 
 namespace gui
@@ -44,7 +45,7 @@ class DensityWidget : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             DensityWidget( QWidget* parent, kernel::Controllers& controllers, const std::string& category );
+             DensityWidget( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const std::string& category );
     virtual ~DensityWidget();
     //@}
 
@@ -79,8 +80,8 @@ private:
     std::auto_ptr< Painter_ABC > pPainter_;
     kernel::Controllers& controllers_;
     kernel::Options& options_;
-    QLineEdit* max_;
-    QLineEdit* min_;
+    RichLineEdit* max_;
+    RichLineEdit* min_;
     GradientButton* densityEditor_;
     ColorButton* color_;
     ColorButton* unoccupiedColor_;

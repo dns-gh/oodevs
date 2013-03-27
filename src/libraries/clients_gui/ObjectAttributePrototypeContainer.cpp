@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "ObjectAttributePrototypeContainer.h"
 #include "ObjectAttributePrototype_ABC.h"
+#include "ObjectNameManager.h"
+#include "SubObjectName.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "tools/Iterator.h"
@@ -29,7 +31,7 @@ ObjectAttributePrototypeContainer::ObjectAttributePrototypeContainer( const tool
     , resolver_( resolver )
     , parent_  ( parent )
 {
-    // NOTHING
+    ObjectNameManager::getInstance()->SetObjectName( parent_, "ObjectAttributePrototypeContainer" );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +40,7 @@ ObjectAttributePrototypeContainer::ObjectAttributePrototypeContainer( const tool
 // -----------------------------------------------------------------------------
 ObjectAttributePrototypeContainer::~ObjectAttributePrototypeContainer()
 {
-    // NOTHING
+    ObjectNameManager::getInstance()->RemoveRegisteredName( parent_->objectName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,6 +64,7 @@ void ObjectAttributePrototypeContainer::Load( const kernel::ObjectType& type )
     if( attributes_.find( type.GetType() ) == attributes_.end() )
     {
         std::pair< IT_AttributesPrototypes, bool > result = attributes_.insert( std::make_pair( type.GetType(), new T_AttributeContainer() ) );
+        SubObjectName subObject( result.first->first.c_str() );
         for( kernel::ObjectType::T_Capacities::const_iterator it = type.CapacitiesBegin(); result.second && it != type.CapacitiesEnd(); ++it )
             factory_->Create( it->first, *it->second, *result.first->second, parent_ );
         factory_->FinalizeCreate();

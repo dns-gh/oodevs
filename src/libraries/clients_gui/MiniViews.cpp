@@ -14,6 +14,7 @@
 #include "MiniView.h"
 #include "MiniViewsRenderPass.h"
 #include "SmartGridWidget.h"
+#include "SubObjectName.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Population_ABC.h"
@@ -32,6 +33,7 @@ MiniViews::MiniViews( QWidget* parent, kernel::Controllers& controllers, const k
     , widget_( 0 )
     , selected_( controllers )
 {
+    SubObjectName subObject( this->objectName() );
     setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
     setWindowTitle( tr( "Miniviews" ) );
     grid_ = new SmartGridWidget( this, 2, Qt::Vertical, "miniviews" );

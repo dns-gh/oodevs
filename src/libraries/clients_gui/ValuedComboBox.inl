@@ -6,6 +6,7 @@
 // Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
+#include "ObjectNameManager.h"
 
 namespace gui
 {
@@ -15,11 +16,11 @@ namespace gui
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 template< typename T >
-ValuedComboBox<T>::ValuedComboBox( QWidget* parent, const char* name )
+ValuedComboBox<T>::ValuedComboBox( const QString& objectName, QWidget* parent, const char* name )
     : QComboBox( false, parent, name )
     , sorting_( false )
 {
-    // NOTHING
+    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +30,7 @@ ValuedComboBox<T>::ValuedComboBox( QWidget* parent, const char* name )
 template< typename T >
 ValuedComboBox<T>::~ValuedComboBox()
 {
-    // NOTHING
+    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
 }
 
 // -----------------------------------------------------------------------------

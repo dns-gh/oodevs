@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "PopulationsPanel.h"
 
+#include "SubObjectName.h"
 #include "PopulationTypesListView.h"
 #include "RichSpinBox.h"
 #include "Tools.h"
@@ -29,6 +30,7 @@ PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel,
     : InfoPanel_ABC( parent, panel, tools::translate( "gui::PopulationsPanel", "Crowds" ), "PopulationsPanel" )
     , controllers_( controllers )
 {
+    gui::SubObjectName subObject( "populationPanel" );
     Q3VBox* vbox = new Q3VBox( this );
     vbox->setMargin( 5 );
     vbox->setSpacing( 5 );
@@ -36,9 +38,9 @@ PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel,
         Q3HBox* box = new Q3HBox( vbox );
         box->setSpacing( 5 );
         new QLabel( tools::translate( "gui::PopulationsPanel", "Healthy number:" ), box );
-        number_ = new RichSpinBox( box, 1, 1000000, 10 );
+        number_ = new RichSpinBox( "number", box, 1, 1000000, 10 );
         number_->setValue( 1000 );
-        list_ = new PopulationTypesListView( vbox, controllers_, types, *number_ );
+        list_ = new PopulationTypesListView( "populationTypeList", vbox, controllers_, types, *number_ );
     }
     setWidget( vbox );
     controllers_.Register( *this );

@@ -84,8 +84,8 @@ bool CheckComboModel::setData( const QModelIndex& index, const QVariant& value, 
 // Name: CheckComboLineEdit constructor
 // Created: ABR 2012-06-18
 // -----------------------------------------------------------------------------
-CheckComboBox::CheckComboLineEdit::CheckComboLineEdit( QComboBox* parent /* = 0 */ )
-    : QLineEdit( parent )
+CheckComboBox::CheckComboLineEdit::CheckComboLineEdit( const QString& objectName, QComboBox* parent /* = 0 */ )
+    : RichLineEdit( objectName, parent )
     , parent_( parent )
 {
     // NOTHING
@@ -118,8 +118,8 @@ void CheckComboBox::CheckComboLineEdit::mousePressEvent( QMouseEvent* event )
 // Name: CheckComboBox constructor
 // Created: ABR 2012-06-18
 // -----------------------------------------------------------------------------
-CheckComboBox::CheckComboBox( QWidget* parent /* = 0 */ )
-    : QComboBox(parent)
+CheckComboBox::CheckComboBox( const QString& objectName, QWidget* parent /* = 0 */ )
+    : RichComboBox( objectName, parent )
     , lineEdit_ ( 0 )
     , separator_( ";" )
     , allText_  ( "" )
@@ -130,10 +130,10 @@ CheckComboBox::CheckComboBox( QWidget* parent /* = 0 */ )
     connect( model(), SIGNAL( rowsInserted( const QModelIndex &, int, int ) ), this, SLOT( UpdateCheckedItems() ) );
     connect( model(), SIGNAL( rowsRemoved( const QModelIndex &, int, int ) ), this, SLOT( UpdateCheckedItems() ) );
 
-    lineEdit_ = new CheckComboLineEdit(this);
-    lineEdit_->setReadOnly(true);
-    setLineEdit(lineEdit_);
-    setInsertPolicy(QComboBox::NoInsert);
+    lineEdit_ = new CheckComboLineEdit( "lineEditComboBox", this );
+    lineEdit_->setReadOnly( true );
+    setLineEdit( lineEdit_ );
+    setInsertPolicy( QComboBox::NoInsert );
 
     view()->installEventFilter( this );
     view()->window()->installEventFilter( this );

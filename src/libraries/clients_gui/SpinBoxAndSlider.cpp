@@ -28,7 +28,7 @@ SpinBoxAndSlider::SpinBoxAndSlider( QWidget* parent, int& value, int min /* = 0 
         layout_ = new Q3HBoxLayout( this );
     else
         layout_ = new Q3VBoxLayout( this );
-    spinbox_ = new RichSpinBox( this, min, max, gap );
+    spinbox_ = new RichSpinBox( "default", this, min, max, gap );
     spinbox_->setValue( value_ );
     spinbox_->setMinimumWidth( 60 );
     slider_ = new QSlider( min, max, gap, value_, sliderOrientation, this );    if( spinboxFirst )

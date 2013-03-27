@@ -11,6 +11,7 @@
 #include "ExpandableGroupBox.h"
 #include "moc_ExpandableGroupBox.cpp"
 #include "ImageWrapper.h"
+#include "RichPushButton.h"
 
 using namespace gui;
 
@@ -29,7 +30,7 @@ ExpandableGroupBox::ExpandableGroupBox( QWidget* parent /* = 0 */, const QString
     titleWidget_->setFrameStyle( QFrame::StyledPanel );
 
     titleLabel_ = new QLabel( "<b>" + title_ + "</b>" );
-    expandButton_ = new QPushButton();
+    expandButton_ = new RichPushButton( "expandButton", "" );
     expandButton_->setFixedSize( 20, 20 );
     connect( expandButton_, SIGNAL( clicked() ), this, SLOT( OnCollapseClicked() ) );
 

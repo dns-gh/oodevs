@@ -23,8 +23,8 @@ using namespace gui;
 // Name: UnitStateTable_ABC constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTable_ABC::UnitStateTable_ABC( QWidget* parent, int numCols )
-    : QTableView( parent )
+UnitStateTable_ABC::UnitStateTable_ABC( const QString& objectName, QWidget* parent, int numCols )
+    : RichTableView( objectName, parent )
     , dataModel_ ( parent )
     , proxyModel_( parent )
     , delegate_  ( parent )

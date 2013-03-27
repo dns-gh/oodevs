@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectAttributePrototypeFactory.h"
+#include "SubObjectName.h"
 
 using namespace gui;
 

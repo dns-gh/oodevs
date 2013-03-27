@@ -12,6 +12,7 @@
 
 namespace gui
 {
+    class RichPushButton;
 
 // =============================================================================
 /** @class  ExpandableGroupBox
@@ -59,7 +60,7 @@ private:
     QString           title_;
     QLabel*           titleLabel_;
     QFrame*           titleWidget_;
-    QPushButton*      expandButton_;
+    RichPushButton*   expandButton_;
     QFrame*           componentsWidget_;
     QList< QWidget* > components_;
     Qt::Orientation   orientation_;

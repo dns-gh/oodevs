@@ -14,20 +14,20 @@
 
 namespace gui
 {
-
+    class RichCheckBox;
 // =============================================================================
 /** @class  LoadableCheckBox
     @brief  Check box that can be filled from a file or manually.
 */
 // Created: BCI 2011-05-09
 // =============================================================================
-class LoadableCheckBox : public LoadableFieldTemplate< QCheckBox >
+class LoadableCheckBox : public LoadableFieldTemplate< RichCheckBox >
 {
 public:
 
     //! @name Constructors/Destructor
     //@{
-             LoadableCheckBox( const QString& text, QWidget* parent, const QString& probableName = QString() );
+             LoadableCheckBox( const QString& objectName, const QString& text, QWidget* parent );
     virtual ~LoadableCheckBox();
     //@}
 

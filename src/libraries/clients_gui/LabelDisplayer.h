@@ -30,7 +30,7 @@ class LabelDisplayer : public BaseDisplayer
 public:
     //! @name Constructors/Destructor
     //@{
-             LabelDisplayer( QBoxLayout* parent, const QString& name, bool bold, ItemFactory_ABC& factory );
+    LabelDisplayer( const QString& objectName, QBoxLayout* parent, const QString& text, bool bold, ItemFactory_ABC& factory );
     virtual ~LabelDisplayer();
     //@}
 

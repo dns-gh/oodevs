@@ -15,6 +15,8 @@
 #include "QtGui/QValidator.h"
 #include <QtCore/QLocale>
 
+#include "ObjectNameManager.h"
+
 namespace gui
 {
 
@@ -27,13 +29,19 @@ namespace gui
 class RichSpinBox : public QSpinBox
 {
 public:
-    explicit RichSpinBox( QWidget* parent = 0, int minValue = 0, int maxValue = std::numeric_limits< int >::max(), int step = 1 )
+    explicit RichSpinBox( const QString& objectName, QWidget* parent = 0, int minValue = 0, int maxValue = std::numeric_limits< int >::max(), int step = 1 )
         : QSpinBox( parent )
     {
         if( !parent )
             setLocale( QLocale() ); // Get the default locale
         setRange( minValue, maxValue );
         setSingleStep( step );
+        ObjectNameManager::getInstance()->SetObjectName( this, objectName );
+    }
+
+    ~RichSpinBox()
+    {
+        ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
     }
 
     void focusOutEvent( QFocusEvent* event )
@@ -90,7 +98,7 @@ public:
 class RichDoubleSpinBox : public QDoubleSpinBox
 {
 public:
-    RichDoubleSpinBox( QWidget* parent = 0, double minValue = 0, double maxValue = std::numeric_limits< double >::max(), double step = 1, int decimals = 2 )
+    RichDoubleSpinBox( const QString& objectName, QWidget* parent = 0, double minValue = 0, double maxValue = std::numeric_limits< double >::max(), double step = 1, int decimals = 2 )
         : QDoubleSpinBox( parent )
         , tolleredSeparator_( "." )
     {
@@ -99,6 +107,12 @@ public:
         setRange( minValue, maxValue );
         setSingleStep( step );
         setDecimals( decimals );
+        setObjectName( objectName );
+    }
+
+    ~RichDoubleSpinBox()
+    {
+        ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
     }
 
     virtual void focusOutEvent( QFocusEvent* event )

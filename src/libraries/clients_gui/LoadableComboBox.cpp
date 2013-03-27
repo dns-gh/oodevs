@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "LoadableComboBox.h"
 #include "ObjectPrototypeLoader_ABC.h"
+#include "RichComboBox.h"
 
 using namespace gui;
 
@@ -17,10 +18,14 @@ using namespace gui;
 // Name: LoadableComboBox constructor
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-LoadableComboBox::LoadableComboBox( bool rw, QWidget* parent, const QString& probableName /*= QString()*/ )
-    : LoadableFieldTemplate< QComboBox >( parent, probableName )
+LoadableComboBox::LoadableComboBox(  const QString& objectName, bool rw, QWidget* parent )
+    : LoadableFieldTemplate< RichComboBox >( parent, objectName )
 {
-    SetDefaultValueWidget( new QComboBox( rw, this ) );
+    RichComboBox* comboBox = new RichComboBox( objectName + "ComboBox", this );
+    comboBox->setEditable( rw );
+    if( rw )
+        comboBox->lineEdit()->setObjectName( objectName + "LineEdit" );
+    SetDefaultValueWidget( comboBox );
 }
 
 // -----------------------------------------------------------------------------

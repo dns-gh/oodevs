@@ -26,7 +26,7 @@ class FirePropagationModifierPrototype_ABC : public ObjectAttributePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    FirePropagationModifierPrototype_ABC( QWidget* parent );
+             FirePropagationModifierPrototype_ABC( QWidget* parent );
     virtual ~FirePropagationModifierPrototype_ABC();
     //@}
 

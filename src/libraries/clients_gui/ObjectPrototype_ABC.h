@@ -13,6 +13,8 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/tools.h"
 #include "ObjectPrototypeLoader_ABC.h"
+#include "RichGroupBox.h"
+#include "RichPushButton.h"
 #include "ShapeHandler_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Observer_ABC.h"
@@ -63,7 +65,7 @@ class ObjectPrototype_ABC : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype_ABC( QWidget* parent, kernel::Controllers& controllers,
+             ObjectPrototype_ABC( const QString& objectName, QWidget* parent, kernel::Controllers& controllers,
                                   const kernel::CoordinateConverter_ABC& coordinateConverter,
                                   const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const kernel::Team_ABC& noSideTeam,
                                   ParametersLayer& layer, std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory );
@@ -138,9 +140,9 @@ protected:
 private:
     kernel::Location_ABC* location_;
     std::auto_ptr< ObjectPrototypeLoader_ABC > loader_;
-    QPushButton* loadFromFileButton_;
+    RichPushButton* loadFromFileButton_;
     QLabel* loadFromFilePathLabel_;
-    QGroupBox* descriptionBox_;
+    RichGroupBox* descriptionBox_;
     QLabel* descriptionLabel_;
 };
 

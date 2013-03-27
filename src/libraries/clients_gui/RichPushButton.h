@@ -10,7 +10,7 @@
 #ifndef __RichPushButton_h_
 #define __RichPushButton_h_
 
-#include <boost/noncopyable.hpp>
+#include "QtGui/qpushbutton.h"
 
 namespace gui
 {

@@ -15,6 +15,7 @@
 #include "Elevation2dLayer.h"
 #include "GradientWidget.h"
 #include "GradientPreferences.h"
+#include "RichGroupBox.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Options.h"
@@ -42,32 +43,43 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
     Q3VBox* container = new Q3VBox( this );
     container->setAutoFillBackground( true );
     {
-        Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tr( "Elevation colors" ), container );
-
-        Q3HBox* hBox = new Q3HBox( box );
-        fitColorGradienttoViewPort_ = new CheckBox( tr( "Fit color gradient to viewport" ), hBox );
+        fitColorGradienttoViewPort_ = new CheckBox( "fitColorGradienttoViewPort", tr( "Fit color gradient to viewport" ) );
         fitColorGradienttoViewPort_->setChecked( true );
-
-        gradient_ = new GradientWidget( new Q3GroupBox( 1, Qt::Horizontal, tr( "Gradient map" ), box ), preferences_, controllers, painter );
-
         connect( fitColorGradienttoViewPort_, SIGNAL( toggled( bool ) ), SLOT( OnEnableVariableGradient( bool ) ) );
+
+        gradient_ = new GradientWidget( 0, preferences_, controllers, painter );
         connect( fitColorGradienttoViewPort_, SIGNAL( toggled( bool ) ), gradient_, SLOT( OnEnableVariableGradient( bool ) ) );
         connect( gradient_, SIGNAL( GradientChanged( Gradient& ) ), SLOT( OnGradientChanged( Gradient& ) ) );
+
+        RichGroupBox* gradientBox = new RichGroupBox( "gradientMap", tr( "Gradient map" ) );
+        QVBoxLayout* gradientBoxLayout = new QVBoxLayout( gradientBox );
+        gradientBoxLayout->addWidget( gradient_ );
+
+        RichGroupBox* box = new RichGroupBox( "elevationColor", tr( "Elevation colors" ), container );
+        QVBoxLayout* boxLayout = new QVBoxLayout( box );
+        boxLayout->addWidget( fitColorGradienttoViewPort_ );
+        boxLayout->addWidget( gradientBox );
     }
     {
-        hsBox_ = new Q3GroupBox( 2, Qt::Horizontal, tr( "Hillshade" ), container );
+        QLabel* directionLabel = new QLabel( tr( "Direction" ) );
+        hsDial_ = new QDial( 0, 359, 1, directionHs_ );
+        hsDial_->setMaximumSize( 50, 50 );
+        connect( hsDial_, SIGNAL( valueChanged( int ) ), SLOT( OnHillShadeDirection( int ) ) );
+
+        QLabel* strengthLabel = new QLabel( tr( "Strength" ) );
+        hillShadeStrength_ = new QSlider( 1, 50, 1, int( strengthHs_ ), Qt::Horizontal );
+        connect( hillShadeStrength_, SIGNAL( valueChanged( int ) ), SLOT( OnStrengthChanged( int ) ) );
+
+        hsBox_ = new RichGroupBox( "hsBox", tr( "Hillshade" ), container );
+        connect( hsBox_, SIGNAL( toggled( bool ) ), SLOT( OnEnableHillshade( bool ) ) );
         hsBox_->setCheckable( true );
         hsBox_->setChecked( enableHs_ );
-        new QLabel( tr( "Direction" ), hsBox_ );
-        hsDial_ = new QDial( 0, 359, 1, directionHs_, hsBox_ );
-        hsDial_->setMaximumSize( 50, 50 );
-
-        new QLabel( tr( "Strength" ), hsBox_ );
-        hillShadeStrength_ = new QSlider( 1, 50, 1, int( strengthHs_ ), Qt::Horizontal, hsBox_ );
-
-        connect( hsBox_, SIGNAL( toggled( bool ) ), SLOT( OnEnableHillshade( bool ) ) );
-        connect( hsDial_, SIGNAL( valueChanged( int ) ), SLOT( OnHillShadeDirection( int ) ) );
-        connect( hillShadeStrength_, SIGNAL( valueChanged( int ) ), SLOT( OnStrengthChanged( int ) ) );
+        QGridLayout* hsBoxLayout = new QGridLayout( hsBox_ );
+        hsBoxLayout->addWidget( directionLabel, 0, 0 );
+        hsBoxLayout->addWidget( hsDial_, 0, 1 );
+        hsBoxLayout->addWidget( strengthLabel, 1, 0 );
+        hsBoxLayout->addWidget( hillShadeStrength_, 1, 1 );
+        hsBoxLayout->setColStretch( 1, 10 );
     }
     setWidget( container );
     controllers_.Register( *this );

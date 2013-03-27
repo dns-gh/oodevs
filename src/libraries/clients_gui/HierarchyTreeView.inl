@@ -12,8 +12,8 @@
 // Created: ABR 2012-08-13
 // -----------------------------------------------------------------------------
 template< typename Hierarchy >
-HierarchyTreeView< Hierarchy >::HierarchyTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
-    : HierarchyTreeView_ABC( controllers, profile, modelObserver, symbols, parent )
+HierarchyTreeView< Hierarchy >::HierarchyTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
+    : HierarchyTreeView_ABC( objectName, controllers, profile, modelObserver, symbols, parent )
     , controllers_( controllers )
 {
     controllers_.Update( *this );

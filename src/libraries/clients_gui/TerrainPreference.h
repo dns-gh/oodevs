@@ -29,6 +29,7 @@ namespace gui
 {
     class ColorButton;
     class SizeButton;
+    class RichCheckBox;
 
 // =============================================================================
 /** @class  TerrainPreference
@@ -40,6 +41,8 @@ class TerrainPreference : public QWidget
                         , public tools::Observer_ABC
                         , public kernel::OptionsObserver_ABC
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -52,10 +55,16 @@ public:
     void Display( QWidget* parent );
     void SetLineWidth() const;
     void SetColor( float alpha ) const;
-    void Commit();
     void Revert();
+    void Commit();
 
     void Save() const;
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void OnCategoryChecked();
     //@}
 
 private:
@@ -77,10 +86,11 @@ private:
     kernel::Options& options_;
     std::string type_;
     std::string name_;
-    bool shown_;
+    bool currentShown_;
+    bool previousShown_;
     ColorButton* colorButton_;
     SizeButton*  sizeButton_;
-    QCheckBox* showCheckbox_;
+    RichCheckBox* showCheckbox_;
     float  lineWidth_;
     QColor color_;
     //@}

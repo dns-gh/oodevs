@@ -18,7 +18,7 @@ using namespace gui;
 // Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
 UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent )
-    : UnitStateTable_ABC( parent, 3 )
+    : UnitStateTable_ABC( "UnitStateTableEquipment", parent, 3 )
 {
     horizontalHeaders_ << tr( "Equipments" )
                        << tr( "State" )

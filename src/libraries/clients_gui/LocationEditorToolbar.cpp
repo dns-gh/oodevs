@@ -22,6 +22,8 @@
 #include "FeatureNameParser.h"
 #include "LocationEditorBox.h"
 #include "LocationParsers.h"
+#include "RichLineEdit.h"
+#include "RichToolButton.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
@@ -44,15 +46,15 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
 {
     locBox_ = new LocationEditorBox( controllers, converter );
     locBox_->AddParser( new FeatureNameParser( controllers ), tr( "Feature" ) );
-    QToolButton* gotoButton = new QToolButton( this );
+    RichToolButton* gotoButton = new RichToolButton( "gotoButton", this );
     gotoButton->setIconSet( MAKE_PIXMAP( goto ) );
     gotoButton->setPopupDelay( 0 );
-    gotoButton->setPopupMode( QToolButton::MenuButtonPopup );
+    gotoButton->setPopupMode( RichToolButton::MenuButtonPopup );
     bookmarksMenu_ = new kernel::ContextMenu( gotoButton );
     gotoButton->setPopup( bookmarksMenu_ );
     ClearBookmarks();
     QToolTip::add( gotoButton, tr( "Center on location" ) );
-    paramsButton_ = new QToolButton( this );
+    paramsButton_ = new RichToolButton( "paramsButton", this );
     paramsButton_->setIconSet( MAKE_PIXMAP( special_point ) );
     QToolTip::add( paramsButton_, tr( "Set special point" ) );
 
@@ -107,7 +109,7 @@ void LocationEditorToolbar::CreateBookmark()
     {
         const std::string utm = converter_.ConvertToMgrs( menuPoint_ );
         bool ok = false;
-        const QString name = QInputDialog::getText( tr( "Create bookmark" ), tr( "Enter text to name the bookmark: " ), QLineEdit::Normal, utm.c_str(), &ok, topLevelWidget() );
+        const QString name = QInputDialog::getText( tr( "Create bookmark" ), tr( "Enter text to name the bookmark: " ), RichLineEdit::Normal, utm.c_str(), &ok, topLevelWidget() );
         if( !ok || name.isEmpty() )
             return;
         bookmarksMenu_->clear();

@@ -9,6 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "PresetDialog.h"
+#include "RichLineEdit.h"
+#include "RichPushButton.h"
+#include "SubObjectName.h"
 #include "moc_PresetDialog.cpp"
 
 #include "Gradient.h"
@@ -29,6 +32,7 @@ PresetDialog::PresetDialog( QWidget* parent, Gradient& gradient, kernel::Options
     , options_ ( options )
     , presets_ ( presets )
 {
+    SubObjectName subObject( "PresetDialog" );
     setFixedSize( 300, 50 );
     setCaption( tr( "Rename preset" ) );
     setModal( true );
@@ -55,7 +59,7 @@ void PresetDialog::CreateContent()
     QLabel* pLabel = new QLabel( this );
     pLabel->setText( tr( "New Name:" ) );
     pEditLayout->addWidget( pLabel );
-    pLineEdit_ = new QLineEdit( this );
+    pLineEdit_ = new RichLineEdit( "LineEdit", this );
     pEditLayout->addWidget( pLineEdit_ );
 }
 
@@ -66,10 +70,10 @@ void PresetDialog::CreateContent()
 void PresetDialog::CreateButton()
 {
     Q3HBoxLayout* pButtonLayout = new Q3HBoxLayout( pLayout_ );
-    pAcceptButton_ = new QPushButton( tr( "Ok" ), this );
+    pAcceptButton_ = new RichPushButton( "ok", tr( "Ok" ), this );
     pAcceptButton_->setDefault( true );
     pAcceptButton_->setMaximumWidth( 100 );
-    pRejectButton_ = new QPushButton( tr( "Cancel" ), this );
+    pRejectButton_ = new RichPushButton( "cancel", tr( "Cancel" ), this );
     pRejectButton_->setMaximumWidth( 100 );
     pButtonLayout->addWidget( pAcceptButton_ );
     pButtonLayout->addWidget( pRejectButton_ );

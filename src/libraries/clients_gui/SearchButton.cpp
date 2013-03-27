@@ -16,8 +16,8 @@ using namespace gui;
 // Name: SearchButton constructor
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-SearchButton::SearchButton( QWidget* parent /*= 0*/ )
-    : QPushButton( parent )
+SearchButton::SearchButton( const QString& objectName, QWidget* parent /*= 0*/ )
+    : RichPushButton( objectName, "", parent )
 {
     // NOTHING
 }

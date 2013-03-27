@@ -29,5 +29,5 @@ RichListView::RichListView( const QString& objectName , QWidget* parent  )
 // -----------------------------------------------------------------------------
 RichListView::~RichListView()
 {
-        ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
+    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
 }

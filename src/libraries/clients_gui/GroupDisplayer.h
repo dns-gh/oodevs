@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    GroupDisplayer& AddLabel( const QString& name, bool bold = false );
+    GroupDisplayer& AddLabel( const QString& objectName, const QString& text, bool bold = false );
     GroupDisplayer& AddSpinBox( const QString& name, int min, int max, int step );
     GroupDisplayer& AddCheckBox( const QString& name );
     virtual void Hide();

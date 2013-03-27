@@ -18,7 +18,7 @@ using namespace gui;
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
 UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel )
-    : UnitStateTable_ABC( parent, 7 )
+    : UnitStateTable_ABC( "UnitStateTableResource", parent, 7 )
 {
     horizontalHeaders_ << tr( "Resources" )
                        << tr( "Category" )

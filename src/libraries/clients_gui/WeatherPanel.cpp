@@ -10,11 +10,15 @@
 #include "clients_gui_pch.h"
 #include "WeatherPanel.h"
 #include "moc_WeatherPanel.cpp"
-
+#include "RichDateTimeEdit.h"
+#include "RichGroupBox.h"
+#include "RichPushButton.h"
+#include "SubObjectName.h"
 #include "ValuedComboBox.h"
 #include "WeatherLayer.h"
 #include "WeatherListView.h"
 #include "WeatherWidget.h"
+#include "SubObjectName.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "meteo/MeteoLocal.h"
@@ -34,44 +38,69 @@ WeatherPanel::WeatherPanel( QWidget* parent, PanelStack_ABC& panel, WeatherLayer
     , startTime_    ( 0 )
     , endTime_      ( 0 )
 {
-    // Layouts
-    QWidget* box = new QWidget( this );
-    QBoxLayout* layout = new QBoxLayout( box, QBoxLayout::TopToBottom, 0, 5 );
-    layout->setMargin( 5 );
-    layout->setAlignment( Qt::AlignTop );
+    SubObjectName subObject1( "WeatherPanel" );
 
-    headerLayout_ = new Q3VBox( box );
-    layout->addWidget( headerLayout_ );
-    Q3VBox* contentLayout = new Q3VBox( box );
-    layout->addWidget( contentLayout );
-    Q3HBox* buttonsLayout = new Q3HBox( box );
-    buttonsLayout->layout()->setSpacing( 5 );
+    //----------------headerlayout------------------
+    headerLayout_ = new QVBoxLayout();
 
-    layout->addWidget( buttonsLayout );
-    buttonsLayout->setMinimumHeight( 30 );
-    buttonsLayout->setMaximumHeight( 30 );
-    // Weather
-    Q3GroupBox* group = new Q3GroupBox( 1, Qt::Horizontal, tr( "Weather" ), contentLayout );
-    {
-        Q3HBox* hbox = new Q3HBox( group );
-        new QLabel( tr( "Weather type:" ), hbox );
-        gui::ValuedComboBox< E_WeatherType >* weatherTypeCombo = new gui::ValuedComboBox< E_WeatherType >( hbox );
-        weatherTypeCombo->AddItem( tr( "Global weather" ), eWeatherGlobal );
-        weatherTypeCombo->AddItem( tr( "Local weather" ), eWeatherLocal );
-        connect( weatherTypeCombo, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged( int ) ) );
-    }
+    //----------------content Layout----------------
+    SubObjectName subObject2( "WeatherGroup" );
+    //Weather type
+    QLabel* weatherTypeLabel = new QLabel( tr( "Weather type:" ) );
+    gui::ValuedComboBox< E_WeatherType >* weatherTypeCombo = new gui::ValuedComboBox< E_WeatherType >( "weatherTypeCombo" );
+    weatherTypeCombo->AddItem( tr( "Global weather" ), eWeatherGlobal );
+    weatherTypeCombo->AddItem( tr( "Local weather" ), eWeatherLocal );
+    connect( weatherTypeCombo, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged( int ) ) );
+
+    QHBoxLayout* weatherTypeLayout = new QHBoxLayout();
+    weatherTypeLayout->addWidget( weatherTypeLabel );
+    weatherTypeLayout->addWidget( weatherTypeCombo );
+
     // Global weather layout
-    globalLayout_ = new Q3VBox( group );
-    globalLayout_->layout()->setSpacing( 5 );
+    globalWidget_ = new QWidget();
+    QVBoxLayout* globalLayout = new QVBoxLayout( globalWidget_ );
+    globalLayout->setSpacing( 5 );
+    globalLayout->addStretch( 1 );
+
     // Local weather layout
-    localLayout_ = new Q3VBox( group );
-    localLayout_->layout()->setSpacing( 5 );
-    // Buttons
-    setWidget( box );
-    QPushButton* okBtn     = new QPushButton( tr( "Validate" ) , buttonsLayout );
-    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), buttonsLayout );
+    localWidget_ = new QWidget();
+    QVBoxLayout* localLayout = new QVBoxLayout( localWidget_ );
+    localLayout->setSpacing( 5 );
+    localLayout->addStretch( 1 );
+    localLayout->setAlignment( Qt::AlignTop );
+
+    RichGroupBox* weatherGroup = new RichGroupBox( "weatherGroup", tr( "Weather" ) );
+    QVBoxLayout* groupLayout = new QVBoxLayout( weatherGroup );
+    groupLayout->addLayout( weatherTypeLayout );
+    groupLayout->addWidget( globalWidget_ );
+    groupLayout->addWidget( localWidget_ );
+    groupLayout->addStretch( 1 );
+
+    QHBoxLayout* contentLayout = new QHBoxLayout();
+    contentLayout->addWidget( weatherGroup );
+
+    //----------------Buttons layout----------------
+    RichPushButton* okBtn     = new RichPushButton( "ok", tr( "Validate" )  );
+    RichPushButton* cancelBtn = new RichPushButton( "cancel", tr( "Cancel" ) );
     connect( okBtn,     SIGNAL( clicked() ), this, SLOT( Commit() ) );
     connect( cancelBtn, SIGNAL( clicked() ), this, SLOT( Reset() ) );
+
+    QHBoxLayout* buttonsLayout = new QHBoxLayout();
+    buttonsLayout->addWidget( okBtn );
+    buttonsLayout->addWidget( cancelBtn );
+    buttonsLayout->setSpacing( 5 );
+
+    //----------------main panel----------------
+    QWidget* mainWidget = new QWidget( this );
+    QVBoxLayout* mainLayout = new QVBoxLayout( mainWidget );
+    mainLayout->setMargin( 5 );
+    mainLayout->setAlignment( Qt::AlignTop );
+    mainLayout->addLayout( headerLayout_ );
+    mainLayout->addLayout( contentLayout );
+    mainLayout->addLayout( buttonsLayout );
+    mainLayout->setSizeConstraint( QLayout::Minimum );
+    mainLayout->addStretch( 1 );
+    setWidget( mainWidget );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,15 +118,23 @@ WeatherPanel::~WeatherPanel()
 // -----------------------------------------------------------------------------
 void WeatherPanel::CreateLocalParameters()
 {
-    parametersGroup_ = new Q3GroupBox( 2, Qt::Horizontal, tr( "Time and position parameters" ), localLayout_ );
-    localLayout_->setMinimumHeight( 400 );
-    new QLabel( tr( "Start time:" ), parametersGroup_ );
-    startTime_ = new QDateTimeEdit( parametersGroup_ );
-    new QLabel( tr( "End time:" ), parametersGroup_ );
-    endTime_ = new QDateTimeEdit( parametersGroup_ );
+    localWidget_->setMinimumHeight( 400 );
+    QLabel* startTimeLabel = new QLabel( tr( "Start time:" ) );
+    startTime_ = new RichDateTimeEdit( "startTime" );
+    QLabel* endTimeLabel = new QLabel( tr( "End time:" ) );
+    endTime_ = new RichDateTimeEdit( "endTime" );
 
-    locationButton_ = new QPushButton( tr( "Set location" ), localLayout_ );
+    parametersGroup_ = new gui::RichGroupBox( "parametersGroup", tr( "Time and position parameters" ), localWidget_ );
+    QGridLayout* parametersGrouplayout = new QGridLayout( parametersGroup_ );
+    parametersGrouplayout->addWidget( startTimeLabel, 0, 0 );
+    parametersGrouplayout->addWidget( startTime_, 0, 1 );
+    parametersGrouplayout->addWidget( endTimeLabel, 1, 0 );
+    parametersGrouplayout->addWidget( endTime_, 1, 1 );
+    localWidget_->layout()->addWidget( parametersGroup_ );
+
+    locationButton_ = new RichPushButton( "location", tr( "Set location" ), localWidget_ );
     connect( locationButton_, SIGNAL( clicked() ), this, SLOT( SetPatchPosition() ) );
+    localWidget_->layout()->addWidget( locationButton_ );
 
     OnTypeChanged( 0 );
     EnableLocalParameters( false, false );
@@ -109,7 +146,7 @@ void WeatherPanel::CreateLocalParameters()
 // -----------------------------------------------------------------------------
 void WeatherPanel::EnableLocalParameters( bool enabled, bool isCreated )
 {
-    localWidget_->setEnabled( enabled );
+    localWeatherWidget_->setEnabled( enabled );
     parametersGroup_->setEnabled( enabled && isCreated );
     locationButton_->setEnabled( enabled && isCreated );
 }
@@ -125,15 +162,15 @@ void WeatherPanel::OnTypeChanged( int selected )
     Reset();
     if( currentType_ == eWeatherLocal )
     {
-        localLayout_->show();
+        localWidget_->show();
         localWeathers_->clearSelection();
-        localWidget_->Clear();
-        globalLayout_->hide();
+        localWeatherWidget_->Clear();
+        globalWidget_->hide();
     }
     else
     {
-        localLayout_->hide();
-        globalLayout_->show();
+        localWidget_->hide();
+        globalWidget_->show();
     }
 }
 
@@ -145,7 +182,7 @@ void WeatherPanel::CommitLocalWeather()
 {
     if( selectedLocal_ )
     {
-        localWidget_->CommitTo( *selectedLocal_ );
+        localWeatherWidget_->CommitTo( *selectedLocal_ );
         if( selectedLocal_->IsCreated() )
             selectedLocal_->SetPeriod( tools::QTimeToBoostTime( startTime_->dateTime() ), tools::QTimeToBoostTime( endTime_->dateTime() ) );
     }
@@ -161,7 +198,7 @@ void WeatherPanel::LocalSelectionChanged()
     CommitLocalWeather();
     if( selected != 0 )
     {
-        localWidget_->Update( *selected );
+        localWeatherWidget_->Update( *selected );
         startTime_->setDateTime( tools::BoostTimeToQTime( selected->GetStartTime() ) );
         endTime_->setDateTime( tools::BoostTimeToQTime( selected->GetEndTime() ) );
         layer_.SetPosition( *selected );

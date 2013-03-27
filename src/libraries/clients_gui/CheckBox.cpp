@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "CheckBox.h"
 #include "moc_CheckBox.cpp"
+#include "ObjectNameManager.h"
 
 using namespace gui;
 
@@ -17,12 +18,12 @@ using namespace gui;
 // Name: CheckBox constructor
 // Created: RPD 2008-08-21
 // -----------------------------------------------------------------------------
-CheckBox::CheckBox( const QString & text, QWidget* parent, const char* name /* = 0 */ )
-    : QCheckBox( text, parent, name )
+CheckBox::CheckBox( const QString& objectName, const QString & text, QWidget* parent /* = 0 */ )
+    : QCheckBox( text, parent )
     , previousValue_( 0 )
     , currentValue_ ( 0 )
 {
-    // NOTHING
+    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +32,7 @@ CheckBox::CheckBox( const QString & text, QWidget* parent, const char* name /* =
 // -----------------------------------------------------------------------------
 CheckBox::~CheckBox()
 {
-    // NOTHING
+    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
 }
 
 // -----------------------------------------------------------------------------

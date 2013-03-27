@@ -18,6 +18,9 @@
 #include "DrawingTemplate.h"
 #include "DrawingCategoryItem.h"
 #include "FileDialog.h"
+#include "RichGroupBox.h"
+#include "RichToolButton.h"
+#include "SubObjectName.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -42,6 +45,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     , selectedDrawing_( controllers )
     , selectedEntity_ ( controllers )
 {
+    SubObjectName subObject( "DrawerPanel" );
     Q3VBox* vbox = new Q3VBox( this );
     {
         Q3HBox* box = new Q3HBox( vbox );
@@ -50,39 +54,39 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
         box->setBackgroundMode( Qt::PaletteButton );
         box->setFrameStyle( QFrame::StyledPanel | Q3Frame::Raised );
 
-        QToolButton* btn = new QToolButton( box );
+        RichToolButton* btn = new RichToolButton( "LoadDrawings", box );
         btn->setAutoRaise( true );
         btn->setIconSet( MAKE_PIXMAP( open ) );
         QToolTip::add( btn, tr( "Load drawings file" ) );
         connect( btn, SIGNAL( clicked() ), SLOT( Open() ) );
 
-        btn = new QToolButton( box );
+        btn = new RichToolButton( "saveDrawings", box );
         btn->setAutoRaise( true );
         btn->setIconSet( MAKE_PIXMAP( save ) );
         QToolTip::add( btn, tr( "Save drawings to file" ) );
         connect( btn, SIGNAL( clicked() ), SLOT( Save() ) );
 
-        btn = new QToolButton( box );
+        btn = new RichToolButton( "clearDrawings", box );
         btn->setAutoRaise( true );
         btn->setIconSet( MAKE_PIXMAP( cross ) );
         btn->setFixedSize( 25, 25 );
         QToolTip::add( btn, tr( "Clear drawings" ) );
         connect( btn, SIGNAL( clicked() ), SLOT( Clear() ) );
 
-        color_ = new ColorButton( box, "" );
+        color_ = new ColorButton( "color", box, "" );
         toolBox_ = new QToolBox( vbox );
         toolBox_->setMargin( 0 );
         toolBox_->setBackgroundColor( Qt::white );
         connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChange( const QColor& ) ) );
 
-        btn = new QToolButton( box );
+        btn = new RichToolButton( "startDrawing", box );
         btn->setAutoRaise( true );
         btn->setIconSet( MAKE_PIXMAP( pencil ) );
         btn->setFixedSize( 25, 25 );
         QToolTip::add( btn, tr( "Start drawing" ) );
         connect( btn, SIGNAL( clicked() ), SLOT( StartDrawing() ) );
     }
-    Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, vbox );
+    RichGroupBox* group = new RichGroupBox( "parentgroup", vbox );
     {
         new QLabel( tr( "Parent:" ), group );
         parentLabel_ = new QLabel( "---", group );

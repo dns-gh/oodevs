@@ -40,6 +40,7 @@ protected:
 // Created: ABR 2012-01-19
 // =============================================================================
 class RichLineEdit : public QLineEdit
+                   , private boost::noncopyable
 {
     Q_OBJECT
     Q_PROPERTY( QString InactiveText READ InactiveText WRITE SetInactiveText ) // $$$$ ABR 2012-01-26: Replace placeholder property to be drawn on the right place.
@@ -57,8 +58,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RichLineEdit( QWidget* parent = 0, const char* name = 0 );
-    explicit RichLineEdit( const QString& contents, QWidget* parent = 0, const char* name = 0 );
+    explicit RichLineEdit( const QString& objectName, QWidget* parent = 0 );
+    explicit RichLineEdit( const QString& objectName, const QString& contents, QWidget* parent = 0 );
     virtual ~RichLineEdit();
     //@}
 
@@ -83,7 +84,7 @@ protected:
     bool event( QEvent* event );
     //@}
 
-protected slots:
+public slots:
     //! @name Slots
     //@{
     void UpdateTextMargins();
@@ -93,7 +94,7 @@ protected slots:
 private:
     //! @name Helpers
     //@{
-    void Init();
+    void Init( const QString& objectName );
     void UpdateSideWidgetLocations();
     //@}
 

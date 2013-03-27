@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "LoadableCheckBox.h"
 #include "ObjectPrototypeLoader_ABC.h"
+#include "RichCheckBox.h"
 
 using namespace gui;
 
@@ -17,10 +18,10 @@ using namespace gui;
 // Name: LoadableCheckBox constructor
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
-LoadableCheckBox::LoadableCheckBox( const QString& text, QWidget* parent, const QString& probableName )
-    : LoadableFieldTemplate< QCheckBox >( parent, probableName )
+LoadableCheckBox::LoadableCheckBox( const QString& objectName, const QString& text, QWidget* parent )
+    : LoadableFieldTemplate< RichCheckBox >( parent, objectName )
 {
-    SetDefaultValueWidget( new QCheckBox( text, this ) );
+    SetDefaultValueWidget( new RichCheckBox( "default" + objectName, text, this ) );
 }
 
 // -----------------------------------------------------------------------------

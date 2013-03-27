@@ -23,8 +23,8 @@ using namespace gui;
 // Name: DiffusionListLineEdit constructor
 // Created: ABR 2011-04-29
 // -----------------------------------------------------------------------------
-DiffusionListLineEdit::DiffusionListLineEdit( QWidget* parent, kernel::Controllers& controllers, const kernel::Entity_ABC* selected, DiffusionListDialog& dialog, const std::string extensionName, const char* name /*= 0*/ )
-    : QLineEdit( parent, name )
+DiffusionListLineEdit::DiffusionListLineEdit( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const kernel::Entity_ABC* selected, DiffusionListDialog& dialog, const std::string extensionName )
+    : RichLineEdit( objectName, parent )
     , dialog_       ( dialog )
     , selected_     ( controllers, selected )
     , extensionName_( extensionName )

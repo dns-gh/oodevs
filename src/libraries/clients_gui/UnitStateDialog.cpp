@@ -10,6 +10,9 @@
 #include "clients_gui_pch.h"
 #include "UnitStateDialog.h"
 #include "moc_UnitStateDialog.cpp"
+#include "RichPushButton.h"
+#include "RichTabWidget.h"
+#include "SubObjectName.h"
 #include "UnitStateTable_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -29,6 +32,7 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     , selected_   ( controllers )
 {
     // Init dialog
+    SubObjectName subObject( "UnitStateDialog" );
     setCaption( tr( "Unit state" ) );
     resize( 900, 600 );
     // Main layout
@@ -43,13 +47,13 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     selectedEntityLabel_->setAlignment( Qt::AlignCenter );
     selectedEntityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
     // Tabs
-    tabWidget_ = new QTabWidget( this, "UnitStateDialog_TabWidget_Tabs" );
+    tabWidget_ = new RichTabWidget( "tabs", this );
     // Buttons
     Q3HBox* buttons = new Q3HBox( this, "UnitStateDialog_HBox_Buttons" );
     buttons->setSpacing( 5 );
-    resetButton_             = new QPushButton( tr( "Reset" )   , buttons, "UnitStateDialog_PushButton_Reset" );
-    validateButton_          = new QPushButton( tr( "Validate" ), buttons, "UnitStateDialog_PushButton_Validate" );
-    QPushButton* closeButton = new QPushButton( tr( "Close" )   , buttons, "UnitStateDialog_PushButton_Cancel" );
+    resetButton_             = new RichPushButton( "reset", tr( "Reset" ) , buttons );
+    validateButton_          = new RichPushButton( "validate", tr( "Validate" ), buttons );
+    RichPushButton* closeButton = new RichPushButton( "close", tr( "Close" )   , buttons );
     validateButton_->setDefault( true );
     // Layouts
     mainLayout->add( header );

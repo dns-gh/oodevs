@@ -15,17 +15,16 @@ using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: RichTabWidget constructor
-// Created: NPT 2013-03-12
+// Created: NPT 2013-03-14
 // -----------------------------------------------------------------------------
-RichTabWidget::RichTabWidget( const QString& objectName, QWidget* parent )
+RichTabWidget::RichTabWidget( const QString& objectName , QWidget* parent /* = 0 */ )
     : QTabWidget( parent )
 {
     ObjectNameManager::getInstance()->SetObjectName( this, objectName );
 }
-
 // -----------------------------------------------------------------------------
 // Name: RichTabWidget destructor
-// Created: NPT 2013-03-12
+// Created: NPT 2013-03-14
 // -----------------------------------------------------------------------------
 RichTabWidget::~RichTabWidget()
 {

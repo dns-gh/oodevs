@@ -12,6 +12,7 @@
 #include "Tools.h"
 #include "clients_kernel/Units.h"
 #include "LoadableLineEdit.h"
+#include "SubObjectName.h"
 
 using namespace gui;
 
@@ -20,13 +21,15 @@ using namespace gui;
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
 TrafficabilityPrototype_ABC::TrafficabilityPrototype_ABC( QWidget* parent, double maxWeight )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::TrafficabilityPrototype_ABC", "Trafficability" ) )
+    : ObjectAttributePrototype_ABC( parent, "TrafficabilityPrototypeABC", tools::translate( "gui::TrafficabilityPrototype_ABC", "Trafficability" ) )
 {
+    SubObjectName subObject( "TrafficabilityPrototypeABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->setMargin( 5 );
     layout->addWidget( new QLabel( tools::translate( "gui::TrafficabilityPrototype_ABC", "Max weight:" ) ) );
     Q3HBox* box = new Q3HBox();
     layout->addWidget( box );
-    maxWeight_ = new LoadableLineEdit( box );
+    maxWeight_ = new LoadableLineEdit( "maxWeight", box );
     maxWeight_->setText( locale().toString( maxWeight ) );
     maxWeight_->setValidator( new QDoubleValidator( 0, 1000000, 2, maxWeight_ ) );
     new QLabel( kernel::Units::tons.AsString(), box );

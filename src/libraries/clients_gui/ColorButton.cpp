@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "ColorButton.h"
 #include "moc_ColorButton.cpp"
+#include "ObjectNameManager.h"
 
 using namespace gui;
 
@@ -28,8 +29,8 @@ namespace
 // Name: ColorButton constructor
 // Created: LGY 2011-09-30
 // -----------------------------------------------------------------------------
-ColorButton::ColorButton( QWidget* parent, const std::string& color )
-    : QToolButton( parent )
+ColorButton::ColorButton( const QString& objectName, QWidget* parent, const std::string& color )
+    : RichToolButton( objectName, parent )
     , options_( QColorDialog::ShowAlphaChannel )
 {
     setAutoRaise( true );
@@ -44,8 +45,8 @@ ColorButton::ColorButton( QWidget* parent, const std::string& color )
 // Name: ColorButton constructor
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
-ColorButton::ColorButton( QWidget* parent /* = 0*/, const char* name /* = 0*/, QColor color /* = black*/ )
-    : QToolButton( parent, name )
+ColorButton::ColorButton( const QString& objectName, QWidget* parent /* = 0*/, const char* text /* = 0*/, QColor color /* = black*/ )
+    : RichToolButton( objectName, parent, text )
     , previous_( color )
     , current_( color )
     , options_( static_cast< QColorDialog::ColorDialogOption >( 0 ) )

@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "WeatherWidget.h"
+#include "SubObjectName.h"
 #include "RichSpinBox.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
@@ -79,42 +80,59 @@ namespace
 // Name: WeatherWidget constructor
 // Created: ABR 2011-05-30
 // -----------------------------------------------------------------------------
-WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
-    : Q3GroupBox( 2, Qt::Horizontal, title, parent, "WeatherWidget" )
+WeatherWidget::WeatherWidget( const QString& objectName, QWidget* parent, const QString& title )
+        : RichGroupBox( objectName, title , parent )
 {
+    gui::SubObjectName subObject( objectName );
     // Speed
-    new QLabel( tools::translate( "gui::WeatherWidget", "Wind speed:" ), this );
-    windSpeed_ = new RichSpinBox( this, 0, 300, 5 );
+    QLabel* windSpeedLabel = new QLabel( tools::translate( "gui::WeatherWidget", "Wind speed:" ), this );
+    windSpeed_ = new RichSpinBox( "windSpeed", this, 0, 300, 5 );
     windSpeed_->setSuffix( Units::kilometersPerHour.AsString() );
 
     // Direction
-    new QLabel( tools::translate( "gui::WeatherWidget", "Wind direction:" ), this );
+    QLabel* windDirectionLabel = new QLabel( tools::translate( "gui::WeatherWidget", "Wind direction:" ) );
     windDirection_ = new RichDial( this, "resources/images/gui/windsock.png", 0.8f );
     windDirection_->setWrapping( true );
     windDirection_->setRange( 0, 359 );
     windDirection_->setMinimumSize( 50, 50 );
+    windDirection_->setMaximumSize( 100, 100 );
 
     // Temperature
-    new QLabel( tools::translate( "gui::WeatherWidget", "Temperature:" ), this );
-    temperature_ = new RichSpinBox( this, -20, 40, 1 );
+    QLabel* temperatureLabel = new QLabel( tools::translate( "gui::WeatherWidget", "Temperature:" ) );
+    temperature_ = new RichSpinBox( "temperature", this, -20, 40, 1 );
     temperature_->setSuffix( tools::translate( "gui::WeatherWidget", "°C" ) );
 
     // Clouds
-    new QLabel( tools::translate( "gui::WeatherWidget", "Clouds floor/ceiling/density:" ), this );
-    Q3HBox* box = new Q3HBox( this );
-    box->layout()->setSpacing( 5 );
-    cloudFloor_   = new QSpinBox( 0, 100000, 100, box );
+    QLabel* cloudsLabel = new QLabel( tools::translate( "gui::WeatherWidget", "Clouds floor/ceiling/density:" ) );
+    cloudFloor_   = new RichSpinBox( "cloudFloor", 0, 0, 100000, 100 );
     cloudFloor_->setSuffix( Units::meters.AsString() );
-    cloudCeiling_ = new QSpinBox( 0, 100000, 100, box );
+    cloudCeiling_ = new RichSpinBox( "cloudCeiling", 0, 0, 100000, 100 );
     cloudCeiling_->setSuffix( Units::meters.AsString() );
-    cloudDensity_ = new QSpinBox( 0, 10, 1, box );
+    cloudDensity_ = new RichSpinBox( "cloudDensity", 0, 0, 10, 1 );
 
     // Type
-    new QLabel( tools::translate( "gui::WeatherWidget", "Weather type:" ), this );
-    type_ = new gui::ValuedComboBox< E_WeatherType >( this );
+    QLabel* weatherTypeLabel = new QLabel( tools::translate( "gui::WeatherWidget", "Weather type:" ) );
+    type_ = new gui::ValuedComboBox< E_WeatherType >( "type" );
     assert( eNbrWeatherType > 0 );
     for( int i = 0; i < eNbrWeatherType; ++i )
         type_->AddItem( tools::ToDisplayedString( static_cast< E_WeatherType >( i ) ), static_cast< E_WeatherType >( i ) );
+
+    QGridLayout* mainLayout = new QGridLayout( this );
+    mainLayout->addWidget( windSpeedLabel, 0, 0 );
+    mainLayout->addWidget( windSpeed_, 0, 1, 1, 3 );
+    mainLayout->addWidget( windDirectionLabel, 1, 0 );
+    mainLayout->addWidget( windDirection_, 1, 1, 1, 3 );
+    mainLayout->addWidget( temperatureLabel, 2, 0 );
+    mainLayout->addWidget( temperature_, 2, 1, 1, 3 );
+    mainLayout->addWidget( cloudsLabel, 3, 0 );
+    mainLayout->addWidget( cloudFloor_, 3, 1 );
+    mainLayout->addWidget( cloudCeiling_, 3, 2 );
+    mainLayout->addWidget( cloudDensity_, 3, 3 );
+    mainLayout->addWidget( weatherTypeLabel, 4, 0 );
+    mainLayout->addWidget( type_, 4, 1, 1, 3 );
+    mainLayout->setAlignment( Qt::AlignTop | Qt::AlignCenter );
+
+    parent->layout()->addWidget( this );
 }
 
 // -----------------------------------------------------------------------------

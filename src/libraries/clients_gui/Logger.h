@@ -24,7 +24,7 @@ namespace kernel
 
 namespace gui
 {
-
+    class RichTreeWidget;
 // =============================================================================
 /** @class  Logger
     @brief  Captures log messages and displays them in a sorted list.
@@ -72,7 +72,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QTreeWidget* treeWidget_;
+    RichTreeWidget* treeWidget_;
     const kernel::Time_ABC& simulation_;
     kernel::ContextMenu* popupMenu_;
     tools::Ofstream log_;

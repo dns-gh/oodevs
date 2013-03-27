@@ -25,6 +25,7 @@ namespace gui
     class DirectionWidget;
     class ColorButton;
     class ButtonGroup;
+    class RichGroupBox;
 
 // =============================================================================
 /** @class  LightingPanel
@@ -80,7 +81,7 @@ private:
     kernel::Options& options_;
     LightingProxy& lighting_;
 
-    Q3GroupBox* fixedLightBox_;
+    RichGroupBox* fixedLightBox_;
     ButtonGroup* lightingType_;
     DirectionWidget* direction_;
     ColorButton* ambient_;

@@ -41,7 +41,7 @@ class PopulationTypesListView : public gui::RichTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationTypesListView( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, const QSpinBox& number );
+    PopulationTypesListView( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, const QSpinBox& number );
     virtual ~PopulationTypesListView();
     //@}
 

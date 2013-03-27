@@ -26,6 +26,7 @@ WeatherListView::WeatherListView( QWidget* parent, const kernel::CoordinateConve
     , model_    ( new QStandardItemModel() )
 {
     setModel( model_ );
+    parent->layout()->addWidget( this );
 }
 
 // -----------------------------------------------------------------------------

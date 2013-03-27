@@ -20,6 +20,9 @@ namespace kernel
 namespace gui
 {
     template< typename EnumError > class FilterProxyModel;
+    class RichTableView;
+    class RichGroupBox;
+    class RichCheckBox;
 
 // =============================================================================
 /** @class  ConsistencyDialog_ABC
@@ -34,7 +37,7 @@ class ConsistencyDialog_ABC : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ConsistencyDialog_ABC( QWidget* parent, kernel::ConsistencyChecker_ABC& checker );
+             ConsistencyDialog_ABC( const QString& objectName, QWidget* parent, kernel::ConsistencyChecker_ABC& checker );
     virtual ~ConsistencyDialog_ABC();
     //@}
 
@@ -83,16 +86,16 @@ protected:
     //! @name Member data
     //@{
     kernel::ConsistencyChecker_ABC&     checker_;
-    QTableView*                         tableView_;
+    RichTableView*                      tableView_;
     QStandardItemModel*                 dataModel_;
     QSignalMapper*                      pMapper_;
 
     QStringList                         horizontalHeaders_;
-    QGroupBox*                          typeGroup_;
-    QGroupBox*                          levelGroup_;
+    RichGroupBox*                       typeGroup_;
+    RichGroupBox*                       levelGroup_;
     QGridLayout*                        checkBoxLayout_;
-    QCheckBox*                          warningCheckBox_;
-    QCheckBox*                          errorCheckBox_;
+    RichCheckBox*                       warningCheckBox_;
+    RichCheckBox*                       errorCheckBox_;
     std::map< unsigned int, QString >   errorDescriptions_;
     //@}
 };
@@ -103,7 +106,7 @@ class ConsistencyDialog : public ConsistencyDialog_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ConsistencyDialog( QWidget* parent, kernel::ConsistencyChecker_ABC& checker, FilterProxyModel< EnumError >& proxyModel );
+             ConsistencyDialog( const QString& objectName, QWidget* parent, kernel::ConsistencyChecker_ABC& checker, FilterProxyModel< EnumError >& proxyModel );
     virtual ~ConsistencyDialog();
     //@}
 

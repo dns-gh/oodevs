@@ -16,9 +16,11 @@ using namespace gui;
 // Name: ObjectAttributePrototype_ABC constructor
 // Created: JCR 2008-06-11
 // -----------------------------------------------------------------------------
-ObjectAttributePrototype_ABC::ObjectAttributePrototype_ABC( QWidget* parent, const QString& name )
-    : RichGroupBox( name, parent )
+ObjectAttributePrototype_ABC::ObjectAttributePrototype_ABC( QWidget* parent, const QString& objectName, const QString& title )
+    : RichGroupBox( objectName, title, parent )
 {
+    if( parent && parent->layout() )
+        parent->layout()->addWidget( this );
     hide();
 }
 

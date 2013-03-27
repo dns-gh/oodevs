@@ -15,6 +15,7 @@
 #include "RichLabel.h"
 #include "Tools.h"
 #include "LoadableSpinBox.h"
+#include "SubObjectName.h"
 
 using namespace kernel;
 using namespace gui;
@@ -24,15 +25,16 @@ using namespace gui;
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< NBCAgent >& resolver, int maxToxic )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::NBCPrototype_ABC", "NBC parameters" ) )
+    : ObjectAttributePrototype_ABC( parent, "NBCPrototypeABC", tools::translate( "gui::NBCPrototype_ABC", "NBC parameters" ) )
     , resolver_ ( resolver )
     , maxToxic_ ( maxToxic )
     , model_    ( new QStandardItemModel( this ) )
     , nbcAgents_( new QTreeView() )
 {
+    gui::SubObjectName subObject( "NBCPrototypeABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
     layout->addWidget( new QLabel( tools::translate( "gui::NBCPrototype_ABC", "Danger level:" ) ) );
-    danger_ = new LoadableSpinBox( 0, 10, 1, this );
+    danger_ = new LoadableSpinBox( "danger", 0, 10, 1, this );
     layout->addWidget( danger_ );
     nbcAgentsLabel_ = new RichLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent(s):" ) );
     layout->addWidget( nbcAgentsLabel_ );
@@ -43,7 +45,7 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
     layout->addWidget( nbcAgents_ );
 
     layout->addWidget( new QLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent state:" ) ) );
-    nbcStates_ = new ValuedComboBox< std::string >( this );
+    nbcStates_ = new ValuedComboBox< std::string >( "nbcStates", this );
     nbcStates_->AddItem( tools::translate( "gui::NBCPrototype_ABC", "Liquid" ), std::string( "liquid" ) );
     nbcStates_->AddItem( tools::translate( "gui::NBCPrototype_ABC", "Gaseous" ), std::string( "gaseous" ) );
     layout->addWidget( nbcStates_ );

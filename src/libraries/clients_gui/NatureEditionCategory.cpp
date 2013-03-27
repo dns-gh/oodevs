@@ -12,16 +12,17 @@
 #include "moc_NatureEditionCategory.cpp"
 #include "Tools.h"
 #include "clients_kernel/SymbolRule.h"
+#include "RichComboBox.h"
 
 using namespace gui;
 using namespace kernel;
 
 namespace
 {
-    class NoWheelComboBox : public QComboBox
+    class NoWheelComboBox : public RichComboBox
     {
     public :
-                 NoWheelComboBox() {}
+        NoWheelComboBox( const QString& objectName ) : RichComboBox( objectName ) {}
         virtual ~NoWheelComboBox() {}
         virtual void wheelEvent( QWheelEvent * ) {}
     };
@@ -41,7 +42,7 @@ NatureEditionCategory::NatureEditionCategory( QGridLayout* parentLayout, int row
     , next_        ( 0 )
 {
     label_ = new QLabel();
-    box_ = new NoWheelComboBox();
+    box_ = new NoWheelComboBox( "box" );
 
     parentLayout->addWidget( label_, row_, 0 );
     parentLayout->addWidget( box_, row_, 1 );

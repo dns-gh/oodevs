@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "LoadableLineEdit.h"
 #include "ObjectPrototypeLoader_ABC.h"
+#include "SubObjectName.h"
 
 using namespace gui;
 
@@ -17,10 +18,11 @@ using namespace gui;
 // Name: LoadableLineEdit constructor
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
-LoadableLineEdit::LoadableLineEdit( QWidget* parent, const QString& probableName )
-    : LoadableFieldTemplate< QLineEdit >( parent, probableName )
+LoadableLineEdit::LoadableLineEdit( const QString& objectName, QWidget* parent )
+    : LoadableFieldTemplate< RichLineEdit >( parent, objectName )
 {
-    SetDefaultValueWidget( new QLineEdit( this ) );
+    SubObjectName subObject( objectName );
+    SetDefaultValueWidget( new RichLineEdit( "default" + objectName, this ) );
 }
 
 // -----------------------------------------------------------------------------

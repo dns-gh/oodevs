@@ -24,21 +24,23 @@ using namespace gui;
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 MedicalTreatmentPrototype_ABC::MedicalTreatmentPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType, std::string >& resolver )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MedicalTreatmentPrototype_ABC", "MedicalTreatment parameters" ) )
+    : ObjectAttributePrototype_ABC( parent, "MedicalTreatmentPrototype_ABC", tools::translate( "gui::MedicalTreatmentPrototype_ABC", "MedicalTreatment parameters" ) )
     , resolver_( resolver )
 {
+    SubObjectName subObject( "MedicalTreatmentPrototypeABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->setMargin( 5 );
     Q3VBox* vbox = new Q3VBox( 0, tools::translate( "gui::MedicalTreatmentPrototype_ABC", "MedicalTreatment Type:" ) );
     layout->addWidget( vbox );
     {
         Q3HBox* canvas = new Q3HBox( vbox );
         new QLabel( tools::translate( "gui::MedicalTreatmentPrototype_ABC", "Hospital ID:" ), canvas );
-        referenceID_ = new LoadableLineEdit( canvas, "AHA_NUM" );
+        referenceID_ = new LoadableLineEdit( "referenceID", canvas );
     }
     {
         Q3HBox* canvas = new Q3HBox( vbox );
         new QLabel( tools::translate( "gui::MedicalTreatmentPrototype_ABC", "Doctors:" ), canvas );
-        doctors_ = new LoadableSpinBox( 0, 1000, 1, canvas );
+        doctors_ = new LoadableSpinBox( "doctors", 0, 1000, 1, canvas );
     }
     {
         Q3VBox* bedCapacities = new Q3VBox( vbox );

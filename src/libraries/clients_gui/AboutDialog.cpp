@@ -12,6 +12,8 @@
 #include "moc_AboutDialog.cpp"
 #include "ItemFactory_ABC.h"
 #include "RichLabel.h"
+#include "RichPushButton.h"
+#include "SubObjectName.h"
 #include "Tools.h"
 #include "ImageWrapper.h"
 #include "tools/GeneralConfig.h"
@@ -25,6 +27,7 @@ using namespace gui;
 AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QString& line, const QString& license )
     : QDialog( parent, 0, true, Qt::WStyle_Splash )
 {
+    SubObjectName subObject( "AboutDialog" );
     setCaption( tools::translate( "Application", "About" ) );
 
     QPixmap pixmap;
@@ -53,7 +56,7 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QStri
         message += tr( "<br>License will expire on " ) + license;
     RichLabel* label = factory.CreateLabel( message, hbox );
     label->setAlignment( Qt::TextSingleLine | Qt::AlignCenter );
-    QPushButton* button = new QPushButton( tr( "Close" ), hbox );
+    RichPushButton* button = new RichPushButton( "close", tr( "Close" ), hbox );
     connect( button, SIGNAL( clicked() ), this, SLOT( accept() ) );
 }
 

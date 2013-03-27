@@ -28,7 +28,7 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-             LoadableSpinBox( int minValue, int maxValue, int step, QWidget* parent, const QString& probableName = QString() );
+             LoadableSpinBox( const QString& objectName, int minValue, int maxValue, int step, QWidget* parent );
     virtual ~LoadableSpinBox();
     //@}
 

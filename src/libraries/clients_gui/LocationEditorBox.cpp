@@ -12,6 +12,9 @@
 #include "moc_LocationEditorBox.cpp"
 #include "LocationParsers.h"
 #include "LocationParser_ABC.h"
+#include "RichLineEdit.h"
+#include "RichListWidget.h"
+#include "RichPushButton.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/ContextMenu.h"
@@ -28,15 +31,15 @@ LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers, const ke
 {
     setFixedWidth( 250 );
 
-    choiceParserButton_ = new QPushButton();
+    choiceParserButton_ = new RichPushButton( "choiceParserButton", "" );
     parserMenu_ = new kernel::ContextMenu( choiceParserButton_ );
     choiceParserButton_->setPopup( parserMenu_ );
     choiceParserButton_->setText( tr("Location: " ) );
 
     latitudeLabel_ = new QLabel( tr( "lat: " ) );
-    latitude_ = new QLineEdit();
+    latitude_ = new RichLineEdit( "latitude" );
     longitudeLabel_ = new QLabel( tr( "long: " ) );
-    longitude_ = new QLineEdit();
+    longitude_ = new RichLineEdit( "longitude" );
     coordBox_ = new QWidget();
     QHBoxLayout* coordLayout = new QHBoxLayout( coordBox_ );
     coordLayout->addWidget( latitudeLabel_ );
@@ -45,13 +48,13 @@ LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers, const ke
     coordLayout->addWidget( longitude_ );
     coordLayout->setMargin( 0 );
 
-    singleField_ = new QLineEdit( this );
+    singleField_ = new RichLineEdit( "singleField", this );
 
     FillDefaultMenu();
     SelectParser( converter.GetCoordSystem().GetDefault() );
 
     subMenu_ = new kernel::ContextMenu();
-    list_ = new QListWidget( subMenu_ );
+    list_ = new RichListWidget( "list", subMenu_ );
     subMenu_->hide();
 
     connect( parserMenu_, SIGNAL( activated( int ) ), SLOT( SelectParser( int ) ) );

@@ -38,8 +38,8 @@ namespace
 // Name: TacticalTreeView constructor
 // Created: JSR 2012-08-31
 // -----------------------------------------------------------------------------
-TacticalTreeView::TacticalTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
-    : HierarchyTreeView< kernel::TacticalHierarchies >( controllers, profile, modelObserver, symbols, parent )
+TacticalTreeView::TacticalTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
+    : HierarchyTreeView< kernel::TacticalHierarchies >( objectName, controllers, profile, modelObserver, symbols, parent )
     , commandPost_( MAKE_PIXMAP( commandpost ) )
     , lock_( MAKE_PIXMAP( lock ) )
 {

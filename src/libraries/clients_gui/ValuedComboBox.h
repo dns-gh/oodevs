@@ -37,7 +37,7 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ValuedComboBox( QWidget* parent = 0, const char* name = 0 );
+    explicit ValuedComboBox( const QString& objectName, QWidget* parent = 0, const char* name = 0 );
     virtual ~ValuedComboBox();
     //@}
 

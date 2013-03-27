@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "SizeButton.h"
 #include "moc_SizeButton.cpp"
+#include "ObjectNameManager.h"
 #include <math.h>
 
 using namespace gui;
@@ -17,23 +18,27 @@ using namespace gui;
 // Name: SizeButton constructor
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-SizeButton::SizeButton( QWidget* parent /* = 0*/, const char* name /* = 0*/, float value /* = 1*/ )
-    : QSlider( parent, name )
+SizeButton::SizeButton( const QString& objectName, QWidget* parent /* = 0*/, const char* name /* = 0*/, float value /* = 1*/ )
+    : QSlider( parent )
     , label_( parent )
     , size_( value )
     , prefix_()
     , changed_( false )
     , previous_( value )
+    , text_ ( name )
 {
     setTickPosition( QSlider::Below );
     setRange( 0, 20 );
     setTickInterval( 2 );
     setPageStep( 1 );
     setOrientation( Qt::Horizontal );
-    label_.setText( QString( name ).append( locale().toString( 1 ) ).append( prefix_ ) );
+    label_.setText( QString( text_ ).append( locale().toString( 1 ) ).append( prefix_ ) );
+    label_.setFixedWidth( 50 );
+    setFixedWidth( 130 );
 
     connect( this, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
     setValue( int( 2 * value ) );
+    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +47,7 @@ SizeButton::SizeButton( QWidget* parent /* = 0*/, const char* name /* = 0*/, flo
 // -----------------------------------------------------------------------------
 SizeButton::~SizeButton()
 {
-    // NOTHING
+    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,14 +61,7 @@ void SizeButton::OnValueChanged( int value )
     size_ = value * 0.5f;
     changed_ = true;
     if( valueLabel_ )
-    {
-        if( size_ == 10 )
-            label_.setText( QString( name() ).append( " " ).append( locale().toString( size_ ) ).append( prefix_ ) );
-        else if( size_ == floor( size_ ) )
-            label_.setText( QString( name() ).append( "   " ).append( locale().toString( size_ ) ).append( prefix_ ) );
-        else
-            label_.setText( QString( name() ).append( locale().toString( size_ ) ).append( prefix_ ) );
-    }
+        label_.setText( QString( text_ ).append( locale().toString( size_ ) ).append( prefix_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,14 +104,7 @@ void SizeButton::Revert()
     size_ = previous_;
     SetSize( size_ );
     if( valueLabel_ )
-    {
-        if( size_ == 10 )
-            label_.setText( QString( name() ).append( " " ).append( locale().toString( size_ ) ).append( prefix_ ) );
-        else if( size_ == floor( size_ ) )
-            label_.setText( QString( name() ).append( "   " ).append( locale().toString( size_ ) ).append( prefix_ ) );
-        else
-            label_.setText( QString( name() ).append( "" ).append( locale().toString( size_ ) ).append( prefix_ ) );
-    }
+        label_.setText( QString( text_ ).append( "" ).append( locale().toString( size_ ) ).append( prefix_ ) );
 }
 
 // -----------------------------------------------------------------------------

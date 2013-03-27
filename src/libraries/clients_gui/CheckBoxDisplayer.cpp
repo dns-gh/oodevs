@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "CheckBoxDisplayer.h"
+#include "RichCheckBox.h"
 
 using namespace kernel;
 using namespace gui;
@@ -22,7 +23,7 @@ CheckBoxDisplayer::CheckBoxDisplayer( QBoxLayout* parent, const QString& name )
     QHBoxLayout* layout = new QHBoxLayout();
     parent->addLayout( layout );
     layout->addWidget( new QLabel( name ) );
-    box_ = new QCheckBox();
+    box_ = new RichCheckBox( name + "CheckBox" );
     layout->addWidget( box_ );
 }
 

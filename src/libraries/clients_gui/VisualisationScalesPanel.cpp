@@ -10,6 +10,10 @@
 #include "clients_gui_pch.h"
 #include "VisualisationScalesPanel.h"
 #include "moc_VisualisationScalesPanel.cpp"
+#include "RichPushButton.h"
+#include "RichComboBox.h"
+#include "RichGroupBox.h"
+#include "SubObjectName.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #pragma warning( push )
@@ -35,7 +39,9 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
     : PreferencePanel_ABC( parent, "VisualisationScalesPanel" )
     , controllers_( controllers )
 {
-    Q3GroupBox* box = new Q3GroupBox( 3, Qt::Horizontal, tr( "Visualisation scales" ), this );
+    SubObjectName subObject( "VisualisationScalesPanel" );
+    RichGroupBox* box = new RichGroupBox( "visuScales", tr( "Visualisation scales" ), this );
+    QGridLayout* boxLayout = new QGridLayout( box );
 
     const QString elements[ 14 ] =
     { tr( "Large texts" ), tr( "Small texts" ), tr( "Edges" ),           tr( "Cliffs" ),
@@ -59,25 +65,33 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
     scales.push_back( "1:10000000" );
 
     new QWidget( box );
-    new QLabel( tr( "Min Scale" ), box );
-    new QLabel( tr( "Max Scale" ), box );
+    QLabel* minlabel = new QLabel( tr( "Min Scale" ), box );
+    QLabel* maxLabel = new QLabel( tr( "Max Scale" ), box );
+    boxLayout->addWidget( minlabel, 0, 1 );
+    boxLayout->addWidget( maxLabel, 0, 2 );
+
     for( int i = 0; i < 14; ++i )
     {
-        new QLabel( elements[ i ], box );
+        QLabel* label = new QLabel( elements[ i ] );
         currentScales_[ i ].min_ = controllers_.options_.GetOption( strMinScale + boost::lexical_cast< std::string >( i ), DefaultScales[ i ].min_ ).To< int >();
         currentScales_[ i ].max_ = controllers_.options_.GetOption( strMaxScale + boost::lexical_cast< std::string >( i ), DefaultScales[ i ].max_ ).To< int >();
-        minCombos_[ i ] = new QComboBox( box );
+        minCombos_[ i ] = new RichComboBox( "minCombos" + QString::number( i ) );
         minCombos_[ i ]->insertStringList( scales );
         minCombos_[ i ]->setCurrentItem( ConvertFromScale( currentScales_[ i ].min_ ) );
         connect( minCombos_[ i ], SIGNAL( activated( int ) ), this, SLOT( OnValueChanged( int ) ) );
-        maxCombos_[ i ] = new QComboBox( box );
+        maxCombos_[ i ] = new RichComboBox( "maxCombos" + QString::number( i ) );
         maxCombos_[ i ]->insertStringList( scales );
         maxCombos_[ i ]->setCurrentItem( ConvertFromScale( currentScales_[ i ].max_ ) );
         connect( maxCombos_[ i ], SIGNAL( activated( int ) ), this, SLOT( OnValueChanged( int ) ) );
+
+        boxLayout->addWidget( label, i + 1, 0 );
+        boxLayout->addWidget( minCombos_[ i ], i + 1, 1 );
+        boxLayout->addWidget( maxCombos_[ i ], i + 1, 2 );
     }
 
-    QPushButton* button = new QPushButton( tr( "Reset" ), box );
+    RichPushButton* button = new RichPushButton( "reset", tr( "Reset" ) );
     connect( button, SIGNAL( clicked() ), this, SLOT( OnReset() ) );
+    boxLayout->addWidget( button, 15, 0 );
     setWidget( box );
     controllers_.Register( *this );
 }

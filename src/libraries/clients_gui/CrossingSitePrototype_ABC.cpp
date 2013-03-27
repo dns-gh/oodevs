@@ -13,6 +13,7 @@
 #include "Tools.h"
 #include "LoadableSpinBox.h"
 #include "LoadableCheckBox.h"
+#include "SubObjectName.h"
 
 using namespace gui;
 
@@ -21,25 +22,27 @@ using namespace gui;
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
 CrossingSitePrototype_ABC::CrossingSitePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::CrossingSitePrototype_ABC", "Crossing site" ) )
+    : ObjectAttributePrototype_ABC( parent, "CrossingSitePrototypeABC", tools::translate( "gui::CrossingSitePrototype_ABC", "Crossing site" ) )
 {
+    SubObjectName subObject( "CrossingSitePrototypeABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->setMargin( 5 );
     layout->addWidget( new QLabel( tools::translate( "gui::CrossingSitePrototype_ABC", "Width:" ) ) );
-    width_ = new LoadableSpinBox( 1, 10000, 10, this );
+    width_ = new LoadableSpinBox( "width", 1, 10000, 10, this );
     width_->setSuffix( kernel::Units::meters.AsString() );
     layout->addWidget( width_ );
 
     layout->addWidget( new QLabel( tools::translate( "gui::CrossingSitePrototype_ABC", "Depth:" ) ) );
-    depth_ = new LoadableSpinBox( 1, 1000, 10, this );
+    depth_ = new LoadableSpinBox( "depth", 1, 1000, 10, this );
     depth_->setSuffix( kernel::Units::meters.AsString() );
     layout->addWidget( depth_ );
 
     layout->addWidget( new QLabel( tools::translate( "gui::CrossingSitePrototype_ABC", "Stream speed:" ) ) );
-    speed_ = new LoadableSpinBox( 0, 100, 1, this );
+    speed_ = new LoadableSpinBox( "speed", 0, 100, 1, this );
     speed_->setSuffix( kernel::Units::metersPerSecond.AsString() );
     layout->addWidget( speed_ );
 
-    needsConstruction_ = new LoadableCheckBox( tools::translate( "gui::CrossingSitePrototype_ABC", "Build river banks:" ), 0 );
+    needsConstruction_ = new LoadableCheckBox( "needsConstruction", tools::translate( "gui::CrossingSitePrototype_ABC", "Build river banks:" ), 0 );
     layout->addWidget( needsConstruction_ );
 }
 

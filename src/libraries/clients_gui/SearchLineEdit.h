@@ -26,7 +26,7 @@ class SearchLineEdit : public RichLineEdit
 public:
     //! @name Constructors/Destructor
     //@{
-             SearchLineEdit( QWidget* parent = 0 );
+    SearchLineEdit( const QString& objectName, QWidget* parent = 0 );
     virtual ~SearchLineEdit();
     //@}
 };

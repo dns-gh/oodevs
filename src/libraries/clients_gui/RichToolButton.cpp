@@ -17,9 +17,10 @@ using namespace gui;
 // Name: RichToolButton constructor
 // Created: NPT 2013-03-14
 // -----------------------------------------------------------------------------
-RichToolButton::RichToolButton( const QString& objectName, QWidget* parent /* = 0*/ )
+RichToolButton::RichToolButton( const QString& objectName, QWidget* parent /* = 0*/, const QString& text /* = 0*/ )
     : QToolButton( parent )
 {
+    setText( text );
     ObjectNameManager::getInstance()->SetObjectName( this, objectName );
 }
 

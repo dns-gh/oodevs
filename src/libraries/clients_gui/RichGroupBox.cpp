@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "RichGroupBox.h"
 #include "moc_RichGroupBox.cpp"
+#include "ObjectNameManager.h"
 
 using namespace gui;
 
@@ -17,12 +18,13 @@ using namespace gui;
 // Name: RichGroupBox constructor
 // Created: ABR 2011-11-21
 // -----------------------------------------------------------------------------
-RichGroupBox::RichGroupBox( QWidget* parent )
+RichGroupBox::RichGroupBox( const QString& objectName, QWidget* parent /* = 0 */ )
     : QGroupBox( parent )
     , timer_             ( new QTimer( this ) )
     , originalTextColor_ ( palette().color( QPalette::Text ) )
     , originalLightColor_( palette().color( QPalette::Light ) )
 {
+    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
     connect( timer_, SIGNAL( timeout() ), SLOT( OnBlink() ) );
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
 }
@@ -31,12 +33,14 @@ RichGroupBox::RichGroupBox( QWidget* parent )
 // Name: RichGroupBox constructor
 // Created: ABR 2011-11-21
 // -----------------------------------------------------------------------------
-RichGroupBox::RichGroupBox( const QString& title, QWidget* parent )
-    : QGroupBox( title, parent )
+RichGroupBox::RichGroupBox( const QString& objectName, const QString& title, QWidget* parent /* = 0 */ )
+    : QGroupBox( parent )
     , timer_             ( new QTimer( this ) )
     , originalTextColor_ ( palette().color( QPalette::Text ) )
     , originalLightColor_( palette().color( QPalette::Light ) )
 {
+    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
+    setTitle( title );
     connect( timer_, SIGNAL( timeout() ), SLOT( OnBlink() ) );
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
 }
@@ -47,7 +51,8 @@ RichGroupBox::RichGroupBox( const QString& title, QWidget* parent )
 // -----------------------------------------------------------------------------
 RichGroupBox::~RichGroupBox()
 {
-    // NOTHING
+    QString objectname = objectName();
+    ObjectNameManager::getInstance()->RemoveRegisteredName( objectname );
 }
 
 // -----------------------------------------------------------------------------

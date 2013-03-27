@@ -14,6 +14,8 @@
 #include <boost/function.hpp>
 #include "ENT/ENT_Tr_ABC.h"
 #include "tools/Resolver_ABC.h"
+#include "RichLineEdit.h"
+#include "RichComboBox.h"
 
 namespace kernel
 {
@@ -61,7 +63,7 @@ signals:
 */
 // Created: ABR 2012-06-18
 // =============================================================================
-class CheckComboBox : public QComboBox
+class CheckComboBox : public RichComboBox
 {
     Q_OBJECT
 
@@ -74,7 +76,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CheckComboBox( QWidget* parent = 0 );
+    explicit CheckComboBox( const QString& objectName, QWidget* parent = 0 );
     virtual ~CheckComboBox();
     //@}
 
@@ -139,12 +141,12 @@ private:
 
     //! @name Types
     //@{
-    class CheckComboLineEdit : public QLineEdit
+    class CheckComboLineEdit : public RichLineEdit
     {
     public:
         //! @name Constructors/Destructor
         //@{
-        explicit CheckComboLineEdit( QComboBox* parent = 0 );
+        explicit CheckComboLineEdit( const QString& objectName, QComboBox* parent = 0 );
         virtual ~CheckComboLineEdit();
         //@}
 
@@ -164,7 +166,7 @@ private:
 public:
     //! @name Member data
     //@{
-    QLineEdit*  lineEdit_;
+    RichLineEdit*  lineEdit_;
     QString     allText_;
     QString     noneText_;
     QString     separator_;

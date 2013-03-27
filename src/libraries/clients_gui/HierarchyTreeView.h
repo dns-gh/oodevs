@@ -39,7 +39,7 @@ class HierarchyTreeView : public HierarchyTreeView_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HierarchyTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent = 0 );
+             HierarchyTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent = 0 );
     virtual ~HierarchyTreeView();
     //@}
 

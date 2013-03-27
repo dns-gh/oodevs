@@ -12,7 +12,13 @@
 #include "moc_ResourceLinksDialog_ABC.cpp"
 
 #include "ResourceNetwork_ABC.h"
+#include "RichCheckBox.h"
+#include "RichGroupBox.h"
+#include "RichListWidget.h"
 #include "RichSpinBox.h"
+#include "RichPushButton.h"
+#include "RichTableWidget.h"
+#include "SubObjectName.h"
 #include "tools.h"
 
 #include "clients_kernel/Controllers.h"
@@ -38,51 +44,60 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     , sourceNode_      ( 0 )
     , id_              ( 0 )
 {
+    SubObjectName subObject( this->objectName() );
     Q3VBox* mainLayout = new Q3VBox( this );
     setWidget( mainLayout );
     pMainLayout_ = new Q3VBox( mainLayout );
     pMainLayout_->setSpacing( 5 );
     pMainLayout_->setMargin( 5 );
     Q3VBox* pNodeBox = new Q3VBox( pMainLayout_ );
-    dotationList_ = new QListWidget( pNodeBox );
+    dotationList_ = new RichListWidget( "datationList", pNodeBox );
     dotationList_->setMaximumHeight( 60 );
     connect( dotationList_, SIGNAL( currentRowChanged ( int ) ), this, SLOT( Update() ) );
-    groupBox_ = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "gui::ResourceLinksDialog_ABC", "Enabled" ), pNodeBox );
+    groupBox_ = new RichGroupBox( "EnabledgroupBox", tools::translate( "gui::ResourceLinksDialog_ABC", "Enabled" ), pNodeBox );
+    QVBoxLayout* groupBoxLayout = new QVBoxLayout( groupBox_ );
     groupBox_->setCheckable( true );
     connect( groupBox_, SIGNAL( toggled( bool ) ), this, SLOT( OnActivationChanged( bool ) ) );
     {
-        Q3HBox* box = new Q3HBox( groupBox_ );
+        Q3HBox* box = new Q3HBox();
+        groupBoxLayout->addWidget( box );
         new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Production:" ), box );
-        production_ = new RichSpinBox( box );
+        production_ = new RichSpinBox( "production", box );
         connect( production_, SIGNAL( valueChanged( int ) ), this, SLOT( OnProductionChanged( int ) ) );
     }
-    generateProduction_ = new QPushButton( tools::translate( "gui::ResourceLinksDialog_ABC", "Automatic production" ), groupBox_ );
+    generateProduction_ = new RichPushButton( "generateProduction", tools::translate( "gui::ResourceLinksDialog_ABC", "Automatic production" ) );
+    groupBoxLayout->addWidget( generateProduction_ );
     connect( generateProduction_, SIGNAL( clicked() ), this, SLOT( GenerateProduction() ) );
     generateProduction_->hide();
     {
-        Q3HBox* box = new Q3HBox( groupBox_ );
+        Q3HBox* box = new Q3HBox();
+        groupBoxLayout->addWidget( box );
         new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Consumption:" ), box );
-        consumption_  = new RichSpinBox( box );
+        consumption_  = new RichSpinBox( "consumption", box );
         connect( consumption_, SIGNAL( valueChanged( int ) ), this, SLOT( OnConsumptionChanged( int ) ) );
     }
-    critical_ = new QCheckBox( tools::translate( "gui::ResourceLinksDialog_ABC", "Vital consumption" ), groupBox_ );
+    critical_ = new RichCheckBox( "critical", tools::translate( "gui::ResourceLinksDialog_ABC", "Vital consumption" ) );
+    groupBoxLayout->addWidget( critical_ );
     connect( critical_, SIGNAL( toggled( bool ) ), this, SLOT( OnCriticalChanged( bool ) ) );
     {
-        Q3HBox* box = new Q3HBox( groupBox_ );
+        Q3HBox* box = new Q3HBox();
+        groupBoxLayout->addWidget( box );
         new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Maximal stock:" ), box );
-        maxStock_ = new RichSpinBox( box );
+        maxStock_ = new RichSpinBox( "maxStock", box );
         connect( maxStock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnMaxStockChanged( int ) ) );
     }
     {
-        stockBox_ = new Q3HBox( groupBox_ );
+        stockBox_ = new Q3HBox();
+        groupBoxLayout->addWidget( stockBox_ );
         new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Initial stock:" ), stockBox_ );
-        stock_ = new RichSpinBox( stockBox_ );
+        stock_ = new RichSpinBox( "stock", stockBox_ );
         connect( stock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnStockChanged( int ) ) );
         stockBox_->hide();
     }
-    table_ = new QTableWidget( groupBox_ );
+    table_ = new RichTableWidget( "table" );
     table_->setSelectionMode( QAbstractItemView::NoSelection );
     table_->setColumnCount( 3 );
+    groupBoxLayout->addWidget( table_ );
     QStringList headers;
     headers << tools::translate( "gui::ResourceLinksDialog_ABC", "Target" )
             << tools::translate( "gui::ResourceLinksDialog_ABC", "Limited" )
@@ -94,7 +109,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     table_->horizontalHeader()->setStretchLastSection( false );
     groupBox_->setEnabled( false );
     connect( table_, SIGNAL( cellChanged( int, int ) ), SLOT( OnValueChanged() ) );
-    okButton_ = new QPushButton( tools::translate( "gui::ResourceLinksDialog_ABC", "Validate" ), pMainLayout_ );
+    okButton_ = new RichPushButton( "ok", tools::translate( "gui::ResourceLinksDialog_ABC", "Validate" ), pMainLayout_ );
     okButton_->setDefault( true );
     connect( okButton_, SIGNAL( clicked() ), SLOT( Validate() ) );
     controllers_.Update( *this );
@@ -170,6 +185,7 @@ void ResourceLinksDialog_ABC::DoMultipleSelect( const std::vector< const T* >& e
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Update()
 {
+    SubObjectName subObject( this->objectName() );
     if( selected_.size() != 1 )
         return;
     okButton_->setVisible( !IsReadOnly() );
@@ -196,6 +212,7 @@ void ResourceLinksDialog_ABC::Update()
     table_->setRowCount( static_cast< int >( node.links_.size() ) );
     for( unsigned int j = 0; j < node.links_.size(); ++j )
     {
+        SubObjectName subObject( selected_.front()->Get< ResourceNetwork_ABC >().GetLinkName( resource, j ) );
         bool limited = node.links_[ j ].capacity_ != -1;
         {
             QTableWidgetItem* item1 = new QTableWidgetItem( selected_.front()->Get< ResourceNetwork_ABC >().GetLinkName( resource, j ) );
@@ -204,14 +221,14 @@ void ResourceLinksDialog_ABC::Update()
         }
         {
             table_->setItem( j, 1, new QTableWidgetItem() );
-            QCheckBox* limitedBox = new QCheckBox;
+            RichCheckBox* limitedBox = new RichCheckBox( "limitedBox" );
             limitedBox->setCheckState( limited ? Qt::Checked : Qt::Unchecked );
             table_->setCellWidget( j, 1, limitedBox );
             connect( limitedBox, SIGNAL( stateChanged( int ) ), SLOT( OnValueChanged() ) );
         }
         {
             table_->setItem( j, 2, new QTableWidgetItem() );
-            QSpinBox* capacity = new QSpinBox();
+            RichSpinBox* capacity = new RichSpinBox( "capacity" );
             capacity->setEnabled( limited );
             capacity->setRange( 0, std::numeric_limits< int >::max() );
             capacity->setValue( limited ? node.links_[ j ].capacity_ : 0 );
@@ -302,10 +319,10 @@ void ResourceLinksDialog_ABC::OnValueChanged()
         std::string resource = dotationList_->currentItem()->text().toStdString();
         for( int j = 0; j < table_->rowCount(); ++j )
         {
-            bool enable = ( static_cast< QCheckBox* >( table_->cellWidget( j, 1 ) )->checkState() == Qt::Checked );
+            bool enable = ( static_cast< RichCheckBox* >( table_->cellWidget( j, 1 ) )->checkState() == Qt::Checked );
             table_->cellWidget( j, 2 )->setEnabled( enable );
             if( enable )
-                resourceNodes_[ resource ].links_[ j ].capacity_ = static_cast< QSpinBox* >( table_->cellWidget( j, 2 ) )->value();
+                resourceNodes_[ resource ].links_[ j ].capacity_ = static_cast< RichSpinBox* >( table_->cellWidget( j, 2 ) )->value();
             else
                 resourceNodes_[ resource ].links_[ j ].capacity_ = -1;
         }

@@ -12,6 +12,10 @@
 #include "moc_AddRasterDialog.cpp"
 #include "SpinBoxAndSlider.h"
 #include "FileDialog.h"
+#include "RichLineEdit.h"
+#include "RichPushButton.h"
+#include "RichTabWidget.h"
+#include "SubObjectName.h"
 #include <boost/algorithm/string.hpp>
 
 using namespace gui;
@@ -24,23 +28,24 @@ AddRasterDialog::AddRasterDialog( QWidget* parent )
     : ModalDialog( parent, "AddRasterDialog" )
     , pixelSize_( 16 )
 {
+    SubObjectName subObject( "AddRasterDialog" );
     setCaption( tr( "Add a raster layer" ) );
     setMinimumSize( 300, 200 );
-    tabWidget_ = new QTabWidget();
+    tabWidget_ = new RichTabWidget( "tabWidget" );
 
     // General tab
     QWidget* generalTab = new QWidget( tabWidget_ );
     QVBoxLayout* generalLayout = new QVBoxLayout( generalTab );
     tabWidget_->addTab( generalTab, tr( "General" ) );
     QGridLayout* gridLayout = new QGridLayout();
-    nameEditor_ = new QLineEdit();
+    nameEditor_ = new RichLineEdit( "nameEditor" );
     nameEditor_->setPlaceholderText( tr( "Enter layer's name" ) );
     connect( nameEditor_, SIGNAL( textChanged( const QString& ) ), SLOT( OnValueChanged() ) );
     QHBoxLayout* fileLayout = new QHBoxLayout();
-    fileEditor_ = new QLineEdit();
+    fileEditor_ = new RichLineEdit( "fileEditor" );
     fileEditor_->setPlaceholderText( tr( "Enter files to import" ) );
     connect( fileEditor_, SIGNAL( textChanged( const QString& ) ), SLOT( OnValueChanged() ) );
-    QPushButton* browseButton = new QPushButton( tr( "Browse..." ) );
+    RichPushButton* browseButton = new RichPushButton( "browse", tr( "Browse..." ) );
     connect( browseButton, SIGNAL( pressed() ), SLOT( OnBrowse() ) );
     fileLayout->addWidget( fileEditor_ );
     fileLayout->addWidget( browseButton );
@@ -65,9 +70,9 @@ AddRasterDialog::AddRasterDialog( QWidget* parent )
     advancedLayout->addStretch();
 
     // Buttons
-    okButton_ = new QPushButton( tr( "Ok" ) );
+    okButton_ = new RichPushButton( "ok", tr( "Ok" ) );
     connect( okButton_, SIGNAL( pressed() ), SLOT( accept() ) );
-    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ) );
+    RichPushButton* cancelButton = new RichPushButton( "cancel", tr( "Cancel" ) );
     connect( cancelButton, SIGNAL( pressed() ), SLOT( reject() ) );
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     buttonLayout->addWidget( okButton_ );

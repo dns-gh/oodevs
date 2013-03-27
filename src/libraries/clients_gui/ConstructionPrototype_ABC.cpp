@@ -12,6 +12,7 @@
 #include "Tools.h"
 #include "LoadableSpinBox.h"
 #include "clients_kernel/Units.h"
+#include "SubObjectName.h"
 
 using namespace gui;
 
@@ -20,11 +21,13 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 ConstructionPrototype_ABC::ConstructionPrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ConstructionPrototype_ABC", "Construction" ) )
+    : ObjectAttributePrototype_ABC( parent, "ConstructionPrototypeABC", tools::translate( "gui::ConstructionPrototype_ABC", "Construction" ) )
 {
+    SubObjectName subObject( "ConstructionPrototypeABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->setMargin( 5 );
     layout->addWidget( new QLabel( tools::translate( "gui::ConstructionPrototype_ABC", "Value:" ) ) );
-    completion_ = new LoadableSpinBox( 1, 100, 1, 0 );
+    completion_ = new LoadableSpinBox( "completion", 1, 100, 1, 0 );
     completion_->setSuffix( kernel::Units::percentage.AsString() );
     completion_->setValue( 100 );
     layout->addWidget( completion_ );

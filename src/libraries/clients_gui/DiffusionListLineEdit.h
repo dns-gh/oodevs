@@ -11,6 +11,7 @@
 #define gui_DiffusionListLineEdit_h_
 
 #include "clients_kernel/SafePointer.h"
+#include "RichLineEdit.h"
 
 namespace kernel
 {
@@ -28,14 +29,14 @@ namespace gui
 */
 // Created: ABR 2011-04-29
 // =============================================================================
-class DiffusionListLineEdit : public QLineEdit
+class DiffusionListLineEdit : public RichLineEdit
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DiffusionListLineEdit( QWidget* parent, kernel::Controllers& controllers, const kernel::Entity_ABC* selected, DiffusionListDialog& diffusionDialog_, const std::string extensionName, const char* name = 0 );
+             DiffusionListLineEdit( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const kernel::Entity_ABC* selected, DiffusionListDialog& diffusionDialog_, const std::string extensionName );
     virtual ~DiffusionListLineEdit();
     //@}
 

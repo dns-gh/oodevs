@@ -13,6 +13,8 @@
 #include "CheckBox.h"
 #include "GlSelector.h"
 #include "Layer.h"
+#include "RichPushButton.h"
+#include "RichGroupBox.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
@@ -24,9 +26,9 @@ Q_DECLARE_METATYPE( Layer* )
 
 namespace
 {
-    QWidget* AddButton( const QIcon& icon, const QString& tooltip, const QObject* receiver, const char* member )
+    QWidget* AddButton( const QString& objectName, const QIcon& icon, const QString& tooltip, const QObject* receiver, const char* member )
     {
-        QPushButton* button = new QPushButton( icon, QString::null );
+        RichPushButton* button = new RichPushButton( objectName, icon, QString::null );
         button->setFixedSize( 32, 32 );
         QToolTip::add( button, tooltip );
         button->connect( button, SIGNAL( clicked() ), receiver, member );
@@ -48,23 +50,26 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers, GlS
 {
     Q3VBox* container = new Q3VBox( this );
     {
-        Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tr( "Fog of war" ), container );
-        fogOfWar_ = new CheckBox( tr( "Display fog of war" ), box );
+        fogOfWar_ = new CheckBox( "fogOfWar", tr( "Display fog of war" ) );
         connect( fogOfWar_, SIGNAL( toggled( bool ) ), SLOT( OnFogOfWarChanged( bool ) ) );
+
+        RichGroupBox* box = new RichGroupBox( "fogBox", tr( "Fog of war" ), container );
+        QHBoxLayout* boxlayout = new QHBoxLayout( box );
+        boxlayout->addWidget( fogOfWar_ );
     }
 
     {
-        Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, tr( "Infrastructures" ), container );
-        infra_ = new CheckBox( tr( "Display Infrastructures" ), box );
+        infra_ = new CheckBox( "infra", tr( "Display Infrastructures" ) );
         connect( infra_, SIGNAL( toggled( bool ) ), SLOT( OnInfraChanged( bool ) ) );
+
+        RichGroupBox* box = new RichGroupBox( "infraBox", tr( "Infrastructures" ), container );
+        QHBoxLayout* boxlayout = new QHBoxLayout( box );
+        boxlayout->addWidget( infra_ );
     }
 
     {
         // ListView
-        Q3GroupBox* groupBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Layer display order and transparency" ), container );
-        Q3VBox* vBox = new Q3VBox( groupBox );
-        vBox->setSpacing( 6 );
-        Q3HBox* box = new Q3HBox( vBox );
+        Q3HBox* box = new Q3HBox();
         box->setSpacing( 5 );
         layersList_ = new QTreeView( box );
         layersList_->setRootIsDecorated( false );
@@ -73,10 +78,10 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers, GlS
         connect( layersList_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), SLOT( OnSelectionChanged() ) );
 
         // Buttons
-        QWidget* up   = AddButton( MAKE_PIXMAP( arrow_up ),   tr( "Move the selected layer forwards" ),  this,   SLOT( OnUp() ) );
-        QWidget* down = AddButton( MAKE_PIXMAP( arrow_down ), tr( "Move the selected layer backwards" ), this,   SLOT( OnDown() ) );
-        QWidget* add  = AddButton( MAKE_PIXMAP( add_point ),  tr( "Add a user raster layer" ),           parent, SIGNAL( OnAddRaster() ) );
-        removeButton_ = AddButton( MAKE_PIXMAP( trash ),      tr( "Remove a user raster layer" ),        this,   SLOT( OnRemoveDynamicLayer() ) );
+        QWidget* up   = AddButton( "up", MAKE_PIXMAP( arrow_up ), tr( "Move the selected layer forwards" ), this, SLOT( OnUp() ) );
+        QWidget* down = AddButton( "down", MAKE_PIXMAP( arrow_down ), tr( "Move the selected layer backwards" ), this, SLOT( OnDown() ) );
+        QWidget* add  = AddButton( "add", MAKE_PIXMAP( add_point ), tr( "Add a user raster layer" ), parent, SIGNAL( OnAddRaster() ) );
+        removeButton_ = AddButton( "remove", MAKE_PIXMAP( trash ), tr( "Remove a user raster layer" ), this, SLOT( OnRemoveDynamicLayer() ) );
         QWidget* buttonBox = new QWidget( box );
         QVBoxLayout* layout = new QVBoxLayout( buttonBox );
         layout->setMargin( 10 );
@@ -86,10 +91,17 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers, GlS
         layout->addWidget( add );
         layout->addWidget( removeButton_ );
 
-        transparencyLabel_ = new QLabel( tr( "Transparency " ), vBox );
-        transparency_ = new QSlider( 0, 100, 1, 100, Qt::Horizontal, vBox );
+        transparencyLabel_ = new QLabel( tr( "Transparency " ) );
+        transparency_ = new QSlider( 0, 100, 1, 100, Qt::Horizontal );
         transparency_->setMaximumWidth( 258 );
         connect( transparency_, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged() ) );
+
+        RichGroupBox* groupBox = new RichGroupBox( "LayerDisplay", tr( "Layer display order and transparency" ), container );
+        QVBoxLayout* groupBoxLayout = new QVBoxLayout( groupBox );
+        groupBoxLayout->setSpacing( 6 );
+        groupBoxLayout->addWidget( box );
+        groupBoxLayout->addWidget( transparencyLabel_ );
+        groupBoxLayout->addWidget( transparency_ );
     }
     setWidget( container );
     controllers_.Register( *this );

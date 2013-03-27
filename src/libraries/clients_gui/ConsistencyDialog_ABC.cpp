@@ -11,6 +11,11 @@
 #include "ConsistencyDialog_ABC.h"
 #include "moc_ConsistencyDialog_ABC.cpp"
 #include "clients_kernel/ConsistencyChecker_ABC.h"
+#include "RichCheckBox.h"
+#include "RichGroupBox.h"
+#include "RichPushButton.h"
+#include "RichTableView.h"
+#include "SubObjectName.h"
 #include <boost/foreach.hpp>
 
 using namespace gui;
@@ -23,11 +28,12 @@ using namespace gui;
 // Name: ConsistencyDialog_ABC constructor
 // Created: ABR 2012-06-06
 // -----------------------------------------------------------------------------
-ConsistencyDialog_ABC::ConsistencyDialog_ABC( QWidget* parent, kernel::ConsistencyChecker_ABC& checker )
+ConsistencyDialog_ABC::ConsistencyDialog_ABC( const QString& objectName, QWidget* parent, kernel::ConsistencyChecker_ABC& checker )
     : QDialog( parent )
     , checker_( checker )
     , pMapper_( new QSignalMapper( this ) )
 {
+    SubObjectName subObject( objectName );
     setCaption( tr( "Consistency analysis" ) );
     connect( pMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnFilterChanged( int ) ) );
 
@@ -36,7 +42,7 @@ ConsistencyDialog_ABC::ConsistencyDialog_ABC( QWidget* parent, kernel::Consisten
     // Proxy instantiated in ConsistencyDialog constructor
 
     // View
-    tableView_ = new QTableView( this );
+    tableView_ = new RichTableView( "tableView", this );
     tableView_->setSortingEnabled( true );
     tableView_->setSelectionBehavior( QAbstractItemView::SelectRows );
     tableView_->setSelectionMode( QAbstractItemView::SingleSelection );
@@ -45,20 +51,20 @@ ConsistencyDialog_ABC::ConsistencyDialog_ABC( QWidget* parent, kernel::Consisten
     connect( tableView_, SIGNAL( doubleClicked( const QModelIndex & ) ), this, SLOT( OnSelectionChanged( const QModelIndex& ) ) );
 
     // Buttons
-    QPushButton* refreshButton = new QPushButton( tr( "Refresh" ) );
-    QPushButton* closeButton = new QPushButton( tr( "Close" ) );
+    RichPushButton* refreshButton = new RichPushButton( "refreshButton", tr( "Refresh" ) );
+    RichPushButton* closeButton = new RichPushButton( "close", tr( "Close" ) );
     connect( refreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
     connect( closeButton, SIGNAL( clicked() ), SLOT( OnClose() ) );
     closeButton->setDefault( true );
 
     // CheckBox type
-    typeGroup_ = new QGroupBox( tr( "Type" ) );
+    typeGroup_ = new RichGroupBox( "typeGroup", tr( "Type" ) );
     checkBoxLayout_ = new QGridLayout( typeGroup_ );
     // CheckBox Level
-    levelGroup_ = new QGroupBox( tr( "Level" ) );
+    levelGroup_ = new RichGroupBox( "levelGroup", tr( "Level" ) );
     QHBoxLayout* levelLayout = new QHBoxLayout( levelGroup_ );
-    warningCheckBox_ = new QCheckBox( tr( "Warning" ) );
-    errorCheckBox_ = new QCheckBox( tr( "Error" ) );
+    warningCheckBox_ = new RichCheckBox( "warningCheckBox", tr( "Warning" ) );
+    errorCheckBox_ = new RichCheckBox( "errorCheckBox", tr( "Error" ) );
     warningCheckBox_->setCheckState( Qt::Checked );
     errorCheckBox_->setCheckState( Qt::Checked );
     connect( warningCheckBox_, SIGNAL( stateChanged( int ) ), this, SLOT( OnLevelChanged() ) );
@@ -159,7 +165,7 @@ void ConsistencyDialog_ABC::CreateCheckbox( const T_Types& names )
     int index = 0;
     BOOST_FOREACH( const T_Types::value_type& name, names )
     {
-        QCheckBox* pCheckBox = new QCheckBox( name.second );
+        RichCheckBox* pCheckBox = new RichCheckBox( name.second, name.second );
         connect( pCheckBox, SIGNAL( stateChanged( int ) ), pMapper_, SLOT( map() ) );
         pMapper_->setMapping( pCheckBox, name.first );
         pCheckBox->setCheckState( Qt::Checked );

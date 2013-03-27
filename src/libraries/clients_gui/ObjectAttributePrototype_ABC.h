@@ -33,7 +33,7 @@ class ObjectAttributePrototype_ABC : public RichGroupBox
 public:
     //! @name Constructor/Destructor
     //@{
-             ObjectAttributePrototype_ABC( QWidget* parent, const QString& name );
+             ObjectAttributePrototype_ABC( QWidget* parent, const QString& objectName, const QString& name );
     virtual ~ObjectAttributePrototype_ABC();
     //@}
 

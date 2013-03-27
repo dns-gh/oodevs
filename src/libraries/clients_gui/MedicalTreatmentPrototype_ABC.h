@@ -13,6 +13,7 @@
 #include "ObjectAttributePrototype_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "LoadableSpinBox.h"
+#include "SubObjectName.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <geometry/Types.h>
 
@@ -66,9 +67,10 @@ protected:
         explicit Capacity( QWidget* parent, const std::string& name )
             : name_ ( name )
         {
+            SubObjectName subObject( "Capacity" );
             Q3HBox* hbox = new Q3HBox( parent );
             new QLabel( QString( name.c_str() ), hbox );
-            baseline_ = new LoadableSpinBox( 0, 10000, 1, hbox );
+            baseline_ = new LoadableSpinBox( QString( name.c_str() ) + "baseline", 0, 10000, 1, hbox );
         }
 
         std::string name_;

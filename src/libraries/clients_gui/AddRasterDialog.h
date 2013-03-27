@@ -15,6 +15,9 @@
 namespace gui
 {
     class SpinBoxAndSlider;
+    class RichTabWidget;
+    class RichPushButton;
+    class RichLineEdit;
 
 // =============================================================================
 /** @class  AddRasterDialog
@@ -57,12 +60,12 @@ private:
     //! @name Member data
     //@{
     int               pixelSize_;
-    QTabWidget*       tabWidget_;
+    RichTabWidget*    tabWidget_;
     SpinBoxAndSlider* pixelSizeEditor_;
-    QLineEdit*        nameEditor_;
-    QLineEdit*        fileEditor_;
+    RichLineEdit*        nameEditor_;
+    RichLineEdit*        fileEditor_;
     QLabel*           warningLabel_;
-    QPushButton*      okButton_;
+    RichPushButton*   okButton_;
     //@}
 };
 

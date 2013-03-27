@@ -753,16 +753,16 @@ Please check access permissions or write protection.</translation>
 <context>
     <name>gui::FloodPrototype_ABC</name>
     <message>
-        <source>Flood</source>
-        <translation>Flood</translation>
-    </message>
-    <message>
         <source>Depth:</source>
         <translation>Depth:</translation>
     </message>
     <message>
         <source>Reference distance:</source>
         <translation>Reference distance:</translation>
+    </message>
+    <message>
+        <source>Flood</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -849,8 +849,8 @@ Please check access permissions or write protection.</translation>
 <context>
     <name>gui::GraphicPreferences</name>
     <message>
-        <source>Colors</source>
-        <translation>Colors</translation>
+        <source>Colors and line thickness</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1707,10 +1707,6 @@ Do you want to remove it?</translation>
 </context>
 <context>
     <name>gui::TerrainPreference</name>
-    <message>
-        <source>Line thickness: </source>
-        <translation>Line thickness: </translation>
-    </message>
     <message>
         <source> px</source>
         <translation> px</translation>

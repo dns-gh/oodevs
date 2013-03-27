@@ -65,7 +65,7 @@ public:
 protected:
     //! @name Helpers
     //@{
-    void CreateGUI();
+    void CreateGUI( const QString& objectName );
     //@}
 
 private:
@@ -88,7 +88,7 @@ protected:
     ExpandableGroupBox*                     filtersWidget_;
     RichTreeView*                           treeView_;
     QSignalMapper*                          signalMapper_;
-    QPushButton*                            clearButton_;
+    RichPushButton*                         clearButton_;
     QWidget*                                filtersContainer_;
     QGridLayout*                            filtersLayout_;
     int                                     currentFilterRow_;
@@ -109,21 +109,21 @@ class SearchTreeView : public SearchTreeView_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SearchTreeView( QWidget* parent );
+             SearchTreeView( const QString& objectName, QWidget* parent );
              template< typename _1 >
-             SearchTreeView( QWidget* parent, _1& first );
+             SearchTreeView( const QString& objectName, QWidget* parent, _1& first );
              template< typename _1, typename _2 >
-             SearchTreeView( QWidget* parent, _1& first, _2& second );
+             SearchTreeView( const QString& objectName, QWidget* parent, _1& first, _2& second );
              template< typename _1, typename _2, typename _3 >
-             SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third );
+             SearchTreeView( const QString& objectName, QWidget* parent, _1& first, _2& second, _3& third );
              template< typename _1, typename _2, typename _3, typename _4 >
-             SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth );
+             SearchTreeView( const QString& objectName, QWidget* parent, _1& first, _2& second, _3& third, _4& fourth );
              template< typename _1, typename _2, typename _3, typename _4, typename _5 >
-             SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth );
+             SearchTreeView( const QString& objectName, QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth );
              template< typename _1, typename _2, typename _3, typename _4, typename _5, typename _6 >
-             SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth );
+             SearchTreeView( const QString& objectName, QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth );
              template< typename _1, typename _2, typename _3, typename _4, typename _5, typename _6, typename _7 >
-             SearchTreeView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth, _7& seventh );
+             SearchTreeView( const QString& objectName, QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth, _7& seventh );
     virtual ~SearchTreeView();
     //@}
 

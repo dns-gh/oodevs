@@ -11,6 +11,8 @@
 #include "ChangeSuperiorDialog.h"
 #include "moc_ChangeSuperiorDialog.cpp"
 #include "ChangeSuperior_ABC.h"
+#include "RichPushButton.h"
+#include "SubObjectName.h"
 #include "tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -29,6 +31,7 @@ ChangeSuperiorDialog::ChangeSuperiorDialog( QWidget* parent, kernel::Controllers
     , entity_        ( 0 )
     , selected_      ( 0 )
 {
+    SubObjectName subObject( "ChangeSuperiorDialog" );
     if( communication )
         setWindowTitle( tr( "Select new group") );
     else
@@ -43,8 +46,8 @@ ChangeSuperiorDialog::ChangeSuperiorDialog( QWidget* parent, kernel::Controllers
     superiorLabel_ = new QLabel( "---" );
     boxLayout->addWidget( superiorLabel_ );
     superiorLabel_->setAlignment( Qt::AlignCenter );
-    okButton_ = new QPushButton( tr( "Ok" ), this );
-    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), this );
+    okButton_ = new RichPushButton( "ok", tr( "Ok" ), this );
+    RichPushButton* cancelButton = new RichPushButton( "cancel", tr( "Cancel" ), this );
     layout->addWidget( box, 0, 0, 1, 2 );
     layout->addWidget( okButton_, 1, 0 );
     layout->addWidget( cancelButton, 1, 1 );

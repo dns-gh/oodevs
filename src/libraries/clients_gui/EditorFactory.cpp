@@ -11,6 +11,8 @@
 #include "EditorFactory.h"
 #include "clients_kernel/ValueEditor.h"
 #include "clients_kernel/Units.h"
+#include "SubObjectName.h"
+#include "RichLineEdit.h"
 #include "RichSpinBox.h"
 #include "ValuedComboBox.h"
 #include "Tools.h"
@@ -63,11 +65,11 @@ QWidget* EditorFactory::EndEditor()
 // =============================================================================
 namespace
 {
-    class QStringEditor : public QLineEdit
+    class QStringEditor : public RichLineEdit
                         , public ValueEditor< QString >
     {
     public:
-        explicit QStringEditor( QWidget* parent ) : QLineEdit( parent )
+        explicit QStringEditor( const QString& objectName, QWidget* parent ) : RichLineEdit( objectName, parent )
         {
             // NOTHING
         }
@@ -90,7 +92,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( QString* const& value )
 {
-    QStringEditor* editor = new QStringEditor( parent_ );
+    QStringEditor* editor = new QStringEditor( "stringEditor", parent_ );
     editor->setText( *value );
     result_ = editor;
 }
@@ -183,8 +185,8 @@ namespace
                        , public ValueEditor< T >
     {
     public:
-        NumberEditor( QWidget* parent, const T& value )
-             : BaseSpinBox( parent )
+        NumberEditor( const QString& objectName, QWidget* parent, const T& value )
+             : BaseSpinBox( objectName, parent )
         {
             setValue( static_cast< EditedType >( value ) );
         }
@@ -203,8 +205,8 @@ namespace
                      , public ValueEditor< UnitedValue< T > >
     {
     public:
-         UnitEditor( QWidget* parent, const UnitedValue< T >& value )
-             : BaseSpinBox( parent, static_cast< EditedType >( value.unit_.GetMinValue() ), static_cast< EditedType >( value.unit_.GetMaxValue() ) )
+        UnitEditor( const QString& objectName, QWidget* parent, const UnitedValue< T >& value )
+             : BaseSpinBox( objectName, parent, static_cast< EditedType >( value.unit_.GetMinValue() ), static_cast< EditedType >( value.unit_.GetMaxValue() ) )
              , unit_( value.unit_ )
          {
              setSuffix( value.unit_.AsString() );
@@ -225,8 +227,8 @@ namespace
     QWidget* CreateNumberEditor( QWidget* parent, const T& value, const Unit* unit )
     {
         if( unit )
-            return new UnitEditor< RichSpinBox, int, T >( parent, UnitedValue< T >( value, *unit ) );
-        return new NumberEditor< RichSpinBox, int, T >( parent, value );
+            return new UnitEditor< RichSpinBox, int, T >( "numberEditorSpinBox", parent, UnitedValue< T >( value, *unit ) );
+        return new NumberEditor< RichSpinBox, int, T >( "numberEditorSpinBox", parent, value );
     }
 
     template< typename T >
@@ -234,9 +236,9 @@ namespace
     {
         RichDoubleSpinBox* spinBox = 0;
         if( unit )
-            spinBox = new UnitEditor< RichDoubleSpinBox, double, T >( parent, UnitedValue< T >( value, *unit ));
+            spinBox = new UnitEditor< RichDoubleSpinBox, double, T >( "floatingSpinBox", parent, UnitedValue< T >( value, *unit ));
         else
-            spinBox = new NumberEditor< RichDoubleSpinBox, double, T >( parent, value );
+            spinBox = new NumberEditor< RichDoubleSpinBox, double, T >( "FloatingSpinBox", parent, value );
         spinBox->setDecimals( ( unit ) ? unit->GetDecimal() : decimals );
         return spinBox;
     }
@@ -305,8 +307,8 @@ namespace
                         , public ValueEditor< bool >
     {
     public:
-        BooleanEditor( QWidget* parent )
-            : ValuedComboBox< bool >( parent )
+        BooleanEditor( const QString& objectName, QWidget* parent )
+            : ValuedComboBox< bool >( objectName, parent )
         {
             AddItem( tools::translate( "gui::EditorFactory", "True" ), true );
             AddItem( tools::translate( "gui::EditorFactory", "False" ), false );
@@ -326,7 +328,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( bool* const& value )
 {
-    BooleanEditor* editor = new BooleanEditor( parent_ );
+    BooleanEditor* editor = new BooleanEditor( "editor", parent_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }

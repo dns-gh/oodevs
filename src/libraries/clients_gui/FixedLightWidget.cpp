@@ -12,6 +12,8 @@
 #include "moc_FixedLightWidget.cpp"
 #include "DirectionWidget.h"
 #include "ColorButton.h"
+#include "RichGroupBox.h"
+#include "SubObjectName.h"
 #include <graphics/FixedLighting.h>
 
 using namespace gui;
@@ -24,15 +26,16 @@ FixedLightWidget::FixedLightWidget( QWidget* parent, FixedLighting& lighting )
     : Q3HBox( parent )
     , lighting_( lighting )
 {
+    SubObjectName subObject( "FixedLightWidget" );
     lighting_.SetLightDirection( geometry::Vector3f( 0, 0, 1 ) );
     lighting_.SetAmbient( 24/255.f, 24/255.f, 24/255.f );
     lighting_.SetDiffuse( 224/255.f, 224/255.f, 224/255.f );
     {
-        Q3GroupBox* directionGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Light direction" ), this );
+        RichGroupBox* directionGroup = new RichGroupBox( "directionGroup", tr( "Light direction" ), this );
         DirectionWidget* direction = new DirectionWidget( directionGroup );
         connect( direction, SIGNAL( DirectionChanged( const geometry::Vector3f& ) ), this, SLOT( OnDirectionChanged( const geometry::Vector3f& ) ) );
     }
-    Q3GroupBox* colorBox = new Q3GroupBox( 2, Qt::Horizontal, tr( "Light colors" ), this );
+    RichGroupBox* colorBox = new RichGroupBox( "colorBox", tr( "Light colors" ), this );
     {
         Q3VBox* labelBox = new Q3VBox( colorBox );
         new QLabel( tr( "Ambient" ), labelBox );
@@ -40,9 +43,9 @@ FixedLightWidget::FixedLightWidget( QWidget* parent, FixedLighting& lighting )
     }
     {
         Q3VBox* buttonBox = new Q3VBox( colorBox );
-        ambient_ = new ColorButton( buttonBox, "", QColor( 24, 24, 24 ) );
+        ambient_ = new ColorButton( "ambient", buttonBox, "", QColor( 24, 24, 24 ) );
         connect( ambient_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( OnAmbientChanged( const QColor& ) ) );
-        diffuse_ = new ColorButton( buttonBox, "", QColor( 224, 224, 224 ) );
+        diffuse_ = new ColorButton( "diffuse", buttonBox, "", QColor( 224, 224, 224 ) );
         connect( diffuse_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( OnDiffuseChanged( const QColor& ) ) );
     }
 }

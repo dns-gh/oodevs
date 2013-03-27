@@ -32,8 +32,8 @@ using namespace gui;
 // Name: HierarchyTreeView_ABC constructor
 // Created: ABR 2012-08-13
 // -----------------------------------------------------------------------------
-HierarchyTreeView_ABC::HierarchyTreeView_ABC( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
-    : EntityTreeView_ABC( controllers, profile, modelObserver, parent )
+HierarchyTreeView_ABC::HierarchyTreeView_ABC( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
+    : EntityTreeView_ABC( objectName, controllers, profile, modelObserver, parent )
     , symbols_( symbols )
     , activated_( true )
     , emptyPixmap_( 0 )

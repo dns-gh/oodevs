@@ -14,7 +14,7 @@
 
 namespace gui
 {
-
+    class RichCheckBox;
 // =============================================================================
 /** @class  CheckBoxDisplayer
     @brief  CheckBoxDisplayer
@@ -53,7 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
-    QCheckBox* box_;
+    RichCheckBox* box_;
     //@}
 };
 

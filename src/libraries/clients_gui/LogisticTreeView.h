@@ -38,7 +38,7 @@ class LogisticTreeView : public HierarchyTreeView_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ );
+             LogisticTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ );
     virtual ~LogisticTreeView();
     //@}
 

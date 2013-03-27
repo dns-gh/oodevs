@@ -20,6 +20,8 @@
 #include "LayersPanel.h"
 #include "InhabitantPanel.h"
 #include "resources.h"
+#include "RichPushButton.h"
+#include "SubObjectName.h"
 #include "ElevationPanel.h"
 #include "Elevation2dLayer.h"
 
@@ -37,6 +39,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     , painter_          ( painter )
     , pGraphicPrefPanel_( 0 )
 {
+    SubObjectName subObject( "PreferencesDialog" );
     setCaption( tr( "Preferences" ) );
     QGridLayout* grid = new QGridLayout( this );
     grid->setColumnStretch( 0, 1 );
@@ -83,8 +86,8 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     box = new Q3HBox( this );
     box->setMargin( 5 );
     box->setMaximumHeight( 40 );
-    QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
-    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
+    RichPushButton* okBtn = new RichPushButton( "ok", tr( "Ok" ), box );
+    RichPushButton* cancelBtn = new RichPushButton( "cancel", tr( "Cancel" ), box );
     okBtn->setDefault( true );
     grid->addWidget( box, 2, 1, Qt::AlignRight );
 

@@ -30,6 +30,10 @@
 #include "DiffusionListDialog.h"
 #include "DiffusionListFunctors.h"
 #include "DiffusionListLineEdit.h"
+#include "RichCheckBox.h"
+#include "RichComboBox.h"
+#include "RichGroupBox.h"
+#include "SubObjectName.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace gui;
@@ -48,10 +52,12 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
     , pGroupBox_      ( 0 )
     , updating_       ( false )
 {
+    SubObjectName subObject( this->objectName() );
     pMainLayout_ = new Q3VBox( this );
     pMainLayout_->setMargin( 5 );
     pMainLayout_->setSpacing( 5 );
-    pExtensionLayout_ = new Q3VBox( pMainLayout_ );
+    pExtensionLayout_ = new QWidget( pMainLayout_ );
+    pExtensionLayout_->setLayout( new QVBoxLayout() );
     setWidget( pMainLayout_ );
     controllers_.Update( *this );
 }
@@ -97,12 +103,17 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
                 type->GetAttributeTypes( "party", attributes );
             if( attributes.size() )
             {
-                pGroupBox_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Enabled" ), pExtensionLayout_ );
+                pGroupBox_ = new RichGroupBox( "enabledGroupBox", tr( "Enabled" ) );
+                pGroupBoxLayout_ = new QGridLayout( pGroupBox_ );
                 pGroupBox_->setCheckable( controllers_.GetCurrentMode() != eModes_Replay );
                 pGroupBox_->setEnabled( controllers_.GetCurrentMode() != eModes_Replay );
-                pGroupBox_->setMargin( 5 );
-                for( ExtensionType::RCIT_AttributesTypes it = attributes.rbegin(); it != attributes.rend(); ++it )
-                    AddWidget( **it );
+                int currentRow = 0;
+                for( ExtensionType::RCIT_AttributesTypes it = attributes.rbegin(); it != attributes.rend(); ++it, ++currentRow )
+                    AddWidget( **it, currentRow );
+                pGroupBoxLayout_->setColStretch( 1, 4 );
+                QVBoxLayout* pExtensionLayoutLayout = static_cast< QVBoxLayout* >( pExtensionLayout_->layout() );
+                pExtensionLayoutLayout->addWidget( pGroupBox_ );
+                pExtensionLayoutLayout->addStretch( 1 );
                 UpdateDependencies();
                 const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
                 if( !ext )
@@ -201,7 +212,7 @@ namespace
         mutable unsigned int trailing_;
     };
 
-    void FillCombo( QComboBox& combo, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver )
+    void FillCombo( RichComboBox& combo, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver )
     {
         std::string dictionary;
         std::string kind;
@@ -246,7 +257,7 @@ namespace
 // Name: ExtensionsPanel::AddWidget
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
+void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute, int currentRow )
 {
     if( !selected_ )
         return;
@@ -255,7 +266,8 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
     std::string value( ext ? ext->GetValue( attribute.GetName() ) : "" );
     if( attribute.GetType() == AttributeType::ETypeBoolean )
     {
-        QCheckBox* box = new QCheckBox( attribute.GetLabel( language, "" ).c_str(), pGroupBox_, attribute.GetName().c_str() );
+        RichCheckBox* box = new RichCheckBox( attribute.GetName().c_str(), attribute.GetLabel( language, "" ).c_str() );
+        pGroupBoxLayout_->addWidget( box, currentRow, 0 );
         widgets_.push_back( box );
         box->setChecked( value == "true" );
         connect( box, SIGNAL( toggled( bool ) ), SLOT( Commit() ) );
@@ -264,44 +276,44 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
     int min;
     int max;
     attribute.GetMinMaxLength( min, max );
-    Q3HBox* box = new Q3HBox( pGroupBox_ );
-    box->setStretchFactor( new QLabel( attribute.GetLabel( language, "" ).c_str(), box ), 1 );
+    QLabel* attributeNameLabel = new QLabel( attribute.GetLabel( language, "" ).c_str() );
+    pGroupBoxLayout_->addWidget( attributeNameLabel );
     switch( attribute.GetType() )
     {
     case AttributeType::ETypeString:
         {
-            QLineEdit* edit = new QLineEdit( box, attribute.GetName().c_str() );
+            RichLineEdit* edit = new RichLineEdit( attribute.GetName().c_str() );
             if( min != -1 || max != -1 )
                 edit->setValidator( new QMinMaxValidator( edit, min, max ) );
             edit->insert( value.c_str() );
-            box->setStretchFactor( edit, 1 );
+            pGroupBoxLayout_->addWidget( edit, currentRow, 1 );
             widgets_.push_back( edit );
             connect( edit, SIGNAL( textChanged( const QString & ) ), SLOT( Commit() ) );
         }
         break;
     case AttributeType::ETypeAlphanumeric:
         {
-            QLineEdit* edit = new QLineEdit( box, attribute.GetName().c_str() );
+            RichLineEdit* edit = new RichLineEdit( attribute.GetName().c_str() );
             edit->setValidator( new QMinMaxValidator( edit, min, max, new QRegExpValidator( QRegExp( "[a-zA-Z0-9.]*" ), edit ) ) );
             edit->insert( value.c_str() );
-            box->setStretchFactor( edit, 1 );
+            pGroupBoxLayout_->addWidget( edit, currentRow, 1 );
             widgets_.push_back( edit );
             connect( edit, SIGNAL( textChanged( const QString & ) ), SLOT( Commit() ) );
         }
         break;
     case AttributeType::ETypeNumeric:
         {
-            QLineEdit* edit = new QLineEdit( box, attribute.GetName().c_str() );
+            RichLineEdit* edit = new RichLineEdit( attribute.GetName().c_str() );
             edit->setValidator( new QMinMaxValidator( edit, min, max, new QIntValidator( edit ) ) );
             edit->insert( value.c_str() );
-            box->setStretchFactor( edit, 1 );
+            pGroupBoxLayout_->addWidget( edit, currentRow, 1 );
             widgets_.push_back( edit );
             connect( edit, SIGNAL( textChanged( const QString & ) ), SLOT( Commit() ) );
         }
         break;
     case AttributeType::ETypeDictionary:
         {
-            QComboBox* combo = new QComboBox( box, attribute.GetName().c_str() );
+            RichComboBox* combo = new RichComboBox( attribute.GetName().c_str() );
             FillCombo( *combo, attribute, extensions_ );
             try
             {
@@ -313,14 +325,14 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
             {
                 // NOTHING
             }
-            box->setStretchFactor( combo, 1 );
+            pGroupBoxLayout_->addWidget( combo, currentRow, 1 );
             widgets_.push_back( combo );
             connect( combo, SIGNAL( activated( int ) ), SLOT( Commit() ) );
         }
         break;
     case AttributeType::ETypeLoosyDictionary:
         {
-            QComboBox* combo = new QComboBox( true, box, attribute.GetName().c_str() );
+            RichComboBox* combo = new RichComboBox( attribute.GetName().c_str() );
             FillCombo( *combo, attribute, extensions_ );
             if( min != -1 || max != 1 )
             {
@@ -333,7 +345,7 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
             }
             else
                 combo->setCurrentText( value.c_str() );
-            box->setStretchFactor( combo, 1 );
+            pGroupBoxLayout_->addWidget( combo, currentRow, 1 );
             widgets_.push_back( combo );
             connect( combo, SIGNAL( activated( int ) ), SLOT( Commit() ) );
         }
@@ -344,10 +356,10 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
                 return;
             const std::string extensionName = extensions_.GetNameByType( AttributeType::ETypeDiffusionList );
             assert( !extensionName.empty() );
-            DiffusionListLineEdit* edit = new DiffusionListLineEdit( box, controllers_, selected_, *diffusionDialog_, extensionName, attribute.GetName().c_str() );
+            DiffusionListLineEdit* edit = new DiffusionListLineEdit( attribute.GetName().c_str(), 0, controllers_, selected_, *diffusionDialog_, extensionName );
             edit->insert( value.c_str() );
             edit->setValidator( new QMinMaxValidator( edit, min, max, new QRegExpValidator( DiffusionListData::regexp_, edit ) ) );
-            box->setStretchFactor( edit, 1 );
+            pGroupBoxLayout_->addWidget( edit, currentRow, 1 );
             widgets_.push_back( edit );
             connect( edit, SIGNAL( textChanged( const QString & ) ), SLOT( Commit() ) );
         }
@@ -407,14 +419,14 @@ void ExtensionsPanel::Commit()
             switch( attribute->GetType() )
             {
             case AttributeType::ETypeBoolean:
-                ext->SetValue( ( *it )->name(), static_cast< QCheckBox* >( *it )->isChecked() && enabled ? "true" : "false" );
+                ext->SetValue( ( *it )->name(), static_cast< RichCheckBox* >( *it )->isChecked() && enabled ? "true" : "false" );
                 break;
             case AttributeType::ETypeString:
             case AttributeType::ETypeAlphanumeric:
             case AttributeType::ETypeNumeric:
             case AttributeType::ETypeDiffusionList:
                 {
-                    QLineEdit* edit = static_cast< QLineEdit* >( *it );
+                    RichLineEdit* edit = static_cast< RichLineEdit* >( *it );
                     QString text = edit->text();
                     int pos = 0;
                     if( !edit->validator() || edit->validator()->validate( text, pos ) == QValidator::Acceptable )
@@ -428,7 +440,7 @@ void ExtensionsPanel::Commit()
                 break;
             case AttributeType::ETypeDictionary:
                 {
-                    QComboBox* combo = static_cast< QComboBox* >( *it );
+                    RichComboBox* combo = static_cast< RichComboBox* >( "combo", *it );
                     const std::string key = GetDictionaryKey( combo->currentText(), *attribute, extensions_ );
                     if( !key.empty() )
                         ext->SetValue( combo->name(), enabled ? key : "" );
@@ -438,7 +450,7 @@ void ExtensionsPanel::Commit()
                 break;
             case AttributeType::ETypeLoosyDictionary:
                 {
-                    QComboBox* combo = static_cast< QComboBox* >( *it );
+                    RichComboBox* combo = static_cast< RichComboBox* >( "combo", *it );
                     QString text = combo->currentText();
                     int pos = 0;
                     if( !combo->validator() || combo->validator()->validate( text, pos ) == QValidator::Acceptable )
@@ -482,14 +494,14 @@ void ExtensionsPanel::UpdateDisplay()
             switch( attribute->GetType() )
             {
             case AttributeType::ETypeBoolean:
-                static_cast< QCheckBox* >( *it )->setChecked( ( *it )->isEnabled() );
+                static_cast< RichCheckBox* >( *it )->setChecked( ( *it )->isEnabled() );
                 break;
             case AttributeType::ETypeString:
             case AttributeType::ETypeAlphanumeric:
             case AttributeType::ETypeNumeric:
             case AttributeType::ETypeDiffusionList:
                 {
-                    QLineEdit* edit = static_cast< QLineEdit* >( *it );
+                    RichLineEdit* edit = static_cast< RichLineEdit* >( *it );
                     edit->setText( enabled ? value : "" );
                     int pos = 0;
                     edit->setPaletteBackgroundColor( ( !edit->validator() || edit->validator()->validate( value, pos ) == QValidator::Acceptable ) ? Qt::white : Qt::yellow );
@@ -497,7 +509,7 @@ void ExtensionsPanel::UpdateDisplay()
                 break;
             case AttributeType::ETypeDictionary:
                 {
-                    QComboBox* combo = static_cast< QComboBox* >( *it );
+                    RichComboBox* combo = static_cast< RichComboBox* >( "combo", *it );
                     const std::string& selected = GetDictionaryString( value.toStdString(), *attribute, extensions_ );
                     if( !selected.empty() )
                         combo->setCurrentText( selected.c_str() );
@@ -505,7 +517,7 @@ void ExtensionsPanel::UpdateDisplay()
                 break;
             case AttributeType::ETypeLoosyDictionary:
                 {
-                    QComboBox* combo = static_cast< QComboBox* >( *it );
+                    RichComboBox* combo = static_cast< RichComboBox* >( "combo", *it );
                     combo->setCurrentText( enabled ? value : "" );
                     int pos = 0;
                     combo->setPaletteBackgroundColor( ( !combo->validator() || combo->validator()->validate( value, pos ) == QValidator::Acceptable ) ? Qt::white : Qt::yellow );

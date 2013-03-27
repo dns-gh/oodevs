@@ -19,7 +19,7 @@ using namespace gui;
 // Created: JSR 2011-02-23
 // -----------------------------------------------------------------------------
 ResourceNetworkPrototype_ABC::ResourceNetworkPrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ResourceNetworkPrototype_ABC", "Resource network" ) )
+    : ObjectAttributePrototype_ABC( parent, "ResourceNetworkPrototype_ABC", tools::translate( "gui::ResourceNetworkPrototype_ABC", "Resource network" ) )
 {
     // NOTHING
 }

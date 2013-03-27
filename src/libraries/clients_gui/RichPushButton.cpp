@@ -17,7 +17,7 @@ using namespace gui;
 // Name: RichPushButton constructor
 // Created: NPT 2013-03-12
 // -----------------------------------------------------------------------------
-RichPushButton::RichPushButton( const QString& objectName , const QString& text, QWidget* parent )
+RichPushButton::RichPushButton( const QString& objectName, const QString& text, QWidget* parent )
     : QPushButton( text, parent )
 {
     ObjectNameManager::getInstance()->SetObjectName( this, objectName );

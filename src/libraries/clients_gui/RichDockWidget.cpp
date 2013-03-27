@@ -9,6 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "RichDockWidget.h"
+#include "SubObjectName.h"
+#include "ObjectNameManager.h"
 #include "clients_kernel/Controllers.h"
 
 using namespace gui;
@@ -23,6 +25,7 @@ RichDockWidget::RichDockWidget( kernel::Controllers& controllers, QWidget* paren
     , windowMenuVisibility_( true )
 {
     setObjectName( objectName );
+    gui::SubObjectName subObject( this->objectName() );
     setWindowTitle( windowTitle );
     controllers_.Register( *this );
 }

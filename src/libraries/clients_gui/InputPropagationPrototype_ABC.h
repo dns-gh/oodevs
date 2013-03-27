@@ -21,6 +21,7 @@ namespace tools
 namespace gui
 {
     class RichLabel;
+    class RichCheckBox;
 
 // =============================================================================
 /** @class  PropagationPrototype_ABC
@@ -55,7 +56,7 @@ protected:
     const tools::Path root_;
     ValuedComboBox< std::string >* propagationFiles_;
     ValuedComboBox< std::string >* dataField_;
-    QCheckBox* exportData_;
+    RichCheckBox* exportData_;
     //@}
 };
 

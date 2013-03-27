@@ -41,7 +41,7 @@ class RichTreeView : public QTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RichTreeView( QWidget* parent = 0, kernel::Controllers* controllers = 0 );
+    explicit RichTreeView( const QString& objectName, QWidget* parent = 0, kernel::Controllers* controllers = 0 );
     virtual ~RichTreeView();
     //@}
 

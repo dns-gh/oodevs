@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "CommonDelegate.h"
 #include "moc_CommonDelegate.cpp"
+#include "RichComboBox.h"
+#include "RichLineEdit.h"
 #include "RichSpinBox.h"
 #include "Roles.h"
 
@@ -265,24 +267,24 @@ QWidget* CommonDelegate::createEditor( QWidget* parent, const QStyleOptionViewIt
     if( const SpinBoxDescription< int >* element = Find( spinBoxs_, position->id_ ) )
     {
         std::pair< int, int > minMax = GetMinMax< int >( *element, newIndex, intRestrictions_, singleIntRestrictions_ );
-        QSpinBox* editor = new RichSpinBox( parent, minMax.first, minMax.second, element->gap_ );
+        RichSpinBox* editor = new RichSpinBox( "editorSpinBox", parent, minMax.first, minMax.second, element->gap_ );
         return editor;
     }
     else if( const SpinBoxDescription< double >* element = Find( doubleSpinBoxs_, position->id_ ) )
     {
         std::pair< double, double > minMax = GetMinMax< double >( *element, newIndex, doubleRestrictions_, singleDoubleRestrictions_ );
-        QDoubleSpinBox* editor = new RichDoubleSpinBox( parent, minMax.first, minMax.second, element->gap_, element->precision_ );
+        QDoubleSpinBox* editor = new RichDoubleSpinBox( "editorDoubleSpinBox", parent, minMax.first, minMax.second, element->gap_, element->precision_ );
         return editor;
     }
     else if( const QStringList* element = Find( comboBoxs_, position->id_ ) )
     {
-        QComboBox* editor = new QComboBox( parent );
+        RichComboBox* editor = new RichComboBox( "editorComboBox", parent );
         editor->addItems( *element );
         return editor;
     }
     else if( const QString* element = Find( lineEdits_, position->id_ ) )
     {
-        QLineEdit* editor = new QLineEdit( parent );
+        RichLineEdit* editor = new RichLineEdit( "editorLineEdit", parent );
         return editor;
     }
     else if( std::find( checkBoxs_.begin(), checkBoxs_.end(), position->id_ ) != checkBoxs_.end() )
@@ -306,7 +308,7 @@ void CommonDelegate::setEditorData( QWidget* editor, const QModelIndex& index ) 
 
     if( const SpinBoxDescription< int >* element = Find( spinBoxs_, position->id_ ) )
     {
-        QSpinBox* spinBox = static_cast< QSpinBox* >( editor );
+        RichSpinBox* spinBox = static_cast< RichSpinBox* >( "spinbox", editor );
         int value = spinBox->locale().toInt( newIndex.model()->data( newIndex, Qt::EditRole ).toString() );
         spinBox->setValue( value );
     }
@@ -319,12 +321,12 @@ void CommonDelegate::setEditorData( QWidget* editor, const QModelIndex& index ) 
     else if( const QStringList* element = Find( comboBoxs_, position->id_ ) )
     {
         int value = newIndex.model()->data( newIndex, Roles::DataRole ).toInt();
-        QComboBox* comboBox = static_cast< QComboBox* >( editor );
+        RichComboBox* comboBox = static_cast< RichComboBox* >( editor );
         comboBox->setCurrentIndex( value );
     }
     else if( const QString* element = Find( lineEdits_, position->id_ ) )
     {
-        QLineEdit* lineEdit = static_cast< QLineEdit* >( editor );
+        RichLineEdit* lineEdit = static_cast< RichLineEdit* >( editor );
         if( !element->isEmpty() )
             lineEdit->setValidator( new QRegExpValidator( QRegExp( *element ), 0 ) );
         lineEdit->setText( newIndex.model()->data( newIndex, Qt::EditRole ).toString() );
@@ -348,27 +350,27 @@ void CommonDelegate::setModelData( QWidget* editor, QAbstractItemModel* model, c
 
     if( const SpinBoxDescription< int >* element = Find( spinBoxs_, position->id_ ) )
     {
-        QSpinBox* spinBox = static_cast< QSpinBox* >( editor );
+        RichSpinBox* spinBox = static_cast< RichSpinBox* >( editor );
         spinBox->interpretText();
         model->setData( index, spinBox->locale().toString( spinBox->value() ), Qt::EditRole );
         model->setData( index, spinBox->value(), Roles::DataRole );
     }
     else if( const SpinBoxDescription< double >* element = Find( doubleSpinBoxs_, position->id_ ) )
     {
-        QDoubleSpinBox* spinBox = static_cast< QDoubleSpinBox* >( editor );
+        RichDoubleSpinBox* spinBox = static_cast< RichDoubleSpinBox* >( editor );
         spinBox->interpretText();
         model->setData( index, spinBox->locale().toString( spinBox->value(), 'f', element->precision_ ), Qt::EditRole );
         model->setData( index, spinBox->value(), Roles::DataRole );
     }
     else if( const QStringList* element = Find( comboBoxs_, position->id_ ) )
     {
-        QComboBox* comboBox = static_cast< QComboBox* >( editor );
+        RichComboBox* comboBox = static_cast< RichComboBox* >( editor );
         model->setData( index, comboBox->currentIndex(), Roles::DataRole );
         model->setData( index, comboBox->currentText(), Qt::EditRole );
     }
     else if( const QString* element = Find( lineEdits_, position->id_ ) )
     {
-        QLineEdit* editLine = static_cast< QLineEdit* >( editor );
+        RichLineEdit* editLine = static_cast< RichLineEdit* >( editor );
         model->setData( index, editLine->text(), Roles::DataRole );
         model->setData( index, editLine->text(), Qt::EditRole );
     }

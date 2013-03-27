@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "LogisticPrototype_ABC.h"
 #include "LongNameHelper.h"
+#include "SubObjectName.h"
 #include "moc_LogisticPrototype_ABC.cpp"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
@@ -27,13 +28,15 @@ using namespace gui;
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
 LogisticPrototype_ABC::LogisticPrototype_ABC( QWidget* parent, Controllers& controllers )
-    : ObjectAttributePrototype_ABC( parent, tr( "Camp" ) )
+    : ObjectAttributePrototype_ABC( parent, "LogisticPrototypeABC",tr( "Camp" ) )
     , controllers_( controllers )
     , selected_   ( controllers )
 {
+    SubObjectName subObject( "LogisticPrototypeABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->setMargin( 5 );
     layout->addWidget( new QLabel( tr( "Logistic unit:" ) ) );
-    logSuperiors_ = new ValuedComboBox< const Entity_ABC* >( 0 );
+    logSuperiors_ = new ValuedComboBox< const Entity_ABC* >( "logSuperiors", 0 );
     layout->addWidget( logSuperiors_ );
     connect( logSuperiors_, SIGNAL( activated( int ) ), this, SLOT( SelectionChanged() ) );
     controllers_.Register( *this );

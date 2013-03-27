@@ -15,6 +15,10 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Diplomacies_ABC.h"
+#include "RichComboBox.h"
+#include "RichPushButton.h"
+#include "RichTableWidget.h"
+#include "SubObjectName.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -58,7 +62,7 @@ namespace
         {
             if( index.row() == index.column() )
                 return 0;
-            QComboBox* editor = new QComboBox( parent );
+            RichComboBox* editor = new RichComboBox( "editorCombo", parent );
             editor->addItem( Karma::friend_ .GetName(), QVariant::fromValue( static_cast< const Karma* >( &Karma::friend_ ) ) );
             editor->addItem( Karma::enemy_  .GetName(), QVariant::fromValue( static_cast< const Karma* >( &Karma::enemy_ ) ) );
             editor->addItem( Karma::neutral_.GetName(), QVariant::fromValue( static_cast< const Karma* >( &Karma::neutral_ ) ) );
@@ -67,14 +71,14 @@ namespace
 
         virtual void setEditorData( QWidget *editor, const QModelIndex &index ) const
         {
-            QComboBox* comboBox = static_cast< QComboBox* >( editor );
+            RichComboBox* comboBox = static_cast< RichComboBox* >( "comboBox", editor );
             const Karma* karma = index.model()->data( index, KarmaRole ).value< const Karma* >();
             comboBox->setCurrentIndex( comboBox->findData( QVariant::fromValue( karma ) ) );
         }
 
         virtual void setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const
         {
-            QComboBox* comboBox = static_cast< QComboBox* >( editor );
+            RichComboBox* comboBox = static_cast< RichComboBox* >( "comboBox", editor );
             const Karma* karma = comboBox->itemData( comboBox->currentIndex() ).value< const Karma* >();
             model->setData( index, karma->GetName(),  Qt::DisplayRole);
             model->setData( index, QVariant::fromValue( karma ), KarmaRole );
@@ -106,12 +110,13 @@ DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, Controllers& controll
     , profile_    ( profile )
     , minCellWidth_( 0 )
 {
+    SubObjectName subObject( "DiplomacyDialogABC" );
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     setCaption( tools::translate( "gui::DiplomacyDialog_ABC", "Diplomacy" ) );
     setMaximumSize( maxWidth, maxHeight );
 
     // Table
-    table_ = new QTableWidget( this );
+    table_ = new RichTableWidget( "table", this );
     table_->setSelectionMode( QAbstractItemView::NoSelection );
     table_->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     table_->verticalHeader()->setResizeMode( QHeaderView::Stretch );
@@ -125,8 +130,8 @@ DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, Controllers& controll
     minCellWidth_ = std::max( fm.width( Karma::unknown_.GetName() ), minCellWidth_ );
 
     // Buttons
-    QPushButton* okBtn     = new QPushButton( tools::translate( "gui::DiplomacyDialog_ABC", "Ok" ), this );
-    QPushButton* cancelBtn = new QPushButton( tools::translate( "gui::DiplomacyDialog_ABC", "Cancel" ), this );
+    RichPushButton* okBtn     = new RichPushButton( "ok", tools::translate( "gui::DiplomacyDialog_ABC", "Ok" ), this );
+    RichPushButton* cancelBtn = new RichPushButton( "cancel", tools::translate( "gui::DiplomacyDialog_ABC", "Cancel" ), this );
     okBtn->setDefault( true );
     okBtn->setMaximumWidth( 100 );
     cancelBtn->setMaximumWidth( 100 );

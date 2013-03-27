@@ -18,7 +18,7 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 FirePropagationModifierPrototype_ABC::FirePropagationModifierPrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::FirePropagationModifierPrototype_ABC", "Fire propagation modifier" ) )
+    : ObjectAttributePrototype_ABC( parent, "FirePropagationModifierPrototype_ABC", tools::translate( "gui::FirePropagationModifierPrototype_ABC", "Fire propagation modifier" ) )
 {
     //NOTHING
 }

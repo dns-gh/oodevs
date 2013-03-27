@@ -42,12 +42,12 @@ GroupDisplayer::~GroupDisplayer()
 // Name: GroupDisplayer::AddLabel
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-GroupDisplayer& GroupDisplayer::AddLabel( const QString& name, bool bold )
+GroupDisplayer& GroupDisplayer::AddLabel( const QString& objectName, const QString& text, bool bold )
 {
-    Displayer_ABC*& item = items_[ name ];
+    Displayer_ABC*& item = items_[ text ];
     if( item )
-        throw MASA_EXCEPTION( "Item '" + name.toStdString() + "' already added" );
-    item = new LabelDisplayer( layout_, name, bold, factory_ );
+        throw MASA_EXCEPTION( "Item '" + text.toStdString() + "' already added" );
+    item = new LabelDisplayer( objectName, layout_, text, bold, factory_ );
     return *this;
 }
 

@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "RichMenu.h"
+#include "ObjectNameManager.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController.h"
 
@@ -18,13 +19,14 @@ using namespace gui;
 // Name: RichMenu constructor
 // Created: ABR 2012-05-14
 // -----------------------------------------------------------------------------
-RichMenu::RichMenu( QWidget* parent, kernel::Controllers& controllers, const QString& title /*= ""*/ )
+RichMenu::RichMenu( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const QString& title /*= ""*/ )
     : kernel::ContextMenu( parent )
     , modeController_( controllers.modes_ )
 {
     if( !title.isEmpty() )
         setTitle( title );
     modeController_.Register( *this );
+    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,6 +36,7 @@ RichMenu::RichMenu( QWidget* parent, kernel::Controllers& controllers, const QSt
 RichMenu::~RichMenu()
 {
     modeController_.Unregister( *this );
+    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
 }
 
 // -----------------------------------------------------------------------------

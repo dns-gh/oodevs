@@ -74,7 +74,7 @@ void VerticalHeaderStyle::drawControl( ControlElement element, const QStyleOptio
 // Created: ABR 2012-02-24
 // -----------------------------------------------------------------------------
 VerticalHeaderTableView::VerticalHeaderTableView( QWidget* parent )
-    : QTableView( parent )
+    : RichTableView( "VerticalHeaderTableView", parent )
 {
     // NOTHING
 }
@@ -98,7 +98,7 @@ bool VerticalHeaderTableView::event( QEvent *event )
     {
         QHelpEvent *helpEvent = static_cast< QHelpEvent* >( event );
         if( !helpEvent )
-            return QTableView::event( event );
+            return RichTableView::event( event );
 
         const int yPos = helpEvent->pos().y();
         const int xPos = helpEvent->pos().x();
@@ -163,5 +163,5 @@ bool VerticalHeaderTableView::event( QEvent *event )
         }
         return true;
     }
-    return QTableView::event( event );
+    return RichTableView::event( event );
 }

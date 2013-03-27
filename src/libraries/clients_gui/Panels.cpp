@@ -12,6 +12,9 @@
 #include "moc_Panels.cpp"
 
 #include "InfoPanel_ABC.h"
+#include "RichPushButton.h"
+#include "RichComboBox.h"
+#include "SubObjectName.h"
 #include "resources.h"
 
 using namespace gui;
@@ -20,22 +23,22 @@ using namespace gui;
 // Name: Panels constructor
 // Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
-Panels::Panels( QWidget* pParent )
+Panels::Panels( const QString& objectName, QWidget* pParent )
     : QWidget( pParent )
 {
-
+    SubObjectName subObject( objectName );
     //knowledge choice panel
-    previous_ = new QPushButton();
+    previous_ = new RichPushButton( "previous", "" );
     previous_->setPixmap( MAKE_PIXMAP( left_arrow ) );
     previous_->setMaximumSize( 20, 20 );
     previous_->setFlat( true );
 
-    next_ = new QPushButton();
+    next_ = new RichPushButton( "next", "" );
     next_->setPixmap( MAKE_PIXMAP( right_arrow ) );
     next_->setMaximumSize( 20, 20 );
     next_->setFlat( true );
 
-    combo_ = new QComboBox();
+    combo_ = new RichComboBox( "combo" );
     combo_->setFocusPolicy( Qt::StrongFocus );
 
     QHBoxLayout* box = new QHBoxLayout();

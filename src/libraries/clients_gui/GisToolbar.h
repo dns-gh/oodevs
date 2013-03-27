@@ -11,6 +11,10 @@
 #define __GisToolbar_h_
 
 #include "RichToolBar.h"
+#include "RichCheckBox.h"
+#include "RichComboBox.h"
+#include "RichSpinBox.h"
+
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
@@ -19,9 +23,6 @@
 #pragma warning( pop )
 
 class QColor;
-class QCheckBox;
-class QComboBox;
-class QSpinBox;
 
 namespace kernel
 {
@@ -37,6 +38,7 @@ namespace gui
     class TerrainProfilerLayer;
     class ContourLinesObserver;
     class RichDockWidget;
+    class RichToolButton;
 
 // =============================================================================
 /** @class  GisToolbar
@@ -60,7 +62,7 @@ public:
 
     //! @name Accessors
     //@{
-    QToolButton* GetTerrainProfilerButton() const;
+    RichToolButton* GetTerrainProfilerButton() const;
     //@}
 
 private slots:
@@ -89,15 +91,15 @@ private:
     kernel::Controllers& controllers_;
     const kernel::DetectionMap& detection_;
     RichDockWidget* terrainProfiler_;
-    QCheckBox* watershedEnabled_;
-    QComboBox* mode_;
-    QSpinBox* height_;
-    QSpinBox* linesHeight_;
+    RichCheckBox* watershedEnabled_;
+    RichComboBox* mode_;
+    RichSpinBox* height_;
+    RichSpinBox* linesHeight_;
     ColorButton* color_;
-    QCheckBox* contourBoxEnabled_;
+    RichCheckBox* contourBoxEnabled_;
     ColorButton* colorContourLines_;
     QLabel* progress_;
-    QToolButton* terrainProfilerButton_;
+    RichToolButton* terrainProfilerButton_;
     //@}
 };
 

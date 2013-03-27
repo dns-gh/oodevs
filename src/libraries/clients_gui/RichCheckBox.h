@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __RichCheckBox_h_
-#define __RichCheckBox_h_
+#ifndef __gui_RichCheckBox_h_
+#define __gui_RichCheckBox_h_
 
 #include <boost/noncopyable.hpp>
 #include "QtGui/qcheckbox.h"
@@ -28,8 +28,8 @@ class RichCheckBox : public QCheckBox
 public:
     //! @name Constructors/Destructor
     //@{
-    RichCheckBox( const QString& objectName );
-    RichCheckBox( const QString& objectName, const QString& text, QWidget* parent );
+    RichCheckBox( const QString& objectName, QWidget* parent = 0 );
+    RichCheckBox( const QString& objectName, const QString& text, QWidget* parent = 0 );
     virtual ~RichCheckBox();
     //@}
 
@@ -50,4 +50,4 @@ private:
 
 } //! namespace gui
 
-#endif // __RichCheckBox_h_
+#endif // __gui_RichCheckBox_h_

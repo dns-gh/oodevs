@@ -12,6 +12,7 @@
 #include "Tools.h"
 #include "clients_kernel/Units.h"
 #include "LoadableSpinBox.h"
+#include "SubObjectName.h"
 
 using namespace gui;
 
@@ -20,16 +21,18 @@ using namespace gui;
 // Created: JSR 2010-12-07
 // -----------------------------------------------------------------------------
 FloodPrototype_ABC::FloodPrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::FloodPrototype_ABC", "Flood" ) )
+    : ObjectAttributePrototype_ABC( parent, "FloodPrototype_ABC", tools::translate( "gui::FloodPrototype_ABC", "Flood" ) )
 {
+    SubObjectName subObject( "FloodPrototype_ABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->setMargin( 5 );
     layout->addWidget( new QLabel( tools::translate( "gui::FloodPrototype_ABC", "Depth:" ) ) );
-    depth_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, 0 );
+    depth_ = new LoadableSpinBox( "depth", 0, std::numeric_limits< int >::max(), 1, 0 );
     depth_->setSuffix( kernel::Units::meters.AsString() );
     layout->addWidget( depth_ );
 
     layout->addWidget( new QLabel( tools::translate( "gui::FloodPrototype_ABC", "Reference distance:" ) ) );
-    refDist_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, 0 );
+    refDist_ = new LoadableSpinBox( "refDist", 0, std::numeric_limits< int >::max(), 1, 0 );
     refDist_->setSuffix( kernel::Units::meters.AsString() );
     layout->addWidget( refDist_ );
 }

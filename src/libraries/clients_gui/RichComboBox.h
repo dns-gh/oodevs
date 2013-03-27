@@ -10,8 +10,6 @@
 #ifndef __RichComboBox_h_
 #define __RichComboBox_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
 // =============================================================================
@@ -21,7 +19,6 @@ namespace gui
 // Created: NPT 2013-03-14
 // =============================================================================
 class RichComboBox : public QComboBox
-                   , private boost::noncopyable
 {
 
 public:
@@ -29,20 +26,6 @@ public:
     //@{
     RichComboBox( const QString& objectName, QWidget* parent = 0 );
     virtual ~RichComboBox();
-    //@}
-
-    //! @name Operations
-    //@{
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

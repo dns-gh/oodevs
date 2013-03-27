@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "Logger.h"
 #include "moc_Logger.cpp"
+#include "SubObjectName.h"
+#include "RichTreeWidget.h"
 #include "clients_kernel/Time_ABC.h"
 #include "clients_kernel/ContextMenu.h"
 
@@ -40,8 +42,9 @@ Logger::Logger( QWidget* pParent, kernel::Controllers& controllers, const kernel
     , popupMenu_( new kernel::ContextMenu( this ) )
     , counter_( 0 )
 {
+    SubObjectName subObject( this->objectName() );
     setWindowTitle( tr( "Log" ) );
-    treeWidget_ = new QTreeWidget( this );
+    treeWidget_ = new gui::RichTreeWidget( "treeWidget", this );
     setWidget( treeWidget_ );
 
     treeWidget_->setBackgroundColor( Qt::white );

@@ -21,12 +21,12 @@ using namespace gui;
 // Name: LabelDisplayer constructor
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-LabelDisplayer::LabelDisplayer( QBoxLayout* parent, const QString& name, bool bold, ItemFactory_ABC& factory )
+LabelDisplayer::LabelDisplayer( const QString& objectName, QBoxLayout* parent, const QString& text, bool bold, ItemFactory_ABC& factory )
 {
     QHBoxLayout* layout = new QHBoxLayout();
     parent->addLayout( layout );
-    layout->addWidget( new QLabel( name ) );
-    valueLabel_ = factory.CreateLabel();
+    layout->addWidget( new QLabel( text ) );
+    valueLabel_ = factory.CreateLabel( objectName );
     if( bold )
     {
         QFont boldFont = valueLabel_->font();

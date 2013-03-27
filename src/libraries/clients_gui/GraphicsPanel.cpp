@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "GraphicsPanel.h"
 #include "GraphicPreferences.h"
+#include "SubObjectName.h"
 
 using namespace gui;
 
@@ -21,6 +22,7 @@ GraphicsPanel::GraphicsPanel( QWidget* parent, kernel::Controllers& controllers 
     : PreferencePanel_ABC( parent, "GraphicsPanel" )
     , preferences_( *new GraphicPreferences( controllers ) )
 {
+    SubObjectName subObject( "GraphicsPanel" );
     Q3VBox* container = new Q3VBox( this );
     preferences_.Display( container );
     setWidget( container );

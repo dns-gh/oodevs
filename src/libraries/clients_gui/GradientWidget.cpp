@@ -17,6 +17,7 @@
 #include "GradientPreferences.h"
 #include "PresetDialog.h"
 #include "resources.h"
+#include "RichComboBox.h"
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
@@ -40,19 +41,19 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
 {
     setMaximumHeight( 150 );
     Q3HBox* box = new Q3HBox( this );
-    presetCombo_ = new QComboBox( box );
+    presetCombo_ = new RichComboBox( "presetCombo", box );
 
-    QToolButton* copyPreset = new QToolButton( box );
+    RichToolButton* copyPreset = new RichToolButton( "copyPreset", box );
     copyPreset->setPixmap( MAKE_PIXMAP( copy ) );
     copyPreset->setTextLabel( tr( "Copy preset" ) );
     copyPreset->setFixedSize( 22, 22 );
 
-    QToolButton* renamePreset = new QToolButton( box );
+    RichToolButton* renamePreset = new RichToolButton( "renamePreset", box );
     renamePreset->setPixmap( MAKE_PIXMAP( pen_cursor ) );
     renamePreset->setTextLabel( tr( "Rename preset" ) );
     renamePreset->setFixedSize( 22, 22 );
 
-    QToolButton* removePreset = new QToolButton( box );
+    RichToolButton* removePreset = new RichToolButton( "removePreset", box );
     removePreset->setPixmap( MAKE_PIXMAP( trash ) );
     removePreset->setTextLabel( tr( "Delete preset" ) );
     removePreset->setFixedSize( 22, 22 );
@@ -61,7 +62,7 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
     box->layout()->setAlignment( Qt::AlignCenter );
     box->setMaximumHeight( 100 );
     gradientEditor_ = new GradientButton( box, painter, true );
-    color_ = new ColorButton( box );
+    color_ = new ColorButton( "color", box );
     color_->setMaximumHeight( 30 );
 
     connect( gradientEditor_, SIGNAL( SelectionChanged( const QColor& ) ), SLOT( OnSelectionChanged( const QColor& ) ) );

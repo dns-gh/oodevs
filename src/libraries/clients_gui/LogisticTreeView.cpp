@@ -42,8 +42,8 @@ namespace
 // Name: LogisticTreeView constructor
 // Created: ABR 2012-09-19
 // -----------------------------------------------------------------------------
-LogisticTreeView::LogisticTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
-    : HierarchyTreeView_ABC( controllers, profile, modelObserver, symbols, parent )
+LogisticTreeView::LogisticTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent /*= 0*/ )
+    : HierarchyTreeView_ABC( objectName, controllers, profile, modelObserver, symbols, parent )
 {
     controllers_.Update( *this );
     EnableDragAndDrop( true );

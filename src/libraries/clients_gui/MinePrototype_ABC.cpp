@@ -12,6 +12,7 @@
 #include "clients_kernel/Units.h"
 #include "Tools.h"
 #include "LoadableSpinBox.h"
+#include "SubObjectName.h"
 
 using namespace kernel;
 using namespace gui;
@@ -21,12 +22,13 @@ using namespace gui;
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 MinePrototype_ABC::MinePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MinePrototype_ABC", "Improvable" ) )
+    : ObjectAttributePrototype_ABC( parent, "MinePrototypeABC", tools::translate( "gui::MinePrototype_ABC", "Improvable" ) )
 {
+    SubObjectName subObject( "MinePrototypeABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
     densityLabel_ = new QLabel( tools::translate( "gui::MinePrototype_ABC", "Value:" ) );
     layout->addWidget( densityLabel_ );
-    density_ = new LoadableSpinBox( 0, 100, 1, 0 );
+    density_ = new LoadableSpinBox( "density", 0, 100, 1, 0 );
     density_->setSuffix( kernel::Units::percentage.AsString() );
     density_->setValue( 100 );
     layout->addWidget( density_ );

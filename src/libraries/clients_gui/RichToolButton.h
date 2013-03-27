@@ -10,8 +10,6 @@
 #ifndef __RichToolButton_h_
 #define __RichToolButton_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
 
@@ -27,7 +25,7 @@ class RichToolButton : public QToolButton
 public:
     //! @name Constructors/Destructor
     //@{
-    RichToolButton( const QString& objectName, QWidget* parent = 0 );
+    RichToolButton( const QString& objectName, QWidget* parent = 0, const QString& text = 0 );
     virtual ~RichToolButton();
     //@}
 };

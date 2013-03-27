@@ -13,6 +13,7 @@
 #include "tools/Iterator.h"
 #include "Tools.h"
 #include "LoadableSpinBox.h"
+#include "SubObjectName.h"
 
 using namespace gui;
 
@@ -21,17 +22,19 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 FirePrototype_ABC::FirePrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass, std::string >& resolver )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::FirePrototype_ABC", "Fire parameters" ) )
+    : ObjectAttributePrototype_ABC( parent, "FirePrototypeABC", tools::translate( "gui::FirePrototype_ABC", "Fire parameters" ) )
     , resolver_( resolver )
     , hasFirePropagation_( false )
 {
+    gui::SubObjectName subObject( "FirePrototypeABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    layout->setMargin( 5 );
     layout->addWidget( new QLabel( tools::translate( "gui::FirePrototype_ABC", "Fire Class:" ) ) );
-    fireClass_ = new ValuedComboBox< const kernel::FireClass* >( 0 );
+    fireClass_ = new ValuedComboBox< const kernel::FireClass* >( "fireClass", 0 );
     layout->addWidget( fireClass_ );
 
     layout->addWidget( new QLabel( tools::translate( "gui::FirePrototype_ABC", "Max combustion energy:" ) ) );
-    maxCombustionEnergy_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, 0 );
+    maxCombustionEnergy_ = new LoadableSpinBox( "maxCombustionEnergy", 0, std::numeric_limits< int >::max(), 1, 0 );
     layout->addWidget( maxCombustionEnergy_ );
 
     FillTypes();

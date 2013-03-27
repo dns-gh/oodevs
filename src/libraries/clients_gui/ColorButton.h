@@ -11,6 +11,7 @@
 #define __ColorButton_h_
 
 #include <QtGui/qcolordialog.h>
+#include "RichToolButton.h"
 
 namespace gui
 {
@@ -21,15 +22,15 @@ namespace gui
 */
 // Created: SBO 2006-04-04
 // =============================================================================
-class ColorButton : public QToolButton
+class ColorButton : public RichToolButton
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ColorButton( QWidget* parent, const std::string& color );
-    explicit ColorButton( QWidget* parent = 0, const char* name = 0, QColor color = Qt::black );
+             ColorButton( const QString& objectName, QWidget* parent, const std::string& color );
+    explicit ColorButton( const QString& objectName, QWidget* parent = 0, const char* text = 0, QColor color = Qt::black );
     virtual ~ColorButton();
     //@}
 

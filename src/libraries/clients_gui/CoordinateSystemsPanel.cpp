@@ -12,6 +12,8 @@
 #include "moc_CoordinateSystemsPanel.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
+#include "clients_gui/RichComboBox.h"
+#include "clients_gui/RichGroupBox.h"
 
 using namespace gui;
 
@@ -28,10 +30,15 @@ CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent, kernel::Control
     , coordinateSystems_( coordSystems )
     , previousCoordinateSystem_( kernel::CoordinateSystems::E_Mgrs )
 {
-    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Vertical, tr( "Coordinate System" ), this );
-    new QLabel( tr( "Select current coordinate system:" ), box );
-    listCoordSys_ = new QComboBox( box );
+    QLabel* coordinateLabel = new QLabel( tr( "Select current coordinate system:" ) );
+    listCoordSys_ = new RichComboBox( "listCoordSys" );
     listCoordSys_->setEditable( false );
+
+    RichGroupBox* box = new RichGroupBox( "coordinateSystem", tr( "Coordinate System" ), this );
+    QVBoxLayout* boxLayout = new QVBoxLayout( box );
+    boxLayout->addWidget( coordinateLabel );
+    boxLayout->addWidget( listCoordSys_ );
+    boxLayout->addStretch( 1 );
 
     const kernel::CoordinateSystems::T_SpatialReference& systems = coordinateSystems_.GetSystems();
     for( auto it = systems.begin(); it != systems.end(); ++it )

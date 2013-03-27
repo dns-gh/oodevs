@@ -36,7 +36,7 @@ class TacticalTreeView : public HierarchyTreeView< kernel::TacticalHierarchies >
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent = 0 );
+             TacticalTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, const EntitySymbols& symbols, QWidget* parent = 0 );
     virtual ~TacticalTreeView();
     //@}
 

@@ -34,9 +34,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual RichLabel*      CreateLabel( QWidget* parent = 0, const char* name = 0 );
-    virtual RichLabel*      CreateLabel( const QString& text, QWidget* parent = 0, const char* name = 0 );
-    virtual RichLabel*      CreateLabel( const QString& text, bool required, QWidget* parent = 0, const char* name = 0 );
+    virtual RichLabel*      CreateLabel( const QString& objectName, QWidget* parent = 0 );
+    virtual RichLabel*      CreateLabel( const QString& objectName, const QString& text, QWidget* parent = 0 );
+    virtual RichLabel*      CreateLabel( const QString& objectName, const QString& text, bool required, QWidget* parent = 0 );
     //@}
 
 signals:

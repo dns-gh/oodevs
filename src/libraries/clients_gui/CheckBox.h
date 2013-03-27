@@ -25,7 +25,7 @@ class CheckBox : public QCheckBox
 public:
     //! @name Constructors/Destructor
     //@{
-             CheckBox( const QString & text, QWidget * parent, const char * name = 0 );
+             CheckBox( const QString& objectName, const QString & text, QWidget * parent = 0 );
     virtual ~CheckBox();
     //@}
 

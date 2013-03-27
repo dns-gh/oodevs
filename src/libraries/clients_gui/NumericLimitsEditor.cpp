@@ -48,9 +48,9 @@ NumericLimitsEditor_ABC::~NumericLimitsEditor_ABC()
 template<>
 void NumericLimitsEditor< int, RichSpinBox >::CreateInterface()
 {
-    minSpin_ = new RichSpinBox( 0, minValue_, maxValue_ );
+    minSpin_ = new RichSpinBox( "minSpin", 0, minValue_, maxValue_ );
     minSpin_->setValue( minValue_ );
-    maxSpin_ = new RichSpinBox( 0, minValue_, maxValue_ );
+    maxSpin_ = new RichSpinBox( "maxSpin", 0, minValue_, maxValue_ );
     maxSpin_->setValue( maxValue_ );
 
     QHBoxLayout* layout = new QHBoxLayout( this );
@@ -67,9 +67,9 @@ void NumericLimitsEditor< int, RichSpinBox >::CreateInterface()
 template<>
 void NumericLimitsEditor< double, RichDoubleSpinBox >::CreateInterface()
 {
-    minSpin_ = new RichDoubleSpinBox( 0, minValue_, maxValue_ );
+    minSpin_ = new RichDoubleSpinBox( "minSpin", 0, minValue_, maxValue_ );
     minSpin_->setValue( minValue_ );
-    maxSpin_ = new RichDoubleSpinBox( 0, minValue_, maxValue_ );
+    maxSpin_ = new RichDoubleSpinBox( "maxSpin", 0, minValue_, maxValue_ );
     maxSpin_->setValue( maxValue_ );
 
     QHBoxLayout* layout = new QHBoxLayout( this );

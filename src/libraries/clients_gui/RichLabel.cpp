@@ -18,10 +18,11 @@ using namespace gui;
 // Name: RichLabel constructor
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
-RichLabel::RichLabel( QWidget* parent /* = 0*/, const char* name /* = 0*/ )
-    : QLabel( parent, name )
+RichLabel::RichLabel( const QString& objectName, QWidget* parent /* = 0*/ )
+    : QLabel( parent )
     , richText_( new SimplerRichText( "", font() ) )
 {
+    setObjectName( objectName );
     setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     setMouseTracking( true );
 }
@@ -30,10 +31,11 @@ RichLabel::RichLabel( QWidget* parent /* = 0*/, const char* name /* = 0*/ )
 // Name: RichLabel constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-RichLabel::RichLabel( const QString& text, QWidget* parent, const char* name )
-    : QLabel( text, parent, name )
+RichLabel::RichLabel( const QString& objectName, const QString& text, QWidget* parent )
+    : QLabel( text, parent )
     , richText_( new SimplerRichText( text, font() ) )
 {
+    setObjectName( objectName );
     setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     setMouseTracking( true );
 }
@@ -42,8 +44,8 @@ RichLabel::RichLabel( const QString& text, QWidget* parent, const char* name )
 // Name: RichLabel constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-RichLabel::RichLabel( const QString& text, bool required, QWidget* parent, const char* name )
-    : QLabel( text, parent, name )
+RichLabel::RichLabel( const QString& objectName, const QString& text, bool required, QWidget* parent )
+    : QLabel( text, parent )
     , richText_( new SimplerRichText( text, font() ) )
 {
     if( required )
@@ -53,6 +55,7 @@ RichLabel::RichLabel( const QString& text, bool required, QWidget* parent, const
         setFont( font );
         richText_->setDefaultFont( font );
     }
+    setObjectName( objectName );
     setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     setMouseTracking( true );
 }

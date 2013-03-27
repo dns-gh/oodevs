@@ -10,15 +10,15 @@
 #include "clients_gui_pch.h"
 #include "ObjectNameManager.h"
 
-ObjectNameManager *ObjectNameManager::instance_ = NULL;
+using namespace gui;
+
+ObjectNameManager* ObjectNameManager::instance_ = NULL;
 
 // -----------------------------------------------------------------------------
 // Name: ObjectNameManager constructor
 // Created: NPT 2013-03-11
 // -----------------------------------------------------------------------------
 ObjectNameManager::ObjectNameManager()
-    : objectNamePath_ ( new QStringList() )
-    , paths_          ( new QStringList() )
 {
     //NOTHING
 }
@@ -43,6 +43,17 @@ ObjectNameManager* ObjectNameManager::getInstance()
     return instance_;
 }
 
+namespace
+{
+    void DisplayErrorMessage( const QString& message )
+    {
+        QMessageBox messageBox;
+        messageBox.setWindowTitle( "Naming Errors" ); 
+        messageBox.setText( message );
+        messageBox.exec();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: NamingManager::AddSubLevel
 // Created: NPT 2013-03-11
@@ -50,12 +61,15 @@ ObjectNameManager* ObjectNameManager::getInstance()
 void ObjectNameManager::AddSubLevel( const QString& name )
 {
     if( name.isEmpty() )
-        throw MASA_EXCEPTION( "this parent doesn't have a name" );
+    {
+        DisplayErrorMessage( "this parent doesn't have a name" );
+        return;
+    }
 
-    if( !objectNamePath_->contains( name ) )
-        objectNamePath_->append( name );
+    if( !objectNamePath_.contains( name ) )
+        objectNamePath_.append( name );
     else
-        throw MASA_EXCEPTION( name.toStdString() + " : Name already given" );
+        DisplayErrorMessage( name + " : Name already given" );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +78,7 @@ void ObjectNameManager::AddSubLevel( const QString& name )
 // -----------------------------------------------------------------------------
 QString ObjectNameManager::GetSubName()
 {
-    return objectNamePath_->join( "_" );
+    return objectNamePath_.join( "_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +87,8 @@ QString ObjectNameManager::GetSubName()
 // -----------------------------------------------------------------------------
 void ObjectNameManager::RemoveSubLevel()
 {
-    objectNamePath_->removeLast();
+    if( !objectNamePath_.isEmpty() )
+        objectNamePath_.removeLast();
 }
 
 // -----------------------------------------------------------------------------
@@ -83,15 +98,17 @@ void ObjectNameManager::RemoveSubLevel()
 void ObjectNameManager::SetObjectName( QObject* obj, const QString& name )
 {
     if( name.isEmpty() )
-        throw MASA_EXCEPTION( "this object doesn't have a name" );
-
+    {
+        DisplayErrorMessage( "this object doesn't have a name" );
+        return;
+    }
+    if( paths_.contains( GetSubName() + "_" + name ) )
+    {
+        DisplayErrorMessage( QString( GetSubName() + "_" + name + " : this object name already exist" ) );
+        return;
+    }
     obj->setObjectName( GetSubName() + "_" + name );
-    std::cout << obj->objectName().toStdString() << std::endl;
-
-    if( paths_->contains( GetSubName() + "_" + name ) )
-        throw MASA_EXCEPTION( QString( GetSubName() + "_" + name + " : this object name already exist" ).toStdString() );
-
-    paths_->append( GetSubName() + "_" + name );
+    paths_.append( GetSubName() + "_" + name );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +117,6 @@ void ObjectNameManager::SetObjectName( QObject* obj, const QString& name )
 // -----------------------------------------------------------------------------
 void ObjectNameManager::RemoveRegisteredName( const QString& name )
 {
-    if( paths_->contains( name ) )
-        paths_->remove( name );
+    if( paths_.contains( name ) )
+        paths_.remove( name );
 }
-

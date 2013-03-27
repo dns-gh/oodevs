@@ -60,8 +60,8 @@ DiffusionListEditor::DiffusionListEditor( QWidget* parent, kernel::Controllers& 
     tableView_.setSortingEnabled( false );
     tableView_.setShowGrid( true );
     tableView_.setAlternatingRowColors( true );
-    tableView_.setSelectionMode( QTableView::NoSelection );
-    tableView_.setEditTriggers( QTableView::AllEditTriggers );
+    tableView_.setSelectionMode( RichTableView::NoSelection );
+    tableView_.setEditTriggers( RichTableView::AllEditTriggers );
 
     // Headers init
     QHeaderView* verticalHV = tableView_.verticalHeader();

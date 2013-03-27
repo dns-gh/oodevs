@@ -9,6 +9,8 @@
 
 #include "clients_kernel/ConsistencyChecker_ABC.h"
 #include "FilterProxyModel.h"
+#include "RichTableView.h"
+#include "RichCheckBox.h"
 
 namespace gui
 {
@@ -18,8 +20,8 @@ namespace gui
 // Created: ABR 2012-06-06
 // -----------------------------------------------------------------------------
 template< typename EnumError, typename TargetItem >
-ConsistencyDialog< EnumError, TargetItem >::ConsistencyDialog( QWidget* parent, kernel::ConsistencyChecker_ABC& checker, FilterProxyModel< EnumError >& proxyModel )
-    : ConsistencyDialog_ABC( parent, checker )
+ConsistencyDialog< EnumError, TargetItem >::ConsistencyDialog( const QString& objectName, QWidget* parent, kernel::ConsistencyChecker_ABC& checker, FilterProxyModel< EnumError >& proxyModel )
+    : ConsistencyDialog_ABC( objectName, parent, checker )
     , proxyModel_( proxyModel )
 {
     // Proxy

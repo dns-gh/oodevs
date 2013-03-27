@@ -10,6 +10,8 @@
 #include "clients_gui_pch.h"
 #include "LoadableTimeEdit.h"
 #include "ObjectPrototypeLoader_ABC.h"
+#include "ObjectNameManager.h"
+#include "RichTimeEdit.h"
 
 using namespace gui;
 
@@ -17,10 +19,10 @@ using namespace gui;
 // Name: LoadableTimeEdit constructor
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
-LoadableTimeEdit::LoadableTimeEdit( QWidget* parent, const QString& probableName )
-    : LoadableFieldTemplate< QTimeEdit >( parent, probableName )
+LoadableTimeEdit::LoadableTimeEdit( const QString& objectName, QWidget* parent )
+    : LoadableFieldTemplate< QTimeEdit >( parent, objectName )
 {
-    SetDefaultValueWidget( new QTimeEdit( this ) );
+    SetDefaultValueWidget( new RichTimeEdit( "default" + objectName ,this ) );
 }
 
 // -----------------------------------------------------------------------------

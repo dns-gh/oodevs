@@ -10,7 +10,9 @@
 #include "clients_gui_pch.h"
 #include "SearchTreeView.h"
 #include "moc_SearchTreeView.cpp"
+#include "RichPushButton.h"
 #include "RichTreeView.h"
+#include "SubObjectName.h"
 #include <boost/bind.hpp>
 
 using namespace gui;
@@ -45,21 +47,21 @@ SearchTreeView_ABC::~SearchTreeView_ABC()
 // Name: SearchTreeView_ABC::CreateGUI
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-void SearchTreeView_ABC::CreateGUI()
+void SearchTreeView_ABC::CreateGUI( const QString& objectName )
 {
     assert( treeView_ != 0 );
-
+    SubObjectName subObject( objectName );
     // Search box
-    searchLine_ = new SearchLineEdit( this );
+    searchLine_ = new SearchLineEdit( "searchLine", this );
 
     // Next Button
-    QPushButton* next = new QPushButton( QIcon( MAKE_ICON( search ) ), "", this );
+    RichPushButton* next = new RichPushButton( "next", QIcon( MAKE_ICON( search ) ), "", this );
     next->setAccel( Qt::Key_F3 );
     next->setMaximumWidth( searchLine_->height() );
     next->setMaximumHeight( searchLine_->height() );
 
     // Filters
-    clearButton_ = new QPushButton( tr( "Clear" ) );
+    clearButton_ = new RichPushButton( "clear", tr( "Clear" ) );
     filtersContainer_ = new QWidget();
     filtersLayout_ = new QGridLayout( filtersContainer_, 0, 2 );
     filtersLayout_->setSpacing( 5 );

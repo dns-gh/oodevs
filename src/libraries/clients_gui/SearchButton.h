@@ -10,6 +10,8 @@
 #ifndef __SearchButton_h_
 #define __SearchButton_h_
 
+#include "RichPushButton.h"
+
 namespace gui
 {
 
@@ -19,12 +21,12 @@ namespace gui
 */
 // Created: ABR 2012-03-27
 // =============================================================================
-class SearchButton : public QPushButton
+class SearchButton : public RichPushButton
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SearchButton( QWidget* parent = 0 );
+    explicit SearchButton( const QString& objectName, QWidget* parent = 0 );
     virtual ~SearchButton();
     //@}
 

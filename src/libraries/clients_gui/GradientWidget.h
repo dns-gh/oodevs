@@ -26,6 +26,7 @@ namespace gui
     class GradientPreferences;
     class GradientsCombo;
     class Painter_ABC;
+    class RichComboBox;
 }
 
 namespace gui
@@ -105,7 +106,7 @@ private:
     GradientPreferences& preferences_;
     GradientButton* gradientEditor_;
     ColorButton* color_;
-    QComboBox* presetCombo_;
+    RichComboBox* presetCombo_;
     T_Gradients presets_;
     //@}
 };

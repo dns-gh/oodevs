@@ -12,8 +12,10 @@
 #include "moc_InhabitantPanel.cpp"
 #include "CheckBox.h"
 #include "DensityWidget.h"
-#include "clients_kernel/Options.h"
+#include "RichGroupBox.h"
+#include "SubObjectName.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 
 using namespace gui;
@@ -27,12 +29,21 @@ InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controll
     , controllers_( controllers )
     , options_    ( controllers.options_ )
 {
-    Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, tr( "Colors" ), this );
-    Q3VBox* hBox = new Q3VBox( box );
-    Q3GroupBox* densityGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Density Gradient map" ), hBox );
-    new DensityWidget( densityGroup, controllers, "Density" );
-    Q3GroupBox* occupationGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Occupation Gradient map" ), hBox );
-    new DensityWidget( occupationGroup, controllers, "Accommodation" );
+    SubObjectName subObject( "InhabitantPanel" );
+    RichGroupBox* densityGroup = new RichGroupBox( "densityGroup", tr( "Density Gradient map" ) );
+    QHBoxLayout* densityGroupLayout = new QHBoxLayout( densityGroup );
+    DensityWidget* densityWidget = new DensityWidget( "densityGroup", densityGroup, controllers, "Density" );
+    densityGroupLayout->addWidget( densityWidget );
+
+    RichGroupBox* occupationGroup = new RichGroupBox( "occupationGroup", tr( "Occupation Gradient map" ) );
+    QHBoxLayout* occupationGroupLayout = new QHBoxLayout( occupationGroup );
+    DensityWidget* occupationWidget = new DensityWidget( "occupationWidget", occupationGroup, controllers, "Accommodation" );
+    occupationGroupLayout->addWidget( occupationWidget );
+
+    RichGroupBox* box = new RichGroupBox( "colorsBox", tr( "Colors" ), this );
+    QVBoxLayout* boxLayout = new QVBoxLayout( box );
+    boxLayout->addWidget( densityGroup );
+    boxLayout->addWidget( occupationGroup );
     setWidget( box );
 }
 

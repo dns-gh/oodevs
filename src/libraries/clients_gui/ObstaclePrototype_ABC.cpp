@@ -13,6 +13,7 @@
 #include "Tools.h"
 #include "LoadableCheckBox.h"
 #include "LoadableTimeEdit.h"
+#include "SubObjectName.h"
 
 using namespace gui;
 
@@ -32,25 +33,27 @@ namespace
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ObstaclePrototype_ABC", "Obstacle" ) )
+    : ObjectAttributePrototype_ABC( parent, "ObstaclePrototype_ABC", tools::translate( "gui::ObstaclePrototype_ABC", "Obstacle" ) )
 {
-    QGridLayout* layout = new QGridLayout( this, 0, 2 );
+    SubObjectName subObject( "ObstaclePrototypeABC" );
     Q3VBox* vbox = new Q3VBox( this );
+    QGridLayout* layout = new QGridLayout( this );
+    layout->setMargin( 5 );
     layout->addWidget( vbox );
     {
         Q3HBox* hBox = new Q3HBox( vbox );
         new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Obstacle type:" ), hBox );
-        types_ = new ValuedComboBox< E_DemolitionTargetType >( hBox );
+        types_ = new ValuedComboBox< E_DemolitionTargetType >( "types", hBox );
     }
     {
         Q3HBox* activationBox = new Q3HBox( vbox );
         QLabel* activationLabel = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ), activationBox );
-        activationTime_ = new LoadableTimeEdit( activationBox );
+        activationTime_ = new LoadableTimeEdit( "activationTime", activationBox );
         activationLabel->hide();
         activationTime_->hide();
         Q3HBox* activityBox = new Q3HBox( vbox );
         QLabel* activityLabel = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ), activityBox );
-        activityTime_ = new LoadableTimeEdit( activityBox );
+        activityTime_ = new LoadableTimeEdit( "activityTime", activityBox );
         activityLabel->hide();
         activityTime_->hide();
 

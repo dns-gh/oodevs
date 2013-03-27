@@ -17,8 +17,8 @@ using namespace gui;
 // Name: RichCheckBox constructor
 // Created: NPT 2013-03-12
 // -----------------------------------------------------------------------------
-RichCheckBox::RichCheckBox( const QString& objectName )
-    : QCheckBox()
+RichCheckBox::RichCheckBox( const QString& objectName, QWidget* parent /*= 0*/ )
+    : QCheckBox( parent )
 {
     ObjectNameManager::getInstance()->SetObjectName( this, objectName );
 }
@@ -27,7 +27,7 @@ RichCheckBox::RichCheckBox( const QString& objectName )
 // Name: RichCheckBox constructor
 // Created: NPT 2013-03-12
 // -----------------------------------------------------------------------------
-RichCheckBox::RichCheckBox( const QString& objectName, const QString& text, QWidget* parent )
+RichCheckBox::RichCheckBox( const QString& objectName, const QString& text, QWidget* parent /* = 0 */ )
     : QCheckBox( text, parent )
 {
     ObjectNameManager::getInstance()->SetObjectName( this, objectName );

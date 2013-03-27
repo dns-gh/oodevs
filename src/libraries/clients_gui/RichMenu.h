@@ -39,7 +39,7 @@ class RichMenu : public kernel::ContextMenu
 public:
     //! @name Constructors/Destructor
     //@{
-             RichMenu( QWidget* parent, kernel::Controllers& controllers, const QString& title = "" );
+             RichMenu( const QString& objectName, QWidget* parent, kernel::Controllers& controllers, const QString& title = "" );
     virtual ~RichMenu();
     //@}
 

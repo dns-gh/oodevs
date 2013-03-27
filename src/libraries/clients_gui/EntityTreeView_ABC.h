@@ -47,7 +47,7 @@ class EntityTreeView_ABC : public RichTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityTreeView_ABC( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
+    EntityTreeView_ABC( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
     virtual ~EntityTreeView_ABC();
     //@}
 

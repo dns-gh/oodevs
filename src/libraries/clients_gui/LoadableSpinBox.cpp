@@ -17,10 +17,10 @@ using namespace gui;
 // Name: LoadableSpinBox constructor
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
-LoadableSpinBox::LoadableSpinBox( int minValue, int maxValue, int step, QWidget* parent, const QString& probableName )
-    : LoadableFieldTemplate< RichSpinBox >( parent, probableName )
+LoadableSpinBox::LoadableSpinBox( const QString& objectName, int minValue, int maxValue, int step, QWidget* parent )
+    : LoadableFieldTemplate< RichSpinBox >( parent, objectName )
 {
-    SetDefaultValueWidget( new RichSpinBox( this, minValue, maxValue, step ) );
+    SetDefaultValueWidget( new RichSpinBox( "default" + objectName, this, minValue, maxValue, step ) );
 }
 
 // -----------------------------------------------------------------------------

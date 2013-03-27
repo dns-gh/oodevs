@@ -11,6 +11,7 @@
 #include "LoadableField.h"
 #include "moc_LoadableField.cpp"
 #include "ObjectPrototypeLoader_ABC.h"
+#include "RichComboBox.h"
 
 using namespace gui;
 
@@ -18,13 +19,13 @@ using namespace gui;
 // Name: LoadableField constructor
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
-LoadableField::LoadableField( QWidget* parent, const QString& probableName)
+LoadableField::LoadableField( QWidget* parent, const QString& objectName )
     : Q3HBox( parent )
-    , probableName_      ( probableName )
+    , probableName_      ( objectName )
     , defaultValueWidget_( 0 )
     , currentLoader_     ( 0 )
 {
-    fieldName_ = new QComboBox( this );
+    fieldName_ = new RichComboBox( objectName, this );
     connect( fieldName_, SIGNAL( activated( const QString& ) ), this, SLOT( FieldSelected( const QString& ) ) );
     SetPossibleFields( QStringList() );
 }

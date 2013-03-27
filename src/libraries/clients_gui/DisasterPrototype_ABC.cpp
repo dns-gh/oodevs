@@ -12,6 +12,9 @@
 #include "moc_DisasterPrototype_ABC.cpp"
 #include "Tools.h"
 #include "LoadableTimeEdit.h"
+#include "RichCheckBox.h"
+#include "RichDateTimeEdit.h"
+#include "SubObjectName.h"
 #include "tools/GeneralConfig.h"
 #include <boost/bind.hpp>
 
@@ -23,17 +26,19 @@ using namespace gui;
 // Created: LGY 2012-11-20
 // -----------------------------------------------------------------------------
 DisasterPrototype_ABC::DisasterPrototype_ABC( QWidget* parent, const tools::GeneralConfig& config )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::DisasterPrototype_ABC", "Propagation" ) )
+    : ObjectAttributePrototype_ABC( parent, "DisasterPrototypeABC", tools::translate( "gui::DisasterPrototype_ABC", "Propagation" ) )
 {
+    SubObjectName subObject( "DisasterPrototypeABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2, 7, 10 );
+    layout->setMargin( 5 );
     layout->addWidget( new QLabel( tools::translate( "gui::DisasterPrototype_ABC", "Propagation Model:" ) ) );
-    propagationFiles_ = new ValuedComboBox< std::string >( 0 );
+    propagationFiles_ = new ValuedComboBox< std::string >( "propagationFiles", 0 );
     layout->addWidget( propagationFiles_ );
     FillInPaths( config.GetRootDir() );
-    checkbox_ = new QCheckBox( tools::translate( "gui::DisasterPrototype_ABC", "Time:" ) );
+    checkbox_ = new RichCheckBox( "time", tools::translate( "gui::DisasterPrototype_ABC", "Time:" ) );
     connect( checkbox_, SIGNAL( stateChanged( int ) ), this, SLOT( OnStateChanged( int ) ) );
     layout->addWidget( checkbox_ );
-    date_ = new QDateTimeEdit();
+    date_ = new RichDateTimeEdit( "date" );
     date_->setEnabled( false );
     layout->addWidget( date_ );
 }

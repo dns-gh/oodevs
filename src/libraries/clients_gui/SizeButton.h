@@ -26,7 +26,7 @@ class SizeButton : public QSlider
 public:
     //! @name Constructors/Destructor
     //@{
-             SizeButton( QWidget* parent = 0, const char* name = 0, float value = 1 );
+             SizeButton( const QString& objectName, QWidget* parent = 0, const char* name = 0, float value = 1 );
     virtual ~SizeButton();
     //@}
 
@@ -61,6 +61,7 @@ private:
     bool    changed_;
     float   previous_;
     bool    valueLabel_;
+    QString text_;
     //@}
 };
 

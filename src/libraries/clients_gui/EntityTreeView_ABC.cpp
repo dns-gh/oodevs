@@ -23,8 +23,8 @@ using namespace gui;
 // Name: EntityTreeView_ABC constructor
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
-EntityTreeView_ABC::EntityTreeView_ABC( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
-    : RichTreeView( parent, &controllers )
+EntityTreeView_ABC::EntityTreeView_ABC( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent /*= 0*/ )
+    : RichTreeView( objectName, parent, &controllers )
     , controllers_( controllers )
     , profile_( profile )
     , modelObserver_( modelObserver )

@@ -28,6 +28,7 @@ namespace gui
     class GradientPreferences;
     class GradientWidget;
     class Painter_ABC;
+    class RichGroupBox;
 }
 
 namespace gui
@@ -87,7 +88,7 @@ private:
     kernel::Options& options_;
     Elevation2dLayer& layer_;
     GradientPreferences& preferences_;
-    Q3GroupBox* hsBox_;
+    RichGroupBox* hsBox_;
     CheckBox* fitColorGradienttoViewPort_;
     QDial* hsDial_;
     QSlider* hillShadeStrength_;

@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "DelayPrototype_ABC.h"
+#include "SubObjectName.h"
 #include "Tools.h"
 #include "LoadableTimeEdit.h"
 
@@ -19,11 +20,12 @@ using namespace gui;
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
 DelayPrototype_ABC::DelayPrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::DelayPrototype_ABC", "Delay time" ) )
+    : ObjectAttributePrototype_ABC( parent, "DelayPrototype_ABC", tools::translate( "gui::DelayPrototype_ABC", "Delay time" ) )
 {
+    SubObjectName subObject( "DelayPrototype_ABC" );
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
     layout->addWidget( new QLabel( tools::translate( "gui::DelayPrototype_ABC", "Delay time:" ) ) );
-    delayTime_ = new LoadableTimeEdit( this );
+    delayTime_ = new LoadableTimeEdit( "delayTime", this );
     layout->addWidget( delayTime_ );
 }
 

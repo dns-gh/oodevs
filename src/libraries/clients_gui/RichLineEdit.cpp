@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "RichLineEdit.h"
+#include "ObjectNameManager.h"
 #include "moc_RichLineEdit.cpp"
 
 using namespace gui;
@@ -24,7 +25,7 @@ using namespace gui;
 SideWidget::SideWidget( QWidget *parent /*= 0*/ )
     : QWidget( parent )
 {
-    // NOTHING
+    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,20 +47,22 @@ bool SideWidget::event( QEvent *event )
 // Name: RichLineEdit constructor
 // Created: ABR 2012-01-19
 // -----------------------------------------------------------------------------
-RichLineEdit::RichLineEdit( QWidget* parent /*= 0*/, const char* name /*= 0*/ )
-    : QLineEdit( parent, name )
+RichLineEdit::RichLineEdit( const QString& objectName, QWidget* parent /*= 0*/ )
+    : QLineEdit( parent )
 {
-    Init();
+    Init( objectName );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RichLineEdit::BaseEditLine_ABC
 // Created: ABR 2012-01-19
 // -----------------------------------------------------------------------------
-RichLineEdit::RichLineEdit( const QString& contents, QWidget* parent /*= 0*/, const char* name /*= 0*/ )
-    : QLineEdit( contents, parent, name )
+RichLineEdit::RichLineEdit( const QString& objectName, const QString& contents, QWidget* parent /*= 0*/ )
+    : QLineEdit( contents, parent )
 {
-    Init();
+    if( parent && parent->layout() )
+        parent->layout()->addWidget( this );
+    Init( objectName );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,15 +71,16 @@ RichLineEdit::RichLineEdit( const QString& contents, QWidget* parent /*= 0*/, co
 // -----------------------------------------------------------------------------
 RichLineEdit::~RichLineEdit()
 {
-    // NOTHING
+    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RichLineEdit::Init
 // Created: ABR 2012-01-19
 // -----------------------------------------------------------------------------
-void RichLineEdit::Init()
+void RichLineEdit::Init( const QString& objectName )
 {
+    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
     leftWidget_ = new SideWidget( this );
     leftWidget_->resize( 0, 0 );
     leftLayout_ = new QHBoxLayout( leftWidget_ );

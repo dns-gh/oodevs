@@ -20,7 +20,7 @@ namespace gui
 /** @class  RichTabWidget
     @brief  RichTabWidget
 */
-// Created: NPT 2013-03-12
+// Created: NPT 2013-03-14
 // =============================================================================
 class RichTabWidget : public QTabWidget
                     , private boost::noncopyable
@@ -29,7 +29,7 @@ class RichTabWidget : public QTabWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             RichTabWidget( const QString& objectName, QWidget* parent );
+             RichTabWidget( const QString& objectName , QWidget* parent = 0 );
     virtual ~RichTabWidget();
     //@}
 

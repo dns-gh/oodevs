@@ -18,6 +18,8 @@ namespace kernel
 namespace gui
 {
     class Gradient;
+    class RichPushButton;
+    class RichLineEdit;
 }
 
 namespace gui
@@ -65,9 +67,9 @@ private:
     //! @name Member data
     //@{
     Q3VBoxLayout* pLayout_;
-    QLineEdit* pLineEdit_;
-    QPushButton* pAcceptButton_;
-    QPushButton* pRejectButton_;
+    RichLineEdit* pLineEdit_;
+    RichPushButton* pAcceptButton_;
+    RichPushButton* pRejectButton_;
     Gradient& gradient_;
     kernel::Options& options_;
     const std::vector< std::string >& presets_;

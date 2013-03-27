@@ -14,6 +14,9 @@
 #include "ColorButton.h"
 #include "DirectionWidget.h"
 #include "LightingProxy.h"
+#include "RichGroupBox.h"
+#include "RichRadioButton.h"
+#include "SubObjectName.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 
@@ -29,6 +32,7 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
     , options_( controllers.options_ )
     , lighting_( lighting )
 {
+    SubObjectName subObject( "LightingPanel" );
     Q3VBox* container = new Q3VBox( this );
     lighting_.SetAmbient( 0.2f, 0.2f, 0.2f );
     lighting_.SetDiffuse( 0.8f, 0.8f, 0.8f );
@@ -37,20 +41,29 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
     // $$$$ SBO 2007-01-03: Todo, handle lighting types different from fixed
     lightingType_ = new ButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ), container );
     lightingType_->resize( this->size() );
-    lightingType_->insert( new QRadioButton( tr( "Fixed" ), lightingType_ ) );
-    lightingType_->insert( new QRadioButton( tr( "Camera fixed" ), lightingType_ ) );
-    lightingType_->insert( new QRadioButton( tr( "Simulation time" ), lightingType_ ) );
+    lightingType_->insert( new RichRadioButton( "fixed", tr( "Fixed" ), lightingType_ ) );
+    lightingType_->insert( new RichRadioButton( "cameraFixed", tr( "Camera fixed" ), lightingType_ ) );
+    lightingType_->insert( new RichRadioButton( "simulationTime", tr( "Simulation time" ), lightingType_ ) );
     lightingType_->setButton( 0 );
 
     connect( lightingType_, SIGNAL( clicked( int ) ), this, SLOT( OnLightingType( int ) ) );
 
-    fixedLightBox_ = new Q3GroupBox( 2, Qt::Horizontal, tr( "Parameters" ), container );
-    new QLabel( tr( "Source position" ), fixedLightBox_ );
-    direction_ = new DirectionWidget( fixedLightBox_ );
-    new QLabel( tr( "Ambient color" ), fixedLightBox_ );
-    ambient_ = new ColorButton( fixedLightBox_, "", QColor( 52, 52, 52 ) );
-    new QLabel( tr( "Diffuse color" ), fixedLightBox_ );
-    diffuse_ = new ColorButton( fixedLightBox_, "", QColor( 204, 204, 204 ) );
+    QLabel* sourceLabel = new QLabel( tr( "Source position" ) );
+    direction_ = new DirectionWidget( 0 );
+    QLabel* ambientLabel = new QLabel( tr( "Ambient color" ) );
+    ambient_ = new ColorButton( "ambient", 0, "", QColor( 52, 52, 52 ) );
+    QLabel* diffuseLabel = new QLabel( tr( "Diffuse color" ) );
+    diffuse_ = new ColorButton( "diffuse", 0, "", QColor( 204, 204, 204 ) );
+
+    fixedLightBox_ = new RichGroupBox( "fixedLightBox", tr( "Parameters" ), container );
+    QGridLayout* fixedLightBoxLayout = new QGridLayout( fixedLightBox_ );
+    fixedLightBoxLayout->addWidget( sourceLabel, 0, 0 );
+    fixedLightBoxLayout->addWidget( direction_, 0 ,1 );
+    fixedLightBoxLayout->addWidget( ambientLabel, 1, 0 );
+    fixedLightBoxLayout->addWidget( ambient_, 1, 1 );
+    fixedLightBoxLayout->addWidget( diffuseLabel, 2, 0) ;
+    fixedLightBoxLayout->addWidget( diffuse_, 2, 1 );
+
 
     connect( direction_, SIGNAL( DirectionChanged( const geometry::Vector3f& ) ), this, SLOT( DirectionChanged( const geometry::Vector3f& ) ) );
     connect( ambient_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( AmbientChanged( const QColor& ) ) );

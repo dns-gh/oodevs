@@ -32,7 +32,7 @@ class ObjectTreeView : public EntityTreeView_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectTreeView( kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
+             ObjectTreeView( const QString& objectName, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, ModelObserver_ABC& modelObserver, QWidget* parent = 0 );
     virtual ~ObjectTreeView();
     //@}
 

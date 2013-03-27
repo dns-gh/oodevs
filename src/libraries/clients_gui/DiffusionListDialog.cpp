@@ -11,6 +11,8 @@
 #include "DiffusionListDialog.h"
 #include "moc_DiffusionListDialog.cpp"
 #include "DiffusionListEditor.h"
+#include "RichPushButton.h"
+#include "SubObjectName.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Team_ABC.h"
@@ -32,6 +34,7 @@ DiffusionListDialog::DiffusionListDialog( QWidget* parent, kernel::Controllers& 
     , currentAgent_    ( controllers )
 {
     // Init
+    SubObjectName subObject( "DiffusionListDialog" );
     resize( 500, 700 );
     hide();
 
@@ -39,10 +42,10 @@ DiffusionListDialog::DiffusionListDialog( QWidget* parent, kernel::Controllers& 
     editor_ = new DiffusionListEditor( this, controllers, agents, formations, extensions );
 
     // Buttons
-    QPushButton* generateButton = new QPushButton( tr( "Generate" ) , this );
-    QPushButton* clearButton    = new QPushButton( tr( "Clear" )    , this );
-    QPushButton* okButton       = new QPushButton( tr( "Ok" )       , this );
-    QPushButton* cancelButton   = new QPushButton( tr( "Cancel" )   , this );
+    RichPushButton* generateButton = new RichPushButton( "generate", tr( "Generate" ) , this );
+    RichPushButton* clearButton    = new RichPushButton( "clear", tr( "Clear" )    , this );
+    RichPushButton* okButton       = new RichPushButton( "ok", tr( "Ok" )       , this );
+    RichPushButton* cancelButton   = new RichPushButton( "cancel", tr( "Cancel" )   , this );
     okButton->setDefault( true );
 
     // Layouts

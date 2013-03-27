@@ -15,6 +15,8 @@
 namespace gui
 {
     class InfoPanel_ABC;
+    class RichPushButton;
+    class RichComboBox;
 
 // =============================================================================
 /** @class  Panels
@@ -30,7 +32,7 @@ class Panels : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             Panels( QWidget* pParent );
+    Panels( const QString& objectName, QWidget* pParent );
     virtual ~Panels();
     //@}
 
@@ -85,9 +87,9 @@ private:
 private:
     //! @name Member data
     //@{
-    QPushButton*        previous_;
-    QPushButton*        next_;
-    QComboBox*          combo_;
+    RichPushButton*     previous_;
+    RichPushButton*     next_;
+    RichComboBox*       combo_;
     QStackedWidget*     stack_;
     QWidget*            dummy_;
 

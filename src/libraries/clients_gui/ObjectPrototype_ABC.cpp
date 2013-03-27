@@ -19,7 +19,10 @@
 #include "ObjectAttributePrototypeFactory_ABC.h"
 #include "ObjectPrototypeShapeFileLoader.h"
 #include "ParametersLayer.h"
+#include "RichGroupBox.h"
 #include "RichLabel.h"
+#include "RichPushButton.h"
+#include "SubObjectName.h"
 #include "Tools.h"
 
 #include "clients_kernel/Controllers.h"
@@ -37,7 +40,7 @@ using namespace gui;
 // Name: ObjectPrototype_ABC constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers,
+ObjectPrototype_ABC::ObjectPrototype_ABC( const QString& objectName, QWidget* parent, Controllers& controllers,
                                          const kernel::CoordinateConverter_ABC& coordinateConverter,
                                          const tools::Resolver_ABC< ObjectType, std::string >& resolver, const Team_ABC& noSideTeam,
                                          ParametersLayer& layer, std::auto_ptr< ObjectAttributePrototypeFactory_ABC > factory )
@@ -47,45 +50,59 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
     , resolver_  ( resolver )
     , location_  ( 0 )
 {
-    QBoxLayout* layout = new QBoxLayout( this, QBoxLayout::TopToBottom, 0, 5 );
+    gui::SubObjectName subObject( objectName );
+    QVBoxLayout* layout = new QVBoxLayout( this );
 
     // Information box
     {
-        Q3GroupBox* infoBox = new Q3GroupBox( 2, Qt::Horizontal, tr( "Information" ), parent );
-        layout->setAlignment( Qt::AlignTop );
-        layout->addWidget( infoBox );
+        SubObjectName subObject( "infoBox" );
 
-        new QLabel( tr( "Name:" ), infoBox );
-        name_ = new LoadableLineEdit( infoBox, "NAME" );
+        QLabel* nameLabel = new QLabel( tr( "Name:" ) );
+        name_ = new LoadableLineEdit( "name" );
 
-        new QLabel( tr( "Side:" ), infoBox );
-        teams_ = new ValuedComboBox< const Team_ABC* >( infoBox );
+        QLabel* sideLabel = new QLabel( tr( "Side:" ) );
+        teams_ = new ValuedComboBox< const Team_ABC* >( "teams" );
         teams_->AddItem( noSideTeam.GetName(), &noSideTeam );
 
-        new QLabel( tr( "Type:" ), infoBox );
-        objectTypes_ = new ValuedComboBox< const ObjectType* >( infoBox );
+        QLabel* typeLabel = new QLabel( tr( "Type:" ) );
+        objectTypes_ = new ValuedComboBox< const ObjectType* >( "objectTypes" );
         objectTypes_->setSorting( true );
         connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 
-        position_ = new RichLabel( tr( "Location:" ), infoBox );
-        locationLabel_ = new QLabel( tr( "---" ), infoBox );
+        position_ = new RichLabel( "Location", tr( "Location:" ) );
+        locationLabel_ = new QLabel( tr( "---" ) );
         locationLabel_->setMinimumWidth( 100 );
+        locationLabel_->setMaximumHeight( 50 );
         locationLabel_->setAlignment( Qt::AlignCenter );
         locationLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
 
         locationCreator_ = new LocationCreator( position_, tr( "New object" ), layer, *this );
 
-        new QWidget( infoBox );
-        loadFromFileButton_ = new QPushButton(  tr( "Load from file" ), infoBox );
+        loadFromFileButton_ = new gui::RichPushButton( "loadFromFileButton", tr( "Load from file" ) );
         loadFromFileButton_->setToggleButton( true );
         connect( loadFromFileButton_, SIGNAL( toggled( bool ) ), this, SLOT( LoadFromFile( bool ) ) );
-        new QWidget( infoBox );
-        loadFromFilePathLabel_ = new QLabel( infoBox );
+
+        loadFromFilePathLabel_ = new QLabel();
+
+        RichGroupBox* infoBox = new RichGroupBox( "information", tr( "Information" ) );
+        QGridLayout* infoxBoxLayout = new QGridLayout( infoBox );
+        infoxBoxLayout->addWidget( nameLabel, 0, 0 );
+        infoxBoxLayout->addWidget( name_, 0, 1, 1, 5 );
+        infoxBoxLayout->addWidget( sideLabel, 1, 0 );
+        infoxBoxLayout->addWidget( teams_, 1, 1, 1, 5 );
+        infoxBoxLayout->addWidget( typeLabel, 2, 0 );
+        infoxBoxLayout->addWidget( objectTypes_, 2, 1, 1, 5 );
+        infoxBoxLayout->addWidget( position_, 3, 0 );
+        infoxBoxLayout->addWidget( locationLabel_, 3, 1, 1, 5 );
+        infoxBoxLayout->addWidget( loadFromFileButton_, 4, 1, 1, 5 );
+        infoxBoxLayout->addWidget( loadFromFilePathLabel_, 5, 1, 1, 5 );
+        layout->addWidget( infoBox );
     }
 
     // Description box
     {
-        descriptionBox_ = new QGroupBox( tr( "Description" ), parent );
+        descriptionBox_ = new RichGroupBox( "description", tr( "Description" ) );
+        SubObjectName subObject( "descriptionBox" );
         descriptionBox_->setVisible( false );
         descriptionLabel_ = new QLabel( descriptionBox_ );
         descriptionLabel_->setWordWrap( true );
@@ -96,12 +113,13 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 
     // Attribute box
     {
-        Q3GroupBox* attributBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Attributes" ), parent );
+        RichGroupBox* attributBox = new RichGroupBox( "Attributes", tr( "Attributes" ) );
+        attributBox->setLayout( new QVBoxLayout( attributBox ) );
+        SubObjectName subObject( "attributBox" );
         layout->addWidget( attributBox );
         attributes_.reset( new ObjectAttributePrototypeContainer( resolver, factory, attributBox ) );
         // $$$$ AGE 2006-08-11: L'initialisation du reste est delayée... C'est pas terrible
     }
-
     controllers_.Register( *this );
 }
 

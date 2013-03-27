@@ -21,12 +21,12 @@ namespace gui
 */
 // Created: JSR 2011-07-07
 // =============================================================================
-class LoadableComboBox : public LoadableFieldTemplate< QComboBox >
+class LoadableComboBox : public LoadableFieldTemplate< RichComboBox >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             LoadableComboBox( bool rw, QWidget* parent, const QString& probableName = QString() );
+    LoadableComboBox( const QString& objectName, bool rw, QWidget* parent );
     virtual ~LoadableComboBox();
     //@}
 
