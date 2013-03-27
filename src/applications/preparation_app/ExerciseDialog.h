@@ -52,6 +52,7 @@ public:
     virtual void NotifyCreated( const Exercise& exercise );
     virtual void VisitBriefing( const QString& lang, const QString& text );
     virtual void VisitResource( const QString& name, const QString& file );
+    virtual void VisitSicVersion( Exercise::E_Sics sic, unsigned int revision, const std::string& name, bool selected );
     //@}
 
 protected:
@@ -99,6 +100,7 @@ private:
     QCheckBox* infiniteDotationsCheckBox_;
     QCheckBox* humanEvolutionCheckBox_;
     QCheckBox* melmilCheckBox_;
+    QRadioButton* sicVersions_[ 2 * Exercise::eSicNbr ];
     //@}
 };
 
