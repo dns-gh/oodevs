@@ -74,8 +74,9 @@ func waitForMessages(client *swapi.Client, timeout time.Duration) bool {
 	handler := func(msg *swapi.SwordMessage, ctx int32, err error) bool {
 		if msg != nil && msg.AuthenticationToClient != nil {
 			auth := msg.AuthenticationToClient
-			resp := auth.GetMessage().GetAuthenticationResponse()
-			if resp != nil {
+			if auth.GetMessage().GetAuthenticationResponse() != nil ||
+				// ConnectedProfileList is sent after a failed authentication
+				auth.GetMessage().GetConnectedProfileList() != nil {
 				return false
 			}
 		}
