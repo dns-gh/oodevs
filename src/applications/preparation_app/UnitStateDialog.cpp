@@ -118,6 +118,8 @@ void UnitStateDialog::NotifyContextMenu( const kernel::Formation_ABC& entity, ke
 // -----------------------------------------------------------------------------
 void UnitStateDialog::NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu )
 {
+    if( entity.GetId() == 0 ) // no side team
+        return;
     selected_ = const_cast< kernel::Team_ABC* > ( &entity );
     menu.InsertItem( "Helpers", tools::translate( "UnitStateDialog", "Display initial state" ), this, SLOT( Show() ), false, 5 );
 }

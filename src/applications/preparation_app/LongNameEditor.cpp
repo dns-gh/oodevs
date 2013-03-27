@@ -93,6 +93,8 @@ void LongNameEditor::NotifyContextMenu( const Agent_ABC& entity, ContextMenu& me
 // -----------------------------------------------------------------------------
 void LongNameEditor::DoNotifyContextMenu( const Entity_ABC& entity, ContextMenu& menu )
 {
+    if( entity.GetId() == 0 ) // no side team
+        return;
     ExtensionType* type = types_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
     if( type && type->Find( "NomLong" ) )
     {

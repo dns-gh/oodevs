@@ -139,7 +139,7 @@ void OrbatToolbar::NotifyUpdated( const kernel::Filter_ABC& filter )
 // -----------------------------------------------------------------------------
 void OrbatToolbar::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
-    if( !filter_.IsVisible( entity ) )
+    if( !filter_.IsVisible( entity ) || entity.GetId() == 0 ) // no side team
         return;
     entity_ = &entity;
     menu.InsertItem( "Interface", tr( "Filter view" ), this, SLOT( OnSetFilter() ) );

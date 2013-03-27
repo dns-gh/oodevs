@@ -107,7 +107,7 @@ void DiffusionListDialog::SetContextMenuEntry( bool contextMenuEntry )
 // -----------------------------------------------------------------------------
 void DiffusionListDialog::NotifyContextMenu( const kernel::Team_ABC& team, ContextMenu& menu )
 {
-    if( !contextMenuEntry_ )
+    if( !contextMenuEntry_ || team.GetId() == 0 ) // no side team
         return;
     currentTeam_ = &team;
     currentAgent_ = 0;

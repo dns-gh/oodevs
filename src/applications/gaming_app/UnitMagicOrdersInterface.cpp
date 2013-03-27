@@ -156,7 +156,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Formation_ABC& e
 // -----------------------------------------------------------------------------
 void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu )
 {
-    if( !profile_.CanDoMagic( entity ) )
+    if( !profile_.CanDoMagic( entity ) || entity.GetId() == 0 ) // no side team
         return;
     selectedEntity_ = &entity;
     kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tools::translate( "Magic orders", "Magic orders" ), false, 1 );

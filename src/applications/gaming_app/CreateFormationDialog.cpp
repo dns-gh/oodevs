@@ -69,6 +69,8 @@ void CreateFormationDialog::NotifyContextMenu( const kernel::Formation_ABC& enti
 // -----------------------------------------------------------------------------
 void CreateFormationDialog::NotifyContextMenu( const kernel::Entity_ABC& entity, E_NatureLevel level, kernel::ContextMenu& menu )
 {
+    if( entity.GetId() == 0 ) // no side team
+        return;
     if( profile_.CanDoMagic( entity ) && level > eNatureLevel_c )
     {
         currentEntity_ = &entity;

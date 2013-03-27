@@ -229,6 +229,8 @@ void LogisticStockEditor::NotifyContextMenu( const Formation_ABC& formation, Con
 // -----------------------------------------------------------------------------
 void LogisticStockEditor::Update( const Entity_ABC& entity, ContextMenu& menu )
 {
+    if( entity.GetId() == 0 ) // no side team
+        return;
     selected_ = const_cast< Entity_ABC* >( &entity );
     ContextMenu* pSubMenu = menu.SubMenu( "Helpers", tr( "Logistic" ), false, 7 );
     pSubMenu->insertItem( tools::translate( "LogisticStockEditor", "Edit Stocks" ), this, SLOT( ShowStocksDialog() ) );
