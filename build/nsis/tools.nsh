@@ -200,12 +200,18 @@
 
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
 
-    FindFirst $0 $1 "$EXEDIR\*.otpak"
+    ${GetParameters} $5
+    ${GetOptions} $5 "/FROMDIR=" $4
+    IfErrors 0 +2
+    StrCpy $4 $EXEDIR
+    ClearErrors
+
+    FindFirst $0 $1 "$4\*.otpak"
     loop:
         StrCmp $1 "" done
         IfFileExists "$INSTDATADIR" +2
             CreateDirectory "$INSTDATADIR"
-        nsisunz::UnzipToLog "$EXEDIR\$1" "$INSTDATADIR"
+        nsisunz::UnzipToLog "$4\$1" "$INSTDATADIR"
         Pop $3
         StrCmp $3 "success" +2
             DetailPrint "$3"
