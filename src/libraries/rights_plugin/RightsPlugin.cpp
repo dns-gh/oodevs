@@ -337,8 +337,6 @@ void RightsPlugin::SendProfiles( AuthenticationSender& sender ) const
     auto response = reply.mutable_message()->mutable_connected_profile_list();
     for( T_Profiles::const_iterator it = authenticated_.begin(); it != authenticated_.end(); ++it )
         it->second->Send( *response->add_elem() );
-    auto ack = reply.mutable_message()->mutable_authentication_response();
-    ack->set_error_code( sword::AuthenticationResponse::success );
     sender.Broadcast( reply );
 }
 
