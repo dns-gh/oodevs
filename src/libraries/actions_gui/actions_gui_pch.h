@@ -22,7 +22,6 @@
 #include <QtGui/qlayout.h>
 #include <QtGui/qlineedit.h>
 #include <QtGui/qpixmap.h>
-#include <QtGui/qpushbutton.h>
 #include <QtGui/qscrollarea.h>
 #include <QtGui/qtreeview.h>
 #include <QtGui/qlistwidget.h>

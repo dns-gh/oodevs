@@ -15,6 +15,7 @@
 #include "actions/MedicalPriorities.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/resources.h"
+#include "clients_gui/RichPushButton.h"
 #include "clients_kernel/Tools.h"
 
 using namespace actions::gui;
@@ -58,9 +59,9 @@ QWidget* ParamHumanWoundList::BuildInterface( const QString& objectName, QWidget
     list_->setContextMenuPolicy( Qt::CustomContextMenu );
     list_->header()->setResizeMode( 0, QHeaderView::ResizeToContents );
 
-    QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, parent );
+    ::gui::RichPushButton* upBtn = new ::gui::RichPushButton( "upBtn", MAKE_ICON( arrow_up ), QString::null, parent );
     upBtn->setFixedSize( 32, 32 );
-    QPushButton* downBtn = new QPushButton( MAKE_ICON( arrow_down ), QString::null, parent );
+    ::gui::RichPushButton* downBtn = new ::gui::RichPushButton( "downBtn", MAKE_ICON( arrow_down ), QString::null, parent );
     downBtn->setFixedSize( 32, 32 );
 
     layout->addWidget( list_, 0, 0, 2, 1 );

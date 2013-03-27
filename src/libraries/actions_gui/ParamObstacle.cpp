@@ -125,10 +125,9 @@ QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* pare
 {
     Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
-
     // Type
     {
-        typeCombo_ = new ::gui::ValuedComboBox< const kernel::ObjectType* >( parent );
+        typeCombo_ = new ::gui::ValuedComboBox< const kernel::ObjectType* >( "typeCombo", parent );
         typeCombo_->setSorting( true );
         tools::Iterator< const kernel::ObjectType& > it = objectTypes_.StringResolver< kernel::ObjectType >::CreateIterator();
         while( it.HasMoreElements() )
@@ -144,7 +143,7 @@ QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* pare
     // Target type
     {
         QLabel* label = new QLabel( tr( "Demolition target type:" ), parent );
-        obstacleTypeCombo_ = new ::gui::ValuedComboBox< unsigned int >( parent );
+        obstacleTypeCombo_ = new ::gui::ValuedComboBox< unsigned int >( "obstacleTypeCombo", parent );
         for( unsigned int i = 0; i < eNbrDemolitionTargetType ; ++i )
             obstacleTypeCombo_->AddItem( tools::ToString( ( E_DemolitionTargetType)i ), i );
         connect( this, SIGNAL( ToggleReservable( bool ) ), label, SLOT( setVisible( bool ) ) );

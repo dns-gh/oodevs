@@ -11,6 +11,7 @@
 #include "actions_gui/resources.h"
 #include "MissionInterface_ABC.h"
 #include "moc_MissionInterface_ABC.cpp"
+#include "clients_gui/RichPushButton.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OrderType.h"
@@ -109,8 +110,8 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
         box->setMargin( 5 );
         box->setSpacing( 5 );
         box->layout()->setAlignment( Qt::AlignRight );
-        ok_ = new QPushButton( tr( "Ok" ), box );
-        QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
+        ok_ = new ::gui::RichPushButton( "ok", tr( "Ok" ), box );
+        ::gui::RichPushButton* cancel = new ::gui::RichPushButton( "cancel", tr( "Cancel" ), box );
         ok_->setDefault( true );
         ok_->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
         connect( ok_, SIGNAL( clicked() ), SLOT( OnOk() ) );

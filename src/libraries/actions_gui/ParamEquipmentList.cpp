@@ -13,6 +13,7 @@
 #include "InterfaceBuilder_ABC.h"
 #include "actions/Action_ABC.h"
 #include "actions/MaintenancePriorities.h"
+#include "clients_gui/RichPushButton.h"
 #include "clients_gui/resources.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/MaintenanceStates_ABC.h"
@@ -74,9 +75,9 @@ QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget*
             }
         }
 
-        QPushButton* addBtn = new QPushButton( MAKE_ICON( right_arrow ), QString::null, parent );
+        ::gui::RichPushButton* addBtn = new ::gui::RichPushButton( "addBtn", MAKE_ICON( right_arrow ), QString::null, parent );
         addBtn->setFixedSize( 32, 32 );
-        QPushButton* removeBtn = new QPushButton( MAKE_ICON( left_arrow ), QString::null, parent );
+        ::gui::RichPushButton* removeBtn = new ::gui::RichPushButton( "removeBtn", MAKE_ICON( left_arrow ), QString::null, parent );
         removeBtn->setFixedSize( 32, 32 );
 
         layout->addWidget( baseList_, 0, 0, 2, 1 );
@@ -97,9 +98,9 @@ QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget*
                 list_->addItem( QString( ( **it ).GetName().c_str() ) );
         }
 
-        QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, parent );
+        ::gui::RichPushButton* upBtn = new ::gui::RichPushButton( "upBtn", MAKE_ICON( arrow_up ), QString::null, parent );
         upBtn->setFixedSize( 32, 32 );
-        QPushButton* downBtn = new QPushButton( MAKE_ICON( arrow_down ), QString::null, parent );
+        ::gui::RichPushButton* downBtn = new ::gui::RichPushButton( "downBtn", MAKE_ICON( arrow_down ), QString::null, parent );
         downBtn->setFixedSize( 32, 32 );
 
         layout->addWidget( list_, 0, 2, 2, 1 );

@@ -154,7 +154,7 @@ void Param_ABC::NotifyChanged( Param_ABC& /*param*/ )
 QWidget* Param_ABC::BuildInterface( const QString& objectName, QWidget* parent )
 {
     if( group_ )
-        ObjectNameManager::getInstance()->RemoveRegisteredName( group_->objectName() );
+        ::gui::ObjectNameManager::getInstance()->RemoveRegisteredName( group_->objectName() );
     group_ = new ::gui::RichGroupBox( objectName, parent );
     group_->setCheckable( IsOptional() );
     if( group_->isCheckable() )

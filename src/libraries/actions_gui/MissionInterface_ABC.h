@@ -18,6 +18,7 @@ QT_FORWARD_DECLARE_CLASS( QTextEdit )
 #include <Qt3Support/q3vbox.h>
 #pragma warning( pop )
 #include "clients_kernel/ModesObserver_ABC.h"
+#include "clients_gui/RichPushButton.h"
 #include "tools/Observer_ABC.h"
 
 namespace kernel
@@ -39,7 +40,6 @@ namespace tools
 }
 
 class QTabWidget;
-class QPushButton;
 
 namespace actions
 {
@@ -133,7 +133,7 @@ private:
     Q3VBox* mainTab_;
     Q3VBox* optionalTab_;
     Q3ScrollView* sc1_;
-    QPushButton* ok_;
+    ::gui::RichPushButton* ok_;
     //@}
 };
 
