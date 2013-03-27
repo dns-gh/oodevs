@@ -380,6 +380,26 @@
             </exec>
         </sequential>
     </macrodef>
+    
+    <macrodef name="check-qt-names">
+        <attribute name="app"/>
+        <attribute name="outputfile"/>
+        <sequential>
+            <exec taskname="@{app}" executable="${out.dir}/release/applications/@{app}/@{app}.exe"
+                  dir="${run.dir}" failonerror="true">
+                  <arg value="--debug-qt-names=@{outputfile}"/>
+            </exec>
+            <python failonerror="true">
+                <arg value="${root.dir}/build/checkqtnames.py"/>
+                <arg value="@{outputfile}"/>
+            </python>
+            <delete file="@{outputfile}"/>
+        </sequential>
+    </macrodef>
+    
+    <target name="qt_name_test">
+        <check-qt-names app="preparation_app" outputfile="${out.dir}/checkqtnames.txt"/>
+    </target>
 
     <target name="app_test" description="check whether gui applications start properly">
         <check-gui app="adaptation_app"/>
@@ -848,6 +868,7 @@
         ,checkpoint_test
         ,data_migrations_test
         ,exercises_test
+        ,qt_name_test
         ,scripts_test
         " description="build and run all tests"/>
 
