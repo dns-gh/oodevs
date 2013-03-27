@@ -92,7 +92,7 @@ RichTreeView::RichTreeView( const QString& objectName, QWidget* parent /*= 0*/, 
 // -----------------------------------------------------------------------------
 RichTreeView::~RichTreeView()
 {
-    // NOTHING
+    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
 }
 
 // -----------------------------------------------------------------------------
