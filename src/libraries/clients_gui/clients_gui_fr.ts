@@ -1566,7 +1566,7 @@ Voulez-vous le supprimer?</translation>
         <translation>Supprimer le noeud</translation>
     </message>
     <message>
-        <source>Cancel</ssource>
+        <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
 </context>
