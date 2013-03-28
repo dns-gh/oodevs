@@ -12,6 +12,7 @@
 #include "LogisticConsigns.h"
 #include "Simulation.h"
 #include "LogConsignDisplayer_ABC.h"
+#include "LogisticHelpers.h"
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -124,8 +125,10 @@ void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& view
 {
     if( ! pPionLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;
-    const Point2f from = pPionLogHandling_->Get< Positions >().GetPosition();
-    const Point2f to   = consumer_.Get< Positions >().GetPosition();
+    const Point2f from = logistic_helpers::GetLogisticPosition( *pPionLogHandling_ );
+    const Point2f to   = logistic_helpers::GetLogisticPosition( consumer_ );
+    if( from == Point2f() || to == Point2f() )
+        return;
     if( ! viewport.IsVisible( Rectangle2f( from, to ) ) )
         return;
     glColor4f( COLOR_MAROON );

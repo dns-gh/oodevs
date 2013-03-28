@@ -12,6 +12,7 @@
 #include "LogisticConsigns.h"
 #include "Simulation.h"
 #include "LogConsignDisplayer_ABC.h"
+#include "LogisticHelpers.h"
 #include "SupplyRecipientResourcesRequest.h"
 #include "SupplyResourceRequest.h"
 #include "clients_gui/DisplayExtractor.h"
@@ -175,10 +176,14 @@ void LogSupplyConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport,
     if( !pLogHandlingEntity_ || !tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;
 
-    Point2f from = pLogHandlingEntity_->Get< Positions >().GetPosition();
+    Point2f from = logistic_helpers::GetLogisticPosition( *pLogHandlingEntity_, true );
+    if( from == Point2f() )
+        return;
     for( tools::Iterator< const SupplyRecipientResourcesRequest& > it = CreateIterator(); it.HasMoreElements(); )
     {
-        const Point2f to   = it.NextElement().recipient_.Get< Positions >().GetPosition();
+        const Point2f to = logistic_helpers::GetLogisticPosition( it.NextElement().recipient_, true );
+        if( to == Point2f() )
+            return;
         if( viewport.IsVisible( Rectangle2f( from, to ) ) )
         {
             glColor4f( COLOR_ORANGE );
