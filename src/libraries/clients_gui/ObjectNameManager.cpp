@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectNameManager.h"
+#include "MT_Tools/MT_Logger.h"
 
 using namespace gui;
 
@@ -47,10 +48,7 @@ namespace
 {
     void DisplayErrorMessage( const QString& message )
     {
-        QMessageBox messageBox;
-        messageBox.setWindowTitle( "Naming Errors" ); 
-        messageBox.setText( message );
-        messageBox.show();
+        _MT_LOG_WARNING_MSG( "Naming Errors :" + message );
     }
 }
 
