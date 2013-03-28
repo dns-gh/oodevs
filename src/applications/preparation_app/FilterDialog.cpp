@@ -29,45 +29,45 @@ FilterDialog::FilterDialog( const QString& objectName, QWidget* parent, xml::xis
     , filterManager_( 0 )
 {
     gui::SubObjectName subObject( objectName + "FilterDialog" );
-    QVBoxLayout* mainLayout = new QVBoxLayout( this, 5, 5, "FilterDialog_MainLayout" );
+
     // Filters list box
-    {
-        list_ = new gui::RichListWidget( "filterList" );
-        connect( list_, SIGNAL( currentRowChanged( int ) ), SLOT( OnSelectFilter( int ) ) );
+    list_ = new gui::RichListWidget( "filterList" );
+    connect( list_, SIGNAL( currentRowChanged( int ) ), SLOT( OnSelectFilter( int ) ) );
 
-        gui::RichGroupBox* selectFilterBox = new gui::RichGroupBox( "selectFilter", tools::translate( "FilterDialog", "Select filter:" ), this );
-        QHBoxLayout* selectFilterBoxLayout = new QHBoxLayout( selectFilterBox );
-        selectFilterBoxLayout->addWidget( list_ );
-        mainLayout->addWidget( selectFilterBox );
-    }
+    gui::RichGroupBox* selectFilterBox = new gui::RichGroupBox( "selectFilter", tools::translate( "FilterDialog", "Select filter:" ), this );
+    QHBoxLayout* selectFilterBoxLayout = new QHBoxLayout( selectFilterBox );
+    selectFilterBoxLayout->addWidget( list_ );
+    
     // Descriptions
-    {
-        description_ = new QLabel();
-        description_->setWordWrap( true );
+    description_ = new QLabel();
+    description_->setWordWrap( true );
 
-        gui::RichGroupBox* descriptionBox = new gui::RichGroupBox( "description", tools::translate( "FilterDialog", "Description:" ), this );
-        descriptionBox->setMinimumHeight( 80 );
-        QHBoxLayout* descriptionBoxLayout = new QHBoxLayout( descriptionBox );
-        descriptionBoxLayout->addWidget( description_ );
-        mainLayout->addWidget( descriptionBox );
-    }
+    gui::RichGroupBox* descriptionBox = new gui::RichGroupBox( "description", tools::translate( "FilterDialog", "Description:" ), this );
+    descriptionBox->setMinimumHeight( 80 );
+    QHBoxLayout* descriptionBoxLayout = new QHBoxLayout( descriptionBox );
+    descriptionBoxLayout->addWidget( description_ );
+    
     // Parameters
-    {
-        stack_ = new Q3WidgetStack( this, "FilterDialog_ParametersStack" );
-        connect( list_, SIGNAL( currentRowChanged( int ) ), stack_, SLOT( raiseWidget( int ) ) );
-        mainLayout->addWidget( stack_ );
-    }
+    stack_ = new QStackedWidget( this );
+    connect( list_, SIGNAL( currentRowChanged( int ) ), stack_, SLOT( setCurrentIndex( int ) ) );
+    
     // Buttons
-    {
-        Q3HBox* box = new Q3HBox( this, "FilterDialog_ButtonsHBox" );
-        box->setSpacing( 5 );
-        box->setMaximumHeight( 40 );
-        okButton_ = new gui::RichPushButton( "ok", tools::translate( "FilterDialog", "Ok" ), box );
-        okButton_->setDefault( true );
-        gui::RichPushButton* cancelBtn = new gui::RichPushButton( "cancel", tools::translate( "FilterDialog", "Cancel" ), box );
-        connect( okButton_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
-        connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
-    }
+    Q3HBox* box = new Q3HBox( this, "FilterDialog_ButtonsHBox" );
+    box->setSpacing( 5 );
+    box->setMaximumHeight( 40 );
+    okButton_ = new gui::RichPushButton( "ok", tools::translate( "FilterDialog", "Ok" ), box );
+    okButton_->setDefault( true );
+    gui::RichPushButton* cancelBtn = new gui::RichPushButton( "cancel", tools::translate( "FilterDialog", "Cancel" ), box );
+    connect( okButton_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
+    connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
+    
+    //  Main Layout
+    QVBoxLayout* mainLayout = new QVBoxLayout( this, 5, 5, "FilterDialog_MainLayout" );
+    mainLayout->addWidget( selectFilterBox );
+    mainLayout->addWidget( descriptionBox );
+    mainLayout->addWidget( stack_ );
+    mainLayout->addWidget( box );
+
     // Manager
     {
         filterManager_.reset( new FilterManager( xis, config, *list_, *stack_, *parent ) );

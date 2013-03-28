@@ -86,7 +86,7 @@ private:
     gui::RichListWidget*           list_;
     QLabel*                        description_;
     gui::RichPushButton*           okButton_;
-    Q3WidgetStack*                 stack_;
+    QStackedWidget*                stack_;
     //@}
 };
 

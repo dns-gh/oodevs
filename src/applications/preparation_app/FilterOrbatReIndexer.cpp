@@ -36,7 +36,6 @@ namespace
         gui::RichCheckBox* checkbox = new gui::RichCheckBox( name, text );
         checkbox->setChecked( checked );
         parent->layout()->addWidget( checkbox );
-        parent->layout()->addWidget( checkbox );
         return checkbox;
     }
 }
@@ -199,33 +198,51 @@ void FilterOrbatReIndexer::ReadDiplomacyLink( xml::xistream& xis, xml::xostream&
 QWidget* FilterOrbatReIndexer::CreateParametersWidget( const QString& objectName, QWidget* parent )
 {
     gui::SubObjectName subObject( objectName );
-    gui::RichGroupBox* parametersWidget = new gui::RichGroupBox( "ParameterGroupBox", tools::translate( "FilterOrbatReIndexer", "Import parameters" ), parent );
-    parametersWidget->setLayout( new QHBoxLayout() );
-    {
-        Q3HBox* hbox = new Q3HBox( parametersWidget, "FilterOrbatReIndexer_OrbatHBox" );
-        hbox->setSpacing( 5 );
-        new QLabel( tools::translate( "FilterOrbatReIndexer", "Select order of battle:" ), hbox, "FilterOrbatReIndexer_OrbatLabel" );
-        filename_ = new gui::RichLineEdit( "FilterOrbatReIndexer", tools::translate( "FilterOrbatReIndexer", "Enter path to the new orbat here" ), hbox );
-        filename_->setReadOnly( true );
-        gui::RichPushButton* browseBtn = new gui::RichPushButton( "browseBtn", tools::translate( "FilterOrbatReIndexer", "Browse..." ), hbox );
-        connect( browseBtn, SIGNAL( clicked() ), SLOT( OnBrowse() ) );
-    }
-    {
-        Q3HBox* hbox = new Q3HBox( parametersWidget, "ParameterHBox" );
-        gui::RichGroupBox* optionBox = new gui::RichGroupBox( "OptionGroupBox", tools::translate( "FilterOrbatReIndexer", "Import options:" ), hbox );
-        optionBox->setLayout( new QHBoxLayout() );
-        objectsCheckBox_       = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Objects" )       , "ObjectsCheckBox" );
-        crowdsCheckBox_        = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Crowds" )        , "CrowdsCheckBox");
-        populationsCheckBox_   = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Populations" )   , "PopulationsCheckBox");
-        initialStateCheckBox_  = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Initial state" ) , "InitialStateCheckBox");
-        logisticLinksCheckBox_ = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Logistic links" ), "LogisticLinksCheckBox");
-        stocksCheckBox_        = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Stocks" )        , "StocksCheckBox");
-        diplomacyCheckBox_     = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Diplomacy" )     , "DiplomacyCheckBox");
 
-        gui::RichGroupBox* sideBox = new gui::RichGroupBox( "PartiesGroupBox", tools::translate( "FilterOrbatReIndexer", "Parties:" ), hbox );
-        partiesListView_ = new FilterPartiesListView( sideBox );
-        partiesListView_->setEnabled( false );
-    }
+    //FilterOrbatReIndexer_OrbatHBox
+    QLabel* orbatLabel = new QLabel( tools::translate( "FilterOrbatReIndexer", "Select order of battle:" ) );
+    filename_ = new gui::RichLineEdit( "FilterOrbatReIndexer", tools::translate( "FilterOrbatReIndexer", "Enter path to the new orbat here" ) );
+    filename_->setReadOnly( true );
+    gui::RichPushButton* browseBtn = new gui::RichPushButton( "browseBtn", tools::translate( "FilterOrbatReIndexer", "Browse..." ) );
+    connect( browseBtn, SIGNAL( clicked() ), SLOT( OnBrowse() ) );
+
+    QWidget* orbatHBox = new QWidget();
+    QHBoxLayout* orbatHBoxLayout = new QHBoxLayout( orbatHBox );
+    orbatHBoxLayout->setSpacing( 5 );
+    orbatHBoxLayout->addWidget( orbatLabel );
+    orbatHBoxLayout->addWidget( filename_ );
+    orbatHBoxLayout->addWidget( browseBtn );
+    
+    //ParameterHBox
+    gui::RichGroupBox* optionBox = new gui::RichGroupBox( "OptionGroupBox", tools::translate( "FilterOrbatReIndexer", "Import options:" ) );
+    optionBox->setLayout( new QVBoxLayout() );
+    objectsCheckBox_       = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Objects" )       , "ObjectsCheckBox" );
+    crowdsCheckBox_        = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Crowds" )        , "CrowdsCheckBox");
+    populationsCheckBox_   = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Populations" )   , "PopulationsCheckBox");
+    initialStateCheckBox_  = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Initial state" ) , "InitialStateCheckBox");
+    logisticLinksCheckBox_ = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Logistic links" ), "LogisticLinksCheckBox");
+    stocksCheckBox_        = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Stocks" )        , "StocksCheckBox");
+    diplomacyCheckBox_     = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Diplomacy" )     , "DiplomacyCheckBox");
+
+    partiesListView_ = new FilterPartiesListView( 0 );
+    partiesListView_->setEnabled( false );
+
+    gui::RichGroupBox* sideBox = new gui::RichGroupBox( "PartiesGroupBox", tools::translate( "FilterOrbatReIndexer", "Parties:" ) );
+    QVBoxLayout* sideboxLayout = new QVBoxLayout( sideBox );
+    sideboxLayout->addWidget( partiesListView_ );
+
+    QWidget* parametersbox = new QWidget();
+    QHBoxLayout* parametersboxlayout = new QHBoxLayout( parametersbox );
+    parametersboxlayout->addWidget( optionBox );
+    parametersboxlayout->addWidget( sideBox );
+    
+    //main widget
+    gui::RichGroupBox* parametersWidget = new gui::RichGroupBox( "ParameterGroupBox", tools::translate( "FilterOrbatReIndexer", "Import parameters" ) );
+    QVBoxLayout* parametersWidgetLayout =  new QVBoxLayout( parametersWidget );
+    parametersWidgetLayout->addWidget( orbatHBox );
+    parametersWidgetLayout->addWidget( parametersbox );
+
+    parent->layout()->addWidget( parametersWidget );
 
     return parametersWidget;
 }

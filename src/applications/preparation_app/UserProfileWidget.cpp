@@ -62,35 +62,44 @@ UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent
     {
         gui::SubObjectName subObject( "ProfileInformation" );
         //profile
+        QLabel* loginLabel = new QLabel( tr( "Login:" ) );
         login_ = new gui::RichLineEdit( "login" );
-        QHBoxLayout* loginLayout = CreateLinelayout( tr( "Login:" ), login_ );
         connect( login_, SIGNAL( editingFinished() ), this, SLOT( OnLoginChanged() ) );
 
         //password
+        QLabel* passwordLabel = new QLabel( tr( "Password:" ) );
         password_ = new gui::RichLineEdit( "password" );
-        QHBoxLayout* passwordLayout = CreateLinelayout( tr( "Password:" ), password_ );
         connect( password_, SIGNAL( textChanged( const QString& ) ), SLOT( OnPasswordChanged( const QString& ) ) );
 
         //automat
+        QLabel* automataLabel = new QLabel( tr( "Automats:" ) );
         automats_= new gui::RichLineEdit( "automats" );
-        QHBoxLayout* automatLayout = CreateLinelayout( tr( "Automats:" ), automats_ );
         automats_->setReadOnly( true );
 
         //knowledge group
+        QLabel* knowledgeLabel = new QLabel( tr( "Knowledge groups:" ) );
         knowledgeGroups_ = new gui::RichLineEdit( "knowledgeGroups" );
-        QHBoxLayout* knowledgeLayout = CreateLinelayout( tr( "Knowledge groups:" ), knowledgeGroups_ );
         knowledgeGroups_->setReadOnly( true );
 
-        Q3VBox* box = new Q3VBox( this );
-        box->setSpacing( 5 );
-        gui::RichGroupBox* profileInformationGroup = new gui::RichGroupBox( "ProfileInformation", tr( "Profile information" ), box );
-        QVBoxLayout* profileInformationGroupLayout = new QVBoxLayout( profileInformationGroup );
-        profileInformationGroupLayout->addLayout( loginLayout );
-        profileInformationGroupLayout->addLayout( passwordLayout );
-        profileInformationGroupLayout->addLayout( automatLayout );
-        profileInformationGroupLayout->addLayout( knowledgeLayout );
+        gui::RichGroupBox* profileInformationGroup = new gui::RichGroupBox( "ProfileInformation", tr( "Profile information" ) );
+        QGridLayout* profileInformationGroupLayout = new QGridLayout( profileInformationGroup );
+        profileInformationGroupLayout->addWidget( loginLabel, 0, 0 );
+        profileInformationGroupLayout->addWidget( login_, 0, 1 );
+        profileInformationGroupLayout->addWidget( passwordLabel, 1, 0 );
+        profileInformationGroupLayout->addWidget( password_, 1, 1 );
+        profileInformationGroupLayout->addWidget( automataLabel, 2, 0 );
+        profileInformationGroupLayout->addWidget( automats_, 2, 1 );
+        profileInformationGroupLayout->addWidget( knowledgeLabel, 3, 0 );
+        profileInformationGroupLayout->addWidget( knowledgeGroups_, 3, 1 );
         profileInformationGroupLayout->setMargin( 5 );
+        profileInformationGroupLayout->setColStretch( 0, 1 );
+        profileInformationGroupLayout->setColStretch( 1, 5 );
+        profileInformationGroupLayout->setSpacing( 0 );
 
+        QWidget* box = new QWidget();
+        QVBoxLayout* boxLayout = new QVBoxLayout( box );
+        boxLayout->addWidget( profileInformationGroup );
+        boxLayout->addStretch( 1 );
         addTab( box, tr( "General" ) );
     }
     {
@@ -114,7 +123,7 @@ UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent
                         "'Write' permission allows you to control a unit." ) );
 
         gui::RichGroupBox* permissionsGroup = new gui::RichGroupBox( "permissionsGroup", tr( "Access permissions" ), box );
-        QHBoxLayout* permissionsGroupLayout = new QHBoxLayout( permissionsGroup );
+        QVBoxLayout* permissionsGroupLayout = new QVBoxLayout( permissionsGroup );
         permissionsGroupLayout->addWidget( holder );
         permissionsGroupLayout->addWidget( tabs );
         permissionsGroupLayout->addWidget( readPermissionlabel );
