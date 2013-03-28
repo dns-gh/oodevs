@@ -451,7 +451,7 @@ void GlWidget::DrawCross( const Point2f& at, float size /* = -1.f*/, E_Unit unit
         else
             size *= GetAdaptiveZoomFactor();
     }
-
+    glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
         glVertex2f( at.X() - size, at.Y() - size );
@@ -459,6 +459,7 @@ void GlWidget::DrawCross( const Point2f& at, float size /* = -1.f*/, E_Unit unit
         glVertex2f( at.X() + size, at.Y() - size );
         glVertex2f( at.X() - size, at.Y() + size );
     glEnd();
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
@@ -467,11 +468,13 @@ void GlWidget::DrawCross( const Point2f& at, float size /* = -1.f*/, E_Unit unit
 // -----------------------------------------------------------------------------
 void GlWidget::DrawLine( const Point2f& from, const Point2f& to ) const
 {
+    glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
         glVertex2f( from.X(), from.Y() );
         glVertex2f( to.X()  , to.Y() );
     glEnd();
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
@@ -506,9 +509,11 @@ void GlWidget::DrawLines( const T_PointVector& points ) const
 {
     if( !points.empty() )
     {
+        glPushAttrib( GL_LINE_BIT );
         glEnable( GL_LINE_SMOOTH );
         glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
         glDrawArrays( GL_LINE_STRIP, 0, static_cast< GLsizei >( points.size() ) );
+        glPopAttrib();
     }
 }
 
@@ -520,6 +525,7 @@ void GlWidget::DrawRectangle( const T_PointVector& points ) const
 {
     if( points.size() > 1 )
     {
+        glPushAttrib( GL_LINE_BIT );
         glEnable( GL_LINE_SMOOTH );
         glBegin( GL_LINE_LOOP );
             glVertex2f( points.front().X(), points.front().Y() );
@@ -527,6 +533,7 @@ void GlWidget::DrawRectangle( const T_PointVector& points ) const
             glVertex2f( points.back().X(), points.back().Y() );
             glVertex2f( points.back().X(), points.front().Y() );
         glEnd();
+        glPopAttrib();
     }
 }
 
@@ -553,8 +560,10 @@ void GlWidget::DrawPolygon( const T_PointVector& points ) const
         glColor4fv( color );
         glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( points.size() ) );
     glPopAttrib();
+    glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
     glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( points.size() ) );
+    glPopAttrib();
     glDisable( GL_STENCIL_TEST );
 }
 
@@ -629,7 +638,7 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const s
     DrawLine( vertices.back(), vertices.front() );
 
     if( !name.empty() )
-        const_cast< GlWidget* >( this )->DrawTextLabel( name, polygon.BoundingBoxCenter(), fontHeight );
+        DrawTextLabel( name, polygon.BoundingBoxCenter(), fontHeight );
 }
 
 // -----------------------------------------------------------------------------
@@ -655,6 +664,7 @@ void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /* 
     const Point2f left  = end + ( - u + v ) * tipFactor;
     const Point2f right = end + ( - u - v ) * tipFactor;
 
+    glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
         glVertex2f( end.X(), end.Y() );
@@ -664,6 +674,7 @@ void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /* 
         glVertex2f( end.X(), end.Y() );
         glVertex2f( from.X(), from.Y() );
     glEnd();
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
@@ -688,6 +699,7 @@ void GlWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f
 
     const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6f;
     glMatrixMode(GL_MODELVIEW);
+    glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
@@ -698,6 +710,7 @@ void GlWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f
             glVertex2f( std::cos( maxAngle ), std::sin( maxAngle ) );
         glEnd();
     glPopMatrix();
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
@@ -733,6 +746,7 @@ void GlWidget::DrawCircle( const Point2f& center, float radius /* = -1.f*/, E_Un
     else if( unit == pixels )
         radius *= Pixels();
 
+    glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
@@ -742,6 +756,7 @@ void GlWidget::DrawCircle( const Point2f& center, float radius /* = -1.f*/, E_Un
             glCallList( circle_ );
         glEnd();
     glPopMatrix();
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
@@ -755,6 +770,7 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit
     else if( unit == pixels )
         radius *= Pixels();
 
+    glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
@@ -765,6 +781,7 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit
             glCallList( circle_ );
         glEnd();
     glPopMatrix();
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
@@ -782,8 +799,8 @@ void GlWidget::DrawLife( const Point2f& where, float h, float factor /* = 1.f*/,
     const float x = where.X();
     const float ydelta = factor * 20.f; // $$$$ SBO 2007-05-04: hard coded again
     const float xdelta = h * halfWidth * 2;
-    glEnable( GL_LINE_SMOOTH );
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+    glEnable( GL_LINE_SMOOTH );
         glLineWidth( 1 );
         glColor3f( 0.8f, 0.8f, 0.8f );  // light gray
         glBegin( GL_QUADS );
