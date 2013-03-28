@@ -48,7 +48,6 @@ ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& con
     , slider_( 0 )
     , sliderTick_( 0 )
     , simulationStep_( 0 )
-    , isPlayingBeforeMove_( false )
     , replayPaused_( true )
 {
     setWindowTitle( tr( "Replay control" ) );
@@ -131,6 +130,8 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         slider_->blockSignals( false );
         SpinBox()->setValue( simulation.GetCurrentTick() );
         DateTimeEdit()->setDateTime( simulation.GetDateTime() );
+        SpinBox()->setEnabled( replayPaused_ );
+        DateTimeEdit()->setEnabled( replayPaused_ );
     }
 }
 
@@ -237,12 +238,6 @@ void ReplayerToolbar::OnDateTimeChanged()
     replay::ControlSkipToDate skip;
     skip().mutable_date_time()->set_data( MakeGDHString( DateTimeEdit()->dateTime() ).c_str() );
     skip.Send( network_ );
-    if( isPlayingBeforeMove_ )
-    {
-        replay::ControlResume message;
-        message().set_tick( 1 );
-        message.Send( network_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -252,8 +247,7 @@ void ReplayerToolbar::OnDateTimeChanged()
 void ReplayerToolbar::OnSliderPressed()
 {
     sliderTick_ = slider_->value();
-    isPlayingBeforeMove_ = !replayPaused_;
-    if( isPlayingBeforeMove_ )
+    if( !replayPaused_ )
     {
         replay::ControlPause message;
         message.Send( network_ );
@@ -281,6 +275,8 @@ void ReplayerToolbar::OnMenuActivated( int index )
     button_->setText( tickMode ? tr( "Ticks" ) : tr( "Time" ) );
     menu_->setItemChecked( 0, tickMode );
     menu_->setItemChecked( 1, !tickMode );
+    SpinBox()->setEnabled( replayPaused_ );
+    DateTimeEdit()->setEnabled( replayPaused_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,12 +307,6 @@ void ReplayerToolbar::SkipToTick( unsigned int tick )
     replay::ControlSkipToTick skip;
     skip().set_tick( tick - 1 );
     skip.Send( network_ );
-    if( isPlayingBeforeMove_ )
-    {
-        replay::ControlResume message;
-        message().set_tick( 1 );
-        message.Send( network_ );
-    }
 }
 
 // -----------------------------------------------------------------------------

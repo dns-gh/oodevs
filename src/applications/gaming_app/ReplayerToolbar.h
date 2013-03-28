@@ -83,7 +83,6 @@ private:
     QPushButton* button_;
     int sliderTick_;
     unsigned int simulationStep_;
-    bool isPlayingBeforeMove_;
     bool replayPaused_;
     //@}
 };
