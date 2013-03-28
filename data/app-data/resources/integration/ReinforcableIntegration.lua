@@ -105,6 +105,8 @@ integration.unitsAbleToReinforce = function ( unitToSupport, units, obstacle, ac
         return DEC_GetAgentsPouvantDevaloriser( list, obstacle:getType() )
     elseif action == "destroy" and localisationisOK then
         return DEC_GetAgentsPouvantDetruireAvecLocalisation( list, obstacle:getType(), localisationObject )
+    elseif action == "demine" and localisationisOK then
+        return DEC_GetAgentsPouvantDevaloriserAvecLocalisation( list, obstacle:getType(), localisationObject )
     else
         return {}
     end
