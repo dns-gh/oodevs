@@ -516,6 +516,7 @@ void RegisterObjectFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_GetAgentsPouvantContournerAvecLocalisation", &DEC_AgentFunctions::RetrieveUnitsAbleToByPassWithLocalisation );
     brain.RegisterFunction( "DEC_GetAgentsPouvantDetruire", &DEC_AgentFunctions::RetrieveUnitsAbleToDestroy );
     brain.RegisterFunction( "DEC_GetAgentsPouvantDetruireAvecLocalisation", &DEC_AgentFunctions::RetrieveUnitsAbleToDestroyWithLocalisation );
+    brain.RegisterFunction( "DEC_GetAgentsPouvantDevaloriserAvecLocalisation", &DEC_AgentFunctions::RetrieveUnitsAbleToDemineWithLocalisation );
 }
 
 // -----------------------------------------------------------------------------
