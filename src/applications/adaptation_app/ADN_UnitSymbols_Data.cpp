@@ -24,7 +24,6 @@
 #include "svgl/RenderingContext.h"
 #include "svgl/TextRenderer.h"
 #include "svgl/SVGFactory.h"
-#include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/streams/xistreamstream.hpp>
