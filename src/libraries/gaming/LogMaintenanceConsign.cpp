@@ -127,7 +127,7 @@ void LogMaintenanceConsign::Draw( const Point2f& , const gui::Viewport_ABC& view
         return;
     const Point2f from = logistic_helpers::GetLogisticPosition( *pPionLogHandling_ );
     const Point2f to   = logistic_helpers::GetLogisticPosition( consumer_ );
-    if( from == Point2f() || to == Point2f() )
+    if( from.IsZero() || to.IsZero() )
         return;
     if( ! viewport.IsVisible( Rectangle2f( from, to ) ) )
         return;

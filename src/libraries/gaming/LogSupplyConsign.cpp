@@ -177,12 +177,12 @@ void LogSupplyConsign::Draw( const Point2f& , const gui::Viewport_ABC& viewport,
         return;
 
     Point2f from = logistic_helpers::GetLogisticPosition( *pLogHandlingEntity_, true );
-    if( from == Point2f() )
+    if( from.IsZero() )
         return;
     for( tools::Iterator< const SupplyRecipientResourcesRequest& > it = CreateIterator(); it.HasMoreElements(); )
     {
         const Point2f to = logistic_helpers::GetLogisticPosition( it.NextElement().recipient_, true );
-        if( to == Point2f() )
+        if( to.IsZero() )
             return;
         if( viewport.IsVisible( Rectangle2f( from, to ) ) )
         {

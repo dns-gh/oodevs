@@ -132,8 +132,8 @@ protected:
         Waypoint( const geometry::Point2f& point ) : pRecipient_( 0 ), point_( point ) {}
         Waypoint( const kernel::Entity_ABC* pRecipient ): pRecipient_( pRecipient ) {}
 
-        bool isPoint() const { return !pRecipient_; }
-        bool isRecipient() const { return !isPoint(); }
+        bool IsPoint() const { return !pRecipient_; }
+        bool IsRecipient() const { return !IsPoint(); }
     };
     typedef std::vector< Waypoint > T_Route;
     typedef std::map< QString , geometry::Point2f > T_PointNames;
