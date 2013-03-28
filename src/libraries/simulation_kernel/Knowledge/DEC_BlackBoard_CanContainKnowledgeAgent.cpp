@@ -303,9 +303,32 @@ const DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& DEC_BlackBoa
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAgent
+// Created: LGY 2013-03-27
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAgent( const DEC_Knowledge_Agent& knowledge )
+{
+    boost::shared_ptr< DEC_Knowledge_Agent > copy( new DEC_Knowledge_Agent( knowledge, pKnowledgeGroup_->shared_from_this() ) );
+    realAgentMap_.insert( std::make_pair( &knowledge.GetAgentKnown(), copy ) );
+    unitKnowledgeFromIDMap_.insert( std::make_pair( copy->GetID(), copy ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::Merge
 // Created: LDC 2012-04-30
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeAgent::Merge( const DEC_BlackBoard_CanContainKnowledgeAgent& /*subGroup*/ )
+void DEC_BlackBoard_CanContainKnowledgeAgent::Merge( const DEC_BlackBoard_CanContainKnowledgeAgent& subGroup )
 {
+    for( auto itKnowledge = subGroup.realAgentMap_.begin(); itKnowledge != subGroup.realAgentMap_.end(); ++itKnowledge )
+    {
+        boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = GetKnowledgeAgent( *itKnowledge->first );
+        boost::shared_ptr< DEC_Knowledge_Agent > pSubKnowledge = itKnowledge->second;
+        if( !pKnowledge.get() )
+            CreateKnowledgeAgent( *pSubKnowledge );
+        else if( pKnowledge->GetRelevance() < pSubKnowledge->GetRelevance() )
+        {
+            DestroyKnowledgeAgent( *pKnowledge );
+            CreateKnowledgeAgent( *pSubKnowledge );
+        }
+    }
 }

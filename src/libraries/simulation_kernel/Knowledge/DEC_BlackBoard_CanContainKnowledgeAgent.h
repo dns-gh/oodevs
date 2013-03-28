@@ -111,6 +111,7 @@ private:
     //! @name Tools
     //@{
     void UpdateQueriesCache();
+    void CreateKnowledgeAgent( const DEC_Knowledge_Agent& knowledge );
     //@}
 
 private:
@@ -122,7 +123,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const MIL_KnowledgeGroup* pKnowledgeGroup_;
+    MIL_KnowledgeGroup* pKnowledgeGroup_;
     T_KnowledgeAgentMap realAgentMap_;
     T_KnowledgeAgentMap previousAgentMap_;
     T_KnowledgeAgentIDMap unitKnowledgeFromIDMap_;

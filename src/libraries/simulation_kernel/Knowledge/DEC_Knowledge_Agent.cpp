@@ -79,6 +79,34 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const boost::shared_ptr< MIL_Knowledge
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent constructor
+// Created: LGY 2012-05-11
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Agent::DEC_Knowledge_Agent( const DEC_Knowledge_Agent& knowledge, const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
+    : pArmyKnowing_                  ( &knowledgeGroup->GetArmy() )
+    , pKnowledgeGroup_               ( knowledgeGroup )
+    , pAgentKnown_                   ( knowledge.pAgentKnown_ )
+    , nID_                           ( knowledge.idManager_.GetFreeId() )
+    , pCurrentPerceptionLevel_       ( knowledge.pCurrentPerceptionLevel_ )
+    , pPreviousPerceptionLevel_      ( knowledge.pPreviousPerceptionLevel_ )
+    , pMaxPerceptionLevel_           ( knowledge.pMaxPerceptionLevel_ )
+    , nTimeLastUpdate_               ( knowledge.nTimeLastUpdate_ )
+    , rRelevance_                    ( knowledge.rRelevance_ )
+    , nTimeExtrapolationEnd_         ( knowledge.nTimeExtrapolationEnd_ )
+    , bLocked_                       ( knowledge.bLocked_ )
+    , bValid_                        ( knowledge.bValid_ )
+    , bCreatedOnNetwork_             ( knowledge.bCreatedOnNetwork_ )
+    , bRelevanceUpdated_             ( knowledge.bRelevanceUpdated_ )
+    , bCurrentPerceptionLevelUpdated_( knowledge.bCurrentPerceptionLevelUpdated_ )
+    , bMaxPerceptionLevelUpdated_    ( knowledge.bMaxPerceptionLevelUpdated_ )
+    , bCriticalIntelligenceUpdated_  ( knowledge.bCriticalIntelligenceUpdated_ )
+    , bPerceptionDistanceHacked_     ( knowledge.bPerceptionDistanceHacked_ )
+    , rLastRelevanceSent_            ( knowledge.rLastRelevanceSent_ )
+{
+    SendMsgCreation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent constructor
 // Created: JVT 2005-03-17
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Agent::DEC_Knowledge_Agent()
