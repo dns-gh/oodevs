@@ -68,8 +68,9 @@ namespace
     bool CanPerceive( const MT_Vector2D& sourcePosition, const MT_Vector2D& targetPosition )
     {
         static const double sensorHeight = 10.0;
+        static const double targetHeight = 2.0;
         const MT_Vector3D vSource3D( sourcePosition.rX_, sourcePosition.rY_, sensorHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( sourcePosition.rX_, sourcePosition.rY_ ) );
-        const MT_Vector3D vTarget3D( targetPosition.rX_, targetPosition.rY_, MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( targetPosition.rX_, targetPosition.rY_ ) );
+        const MT_Vector3D vTarget3D( targetPosition.rX_, targetPosition.rY_, targetHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( targetPosition.rX_, targetPosition.rY_ ) );
 
         PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
         while ( !(++it).End() )
