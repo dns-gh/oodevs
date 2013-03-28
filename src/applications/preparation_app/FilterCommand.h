@@ -70,7 +70,7 @@ private slots:
 signals:
     //! @name Signals
     //@{
-    void ForceSaveAndAddActionPlanning( const std::string& filename );
+    void ForceSaveAndAddActionPlanning( const tools::Path& filename );
     //@}
 
 private:
