@@ -118,11 +118,17 @@ namespace
 // -----------------------------------------------------------------------------
 void SuccessFactorsModel::SerializeScript( const tools::ExerciseConfig& config ) const
 {
+    tools::Path xslFile = tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" );
+    tools::Path luaFile = config.BuildExerciseChildFile( "scripts/success-factors.lua" );
+    tools::Path successFactorsFile = config.GetSuccessFactorsFile();
+    if( xslFile.Exists() && luaFile.Exists() && successFactorsFile.Exists() )
     {
-        xsl::xftransform xft( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ).ToUTF8().c_str(), config.BuildExerciseChildFile( "scripts/success-factors.lua" ).ToUTF8().c_str() );
-        xft << tools::Xifstream( config.GetSuccessFactorsFile() );
+        {
+            xsl::xftransform xft( xslFile.ToUTF8().c_str(), luaFile.ToUTF8().c_str() );
+            xft << tools::Xifstream( successFactorsFile );
+        }
+        EraseLine( luaFile, 0 ); // $$$$ ABR 2011-07-26: Temporaire, la transformation xsl de Xalan crash en vc100 (Mantis 5915)
     }
-    EraseLine( config.BuildExerciseChildFile( "scripts/success-factors.lua" ), 0 ); // $$$$ ABR 2011-07-26: Temporaire, la transformation xsl de Xalan crash en vc100 (Mantis 5915)
 }
 
 // -----------------------------------------------------------------------------
