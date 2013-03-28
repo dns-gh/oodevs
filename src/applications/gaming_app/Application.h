@@ -33,6 +33,7 @@ class MainWindow;
 class StaticModel;
 class Model;
 class Simulation;
+class SimulationController;
 class Profile;
 class Config;
 class LoggerProxy;
@@ -79,6 +80,7 @@ private:
     std::auto_ptr< Model >                             model_;
     std::auto_ptr< Services >                          services_;
     std::auto_ptr< Simulation >                        simulation_;
+    std::auto_ptr< SimulationController >              simulationController_;
     std::auto_ptr< Profile >                           profile_;
     std::auto_ptr< kernel::Workers >                   workers_;
     std::auto_ptr< LoggerProxy >                       logger_;

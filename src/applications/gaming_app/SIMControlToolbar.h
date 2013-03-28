@@ -10,7 +10,6 @@
 #ifndef __SIMControlToolbar_h_
 #define __SIMControlToolbar_h_
 
-#include "gaming/Simulation.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_gui/RichToolBar.h"
 
@@ -23,9 +22,9 @@ namespace kernel
 
 class ConnectDialog;
 class DisconnectDialog;
-class Services;
 class Network;
-class Publisher_ABC;
+class Simulation;
+class SimulationController;
 
 // =============================================================================
 /** @class  SIMControlToolbar
@@ -35,16 +34,14 @@ class Publisher_ABC;
 // =============================================================================
 class SIMControlToolbar : public gui::RichToolBar
                         , public tools::ElementObserver_ABC< Simulation >
-                        , public tools::ElementObserver_ABC< Services >
                         , public tools::ElementObserver_ABC< kernel::Profile_ABC >
-                        , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
     Q_OBJECT
 
 public:
     //! @name Constructor/Destructor
     //@{
-             SIMControlToolbar( QMainWindow* pParent, kernel::Controllers& controllers, Network& network, Publisher_ABC& publisher, kernel::Logger_ABC& logger );
+             SIMControlToolbar( QMainWindow* pParent, kernel::Controllers& controllers, SimulationController& simulationController, Network& network, kernel::Logger_ABC& logger );
     virtual ~SIMControlToolbar();
     //@}
 
@@ -69,9 +66,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
-    virtual void NotifyUpdated( const Services& services );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
-    virtual void NotifyUpdated( const Simulation::sEndTick& endTick );
     virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
     void RequestCheckpoint( const std::string& name );
     //@}
@@ -80,7 +75,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    Publisher_ABC& publisher_;
+    SimulationController& simulationController_;
     QToolButton* pConnectButton_;
     QToolButton* pPlayButton_;
     QToolButton* pStepButton_;
@@ -93,9 +88,6 @@ private:
     int speed_;
     bool connected_;
     bool paused_;
-    bool hasReplay_;
-    bool hasSimulation_;
-    bool replayRequested_;
     QIcon connectPix_;
     QIcon disconnectPix_;
     QIcon playPix_;

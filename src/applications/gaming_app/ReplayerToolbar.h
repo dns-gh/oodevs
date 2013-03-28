@@ -21,7 +21,7 @@ namespace kernel
 }
 
 class Publisher_ABC;
-class Simulation;
+class SimulationController;
 
 // =============================================================================
 /** @class  ReplayerToolbar
@@ -38,7 +38,7 @@ class ReplayerToolbar : public gui::RichToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& controllers, Publisher_ABC& network );
+             ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& controllers, SimulationController& simulationController, Publisher_ABC& network );
     virtual ~ReplayerToolbar();
     //@}
 
@@ -74,16 +74,14 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    SimulationController& simulationController_;
     Publisher_ABC& network_;
-    unsigned int maxTick_;
     QSlider* slider_;
     QAction* spinBoxAction_;
     QAction* dateTimeAction_;
     kernel::ContextMenu* menu_;
     QPushButton* button_;
     int sliderTick_;
-    unsigned int simulationStep_;
-    bool replayPaused_;
     //@}
 };
 

@@ -12,17 +12,13 @@
 #include "moc_SIMControlToolbar.cpp"
 #include "ConnectDialog.h"
 #include "DisconnectDialog.h"
-#include "gaming/Simulation.h"
-#include "gaming/Services.h"
+#include "gaming/SimulationController.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/RichSpinBox.h"
 #include "gaming/statusicons.h"
-#include "protocol/ServerPublisher_ABC.h"
-#include "protocol/SimulationSenders.h"
-#include "protocol/ReplaySenders.h"
 
 using namespace sword;
 
@@ -113,16 +109,13 @@ namespace
 // Name: SIMControlToolbar constructor
 // Created: FBD 03-01-14
 //-----------------------------------------------------------------------------
-SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, kernel::Controllers& controllers, Network& network, Publisher_ABC& publisher, kernel::Logger_ABC& logger )
+SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, kernel::Controllers& controllers, SimulationController& simulationController, Network& network, kernel::Logger_ABC& logger )
     : gui::RichToolBar( controllers, pParent, "sim control toolbar" )
     , controllers_( controllers )
-    , publisher_( publisher )
+    , simulationController_( simulationController )
     , speed_( 4212 )
     , connected_( false )
     , paused_( false )
-    , hasReplay_( false )
-    , hasSimulation_( true )
-    , replayRequested_( false )
     , connectPix_   ( MAKE_ICON( notconnected ) )
     , disconnectPix_( MAKE_ICON( connected ) )
     , playPix_      ( MAKE_ICON( play ) )
@@ -236,34 +229,10 @@ void SIMControlToolbar::SlotConnectDisconnect()
 //-----------------------------------------------------------------------------
 void SIMControlToolbar::SlotPlayPause()
 {
-    if( paused_ )
-    {
-        if( hasReplay_ )
-        {
-            replayRequested_ = true;
-            replay::ControlResume message;
-            message.Send( publisher_ );
-        }
-        if( hasSimulation_ )
-        {
-            simulation::ControlResume  message;
-            message.Send( publisher_ );
-        }
-    }
+    if( simulationController_.IsPaused() )
+        simulationController_.Resume();
     else
-    {
-        if( hasReplay_ )
-        {
-            replayRequested_ = false;
-            replay::ControlPause message;
-            message.Send( publisher_ );
-        }
-        if( hasSimulation_ )
-        {
-            simulation::ControlPause message;
-            message.Send( publisher_ );
-        }
-    }
+        simulationController_.Pause();
 }
 
 // -----------------------------------------------------------------------------
@@ -272,19 +241,7 @@ void SIMControlToolbar::SlotPlayPause()
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::SlotStep()
 {
-    if( hasReplay_ )
-    {
-        replayRequested_ = false;
-        replay::ControlResume message;
-        message().set_tick( 1 );
-        message.Send( publisher_ );
-    }
-    if( hasSimulation_ )
-    {
-        simulation::ControlResume  message;
-        message().set_tick( 1 );
-        message.Send( publisher_ );
-    }
+    simulationController_.Step();
 }
 
 // -----------------------------------------------------------------------------
@@ -294,20 +251,7 @@ void SIMControlToolbar::SlotStep()
 void SIMControlToolbar::SlotSpeedChange()
 {
     if( connected_ )
-    {
-        if( hasReplay_ )
-        {
-            replay::ControlChangeTimeFactor message;
-            message().set_time_factor( pSpeedSpinBox_->value() );
-            message.Send( publisher_ );
-        }
-        if( hasSimulation_ )
-        {
-            simulation::ControlChangeTimeFactor message;
-            message().set_time_factor( pSpeedSpinBox_->value() );
-            message.Send( publisher_ );
-        }
-    }
+        simulationController_.ChangeTimeFactor( pSpeedSpinBox_->value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -317,16 +261,6 @@ void SIMControlToolbar::SlotSpeedChange()
 void SIMControlToolbar::SlotOnSpinBoxChange( int value )
 {
     pSpeedButton_->setEnabled( value != speed_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIMControlToolbar::NotifyUpdated
-// Created: AGE 2008-08-13
-// -----------------------------------------------------------------------------
-void SIMControlToolbar::NotifyUpdated( const Services& services )
-{
-    hasReplay_     = services.HasService< replay::Service >();
-    hasSimulation_ = services.HasService< simulation::Service >();
 }
 
 // -----------------------------------------------------------------------------
@@ -377,7 +311,6 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         paused_ = simulation.IsPaused();
         if( paused_ )
         {
-            replayRequested_ = false;
             pPlayButton_->setIconSet( playPix_ );
             pPlayButton_->setTextLabel( tr( "Unpause (Alt+P)" ) );
         }
@@ -409,19 +342,6 @@ void SIMControlToolbar::NotifyUpdated( const kernel::Profile_ABC& profile )
     pSpeedButton_->setEnabled( super );
     pCheckpointButton_->setEnabled( super );
     pCheckpointAction_->setVisible( super && controllers_.GetCurrentMode() != eModes_Replay );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIMControlToolbar::NotifyUpdated
-// Created: LDC 2012-08-07
-// -----------------------------------------------------------------------------
-void SIMControlToolbar::NotifyUpdated( const Simulation::sEndTick& )
-{
-    if( replayRequested_ && hasReplay_ )
-    {
-        replay::ControlResume message;
-        message.Send( publisher_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -463,9 +383,6 @@ void SIMControlToolbar::SlotNamedCheckPoint()
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::RequestCheckpoint( const std::string& name )
 {
-    simulation::ControlCheckPointSaveNow message;
-    if( !name.empty() )
-        message().set_name ( name.c_str() );
-    message.Send( publisher_ );
+    simulationController_.RequestCheckpoint( name );
     pCheckpointButton_->popup()->hide();
 }

@@ -141,7 +141,7 @@ namespace
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation,
+MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation, SimulationController& simulationController,
                         Network& network, const Profile_ABC& p, Config& config, LoggerProxy& logger, const QString& license )
     : QMainWindow()
     , controllers_     ( controllers )
@@ -232,13 +232,13 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( selector_.get(), SIGNAL( Widget2dChanged( gui::GlWidget* ) ), &dockContainer_->GetMiniView(), SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
 
     // Tool bars
-    AddToolBar( *this, new SIMControlToolbar( this, controllers, network, network_.GetMessageMgr(), dockContainer_->GetLoggerPanel() ), eModes_None, eModes_Default );
+    AddToolBar( *this, new SIMControlToolbar( this, controllers, simulationController, network, dockContainer_->GetLoggerPanel() ), eModes_None, eModes_Default );
     AddToolBar( *this, new gui::DisplayToolbar( this, controllers ), eModes_Default );
     AddToolBar( *this, new EventToolbar( this, controllers, *pProfile_ ), eModes_Default );
     AddToolBar( *this, new gui::GisToolbar( this, controllers, staticModel_.detection_, dockContainer_->GetTerrainProfiler() ), eModes_Default );
     AddToolBar( *this, new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ), eModes_Default );
     addToolBarBreak();
-    AddToolBar( *this, new ReplayerToolbar( this, controllers, network_.GetMessageMgr() ), eModes_Default | eModes_Gaming, eModes_Replay );
+    AddToolBar( *this, new ReplayerToolbar( this, controllers, simulationController, network_.GetMessageMgr() ), eModes_Default | eModes_Gaming, eModes_Replay );
     AddToolBar( *this, new MessagePanel( this, controllers_, network_.GetMessageMgr(), network.GetCommands(), *factory ), eModes_Default );
 
     // Help

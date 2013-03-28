@@ -19,6 +19,7 @@
 #include "gaming/Model.h"
 #include "gaming/Services.h"
 #include "gaming/Simulation.h"
+#include "gaming/SimulationController.h"
 #include "gaming/Profile.h"
 #include "gaming/CommandHandler.h"
 #include "gaming/AgentServerMsgMgr.h"
@@ -54,6 +55,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     simulation_.reset( new Simulation( controllers_->controller_ ) );
     workers_.reset( new Workers() );
     network_.reset( new Network( *services_, *simulation_, *logger_, config_->GetNetworkTimeOut() ) );
+    simulationController_.reset( new SimulationController( *simulation_, *controllers_, network_->GetMessageMgr() ) );
     rcResolver_.reset( new RcEntityResolver( *controllers_ ) );
     staticModel_.reset( new ::StaticModel( *controllers_, *rcResolver_.get(), *simulation_ ) );
     model_.reset( new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *config_ ) );
@@ -65,7 +67,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     connect( networkTimer_.get(), SIGNAL( timeout()), SLOT( UpdateData() ) );
 
     // GUI
-    mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_, *logger_, GetExpiration() );
+    mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *simulationController_, *network_, *profile_, *config_, *logger_, GetExpiration() );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
 }
 

@@ -13,7 +13,6 @@
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include "gaming/Simulation.h"
 
 namespace kernel
 {
@@ -55,6 +54,7 @@ class Network;
 class MissionPanel;
 class LoggerProxy;
 class Simulation;
+class SimulationController;
 class ColorController;
 class OrbatDockWidget;
 class ProfileFilter;
@@ -80,8 +80,8 @@ public:
     //! @name Constructors/Destructor/Accessor
     //@{
              MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation,
-                         Network& network, const kernel::Profile_ABC& profile, Config& config, LoggerProxy& logger,
-                         const QString& license );
+                         SimulationController& simulationController, Network& network, const kernel::Profile_ABC& profile,
+                         Config& config, LoggerProxy& logger, const QString& license );
     virtual ~MainWindow();
     //@}
 

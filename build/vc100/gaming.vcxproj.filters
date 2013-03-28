@@ -805,6 +805,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\Propagation.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\SimulationController.cpp">
+      <Filter>Source Files\Model\Simulation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1532,6 +1535,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\LogConsignDisplayer_ABC.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\SimulationController.h">
+      <Filter>Source Files\Model\Simulation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

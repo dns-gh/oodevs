@@ -107,9 +107,7 @@ void ClockWidget::paintEvent( QPaintEvent* = 0)
 {
     QPainter p;
     if( p.begin( this ) )
-    {
         p.end();
-    }
 }
 
 // -----------------------------------------------------------------------------

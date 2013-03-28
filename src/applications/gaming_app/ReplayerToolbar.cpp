@@ -15,8 +15,8 @@
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
+#include "gaming/SimulationController.h"
 #include "protocol/ReplaySenders.h"
-#include "protocol/ServerPublisher_ABC.h"
 
 using namespace sword;
 
@@ -40,15 +40,13 @@ namespace
 // Name: ReplayerToolbar constructor
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& controllers, Publisher_ABC& network )
+ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& controllers, SimulationController& simulationController, Publisher_ABC& network )
     : gui::RichToolBar( controllers, pParent, "replay control toolbar" )
     , controllers_( controllers )
+    , simulationController_( simulationController )
     , network_( network )
-    , maxTick_( 0 )
     , slider_( 0 )
     , sliderTick_( 0 )
-    , simulationStep_( 0 )
-    , replayPaused_( true )
 {
     setWindowTitle( tr( "Replay control" ) );
     QLabel* label = new QLabel( this );
@@ -74,13 +72,13 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
 {
     if( controllers_.GetCurrentMode() == eModes_Replay )
     {
-        maxTick_ = simulation.GetTickCount();
+        unsigned int maxTick = simulation.GetTickCount();
         if( ! slider_ )
         {
             slider_ = new QSlider( Qt::Horizontal );
             addWidget( slider_ );
             const unsigned int firstTick = simulation.GetFirstTick();
-            slider_->setMinValue( firstTick == std::numeric_limits< unsigned int >::max() ? maxTick_ : firstTick );
+            slider_->setMinValue( firstTick == std::numeric_limits< unsigned int >::max() ? maxTick : firstTick );
             slider_->setPageStep( 1 );
             slider_->setMinimumWidth( 200 );
             slider_->setTickmarks( QSlider::TicksBelow );
@@ -120,18 +118,16 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
             connect( pRefreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
             connect( menu_, SIGNAL( activated( int ) ), SLOT( OnMenuActivated( int ) ) );
         }
-        replayPaused_ = simulation.IsPaused();
-        simulationStep_ = simulation.GetTickDuration();
-        SpinBox()->setRange( simulation.GetFirstTick(), maxTick_);
-        slider_->setRange( simulation.GetFirstTick(), maxTick_ );
+        SpinBox()->setRange( simulation.GetFirstTick(), maxTick );
+        slider_->setRange( simulation.GetFirstTick(), maxTick );
         slider_->setTickInterval( slider_->maxValue() / 20 );
         slider_->blockSignals( true );
         slider_->setValue( simulation.GetCurrentTick() );
         slider_->blockSignals( false );
         SpinBox()->setValue( simulation.GetCurrentTick() );
         DateTimeEdit()->setDateTime( simulation.GetDateTime() );
-        SpinBox()->setEnabled( replayPaused_ );
-        DateTimeEdit()->setEnabled( replayPaused_ );
+        SpinBox()->setEnabled( simulation.IsPaused() );
+        DateTimeEdit()->setEnabled( simulation.IsPaused() );
     }
 }
 
@@ -203,7 +199,7 @@ void ReplayerToolbar::OnSliderMoved( int value )
 {
     SpinBox()->setValue( value );
     QDateTime date = DateTimeEdit()->dateTime();
-    date = date.addSecs( ( value - sliderTick_ ) * simulationStep_ );
+    date = date.addSecs( ( value - sliderTick_ ) * simulationController_.GetTickDuration() );
     DateTimeEdit()->setDateTime( date );
     sliderTick_ = value;
 }
@@ -217,27 +213,13 @@ void ReplayerToolbar::OnSpinBoxChanged()
     SkipToTick( SpinBox()->value() );
 }
 
-namespace
-{
-    std::string MakeGDHString( const QDateTime& datetime )
-    {
-        // $$$$ SBO 2008-04-25: ...
-        QString str = datetime.toString( Qt::ISODate );
-        str.remove( ':' );
-        str.remove( '-' );
-        return str.toStdString();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ReplayerToolbar::OnDateTimeChanged
 // Created: JSR 2013-03-12
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::OnDateTimeChanged()
 {
-    replay::ControlSkipToDate skip;
-    skip().mutable_date_time()->set_data( MakeGDHString( DateTimeEdit()->dateTime() ).c_str() );
-    skip.Send( network_ );
+    simulationController_.SkipToDate( DateTimeEdit()->dateTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,11 +229,8 @@ void ReplayerToolbar::OnDateTimeChanged()
 void ReplayerToolbar::OnSliderPressed()
 {
     sliderTick_ = slider_->value();
-    if( !replayPaused_ )
-    {
-        replay::ControlPause message;
-        message.Send( network_ );
-    }
+    if( !simulationController_.IsPaused() )
+        simulationController_.Pause();
 }
 
 // -----------------------------------------------------------------------------
@@ -275,8 +254,8 @@ void ReplayerToolbar::OnMenuActivated( int index )
     button_->setText( tickMode ? tr( "Ticks" ) : tr( "Time" ) );
     menu_->setItemChecked( 0, tickMode );
     menu_->setItemChecked( 1, !tickMode );
-    SpinBox()->setEnabled( replayPaused_ );
-    DateTimeEdit()->setEnabled( replayPaused_ );
+    SpinBox()->setEnabled( simulationController_.IsPaused() );
+    DateTimeEdit()->setEnabled( simulationController_.IsPaused() );
 }
 
 // -----------------------------------------------------------------------------
@@ -285,7 +264,7 @@ void ReplayerToolbar::OnMenuActivated( int index )
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::OnTimeTable()
 {
-    TimeTableRequestDialog( this, network_, maxTick_ ).exec();
+    TimeTableRequestDialog( this, network_, simulationController_.GetTickCount() ).exec();
 }
 
 // -----------------------------------------------------------------------------
@@ -294,8 +273,7 @@ void ReplayerToolbar::OnTimeTable()
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::OnRefresh()
 {
-    replay::ForceRefreshDataRequest reload;
-    reload.Send( network_ );
+    simulationController_.ForceReplayDataRequest();
 }
 
 // -----------------------------------------------------------------------------
@@ -304,9 +282,7 @@ void ReplayerToolbar::OnRefresh()
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::SkipToTick( unsigned int tick )
 {
-    replay::ControlSkipToTick skip;
-    skip().set_tick( tick - 1 );
-    skip.Send( network_ );
+    simulationController_.SkipToTick( tick - 1 );
 }
 
 // -----------------------------------------------------------------------------
