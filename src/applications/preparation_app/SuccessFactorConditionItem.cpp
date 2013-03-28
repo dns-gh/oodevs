@@ -98,7 +98,7 @@ void SuccessFactorConditionItem::CommitTo( SuccessFactorConditions& conditions )
 {
     if( score_->Count() > 0 )
         if( const Score_ABC* score = score_->GetValue() )
-            conditions.AddCondition( *new SuccessFactorCondition( *score, operator_->GetValue().toStdString(), value_->text().toFloat() ) );
+            conditions.AddCondition( *new SuccessFactorCondition( *score, operator_->GetValue().toStdString(), locale().toFloat( value_->text() ) ) );
 }
 
 // -----------------------------------------------------------------------------

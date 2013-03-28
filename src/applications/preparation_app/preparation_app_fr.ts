@@ -1175,7 +1175,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Success factors...</source>
-        <translation>Facteurs de réussite...</translation>
+        <translation>Facteurs de succès...</translation>
     </message>
     <message>
         <source>Properties...</source>
@@ -1357,7 +1357,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Success factor definitions contain errors: %1</source>
-        <translation>Les définitions des facteurs de réussite contiennent des erreurs: %1</translation>
+        <translation>Les définitions des facteurs de succès contiennent des erreurs: %1</translation>
     </message>
     <message>
         <source>Logistic sector not included in a logistic base.</source>
@@ -2365,7 +2365,7 @@ Ces données ne peuvent pas être projetées.</translation>
     <name>SuccessFactorDialog</name>
     <message>
         <source>Success factors</source>
-        <translation>Facteur de succès</translation>
+        <translation>Facteurs de succès</translation>
     </message>
     <message>
         <source>Create new factor</source>
