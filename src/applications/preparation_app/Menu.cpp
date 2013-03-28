@@ -29,6 +29,7 @@
 #include "clients_gui/AboutDialog.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/ImageWrapper.h"
+#include "clients_gui/ObjectNameManager.h"
 #include "clients_gui/OptionMenu.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/resources.h"
@@ -175,13 +176,15 @@ Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers
         addMenu( menu->FillMenu() );
     }
     // Windows
-    if( gui::RichMenu* menu = new gui::RichMenu( "windowMenu", pParent, controllers_ ) )
+    if( QMenu* menu = pParent->createPopupMenu() )
     {
+        gui::ObjectNameManager::getInstance()->SetObjectName( this, objectName );
         if( QAction* action = addMenu( menu ) )
         {
             action->setText( tools::translate( "Menu", "&Windows" ) );
             AddModdedAction( action, eModes_LivingArea | eModes_Default, eModes_Prepare | eModes_Terrain );
         }
+        gui::ObjectNameManager::getInstance()->RemoveRegisteredName( menu->objectName() );
     }
     // Help
     {
