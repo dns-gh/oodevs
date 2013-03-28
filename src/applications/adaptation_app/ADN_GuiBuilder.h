@@ -105,7 +105,6 @@ public:
     ADN_ComboBox_Enum* AddEnumField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector );
 
     ADN_FileChooser* AddFileField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szFilter = "(*.*)" );
-    ADN_FileChooser* AddFileField( QWidget* pParent, const char* objectName, const char* szName, ADN_Type_String& strFileNameConnector, const char* szFilter = "(*.*)" );
 
     void AddStretcher( QWidget* pParent, Qt::Orientation nOrientation );
     void AddStretcher( QLayout* pLayout, Qt::Orientation nOrientation );

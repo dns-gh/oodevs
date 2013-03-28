@@ -86,30 +86,6 @@ ADN_FileChooser* ADN_GuiBuilder::AddFileField( QWidget* pParent, const char* obj
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_GuiBuilder::AddFileField
-// Created: APE 2005-03-23
-// -----------------------------------------------------------------------------
-ADN_FileChooser* ADN_GuiBuilder::AddFileField( QWidget* pParent, const char* objectName, const char* szName, ADN_Type_String& strFileNameConnector, const char* szFilter )
-{
-    // Create the field and labels.
-    QLabel* pNameLabel = new QLabel( szName, pParent );
-    ADN_FileChooser* pChooser = new ADN_FileChooser( pParent, szFilter );
-    pChooser->setObjectName( GetChildName( objectName ) );
-
-    pCurrentFieldWidget1_ = pNameLabel;
-    pCurrentFieldWidget2_ = pChooser;
-    pCurrentFieldGfx2_ = 0;
-    pCurrentFieldWidget3_ = 0;
-
-    // Lay them out if necessary.
-    this->DoFieldLayout( pParent, pNameLabel, pChooser, 0 );
-
-    pChooser->GetConnector(ADN_FileChooser::eFile).Connect( &strFileNameConnector );
-    pChooser->GetConnector(ADN_FileChooser::eDirectory).Connect( &ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory() );
-    return pChooser;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::SetToolTip
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
