@@ -50,7 +50,7 @@ namespace
         QMessageBox messageBox;
         messageBox.setWindowTitle( "Naming Errors" ); 
         messageBox.setText( message );
-        messageBox.exec();
+        messageBox.show();
     }
 }
 
