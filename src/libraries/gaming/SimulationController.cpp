@@ -112,10 +112,14 @@ void SimulationController::Step()
 {
     if( hasReplay_ )
     {
-        replayRequested_ = false;
-        replay::ControlResume message;
-        message().set_tick( 1 );
-        message.Send( publisher_ );
+        if( !IsPaused() )
+            Pause();
+        else
+        {
+            replay::ControlResume message;
+            message().set_tick( 1 );
+            message.Send( publisher_ );
+        }
     }
     if( hasSimulation_ )
     {
@@ -222,4 +226,14 @@ void SimulationController::NotifyUpdated( const Simulation::sEndTick& /*endTick*
         replay::ControlResume message;
         message.Send( publisher_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationController::NotifyUpdated
+// Created: JSR 2013-03-28
+// -----------------------------------------------------------------------------
+void SimulationController::NotifyUpdated( const Simulation& simulation )
+{
+    if( simulation.IsPaused() )
+        replayRequested_ = false;
 }

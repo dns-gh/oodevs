@@ -30,6 +30,7 @@ class Services;
 class SimulationController : public tools::Observer_ABC
                            , public tools::ElementObserver_ABC< Services >
                            , public tools::ElementObserver_ABC< Simulation::sEndTick >
+                           , public tools::ElementObserver_ABC< Simulation >
                            , private boost::noncopyable
 {
 public:
@@ -59,6 +60,7 @@ private:
     //@{
     virtual void NotifyUpdated( const Services& services );
     virtual void NotifyUpdated( const Simulation::sEndTick& endTick );
+    void NotifyUpdated( const Simulation& simulation );
     //@}
 
 private:

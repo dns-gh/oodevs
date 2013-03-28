@@ -28,6 +28,7 @@ namespace tools
 
 namespace dispatcher
 {
+    class LinkResolver_ABC;
     class Loader;
     class Model_ABC;
     class ReplayModel_ABC;
@@ -51,7 +52,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ReplayPlugin( dispatcher::Model_ABC& model, dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands,
-                           dispatcher::Loader& loader, const dispatcher::ReplayModel_ABC& replayModel );
+                           dispatcher::LinkResolver_ABC& linkResolver, dispatcher::Loader& loader, const dispatcher::ReplayModel_ABC& replayModel );
     virtual ~ReplayPlugin();
     //@}
 
@@ -76,7 +77,7 @@ private:
     void OnReceive( const std::string& link, const sword::ClientToReplay& asnMsg );
     void ChangeTimeFactor( unsigned int factor );
     void Pause( bool fromClient );
-    void Resume( const sword::ControlResume& msg );
+    void Resume( const std::string& endpoint, const sword::ControlResume& msg );
     void SkipToFrame( unsigned int frame );
     void RequestTimeTable( const sword::TimeTableRequest_TimeRange& msg );
     void SendReplayInfo( dispatcher::ClientPublisher_ABC& client );
@@ -88,13 +89,15 @@ private:
     //@{
     dispatcher::Model_ABC& model_;
     dispatcher::ClientPublisher_ABC& clients_;
+    dispatcher::LinkResolver_ABC& linkResolver_;
     dispatcher::Loader& loader_;
     unsigned int factor_;
     unsigned int tickNumber_;
     bool running_;
+    bool playingMode_;
     int skipToFrame_;
     int nextPause_;
-    bool playingMode_;
+    std::string endpoint_;
     MT_TimerManager manager_;
     std::auto_ptr< ReplayExtensionFactory > factory_;
     //@}

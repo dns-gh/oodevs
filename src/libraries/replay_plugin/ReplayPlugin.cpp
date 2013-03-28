@@ -9,6 +9,8 @@
 
 #include "ReplayPlugin.h"
 #include "ReplayExtensionFactory.h"
+#include "dispatcher/Client.h"
+#include "dispatcher/LinkResolver_ABC.h"
 #include "dispatcher/Loader.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Services.h"
@@ -25,16 +27,17 @@ using namespace dispatcher;
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
 ReplayPlugin::ReplayPlugin( Model_ABC& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands,
-                            Loader& loader, const ReplayModel_ABC& replayModel )
+                            dispatcher::LinkResolver_ABC& linkResolver, Loader& loader, const ReplayModel_ABC& replayModel )
     : model_( model )
     , clients_( clients )
+    , linkResolver_( linkResolver )
     , loader_( loader )
     , factor_( 1 )
     , tickNumber_( 0 )
     , running_( false )
+    , playingMode_( false )
     , skipToFrame_( -1 )
     , nextPause_( 0 )
-    , playingMode_( false )
     , factory_( new ReplayExtensionFactory( replayModel ) )
 {
     model.RegisterFactory( *factory_ );
@@ -101,6 +104,26 @@ void ReplayPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const
 // -----------------------------------------------------------------------------
 void ReplayPlugin::OnTimer()
 {
+    if( !endpoint_.empty() )
+    {
+        bool disconnected = false;
+        try
+        {
+            ClientPublisher_ABC& client = linkResolver_.GetPublisher( endpoint_ );
+            disconnected = !static_cast< dispatcher::Client& >( client ).HasAnsweredSinceLastTick();
+        }
+        catch( ... )
+        {
+            disconnected = true;
+        }
+        if( disconnected )
+        {
+            Pause( true );
+            if( tickNumber_ != loader_.GetTickNumber() )
+                SendReplayInfo( clients_ );
+            return;
+        }
+    }
     if( running_ )
         loader_.Tick();
     if( running_ || tickNumber_ != loader_.GetTickNumber() )
@@ -123,12 +146,12 @@ void ReplayPlugin::SendReplayInfo( ClientPublisher_ABC& client )
 // Name: ReplayPlugin::OnReceive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void ReplayPlugin::OnReceive( const std::string& , const sword::ClientToReplay& wrapper )
+void ReplayPlugin::OnReceive( const std::string& endpoint, const sword::ClientToReplay& wrapper )
 {
     if( wrapper.message().has_control_pause() )
         Pause( true );
     else if( wrapper.message().has_control_resume() )
-        Resume( wrapper.message().control_resume() );
+        Resume( endpoint, wrapper.message().control_resume() );
     else if( wrapper.message().has_control_change_time_factor() )
         ChangeTimeFactor( wrapper.message().control_change_time_factor().time_factor() );
     else if( wrapper.message().has_control_skip_to_tick() )
@@ -166,6 +189,7 @@ void ReplayPlugin::ChangeTimeFactor( unsigned int factor )
 // -----------------------------------------------------------------------------
 void ReplayPlugin::Pause( bool fromClient )
 {
+    endpoint_.clear();
     sword::ControlAck::ErrorCode error = ( running_ || playingMode_ || !fromClient ) ? sword::ControlAck::no_error: sword::ControlAck::error_already_paused;
     running_ = false;
     if( fromClient )
@@ -183,7 +207,7 @@ void ReplayPlugin::Pause( bool fromClient )
 // Name: ReplayPlugin::Resume
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void ReplayPlugin::Resume( const sword::ControlResume& msg )
+void ReplayPlugin::Resume( const std::string& endpoint, const sword::ControlResume& msg )
 {
     sword::ControlAck::ErrorCode error = running_ ? sword::ControlAck::error_not_paused : sword::ControlAck::no_error;
     running_ = true;
@@ -193,11 +217,17 @@ void ReplayPlugin::Resume( const sword::ControlResume& msg )
         asn().set_error_code( error );
         asn.Send( clients_ );
     }
-    playingMode_ = !msg.has_tick();
+    playingMode_ = !msg.has_tick() || msg.tick() == 0;
     if( playingMode_ )
+    {
+        endpoint_ = endpoint;
         nextPause_ = 1;
+    }
     else
+    {
+        endpoint_.clear();
         nextPause_ = msg.tick();
+    }
 }
 
 // -----------------------------------------------------------------------------
