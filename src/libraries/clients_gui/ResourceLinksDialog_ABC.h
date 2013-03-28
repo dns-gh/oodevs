@@ -74,6 +74,7 @@ private slots:
     void OnStockChanged( int value );
     void OnValueChanged();
     void Validate();
+    void Cancel();
     void OnChangeLink( int resourceId );
     void OnCreateNode( int resourceId );
     void OnRemoveNode( int resourceId );
@@ -100,6 +101,7 @@ private:
     void DoNotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     template< class T >
     void DoMultipleSelect( const std::vector< const T* >& elements );
+    void EnableDataUpdate( bool enable );
     //@}
 
 protected:
@@ -116,7 +118,7 @@ protected:
     Q3VBox* pMainLayout_;
     RichListWidget* dotationList_;
     RichGroupBox* groupBox_;
-    QSpinBox* production_;
+    RichSpinBox* production_;
     RichPushButton* generateProduction_;
     RichSpinBox* consumption_;
     RichCheckBox* critical_;
@@ -125,6 +127,8 @@ protected:
     RichSpinBox* stock_;
     RichTableWidget* table_;
     RichPushButton* okButton_;
+    RichPushButton* cancelButton_;
+    bool enableDataUpdate_;
     //@}
 };
 

@@ -1569,6 +1569,10 @@ Do you want to remove it?</translation>
         <source>Remove node</source>
         <translation>Remove node</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
 </context>
 <context>
     <name>gui::ResourceNetworkPrototype_ABC</name>

@@ -43,6 +43,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     , resources_       ( resources )
     , sourceNode_      ( 0 )
     , id_              ( 0 )
+    , enableDataUpdate_( true )
 {
     SubObjectName subObject( this->objectName() );
     Q3VBox* mainLayout = new Q3VBox( this );
@@ -109,9 +110,16 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     table_->horizontalHeader()->setStretchLastSection( false );
     groupBox_->setEnabled( false );
     connect( table_, SIGNAL( cellChanged( int, int ) ), SLOT( OnValueChanged() ) );
-    okButton_ = new RichPushButton( "ok", tools::translate( "gui::ResourceLinksDialog_ABC", "Validate" ), pMainLayout_ );
+    Q3HBox* buttonBox = new Q3HBox( pMainLayout_ );
+    okButton_ = new RichPushButton( "ok", tools::translate( "gui::ResourceLinksDialog_ABC", "Validate" ), buttonBox );
     okButton_->setDefault( true );
     connect( okButton_, SIGNAL( clicked() ), SLOT( Validate() ) );
+
+    cancelButton_ = new RichPushButton( "cancel", tools::translate( "gui::ResourceLinksDialog_ABC", "Cancel" ), buttonBox );
+    cancelButton_->setDefault( true );
+    cancelButton_->setEnabled( false );
+    connect( cancelButton_, SIGNAL( clicked() ), SLOT( Cancel() ) );
+
     controllers_.Update( *this );
     pMainLayout_->hide();
 }
@@ -185,6 +193,8 @@ void ResourceLinksDialog_ABC::DoMultipleSelect( const std::vector< const T* >& e
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Update()
 {
+    if( !enableDataUpdate_ )
+        return;
     SubObjectName subObject( this->objectName() );
     if( selected_.size() != 1 )
         return;
@@ -220,15 +230,19 @@ void ResourceLinksDialog_ABC::Update()
             item1->setFlags( item1->flags() ^ Qt::ItemIsEditable );
         }
         {
+            table_->setCellWidget( j, 1, 0 );
             table_->setItem( j, 1, new QTableWidgetItem() );
             RichCheckBox* limitedBox = new RichCheckBox( "limitedBox" );
+            limitedBox->setEnabled( controllers_.GetCurrentMode() != eModes_Replay );
             limitedBox->setCheckState( limited ? Qt::Checked : Qt::Unchecked );
             table_->setCellWidget( j, 1, limitedBox );
             connect( limitedBox, SIGNAL( stateChanged( int ) ), SLOT( OnValueChanged() ) );
         }
         {
+            table_->setCellWidget( j, 2, 0 );
             table_->setItem( j, 2, new QTableWidgetItem() );
             RichSpinBox* capacity = new RichSpinBox( "capacity" );
+            capacity->setEnabled( controllers_.GetCurrentMode() != eModes_Replay );
             capacity->setEnabled( limited );
             capacity->setRange( 0, std::numeric_limits< int >::max() );
             capacity->setValue( limited ? node.links_[ j ].capacity_ : 0 );
@@ -263,6 +277,7 @@ void ResourceLinksDialog_ABC::OnProductionChanged( int value )
 {
     if( dotationList_->currentItem() )
         resourceNodes_[ dotationList_->currentItem()->text().toStdString() ].production_ = value;
+    EnableDataUpdate( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,6 +288,7 @@ void ResourceLinksDialog_ABC::OnConsumptionChanged( int value )
 {
     if( dotationList_->currentItem() )
         resourceNodes_[ dotationList_->currentItem()->text().toStdString() ].consumption_ = value;
+    EnableDataUpdate( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -283,6 +299,7 @@ void ResourceLinksDialog_ABC::OnCriticalChanged( bool on )
 {
     if( dotationList_->currentItem() )
         resourceNodes_[ dotationList_->currentItem()->text().toStdString() ].critical_ = on;
+    EnableDataUpdate( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -293,6 +310,7 @@ void ResourceLinksDialog_ABC::OnMaxStockChanged( int value )
 {
     if( dotationList_->currentItem() )
         resourceNodes_[ dotationList_->currentItem()->text().toStdString() ].maxStock_ = value;
+    EnableDataUpdate( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -303,6 +321,7 @@ void ResourceLinksDialog_ABC::OnStockChanged( int value )
 {
     if( dotationList_->currentItem() )
         resourceNodes_[ dotationList_->currentItem()->text().toStdString() ].stock_ = value;
+    EnableDataUpdate( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -328,6 +347,7 @@ void ResourceLinksDialog_ABC::OnValueChanged()
         }
         blockSlot_ = false;
     }
+    EnableDataUpdate( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -349,6 +369,17 @@ void ResourceLinksDialog_ABC::Validate()
         DoValidate();
         controllers_.controller_.Update( selected_.front()->Get< ResourceNetwork_ABC >() );
     }
+    enableDataUpdate_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::Cancel
+// Created: NPT 2013-03-28
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::Cancel()
+{
+    enableDataUpdate_  =true;
+    Show();
 }
 
 // -----------------------------------------------------------------------------
@@ -489,6 +520,7 @@ void ResourceLinksDialog_ABC::Show()
     }
     Update();
     pMainLayout_->show();
+    EnableDataUpdate( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -611,4 +643,14 @@ void ResourceLinksDialog_ABC::GenerateProduction()
             controllers_.controller_.Update( selected_.front()->Get< ResourceNetwork_ABC >() );
             Update();
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::EnableDataUpdate
+// Created: NPT 2013-03-28
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::EnableDataUpdate( bool enable )
+{
+    enableDataUpdate_ = enable;
+    cancelButton_->setEnabled( !enable );
 }

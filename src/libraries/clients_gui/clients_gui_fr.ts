@@ -1565,6 +1565,10 @@ Voulez-vous le supprimer?</translation>
         <source>Remove node</source>
         <translation>Supprimer le noeud</translation>
     </message>
+    <message>
+        <source>Cancel</ssource>
+        <translation>Annuler</translation>
+    </message>
 </context>
 <context>
     <name>gui::ResourceNetworkPrototype_ABC</name>

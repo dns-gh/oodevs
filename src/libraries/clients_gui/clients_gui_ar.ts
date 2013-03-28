@@ -1564,6 +1564,10 @@ Do you want to remove it?</source>
         <source>Remove node</source>
         <translation type="unfinished">إزالة عقده</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">إلغاء الأمر</translation>
+    </message>
 </context>
 <context>
     <name>gui::ResourceNetworkPrototype_ABC</name>
