@@ -156,10 +156,7 @@ void InterfaceBuilder::BuildAll( actions::gui::MissionInterface_ABC& missionInte
     entity_ = &entity;
     tools::Iterator< const kernel::OrderParameter& > it = order.CreateIterator();
     while( it.HasMoreElements() )
-    {
-        const kernel::OrderParameter& order = it.NextElement();
-        BuildOne( order );
-    }
+        BuildOne( it.NextElement() );
 }
 
 // -----------------------------------------------------------------------------
