@@ -17,6 +17,7 @@
 namespace sword
 {
     class ClientToReplay;
+    class ControlResume;
     class TimeTableRequest_TimeRange;
 }
 
@@ -74,8 +75,8 @@ private:
     //@{
     void OnReceive( const std::string& link, const sword::ClientToReplay& asnMsg );
     void ChangeTimeFactor( unsigned int factor );
-    void Pause();
-    void Resume( int ticks );
+    void Pause( bool fromClient );
+    void Resume( const sword::ControlResume& msg );
     void SkipToFrame( unsigned int frame );
     void RequestTimeTable( const sword::TimeTableRequest_TimeRange& msg );
     void SendReplayInfo( dispatcher::ClientPublisher_ABC& client );
@@ -93,6 +94,7 @@ private:
     bool running_;
     int skipToFrame_;
     int nextPause_;
+    bool playingMode_;
     MT_TimerManager manager_;
     std::auto_ptr< ReplayExtensionFactory > factory_;
     //@}

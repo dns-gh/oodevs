@@ -10,18 +10,9 @@
 #ifndef __SIMControlToolbar_h_
 #define __SIMControlToolbar_h_
 
-#include "clients_gui/Types.h"
 #include "gaming/Simulation.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_gui/RichToolBar.h"
-#include "clients_gui/RichAction.h"
-
-#pragma warning( push, 0 )
-#include <QtGui/qicon.h>
-#pragma warning( pop )
-
-class QToolButton;
-class QSpinBox;
 
 namespace kernel
 {
@@ -46,7 +37,6 @@ class SIMControlToolbar : public gui::RichToolBar
                         , public tools::ElementObserver_ABC< Simulation >
                         , public tools::ElementObserver_ABC< Services >
                         , public tools::ElementObserver_ABC< kernel::Profile_ABC >
-                        , public tools::ElementObserver_ABC< Simulation::sStartTick >
                         , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
     Q_OBJECT
@@ -76,18 +66,11 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SIMControlToolbar( const SIMControlToolbar& );
-    SIMControlToolbar& operator=( const SIMControlToolbar& );
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Services& services );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
-    virtual void NotifyUpdated( const Simulation::sStartTick& startTick );
     virtual void NotifyUpdated( const Simulation::sEndTick& endTick );
     virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
     void RequestCheckpoint( const std::string& name );
@@ -96,26 +79,27 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&        controllers_;
-    Publisher_ABC&      publisher_;
-    QToolButton*        pConnectButton_;
-    QToolButton*        pPlayButton_;
-    QToolButton*        pStepButton_;
-    QToolButton*        pSpeedButton_;
-    QSpinBox*           pSpeedSpinBox_;
-    QToolButton*        pCheckpointButton_;
-    QAction*            pCheckpointAction_ ;
-    ConnectDialog*      pConnectDlg_;
-    DisconnectDialog*   pDisconnectDlg_;
+    kernel::Controllers& controllers_;
+    Publisher_ABC& publisher_;
+    QToolButton* pConnectButton_;
+    QToolButton* pPlayButton_;
+    QToolButton* pStepButton_;
+    QToolButton* pSpeedButton_;
+    QSpinBox* pSpeedSpinBox_;
+    QToolButton* pCheckpointButton_;
+    QAction* pCheckpointAction_ ;
+    ConnectDialog* pConnectDlg_;
+    DisconnectDialog* pDisconnectDlg_;
     int speed_;
-    unsigned int tickCount_;
-    bool connected_, paused_;
-    bool hasReplay_, hasSimulation_;
-    bool gamingPaused_;
-    bool replayStepMode_;
-
-    QIcon connectPix_, disconnectPix_;
-    QIcon playPix_, stopPix_;
+    bool connected_;
+    bool paused_;
+    bool hasReplay_;
+    bool hasSimulation_;
+    bool replayRequested_;
+    QIcon connectPix_;
+    QIcon disconnectPix_;
+    QIcon playPix_;
+    QIcon stopPix_;
     //@}
 };
 

@@ -26,15 +26,16 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 ReplayPlugin::ReplayPlugin( Model_ABC& model, ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& clientCommands,
                             Loader& loader, const ReplayModel_ABC& replayModel )
-    : model_      ( model )
-    , clients_    ( clients )
-    , loader_     ( loader )
-    , factor_     ( 1 )
-    , tickNumber_ ( 0 )
-    , running_    ( false )
+    : model_( model )
+    , clients_( clients )
+    , loader_( loader )
+    , factor_( 1 )
+    , tickNumber_( 0 )
+    , running_( false )
     , skipToFrame_( -1 )
-    , nextPause_  ( 0 )
-    , factory_    ( new ReplayExtensionFactory( replayModel ) )
+    , nextPause_( 0 )
+    , playingMode_( false )
+    , factory_( new ReplayExtensionFactory( replayModel ) )
 {
     model.RegisterFactory( *factory_ );
     clientCommands.RegisterMessage( *this, &ReplayPlugin::OnReceive );
@@ -105,7 +106,7 @@ void ReplayPlugin::OnTimer()
     if( running_ || tickNumber_ != loader_.GetTickNumber() )
         SendReplayInfo( clients_ );
     if( nextPause_ > 0 && --nextPause_ == 0 )
-        Pause();
+        Pause( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,9 +126,9 @@ void ReplayPlugin::SendReplayInfo( ClientPublisher_ABC& client )
 void ReplayPlugin::OnReceive( const std::string& , const sword::ClientToReplay& wrapper )
 {
     if( wrapper.message().has_control_pause() )
-        Pause();
+        Pause( true );
     else if( wrapper.message().has_control_resume() )
-        Resume( wrapper.message().control_resume().has_tick() ? wrapper.message().control_resume().tick() : 0 );
+        Resume( wrapper.message().control_resume() );
     else if( wrapper.message().has_control_change_time_factor() )
         ChangeTimeFactor( wrapper.message().control_change_time_factor().time_factor() );
     else if( wrapper.message().has_control_skip_to_tick() )
@@ -163,25 +164,40 @@ void ReplayPlugin::ChangeTimeFactor( unsigned int factor )
 // Name: ReplayPlugin::Pause
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void ReplayPlugin::Pause()
+void ReplayPlugin::Pause( bool fromClient )
 {
-    ::replay::ControlPauseAck asn;
-    asn().set_error_code( running_ ? sword::ControlAck::no_error: sword::ControlAck::error_already_paused );
-    asn.Send( clients_ );
+    sword::ControlAck::ErrorCode error = ( running_ || playingMode_ || !fromClient ) ? sword::ControlAck::no_error: sword::ControlAck::error_already_paused;
     running_ = false;
+    if( fromClient )
+        playingMode_ = false;
+    if( !playingMode_ )
+    {
+        ::replay::ControlPauseAck asn;
+        asn().set_error_code( error );
+        asn.Send( clients_ );
+    }
+    nextPause_ = 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPlugin::Resume
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void ReplayPlugin::Resume( int ticks )
+void ReplayPlugin::Resume( const sword::ControlResume& msg )
 {
-    nextPause_ = ticks;
-    ::replay::ControlResumeAck asn;
-    asn().set_error_code( running_ ? sword::ControlAck::error_not_paused : sword::ControlAck::no_error );
-    asn.Send( clients_ );
+    sword::ControlAck::ErrorCode error = running_ ? sword::ControlAck::error_not_paused : sword::ControlAck::no_error;
     running_ = true;
+    if( !playingMode_ )
+    {
+        ::replay::ControlResumeAck asn;
+        asn().set_error_code( error );
+        asn.Send( clients_ );
+    }
+    playingMode_ = !msg.has_tick();
+    if( playingMode_ )
+        nextPause_ = 1;
+    else
+        nextPause_ = msg.tick();
 }
 
 // -----------------------------------------------------------------------------

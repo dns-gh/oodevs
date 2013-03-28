@@ -25,7 +25,6 @@
 #include "protocol/ReplaySenders.h"
 
 using namespace sword;
-using namespace kernel;
 
 namespace
 {
@@ -39,17 +38,18 @@ namespace
             // NOTHING
         }
 
-        ~SpinBox() {}
+        ~SpinBox()
+        {
+            // NOTHING
+        }
 
     private:
-        SpinBox( const SpinBox& );
-        SpinBox& operator=( const SpinBox& );
 
         virtual bool event( QEvent* event )
         {
             if( event->type() == QEvent::KeyPress )
             {
-                const int key = ((QKeyEvent*)event)->key();
+                const int key = static_cast< QKeyEvent* >( event )->key();
                 emit valueChanged( value() );
                 if( key == Qt::Key_Enter || key == Qt::Key_Return )
                     toolBar_.SlotSpeedChange();
@@ -64,8 +64,15 @@ namespace
     class AutoFitPopupMenu : public kernel::ContextMenu
     {
     public:
-        explicit AutoFitPopupMenu( QWidget* parent ) : kernel::ContextMenu( parent ) {}
-        virtual ~AutoFitPopupMenu() {}
+        explicit AutoFitPopupMenu( QWidget* parent )
+            : kernel::ContextMenu( parent )
+        {
+            // NOTHING
+        }
+        virtual ~AutoFitPopupMenu()
+        {
+            // NOTHING
+        }
         virtual void showEvent( QShowEvent* event )
         {
             kernel::ContextMenu::showEvent( event );
@@ -79,8 +86,14 @@ namespace
         LineEdit( QWidget* toolbar, QObject* parent )
             : QWidgetAction( parent )
             , toolbar_( toolbar )
-        {}
-        virtual ~LineEdit() {}
+        {
+            // NOTHING
+        }
+        virtual ~LineEdit()
+        {
+            // NOTHING
+        }
+    private:
         virtual QWidget* createWidget( QWidget* parent )
         {
             Q3HBox* box = new Q3HBox( parent );
@@ -90,6 +103,8 @@ namespace
             connect( lineEdit, SIGNAL( returnPressed() ), toolbar_, SLOT( SlotNamedCheckPoint() ) );
             return box;
         }
+
+    private:
         QWidget* toolbar_;
     };
 }
@@ -98,18 +113,16 @@ namespace
 // Name: SIMControlToolbar constructor
 // Created: FBD 03-01-14
 //-----------------------------------------------------------------------------
-SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& controllers, Network& network, Publisher_ABC& publisher, kernel::Logger_ABC& logger )
+SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, kernel::Controllers& controllers, Network& network, Publisher_ABC& publisher, kernel::Logger_ABC& logger )
     : gui::RichToolBar( controllers, pParent, "sim control toolbar" )
     , controllers_( controllers )
     , publisher_( publisher )
     , speed_( 4212 )
-    , tickCount_( 0 )
     , connected_( false )
     , paused_( false )
     , hasReplay_( false )
     , hasSimulation_( true )
-    , gamingPaused_( true )
-    , replayStepMode_( false )
+    , replayRequested_( false )
     , connectPix_   ( MAKE_ICON( notconnected ) )
     , disconnectPix_( MAKE_ICON( connected ) )
     , playPix_      ( MAKE_ICON( play ) )
@@ -223,14 +236,12 @@ void SIMControlToolbar::SlotConnectDisconnect()
 //-----------------------------------------------------------------------------
 void SIMControlToolbar::SlotPlayPause()
 {
-    gamingPaused_ = !gamingPaused_;
-    // $$$$ AGE 2007-08-24:
     if( paused_ )
     {
         if( hasReplay_ )
         {
+            replayRequested_ = true;
             replay::ControlResume message;
-            message().set_tick( 1 );
             message.Send( publisher_ );
         }
         if( hasSimulation_ )
@@ -243,6 +254,7 @@ void SIMControlToolbar::SlotPlayPause()
     {
         if( hasReplay_ )
         {
+            replayRequested_ = false;
             replay::ControlPause message;
             message.Send( publisher_ );
         }
@@ -262,8 +274,7 @@ void SIMControlToolbar::SlotStep()
 {
     if( hasReplay_ )
     {
-        gamingPaused_ = true;
-        replayStepMode_ = true;
+        replayRequested_ = false;
         replay::ControlResume message;
         message().set_tick( 1 );
         message.Send( publisher_ );
@@ -364,9 +375,9 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
     if( paused_ != simulation.IsPaused() )
     {
         paused_ = simulation.IsPaused();
-        bool paused = hasReplay_ ? gamingPaused_ : paused_;
-        if( paused )
+        if( paused_ )
         {
+            replayRequested_ = false;
             pPlayButton_->setIconSet( playPix_ );
             pPlayButton_->setTextLabel( tr( "Unpause (Alt+P)" ) );
         }
@@ -383,19 +394,6 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         speed_ = simulation.GetSpeed();
         pSpeedSpinBox_->setValue( speed_ );
         pSpeedButton_->setEnabled( false );
-    }
-    if( hasReplay_ )
-    {
-        if( tickCount_ != simulation.GetTickCount() )
-        {
-            if( !gamingPaused_ && simulation.GetCurrentTick() >= tickCount_ )
-            {
-                replay::ControlResume message;
-                message().set_tick( 1 );
-                message.Send( publisher_ );
-            }
-            tickCount_ = simulation.GetTickCount();
-        }
     }
 }
 
@@ -417,25 +415,12 @@ void SIMControlToolbar::NotifyUpdated( const kernel::Profile_ABC& profile )
 // Name: SIMControlToolbar::NotifyUpdated
 // Created: LDC 2012-08-07
 // -----------------------------------------------------------------------------
-void SIMControlToolbar::NotifyUpdated( const Simulation::sStartTick& )
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: SIMControlToolbar::NotifyUpdated
-// Created: LDC 2012-08-07
-// -----------------------------------------------------------------------------
 void SIMControlToolbar::NotifyUpdated( const Simulation::sEndTick& )
 {
-    if( hasReplay_ )
+    if( replayRequested_ && hasReplay_ )
     {
-        if( !gamingPaused_ && !replayStepMode_ )
-        {
-            replay::ControlResume message;
-            message().set_tick( 1 );
-            message.Send( publisher_ );
-        }
-        replayStepMode_ = false;
+        replay::ControlResume message;
+        message.Send( publisher_ );
     }
 }
 
