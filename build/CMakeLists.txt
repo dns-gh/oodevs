@@ -21,7 +21,7 @@ find_package( OpenGL REQUIRED )
 masa_find_with_prefix( ZLIB zlib REQUIRED )
 masa_find_qt4( REQUIRED QtCore QtGui QtNetwork QtOpenGL QtWebKit )
 
-set( FLEX_LIBRARIES
+masa_set_library( FLEX_LIBRARIES
     lm_new_md
     libnoact_md
     libsb_md
@@ -29,7 +29,7 @@ set( FLEX_LIBRARIES
     lmgr_md
     lmgr_dongle_stub
 )
-set( OPENSSL_LIBRARIES
+masa_set_library( OPENSSL_LIBRARIES
     libeay32
     ssleay32
 )
