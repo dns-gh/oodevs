@@ -57,7 +57,8 @@ void PHY_PerceptionRecoObjectsReco::UpdateLocalisation()
     bMaxSizeDone_ = true;
     for ( CIT_PointVector it = pointLocalisationFinale.begin(); bMaxSizeDone_ && it != pointLocalisationFinale.end(); ++it )
         bMaxSizeDone_ = circle_.IsInside( *it );
-    callerAgent_.CallbackPerception( Id() );
+    if( bMaxSizeDone_ )
+        callerAgent_.CallbackPerception( Id() );
 }
 
 // -----------------------------------------------------------------------------
