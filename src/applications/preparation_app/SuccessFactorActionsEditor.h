@@ -20,9 +20,9 @@ class SuccessFactorActionTypes;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorActionsEditor : public Q3ScrollView
+class SuccessFactorActionsEditor : public QVBoxLayout
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -45,12 +45,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SuccessFactorActionsEditor( const SuccessFactorActionsEditor& );            //!< Copy constructor
-    SuccessFactorActionsEditor& operator=( const SuccessFactorActionsEditor& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< SuccessFactorActionItem* > T_Items;
@@ -60,8 +54,8 @@ private:
     //! @name Member data
     //@{
     const SuccessFactorActionTypes& actionTypes_;
-    Q3VBox* mainWidget_;
     T_Items items_;
+    QScrollArea* scrollArea_;
     //@}
 };
 

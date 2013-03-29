@@ -23,21 +23,24 @@ Q_DECLARE_METATYPE( const SuccessFactor* )
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
 SuccessFactorList::SuccessFactorList( QWidget* parent, kernel::Controllers& controllers, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores, SuccessFactorsModel& success )
-    : Q3VBox( parent )
-    , controllers_( controllers )
-    , factors_( new gui::RichTreeWidget( "factors", this ) )
-    , editor_( new SuccessFactorEditor( this, controllers_, actionTypes, scores, success ) )
+    : controllers_( controllers )
+    , factors_( new gui::RichTreeWidget( "factors" ) )
+    , editor_( new SuccessFactorEditor( parent, controllers_, actionTypes, scores, success ) )
 {
     gui::SubObjectName subObject( "SuccessFactorList" );
-    layout()->setAlignment( Qt::AlignRight );
+    setAlignment( Qt::AlignRight );
     factors_->setHeaderLabels( QStringList( tr( "Name" ) ) );
     factors_->setRootIsDecorated( false );
+    addWidget( factors_ );
     {
-        Q3HBox* box = new Q3HBox( this );
-        editButton_ = new gui::RichPushButton( "edit", tr( "Edit..." ), box );
-        deleteButton_ = new gui::RichPushButton( "delete", tr( "Delete" ), box );
+        QHBoxLayout* box = new QHBoxLayout();
+        editButton_ = new gui::RichPushButton( "edit", tr( "Edit..." ) );
+        deleteButton_ = new gui::RichPushButton( "delete", tr( "Delete" ) );
+        box->addWidget( editButton_ );
+        box->addWidget( deleteButton_ );
         connect( editButton_, SIGNAL( clicked() ), SLOT( OnEdit() ) );
         connect( deleteButton_, SIGNAL( clicked() ), SLOT( OnDelete() ) );
+        addLayout( box );
     }
     connect( factors_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnEdit() ) );
     controllers_.Register( *this );

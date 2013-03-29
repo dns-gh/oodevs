@@ -63,7 +63,7 @@ SuccessFactorEditor::SuccessFactorEditor( QWidget* parent, kernel::Controllers& 
 
         gui::RichGroupBox* conditionsBox = new gui::RichGroupBox( "conditions", tr( "Conditions" ), this );
         QHBoxLayout* conditionsBoxLayout = new QHBoxLayout( conditionsBox );
-        conditionsBoxLayout->addWidget( conditions_ );
+        conditionsBoxLayout->addLayout( conditions_ );
         grid->addWidget( conditionsBox, 1, 1, 1, 4 );
     }
     {
@@ -72,26 +72,21 @@ SuccessFactorEditor::SuccessFactorEditor( QWidget* parent, kernel::Controllers& 
 
         gui::RichGroupBox* actionsBox = new gui::RichGroupBox( "actions", tr( "Actions" ), this );
         QHBoxLayout* actionsBoxLayout = new QHBoxLayout( actionsBox );
-        actionsBoxLayout->addWidget( actions_ );
+        actionsBoxLayout->addLayout( actions_ );
         grid->addWidget( actionsBox, 2, 1, 1, 4 );
     }
     {
-        Q3HBox* box = new Q3HBox( this );
-
-
-        ok_ = new gui::RichPushButton( "ok", tr( "Ok" ), box );
+        QHBoxLayout* layout = new QHBoxLayout();
+        ok_ = new gui::RichPushButton( "ok", tr( "Ok" ) );
         connect( ok_, SIGNAL( clicked() ), SLOT( Commit() ) );
-
-        gui::RichPushButton* cancel = new gui::RichPushButton( "cancel", tr( "Cancel" ), box );
+        gui::RichPushButton* cancel = new gui::RichPushButton( "cancel", tr( "Cancel" ) );
         connect( ok_, SIGNAL( clicked() ), SLOT( Commit() ) );
-
         connect( cancel, SIGNAL( clicked() ), SLOT( Cancel() ) );
-
         connect( cancel, SIGNAL( clicked() ), SLOT( Cancel() ) );
-
-        grid->addWidget( box, 3, 1, Qt::AlignRight );
+        layout->addWidget( ok_ );
+        layout->addWidget( cancel );
+        grid->addLayout( layout, 3, 1, Qt::AlignRight );
     }
-
 }
 
 // -----------------------------------------------------------------------------

@@ -31,14 +31,14 @@ namespace gui
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorActionItem : public Q3VBox
+class SuccessFactorActionItem : public QFrame
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SuccessFactorActionItem( const QString& objectName, QWidget* parent, const SuccessFactorActionTypes& actions );
+             SuccessFactorActionItem( const QString& objectName, const SuccessFactorActionTypes& actions );
     virtual ~SuccessFactorActionItem();
     //@}
 
@@ -64,12 +64,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SuccessFactorActionItem( const SuccessFactorActionItem& );            //!< Copy constructor
-    SuccessFactorActionItem& operator=( const SuccessFactorActionItem& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void AddParameter( const QString& name, const QString& value );
@@ -88,6 +82,7 @@ private:
     gui::RichGroupBox* parameters_;
     T_ParameterEditors editors_;
     gui::RichPushButton* deleteButton_;
+    QVBoxLayout* layout_;
     //@}
 };
 

@@ -35,7 +35,7 @@ class SuccessFactorsModel;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorList : public Q3VBox
+class SuccessFactorList : public QVBoxLayout
                         , public tools::Observer_ABC
                         , public tools::ElementObserver_ABC< SuccessFactor >
 {

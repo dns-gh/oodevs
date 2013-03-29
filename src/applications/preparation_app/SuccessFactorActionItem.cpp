@@ -27,36 +27,36 @@
 // Name: SuccessFactorActionItem constructor
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-SuccessFactorActionItem::SuccessFactorActionItem( const QString& objectName, QWidget* parent, const SuccessFactorActionTypes& actions )
-    : Q3VBox( parent )
-    , parameters_( 0 )
+SuccessFactorActionItem::SuccessFactorActionItem( const QString& objectName, const SuccessFactorActionTypes& actions )
+    : parameters_( 0 )
 {
     gui::SubObjectName subObject( objectName );
     setObjectName( objectName );
-    setSpacing( 2 );
-    setFrameStyle( Q3Frame::Panel | Q3Frame::Raised );
-    Q3HBox* box = new Q3HBox( this  );
+    setFrameStyle( QFrame::Panel | QFrame::Raised );
+    QHBoxLayout* box = new QHBoxLayout();
     box->setSpacing( 5 );
+    type_ = new gui::ValuedComboBox< const SuccessFactorActionType* >( "type" );
+    tools::Iterator< const SuccessFactorActionType& > it( actions.CreateIterator() );
+    while( it.HasMoreElements() )
     {
-        type_ = new gui::ValuedComboBox< const SuccessFactorActionType* >( "type", box );
-        tools::Iterator< const SuccessFactorActionType& > it( actions.CreateIterator() );
-        while( it.HasMoreElements() )
-        {
-            const SuccessFactorActionType& type = it.NextElement();
-            type_->AddItem( type.GetName(), &type );
-        }
-        connect( type_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
+        const SuccessFactorActionType& type = it.NextElement();
+        type_->AddItem( type.GetName(), &type );
     }
-    {
-        gui::RichPushButton* addButton = new gui::RichPushButton( "add", "+", box );
-        addButton->setMaximumWidth( 30 );
-        deleteButton_ = new gui::RichPushButton( "delete", MAKE_PIXMAP( trash ), "", box );
-        deleteButton_->setMaximumWidth( 30 );
-        connect( addButton, SIGNAL( clicked() ), SIGNAL( Add() ) );
-        connect( deleteButton_, SIGNAL( clicked() ), SLOT( OnDelete() ) );
-    }
+    connect( type_, SIGNAL( activated( int ) ), SLOT( OnTypeChanged() ) );
+    gui::RichPushButton* addButton = new gui::RichPushButton( "add", "+" );
+    addButton->setMaximumWidth( 30 );
+    deleteButton_ = new gui::RichPushButton( "delete", MAKE_PIXMAP( trash ), "" );
+    deleteButton_->setMaximumWidth( 30 );
+    connect( addButton, SIGNAL( clicked() ), SIGNAL( Add() ) );
+    connect( deleteButton_, SIGNAL( clicked() ), SLOT( OnDelete() ) );
+    box->addWidget( type_ );
+    box->addWidget( addButton );
+    box->addWidget( deleteButton_ );
+    layout_ = new QVBoxLayout;
+    setLayout( layout_ );
+    layout_->setSpacing( 2 );
+    layout_->addLayout( box );
     OnTypeChanged();
-
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +116,8 @@ void SuccessFactorActionItem::OnTypeChanged()
 {
     editors_.clear();
     delete parameters_;
-    parameters_ = new gui::RichGroupBox( "parameters" + objectName() , this );
+    parameters_ = new gui::RichGroupBox( "parameters" + objectName() );
+    layout_->addWidget( parameters_ );
     QHBoxLayout* parametersLayout = new QHBoxLayout( parameters_ );
     parametersLayout->setMargin( 5 );
     parameters_->setFlat( true );
@@ -150,7 +151,7 @@ void SuccessFactorActionItem::AddParameter( const QString& name, const QString& 
 // -----------------------------------------------------------------------------
 void SuccessFactorActionItem::SetParameter( const QString& name, const QString& value )
 {
-    T_ParameterEditors::iterator it = editors_.find( name );
+    auto it = editors_.find( name );
     if( it != editors_.end() )
         it->second->setText( value );
 }

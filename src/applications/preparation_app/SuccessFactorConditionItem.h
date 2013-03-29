@@ -28,14 +28,14 @@ namespace gui
 */
 // Created: SBO 2009-06-16
 // =============================================================================
-class SuccessFactorConditionItem : public Q3HBox
+class SuccessFactorConditionItem : public QFrame
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SuccessFactorConditionItem( const QString& objectName, QWidget* parent, const ScoresModel& scores );
+             SuccessFactorConditionItem( const QString& objectName, const ScoresModel& scores );
     virtual ~SuccessFactorConditionItem();
     //@}
 
@@ -59,12 +59,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SuccessFactorConditionItem( const SuccessFactorConditionItem& );            //!< Copy constructor
-    SuccessFactorConditionItem& operator=( const SuccessFactorConditionItem& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void FillOperators();

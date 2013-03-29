@@ -23,24 +23,25 @@
 // -----------------------------------------------------------------------------
 SuccessFactorConditionsEditor::SuccessFactorConditionsEditor( const QString& objectName, const ScoresModel& scores )
     : scores_( scores )
-    , scrollView_( 0 )
+    , scrollArea_( 0 )
 {
     gui::SubObjectName subObject( objectName );
     setSpacing( 3 );
-    Q3HBox* box = new Q3HBox( this );
-    box->setSpacing( 5 );
-    {
-        operator_ = new Q3HButtonGroup( tr( "Actions must be executed when: " ), box );
-        operator_->setRadioButtonExclusive( true );
-        new gui::RichRadioButton( "oneConditionVerified", tr( "at least one condition is verified" ), operator_ ); //!< or
-        new gui::RichRadioButton( "allConditionsVerified", tr( "all conditions are verified" ), operator_ ); //!< and
-    }
-    {
-        gui::RichPushButton* add = new gui::RichPushButton( "add", tr( "Add" ), box );
-        add->setMaximumWidth( 60 );
-        connect( add, SIGNAL( clicked() ), SLOT( CreateItem() ) );
-    }
-
+    QHBoxLayout* hLayout = new QHBoxLayout;
+    addLayout( hLayout );
+    QGroupBox* group = new QGroupBox( tr( "Actions must be executed when: " ) );
+    hLayout->addWidget( group );
+    QHBoxLayout* boxLayout = new QHBoxLayout();
+    group->setLayout( boxLayout );
+    boxLayout->setSpacing( 5 );
+    orButton_ = new gui::RichRadioButton( "oneConditionVerified", tr( "at least one condition is verified" ) ); //!< or
+    andButton_ = new gui::RichRadioButton( "allConditionsVerified", tr( "all conditions are verified" ) ); //!< and
+    boxLayout->addWidget( orButton_ );
+    boxLayout->addWidget( andButton_ );
+    gui::RichPushButton* add = new gui::RichPushButton( "add", tr( "Add" ) );
+    add->setMaximumWidth( 60 );
+    connect( add, SIGNAL( clicked() ), SLOT( CreateItem() ) );
+    hLayout->addWidget( add );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,15 +59,28 @@ SuccessFactorConditionsEditor::~SuccessFactorConditionsEditor()
 // -----------------------------------------------------------------------------
 void SuccessFactorConditionsEditor::StartEdit( const SuccessFactorConditions& conditions )
 {
-    operator_->setButton( conditions.GetOperator() == "and" ? 1 : 0 );
+    if( conditions.GetOperator() == "and" )
+        andButton_->setChecked( true );
+    else 
+        orButton_->setChecked( true );
     items_.clear();
-    delete scrollView_;
-    scrollView_ = new ScrollView( this );
+    delete scrollArea_;
+    QVBoxLayout* scrollLayout = new QVBoxLayout;
+    scrollArea_ = new QScrollArea();
+    scrollArea_->setWidgetResizable( true );
+    QWidget* widget = new QWidget;
+    widget->setLayout( scrollLayout );
+    scrollArea_->setWidget( widget );
+    scrollLayout->setMargin( 2 );
+    scrollLayout->setSpacing( 2 );
+    scrollArea_->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    scrollArea_->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+    addWidget( scrollArea_ );
     tools::Iterator< const SuccessFactorCondition& > it( conditions.CreateIterator() );
     while( it.HasMoreElements() )
         CreateItem()->StartEdit( it.NextElement() );
-    if( items_.empty() )
-        CreateItem();
+        if( items_.empty() )
+            CreateItem();
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +90,7 @@ void SuccessFactorConditionsEditor::StartEdit( const SuccessFactorConditions& co
 void SuccessFactorConditionsEditor::CommitTo( SuccessFactorConditions& conditions ) const
 {
     conditions.DeleteAll();
-    conditions.SetOperator( operator_->selectedId() == 0 ? "or" : "and" );
+    conditions.SetOperator( orButton_->isChecked() ? "or" : "and" );
     BOOST_FOREACH( const T_Items::value_type item, items_ )
         item->CommitTo( conditions );
 }
@@ -88,8 +102,8 @@ void SuccessFactorConditionsEditor::CommitTo( SuccessFactorConditions& condition
 SuccessFactorConditionItem* SuccessFactorConditionsEditor::CreateItem()
 {
     gui::SubObjectName subObject( "SuccessFactorConditionsEditor" );
-    SuccessFactorConditionItem* item = new SuccessFactorConditionItem( "SuccessFactorConditionsEditor" + QString::number( items_.size() ) , scrollView_->getMainWidget(), scores_ );
-    scrollView_->addChild( scrollView_->getMainWidget() );
+    SuccessFactorConditionItem* item = new SuccessFactorConditionItem( "SuccessFactorConditionsEditor" + QString::number( items_.size() ) , scores_ );
+    scrollArea_->widget()->layout()->addWidget( item );
     items_.push_back( item );
     items_.front()->EnableDeletion( items_.size() > 1 );
     connect( item, SIGNAL( Deleted( SuccessFactorConditionItem& ) ), SLOT( OnDelete( SuccessFactorConditionItem& ) ) );
@@ -111,6 +125,6 @@ void SuccessFactorConditionsEditor::OnDelete( SuccessFactorConditionItem& item )
         item.deleteLater();
         if( items_.size() == 1 )
             items_.front()->EnableDeletion( false );
-        scrollView_->addChild( scrollView_->getMainWidget() );
+        scrollArea_->widget()->layout()->removeWidget( &item );
     }
 }

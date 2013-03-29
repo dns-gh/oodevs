@@ -23,16 +23,13 @@
 // Name: SuccessFactorConditionItem constructor
 // Created: SBO 2009-06-16
 // -----------------------------------------------------------------------------
-SuccessFactorConditionItem::SuccessFactorConditionItem( const QString& objectName, QWidget* parent, const ScoresModel& scores )
-    : Q3HBox( parent )
+SuccessFactorConditionItem::SuccessFactorConditionItem( const QString& objectName, const ScoresModel& scores )
 {
     gui::SubObjectName subObject( objectName  );
     setFixedHeight( 45 );
-    setSpacing( 2 );
-    setFrameStyle( Q3Frame::Panel | Q3Frame::Raised );
-
+    setFrameStyle( QFrame::Panel | QFrame::Raised );
     {
-        score_ = new gui::ValuedComboBox< const Score_ABC* >( "score", this );
+        score_ = new gui::ValuedComboBox< const Score_ABC* >( "score" );
         tools::Iterator< const Score_ABC& > it( scores.CreateIterator() );
         while( it.HasMoreElements() )
         {
@@ -46,6 +43,7 @@ SuccessFactorConditionItem::SuccessFactorConditionItem( const QString& objectNam
     }
     {
         value_ = new gui::RichDoubleSpinBox( "value", this, std::numeric_limits< double >::min() );
+        value_->setFixedWidth( 100 );
         value_->setAlignment( Qt::AlignRight );
     }
     {
@@ -53,7 +51,13 @@ SuccessFactorConditionItem::SuccessFactorConditionItem( const QString& objectNam
         deleteButton_->setMaximumWidth( 30 );
         connect( deleteButton_, SIGNAL( clicked() ), SLOT( OnDelete() ) );
     }
-
+    QHBoxLayout* layout = new QHBoxLayout;
+    setLayout( layout );
+    layout->setSpacing( 2 );
+    layout->addWidget( score_ );
+    layout->addWidget( operator_ );
+    layout->addWidget( value_ );
+    layout->addWidget( deleteButton_ );
 }
 
 // -----------------------------------------------------------------------------

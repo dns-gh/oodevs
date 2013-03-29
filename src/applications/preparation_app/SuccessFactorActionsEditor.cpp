@@ -19,13 +19,10 @@
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
 SuccessFactorActionsEditor::SuccessFactorActionsEditor( const QString& objectName, const SuccessFactorActionTypes& actionTypes )
-    : mainWidget_( 0 )
-    , actionTypes_( actionTypes )
+    : actionTypes_( actionTypes )
+    , scrollArea_( 0 )
 {
     gui::ObjectNameManager::getInstance()->SetObjectName( this, objectName );
-    setHScrollBarMode( Q3ScrollView::AlwaysOff );
-    setResizePolicy( Q3ScrollView::AutoOneFit );
-    setFrameStyle( Q3Frame::Panel | Q3Frame::Sunken );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,9 +41,18 @@ SuccessFactorActionsEditor::~SuccessFactorActionsEditor()
 void SuccessFactorActionsEditor::StartEdit( const SuccessFactorActions& actions )
 {
     items_.clear();
-    delete mainWidget_;
-    mainWidget_ = new Q3VBox( viewport() );
-    addChild( mainWidget_ );
+    delete scrollArea_;
+    QVBoxLayout* scrollLayout = new QVBoxLayout;
+    scrollArea_ = new QScrollArea();
+    scrollArea_->setWidgetResizable( true );
+    QWidget* widget = new QWidget;
+    widget->setLayout( scrollLayout );
+    scrollArea_->setWidget( widget );
+    scrollLayout->setMargin( 2 );
+    scrollLayout->setSpacing( 2 );
+    scrollArea_->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    scrollArea_->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+    addWidget( scrollArea_ );
     tools::Iterator< const SuccessFactorAction& > it( actions.CreateIterator() );
     while( it.HasMoreElements() )
         CreateItem()->StartEdit( it.NextElement() );
@@ -72,13 +78,12 @@ void SuccessFactorActionsEditor::CommitTo( SuccessFactorActions& actions ) const
 SuccessFactorActionItem* SuccessFactorActionsEditor::CreateItem()
 {
     gui::SubObjectName subObject( "SuccessFactorActionsEditor" );
-    SuccessFactorActionItem* item = new SuccessFactorActionItem( "SuccessFactorActionItem" + QString::number( items_.size() ), mainWidget_, actionTypes_ );
-    addChild( mainWidget_ );
+    SuccessFactorActionItem* item = new SuccessFactorActionItem( "SuccessFactorActionItem" + QString::number( items_.size() ), actionTypes_ );
+    scrollArea_->widget()->layout()->addWidget( item );
     items_.push_back( item );
     items_.front()->EnableDeletion( items_.size() > 1 );
     connect( item, SIGNAL( Add() ), SLOT( CreateItem() ) );
     connect( item, SIGNAL( Deleted( SuccessFactorActionItem& ) ), SLOT( OnDelete( SuccessFactorActionItem& ) ) );
-    item->show();
     return item;
 }
 
@@ -96,6 +101,6 @@ void SuccessFactorActionsEditor::OnDelete( SuccessFactorActionItem& item )
         item.deleteLater();
         if( items_.size() == 1 )
             items_.front()->EnableDeletion( false );
-        addChild( mainWidget_ );
+        scrollArea_->widget()->layout()->removeWidget( &item );
     }
 }

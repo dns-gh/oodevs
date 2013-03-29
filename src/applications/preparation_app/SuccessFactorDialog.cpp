@@ -47,12 +47,13 @@ SuccessFactorDialog::SuccessFactorDialog( QWidget* parent, kernel::Controllers& 
     gui::SubObjectName subObject( "SuccessFactorDialog" );
     setModal( false );
     setCaption( tr( "Success factors" ) );
-    Q3GridLayout* grid = new Q3GridLayout( this, 3, 1, 0, 5 );
+    QGridLayout* grid = new QGridLayout;
+    setLayout( grid );
     grid->setMargin( 5 );
     grid->setRowStretch( 0, 4 );
     {
         SuccessFactorList* factors = new SuccessFactorList( this, controllers, actionTypes, scores, model );
-        grid->addWidget( factors, 0, 0 );
+        grid->addLayout( factors, 0, 0 );
         connect( factors, SIGNAL( Deleted( const SuccessFactor& ) ), SLOT( OnDelete( const SuccessFactor& ) ) );
     }
     {
@@ -79,7 +80,6 @@ SuccessFactorDialog::SuccessFactorDialog( QWidget* parent, kernel::Controllers& 
         grid->addWidget( ok, 2, 0 );
         connect( ok, SIGNAL( clicked() ), SLOT( accept() ) );
     }
-
 }
 
 // -----------------------------------------------------------------------------

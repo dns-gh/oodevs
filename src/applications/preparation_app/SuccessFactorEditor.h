@@ -37,7 +37,7 @@ class SuccessFactorProfileList;
 // =============================================================================
 class SuccessFactorEditor : public QDialog
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -60,12 +60,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SuccessFactorEditor( const SuccessFactorEditor& );            //!< Copy constructor
-    SuccessFactorEditor& operator=( const SuccessFactorEditor& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual QSize sizeHint() const;
