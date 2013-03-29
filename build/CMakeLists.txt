@@ -113,10 +113,10 @@ function( add_target target group dir )
             ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${target}> "${rundir}" )
     elseif( test )
         if( MSVC AND CMAKE_CONFIGURATION_TYPES )
-            #add_custom_command( TARGET ${target} POST_BUILD COMMAND ${target}
-            #    --temp_directory=${CMAKE_CURRENT_BINARY_DIR}/${target}.tmp
-            #    --data_directory=${root_dir}/data/${dir}
-            #    WORKING_DIRECTORY ${MASA_RUN} )
+            add_custom_command( TARGET ${target} POST_BUILD COMMAND ${target}
+                --temp_directory=${CMAKE_CURRENT_BINARY_DIR}/${target}.tmp
+                --data_directory=${root_dir}/data/${dir}
+                WORKING_DIRECTORY ${MASA_RUN} )
         endif()
     else()
         # add lib prefix
