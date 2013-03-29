@@ -69,6 +69,8 @@ public:
     bool HasGenObject( const std::string& type ) const; // $$$$ ABR 2013-01-08: Rename this method, not only about gen objects, that can be about object knowledge too
     unsigned int MinOccurs() const;
     unsigned int MaxOccurs() const;
+    double MinValue() const;
+    double MaxValue() const;
     bool IsList() const;
     const OrderParameterValue& GetValue( unsigned int id ) const;
     const std::string& GetChoice( unsigned int id ) const;
@@ -103,6 +105,8 @@ private:
     bool optional_;
     unsigned int minOccurs_;
     unsigned int maxOccurs_;
+    double minValue_;
+    double maxValue_;
     T_OrderParameterValues values_;
     T_Aliases aliases_;
     T_Aliases genObjects_;

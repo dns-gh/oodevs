@@ -29,24 +29,25 @@ OrderParameter::OrderParameter( xml::xistream& xis )
     , optional_( xis.attribute( "optional", false ) )
     , minOccurs_( 1 )
     , maxOccurs_( 1 )
+    , minValue_ ( std::numeric_limits< double >::min() )
+    , maxValue_ ( std::numeric_limits< double >::max() )
 {
     xis >> xml::list( "value", *this, &OrderParameter::ReadValue )
-        >> xml::optional
-        >> xml::start( "choice" )
+        >> xml::optional >> xml::start( "choice" )
             >> xml::list( "parameter", boost::bind( &OrderParameter::ReadChoice, this, _1, boost::ref( aliases_ ), true ) )
         >> xml::end
-        >> xml::optional
-            >> xml::start( "objects" )
+        >> xml::optional >> xml::start( "objects" )
                 >> xml::list( "parameter", boost::bind( &OrderParameter::ReadChoice, this, _1, boost::ref( genObjects_ ), false ) )
             >> xml::end
-        >> xml::optional
-            >> xml::attribute< unsigned int >( "min-occurs", minOccurs_ );
+        >> xml::optional >> xml::attribute( "min-occurs", minOccurs_ )
+        >> xml::optional >> xml::attribute( "min-value", minValue_ )
+        >> xml::optional >> xml::attribute( "max-value", maxValue_ );
     std::string maxString( "1" );
-    xis >> xml::optional >> xml::attribute< std::string >( "max-occurs", maxString );
+    xis >> xml::optional >> xml::attribute( "max-occurs", maxString );
     if( maxString == "unbounded" )
         maxOccurs_ = std::numeric_limits< unsigned int >::max();
     else
-        xis >> xml::optional >> xml::attribute< unsigned int >( "max-occurs", maxOccurs_ );
+        xis >> xml::optional >> xml::attribute( "max-occurs", maxOccurs_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,6 +60,8 @@ OrderParameter::OrderParameter( const std::string& name, const std::string& type
     , optional_( optional )
     , minOccurs_( min )
     , maxOccurs_( max )
+    , minValue_ ( std::numeric_limits< double >::min() )
+    , maxValue_ ( std::numeric_limits< double >::max() )
 {
     // NOTHING
 }
@@ -124,6 +127,24 @@ unsigned int OrderParameter::MinOccurs() const
 unsigned int OrderParameter::MaxOccurs() const
 {
     return maxOccurs_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::MinValue
+// Created: MCO 2013-03-29
+// -----------------------------------------------------------------------------
+double OrderParameter::MinValue() const
+{
+    return minValue_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::MaxValue
+// Created: MCO 2013-03-29
+// -----------------------------------------------------------------------------
+double OrderParameter::MaxValue() const
+{
+    return maxValue_;
 }
 
 // -----------------------------------------------------------------------------

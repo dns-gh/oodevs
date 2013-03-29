@@ -52,7 +52,9 @@ QWidget* ParamNumericField< NumericType >::BuildInterface( const QString& object
     pEdit_ = new QLineEdit( parent );
     layout->addWidget( pEdit_ );
     pEdit_->setPlaceholderText( "0" );
-    SetLimits( static_cast< NumericType >( 0.f ), static_cast< NumericType >( 100000.f ) );
+    double min = std::max< double >( parameter_.MinValue(), std::numeric_limits< NumericType >::min() );
+    double max = std::min< double >( parameter_.MaxValue(), std::numeric_limits< NumericType >::max() );
+    SetLimits( static_cast< NumericType >( min ), static_cast< NumericType >( max ) );
     pLabel_ = new QLabel( suffix_ );
     layout->addWidget( pLabel_ );
     return group_;
