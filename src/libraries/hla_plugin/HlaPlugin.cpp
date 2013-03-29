@@ -144,7 +144,7 @@ namespace
         const kernel::CoordinateConverter_ABC& converter_;
     };
     TransferSender_ABC* CreateTransferSender( xml::xisubstream xis, const rpr::EntityIdentifier& federateID, const std::string& federateName,
-            const ContextFactory_ABC& ctxtFactory, const InteractionBuilder& builder, OwnershipStrategy_ABC& strategy,
+            const ::hla::FederateIdentifier& fedHandle, const ContextFactory_ABC& ctxtFactory, const InteractionBuilder& builder, OwnershipStrategy_ABC& strategy,
             OwnershipController_ABC& controller,  dispatcher::Logger_ABC& logger,
             const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver )
     {
@@ -165,7 +165,7 @@ namespace
         {
             try
             {
-                transferResult = new Netn2TransferSender( federateName, ctxtFactory, builder, strategy, controller, logger, agentResolver, callsignResolver );
+                transferResult = new Netn2TransferSender( federateName, fedHandle, ctxtFactory, builder, strategy, controller, logger, agentResolver, callsignResolver );
             }
             catch( const ::hla::HLAException& e )
             {
@@ -287,7 +287,8 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pInteractionBuilder_, *pContextFactory_, simulationPublisher_, clientsPublisher_ ) : 0 );
             pStepper_.reset( new Stepper( *pXis_, *pMessageController_, simulationPublisher_ ) );
             pOwnershipController_.reset( new OwnershipController( federateID, *pFederate_, logger_ ) );
-            transferSender_.reset( CreateTransferSender( *pXis_, federateID, pXis_->attribute< std::string >( "name", "SWORD" ), *pContextFactory_, *pInteractionBuilder_, *pOwnershipStrategy_, *pOwnershipController_, logger_, *pLocalAgentResolver_, *pCallsignResolver_ ) );
+            transferSender_.reset( CreateTransferSender( *pXis_, federateID, pXis_->attribute< std::string >( "name", "SWORD" ), pFederate_->GetFederateHandle(),
+                    *pContextFactory_, *pInteractionBuilder_, *pOwnershipStrategy_, *pOwnershipController_, logger_, *pLocalAgentResolver_, *pCallsignResolver_ ) );
             pOwnershipPolicy_.reset( new LocationOwnershipPolicy( *pMessengerMessageController_, *pOwnershipController_, *pFederate_, *transferSender_, ReadDivestitureZone( *pXisConfiguration_ ) ) );
             // must be last action
             pSubject_->Visit( dynamicModel_ );

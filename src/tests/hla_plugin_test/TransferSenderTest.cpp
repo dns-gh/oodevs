@@ -301,7 +301,7 @@ namespace hla
     {
         bool operator==( const TransactionId& lhs, const TransactionId& rhs )
         {
-            return lhs.federateName == rhs.federateName &&
+            return (std::string)lhs.federateHandle == (std::string)rhs.federateHandle &&
                 lhs.transactionCounter == rhs.transactionCounter;
         }    
     }
@@ -338,7 +338,8 @@ namespace
     {
         NetnTransferFixture()
             : federateName( "federateName" )
-            , sender( federateName, contextFactory, builder, ownershipStrategy, ownershipController, logger, localAgentResolver, callsignResolver )
+            , federateHandle( "federateHandle" )
+            , sender( federateName, ::hla::FederateIdentifier( federateHandle ), contextFactory, builder, ownershipStrategy, ownershipController, logger, localAgentResolver, callsignResolver )
             , requestHandler( new ::hla::MockInteractionHandler() )
             , offerHandler( new ::hla::MockInteractionHandler() )
         {
@@ -371,7 +372,7 @@ namespace
         }
         void CheckTransfer( const NETN_UUID& uniqueId, TransferSender_ABC::TransferType type, uint32_t requestId )
         {
-            interactions::TransactionId trId; trId.federateName = UnicodeString( federateName ); trId.transactionCounter = requestId;
+            interactions::TransactionId trId; trId.federateHandle = ::hla::FederateIdentifier( federateHandle ); trId.transactionCounter = requestId;
             VariableArray< NETN_UUID > instances; instances.list.push_back( uniqueId );
             
             mock::sequence s;
@@ -394,7 +395,7 @@ namespace
         }
         void ReceiveAnswer( uint32_t requestId, bool ok, interactions::TMR::NoofferReasonEnum32 reason )
         {
-            interactions::TransactionId trId; trId.federateName = UnicodeString( federateName ); trId.transactionCounter = requestId;
+            interactions::TransactionId trId; trId.federateHandle = ::hla::FederateIdentifier( federateHandle ); trId.transactionCounter = requestId;
 
             std::list< std::vector<uint8_t> > bufVect;
             ::hla::Interaction_ABC::T_Parameters params;
@@ -410,7 +411,7 @@ namespace
         {
             static const rpr::EntityIdentifier destFederate( 0xFFFF, 0xFFFF, 0xFFFF );
             
-            interactions::TransactionId trId; trId.federateName = UnicodeString( federateName ); trId.transactionCounter = requestId;
+            interactions::TransactionId trId; trId.federateHandle = ::hla::FederateIdentifier( federateHandle ); trId.transactionCounter = requestId;
             VariableArray< NETN_UUID > instances; instances.list.push_back( MakeNetnUid( agent ) ) ;
             VariableArray< UnicodeString > attributes;
             VariableArray< interactions::AttributeValueStruct > attributeValues;
@@ -431,7 +432,7 @@ namespace
         void CheckOffer( uint32_t requestId, bool isOffering )
         {
             mock::sequence s;
-            interactions::TransactionId trId; trId.federateName = UnicodeString( federateName ); trId.transactionCounter = requestId;
+            interactions::TransactionId trId; trId.federateHandle = ::hla::FederateIdentifier( federateHandle ); trId.transactionCounter = requestId;
             MOCK_EXPECT( offerHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "TransactionID" ), mock::any ).
                 calls( boost::bind( &NetnTransferFixture::CheckParameter< interactions::TransactionId >, this, _1, _2, trId ) ); 
             MOCK_EXPECT( offerHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "RequestFederate" ), mock::any );
@@ -442,6 +443,7 @@ namespace
             MOCK_EXPECT( offerHandler->End ).once();
         }
         const std::string federateName;
+        const std::string federateHandle;
         MockLocalAgentResolver localAgentResolver;
         MockCallsignResolver callsignResolver;
         Netn2TransferSender sender;

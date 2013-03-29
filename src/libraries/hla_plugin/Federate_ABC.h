@@ -11,6 +11,7 @@
 #define plugins_hla_Federate_ABC_h
 
 #include <hla/AttributeIdentifier.h>
+#include <hla/FederateIdentifier.h>
 #include <boost/noncopyable.hpp>
 #include <string>
 #include <vector>
@@ -66,6 +67,8 @@ public:
     virtual void Register( const ::hla::InteractionIdentifier& interactionID, ::hla::Interaction_ABC& interactionClass, bool publish, bool subscribe ) = 0;
 
     virtual void Register( ::hla::FederateAmbassador_ABC& listener ) = 0;
+
+    virtual const ::hla::FederateIdentifier& GetFederateHandle() const = 0;
 
     // Ownership control
     virtual void DivestRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag ) = 0;

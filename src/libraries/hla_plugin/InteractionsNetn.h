@@ -18,6 +18,7 @@
 #include "rpr/EntityType.h"
 #include "rpr/Coordinates.h"
 #include <hla/HLA_Types.h>
+#include <hla/FederateIdentifier.h>
 
 namespace plugins
 {
@@ -100,16 +101,24 @@ struct TransactionId
     void Serialize( Archive& archive ) const
     {
         archive << transactionCounter;
-        federateName.Serialize( archive );
+        const uint32_t nameSize = static_cast<uint32_t>(federateHandle.Size());
+        archive << nameSize;
+        const uint8_t* b = federateHandle.Buffer();
+        for( std::size_t i = 0; i < nameSize; ++i )
+            archive << *(b+i);
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
-        archive >> transactionCounter;
-        federateName.Deserialize( archive );
+        uint32_t nameSize;
+        archive >> transactionCounter
+                >> nameSize;
+        std::vector< uint8_t > b(nameSize,0);
+        archive >> b;
+        federateHandle = ::hla::FederateIdentifier( &b[0], nameSize );
     }
     uint32_t transactionCounter;
-    UnicodeString federateName;
+    ::hla::FederateIdentifier federateHandle;
 };
 struct TMR
 {

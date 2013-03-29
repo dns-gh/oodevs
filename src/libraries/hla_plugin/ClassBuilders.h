@@ -17,6 +17,7 @@
 #include <hla/Class.h>
 #include <hla/AttributeIdentifier.h>
 #include <hla/ClassIdentifier.h>
+#include <hla/FederateIdentifier.h>
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
 
@@ -42,6 +43,7 @@ namespace hla
         virtual void UnconditionalDivest( const ::hla::ObjectIdentifier& , const T_AttributeIdentifiers& ) {}
         virtual void AcquisitionRequest( const ::hla::ObjectIdentifier& , const T_AttributeIdentifiers& ) {}
         virtual void UnconditionalAcquisition( const ::hla::ObjectIdentifier&, const T_AttributeIdentifiers&, const ::hla::VariableLengthData& ) {}
+        virtual const ::hla::FederateIdentifier& GetFederateHandle() const { static const ::hla::FederateIdentifier handle; return handle; }
     };
     class ClassBuilder : public ClassBuilder_ABC
     {

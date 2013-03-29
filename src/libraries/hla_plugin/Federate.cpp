@@ -175,3 +175,12 @@ void Federate::UnconditionalAcquisition( const ::hla::ObjectIdentifier& objectID
 {
     federate_->OwnershipAcquisition( objectID, attributes, tag )
 ;}
+
+// -----------------------------------------------------------------------------
+// Name: Federate::GetFederateHandle
+// Created: AHC 2013-03-29
+// -----------------------------------------------------------------------------
+const ::hla::FederateIdentifier& Federate::GetFederateHandle() const
+{
+    return federate_->GetFederateIdentifier();
+}

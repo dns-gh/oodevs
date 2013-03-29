@@ -445,3 +445,12 @@ void FederateFacade::UnregisterTactical( ClassListener_ABC& listener )
     if( otherArealObjectClass_.get() )
         otherArealObjectClass_->Unregister( listener );
 }
+
+// -----------------------------------------------------------------------------
+// Name: FederateFacade::GetFederateHandle
+// Created: AHC 2013-03-29
+// -----------------------------------------------------------------------------
+const ::hla::FederateIdentifier& FederateFacade::GetFederateHandle() const
+{
+    return federate_->GetFederateHandle();
+}

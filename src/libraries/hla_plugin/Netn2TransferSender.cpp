@@ -43,11 +43,12 @@ namespace
 // Name: Netn2TransferSender constructor
 // Created: AHC 2012-10-25
 // -----------------------------------------------------------------------------
-Netn2TransferSender::Netn2TransferSender( const std::string& federateName, const ContextFactory_ABC& ctxtFactory, const InteractionBuilder& builder,
+Netn2TransferSender::Netn2TransferSender( const std::string& federateName, const ::hla::FederateIdentifier& federateHandle, const ContextFactory_ABC& ctxtFactory, const InteractionBuilder& builder,
         OwnershipStrategy_ABC& ownershipStrategy, OwnershipController_ABC& controller, dispatcher::Logger_ABC& logger,
         const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver )
     : ctxtFactory_( ctxtFactory )
     , federateName_( federateName )
+    , federateHandle_( federateHandle )
     , pOfferSender_( new InteractionSender< interactions::TMR_OfferTransferModellingResponsibility >( *this, builder ) )
     , pRequestSender_( new InteractionSender< interactions::TMR_RequestTransferModellingResponsibility >( *this, builder ) )
     , ownershipStrategy_ ( ownershipStrategy )
@@ -83,7 +84,7 @@ void Netn2TransferSender::RequestTransfer(const std::string& agentID, const Tran
 {
     unsigned int reqId = ctxtFactory_.Create();
     interactions::TMR_RequestTransferModellingResponsibility transfer;
-    transfer.transactionID.federateName = UnicodeString( federateName_ );
+    transfer.transactionID.federateHandle = federateHandle_;
     transfer.transactionID.transactionCounter = reqId;
     transfer.requestFederate = UnicodeString( federateName_ );
     std::vector< char > uniqueId( GetUniqueId( agentID, agentResolver_, callsignResolver_ ) );

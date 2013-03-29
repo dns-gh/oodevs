@@ -14,6 +14,7 @@
 #include "rpr/EntityIdentifier.h"
 #include "dispatcher/Logger_ABC.h"
 #include <hla/InteractionNotification_ABC.h>
+#include <hla/FederateIdentifier.h>
 #include <memory>
 #include <map>
 
@@ -54,7 +55,7 @@ class Netn2TransferSender :  public TransferSender_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    Netn2TransferSender( const std::string& federateName, const ContextFactory_ABC& ctxtFactory, const InteractionBuilder& builder,
+    Netn2TransferSender( const std::string& federateName, const ::hla::FederateIdentifier& federateHandle, const ContextFactory_ABC& ctxtFactory, const InteractionBuilder& builder,
             OwnershipStrategy_ABC& ownershipStrategy, OwnershipController_ABC& controller, dispatcher::Logger_ABC& logger,
             const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver );
     ~Netn2TransferSender();
@@ -86,6 +87,7 @@ private:
     //@{
     const ContextFactory_ABC& ctxtFactory_;
     const std::string federateName_;
+    const ::hla::FederateIdentifier federateHandle_;
     std::auto_ptr< T_OfferSender > pOfferSender_;
     std::auto_ptr< T_RequestSender > pRequestSender_;
     OwnershipStrategy_ABC& ownershipStrategy_;

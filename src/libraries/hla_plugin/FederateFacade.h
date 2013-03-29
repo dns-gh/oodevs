@@ -115,6 +115,8 @@ public:
 
     virtual void Register( ::hla::FederateAmbassador_ABC& listener );
 
+    const ::hla::FederateIdentifier& GetFederateHandle() const;
+
     // Ownership control
     virtual void DivestRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
     virtual void UnconditionalDivest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );

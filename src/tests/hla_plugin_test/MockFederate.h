@@ -40,6 +40,7 @@ MOCK_BASE_CLASS( MockFederate, Federate_ABC )
     MOCK_METHOD( UnconditionalDivest, 2 )
     MOCK_METHOD( AcquisitionRequest, 2 )
     MOCK_METHOD( UnconditionalAcquisition, 3 )
+    MOCK_METHOD( GetFederateHandle, 0 )
 };
 
 }
