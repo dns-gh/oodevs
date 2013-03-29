@@ -275,10 +275,9 @@ void AggregateEntity::ChildrenChanged( const EventListener_ABC::T_ChildrenIds& c
 // Name: AggregateEntity::ChildrenChanged
 // Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-void AggregateEntity::ParentChanged( const std::string& parentId )
+void AggregateEntity::ParentChanged( const std::string& )
 {
-    isPartOf_.rtiId_ = Omt13String( parentId );
-    attributesUpdater_->Update( "IsPartOf", isPartOf_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

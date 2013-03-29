@@ -422,9 +422,18 @@ void RemoteOrbatShaper::MoveChild( const std::string& childId )
 // Name: RemoteOrbatShaper::SubAgregatesChanged
 // Created: AHC 2012-10-03
 // -----------------------------------------------------------------------------
-void RemoteOrbatShaper::SubAgregatesChanged( const std::string& /*rtiIdentifier*/, const std::set< std::string >& /*children*/ )
+void RemoteOrbatShaper::SubAgregatesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children )
 {
-    // NOTHING
+    for( auto chIt=children.begin(); children.end() != chIt; ++chIt )
+    {
+        const std::string& childRtiIdentifier = *chIt;
+        T_UnitsData::const_iterator it( units_.find( childRtiIdentifier ) );
+        if( units_.end() == it )
+            return;
+
+        it->second->parentRtiId = rtiIdentifier;
+        CreateParent( childRtiIdentifier );
+    }
 }
 
 // -----------------------------------------------------------------------------

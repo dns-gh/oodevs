@@ -260,8 +260,7 @@ const UniqueIdSerializer& FOM_Serializer::GetUniqueIdSerializer()
 // Name: FOM_Serializer::ReadIsPartOf
 // Created: AHC 2012-11-12
 // -----------------------------------------------------------------------------
-void FOM_Serializer::ReadIsPartOf( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, IsPartOfStruct& isPartOf )
+void FOM_Serializer::ReadIsPartOf( ::hla::Deserializer_ABC& /*deserializer*/, const std::string& /*identifier*/, ObjectListener_ABC& /*listener*/, IsPartOfStruct& /*isPartOf*/ )
 {
-    isPartOf.Deserialize( deserializer );
-    listener.ParentChanged( identifier, isPartOf.rtiId_.str() ) ;
+    // NOTHING
 }

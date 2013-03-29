@@ -116,6 +116,7 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_silent_entities_attribute
     }
 }
 
+/*
 BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_ispartort_attribute_and_notifies_listener, Fixture )
 {
     IsPartOfStruct v;
@@ -125,6 +126,7 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_ispartort_attribute_and_n
     ::hla::Deserializer deserializer( Deserialize() );
     aggregate.Deserialize( "IsPartOf", deserializer );
 }
+*/
 
 BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_sub_aggregates_attribute_and_notifies_listener, Fixture )
 {
