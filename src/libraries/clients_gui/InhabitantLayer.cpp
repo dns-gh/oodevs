@@ -30,3 +30,12 @@ InhabitantLayer::~InhabitantLayer()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantLayer::IsPickable
+// Created: LGY 2013-03-29
+// -----------------------------------------------------------------------------
+bool InhabitantLayer::IsPickable() const
+{
+    return false;
+}

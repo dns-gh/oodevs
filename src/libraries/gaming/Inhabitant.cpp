@@ -175,15 +175,6 @@ void Inhabitant::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& /*view
 }
 
 // -----------------------------------------------------------------------------
-// Name: Inhabitant::Pick
-// Created: LGY 2013-02-20
-// -----------------------------------------------------------------------------
-void Inhabitant::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
-{
-    Draw( where, viewport, tools );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Inhabitant::GetPosition
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
