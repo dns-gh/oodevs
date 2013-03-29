@@ -328,7 +328,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_empty_knowledge_group, Fixture )
 {
     // check group1 is empty
-    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 0 );
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 0u );
     mock::verify();
 
     // knowledge creation in group2
@@ -336,7 +336,7 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_empty_knowledge_group, Fixture
     CreateAgentKnowledge( agent, blackBoardGroup2, group2, 0.1 );
 
     // check group2 is not empty
-    BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgeAgents().size(), 1 );
+    BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgeAgents().size(), 1u );
     mock::verify();
 
     MockNET_Publisher_ABC publisher;
@@ -346,7 +346,7 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_empty_knowledge_group, Fixture
     blackBoardGroup1.Merge( blackBoardGroup2 );
 
     // check group1 is not empty
-    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 1 );
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 1u );
 
     // retrieve knowledge
     CheckKnowledge( agent, blackBoardGroup1, 0.1 );
@@ -355,7 +355,7 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_empty_knowledge_group, Fixture
 BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_knowledge_group, Fixture )
 {
     // check group1 is empty
-    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 0 );
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 0u );
     mock::verify();
 
     // knowledge creation in group2
@@ -363,7 +363,7 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_knowledge_group, Fixture )
     CreateAgentKnowledge( agent1, blackBoardGroup2, group2, 0.2 );
 
     // check group2 is not empty
-    BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgeAgents().size(), 1 );
+    BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgeAgents().size(), 1u );
     mock::verify();
 
     // knowledge creation in group1
@@ -371,7 +371,7 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_knowledge_group, Fixture )
     CreateAgentKnowledge( agent2, blackBoardGroup1, group1, 0.3 );
 
     // check group1 is not empty
-    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 1 );
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 1u );
     mock::verify();
 
     MockNET_Publisher_ABC publisher;
@@ -381,7 +381,7 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_knowledge_group, Fixture )
     blackBoardGroup1.Merge( blackBoardGroup2 );
 
     // check group1 is not empty
-    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 2 );
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 2u );
 
     // retrieve knowledges
     CheckKnowledge( agent1, blackBoardGroup1, 0.2 );
@@ -391,7 +391,7 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_knowledge_group, Fixture )
 BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_knowledge_group_with_same_agent_knowledge, Fixture )
 {
     // check group1 is empty
-    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 0 );
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 0u );
     mock::verify();
 
     // knowledge creation
@@ -411,7 +411,7 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_knowledge_group_with_same_agen
     blackBoardGroup1.Merge( blackBoardGroup2 );
 
     // check group1 is not empty
-    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 2 );
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 2u );
 
     // retrieve knowledges
     CheckKnowledge( agent1, blackBoardGroup1, 0.5 );
