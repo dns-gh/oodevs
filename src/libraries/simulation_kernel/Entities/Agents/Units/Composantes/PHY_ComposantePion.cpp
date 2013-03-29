@@ -241,7 +241,7 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& state, co
         pBreakdown_ = new PHY_Breakdown( pType_->GetRandomBreakdownType() );
     ManageEndMaintenance();
     assert( pRole_ );
-    pRole_->NotifyComposanteChanged ( *this, *pOldState );
+    pRole_->NotifyComposanteChanged( *this, *pOldState );
 }
 
 // -----------------------------------------------------------------------------

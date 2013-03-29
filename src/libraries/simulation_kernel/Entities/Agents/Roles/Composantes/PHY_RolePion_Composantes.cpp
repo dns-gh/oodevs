@@ -112,7 +112,6 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes()
     , nNeutralizationEndTimeStep_ ( 0 )
     , bLoansChanged_              ( false )
     , bExternalMustChange_        ( false )
-    , bTransportHasChanged_       ( false )
     , bIsLoaded_                  ( false )
     , bNeutralized_               ( false )
     , nTickRcMaintenanceQuerySent_( 0 )
@@ -135,7 +134,6 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool in
     , nNeutralizationEndTimeStep_ ( 0 )
     , bLoansChanged_              ( false )
     , bExternalMustChange_        ( false )
-    , bTransportHasChanged_       ( false )
     , bIsLoaded_                  ( false )
     , bNeutralized_               ( false )
     , nTickRcMaintenanceQuerySent_( 0 )
@@ -553,7 +551,7 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::UpdateMajorComposante()
 {
-    if( !HasChanged() && !bTransportHasChanged_ )
+    if( !HasChanged() )
         return;
     pMajorComposante_ = 0;
     unsigned int nMajorScore  = 0;
@@ -600,7 +598,6 @@ void PHY_RolePion_Composantes::Clean()
     }
     bLoansChanged_            = false;
     bExternalMustChange_      = false;
-    bTransportHasChanged_     = false;
     bOperationalStateChanged_ = false;
     boost::for_each( maintenanceComposanteStates_, boost::mem_fn( &PHY_MaintenanceComposanteState::Clean ) );
 }
@@ -1737,15 +1734,6 @@ void PHY_RolePion_Composantes::Execute( moving::SpeedComputer_ABC& algorithm ) c
 void PHY_RolePion_Composantes::NotifyHumanHasChanged()
 {
     bExternalMustChange_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::NotifyTransportHasChanged
-// Created: MGD 2009-10-02
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::NotifyTransportHasChanged()
-{
-    bTransportHasChanged_ = true;//@TODO MGD See to remove it isn't more called
 }
 
 // -----------------------------------------------------------------------------

@@ -114,7 +114,6 @@ public:
     template< typename T > void ApplyOnWeapons( T& t ) const;
 
     virtual void NotifyHumanHasChanged();
-    virtual void NotifyTransportHasChanged();
     virtual void NotifyIsLoadedInVab();
     virtual void NotifyIsUnLoadedInVab();
 
@@ -347,7 +346,6 @@ private:
     bool bOperationalStateChanged_;
     bool bLoansChanged_;
     bool bExternalMustChange_;
-    bool bTransportHasChanged_;
     bool bIsLoaded_;
     bool bNeutralized_;
 
