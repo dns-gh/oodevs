@@ -85,6 +85,8 @@ void LogisticLinksEditor::NotifyContextMenu( const kernel::Formation_ABC& format
 // -----------------------------------------------------------------------------q
 void LogisticLinksEditor::NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu )
 {
+    if( team.GetId() == 0 ) // no side team
+        return;
     Create( tools::translate( "LogisticLinksEditor", "Generate logistic links" ), team, menu, *pAddTeamMapper_ );
     Create( tools::translate( "LogisticLinksEditor", "Remove logistic links" ), team, menu, *pRemoveTeamMapper_ );
 }
