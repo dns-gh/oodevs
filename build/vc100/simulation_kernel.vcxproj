@@ -206,6 +206,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkNodeParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkTypeParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_StageParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionMoveAlong.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_AutomateTypeBaseLOG.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\Remote\MIL_AgentPion_Remote.cpp" />
@@ -977,6 +978,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkNodeParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkTypeParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_StageParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionMoveAlong.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_AutomateTypeBaseLOG.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_LogisticVisitors.h" />

@@ -144,6 +144,8 @@ public:
     //! @name Actions
     //@{
     void Move( const MT_Vector2D& destination );
+    void MoveAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& destination );
+    void CancelMove();
     void FireOnPions( double rIntensity, PHY_FireResults_Population& fireResult );
     void FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
     double GetDangerosity( const MIL_AgentPion& target ) const;

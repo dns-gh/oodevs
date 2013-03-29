@@ -28,6 +28,7 @@
 #include "Decision/DEC_KnowledgeAgentFunctions.h"
 #include "Decision/DEC_AgentFunctions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
+#include "Entities/Populations/Actions/PHY_Population_ActionMoveAlong.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionUrbanDestruction.h"
@@ -155,6 +156,8 @@ void DEC_PopulationDecision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< void ( unsigned int ) >( boost::bind( &DEC_ActionFunctions::ResumeAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC__StartDeplacement",
         boost::function< unsigned int( MT_Vector2D* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionMove, MT_Vector2D* >, boost::ref( GetPopulation() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_StartDeplacementItineraire",
+        boost::function< unsigned int( std::vector< boost::shared_ptr< MT_Vector2D > > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionMoveAlong, std::vector< boost::shared_ptr< MT_Vector2D > > >, boost::ref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC__StartTirSurPions",
         boost::function< unsigned int( float ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPions, float >, boost::ref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC__StartTirSurPion",

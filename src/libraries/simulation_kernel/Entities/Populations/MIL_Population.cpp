@@ -935,6 +935,32 @@ void MIL_Population::Move( const MT_Vector2D& destination )
     UpdateBarycenter();
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::MoveAlong
+// Created: LDC 2013-03-29
+// -----------------------------------------------------------------------------
+void MIL_Population::MoveAlong( const std::vector< boost::shared_ptr< MT_Vector2D > >& destination )
+{
+    if( destination.empty() )
+        return;
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        ( **itConcentration ).Move( *destination[0] );
+    for( size_t i = 0; i < flows_.size(); ++i ) // $$$$ LDC Do NOT optimize the flow.size() away, flows_ is modified during iteration!!
+        flows_[i]->MoveAlong( *destination[0] );
+    UpdateBarycenter();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::CancelMove
+// Created: LDC 2013-03-29
+// -----------------------------------------------------------------------------
+void MIL_Population::CancelMove()
+{
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
+        ( *it )->CancelMove();
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::FireOnPions
 // Created: NLD 2005-11-03

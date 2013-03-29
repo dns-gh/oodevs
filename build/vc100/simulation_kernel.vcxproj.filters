@@ -2673,6 +2673,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Logger.cpp">
       <Filter>Source Files\Decision</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionMoveAlong.cpp">
+      <Filter>Source Files\Entities\Populations\Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5467,6 +5470,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_StageParameter.h">
       <Filter>Source Files\Entities\Orders\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionMoveAlong.h">
+      <Filter>Source Files\Entities\Populations\Actions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

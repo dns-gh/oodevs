@@ -46,6 +46,8 @@ public:
     //@{
     void MagicMove( const MT_Vector2D& destination );
     void Move( const MT_Vector2D& destination );
+    void MoveAlong( const MT_Vector2D& destination );
+    void CancelMove();
     //@}
 
     //! @name Accessors

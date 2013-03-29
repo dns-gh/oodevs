@@ -983,3 +983,27 @@ bool MIL_PopulationFlow::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter
 {
     return TER_PopulationFlow_ABC::Intersect2DWithCircle( vCircleCenter, rRadius, shape );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::MoveAlong
+// Created: LDC 2013-03-29
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::MoveAlong( const MT_Vector2D& destination )
+{
+    if( destination == primaryDestination_ || !pHeadPath_ )
+        Move( destination );
+    else
+        Move( primaryDestination_ );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::CancelMove
+// Created: LDC 2013-03-29
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::CancelMove()
+{
+    pHeadPath_->Cancel();
+    pHeadPath_->DecRef();
+    pHeadPath_.reset();
+}
+
