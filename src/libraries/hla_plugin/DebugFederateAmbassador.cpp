@@ -268,5 +268,5 @@ void DebugFederateAmbassador::AttributeIsOwnedByRTI( const ::hla::ObjectIdentifi
 // -----------------------------------------------------------------------------
 void DebugFederateAmbassador::SetFederateIdentifier( const ::hla::FederateIdentifier& id )
 {
-    logger_.LogInfo( "<- SetFederateIdentifier object " + id.ToString() );
+    logger_.LogInfo( "<- SetFederateIdentifier object size " + id.Size() );
 }
