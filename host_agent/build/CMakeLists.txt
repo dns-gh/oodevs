@@ -38,7 +38,7 @@ find_package( Boost COMPONENTS
     unit_test_framework
     REQUIRED )
 masa_find_with_prefix( ZLIB zlib REQUIRED )
-set( OPENSSL_LIBRARIES libeay32 ssleay32 )
+masa_set_library( OPENSSL_LIBRARIES libeay32 ssleay32 )
 masa_find_qt4( REQUIRED QtCore QtGui QtNetwork )
 
 masa_set_external_library( ARCHIVE_LIBRARIES            archive_static_d archive_static )
@@ -46,6 +46,7 @@ masa_set_external_library( CPP_NETLIB_CLIENT_LIBRARIES  cpp-netlib_client-${plat
 masa_set_external_library( CPP_NETLIB_URI_LIBRARIES     cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
 masa_set_external_library( MONGOOSE_LIBRARIES           mongoose_d mongoose )
 masa_set_external_library( ZLIB_LIBRARIES               zlibd zlib )
+
 masa_set_internal_library( BCRYPT_LIBRARIES             bcrypt )
 masa_set_internal_library( SQLITE3_LIBRARIES            sqlite3 )
 
