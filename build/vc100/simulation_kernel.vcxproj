@@ -1746,7 +1746,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NbcAgentType.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_ActionLogistic.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_DecisionCallbackAction_ABC.inl" />
-    <None Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_Report.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\meteo\PHY_MeteoDataManager.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_AmmoEffect.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_RawVisionDataIterator.inl" />

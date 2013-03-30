@@ -200,3 +200,31 @@ void MIL_Report::Send< DEC_Decision_ABC >( const DEC_Decision_ABC& sender, E_Typ
         message.Send( NET_Publisher_ABC::Publisher() );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Report::Find
+// Created: NLD 2006-12-06
+// -----------------------------------------------------------------------------
+const MIL_Report* MIL_Report::Find( unsigned int nID )
+{
+    auto it = reports_.find( nID );
+    if( it == reports_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Report::Find
+// Created: SLI 2013-01-03
+// -----------------------------------------------------------------------------
+const MIL_Report* MIL_Report::Find( const std::string& key )
+{
+    unsigned int id;
+    if( ( std::istringstream( key ) >> id ).eof() )
+        return Find( id );
+    auto it = keys_.find( key );
+    if( it == keys_.end() )
+        return 0;
+    return Find( it->second );
+}
+
