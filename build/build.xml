@@ -696,9 +696,24 @@
                 <arg value="setup.exe"/>
             </exec>
             <delete file="${out.dir}/setup.exe"/>
+            <copy file="${bin.dir}/7z/7zS.sfx" tofile="${out.dir}/setup.sfx"/>
+            <python failonerror="true">
+                <arg value="${root.dir}/build/editres.py"/>
+                <arg value="editversion"/>
+                <arg value="--version=${version.version}"/>
+                <arg value="--product-name=Sword"/>
+                <arg value="--original-filename=@{file}"/>
+                <arg value="${out.dir}/setup.sfx"/>
+            </python>
+            <python failonerror="true">
+                <arg value="${root.dir}/build/editres.py"/>
+                <arg value="copyicons"/>
+                <arg value="${out.dir}/release/applications/simulation_app/simulation_app.exe"/>
+                <arg value="${out.dir}/setup.sfx"/>
+            </python>
             <concat destfile="@{file}" binary="true">
                 <filelist>
-                    <file name="${bin.dir}/7z/7zS.sfx"/>
+                    <file name="${out.dir}/setup.sfx"/>
                     <file name="config.txt"/>
                     <file name="${out.dir}/setup.7z"/>
                 </filelist>
