@@ -706,6 +706,22 @@ bool DEC_AgentFunctions::CanRelievePion( MIL_Agent_ABC& callerAgent, const DEC_D
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::SurrenderAutomat
+// Created: MMC 2013-03-19
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::SurrenderAutomat( MIL_Agent_ABC& callerAgent, DEC_Decision_ABC* automat )
+{
+    if( !automat )
+        throw std::runtime_error( "Invalid automat in DEC_AgentFunctions::SurrenderAutomat" );
+    if( automat->GetAutomate().GetArmy() == callerAgent.GetArmy() )
+        return false;
+    if( automat->GetAutomate().IsSurrendered() )
+        return false;
+    automat->GetAutomate().SurrenderWithUnits( callerAgent.GetArmy() );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetPionsWithPC
 // Created: JVT 2004-12-20
 // -----------------------------------------------------------------------------
