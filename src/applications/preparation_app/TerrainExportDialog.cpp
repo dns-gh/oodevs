@@ -140,8 +140,8 @@ void TerrainExportDialog::accept()
             PlanarCartesianProjector projector( config_.GetTerrainLatitude(), config_.GetTerrainLongitude() );
             Translator translator( projector, geometry::Vector2d( config_.GetTerrainWidth() / 2.f, config_.GetTerrainHeight() / 2.f ) );
             {
-                TerrainExportManager manager( config_.GetTerrainDir( config_.GetTerrainName() ).ToLocal(), translator );
-                manager.Run( path.ToLocal() );
+                TerrainExportManager manager( config_.GetTerrainDir( config_.GetTerrainName() ), translator );
+                manager.Run( path );
             }
             SetProgression( progressDialog, 25, tr( "Exporting urban data..." ) );
             {
@@ -149,12 +149,12 @@ void TerrainExportDialog::accept()
             }
         }
         SetProgression( progressDialog, 50, tr( "Exporting raster data..." ) );
-        extractor::TerrainExtractionManager extractor( config_.GetTerrainFile().Parent().ToBoost() );
+        extractor::TerrainExtractionManager extractor( config_.GetTerrainFile().Parent() );
         if( rasterCheck_->isChecked() )
-            extractor.ExportRaster( path.ToBoost() );
+            extractor.ExportRaster( path );
         SetProgression( progressDialog, 75, tr( "Exporting elevation data..." ) );
         if( elevationCheck_->isChecked() )
-            extractor.ExportElevation( path.ToBoost() );
+            extractor.ExportElevation( path );
         SetProgression( progressDialog, 100, "" );
         QMessageBox::information( this, tr( "Terrain export" ), tr( "Export successful." ) );
     }
