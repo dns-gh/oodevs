@@ -18,6 +18,7 @@
 #include "Decision/DEC_Model.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "AlgorithmsFactories.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/noncopyable.hpp>
@@ -27,6 +28,7 @@ struct FixturePion : private boost::noncopyable
     FixturePion( MIL_EffectManager& effectManager )
         : effectManager_( effectManager )
     {
+        PHY_RoePopulation::Initialize();
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms' id='12' name='stuff'/>" );
         xis >> xml::start( "main" );
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
@@ -38,6 +40,10 @@ struct FixturePion : private boost::noncopyable
         pTypeAutomat_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pTypeAutomat_ ) );
         pPion_.reset( new StubMIL_AgentPion( *pType_, *pAutomat_, algorithmsFactories_, xis ) );
+    }
+    ~FixturePion()
+    {
+        PHY_RoePopulation::Terminate();
     }
     AlgorithmsFactories                    algorithmsFactories_;
     MIL_EffectManager&                     effectManager_;
@@ -52,12 +58,17 @@ struct FixtureAutomate : private boost::noncopyable
 {
     FixtureAutomate()
     {
+        PHY_RoePopulation::Initialize();
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
         xis >> xml::start( "main" );
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
         pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) ) );
         pType_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pType_ ) );
+    }
+    ~FixtureAutomate()
+    {
+        PHY_RoePopulation::Terminate();
     }
     MIL_EffectManager                     effectManager_;
     std::auto_ptr< DEC_Model >            pModel_;
