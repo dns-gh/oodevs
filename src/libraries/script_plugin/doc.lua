@@ -210,6 +210,8 @@ ClearFilter      = function( tParameters ) end
 Zoom             = function( tParameters ) end
 ChangeOptions    = function( tParameters ) end
 ResetOptions     = function( tParameters ) end
+-- dock widgets include:
+-- terrainProfiler, extensions, logger-panel, creation-panel, mission, timeline, chat, clock, after-action, indicatorplot, Notation, score, info, properties-panel, info-panels, Inhabitants, Planification mode, profiles, profiling-panel, orbat
 SetDock          = function( tParameters ) end
 
 StartTimeSequence = function( strSequence ) end
