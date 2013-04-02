@@ -24,7 +24,7 @@ class PHY_RoePopulation : private boost::noncopyable
 public:
     //! @name Constants
     //@{
-    static const PHY_RoePopulation none_;
+    static const PHY_RoePopulation* Default();
     //@}
 
 public:

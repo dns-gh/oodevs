@@ -38,7 +38,7 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int 
     , nCloseCombatState_        ( eCloseCombatStateNone )
     , nOperationalState_        ( eOpStateOperational )
     , nIndirectFireAvailability_( eFireAvailability_None )
-    , pRoePopulation_           ( &PHY_RoePopulation::none_ )
+    , pRoePopulation_           ( PHY_RoePopulation::Default() )
     , eEtatEchelon_             ( 0 )
     , eEtatDec_                 ( 0 )
     , eEtatDecPrudence_         ( 0 )
