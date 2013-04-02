@@ -78,10 +78,10 @@ ConstructionAttribute::~ConstructionAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConstructionAttribute::SetDotations
+// Name: ConstructionAttribute::SetMaxDotations
 // Created: ABR 2012-03-20
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::SetDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation )
+void ConstructionAttribute::SetMaxDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation )
 {
     nFullNbrDotation_    = nFullNbrDotation;
     nCurrentNbrDotation_ = static_cast< int >( constructionPercentage_.Get() * nFullNbrDotation );

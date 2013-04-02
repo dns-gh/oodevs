@@ -80,7 +80,7 @@ public:
     unsigned int GetCurrentDotations() const;
     unsigned int GetDotationType() const;
     void Set( double percentage );
-    void SetDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
+    void SetMaxDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
     //@}
 
     //! @name Copy
