@@ -714,6 +714,17 @@ void MIL_Automate::Surrender( const MIL_Army_ABC& armySurrenderedTo )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::SurrenderWithUnits
+// Created: MMC 2013-04-02
+// -----------------------------------------------------------------------------
+void MIL_Automate::SurrenderWithUnits( const MIL_Army_ABC& armySurrenderedTo )
+{
+    Surrender( armySurrenderedTo );
+    for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+        ( **itPion ).OnReceiveMagicSurrender();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::CancelSurrender
 // Created: NLD 2007-02-15
 // -----------------------------------------------------------------------------
@@ -988,11 +999,7 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
             else if( IsSurrendered() )
                 throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_unit_surrendered );
             else
-            {
-                Surrender( *pSurrenderedToArmy );
-                for( auto itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-                    ( **itPion ).OnReceiveMagicSurrender();
-            }
+                SurrenderWithUnits( *pSurrenderedToArmy );
         }
         break;
     case sword::UnitMagicAction::cancel_surrender:

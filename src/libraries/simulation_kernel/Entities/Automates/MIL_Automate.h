@@ -226,7 +226,7 @@ public:
     //@{
     void Engage();
     void Disengage();
-    void Surrender( const MIL_Army_ABC& armySurrenderedTo );
+    void SurrenderWithUnits( const MIL_Army_ABC& armySurrenderedTo );
     //@}
 
 protected:
@@ -237,6 +237,7 @@ protected:
 
     //! @name Tools
     //@{
+    void Surrender( const MIL_Army_ABC& armySurrenderedTo );
     void CancelSurrender();
     //@}
 

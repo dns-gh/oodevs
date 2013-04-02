@@ -724,8 +724,8 @@ bool DEC_AgentFunctions::CanRelievePion( MIL_Agent_ABC& callerAgent, const DEC_D
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::CanRelievePion
-// Created: NLD 2004-12-09
+// Name: DEC_AgentFunctions::SurrenderAutomat
+// Created: MMC 2013-03-19
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::SurrenderAutomat( MIL_Agent_ABC& callerAgent, DEC_Decision_ABC* automat )
 {
@@ -735,7 +735,7 @@ bool DEC_AgentFunctions::SurrenderAutomat( MIL_Agent_ABC& callerAgent, DEC_Decis
         return false;
     if( automat->GetAutomate().IsSurrendered() )
         return false;
-    automat->GetAutomate().Surrender( callerAgent.GetArmy() );
+    automat->GetAutomate().SurrenderWithUnits( callerAgent.GetArmy() );
     return true;
 }
 
