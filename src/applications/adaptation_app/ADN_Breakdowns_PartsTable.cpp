@@ -35,7 +35,7 @@ ADN_Breakdowns_PartsTable::ADN_Breakdowns_PartsTable( const QString& objectName,
     QStringList horizontalHeaders;
     horizontalHeaders << tr( "Name" ) << tr( "Nbr required" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
-    delegate_.AddSpinBoxOnColumn( 1, 0, std::numeric_limits< int >::max() );
+    delegate_.AddSpinBoxOnColumn( 1, 1, std::numeric_limits< int >::max() );
 }
 
 // -----------------------------------------------------------------------------

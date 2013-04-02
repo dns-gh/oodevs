@@ -686,6 +686,10 @@ estacionado con motor encendido</translation>
         <source>The file %2 included in the mission %1 is invalid or not present in the attachment list.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit %1 has no crew in equipment &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -6492,10 +6496,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <name>Units_Data</name>
     <message>
         <source>Unit types - Invalid equipment &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit has no crew in equipment &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -83,11 +83,8 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 // Name: ComposanteInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output, bool bIsAutonomous ) const
+void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output ) const
 {
-    if( !bIsAutonomous && nNbrHumanInCrew_.GetData() == 0 )
-        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit has no crew in equipment '%1'" ).arg( GetCrossedElement()->strName_.GetData().c_str() ).toStdString() );
-
     output << xml::start( "equipment" )
             << xml::attribute( "type", GetCrossedElement()->strName_ )
             << xml::attribute( "count", nNb_ )
@@ -699,7 +696,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
 
     output << xml::start( "equipments" );
     for( CIT_ComposanteInfos_Vector itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
-        (*itComposante)->WriteArchive( output, bIsAutonomous_.GetData() );
+        (*itComposante)->WriteArchive( output );
     output << xml::end;
 
     output << xml::start( "sensors-range" )
@@ -805,6 +802,13 @@ void ADN_Units_Data::UnitInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& c
 {
     if( ptrModel_.GetData() == 0 )
         checker.AddError( eMissingDecisionalModel, strName_.GetData(), eUnits );
+    
+    if( !bIsAutonomous_.GetData() )
+    for( auto itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
+    {
+        if( (*itComposante)->nNbrHumanInCrew_.GetData() == 0 )
+            checker.AddError( eNoCrew, strName_.GetData().c_str(), eUnits, -1, (*itComposante)->GetCrossedElement()->strName_.GetData().c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -37,7 +37,7 @@ public:
 
         ComposanteInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, bool bIsAutonomous ) const;
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Bool                                                   bMajor_;

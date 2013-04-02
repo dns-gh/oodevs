@@ -24,7 +24,7 @@ tools::IdManager ADN_Breakdowns_Data::idManager_;
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::RepairPartInfo::RepairPartInfo()
-    : nNbr_               ( 0 )
+    : nNbr_               ( 1 )
     , ptrPart_            ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).categories_, 0 )
 {
     this->BindExistenceTo( &ptrPart_ );

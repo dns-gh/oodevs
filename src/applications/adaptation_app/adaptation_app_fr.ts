@@ -686,6 +686,10 @@ Arrêt moteur allumé</translation>
         <source>The file %2 included in the mission %1 is invalid or not present in the attachment list.</source>
         <translation>Le fichier %2 dans la mission %1 est invalid ou non présent dans la liste des piècess jointes.</translation>
     </message>
+    <message>
+        <source>Unit %1 has no crew in equipment &apos;%2&apos;</source>
+        <translation>L&apos;unité %1 ne possède aucun équipage dans l&apos;équipement &apos;%2&apos;</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -3743,7 +3747,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
     <message>
         <source>Logistic supply class</source>
-        <translation></translation>
+        <translation>Tranche logistique</translation>
     </message>
     <message>
         <source>Usable within a resource network</source>
@@ -3783,7 +3787,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
     <message>
         <source>Armor-Plating</source>
-        <translation type="unfinished"></translation>
+        <translation>Blindage</translation>
     </message>
     <message>
         <source>Urban material</source>
@@ -5632,7 +5636,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Logistic supply class</source>
-        <translation type="unfinished"></translation>
+        <translation>Tranche logistique</translation>
     </message>
     <message>
         <source>Add class</source>
@@ -6218,7 +6222,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Logistic supply system - Invalid supply convoy type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique ravitaillement - Type de convoi de ravitaillement invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -6253,11 +6257,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Categories - Duplicated resource logistic category &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Catégories - Catégorie de ressource dupliquée &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Categories - Duplicated logistic resource category</source>
-        <translation type="unfinished"></translation>
+        <translation>Catégories - Catégirue de ressource dupliquée</translation>
     </message>
 </context>
 <context>
@@ -6466,7 +6470,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Equipement - Tranche logistique invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Object type - Invalid object &apos;%1&apos;</source>
@@ -6496,11 +6500,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <name>Supply_Data</name>
     <message>
         <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique ravitaillement - Unité invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique ravitaillement - Mission invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -6508,10 +6512,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Unit types - Invalid equipment &apos;%1&apos;</source>
         <translation>Type de pion - équipement &quot;%1&quot; invalide</translation>
-    </message>
-    <message>
-        <source>Unit has no crew in equipment &apos;%1&apos;</source>
-        <translation>Le pion n&apos;a pas d&apos;équipage dans l&apos;équipement &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Unit types - Invalid stance &apos;%1&apos;</source>
@@ -6543,7 +6543,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Unit - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Unité - Tranche logistique invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Unit types - Invalid nbc suit level &apos;%1&apos;</source>

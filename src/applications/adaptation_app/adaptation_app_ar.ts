@@ -674,6 +674,10 @@ Parked engine running</source>
         <source>The file %2 included in the mission %1 is invalid or not present in the attachment list.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unit %1 has no crew in equipment &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -6477,10 +6481,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Unit types - Invalid equipment &apos;%1&apos;</source>
         <translation type="unfinished">أنواع وحدة-معدات غير صالحة &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Unit has no crew in equipment &apos;%1&apos;</source>
-        <translation type="unfinished">وحدة قد لا الطاقم في المعدات &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Unit - Invalid resource logistic supply class &apos;%1&apos;</source>

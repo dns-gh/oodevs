@@ -19,8 +19,7 @@ namespace
 {
     bool IsError( E_ConsistencyCheck type )
     {
-        return type == eMissingPart ||
-               type == eMissingBreakdown ||
+        return type == eMissingBreakdown ||
                type == eMissingConvoy ||
                type == eMissingConvoyMission ||
                type == eMissingGeometry ||
@@ -30,15 +29,16 @@ namespace
                type == eMissingArmor ||
                type == eMissingDisaster ||
                type == eMissionTypeUniqueness ||
-               type == eObjectTypeUniqueness;
+               type == eObjectTypeUniqueness ||
+               type == eNoCrew;
     }
-
-#define CONVERT_TO_MASK( mask ) { if( type < mask ) return mask; }
 
     E_ConsistencyCheck Convert( E_ConsistencyCheck type )
     {
-        CONVERT_TO_MASK( eUniquenessMask )
-        CONVERT_TO_MASK( eMissingMask )
+        if( type < eUniquenessMask )
+            return eUniquenessMask;
+        if( type < eMissingMask )
+            return eMissingMask;
         return eOthersMask;
     }
 }
@@ -86,6 +86,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingPCOnAutomat ]     = tr( "Automat %1 requires at least one PC" ) + error;
     errorDescriptions_[ eMissingArmor ]           = tr( "At least one armor must be defined" ) + error;
     errorDescriptions_[ eMissingDisaster ]        = tr( "No disaster model for object %1" ) + error;
+    errorDescriptions_[ eNoCrew ]                 = tr( "Unit %1 has no crew in equipment '%2'" ) + error;            
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );

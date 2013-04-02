@@ -24,8 +24,6 @@ enum E_ConsistencyCheck
     eMissingChoiceComposite,
     eMissingSymbols,
     eMissionAttachmentInvalid,
-    eLowerCaseEmat,
-
     eMissingConvoy,
     eMissingConvoyMission,
     eMissingBreakdown,
@@ -37,6 +35,8 @@ enum E_ConsistencyCheck
     eMissingDisaster,
     eMissingMask,
 
+    eLowerCaseEmat,
+    eNoCrew,
     eOthersMask
 };
 
