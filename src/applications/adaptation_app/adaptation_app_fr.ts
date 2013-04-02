@@ -1258,6 +1258,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>%1 has lower case EMAT8 code.</source>
         <translation>%1 a un code emat8 en minuscules.</translation>
     </message>
+    <message>
+        <source>%1 has no repair type defined in maintenance system in a &apos;gravity&apos; category.</source>
+        <translation>%1 n&apos;a pas de type de réparation défini dans la chaîne de maintenance dans une catégorie &apos;gravité&apos;</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
