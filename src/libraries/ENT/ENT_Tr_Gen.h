@@ -91,7 +91,7 @@ public:
     static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
     static E_Location ConvertToLocation( const std::string& );
     static E_CrossingType ConvertToCrossingType( const std::string& );
-    static E_HumanWound ConvertToHumanWound( const std::string& );
+    static E_HumanWound ConvertToHumanWound( const std::string&, E_Conversion = eToSim );
     static E_HumanRank ConvertToHumanRank( const std::string& );
     static E_HumanState ConvertToHumanState( const std::string& );
     static E_HumanLocation ConvertToHumanLocation( const std::string& );

@@ -1056,9 +1056,9 @@ E_CrossingType ENT_Tr::ConvertToCrossingType( const std::string& strName )
 // Name: ENT_Tr::ConvertToHumanWound
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_HumanWound ENT_Tr::ConvertToHumanWound( const std::string& strName )
+E_HumanWound ENT_Tr::ConvertToHumanWound( const std::string& strName, E_Conversion mode )
 {
-    return ENT_Tr::FindInConverter( HumanWoundConverter_, strName );
+    return ENT_Tr::FindInConverter( HumanWoundConverter_, strName, mode );
 }
 
 //-----------------------------------------------------------------------------

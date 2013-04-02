@@ -59,11 +59,11 @@ public:
     // Created: JVT 03-01-08
     // Last modified: JVT 03-04-29
     //-----------------------------------------------------------------------------
-    template < typename T > static const T& FindInConverter( const converter<T> conv[], const std::string& str )
+    template < typename T > static const T& FindInConverter( const converter<T> conv[], const std::string& str, E_Conversion e = eToSim )
     {
         for( unsigned int i = 0; ; ++i )
         {
-            const std::string& sCurrentName = conv[i].simname_;
+            const std::string& sCurrentName = GetName( e, conv[i] );
             if( sCurrentName.empty() || !::_stricmp( sCurrentName.c_str(), str.c_str() ) )
                 return conv[i].type_;
         }
@@ -81,19 +81,7 @@ public:
         for( unsigned int i = 0; !conv[i].simname_.empty(); ++i )
         {
             if( conv[i].type_ == val )
-            {
-                switch( e )
-                {
-                    case eToSim:
-                        return conv[i].simname_;
-                    case eToApp:
-                        return conv[i].appname_;
-                    case eToTr:
-                        return conv[i].trname_;
-                    default:
-                        assert( 0 );
-                }
-            }
+                return GetName( e, conv[i] );
         }
         return strBadName_;
     }
@@ -106,6 +94,22 @@ public:
     {
         for ( unsigned int i = 0; !conv[i].simname_.empty(); ++i )
             conv[i].trname_ = qApp->translate( szContext, conv[i].appname_.c_str() ).toStdString();
+    }
+
+    private:
+    template < typename T > static const std::string& GetName( E_Conversion e, const converter<T>& conv )
+    {
+        static const std::string strBadName_;
+        switch( e )
+        {
+            case eToSim:
+                return conv.simname_;
+            case eToApp:
+                return conv.appname_;
+            case eToTr:
+                return conv.trname_;
+        }
+        return strBadName_;
     }
 };
 

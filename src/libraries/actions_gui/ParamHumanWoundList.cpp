@@ -17,6 +17,7 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_kernel/Tools.h"
+#include "Ent/ENT_Tr_Gen.h"
 
 using namespace actions::gui;
 
@@ -83,7 +84,10 @@ void ParamHumanWoundList::CommitTo( actions::ParameterContainer_ABC& action ) co
     std::auto_ptr< actions::parameters::MedicalPriorities > param( new actions::parameters::MedicalPriorities( parameter_ ) );
     if( IsChecked() )
         for( int row = 0; row < model_.rowCount(); ++row )
-            param->AddMedicalPriority( E_HumanWound( model_.item( row )->text().toUInt() ) );
+        {
+            const std::string text = model_.item( row )->text().toStdString();
+            param->AddMedicalPriority( ENT_Tr::ConvertToHumanWound( text, ENT_Tr::eToTr ) );
+        }
     action.AddParameter( *param.release() );
 }
 
