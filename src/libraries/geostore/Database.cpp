@@ -89,7 +89,7 @@ void Database::LoadLayer( std::string layer, PointProjector_ABC& projector, cons
         tables_.insert( layer, new GeoTable( db_.get(), layer ) );
     else
     {
-        const TerrainFileReader reader( file.ToLocal(), projector );
+        const TerrainFileReader reader( file, projector );
         AddLayer( layer, static_cast< GeometryType >( reader.GetGeomType() ), reader.GetFeatures() );
         log_->SetLastAccessTime( layer, file.LastWriteTime() );
     }

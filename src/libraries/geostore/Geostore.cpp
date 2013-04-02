@@ -37,7 +37,7 @@ Geostore::Geostore( const tools::Path& terrain, const SpatialIndexer& index )
     : index_    ( index )
     , file_     ( terrain / "Graphics/geostore.sqlite" )
     , temporary_( file_ )
-    , projector_( new PointProjector( terrain.ToBoost() ) )
+    , projector_( new PointProjector( terrain ) )
     , database_ ( Load( terrain / "Graphics", temporary_, *projector_ ) )
 {
     // NOTHING
