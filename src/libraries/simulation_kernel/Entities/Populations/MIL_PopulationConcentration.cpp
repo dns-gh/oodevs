@@ -145,7 +145,7 @@ bool MIL_PopulationConcentration::Update()
     {
         if( pPullingFlow_ )
         {
-            pPullingFlow_->UnregisterSourceConcentration( *this );
+            pPullingFlow_->UnregisterSourceConcentration();
             pPullingFlow_ = 0;
         }
         RemoveFromPatch();
@@ -194,7 +194,7 @@ void MIL_PopulationConcentration::MagicMove( const MT_Vector2D& destination )
     }
     if( pPullingFlow_ )
     {
-        pPullingFlow_->UnregisterSourceConcentration( *this );
+        pPullingFlow_->UnregisterSourceConcentration();
         pPullingFlow_ = 0;
     }
 }

@@ -827,10 +827,8 @@ bool MIL_PopulationFlow::HasChanged() const
 // Name: MIL_PopulationFlow::UnregisterSourceConcentration
 // Created: NLD 2005-10-04
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::UnregisterSourceConcentration( MIL_PopulationConcentration& concentration )
+void MIL_PopulationFlow::UnregisterSourceConcentration()
 {
-    assert( pSourceConcentration_ == &concentration );
-    ( void )concentration; // remove warning in release
     pSourceConcentration_ = 0;
 }
 
