@@ -307,11 +307,39 @@ void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObject( MIL_Object
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject
+// Created: LGY 2013-03-28
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const DEC_Knowledge_Object& knowledge )
+{
+    boost::shared_ptr< DEC_Knowledge_Object > copy( new DEC_Knowledge_Object( knowledge, pKnowledgeGroup_->shared_from_this() ) );
+    if( !copy->GetObjectKnown() )
+        return;
+    objectMap_.insert( std::make_pair( copy->GetObjectKnown(), copy ) );
+    knowledgeObjectFromIDMap_.insert( std::make_pair( copy->GetID(), copy ) );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::Merge
 // Created: LDC 2012-04-30
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObject::Merge( const DEC_BlackBoard_CanContainKnowledgeObject* /*subGroup*/ )
+void DEC_BlackBoard_CanContainKnowledgeObject::Merge( const DEC_BlackBoard_CanContainKnowledgeObject* subGroup )
 {
+    if( !subGroup )
+        return;
+    for( auto itKnowledge = subGroup->objectMap_.begin(); itKnowledge != subGroup->objectMap_.end(); ++itKnowledge )
+    {
+        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = GetKnowledgeObject( *itKnowledge->first );
+        boost::shared_ptr< DEC_Knowledge_Object > pSubKnowledge = itKnowledge->second;
+        if( !pKnowledge.get() )
+            CreateKnowledgeObject( *pSubKnowledge );
+        else if( pKnowledge->GetRelevance() < pSubKnowledge->GetRelevance() )
+        {
+            DestroyKnowledgeObject( *pKnowledge );
+            CreateKnowledgeObject( *pSubKnowledge );
+        }
+    }
 }
 
 namespace

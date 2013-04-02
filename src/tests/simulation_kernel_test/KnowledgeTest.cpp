@@ -16,12 +16,17 @@
 #include "MockPHY_RoleInterface_Perceiver.h"
 #include "MockKnowledgeGroupFactory.h"
 #include "StubMIL_AgentTypePion.h"
+#include "StubMIL_Object_ABC.h"
+#include "MockMIL_ObjectType_ABC.h"
+#include "MockMIL_Object_ABC.h"
 #include "MockNET_Publisher_ABC.h"
 
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
@@ -284,23 +289,63 @@ BOOST_AUTO_TEST_CASE( TestLatentRelevance )
 
 namespace
 {
-    class Fixture : private boost::noncopyable
+    class Configuration : private boost::noncopyable
+    {
+    public:
+        Configuration()
+            : blackboardArmy( army )
+        {
+            MOCK_EXPECT( publisher.Send );
+            MOCK_EXPECT( army.GetKnowledge ).returns( boost::ref( blackboardArmy ) );
+            MOCK_EXPECT( army.GetID ).returns( 42u );
+        }
+        MockNET_Publisher_ABC publisher;
+        MockArmy army;
+        DEC_KnowledgeBlackBoard_Army blackboardArmy;
+    };
+    class Fixture : public Configuration
     {
     public:
         Fixture()
             : group1( CreateKnowledgeGroup( army, 1 ) )
             , group2( CreateKnowledgeGroup( army, 2 ) )
-            , blackBoardGroup1( group1->GetKnowledge()->GetKnowledgeAgentContainer() )
-            , blackBoardGroup2( group2->GetKnowledge()->GetKnowledgeAgentContainer() )
         {
-            MOCK_EXPECT( army.GetID ).returns( 42u );
-
+            group2->Clone( *group1 );
         }
-        MockArmy army;
         boost::shared_ptr< MIL_KnowledgeGroup > group1;
         boost::shared_ptr< MIL_KnowledgeGroup > group2;
+    };
+    class AgentFixture : public Fixture
+    {
+    public:
+        AgentFixture()
+            : blackBoardGroup1( group1->GetKnowledge()->GetKnowledgeAgentContainer() )
+            , blackBoardGroup2( group2->GetKnowledge()->GetKnowledgeAgentContainer() )
+        {
+            // NOTHING
+        }
         DEC_BlackBoard_CanContainKnowledgeAgent& blackBoardGroup1;
         DEC_BlackBoard_CanContainKnowledgeAgent& blackBoardGroup2;
+    };
+    class ObjectFixture : public Fixture
+    {
+    public:
+        ObjectFixture()
+            : objectBlackBoardGroup1( group1->GetKnowledgeObjectContainer() )
+            , objectBlackBoardGroup2( group2->GetKnowledgeObjectContainer() )
+            , object( &army, objectType, 15u )
+            , object2( &army, objectType, 15u )
+        {
+            objectBlackBoardGroup1.SetKnowledgeGroup( group1.get() );
+            objectBlackBoardGroup2.SetKnowledgeGroup( group2.get() );
+            MOCK_EXPECT( objectType.GetName ).returns( "type" );
+        }
+        DEC_BlackBoard_CanContainKnowledgeObject& objectBlackBoardGroup1;
+        DEC_BlackBoard_CanContainKnowledgeObject& objectBlackBoardGroup2;
+        MockMIL_ObjectType_ABC objectType;
+        MockMIL_Object_ABC object;
+        MockMIL_Object_ABC object2;
+
     };
 
     void CreateAgentKnowledge( MockAgent& agent, DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard, boost::shared_ptr< MIL_KnowledgeGroup > group, double relevance )
@@ -316,16 +361,15 @@ namespace
         blackBoard.CreateKnowledgeAgent( group, agent );
     }
 
-    void CheckKnowledge( MockAgent& agent, DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard, double relevance )
+    template< typename Knowledge >
+    void CheckKnowledge( Knowledge knowledge, double relevance )
     {
-        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = blackBoard.GetKnowledgeAgent( agent );
         BOOST_REQUIRE( knowledge );
-        // check relevance
         BOOST_CHECK_EQUAL( knowledge->GetRelevance(), relevance );
     }
 }
 
-BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_empty_knowledge_group, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_merge_knowledge_group_in_empty_knowledge_group, AgentFixture )
 {
     // check group1 is empty
     BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 0u );
@@ -339,9 +383,6 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_empty_knowledge_group, Fixture
     BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgeAgents().size(), 1u );
     mock::verify();
 
-    MockNET_Publisher_ABC publisher;
-    MOCK_EXPECT( publisher.Send );
-
     // merge two group
     blackBoardGroup1.Merge( blackBoardGroup2 );
 
@@ -349,10 +390,10 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_empty_knowledge_group, Fixture
     BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 1u );
 
     // retrieve knowledge
-    CheckKnowledge( agent, blackBoardGroup1, 0.1 );
+    CheckKnowledge( blackBoardGroup1.GetKnowledgeAgent( agent ), 0.1 );
 }
 
-BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_knowledge_group, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_merge_knowledge_group_in_knowledge_group, AgentFixture )
 {
     // check group1 is empty
     BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 0u );
@@ -374,9 +415,6 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_knowledge_group, Fixture )
     BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 1u );
     mock::verify();
 
-    MockNET_Publisher_ABC publisher;
-    MOCK_EXPECT( publisher.Send );
-
     // merge two group
     blackBoardGroup1.Merge( blackBoardGroup2 );
 
@@ -384,11 +422,11 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_knowledge_group, Fixture )
     BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 2u );
 
     // retrieve knowledges
-    CheckKnowledge( agent1, blackBoardGroup1, 0.2 );
-    CheckKnowledge( agent2, blackBoardGroup1, 0.3 );
+    CheckKnowledge( blackBoardGroup1.GetKnowledgeAgent( agent1 ), 0.2 );
+    CheckKnowledge( blackBoardGroup1.GetKnowledgeAgent( agent2 ), 0.3 );
 }
 
-BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_knowledge_group_with_same_agent_knowledge, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_merge_knowledge_group_in_knowledge_group_with_same_knowledge, AgentFixture )
 {
     // check group1 is empty
     BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 0u );
@@ -404,9 +442,6 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_knowledge_group_with_same_agen
     CreateAgentKnowledge( agent2, blackBoardGroup1, group1, 0.9 );
     CreateAgentKnowledge( agent2, blackBoardGroup2, group2, 0.5 );
 
-    MockNET_Publisher_ABC publisher;
-    MOCK_EXPECT( publisher.Send );
-
     // merge two group
     blackBoardGroup1.Merge( blackBoardGroup2 );
 
@@ -414,6 +449,105 @@ BOOST_FIXTURE_TEST_CASE( merge_knowledge_group_in_knowledge_group_with_same_agen
     BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgeAgents().size(), 2u );
 
     // retrieve knowledges
-    CheckKnowledge( agent1, blackBoardGroup1, 0.5 );
-    CheckKnowledge( agent2, blackBoardGroup1, 0.9 );
+    CheckKnowledge( blackBoardGroup1.GetKnowledgeAgent( agent1 ), 0.5 );
+    CheckKnowledge( blackBoardGroup1.GetKnowledgeAgent( agent2 ), 0.9 );
+}
+
+namespace
+{
+    boost::shared_ptr< DEC_Knowledge_Object > CreateObjectKnowledge( MockMIL_Object_ABC& object, MockArmy& army,
+                                                                     DEC_BlackBoard_CanContainKnowledgeObject& blackBoard,
+                                                                     boost::shared_ptr< MIL_KnowledgeGroup > group, double relevance )
+    {
+        MOCK_EXPECT( object.GetName ).returns( "object" );
+        boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( group, object, relevance ) );
+        MOCK_EXPECT( object.CreateKnowledgeKnowledgeGroup ).once().returns( knowledge );
+        blackBoard.CreateKnowledgeObject( army, object );
+        return knowledge;
+    }
+}
+
+// TESTS MERGE OBJECT KNOWLEDGE BETWEEN TWO KNOWLEDGE GROUPS
+
+BOOST_FIXTURE_TEST_CASE( object_merge_knowledge_group_in_empty_knowledge_group, ObjectFixture )
+{
+    // check group1 is empty
+    BOOST_CHECK_EQUAL( objectBlackBoardGroup1.GetKnowledgeObjects().size(), 0u );
+    mock::verify();
+
+    // knowledge creation
+    boost::shared_ptr< DEC_Knowledge_Object > knowledge = CreateObjectKnowledge( object, army, objectBlackBoardGroup2, group2, 0.5 );
+
+    // check group2 is not empty
+    BOOST_CHECK_EQUAL( objectBlackBoardGroup2.GetKnowledgeObjects().size(), 1u );
+
+    // merge
+    objectBlackBoardGroup1.Merge( &objectBlackBoardGroup2 );
+
+    // check group1 is not empty
+    BOOST_CHECK_EQUAL( objectBlackBoardGroup1.GetKnowledgeObjects().size(), 1u );
+
+    // check knowledges
+    CheckKnowledge( objectBlackBoardGroup1.GetKnowledgeObject( object ), 0.5 );
+
+    // need detroy object knowledge before object
+    objectBlackBoardGroup2.DestroyKnowledgeObject( *knowledge );
+}
+
+BOOST_FIXTURE_TEST_CASE( object_merge_knowledge_group_in_knowledge_group, ObjectFixture )
+{
+    // check group1 is empty
+    BOOST_CHECK_EQUAL( objectBlackBoardGroup1.GetKnowledgeObjects().size(), 0u );
+    mock::verify();
+
+    // knowledge creation
+    boost::shared_ptr< DEC_Knowledge_Object > knowledge = CreateObjectKnowledge( object, army, objectBlackBoardGroup2, group2, 0.5 );
+
+    // knowledge creation
+    boost::shared_ptr< DEC_Knowledge_Object > knowledge2 = CreateObjectKnowledge( object2, army, objectBlackBoardGroup1, group2, 0.4 );
+
+    // merge
+    objectBlackBoardGroup1.Merge( &objectBlackBoardGroup2 );
+
+    // check group1 is not empty
+    BOOST_CHECK_EQUAL( objectBlackBoardGroup1.GetKnowledgeObjects().size(), 2u );
+
+    // check knowledges
+    CheckKnowledge( objectBlackBoardGroup1.GetKnowledgeObject( object ), 0.5 );
+    CheckKnowledge( objectBlackBoardGroup1.GetKnowledgeObject( object2 ), 0.4 );
+}
+
+BOOST_FIXTURE_TEST_CASE( object_merge_knowledge_group_in_knowledge_group_with_same_knowledge, ObjectFixture )
+{
+    // check group1 is empty
+    BOOST_CHECK_EQUAL( objectBlackBoardGroup1.GetKnowledgeObjects().size(), 0u );
+    mock::verify();
+
+    // knowledge creation
+    boost::shared_ptr< DEC_Knowledge_Object > knowledge = CreateObjectKnowledge( object, army, objectBlackBoardGroup2, group2, 0.5 );
+    boost::shared_ptr< DEC_Knowledge_Object > knowledge2 = CreateObjectKnowledge( object, army, objectBlackBoardGroup1, group2, 0.6 );
+
+    // check group1 is empty
+    BOOST_CHECK_EQUAL( objectBlackBoardGroup1.GetKnowledgeObjects().size(), 1u );
+    BOOST_CHECK_EQUAL( objectBlackBoardGroup2.GetKnowledgeObjects().size(), 1u );
+    mock::verify();
+
+    // knowledge creation
+    boost::shared_ptr< DEC_Knowledge_Object > knowledge3 = CreateObjectKnowledge( object2, army, objectBlackBoardGroup2, group2, 0.7 );
+    boost::shared_ptr< DEC_Knowledge_Object > knowledge4 = CreateObjectKnowledge( object2, army, objectBlackBoardGroup1, group2, 0.4 );
+
+    // check group1 is empty
+    BOOST_CHECK_EQUAL( objectBlackBoardGroup1.GetKnowledgeObjects().size(), 2u );
+    BOOST_CHECK_EQUAL( objectBlackBoardGroup2.GetKnowledgeObjects().size(), 2u );
+    mock::verify();
+
+    // merge
+    objectBlackBoardGroup1.Merge( &objectBlackBoardGroup2 );
+
+    // check group1 is not empty
+    BOOST_CHECK_EQUAL( objectBlackBoardGroup1.GetKnowledgeObjects().size(), 2u );
+
+    // check knowledges
+    CheckKnowledge( objectBlackBoardGroup1.GetKnowledgeObject( object ), 0.6 );
+    CheckKnowledge( objectBlackBoardGroup1.GetKnowledgeObject( object2 ), 0.7 );
 }

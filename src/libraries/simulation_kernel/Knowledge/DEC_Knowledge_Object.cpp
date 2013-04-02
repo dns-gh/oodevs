@@ -86,7 +86,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
 // Name: DEC_Knowledge_Object constructor
 // Created: LDC 2010-04-15
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object::DEC_Knowledge_Object( const boost::shared_ptr< MIL_KnowledgeGroup >& groupKnowing, MIL_Object_ABC& objectKnown )
+DEC_Knowledge_Object::DEC_Knowledge_Object( const boost::shared_ptr< MIL_KnowledgeGroup >& groupKnowing, MIL_Object_ABC& objectKnown, double rRelevance )
     : DEC_Knowledge_ABC()
     , pArmyKnowing_            ( &groupKnowing->GetArmy() )
     , pObjectKnown_            ( &objectKnown )
@@ -101,7 +101,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const boost::shared_ptr< MIL_Knowled
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_     ( &PHY_PerceptionLevel::notSeen_ )
     , nTimeLastUpdate_         ( 0 )
-    , rRelevance_              ( 1. )
+    , rRelevance_              ( rRelevance )
     , bValid_                  ( true )
     , bPerceptionDistanceHacked_ ( false )
     , bSkipPreparation_        ( false )

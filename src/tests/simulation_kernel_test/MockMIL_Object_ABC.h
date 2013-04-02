@@ -21,6 +21,12 @@
 // =============================================================================
 MOCK_BASE_CLASS( MockMIL_Object_ABC, MIL_Object_ABC )
 {
+    MockMIL_Object_ABC()
+    {}
+    MockMIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int forcedId )
+        : MIL_Object_ABC( army, type, forcedId )
+    {}
+
     MOCK_METHOD( WriteODB, 1 );
     MOCK_METHOD( PreprocessAgent, 1 );
     MOCK_METHOD( ProcessAgentEntering, 1 );
