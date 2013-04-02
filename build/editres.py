@@ -312,6 +312,8 @@ def makeversion(orig, version, name, filename):
     return pad(ver)
 
 def updateresources(path, opts):
+    filename = opts.original_filename.replace('\\', '/')
+    filename = filename.rsplit('/', 1) [-1]
     rtypes = [RT_VERSION]
     oldresources = getresources(path, rtypes)
     newresources = []
@@ -319,7 +321,7 @@ def updateresources(path, opts):
         rtype, name, langs, data = k
         newresources.append((rtype, name, langs, None))
         replacement = makeversion(data, opts.version, opts.product_name,
-            opts.original_filename)
+            filename)
         newresources.append((rtype, name, [1033], replacement))
 
     setresources(path, newresources)
