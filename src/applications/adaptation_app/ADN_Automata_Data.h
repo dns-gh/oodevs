@@ -36,7 +36,7 @@ public:
         UnitInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, const ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos>& pc );
+        void WriteArchive( xml::xostream& output, const UnitInfos& pc );
 
     public:
         ADN_Type_Int min_;
@@ -65,7 +65,7 @@ public:
         ADN_Type_Enum<E_AgentTypeAutomate,eNbrAgentTypeAutomate> nAgentType_;
         ADN_TypePtr_InVector_ABC<ADN_Models_Data::ModelInfos> ptrModel_;
         T_UnitInfosVector                                     vSubUnits_;
-        ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos>   ptrUnit_;
+        ADN_TypePtr_InVector_ABC< UnitInfos >                 ptrUnit_;
         ADN_Type_Bool                                         bStrengthRatioFeedbackTime_;
         ADN_Type_Time                                         strengthRatioFeedbackTime_;
     };

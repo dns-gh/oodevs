@@ -69,18 +69,3 @@ void ADN_Automata_ListView::OnContextMenu( const QPoint& pt )
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Automata_ListView::Update
-// Created: LGY 2011-11-04
-// -----------------------------------------------------------------------------
-void ADN_Automata_ListView::Update()
-{
-    if( pCurData_ == 0 )
-        return;
-
-    AutomatonInfos* pInfos = (AutomatonInfos*)pCurData_;
-    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Automata_GUI::eNbrGuiElements );
-
-    vItemConnectors_[ADN_Automata_GUI::eUnit]->Connect( &pInfos->ptrUnit_, true );
-}

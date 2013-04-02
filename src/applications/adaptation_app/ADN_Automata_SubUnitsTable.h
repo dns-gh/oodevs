@@ -34,7 +34,6 @@ public:
     virtual void OnContextMenu( const QPoint& pt );
     virtual void AddRow( int row, void* data );
     virtual void RemoveCurrentElement();
-    void AddSubItems( const std::string& name );
     //@}
 
 signals:

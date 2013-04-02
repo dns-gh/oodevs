@@ -18,7 +18,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Automata_GUI.h"
-#include "moc_ADN_Automata_GUI.cpp"
 #include "ADN_MainWindow.h"
 #include "ADN_App.h"
 #include "ADN_GuiBuilder.h"
@@ -36,7 +35,6 @@
 #include "ADN_AutomatLog_ListView.h"
 #include "ADN_AutomatLogCategory_ListView.h"
 #include "ADN_GoToButton.h"
-#include "UnitsFilter.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_GUI constructor
@@ -45,7 +43,6 @@
 ADN_Automata_GUI::ADN_Automata_GUI( ADN_Automata_Data& data )
     : ADN_GUI_ABC( eAutomata )
     , data_         ( data )
-    , pFilter_      ( 0 )
 {
     // NOTHING
 }
@@ -83,7 +80,7 @@ void ADN_Automata_GUI::Build()
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::eModels, eEntityType_Automat );
     goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "doctrine-model", tr( "Doctrine model" ), vInfosConnectors[eModel], 0, eNone, goToButton ) );
     // Unit
-    pFilter_ = builder.AddField< UnitsFilter >( pInfoHolder, "command-post", tr( "Command post" ), vInfosConnectors[eUnit] );
+    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "command-post", tr( "Command post" ), vInfosConnectors[eUnit] );
     // Feedback time
     builder.AddOptionnalField<ADN_TimeField>( pInfoHolder, "force-ratio-feedback-time", tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
 
@@ -93,8 +90,6 @@ void ADN_Automata_GUI::Build()
     ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( builder.GetChildName( "sub-units-table" ), vInfosConnectors[eSubUnit], pSubUnitsGroup );
     pSubUnitsTable->SetGoToOnDoubleClick( ::eUnits );
     pSubUnitsLayout->addWidget( pSubUnitsTable, 1 );
-    connect( pSubUnitsTable, SIGNAL( ItemAdded( const std::string& ) ), this, SLOT( OnItemAdded( const std::string& ) ) );
-    connect( pSubUnitsTable, SIGNAL( ItemRemoved( const std::string& ) ), this, SLOT( OnItemRemoved( const std::string& ) ) );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -166,18 +161,11 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
 
         for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); nSubRow == 0 || it2 != automaton.vSubUnits_.end(); )
         {
-            ADN_Automata_Data::UnitInfos* pUnitInfos = 0;
-            ADN_Units_Data::UnitInfos* pUnit = 0;
-
-            if( nSubRow == 0 )
-                pUnit = automaton.ptrUnit_.GetData();
-            else
-            {
-                pUnitInfos = *it2;
-                assert( pUnitInfos->GetCrossedElement() != 0 );
-                pUnit = pUnitInfos->GetCrossedElement();
-            }
-            ADN_Units_Data::UnitInfos& unit = *pUnit;
+            ADN_Automata_Data::UnitInfos* pUnit = ( nSubRow == 0 ) ? automaton.ptrUnit_.GetData() : *it2;
+            assert( pUnit && pUnit->GetCrossedElement() != 0 );
+            if( !pUnit || !pUnit->GetCrossedElement() )
+                continue;
+            ADN_Units_Data::UnitInfos& unit = *pUnit->GetCrossedElement();
             pTable->setNumRows( std::max( pTable->numRows(), nRow + nSubRow + 1 ) );
 
             int nSubSubRow = 0;
@@ -187,11 +175,11 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
                 ADN_Units_Data::ComposanteInfos* composantes = *it3;
                 pTable->setNumRows( std::max( pTable->numRows(), nRow + nSubRow + nSubSubRow + 1 ) );
                 QString strText;
-                if( pUnitInfos != 0 )
+                if( nSubRow != 0 )
                 {
                     strText = tr( "(%1..%2) x %3 x %4 [ %5 ]" );
-                    strText = strText.arg( pUnitInfos->min_.GetData() )
-                                     .arg( pUnitInfos->max_.GetData() )
+                    strText = strText.arg( pUnit->min_.GetData() )
+                                     .arg( pUnit->max_.GetData() )
                                      .arg( composantes->nNb_.GetData() )
                                      .arg( composantes->GetCrossedElement()->strName_.GetData().c_str() )
                                      .arg( composantes->nNbrHumanInCrew_.GetData() );
@@ -208,30 +196,30 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
             }
             int nRowSpan = std::max( 1, static_cast< int >( unit.vComposantes_.size() ) );
             QString strText;
-            if( pUnitInfos != 0 )
+            if( nSubRow != 0 )
             {
                 strText = tr( "(%1..%2) x %3 [ %4/%5/%6 ]" );
-                strText = strText.arg( pUnitInfos->min_.GetData() )
-                                 .arg( pUnitInfos->max_.GetData() )
+                strText = strText.arg( pUnit->min_.GetData() )
+                                 .arg( pUnit->max_.GetData() )
                                  .arg( unit.strName_.GetData().c_str() )
-                                 .arg( pUnit->nNbOfficer_.GetData() )
-                                 .arg( pUnit->nNbNCOfficer_.GetData() )
-                                 .arg( nTroops - pUnit->nNbOfficer_.GetData() - pUnit->nNbNCOfficer_.GetData() );
-                uint nNbUnit = pUnitInfos->min_.GetData();
-                nAutoOfficer   += nNbUnit * pUnit->nNbOfficer_.GetData();
-                nAutoNCOfficer += nNbUnit * pUnit->nNbNCOfficer_.GetData();
-                nAutoTroops    += nNbUnit * ( nTroops - pUnit->nNbOfficer_.GetData() - pUnit->nNbNCOfficer_.GetData() );
+                                 .arg( unit.nNbOfficer_.GetData() )
+                                 .arg( unit.nNbNCOfficer_.GetData() )
+                                 .arg( nTroops - unit.nNbOfficer_.GetData() - unit.nNbNCOfficer_.GetData() );
+                uint nNbUnit = pUnit->min_.GetData();
+                nAutoOfficer   += nNbUnit * unit.nNbOfficer_.GetData();
+                nAutoNCOfficer += nNbUnit * unit.nNbNCOfficer_.GetData();
+                nAutoTroops    += nNbUnit * ( nTroops - unit.nNbOfficer_.GetData() - unit.nNbNCOfficer_.GetData() );
             }
             else
             {
                 strText = tr( "%1 [ %2/%3/%4 ]" );
                 strText = strText.arg( unit.strName_.GetData().c_str() )
-                                 .arg( pUnit->nNbOfficer_.GetData() )
-                                 .arg( pUnit->nNbNCOfficer_.GetData() )
-                                 .arg( nTroops - pUnit->nNbOfficer_.GetData() - pUnit->nNbNCOfficer_.GetData() );
-                nAutoOfficer   += pUnit->nNbOfficer_.GetData();
-                nAutoNCOfficer += pUnit->nNbNCOfficer_.GetData();
-                nAutoTroops    += nTroops - pUnit->nNbOfficer_.GetData() - pUnit->nNbNCOfficer_.GetData();
+                                 .arg( unit.nNbOfficer_.GetData() )
+                                 .arg( unit.nNbNCOfficer_.GetData() )
+                                 .arg( nTroops - unit.nNbOfficer_.GetData() - unit.nNbNCOfficer_.GetData() );
+                nAutoOfficer   += unit.nNbOfficer_.GetData();
+                nAutoNCOfficer += unit.nNbNCOfficer_.GetData();
+                nAutoTroops    += nTroops - unit.nNbOfficer_.GetData() - unit.nNbNCOfficer_.GetData();
             }
             pTable->AddItem( nRow + nSubRow, 1, nRowSpan, 1, pUnit, strText );
             if( nSubRow > 0 )
@@ -279,24 +267,4 @@ void ADN_Automata_GUI::RegisterTable( ADN_MainWindow& mainWindow )
     mainWindow.AddTable   ( tr( "Automata compositions" ), new ADN_Callback<ADN_Table*  ,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataCompositionsTable ) );
     mainWindow.AddListView( tr( "Logistic per automat" ) , new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataLogTable ) );
     mainWindow.AddListView( tr( "Logistic per resource" ), new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataLogTablePerDotation ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Automata_GUI::OnItemAdded
-// Created: LGY 2011-11-04
-// -----------------------------------------------------------------------------
-void ADN_Automata_GUI::OnItemAdded( const std::string& name )
-{
-    pFilter_->Add( name );
-    static_cast< ADN_Automata_ListView* >( pListView_ )->Update();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Automata_GUI::OnItemRemoved
-// Created: LGY 2011-11-04
-// -----------------------------------------------------------------------------
-void ADN_Automata_GUI::OnItemRemoved( const std::string& name )
-{
-    pFilter_->Remove( name );
-    static_cast< ADN_Automata_ListView* >( pListView_ )->Update();
 }

@@ -14,9 +14,9 @@
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template< class T >
-ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC()
-    : pData_(0)
-    , pVector_(0)
+ADN_TypePtr_InVector_ABC< T >::ADN_TypePtr_InVector_ABC()
+    : pData_( 0 )
+    , pVector_( 0 )
 {
     // NOTHING
 }
@@ -26,9 +26,9 @@ ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC()
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template< class T >
-ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC( const typename ADN_TypePtr_InVector_ABC::T_TypePtr& value )
-    : pData_(0)
-    , pVector_(0)
+ADN_TypePtr_InVector_ABC< T >::ADN_TypePtr_InVector_ABC( const typename ADN_TypePtr_InVector_ABC::T_TypePtr& value )
+    : pData_( 0 )
+    , pVector_( 0 )
 {
     SetData( value );
 }
@@ -38,12 +38,12 @@ ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC( const typename ADN_TypePt
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template< class T >
-ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC( const typename ADN_TypePtr_InVector_ABC<T>::T_TypeVector& v, const typename ADN_TypePtr_InVector_ABC::T_TypePtr& value )
-    : pData_(0)
-    , pVector_(0)
+ADN_TypePtr_InVector_ABC< T >::ADN_TypePtr_InVector_ABC( const typename ADN_TypePtr_InVector_ABC< T >::T_TypeVector& v, const typename ADN_TypePtr_InVector_ABC::T_TypePtr& value )
+    : pData_( 0 )
+    , pVector_( 0 )
 {
-    SetVector(v);
-    if( value == 0 && ! v.empty() )
+    SetVector( v );
+    if( value == 0 && !v.empty() )
         SetData( v.front() );
     else
         SetData( value );
@@ -54,7 +54,7 @@ ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC( const typename ADN_TypePt
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template< class T >
-ADN_TypePtr_InVector_ABC<T>::~ADN_TypePtr_InVector_ABC()
+ADN_TypePtr_InVector_ABC< T >::~ADN_TypePtr_InVector_ABC()
 {
     // NOTHING
 }
@@ -64,14 +64,14 @@ ADN_TypePtr_InVector_ABC<T>::~ADN_TypePtr_InVector_ABC()
 // Created: APE 2005-02-28
 // -----------------------------------------------------------------------------
 template< class T >
-void ADN_TypePtr_InVector_ABC<T>::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarget )
+void ADN_TypePtr_InVector_ABC< T >::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarget )
 {
-    ADN_Connector_ABC::ConnectPrivateSub( (ADN_Connector_ABC*)pTarget );
+    ADN_Connector_ABC::ConnectPrivateSub( static_cast< ADN_Connector_ABC* >( pTarget ) );
 
-    connect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItem(void*)));
-    connect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItem(void*)));
-    connect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
-    connect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
+    connect( pTarget, SIGNAL( ItemAdded( void* ) ),      this, SLOT( AddItem( void* ) ) );
+    connect( pTarget, SIGNAL( ItemRemoved( void* ) ),    this, SLOT( RemItem( void* ) ) );
+    connect( pTarget, SIGNAL( ItemSwapped( int, int ) ), this, SLOT( SwapItem( int, int ) ) );
+    connect( pTarget, SIGNAL( Cleared( bool ) ),         this, SLOT( Clear( bool ) ) );
 
     pTarget->Initialize( *this );
 }
@@ -81,115 +81,109 @@ void ADN_TypePtr_InVector_ABC<T>::ConnectPrivateSub( ADN_Connector_Vector_ABC* p
 // Created: APE 2005-02-28
 // -----------------------------------------------------------------------------
 template< class T >
-void ADN_TypePtr_InVector_ABC<T>::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget )
+void ADN_TypePtr_InVector_ABC< T >::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget )
 {
-    ADN_Connector_ABC::DisconnectPrivateSub( (ADN_Connector_ABC*)pTarget );
+    ADN_Connector_ABC::DisconnectPrivateSub( static_cast< ADN_Connector_ABC* >( pTarget ) );
 
-    disconnect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItem(void*)));
-    disconnect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItem(void*)));
-    disconnect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
-    disconnect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
+    disconnect( pTarget, SIGNAL( ItemAdded( void* ) ),      this, SLOT( AddItem( void* ) ) );
+    disconnect( pTarget, SIGNAL( ItemRemoved( void* ) ),    this, SLOT( RemItem( void* ) ) );
+    disconnect( pTarget, SIGNAL( ItemSwapped( int, int ) ), this, SLOT( SwapItem( int, int ) ) );
+    disconnect( pTarget, SIGNAL( Cleared( bool ) ),         this, SLOT( Clear( bool ) ) );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TypePtr_InVector_ABC<T>::SetData
+// Name: ADN_TypePtr_InVector_ABC< T >::SetData
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template< class T >
-void ADN_TypePtr_InVector_ABC<T>::SetData(const T_TypePtr& value )
+void ADN_TypePtr_InVector_ABC< T >::SetData( const T_TypePtr& value )
 {
     if( pData_!= value)
     {
         if( pData_ )
         {
-            static_cast<ADN_Ref_ABC*>(pData_)->ADN_Ref_ABC::DisconnectPrivate( static_cast<ADN_Ref_ABC*>(this) );
+            static_cast< ADN_Ref_ABC* >( pData_ )->ADN_Ref_ABC::DisconnectPrivate( static_cast< ADN_Ref_ABC* >( this ) );
             pData_->RemoveRef();
         }
 
-        pData_    =value;
-        emit DataChanged(pData_);
+        pData_ =value;
+        emit DataChanged( pData_ );
 
         if( pData_ )
         {
-            static_cast<ADN_Ref_ABC*>(pData_)->ADN_Ref_ABC::ConnectPrivate( static_cast<ADN_Ref_ABC*>(this) );
+            static_cast< ADN_Ref_ABC* >( pData_ )->ADN_Ref_ABC::ConnectPrivate( static_cast< ADN_Ref_ABC* >( this ) );
             pData_->AddRef();
         }
     }
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TypePtr_InVector_ABC<T>::T_TypePtr
+// Name: ADN_TypePtr_InVector_ABC< T >::T_TypePtr
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template< class T >
-typename const ADN_TypePtr_InVector_ABC<T>::T_TypePtr ADN_TypePtr_InVector_ABC<T>::GetData() const
+typename const ADN_TypePtr_InVector_ABC< T >::T_TypePtr ADN_TypePtr_InVector_ABC< T >::GetData() const
 {
     return pData_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TypePtr_InVector_ABC<T>::T_TypeVector
+// Name: ADN_TypePtr_InVector_ABC< T >::T_TypeVector
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template< class T >
-const typename ADN_TypePtr_InVector_ABC<T>::T_TypeVector& ADN_TypePtr_InVector_ABC<T>::GetVector() const
+const typename ADN_TypePtr_InVector_ABC< T >::T_TypeVector& ADN_TypePtr_InVector_ABC< T >::GetVector() const
 {
     return *pVector_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TypePtr_InVector_ABC<T>::T_TypeVector
+// Name: ADN_TypePtr_InVector_ABC< T >::T_TypeVector
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template< class T >
-void ADN_TypePtr_InVector_ABC<T>::SetVector(const typename ADN_TypePtr_InVector_ABC<T>::T_TypeVector& v)
+void ADN_TypePtr_InVector_ABC< T >::SetVector( const typename ADN_TypePtr_InVector_ABC< T >::T_TypeVector& v )
 {
-    if (pVector_!=&v)
+    if( pVector_ != &v )
     {
         // disconnect previous vector
-        if (pVector_)
-            static_cast<ADN_Connector_Vector_ABC*>(this)->Disconnect(static_cast<ADN_Connector_Vector_ABC*>(pVector_));
+        if( pVector_ )
+            static_cast< ADN_Connector_Vector_ABC* >( this )->Disconnect( static_cast< ADN_Connector_Vector_ABC* >( pVector_ ) );
 
         // set new vector
-        pVector_=(T_TypeVector*)&v;
+        pVector_= const_cast< T_TypeVector* >( &v );
 
         // connect new vector
-        if (pVector_)
-            static_cast<ADN_Connector_Vector_ABC*>(this)->Connect(static_cast<ADN_Connector_Vector_ABC*>(pVector_));
-
+        if( pVector_ )
+            static_cast< ADN_Connector_Vector_ABC* >( this )->Connect( static_cast< ADN_Connector_Vector_ABC* >( pVector_ ) );
     }
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TypePtr_InVector_ABC<T>::operator =
+// Name: ADN_TypePtr_InVector_ABC< T >::operator =
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template< class T >
-ADN_TypePtr_InVector_ABC<T>& ADN_TypePtr_InVector_ABC<T>::operator =(const T_TypePtr& val)
+ADN_TypePtr_InVector_ABC< T >& ADN_TypePtr_InVector_ABC< T >::operator = ( const T_TypePtr& val )
 {
     SetData( val );
     return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_TypePtr_InVector_ABC::AddItemPrivate
-/** @param  item
-    @param  bInConnection
-    @return
-*/
+// Name: ADN_TypePtr_InVector_ABC< T >::AddItemPrivate
 // Created: AGN 2004-03-22
 // -----------------------------------------------------------------------------
 template< class T >
 bool ADN_TypePtr_InVector_ABC< T >::AddItemPrivate( void* item )
 {
+    if( item && pVector_->size() == 1 )
+        SetData( ( *pVector_ )[ 0 ] );
     return item != 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC::RemItemPrivate
-/** @param  item
-    @return
-*/
 // Created: AGN 2004-05-11
 // -----------------------------------------------------------------------------
 template< class T >
@@ -203,31 +197,31 @@ bool ADN_TypePtr_InVector_ABC< T >::RemItemPrivate( void* item )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TypePtr_InVector_ABC<T>::operator ==
+// Name: ADN_TypePtr_InVector_ABC< T >::operator ==
 // Created: JDY 03-08-25
 //-----------------------------------------------------------------------------
 template< class T >
-bool ADN_TypePtr_InVector_ABC<T>::operator ==(const ADN_TypePtr_InVector_ABC& o) const
+bool ADN_TypePtr_InVector_ABC< T >::operator == ( const ADN_TypePtr_InVector_ABC& o ) const
 {
-    return pData_==o.pData_ && pVector_==o.pVector_;
+    return pData_ == o.pData_ && pVector_ == o.pVector_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TypePtr_InVector_ABC<T>::operator ==
+// Name: ADN_TypePtr_InVector_ABC< T >::operator ==
 // Created: JDY 03-08-25
 //-----------------------------------------------------------------------------
 template< class T >
-bool ADN_TypePtr_InVector_ABC<T>::operator ==(const T_TypePtr& val) const
+bool ADN_TypePtr_InVector_ABC< T >::operator == ( const T_TypePtr& val ) const
 {
-    return pData_==val;
+    return pData_ == val;
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TypePtr_InVector_ABC<T>::SetDataPrivate
+// Name: ADN_TypePtr_InVector_ABC< T >::SetDataPrivate
 // Created: JDY 03-07-21
 //-----------------------------------------------------------------------------
 template< class T >
-void ADN_TypePtr_InVector_ABC<T>::SetDataPrivate( void *data )
+void ADN_TypePtr_InVector_ABC< T >::SetDataPrivate( void* data )
 {
     T_TypePtr newData = static_cast< T_TypePtr >( data );
     SetData( newData );
@@ -235,17 +229,17 @@ void ADN_TypePtr_InVector_ABC<T>::SetDataPrivate( void *data )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TypePtr_InVector_ABC<T>:: InvalidatePrivate
+// Name: ADN_TypePtr_InVector_ABC< T >:: InvalidatePrivate
 // Created: JDY 03-08-25
 //-----------------------------------------------------------------------------
 template< class T >
-void ADN_TypePtr_InVector_ABC<T>::InvalidatePrivate(void *ptr,bool bDel)
+void ADN_TypePtr_InVector_ABC< T >::InvalidatePrivate( void* ptr, bool bDel )
 {
     if( pData_ == ptr)
     {
-        ADN_TypePtr_InVector_ABC<T>::SetData((T_TypePtr)0);
-        ADN_Ref_ABC::InvalidatePrivate(this);
-        emit Invalidated(ptr,bDel);
+        ADN_TypePtr_InVector_ABC< T >::SetData( static_cast< T_TypePtr >( 0) );
+        ADN_Ref_ABC::InvalidatePrivate( this );
+        emit Invalidated( ptr, bDel );
     }
 }
 
@@ -261,7 +255,7 @@ void ADN_TypePtr_InVector_ABC< T >::Initialize( ADN_Connector_Vector_ABC& dest )
     if( pVector_ != 0 )
     {
         dest.Clear( true );
-        for (T_TypeVector::IT_PtrVector it=pVector_->begin();it!=pVector_->end();++it)
+        for( T_TypeVector::IT_PtrVector it = pVector_->begin(); it != pVector_->end(); ++it )
             dest.AddItemNoEmit( *it );
         dest.AddItemNoEmit( 0 );
     }

@@ -21,8 +21,8 @@ class ADN_TypePtr_InVector_ABC : public ADN_Connector_Vector_ABC
 {
 
 public:
-    typedef typename T*                      T_TypePtr;
-    typedef typename ADN_Type_Vector_ABC<T>  T_TypeVector;
+    typedef typename T* T_TypePtr;
+    typedef typename ADN_Type_Vector_ABC< T > T_TypeVector;
 
 public:
              ADN_TypePtr_InVector_ABC();
@@ -37,10 +37,10 @@ public:
     virtual void Initialize( ADN_Connector_Vector_ABC& dest ) const;
     virtual void Initialize( ADN_Connector_ABC& dest ) const;
 
-    void SetData(const T_TypePtr& value );
+    void SetData( const T_TypePtr& value );
     const T_TypePtr GetData() const;
 
-    void          SetVector(const T_TypeVector& v);
+    void SetVector( const T_TypeVector& v );
     const T_TypeVector& GetVector() const;
     //@}
 
@@ -48,24 +48,23 @@ public:
     /** @name Operators*/
     //-------------------------------------------------------------------------
     //@{
-//    ADN_TypePtr_InVector_ABC& operator =(const ADN_TypePtr_InVector_ABC& o);
-    ADN_TypePtr_InVector_ABC& operator =(const T_TypePtr& val);
-    bool          operator ==(const ADN_TypePtr_InVector_ABC& val) const;
-    bool          operator ==(const T_TypePtr& val) const;
+    ADN_TypePtr_InVector_ABC& operator = ( const T_TypePtr& val );
+    bool operator == ( const ADN_TypePtr_InVector_ABC& val ) const;
+    bool operator == ( const T_TypePtr& val ) const;
     //@}
 
 protected:
     virtual void ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
     virtual void DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
 
-    virtual void  SetDataPrivate(void *data);
-    virtual void  InvalidatePrivate( void *ptr ,bool bDel=false);
-    virtual bool  AddItemPrivate(void *item );
-    virtual bool  RemItemPrivate(void *item );
+    virtual void SetDataPrivate( void* data );
+    virtual void InvalidatePrivate( void* ptr, bool bDel = false );
+    virtual bool AddItemPrivate( void* item );
+    virtual bool RemItemPrivate( void* item );
 
 private:
-    T_TypePtr       pData_;
-    T_TypeVector*   pVector_;
+    T_TypePtr pData_;
+    T_TypeVector* pVector_;
 };
 
 #include "ADN_TypePtr_InVector_ABC.inl"

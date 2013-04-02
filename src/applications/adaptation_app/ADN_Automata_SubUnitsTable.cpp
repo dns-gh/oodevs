@@ -69,15 +69,6 @@ void ADN_Automata_SubUnitsTable::RemoveCurrentElement()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Automata_SubUnitsTable::AddSubItems
-// Created: LGY 2011-11-03
-// -----------------------------------------------------------------------------
-void ADN_Automata_SubUnitsTable::AddSubItems( const std::string& name )
-{
-    emit ItemAdded( name );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Automata_SubUnitsTable::AddRow
 // Created: NPT 2012-11-05
 // -----------------------------------------------------------------------------
@@ -89,5 +80,5 @@ void ADN_Automata_SubUnitsTable::AddRow( int row, void* data )
     AddItem( row, 0, data, &info->GetCrossedElement()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
     AddItem( row, 1, data, &info->min_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
     AddItem( row, 2, data, &info->max_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
-    AddSubItems( info->GetCrossedElement()->strName_.GetData() );
+    emit ItemAdded( info->GetCrossedElement()->strName_.GetData() );
 }

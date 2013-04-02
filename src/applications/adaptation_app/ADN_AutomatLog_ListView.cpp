@@ -105,17 +105,15 @@ void ADN_AutomatLog_ListView::BuildBody()
 
         // Units - PC
         assert( automaton.ptrUnit_.GetData() != 0 );
-        ADN_Units_Data::UnitInfos* pUnit = automaton.ptrUnit_.GetData();
+        ADN_Automata_Data::UnitInfos* pUnit = automaton.ptrUnit_.GetData();
         std::string pcName = pUnit->strName_.GetData();
-        nCompInAutomat += AddUnit( pAutomatItem, QString( "[PC] - %1" ).arg( pcName.c_str() ), *pUnit, 1 );
+        nCompInAutomat += AddUnit( pAutomatItem, QString( "[PC] - %1" ).arg( pcName.c_str() ), *pUnit->GetCrossedElement(), 1 );
 
         // Units - Not PC
         for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); it2 != automaton.vSubUnits_.end(); ++it2 )
         {
             ADN_Automata_Data::UnitInfos* pUnitInfos = *it2;
-            assert( pUnitInfos->GetCrossedElement() != 0 );
-            pUnit = pUnitInfos->GetCrossedElement();
-            std::string pionName = pUnit->strName_.GetData();
+            std::string pionName = pUnitInfos->strName_.GetData();
             uint quantity = pUnitInfos->min_.GetData();
             if( quantity == 0 )
                 continue;
@@ -126,7 +124,7 @@ void ADN_AutomatLog_ListView::BuildBody()
                 else if( quantity > 1 )
                     --quantity;
             }
-            nCompInAutomat += AddUnit( pAutomatItem, pionName.c_str(), *pUnit, quantity );
+            nCompInAutomat += AddUnit( pAutomatItem, pionName.c_str(), *pUnitInfos->GetCrossedElement(), quantity );
             nUnitInAutomat += quantity;
         }
 

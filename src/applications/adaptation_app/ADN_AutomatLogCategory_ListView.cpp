@@ -225,8 +225,7 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
                 uint nCompInAutomat = 0;
                 for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); nUnitInAutomat == 0 || it2 != automaton.vSubUnits_.end(); )
                 {
-                    ADN_Automata_Data::UnitInfos* pUnitInfos = 0;
-                    ADN_Units_Data::UnitInfos*    pUnit;
+                    ADN_Automata_Data::UnitInfos* pUnit = 0;
                     ADN_Rich_ListViewItem* pUnitItem = 0;
 
                     uint nUnit = 0;
@@ -237,15 +236,14 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
                     }
                     else
                     {
-                        pUnitInfos = *it2;
-                        assert( pUnitInfos->GetCrossedElement() != 0 );
-                        pUnit = pUnitInfos->GetCrossedElement();
+                        pUnit = *it2;
                         ++it2;
                         if( pUnit == automaton.ptrUnit_.GetData() )
                             continue;
-                        nUnit += pUnitInfos->min_.GetData();
+                        nUnit += pUnit->min_.GetData();
                     }
-                    ADN_Units_Data::UnitInfos& unit = *pUnit;
+                    assert( pUnit->GetCrossedElement() );
+                    ADN_Units_Data::UnitInfos& unit = *pUnit->GetCrossedElement();
                     nUnitInAutomat += nUnit;
 
                     // Component
@@ -258,14 +256,14 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
                         if( compItem )
                         {
                             AddEntryToTotal( compTotal, unitTotal_, (*it3)->nNb_.GetData() );
-                        nCompInUnit += (*it3)->nNb_.GetData();
-                    }
+                            nCompInUnit += (*it3)->nNb_.GetData();
+                        }
                     }
                     if( pUnitItem )
                     {
-                    pUnitItem->setText( eColumnNbrComp, QString::number( nCompInUnit ) );
-                    AddEntryToTotal( unitTotal_, automatTotal_, nUnit );
-                    FillTotalItem( *pUnitItem, unitTotal_ );
+                        pUnitItem->setText( eColumnNbrComp, QString::number( nCompInUnit ) );
+                        AddEntryToTotal( unitTotal_, automatTotal_, nUnit );
+                        FillTotalItem( *pUnitItem, unitTotal_ );
                     }
                     unitTotal_.Clear();
                     nCompInAutomat += nCompInUnit * nUnit;

@@ -16,7 +16,6 @@ class ADN_Automata_Data;
 class ADN_Automata_ListView;
 class ADN_Table;
 class ADN_ListView;
-class UnitsFilter;
 
 // =============================================================================
 /** @class  ADN_Automata_GUI
@@ -26,8 +25,6 @@ class UnitsFilter;
 // =============================================================================
 class ADN_Automata_GUI : public ADN_GUI_ABC
 {
-    Q_OBJECT
-
 public:
     enum E_GuiElements
     {
@@ -58,18 +55,10 @@ public:
     ADN_ListView* CreateAutomataLogTablePerDotation();
     //@}
 
-private slots:
-    //! @name Slots
-    //@{
-    void OnItemAdded( const std::string& name );
-    void OnItemRemoved( const std::string& name );
-    //@}
-
 private:
     //! @name Member data
     //@{
     ADN_Automata_Data& data_;
-    UnitsFilter* pFilter_;
     //@}
 };
 

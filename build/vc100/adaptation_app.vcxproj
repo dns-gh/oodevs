@@ -1402,7 +1402,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ProgressIndicator_ABC.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ColorSelector.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\UnitsFilter.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\XmlResources.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debug|win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debug|x64'">true</ExcludedFromBuild>
@@ -1413,20 +1412,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_App.h" />
-    <CustomBuild Include="..\..\src\applications\adaptation_app\UnitsFilter.h">
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ColorNameSelector.h">
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
@@ -2551,7 +2536,7 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AiEngine_Data.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_AiEngine_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Automata_Data.h" />
-    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Automata_GUI.h">
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Automata_GUI.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -2564,7 +2549,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </Qt_file_Mocing>
+    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Automata_ListView.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Automata_SubUnitsTable.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>

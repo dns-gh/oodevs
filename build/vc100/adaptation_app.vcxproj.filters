@@ -946,9 +946,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DateEdit.cpp">
       <Filter>Source Files\Common widgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\UnitsFilter.cpp">
-      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TextEdit_ABC.cpp">
       <Filter>Source Files\Common widgets\Edit line</Filter>
     </ClCompile>
@@ -1815,6 +1812,9 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_PhInfos.h">
       <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Automata_GUI.h">
+      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -2015,9 +2015,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_DateEdit.h">
       <Filter>Source Files\Common widgets</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\UnitsFilter.h">
-      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TextEdit_ABC.h">
       <Filter>Source Files\Common widgets\Edit line</Filter>
     </CustomBuild>
@@ -2157,9 +2154,6 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Units_GUI.h">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
-    </Qt_file_Mocing>
-    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Automata_GUI.h">
-      <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Crowds_GUI.h">
       <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>

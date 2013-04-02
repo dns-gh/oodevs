@@ -34,7 +34,6 @@ public:
     //@{
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
-    void Update();
     //@}
 };
 
