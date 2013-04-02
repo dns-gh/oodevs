@@ -39,7 +39,6 @@ bool ADN_ConsistencyChecker::CheckConsistency()
 {
     ClearErrors();
     CheckValidDatabase();
-    CheckNNOConsistency();
     return !errors_.empty();
 }
 
@@ -89,74 +88,6 @@ void ADN_ConsistencyChecker::CheckValidDatabase()
         ADN_Workspace::GetWorkspace().GetWorkspaceElement( static_cast< E_WorkspaceElements >( i ) ).GetDataABC().CheckDatabaseValidity( *this );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_ConsistencyChecker::CheckNNOConsistency
-// Created: ABR 2012-06-08
-// -----------------------------------------------------------------------------
-void ADN_ConsistencyChecker::CheckNNOConsistency()
-{
-    // Fill elements
-    T_NNOElements elements_;
-    ADN_Equipments_Data::T_EquipmentInfos_Vector composantes = ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipments();
-    for( ADN_Equipments_Data::CIT_EquipmentInfos_Vector itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
-    {
-        ADN_Equipments_Data::EquipmentInfos& infos = **itComposante;
-        elements_.push_back( NNOElement( infos.strName_.GetData(), infos.strCodeNNO_.GetData(), infos.strCodeEMAT8_.GetData(), eEquipments ) );
-    }
-
-    ADN_Resources_Data::T_ResourceInfos_Vector ressourceCategories = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources();
-    for( ADN_Resources_Data::CIT_ResourceInfos_Vector itCategory = ressourceCategories.begin(); itCategory != ressourceCategories.end(); ++itCategory )
-    {
-        ADN_Resources_Data::T_CategoryInfos_Vector ressources = ( *itCategory )->categories_;
-        for( ADN_Resources_Data::CIT_CategoryInfos_Vector itRessource = ressources.begin(); itRessource != ressources.end(); ++itRessource )
-        {
-            ADN_Resources_Data::CategoryInfo& infos = **itRessource;
-            elements_.push_back( NNOElement( infos.strName_.GetData(), infos.strCodeNNO_.GetData(), infos.strCodeEMAT8_.GetData(), eResources, ( *itCategory )->nType_ ) );
-        }
-    }
-
-    // Check errors
-    for( std::vector< NNOElement >::iterator itFirst = elements_.begin(); itFirst != elements_.end(); ++itFirst )
-    {
-        NNOElement& firstElement = *itFirst;
-
-        const std::string& emat8 = firstElement.codeEMAT8_;
-        // Check initialization
-        if( firstElement.codeNNO_.empty() )
-            AddError( eMissingNNo, firstElement.name_, firstElement.tab_, firstElement.subTab_ );
-        if( emat8.empty() )
-            AddError( eMissingEmat, firstElement.name_, firstElement.tab_, firstElement.subTab_ );
-        std::string upperEmat8 = emat8;
-        std::transform( upperEmat8.begin(), upperEmat8.end(), upperEmat8.begin(), toupper);
-        if( upperEmat8 != emat8 )
-            AddError( eLowerCaseEmat, firstElement.name_, firstElement.tab_, firstElement.subTab_ );
-
-        // Check uniqueness
-        std::vector< NNOElement > NNOelements;
-        std::vector< NNOElement > EMATelements;
-        if( !firstElement.codeNNO_.empty() || !firstElement.codeEMAT8_.empty() )
-        {
-            for( std::vector< NNOElement >::iterator itSecond = itFirst + 1; itSecond != elements_.end(); ++itSecond )
-            {
-                NNOElement& secondElement = *itSecond;
-                if( !firstElement.codeNNO_.empty() && !secondElement.codeNNO_.empty() && firstElement.codeNNO_ == secondElement.codeNNO_ && !IsAlreadyRegistered( secondElement.codeNNO_, eNNoUniqueness ) )
-                    NNOelements.push_back( secondElement );
-                if( !emat8.empty() && !secondElement.codeEMAT8_.empty() && emat8 == secondElement.codeEMAT8_ && !IsAlreadyRegistered( secondElement.codeEMAT8_, eEmatUniqueness ) )
-                    EMATelements.push_back( secondElement );
-            }
-        }
-        if( !NNOelements.empty() )
-        {
-            NNOelements.insert( NNOelements.begin(), firstElement );
-            AddNNOError( eNNoUniqueness, NNOelements );
-        }
-        if( !EMATelements.empty() )
-        {
-            EMATelements.insert( EMATelements.begin(), firstElement );
-            AddNNOError( eEmatUniqueness, EMATelements );
-        }
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ConsistencyChecker::IsAlreadyRegistered
@@ -168,20 +99,4 @@ bool ADN_ConsistencyChecker::IsAlreadyRegistered( const std::string& code, E_Con
         if( it->type_ == type && it->optional_ == code )
             return true;
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ConsistencyChecker::AddNNOError
-// Created: ABR 2012-06-08
-// -----------------------------------------------------------------------------
-void ADN_ConsistencyChecker::AddNNOError( E_ConsistencyCheck type, const T_NNOElements& elements )
-{
-    assert( elements.size() > 1 );
-    ConsistencyError error( type );
-    for( auto it = elements.begin(); it != elements.end(); ++it )
-    {
-        const NNOElement& element = *it;
-        error.items_.push_back( CreateGotoInfo( element.name_, element.tab_, element.subTab_ ) );
-    }
-    errors_.push_back( error );
 }
