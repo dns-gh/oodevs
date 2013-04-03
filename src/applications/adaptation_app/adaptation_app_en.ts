@@ -310,10 +310,6 @@ Parked engine running</translation>
         <translation>(%1..%2) x %3 x %4 [ %5 ]</translation>
     </message>
     <message>
-        <source>%1 x %2 [ %3 ]</source>
-        <translation>%1 x %2 [ %3 ]</translation>
-    </message>
-    <message>
         <source>(%1..%2) x %3 [ %4/%5/%6 ]</source>
         <translation>(%1..%2) x %3 [ %4/%5/%6 ]</translation>
     </message>
@@ -344,6 +340,10 @@ Parked engine running</translation>
     <message>
         <source>Equipment [ officers/warrant officers/soldiers ]</source>
         <translation>Equipment [ officers/warrant officers/soldiers ]</translation>
+    </message>
+    <message>
+        <source>CP</source>
+        <translation type="unfinished">CP</translation>
     </message>
 </context>
 <context>

@@ -310,10 +310,6 @@ estacionado con motor encendido</translation>
         <translation>%1 [ %2/%3/%4 ]</translation>
     </message>
     <message>
-        <source>%1 x %2 [ %3 ]</source>
-        <translation>%1 x %2 [ %3 ]</translation>
-    </message>
-    <message>
         <source>Logistic per automat</source>
         <translation>Logística por autómata</translation>
     </message>
@@ -344,6 +340,10 @@ estacionado con motor encendido</translation>
     <message>
         <source>Equipment [ officers/warrant officers/soldiers ]</source>
         <translation type="unfinished">Equipos [ oficiales/sub-oficiales/soldados ]</translation>
+    </message>
+    <message>
+        <source>CP</source>
+        <translation type="unfinished">PC</translation>
     </message>
 </context>
 <context>

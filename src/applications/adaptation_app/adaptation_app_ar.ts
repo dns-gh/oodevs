@@ -298,10 +298,6 @@ Parked engine running</source>
         <translation type="unfinished">(%1... %2) × %3 x %4% [5]</translation>
     </message>
     <message>
-        <source>%1 x %2 [ %3 ]</source>
-        <translation type="unfinished">%1 x %2% [3]</translation>
-    </message>
-    <message>
         <source>(%1..%2) x %3 [ %4/%5/%6 ]</source>
         <translation type="unfinished">(%1... %2) × %3 [%4/%5/%6]</translation>
     </message>
@@ -332,6 +328,10 @@ Parked engine running</source>
     <message>
         <source>Equipment [ officers/warrant officers/soldiers ]</source>
         <translation type="unfinished">معدات [ضباط ضباط/أمر/جنود]</translation>
+    </message>
+    <message>
+        <source>CP</source>
+        <translation type="unfinished">CP</translation>
     </message>
 </context>
 <context>

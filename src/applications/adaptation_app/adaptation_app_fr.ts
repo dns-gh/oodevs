@@ -310,10 +310,6 @@ Arrêt moteur allumé</translation>
         <translation>%1 [ %2/%3/%4 ]</translation>
     </message>
     <message>
-        <source>%1 x %2 [ %3 ]</source>
-        <translation>%1 x %2 [ %3 ]</translation>
-    </message>
-    <message>
         <source>Logistic per automat</source>
         <translation>Logistique par automate</translation>
     </message>
@@ -344,6 +340,10 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Equipment [ officers/warrant officers/soldiers ]</source>
         <translation>Equipement [ officiers/sous-officiers/soldats ]</translation>
+    </message>
+    <message>
+        <source>CP</source>
+        <translation>PC</translation>
     </message>
 </context>
 <context>

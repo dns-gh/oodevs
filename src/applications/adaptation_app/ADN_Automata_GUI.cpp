@@ -132,6 +132,7 @@ namespace
             horizontalHeader()->setResizeMode( QHeaderView::Stretch );
             horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
             verticalHeader()->setVisible( false );
+            setAlternatingRowColors( false );
         }
         virtual ~ADN_CompositionTable() {}
         //@}
@@ -145,15 +146,17 @@ namespace
 ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
 {
     ADN_Table* pTable = new ADN_CompositionTable( std::string( std::string( strClassName_ ) + "automata-compositions-consistency-table" ).c_str() );
+    pTable->AddBoldGridCol( 1 );
+    pTable->AddBoldGridCol( 2 );
     // Fill the table.
     int nRow = 0;
     ADN_Automata_Data::T_AutomatonInfosVector automats = data_.vAutomata_;
     std::sort( automats.begin(), automats.end(), ADN_Tools::NameSort<ADN_Automata_Data::AutomatonInfos>() ); 
-
     for( ADN_Automata_Data::IT_AutomatonInfosVector it = automats.begin(); it != automats.end(); ++it )
     {
         ADN_Automata_Data::AutomatonInfos& automaton = **it;
         pTable->setNumRows( std::max( pTable->numRows(), nRow + 1 ) );
+        pTable->AddBoldGridRow( nRow );
         int nSubRow = 0;
         unsigned int nAutoOfficer = 0;
         unsigned int nAutoNCOfficer = 0;
@@ -174,55 +177,30 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
             {
                 ADN_Units_Data::ComposanteInfos* composantes = *it3;
                 pTable->setNumRows( std::max( pTable->numRows(), nRow + nSubRow + nSubSubRow + 1 ) );
-                QString strText;
-                if( nSubRow != 0 )
-                {
-                    strText = tr( "(%1..%2) x %3 x %4 [ %5 ]" );
-                    strText = strText.arg( pUnit->min_.GetData() )
-                                     .arg( pUnit->max_.GetData() )
-                                     .arg( composantes->nNb_.GetData() )
-                                     .arg( composantes->GetCrossedElement()->strName_.GetData().c_str() )
-                                     .arg( composantes->nNbrHumanInCrew_.GetData() );
-                }
-                else
-                {
-                    strText = tr( "%1 x %2 [ %3 ]" );
-                    strText = strText.arg( composantes->nNb_.GetData() )
-                                     .arg( composantes->GetCrossedElement()->strName_.GetData().c_str() )
-                                     .arg( composantes->nNbrHumanInCrew_.GetData() );
-                }
+                QString strText = tr( "(%1..%2) x %3 x %4 [ %5 ]" );
+                strText = strText.arg( pUnit->min_.GetData() )
+                    .arg( pUnit->max_.GetData() )
+                    .arg( composantes->nNb_.GetData() )
+                    .arg( composantes->GetCrossedElement()->strName_.GetData().c_str() )
+                    .arg( composantes->nNbrHumanInCrew_.GetData() );
                 pTable->AddItem( nRow + nSubRow + nSubSubRow, 2, composantes, strText );
                 nTroops += composantes->nNb_.GetData() * composantes->nNbrHumanInCrew_.GetData();
             }
             int nRowSpan = std::max( 1, static_cast< int >( unit.vComposantes_.size() ) );
-            QString strText;
-            if( nSubRow != 0 )
-            {
-                strText = tr( "(%1..%2) x %3 [ %4/%5/%6 ]" );
-                strText = strText.arg( pUnit->min_.GetData() )
-                                 .arg( pUnit->max_.GetData() )
-                                 .arg( unit.strName_.GetData().c_str() )
-                                 .arg( unit.nNbOfficer_.GetData() )
-                                 .arg( unit.nNbNCOfficer_.GetData() )
-                                 .arg( nTroops - unit.nNbOfficer_.GetData() - unit.nNbNCOfficer_.GetData() );
-                uint nNbUnit = pUnit->min_.GetData();
-                nAutoOfficer   += nNbUnit * unit.nNbOfficer_.GetData();
-                nAutoNCOfficer += nNbUnit * unit.nNbNCOfficer_.GetData();
-                nAutoTroops    += nNbUnit * ( nTroops - unit.nNbOfficer_.GetData() - unit.nNbNCOfficer_.GetData() );
-            }
-            else
-            {
-                strText = tr( "%1 [ %2/%3/%4 ]" );
-                strText = strText.arg( unit.strName_.GetData().c_str() )
-                                 .arg( unit.nNbOfficer_.GetData() )
-                                 .arg( unit.nNbNCOfficer_.GetData() )
-                                 .arg( nTroops - unit.nNbOfficer_.GetData() - unit.nNbNCOfficer_.GetData() );
-                nAutoOfficer   += unit.nNbOfficer_.GetData();
-                nAutoNCOfficer += unit.nNbNCOfficer_.GetData();
-                nAutoTroops    += nTroops - unit.nNbOfficer_.GetData() - unit.nNbNCOfficer_.GetData();
-            }
+            QString strText = tr( "(%1..%2) x %3 [ %4/%5/%6 ]" );
+            strText = strText.arg( pUnit->min_.GetData() )
+                .arg( pUnit->max_.GetData() )
+                .arg( unit.strName_.GetData().c_str() )
+                .arg( unit.nNbOfficer_.GetData() )
+                .arg( unit.nNbNCOfficer_.GetData() )
+                .arg( nTroops - unit.nNbOfficer_.GetData() - unit.nNbNCOfficer_.GetData() );
+            uint nNbUnit = pUnit->min_.GetData();
+            nAutoOfficer   += nNbUnit * unit.nNbOfficer_.GetData();
+            nAutoNCOfficer += nNbUnit * unit.nNbNCOfficer_.GetData();
+            nAutoTroops    += nNbUnit * ( nTroops - unit.nNbOfficer_.GetData() - unit.nNbNCOfficer_.GetData() );
+            if( nSubRow == 0 )
+                strText = strText + " ( " + tr( "CP" ) +" )";
             pTable->AddItem( nRow + nSubRow, 1, nRowSpan, 1, pUnit, strText );
-            if( nSubRow > 0 )
                 ++it2;
             nSubRow += nRowSpan;
         }
