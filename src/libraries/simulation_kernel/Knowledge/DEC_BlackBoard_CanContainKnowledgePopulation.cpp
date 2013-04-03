@@ -15,6 +15,7 @@
 #include "CheckPoints/SerializationTools.h"
 #include "KnowledgesVisitor_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_Logger.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgePopulation )
@@ -24,7 +25,18 @@ BOOST_CLASS_TRACKING( DEC_BlackBoard_CanContainKnowledgePopulation, boost::seria
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
+DEC_BlackBoard_CanContainKnowledgePopulation::DEC_BlackBoard_CanContainKnowledgePopulation( MIL_KnowledgeGroup* knowledgeGroup )
+    : pKnowledgeGroup_( knowledgeGroup )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgePopulation constructor
+// Created: LGY 2013-04-02
+// -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgePopulation::DEC_BlackBoard_CanContainKnowledgePopulation()
+    : pKnowledgeGroup_( 0 )
 {
     // NOTHING
 }
@@ -45,7 +57,8 @@ DEC_BlackBoard_CanContainKnowledgePopulation::~DEC_BlackBoard_CanContainKnowledg
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> knowledgePopulationMap_;
+    file >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
+         >> knowledgePopulationMap_;
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +67,8 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << knowledgePopulationMap_;
+    file << pKnowledgeGroup_
+         << knowledgePopulationMap_;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +139,19 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::Accept( KnowledgesVisitor_ABC
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::Merge
 // Created: LDC 2012-04-30
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgePopulation::Merge( const DEC_BlackBoard_CanContainKnowledgePopulation& /*subGroup*/ )
+void DEC_BlackBoard_CanContainKnowledgePopulation::Merge( const DEC_BlackBoard_CanContainKnowledgePopulation& subGroup )
 {
-    // NOTHING
+    for( auto itKnowledge = subGroup.knowledgePopulationMap_.begin(); itKnowledge != subGroup.knowledgePopulationMap_.end(); ++itKnowledge )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = GetKnowledgePopulation( *itKnowledge->first );
+        boost::shared_ptr< DEC_Knowledge_Population > pSubKnowledge = itKnowledge->second;
+        if( !pKnowledge.get() )
+        {
+            boost::shared_ptr< DEC_Knowledge_Population > copy( new DEC_Knowledge_Population( *pSubKnowledge, pKnowledgeGroup_->shared_from_this() ) );
+            copy->CopyFrom( *pSubKnowledge );
+            knowledgePopulationMap_.insert( std::make_pair( &copy->GetPopulationKnown(), copy ) );
+        }
+        else
+            pKnowledge->Merge( *pSubKnowledge );
+    }
 }

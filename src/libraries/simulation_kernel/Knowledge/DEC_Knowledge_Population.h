@@ -44,6 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_Knowledge_Population( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup, MIL_Population& populationKnown );
+             DEC_Knowledge_Population( const DEC_Knowledge_Population& knowledge, const boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup );
              DEC_Knowledge_Population();
     virtual ~DEC_Knowledge_Population();
     //@}
@@ -55,6 +56,12 @@ public:
     void load( MIL_CheckPointInArchive& , const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     void WriteKnowledges( xml::xostream& xos ) const;
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< unsigned int, DEC_Knowledge_PopulationConcentration* > T_ConcentrationMap;
+    typedef std::map< unsigned int, DEC_Knowledge_PopulationFlow* > T_FlowMap;
     //@}
 
     //! @name Operations
@@ -72,6 +79,7 @@ public:
     void Secure( const MIL_AgentPion& pionSecuring );
     void Exterminate( const MIL_AgentPion& exterminator, double rSurface );
     void CopyFrom( const DEC_Knowledge_Population& knowledge );
+    void Merge( const DEC_Knowledge_Population& knowledge );
     void SetCriticalIntelligenceFromPopulationKnown();
     void HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel );
     const PHY_PerceptionLevel* GetHackedPerceptionLevel() const;
@@ -94,6 +102,8 @@ public:
     MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
     MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const;
     const std::string& GetCriticalIntelligence() const;
+    const T_ConcentrationMap& GetConcentrationMap() const;
+    const T_FlowMap& GetFlowMap() const;
     //@}
 
     //! @name Network operations
@@ -114,13 +124,6 @@ private:
     DEC_Knowledge_PopulationConcentration& GetKnowledge( const MIL_PopulationConcentration& concentration );
     DEC_Knowledge_PopulationFlow& GetKnowledge( const MIL_PopulationFlow& flow );
     void UpdateReconAttributes();
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< unsigned int, DEC_Knowledge_PopulationConcentration* > T_ConcentrationMap;
-    typedef std::map< unsigned int, DEC_Knowledge_PopulationFlow* > T_FlowMap;
     //@}
 
 private:

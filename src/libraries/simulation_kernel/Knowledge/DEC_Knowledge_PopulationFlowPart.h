@@ -53,6 +53,7 @@ public:
     bool Update( const DEC_Knowledge_PopulationCollision& collision );
     bool UpdateRelevance( const double rMaxLifeTime );
     bool Clean();
+    double GetRelevance() const;
     //@}
 
     //! @name Network operations

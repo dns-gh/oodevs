@@ -35,6 +35,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             DEC_BlackBoard_CanContainKnowledgePopulation( MIL_KnowledgeGroup* knowledgeGroup );
              DEC_BlackBoard_CanContainKnowledgePopulation();
     virtual ~DEC_BlackBoard_CanContainKnowledgePopulation();
     //@}
@@ -76,6 +77,7 @@ public:
 private:
     //! @name Member data
     //@{
+    MIL_KnowledgeGroup* pKnowledgeGroup_;
     T_KnowledgePopulationMap knowledgePopulationMap_;
     //@}
 };

@@ -419,3 +419,12 @@ void DEC_Knowledge_PopulationConcentration::HackPerceptionLevel( const PHY_Perce
         nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentration::GetRelevance
+// Created: LGY 2013-04-02
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_PopulationConcentration::GetRelevance() const
+{
+    return rRelevance_;
+}

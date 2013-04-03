@@ -54,6 +54,26 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const boost::shared_ptr< MIL
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population constructor
+// Created: LGY 2012-05-11
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population::DEC_Knowledge_Population( const DEC_Knowledge_Population& knowledge, const boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup )
+    : DEC_Knowledge_ABC()
+    , nID_                         ( knowledge.idManager_.GetFreeId() )
+    , pKnowledgeGroup_             ( pKnowledgeGroup )
+    , pPopulationKnown_            ( knowledge.pPopulationKnown_ )
+    , pHackedPerceptionLevel_      ( knowledge.pHackedPerceptionLevel_ )
+    , rDominationState_            ( knowledge.rDominationState_ )
+    , criticalIntelligence_        ( knowledge.criticalIntelligence_ )
+    , bIsRecon_                    ( knowledge.bIsRecon_ )
+    , bReconAttributesValid_       ( knowledge.bReconAttributesValid_ )
+    , bDecStateUpdated_            ( knowledge.bDecStateUpdated_ )
+    , bCriticalIntelligenceUpdated_( knowledge.bCriticalIntelligenceUpdated_ )
+{
+    SendMsgCreation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population constructor
 // Created: JVT 2005-03-17
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population()
@@ -557,7 +577,7 @@ void DEC_Knowledge_Population::CopyFrom( const DEC_Knowledge_Population& knowled
 {
     for( auto it = knowledge.concentrations_.begin(); it != knowledge.concentrations_.end(); ++it )
         concentrations_[ it->first ] = new DEC_Knowledge_PopulationConcentration( *this, *it->second );
-    for( auto it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = knowledge.flows_.begin(); it != knowledge.flows_.end(); ++it )
         flows_[ it->first ] = new DEC_Knowledge_PopulationFlow( *this, *it->second );
     bIsRecon_ = knowledge.bIsRecon_;
     bReconAttributesValid_ = knowledge.bReconAttributesValid_;
@@ -565,6 +585,43 @@ void DEC_Knowledge_Population::CopyFrom( const DEC_Knowledge_Population& knowled
     criticalIntelligence_ = knowledge.criticalIntelligence_;
     bDecStateUpdated_ = true;
     bCriticalIntelligenceUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::Merge
+// Created: LGY 2013-04-02
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::Merge( const DEC_Knowledge_Population& knowledge )
+{
+    if( pHackedPerceptionLevel_ > knowledge.pHackedPerceptionLevel_ )
+        pHackedPerceptionLevel_ = knowledge.pHackedPerceptionLevel_;
+    if( knowledge.criticalIntelligence_ != "" )
+        criticalIntelligence_ = knowledge.criticalIntelligence_;
+    if( knowledge.bIsRecon_ )
+        bIsRecon_ = knowledge.bIsRecon_;
+
+    for( auto it = knowledge.concentrations_.begin(); it != knowledge.concentrations_.end(); ++it )
+    {
+        auto current = concentrations_.find( it->first );
+        if( current == concentrations_.end() )
+            concentrations_[ it->first ] = new DEC_Knowledge_PopulationConcentration( *this, *it->second );
+        else if( it->second->GetRelevance() > current->second->GetRelevance() )
+        {
+            concentrations_.erase( it->first );
+            concentrations_[ it->first ] = new DEC_Knowledge_PopulationConcentration( *this, *it->second );
+        }
+    }
+    for( auto it = knowledge.flows_.begin(); it != knowledge.flows_.end(); ++it )
+    {
+        auto current = flows_.find( it->first );
+        if( current == flows_.end() )
+            flows_[ it->first ] = new DEC_Knowledge_PopulationFlow( *this, *it->second );
+        else if( it->second->GetRelevance() > current->second->GetRelevance() )
+        {
+            flows_.erase( it->first );
+            flows_[ it->first ] = new DEC_Knowledge_PopulationFlow( *this, *it->second );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -599,4 +656,22 @@ bool DEC_Knowledge_Population::IsPerceptionDistanceHacked() const
 const PHY_PerceptionLevel* DEC_Knowledge_Population::GetHackedPerceptionLevel() const
 {
     return pHackedPerceptionLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetConcentrationMap
+// Created: LGY 2013-04-02
+// -----------------------------------------------------------------------------
+const DEC_Knowledge_Population::T_ConcentrationMap& DEC_Knowledge_Population::GetConcentrationMap() const
+{
+    return concentrations_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetFlowMap
+// Created: LGY 2013-04-02
+// -----------------------------------------------------------------------------
+const DEC_Knowledge_Population::T_FlowMap& DEC_Knowledge_Population::GetFlowMap() const
+{
+    return flows_;
 }

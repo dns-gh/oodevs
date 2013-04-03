@@ -53,6 +53,7 @@ public:
     void UpdateRelevance();
     bool Clean();
     void HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel );
+    double GetRelevance() const;
     //@}
 
     //! @name Network operations

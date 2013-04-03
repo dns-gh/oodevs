@@ -411,3 +411,12 @@ void DEC_Knowledge_PopulationFlow::HackPerceptionLevel( const PHY_PerceptionLeve
     if( *pPerceptionLevel > *pCurrentPerceptionLevel_ )
         pCurrentPerceptionLevel_ = pPerceptionLevel;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlow::GetRelevance
+// Created: LGY 2013-04-02
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_PopulationFlow::GetRelevance() const
+{
+    return flowParts_.GetRelevance();
+}

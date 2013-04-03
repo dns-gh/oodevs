@@ -209,3 +209,12 @@ bool DEC_Knowledge_PopulationFlowPart::ChangeRelevance( double rNewRelevance )
     rRelevance_ = rNewRelevance;
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart::GetRelevance
+// Created: LGY 2013-04-02
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_PopulationFlowPart::GetRelevance() const
+{
+    return rRelevance_;
+}

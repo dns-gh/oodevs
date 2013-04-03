@@ -13,6 +13,8 @@
 #include "MockArmy.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockRoleLocation.h"
+#include "StubMIL_PopulationType.h"
+#include "StubMIL_Population.h"
 #include "MockPHY_RoleInterface_Perceiver.h"
 #include "MockKnowledgeGroupFactory.h"
 #include "StubMIL_AgentTypePion.h"
@@ -20,18 +22,29 @@
 #include "MockMIL_ObjectType_ABC.h"
 #include "MockMIL_Object_ABC.h"
 #include "MockNET_Publisher_ABC.h"
+#include "StubTER_World.h"
 
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgePopulation.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_Knowledge_PopulationConcentration.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
+#include "Knowledge/DEC_Knowledge_PopulationFlow.h"
 #include "Decision/DEC_Model.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
+#include "Entities/Populations/MIL_PopulationConcentration.h"
+#include "Entities/Populations/MIL_PopulationAttitude.h"
+#include "Knowledge/DEC_Knowledge_PopulationPerception.h"
+#include "Knowledge/DEC_Knowledge_PopulationConcentrationPerception.h"
+#include "Knowledge/DEC_Knowledge_PopulationFlowPerception.h"
+#include "Entities/Populations/MIL_PopulationFlow.h"
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -298,6 +311,18 @@ namespace
             MOCK_EXPECT( publisher.Send );
             MOCK_EXPECT( army.GetKnowledge ).returns( boost::ref( blackboardArmy ) );
             MOCK_EXPECT( army.GetID ).returns( 42u );
+            MIL_KnowledgeGroupType::Terminate();
+            xml::xistringstream xis( "<knowledge-groups>"
+                                     "   <knowledge-group name='GTIA' communication-delay='01m'>"
+                                     "       <unit-knowledge max-lifetime='03h' max-unit-to-knowledge-distance='60000' interpolation-time='010m'/>"
+                                     "       <population-knowledge max-lifetime='2m'/>"
+                                     "   </knowledge-group>"
+                                     "</knowledge-groups>" );
+            MIL_KnowledgeGroupType::InitializeWithTime( xis, timeFactor );
+        }
+        virtual ~Configuration()
+        {
+            MIL_KnowledgeGroupType::Terminate();
         }
         MockNET_Publisher_ABC publisher;
         MockArmy army;
@@ -345,9 +370,35 @@ namespace
         MockMIL_ObjectType_ABC objectType;
         MockMIL_Object_ABC object;
         MockMIL_Object_ABC object2;
-
     };
 
+    class PopulationFixture : public Fixture
+    {
+    public:
+        PopulationFixture()
+            : blackBoardGroup1( group1->GetKnowledge()->GetKnowledgePopulationContainer() )
+            , blackBoardGroup2( group2->GetKnowledge()->GetKnowledgePopulationContainer() )
+            , xis( "<main dia-type='PionTest' file='PionTest.bms'/>" )
+            , model( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) )
+            , type( model )
+        {
+            WorldInitialize( "worldwide/Paris" );
+            MIL_PopulationAttitude::Initialize();
+            MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1 );
+        }
+        virtual ~PopulationFixture()
+        {
+            TER_World::DestroyWorld();
+        }
+        DEC_BlackBoard_CanContainKnowledgePopulation& blackBoardGroup1;
+        DEC_BlackBoard_CanContainKnowledgePopulation& blackBoardGroup2;
+        MockAgent agent;
+        MockMIL_Time_ABC time;
+        xml::xistringstream xis;
+        DEC_Model model;
+        std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
+        StubMIL_PopulationType type;
+    };
     void CreateAgentKnowledge( MockAgent& agent, DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard, boost::shared_ptr< MIL_KnowledgeGroup > group, double relevance )
     {
         MOCK_EXPECT( agent.BelongsTo ).once().with( boost::cref( *group ) ).returns( true );
@@ -550,4 +601,162 @@ BOOST_FIXTURE_TEST_CASE( object_merge_knowledge_group_in_knowledge_group_with_sa
     // check knowledges
     CheckKnowledge( objectBlackBoardGroup1.GetKnowledgeObject( object ), 0.6 );
     CheckKnowledge( objectBlackBoardGroup1.GetKnowledgeObject( object2 ), 0.7 );
+}
+
+// TESTS MERGE POPULATION KNOWLEDGE BETWEEN TWO KNOWLEDGE GROUPS
+
+namespace
+{
+    void UpdatePopulationKnowledge( MockAgent& agent, StubMIL_Population& population, MIL_PopulationConcentration& concentration,
+                                    MIL_PopulationFlow& flow, DEC_Knowledge_Population& knowledge )
+    {
+        DEC_Knowledge_PopulationPerception perception( agent, population );
+        DEC_Knowledge_PopulationConcentrationPerception concentrationPerception( perception, concentration );
+        DEC_Knowledge_PopulationFlowPerception flowPerception( perception, flow );
+        knowledge.Update( concentrationPerception );
+        knowledge.Update( flowPerception );
+    }
+
+    void CheckPopulationKnowledge( StubMIL_Population& population, DEC_BlackBoard_CanContainKnowledgePopulation& blackBoardGroup,
+                                   MIL_PopulationConcentration& concentration, MIL_PopulationFlow& flow, double flowRelevance = 1., double concentrationRelevance = 1. )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > knowledge = blackBoardGroup.GetKnowledgePopulation( population );
+        BOOST_REQUIRE( knowledge );
+        const DEC_Knowledge_Population::T_ConcentrationMap& concentrationMap = knowledge->GetConcentrationMap();
+        BOOST_CHECK_EQUAL( concentrationMap.size(), 1u );
+        const DEC_Knowledge_Population::T_FlowMap& flowMap = knowledge->GetFlowMap();
+        BOOST_CHECK_EQUAL( flowMap.size(), 1u );
+        mock::verify();
+
+        BOOST_CHECK_CLOSE( concentrationMap.at( concentration.GetID() )->GetRelevance(), concentrationRelevance, 0.1 );
+        BOOST_CHECK_CLOSE( flowMap.at( flow.GetID() )->GetRelevance(), flowRelevance, 0.1 );
+    }
+}
+
+BOOST_FIXTURE_TEST_CASE( population_merge_knowledge_group_in_empty_knowledge_group, PopulationFixture )
+{
+    // check group1 is empty
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgePopulations().size(), 0u );
+    mock::verify();
+
+    // knowledge creation in group2
+    StubMIL_Population population( type, army );
+    DEC_Knowledge_Population& knowledge = blackBoardGroup2.CreateKnowledgePopulation( group2, population );
+    BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgePopulations().size(), 1u );
+    mock::verify();
+
+    MIL_PopulationConcentration concentration( population, 29u );
+    MIL_PopulationFlow flow( population, concentration );
+
+    UpdatePopulationKnowledge( agent, population, concentration, flow, knowledge );
+
+    // merge two group
+    blackBoardGroup1.Merge( blackBoardGroup2 );
+
+    // check group2 is not empty
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgePopulations().size(), 1u );
+    mock::verify();
+
+    // retrieve knowledge
+    CheckPopulationKnowledge( population, blackBoardGroup1, concentration, flow );
+    flow.UnregisterSourceConcentration();
+}
+
+BOOST_FIXTURE_TEST_CASE( population_merge_knowledge_group_in_knowledge_group, PopulationFixture )
+{
+    // check group1 is empty
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgePopulations().size(), 0u );
+    mock::verify();
+
+    // knowledge creation in group2
+    StubMIL_Population population2( type, army );
+    DEC_Knowledge_Population& knowledge2 = blackBoardGroup2.CreateKnowledgePopulation( group2, population2 );
+    BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgePopulations().size(), 1u );
+    mock::verify();
+
+    // knowledge creation in group1
+    StubMIL_Population population1( type, army );
+    DEC_Knowledge_Population& knowledge1 = blackBoardGroup1.CreateKnowledgePopulation( group1, population1 );
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgePopulations().size(), 1u );
+    mock::verify();
+
+    // update knowledges
+    MIL_PopulationConcentration concentration1( population1, 29u );
+    MIL_PopulationFlow flow1( population1, concentration1 );
+    MIL_PopulationConcentration concentration2( population2, 21u );
+    MIL_PopulationFlow flow2( population2, concentration2 );
+
+    UpdatePopulationKnowledge( agent, population2, concentration2, flow2, knowledge2 );
+    UpdatePopulationKnowledge( agent, population1, concentration1, flow1, knowledge1 );
+
+    // merge two group
+    blackBoardGroup1.Merge( blackBoardGroup2 );
+
+    // check group2 is not empty
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgePopulations().size(), 2u );
+    mock::verify();
+
+    // retrieve knowledge
+    CheckPopulationKnowledge( population1, blackBoardGroup1, concentration1, flow1 );
+    CheckPopulationKnowledge( population2, blackBoardGroup1, concentration2, flow2 );
+
+    flow1.UnregisterSourceConcentration();
+    flow2.UnregisterSourceConcentration();
+}
+
+BOOST_FIXTURE_TEST_CASE( population_merge_knowledge_group_in_knowledge_group_with_same_knowledge, PopulationFixture )
+{
+    // check group1 is empty
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgePopulations().size(), 0u );
+    mock::verify();
+
+    StubMIL_Population population1( type, army );
+    StubMIL_Population population2( type, army );
+
+    // knowledge creation in group2
+    DEC_Knowledge_Population& knowledge21 = blackBoardGroup2.CreateKnowledgePopulation( group2, population1 );
+    DEC_Knowledge_Population& knowledge22 = blackBoardGroup2.CreateKnowledgePopulation( group2, population2 );
+    BOOST_CHECK_EQUAL( blackBoardGroup2.GetKnowledgePopulations().size(), 2u );
+    mock::verify();
+
+    // knowledge creation in group1
+    DEC_Knowledge_Population& knowledge11 = blackBoardGroup1.CreateKnowledgePopulation( group1, population1 );
+    DEC_Knowledge_Population& knowledge12 = blackBoardGroup1.CreateKnowledgePopulation( group1, population2 );
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgePopulations().size(), 2u );
+    mock::verify();
+
+    // update knowledges
+    MIL_PopulationConcentration concentration1( population1, 29u );
+    MIL_PopulationFlow flow1( population1, concentration1 );
+    MIL_PopulationConcentration concentration2( population2, 21u );
+    MIL_PopulationFlow flow2( population2, concentration2 );
+
+    UpdatePopulationKnowledge( agent, population2, concentration2, flow2, knowledge22 );
+    UpdatePopulationKnowledge( agent, population1, concentration1, flow1, knowledge11 );
+    UpdatePopulationKnowledge( agent, population2, concentration2, flow2, knowledge12 );
+    UpdatePopulationKnowledge( agent, population1, concentration1, flow1, knowledge21 );
+
+    MOCK_RESET( time.GetCurrentTimeStep );
+    MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 2 );
+
+    knowledge22.UpdateRelevance();
+    knowledge11.UpdateRelevance();
+
+    CheckPopulationKnowledge( population2, blackBoardGroup2, concentration2, flow2, 0, 0.983 );
+    CheckPopulationKnowledge( population1, blackBoardGroup1, concentration1, flow1, 0, 0.983 );
+
+    mock::verify();
+
+    // merge two group
+    blackBoardGroup1.Merge( blackBoardGroup2 );
+
+    // check group2 is not empty
+    BOOST_CHECK_EQUAL( blackBoardGroup1.GetKnowledgePopulations().size(), 2u );
+    mock::verify();
+
+    // retrieve knowledge
+    CheckPopulationKnowledge( population2, blackBoardGroup1, concentration2, flow2 );
+
+    flow1.UnregisterSourceConcentration();
+    flow2.UnregisterSourceConcentration();
 }
