@@ -100,6 +100,7 @@ public:
     virtual QString GetName() const;
     virtual void Select( const kernel::GraphicalEntity_ABC&, bool control, bool shift );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual bool ContextMenu( const std::vector< const kernel::GraphicalEntity_ABC* >&, const QPoint& );
     virtual void ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection );
     virtual bool ShowTooltip( const T_ObjectPicking& selection );
     virtual void HideTooltip();

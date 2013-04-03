@@ -168,6 +168,26 @@ void EntityLayerBase::ContextMenu( const kernel::GraphicalEntity_ABC& selectable
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityLayer::ContextMenu
+// Created: LGY 2013-04-03
+// -----------------------------------------------------------------------------
+bool EntityLayerBase::ContextMenu( const std::vector< const kernel::GraphicalEntity_ABC* >& elements, const QPoint& where )
+{
+    if( !selected_ )
+        return false;
+    for( auto it = elements.begin(); it != elements.end(); ++it )
+    {
+        const kernel::Entity_ABC& entity = static_cast< const kernel::Entity_ABC& >( **it );
+        if( entity.GetId() == selected_->GetId() )
+        {
+            selected_->ContextMenu( controllers_.actions_, where );
+            return true;
+        }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityLayer::IsInSelection
 // Created: LGY 2013-03-01
 // -----------------------------------------------------------------------------

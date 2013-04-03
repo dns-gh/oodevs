@@ -218,17 +218,18 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
     if( !mouse || ( mouse->buttons() & mouse->button() ) == 0 ) // mouse release
         return;
 
+    // Extract elements with opengl picking
     Layer_ABC::T_LayerElements extractedElements;
     GlTools_ABC::T_ObjectsPicking selection;
     tools_.FillSelection( point, selection );
-    for( auto it = layers_.begin(); it != layers_.end(); ++it )                                         // Extract elements
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
     {
         if( !( mouse->button() == Qt::LeftButton || ( mouse->button() == Qt::RightButton && !( *it )->IsReadOnly() ) ) )
             continue;
         ( *it )->ExtractElements( extractedElements, selection );
     }
 
-    if(  Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMousePress, false ) ) ||                      // a layer has return true
+    if( Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMousePress, false ) ) ||                       // a layer has return true
         ( mouse->globalPos() - QCursor::pos() ).manhattanLength() > 3 ||                                    // the mouse has moved more than 3 pixels since the oldPosition
         ( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton ) ||                      // no good button
         ( mouse->modifiers() == Qt::ShiftModifier  ) )                                                      // metrics mode
@@ -239,6 +240,12 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
         default_->HandleMousePress( mouse, point );
         return;
     }
+
+    // Show context menu on selected unit
+    if( mouse->button() == Qt::RightButton )
+        for( auto it = extractedElements.begin(); it != extractedElements.end(); ++it )
+            if( (*it).first->ContextMenu( (*it).second, mouse->globalPos() ) )
+                return;
 
     menu_->ExecMenu( extractedElements, point, mouse->globalPos(), mouse->button(), mouse->modifiers() );   // Elements extracted, let the menu handle it
 }
