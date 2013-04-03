@@ -127,39 +127,39 @@ void FireResultListView::Display( const AgentFireResult& result, QTreeWidgetItem
     item->setText( 0, extractor_.GetDisplayName( result.time_ ) );
     item->setText( 1, extractor_.GetDisplayName( result.target_ ) );
     DisplayFirer( item, result.firer_ );
-    if( item->childCount() == 0 )
-    {
-        QStringList equipments;
-        equipments << tools::translate( "FireResultListView", "Equipments" )
-                   << tools::translate( "FireResultListView", "avail" )
-                   << tools::translate( "FireResultListView", "unavail" )
-                   << tools::translate( "FireResultListView", "repairable" );
-        QTreeWidgetItem* subItem = new QTreeWidgetItem( equipments );
-        QFont font = subItem->font( 0 );
-        font.setBold( true );
-        subItem->setFont( 0, font );
-        subItem->setFont( 1, font );
-        subItem->setFont( 2, font );
-        subItem->setFont( 3, font );
-        item->addChild( subItem );
-        QStringList troops;
-        troops << tools::translate( "FireResultListView", "Troops" )
-               << tools::translate( "FireResultListView", "officer" )
-               << tools::translate( "FireResultListView", "warrant-off." )
-               << tools::translate( "FireResultListView", "private" );
-        subItem = new QTreeWidgetItem( troops );
-        subItem->setFont( 0, font );
-        subItem->setFont( 1, font );
-        subItem->setFont( 2, font );
-        subItem->setFont( 3, font );
-        item->addChild( subItem );
-        item->child( 0 )->setTextAlignment( 1, Qt::AlignCenter );
-        item->child( 0 )->setTextAlignment( 2, Qt::AlignCenter );
-        item->child( 0 )->setTextAlignment( 3, Qt::AlignCenter );
-        item->child( 1 )->setTextAlignment( 1, Qt::AlignCenter );
-        item->child( 1 )->setTextAlignment( 2, Qt::AlignCenter );
-        item->child( 1 )->setTextAlignment( 3, Qt::AlignCenter );
-    }
+    SetNumberOfChildren( item, 0 );
+
+    QStringList equipments;
+    equipments << tools::translate( "FireResultListView", "Equipments" )
+        << tools::translate( "FireResultListView", "avail" )
+        << tools::translate( "FireResultListView", "unavail" )
+        << tools::translate( "FireResultListView", "repairable" );
+    QTreeWidgetItem* subItem = new QTreeWidgetItem( equipments );
+    QFont font = subItem->font( 0 );
+    font.setBold( true );
+    subItem->setFont( 0, font );
+    subItem->setFont( 1, font );
+    subItem->setFont( 2, font );
+    subItem->setFont( 3, font );
+    item->addChild( subItem );
+    QStringList troops;
+    troops << tools::translate( "FireResultListView", "Troops" )
+        << tools::translate( "FireResultListView", "officer" )
+        << tools::translate( "FireResultListView", "warrant-off." )
+        << tools::translate( "FireResultListView", "private" );
+    subItem = new QTreeWidgetItem( troops );
+    subItem->setFont( 0, font );
+    subItem->setFont( 1, font );
+    subItem->setFont( 2, font );
+    subItem->setFont( 3, font );
+    item->addChild( subItem );
+    item->child( 0 )->setTextAlignment( 1, Qt::AlignCenter );
+    item->child( 0 )->setTextAlignment( 2, Qt::AlignCenter );
+    item->child( 0 )->setTextAlignment( 3, Qt::AlignCenter );
+    item->child( 1 )->setTextAlignment( 1, Qt::AlignCenter );
+    item->child( 1 )->setTextAlignment( 2, Qt::AlignCenter );
+    item->child( 1 )->setTextAlignment( 3, Qt::AlignCenter );
+
     assert( item->childCount() == 2 );
     SetNumberOfChildren( item->child( 0 ), result.Count() );
     SetNumberOfChildren( item->child( 1 ), eNbrHumanWound );

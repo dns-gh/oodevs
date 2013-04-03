@@ -228,7 +228,6 @@ namespace {
             if( !bbKg )
                 return;
             boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = bbKg->GetKnowledgeAgent( knowledge );
-            assert( pKnowledge );
             if( !pKnowledge )
             {
                 MT_LOG_ERROR_MSG( "Invalid knowledge while perceiving living enemies for agent " << pPion_->GetID() );
