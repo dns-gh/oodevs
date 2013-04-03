@@ -125,7 +125,8 @@ void Object::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "id"  , GetID() )
             << xml::attribute( "name", name_ )
             << xml::attribute( "type", type );
-    pColor_->WriteODB( xos );
+    if( pColor_.get() )
+        pColor_->WriteODB( xos );
     GetLocalisation().Write( xos );
     MIL_Object::WriteODB( xos );
     xos << xml::end; // object
@@ -190,7 +191,8 @@ void Object::SendCreation() const
         asn().set_external_identifier( externalIdentifier_ );
     if( GetExtensions() )
         GetExtensions()->SendFullState( asn );
-    pColor_->SendFullState( asn );
+    if( pColor_.get() )
+        pColor_->SendFullState( asn );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
