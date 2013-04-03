@@ -690,6 +690,10 @@ Arrêt moteur allumé</translation>
         <source>Unit %1 has no crew in equipment &apos;%2&apos;</source>
         <translation>L&apos;unité %1 ne possède aucun équipage dans l&apos;équipement &apos;%2&apos;</translation>
     </message>
+    <message>
+        <source>Equipment %1 has no repair type defined in maintenance system in a &apos;gravity&apos; category.</source>
+        <translation>L&apos;équipement %1 n&apos;a pas de type de réparation défini dans la chaîne de maintenance dans une catégorie &apos;gravité&apos;</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

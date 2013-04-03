@@ -285,6 +285,18 @@ void ADN_Equipments_Data::NTIInfos::WriteArchive( xml::xostream& output ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: NTIInfos::IsTypeValid
+// Created: MMC 2013-04-02
+// -----------------------------------------------------------------------------
+bool ADN_Equipments_Data::NTIInfos::IsTypeValid() const
+{
+    if( bIsPresent_.GetData() && !bCanRepairEA_.GetData() && !bCanRepairM_.GetData() )
+        return false;
+    return true;
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: LogMaintenanceInfos::LogMaintenanceInfos
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
@@ -368,6 +380,17 @@ void ADN_Equipments_Data::LogMaintenanceInfos::WriteArchive( xml::xostream& outp
     NTI2Infos_.WriteArchive( output );
     NTI3Infos_.WriteArchive( output );
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogMaintenanceInfos::IsRepairTypeValid
+// Created: MMC 2013-04-02
+// -----------------------------------------------------------------------------
+bool ADN_Equipments_Data::LogMaintenanceInfos::IsRepairTypeValid() const
+{
+    if( !NTI1Infos_.IsTypeValid() || !NTI2Infos_.IsTypeValid() || !NTI3Infos_.IsTypeValid() )
+        return false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -507,6 +530,17 @@ void ADN_Equipments_Data::LogInfos::WriteArchive( xml::xostream& output ) const
     if( bHasSupplyInfos_.GetData() )
         supplyInfos_.WriteArchive( output );
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogInfos::IsRepairTypeValid
+// Created: MMC 2013-04-02
+// -----------------------------------------------------------------------------
+bool ADN_Equipments_Data::LogInfos::IsRepairTypeValid() const
+{
+    if( !bHasMaintenanceInfos_.GetData() )
+        return true;
+    return maintenanceInfos_.IsRepairTypeValid();
 }
 
 // -----------------------------------------------------------------------------
@@ -1806,6 +1840,8 @@ void ADN_Equipments_Data::EquipmentInfos::CheckDatabaseValidity( ADN_Consistency
     if( attritionBreakdowns_.vBreakdowns_.empty() || randomBreakdowns_.vBreakdowns_.empty() )
         if( ptrArmor_.GetData()->nType_.GetData() == eProtectionType_Material )
             checker.AddError( eMissingBreakdown, strName_.GetData(), eEquipments );
+    if( !logInfos_.IsRepairTypeValid() )
+        checker.AddError( eMissingRepairType, strName_.GetData(), eEquipments );
 }
 
 // -----------------------------------------------------------------------------

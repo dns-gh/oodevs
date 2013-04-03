@@ -88,7 +88,6 @@ void ADN_ConsistencyChecker::CheckValidDatabase()
         ADN_Workspace::GetWorkspace().GetWorkspaceElement( static_cast< E_WorkspaceElements >( i ) ).GetDataABC().CheckDatabaseValidity( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ConsistencyChecker::IsAlreadyRegistered
 // Created: ABR 2012-06-08

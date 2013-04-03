@@ -24,6 +24,8 @@ enum E_ConsistencyCheck
     eMissingChoiceComposite,
     eMissingSymbols,
     eMissionAttachmentInvalid,
+    eMissingRepairType,
+
     eMissingConvoy,
     eMissingConvoyMission,
     eMissingBreakdown,

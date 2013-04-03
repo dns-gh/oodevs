@@ -690,6 +690,10 @@ Parked engine running</translation>
         <source>Unit %1 has no crew in equipment &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Equipment %1 has no repair type defined in maintenance system in a &apos;gravity&apos; category.</source>
+        <translation>Equipment %1 has no repair type defined in maintenance system in a &apos;gravity&apos; category.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
