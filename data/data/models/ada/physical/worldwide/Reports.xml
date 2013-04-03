@@ -693,5 +693,7 @@
   </report>
   <report category="operational" id="508" message="Impossible Indirect Fire : unit neutralized"/>
   <report category="operational" id="509" message="Work impossible : no demine capacity"/>
+  <report category="operational" id="510" message="Surrendered unit recognized"/>
+  <report category="operational" id="511" message="Surrendered unit identified"/>
 </reports>
-<!-- signature="1459967207" -->
+<!-- signature="2184233667" -->

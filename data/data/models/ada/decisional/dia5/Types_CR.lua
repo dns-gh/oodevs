@@ -473,4 +473,6 @@ eRC_CloseCrowdAttitudeChanged = 506
 eRC_CloseCrowdUrbanDestruction = 507
 eRC_AgentNeutralizedIndirectFireImpossible = 508
 eRC_ObjetNonDevalorisable = 509
-eNbr = 510
+eRC_AgentNeutralizedIndirectFireImpossible = 508
+eRC_ObjetNonDevalorisable = 509
+eNbr = 512
