@@ -44,13 +44,13 @@ integration.startBuildIt = function( object, objectType )
     if not objectType then
         objectType = integration.ontology.types.object
     end
-    local checkpoint = integration.obtenirObjetProcheDe( object:getLocalisation(), 
+    local existingObject = integration.obtenirObjetProcheDe( object:getLocalisation(), 
                         object:getType(), 10 )
     object[ myself ] = object[ myself ] or {}
-    if checkpoint == nil then
+    if existingObject == nil then
         object[myself].actionBuild = DEC_StartCreateObject( object.source )
     else
-        object[myself].actionBuild = DEC_StartCreateObject( checkpoint.source ) -- Cas d'une reprise sur sauvegarde
+        object[myself].actionBuild = DEC_StartCreateObject( existingObject.source ) 
     end
     actionCallbacks[ object[ myself ].actionBuild ] = function( arg ) 
         object[ myself ].actionBuildState = arg
@@ -64,8 +64,15 @@ integration.startBuildIt = function( object, objectType )
 end
 
 integration.startBuildItInstantaneously = function( object, objectType )
+    local existingObject = integration.obtenirObjetProcheDe( object:getLocalisation(), 
+                        object:getType(), 10 )
     object[ myself ] = object[ myself ] or {}
-    object[myself].actionCreate = DEC_StartCreateObjectInstantaneously( object.source )
+    if existingObject == nil then
+        object[ myself ].actionCreate = DEC_StartCreateObjectInstantaneously( object.source )
+    else
+        object.knowledge = CreateKnowledge( objectType, existingObject )
+        return
+    end 
     actionCallbacks[ object[ myself ].actionCreate ] = function( arg ) 
         object[ myself ].actionCreateState = arg
     end
