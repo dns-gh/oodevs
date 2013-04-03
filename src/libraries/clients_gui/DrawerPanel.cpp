@@ -46,54 +46,66 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     , selectedEntity_ ( controllers )
 {
     SubObjectName subObject( "DrawerPanel" );
-    Q3VBox* vbox = new Q3VBox( this );
-    {
-        Q3HBox* box = new Q3HBox( vbox );
-        box->layout()->setAlignment( Qt::AlignCenter );
-        box->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
-        box->setBackgroundMode( Qt::PaletteButton );
-        box->setFrameStyle( QFrame::StyledPanel | Q3Frame::Raised );
 
-        RichToolButton* btn = new RichToolButton( "LoadDrawings", box );
-        btn->setAutoRaise( true );
-        btn->setIconSet( MAKE_PIXMAP( open ) );
-        QToolTip::add( btn, tr( "Load drawings file" ) );
-        connect( btn, SIGNAL( clicked() ), SLOT( Open() ) );
+    //main drawing box box panel
+    Q3HBox* box = new Q3HBox();
+    box->layout()->setAlignment( Qt::AlignCenter );
+    box->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
+    box->setBackgroundMode( Qt::PaletteButton );
+    box->setFrameStyle( QFrame::StyledPanel | Q3Frame::Raised );
 
-        btn = new RichToolButton( "saveDrawings", box );
-        btn->setAutoRaise( true );
-        btn->setIconSet( MAKE_PIXMAP( save ) );
-        QToolTip::add( btn, tr( "Save drawings to file" ) );
-        connect( btn, SIGNAL( clicked() ), SLOT( Save() ) );
+    RichToolButton* btn = new RichToolButton( "LoadDrawings", box );
+    btn->setAutoRaise( true );
+    btn->setIconSet( MAKE_PIXMAP( open ) );
+    QToolTip::add( btn, tr( "Load drawings file" ) );
+    connect( btn, SIGNAL( clicked() ), SLOT( Open() ) );
 
-        btn = new RichToolButton( "clearDrawings", box );
-        btn->setAutoRaise( true );
-        btn->setIconSet( MAKE_PIXMAP( cross ) );
-        btn->setFixedSize( 25, 25 );
-        QToolTip::add( btn, tr( "Clear drawings" ) );
-        connect( btn, SIGNAL( clicked() ), SLOT( Clear() ) );
+    btn = new RichToolButton( "saveDrawings", box );
+    btn->setAutoRaise( true );
+    btn->setIconSet( MAKE_PIXMAP( save ) );
+    QToolTip::add( btn, tr( "Save drawings to file" ) );
+    connect( btn, SIGNAL( clicked() ), SLOT( Save() ) );
 
-        color_ = new ColorButton( "color", box, "" );
-        toolBox_ = new QToolBox( vbox );
-        toolBox_->setMargin( 0 );
-        toolBox_->setBackgroundColor( Qt::white );
-        connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChange( const QColor& ) ) );
+    btn = new RichToolButton( "clearDrawings", box );
+    btn->setAutoRaise( true );
+    btn->setIconSet( MAKE_PIXMAP( cross ) );
+    btn->setFixedSize( 25, 25 );
+    QToolTip::add( btn, tr( "Clear drawings" ) );
+    connect( btn, SIGNAL( clicked() ), SLOT( Clear() ) );
 
-        btn = new RichToolButton( "startDrawing", box );
-        btn->setAutoRaise( true );
-        btn->setIconSet( MAKE_PIXMAP( pencil ) );
-        btn->setFixedSize( 25, 25 );
-        QToolTip::add( btn, tr( "Start drawing" ) );
-        connect( btn, SIGNAL( clicked() ), SLOT( StartDrawing() ) );
-    }
-    RichGroupBox* group = new RichGroupBox( "parentgroup", vbox );
-    {
-        new QLabel( tr( "Parent:" ), group );
-        parentLabel_ = new QLabel( "---", group );
-    }
-    toolBox_ = new QToolBox( vbox );
+    color_ = new ColorButton( "color", box, "" );
+    toolBox_ = new QToolBox();
     toolBox_->setMargin( 0 );
     toolBox_->setBackgroundColor( Qt::white );
+    connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChange( const QColor& ) ) );
+
+    btn = new RichToolButton( "startDrawing", box );
+    btn->setAutoRaise( true );
+    btn->setIconSet( MAKE_PIXMAP( pencil ) );
+    btn->setFixedSize( 25, 25 );
+    QToolTip::add( btn, tr( "Start drawing" ) );
+    connect( btn, SIGNAL( clicked() ), SLOT( StartDrawing() ) );
+    
+    //parent group
+    QLabel* parentLabelText = new QLabel( tr( "Parent:" ) );
+    parentLabel_ = new QLabel( "---" );
+
+    RichGroupBox* group = new RichGroupBox( "parentgroup" );
+    QHBoxLayout* groupLayout = new QHBoxLayout( group );
+    groupLayout->addWidget( parentLabelText );
+    groupLayout->addWidget( parentLabel_ );
+    
+    //toolbox
+    toolBox_ = new QToolBox();
+    toolBox_->setMargin( 0 );
+    toolBox_->setBackgroundColor( Qt::white );
+
+    QWidget* vbox = new QWidget( this );
+    QVBoxLayout* vBoxLayout = new QVBoxLayout( vbox );
+    vBoxLayout->addWidget( box );
+    vBoxLayout->addWidget( group );
+    vBoxLayout->addWidget( toolBox_ );
+    vBoxLayout->addStretch( 1 );
     setWidget( vbox );
 
     controllers_.Register( *this );
