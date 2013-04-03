@@ -46,7 +46,7 @@ ASCExtractor::ASCExtractor( const tools::Path& file )
     , noValueData_    ( 0. )
 {
     GDALAllRegister();
-    pDataset_ = ( GDALDataset* ) GDALOpen( file.ToLocal().c_str(), GA_ReadOnly );
+    pDataset_ = ( GDALDataset* ) GDALOpen( file.ToUTF8().c_str(), GA_ReadOnly );
     if( pDataset_ == NULL )
         throw MASA_EXCEPTION( "Unable to open file : " + file.ToUTF8() );
 
@@ -75,7 +75,7 @@ ASCExtractor::ASCExtractor( const tools::Path& file, const tools::Path& projecti
     , noValueData_    ( 0. )
 {
     GDALAllRegister();
-    pDataset_ = ( GDALDataset* ) GDALOpen( file.ToLocal().c_str(), GA_ReadOnly );
+    pDataset_ = ( GDALDataset* ) GDALOpen( file.ToUTF8().c_str(), GA_ReadOnly );
     if( pDataset_ == NULL )
         throw MASA_EXCEPTION( "Unable to open file : " + file.ToUTF8() );
 

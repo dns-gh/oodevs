@@ -31,7 +31,7 @@ ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::C
     , coordinateConverter_( coordinateConverter )
 {
     OGRRegisterAll();
-    dataSource_.reset( OGRSFDriverRegistrar::Open( filename.ToLocal().c_str(), FALSE ), OGRDataSource::DestroyDataSource );
+    dataSource_.reset( OGRSFDriverRegistrar::Open( filename.ToUTF8().c_str(), FALSE ), OGRDataSource::DestroyDataSource );
     if( ! dataSource_ )
         throw MASA_EXCEPTION( tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot load shapefile %1" ).arg( filename.ToUTF8().c_str() ).toStdString() );
 

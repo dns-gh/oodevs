@@ -18,7 +18,7 @@
 // -----------------------------------------------------------------------------
 TER_StaticData::TER_StaticData( const tools::Path& strGraphArchive, const tools::Path& strNodeArchive, const tools::Path& strLinkArchive, float precision )
 {
-    pGraph_ = new StaticTerrainGraph( strGraphArchive.ToLocal(), strNodeArchive.ToLocal(), strLinkArchive.ToLocal(), precision );
+    pGraph_ = new StaticTerrainGraph( strGraphArchive, strNodeArchive, strLinkArchive, precision );
 }
 
 // -----------------------------------------------------------------------------

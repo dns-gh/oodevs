@@ -108,12 +108,12 @@ void UrbanFileExporter::Initialize()
         throw MASA_EXCEPTION( "ESRI Shapefile driver not available" );
     const tools::Path filepath = directory_ / name_ + ".shp";
     filepath.Remove();
-    source_ = poDriver->CreateDataSource( filepath.ToLocal().c_str(), 0 );
+    source_ = poDriver->CreateDataSource( filepath.ToUTF8().c_str(), 0 );
     if( !source_ )
         throw MASA_EXCEPTION( "gdal_ogr : write shape failed " + filepath.ToUTF8() );
     OGRSpatialReference newSpatialRef;
     newSpatialRef.SetWellKnownGeogCS( "EPSG:4326" );
-    layer_ = source_->CreateLayer( filepath.ToLocal().c_str(), &newSpatialRef, wkbPolygon, 0 );
+    layer_ = source_->CreateLayer( filepath.ToUTF8().c_str(), &newSpatialRef, wkbPolygon, 0 );
     if( !layer_ )
         throw MASA_EXCEPTION( "Layer creation failed" );
 }

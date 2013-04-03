@@ -60,7 +60,7 @@ namespace
     struct NameShapeLayer : public GraphicSetup_ABC, public NoVBOShapeLayer
     {
         NameShapeLayer( const tools::Path& filename )
-            : NoVBOShapeLayer( *this, filename.ToLocal().c_str() )
+            : NoVBOShapeLayer( *this, filename )
         {}
         virtual void DrawName( const geometry::Point2f& at, const std::string& name )
         {
