@@ -229,8 +229,6 @@ namespace
         const kernel::Entity_ABC* superior = hierarchies->GetSuperior();
         if( !superior )
             return false;
-        if( dynamic_cast< const kernel::KnowledgeGroup_ABC* >( superior ) )
-            return false;
         unsigned int count = 0u;
         tools::Iterator< const kernel::KnowledgeGroup_ABC& > it = model.knowledgeGroups_.CreateIterator();
         while( it.HasMoreElements() )
