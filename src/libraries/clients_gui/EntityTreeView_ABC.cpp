@@ -64,7 +64,7 @@ void EntityTreeView_ABC::NotifyActivated( const kernel::Entity_ABC& entity )
     if( IsTypeRejected( entity ) )
         return;
     QStandardItem* item = dataModel_.FindDataItem( entity );
-    if( item )
+    if( item && item->index().isValid() )
         scrollTo( proxyModel_->mapFromSource( item->index() ) );
 }
 
@@ -167,8 +167,11 @@ void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel
         if( *it && !IsTypeRejected( **it ) )
             if( QStandardItem* item = dataModel_.FindDataItem( **it ) )
             {
-                selectionModel()->select( proxyModel_->mapFromSource( item->index() ), QItemSelectionModel::Select | QItemSelectionModel::Rows );
-                scrollTo( proxyModel_->mapFromSource( item->index() ) );
+                if( item->index().isValid() )
+                {
+                    selectionModel()->select( proxyModel_->mapFromSource( item->index() ), QItemSelectionModel::Select | QItemSelectionModel::Rows );
+                    scrollTo( proxyModel_->mapFromSource( item->index() ) );
+                }
             }
     }
     blockSelect_ = false;

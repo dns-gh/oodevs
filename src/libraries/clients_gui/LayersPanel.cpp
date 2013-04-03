@@ -340,7 +340,8 @@ void LayersPanel::MoveItem( int row, Layer* layer, int newPlace, int oldPlace, i
         layersModel_->removeRow( row + oldPlace );
         T_Layers::iterator it = std::find( newLayers_.begin(), newLayers_.end(), layer );
         std::swap( *it, *(it+step) );
-        layersList_->selectionModel()->select( item->index(), QItemSelectionModel::Select );
+        if( item->index().isValid() )
+            layersList_->selectionModel()->select( item->index(), QItemSelectionModel::Select );
         UpdateLeastAndMostVisible();
     }
 }

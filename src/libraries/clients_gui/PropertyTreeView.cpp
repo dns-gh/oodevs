@@ -73,7 +73,8 @@ void PropertyTreeView::RestoreState( const PropertyModel& model )
 {
     BOOST_FOREACH( const std::string& category, itemsCollapsed_ )
         if( QStandardItem* item = model.FindItem( category.c_str() ) )
-            setExpanded( item->index(), false );
+            if( item->index().isValid() )
+                setExpanded( item->index(), false );
 }
 
 // -----------------------------------------------------------------------------

@@ -249,7 +249,7 @@ void CommonDelegate::SetRowDependency( int dependentRow, int referenceRow, E_Lin
 // -----------------------------------------------------------------------------
 void CommonDelegate::OnItemChanged( QStandardItem* item )
 {
-    if( item && IsCheckBox( item->index() ) )
+    if( item && item->index().isValid() && IsCheckBox( item->index() ) )
         emit CheckedStateChanged( *item );
 }
 
