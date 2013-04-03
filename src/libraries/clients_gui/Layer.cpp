@@ -341,7 +341,7 @@ void Layer::ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Poi
 // Name: Layer::ContextMenu
 // Created: LGY 2013-04-03
 // -----------------------------------------------------------------------------
-bool Layer::ContextMenu( const std::vector< const kernel::GraphicalEntity_ABC* >&, const QPoint& )
+bool Layer::ContextMenu( const std::vector< const kernel::GraphicalEntity_ABC* >&, const geometry::Point2f&, const QPoint& )
 {
     return false;
 }

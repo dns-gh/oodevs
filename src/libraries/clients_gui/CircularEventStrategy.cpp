@@ -244,7 +244,7 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
     // Show context menu on selected unit
     if( mouse->button() == Qt::RightButton )
         for( auto it = extractedElements.begin(); it != extractedElements.end(); ++it )
-            if( (*it).first->ContextMenu( (*it).second, mouse->globalPos() ) )
+            if( (*it).first->ContextMenu( (*it).second, point, mouse->globalPos() ) )
                 return;
 
     menu_->ExecMenu( extractedElements, point, mouse->globalPos(), mouse->button(), mouse->modifiers() );   // Elements extracted, let the menu handle it
