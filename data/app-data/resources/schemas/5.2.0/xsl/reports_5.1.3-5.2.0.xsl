@@ -517,6 +517,10 @@
               <xsl:when test="@id=504">eRC_TirIndirectLessInterventionType</xsl:when>
               <xsl:when test="@id=506">eRC_CloseCrowdAttitudeChanged</xsl:when>
               <xsl:when test="@id=507">eRC_CloseCrowdUrbanDestruction</xsl:when>
+              <xsl:when test="@id=508">eRC_AgentNeutralizedIndirectFireImpossible</xsl:when>
+              <xsl:when test="@id=509">eRC_ObjetNonDevalorisable</xsl:when>
+              <xsl:when test="@id=510">eRC_SurrenderedUnitRecognized</xsl:when>
+              <xsl:when test="@id=511">eRC_SurrenderedUnitIdentified</xsl:when>
               <xsl:otherwise/>
             </xsl:choose>
           </xsl:attribute>
