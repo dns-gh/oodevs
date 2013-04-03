@@ -39,7 +39,7 @@ integration.startImproveIt = function( object )
     meKnowledge:RC( eRC_DebutValorisation, object.source )
 end
 
-integration.updateImproveIt = function( object )
+integration.updateImproveIt = function( object ) -- used by scipio
     if object[myself].actionImprovementState == eActionObjetImpossible then
         DEC_Trace( "impossible works" ) 
     elseif object[myself].actionImprovementState == eActionObjetManqueDotation then
@@ -48,6 +48,23 @@ integration.updateImproveIt = function( object )
         DEC_Trace( "no capacity" ) 
     end
 end
+
+integration.updateImproveItWithFeedbacks = function( object ) -- used by sword ML
+    if object[myself].actionImprovementState == eActionObjetImpossible then
+        DEC_Trace( "this object cannot be improved" )
+       return false
+    elseif object[myself].actionImprovementState == eActionObjetManqueDotation then
+        DEC_Trace( "not enough dotation" ) 
+        return false
+    elseif object[myself].actionImprovementState == eActionObjetPasDeCapacite then
+        DEC_Trace( "the agent has not capacity to improve the object" )
+        return false
+    elseif object[myself].actionImprovementState == eActionObjetTerminee then
+        return true
+    end 
+    -- return nil if action is running
+end
+
 
 integration.stopImproveIt = function( object )
     object[myself] = object[myself] or {} 

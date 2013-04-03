@@ -105,9 +105,12 @@ end
 -- -----------------------------------------------------------------------------
 -- Update the object creation (object, urban block) 
 -- -----------------------------------------------------------------------------
-integration.updateBuildIt = function( object )
+integration.updateBuildIt = function( object, returnActionDone )
     if object[myself].actionBuildState == eActionObjetTerminee then --on a fini de construire un obstacle de manoeuvre mais on ne renvoie pas de feedback done sans l'avoir activé
         if( object.knowledge ~= nil ) then
+            if returnActionDone then
+                return eRC_FinTravauxObjet
+            end
             meKnowledge:RC( eRC_FinTravauxObjet, object.knowledge.source )
         end
         object[myself].actionBuild = DEC__StopAction( object[myself].actionBuild )
