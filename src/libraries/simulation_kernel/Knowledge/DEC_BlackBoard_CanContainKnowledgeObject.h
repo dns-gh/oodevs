@@ -65,7 +65,7 @@ public:
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
     void Prepare();
     void UpdateUniversalObjects( const MIL_Army_ABC& team );
-    void Merge( const DEC_BlackBoard_CanContainKnowledgeObject* subGroup );
+    void Merge( const DEC_BlackBoard_CanContainKnowledgeObject* subGroup, const MIL_Army_ABC& teamKnowing  );
     void GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter );
     void GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius, bool nonActivatedObstacles );
     void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
@@ -126,7 +126,7 @@ private:
     void GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight );
     bool HasObjectsAtInteractionHeightCache( double rHeight ) const;
     void UpdateUniversalObject( MIL_Object_ABC& object, const MIL_Army_ABC& team );
-    void CreateKnowledgeObject( const DEC_Knowledge_Object& knowledge );
+    void CreateKnowledgeObject( const DEC_Knowledge_Object& knowledge, const MIL_Army_ABC& teamKnowing );
     //@}
 
 private:

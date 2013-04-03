@@ -85,24 +85,29 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const DEC_Knowledge_Agent& knowledge, 
     : pArmyKnowing_                  ( &knowledgeGroup->GetArmy() )
     , pKnowledgeGroup_               ( knowledgeGroup )
     , pAgentKnown_                   ( knowledge.pAgentKnown_ )
-    , nID_                           ( knowledge.idManager_.GetFreeId() )
-    , pCurrentPerceptionLevel_       ( knowledge.pCurrentPerceptionLevel_ )
-    , pPreviousPerceptionLevel_      ( knowledge.pPreviousPerceptionLevel_ )
-    , pMaxPerceptionLevel_           ( knowledge.pMaxPerceptionLevel_ )
-    , nTimeLastUpdate_               ( knowledge.nTimeLastUpdate_ )
-    , rRelevance_                    ( knowledge.rRelevance_ )
-    , nTimeExtrapolationEnd_         ( knowledge.nTimeExtrapolationEnd_ )
-    , bLocked_                       ( knowledge.bLocked_ )
-    , bValid_                        ( knowledge.bValid_ )
-    , bCreatedOnNetwork_             ( knowledge.bCreatedOnNetwork_ )
-    , bRelevanceUpdated_             ( knowledge.bRelevanceUpdated_ )
-    , bCurrentPerceptionLevelUpdated_( knowledge.bCurrentPerceptionLevelUpdated_ )
-    , bMaxPerceptionLevelUpdated_    ( knowledge.bMaxPerceptionLevelUpdated_ )
-    , bCriticalIntelligenceUpdated_  ( knowledge.bCriticalIntelligenceUpdated_ )
-    , bPerceptionDistanceHacked_     ( knowledge.bPerceptionDistanceHacked_ )
-    , rLastRelevanceSent_            ( knowledge.rLastRelevanceSent_ )
+    , nID_                           ( idManager_.GetFreeId() )
+    , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
+    , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
+    , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
+    , nTimeLastUpdate_               ( 0 )
+    , rRelevance_                    ( 0 )
+    , nTimeExtrapolationEnd_         ( -1 )
+    , bLocked_                       ( false )
+    , bValid_                        ( true )
+    , bCreatedOnNetwork_             ( !pAgentKnown_->BelongsTo( *knowledgeGroup ) )
+    , bRelevanceUpdated_             ( false )
+    , bCurrentPerceptionLevelUpdated_( false )
+    , bMaxPerceptionLevelUpdated_    ( false )
+    , bCriticalIntelligenceUpdated_  ( false )
+    , bPerceptionDistanceHacked_     ( false )
+    , rLastRelevanceSent_            ( 0 )
 {
-    SendMsgCreation();
+    CopyFrom( knowledge );
+    if( bCreatedOnNetwork_ )
+    {
+        SendMsgCreation();
+        SendFullState();
+    }
 }
 
 // -----------------------------------------------------------------------------

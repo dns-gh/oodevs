@@ -167,6 +167,37 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, co
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object constructor
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, const MIL_Army_ABC& armyKnowing )
+    : DEC_Knowledge_ABC()
+    , pArmyKnowing_                    ( &armyKnowing )
+    , pObjectKnown_                    ( copy.pObjectKnown_ )
+    , objectId_                        ( copy.objectId_ )
+    , pObjectType_                     ( copy.pObjectType_ )
+    , nID_                             ( copy.idManager_.GetFreeId() )
+    , name_                            ( copy.name_ )
+    , nAttributesUpdated_              ( eAttr_AllAttributes )
+    , pOwnerArmy_                      ( copy.pOwnerArmy_ )
+    , localisation_                    ( copy.localisation_ )
+    , avoidanceLocalisation_           ( copy.avoidanceLocalisation_ )
+    , pCurrentPerceptionLevel_         ( copy.pCurrentPerceptionLevel_ )
+    , pPreviousPerceptionLevel_        ( copy.pPreviousPerceptionLevel_ )
+    , pMaxPerceptionLevel_             ( copy.pMaxPerceptionLevel_ )
+    , perceptionPerAutomateSet_        ( copy.perceptionPerAutomateSet_ )
+    , previousPerceptionPerAutomateSet_( copy.previousPerceptionPerAutomateSet_ )
+    , nTimeLastUpdate_                 ( copy.nTimeLastUpdate_ )
+    , rRelevance_                      ( copy.rRelevance_ )
+    , bValid_                          ( copy.bValid_ )
+    , bPerceptionDistanceHacked_       ( copy.bPerceptionDistanceHacked_ )
+    , bSkipPreparation_                ( false )
+{
+    SendMsgCreation();
+    SendUpdateOnNetwork();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object destructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------

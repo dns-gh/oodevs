@@ -401,7 +401,7 @@ namespace
     };
     void CreateAgentKnowledge( MockAgent& agent, DEC_BlackBoard_CanContainKnowledgeAgent& blackBoard, boost::shared_ptr< MIL_KnowledgeGroup > group, double relevance )
     {
-        MOCK_EXPECT( agent.BelongsTo ).once().with( boost::cref( *group ) ).returns( true );
+        MOCK_EXPECT( agent.BelongsTo ).returns( true );
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms' id='12' name='stuff'/>" );
         std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
         DEC_Model model( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
@@ -533,7 +533,9 @@ BOOST_FIXTURE_TEST_CASE( object_merge_knowledge_group_in_empty_knowledge_group, 
     BOOST_CHECK_EQUAL( objectBlackBoardGroup2.GetKnowledgeObjects().size(), 1u );
 
     // merge
-    objectBlackBoardGroup1.Merge( &objectBlackBoardGroup2 );
+    boost::shared_ptr< DEC_Knowledge_Object > knowledgeMerged( new DEC_Knowledge_Object( *knowledge, army ) );
+    MOCK_EXPECT( object.CreateKnowledgeArmyKnowledgeGroup ).once().returns( knowledgeMerged );
+    objectBlackBoardGroup1.Merge( &objectBlackBoardGroup2, army );
 
     // check group1 is not empty
     BOOST_CHECK_EQUAL( objectBlackBoardGroup1.GetKnowledgeObjects().size(), 1u );
@@ -558,7 +560,9 @@ BOOST_FIXTURE_TEST_CASE( object_merge_knowledge_group_in_knowledge_group, Object
     boost::shared_ptr< DEC_Knowledge_Object > knowledge2 = CreateObjectKnowledge( object2, army, objectBlackBoardGroup1, group2, 0.4 );
 
     // merge
-    objectBlackBoardGroup1.Merge( &objectBlackBoardGroup2 );
+    boost::shared_ptr< DEC_Knowledge_Object > knowledgeMerged( new DEC_Knowledge_Object( *knowledge, army ) );
+    MOCK_EXPECT( object.CreateKnowledgeArmyKnowledgeGroup ).once().returns( knowledgeMerged );
+    objectBlackBoardGroup1.Merge( &objectBlackBoardGroup2, army );
 
     // check group1 is not empty
     BOOST_CHECK_EQUAL( objectBlackBoardGroup1.GetKnowledgeObjects().size(), 2u );
@@ -593,7 +597,9 @@ BOOST_FIXTURE_TEST_CASE( object_merge_knowledge_group_in_knowledge_group_with_sa
     mock::verify();
 
     // merge
-    objectBlackBoardGroup1.Merge( &objectBlackBoardGroup2 );
+    boost::shared_ptr< DEC_Knowledge_Object > knowledgeMerged2( new DEC_Knowledge_Object( *knowledge3, army ) );
+    MOCK_EXPECT( object2.CreateKnowledgeArmyKnowledgeGroup ).once().returns( knowledgeMerged2 );
+    objectBlackBoardGroup1.Merge( &objectBlackBoardGroup2, army );
 
     // check group1 is not empty
     BOOST_CHECK_EQUAL( objectBlackBoardGroup1.GetKnowledgeObjects().size(), 2u );

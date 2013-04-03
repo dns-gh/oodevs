@@ -468,8 +468,7 @@ void MIL_Object::UpdateLocalisation( const TER_Localisation& location )
 boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const MIL_Army_ABC& team )
 {
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge( new DEC_Knowledge_Object( team, *this ) );
-    for( T_Attributes::const_iterator it = attributes_.begin(); it != attributes_.end(); ++it )
-        (*it)->Instanciate( *pKnowledge );
+    InstanciateAttributes( *pKnowledge );
     return pKnowledge;
 }
 
@@ -480,9 +479,29 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const MIL
 boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& group )
 {
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge( new DEC_Knowledge_Object( group, *this ) );
-    for( T_Attributes::const_iterator it = attributes_.begin(); it != attributes_.end(); ++it )
-        (*it)->Instanciate( *pKnowledge );
+    InstanciateAttributes( *pKnowledge );
     return pKnowledge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge
+// Created: LGY 2013-04-03
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const MIL_Army_ABC& team, const DEC_Knowledge_Object& knowledge )
+{
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge( new DEC_Knowledge_Object( knowledge, team ) );
+    InstanciateAttributes( *pKnowledge );
+    return pKnowledge;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object::InstanciateAttributes
+// Created: LGY 2013-04-03
+// -----------------------------------------------------------------------------
+void MIL_Object::InstanciateAttributes( DEC_Knowledge_Object& knowledge )
+{
+    for( T_Attributes::const_iterator it = attributes_.begin(); it != attributes_.end(); ++it )
+        (*it)->Instanciate( knowledge );
 }
 
 // -----------------------------------------------------------------------------

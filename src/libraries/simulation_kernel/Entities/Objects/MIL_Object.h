@@ -80,6 +80,7 @@ public:
     //@{
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team );
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const boost::shared_ptr< MIL_KnowledgeGroup >& group );
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team, const DEC_Knowledge_Object& knowledge );
     //@}
 
     //! @name Manipulator
@@ -126,6 +127,12 @@ private:
         eAttrUpdate_Localisation = 0x10,
         eAttrUpdate_All          = 0xFF
     };
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void InstanciateAttributes( DEC_Knowledge_Object& knowledge );
     //@}
 
 private:

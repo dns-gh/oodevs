@@ -310,11 +310,11 @@ void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObject( MIL_Object
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject
 // Created: LGY 2013-03-28
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const DEC_Knowledge_Object& knowledge )
+void DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const DEC_Knowledge_Object& knowledge, const MIL_Army_ABC& teamKnowing )
 {
-    boost::shared_ptr< DEC_Knowledge_Object > copy( new DEC_Knowledge_Object( knowledge, pKnowledgeGroup_->shared_from_this() ) );
-    if( !copy->GetObjectKnown() )
+    if( !knowledge.GetObjectKnown() )
         return;
+    boost::shared_ptr< DEC_Knowledge_Object > copy = knowledge.GetObjectKnown()->CreateKnowledge( teamKnowing, knowledge );
     objectMap_.insert( std::make_pair( copy->GetObjectKnown(), copy ) );
     knowledgeObjectFromIDMap_.insert( std::make_pair( copy->GetID(), copy ) );
 }
@@ -324,7 +324,7 @@ void DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const DEC_
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::Merge
 // Created: LDC 2012-04-30
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObject::Merge( const DEC_BlackBoard_CanContainKnowledgeObject* subGroup )
+void DEC_BlackBoard_CanContainKnowledgeObject::Merge( const DEC_BlackBoard_CanContainKnowledgeObject* subGroup, const MIL_Army_ABC& teamKnowing )
 {
     if( !subGroup )
         return;
@@ -333,11 +333,11 @@ void DEC_BlackBoard_CanContainKnowledgeObject::Merge( const DEC_BlackBoard_CanCo
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = GetKnowledgeObject( *itKnowledge->first );
         boost::shared_ptr< DEC_Knowledge_Object > pSubKnowledge = itKnowledge->second;
         if( !pKnowledge.get() )
-            CreateKnowledgeObject( *pSubKnowledge );
+            CreateKnowledgeObject( *pSubKnowledge, teamKnowing );
         else if( pKnowledge->GetRelevance() < pSubKnowledge->GetRelevance() )
         {
             DestroyKnowledgeObject( *pKnowledge );
-            CreateKnowledgeObject( *pSubKnowledge );
+            CreateKnowledgeObject( *pSubKnowledge, teamKnowing );
         }
     }
 }

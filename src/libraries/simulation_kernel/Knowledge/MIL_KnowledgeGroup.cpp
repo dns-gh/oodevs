@@ -226,7 +226,7 @@ void MIL_KnowledgeGroup::Destroy()
 void MIL_KnowledgeGroup::Merge( const MIL_KnowledgeGroup& subGroup )
 {
     knowledgeBlackBoard_->GetKnowledgeAgentContainer().Merge( subGroup.knowledgeBlackBoard_->GetKnowledgeAgentContainer() );
-    GetKnowledgeObjectContainer().Merge( subGroup.knowledgeBlackBoard_->GetKnowledgeObjectContainer() );
+    GetKnowledgeObjectContainer().Merge( subGroup.knowledgeBlackBoard_->GetKnowledgeObjectContainer(), *army_ );
     knowledgeBlackBoard_->GetKnowledgePopulationContainer().Merge( subGroup.knowledgeBlackBoard_->GetKnowledgePopulationContainer() );
 }
 
