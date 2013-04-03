@@ -456,9 +456,8 @@ void MIL_PopulationElement_ABC::SetAttitude( const MIL_PopulationAttitude& attit
         for( auto it = collidingAgents_.begin(); it != collidingAgents_.end(); ++it )
         {
             boost::shared_ptr< DEC_Knowledge_Population > pKnPopulation = ( *it )->GetKnowledge().ResolveKnowledgePopulation( *pPopulation_ );
-            if( !pKnPopulation )
-                return;
-            MIL_Report::PostEvent( **it, report::eRC_CloseCrowdAttitudeChanged, pKnPopulation, GetAttitude().GetID() );
+            if( pKnPopulation )
+                MIL_Report::PostEvent( **it, report::eRC_CloseCrowdAttitudeChanged, pKnPopulation, GetAttitude().GetID() );
         }
     }
 }
