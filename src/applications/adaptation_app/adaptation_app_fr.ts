@@ -3871,7 +3871,7 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
     <message>
         <source>Effect ammo parameters</source>
-        <translation>&gt;Paramètres d&apos;effets de munitions</translation>
+        <translation>Paramètres d&apos;effets de munitions</translation>
     </message>
     <message>
         <source>Created object</source>

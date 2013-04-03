@@ -265,6 +265,7 @@ void ADN_Resources_Data::IndirectAmmoInfos::CopyFrom( ADN_Resources_Data::Indire
     smokeLifeTime_ = ammoInfos.smokeLifeTime_.GetData();
     nMineNumber_ = ammoInfos.nMineNumber_.GetData();
     objectType_ = ammoInfos.objectType_.GetData();
+    strObjectType_ = ammoInfos.strObjectType_;
     effectLifeTime_ = ammoInfos.effectLifeTime_.GetData();
 }
 
@@ -274,8 +275,7 @@ void ADN_Resources_Data::IndirectAmmoInfos::CopyFrom( ADN_Resources_Data::Indire
 // -----------------------------------------------------------------------------
 void ADN_Resources_Data::IndirectAmmoInfos::ReadPh( xml::xistream& input )
 {
-    std::string posture;
-    input >> xml::attribute( "target-posture", posture );
+    std::string posture = input.attribute< std::string >( "target-posture" );
     for( int i = 0; i < eNbrUnitPosture; ++i )
         if( ADN_Tools::ComputePostureScriptName( E_UnitPosture( i ) ) == posture )
         {
@@ -389,13 +389,14 @@ void ADN_Resources_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output 
 // -----------------------------------------------------------------------------
 void ADN_Resources_Data::IndirectAmmoInfos::Initialize()
 {
-    if( objectType_.GetData() != 0 )
-        return;
     if( !strObjectType_.empty() )
     {
         ADN_Objects_Data_ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( strObjectType_ );
         if( pObject )
-            objectType_ = pObject;
+        {
+            if( pObject != objectType_.GetData() )
+                objectType_ = pObject;
+        }
         else
             QMessageBox::warning( QApplication::activeWindow(), tools::translate( "Resources_Data", "Invalid data" ), tools::translate( "Resources_Data", "Object type - Invalid object '%1'" ).arg( strObjectType_.c_str() ), QMessageBox::Ok, Qt::NoButton );
     }
