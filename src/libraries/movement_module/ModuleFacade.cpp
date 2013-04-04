@@ -82,7 +82,10 @@ namespace
     }
     DEFINE_HOOK( PathGetLastPointOfPath, 2, void, ( size_t path, MT_Vector2D* point ) )
     {
-        const MT_Vector2D& lastPoint = facade->GetPath( path )->GetResult().back()->GetPos();
+        const PathResult::T_PathPointList& result = facade->GetPath( path )->GetResult();
+        if( result.empty() )
+            return;
+        const MT_Vector2D& lastPoint = result.back()->GetPos();
         point->rX_ = lastPoint.rX_;
         point->rY_ = lastPoint.rY_;
     }

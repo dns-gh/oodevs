@@ -384,6 +384,8 @@ namespace
     boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const DEC_Path_ABC* pPath )
     {
         boost::shared_ptr< MT_Vector2D > result( new MT_Vector2D() );
+        if( !pPath )
+            return result;
         GET_HOOK( PathGetLastPointOfPath )( pPath->GetID(), result.get() );
         return result;
     }
