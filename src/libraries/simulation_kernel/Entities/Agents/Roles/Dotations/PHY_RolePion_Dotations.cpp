@@ -212,8 +212,6 @@ void PHY_RolePion_Dotations::UnregisterDotationsCapacities( const PHY_DotationCa
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::NotifyCaptured()
 {
-    assert( pDotations_ );
-    pDotations_->NotifyCaptured();
 }
 
 // -----------------------------------------------------------------------------
@@ -222,8 +220,6 @@ void PHY_RolePion_Dotations::NotifyCaptured()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::NotifyReleased()
 {
-    assert( pDotations_ );
-    pDotations_->NotifyReleased();
 }
 
 // -----------------------------------------------------------------------------
@@ -232,6 +228,8 @@ void PHY_RolePion_Dotations::NotifyReleased()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::NotifySurrendered()
 {
+    assert( pDotations_ );
+    pDotations_->NotifyCaptured();
 }
  
 // -----------------------------------------------------------------------------
@@ -240,6 +238,8 @@ void PHY_RolePion_Dotations::NotifySurrendered()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::NotifySurrenderCanceled()
 {
+    assert( pDotations_ );
+    pDotations_->NotifyReleased();
 }
 
 // =============================================================================
