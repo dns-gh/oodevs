@@ -70,6 +70,7 @@ protected:
     //@{
     virtual void Initialize( const geometry::Rectangle2f& extent );
     virtual bool IsInSelection( const kernel::Entity_ABC& entity ) const;
+    virtual bool IsSelected( const kernel::Entity_ABC& entity ) const;
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
     virtual bool IsPickable() const;
 

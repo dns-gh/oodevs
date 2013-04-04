@@ -50,6 +50,7 @@ public:
 protected:
     //! @name Helpers
     //@{
+    virtual bool IsSelected( const kernel::Entity_ABC& entity ) const;
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& object );
     virtual void NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point );

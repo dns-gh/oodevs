@@ -53,6 +53,15 @@ void UrbanLayer::Reset2d()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanLayer::IsSelected
+// Created: LGY 2013-04-04
+// -----------------------------------------------------------------------------
+bool UrbanLayer::IsSelected( const kernel::Entity_ABC& entity ) const
+{
+    return std::find( actualSelection_.begin(), actualSelection_.end(), &entity ) != actualSelection_.end();
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanLayer::NotifySelectionChanged
 // Created: JSR 2012-05-22
 // -----------------------------------------------------------------------------

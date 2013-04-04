@@ -178,7 +178,7 @@ bool EntityLayerBase::ContextMenu( const std::vector< const kernel::GraphicalEnt
     for( auto it = elements.begin(); it != elements.end(); ++it )
     {
         const kernel::Entity_ABC& entity = static_cast< const kernel::Entity_ABC& >( **it );
-        if( entity.GetId() == selected_->GetId() )
+        if( IsSelected( entity ) )
         {
             ContextMenu( *selected_, geoPoint, where );
             return true;
@@ -194,6 +194,15 @@ bool EntityLayerBase::ContextMenu( const std::vector< const kernel::GraphicalEnt
 bool EntityLayerBase::IsInSelection( const kernel::Entity_ABC& entity ) const
 {
     return selection_.find( entity.GetId() ) != selection_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::IsSelected
+// Created: LGY 2013-04-04
+// -----------------------------------------------------------------------------
+bool EntityLayerBase::IsSelected( const kernel::Entity_ABC& entity ) const
+{
+    return selected_ && selected_->GetId() == entity.GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +234,7 @@ bool EntityLayerBase::RemoveEntity( const Entity_ABC& entity )
     if( it != entities_.end() )
     {
         entities_.erase( it );
-        if( &entity == selected_ )
+        if( IsSelected( entity ) )
             selected_ = 0;
         return true;
     }
