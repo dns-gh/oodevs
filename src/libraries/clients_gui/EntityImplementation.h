@@ -65,6 +65,12 @@ private:
     //! @name Helpers
     //@{
     I& This();
+    std::string GetDisplayId()
+    {
+        std::stringstream m;
+        m << id_;
+        return m.str();
+    }
     //@}
 
 private:
@@ -79,6 +85,7 @@ protected:
     //@{
     const unsigned long id_;
     QString name_;
+    const std::string displayId_;
     //@}
 };
 
@@ -90,11 +97,12 @@ template< typename I >
 EntityImplementation< I >::EntityImplementation( kernel::Controller& controller, unsigned long id, const QString& name, bool readOnly = false )
     : controller_( controller )
     , id_        ( id )
+    , displayId_ ( GetDisplayId() )
     , name_      ( name )
     , dictionary_( new kernel::PropertiesDictionary( controller ) )
 {
     Attach( *dictionary_ );
-    dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Identifier" ), id_ );
+    dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Identifier" ), displayId_ );
     dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Name" ), name_, *this, &EntityImplementation::Rename, readOnly );
 }
 

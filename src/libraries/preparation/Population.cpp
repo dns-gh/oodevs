@@ -140,7 +140,7 @@ unsigned int Population::GetTotalLivingHumans() const
 // -----------------------------------------------------------------------------
 void Population::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
-    QString id = QString( "[%L1]" ).arg( GetId() );
+    QString id = QString( "[%1]" ).arg( GetId() );
     displayer.Item( "" ).Start( kernel::Styles::bold ).Add( static_cast< const kernel::Population_ABC* >( this ) ).AddToDisplay( id );
     displayer.End();
     displayer.Display( tools::translate( "Crowd", "Healthy:" ), healthy_ );

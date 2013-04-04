@@ -181,7 +181,7 @@ void Agent::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Agent::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    QString id = QString( "[%L1]" ).arg( GetId() );
+    QString id = QString( "[%1]" ).arg( GetId() );
     displayer.Item( "" ).Start( Styles::bold )
                  .Add( (Agent_ABC*)this )
                  .AddToDisplay( id );

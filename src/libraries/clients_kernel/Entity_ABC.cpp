@@ -56,7 +56,7 @@ const std::string& Entity_ABC::GetTypeName() const
 // -----------------------------------------------------------------------------
 QString Entity_ABC::GetTooltip() const
 {
-    return QString( "%1 [%L2]" ).arg( GetName() ).arg( GetId() );
+    return QString( "%1 [%2]" ).arg( GetName() ).arg( GetId() );
 }
 
 // -----------------------------------------------------------------------------
