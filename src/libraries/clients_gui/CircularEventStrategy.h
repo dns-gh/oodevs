@@ -80,6 +80,10 @@ private:
     bool Apply( Functor functor );
 
     void HideTooltip();
+
+    void RetrieveEntities( QMouseEvent* mouse, const geometry::Point2f& point, Layer_ABC::T_LayerElements& extractedElements );
+    bool DisplayDefaultMenu( QMouseEvent* mouse, const geometry::Point2f& point, Layer_ABC::T_LayerElements& extractedElements );
+    bool DisplaySelectedMenu( QMouseEvent* mouse, const geometry::Point2f& point, Layer_ABC::T_LayerElements& extractedElements );
     //@}
 
 private slots:

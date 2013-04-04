@@ -201,6 +201,13 @@ public:
         ShowMenu( where );
     }
 
+    template< typename T1, typename T2 >
+    void ContextMenu( const T1& firstElement, const T2& secondElement, kernel::ContextMenu& menu )
+    {
+        Apply( & ContextMenuObserver_ABC< T1 >::NotifyContextMenu, firstElement, menu );
+        Apply( & ContextMenuObserver_ABC< T2 >::NotifyContextMenu, secondElement, menu );
+    }
+
     // -----------------------------------------------------------------------------
     // Activate
     // -----------------------------------------------------------------------------

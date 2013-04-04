@@ -65,6 +65,7 @@ SelectionMenu::SelectionMenu( Options& options, EntitySymbols& entitySymbols, Co
     , parent3d_( 0 )
     , moreElements_( 0u )
     , mode3d_( false )
+    , menu_( 0 )
 {
     options_.Register( *this );
 }
@@ -98,12 +99,10 @@ void SelectionMenu::OnWidget3dChanged( gui::Gl3dWidget* parent )
 
 namespace
 {
-    void ApplyMousePress( Layer_ABC& layer, const GraphicalEntity_ABC& selectable, const geometry::Point2f& point, QMouseEvent* mouse, Qt::MouseButton button )
+    void ApplyMousePress( Layer_ABC& layer, const GraphicalEntity_ABC& selectable, QMouseEvent* mouse, Qt::MouseButton button )
     {
         if( button == Qt::LeftButton )
             layer.Select( selectable, ( mouse->modifiers() & Qt::ControlModifier ) != 0, ( mouse->modifiers() & Qt::ShiftModifier ) != 0 );
-        else if( button == Qt::RightButton && !layer.IsReadOnly() )
-            layer.ContextMenu( selectable, point, mouse->globalPos() );
     }
 
     void FillPixmapBackground( QPixmap& pix )
@@ -330,6 +329,15 @@ void SelectionMenu::GenerateMenu()
     dummyEntry->setEnabled( false );
     dummyEntry->setFont( QFont( "Arial", 1 ) );
 
+    // merge with default menu
+    if( menu_  )
+    {
+        QList< QAction* > actions = menu_->actions();
+        if( actions.size() > 1u )
+            for( int i = actions.size() - 1; i > 0; --i )
+                menu->addAction( actions[ i ] );
+    }
+
     for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
     {
         Layer_ABC* layer = extractedPair->first;
@@ -383,7 +391,7 @@ void SelectionMenu::GenerateMenu()
                     continue;
                 if( graphicalEntity->GetTooltip() == actionText )
                 {
-                    ApplyMousePress( *layer, *graphicalEntity, point_, &*mouseEvent_, menu->GetButton() );
+                    ApplyMousePress( *layer, *graphicalEntity, &*mouseEvent_, menu->GetButton() );
                     icons_.clear();
                     return;
                 }
@@ -398,20 +406,20 @@ void SelectionMenu::GenerateMenu()
 // Name: SelectionMenu::ExecMenu
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
-void SelectionMenu::ExecMenu( const Layer_ABC::T_LayerElements& extractedElements, const geometry::Point2f& point,
-                              const QPoint &globalPos, Qt::MouseButton button, Qt::KeyboardModifiers modifiers )
+void SelectionMenu::ExecMenu( const Layer_ABC::T_LayerElements& extractedElements,
+                              const QPoint &globalPos, Qt::MouseButton button, Qt::KeyboardModifiers modifiers, kernel::ContextMenu* menu )
 {
     mouseEvent_.reset( new QMouseEvent( QEvent::None, globalPos, globalPos, button, Qt::NoButton, modifiers ) );
 
     if( extractedElements.size() == 1 && extractedElements.begin()->second.size() == 1 &&
         extractedElements.begin()->first && *extractedElements.begin()->second.begin() )    // Only one element extracted, classic way
     {
-        ApplyMousePress( *extractedElements.begin()->first, **extractedElements.begin()->second.begin(), point, &*mouseEvent_, mouseEvent_->button() );
+        ApplyMousePress( *extractedElements.begin()->first, **extractedElements.begin()->second.begin(), &*mouseEvent_, mouseEvent_->button() );
         return;
     }
 
     FilterElement( extractedElements );
-    point_ = point;
+    menu_ = menu;
     GenerateMenu();                                                                         // Several elements extracted, menu way
 }
 

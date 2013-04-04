@@ -52,8 +52,8 @@ public:
 
     //! @name Operations
     //@{
-    void ExecMenu( const Layer_ABC::T_LayerElements& extractedElements, const geometry::Point2f& point,
-                   const QPoint &globalPos, Qt::MouseButton button, Qt::KeyboardModifiers modifiers );
+    void ExecMenu( const Layer_ABC::T_LayerElements& extractedElements,
+                   const QPoint &globalPos, Qt::MouseButton button, Qt::KeyboardModifiers modifiers, kernel::ContextMenu* menu );
     //@}
 
 private slots:
@@ -86,10 +86,10 @@ private:
     Layer_ABC::T_LayerElements extractedElements_;
     std::map< const kernel::GraphicalEntity_ABC*, QPixmap > icons_;
     std::auto_ptr< QMouseEvent > mouseEvent_;
-    geometry::Point2f point_;
     gui::GlWidget* parent2d_;
     gui::Gl3dWidget* parent3d_;
     unsigned int moreElements_;
+    kernel::ContextMenu* menu_;
     bool mode3d_;
     //@}
 };

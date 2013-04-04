@@ -65,6 +65,19 @@ bool DefaultLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f
 }
 
 // -----------------------------------------------------------------------------
+// Name: DefaultLayer::FillContextMenu
+// Created: LGY 2013-04-04
+// -----------------------------------------------------------------------------
+void DefaultLayer::FillContextMenu( QMouseEvent* mouse, kernel::ContextMenu& menu, const geometry::Point2f& point )
+{
+    if( mouse && mouse->button() == Qt::RightButton )
+    {
+        point_ = point;
+        controllers_.actions_.ContextMenu( point_, kernel::Nothing(), menu );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DefaultLayer::HandleMoveDragEvent
 // Created: ABR 2011-10-28
 // -----------------------------------------------------------------------------

@@ -347,6 +347,15 @@ bool Layer::ContextMenu( const std::vector< const kernel::GraphicalEntity_ABC* >
 }
 
 // -----------------------------------------------------------------------------
+// Name: Layer::FillContextMenu
+// Created: LGY 2013-04-04
+// -----------------------------------------------------------------------------
+void Layer::FillContextMenu( QMouseEvent* /*mouse*/, kernel::ContextMenu& /*menu*/, const geometry::Point2f& /*point*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: Layer::ExtractElements
 // Created: ABR 2013-01-25
 // -----------------------------------------------------------------------------

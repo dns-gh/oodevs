@@ -46,6 +46,7 @@ private:
     virtual bool HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
     virtual bool HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual void FillContextMenu( QMouseEvent* mouse, kernel::ContextMenu& menu, const geometry::Point2f& point );
     //@}
 
 private:

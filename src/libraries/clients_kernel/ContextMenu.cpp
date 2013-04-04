@@ -20,7 +20,6 @@ ContextMenu::ContextMenu()
     : Q3PopupMenu() //: QMenu()
 {
     setSeparatorsCollapsible( true );
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

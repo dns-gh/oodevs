@@ -12,6 +12,7 @@
 #include "moc_CircularEventStrategy.cpp"
 #include "GlTools_ABC.h"
 #include "SelectionMenu.h"
+#include "clients_kernel/ContextMenu.h"
 
 using namespace gui;
 
@@ -220,6 +221,33 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
 
     // Extract elements with opengl picking
     Layer_ABC::T_LayerElements extractedElements;
+    RetrieveEntities( mouse, point, extractedElements );
+
+    if( Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMousePress, false ) ) ||                       // a layer has return true
+        ( mouse->globalPos() - QCursor::pos() ).manhattanLength() > 3 ||                                    // the mouse has moved more than 3 pixels since the oldPosition
+        ( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton ) ||                      // no good button
+        ( mouse->modifiers() == Qt::ShiftModifier  ) )                                                      // metrics mode
+        return;
+
+    if( DisplayDefaultMenu( mouse, point, extractedElements ) )                                             // No element extracted and display default menu
+        return;
+
+    if( DisplaySelectedMenu( mouse, point, extractedElements ) )                                           // Show context menu on selected unit
+        return;
+
+    kernel::ContextMenu menu;
+    if( default_ )
+        default_->FillContextMenu( mouse, menu, point );
+
+    menu_->ExecMenu( extractedElements, mouse->globalPos(), mouse->button(), mouse->modifiers(), menu.FillMenu() );   // Elements extracted, let the menu handle it
+}
+
+// -----------------------------------------------------------------------------
+// Name: CircularEventStrategy::RetrieveEntities
+// Created: LGY 2013-04-04
+// -----------------------------------------------------------------------------
+void CircularEventStrategy::RetrieveEntities( QMouseEvent* mouse, const geometry::Point2f& point, Layer_ABC::T_LayerElements& extractedElements )
+{
     GlTools_ABC::T_ObjectsPicking selection;
     tools_.FillSelection( point, selection );
     for( auto it = layers_.begin(); it != layers_.end(); ++it )
@@ -228,26 +256,33 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
             continue;
         ( *it )->ExtractElements( extractedElements, selection );
     }
+}
 
-    if( Apply( MouseFunctor( mouse, point, &Layer_ABC::HandleMousePress, false ) ) ||                       // a layer has return true
-        ( mouse->globalPos() - QCursor::pos() ).manhattanLength() > 3 ||                                    // the mouse has moved more than 3 pixels since the oldPosition
-        ( mouse->button() != Qt::LeftButton && mouse->button() != Qt::RightButton ) ||                      // no good button
-        ( mouse->modifiers() == Qt::ShiftModifier  ) )                                                      // metrics mode
-        return;
+// -----------------------------------------------------------------------------
+// Name: CircularEventStrategy::DisplayDefaultMenu
+// Created: LGY 2013-04-04
+// -----------------------------------------------------------------------------
+bool CircularEventStrategy::DisplayDefaultMenu( QMouseEvent* mouse, const geometry::Point2f& point, Layer_ABC::T_LayerElements& extractedElements )
+{
+    if( !default_ || extractedElements.size() != 0 )
+        return false;
+    default_->HandleMousePress( mouse, point );
+    return true;
+}
 
-    if( default_ && extractedElements.size() == 0 )                                                         // No element extracted
-    {
-        default_->HandleMousePress( mouse, point );
-        return;
-    }
-
-    // Show context menu on selected unit
+// -----------------------------------------------------------------------------
+// Name: CircularEventStrategy::DisplaySelectedMenu
+// Created: LGY 2013-04-04
+// -----------------------------------------------------------------------------
+bool CircularEventStrategy::DisplaySelectedMenu( QMouseEvent* mouse, const geometry::Point2f& point, Layer_ABC::T_LayerElements& extractedElements )
+{
     if( mouse->button() == Qt::RightButton )
+    {
         for( auto it = extractedElements.begin(); it != extractedElements.end(); ++it )
             if( (*it).first->ContextMenu( (*it).second, point, mouse->globalPos() ) )
-                return;
-
-    menu_->ExecMenu( extractedElements, point, mouse->globalPos(), mouse->button(), mouse->modifiers() );   // Elements extracted, let the menu handle it
+                return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
