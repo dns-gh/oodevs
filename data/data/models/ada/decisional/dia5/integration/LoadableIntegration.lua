@@ -175,13 +175,20 @@ integration.isTransportFinished = function()
 end
 
 integration.canTransportUnit = function( unit, onlyLoadable )
-    return DEC_Agent_PeutTransporterPion( unit.source , onlyLoadable )
+    return DEC_Agent_PeutTransporterPion( unit.source, onlyLoadable )
 end
 
 integration.canTransportKnowledge = function( knowledge, onlyLoadable )
-    return DEC_Connaissance_PeutTransporterPion( myself, knowledge.source , onlyLoadable )
+    return DEC_Connaissance_PeutTransporterPion( myself, knowledge.source, onlyLoadable )
 end
 
+integration.transportUnitRoundTrip = function( unit, onlyLoadable )
+    return DEC_Agent_TransportNombreAllerRetour( unit.source, onlyLoadable )
+end
+
+integration.transportKnowledgeRoundTrip = function( knowledge, onlyLoadable )
+    return DEC_Connaissance_TransportNombreAllerRetour( myself, knowledge.source, onlyLoadable )
+end
 
 -- -----------------------------------------------------------------------------------
 -- Transport of crowd

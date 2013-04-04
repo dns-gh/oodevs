@@ -475,4 +475,5 @@ eRC_AgentNeutralizedIndirectFireImpossible = 508
 eRC_ObjetNonDevalorisable = 509
 eRC_SurrenderedUnitRecognized= 510
 eRC_SurrenderedUnitIdentified= 511
-eNbr = 512
+eRC_TransportRoundTrip = 512
+eNbr = 513

@@ -971,5 +971,8 @@ return
     end,
     getName = function( self )
         return integration.getName( self )
+    end,
+    transportUnitRoundTrip = function( self, onlyLoadable )
+        return integration.transportUnitRoundTrip( self, onlyLoadable )
     end
 }
