@@ -117,7 +117,6 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
 
     cancelButton_ = new RichPushButton( "cancel", tools::translate( "gui::ResourceLinksDialog_ABC", "Cancel" ), buttonBox );
     cancelButton_->setDefault( true );
-    cancelButton_->setEnabled( false );
     connect( cancelButton_, SIGNAL( clicked() ), SLOT( Cancel() ) );
 
     controllers_.Update( *this );
@@ -193,12 +192,12 @@ void ResourceLinksDialog_ABC::DoMultipleSelect( const std::vector< const T* >& e
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Update()
 {
-    if( !enableDataUpdate_ )
-        return;
+    EnableDataUpdate( true );
     SubObjectName subObject( this->objectName() );
     if( selected_.size() != 1 )
         return;
     okButton_->setVisible( !IsReadOnly() );
+    cancelButton_->setVisible( !IsReadOnly() );
     QListWidgetItem* item = dotationList_->currentItem();
     if( !item )
     {
@@ -480,6 +479,7 @@ void ResourceLinksDialog_ABC::SetReadOnly( bool readOnly ) const
     table_->setEditTriggers( readOnly? QAbstractItemView::NoEditTriggers : QAbstractItemView::CurrentChanged );
     generateProduction_->setEnabled( !readOnly );
     okButton_->setEnabled( !readOnly );
+    cancelButton_->setEnabled( !readOnly );
 }
 
 // -----------------------------------------------------------------------------
@@ -509,7 +509,6 @@ void ResourceLinksDialog_ABC::Show()
     else
     {
         groupBox_->setEnabled( false );
-        groupBox_->setChecked( true );
         production_->setValue( 0 );
         consumption_->setValue( 0 );
         critical_->setChecked( false );
@@ -518,9 +517,13 @@ void ResourceLinksDialog_ABC::Show()
         table_->clearContents();
         table_->setRowCount( 0 );
     }
+    if( selectedItem_ )
+    {
+        std::string resource = selectedItem_->text().toStdString();
+        groupBox_->setChecked( resourceNodes_[ resource ].isEnabled_ );
+    }
     Update();
     pMainLayout_->show();
-    EnableDataUpdate( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -652,5 +655,4 @@ void ResourceLinksDialog_ABC::GenerateProduction()
 void ResourceLinksDialog_ABC::EnableDataUpdate( bool enable )
 {
     enableDataUpdate_ = enable;
-    cancelButton_->setEnabled( !enable );
 }
