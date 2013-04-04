@@ -17,9 +17,7 @@
 #include "frontend/SpawnCommand.h"
 #include "frontend/ProcessWrapper.h"
 #include "tools/ExerciseConfig.h"
-#pragma warning( push, 0 )
-#include <boost/algorithm/string.hpp>
-#pragma warning( pop )
+#include "tools/EnvHelpers.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -195,38 +193,19 @@ bool FilterCommand::SearchCommand( const tools::Path& path ) const
 // -----------------------------------------------------------------------------
 void FilterCommand::ComputePath()
 {
-    std::wstring path = _wgetenv( L"PATH" );
-    std::vector< std::wstring > valuesVector; // $$$$ ABR 2013-03-07: System encoded paths
-    boost::split( valuesVector, path, boost::algorithm::is_any_of( ";" ) );
-    valuesVector.insert( valuesVector.begin(), config_.BuildPhysicalChildFile( "Filters/" ).ToUnicode() );
+    auto dirs = tools::ExpandEnvPath( true );
+    dirs.insert( dirs.begin(), config_.BuildPhysicalChildFile( "Filters/" ) );
     if( path_.IsRelative() )
         path_ = path_.Absolute();
-    valuesVector.insert( valuesVector.begin(), path_.ToUnicode() );
+    dirs.insert( dirs.begin(), path_ );
     path_.Clear();
 
-    for( auto it = valuesVector.begin(); it != valuesVector.end(); ++it )
+    for( auto it = dirs.begin(); it != dirs.end(); ++it )
     {
-        std::wstring& currentValue = *it;
-        if( currentValue.find( L"%" ) != std::wstring::npos ) // $$$$ ABR 2011-08-01: If an environment variable is given, expand it.
+        if( it->Apply( boost::bind( &FilterCommand::SearchCommand, this, _1 ), false ) )
         {
-            LPWSTR result = L"";
-            int done = ExpandEnvironmentStringsW( currentValue.c_str(), result, 512 );
-            if( done < 512 )
-                currentValue = result;
-        }
-        try
-        {
-            const tools::Path currentPath = tools::Path::FromUnicode( currentValue );
-            if( currentPath.Exists() && currentPath.IsDirectory() )
-                if( currentPath.Apply( boost::bind( &FilterCommand::SearchCommand, this, _1 ), false ) )
-                {
-                    path_ = currentPath;
-                    break;
-                }
-        }
-        catch( const std::exception& )
-        {
-            // NOTHING, here to prevent exists to throw an exception when tested path is on an unknown hard drive
+            path_ = *it;
+            break;
         }
     }
     emit statusChanged( IsValid() );
