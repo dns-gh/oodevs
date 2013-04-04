@@ -383,7 +383,7 @@ void RolePion_Location::Show( const MT_Vector2D& vPosition )
                                                     ( "position/x", vPosition.rX_ )
                                                     ( "position/y", vPosition.rY_ ) );
     TER_Object_ABC::T_ObjectVector objectsColliding;
-    TER_World::GetWorld().GetObjectManager().GetListAt( *pvPosition_, objectsColliding );
+    TER_World::GetWorld().GetObjectManager().GetListAt( vPosition, objectsColliding );
     for( TER_Object_ABC::CIT_ObjectVector itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
         NotifyPutInsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
     bHasDoneMagicMove_ = true;
