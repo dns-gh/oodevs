@@ -42,24 +42,28 @@
     <Import Project="Property sheets\base_win32.props" />
     <Import Project="Property sheets\library_static_release.props" />
     <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\link_log4cxx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Property sheets\base_x64.props" />
     <Import Project="Property sheets\library_static_release.props" />
     <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\link_log4cxx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Property sheets\base_win32.props" />
     <Import Project="Property sheets\library_static_debug.props" />
     <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\link_log4cxx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Property sheets\base_x64.props" />
     <Import Project="Property sheets\library_static_debug.props" />
     <Import Project="Property sheets\precompiled_header.props" />
+    <Import Project="Property sheets\link_log4cxx.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -105,6 +109,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_GraphManager.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_LimitData.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_LimitDataManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Logger.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_StaticData.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_World.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_CoordinateManager.cpp" />
@@ -135,6 +140,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_LimitData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_LimitDataManager.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Localisation_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Logger.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Pathfinder_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_StaticData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_World.h" />

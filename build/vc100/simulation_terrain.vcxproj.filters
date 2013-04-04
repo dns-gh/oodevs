@@ -114,7 +114,12 @@
     <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_LimitData.cpp">
       <Filter>Source Files\Pathfinder</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_LimitDataManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_LimitDataManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_terrain\TER_Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_terrain\simulation_terrain_pch.h">
@@ -207,9 +212,14 @@
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_LimitData.h">
       <Filter>Source Files\Pathfinder</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_LimitDataManager.h" />
     <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Localisation_ABC.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_LimitDataManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_terrain\TER_Logger.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

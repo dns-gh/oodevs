@@ -7,6 +7,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Version.h"
 #include "tools/WinArguments.h"
+#include "simulation_terrain/TER_Logger.h"
 #include <license_gui/LicenseDialog.h>
 #include <tools/win32/FlexLm.h>
 #include <tools/win32/CrashHandler.h>
@@ -75,6 +76,7 @@ int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
     MT_FileLogger crashFileLogger( filename, 1, -1,  MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError );
     MT_LOG_REGISTER_LOGGER( fileLogger );
     MT_LOG_REGISTER_LOGGER( crashFileLogger );
+    InitializeTerrainLogger();
 
     SIM_App* app = 0;
     int nResult = EXIT_FAILURE;
