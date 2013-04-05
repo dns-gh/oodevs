@@ -72,7 +72,6 @@ private:
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, float r, float g, float b, const std::string& category = "", float markerPixelRatio = 1.f ) const;
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, const QColor& color, const std::string& category = "", float markerPixelRatio = 1.f ) const;
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-//    void FillDefaultMenu( QMenu& main );
     //@}
 
 private:

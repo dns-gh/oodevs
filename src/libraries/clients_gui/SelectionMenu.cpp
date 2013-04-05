@@ -424,23 +424,6 @@ void SelectionMenu::ExecMenu( const Layer_ABC::T_LayerElements& extractedElement
     GenerateMenu();                                                                         // Several elements extracted, menu way
 }
 
-// -----------------------------------------------------------------------------
-// Name: SelectionMenu::FillDefaultMenu
-// Created: LGY 2013-04-05
-// -----------------------------------------------------------------------------
-//void SelectionMenu::FillDefaultMenu( Menu_ABC& main )
-//{
-//    kernel::ContextMenu defaultMenu;
-//    controllers_.actions_.ContextMenu( point_, kernel::Nothing(), defaultMenu );
-//    if( kernel::ContextMenu* qMenu = defaultMenu.FillMenu() )
-//    {
-//        QList< QAction* > actions = qMenu->actions();
-//        if( actions.size() > 1u )
-//            for( int i = actions.size() - 1; i > 0; --i )
-//                menu.addAction( actions[ i ] );
-//    }
-//}
-
 namespace
 {
     std::size_t GetEntityCount( const Layer_ABC::T_LayerElements& extractedElements )
