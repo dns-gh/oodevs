@@ -31,7 +31,7 @@ def writeerr(s):
 def writeerrlines(lines):
     sys.stdout.flush()
     for line in lines:
-        sys.stderr.write(line.encode('ascii', 'ignore'))
+        sys.stderr.write(line[:-1].encode('string_escape') + '\n')
     sys.stderr.flush()
 
 def get_checksum(filename):
