@@ -35,7 +35,6 @@ namespace
             MOCK_EXPECT( UsePathDebug ).returns( false );
             MOCK_EXPECT( IsDestinationTrafficable ).returns( true );
             MOCK_EXPECT( GetMaxPathFindComputationDuration ).returns( std::numeric_limits< unsigned int >::max() );
-            MOCK_EXPECT( IsNullAutomateFuseau ).returns( true );
             MOCK_EXPECT( ComputePathfind ).once().calls( bp::bind( &PathfindFixture::AddPoints, this, boost::ref( points ), bp::arg_names::arg10, bp::arg_names::arg11 ) );
             MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _1, boost::ref( pathfind ) ) );
             MOCK_EXPECT( CreateKnowledgeCache ).returns( reinterpret_cast< KnowledgeCache* >( 0xDCBA ) );

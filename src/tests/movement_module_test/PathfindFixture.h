@@ -113,7 +113,7 @@ namespace movement
             MOCK_EXPECT( NotifyPathCreation ).once().returns( pathId );
             MOCK_EXPECT( GetPathHandler ).once().with( pathId ).returns( handler );
             MOCK_EXPECT( InitializePath ).once();
-            MOCK_EXPECT( IsNullAutomateFuseau ).once();
+            MOCK_EXPECT( IsNullAutomateFuseau ).returns( true );
             return CreatePath( core::Convert( &entity ), vPosEnd, movementPathType );
         }
         std::size_t CreateSimplePath()
