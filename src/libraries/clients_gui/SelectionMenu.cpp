@@ -333,13 +333,11 @@ void SelectionMenu::GenerateMenu()
     // merge with default menu
     kernel::ContextMenu defaultMenu;
     controllers_.actions_.ContextMenu( point_, kernel::Nothing(), defaultMenu );
-    if( kernel::ContextMenu* qMenu = defaultMenu.FillMenu() )
-    {
-        QList< QAction* > actions = qMenu->actions();
-        if( actions.size() > 1u )
-            for( int i = actions.size() - 1; i > 0; --i )
-                menu->addAction( actions[ i ] );
-    }
+    defaultMenu.FillMenu();
+    QList< QAction* > actions = defaultMenu.actions();
+    if( actions.size() > 1u )
+        for( int i = actions.size() - 1; i > 0; --i )
+            menu->addAction( actions[ i ] );
 
     for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
     {
