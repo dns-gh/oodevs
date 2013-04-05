@@ -43,7 +43,7 @@
       <sensor height="5" type="Test sensor unicode المكتبة"/>
     </sensors>
     <radars>
-      <radar type="Test special sensor unicode المكتبة"/>
+      <radar height="10" type="Test special sensor unicode المكتبة"/>
     </radars>
     <transports>
       <crew man-boarding-time="12s" man-unloading-time="12s"/>
