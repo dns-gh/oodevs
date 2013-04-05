@@ -136,6 +136,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\tools_test\ClientNetworkerTest.cpp" />
+    <ClCompile Include="..\..\src\tests\tools_test\EnvHelpersTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\FileMatcherTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\FileMigrationTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\IpcQueueTest.cpp" />

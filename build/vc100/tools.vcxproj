@@ -102,6 +102,7 @@
     <ClCompile Include="..\..\src\libraries\tools\App6Symbol.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\Codec.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\EndpointResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\EnvHelpers.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\ExerciseSettings.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\FileWrapper.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\IdManager.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="..\..\src\libraries\tools\Codec.h" />
     <ClInclude Include="..\..\src\libraries\tools\ConnectionError.h" />
     <ClInclude Include="..\..\src\libraries\tools\EndpointResolver.h" />
+    <ClInclude Include="..\..\src\libraries\tools\EnvHelpers.h" />
     <ClInclude Include="..\..\src\libraries\tools\ExerciseSettings.h" />
     <ClInclude Include="..\..\src\libraries\tools\FileWrapper.h" />
     <ClInclude Include="..\..\src\libraries\tools\IdManager.h" />
