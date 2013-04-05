@@ -51,9 +51,11 @@ Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, const
     : PathResult         ( GET_HOOK( NotifyPathCreation )(), pathType )
     , module_            ( module )
     , entity_            ( entity )
+    , entityID_          ( entity[ "identifier" ] )
     , unitSpeeds_        ( entity )
     , pathClass_         ( Agent_PathClass::GetPathClass( pathType, entity ) )
     , bDecPointsInserted_( false )
+    , bUseStrictClosest_ ( ! GET_HOOK( IsNullAutomateFuseau )( entity_ ) )
 {
     initialWaypoints_.reserve( 1 + points.size() );
     nextWaypoints_.reserve( points.size() );
@@ -70,9 +72,11 @@ Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, std::
     : PathResult         ( GET_HOOK( NotifyPathCreation )(), pathType )
     , module_            ( module )
     , entity_            ( entity )
+    , entityID_          ( entity[ "identifier" ] )
     , unitSpeeds_        ( entity )
     , pathClass_         ( Agent_PathClass::GetPathClass( pathType, entity ) )
     , bDecPointsInserted_( false )
+    , bUseStrictClosest_ ( ! GET_HOOK( IsNullAutomateFuseau )( entity_ ) )
 {
     initialWaypoints_.reserve( 1 + points.size() );
     nextWaypoints_.reserve( points.size() );
@@ -92,9 +96,11 @@ Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, const
     : PathResult         ( GET_HOOK( NotifyPathCreation )(), pathType )
     , module_            ( module )
     , entity_            ( entity )
+    , entityID_          ( entity[ "identifier" ] )
     , unitSpeeds_        ( entity )
     , pathClass_         ( Agent_PathClass::GetPathClass( pathType, entity ) )
     , bDecPointsInserted_( false )
+    , bUseStrictClosest_ ( ! GET_HOOK( IsNullAutomateFuseau )( entity_ ) )
 {
     initialWaypoints_.reserve( 2 );
     nextWaypoints_.reserve( 1 );
@@ -110,10 +116,9 @@ Agent_Path::Agent_Path( ModuleFacade& module, const wrapper::View& entity, const
 //-----------------------------------------------------------------------------
 Agent_Path::~Agent_Path()
 {
-    const unsigned int entity = entity_[ "identifier" ];
     for( auto it = resultList_.begin(); it!= resultList_.end(); it++ )
         module_.UnregisterPoint( *it );
-    module_.RemovePathPoints( entity );
+    module_.RemovePathPoints( entityID_ );
 }
 
  // -----------------------------------------------------------------------------
@@ -468,7 +473,7 @@ void Agent_Path::Execute( TER_Pathfinder_ABC& pathfind )
         std::stringstream s;
         s << "Agent_Path::Compute: " << this << " : computation begin"
           << ", Thread : " << GET_HOOK( GetPathfindCurrentThread )()
-          << ", Agent : " << static_cast< unsigned int >( entity_[ "identifier" ] )
+          << ", Agent : " << entityID_
           << ", Path type : " << PathResult::GetPathType().GetName()
           << ", " << GetPathAsString().c_str();
         ::SWORD_Log( SWORD_LOG_LEVEL_INFO, s.str().c_str() );
@@ -572,7 +577,7 @@ bool Agent_Path::NeedRefine() const
 // -----------------------------------------------------------------------------
 bool Agent_Path::UseStrictClosest() const
 {
-    return ! GET_HOOK( IsNullAutomateFuseau )( entity_ );
+    return bUseStrictClosest_;
 }
 
 // -----------------------------------------------------------------------------

@@ -96,6 +96,7 @@ private:
     //@{
     ModuleFacade& module_;
     const wrapper::View entity_;
+    const unsigned int entityID_;
     // Path calculation parameters
     const Agent_PathClass& pathClass_;
     T_PointVector initialWaypoints_;
@@ -103,6 +104,7 @@ private:
     Speeds unitSpeeds_;
     MT_Profiler profiler_;
     bool bDecPointsInserted_;
+    bool bUseStrictClosest_;
     //@}
 };
 
