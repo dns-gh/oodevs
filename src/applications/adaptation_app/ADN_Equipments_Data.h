@@ -298,6 +298,7 @@ public:
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Radars_Data::RadarInfos> ptrRadar_;
+        ADN_Type_Double                                         rHeight_;
     };
 
     typedef ADN_Type_Vector_ABC<RadarInfos>       T_RadarInfos_Vector;

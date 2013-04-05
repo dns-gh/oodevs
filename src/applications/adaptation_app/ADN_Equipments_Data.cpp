@@ -773,6 +773,7 @@ void ADN_Equipments_Data::SensorInfos::WriteArchive( xml::xostream& output ) con
 // -----------------------------------------------------------------------------
 ADN_Equipments_Data::RadarInfos::RadarInfos()
     : ptrRadar_( ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.vRadars_, 0 )
+    , rHeight_( 10 )
 {
     BindExistenceTo( &ptrRadar_ );
 }
@@ -786,6 +787,7 @@ ADN_Equipments_Data::RadarInfos* ADN_Equipments_Data::RadarInfos::CreateCopy()
     RadarInfos* pCopy = new RadarInfos();
     pCopy->ptrRadar_ = ptrRadar_.GetData();
     pCopy->strName_ = strName_.GetData();
+    pCopy->rHeight_ = rHeight_.GetData();
     return pCopy;
 }
 
@@ -796,7 +798,8 @@ ADN_Equipments_Data::RadarInfos* ADN_Equipments_Data::RadarInfos::CreateCopy()
 void ADN_Equipments_Data::RadarInfos::ReadArchive( xml::xistream& input )
 {
     std::string strRadarName;
-    input >> xml::attribute( "type", strRadarName );
+    input >> xml::attribute( "type", strRadarName )
+          >> xml::optional() >> xml::attribute( "height", rHeight_ );
     ADN_Radars_Data::RadarInfos* pRadar = ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.FindRadar( strRadarName );
     if( pRadar == 0 )
         throw MASA_EXCEPTION(  tools::translate( "Equipments_Data", "Equipment - Invalid radar type '%1'" ).arg( strRadarName.c_str() ).toStdString() );
@@ -811,7 +814,8 @@ void ADN_Equipments_Data::RadarInfos::ReadArchive( xml::xistream& input )
 void ADN_Equipments_Data::RadarInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "radar" )
-            << xml::attribute( "type", ptrRadar_.GetData()->strName_ )
+             << xml::attribute( "type", ptrRadar_.GetData()->strName_ )
+             << xml::attribute( "height", rHeight_ )
            << xml::end;
 }
 
