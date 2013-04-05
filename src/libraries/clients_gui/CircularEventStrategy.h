@@ -15,7 +15,7 @@
 
 namespace kernel
 {
-    class Options;
+    class Controllers;
 }
 
 namespace gui
@@ -40,7 +40,7 @@ class CircularEventStrategy : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             CircularEventStrategy( kernel::Options& options, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
+             CircularEventStrategy( kernel::Controllers& controllers, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
                                     DrawingTypes& drawingTypes, GlTools_ABC& tools );
     virtual ~CircularEventStrategy();
     //@}

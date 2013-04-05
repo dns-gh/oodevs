@@ -25,6 +25,7 @@
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Drawing_ABC.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
@@ -33,6 +34,7 @@
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
@@ -54,9 +56,9 @@ namespace
 // Name: SelectionMenu constructor
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
-SelectionMenu::SelectionMenu( Options& options, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
+SelectionMenu::SelectionMenu( Controllers& controllers, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
                               DrawingTypes& drawingTypes, GlTools_ABC& tools )
-    : options_( options )
+    : controllers_( controllers )
     , entitySymbols_( entitySymbols )
     , colorStrategy_( colorStrategy )
     , drawingTypes_( drawingTypes )
@@ -65,9 +67,8 @@ SelectionMenu::SelectionMenu( Options& options, EntitySymbols& entitySymbols, Co
     , parent3d_( 0 )
     , moreElements_( 0u )
     , mode3d_( false )
-    , menu_( 0 )
 {
-    options_.Register( *this );
+    controllers_.options_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +77,7 @@ SelectionMenu::SelectionMenu( Options& options, EntitySymbols& entitySymbols, Co
 // -----------------------------------------------------------------------------
 SelectionMenu::~SelectionMenu()
 {
-    options_.Unregister( *this );
+    controllers_.options_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -330,9 +331,11 @@ void SelectionMenu::GenerateMenu()
     dummyEntry->setFont( QFont( "Arial", 1 ) );
 
     // merge with default menu
-    if( menu_  )
+    kernel::ContextMenu defaultMenu;
+    controllers_.actions_.ContextMenu( point_, kernel::Nothing(), defaultMenu );
+    if( kernel::ContextMenu* qMenu = defaultMenu.FillMenu() )
     {
-        QList< QAction* > actions = menu_->actions();
+        QList< QAction* > actions = qMenu->actions();
         if( actions.size() > 1u )
             for( int i = actions.size() - 1; i > 0; --i )
                 menu->addAction( actions[ i ] );
@@ -406,8 +409,8 @@ void SelectionMenu::GenerateMenu()
 // Name: SelectionMenu::ExecMenu
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
-void SelectionMenu::ExecMenu( const Layer_ABC::T_LayerElements& extractedElements,
-                              const QPoint &globalPos, Qt::MouseButton button, Qt::KeyboardModifiers modifiers, kernel::ContextMenu* menu )
+void SelectionMenu::ExecMenu( const Layer_ABC::T_LayerElements& extractedElements, const geometry::Point2f& point,
+                              const QPoint &globalPos, Qt::MouseButton button, Qt::KeyboardModifiers modifiers )
 {
     mouseEvent_.reset( new QMouseEvent( QEvent::None, globalPos, globalPos, button, Qt::NoButton, modifiers ) );
 
@@ -419,9 +422,26 @@ void SelectionMenu::ExecMenu( const Layer_ABC::T_LayerElements& extractedElement
     }
 
     FilterElement( extractedElements );
-    menu_ = menu;
+    point_ = point;
     GenerateMenu();                                                                         // Several elements extracted, menu way
 }
+
+// -----------------------------------------------------------------------------
+// Name: SelectionMenu::FillDefaultMenu
+// Created: LGY 2013-04-05
+// -----------------------------------------------------------------------------
+//void SelectionMenu::FillDefaultMenu( Menu_ABC& main )
+//{
+//    kernel::ContextMenu defaultMenu;
+//    controllers_.actions_.ContextMenu( point_, kernel::Nothing(), defaultMenu );
+//    if( kernel::ContextMenu* qMenu = defaultMenu.FillMenu() )
+//    {
+//        QList< QAction* > actions = qMenu->actions();
+//        if( actions.size() > 1u )
+//            for( int i = actions.size() - 1; i > 0; --i )
+//                menu.addAction( actions[ i ] );
+//    }
+//}
 
 namespace
 {

@@ -13,6 +13,7 @@
 #include "GlTools_ABC.h"
 #include "SelectionMenu.h"
 #include "clients_kernel/ContextMenu.h"
+#include "clients_kernel/Controllers.h"
 
 using namespace gui;
 
@@ -20,10 +21,10 @@ using namespace gui;
 // Name: CircularEventStrategy constructor
 // Created: AGE 2006-08-21
 // -----------------------------------------------------------------------------
-CircularEventStrategy::CircularEventStrategy( kernel::Options& options, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
+CircularEventStrategy::CircularEventStrategy( kernel::Controllers& controllers, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
                                               DrawingTypes& drawingTypes, GlTools_ABC& tools )
     : QObject()
-    , menu_( new SelectionMenu( options, entitySymbols, colorStrategy, drawingTypes, tools ) )
+    , menu_( new SelectionMenu( controllers, entitySymbols, colorStrategy, drawingTypes, tools ) )
     , default_( 0 )
     , exclusive_( true )
     , tools_( tools )
@@ -235,11 +236,7 @@ void CircularEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry
     if( DisplaySelectedMenu( mouse, point, extractedElements ) )                                           // Show context menu on selected unit
         return;
 
-    kernel::ContextMenu menu;
-    if( default_ )
-        default_->FillContextMenu( mouse, menu, point );
-
-    menu_->ExecMenu( extractedElements, mouse->globalPos(), mouse->button(), mouse->modifiers(), menu.FillMenu() );   // Elements extracted, let the menu handle it
+    menu_->ExecMenu( extractedElements, point, mouse->globalPos(), mouse->button(), mouse->modifiers() );   // Elements extracted, let the menu handle it
 }
 
 // -----------------------------------------------------------------------------

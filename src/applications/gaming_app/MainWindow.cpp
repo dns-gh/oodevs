@@ -172,7 +172,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     icons_.reset( new gui::EntitySymbols( *symbols, *strategy_ ) );
 
     // Event strategy
-    forward_.reset( new gui::CircularEventStrategy( controllers_.options_, *icons_, *strategy_, staticModel_.drawings_, *glProxy_ ) );
+    forward_.reset( new gui::CircularEventStrategy( controllers_, *icons_, *strategy_, staticModel_.drawings_, *glProxy_ ) );
     eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
 
     // Main widget

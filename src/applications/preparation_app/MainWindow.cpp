@@ -160,7 +160,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     gui::RichItemFactory* factory = new gui::RichItemFactory( this );
 
     // Event strategy
-    forward_.reset( new gui::CircularEventStrategy( controllers.options_, *icons_, *strategy_, staticModel_.drawings_, *glProxy_ ) );
+    forward_.reset( new gui::CircularEventStrategy( controllers, *icons_, *strategy_, staticModel_.drawings_, *glProxy_ ) );
     eventStrategy_.reset( new gui::ExclusiveEventStrategy( *forward_ ) );
 
     // Main widget

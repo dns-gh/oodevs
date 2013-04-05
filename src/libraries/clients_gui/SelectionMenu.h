@@ -17,7 +17,7 @@
 namespace kernel
 {
     class GraphicalEntity_ABC;
-    class Options;
+    class Controllers;
 }
 
 namespace gui
@@ -45,15 +45,15 @@ class SelectionMenu : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             SelectionMenu( kernel::Options& options, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
+             SelectionMenu( kernel::Controllers& controllers, EntitySymbols& entitySymbols, ColorStrategy& colorStrategy,
                             DrawingTypes& drawingTypes, GlTools_ABC& tools );
     virtual ~SelectionMenu();
     //@}
 
     //! @name Operations
     //@{
-    void ExecMenu( const Layer_ABC::T_LayerElements& extractedElements,
-                   const QPoint &globalPos, Qt::MouseButton button, Qt::KeyboardModifiers modifiers, kernel::ContextMenu* menu );
+    void ExecMenu( const Layer_ABC::T_LayerElements& extractedElements, const geometry::Point2f& point,
+                   const QPoint &globalPos, Qt::MouseButton button, Qt::KeyboardModifiers modifiers );
     //@}
 
 private slots:
@@ -72,24 +72,24 @@ private:
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, float r, float g, float b, const std::string& category = "", float markerPixelRatio = 1.f ) const;
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, const QColor& color, const std::string& category = "", float markerPixelRatio = 1.f ) const;
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+//    void FillDefaultMenu( QMenu& main );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Options& options_;
+    kernel::Controllers& controllers_;
     EntitySymbols& entitySymbols_;
     ColorStrategy& colorStrategy_;
     DrawingTypes& drawingTypes_;
     GlTools_ABC& tools_;
-
+    geometry::Point2f point_;
     Layer_ABC::T_LayerElements extractedElements_;
     std::map< const kernel::GraphicalEntity_ABC*, QPixmap > icons_;
     std::auto_ptr< QMouseEvent > mouseEvent_;
     gui::GlWidget* parent2d_;
     gui::Gl3dWidget* parent3d_;
     unsigned int moreElements_;
-    kernel::ContextMenu* menu_;
     bool mode3d_;
     //@}
 };
