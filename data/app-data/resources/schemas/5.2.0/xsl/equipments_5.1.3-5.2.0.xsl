@@ -9,7 +9,7 @@
   
   <xsl:template match="radar">
     <xsl:element name="radar">
-      <xsl:apply-templates select="node()"/>
+      <xsl:apply-templates select="node()|@*"/>
       <xsl:attribute name="height">10</xsl:attribute>
     </xsl:element>
   </xsl:template>
