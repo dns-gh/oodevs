@@ -308,7 +308,7 @@ tools::Path ScriptPlugin::GenerateOrdersScript( const std::vector< tools::Path >
             {
                 tools::Path orderFile = *it;
                 orderFile.ReplaceExtension();
-                destFile << "actions:StartScheduler( \"../../" << orderFile.ToLocal() << "\" )\n";
+                destFile << "actions:StartScheduler( \"../../" << orderFile.ToUTF8() << "\" )\n";
             }
         }
     }

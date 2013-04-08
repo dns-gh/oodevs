@@ -1574,7 +1574,7 @@ namespace
 
     void LoadResourcesFile( const std::string& file, const tools::Path& dir, sword::Brain& brain )
     {
-        brain.GetScriptRef( "include" )( ( dir / tools::Path( file.c_str() ) ).ToLocal() );
+        brain.GetScriptRef( "include" )( ( dir / tools::Path( file.c_str() ) ).ToUTF8() );
     }
 }
 
@@ -1582,7 +1582,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
                   const tools::Path& includePath, const tools::Path& brainFile, bool isMasalife,
                   const std::string& type, bool reload, const tools::Path& integrationDir, sword::DEC_Logger* logger )
 {
-    const std::string& idx = isMasalife ? type : brainFile.ToLocal();
+    const std::string& idx = isMasalife ? type : brainFile.ToUTF8();
     pArchetypeBrain = brainTable[idx];
     if( reload )
         pArchetypeBrain.reset();
@@ -1599,7 +1599,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
             + PLUGIN( "communication" )
             + PLUGIN46( "errorhandler" )
             + PLUGIN46( "devtools" )
-            + "} cwd='" + includePath.ToLocal() + "'", logger ) );
+            + "} cwd='" + includePath.ToUTF8() + "'", logger ) );
     else
         pArchetypeBrain.reset( new sword::Brain(
             "plugins={"
@@ -1607,10 +1607,10 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
             + PLUGIN46( "motivation" )
             + PLUGIN46( "errorhandler" )
             + PLUGIN46( "devtools" )
-            + "} cwd='" + includePath.ToLocal() + "'", logger ) );
+            + "} cwd='" + includePath.ToUTF8() + "'", logger ) );
     pArchetypeBrain->RegisterFunction( "LoadResourcesFile", boost::function< void( const std::string& ) >(
         boost::bind( &LoadResourcesFile, _1, integrationDir, boost::ref( *pArchetypeBrain ) ) ) );
-    pArchetypeBrain->GetScriptRef( "include" )( brainFile.ToLocal(), includePath.ToLocal(), type );
+    pArchetypeBrain->GetScriptRef( "include" )( brainFile.ToUTF8(), includePath.ToUTF8(), type );
     if( !reload )
         brainTable[idx] = pArchetypeBrain;
     if( reload )

@@ -60,7 +60,7 @@ void IndicatorConditions::RegisterIn( directia::brain::Brain& brain )
 // -----------------------------------------------------------------------------
 std::string IndicatorConditions::PrependSessionPath( const std::string& filename )
 {
-    return config_.BuildSessionChildFile( filename.c_str() ).ToLocal();
+    return config_.BuildSessionChildFile( filename.c_str() ).ToUTF8();
 }
 
 // -----------------------------------------------------------------------------

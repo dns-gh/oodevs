@@ -22,8 +22,8 @@ namespace
     directia::brain::Brain* CreateBrain( tools::Path file )
     {
         file.Normalize();
-        std::string workingDirectory = ( file.Parent().IsEmpty() ) ? "." : file.Parent().ToLocal();
-        std::string brainInit = std::string( "brain={file='" ) + file.ToLocal() + "',type='brain'}plugins={} cwd='" + workingDirectory + "'";
+        std::string workingDirectory = ( file.Parent().IsEmpty() ) ? "." : file.Parent().ToUTF8();
+        std::string brainInit = std::string( "brain={file='" ) + file.ToUTF8() + "',type='brain'}plugins={} cwd='" + workingDirectory + "'";
         return new directia::brain::Brain( brainInit );
     }
 }
