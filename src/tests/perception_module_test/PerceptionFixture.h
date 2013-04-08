@@ -74,7 +74,9 @@ namespace perception
             core::Model& sensor = component[ "sensors" ].AddElement();
             sensor[ "height" ] = 0;
             sensor[ "type" ] = "sensor-type";
-            component[ "radars" ].AddElement()[ "type" ] = "my-radar";
+            core::Model& radar = component[ "radars" ].AddElement();
+            radar[ "type" ] = "my-radar";
+            radar[ "height" ] = 42.;
         }
         const unsigned int identifier;
         const double maxPerceptionDistance;

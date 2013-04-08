@@ -78,10 +78,11 @@ namespace
         s[ "height" ] = sensor.GetHeight();
         s[ "type" ] = sensor.GetType().GetName();
     }
-    void AddRadar( core::Model& radars, const PHY_RadarType& radar )
+    void AddRadar( core::Model& radars, const PHY_RadarType& radar, double height )
     {
         core::Model& r = radars.AddElement();
         r[ "type" ] = radar.GetName();
+        r[ "height" ] = height;
     }
     void AddWeapon( core::Model& weapons, const PHY_Weapon& weapon )
     {
@@ -105,7 +106,7 @@ void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante
     component[ "type/sensor-rotation-angle" ] = composante.GetType().GetSensorRotationAngle(); // $$$$ MCO 2012-07-09: type/ ?!
     components_[ &composante ] = &component;
     composante.ApplyOnSensors( boost::bind( &AddSensor, boost::ref( component[ "sensors" ] ), _1 ) );
-    composante.ApplyOnRadars( boost::bind( &AddRadar, boost::ref( component[ "radars" ] ), _1 ) );
+    composante.ApplyOnRadars( boost::bind( &AddRadar, boost::ref( component[ "radars" ] ), _1, _2 ) );
     composante.ApplyOnWeapons( boost::bind( &AddWeapon, boost::ref( component[ "weapons" ] ), _2 ) );
     PHY_RolePion_Composantes::NotifyComposanteAdded( composante, dotations );
 }
