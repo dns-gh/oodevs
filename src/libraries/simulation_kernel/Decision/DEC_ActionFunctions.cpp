@@ -394,6 +394,15 @@ bool DEC_ActionFunctions::CanTransportCrowd( DEC_Decision_ABC& callerAgent )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::GetCapacityToTransportCrowd
+// Created: GGE 2013-04-04
+// -----------------------------------------------------------------------------
+int DEC_ActionFunctions::GetCapacityToTransportCrowd( DEC_Decision_ABC& callerAgent )
+{
+    return callerAgent.GetPion().GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterCapacity();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::IsTransportingCrowd
 // Created: DDA 2011-08-31
 // -----------------------------------------------------------------------------

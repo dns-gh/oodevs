@@ -487,6 +487,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_GetConcentrationLaPlusProche" ] = &DEC_KnowledgePopulationFunctions::GetClosestConcentration;
     brain[ "DEC_GetPositionConcentration" ] = &DEC_KnowledgePopulationFunctions::GetConcentrationPosition;
     brain[ "DEC_GetNombrePersonnesDansConcentration" ] = &DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration;
+    brain[ "DEC_GetNombrePersonnesDansFoule" ] = &DEC_KnowledgePopulationFunctions::GetAllHumans;
     brain[ "DEC_AssignMissionCrowdParameter" ] = 
         boost::function< void( boost::shared_ptr< MIL_Mission_ABC >, const std::string&, int ) >( boost::bind( &MIL_MissionParameterFactory::SetCrowdKnowledgeParameter, this, _1, _2, _3 ) );
 
@@ -781,6 +782,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Connaissance_TransportNombreAllerRetour" ] = &DEC_ActionFunctions::GetNumberOfRoundTripToTransportKnowledge;
 
     brain[ "DEC_Agent_PeutTransporterFoule" ] = &DEC_ActionFunctions::CanTransportCrowd;
+    brain[ "DEC_Agent_GetCapacityToTransportCrowd" ] = &DEC_ActionFunctions::GetCapacityToTransportCrowd;
     brain[ "DEC_Agent_TransporteFoule" ] = &DEC_ActionFunctions::IsTransportingCrowd;
     brain[ "DEC_StartEmbarquerFouleDUneConcentration" ] =
         boost::function< unsigned int( int, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< crowdtransport::PHY_ActionLoadCrowd, int, unsigned int >, boost::ref( GetPion() ), _1, _2 ) );

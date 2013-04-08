@@ -196,6 +196,16 @@ end
 integration.canTransportCrowd = function()
     return DEC_Agent_PeutTransporterFoule( myself )
 end
+
+integration.transportCrowdRoundTrip = function( crowd )
+    local capacityTransport = DEC_Agent_GetCapacityToTransportCrowd( myself )
+    local crowdsNumber = DEC_GetNombrePersonnesDansFoule( myself, crowd.source )  
+    if capacityTransport > 0 then
+        return math.ceil( crowdsNumber / capacityTransport )
+    else
+        return 0
+    end
+end
 -- Load crowd
 integration.startLoadCrowd = function( crowd, concentration )
     meKnowledge:RC( eRC_TransportEmbarquement )
