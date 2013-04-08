@@ -251,6 +251,7 @@ void ADN_Resources_Data::IndirectAmmoInfos::CopyFrom( ADN_Resources_Data::Indire
     bFlare_ = ammoInfos.bFlare_.GetData();
     bEffect_ = ammoInfos.bEffect_.GetData();
 
+    nIntervention_ = ammoInfos.nIntervention_.GetData();
     rDispersionX_ = ammoInfos.rDispersionX_.GetData();
     rDispersionY_ = ammoInfos.rDispersionY_.GetData();
     rNeutralizationRatio_ = ammoInfos.rNeutralizationRatio_.GetData();
