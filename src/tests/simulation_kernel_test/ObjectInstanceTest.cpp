@@ -28,7 +28,7 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
 {
-    WorldInitialize( "worldwide/Paris" );
+    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
     MIL_ObjectFactory factory( true );
     {
         xml::xistringstream xis(

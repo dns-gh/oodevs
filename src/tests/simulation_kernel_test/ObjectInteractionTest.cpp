@@ -79,7 +79,7 @@ namespace
         ObjectCapacityFixture()
             : factory( false )
         {
-            WorldInitialize( "worldwide/Paris" );
+            WorldInitialize( "worldwide/tests/EmptyParis-ML" );
             MOCK_EXPECT( army.RegisterObject ).once();
             MOCK_EXPECT( army.GetColor ).once().returns( boost::cref( color ) );
             MOCK_EXPECT( army.UnregisterObject ).once();

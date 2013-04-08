@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
 {
     SingletonTerminator terminator;
     MockMIL_Time_ABC time;
-    WorldInitialize( "worldwide/Paris" ); // $$$$ because used in asn and in destructor of action!!!
+    WorldInitialize( "worldwide/tests/EmptyParis-ML" ); // $$$$ because used in asn and in destructor of action!!!
     MockNET_Publisher_ABC mockPublisher;
 
     {

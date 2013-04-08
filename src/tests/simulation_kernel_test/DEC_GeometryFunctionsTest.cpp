@@ -17,7 +17,7 @@ namespace
     {
         Fixture()
         {
-            WorldInitialize( "worldwide/Paris" );
+            WorldInitialize( "worldwide/tests/EmptyParis-ML" );
         }
         ~Fixture()
         {

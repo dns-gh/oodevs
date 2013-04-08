@@ -382,7 +382,7 @@ namespace
             , model( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) )
             , type( model )
         {
-            WorldInitialize( "worldwide/Paris" );
+            WorldInitialize( "worldwide/tests/EmptyParis-ML" );
             MIL_PopulationAttitude::Initialize();
             MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1 );
         }

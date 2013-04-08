@@ -42,7 +42,7 @@ namespace
     {
         WorldFixture()
         {
-            WorldInitialize( "worldwide/Paris" );
+            WorldInitialize( "worldwide/tests/EmptyParis-ML" );
         }
         ~WorldFixture()
         {

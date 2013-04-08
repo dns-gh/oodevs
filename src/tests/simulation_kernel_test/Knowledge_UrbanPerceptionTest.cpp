@@ -40,7 +40,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
 {
-    WorldInitialize( "worldwide/Paris" );
+    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
     {
         MIL_ObjectFactory factory( true );
         {

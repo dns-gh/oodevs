@@ -49,7 +49,7 @@ namespace
     {
         ObjectKnowledgeSerializationFixture()
         {
-            WorldInitialize( "worldwide/Paris" );
+            WorldInitialize( "worldwide/tests/EmptyParis-ML" );
             PHY_ConsumptionType::Initialize();
             MOCK_EXPECT( time.GetCurrentTimeStep ).returns( 1u );
         }

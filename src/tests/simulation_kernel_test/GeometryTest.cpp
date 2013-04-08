@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE( TestComputePolygonScale )
 
 BOOST_AUTO_TEST_CASE( AdvanceAlongFuseau )
 {
-    WorldInitialize( "worldwide/Paris" );
+    WorldInitialize( "worldwide/tests/EmptyParis-ML" );
     {
         MT_Vector2D result;
         MT_Vector2D orientation( 1, 1 );
