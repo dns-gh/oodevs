@@ -60,6 +60,7 @@ public:
     virtual void AddToLineIndex( int number ) { curLineIndex_ += number; }
     void SetMaxLinesInFile( int maxLines ) { maxLinesInFile_ = maxLines; }
     int GetConsignCount() const;
+    int GetCurrentTick() const { return curTick_; }
     //@}
 
 protected:

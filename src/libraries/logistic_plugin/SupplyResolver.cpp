@@ -121,6 +121,8 @@ const ConsignData_ABC& SupplyConsignData::ManageMessage( const ::sword::LogSuppl
         int entTick = msg.current_state_end_tick();
         if( entTick > 0 )
             stateEndTick_ = boost::lexical_cast< std::string >( entTick );
+        if( entTick <= resolver.GetCurrentTick() )
+            stateEndTick_.clear();
     }
     if( msg.has_convoyer() )
     {
