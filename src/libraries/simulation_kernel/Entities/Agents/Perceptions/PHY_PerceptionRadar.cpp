@@ -156,7 +156,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRadar::Compute( const MIL_Agent_ABC& /*
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
-    PHY_RadarClass::T_RadarClassMap radarClasses = PHY_RadarClass::GetRadarClasses(); 
+    PHY_RadarClass::T_RadarClassMap radarClasses = PHY_RadarClass::GetRadarClasses();
     for( auto itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
     {
         const PHY_PerceptionRadarData::T_ZoneSet& zones = radarZones_         [ itRadarClass->second->GetID() ];
@@ -165,18 +165,14 @@ void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perc
         if( !bRadarEnabledOnPerceiverPos && zones.empty() )
             continue;
 
-        const PHY_RoleInterface_Perceiver::T_RadarMap& radars = perceiver_.GetRadars( *itRadarClass->second );
+        const PHY_RoleInterface_Perceiver::T_RadarSet& radars = perceiver_.GetRadars( *itRadarClass->second );
         for( auto itRadar = radars.begin(); itRadar != radars.end(); ++itRadar )
         {
-            const PHY_RadarType* radarType = itRadar->first;
-            double radarHeight = itRadar->second;
-            PHY_PerceptionRadarData radarData( *radarType, radarHeight );
+            const PHY_RadarType& radarType = **itRadar;
             auto itRadarData = radarData_.find( &radarType );
             if( itRadarData == radarData_.end() )
-                radarData_[ &radarType ] = radarData;
-            else // Use max height for a given radar type
-                radarData_[ &radarType ].SetHeight( radarHeight );
-            radarData_[ &radarType ].Acquire( perceiver_, zones, bRadarEnabledOnPerceiverPos, detectionComputerFactory );
+                itRadarData  = radarData_.insert( std::make_pair( &radarType, PHY_PerceptionRadarData( radarType ) ) ).first;
+            itRadarData->second.Acquire( perceiver_, zones, bRadarEnabledOnPerceiverPos, detectionComputerFactory );
         }
     }
 }

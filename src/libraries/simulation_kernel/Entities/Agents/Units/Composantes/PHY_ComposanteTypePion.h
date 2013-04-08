@@ -154,7 +154,7 @@ public:
     void ApplyOnRadars ( T& func ) const
     {
         for( auto it = radarTypes_.begin(); it != radarTypes_.end(); ++it )
-            func( *it->first, it->second );
+            func( **it );
     }
     //@}
 
@@ -223,7 +223,7 @@ private:
     typedef std::map< std::string, PHY_ComposanteTypePion* >   T_ComposanteTypeMap;
     typedef tools::Map< const PHY_WeaponType*, bool >          T_WeaponTypeMap;
     typedef tools::Map< const PHY_SensorType*, double >        T_SensorTypeMap;
-    typedef tools::Map< const PHY_RadarType*, double >         T_RadarTypeMap;
+    typedef std::vector< const PHY_RadarType* >                T_RadarTypeSet;
     typedef std::vector< const PHY_ComposanteTypeObjectData* > T_ObjectDataVector;
     typedef std::vector< PHY_DotationConsumptions* >           T_ConsumptionVector;
 
@@ -315,7 +315,7 @@ private:
     const PHY_DotationCapacities dotationCapacities_;
           T_WeaponTypeMap        weaponTypes_;
           T_SensorTypeMap        sensorTypes_;
-          T_RadarTypeMap         radarTypes_;
+          T_RadarTypeSet         radarTypes_;
           double                 rSensorRotationAngle_;
           T_ObjectDataVector     objectData_;
           T_ConsumptionVector    consumptions_;

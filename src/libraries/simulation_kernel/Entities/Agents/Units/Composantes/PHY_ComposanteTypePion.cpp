@@ -408,9 +408,9 @@ void PHY_ComposanteTypePion::ReadRadar( xml::xistream& xis )
     const PHY_RadarType* pRadarType = PHY_RadarType::Find( strRadar );
     if( !pRadarType )
         xis.error( "Unknown radar type" );
-    if( radarTypes_.find( pRadarType ) != radarTypes_.end() )
+    if( std::find( radarTypes_.begin(), radarTypes_.end(), pRadarType ) != radarTypes_.end() )
         xis.error( "Radar type already defined" );
-    xis >> xml::attribute( "height", radarTypes_[ pRadarType ] );
+    radarTypes_.push_back( pRadarType );
 }
 
 // -----------------------------------------------------------------------------

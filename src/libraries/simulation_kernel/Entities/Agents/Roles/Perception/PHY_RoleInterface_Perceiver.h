@@ -57,7 +57,7 @@ public:
 
     typedef std::vector< const PHY_SensorTypeDisaster* > T_DisasterDetectors;
 
-    typedef tools::Map< const PHY_RadarType*, double > T_RadarMap;
+    typedef tools::Set< const PHY_RadarType* > T_RadarSet;
     //@}
 
 public:
@@ -143,7 +143,7 @@ public:
     virtual const T_SurfaceAgentMap& GetSurfacesAgent () const = 0;
     virtual const T_SurfaceObjectMap& GetSurfacesObject() const = 0;
     virtual const T_DisasterDetectors& GetDisasterDetectors() const = 0;
-    virtual const T_RadarMap& GetRadars( const PHY_RadarClass& radarClass ) = 0;
+    virtual const T_RadarSet& GetRadars( const PHY_RadarClass& radarClass ) = 0;
     //@}
 
     //! @name Tools

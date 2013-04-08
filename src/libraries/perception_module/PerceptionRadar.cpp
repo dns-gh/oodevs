@@ -91,15 +91,7 @@ void PerceptionRadar::PrepareRadarData( const wrapper::View& entity, T_RadarType
             const RadarType* radarType = RadarType::Find( radar[ "type" ] );
             if( !radarType )
                 throw MASA_EXCEPTION( "unknown radar type " + radar[ "type" ] );
-            int radarClassId = radarType->GetClass().GetID();
-            if( types.find( radarClassId ) != types.end() )
-            {
-                double currentValue = types[ radarType->GetClass().GetID() ][ radarType ];
-                double height = radar[ "height" ];
-                types[ radarClassId ][ radarType ] = std::max( height, currentValue );
-            }
-            else
-                types[ radarClassId ][ radarType ] = radar[ "height" ];
+            types[ radarType->GetClass().GetID() ].insert( radarType );
         }
     }
 }
@@ -122,32 +114,29 @@ void PerceptionRadar::ExecuteAgents( const wrapper::View& model, const wrapper::
 {
     if( !GET_HOOK( IsUsingActiveRadar )( perceiver ) )
         return;
-    T_RadarDataMap previousPerceptions;
+    T_RadarDataMap radarData;
     T_RadarTypesMap radarTypes;
     wrapper::Effect effect( perceiver[ "perceptions/radars/acquisitions" ] );
-    // Retrieve all previous perceptions. Duplicate them into radarData 
-    perceiver[ "perceptions/radars/acquisitions" ].VisitNamedChildren( boost::bind( &::AddRadarType< T_RadarDataMap >, _1, boost::cref( perceiver ), boost::ref( previousPerceptions ) ) );
+    perceiver[ "perceptions/radars/acquisitions" ].VisitNamedChildren( boost::bind( &::AddRadarType< T_RadarDataMap >, _1, boost::cref( perceiver ), boost::ref( radarData ) ) );
     PrepareRadarData( perceiver, radarTypes );
     RadarClass::T_RadarClassMap radarClasses = RadarClass::GetRadarClasses();
-    for( auto itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
+    for( RadarClass::CIT_RadarClassMap itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
     {
         const PerceptionRadarData::T_ZoneSet& zones = radarZones_[ itRadarClass->second->GetID() ];
         const bool bRadarEnabledOnPerceiverPos = radarOnUnitPosition_[ itRadarClass->second->GetID() ];
 
         if( !bRadarEnabledOnPerceiverPos && zones.empty() )
             continue;
-        const T_RadarMap& radars = radarTypes[ itRadarClass->second->GetID() ];
-        for( T_RadarMap::const_iterator itRadar = radars.begin(); itRadar != radars.end(); ++itRadar )
+        const T_RadarSet& radars = radarTypes[ itRadarClass->second->GetID() ];
+        for( T_RadarSet::const_iterator itRadar = radars.begin(); itRadar != radars.end(); ++itRadar )
         {
-            const RadarType& radarType = *itRadar->first;
-
-            T_RadarDataMap::iterator itRadarData = previousPerceptions.find( &radarType );
-            if( itRadarData == previousPerceptions.end() )
+            const RadarType& radarType = **itRadar;
+            T_RadarDataMap::iterator itRadarData = radarData.find( &radarType );
+            if( itRadarData == radarData.end() )
             {
-                itRadarData  = previousPerceptions.insert( std::make_pair( &radarType, T_Data( new PerceptionRadarData( radarType ) ) ) ).first;
-                radarTypes[ radarType.GetClass().GetID() ][ &radarType ] = 0.;
+                itRadarData  = radarData.insert( std::make_pair( &radarType, T_Data( new PerceptionRadarData( radarType ) ) ) ).first;
+                radarTypes[ radarType.GetClass().GetID() ].insert( &radarType );
             }
-
             itRadarData->second->Acquire( model, perceiver, effect, observer_, zones, bRadarEnabledOnPerceiverPos ); // new radar type, add it with effect
         }
     }

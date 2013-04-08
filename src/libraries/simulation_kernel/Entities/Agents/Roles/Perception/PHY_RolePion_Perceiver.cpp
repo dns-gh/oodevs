@@ -815,9 +815,9 @@ public:
         composante.ApplyOnRadars( *this );
     }
 
-    void operator()( const PHY_RadarType& radarType, double height )
+    void operator()( const PHY_RadarType& radarType )
     {
-        radars_[ &radarType.GetClass() ][ &radarType ] = height;
+        radars_[ &radarType.GetClass() ].insert( &radarType );
     }
 
 private:
@@ -1415,7 +1415,7 @@ const PHY_RolePion_Perceiver::T_DisasterDetectors& PHY_RolePion_Perceiver::GetDi
 // Name: PHY_RolePion_Perceiver::GetRadars
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-const PHY_RolePion_Perceiver::T_RadarMap& PHY_RolePion_Perceiver::GetRadars( const PHY_RadarClass& radarClass )
+const PHY_RolePion_Perceiver::T_RadarSet& PHY_RolePion_Perceiver::GetRadars( const PHY_RadarClass& radarClass )
 {
     return radars_[ &radarClass ];
 }

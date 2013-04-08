@@ -40,7 +40,6 @@ PHY_PerceptionRadarData::sAcquisitionData::sAcquisitionData()
 // -----------------------------------------------------------------------------
 PHY_PerceptionRadarData::PHY_PerceptionRadarData()
     : pRadarType_( 0 )
-    , sensorHeight_( 10. )
 {
     // NOTHING
 }
@@ -49,9 +48,8 @@ PHY_PerceptionRadarData::PHY_PerceptionRadarData()
 // Name: PHY_PerceptionRadarData constructor
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-PHY_PerceptionRadarData::PHY_PerceptionRadarData( const PHY_RadarType& radarType, const double sensorHeight )
+PHY_PerceptionRadarData::PHY_PerceptionRadarData( const PHY_RadarType& radarType )
     : pRadarType_( &radarType )
-    , sensorHeight_( sensorHeight )
 {
     // NOTHING
 }
@@ -67,8 +65,9 @@ PHY_PerceptionRadarData::~PHY_PerceptionRadarData()
 
 namespace
 {
-    bool CanPerceive( const MT_Vector2D& sourcePosition, const MT_Vector2D& targetPosition, double sensorHeight )
+    bool CanPerceive( const MT_Vector2D& sourcePosition, const MT_Vector2D& targetPosition )
     {
+        static const double sensorHeight = 10.0;
         static const double targetHeight = 2.0;
         const MT_Vector3D vSource3D( sourcePosition.rX_, sourcePosition.rY_, sensorHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( sourcePosition.rX_, sourcePosition.rY_ ) );
         const MT_Vector3D vTarget3D( targetPosition.rX_, targetPosition.rY_, targetHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( targetPosition.rX_, targetPosition.rY_ ) );
@@ -97,10 +96,11 @@ void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perce
         std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer = detectionComputerFactory.Create( target );
         perceiver.GetPion().Execute( *detectionComputer );
         target.Execute( *detectionComputer );
+
         if( detectionComputer->CanBeSeen() && pRadarType_->CanAcquire( perceiver.GetPion(), target ) )
         {
             const MT_Vector2D& targetPosition = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
-            if( CanPerceive( perceiverPosition, targetPosition, sensorHeight_ ) )
+            if( CanPerceive( perceiverPosition, targetPosition ) )
             {
                 sAcquisitionData& agentData = acquisitionData_[ &target ];
                 agentData.bUpdated_ = true;
@@ -152,13 +152,3 @@ void PHY_PerceptionRadarData::Acquire( PHY_RoleInterface_Perceiver& perceiver, c
     }
     Update( perceiver );
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_PerceptionRadarData::SetMinHeight
-// Created: LDC 2013-04-08
-// -----------------------------------------------------------------------------
-void PHY_PerceptionRadarData::SetMinHeight( double height )
-{
-    sensorHeight_ = std:max( sensorHeight_, height );
-}
-    

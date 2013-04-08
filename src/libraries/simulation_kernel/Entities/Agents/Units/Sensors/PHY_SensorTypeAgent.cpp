@@ -428,9 +428,9 @@ bool PHY_SensorTypeAgent::IsLimitedToSensors( const MIL_Agent_ABC& target ) cons
     {
         if( targetPerceiver.IsUsingActiveRadar( *itRadarClass->second ) == false )
             continue;
-        const PHY_RoleInterface_Perceiver::T_RadarMap& radars = const_cast< PHY_RoleInterface_Perceiver& >( targetPerceiver ).GetRadars( *itRadarClass->second );
+        const PHY_RoleInterface_Perceiver::T_RadarSet& radars = const_cast< PHY_RoleInterface_Perceiver& >( targetPerceiver ).GetRadars( *itRadarClass->second );
         for( auto it = radars.begin(); it != radars.end(); ++it )
-            if( boost::find( limitedToSensorsList_, it->first->GetName() ) != limitedToSensorsList_.end() )
+            if( boost::find( limitedToSensorsList_, (*it)->GetName() ) != limitedToSensorsList_.end() )
                 return false;
     }
 

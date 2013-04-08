@@ -93,9 +93,7 @@ BOOST_FIXTURE_TEST_CASE( agent_has_radar_hook_checks_if_one_component_has_radar_
         core::Model entity;
         core::Model& component = entity[ "components" ].AddElement();
         component[ "can-perceive" ] = true;
-        core::Model& radar = component[ "radars" ].AddElement();
-        radar[ "type" ] = "my-radar";
-        radar[ "height" ] = 42.;
+        component[ "radars" ].AddElement()[ "type" ] = "my-radar";
         entity[ "perceptions" ] = perceptions;
         BOOST_CHECK( AgentHasRadar( core::Convert( &entity ), 0 ) );
     }
