@@ -169,7 +169,8 @@ public:
         eRC_CloseCrowdAttitudeChanged = 506,
         eRC_CloseCrowdUrbanDestruction = 507,
         eRC_SurrenderedUnitRecognized = 510,
-        eRC_SurrenderedUnitIdentified = 511
+        eRC_SurrenderedUnitIdentified = 511,
+        eRC_TransportRoundTrip = 512
     };
     //@}
 

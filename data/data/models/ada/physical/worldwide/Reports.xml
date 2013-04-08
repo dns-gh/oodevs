@@ -695,8 +695,9 @@
   <report category="operational" id="509" message="Work impossible : no demine capacity"/>
   <report category="operational" id="510" message="Surrendered unit recognized"/>
   <report category="operational" id="511" message="Surrendered unit identified"/>
-  <report category="operational" id="512" message="Number of round trip %1">
+  <report category="operational" id="512" message="%1 of %2 shuttle(s) betwween loading and unloading">
+    <parameter type="Integer"/>
     <parameter type="Integer"/>
   </report>
 </reports>
-<!-- signature="2139720776" -->
+<!-- signature="2682122974" -->
