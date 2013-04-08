@@ -166,8 +166,6 @@ void StandardModel::ApplyFilter( T_FilterFunction func )
 // -----------------------------------------------------------------------------
 QModelIndex StandardModel::GetMainModelIndex( const QModelIndex& index ) const
 {
-    if( !index.parent().isValid() )
-        return QModelIndex();
     return index.model()->index( index.row(), 0, index.parent() );
 }
 
