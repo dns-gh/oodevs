@@ -93,11 +93,11 @@ reigndesc = '(' + '|'.join(re.escape(p) for p in ignoredescendants) + ')'
 reigndesc = reigndesc + '\.'
 reigndesc = re.compile(reigndesc)
 
-retype = re.compile(r'(Layout|Delegate|Model|Factory|Validator|Action|Separator|Widget|Handler|Panel|Dialog|Editor)$')
+retype = re.compile(r'(Layout|Delegate|Model|Factory|Validator|Action|'
+    + r'Separator|Widget|Handler|Panel|Dialog|Editor)$')
 
 if __name__ == '__main__':
     path = sys.argv[1]
-    reknown = re.compile(r'\.QTimer$')
     leaves = set()
     unnamed = set()
     for name in parseqtnames(path):
