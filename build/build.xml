@@ -380,7 +380,7 @@
             </exec>
         </sequential>
     </macrodef>
-    
+
     <macrodef name="check-qt-names">
         <attribute name="app"/>
         <attribute name="outputfile"/>
@@ -389,14 +389,14 @@
                   dir="${run.dir}" failonerror="true">
                   <arg value="--debug-qt-names=@{outputfile}"/>
             </exec>
-            <python failonerror="true">
+            <python failonerror="false">
                 <arg value="${root.dir}/build/checkqtnames.py"/>
                 <arg value="@{outputfile}"/>
             </python>
             <delete file="@{outputfile}"/>
         </sequential>
     </macrodef>
-    
+
     <target name="qt_name_test">
         <check-qt-names app="preparation_app" outputfile="${out.dir}/checkqtnames.txt"/>
     </target>
