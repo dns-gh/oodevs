@@ -40,12 +40,13 @@ public:
 
 public:
              PHY_PerceptionRadarData();
-             PHY_PerceptionRadarData( const PHY_RadarType& radarType );
+             PHY_PerceptionRadarData( const PHY_RadarType& radarType, const double sensorHeight );
     virtual ~PHY_PerceptionRadarData();
 
     //! @name Operations
     //@{
     void Acquire( PHY_RoleInterface_Perceiver& perceiver, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition, const detection::DetectionComputerFactory_ABC& detectionComputerFactory );
+    void SetMinHeight( double height );
     //@}
 
 private:
@@ -67,7 +68,12 @@ private:
     //@}
 
 private:
+    PHY_PerceptionRadarData( const PHY_PerceptionRadarData& );
+    PHY_PerceptionRadarData& operator=( const PHY_PerceptionRadarData& );
+
+private:
     const PHY_RadarType* pRadarType_;
+    double sensorHeight_;
     tools::Map< MIL_Agent_ABC*, sAcquisitionData > acquisitionData_;
 };
 

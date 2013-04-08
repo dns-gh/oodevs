@@ -861,7 +861,7 @@ const RolePion_Perceiver::T_DisasterDetectors& RolePion_Perceiver::GetDisasterDe
 // Name: RolePion_Perceiver::GetRadars
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-const RolePion_Perceiver::T_RadarSet& RolePion_Perceiver::GetRadars( const PHY_RadarClass& /*radarClass*/ )
+const RolePion_Perceiver::T_RadarMap& RolePion_Perceiver::GetRadars( const PHY_RadarClass& /*radarClass*/ )
 {
     throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }

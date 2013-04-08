@@ -134,7 +134,7 @@ public:
     virtual const T_SurfaceAgentMap&  GetSurfacesAgent () const;
     virtual const T_SurfaceObjectMap& GetSurfacesObject() const;
     virtual const T_DisasterDetectors& GetDisasterDetectors() const;
-    virtual const T_RadarSet&         GetRadars        ( const PHY_RadarClass& radarClass );
+    virtual const T_RadarMap& GetRadars( const PHY_RadarClass& radarClass );
     //@}
 
     //! @name Tools
