@@ -988,6 +988,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichMenuBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Selection.cpp">
+      <Filter>Source Files\gl\Strategies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1631,6 +1634,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichMenuBar.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Selection.h">
+      <Filter>Source Files\gl\Strategies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

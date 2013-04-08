@@ -137,6 +137,16 @@ void UrbanLayer::ContextMenu( const kernel::GraphicalEntity_ABC& selectable, con
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanLayer::FillContextMenu
+// Created: LGY 2013-04-05
+// -----------------------------------------------------------------------------
+void UrbanLayer::FillContextMenu( const kernel::GraphicalEntity_ABC& selectable, kernel::ContextMenu& menu )
+{
+    const kernel::UrbanObject_ABC& urbanObject = static_cast< const kernel::UrbanObject_ABC& >( selectable );
+    controllers_.actions_.ContextMenu( urbanObject, kernel::Nothing(), menu );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanLayer::ShouldDisplay
 // Created: LDC 2010-09-10
 // -----------------------------------------------------------------------------

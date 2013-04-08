@@ -67,6 +67,7 @@ SelectionMenu::SelectionMenu( Controllers& controllers, EntitySymbols& entitySym
     , parent3d_( 0 )
     , moreElements_( 0u )
     , mode3d_( false )
+    , current_( 0 )
 {
     controllers_.options_.Register( *this );
 }
@@ -272,10 +273,10 @@ bool SelectionMenu::GenerateIcons()
 
 namespace
 {
-    class Menu_ABC : public QMenu
+    class Menu_ABC : public kernel::ContextMenu
     {
     public:
-                 Menu_ABC( QWidget* parent ) : QMenu( parent ){}
+                 Menu_ABC( QWidget* parent ) : kernel::ContextMenu( parent ){}
         virtual ~Menu_ABC() {}
 
         virtual Qt::MouseButton GetButton() const = 0;
@@ -305,6 +306,18 @@ namespace
         T* parent_;
         Qt::MouseButton button_;
     };
+
+    QAction* GenerateAction( const kernel::GraphicalEntity_ABC& graphicalEntity, Menu_ABC& menu, QMouseEvent& event, gui::Layer_ABC& /*layer*/ )
+    {
+        if( event.button() == Qt::RightButton )
+        {
+            kernel::ContextMenu* context = new kernel::ContextMenu( &menu );
+            context->setTitle( graphicalEntity.GetTooltip() );
+            return menu.addMenu( context );
+        }
+        else
+            return menu.addAction( graphicalEntity.GetTooltip() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -324,20 +337,14 @@ void SelectionMenu::GenerateMenu()
         menu.reset( new RichMenu< gui::Gl3dWidget >( parent3d_ ) );
     else
         menu.reset( new RichMenu< gui::GlWidget >( parent2d_ ) );
+    connect( menu.get(), SIGNAL( hovered( QAction* ) ), this, SLOT( OnSelectionChanged( QAction* ) ) );
 
     menu->setStyle( new StandardIconProxyStyle() );
-    QAction* dummyEntry = menu->addAction( "" ); // Can't have a separator without an item before
-    dummyEntry->setEnabled( false );
-    dummyEntry->setFont( QFont( "Arial", 1 ) );
 
     // merge with default menu
-    kernel::ContextMenu defaultMenu;
-    controllers_.actions_.ContextMenu( point_, kernel::Nothing(), defaultMenu );
-    defaultMenu.FillMenu();
-    QList< QAction* > actions = defaultMenu.actions();
-    if( actions.size() > 1u )
-        for( int i = actions.size() - 1; i > 0; --i )
-            menu->addAction( actions[ i ] );
+    menu->InitializeBaseCategories();
+    controllers_.actions_.ContextMenu( point_, kernel::Nothing(), *menu );
+    menu->FillMenu();
 
     for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
     {
@@ -351,7 +358,8 @@ void SelectionMenu::GenerateMenu()
             const GraphicalEntity_ABC* graphicalEntity = *extractedElement;
             if( !graphicalEntity )
                 continue;
-            QAction* action = menu->addAction( graphicalEntity->GetTooltip() );
+
+            QAction* action = GenerateAction( *graphicalEntity, *menu, *mouseEvent_, *layer );
             QPixmap& pixmap = icons_[ graphicalEntity ];
             if( !action )
                 continue;
@@ -376,28 +384,11 @@ void SelectionMenu::GenerateMenu()
         action->setFont( QFont( "Arial", -1, -1, true ) );
     }
 
-    if( QAction* resultingAction = menu->exec( mouseEvent_->globalPos() ) )
+    if( QAction* resultingAction = menu->QMenu::exec( mouseEvent_->globalPos() ) )
     {
-        const QString actionText = resultingAction->text();
-        for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
-        {
-            Layer_ABC* layer = extractedPair->first;
-            kernel::GraphicalEntity_ABC::T_GraphicalEntities& entities = extractedPair->second;
-            if( !layer )
-                continue;
-            for( auto extractedElement = entities.begin(); extractedElement != entities.end(); ++extractedElement )
-            {
-                const GraphicalEntity_ABC* graphicalEntity = *extractedElement;
-                if( !graphicalEntity )
-                    continue;
-                if( graphicalEntity->GetTooltip() == actionText )
-                {
-                    ApplyMousePress( *layer, *graphicalEntity, &*mouseEvent_, menu->GetButton() );
-                    icons_.clear();
-                    return;
-                }
-            }
-        }
+        T_Result result = GetSelected( resultingAction->text() );
+        if( result.first && result.second )
+            ApplyMousePress( *result.first, *result.second, &*mouseEvent_, menu->GetButton() );
     }
     icons_.clear();
     moreElements_ = 0;
@@ -408,7 +399,7 @@ void SelectionMenu::GenerateMenu()
 // Created: ABR 2013-01-30
 // -----------------------------------------------------------------------------
 void SelectionMenu::ExecMenu( const Layer_ABC::T_LayerElements& extractedElements, const geometry::Point2f& point,
-                              const QPoint &globalPos, Qt::MouseButton button, Qt::KeyboardModifiers modifiers )
+                              const QPoint& globalPos, Qt::MouseButton button, Qt::KeyboardModifiers modifiers )
 {
     mouseEvent_.reset( new QMouseEvent( QEvent::None, globalPos, globalPos, button, Qt::NoButton, modifiers ) );
 
@@ -478,4 +469,53 @@ void SelectionMenu::OptionChanged( const std::string& name, const kernel::Option
 {
     if( name == "3D" )
         mode3d_ = value.To< bool >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SelectionMenu::OnSelectionChanged
+// Created: LGY 2013-04-05
+// -----------------------------------------------------------------------------
+void SelectionMenu::OnSelectionChanged( QAction* action )
+{
+    if( mouseEvent_->button() == Qt::RightButton )
+    {
+        if( !action || ( current_ && current_ == action ) )
+            return;
+
+        T_Result result = GetSelected( action->text() );
+        if( !result.first || !result.second )
+            return;
+
+        kernel::ContextMenu* context = new kernel::ContextMenu( action->parentWidget() );
+        context->InitializeBaseCategories();
+        result.first->FillContextMenu( static_cast< const kernel::Entity_ABC& >( *result.second ), *context );
+        context->FillMenu();
+        action->setMenu( context );
+
+        current_ = action;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SelectionMenu::GetSelected
+// Created: LGY 2013-04-08
+// -----------------------------------------------------------------------------
+std::pair< Layer_ABC*, const GraphicalEntity_ABC* > SelectionMenu::GetSelected( const QString& text )
+{
+    for( auto extractedPair = extractedElements_.begin(); extractedPair != extractedElements_.end(); ++extractedPair )
+    {
+        Layer_ABC* layer = extractedPair->first;
+        kernel::GraphicalEntity_ABC::T_GraphicalEntities& entities = extractedPair->second;
+        if( !layer )
+            continue;
+        for( auto extractedElement = entities.begin(); extractedElement != entities.end(); ++extractedElement )
+        {
+            const GraphicalEntity_ABC* graphicalEntity = *extractedElement;
+            if( !graphicalEntity )
+                continue;
+            if( graphicalEntity->GetTooltip() == text )
+                return std::make_pair( layer, graphicalEntity );
+        }
+    }
+    return std::make_pair( nullptr, nullptr );
 }

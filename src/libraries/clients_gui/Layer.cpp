@@ -356,6 +356,15 @@ void Layer::FillContextMenu( QMouseEvent* /*mouse*/, kernel::ContextMenu& /*menu
 }
 
 // -----------------------------------------------------------------------------
+// Name: Layer::FillContextMenu
+// Created: LGY 2013-04-05
+// -----------------------------------------------------------------------------
+void Layer::FillContextMenu( const kernel::GraphicalEntity_ABC& /*entity*/, kernel::ContextMenu& /*menu*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: Layer::ExtractElements
 // Created: ABR 2013-01-25
 // -----------------------------------------------------------------------------

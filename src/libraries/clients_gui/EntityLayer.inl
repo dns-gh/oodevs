@@ -117,6 +117,16 @@ void EntityLayer< ConcreteEntity >::ContextMenu( const kernel::GraphicalEntity_A
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityLayer::FillContextMenu
+// Created: LGY 2013-04-05
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityLayer< ConcreteEntity >::FillContextMenu( const kernel::GraphicalEntity_ABC& selectable, kernel::ContextMenu& menu )
+{
+    controllers_.actions_.ContextMenu( static_cast< const ConcreteEntity& >( selectable ), menu );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityLayer::IsIn
 // Created: JSR 2012-05-24
 // -----------------------------------------------------------------------------

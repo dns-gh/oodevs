@@ -12,6 +12,7 @@
 #include "moc_CircularEventStrategy.cpp"
 #include "GlTools_ABC.h"
 #include "SelectionMenu.h"
+#include "Selection.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 
@@ -25,6 +26,7 @@ CircularEventStrategy::CircularEventStrategy( kernel::Controllers& controllers, 
                                               DrawingTypes& drawingTypes, GlTools_ABC& tools )
     : QObject()
     , menu_( new SelectionMenu( controllers, entitySymbols, colorStrategy, drawingTypes, tools ) )
+    , selection_( new Selection( controllers ) )
     , default_( 0 )
     , exclusive_( true )
     , tools_( tools )
@@ -276,8 +278,12 @@ bool CircularEventStrategy::DisplaySelectedMenu( QMouseEvent* mouse, const geome
     if( mouse->button() == Qt::RightButton )
     {
         for( auto it = extractedElements.begin(); it != extractedElements.end(); ++it )
-            if( (*it).first->ContextMenu( (*it).second, point, mouse->globalPos() ) )
-                return true;
+        {
+            const std::vector< const kernel::GraphicalEntity_ABC* >& entities = (*it).second;
+            if( selection_->IsSelected( entities ) )
+                if( (*it).first->ContextMenu( entities, point, mouse->globalPos() ) )
+                    return true;
+        }
     }
     return false;
 }

@@ -62,6 +62,13 @@ private slots:
     void GenerateMenu();
     void OnWidget2dChanged( gui::GlWidget* );
     void OnWidget3dChanged( gui::Gl3dWidget* );
+    void OnSelectionChanged( QAction* action );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::pair< Layer_ABC*, const kernel::GraphicalEntity_ABC* > T_Result;
     //@}
 
 private:
@@ -72,6 +79,7 @@ private:
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, float r, float g, float b, const std::string& category = "", float markerPixelRatio = 1.f ) const;
     QPixmap SelectionMenu::ExtractDrawingSample( const std::string& code, const QColor& color, const std::string& category = "", float markerPixelRatio = 1.f ) const;
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    T_Result GetSelected( const QString& text );
     //@}
 
 private:
@@ -90,6 +98,7 @@ private:
     gui::Gl3dWidget* parent3d_;
     unsigned int moreElements_;
     bool mode3d_;
+    QAction* current_;
     //@}
 };
 

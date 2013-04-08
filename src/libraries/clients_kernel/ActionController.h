@@ -207,6 +207,11 @@ public:
         Apply( & ContextMenuObserver_ABC< T1 >::NotifyContextMenu, firstElement, menu );
         Apply( & ContextMenuObserver_ABC< T2 >::NotifyContextMenu, secondElement, menu );
     }
+    template< typename T >
+    void ContextMenu( const T& element, kernel::ContextMenu& menu )
+    {
+        Apply( & ContextMenuObserver_ABC< T >::NotifyContextMenu, element, menu );
+    }
 
     // -----------------------------------------------------------------------------
     // Activate

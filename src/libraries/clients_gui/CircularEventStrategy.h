@@ -24,6 +24,7 @@ namespace gui
     class DrawingTypes;
     class GlTools_ABC;
     class SelectionMenu;
+    class Selection;
     class EntitySymbols;
 
 // =============================================================================
@@ -100,6 +101,7 @@ private:
     bool exclusive_;
     Layer_ABC::T_Layers::const_reverse_iterator rlast_;
     std::auto_ptr< SelectionMenu > menu_;
+    std::auto_ptr< Selection > selection_;
     GlTools_ABC& tools_;
     QTimer* timer_;
     geometry::Point2f point_;

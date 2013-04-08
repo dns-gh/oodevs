@@ -167,6 +167,7 @@ protected:
     virtual void NotifySelectionChanged( const std::vector< const ConcreteEntity* >& elements );
     virtual void SelectColor( const kernel::Entity_ABC& );
     virtual void ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
+    virtual void FillContextMenu( const kernel::GraphicalEntity_ABC& entity, kernel::ContextMenu& menu );
     virtual void HandleRectangleSelection( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
     virtual bool IsIn( const kernel::GraphicalEntity_ABC& selectable ) const;
     //@}
