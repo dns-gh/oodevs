@@ -16,7 +16,7 @@
 
 class ADN_TimeField_EditLine;
 class QComboBox;
-class ADN_IntValidator;
+class ADN_DoubleValidator;
 
 // $$$$ ABR 2012-11-05: This class should be rename in ADN_DelayEdit
 
@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     QString text() const;
-    ADN_IntValidator& GetValidator();
+    ADN_DoubleValidator& GetValidator();
     void setText( const QString& strText );
     void SetMinimumValueInSecond( unsigned int value );
     //@}
@@ -54,9 +54,18 @@ private slots:
     //! @name Internal events
     //@{
     void OnValueChanged( const QString& strValue );
-    void OnUnitChanged ( const QString& strUnit  );
+    void OnUnitChanged ( const QString& strUnit );
     void UpdateEnableState();
     virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void NotifyDataChanged();
+    float GetSeconds( const QString& strValue, const QString& strUnit ) const;
+    float GetDisplayValue( const QString& strUnit ) const;
+    float GetDisplayMin( const QString& strUnit ) const;
     //@}
 
 private:
@@ -64,12 +73,12 @@ private:
     //@{
     ADN_TimeField_EditLine* pLineEdit_;
     QComboBox*              pComboBox_;
-    unsigned int            nSecondsValue_;
+    float                   secondsValue_;
     unsigned int            nMinimumSecondsValue_;
     unsigned int            nMinimumMinutesValue_;
     unsigned int            nMinimumHoursValue_;
     bool                    bFreezeSlot_;
-    ADN_IntValidator*          pValidator_;
+    ADN_DoubleValidator*    pValidator_;
     //@}
 };
 

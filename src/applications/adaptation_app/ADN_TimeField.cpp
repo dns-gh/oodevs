@@ -79,7 +79,7 @@ private:
 ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /* = 0*/ )
     : QWidget              ( pParent, szName )
     , ADN_Gfx_ABC          ()
-    , nSecondsValue_       ( 0 )
+    , secondsValue_        ( 0.f )
     , nMinimumSecondsValue_( 0 )
     , nMinimumMinutesValue_( 0 )
     , nMinimumHoursValue_  ( 0 )
@@ -107,8 +107,8 @@ ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /* = 0*/ )
 
     connect( pLineEdit_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnValueChanged( const QString& ) ) );
     connect( pComboBox_, SIGNAL( activated  ( const QString& ) ), this, SLOT( OnUnitChanged ( const QString& ) ) );
-    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
-    pValidator_ = new ADN_IntValidator( 0, INT_MAX, pLineEdit_ );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT( UpdateEnableState() ) );
+    pValidator_ = new ADN_DoubleValidator( 0., INT_MAX, 10, pLineEdit_ );
     pLineEdit_->setValidator( pValidator_ );
 }
 
@@ -130,37 +130,14 @@ void ADN_TimeField::OnValueChanged( const QString& strValue )
     if( bFreezeSlot_ )
         return;
 
-    if( pComboBox_->currentText() == "s" )
-        nSecondsValue_ = locale().toUInt( strValue );
-    else if( pComboBox_->currentText() == "m" )
-        nSecondsValue_ = locale().toUInt( strValue ) * 60;
-    else if( pComboBox_->currentText() == "h" )
-        nSecondsValue_ = locale().toUInt( strValue ) * 3600;
-
-    if( strValue.isEmpty() || nSecondsValue_ < nMinimumSecondsValue_ )
+    secondsValue_ = GetSeconds( strValue, pComboBox_->currentText() );
+    if( secondsValue_ < static_cast< float >( nMinimumSecondsValue_ ) )
     {
-        QString currentEmptyValue = "0";
-        if( nMinimumSecondsValue_ > 0 )
-        {
-            if( pComboBox_->currentText() == "s" )
-                currentEmptyValue = locale().toString( nMinimumSecondsValue_ );
-            else if( pComboBox_->currentText() == "m" )
-                currentEmptyValue = locale().toString( nMinimumMinutesValue_ );
-            else if( pComboBox_->currentText() == "h" )
-                currentEmptyValue = locale().toString( nMinimumHoursValue_ );
-        }
-
-        nSecondsValue_ = nMinimumSecondsValue_;
-        pLineEdit_->setText( currentEmptyValue );
-        unsigned value = locale().toUInt( currentEmptyValue );
-        static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( QString::number( value ) + pComboBox_->currentText() );
-    }
-    else
-    {
-        unsigned value = locale().toUInt( strValue );
-        static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( QString::number( value ) + pComboBox_->currentText() );
+        secondsValue_ = static_cast< float >( nMinimumSecondsValue_ );
+        pLineEdit_->setText( locale().toString( GetDisplayMin( pComboBox_->currentText() ) ) );
     }
 
+    NotifyDataChanged();
     emit ValueChanged();
 }
 
@@ -170,19 +147,9 @@ void ADN_TimeField::OnValueChanged( const QString& strValue )
 // -----------------------------------------------------------------------------
 void ADN_TimeField::OnUnitChanged( const QString& strUnit )
 {
-    unsigned int minutesValue = nSecondsValue_ / 60;
-    unsigned int hoursValue = nSecondsValue_ / 3600;
-
     bFreezeSlot_ = true;
-    if( strUnit == "s" )
-        pLineEdit_->setText( locale().toString( nSecondsValue_ ) );
-    else if( strUnit == "m" )
-        pLineEdit_->setText( locale().toString( std::max<unsigned int>( minutesValue, nMinimumMinutesValue_) )  );
-    else if( strUnit == "h" )
-        pLineEdit_->setText( locale().toString( std::max<unsigned int>( hoursValue, nMinimumHoursValue_) ) );
-
-    unsigned value = locale().toUInt( pLineEdit_->text() );
-    static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( QString::number( value ) + strUnit );
+    pLineEdit_->setText( locale().toString( GetDisplayValue( strUnit ) ) );
+    NotifyDataChanged();
     bFreezeSlot_ = false;
     pLineEdit_->setFocus();
     emit ValueChanged();
@@ -194,7 +161,7 @@ void ADN_TimeField::OnUnitChanged( const QString& strUnit )
 // -----------------------------------------------------------------------------
 QString ADN_TimeField::text() const
 {
-    unsigned value = locale().toUInt( pLineEdit_->text() );
+    float value = locale().toFloat( pLineEdit_->text() );
     return QString::number( value ) + pComboBox_->currentText();
 }
 
@@ -206,26 +173,11 @@ void ADN_TimeField::setText( const QString& strText )
 {
     if( strText.isEmpty() )
         return;
-
-    const std::string strValue = std::string( strText );
-    const char        cUnit = *strValue.rbegin();
-    std::string       strTimeValue = strValue.substr( 0, strValue.size() - 1 );
-    std::stringstream strTmp( strTimeValue );
-    strTmp >> nSecondsValue_;
-    switch( cUnit )
-    {
-        case 's': break;
-        case 'm': nSecondsValue_ *= 60  ; break;
-        case 'h': nSecondsValue_ *= 3600; break;
-        default:
-            return;
-    }
-
-    std::stringstream strUnit;
-    strUnit << cUnit;
-    pComboBox_->setCurrentText( strUnit.str().c_str() );
-    unsigned value = locale().toUInt( strTimeValue.c_str() );
-    pLineEdit_->setText( locale().toString( value ) );
+    QString strUnit( strText.right( 1 ) );
+    QString strValue( strText.left( strText.size() - 1 ) );
+    secondsValue_ = GetSeconds( strValue, strUnit );
+    pComboBox_->setCurrentText( strUnit );
+    pLineEdit_->setText( locale().toString( strValue.toFloat() ) );
     emit ValueChanged();
 }
 
@@ -243,7 +195,7 @@ void ADN_TimeField::UpdateEnableState()
 // Name: ADN_TimeField::GetValidator
 // Created: SBO 2006-01-17
 // -----------------------------------------------------------------------------
-ADN_IntValidator& ADN_TimeField::GetValidator()
+ADN_DoubleValidator& ADN_TimeField::GetValidator()
 {
     assert( pValidator_ );
     return *pValidator_;
@@ -272,4 +224,62 @@ void ADN_TimeField::SetMinimumValueInSecond( unsigned int value )
 void ADN_TimeField::Warn( ADN_ErrorStatus, const QString& )
 {
     // NOTHING (For now)
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TimeField::NotifyDataChanged
+// Created: MMC 2013-04-04
+// -----------------------------------------------------------------------------
+void ADN_TimeField::NotifyDataChanged()
+{
+    static_cast< ADN_Connector_String<ADN_TimeField>* >( pConnector_ )->SetDataChanged(
+        QString::number( GetDisplayValue( pComboBox_->currentText() ) ) + pComboBox_->currentText() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TimeField::GetSeconds
+// Created: MMC 2013-04-04
+// -----------------------------------------------------------------------------
+float ADN_TimeField::GetSeconds( const QString& strValue, const QString& strUnit ) const
+{
+    if( strUnit == "s" )
+        return locale().toFloat( strValue );
+    else if( strUnit == "m" )
+        return locale().toFloat( strValue ) * 60;
+    else if( strUnit == "h" )
+        return locale().toFloat( strValue ) * 3600;
+    return 0.f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TimeField::GetDisplayValue
+// Created: MMC 2013-04-04
+// -----------------------------------------------------------------------------
+float ADN_TimeField::GetDisplayValue( const QString& strUnit ) const
+{
+    if( strUnit == "s" )
+        return secondsValue_;
+    else if( strUnit == "m" )
+        return std::max< float >( secondsValue_ / 60, static_cast< float >( nMinimumMinutesValue_ ) );
+    else if( strUnit == "h" )
+        return std::max< float >( secondsValue_ / 3600, static_cast< float >( nMinimumHoursValue_ ) );
+    return 0.f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TimeField::GetDisplayMin
+// Created: MMC 2013-04-04
+// -----------------------------------------------------------------------------
+float ADN_TimeField::GetDisplayMin( const QString& strUnit ) const
+{
+    if( nMinimumSecondsValue_ > 0 )
+    {
+        if( strUnit == "s" )
+            return static_cast< float >( nMinimumSecondsValue_ );
+        else if( strUnit == "m" )
+            return static_cast< float >( nMinimumMinutesValue_ );
+        else if( strUnit == "h" )
+            return static_cast< float >( nMinimumHoursValue_ );
+    }
+    return 0.f;
 }

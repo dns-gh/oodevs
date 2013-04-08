@@ -28,16 +28,22 @@ namespace tools
         if( input.empty() )
             return false;
 
+        static const double epsilon = 1e-6;
+        int nValue = 0;
+        double fValue = 0.;
+
         const char timeUnit = *input.rbegin();
-        std::string       strTimeValue = input.substr( 0, input.size() - 1 );
-        std::stringstream strTmp( strTimeValue );
-        strTmp >> output;
+        std::string timeValue( input.substr( 0, input.size() - 1 ) );
+        std::stringstream strTimeFValue( timeValue ); strTimeFValue.precision( 10 ); strTimeFValue >> fValue;
+        std::stringstream strTimeNValue( timeValue ); strTimeNValue >> nValue;
+        if( std::abs( static_cast< double >( nValue ) - fValue ) < epsilon )
+            fValue = static_cast< T >( nValue );
 
         switch( timeUnit )
         {
-        case 's': break;
-        case 'm': output *= (T)60  ; break;
-        case 'h': output *= (T)3600; break;
+        case 's': output = static_cast< T >( fValue ); break;break;
+        case 'm': output = static_cast< T >( fValue * 60 ); break;
+        case 'h': output = static_cast< T >( fValue * 3600 ); break;
         default:
             return false;
         }

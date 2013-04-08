@@ -88,3 +88,43 @@ BOOST_AUTO_TEST_CASE( XmlCodecTest_DecodeTimeWithHours )
         BOOST_CHECK_EQUAL( 100.f * 3600, value );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: XmlCodecTest_DecodeTimeWithFloatingHours
+// Created: MMC 2013-04-04
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( XmlCodecTest_DecodeTimeWithFloatingHours )
+{
+    const std::string input( "<data time='0.5h'/>" );
+    xml::xistringstream xis( input ); xis >> xml::start( "data" );
+    {
+        unsigned int value = 0;
+        BOOST_REQUIRE( tools::ReadTimeAttribute( xis, "time", value ) );
+        BOOST_CHECK_EQUAL( 1800u, value );
+    }
+    {
+        float value = 0;
+        BOOST_REQUIRE( tools::ReadTimeAttribute( xis, "time", value ) );
+        BOOST_CHECK_EQUAL( 0.5f * 3600, value );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: XmlCodecTest_DecodeTimeWithFloatingSeconds
+// Created: MMC 2013-04-04
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( XmlCodecTest_DecodeTimeWithFloatingSeconds )
+{
+    const std::string input( "<data time='0.05s'/>" );
+    xml::xistringstream xis( input ); xis >> xml::start( "data" );
+    {
+        unsigned int value = 0;
+        BOOST_REQUIRE( tools::ReadTimeAttribute( xis, "time", value ) );
+        BOOST_CHECK_EQUAL( 0u, value );
+    }
+    {
+        float value = 0.05f;
+        BOOST_REQUIRE( tools::ReadTimeAttribute( xis, "time", value ) );
+        BOOST_CHECK_EQUAL( 0.05f, value );
+    }
+}
