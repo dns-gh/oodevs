@@ -6,7 +6,7 @@ def parseqtnames(path):
         named = int(named)
         if not named:
             yield name.strip()
-   
+
 ignored = set([
     'QBoxLayout',
     'QVBoxLayout',
@@ -62,7 +62,7 @@ ignored = set([
     "gui::ConsistencyDialog_ABC",
     "Menu",
     ])
-    
+
 ignoredescendants = set([
     "QSpinBox",
     "QLineEdit",
@@ -94,7 +94,7 @@ reigndesc = reigndesc + '\.'
 reigndesc = re.compile(reigndesc)
 
 retype = re.compile(r'(Layout|Delegate|Model|Factory|Validator|Action|Separator|Widget|Handler|Panel|Dialog|Editor)$')
-            
+
 if __name__ == '__main__':
     path = sys.argv[1]
     reknown = re.compile(r'\.QTimer$')
@@ -113,4 +113,3 @@ if __name__ == '__main__':
 
     for name in sorted(unnamed):
         print name
-    
