@@ -277,12 +277,24 @@ bool CircularEventStrategy::DisplaySelectedMenu( QMouseEvent* mouse, const geome
 {
     if( mouse->button() == Qt::RightButton )
     {
+        // is selected
         for( auto it = extractedElements.begin(); it != extractedElements.end(); ++it )
         {
             const std::vector< const kernel::GraphicalEntity_ABC* >& entities = (*it).second;
             if( selection_->IsSelected( entities ) )
                 if( (*it).first->ContextMenu( entities, point, mouse->globalPos() ) )
                     return true;
+        }
+        // is not selected
+        if( extractedElements.size() == 1 )
+        {
+            auto it = extractedElements.begin();
+            const std::vector< const kernel::GraphicalEntity_ABC* >& entities = (*it).second;
+            if( entities.size() == 1 )
+            {
+                (*it).first->ContextMenu( **(*it).second.begin(), point, mouse->globalPos() );
+                return true;
+            }
         }
     }
     return false;
