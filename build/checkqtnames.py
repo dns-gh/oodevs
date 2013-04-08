@@ -111,5 +111,10 @@ if __name__ == '__main__':
         leaves.add(leaf)
         unnamed.add(name)
 
-    for name in sorted(unnamed):
-        print name
+    ret = 0
+    if unnamed:
+        w = sys.stderr.write
+        for name in sorted(unnamed):
+            w('error: ui element is unnamed: %s\n' % name)
+        ret = 1
+    sys.exit(ret)
