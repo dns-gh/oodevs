@@ -53,7 +53,7 @@ namespace
     QPixmap ComputePixmap( double value )
     {
         const tools::Path image = tools::Path( value > 0 ? "raise" : ( value < 0 ? "fall" : "stable" ) );
-        return QPixmap( QString::fromWCharArray( tools::GeneralConfig::BuildResourceChildFile( tools::Path( "images/gauges/tendency" ) / image + ".png" ).ToUnicode().c_str() ) );
+        return QPixmap( QString::fromStdWString( tools::GeneralConfig::BuildResourceChildFile( tools::Path( "images/gauges/tendency" ) / image + ".png" ).ToUnicode().c_str() ) );
     }
 }
 

@@ -517,14 +517,14 @@ void ExportWidget::ExportPackage()
 // -----------------------------------------------------------------------------
 bool ExportWidget::BrowseClicked()
 {
-    const tools::Path filename = gui::FileDialog::getSaveFileName( this, tools::translate( "ExportWidget", "Select a package" ), package_.second.ToUTF8().c_str(), "SWORD packages (*.otpak)" );
+    const tools::Path filename = gui::FileDialog::getSaveFileName( this, tools::translate( "ExportWidget", "Select a package" ), package_.second, "SWORD packages (*.otpak)" );
     if( filename.IsEmpty() )
         return false;
     package_.first = filename.Parent();
     package_.second = filename.FileName();
     if( filename.Exists() )
         return QMessageBox::question( this, tools::translate( "ExportWidget", "Overwrite File?" ),
-                            tools::translate( "ExportWidget", "A file called %1 already exists. Do you want to overwrite it?" ).arg( filename.ToUTF8().c_str() ),
+                            tools::translate( "ExportWidget", "A file called %1 already exists. Do you want to overwrite it?" ).arg( QString::fromStdWString( filename.ToUnicode().c_str() ) ),
                             QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes;
     return true;
 }
