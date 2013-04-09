@@ -273,8 +273,11 @@ QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Resourc
 {
     QStringList result;
     for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
-        if( ( *it )->ptr_.GetData()->strName_.GetData() == ammo.strName_.GetData() )
+    {
+        const ADN_Resources_Data::AmmoCategoryInfo* info = ( *it )->ptr_.GetData();
+        if( info && info->strName_.GetData() == ammo.strName_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
+    }
     return result;
 }
 
@@ -287,8 +290,11 @@ QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Resourc
     QStringList result;
     for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
         for( auto itWeapon = ( *it )->weapons_.begin(); itWeapon != ( *it )->weapons_.end(); ++itWeapon )
-            if( ( *itWeapon )->ptr_.GetData()->strName_.GetData() == category.strName_.GetData() )
+        {
+            const ADN_Resources_Data::CategoryInfo* info = ( *itWeapon )->ptr_.GetData();
+            if( info && info->strName_.GetData() == category.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
+        }
     return result;
 }
 
