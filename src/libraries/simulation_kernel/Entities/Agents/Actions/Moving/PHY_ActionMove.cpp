@@ -127,8 +127,7 @@ bool PHY_ActionMove::AvoidObstacles()
     obstacleId_ = pObjectColliding->GetObjectKnown() ? pObjectColliding->GetObjectKnown()->GetID() : 0;
 
     const std::string name = MIL_ObjectLoader::GetLoader().GetType( pObjectColliding->GetType().GetName() ).GetRealName();
-    if( pMainPath_->GetPathClass().AvoidObjects() )
-        role_.SendRC( MIL_Report::eRC_DifficultMovementProgression, name );
+    role_.SendRC( MIL_Report::eRC_DifficultMovementProgression, name );
     return true;
 }
 

@@ -351,16 +351,6 @@ bool DEC_ActionFunctions::CanTransportPion( const MIL_AgentPion& callerAgent, co
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::GetNumberOfRoundTripToTransportPion
-// Created: GGE 2013-04-04
-// -----------------------------------------------------------------------------
-double DEC_ActionFunctions::GetNumberOfRoundTripToTransportPion( const MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
-{
-    assert( pPion );
-    return callerAgent.GetRole< transport::PHY_RoleAction_Transport >().GetNumberOfRoundTripToTransportPion( pPion->GetPion(), bTransportOnlyLoadable ) ;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::CanTransportKnowledge
 // Created: EVH 2011-05-30
 // -----------------------------------------------------------------------------
@@ -373,33 +363,12 @@ bool DEC_ActionFunctions::CanTransportKnowledge( DEC_Decision_ABC& callerAgent, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::GetNumberOfRoundTripToTransportKnowledge
-// Created: GGE 2013-04-04
-// -----------------------------------------------------------------------------
-double DEC_ActionFunctions::GetNumberOfRoundTripToTransportKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool bTransportOnlyLoadable )
-{
-    if( !pKnowledge )
-        throw std::runtime_error( "Null knowledge passed to DEC_ActionFunctions::GetNumberOfRoundTripToTransportKnowledge" );
-    MIL_Agent_ABC& pion = pKnowledge->GetAgentKnown();
-    return callerAgent.GetPion().GetRole< transport::PHY_RoleAction_Transport >().GetNumberOfRoundTripToTransportPion( pion, bTransportOnlyLoadable ) ;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::CanTransportCrowd
 // Created: JSR 2011-08-09
 // -----------------------------------------------------------------------------
 bool DEC_ActionFunctions::CanTransportCrowd( DEC_Decision_ABC& callerAgent )
 {
     return callerAgent.GetPion().GetRole< PHY_RolePion_Composantes >().CanTransportCrowd();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::GetCapacityToTransportCrowd
-// Created: GGE 2013-04-04
-// -----------------------------------------------------------------------------
-int DEC_ActionFunctions::GetCapacityToTransportCrowd( DEC_Decision_ABC& callerAgent )
-{
-    return callerAgent.GetPion().GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterCapacity();
 }
 
 // -----------------------------------------------------------------------------

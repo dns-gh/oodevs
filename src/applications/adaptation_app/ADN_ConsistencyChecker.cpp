@@ -110,13 +110,12 @@ void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const T_NNOEleme
 void ADN_ConsistencyChecker::CheckNNOConsistency()
 {
     // Fill elements
-    T_NNOElements elements;
+    T_NNOElements elements_;
     ADN_Composantes_Data::T_ComposanteInfos_Vector composantes = ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantes();
     for( ADN_Composantes_Data::CIT_ComposanteInfos_Vector itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
     {
         ADN_Composantes_Data::ComposanteInfos& infos = **itComposante;
-        elements.push_back( NNOElement( infos.strName_.GetData(), infos.strCodeNNO_.GetData(), infos.strCodeEMAT8_.GetData()
-                                      , eComposantes, -1, infos.logInfos_.IsRepairTypeValid() ) );
+        elements_.push_back( NNOElement( infos.strName_.GetData(), infos.strCodeNNO_.GetData(), infos.strCodeEMAT8_.GetData(), eComposantes ) );
     }
 
     ADN_Equipement_Data::T_ResourceInfos_Vector ressourceCategories = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations(); 
@@ -126,13 +125,12 @@ void ADN_ConsistencyChecker::CheckNNOConsistency()
         for( ADN_Equipement_Data::CIT_CategoryInfos_Vector itRessource = ressources.begin(); itRessource != ressources.end(); ++itRessource )
         {
             ADN_Equipement_Data::CategoryInfo& infos = **itRessource;
-            elements.push_back( NNOElement( infos.strName_.GetData(), infos.strCodeNNO_.GetData(), infos.strCodeEMAT8_.GetData()
-                                          , eEquipement, ( *itCategory )->nType_ ) );
+            elements_.push_back( NNOElement( infos.strName_.GetData(), infos.strCodeNNO_.GetData(), infos.strCodeEMAT8_.GetData(), eEquipement, ( *itCategory )->nType_ ) );
         }
     }
 
     // Check errors
-    for( std::vector< NNOElement >::iterator itFirst = elements.begin(); itFirst != elements.end(); ++itFirst )
+    for( std::vector< NNOElement >::iterator itFirst = elements_.begin(); itFirst != elements_.end(); ++itFirst )
     {
         NNOElement& firstElement = *itFirst;
 
@@ -143,18 +141,16 @@ void ADN_ConsistencyChecker::CheckNNOConsistency()
         if( emat8.empty() )
             AddError( eMissingEmat, firstElement );
         std::string upperEmat8 = emat8;
-        std::transform( upperEmat8.begin(), upperEmat8.end(), upperEmat8.begin(), toupper );
+        std::transform( upperEmat8.begin(), upperEmat8.end(), upperEmat8.begin(), toupper);
         if( upperEmat8 != emat8 )
             AddError( eLowerCaseEmat, firstElement );
-        if( !firstElement.bRepairTypeValid_ )
-            AddError( eMissingRepairType, firstElement );
 
         // Check uniqueness
         std::vector< NNOElement > NNOelements;
         std::vector< NNOElement > EMATelements;
         if( !firstElement.codeNNO_.empty() || !firstElement.codeEMAT8_.empty() )
         {
-            for( std::vector< NNOElement >::iterator itSecond = itFirst + 1; itSecond != elements.end(); ++itSecond )
+            for( std::vector< NNOElement >::iterator itSecond = itFirst + 1; itSecond != elements_.end(); ++itSecond )
             {
                 NNOElement& secondElement = *itSecond;
                 if( !firstElement.codeNNO_.empty() && !secondElement.codeNNO_.empty() && firstElement.codeNNO_ == secondElement.codeNNO_ && !IsAlreadyRegistered( secondElement.codeNNO_, eNNoUniqueness ) )

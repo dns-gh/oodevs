@@ -36,7 +36,6 @@ public:
                            static bool IsPerceivedByAgent( const MIL_AgentPion& caller, int knowledgeId );
                            static boost::shared_ptr< MT_Vector2D > GetConcentrationPosition( const DEC_Decision_ABC& callerAgent, int knowledgeId, unsigned int concentrationId );
                            static unsigned int GetAllHumansInConcentration( const DEC_Decision_ABC& callerAgent, int knowledgeId, unsigned int concentrationId );
-                           static unsigned int GetAllHumans( const DEC_Decision_ABC& callerAgent, int knowledgeId );
                            static boost::shared_ptr< MT_Vector2D > ClosestPoint( const MIL_AgentPion& caller, int knowledgeId );
                            static void Secure( const MIL_AgentPion& caller, int knowledgeId );
                            static boost::shared_ptr< MT_Vector2D > SecuringPoint ( const MIL_AgentPion& caller, int knowledgeId );

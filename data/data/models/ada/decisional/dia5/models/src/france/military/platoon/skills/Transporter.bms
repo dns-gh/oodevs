@@ -11,8 +11,7 @@ rootnode
         skill.nodes.QueueForLoad,
         skill.nodes.LoadQueue,
         skill.nodes.UnloadQueue,
-        skill.nodes.Reports,
-        skill.nodes.ReportsWithParameters },
+        skill.nodes.Reports },
 
     -- unite arrivee a destination
     done = function( self, params, additionalParams )
@@ -47,7 +46,6 @@ rootnode
 
     -- init
     create = function( self )
-        self.numberOfRoundTrip = 0
         meKnowledge.isStoppingTransport = false
         -- filtrer les unites transportables
         self.loadableUnits = {}
@@ -55,7 +53,6 @@ rootnode
         for _, unit in pairs( self.params.units ) do
             if unit:canTransportIt( self.onlyLoadable ) then
                 self.loadableUnits[ unit ] = true
-                self.numberOfRoundTrip = self.numberOfRoundTrip + unit:transportUnitRoundTrip( self.onlyLoadable )
             end
         end
         if not next(self.loadableUnits) then
@@ -67,9 +64,6 @@ rootnode
         self.arrivedDestination = false
         self.everybodyQueued = false
         self.newqueued = false
-        --information sur le nombre d'aller retour
-        self.numberOfRoundTrip = math.ceil(self.numberOfRoundTrip)
-        Activate( skill.nodes.ReportsWithParameters, 1, { RC = eRC_TransportRoundTrip, roundTrip = self.numberOfRoundTrip } )
     end,
 
     activate = function( self )
@@ -146,12 +140,5 @@ node "Reports"
 {
     create = function( self )
         meKnowledge:RC( self.params.RC )
-    end,
-}
-
-node "ReportsWithParameters"
-{
-    create = function( self )
-        meKnowledge:RC( self.params.RC, self.params.roundTrip )
     end,
 }

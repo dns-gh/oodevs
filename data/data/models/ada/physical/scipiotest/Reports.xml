@@ -693,11 +693,5 @@
   </report>
   <report category="operational" id="508" message="Tir impossible : pion neutralisé"/>
   <report category="operational" id="509" message="Travaux impossibles : pas de capacité de déminage"/>
-  <report category="operational" id="510" message="Unité rendue reconnue"/>
-  <report category="operational" id="511" message="Unité rendue identifiée"/>
-  <report category="operational" id="512" message="%1 noria(s) effectuée(s) sur %2 noria(s) au total">
-    <parameter type="Integer"/>
-    <parameter type="Integer"/>
-  </report>
 </reports>
-<!-- signature="0093943200" -->
+<!-- signature="1606162288" -->

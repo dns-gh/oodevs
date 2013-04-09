@@ -42,14 +42,13 @@ private: // NNO Consistency
     //@{
     struct NNOElement
     {
-        NNOElement( const std::string& name, const std::string& codeNNO, const std::string& codeEMAT8, int tab, int subTab = -1, bool bRepairTypeValid = true )
-            : name_( name ), codeNNO_( codeNNO ), codeEMAT8_( codeEMAT8 ), tab_( tab ), subTab_( subTab ), bRepairTypeValid_( bRepairTypeValid ) {}
+        NNOElement( const std::string& name, const std::string& codeNNO, const std::string& codeEMAT8, int tab, int subTab = -1 )
+            : name_( name ) , codeNNO_( codeNNO ) , codeEMAT8_( codeEMAT8 ) , tab_( tab ) , subTab_( subTab ) {}
         std::string name_;
         std::string codeNNO_;
         std::string codeEMAT8_;
         int         tab_;
         int         subTab_;
-        bool        bRepairTypeValid_;
     };
     typedef std::vector< NNOElement >        T_NNOElements;
     typedef T_NNOElements::iterator         IT_NNOElements;

@@ -280,9 +280,7 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++()
 
     pCurrentCell_ = &data_( static_cast< unsigned int >( nRealCellCol ), static_cast< unsigned int >( nRealCellRow ) );
 
-    double realX = ( nRealCellCol + rNextY * nCellXOffset ) * data_.GetCellSize();
-    double realY = ( nRealCellRow + nCellYOffset * rNextY ) * data_.GetCellSize();
-    double rGroundHeight = data_.GetAltitude( realX, realY );
+    double rGroundHeight  = rNextY * data_( static_cast< unsigned int >( nRealCellCol + nCellYOffset ), static_cast< unsigned int >( nRealCellRow + nCellXOffset ) ).GetAltitude() + pCurrentCell_->GetAltitude() * ( 1. - rNextY );
 
     // calcul des coefficients de changement d'environnement
     double rOldGroundCoeff = rGroundCoeff_;

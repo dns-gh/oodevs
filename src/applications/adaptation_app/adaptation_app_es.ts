@@ -1257,10 +1257,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
         <source>%1 has lower case EMAT8 code.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>%1 has no repair type defined in maintenance system in a &apos;gravity&apos; category.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

@@ -85,7 +85,7 @@ public:
     void NotifyBuildByGen();
     void NotifyStopBuildByGen();
     void Set( double percentage );
-    void SetMaxDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
+    void SetDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
     void SetDensity( double density );
     //@}
 

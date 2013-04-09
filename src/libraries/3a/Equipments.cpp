@@ -23,7 +23,7 @@ Equipments::Equipments()
 
 namespace
 {
-    const unsigned nEquipmentStates = 6;
+    const unsigned nEquipmentStates = 5;
     typedef int( sword::EquipmentDotations_EquipmentDotation::* EquipmentDotationsMemberFn )() const;
     EquipmentDotationsMemberFn equipmentData[nEquipmentStates] =
     {
@@ -31,7 +31,6 @@ namespace
         &sword::EquipmentDotations_EquipmentDotation::unavailable,
         &sword::EquipmentDotations_EquipmentDotation::repairable,
         &sword::EquipmentDotations_EquipmentDotation::repairing,
-        &sword::EquipmentDotations_EquipmentDotation::on_site_fixable,
         &sword::EquipmentDotations_EquipmentDotation::captured
     };
     const char* equipmentStates[nEquipmentStates] =
@@ -40,7 +39,6 @@ namespace
         "unavailable",
         "repairable",
         "repairing",
-        "on_site_fixable",
         "captured"
     };
     int ReadMask( xml::xistream& xis )

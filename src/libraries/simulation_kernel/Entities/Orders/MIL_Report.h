@@ -167,10 +167,7 @@ public:
         eRC_AttenteOrdrePoursuivreConvoi = 503,
         eRC_TirIndirectLessInterventionType = 504,
         eRC_CloseCrowdAttitudeChanged = 506,
-        eRC_CloseCrowdUrbanDestruction = 507,
-        eRC_SurrenderedUnitRecognized = 510,
-        eRC_SurrenderedUnitIdentified = 511,
-        eRC_TransportRoundTrip = 512
+        eRC_CloseCrowdUrbanDestruction = 507
     };
     //@}
 

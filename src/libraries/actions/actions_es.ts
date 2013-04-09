@@ -176,13 +176,6 @@
     </message>
 </context>
 <context>
-    <name>actions::gui::ParamObstacle</name>
-    <message>
-        <source>Density per 100 square meter</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>gaming_app::Action</name>
     <message>
         <source>Object Update</source>

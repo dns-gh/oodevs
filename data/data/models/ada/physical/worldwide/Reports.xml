@@ -693,11 +693,5 @@
   </report>
   <report category="operational" id="508" message="Impossible Indirect Fire : unit neutralized"/>
   <report category="operational" id="509" message="Work impossible : no demine capacity"/>
-  <report category="operational" id="510" message="Surrendered unit recognized"/>
-  <report category="operational" id="511" message="Surrendered unit identified"/>
-  <report category="operational" id="512" message="%1 of %2 shuttle(s) betwween loading and unloading">
-    <parameter type="Integer"/>
-    <parameter type="Integer"/>
-  </report>
 </reports>
-<!-- signature="2682122974" -->
+<!-- signature="1459967207" -->

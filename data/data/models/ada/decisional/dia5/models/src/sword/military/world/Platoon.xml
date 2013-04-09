@@ -720,21 +720,13 @@
             <description>Returns 'true' if this element is moving, 'false' otherwise.</description>
         </method>
         <method name="canBeFollowed" abstract="false">
-            <description>Retourne 'vrai' si cet élément peut être suivi par l'agent, &quot;faux&quot; sinon. Cette implémentation retourne &quot;vrai&quot; si cet élément est opérationnel, ie: un élément</description>
+            <description>Retourne "vrai" si cet élément peut être suivi par l'agent, "faux" sinon. Cette implémentation retourne "vrai" si cet élément est opérationnel, ie: un élément</description>
         </method>
         <method name="getName" abstract="false">
             <description>Retourne le nom de l'élément motile.</description>
             <return>
                 <type>
                     <simple name="string"/>
-                </type>
-            </return>
-        </method>
-        <method name="transportUnitRoundTrip">
-            <description>Returns the number of round-trip mandatory to transport unit</description>
-            <return>
-                <type>
-                    <simple name="numeric"/>
                 </type>
             </return>
         </method>
