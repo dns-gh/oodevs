@@ -6252,40 +6252,12 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>Equipments_Data</name>
     <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid breakdown type &apos;%1&apos;</source>
-        <translation type="unfinished">Equipo - Tipo de falla &apos;%1&apos; inválido</translation>
-    </message>
-    <message>
         <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Equipment - Invalid sensor type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid radar type &apos;%1&apos;</source>
-        <translation type="unfinished">Equipo - Tipo de rada inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid weapon system &apos;%1/%2&apos;</source>
-        <translation type="unfinished">Equipo - Sistema de armas inválido &apos;%1/%2&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid active protection type &apos;%1&apos;</source>
-        <translation type="unfinished">Equipos - Tipo de protección activa &apos;%1&apos; inválida</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
         <translation type="unfinished">Equipo - Tipo de recurso inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid object type &apos;%1&apos;</source>
-        <translation type="unfinished">Equipo - Tipo de objeto inválido &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid activty &apos;%1&apos;</source>

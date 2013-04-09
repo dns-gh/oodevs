@@ -31,7 +31,9 @@ namespace
             ADN_StandardItem* pItem = new ADN_StandardItem( pObj );
 
             // Connect list item with object's name
-            pItem->Connect( & static_cast< ADN_Equipments_Data::CategoryInfos* >( pObj )->ptrCategory_.GetData()->strName_ );
+            ADN_Equipments_Data::CategoryInfos* infos = static_cast< ADN_Equipments_Data::CategoryInfos* >( pObj );
+            if( infos && infos->GetCrossedElement() )
+                pItem->Connect( &infos->GetCrossedElement()->strName_ );
             return pItem;
         }
     };
@@ -127,7 +129,7 @@ void ADN_Equipments_Resources_ListView::OnContextMenu( const QPoint& pt )
         ADN_Resources_Data::CategoryInfo& category = *(ADN_Resources_Data::CategoryInfo*)( nMenuResult );
 
         ADN_Equipments_Data::CategoryInfos* pNewInfo = new ADN_Equipments_Data::CategoryInfos( category.parentResource_ );
-        pNewInfo->ptrCategory_ = &category;
+        pNewInfo->ptr_ = &category;
         pNewInfo->rNbr_ = 1;
 
         pCTable->AddItem( pNewInfo );
@@ -149,7 +151,7 @@ bool ADN_Equipments_Resources_ListView::Contains( void* category )
     {
         ADN_StandardItem* pItem = static_cast< ADN_StandardItem* >( dataModel_.item( n, 0 ) );
         ADN_Equipments_Data::CategoryInfos* pCategory = static_cast< ADN_Equipments_Data::CategoryInfos* >( pItem->GetData() );
-        if( pCategory->ptrCategory_.GetData() == category )
+        if( pCategory->GetCrossedElement() == category )
             return true;
     }
     return false;
@@ -161,10 +163,13 @@ bool ADN_Equipments_Resources_ListView::Contains( void* category )
 // -----------------------------------------------------------------------------
 std::string ADN_Equipments_Resources_ListView::GetToolTipFor( const QModelIndex& index )
 {
-    if( !index.isValid() )
-        return "";
-    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
-    ADN_Equipments_Data::CategoryInfos* pCastData = static_cast< ADN_Equipments_Data::CategoryInfos* >( pData );
-    assert( pCastData != 0 );
-    return pCastData->ptrCategory_.GetData()->strName_.GetData();
+    if( index.isValid() )
+    {
+        void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
+        ADN_Equipments_Data::CategoryInfos* pCastData = static_cast< ADN_Equipments_Data::CategoryInfos* >( pData );
+        assert( pCastData != 0 );
+        if( pCastData->GetCrossedElement() )
+            return pCastData->GetCrossedElement()->strName_.GetData();
+    }
+    return "";
 }

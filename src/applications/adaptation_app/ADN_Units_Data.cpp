@@ -679,7 +679,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 // Name: UnitInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
+void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
 {
     const std::string decisionalModel = ptrModel_.GetData() == 0 ? "" : ptrModel_.GetData()->strName_.GetData();
     output << xml::start( "unit" )

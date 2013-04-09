@@ -573,10 +573,12 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
         builder.CreateTableFrom( *pActiveProtections_ );
 
         builder.Section( tr( "Objects" ) );
-        for( ADN_Equipments_Data::IT_ObjectInfos_Vector it2 = composante.vObjects_.begin(); it2 != composante.vObjects_.end(); ++it2 )
+        for( auto it2 = composante.vObjects_.begin(); it2 != composante.vObjects_.end(); ++it2 )
         {
             ADN_Equipments_Data::ObjectInfos& object = **it2;
-            builder.SubSection( object.ptrObject_.GetData()->strName_.GetData().c_str() );
+            if( !object.GetCrossedElement() )
+                continue;
+            builder.SubSection( object.GetCrossedElement()->strName_.GetData().c_str() );
             builder.BeginList();
             if( object.bInitialBuildTime_.GetData() )
                 builder.ListItem( tr( "Initial construction duration" ), object.initialBuildTime_.GetData().c_str() );

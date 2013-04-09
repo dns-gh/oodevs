@@ -137,9 +137,9 @@ namespace
     {
         // retrieve corresponding dotation category
         ADN_Equipments_Data::T_CategoryInfos_Vector& categories = comp.GetCrossedElement()->resources_.categories_;
-        ADN_Equipments_Data::IT_CategoryInfos_Vector itCategory = categories.begin();
+        auto itCategory = categories.begin();
         for( ; itCategory != categories.end(); ++itCategory )
-            if( (*itCategory)->ptrCategory_.GetData() == &category )
+            if( ( *itCategory )->GetCrossedElement() == &category )
                 break;
         if( itCategory == categories.end() )
             return 0;
@@ -156,7 +156,7 @@ namespace
         for( ADN_Equipments_Data::IT_ConsumptionItem_Vector itConso = consumptions.begin(); itConso != consumptions.end(); ++itConso )
         {
             ADN_Equipments_Data::ConsumptionItem& conso = **itConso;
-            if( conso.ptrCategory_.GetData()->ptrCategory_.GetData() == &category )
+            if( conso.ptrCategory_.GetData()->GetCrossedElement() == &category )
             {
                 if( conso.nConsumptionType_ != eMoving && conso.nConsumptionType_ != eEngineStopped )
                     continue;

@@ -6133,7 +6133,7 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>ActiveProtections_Data</name>
-    <message>
+    <message id="-1">
         <source>Resource</source>
         <translation>Resource</translation>
     </message>
@@ -6248,40 +6248,12 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>Equipments_Data</name>
     <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation>Equipment - Invalid resource nature &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid breakdown type &apos;%1&apos;</source>
-        <translation>Equipment - Invalid breakdown type &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
         <translation>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</translation>
     </message>
     <message>
-        <source>Equipment - Invalid sensor type &apos;%1&apos;</source>
-        <translation>Equipment - Invalid sensor type &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid radar type &apos;%1&apos;</source>
-        <translation>Equipment - Invalid radar type &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid weapon system &apos;%1/%2&apos;</source>
-        <translation>Equipment - Invalid weapon system &apos;%1/%2&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid active protection type &apos;%1&apos;</source>
-        <translation>Equipment - Invalid active protection type &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
         <translation>Equipment - Invalid resource type &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid object type &apos;%1&apos;</source>
-        <translation>Equipment - Invalid object type &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid activty &apos;%1&apos;</source>

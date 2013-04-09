@@ -59,8 +59,11 @@ void ADN_Equipments_ConsumptionsTable::AddRow( int /* row */, void* data )
     ADN_Equipments_Data::ConsumptionItem* pConsumption = static_cast< ADN_Equipments_Data::ConsumptionItem* >( data );
     if( !pConsumption )
         return;
+    ADN_Equipments_Data::CategoryInfos* catInfos = pConsumption->ptrCategory_.GetData();
+    if( !catInfos || !catInfos->GetCrossedElement() )
+        return;
 
-    QString resourceName = pConsumption->ptrCategory_.GetData()->ptrCategory_.GetData()->strName_.GetData().c_str();
+    QString resourceName = catInfos->GetCrossedElement()->strName_.GetData().c_str();
     QStandardItem* resourceItem = 0;
     for( int i = 0; i < numRows(); ++i )
     {
@@ -72,7 +75,7 @@ void ADN_Equipments_ConsumptionsTable::AddRow( int /* row */, void* data )
         }
     }
     if( !resourceItem )
-        resourceItem = AddItem( numRows(), 0, data, &pConsumption->ptrCategory_.GetData()->ptrCategory_.GetData()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+        resourceItem = AddItem( numRows(), 0, data, &catInfos->GetCrossedElement()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
 
     AddItem( resourceItem->row(), 1 + pConsumption->nConsumptionType_, data, &pConsumption->nQuantityUsedPerHour_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

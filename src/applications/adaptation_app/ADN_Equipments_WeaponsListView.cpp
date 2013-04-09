@@ -111,7 +111,7 @@ bool ADN_Equipments_WeaponsListView::Contains( const ADN_Weapons_Data_WeaponInfo
     {
         ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
         ADN_Equipments_Data::WeaponInfos* pData = static_cast< ADN_Equipments_Data::WeaponInfos* >( pCurr->GetData() );
-        if( pData->ptrWeapon_.GetData() == pInfo )
+        if( pData->GetCrossedElement() == pInfo )
             return true;
     }
     return false;

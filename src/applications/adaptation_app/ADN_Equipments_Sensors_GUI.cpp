@@ -96,7 +96,7 @@ bool ADN_Equipments_Sensors_GUI::Contains( const ADN_Sensors_Data::SensorInfos* 
     for( int row = 0; row < rowCount; ++row )
     {
         SensorInfos* infos = static_cast< SensorInfos* >( GetData( row, 0 ) );
-        if( infos->ptrSensor_.GetData() == pInfo )
+        if( infos->GetCrossedElement() == pInfo )
             return true;
     }
     return false;
@@ -111,7 +111,7 @@ bool ADN_Equipments_Sensors_GUI::Contains( const ADN_Sensors_Data::SensorInfos* 
 void ADN_Equipments_Sensors_GUI::CreateNewSensor( int nSensor )
 {
     SensorInfos* pNewInfo = new SensorInfos();
-    pNewInfo->ptrSensor_ = ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos()[ nSensor ];
+    pNewInfo->ptr_ = ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos()[ nSensor ];
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( pNewInfo );
     pCTable->AddItem( 0 );
@@ -141,6 +141,9 @@ void ADN_Equipments_Sensors_GUI::AddRow( int row, void* data )
     SensorInfos* infos = static_cast< SensorInfos* >( data );
     if( !infos )
         return;
-    AddItem( row, 0, data, &infos->ptrSensor_.GetData()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
-    AddItem( row, 1, data, &infos->rHeight_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    if( infos->GetCrossedElement() )
+    {
+        AddItem( row, 0, data, &infos->GetCrossedElement()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+        AddItem( row, 1, data, &infos->rHeight_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    }
 }

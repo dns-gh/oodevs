@@ -6235,40 +6235,12 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>Equipments_Data</name>
     <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-طبيعة المورد غير صحيحة &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid breakdown type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-انهيار غير صالح نوع &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
         <translation type="unfinished">معدات &apos;%1&apos;--البيانات توزيعاً غير صالحة: sum! = 100</translation>
     </message>
     <message>
-        <source>Equipment - Invalid sensor type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-نوع استشعار غير صالح &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid radar type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-نوع الرادار غير صالح &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid weapon system &apos;%1/%2&apos;</source>
-        <translation type="unfinished">معدات-منظومة سلاح غير صالح &apos;%1/%2&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid active protection type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-نوع الحماية النشطة غير صالح &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
         <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid object type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-نوع كائن غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid activty &apos;%1&apos;</source>

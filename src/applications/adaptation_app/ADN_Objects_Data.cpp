@@ -102,7 +102,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation( xml::xistream&
         if( category == 0 )
             throw MASA_EXCEPTION( "Invalid dotation: " + dotation );
         ADN_Equipments_Data::CategoryInfos* infos = new ADN_Equipments_Data::CategoryInfos( category->parentResource_ );
-        infos->ptrCategory_ = category;
+        infos->ptr_ = category;
         infos->rNbr_ = quantity;
         categories_.AddItem( infos );
     }
@@ -121,7 +121,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::WriteArchive( xml::xostream&
     {
         ADN_Equipments_Data::CategoryInfos* infos = reinterpret_cast< ADN_Equipments_Data::CategoryInfos* >( *it );
         xos << xml::start( "resource" )
-                << xml::attribute( "name", infos->ptrCategory_.GetData()->strName_ ) << xml::attribute( "count", infos->rNbr_ )
+                << xml::attribute( "name", infos->ptr_ ) << xml::attribute( "count", infos->rNbr_ )
             << xml::end;
     }
     xos << xml::end;
@@ -162,7 +162,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation( xml::xistream
         if( category == 0 )
             throw MASA_EXCEPTION( "Invalid dotation : " + dotation );
         ADN_Equipments_Data::CategoryInfos* infos = new ADN_Equipments_Data::CategoryInfos( category->parentResource_ );
-        infos->ptrCategory_ = category;
+        infos->ptr_ = category;
         infos->rNbr_ = quantity;
         categories_.AddItem( infos );
     }
@@ -181,7 +181,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::WriteArchive( xml::xostream
     {
         ADN_Equipments_Data::CategoryInfos* infos = *it;
         xos << xml::start( "resource" )
-                << xml::attribute( "name", infos->ptrCategory_.GetData()->strName_ ) << xml::attribute( "count", infos->rNbr_ )
+                << xml::attribute( "name", infos->ptr_ ) << xml::attribute( "count", infos->rNbr_ )
             << xml::end;
     }
     xos << xml::end;
@@ -1428,19 +1428,25 @@ QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Resources_Data::CategoryInf
             // Buildable
             if( constructor->ptrBuildable_.get() && constructor->ptrBuildable_->bPresent_.GetData() )
                 for( ADN_CapacityInfos_Buildable::CIT_Categories it = constructor->ptrBuildable_->categories_.begin(); !added && it != constructor->ptrBuildable_->categories_.end(); ++it )
-                    if( ( *it )->ptrCategory_.GetData()->strName_.GetData() == object.strName_.GetData() )
+                {
+                    ADN_Resources_Data::CategoryInfo* infos = ( *it )->GetCrossedElement();
+                    if( infos && infos->strName_.GetData() == object.strName_.GetData() )
                     {
                         added = true;
                         result << ( *itObject )->strName_.GetData().c_str();
                     }
+                }
             // Improvable
             if( !added && constructor->ptrImprovable_.get() && constructor->ptrImprovable_->bPresent_.GetData() )
                 for( ADN_CapacityInfos_Buildable::CIT_Categories it = constructor->ptrImprovable_->categories_.begin(); !added && it != constructor->ptrImprovable_->categories_.end(); ++it )
-                    if( ( *it )->ptrCategory_.GetData()->strName_.GetData() == object.strName_.GetData() )
+                {
+                    ADN_Resources_Data::CategoryInfo* infos = ( *it )->GetCrossedElement();
+                    if( infos && infos->strName_.GetData() == object.strName_.GetData() )
                     {
                         added = true;
                         result << ( *itObject )->strName_.GetData().c_str();
                     }
+                }
         }
 
         // Attrition

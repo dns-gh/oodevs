@@ -87,9 +87,7 @@ void ADN_Equipments_BreakdownsTable::OnContextMenu( const QPoint& pt )
         // Create a new element
         ADN_Breakdowns_Data::BreakdownInfo* pCast = breakdowns[ nMenuResult - 2 ];
         BreakdownInfos* pNewInfo = new BreakdownInfos();
-        pNewInfo->ptrBreakdown_ = pCast;
-        pNewInfo->ptrBreakdown_.SetVector( breakdowns );
-        //pNewInfo->ptrBreakdown_.SetVector( pCast->nti_.vBreakdowns_ );
+        pNewInfo->ptr_ = pCast;
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
         pCTable->AddItem( 0 );
@@ -106,7 +104,7 @@ bool ADN_Equipments_BreakdownsTable::Contains( const ADN_Breakdowns_Data::Breakd
     for( int row = 0; row < rowCount; ++row )
     {
         BreakdownInfos* infos = static_cast< BreakdownInfos* >( GetData( row, 0 ) );
-        if( infos->ptrBreakdown_.GetData() == pInfo )
+        if( infos->GetCrossedElement() == pInfo )
             return true;
     }
     return false;
@@ -162,6 +160,9 @@ void ADN_Equipments_BreakdownsTable::AddRow( int row, void* data )
     BreakdownInfos* pBreakdown = static_cast<BreakdownInfos*>( data );
     if( !pBreakdown )
         return;
-    AddItem( row, 0, data, &pBreakdown->ptrBreakdown_.GetData()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
-    AddItem( row, 1, data, &pBreakdown->rPercentage_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    if( pBreakdown->GetCrossedElement() )
+    {
+        AddItem( row, 0, data, &pBreakdown->GetCrossedElement()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+        AddItem( row, 1, data, &pBreakdown->rPercentage_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    }
 }

@@ -111,7 +111,7 @@ bool ADN_Equipments_ActiveProtectionsListView::Contains( const ADN_ActiveProtect
     {
         ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
         ADN_Equipments_Data::ActiveProtectionsInfos* pData = static_cast< ADN_Equipments_Data::ActiveProtectionsInfos* >( pCurr->GetData() );
-        if( pData->ptrActiveProtections_.GetData() == pInfo )
+        if( pData->GetCrossedElement() == pInfo )
             return true;
     }
     return false;

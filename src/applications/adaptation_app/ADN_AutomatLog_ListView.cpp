@@ -167,16 +167,16 @@ uint ADN_AutomatLog_ListView::AddUnit( ADN_Rich_ListViewItem* parent, const QStr
         // Consumption
         ADN_Equipments_Data::T_ConsumptionItem_Vector& consumptions = (*it3)->GetCrossedElement()->consumptions_.vConsumptions_;
         ADN_Equipments_Data::T_CategoryInfos_Vector&   categories   = (*it3)->GetCrossedElement()->resources_.categories_;
-        for( ADN_Equipments_Data::IT_ConsumptionItem_Vector itCompCons = consumptions.begin(); itCompCons != consumptions.end(); ++itCompCons )
+        for( auto itCompCons = consumptions.begin(); itCompCons != consumptions.end(); ++itCompCons )
         {
-            ADN_Equipments_Data::IT_CategoryInfos_Vector itCategory = categories.begin();
+            auto itCategory = categories.begin();
             for( ; itCategory != categories.end(); ++itCategory )
                 if( ( *itCategory ) == ( *itCompCons )->ptrCategory_.GetData() )
                     break;
             if( itCategory != categories.end() )
                 InsertCategory( *pCompItem, **itCategory, **itCompCons );
         }
-        for( ADN_Equipments_Data::IT_CategoryInfos_Vector it = categories.begin(); it != categories.end(); ++it )
+        for( auto it = categories.begin(); it != categories.end(); ++it )
             InsertCategory( *pCompItem, **it );
         pCompItem->SetValueGreaterThan( eColumnMoveAutonomy         , GetMinMoveAutonomy         ( compTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
         pCompItem->SetValueGreaterThan( eColumnEngineStoppedAutonomy, GetMinEngineStoppedAutonomy( compTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
@@ -202,7 +202,7 @@ void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                    
                                               ADN_Equipments_Data::CategoryInfos&   category,
                                               ADN_Equipments_Data::ConsumptionItem& conso )
 {
-    ADN_Resources_Data::CategoryInfo* ptrCategory = conso.ptrCategory_.GetData() ? conso.ptrCategory_.GetData()->ptrCategory_.GetData() : 0;
+    ADN_Resources_Data::CategoryInfo* ptrCategory = conso.ptrCategory_.GetData() ? conso.ptrCategory_.GetData()->GetCrossedElement() : 0;
 
     if( !ptrCategory || ( conso.nConsumptionType_ != eMoving && conso.nConsumptionType_ != eEngineStopped && conso.nConsumptionType_ != eEngineStarted ) )
         return;
@@ -268,13 +268,16 @@ void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                    
 void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                       parent,
                                               ADN_Equipments_Data::CategoryInfos& category )
 {
+    ADN_Resources_Data::CategoryInfo* infos = category.GetCrossedElement();
+    if( !infos )
+        return;
     ADN_Rich_ListViewItem* pItem = 0;
     // try to find existing item
     const int rowCount = parent.rowCount();
     for( int row = 0; row < rowCount; ++row )
     {
         QStandardItem* pTmpItem = parent.child( row, eColumnTarget );
-        if( pTmpItem && pTmpItem->text().toStdString() == category.ptrCategory_.GetData()->strName_.GetData() )
+        if( pTmpItem && pTmpItem->text().toStdString() == infos->strName_.GetData() )
         {
             pItem = static_cast< ADN_Rich_ListViewItem* >( parent.child( row ) );
             break;
@@ -283,16 +286,16 @@ void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                    
     if( pItem == 0 )
     {
         pItem = new ADN_Rich_ListViewItem( &parent, Qt::AlignCenter );
-        pItem->setText( eColumnTarget         , category.ptrCategory_.GetData()->strName_.GetData().c_str() );
+        pItem->setText( eColumnTarget         , infos->strName_.GetData().c_str() );
         pItem->setText( eColumnContenance     , QString::number( category.rNbr_.GetData() ) );
         pItem->setText( eColumnNormalizedConso, QString::number( category.rNormalizedConsumption_.GetData() ) );
     }
 
-    if( compTotal_[ category.ptrCategory_.GetData() ] == 0 )
-        compTotal_[ category.ptrCategory_.GetData() ] = new ADN_AutomatLog_Entry();
+    if( compTotal_[ infos ] == 0 )
+        compTotal_[ infos ] = new ADN_AutomatLog_Entry();
 
-    compTotal_[ category.ptrCategory_.GetData() ]->rNbr_ = category.rNbr_.GetData();
-    compTotal_[ category.ptrCategory_.GetData() ]->rNormalizedConsumption_ = category.rNormalizedConsumption_.GetData();
+    compTotal_[ infos ]->rNbr_ = category.rNbr_.GetData();
+    compTotal_[ infos ]->rNormalizedConsumption_ = category.rNormalizedConsumption_.GetData();
 }
 
 // -----------------------------------------------------------------------------

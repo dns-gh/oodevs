@@ -91,7 +91,7 @@ void ADN_Equipments_RadarsListView::OnContextMenu( const QPoint& pt )
         // Add the weapon to the list.
         RadarInfos* pNewInfo = new RadarInfos();
         ADN_Radars_Data::RadarInfos* radarsInfos = vRadars[ nMenuResult - 2 ];
-        pNewInfo->ptrRadar_ = radarsInfos;
+        pNewInfo->ptr_ = radarsInfos;
         pNewInfo->strName_ = radarsInfos->strName_.GetData();
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
@@ -112,7 +112,7 @@ bool ADN_Equipments_RadarsListView::Contains( const ADN_Radars_Data::RadarInfos*
     {
         ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
         ADN_Equipments_Data::RadarInfos* pData = static_cast< ADN_Equipments_Data::RadarInfos* >( pCurr->GetData() );
-        if( pData->ptrRadar_.GetData() == pInfo )
+        if( pData->GetCrossedElement() == pInfo )
             return true;
     }
     return false;

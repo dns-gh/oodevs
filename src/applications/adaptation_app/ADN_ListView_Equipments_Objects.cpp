@@ -37,7 +37,9 @@ public:
         ADN_ListViewItem* pItem = new ADN_ListViewItem( pObj );
 
         // Connect list item with object's name
-        pItem->Connect( &static_cast< ObjectInfos* >( pObj )->ptrObject_.GetData()->strName_ );
+        ObjectInfos* infos = static_cast< ObjectInfos* >( pObj );
+        if( infos->GetCrossedElement() )
+            pItem->Connect( &infos->GetCrossedElement()->strName_ );
         return pItem;
     }
     //@}
@@ -139,7 +141,7 @@ void ADN_ListView_Equipments_Objects::OnContextMenu( const QPoint& pt )
     {
         // Add the weapon to the list.
         ObjectInfos* pNewInfo = new ObjectInfos();
-        pNewInfo->ptrObject_ = vObjects[ nMenuResult - 2 ];
+        pNewInfo->ptr_ = vObjects[ nMenuResult - 2 ];
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
@@ -159,7 +161,7 @@ bool ADN_ListView_Equipments_Objects::Contains( const ADN_Objects_Data_ObjectInf
     {
         ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
         ADN_Equipments_Data::ObjectInfos* pData = static_cast< ADN_Equipments_Data::ObjectInfos* >( pCurr->GetData() );
-        if( pData->ptrObject_.GetData() == pInfo )
+        if( pData->GetCrossedElement() == pInfo )
             return true;
     }
     return false;

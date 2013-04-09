@@ -163,7 +163,7 @@ public:
         void ReadCrew( xml::xistream& input );
         void ReadPosture( xml::xistream& input );
         void ReadPointDistance( xml::xistream& input );
-        void WriteArchive( xml::xostream& output ) const;
+        void WriteArchive( xml::xostream& output );
         void CleanupNature();
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
