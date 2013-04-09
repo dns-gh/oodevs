@@ -446,21 +446,21 @@
         description="generate SDK documentation">
         <mkdir dir="${out.dir}/sdk/doc/html"/>
         <python taskname="python" failonerror="true">
-            <arg value="${bin.dir}/asciidoc/asciidoc/asciidoc.py" />
-            <arg value="--out-file=${out.dir}/sdk/doc/html/index.html" />
-            <arg value="${libraries.dir}/protocol/doc/sdk.txt" />
+            <arg value="${bin.dir}/asciidoc/asciidoc/asciidoc.py"/>
+            <arg value="--out-file=${out.dir}/sdk/doc/html/index.html"/>
+            <arg value="${libraries.dir}/protocol/doc/sdk.txt"/>
         </python>
         <python failonerror="true">
-            <arg value="${bin.dir}/asciidoc/asciidoc/a2x.py" />
-            <arg value="--format=pdf" />
-            <arg value="--fop" />
+            <arg value="${bin.dir}/asciidoc/asciidoc/a2x.py"/>
+            <arg value="--format=pdf"/>
+            <arg value="--fop"/>
             <!-- Linting needs the DTD, DTD are usually resolved relatively to
                  the input file location, this is a pain to deal with, just
                  forget it, asciidoc should generate valid docbook anyway. -->
-            <arg value="--no-xmllint" />
-            <arg value="--xsltproc-opts=-nonet" />
-            <arg value="--destination-dir=${out.dir}/sdk/doc" />
-            <arg value="${libraries.dir}/protocol/doc/sdk.txt" />
+            <arg value="--no-xmllint"/>
+            <arg value="--xsltproc-opts=-nonet"/>
+            <arg value="--destination-dir=${out.dir}/sdk/doc"/>
+            <arg value="${libraries.dir}/protocol/doc/sdk.txt"/>
         </python>
     </target>
 
@@ -476,7 +476,7 @@
         <mkdir dir="${out.dir}/dec_api"/>
         <exec executable="sh">
             <arg value="-c"/>
-            <arg value='find \"${src.dir.unix}/libraries/simulation_kernel\" -name \"*.cpp\" | xargs grep -e \"brain\\.Register(\" -e \"brain\\[.*=\" | grep -v \"\\.svn\" | grep -o \".*\.cpp\" | sort -u > ${out.dir.unix}/dec_api/dec_files.txt' />
+            <arg value='find \"${src.dir.unix}/libraries/simulation_kernel\" -name \"*.cpp\" | xargs grep -e \"brain\\.Register(\" -e \"brain\\[.*=\" | grep -v \"\\.svn\" | grep -o \".*\.cpp\" | sort -u > ${out.dir.unix}/dec_api/dec_files.txt'/>
         </exec>
         <python failonerror="true">
             <arg value="decfilter.py"/>
@@ -544,7 +544,6 @@
     -->
     <target name="package" depends="package.app,package.debug,package.ts,package.plugins,package.binaries,package.gaming_app,package.sdk,package.proto" description="package the installers and packs"/>
 
-    <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.hla,package.plugin.dis,package.plugin.timeline" description="package plugin individual installers"/>
 
     <macrodef name="package-plugin">
@@ -677,7 +676,6 @@
         </safe-move>
     </target>
 
-     <!-- Package Application -->
     <target name="package.app" description="package des applications runtime">
         <safe-move file="${out.dir}/SWORD_${platform}_${version.project}.exe">
             <nsis name="sword" script="sword.nsi" nsh="config.nsh" todir="${out.dir}">
@@ -722,13 +720,12 @@
         </safe-move>
     </target>
 
-    <!-- Package documentation/SDK -->
     <target name="package.sdk" description="package sdk documentation">
-        <delete dir="${dist.dir}/sdk-${platform}" />
+        <delete dir="${dist.dir}/sdk-${platform}"/>
         <copy file="${out.dir}/sdk/doc/sdk.pdf"
-            tofile="${dist.dir}/sdk-${platform}/SWORD_API_Reference_${version.project}.pdf" />
+            tofile="${dist.dir}/sdk-${platform}/SWORD_API_Reference_${version.project}.pdf"/>
         <copy todir="${dist.dir}/sdk-${platform}/SWORD_API_Reference_${version.project}-html">
-            <fileset dir="${out.dir}/sdk/doc/html" />
+            <fileset dir="${out.dir}/sdk/doc/html"/>
         </copy>
         <copy todir="${dist.dir}/sdk-${platform}/proto">
             <fileset dir="${src.dir}/libraries/protocol/proto" includes="*.proto"/>
@@ -793,6 +790,7 @@
 
     <target name="check" depends="checkproject,checkreports,checkdec,checkproto"
         description="perform various static checks on codebase"/>
+
     <!--
     ============================================================================
     main
