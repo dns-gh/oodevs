@@ -184,10 +184,38 @@ void SymbolFactory::ReadRule( xml::xistream& xis, SymbolRule*& rule ) const
 std::string SymbolFactory::CreateSymbol( const std::string& hierarchy ) const
 {
     if( !initialized_ || !symbolRule_.get() )
-        return "";
+        return std::string();
     std::string result( symbolBase_ );
     symbolRule_->Evaluate( hierarchy, result );
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::CreateMoveSymbol
+// Created: LDC 2013-04-09
+// -----------------------------------------------------------------------------
+std::string SymbolFactory::CreateMoveSymbol( const std::string& hierarchy ) const
+{
+    if( !initialized_ || !symbolRule_.get() )
+        return std::string();
+    std::string result( symbolBase_ );
+    if( symbolRule_->EvaluateMove( hierarchy, result ) )
+        return result;
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::CreateStaticSymbol
+// Created: LDC 2013-04-09
+// -----------------------------------------------------------------------------
+std::string SymbolFactory::CreateStaticSymbol( const std::string& hierarchy ) const
+{
+    if( !initialized_ || !symbolRule_.get() )
+        return std::string();
+    std::string result( symbolBase_ );
+    if( symbolRule_->EvaluateStatic( hierarchy, result ) )
+        return result;
+    return std::string();
 }
 
 // -----------------------------------------------------------------------------

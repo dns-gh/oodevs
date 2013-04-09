@@ -51,6 +51,7 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -61,6 +62,7 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -71,6 +73,7 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -81,6 +84,7 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -145,6 +149,9 @@
     <ProjectReference Include="MT_Tools.vcxproj">
       <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
     </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+    </ProjectReference>
     <ProjectReference Include="tools.vcxproj">
       <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
     </ProjectReference>
@@ -157,6 +164,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\clients_kernel_test\MagicActionTypeTest.cpp" />
+    <ClCompile Include="..\..\src\tests\clients_kernel_test\SymbolTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\clients_kernel_test\clients_kernel_test_pch.h" />

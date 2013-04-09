@@ -58,24 +58,66 @@ const SymbolRule::T_Cases& SymbolRule::GetCases() const
     return cases_;
 }
 
+namespace
+{
+    struct CaseTail
+    {
+        CaseTail() : case_( 0 ) {}
+        SymbolCase* case_;
+        std::string tail_;
+    };
+
+    CaseTail FindCase( const std::string& request, SymbolRule::T_Cases cases )
+    {
+        CaseTail result;
+        const std::string::size_type pos = request.find_first_of( '/' );
+
+        std::string head = request;
+        if( pos != std::string::npos )
+        {
+           head = request.substr( 0, pos );
+           result.tail_ = request.substr( pos + 1, request.length() - pos  - 1 );
+        }
+        auto it = cases.find( head );
+        if( it != cases.end() )
+            result.case_ = it->second;
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: SymbolRule::Evaluate
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
 void SymbolRule::Evaluate( const std::string& request, std::string& result ) const
 {
-    const std::string::size_type pos = request.find_first_of( '/' );
+    CaseTail symbol = FindCase( request, cases_ );
+    if( symbol.case_ )
+        symbol.case_->Evaluate( symbol.tail_, result );
+}
 
-    std::string head = request;
-    std::string tail;
-    if( pos != std::string::npos )
-    {
-       head = request.substr( 0, pos );
-       tail = request.substr( pos + 1, request.length() - pos  - 1 );
-    }
-    CIT_Cases it = cases_.find( head );
-    if( it != cases_.end() )
-        it->second->Evaluate( tail, result );
+// -----------------------------------------------------------------------------
+// Name: SymbolRule::EvaluateMove
+// Created: LDC 2013-04-09
+// -----------------------------------------------------------------------------
+bool SymbolRule::EvaluateMove( const std::string& request, std::string& result ) const
+{
+    CaseTail symbol = FindCase( request, cases_ );
+    if( symbol.case_ )
+        return symbol.case_->EvaluateMove( symbol.tail_, result );
+    return false;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: SymbolRule::EvaluateStatic
+// Created: LDC 2013-04-09
+// -----------------------------------------------------------------------------
+bool SymbolRule::EvaluateStatic( const std::string& request, std::string& result ) const
+{
+    CaseTail symbol = FindCase( request, cases_ );
+    if( symbol.case_ )
+        return symbol.case_->EvaluateStatic( symbol.tail_, result );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

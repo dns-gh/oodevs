@@ -22,6 +22,8 @@ using namespace kernel;
 SymbolCase::SymbolCase( xml::xistream& xis )
 {
     xis >> xml::attribute( "symbol", value_ )
+        >> xml::optional >> xml::attribute( "move", move_ )
+        >> xml::optional >> xml::attribute( "static", static_ )
         >> xml::attribute( "name", name_ )
         >> xml::list( "choice", *this, &SymbolCase::ReadRule );
 }
@@ -73,6 +75,54 @@ void SymbolCase::Evaluate( const std::string& request, std::string& result ) con
     result += value_;
     if( rule_.get() )
         rule_->Evaluate( request, result );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolCase::EvaluateMove
+// Created: LDC 2013-04-09
+// -----------------------------------------------------------------------------
+bool SymbolCase::EvaluateMove( const std::string& request, std::string& result ) const
+{
+    std::string tmp( result );
+    if( rule_.get() )
+    {
+        result += value_;
+        if( rule_->EvaluateMove( request, result ) )
+            return true;
+    }
+    if( move_.empty() )
+    {
+        result = tmp;
+        return false;
+    }
+    if( !rule_.get() )
+        result += value_;
+    result += move_;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolCase::EvaluateStatic
+// Created: LDC 2013-04-09
+// -----------------------------------------------------------------------------
+bool SymbolCase::EvaluateStatic( const std::string& request, std::string& result ) const
+{
+    std::string tmp( result );
+    if( rule_.get() )
+    {
+        result += value_;
+        if( rule_->EvaluateStatic( request, result ) )
+            return true;
+    }
+    if( static_.empty() )
+    {
+        result = tmp;
+        return false;
+    }
+    if( !rule_.get() )
+        result += value_;
+    result += static_;
+    return true;
 }
 
 // -----------------------------------------------------------------------------

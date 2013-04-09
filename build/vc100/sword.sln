@@ -230,6 +230,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "timeline_plugin_dll", "timeline_plugin_dll.vcxproj", "{D2D056BC-3707-499F-87BC-E48C76796A65}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "clients_kernel_test", "clients_kernel_test.vcxproj", "{3FF4382F-3172-4B3E-90F1-93FB3380663E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E907053A-8F48-4029-B778-3B8435282539} = {E907053A-8F48-4029-B778-3B8435282539}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

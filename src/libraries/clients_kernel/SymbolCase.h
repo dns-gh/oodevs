@@ -35,6 +35,8 @@ public:
     //! @name Operations
     //@{
     void Evaluate( const std::string& request, std::string& result ) const;
+    bool EvaluateMove( const std::string& request, std::string& result ) const;
+    bool EvaluateStatic( const std::string& request, std::string& result ) const;
     void Accept( SymbolVisitor_ABC& visitor ) const;
     //@}
 
@@ -62,6 +64,8 @@ private:
     //@{
     std::string name_;
     std::string value_;
+    std::string move_;
+    std::string static_;
     std::auto_ptr< SymbolRule > rule_;
     //@}
 };

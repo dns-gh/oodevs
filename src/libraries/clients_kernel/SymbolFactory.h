@@ -50,6 +50,8 @@ public:
     //! @name Operations
     //@{
     std::string CreateSymbol( const std::string& hierarchy ) const;
+    std::string CreateMoveSymbol( const std::string& hierarchy ) const;
+    std::string CreateStaticSymbol( const std::string& hierarchy ) const;
     std::string GetNatureFromSymbol( const std::string& symbol ) const;
     std::string CreateLevelSymbol( const std::string& level ) const;
     std::string CreateLevelSymbol( const kernel::HierarchyLevel_ABC& level ) const;
