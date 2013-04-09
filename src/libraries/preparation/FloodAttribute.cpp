@@ -37,8 +37,8 @@ FloodAttribute::FloodAttribute( PropertiesDictionary& dictionary, const kernel::
     , floodModel_ ( new propagation::FloodModel( *this ) )
     , floodDrawer_( new propagation::FloodDrawer() )
 {
-    controllers_.Register( *this );
     CreateDictionary( dictionary, entity );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,12 +54,11 @@ FloodAttribute::FloodAttribute( xml::xistream& xis, const kernel::DetectionMap& 
     , refDist_    ( 0, Units::meters )
     , floodModel_ ( new propagation::FloodModel( *this ) )
 {
-    controllers_.Register( *this );
     xis >> xml::attribute( "depth", depth_.value_ )
         >> xml::attribute( "reference-distance", refDist_.value_ );
     CreateDictionary( dictionary, entity );
-
     floodDrawer_.reset( new propagation::FloodDrawer( *floodModel_, positions.GetPosition(), depth_.value_, refDist_.value_ ) );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------

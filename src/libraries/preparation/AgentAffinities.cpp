@@ -33,8 +33,8 @@ AgentAffinities::AgentAffinities( kernel::Entity_ABC& agent, kernel::Controllers
     , dictionary_  ( dictionary )
     , propertyName_( propertyName )
 {
-    controllers_.Register( *this );
     InitializeAffinities();
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,8 +49,8 @@ AgentAffinities::AgentAffinities( xml::xistream& xis, kernel::Entity_ABC& agent,
     , dictionary_  ( dictionary )
     , propertyName_( propertyName )
 {
-    controllers_.Register( *this );
     InitializeAffinities();
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -50,7 +50,6 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, Controllers& controll
     , staticModel_( staticModel )
     , showStocks_( true )
 {
-    controllers_.Register( *this );
     setCaption( tools::translate( "StocksEditionDialog", "Stocks Edition" ) );
     gui::SubObjectName subObject( "LogisticStockEditor" );
     setMinimumSize( 350, 300 );
@@ -80,6 +79,7 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, Controllers& controll
     connect( validateButton_, SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( cancelButton_, SIGNAL( clicked() ), SLOT( Reject() ) );
     hide();
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------

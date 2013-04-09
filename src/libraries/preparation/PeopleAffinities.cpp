@@ -29,8 +29,8 @@ PeopleAffinities::PeopleAffinities( kernel::Controllers& controllers, Model& mod
     , dictionary_ ( dictionary )
     , entity_( entity )
 {
-    controllers_.Register( *this );
     InitializeAffinities();
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,8 +43,8 @@ PeopleAffinities::PeopleAffinities( xml::xistream& xis, kernel::Controllers& con
     , dictionary_ ( dictionary )
     , entity_( entity )
 {
-    controllers_.Register( *this );
     InitializeAffinities();
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------

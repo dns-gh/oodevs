@@ -63,10 +63,9 @@ GhostsPanel::GhostsPanel( QWidget* parent, gui::PanelStack_ABC& panel, Controlle
     warningLabel_ = new QLabel( this );
     layout->addWidget( warningLabel_, 10, 0, 1, 2, Qt::AlignCenter );
 
-    // Configuration
-    controllers_.Register( *this );
-
     UpdateWarning();
+
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------

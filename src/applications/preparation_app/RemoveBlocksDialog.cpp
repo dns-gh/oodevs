@@ -100,14 +100,13 @@ RemoveBlocksDialog::RemoveBlocksDialog( QWidget* parent, kernel::Controllers& co
     mainLayout->addWidget( tableView_ );
     mainLayout->addLayout( labelLayout );
     mainLayout->addLayout( buttonLayout );
-    controllers_.Register( *this );
     hide();
 
     // Help
     QShortcut* s = new QShortcut( QKeySequence( Qt::Key_F1 ), this );
     connect( s, SIGNAL( activated() ), parent, SIGNAL( ShowHelp() ) );
 
-
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------

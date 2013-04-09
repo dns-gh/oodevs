@@ -229,8 +229,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     // Initialize
     setCentralWidget( selector_.get() );
     SetWindowTitle( false );
-    controllers_.Register( *this );
-    controllers_.ChangeMode( eModes_Default );
     setLocale( QLocale() );
     setMinimumSize( 800, 600 );
     setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
@@ -243,6 +241,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
             LoadExercise();
         SetProgression( 100, tr( "Loading complete" ) );
     }
+    controllers_.ChangeMode( eModes_Default );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
