@@ -11,15 +11,13 @@
 #define __ADN_Crowds_Data_h_
 
 #include "ADN_Data_ABC.h"
-#include "ADN_RefWithName.h"
+#include "ADN_CrossedRef.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Type_Repartition.h"
 #include "ADN_Models_Data.h"
 #include "ADN_Categories_Data.h"
-
-namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_Crowds_Data
@@ -28,10 +26,9 @@ namespace xml { class xistream; }
 // =============================================================================
 class ADN_Crowds_Data : public ADN_Data_ABC
 {
-
 public:
 // *****************************************************************************
-    class FireEffectProtectionInfos : public ADN_RefWithName
+    class FireEffectProtectionInfos : public ADN_CrossedRef< helpers::ArmorInfos >
     {
     public:
         explicit FireEffectProtectionInfos( helpers::ArmorInfos* ptr );
@@ -41,31 +38,32 @@ public:
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        ADN_TypePtr_InVector_ABC< helpers::ArmorInfos > ptrProtection_;
-        ADN_Type_Double                                 rUnarmedDestruction_;
-        ADN_Type_Double                                 rUnarmedFixableWithEvacuation_;
-        ADN_Type_Double                                 rUnarmedFixableWithoutEvacuation_;
-        ADN_Type_Double                                 rArmedDestruction_;
-        ADN_Type_Double                                 rArmedFixableWithEvacuation_;
-        ADN_Type_Double                                 rArmedFixableWithoutEvacuation_;
+        ADN_Type_Double rUnarmedDestruction_;
+        ADN_Type_Double rUnarmedFixableWithEvacuation_;
+        ADN_Type_Double rUnarmedFixableWithoutEvacuation_;
+        ADN_Type_Double rArmedDestruction_;
+        ADN_Type_Double rArmedFixableWithEvacuation_;
+        ADN_Type_Double rArmedFixableWithoutEvacuation_;
 
     public:
         typedef helpers::ArmorInfos T_Item;
 
-        class CmpRef : public std::unary_function< FireEffectProtectionInfos* , bool >
+        class CmpRef : public std::unary_function< FireEffectProtectionInfos*, bool >
         {
         public:
-            CmpRef(helpers::ArmorInfos* val) : val_(val) {}
+             CmpRef( helpers::ArmorInfos* val ) : val_( val ) {}
             ~CmpRef(){}
 
             bool operator()( FireEffectProtectionInfos* tgtnfos ) const
-            {   return tgtnfos->ptrProtection_.GetData() == val_;}
+            {
+                return tgtnfos->GetCrossedElement() == val_;
+            }
 
         private:
             helpers::ArmorInfos* val_;
         };
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC<FireEffectProtectionInfos>, FireEffectProtectionInfosVector )
+    TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC< FireEffectProtectionInfos >, FireEffectProtectionInfosVector )
 
 // *****************************************************************************
     class FireEffectInfos : public ADN_RefWithName
@@ -79,26 +77,28 @@ public:
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        E_PopulationAttitude              nAttitude_;
-        ADN_Type_Double                   rIntensityDensity_;
-        ADN_Type_Double                   rIntensityFactor_;
+        E_PopulationAttitude nAttitude_;
+        ADN_Type_Double rIntensityDensity_;
+        ADN_Type_Double rIntensityFactor_;
         T_FireEffectProtectionInfosVector vProtectionInfos_;
 
     public:
-        class CmpAttitude : public std::unary_function< FireEffectInfos* , bool >
+        class CmpAttitude : public std::unary_function< FireEffectInfos*, bool >
         {
         public:
-            CmpAttitude(E_PopulationAttitude val) : val_(val) {}
-            ~CmpAttitude(){}
+            CmpAttitude( E_PopulationAttitude val ) : val_( val ) {}
+            ~CmpAttitude() {}
 
             bool operator()( FireEffectInfos* tgtnfos ) const
-            {   return tgtnfos->nAttitude_ == val_;}
+            {
+                return tgtnfos->nAttitude_ == val_;
+            }
 
         private:
             E_PopulationAttitude val_;
         };
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<FireEffectInfos>, FireEffectInfosVector )
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< FireEffectInfos >, FireEffectInfosVector )
 
 // *****************************************************************************
     class FireEffectRoeInfos : public ADN_RefWithName
@@ -117,10 +117,10 @@ public:
         ADN_Type_Double rAttritionSurface_;
         ADN_Type_Double rPH_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<FireEffectRoeInfos>, FireEffectRoeInfosVector )
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< FireEffectRoeInfos >, FireEffectRoeInfosVector )
 
 // *****************************************************************************
-    class SpeedEffectVolumeInfos : public ADN_RefWithName
+    class SpeedEffectVolumeInfos : public ADN_CrossedRef< ADN_Categories_Data::SizeInfos >
     {
     public:
         explicit SpeedEffectVolumeInfos( ADN_Categories_Data::SizeInfos* ptr );
@@ -130,27 +130,28 @@ public:
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos> ptrVolume_;
-        ADN_Type_Double                                          rDensity_;
-        ADN_Type_Double                                          rMaxSpeed_;
+        ADN_Type_Double rDensity_;
+        ADN_Type_Double rMaxSpeed_;
 
     public:
         typedef ADN_Categories_Data::SizeInfos T_Item;
 
-        class CmpRef : public std::unary_function< SpeedEffectVolumeInfos* , bool >
+        class CmpRef : public std::unary_function< SpeedEffectVolumeInfos*, bool >
         {
         public:
-            CmpRef(ADN_Categories_Data::SizeInfos* val) : val_(val) {}
+             CmpRef(ADN_Categories_Data::SizeInfos* val) : val_( val ) {}
             ~CmpRef(){}
 
             bool operator()( SpeedEffectVolumeInfos* tgtnfos ) const
-            {   return tgtnfos->ptrVolume_.GetData() == val_;}
+            {
+                return tgtnfos->GetCrossedElement() == val_;
+            }
 
         private:
             ADN_Categories_Data::SizeInfos* val_;
         };
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC<SpeedEffectVolumeInfos>, SpeedEffectVolumeInfosVector )
+    TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC< SpeedEffectVolumeInfos >, SpeedEffectVolumeInfosVector )
 
 // *****************************************************************************
     class SpeedEffectInfos : public ADN_RefWithName
@@ -164,10 +165,10 @@ public:
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        E_PopulationAttitude           nAttitude_;
+        E_PopulationAttitude nAttitude_;
         T_SpeedEffectVolumeInfosVector vVolumeInfos_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<SpeedEffectInfos>, SpeedEffectInfosVector )
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< SpeedEffectInfos >, SpeedEffectInfosVector )
 
 // *****************************************************************************
     class UrbanEffectInfos : public ADN_RefWithName
@@ -180,11 +181,11 @@ public:
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        E_PopulationAttitude    nAttitude_;
-        ADN_Type_Double         rDensity_;
-        ADN_Type_Time           rTime_;
+        E_PopulationAttitude nAttitude_;
+        ADN_Type_Double rDensity_;
+        ADN_Type_Time rTime_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<UrbanEffectInfos>, UrbanEffectInfosVector )
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< UrbanEffectInfos >, UrbanEffectInfosVector )
 
 // *****************************************************************************
     class CrowdsInfos : public ADN_RefWithName
@@ -201,23 +202,25 @@ public:
         void ReadAttritionEffect( xml::xistream& input );
         void ReadFireEffect( xml::xistream& input );
         void ReadUrbanEffect( xml::xistream& input );
-        void WriteArchive( xml::xostream& output ) const;
+        void WriteArchive( xml::xostream& output );
+        using ADN_RefWithName::CheckValidity;
+        virtual void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
 
     public:
-        ADN_Type_Int                                          nId_;
-        ADN_TypePtr_InVector_ABC<ADN_Models_Data::ModelInfos> ptrModel_;
-        ADN_Type_Double                                       rConcentrationDensity_;
-        ADN_Type_Double                                       rMoveDensity_;
-        ADN_Type_Double                                       rMoveSpeed_;
-        ADN_Type_Repartition                                  repartition_;
-        ADN_Type_Int                                          armedIndividuals_;
-        ADN_Type_Time                                         decontaminationDelay_;
-        T_SpeedEffectInfosVector                              vSpeedEffectInfos_;
-        T_FireEffectInfosVector                               vFireEffectInfos_;
-        T_FireEffectRoeInfosVector                            vFireEffectRoeInfos_;
-        T_UrbanEffectInfosVector                              vUrbanEffectInfos_;
+        ADN_Type_Int nId_;
+        ADN_TypePtr_InVector_ABC< ADN_Models_Data::ModelInfos > ptrModel_;
+        ADN_Type_Double rConcentrationDensity_;
+        ADN_Type_Double rMoveDensity_;
+        ADN_Type_Double rMoveSpeed_;
+        ADN_Type_Repartition repartition_;
+        ADN_Type_Int armedIndividuals_;
+        ADN_Type_Time decontaminationDelay_;
+        T_SpeedEffectInfosVector vSpeedEffectInfos_;
+        T_FireEffectInfosVector vFireEffectInfos_;
+        T_FireEffectRoeInfosVector vFireEffectRoeInfos_;
+        T_UrbanEffectInfosVector vUrbanEffectInfos_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<CrowdsInfos>, CrowdsInfosVector )
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< CrowdsInfos >, CrowdsInfosVector )
 
 // *****************************************************************************
     class ReloadingSpeedEffectInfos : public ADN_Ref_ABC
@@ -245,6 +248,7 @@ public:
     T_CrowdsInfosVector& GetCrowds();
     CrowdsInfos* FindCrowd( const std::string& strName );
     QStringList GetCrowdsThatUse( ADN_Models_Data::ModelInfos& model );
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
 private:
     void ReadArchive( xml::xistream& input );
@@ -252,7 +256,7 @@ private:
     void WriteArchive( xml::xostream& output );
 
 public:
-    T_CrowdsInfosVector   vCrowds_;
+    T_CrowdsInfosVector vCrowds_;
     ReloadingSpeedEffectInfos reloadingSpeedEffectInfos_;
     ADN_Type_Time timeBetweenNbcApplication_;
 
@@ -277,7 +281,7 @@ ADN_Crowds_Data::T_CrowdsInfosVector& ADN_Crowds_Data::GetCrowds()
 inline
 ADN_Crowds_Data::CrowdsInfos* ADN_Crowds_Data::FindCrowd( const std::string& strName )
 {
-    IT_CrowdsInfosVector it = std::find_if( vCrowds_.begin(), vCrowds_.end(), ADN_Tools::NameCmp<CrowdsInfos>( strName ) );
+    IT_CrowdsInfosVector it = std::find_if( vCrowds_.begin(), vCrowds_.end(), ADN_Tools::NameCmp< CrowdsInfos >( strName ) );
     if( it == vCrowds_.end() )
         return 0;
     return *it;

@@ -11,13 +11,7 @@
 #define __ADN_AiEngine_Data_h_
 
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Types.h"
-#include "ADN_Type_Vector_ABC.h"
-#include "ADN_TypePtr_InVector_ABC.h"
-#include "ADN_Enums.h"
-
-namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_AiEngine_Data
@@ -36,7 +30,7 @@ public:
     //@}
 
     void Reset();
-    void FilesNeeded(tools::Path::T_Paths& l) const;
+    void FilesNeeded( tools::Path::T_Paths& l ) const;
 
 private:
     void ReadArchive( xml::xistream& );

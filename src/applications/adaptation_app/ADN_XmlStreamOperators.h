@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #ifndef __ADN_XmlStreamOperators_h_
-#define __XmlStreamOperators_h_
+#define __ADN_XmlStreamOperators_h_
 
 #include <xeumeuleu/xml.hpp>
 #include "ADN_Type_ABC.h"

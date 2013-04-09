@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Breakdowns_Data.h"
-
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Workspace.h"
 #include "ADN_Resources_Data.h"
@@ -24,10 +23,10 @@ tools::IdManager ADN_Breakdowns_Data::idManager_;
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::RepairPartInfo::RepairPartInfo()
-    : nNbr_               ( 1 )
-    , ptrPart_            ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).categories_, 0 )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).categories_, 0, true )
+    , nNbr_( 1 )
 {
-    this->BindExistenceTo( &ptrPart_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,9 +36,8 @@ ADN_Breakdowns_Data::RepairPartInfo::RepairPartInfo()
 ADN_Breakdowns_Data::RepairPartInfo* ADN_Breakdowns_Data::RepairPartInfo::CreateCopy()
 {
     RepairPartInfo* pCopy = new RepairPartInfo();
-    pCopy->ptrPart_ = ptrPart_.GetData();
+    pCopy->ptr_ = ptr_.GetData();
     pCopy->nNbr_ = nNbr_.GetData();
-
     return pCopy;
 }
 
@@ -49,13 +47,8 @@ ADN_Breakdowns_Data::RepairPartInfo* ADN_Breakdowns_Data::RepairPartInfo::Create
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
 {
-    std::string strCategoryName;
-    input >> xml::attribute( "resource", strCategoryName )
+    input >> xml::attribute( "resource", ptr_ )
           >> xml::attribute( "quantity", nNbr_ );
-    ADN_Resources_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).FindCategory( strCategoryName );
-    if( pCategory == 0 )
-        throw MASA_EXCEPTION( tools::translate( "Breakdown_Data", "Breakdowns - Invalid part '%1'" ).arg( strCategoryName.c_str() ).toStdString() );
-    ptrPart_ = pCategory;
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +58,7 @@ void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
 void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "part" )
-            << xml::attribute( "resource", ptrPart_.GetData()->strName_ )
+            << xml::attribute( "resource", ptr_ )
             << xml::attribute( "quantity", nNbr_ )
         << xml::end;
 }
@@ -75,9 +68,9 @@ void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output )
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo()
-    : nId_                 ( ADN_Breakdowns_Data::idManager_.GetNextId() )
-    , repairTime_          ( "0s" )
-    , repairTimeVariance_  ( "0s" )
+    : nId_( ADN_Breakdowns_Data::idManager_.GetNextId() )
+    , repairTime_( "0s" )
+    , repairTimeVariance_( "0s" )
 {
     // NOTHING
 }
@@ -87,9 +80,9 @@ ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo()
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo( unsigned int id )
-    : nId_                 ( id )
-    , repairTime_          ( "0s" )
-    , repairTimeVariance_  ( "0s" )
+    : nId_( id )
+    , repairTime_( "0s" )
+    , repairTimeVariance_( "0s" )
 {
     ADN_Breakdowns_Data::idManager_.Lock( id );
 }
@@ -115,10 +108,8 @@ ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::BreakdownInfo::CreateCo
     pCopy->nNTI_  = nNTI_.GetData();
     pCopy->repairTime_ = repairTime_.GetData();
     pCopy->repairTimeVariance_ = repairTimeVariance_.GetData();
-
-    for( IT_RepairPartInfoVector it = vRepairParts_.begin(); it != vRepairParts_.end(); ++it )
-        pCopy->vRepairParts_.AddItem( (*it)->CreateCopy() );
-
+    for( auto it = vRepairParts_.begin(); it != vRepairParts_.end(); ++it )
+        pCopy->vRepairParts_.AddItem( ( *it )->CreateCopy() );
     return pCopy;
 }
 
@@ -128,7 +119,7 @@ ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::BreakdownInfo::CreateCo
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::BreakdownInfo::ReadPart( xml::xistream& input )
 {
-    std::auto_ptr<RepairPartInfo> spNew( new RepairPartInfo() );
+    std::auto_ptr< RepairPartInfo > spNew( new RepairPartInfo() );
     spNew->ReadArchive( input );
     vRepairParts_.AddItem( spNew.release() );
 }
@@ -162,8 +153,8 @@ void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output )
            << xml::attribute( "type", nType_.Convert() )
            << xml::attribute( "average-repairing-time", repairTime_ )
            << xml::attribute( "variance", repairTimeVariance_ );
-    for( IT_RepairPartInfoVector it = vRepairParts_.begin(); it != vRepairParts_.end(); ++it )
-        (*it)->WriteArchive( output );
+    for( auto it = vRepairParts_.begin(); it != vRepairParts_.end(); ++it )
+        ( *it )->WriteArchive( output );
     output << xml::end;
 }
 
@@ -172,7 +163,7 @@ void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output )
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::ADN_Breakdowns_Data()
-    : ADN_Data_ABC             ( eBreakdowns )
+    : ADN_Data_ABC( eBreakdowns )
     , strAverageDiagnosticTime_( "0s" )
 {
     vBreakdowns_.AddUniquenessChecker( eError, duplicateName_ );
@@ -212,7 +203,7 @@ void ADN_Breakdowns_Data::Reset()
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo* ADN_Breakdowns_Data::FindBreakdown( const std::string& strName )
 {
-    IT_BreakdownInfoVector it = std::find_if( vBreakdowns_.begin(), vBreakdowns_.end(), ADN_Tools::NameCmp<BreakdownInfo>( strName ) );
+    auto it = std::find_if( vBreakdowns_.begin(), vBreakdowns_.end(), ADN_Tools::NameCmp< BreakdownInfo >( strName ) );
     if( it == vBreakdowns_.end() )
         return 0;
     return *it;
@@ -248,9 +239,7 @@ void ADN_Breakdowns_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::ReadCategory( xml::xistream& input )
 {
-    std::string strNti;
-    input >> xml::attribute( "name", strNti );
-    E_BreakdownNTI nti = ADN_Tr::ConvertToBreakdownNTI( strNti );
+    E_BreakdownNTI nti = ADN_Tr::ConvertToBreakdownNTI( input.attribute< std::string >( "name" ) );
     input >> xml::list( "breakdown", *this, &ADN_Breakdowns_Data::ReadBreakdown, nti );
 }
 
@@ -282,11 +271,12 @@ void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
              << xml::end;
     for( unsigned int i = 0; i < eNbrBreakdownNTI; ++i )
     {
+        E_BreakdownNTI bd = static_cast< E_BreakdownNTI >( i );
         output << xml::start( "category" )
-                 << xml::attribute( "name", ADN_Tr::ConvertFromBreakdownNTI( ( E_BreakdownNTI )i ) );
-        for( IT_BreakdownInfoVector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
-            if( (*it)->nNTI_ == ( E_BreakdownNTI )i )
-                (*it)->WriteArchive( output );
+                 << xml::attribute( "name", ADN_Tr::ConvertFromBreakdownNTI( bd ) );
+        for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
+            if( ( *it )->nNTI_ == bd )
+                ( *it )->WriteArchive( output );
         output << xml::end;
     }
     output << xml::end;
@@ -299,10 +289,13 @@ void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
 QStringList ADN_Breakdowns_Data::GetBreakdownsThatUse( ADN_Resources_Data::CategoryInfo& part )
 {
     QStringList result;
-    for( IT_BreakdownInfoVector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
-        for( IT_RepairPartInfoVector itPart = ( *it )->vRepairParts_.begin(); itPart != ( *it )->vRepairParts_.end(); ++itPart )
-            if( ( *itPart )->ptrPart_.GetData()->strName_ == part.strName_.GetData() )
+    for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
+        for( auto itPart = ( *it )->vRepairParts_.begin(); itPart != ( *it )->vRepairParts_.end(); ++itPart )
+        {
+            ADN_Resources_Data::CategoryInfo* info = ( *itPart )->GetCrossedElement();
+            if( info && info->strName_ == part.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
+        }
     return result;
 }
 
@@ -312,18 +305,20 @@ QStringList ADN_Breakdowns_Data::GetBreakdownsThatUse( ADN_Resources_Data::Categ
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    for( ADN_Breakdowns_Data::CIT_BreakdownInfoVector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
+    for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
     {
         if( ( *it )->vRepairParts_.size() == 0 )
             checker.AddError( eMissingPart, ( *it )->strName_.GetData(), eBreakdowns );
         else
             for( auto itPart = ( *it )->vRepairParts_.begin(); itPart != ( *it )->vRepairParts_.end(); ++itPart )
             {
-                if( ( *itPart )->nNbr_.GetData() == 0 )
+                bool missing = false;
+                if( ! missing && ( *itPart )->nNbr_.GetData() == 0 )
                 {
                     checker.AddError( eMissingPart, ( *it )->strName_.GetData(), eBreakdowns );
-                    break;
+                    missing = true;
                 }
+                ( *itPart )->CheckValidity( checker, ( *it )->strName_.GetData(), eBreakdowns, -1, tools::translate( "ADN_Breakdowns_Data", "Required parts" ).toStdString() );
             }
     }
 }

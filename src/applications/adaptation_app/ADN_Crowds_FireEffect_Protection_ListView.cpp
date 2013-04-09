@@ -33,8 +33,10 @@ public:
 
     ADN_ListViewItem* CreateItem( void* pObj )
     {
+        FireEffectProtectionInfos* infos = static_cast< FireEffectProtectionInfos* >( pObj );
         ADN_ListViewItem* pItem = new ADN_ListViewItem( pObj );
-        pItem->Connect( &static_cast< FireEffectProtectionInfos* >( pObj )->ptrProtection_.GetData()->strName_ );
+        if( infos && infos->GetCrossedElement() )
+            pItem->Connect( &infos->GetCrossedElement()->strName_ );
         return pItem;
     }
 };

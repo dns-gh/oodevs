@@ -381,6 +381,13 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Breakdowns_Data</name>
+    <message>
+        <source>Required parts</source>
+        <translation>Required parts</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Breakdowns_GUI</name>
     <message>
         <source>General parameters</source>
@@ -689,6 +696,17 @@ Parked engine running</translation>
     <message>
         <source>Remove resource</source>
         <translation>Remove resource</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_Data</name>
+    <message>
+        <source>Attritions</source>
+        <translation>Attritions</translation>
+    </message>
+    <message>
+        <source>Speeds</source>
+        <translation>Speeds</translation>
     </message>
 </context>
 <context>
@@ -6115,7 +6133,7 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>ActiveProtections_Data</name>
-    <message id="-1">
+    <message>
         <source>Resource</source>
         <translation>Resource</translation>
     </message>
@@ -6165,16 +6183,16 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>Automaton - Invalid unit type &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Automat - Invalid doctrine model &apos;%1&apos;</source>
-        <translation>Automaton - Invalid doctrine model &apos;%1&apos;</translation>
+        <source>Doctrine model</source>
+        <translation>Doctrine model</translation>
+    </message>
+    <message>
+        <source>Command post</source>
+        <translation>Command post</translation>
     </message>
 </context>
 <context>
     <name>Breakdown_Data</name>
-    <message>
-        <source>Breakdowns - Invalid part &apos;%1&apos;</source>
-        <translation>Breakdowns - Invalid part &apos;%1&apos;</translation>
-    </message>
     <message>
         <source>New breakdown</source>
         <translation>New breakdown</translation>
@@ -6369,10 +6387,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Crowd</source>
         <translation>Crowd</translation>
-    </message>
-    <message>
-        <source>Crowd types - Invalid behavior model &apos;%1&apos;</source>
-        <translation>Crowd types - Invalid behavior model &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Crowd types - Invalid crowd attitude &apos;%1&apos;</source>

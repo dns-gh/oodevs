@@ -56,8 +56,12 @@ void ADN_Breakdowns_PartsTable::AddRow( int row, void* data )
     ADN_Breakdowns_Data::RepairPartInfo* pInfos = static_cast< ADN_Breakdowns_Data::RepairPartInfo* >( data );
     if( !pInfos )
         return;
-    AddItem( row, 0, data, &pInfos->ptrPart_.GetData()->strName_, ADN_StandardItem::eString );
-    AddItem( row, 1, data, &pInfos->nNbr_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+    ADN_Resources_Data::CategoryInfo* info = pInfos->GetCrossedElement();
+    if( info )
+    {
+        AddItem( row, 0, data, &info->strName_, ADN_StandardItem::eString );
+        AddItem( row, 1, data, &pInfos->nNbr_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +101,7 @@ void ADN_Breakdowns_PartsTable::OnContextMenu( const QPoint& pt )
     {
         // Create a new element
         ADN_Breakdowns_Data::RepairPartInfo* pNewInfo = new ADN_Breakdowns_Data::RepairPartInfo();
-        pNewInfo->ptrPart_ = parts[ nMenuResult - 1 ];
+        pNewInfo->SetCrossedElement( parts[ nMenuResult - 1 ] );
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
         pCTable->AddItem( 0 );
@@ -114,7 +118,7 @@ bool ADN_Breakdowns_PartsTable::Contains( ADN_Resources_Data::CategoryInfo& cate
     {
         const QModelIndex index = dataModel_.index( row, 1 );
         ADN_Breakdowns_Data::RepairPartInfo* pInfos = static_cast<ADN_Breakdowns_Data::RepairPartInfo*>( GetDataFromIndex( index ) );
-        if( pInfos->ptrPart_.GetData() == &category )
+        if( pInfos->GetCrossedElement() == &category )
             return true;
     }
     return false;

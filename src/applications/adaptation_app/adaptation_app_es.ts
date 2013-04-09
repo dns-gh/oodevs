@@ -381,6 +381,13 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Breakdowns_Data</name>
+    <message>
+        <source>Required parts</source>
+        <translation type="unfinished">Partes requeridas</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Breakdowns_GUI</name>
     <message>
         <source>Name</source>
@@ -690,6 +697,17 @@ estacionado con motor encendido</translation>
     <message>
         <source>Remove resource</source>
         <translation type="unfinished">Remover dotación</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_Data</name>
+    <message>
+        <source>Attritions</source>
+        <translation type="unfinished">Atriciones</translation>
+    </message>
+    <message>
+        <source>Speeds</source>
+        <translation type="unfinished">Velocidades</translation>
     </message>
 </context>
 <context>
@@ -6121,11 +6139,11 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <name>ActiveProtections_Data</name>
     <message id="-1">
         <source>Resource</source>
-        <translation>Dotación</translation>
+        <translation type="unfinished">Dotación</translation>
     </message>
     <message>
         <source>Ammunitions</source>
-        <translation>Munición</translation>
+        <translation type="unfinished">Munición</translation>
     </message>
 </context>
 <context>
@@ -6169,16 +6187,16 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation>Autómata – Tipo de unidad inválido &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Automat - Invalid doctrine model &apos;%1&apos;</source>
-        <translation>Autómata  - modelo de doctrina inválido &apos;%1&apos;</translation>
+        <source>Doctrine model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command post</source>
+        <translation type="unfinished">Puesto de comando</translation>
     </message>
 </context>
 <context>
     <name>Breakdown_Data</name>
-    <message>
-        <source>Breakdowns - Invalid part &apos;%1&apos;</source>
-        <translation>Fallas – Parte inválida &apos;%1&apos;</translation>
-    </message>
     <message>
         <source>New breakdown</source>
         <translation>Nueva Falla</translation>
@@ -6372,10 +6390,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Crowd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowd types - Invalid behavior model &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

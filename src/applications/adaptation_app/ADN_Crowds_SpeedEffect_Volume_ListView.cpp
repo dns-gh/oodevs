@@ -33,8 +33,10 @@ public:
 
     ADN_ListViewItem* CreateItem( void* pObj )
     {
+        SpeedEffectVolumeInfos* infos = static_cast< SpeedEffectVolumeInfos* >( pObj );
         ADN_ListViewItem* pItem = new ADN_ListViewItem( pObj );
-        pItem->Connect( &static_cast< SpeedEffectVolumeInfos* >( pObj )->ptrVolume_.GetData()->strName_ );
+        if( infos && infos->GetCrossedElement() )
+            pItem->Connect( &infos->GetCrossedElement()->strName_ );
         return pItem;
     }
 };

@@ -11,12 +11,9 @@
 #define __ADN_Breakdowns_Data_h_
 
 #include "ADN_Data_ABC.h"
-#include "ADN_RefWithName.h"
+#include "ADN_CrossedRef.h"
 #include "ADN_Types.h"
 #include "ADN_Resources_Data.h"
-#include "ADN_Tr.h"
-
-namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_Breakdowns_Data
@@ -26,10 +23,9 @@ namespace xml { class xistream; }
 // =============================================================================
 class ADN_Breakdowns_Data : public ADN_Data_ABC
 {
-
 public:
 // *****************************************************************************
-    class RepairPartInfo : public ADN_Ref_ABC
+    class RepairPartInfo : public ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >
     {
     public:
                  RepairPartInfo();
@@ -41,12 +37,10 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Resources_Data::CategoryInfo> ptrPart_;
         ADN_Type_Int nNbr_;
     };
 
-    typedef ADN_Type_Vector_ABC<RepairPartInfo> T_RepairPartInfoVector;
-    typedef T_RepairPartInfoVector::iterator    IT_RepairPartInfoVector;
+    typedef ADN_Type_Vector_ABC< RepairPartInfo > T_RepairPartInfoVector;
 
 // *****************************************************************************
 
@@ -60,22 +54,19 @@ public:
         BreakdownInfo* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void ReadPart   ( xml::xistream& input );
+        void ReadPart( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_Enum<E_BreakdownNTI, eNbrBreakdownNTI>    nNTI_;
-        ADN_Type_Enum<E_BreakdownType, eNbrBreakdownType>  nType_;
-        ADN_Type_Int      nId_;
-        ADN_Type_Time     repairTime_;
-        ADN_Type_Time     repairTimeVariance_;
-
+        ADN_Type_Enum< E_BreakdownNTI, eNbrBreakdownNTI > nNTI_;
+        ADN_Type_Enum< E_BreakdownType, eNbrBreakdownType > nType_;
+        ADN_Type_Int nId_;
+        ADN_Type_Time repairTime_;
+        ADN_Type_Time repairTimeVariance_;
         T_RepairPartInfoVector vRepairParts_;
     };
 
-    typedef ADN_Type_Vector_ABC<BreakdownInfo>      T_BreakdownInfoVector;
-    typedef T_BreakdownInfoVector::iterator         IT_BreakdownInfoVector;
-    typedef T_BreakdownInfoVector::const_iterator   CIT_BreakdownInfoVector;
+    typedef ADN_Type_Vector_ABC< BreakdownInfo > T_BreakdownInfoVector;
 
 // *****************************************************************************
 public:

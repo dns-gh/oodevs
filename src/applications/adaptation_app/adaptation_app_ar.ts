@@ -369,6 +369,13 @@ Parked engine running</source>
     </message>
 </context>
 <context>
+    <name>ADN_Breakdowns_Data</name>
+    <message>
+        <source>Required parts</source>
+        <translation type="unfinished">الأجزاء المطلوبة</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Breakdowns_GUI</name>
     <message>
         <source>General parameters</source>
@@ -677,6 +684,17 @@ Parked engine running</source>
     <message>
         <source>Remove resource</source>
         <translation type="unfinished">إزالة مورد</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_Data</name>
+    <message>
+        <source>Attritions</source>
+        <translation type="unfinished">أتريشنز</translation>
+    </message>
+    <message>
+        <source>Speeds</source>
+        <translation type="unfinished">بسرعة</translation>
     </message>
 </context>
 <context>
@@ -6152,16 +6170,16 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">[اوتومت]-نوع الوحدة غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Automat - Invalid doctrine model &apos;%1&apos;</source>
-        <translation type="unfinished">[اوتومت]-نموذج نظرية غير صالح &apos;%1&apos;</translation>
+        <source>Doctrine model</source>
+        <translation type="unfinished">طراز مذهب</translation>
+    </message>
+    <message>
+        <source>Command post</source>
+        <translation type="unfinished">مقر القيادة</translation>
     </message>
 </context>
 <context>
     <name>Breakdown_Data</name>
-    <message>
-        <source>Breakdowns - Invalid part &apos;%1&apos;</source>
-        <translation type="unfinished">أعطال-جزء غير صالح &apos;%1&apos;</translation>
-    </message>
     <message>
         <source>New breakdown</source>
         <translation type="unfinished">انهيار جديد</translation>
@@ -6356,10 +6374,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Crowd</source>
         <translation type="unfinished">الحشد</translation>
-    </message>
-    <message>
-        <source>Crowd types - Invalid behavior model &apos;%1&apos;</source>
-        <translation type="unfinished">أنواع الحشد--نموذج سلوك غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Crowd types - Invalid crowd attitude &apos;%1&apos;</source>

@@ -381,6 +381,13 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Breakdowns_Data</name>
+    <message>
+        <source>Required parts</source>
+        <translation>Pièces nécéssaires</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Breakdowns_GUI</name>
     <message>
         <source>Name</source>
@@ -691,6 +698,17 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Remove resource</source>
         <translation>Supprimer une ressource</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_Data</name>
+    <message>
+        <source>Attritions</source>
+        <translation>Attritions</translation>
+    </message>
+    <message>
+        <source>Speeds</source>
+        <translation>Vitesses</translation>
     </message>
 </context>
 <context>
@@ -6135,7 +6153,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 </context>
 <context>
     <name>ActiveProtections_Data</name>
-    <message id="-1">
+    <message>
         <source>Resource</source>
         <translation>Dotation</translation>
     </message>
@@ -6185,16 +6203,16 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Automate - Modèle invalide &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Automat - Invalid doctrine model &apos;%1&apos;</source>
-        <translation>Automate - Modèle décisionnel invalide &apos;%1&apos;</translation>
+        <source>Doctrine model</source>
+        <translation>Modèle</translation>
+    </message>
+    <message>
+        <source>Command post</source>
+        <translation>PC</translation>
     </message>
 </context>
 <context>
     <name>Breakdown_Data</name>
-    <message>
-        <source>Breakdowns - Invalid part &apos;%1&apos;</source>
-        <translation>Pannes - Pièce invalide &apos;%1&apos;</translation>
-    </message>
     <message>
         <source>New breakdown</source>
         <translation>Nouvelle panne</translation>
@@ -6382,10 +6400,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 </context>
 <context>
     <name>Population_Data</name>
-    <message>
-        <source>Crowd types - Invalid behavior model &apos;%1&apos;</source>
-        <translation>Foules - Modèle invalide &apos;%1&apos;</translation>
-    </message>
     <message>
         <source>Crowd types - Invalid crowd attitude &apos;%1&apos;</source>
         <translation>Foules - Attitude invalide &apos;%1&apos;</translation>

@@ -6,16 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-02 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Crowds_Data.cpp $
-// $Author: Ape $
-// $Modtime: 7/06/05 9:51 $
-// $Revision: 15 $
-// $Workfile: ADN_Crowds_Data.cpp $
-//
-// *****************************************************************************
-
 #include "adaptation_app_pch.h"
 #include "ADN_Crowds_Data.h"
 #include "ADN_Workspace.h"
@@ -30,16 +20,15 @@ tools::IdManager ADN_Crowds_Data::idManager_;
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::FireEffectProtectionInfos::FireEffectProtectionInfos( helpers::ArmorInfos* ptr )
-    : ADN_RefWithName( ptr )
-    , ptrProtection_            ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), ptr )
-    , rUnarmedDestruction_              ( 0. )
-    , rUnarmedFixableWithEvacuation_    ( 0. )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), ptr, true )
+    , rUnarmedDestruction_( 0. )
+    , rUnarmedFixableWithEvacuation_( 0. )
     , rUnarmedFixableWithoutEvacuation_ ( 0. )
-    , rArmedDestruction_                ( 0. )
-    , rArmedFixableWithEvacuation_      ( 0. )
-    , rArmedFixableWithoutEvacuation_   ( 0. )
+    , rArmedDestruction_( 0. )
+    , rArmedFixableWithEvacuation_( 0. )
+    , rArmedFixableWithoutEvacuation_( 0. )
 {
-    BindExistenceTo( &ptrProtection_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -63,12 +52,12 @@ void ADN_Crowds_Data::FireEffectProtectionInfos::ReadArchive( xml::xistream& inp
               >> xml::attribute( "repairable-without-evacuation", rUnarmedFixableWithoutEvacuation )
           >> xml::end;
 
-    rArmedDestruction_                  = 100.0 * rArmedDestruction;
-    rArmedFixableWithEvacuation_        = 100.0 * rArmedFixableWithEvacuation;
-    rArmedFixableWithoutEvacuation_     = 100.0 * rArmedFixableWithoutEvacuation;
-    rUnarmedDestruction_                = 100.0 * rUnarmedDestruction;
-    rUnarmedFixableWithEvacuation_      = 100.0 * rUnarmedFixableWithEvacuation;
-    rUnarmedFixableWithoutEvacuation_   = 100.0 * rUnarmedFixableWithoutEvacuation;
+    rArmedDestruction_                = 100.0 * rArmedDestruction;
+    rArmedFixableWithEvacuation_      = 100.0 * rArmedFixableWithEvacuation;
+    rArmedFixableWithoutEvacuation_   = 100.0 * rArmedFixableWithoutEvacuation;
+    rUnarmedDestruction_              = 100.0 * rUnarmedDestruction;
+    rUnarmedFixableWithEvacuation_    = 100.0 * rUnarmedFixableWithEvacuation;
+    rUnarmedFixableWithoutEvacuation_ = 100.0 * rUnarmedFixableWithoutEvacuation;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,8 +66,10 @@ void ADN_Crowds_Data::FireEffectProtectionInfos::ReadArchive( xml::xistream& inp
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::FireEffectProtectionInfos::WriteArchive( xml::xostream& output ) const
 {
+    if( !GetCrossedElement() )
+        return;
     output << xml::start( "protection" )
-                << xml::attribute( "name", ptrProtection_.GetData()->strName_ )
+                << xml::attribute( "name", GetCrossedElement()->strName_ )
                 << xml::start( "unarmed" )
                     << xml::attribute( "destruction",                   rUnarmedDestruction_.GetData() /100.0 )
                     << xml::attribute( "repairable-with-evacuation",    rUnarmedFixableWithEvacuation_.GetData() /100.0 )
@@ -107,8 +98,8 @@ ADN_Crowds_Data::FireEffectProtectionInfos::~FireEffectProtectionInfos()
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::FireEffectInfos::FireEffectInfos( E_PopulationAttitude nAttitude )
     : ADN_RefWithName( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
-    , nAttitude_        ( nAttitude )
-    , vProtectionInfos_ ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
+    , nAttitude_( nAttitude )
+    , vProtectionInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
     , rIntensityDensity_( 0. )
     , rIntensityFactor_ ( 0. )
 {
@@ -132,12 +123,10 @@ void ADN_Crowds_Data::FireEffectInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::FireEffectInfos::ReadProtection( xml::xistream& input )
 {
-    std::string strProtection;
-    input >> xml::attribute( "name", strProtection );
-    IT_FireEffectProtectionInfosVector itProtection = std::find_if( vProtectionInfos_.begin(), vProtectionInfos_.end(),
-                                                                    ADN_Tools::NameCmp<FireEffectProtectionInfos>(strProtection) );
+    auto itProtection = std::find_if( vProtectionInfos_.begin(), vProtectionInfos_.end(),
+                                      ADN_Tools::NameCmp< FireEffectProtectionInfos >( input.attribute< std::string >( "name" ) ) );
     assert( itProtection != vProtectionInfos_.end() );
-    (*itProtection)->ReadArchive( input );
+    ( *itProtection )->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +142,7 @@ void ADN_Crowds_Data::FireEffectInfos::WriteArchive( xml::xostream& output ) con
              << xml::attribute( "intensity", rIntensityFactor_ )
              << xml::attribute( "population-attitude", ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) );
     for( auto it = vProtectionInfos_.begin(); it != vProtectionInfos_.end(); ++it )
-        (*it)->WriteArchive( output );
+        ( *it )->WriteArchive( output );
     output << xml::end;
 }
 
@@ -172,9 +161,9 @@ ADN_Crowds_Data::FireEffectInfos::~FireEffectInfos()
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::FireEffectRoeInfos::FireEffectRoeInfos( E_PopulationRoe nRoe )
     : ADN_RefWithName( ENT_Tr::ConvertFromPopulationRoe( nRoe ) )
-    , nRoe_             ( nRoe )
+    , nRoe_( nRoe )
     , rAttritionSurface_( 0. )
-    , rPH_              ( 0. )
+    , rPH_( 0. )
 {
     // NOTHING
 }
@@ -227,12 +216,11 @@ void ADN_Crowds_Data::FireEffectRoeInfos::WriteArchive( xml::xostream& output ) 
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos( ADN_Categories_Data::SizeInfos* ptr )
-    : ADN_RefWithName( ptr )
-    , ptrVolume_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), ptr )
-    , rDensity_ ( 0. )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), ptr, true )
+    , rDensity_( 0. )
     , rMaxSpeed_( 0. )
 {
-    this->BindExistenceTo( &ptrVolume_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -253,8 +241,10 @@ void ADN_Crowds_Data::SpeedEffectVolumeInfos::WriteArchive( xml::xostream& outpu
 {
     if( rDensity_ == 0. && rMaxSpeed_ == 0. )
         return;
+    if( !GetCrossedElement() )
+        return;
     output << xml::start( "unit" )
-             << xml::attribute( "unit-size", ptrVolume_.GetData()->strName_ )
+             << xml::attribute( "unit-size", GetCrossedElement()->strName_ )
              << xml::attribute( "population-density", rDensity_  )
              << xml::attribute( "max-speed", rMaxSpeed_  )
            << xml::end;
@@ -279,7 +269,7 @@ ADN_Crowds_Data::SpeedEffectVolumeInfos::~SpeedEffectVolumeInfos()
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::SpeedEffectInfos::SpeedEffectInfos( E_PopulationAttitude nAttitude )
     : ADN_RefWithName( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
-    , nAttitude_   ( nAttitude )
+    , nAttitude_( nAttitude )
     , vVolumeInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos() )
 {
     // NOTHING
@@ -300,12 +290,10 @@ void ADN_Crowds_Data::SpeedEffectInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::SpeedEffectInfos::ReadSpeedEffect( xml::xistream& input )
 {
-    std::string strVolume;
-    input >> xml::attribute( "unit-size", strVolume );
-    IT_SpeedEffectVolumeInfosVector itVolume = std::find_if( vVolumeInfos_.begin(), vVolumeInfos_.end(),
-                                                                ADN_Tools::NameCmp<SpeedEffectVolumeInfos>(strVolume) );
+    auto itVolume = std::find_if( vVolumeInfos_.begin(), vVolumeInfos_.end(),
+                                  ADN_Tools::NameCmp< SpeedEffectVolumeInfos >( input.attribute< std::string >( "unit-size" ) ) );
     assert( itVolume != vVolumeInfos_.end() );
-    (*itVolume)->ReadArchive( input );
+    ( *itVolume )->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -317,7 +305,7 @@ void ADN_Crowds_Data::SpeedEffectInfos::WriteArchive( xml::xostream& output ) co
     output << xml::start( "slowing-effect" )
              << xml::attribute( "population-attitude" ,ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) );
     for( auto it = vVolumeInfos_.begin(); it != vVolumeInfos_.end(); ++it )
-        (*it)->WriteArchive( output );
+        ( *it )->WriteArchive( output );
     output << xml::end;
 }
 
@@ -339,10 +327,10 @@ ADN_Crowds_Data::SpeedEffectInfos::~SpeedEffectInfos()
 // Created: MMC 2011-03-30
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::UrbanEffectInfos::UrbanEffectInfos( E_PopulationAttitude nAttitude )
-: ADN_RefWithName( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
-, nAttitude_   ( nAttitude )
-, rDensity_    ( 0.0 )
-, rTime_       ( "0s" )
+    : ADN_RefWithName( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
+    , nAttitude_( nAttitude )
+    , rDensity_( 0.0 )
+    , rTime_( "0s" )
 {
     // NOTHING
 }
@@ -363,7 +351,7 @@ ADN_Crowds_Data::UrbanEffectInfos::~UrbanEffectInfos()
 void ADN_Crowds_Data::UrbanEffectInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "density", rDensity_ )
-        >> xml::attribute( "time", rTime_ );
+          >> xml::attribute( "time", rTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -372,11 +360,11 @@ void ADN_Crowds_Data::UrbanEffectInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::UrbanEffectInfos::WriteArchive( xml::xostream& output ) const
 {
-    output  << xml::start( "urban-destruction-effect" )
-                << xml::attribute( "attitude", ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) )
-                << xml::attribute( "density", rDensity_ )
-                << xml::attribute( "time", rTime_ )
-            << xml::end;
+    output << xml::start( "urban-destruction-effect" )
+            << xml::attribute( "attitude", ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) )
+            << xml::attribute( "density", rDensity_ )
+            << xml::attribute( "time", rTime_ )
+           << xml::end;
 }
 
 // =============================================================================
@@ -388,18 +376,18 @@ void ADN_Crowds_Data::UrbanEffectInfos::WriteArchive( xml::xostream& output ) co
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::CrowdsInfos::CrowdsInfos()
-    : nId_                  ( ADN_Crowds_Data::idManager_.GetNextId() )
-    , ptrModel_             ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos(), 0 )
+    : nId_( ADN_Crowds_Data::idManager_.GetNextId() )
+    , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos(), 0 )
     , rConcentrationDensity_( 0. )
-    , rMoveDensity_         ( 0. )
-    , rMoveSpeed_           ( 0. )
-    , repartition_          ( tools::translate( "Population_Data", "Crowd" ) )
-    , armedIndividuals_     ( 0 )
-    , decontaminationDelay_ ( "300s" )
-    , vSpeedEffectInfos_    ()
-    , vFireEffectInfos_     ()
-    , vFireEffectRoeInfos_  ()
-    , vUrbanEffectInfos_    ()
+    , rMoveDensity_( 0. )
+    , rMoveSpeed_( 0. )
+    , repartition_( tools::translate( "Population_Data", "Crowd" ) )
+    , armedIndividuals_( 0 )
+    , decontaminationDelay_( "300s" )
+    , vSpeedEffectInfos_()
+    , vFireEffectInfos_()
+    , vFireEffectRoeInfos_()
+    , vUrbanEffectInfos_()
 {
     Initialize();
 }
@@ -409,18 +397,18 @@ ADN_Crowds_Data::CrowdsInfos::CrowdsInfos()
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::CrowdsInfos::CrowdsInfos( unsigned int id )
-    : nId_                  ( id )
-    , ptrModel_             ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos(), 0 )
+    : nId_( id )
+    , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos(), 0 )
     , rConcentrationDensity_( 0. )
-    , rMoveDensity_         ( 0. )
-    , rMoveSpeed_           ( 0. )
-    , repartition_          ( tools::translate( "Population_Data", "Crowd" ) )
-    , armedIndividuals_     ( 0 )
-    , decontaminationDelay_ ( "300s" )
-    , vSpeedEffectInfos_    ()
-    , vFireEffectInfos_     ()
-    , vFireEffectRoeInfos_  ()
-    , vUrbanEffectInfos_    ()
+    , rMoveDensity_( 0. )
+    , rMoveSpeed_( 0. )
+    , repartition_( tools::translate( "Population_Data", "Crowd" ) )
+    , armedIndividuals_( 0 )
+    , decontaminationDelay_( "300s" )
+    , vSpeedEffectInfos_()
+    , vFireEffectInfos_()
+    , vFireEffectRoeInfos_()
+    , vUrbanEffectInfos_()
 {
     Initialize();
     ADN_Crowds_Data::idManager_.Lock( id );
@@ -434,26 +422,28 @@ void ADN_Crowds_Data::CrowdsInfos::Initialize()
 {
     for( int i = 0; i < eNbrPopulationAttitude; ++i )
     {
-        SpeedEffectInfos* pSpeedNew = new SpeedEffectInfos( ( E_PopulationAttitude )i );
+        E_PopulationAttitude attitude = static_cast< E_PopulationAttitude >( i );
+        SpeedEffectInfos* pSpeedNew = new SpeedEffectInfos( attitude );
         std::auto_ptr< SpeedEffectInfos > spSpeedNew( pSpeedNew );
         vSpeedEffectInfos_.AddItem( spSpeedNew.release() );
 
-        FireEffectInfos* pFireNew = new FireEffectInfos( ( E_PopulationAttitude )i );
+        FireEffectInfos* pFireNew = new FireEffectInfos( attitude );
         std::auto_ptr< FireEffectInfos > spFireNew( pFireNew );
         vFireEffectInfos_.AddItem( spFireNew.release() );
 
-        UrbanEffectInfos* pUrbanNew = new UrbanEffectInfos( ( E_PopulationAttitude )i );
+        UrbanEffectInfos* pUrbanNew = new UrbanEffectInfos( attitude );
         std::auto_ptr< UrbanEffectInfos > spUrbanNew( pUrbanNew );
         vUrbanEffectInfos_.AddItem( spUrbanNew.release() );
     }
     for( int i = 2; i < eNbrPopulationRoe; ++i )
     {
-        FireEffectRoeInfos* pFireRoeNew = new FireEffectRoeInfos( ( E_PopulationRoe )i );
+        FireEffectRoeInfos* pFireRoeNew = new FireEffectRoeInfos( static_cast< E_PopulationRoe >( i ) );
         std::auto_ptr< FireEffectRoeInfos > spFireRoeNew( pFireRoeNew );
         vFireEffectRoeInfos_.AddItem( spFireRoeNew.release() );
     }
-    this->BindExistenceTo( &ptrModel_ );
+    BindExistenceTo( &ptrModel_ );
 }
+
 // -----------------------------------------------------------------------------
 // Name: CrowdsInfos::~CrowdsInfos
 // Created: APE 2004-12-02
@@ -497,19 +487,14 @@ ADN_Crowds_Data::CrowdsInfos* ADN_Crowds_Data::CrowdsInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::CrowdsInfos::ReadArchive( xml::xistream& input )
 {
-    std::string strModel;
     double rArmedIndividuals = 0.;
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "concentration-density", rConcentrationDensity_ )
           >> xml::attribute( "moving-base-density", rMoveDensity_ )
           >> xml::attribute( "moving-speed", rMoveSpeed_ )
-          >> xml::attribute( "decisional-model", strModel )
+          >> xml::attribute( "decisional-model", ptrModel_ )
           >> xml::optional
           >> xml::attribute( "armed-individuals", rArmedIndividuals );
-    ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindPopulationModel( strModel );
-    if( !pModel )
-        throw MASA_EXCEPTION( tools::translate( "Population_Data", "Crowd types - Invalid behavior model '%1'" ).arg( strModel.c_str() ).toStdString() );
-    ptrModel_ = pModel;
 
     input >> xml::start( "slowing-effects" )
             >> xml::list( "slowing-effect", *this, &ADN_Crowds_Data::CrowdsInfos::ReadSlowingEffect )
@@ -542,10 +527,9 @@ void ADN_Crowds_Data::CrowdsInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::CrowdsInfos::ReadSlowingEffect( xml::xistream& input )
 {
-    std::string strAttitude;
-    input >> xml::attribute( "population-attitude", strAttitude );
+    std::string strAttitude = input.attribute< std::string >( "population-attitude" );
     uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
-    if( nAttitude == (E_PopulationAttitude)-1 )
+    if( nAttitude == static_cast< E_PopulationAttitude >( -1 ) )
         throw MASA_EXCEPTION( tools::translate( "Population_Data",  "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).toStdString() );
     vSpeedEffectInfos_[ nAttitude ]->ReadArchive( input );
 }
@@ -558,7 +542,7 @@ void ADN_Crowds_Data::CrowdsInfos::ReadAttritionEffect( xml::xistream& input )
 {
     std::string strAttitude = input.attribute< std::string >( "population-attitude" );
     uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
-    if( nAttitude == (E_PopulationAttitude)-1 )
+    if( nAttitude == static_cast< E_PopulationAttitude >( -1 ) )
         throw MASA_EXCEPTION( tools::translate( "Population_Data",  "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).toStdString() );
     vFireEffectInfos_[ nAttitude ]->ReadArchive( input );
 }
@@ -569,12 +553,11 @@ void ADN_Crowds_Data::CrowdsInfos::ReadAttritionEffect( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Crowds_Data::CrowdsInfos::ReadFireEffect( xml::xistream& input )
 {
-    std::string strROE;
-    input >> xml::attribute( "rule-of-engagment", strROE );
+    std::string strROE = input.attribute< std::string >( "rule-of-engagment" );
     uint nROE = ENT_Tr::ConvertToPopulationRoe( strROE );
-    if( nROE == (E_PopulationRoe)-1 )
+    if( nROE == static_cast< E_PopulationRoe >( -1 ) )
         throw MASA_EXCEPTION( tools::translate( "Population_Data", "Crowd types - Invalid crowd 'rules of engagment' '%1'" ).arg( strROE.c_str() ).toStdString() );
-    for( IT_FireEffectRoeInfosVector it = vFireEffectRoeInfos_.begin(); it != vFireEffectRoeInfos_.end(); ++it )
+    for( auto it = vFireEffectRoeInfos_.begin(); it != vFireEffectRoeInfos_.end(); ++it )
         if( ( *it )->GetRoe() == nROE )
             ( *it )->ReadArchive( input );
 }
@@ -587,24 +570,24 @@ void ADN_Crowds_Data::CrowdsInfos::ReadUrbanEffect( xml::xistream& input )
 {
     std::string strAttitude = input.attribute< std::string >( "attitude" );
     uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
-    if( nAttitude == (E_PopulationAttitude)-1 )
+    if( nAttitude == static_cast< E_PopulationAttitude >( -1 ) )
         throw MASA_EXCEPTION( tools::translate( "Population_Data",  "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).toStdString() );
 
     vUrbanEffectInfos_[ nAttitude ]->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrowdsInfos::WriteArchive
+// Name: CrowdsInfos::CrowdsInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output ) const
+void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output )
 {
     repartition_.CheckNoError( strName_.GetData().c_str() );
 
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "id", nId_ )
-            << xml::attribute( "decisional-model", ptrModel_.GetData()->strName_ )
+            << xml::attribute( "decisional-model", ptrModel_ )
             << xml::attribute( "concentration-density", rConcentrationDensity_ )
             << xml::attribute( "moving-base-density", rMoveDensity_ )
             << xml::attribute( "moving-speed", rMoveSpeed_ )
@@ -642,12 +625,32 @@ void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Crowds_Data::CrowdsInfos::CheckValidity
+// Created: JSR 2013-04-04
+// -----------------------------------------------------------------------------
+void ADN_Crowds_Data::CrowdsInfos::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab /*= -1*/, const std::string& /*optional = ""*/ )
+{
+    ptrModel_.CheckValidity( checker, name, tab, subTab, tools::translate( "ADN_Crowds_Data", "Behavior model" ).toStdString() );
+    for( auto it = vFireEffectInfos_.begin(); it != vFireEffectInfos_.end(); ++it )
+    {
+        const FireEffectInfos* infos = ( *it );
+        for( auto it2 = infos->vProtectionInfos_.begin(); it2 != infos->vProtectionInfos_.end(); ++it2 )
+            ( *it2 )->CheckValidity( checker, name, tab, subTab, tools::translate( "ADN_Crowds_Data", "Attritions" ).toStdString() );
+    }
+    for( auto it = vSpeedEffectInfos_.begin(); it != vSpeedEffectInfos_.end(); ++it )
+    {
+        const SpeedEffectInfos* infos = ( *it );
+        for( auto it2 = infos->vVolumeInfos_.begin(); it2 != infos->vVolumeInfos_.end(); ++it2 )
+            ( *it2 )->CheckValidity( checker, name, tab, subTab, tools::translate( "ADN_Crowds_Data", "Speeds" ).toStdString() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Crowds_Data::ReloadingSpeedEffectInfos::ReloadingSpeedEffectInfos
 // Created: SBO 2005-11-14
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::ReloadingSpeedEffectInfos::ReloadingSpeedEffectInfos()
-    : ADN_Ref_ABC()
-    , rDensity_ ( 0. )
+    : rDensity_ ( 0. )
     , rModifier_( 0. )
 {
     // NOTHING
@@ -685,13 +688,14 @@ void ADN_Crowds_Data::ReloadingSpeedEffectInfos::WriteArchive( xml::xostream& ou
             << xml::attribute( "modifier", rModifier_ )
           << xml::end;
 }
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Crowds_Data constructor
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::ADN_Crowds_Data()
     : ADN_Data_ABC( eCrowds )
-    , vCrowds_              ()
+    , vCrowds_()
     , reloadingSpeedEffectInfos_()
     , timeBetweenNbcApplication_ ( "1h" )
 {
@@ -704,7 +708,7 @@ ADN_Crowds_Data::ADN_Crowds_Data()
 // -----------------------------------------------------------------------------
 ADN_Crowds_Data::~ADN_Crowds_Data()
 {
-    this->Reset();
+    Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -770,7 +774,7 @@ void ADN_Crowds_Data::WriteArchive( xml::xostream& output )
             << xml::attribute( "delay", timeBetweenNbcApplication_.GetData() )
            << xml::end;
     for( auto it = vCrowds_.begin(); it != vCrowds_.end(); ++it )
-        (*it)->WriteArchive( output );
+        ( *it )->WriteArchive( output );
     output << xml::end;
 }
 
@@ -781,8 +785,18 @@ void ADN_Crowds_Data::WriteArchive( xml::xostream& output )
 QStringList ADN_Crowds_Data::GetCrowdsThatUse( ADN_Models_Data::ModelInfos& model )
 {
     QStringList result;
-    for( IT_CrowdsInfosVector it = vCrowds_.begin(); it != vCrowds_.end(); ++it )
-        if( (*it)->ptrModel_.GetData() == &model )
-            result << (*it)->strName_.GetData().c_str();
+    for( auto it = vCrowds_.begin(); it != vCrowds_.end(); ++it )
+        if( ( *it )->ptrModel_.GetData() == &model )
+            result << ( *it )->strName_.GetData().c_str();
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Crowds_Data::CheckDatabaseValidity
+// Created: JSR 2013-04-04
+// -----------------------------------------------------------------------------
+void ADN_Crowds_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = vCrowds_.begin(); it != vCrowds_.end(); ++it )
+        ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eCrowds );
 }

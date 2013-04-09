@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Automata_Data.h"
-
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_ConsistencyChecker.h"
@@ -36,8 +35,8 @@ ADN_Automata_Data::UnitInfos::UnitInfos( const ADN_Units_Data::T_UnitInfos_Vecto
 ADN_Automata_Data::UnitInfos* ADN_Automata_Data::UnitInfos::CreateCopy()
 {
     UnitInfos* pCopy = new UnitInfos( GetVector(), GetCrossedElement() );
-    pCopy->min_     = min_.GetData();
-    pCopy->max_     = max_.GetData();
+    pCopy->min_ = min_.GetData();
+    pCopy->max_ = max_.GetData();
     return pCopy;
 }
 
@@ -47,8 +46,7 @@ ADN_Automata_Data::UnitInfos* ADN_Automata_Data::UnitInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
 {
-    std::string type;
-    input >> xml::attribute( "type", type );
+    std::string type = input.attribute< std::string >( "type" );
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( type );
     if( ! pUnit )
         throw MASA_EXCEPTION( tools::translate( "Automata_Data", "Automat - Invalid unit type '%1'" ).arg( type.c_str() ).toStdString() );
@@ -85,7 +83,6 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos()
     , bStrengthRatioFeedbackTime_( false )
     , strengthRatioFeedbackTime_( "0s" )
 {
-    //BindExistenceTo( &ptrUnit_ );
     BindExistenceTo( &ptrModel_ );
 }
 
@@ -100,7 +97,6 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos( unsigned int id )
     , bStrengthRatioFeedbackTime_( false )
     , strengthRatioFeedbackTime_( "0s" )
 {
-    //BindExistenceTo( &ptrUnit_ );
     BindExistenceTo( &ptrModel_ );
     ADN_Automata_Data::idManager_.Lock( id );
 }
@@ -128,8 +124,8 @@ ADN_Automata_Data::AutomatonInfos* ADN_Automata_Data::AutomatonInfos::CreateCopy
     pCopy->bStrengthRatioFeedbackTime_ = bStrengthRatioFeedbackTime_.GetData();
     pCopy->strengthRatioFeedbackTime_ = strengthRatioFeedbackTime_.GetData();
 
-    for( IT_UnitInfosVector it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
-        pCopy->vSubUnits_.AddItem( (*it)->CreateCopy() );
+    for( auto it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
+        pCopy->vSubUnits_.AddItem( ( *it )->CreateCopy() );
 
     return pCopy;
 }
@@ -140,7 +136,7 @@ ADN_Automata_Data::AutomatonInfos* ADN_Automata_Data::AutomatonInfos::CreateCopy
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::AutomatonInfos::ReadUnit( xml::xistream& input )
 {
-    std::auto_ptr<UnitInfos> spNew( new UnitInfos( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos() ) );
+    std::auto_ptr< UnitInfos > spNew( new UnitInfos( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos() ) );
     spNew->ReadArchive( input );
     bool cp = false;
     input >> xml::optional >> xml::attribute( "command-post", cp );
@@ -155,18 +151,13 @@ void ADN_Automata_Data::AutomatonInfos::ReadUnit( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::AutomatonInfos::ReadArchive( xml::xistream& input )
 {
-    std::string strType, strModel;
+    std::string strType;
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "type", strType )
-          >> xml::attribute( "decisional-model", strModel )
+          >> xml::attribute( "decisional-model", ptrModel_ )
           >> xml::optional >> xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
     bStrengthRatioFeedbackTime_ = strengthRatioFeedbackTime_ != "0s";
     nAgentType_ = ADN_Tr::ConvertToAgentTypeAutomate( strType );
-    ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindAutomataModel( strModel );
-    if( !pModel )
-        throw MASA_EXCEPTION( tools::translate( "Automata_Data", "Automat - Invalid doctrine model '%1'" ).arg( strModel.c_str() ).toStdString() );
-    ptrModel_ = pModel;
-
     input >> xml::list( "unit", *this, &ADN_Automata_Data::AutomatonInfos::ReadUnit );
 }
 
@@ -179,12 +170,12 @@ void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "automat" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "type", nAgentType_.Convert() )
-            << xml::attribute( "decisional-model", ptrModel_.GetData()->strName_ )
+            << xml::attribute( "decisional-model", ptrModel_ )
             << xml::attribute( "id", nId_ );
     if( bStrengthRatioFeedbackTime_.GetData() )
         output << xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
-    for( IT_UnitInfosVector it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
-        (*it)->WriteArchive( output, *ptrUnit_.GetData() );
+    for( auto it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
+        ( *it )->WriteArchive( output, *ptrUnit_.GetData() );
     output << xml::end;
 }
 
@@ -192,22 +183,29 @@ void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output )
 // Name: AutomatonInfos::CheckDatabaseValidity
 // Created: ABR 2012-07-04
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::AutomatonInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+void ADN_Automata_Data::AutomatonInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker )
 {
     if( vSubUnits_.empty() )
         checker.AddError( eMissingUnitOnAutomat, strName_.GetData(), eAutomata );
 
-    const UnitInfos& pc = *ptrUnit_.GetData();
-    for( auto it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
-    {
-        const ADN_Automata_Data::UnitInfos& unit = **it;
-        assert( unit.GetCrossedElement() != 0 );
-        if( !unit.GetCrossedElement() )
-            continue;
-        const ADN_Units_Data::UnitInfos& agent = *unit.GetCrossedElement();
-        if( unit.min_.GetData() == 0 && pc.strName_.GetData() == agent.strName_.GetData() )
-            checker.AddError( eMissingPCOnAutomat, strName_.GetData(), eAutomata );
-    }
+    ptrModel_.CheckValidity( checker, strName_.GetData(), eAutomata, -1, tools::translate( "Automata_Data", "Doctrine model" ).toStdString() );
+    ptrUnit_.CheckValidity( checker, strName_.GetData(), eAutomata, -1, tools::translate( "Automata_Data", "Command post" ).toStdString() );
+
+    const UnitInfos* pc = ptrUnit_.GetData();
+    bool error = ( pc == 0 );
+    if( pc )
+        for( auto it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
+        {
+            const ADN_Automata_Data::UnitInfos& unit = **it;
+            assert( unit.GetCrossedElement() != 0 );
+            if( !unit.GetCrossedElement() )
+                continue;
+            const ADN_Units_Data::UnitInfos& agent = *unit.GetCrossedElement();
+            if( unit.min_.GetData() == 0 && pc->strName_.GetData() == agent.strName_.GetData() )
+                error = true;
+        }
+    if( error )
+        checker.AddError( eMissingPCOnAutomat, strName_.GetData(), eAutomata );
 }
 
 // -----------------------------------------------------------------------------
@@ -282,8 +280,8 @@ void ADN_Automata_Data::WriteArchive( xml::xostream& output )
 
     output << xml::start( "automats" );
     ADN_Tools::AddSchema( output, "Automats" );
-    for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
-        (*it)->WriteArchive( output );
+    for( auto it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
+        ( *it )->WriteArchive( output );
     output  << xml::end;
 }
 
@@ -294,9 +292,10 @@ void ADN_Automata_Data::WriteArchive( xml::xostream& output )
 QStringList ADN_Automata_Data::GetAutomataThatUseForPC( ADN_Units_Data::UnitInfos& unit )
 {
     QStringList result;
-    for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
+    for( auto it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
     {
-        if( ( *it )->ptrUnit_.GetData()->strName_.GetData() == unit.strName_.GetData() )
+        const UnitInfos* infos = ( *it )->ptrUnit_.GetData();
+        if( infos && infos->strName_.GetData() == unit.strName_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
     }
     return result;
@@ -309,11 +308,12 @@ QStringList ADN_Automata_Data::GetAutomataThatUseForPC( ADN_Units_Data::UnitInfo
 QStringList ADN_Automata_Data::GetAutomataThatUseForElement( ADN_Units_Data::UnitInfos& unit )
 {
     QStringList result;
-    for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
+    for( auto it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
     {
-        for( IT_UnitInfosVector it2 = ( *it )->vSubUnits_.begin(); it2 != ( *it )->vSubUnits_.end(); ++it2 )
+        for( auto it2 = ( *it )->vSubUnits_.begin(); it2 != ( *it )->vSubUnits_.end(); ++it2 )
         {
-            if( ( *it )->ptrUnit_.GetData()->strName_.GetData() != ( *it2 )->GetCrossedElement()->strName_.GetData() && ( *it2 )->GetCrossedElement() == &unit ) // all units except pc
+            const UnitInfos* infos = ( *it )->ptrUnit_.GetData();
+            if( infos && ( *it2 )->GetCrossedElement() == &unit && infos->strName_.GetData() != ( *it2 )->GetCrossedElement()->strName_.GetData() ) // all units except pc
             {
                 result << ( *it )->strName_.GetData().c_str();
                 break;
@@ -341,7 +341,7 @@ QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Units_Data::UnitInfos& un
 QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Models_Data::ModelInfos& model )
 {
     QStringList result;
-    for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
+    for( auto it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
     {
         AutomatonInfos* pAutomaton = *it;
         if( pAutomaton->ptrModel_.GetData() == &model )
