@@ -46,6 +46,7 @@
     <Import Project="Property sheets\base_win32.props" />
     <Import Project="Property sheets\library_static_release.props" />
     <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
@@ -53,6 +54,7 @@
     <Import Project="Property sheets\base_x64.props" />
     <Import Project="Property sheets\library_static_release.props" />
     <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
@@ -60,6 +62,7 @@
     <Import Project="Property sheets\base_win32.props" />
     <Import Project="Property sheets\library_static_debug.props" />
     <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
@@ -67,6 +70,7 @@
     <Import Project="Property sheets\base_x64.props" />
     <Import Project="Property sheets\library_static_debug.props" />
     <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
