@@ -12,14 +12,10 @@
 
 enum E_ConsistencyCheck
 {
-    eNNoUniqueness,
-    eEmatUniqueness,
     eMissionTypeUniqueness,
     eObjectTypeUniqueness,
     eUniquenessMask,
 
-    eMissingNNo,
-    eMissingEmat,
     eMissingPart,
     eMissingChoiceComposite,
     eMissingSymbols,
@@ -37,7 +33,6 @@ enum E_ConsistencyCheck
     eMissingDisaster,
     eMissingMask,
 
-    eLowerCaseEmat,
     eNoCrew,
     eInvalidCrossedRef,
     eOthersMask

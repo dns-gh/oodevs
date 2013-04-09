@@ -591,30 +591,6 @@ Arrêt moteur allumé</translation>
         <translation>Autres</translation>
     </message>
     <message>
-        <source>Duplicate NNO code for %1.</source>
-        <translation>Les éléments %1 possèdent le même code NNO.</translation>
-    </message>
-    <message>
-        <source>Duplicate EMAT8 code for %1.</source>
-        <translation>Les éléments %1 possèdent le même code EMAT8.</translation>
-    </message>
-    <message>
-        <source>%1 has no NNO code defined.</source>
-        <translation>%1 n&apos;a pas de code NNO de défini.</translation>
-    </message>
-    <message>
-        <source>%1 has no EMAT8 code defined.</source>
-        <translation>%1 n&apos;a pas de code EMAT8 de défini.</translation>
-    </message>
-    <message>
-        <source>The equipement &apos;</source>
-        <translation>L&apos;équipement &apos;</translation>
-    </message>
-    <message>
-        <source>The resource &apos;</source>
-        <translation>La ressource &apos;</translation>
-    </message>
-    <message>
         <source> and &apos;</source>
         <translation> et &apos;</translation>
     </message>
@@ -673,10 +649,6 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Duplicate type for objects %1</source>
         <translation>Les objets %1 possèdent le même type</translation>
-    </message>
-    <message>
-        <source>%1 has lower case EMAT8 code.</source>
-        <translation>%1 a un code emat8 en minuscules.</translation>
     </message>
     <message>
         <source>The symbols %1 are defined in symbols.xml but not found in Symbols directory.</source>
@@ -6163,7 +6135,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 </context>
 <context>
     <name>ActiveProtections_Data</name>
-    <message>
+    <message id="-1">
         <source>Resource</source>
         <translation>Dotation</translation>
     </message>

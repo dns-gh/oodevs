@@ -591,31 +591,7 @@ estacionado con motor encendido</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Duplicate NNO code for %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Duplicate EMAT8 code for %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 has no NNO code defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 has no EMAT8 code defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> and &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The equipement &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The resource &apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -672,10 +648,6 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Duplicate type for objects %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 has lower case EMAT8 code.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6147,7 +6119,7 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 </context>
 <context>
     <name>ActiveProtections_Data</name>
-    <message>
+    <message id="-1">
         <source>Resource</source>
         <translation>Dotación</translation>
     </message>

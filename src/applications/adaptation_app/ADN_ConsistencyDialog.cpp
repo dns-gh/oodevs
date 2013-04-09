@@ -65,15 +65,9 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     QString error = tr( ", because of this, the simulation can't start with this database." );
 
     // Fill errors text
-    errorDescriptions_[ eNNoUniqueness  ]         = tr( "Duplicate NNO code for %1." );
-    errorDescriptions_[ eEmatUniqueness ]         = tr( "Duplicate EMAT8 code for %1." );
-
-    errorDescriptions_[ eMissingNNo     ]         = tr( "%1 has no NNO code defined." );
-    errorDescriptions_[ eMissingEmat    ]         = tr( "%1 has no EMAT8 code defined." );
     errorDescriptions_[ eMissingChoiceComposite ] = tr( "The mission %1 has no type defined for a localisation composite parameter." );
     errorDescriptions_[ eMissingSymbols ]         = tr( "The symbols %1 are defined in symbols.xml but not found in Symbols directory." );
     errorDescriptions_[ eMissionAttachmentInvalid ] = tr( "The file %2 included in the mission %1 is invalid or not present in the attachment list." );
-    errorDescriptions_[ eLowerCaseEmat  ]         = tr( "%1 has lower case EMAT8 code." );
     errorDescriptions_[ eMissingRepairType ]      = tr( "Equipment %1 has no repair type defined in maintenance system in a 'gravity' category." );
 
     errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1" ) + error;
@@ -152,24 +146,10 @@ void ADN_ConsistencyDialog::UpdateDataModel()
         QString text = errorDescriptions_[ error.type_ ];
         if( text.contains( "%1" ) )
         {
-            if( error.type_ == eMissingNNo || error.type_ == eMissingEmat ) // exception
-            {
-                if( error.items_.front()->targetTab_ == eEquipments )
-                    text = text.arg( tr( "The equipement '" ) + error.items_.front()->targetName_ + "'" );
-                else if ( error.items_.front()->targetTab_ == eResources )
-                    text = text.arg( tr( "The resource '" ) + error.items_.front()->targetName_ + "'" );
-                else
-                {
-                    assert( false );
-                }
-            }
-            else // standard
-            {
-                QString itemList;
-                for( ADN_ConsistencyChecker::CIT_Items it = error.items_.begin(); it != error.items_.end(); ++it )
-                    itemList += ( ( itemList.isEmpty() ) ? "'" : ( it + 1 == error.items_.end() ) ? tr( " and '" ) : ", '" ) + ( *it )->targetName_ + "'";
-                text = ( error.optional_.empty() ) ? text.arg( itemList ) : text.arg( itemList ).arg( error.optional_.c_str() );
-            }
+            QString itemList;
+            for( ADN_ConsistencyChecker::CIT_Items it = error.items_.begin(); it != error.items_.end(); ++it )
+                itemList += ( ( itemList.isEmpty() ) ? "'" : ( it + 1 == error.items_.end() ) ? tr( " and '" ) : ", '" ) + ( *it )->targetName_ + "'";
+            text = ( error.optional_.empty() ) ? text.arg( itemList ) : text.arg( itemList ).arg( error.optional_.c_str() );
         }
         AddIcon( error.items_, error.type_, items );
         AddItem( text, text, error.items_, error.type_, items );

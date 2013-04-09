@@ -579,32 +579,8 @@ Parked engine running</source>
         <translation type="unfinished">الآخرين</translation>
     </message>
     <message>
-        <source>Duplicate NNO code for %1.</source>
-        <translation type="unfinished">تكرار التعليمات البرمجية NNO ل %1.</translation>
-    </message>
-    <message>
-        <source>Duplicate EMAT8 code for %1.</source>
-        <translation type="unfinished">تكرار التعليمات البرمجية EMAT8 ل %1.</translation>
-    </message>
-    <message>
-        <source>%1 has no NNO code defined.</source>
-        <translation type="unfinished">وقد %1 لم يتم تعريف رمز NNO.</translation>
-    </message>
-    <message>
-        <source>%1 has no EMAT8 code defined.</source>
-        <translation type="unfinished">وقد %1 لم يتم تعريف رمز EMAT8.</translation>
-    </message>
-    <message>
         <source> and &apos;</source>
         <translation type="unfinished">و &apos;</translation>
-    </message>
-    <message>
-        <source>The equipement &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The resource &apos;</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The mission %1 has no type defined for a localisation composite parameter.</source>
@@ -660,10 +636,6 @@ Parked engine running</source>
     </message>
     <message>
         <source>Duplicate type for objects %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 has lower case EMAT8 code.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6130,7 +6102,7 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>ActiveProtections_Data</name>
-    <message>
+    <message id="-1">
         <source>Resource</source>
         <translation type="unfinished">الموارد</translation>
     </message>

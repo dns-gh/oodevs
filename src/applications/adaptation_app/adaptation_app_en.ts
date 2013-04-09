@@ -591,32 +591,8 @@ Parked engine running</translation>
         <translation>Others</translation>
     </message>
     <message>
-        <source>Duplicate NNO code for %1.</source>
-        <translation>Duplicate NNO code for %1.</translation>
-    </message>
-    <message>
-        <source>Duplicate EMAT8 code for %1.</source>
-        <translation>Duplicate EMAT8 code for %1.</translation>
-    </message>
-    <message>
-        <source>%1 has no NNO code defined.</source>
-        <translation>%1 has no NNO code defined.</translation>
-    </message>
-    <message>
-        <source>%1 has no EMAT8 code defined.</source>
-        <translation>%1 has no EMAT8 code defined.</translation>
-    </message>
-    <message>
         <source> and &apos;</source>
         <translation> and &apos;</translation>
-    </message>
-    <message>
-        <source>The equipement &apos;</source>
-        <translation>The equipement &apos;</translation>
-    </message>
-    <message>
-        <source>The resource &apos;</source>
-        <translation>The resource &apos;</translation>
     </message>
     <message>
         <source>The mission %1 has no type defined for a localisation composite parameter.</source>
@@ -673,10 +649,6 @@ Parked engine running</translation>
     <message>
         <source>Duplicate type for objects %1</source>
         <translation>Duplicate type for objects %1</translation>
-    </message>
-    <message>
-        <source>%1 has lower case EMAT8 code.</source>
-        <translation>%1 has lower case EMAT8 code.</translation>
     </message>
     <message>
         <source>The symbols %1 are defined in symbols.xml but not found in Symbols directory.</source>
@@ -6143,7 +6115,7 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>ActiveProtections_Data</name>
-    <message>
+    <message id="-1">
         <source>Resource</source>
         <translation>Resource</translation>
     </message>
