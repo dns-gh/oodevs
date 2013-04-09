@@ -218,20 +218,17 @@
     </macrodef>
 
     <macrodef name="test-adaptation-unicode">
-        <attribute name="input"/>
-        <attribute name="directory"/>
+        <attribute name="dir"/>
+        <attribute name="todir" default="${out.dir}/physical base with unicode"/>
+        <!--
+            Java loses unicode when calling exec or echo, so no unicode char in the physical base path for now
+            <attribute name="todir" value="${out.dir}/physical base with unicode ひらがな"/>
+        -->
         <sequential>
-            <local name="unicode name"/>
-            <property name="unicode name" value="${out.dir}/physical base with unicode"/>
-            <!--
-            Java lost unicode when calling exec or echo, so no unicode char in the physical base path for now
-            <property name="unicode name" value="${out.dir}/physical base with unicode ひらがな"/>
-            -->
-            <delete dir="${unicode name}"/>
-
-            <!-- SVN and HG work poorly together with versioned unicode paths, so let ant generate them -->
-            <copy todir="${unicode name}">
-                <fileset dir="@{directory}@{input}">
+            <delete dir="@{todir}"/>
+            <!-- SVN and HG work poorly together with versionned unicode paths, so let ant generate them -->
+            <copy todir="@{todir}">
+                <fileset dir="@{dir}">
                     <depth max="0"/>
                     <exclude name="**/physical.xml"/>
                 </fileset>
@@ -240,8 +237,8 @@
                     <globmapper from="*.xml" to="*ひらがな.xml"/>
                 </firstmatchmapper>
             </copy>
-            <copy todir="${unicode name}">
-                <fileset dir="@{directory}@{input}">
+            <copy todir="@{todir}">
+                <fileset dir="@{dir}">
                     <depth min="1"/>
                 </fileset>
                 <firstmatchmapper>
@@ -252,21 +249,16 @@
                     <identitymapper/>
                 </firstmatchmapper>
             </copy>
-
-            <copy file="@{directory}@{input}/../physical with unicode.xml" toFile="${unicode name}/physical.xml" />
-            <copy file="@{directory}@{input}/../missionSheets with unicode.xslt" toFile="${unicode name}/missionSheetsひらがな.xslt" />
-
-            <move todir="${unicode name}/Mission sheetsひらがな">
-                <fileset dir="${unicode name}/Mission sheets"/>
+            <copy file="@{dir}/../physical with unicode.xml" tofile="@{todir}/physical.xml"/>
+            <copy file="@{dir}/../missionSheets with unicode.xslt" tofile="@{todir}/missionSheetsひらがな.xslt"/>
+            <move todir="@{todir}/Mission sheetsひらがな">
+                <fileset dir="@{todir}/Mission sheets"/>
             </move>
-            <move todir="${unicode name}/Symbolsひらがな">
-                <fileset dir="${unicode name}/Symbols"/>
+            <move todir="@{todir}/Symbolsひらがな">
+                <fileset dir="@{todir}/Symbols"/>
             </move>
-
-            <test-adaptation input="${unicode name}" mission-sheet-path="Mission sheetsひらがな"/>
-
-            <delete dir="${unicode name}"/>
-
+            <test-adaptation input="@{todir}" mission-sheet-path="Mission sheetsひらがな"/>
+            <delete dir="@{todir}"/>
         </sequential>
     </macrodef>
 
@@ -288,7 +280,7 @@
         <test-adaptation-newbase/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/scipio"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
-        <test-adaptation-unicode directory="${data.dir}/tests/test_data_unicode/" input="physical base without unicode"/>
+        <test-adaptation-unicode dir="${data.dir}/tests/test_data_unicode/physical base without unicode"/>
     </target>
 
     <macrodef name="test-exercise">
