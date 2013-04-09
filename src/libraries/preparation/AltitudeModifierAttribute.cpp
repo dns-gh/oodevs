@@ -85,8 +85,8 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( xml::xistream& xis, kernel
     , height_     ( 0, Units::meters )
 {
     CreateDictionary( dictionary, entity );
-    controllers_.Register( *this );
     SetHeight( xis.attribute< unsigned int >( "height" ) );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
