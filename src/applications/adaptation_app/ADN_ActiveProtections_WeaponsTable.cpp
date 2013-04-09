@@ -87,9 +87,9 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( const QPoint& pt )
     {
         // Create a new element
         ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons* pNewInfo = new ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons();
-        pNewInfo->ptrWeapon_ = pWeapon[ nMenuResult - 2 ];
+        pNewInfo->ptr_ = pWeapon[ nMenuResult - 2 ];
         pNewInfo->coefficient_ = 0;
-        pNewInfo->strName_  = pNewInfo->ptrWeapon_.GetData()->strName_.GetData();
+        pNewInfo->strName_  = pNewInfo->ptr_.GetData()->strName_.GetData();
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
@@ -107,7 +107,7 @@ bool ADN_ActiveProtections_WeaponsTable::Contains( ADN_Resources_Data::CategoryI
     {
         const QModelIndex index = dataModel_.index( row, 1 );
         ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons* pInfos = static_cast< ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons* >( GetDataFromIndex( index ) );
-        if( pInfos->ptrWeapon_.GetData() == &category )
+        if( pInfos->ptr_.GetData() == &category )
             return true;
     }
     return false;

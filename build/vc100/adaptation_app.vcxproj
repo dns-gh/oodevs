@@ -2984,6 +2984,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_XmlStreamOperators.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\GQ_PlotDataBBox.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\GQ_PlotToolTip.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\GQ_ValueConvertor.h" />

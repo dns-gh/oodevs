@@ -31,6 +31,7 @@ namespace
                type == eMissionTypeUniqueness ||
                type == eObjectTypeUniqueness ||
                type == eMissingRepairType ||
+               type == eInvalidCrossedRef ||
                type == eNoCrew;
     }
 
@@ -88,7 +89,8 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingPCOnAutomat ]     = tr( "Automat %1 requires at least one PC" ) + error;
     errorDescriptions_[ eMissingArmor ]           = tr( "At least one armor must be defined" ) + error;
     errorDescriptions_[ eMissingDisaster ]        = tr( "No disaster model for object %1" ) + error;
-    errorDescriptions_[ eNoCrew ]                 = tr( "Unit %1 has no crew in equipment '%2'" ) + error;            
+    errorDescriptions_[ eNoCrew ]                 = tr( "Unit %1 has no crew in equipment '%2'" ) + error;
+    errorDescriptions_[ eInvalidCrossedRef ]      = tr( "Field '%2' is invalid in '%1'" ) + error;
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );

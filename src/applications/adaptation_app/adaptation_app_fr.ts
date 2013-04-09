@@ -695,6 +695,13 @@ Arrêt moteur allumé</translation>
         <translation>L&apos;équipement %1 n&apos;a pas de type de réparation défini dans la chaîne de maintenance dans une catégorie &apos;gravité&apos;</translation>
     </message>
 </context>
+        <translation>L&apos;unité %1 ne possède aucun équipage dans l&apos;équipement &apos;%2&apos;</translation>
+    </message>
+    <message>
+        <source>Field &apos;%2&apos; is invalid in &apos;%1&apos;</source>
+        <translation>Le champ &apos;%2&apos; est invalide dans &apos;%1&apos;</translation>
+    </message>
+</context>
 <context>
     <name>ADN_Consumptions_Table</name>
     <message>
@@ -6157,12 +6164,12 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 <context>
     <name>ActiveProtections_Data</name>
     <message>
-        <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
-        <translation>Equipement - Munition invalide &apos;%1/%2&apos;</translation>
+        <source>Resource</source>
+        <translation>Dotation</translation>
     </message>
     <message>
-        <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
-        <translation>Protection active &apos;%1&apos; - Type de munition invalide &apos;%2&apos;</translation>
+        <source>Ammunitions</source>
+        <translation>Munitions</translation>
     </message>
 </context>
 <context>

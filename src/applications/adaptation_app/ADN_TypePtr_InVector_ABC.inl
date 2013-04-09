@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "ADN_App.h"
+#include "ADN_ConsistencyChecker.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC constructor
@@ -255,7 +256,7 @@ void ADN_TypePtr_InVector_ABC< T >::Initialize( ADN_Connector_Vector_ABC& dest )
     if( pVector_ != 0 )
     {
         dest.Clear( true );
-        for( T_TypeVector::IT_PtrVector it = pVector_->begin(); it != pVector_->end(); ++it )
+        for( auto it = pVector_->begin(); it != pVector_->end(); ++it )
             dest.AddItemNoEmit( *it );
         dest.AddItemNoEmit( 0 );
     }
@@ -270,4 +271,43 @@ template< class T >
 void ADN_TypePtr_InVector_ABC< T >::Initialize( ADN_Connector_ABC& dest ) const
 {
     dest.SetData( pData_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TypePtr_InVector_ABC::Initialize
+// Created: JSR 2013-04-03
+// -----------------------------------------------------------------------------
+template< class T >
+void ADN_TypePtr_InVector_ABC< T >::Initialize( T_TypeVector* vector /*= 0*/ )
+{
+    if( vector )
+        pVector_ = vector;
+    if( !pVector_ )
+        return;
+    auto it = std::find_if( pVector_->begin(), pVector_->end(), ADN_Tools::NameCmp< T >( refName_ ) );
+    if( it == pVector_->end() )
+        SetData( 0 );
+    else
+        SetData( *it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TypePtr_InVector_ABC::SetRefName
+// Created: JSR 2013-04-03
+// -----------------------------------------------------------------------------
+template< class T >
+void ADN_TypePtr_InVector_ABC< T >::SetRefName( const std::string& refName )
+{
+    refName_ = refName;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TypePtr_InVector_ABC::CheckValidity
+// Created: JSR 2013-04-03
+// -----------------------------------------------------------------------------
+template< class T >
+void ADN_TypePtr_InVector_ABC< T >::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab /*= -1*/, const std::string& optional /*= ""*/ )
+{
+    if( pData_ == 0 )
+        checker.AddError( eInvalidCrossedRef, name, tab, subTab, optional );
 }

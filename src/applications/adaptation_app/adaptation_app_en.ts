@@ -695,6 +695,11 @@ Parked engine running</translation>
         <translation>Equipment %1 has no repair type defined in maintenance system in a &apos;gravity&apos; category.</translation>
     </message>
 </context>
+    <message>
+        <source>Field &apos;%2&apos; is invalid in &apos;%1&apos;</source>
+        <translation>Field &apos;%2&apos; is invalid in &apos;%1&apos;</translation>
+    </message>
+</context>
 <context>
     <name>ADN_Consumptions_Table</name>
     <message>
@@ -6139,12 +6144,12 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>ActiveProtections_Data</name>
     <message>
-        <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
-        <translation>Equipment - Invalid amunition &apos;%1/%2&apos;</translation>
+        <source>Resource</source>
+        <translation>Resource</translation>
     </message>
     <message>
-        <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
-        <translation>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</translation>
+        <source>Ammunitions</source>
+        <translation>Ammunitions</translation>
     </message>
 </context>
 <context>

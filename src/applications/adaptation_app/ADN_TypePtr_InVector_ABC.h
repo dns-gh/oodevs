@@ -36,12 +36,16 @@ public:
     //@{
     virtual void Initialize( ADN_Connector_Vector_ABC& dest ) const;
     virtual void Initialize( ADN_Connector_ABC& dest ) const;
+    void Initialize( T_TypeVector* vector = 0 );
+    void SetRefName( const std::string& refName );
 
     void SetData( const T_TypePtr& value );
     const T_TypePtr GetData() const;
 
     void SetVector( const T_TypeVector& v );
     const T_TypeVector& GetVector() const;
+
+    virtual void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
     //@}
 
     //-------------------------------------------------------------------------
@@ -65,6 +69,7 @@ protected:
 private:
     T_TypePtr pData_;
     T_TypeVector* pVector_;
+    std::string refName_;
 };
 
 #include "ADN_TypePtr_InVector_ABC.inl"

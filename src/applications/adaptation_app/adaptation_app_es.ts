@@ -695,6 +695,12 @@ estacionado con motor encendido</translation>
         <translation type="unfinished"></translation>
     </message>
 </context>
+    </message>
+    <message>
+        <source>Field &apos;%2&apos; is invalid in &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 <context>
     <name>ADN_Consumptions_Table</name>
     <message>
@@ -6142,12 +6148,12 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>ActiveProtections_Data</name>
     <message>
-        <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
-        <translation>Equipo – munición inválida &apos;%1/%2&apos;</translation>
+        <source>Resource</source>
+        <translation>Dotación</translation>
     </message>
     <message>
-        <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
-        <translation>Protección activa &apos;%1&apos; – Tipo de munición inválido &apos;%2&apos;</translation>
+        <source>Ammunitions</source>
+        <translation>Munición</translation>
     </message>
 </context>
 <context>

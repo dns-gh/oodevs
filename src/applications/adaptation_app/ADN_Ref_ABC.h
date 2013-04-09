@@ -14,6 +14,7 @@
 
 class ADN_Connector_ABC;
 class ADN_Connector_Vector_ABC;
+class ADN_ConsistencyChecker;
 
 // =============================================================================
 /** @class  ADN_Ref_ABC
@@ -58,6 +59,7 @@ public slots:
     //@{
     void Invalidate( void* pObj, bool bDel = false );
     virtual void CheckValidity();
+    virtual void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
     //@}
 
 signals:

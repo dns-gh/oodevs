@@ -55,7 +55,7 @@ void ADN_ActiveProtectionsListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_ActiveProtections_GUI::eActiveProtectionName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_ActiveProtections_GUI::eActiveProtectionCoeffiscient]->Connect( &pInfos->coefficient_, bConnect );
     vItemConnectors_[ADN_ActiveProtections_GUI::eActiveProtectionHardKill]->Connect( &pInfos->hardKill_, bConnect );
-    vItemConnectors_[ADN_ActiveProtections_GUI::eActiveProtectionDotation]->Connect( &pInfos->ptrAmmunition_, bConnect );
+    vItemConnectors_[ADN_ActiveProtections_GUI::eActiveProtectionDotation]->Connect( &pInfos->ptr_, bConnect );
     vItemConnectors_[ADN_ActiveProtections_GUI::eActiveProtectionUsage]->Connect( &pInfos->usage_, bConnect );
     vItemConnectors_[ADN_ActiveProtections_GUI::eActiveProtectionWeapons]->Connect( &pInfos->weapons_, bConnect );
 }

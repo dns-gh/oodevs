@@ -34,9 +34,11 @@ public:
     void SetCrossedElement( T* element );
     T* GetCrossedElement() const;
     const ADN_Type_Vector_ABC< T >& GetVector() const;
+    using ADN_Ref_ABC::CheckValidity;
+    virtual void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     ADN_TypePtr_InVector_ABC< T > ptr_;
@@ -98,5 +100,16 @@ void ADN_CrossedRef< T >::SetCrossedElement( T* element )
     if( element )
         strName_.Connect( &ptr_.GetData()->strName_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_CrossedRef::CheckValidity
+// Created: JSR 2013-04-03
+// -----------------------------------------------------------------------------
+template< typename T >
+void ADN_CrossedRef< T >::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab /*= -1*/, const std::string& optional /*= ""*/ )
+{
+    ptr_.CheckValidity( checker, name, tab, subTab, optional );
+}
+
 
 #endif // __ADN_CrossedRef_h_

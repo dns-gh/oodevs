@@ -39,6 +39,7 @@ enum E_ConsistencyCheck
 
     eLowerCaseEmat,
     eNoCrew,
+    eInvalidCrossedRef,
     eOthersMask
 };
 

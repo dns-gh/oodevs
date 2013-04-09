@@ -683,6 +683,11 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
+    <message>
+        <source>Field &apos;%2&apos; is invalid in &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 <context>
     <name>ADN_Consumptions_Table</name>
     <message>
@@ -6126,12 +6131,12 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>ActiveProtections_Data</name>
     <message>
-        <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
-        <translation type="unfinished">معدات-أمونيتيون غير صالح &apos;%1/%2&apos;</translation>
+        <source>Resource</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-        <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
-        <translation type="unfinished">الحماية النشطة &apos;%1&apos;--نوع الذخيرة غير صالح &apos;%2&apos;</translation>
+        <source>Ammunitions</source>
+        <translation type="unfinished">الذخيرة</translation>
     </message>
 </context>
 <context>

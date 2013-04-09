@@ -1815,6 +1815,9 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Automata_GUI.h">
       <Filter>Source Files\Workspace\Automata\Automata GUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_XmlStreamOperators.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">

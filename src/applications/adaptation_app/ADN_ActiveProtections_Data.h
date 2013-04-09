@@ -10,8 +10,8 @@
 #ifndef __ADN_ActiveProtections_Data_h_
 #define __ADN_ActiveProtections_Data_h_
 
+#include "ADN_CrossedRef.h"
 #include "ADN_Data_ABC.h"
-#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
@@ -29,7 +29,7 @@ class ADN_ActiveProtections_Data : public ADN_Data_ABC
 
 public:
 
-    class ActiveProtectionsInfosWeapons : public ADN_RefWithName
+    class ActiveProtectionsInfosWeapons : public ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >
     {
     public:
                  ActiveProtectionsInfosWeapons();
@@ -40,12 +40,10 @@ public:
         void WriteArchive( xml::xostream& xos );
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Resources_Data::CategoryInfo> ptrWeapon_;
         ADN_Type_Double coefficient_;
     };
 
     typedef ADN_Type_Vector_ABC< ActiveProtectionsInfosWeapons > T_ActiveProtectionsInfosWeaponsVector;
-    typedef T_ActiveProtectionsInfosWeaponsVector::iterator     IT_ActiveProtectionsInfosWeaponsVector;
 
     //! @name Types
     //@{
@@ -61,19 +59,20 @@ public:
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& xos );
         void ReadWeapon( xml::xistream& xis );
+        using ADN_RefWithName::CheckValidity;
+        virtual void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
 
         T_ActiveProtectionsInfosWeaponsVector& GetActiveProtectionsInfosWeapons();
 
     public:
+        ADN_TypePtr_InVector_ABC< ADN_Resources_Data::AmmoCategoryInfo > ptr_;
         ADN_Type_Double coefficient_;
         ADN_Type_Bool hardKill_;
         ADN_Type_Double usage_;
         T_ActiveProtectionsInfosWeaponsVector weapons_;
-        ADN_TypePtr_InVector_ABC<ADN_Resources_Data::AmmoCategoryInfo> ptrAmmunition_;
     };
 
     typedef ADN_Type_Vector_ABC< ActiveProtectionsInfos > T_ActiveProtectionsInfosVector;
-    typedef T_ActiveProtectionsInfosVector::iterator     IT_ActiveProtectionsInfosVector;
 
     //! @name Constructors/Destructor
     //@{
@@ -90,6 +89,8 @@ public:
     //@{
     virtual void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
     virtual void Reset();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
+
     T_ActiveProtectionsInfosVector& GetActiveProtectionsInfos();
 
     QStringList GetActiveProtectionsThatUse( ADN_Resources_Data::AmmoCategoryInfo& ammo );

@@ -35,6 +35,7 @@ public:
 
     //! @name Operations
     //@{
+    using ADN_Ref_ABC::CheckValidity;
     virtual void CheckValidity()
     {
         ADN_Ref_ABC::CheckValidity();

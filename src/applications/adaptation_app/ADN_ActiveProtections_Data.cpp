@@ -48,7 +48,7 @@ ADN_ActiveProtections_Data::T_ActiveProtectionsInfosVector& ADN_ActiveProtection
 // -----------------------------------------------------------------------------
 ADN_ActiveProtections_Data::ActiveProtectionsInfos* ADN_ActiveProtections_Data::FindActiveProtection(const std::string& strName )
 {
-    IT_ActiveProtectionsInfosVector it = std::find_if( activeProtections_.begin(), activeProtections_.end(), ADN_Tools::NameCmp<ActiveProtectionsInfos>( strName ) );
+    auto it = std::find_if( activeProtections_.begin(), activeProtections_.end(), ADN_Tools::NameCmp<ActiveProtectionsInfos>( strName ) );
     if( it == activeProtections_.end() )
         return 0;
     return *it;
@@ -106,9 +106,17 @@ void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos )
 
     xos << xml::start( "protections" );
     ADN_Tools::AddSchema( xos, "ActiveProtections" );
-    for( IT_ActiveProtectionsInfosVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+    for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
         (*it)->WriteArchive( xos );
     xos << xml::end;
+}
+
+namespace
+{
+    ADN_Type_Vector_ABC< ADN_Resources_Data::CategoryInfo >& GetMunitionsVector()
+    {
+        return ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition ).categories_;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -116,10 +124,10 @@ void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos )
 // Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
 ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ActiveProtectionsInfosWeapons()
-    : ptrWeapon_  ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition ).categories_, 0 )
+    : ADN_CrossedRef( GetMunitionsVector(), 0, true )
     , coefficient_( 0 )
 {
-    BindExistenceTo(&ptrWeapon_);
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -128,14 +136,8 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ActiveProtectionsInfo
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml::xistream& xis )
 {
-    std::string strAmmunition;
-    xis >> xml::attribute( "name", strAmmunition)
+    xis >> xml::attribute( "name", ptr_ )
         >> xml::attribute( "coefficient", coefficient_ );
-    ADN_Resources_Data::CategoryInfo* pWeapon = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( "munition", strAmmunition );
-    if( !pWeapon )
-        throw MASA_EXCEPTION( tools::translate( "ActiveProtections_Data",  "Equipment - Invalid amunition '%1/%2'" ).arg( strAmmunition.c_str() ).toStdString() );
-    ptrWeapon_ = (ADN_Resources_Data::AmmoCategoryInfo*)pWeapon;
-    strName_ = pWeapon->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +147,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml
 void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::WriteArchive( xml::xostream& xos )
 {
     xos << xml::start( "weapon" )
-        << xml::attribute( "name", ptrWeapon_.GetData()->strName_ )
+        << xml::attribute( "name", ptr_ )
         << xml::attribute( "coefficient", coefficient_)
         << xml::end;
 }
@@ -164,12 +166,12 @@ std::string ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::GetItemNa
 // Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
 ADN_ActiveProtections_Data::ActiveProtectionsInfos::ActiveProtectionsInfos()
-    : coefficient_  ( 0 )
+    : ptr_( ( ADN_Resources_Data::T_AmmoCategoryInfo_Vector& )GetMunitionsVector(), 0 )
+    , coefficient_  ( 0 )
     , hardKill_     ( false )
     , usage_        ( 0 )
-    , ptrAmmunition_( ( ADN_Resources_Data::T_AmmoCategoryInfo_Vector& )ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition ).categories_, 0 )
 {
-    BindExistenceTo( &ptrAmmunition_ );
+    BindExistenceTo( &ptr_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,9 +193,9 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfos* ADN_ActiveProtections_Data::
     pCopy->coefficient_ = coefficient_.GetData();
     pCopy->hardKill_ = hardKill_.GetData();
     pCopy->usage_ = usage_.GetData();
-    for( IT_ActiveProtectionsInfosWeaponsVector it = weapons_.begin(); it != weapons_.end(); ++it )
+    for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
         pCopy->weapons_.AddItem( *it );
-    pCopy->ptrAmmunition_ = ptrAmmunition_.GetData();
+    pCopy->ptr_ = ptr_.GetData();
     return pCopy;
 }
 
@@ -212,19 +214,14 @@ ADN_ActiveProtections_Data::T_ActiveProtectionsInfosWeaponsVector& ADN_ActivePro
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistream& xis )
 {
-   std::string strAmmunition;
     xis >> xml::attribute( "name", strName_ )
         >> xml::attribute( "coefficient", coefficient_ )
         >> xml::attribute( "hard-kill", hardKill_ )
         >> xml::optional >> xml::start( "resource" )
-            >> xml::attribute( "name", strAmmunition )
+            >> xml::attribute( "name", ptr_ )
             >> xml::attribute( "usage", usage_ )
         >> xml::end
         >> xml::list( "weapon", *this, &ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadWeapon );
-    ADN_Resources_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( "munition", strAmmunition );
-    if( !pAmmo )
-        throw MASA_EXCEPTION( tools::translate( "ActiveProtections_Data",  "Active protection '%1' - Invalid ammunition type '%2'" ).arg( strName_.GetData().c_str() ,strAmmunition.c_str() ).toStdString() );
-    ptrAmmunition_ = (ADN_Resources_Data::AmmoCategoryInfo*)pAmmo;
 }
 
 // -----------------------------------------------------------------------------
@@ -247,15 +244,25 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::WriteArchive( xml::xost
     xos << xml::start( "protection" )
         << xml::attribute( "name", strName_ )
         << xml::attribute( "coefficient", coefficient_ )
-        << xml::attribute( "hard-kill", hardKill_ );
-    if( ptrAmmunition_.GetData()->strName_ != "" )
-        xos << xml::start( "resource" )
-                << xml::attribute( "name", ptrAmmunition_.GetData()->strName_ )
-                << xml::attribute( "usage", usage_ )
-            << xml::end;
-    for( IT_ActiveProtectionsInfosWeaponsVector it = weapons_.begin(); it != weapons_.end(); ++it )
+        << xml::attribute( "hard-kill", hardKill_ )
+        << xml::start( "resource" )
+            << xml::attribute( "name", ptr_ )
+            << xml::attribute( "usage", usage_ )
+        << xml::end;
+    for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
         (*it)->WriteArchive(xos);
     xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::ActiveProtectionsInfos::CheckValidity
+// Created: JSR 2013-04-03
+// -----------------------------------------------------------------------------
+void ADN_ActiveProtections_Data::ActiveProtectionsInfos::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab /*= -1*/, const std::string& /*optional = ""*/ )
+{
+    ptr_.CheckValidity( checker, name, tab, subTab, tools::translate( "ActiveProtections_Data", "Resource" ).toStdString() );
+    for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
+        ( *it )->CheckValidity( checker, name, tab, subTab, tools::translate( "ActiveProtections_Data", "Ammunitions" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -265,8 +272,8 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::WriteArchive( xml::xost
 QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Resources_Data::AmmoCategoryInfo& ammo )
 {
     QStringList result;
-    for( IT_ActiveProtectionsInfosVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
-        if( ( *it )->ptrAmmunition_.GetData()->strName_.GetData() == ammo.strName_.GetData() )
+    for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+        if( ( *it )->ptr_.GetData()->strName_.GetData() == ammo.strName_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
     return result;
 }
@@ -278,9 +285,19 @@ QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Resourc
 QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Resources_Data::CategoryInfo& category )
 {
     QStringList result;
-    for( IT_ActiveProtectionsInfosVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
-        for( IT_ActiveProtectionsInfosWeaponsVector itWeapon = ( *it )->weapons_.begin(); itWeapon != ( *it )->weapons_.end(); ++itWeapon )
-            if( ( *itWeapon )->ptrWeapon_.GetData()->strName_.GetData() == category.strName_.GetData() )
+    for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+        for( auto itWeapon = ( *it )->weapons_.begin(); itWeapon != ( *it )->weapons_.end(); ++itWeapon )
+            if( ( *itWeapon )->ptr_.GetData()->strName_.GetData() == category.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::CheckDatabaseValidity
+// Created: JSR 2013-04-03
+// -----------------------------------------------------------------------------
+void ADN_ActiveProtections_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+        ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eActiveProtections );
 }

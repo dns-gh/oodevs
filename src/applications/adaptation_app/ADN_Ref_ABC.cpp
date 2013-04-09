@@ -235,6 +235,15 @@ void ADN_Ref_ABC::CheckValidity()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Ref_ABC::CheckValidity
+// Created: JSR 2013-04-03
+// -----------------------------------------------------------------------------
+void ADN_Ref_ABC::CheckValidity( ADN_ConsistencyChecker& /*checker*/, const std::string& /*name*/, int /*tab*/, int /*subTab = -1*/, const std::string& /*optional = ""*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Ref_ABC::SetErrorStatus
 // Created: ABR 2013-01-15
 // -----------------------------------------------------------------------------
