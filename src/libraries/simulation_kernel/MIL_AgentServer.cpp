@@ -32,6 +32,29 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 
+namespace
+{
+
+struct AgentServerInit : boost::noncopyable
+{
+    AgentServerInit( MIL_AgentServer*& agent ): agent_( agent ), done_( false ) {}
+    ~AgentServerInit()
+    {
+        if( !done_ )
+            agent_ = 0;
+    }
+    void Done()
+    {
+        done_ = true;
+    }
+
+private:
+    MIL_AgentServer*& agent_;
+    bool done_;
+};
+
+}
+
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 
 //-----------------------------------------------------------------------------
@@ -75,6 +98,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     // lazyness...
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
+    AgentServerInit initGuard( pTheAgentServer_ );
 
     config_.AddFileToCRC( config_.GetExerciseFile() );
     config_.GetLoader().LoadFile( config_.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, settings_, _1 ) );
@@ -103,6 +127,9 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
     MT_LOG_STARTUP_MESSAGE( "---- SIM Initialized ----" );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
+
+    // Must be the last action of the constructor
+    initGuard.Done();
 }
 
 //-----------------------------------------------------------------------------
