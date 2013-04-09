@@ -171,7 +171,7 @@ uint ADN_AutomatLog_ListView::AddUnit( ADN_Rich_ListViewItem* parent, const QStr
         {
             auto itCategory = categories.begin();
             for( ; itCategory != categories.end(); ++itCategory )
-                if( ( *itCategory ) == ( *itCompCons )->ptrCategory_.GetData() )
+                if( ( *itCategory ) == ( *itCompCons )->GetCrossedElement() )
                     break;
             if( itCategory != categories.end() )
                 InsertCategory( *pCompItem, **itCategory, **itCompCons );
@@ -202,7 +202,7 @@ void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                    
                                               ADN_Equipments_Data::CategoryInfos&   category,
                                               ADN_Equipments_Data::ConsumptionItem& conso )
 {
-    ADN_Resources_Data::CategoryInfo* ptrCategory = conso.ptrCategory_.GetData() ? conso.ptrCategory_.GetData()->GetCrossedElement() : 0;
+    ADN_Resources_Data::CategoryInfo* ptrCategory = conso.GetCrossedElement() ? conso.GetCrossedElement()->GetCrossedElement() : 0;
 
     if( !ptrCategory || ( conso.nConsumptionType_ != eMoving && conso.nConsumptionType_ != eEngineStopped && conso.nConsumptionType_ != eEngineStarted ) )
         return;

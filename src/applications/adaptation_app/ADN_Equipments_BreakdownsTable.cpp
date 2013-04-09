@@ -87,7 +87,7 @@ void ADN_Equipments_BreakdownsTable::OnContextMenu( const QPoint& pt )
         // Create a new element
         ADN_Breakdowns_Data::BreakdownInfo* pCast = breakdowns[ nMenuResult - 2 ];
         BreakdownInfos* pNewInfo = new BreakdownInfos();
-        pNewInfo->ptr_ = pCast;
+        pNewInfo->SetCrossedElement( pCast );
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
         pCTable->AddItem( 0 );

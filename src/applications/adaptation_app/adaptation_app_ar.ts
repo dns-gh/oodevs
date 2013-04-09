@@ -661,7 +661,6 @@ Parked engine running</source>
         <source>Equipment %1 has no repair type defined in maintenance system in a &apos;gravity&apos; category.</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
     <message>
         <source>Field &apos;%2&apos; is invalid in &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
@@ -6237,10 +6236,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
         <translation type="unfinished">معدات &apos;%1&apos;--البيانات توزيعاً غير صالحة: sum! = 100</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid activty &apos;%1&apos;</source>

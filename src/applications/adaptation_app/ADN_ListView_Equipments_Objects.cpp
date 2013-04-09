@@ -141,7 +141,7 @@ void ADN_ListView_Equipments_Objects::OnContextMenu( const QPoint& pt )
     {
         // Add the weapon to the list.
         ObjectInfos* pNewInfo = new ObjectInfos();
-        pNewInfo->ptr_ = vObjects[ nMenuResult - 2 ];
+        pNewInfo->SetCrossedElement( vObjects[ nMenuResult - 2 ] );
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );

@@ -111,7 +111,7 @@ bool ADN_Equipments_Sensors_GUI::Contains( const ADN_Sensors_Data::SensorInfos* 
 void ADN_Equipments_Sensors_GUI::CreateNewSensor( int nSensor )
 {
     SensorInfos* pNewInfo = new SensorInfos();
-    pNewInfo->ptr_ = ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos()[ nSensor ];
+    pNewInfo->SetCrossedElement( ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos()[ nSensor ] );
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( pNewInfo );
     pCTable->AddItem( 0 );

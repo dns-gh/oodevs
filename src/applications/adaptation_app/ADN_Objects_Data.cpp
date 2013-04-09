@@ -102,7 +102,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation( xml::xistream&
         if( category == 0 )
             throw MASA_EXCEPTION( "Invalid dotation: " + dotation );
         ADN_Equipments_Data::CategoryInfos* infos = new ADN_Equipments_Data::CategoryInfos( category->parentResource_ );
-        infos->ptr_ = category;
+        infos->SetCrossedElement( category );
         infos->rNbr_ = quantity;
         categories_.AddItem( infos );
     }
@@ -120,9 +120,13 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::WriteArchive( xml::xostream&
     for( auto it = categories_.begin(); it != categories_.end(); ++it )
     {
         ADN_Equipments_Data::CategoryInfos* infos = reinterpret_cast< ADN_Equipments_Data::CategoryInfos* >( *it );
-        xos << xml::start( "resource" )
-                << xml::attribute( "name", infos->ptr_ ) << xml::attribute( "count", infos->rNbr_ )
-            << xml::end;
+        if( infos )
+        {
+            xos << xml::start( "resource" )
+                  << xml::attribute( "name", infos->GetCrossedElement() ? infos->GetCrossedElement()->strName_.GetData() : "" )
+                  << xml::attribute( "count", infos->rNbr_ )
+                << xml::end;
+        }
     }
     xos << xml::end;
 }
@@ -162,7 +166,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation( xml::xistream
         if( category == 0 )
             throw MASA_EXCEPTION( "Invalid dotation : " + dotation );
         ADN_Equipments_Data::CategoryInfos* infos = new ADN_Equipments_Data::CategoryInfos( category->parentResource_ );
-        infos->ptr_ = category;
+        infos->SetCrossedElement( category );
         infos->rNbr_ = quantity;
         categories_.AddItem( infos );
     }
@@ -180,9 +184,13 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::WriteArchive( xml::xostream
     for( auto it = categories_.begin(); it != categories_.end(); ++it )
     {
         ADN_Equipments_Data::CategoryInfos* infos = *it;
-        xos << xml::start( "resource" )
-                << xml::attribute( "name", infos->ptr_ ) << xml::attribute( "count", infos->rNbr_ )
-            << xml::end;
+        if( infos )
+        {
+            xos << xml::start( "resource" );
+            xos << xml::attribute( "name", infos->GetCrossedElement() ? infos->GetCrossedElement()->strName_.GetData() : "" )
+                << xml::attribute( "count", infos->rNbr_ )
+                << xml::end;
+        }
     }
     xos << xml::end;
 }

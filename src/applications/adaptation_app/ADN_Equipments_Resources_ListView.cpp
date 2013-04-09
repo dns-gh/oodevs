@@ -129,7 +129,7 @@ void ADN_Equipments_Resources_ListView::OnContextMenu( const QPoint& pt )
         ADN_Resources_Data::CategoryInfo& category = *(ADN_Resources_Data::CategoryInfo*)( nMenuResult );
 
         ADN_Equipments_Data::CategoryInfos* pNewInfo = new ADN_Equipments_Data::CategoryInfos( category.parentResource_ );
-        pNewInfo->ptr_ = &category;
+        pNewInfo->SetCrossedElement( &category );
         pNewInfo->rNbr_ = 1;
 
         pCTable->AddItem( pNewInfo );

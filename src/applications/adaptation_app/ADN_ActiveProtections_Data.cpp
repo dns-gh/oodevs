@@ -136,8 +136,8 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ActiveProtectionsInfo
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml::xistream& xis )
 {
-    xis >> xml::attribute( "name", ptr_ )
-        >> xml::attribute( "coefficient", coefficient_ );
+    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::ReadArchive( xis );
+    xis >> xml::attribute( "coefficient", coefficient_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,9 +146,9 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::WriteArchive( xml::xostream& xos )
 {
-    xos << xml::start( "weapon" )
-        << xml::attribute( "name", ptr_ )
-        << xml::attribute( "coefficient", coefficient_)
+    xos << xml::start( "weapon" );
+    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( xos );
+    xos << xml::attribute( "coefficient", coefficient_)
         << xml::end;
 }
 
@@ -291,7 +291,7 @@ QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Resourc
     for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
         for( auto itWeapon = ( *it )->weapons_.begin(); itWeapon != ( *it )->weapons_.end(); ++itWeapon )
         {
-            const ADN_Resources_Data::CategoryInfo* info = ( *itWeapon )->ptr_.GetData();
+            const ADN_Resources_Data::CategoryInfo* info = ( *itWeapon )->GetCrossedElement();
             if( info && info->strName_.GetData() == category.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
         }

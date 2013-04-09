@@ -153,10 +153,10 @@ namespace
 
         // consumption
         ADN_Equipments_Data::T_ConsumptionItem_Vector& consumptions = comp.GetCrossedElement()->consumptions_.vConsumptions_;
-        for( ADN_Equipments_Data::IT_ConsumptionItem_Vector itConso = consumptions.begin(); itConso != consumptions.end(); ++itConso )
+        for( auto itConso = consumptions.begin(); itConso != consumptions.end(); ++itConso )
         {
             ADN_Equipments_Data::ConsumptionItem& conso = **itConso;
-            if( conso.ptrCategory_.GetData()->GetCrossedElement() == &category )
+            if( conso.GetCrossedElement() && conso.GetCrossedElement()->GetCrossedElement() == &category )
             {
                 if( conso.nConsumptionType_ != eMoving && conso.nConsumptionType_ != eEngineStopped )
                     continue;

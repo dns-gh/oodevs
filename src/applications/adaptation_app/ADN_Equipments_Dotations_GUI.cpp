@@ -140,7 +140,7 @@ bool ADN_Equipments_Dotations_GUI::Contains( ADN_Resources_Data::CategoryInfo& c
 void ADN_Equipments_Dotations_GUI::AddNewDotation( ADN_Resources_Data::CategoryInfo& category )
 {
     CategoryInfos* pNewInfo = new CategoryInfos( category.parentResource_ );
-    pNewInfo->ptr_ = &category;
+    pNewInfo->SetCrossedElement( &category );
     pNewInfo->rNbr_ = 1;
 
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );

@@ -673,7 +673,6 @@ Parked engine running</translation>
         <source>Equipment %1 has no repair type defined in maintenance system in a &apos;gravity&apos; category.</source>
         <translation>Equipment %1 has no repair type defined in maintenance system in a &apos;gravity&apos; category.</translation>
     </message>
-</context>
     <message>
         <source>Field &apos;%2&apos; is invalid in &apos;%1&apos;</source>
         <translation>Field &apos;%2&apos; is invalid in &apos;%1&apos;</translation>
@@ -6250,10 +6249,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
         <translation>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Equipment - Invalid resource type &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid activty &apos;%1&apos;</source>

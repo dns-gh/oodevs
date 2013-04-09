@@ -59,7 +59,7 @@ void ADN_Equipments_ConsumptionsTable::AddRow( int /* row */, void* data )
     ADN_Equipments_Data::ConsumptionItem* pConsumption = static_cast< ADN_Equipments_Data::ConsumptionItem* >( data );
     if( !pConsumption )
         return;
-    ADN_Equipments_Data::CategoryInfos* catInfos = pConsumption->ptrCategory_.GetData();
+    ADN_Equipments_Data::CategoryInfos* catInfos = pConsumption->GetCrossedElement();
     if( !catInfos || !catInfos->GetCrossedElement() )
         return;
 

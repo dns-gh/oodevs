@@ -488,7 +488,7 @@ ADN_Table* ADN_Equipments_GUI::CreateComposanteSpeedsTable()
 
     // Fill the table.
     int nRow = 0;
-    for( ADN_Equipments_Data::IT_EquipmentInfos_Vector it = data_.vEquipments_.begin(); it != data_.vEquipments_.end(); ++it, ++nRow )
+    for( auto it = data_.vEquipments_.begin(); it != data_.vEquipments_.end(); ++it, ++nRow )
     {
         ADN_Equipments_Data::EquipmentInfos& composante = **it;
         pTable->AddItem( nRow, 0, &composante, &composante.strName_, ADN_StandardItem::eString );
@@ -521,7 +521,7 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
     indexBuilder.BeginList();
 
     int n = 0;
-    for( ADN_Equipments_Data::IT_EquipmentInfos_Vector it = data_.vEquipments_.begin(); it != data_.vEquipments_.end(); ++it, ++n )
+    for( auto it = data_.vEquipments_.begin(); it != data_.vEquipments_.end(); ++it, ++n )
     {
         ADN_Equipments_Data::EquipmentInfos& composante = **it;
 

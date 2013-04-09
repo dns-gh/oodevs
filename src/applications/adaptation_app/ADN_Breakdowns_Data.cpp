@@ -23,7 +23,7 @@ tools::IdManager ADN_Breakdowns_Data::idManager_;
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::RepairPartInfo::RepairPartInfo()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).categories_, 0, true )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).categories_, 0, true, "resource" )
     , nNbr_( 1 )
 {
     // NOTHING
@@ -36,7 +36,7 @@ ADN_Breakdowns_Data::RepairPartInfo::RepairPartInfo()
 ADN_Breakdowns_Data::RepairPartInfo* ADN_Breakdowns_Data::RepairPartInfo::CreateCopy()
 {
     RepairPartInfo* pCopy = new RepairPartInfo();
-    pCopy->ptr_ = ptr_.GetData();
+    pCopy->SetCrossedElement( GetCrossedElement() );
     pCopy->nNbr_ = nNbr_.GetData();
     return pCopy;
 }
@@ -47,8 +47,8 @@ ADN_Breakdowns_Data::RepairPartInfo* ADN_Breakdowns_Data::RepairPartInfo::Create
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "resource", ptr_ )
-          >> xml::attribute( "quantity", nNbr_ );
+    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::ReadArchive( input );
+    input >> xml::attribute( "quantity", nNbr_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,9 +57,9 @@ void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "part" )
-            << xml::attribute( "resource", ptr_ )
-            << xml::attribute( "quantity", nNbr_ )
+    output << xml::start( "part" );
+    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( output );
+    output << xml::attribute( "quantity", nNbr_ )
         << xml::end;
 }
 
