@@ -150,6 +150,7 @@ public:
     //! @name Exercise methods
     //@{
     virtual T_Exercises GetExercises( int offset, int limit ) const;
+    virtual Tree        GetExerciseProperties( const std::string& exercise ) const;
     virtual size_t      CountExercises() const;
     virtual Tree        LinkExercise( const std::string& name ) const;
     virtual Tree        LinkExercise( const Tree& tree ) const;

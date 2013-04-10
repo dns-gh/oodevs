@@ -303,8 +303,20 @@ BOOST_FIXTURE_TEST_CASE( session_updates, Fixture )
     SessionPtr session = MakeSession();
     Tree save;
     save.put( "reports.clean_frequency", 38 );
+    save.put( "sides.no_side_objects", false );
+    Tree side1;
+    side1.put( "name", "team1" );
+    side1.put( "created", true );
+    Tree side2;
+    side2.put( "name", "team2" );
+    side2.put( "created", false );
+    save.put_child( "sides.list.1", side1 );
+    save.put_child( "sides.list.2", side2 );
     session->Update( save );
     BOOST_CHECK_EQUAL( Get< int >( save, "reports.clean_frequency" ), 38 );
+    BOOST_CHECK_EQUAL( Get< bool >( save, "sides.no_side_objects" ), false );
+    BOOST_CHECK_EQUAL( Get< std::string >( save, "sides.list.1.name" ), "team1" );
+    BOOST_CHECK_EQUAL( Get< bool >( save, "sides.list.2.created" ), false );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_rejects_bind_to_another_process, Fixture )

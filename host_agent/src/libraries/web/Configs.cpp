@@ -48,6 +48,27 @@ session::PluginConfig::PluginConfig( const Plugins& plugins, const Path& path )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Sides::Sides
+// Created: NPT 2013-04-10
+// -----------------------------------------------------------------------------
+session::Side::Side( const std::string& name, bool created )
+    : name( name )
+    , created( created )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sides::Sides
+// Created: NPT 2013-04-10
+// -----------------------------------------------------------------------------
+session::Side::Side()
+    : created( false )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: Config::Config
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
@@ -64,6 +85,7 @@ session::Config::Config()
     time.step = 10;
     rng.seed = 0;
     reports.clean_frequency = 0;
+    sides.no_side_objects = true;
 }
 
 namespace
@@ -153,6 +175,42 @@ void WriteRngConfig( Tree& dst, const std::string& prefix, const session::RngCon
 }
 
 // -----------------------------------------------------------------------------
+// Name: ReadSideConfig
+// Created: NPT 2013-08-04
+// -----------------------------------------------------------------------------
+bool ReadSideConfig( web::session::Config::T_Sides& dst, const Tree& src, const std::string& prefix )
+{
+    bool modified = false;
+    const auto tree = src.get_child_optional( prefix );
+    if( !tree )
+        return false;
+    for( auto it = tree->begin(); it != tree->end(); ++it )
+    {
+        auto side = dst.find( it->first );
+        if( side == dst.end() )
+            continue;
+        const std::string val = prefix + "." + it->first;
+        modified |= ::TryRead( side->second.created, src, val + ".created" );
+    }
+    return modified;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WriteSideConfig
+// Created: NPT 2013-08-04
+// -----------------------------------------------------------------------------
+void WriteSideConfig( Tree& dst, const std::string& prefix, const web::session::Config::T_Sides& src )
+{
+    Tree tree;
+    for( auto it = src.begin(); it != src.end(); ++it )
+    {
+        tree.put( it->first + "." + "name", it->second.name );
+        tree.put( it->first + "." + "created", it->second.created );
+    }
+    dst.add_child( prefix, tree );
+}
+
+// -----------------------------------------------------------------------------
 // Name: XpathToJson
 // Created: BAX 2012-08-29
 // -----------------------------------------------------------------------------
@@ -236,6 +294,8 @@ bool web::session::ReadConfig( session::Config& dst, const Plugins& plugins, con
     modified |= TryRead( dst.recorder.frequency, src, "recorder.frequency" );
     modified |= TryRead( dst.rng.seed, src, "rng.seed" );
     modified |= TryRead( dst.reports.clean_frequency, src, "reports.clean_frequency" );
+    modified |= TryRead( dst.sides.no_side_objects, src, "sides.no_side_objects" );
+    modified |= ReadSideConfig( dst.sides.list, src, "sides.list" );
     modified |= ReadRngConfig( dst.rng.breakdown, src, "rng.breakdown." );
     modified |= ReadRngConfig( dst.rng.fire, src, "rng.fire." );
     modified |= ReadRngConfig( dst.rng.perception, src, "rng.perception." );
@@ -262,6 +322,8 @@ void web::session::WriteConfig( Tree& dst, const session::Config& cfg )
     dst.put( "recorder.frequency", cfg.recorder.frequency );
     dst.put( "rng.seed", cfg.rng.seed );
     dst.put( "reports.clean_frequency", cfg.reports.clean_frequency );
+    dst.put( "sides.no_side_objects", cfg.sides.no_side_objects );
+    WriteSideConfig( dst, "sides.list", cfg.sides.list );
     WriteRngConfig( dst, "rng.breakdown.", cfg.rng.breakdown );
     WriteRngConfig( dst, "rng.fire.", cfg.rng.fire );
     WriteRngConfig( dst, "rng.perception.", cfg.rng.perception );

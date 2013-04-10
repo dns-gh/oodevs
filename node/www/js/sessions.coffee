@@ -29,6 +29,12 @@ Handlebars.registerHelper "can_play", (data, options) ->
     if valid
         return options.fn this
     return options.inverse this
+    
+Handlebars.registerHelper "each_pair", (src, options) ->
+    ret = ""
+    for k, v of src
+        ret += options.fn key: k, value: v
+    return ret
 
 make_id = (value) ->
     value = value.replace /\s+/, '_'
@@ -237,7 +243,16 @@ validate_settings = (ui) ->
         next = data.recorder = {}
         return unless validate_number next, "frequency", ui, "#recorder_frequency", 1, Number.MAX_VALUE, "Invalid"
         next = data.reports = {}
-        return unless validate_number next, "clean_frequency", ui, "#reports_clean_frequency", 1, Number.MAX_VALUE, "Invalid"
+        return unless validate_number next, "clean_frequency", ui, "#reports_clean_frequency", 0, Number.MAX_VALUE, "Invalid"
+
+    if has_element ui, "#tab_orbat"
+        next = data.sides = {}
+        next.no_side_objects = ui.find("#no_side_object_creation").is ":checked"
+        next.list = {}
+        for it in ui.find "div.sides input"
+            sub = /^sides_(\d+)$/.exec it.id
+            continue unless sub
+            next.list[sub[1]] = created: $(it).is ":checked"
 
     if has_element ui, "#tab_plugins"
         validate_plugins ui, data
@@ -248,7 +263,7 @@ class SessionItem extends Backbone.Model
     view: SessionItemView
 
     sync: (method, model, options) =>
-        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports"]
+        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports", "sides"]
 
         if method == "create"
             data = select_attributes model.attributes, cfg_attributes

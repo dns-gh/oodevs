@@ -120,6 +120,7 @@ struct Node_ABC : public boost::noncopyable
     //@{
     typedef std::vector< Path > T_Exercises;
     virtual T_Exercises GetExercises( int offset, int limit ) const = 0;
+    virtual Tree        GetExerciseProperties( const std::string& exercise ) const = 0;
     virtual size_t      CountExercises() const = 0;
     virtual Tree        LinkExercise( const std::string& name ) const = 0;
     virtual Tree        LinkExercise( const Tree& tree ) const = 0;

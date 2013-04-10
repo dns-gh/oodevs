@@ -64,6 +64,14 @@ struct PluginConfig
     T_Parameters parameters;
 };
 
+struct Side
+{
+    Side( const std::string& name, bool created );
+    Side();
+    std::string name;
+    bool created;
+};
+
 // -----------------------------------------------------------------------------
 // Name: session::Config
 // Created: BAX 2012-08-02
@@ -72,6 +80,7 @@ struct Config
 {
     Config();
     typedef std::map< std::string, PluginConfig > T_Plugins;
+    typedef std::map< std::string, Side > T_Sides;
     std::string     name;
     T_Plugins       plugins;
     struct
@@ -107,6 +116,11 @@ struct Config
     {
         int         clean_frequency;
     }               reports;
+    struct
+    {
+        bool        no_side_objects;
+        T_Sides     list;
+    }               sides;
 };
 
 bool ReadConfig ( Config& dst, const Plugins& plugins, const Tree& src );

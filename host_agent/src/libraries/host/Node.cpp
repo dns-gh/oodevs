@@ -545,6 +545,15 @@ Node::T_Exercises Node::GetExercises( int offset, int limit ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Node::GetExerciseProperties
+// Created: NPT 2013-04-05
+// -----------------------------------------------------------------------------
+Tree Node::GetExerciseProperties( const std::string& exercise ) const
+{
+    return install_->GetExerciseProperties( exercise );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Node::CountExercises
 // Created: BAX 2012-05-31
 // -----------------------------------------------------------------------------

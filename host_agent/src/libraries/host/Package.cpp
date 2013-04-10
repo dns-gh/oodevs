@@ -622,6 +622,34 @@ struct Dependency : public Item
     const std::string type_;
 };
 
+namespace
+{
+    typedef std::map< std::string, std::string > T_Sides;
+
+    T_Sides GetSides( const FileSystem_ABC& fs, const Path& path )
+    {
+        if( !fs.Exists( path ) )
+            return T_Sides();
+        const Tree src = FromXml( fs.ReadFile( path ) );
+        const auto opt = src.get_child_optional( "orbat.parties" );
+        if( !opt )
+            return T_Sides();
+        T_Sides sides;
+        BOOST_FOREACH( const auto& side, *opt )
+            if( side.first == "party" )
+                sides.insert( std::make_pair( Get< std::string >( side.second, "<xmlattr>.id" ), Get< std::string >( side.second, "<xmlattr>.name" ) ) );
+        return sides;
+    }
+
+    Tree ConvertSides( const T_Sides& sides ) 
+    {
+        Tree tree;
+        for( auto it = sides.begin(); it != sides.end(); ++it )
+            tree.put( it->first, it->second );
+        return tree;
+    }
+}
+
 struct Exercise : public Item
 {
     Exercise( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id, const Metadata* meta, const Tree& more )
@@ -629,6 +657,7 @@ struct Exercise : public Item
         , briefing_( Get< std::string >( more, "exercise.meta.briefing.text" ) )
         , model_   ( Get< std::string >( more, "exercise.model.<xmlattr>.dataset" ) )
         , terrain_ ( Get< std::string >( more, "exercise.terrain.<xmlattr>.name" ) )
+        , sides_   ( GetSides( fs, file.parent_path() / "orbat.xml" ) )
     {
         // NOTHING
     }
@@ -639,6 +668,7 @@ struct Exercise : public Item
         tree.put( "briefing", briefing_ );
         tree.put( "model", model_ );
         tree.put( "terrain", terrain_ );
+        tree.put_child( "sides", ConvertSides( sides_ ) );
         return tree;
     }
 
@@ -690,6 +720,7 @@ struct Exercise : public Item
     const std::string briefing_;
     const std::string model_;
     const std::string terrain_;
+    const T_Sides     sides_;
 };
 
 struct Client : public Item
@@ -1042,6 +1073,14 @@ Tree Link( const Package_ABC::T_Item& item, const Package_ABC& pkg, bool recurse
 Tree Package::LinkExercise( const std::string& name )
 {
     return Link( Find( Dependency( "exercise", name ), true ), *this, true );
+}
+
+Tree Package::GetExerciseProperties( const std::string& name )
+{
+    auto item = Find( Dependency( "exercise", name ), true );
+    if( !item )
+        return Tree();
+    return GetPropertiesFrom( *item );
 }
 
 namespace

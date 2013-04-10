@@ -79,6 +79,7 @@ struct Package_ABC : public boost::noncopyable
     virtual Tree LinkExercise( const std::string& name ) = 0;
     virtual Tree LinkItem( Item_ABC& item ) = 0;
     virtual Tree LinkItem( const Tree& tree ) = 0;
+    virtual Tree GetExerciseProperties( const std::string& name ) = 0;
     virtual bool UnlinkItem( runtime::Async& async, const Tree& tree ) = 0;
     virtual void Download( web::Chunker_ABC& dst, const Item_ABC& item ) = 0;
     //@}

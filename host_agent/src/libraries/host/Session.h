@@ -142,6 +142,7 @@ public:
     virtual Path GetRoot() const;
     virtual Uuid GetNode() const;
     virtual Path GetExercise() const;
+    virtual void FillExerciseSides();
     virtual std::string GetName() const;
     virtual int GetPort() const;
     virtual Tree GetProperties() const;

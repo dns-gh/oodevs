@@ -30,6 +30,7 @@
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <boost/algorithm/string/join.hpp>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -204,6 +205,7 @@ Session::Session( const SessionDependencies& deps,
     , replays_     ()
 {
     NotifyNode();
+    FillExerciseSides();
 }
 
 // -----------------------------------------------------------------------------
@@ -238,6 +240,7 @@ Session::Session( const SessionDependencies& deps,
     , replays_     ()
 {
     NotifyNode();
+    FillExerciseSides();
     node_->UpdateSessionSize( id_, size_ );
     if( !process_ && !IsReplay() )
         ParseCheckpoints();
@@ -268,6 +271,20 @@ Uuid Session::GetId() const
 Path Session::GetRoot() const
 {
     return paths_.root;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::GetExerciseSides
+// Created: NPT 2013-04-05
+// -----------------------------------------------------------------------------
+void Session::FillExerciseSides()
+{
+    Tree tree = node_->GetExerciseProperties( GetExercise().string() );
+    const auto opt = tree.get_child_optional( "sides" );
+    if( !opt )
+        return;
+    for( auto it = opt->begin(); it != opt->end(); ++it )
+        cfg_.sides.list[ it->first ] = Side( Get< std::string >( it->second, "" ), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -401,6 +418,15 @@ std::string XpathToXml( std::string xpath )
     return xpath;
 }
 
+std::string GetPartiesDataMessage( const Config::T_Sides& sides )
+{
+    std::vector< std::string > sidesList;
+    for( auto it = sides.begin(); it != sides.end(); ++it )
+        if( it->second.created )
+            sidesList.push_back( it->first );
+    return boost::algorithm::join( sidesList, ";" );
+}
+
 void WritePlugin( Tree& tree, const std::string& prefix, const web::session::PluginConfig& cfg )
 {
     if( !cfg.enabled )
@@ -464,6 +490,9 @@ void WriteSimulationConfiguration( Tree& tree, int base, const Config& cfg )
         tree.put( prefix + "time.<xmlattr>.end-tick", cfg.time.end_tick );
     tree.put( prefix + "time.<xmlattr>.paused", cfg.time.paused );
     tree.put( prefix + "random.<xmlattr>.seed", cfg.rng.seed );
+    if( cfg.sides.no_side_objects )
+            tree.put( prefix + "orbat.subset.<xmlattr>.no-party", cfg.sides.no_side_objects );
+    tree.put( prefix + "orbat.subset.<xmlattr>.parties", GetPartiesDataMessage( cfg.sides.list ) );
     WriteRngConfiguration( tree, prefix + "random0.", cfg.rng.fire );
     WriteRngConfiguration( tree, prefix + "random1.", cfg.rng.wound );
     WriteRngConfiguration( tree, prefix + "random2.", cfg.rng.perception );

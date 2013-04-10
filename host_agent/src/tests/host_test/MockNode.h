@@ -23,6 +23,7 @@ namespace mocks
             MOCK_EXPECT( GetIdent ).returns( tree.get< std::string >( "ident" ) );
             MOCK_EXPECT( GetPort ).returns( tree.get< int >( "port" ) );
             MOCK_EXPECT( Save ).returns( tree );
+            MOCK_EXPECT( GetExerciseProperties ).returns( host::Tree() );
         }
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetRoot, 0 );
@@ -52,6 +53,7 @@ namespace mocks
         MOCK_METHOD( RemoveSession, 1 );
         MOCK_METHOD( UpdateSessionSize, 2 );
         MOCK_METHOD( FilterConfig, 1 );
+        MOCK_METHOD( GetExerciseProperties, 1 );
     };
 
     MOCK_BASE_CLASS( MockNodeFactory, host::NodeFactory_ABC )

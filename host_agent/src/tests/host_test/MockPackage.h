@@ -36,6 +36,7 @@ namespace mocks
         MOCK_METHOD_EXT( LinkItem, 1, host::Tree( const host::Tree& ), LinkItemByTree );
         MOCK_METHOD( UnlinkItem, 2 );
         MOCK_METHOD( Download, 2 );
+        MOCK_METHOD( GetExerciseProperties, 1 );
     };
 
     MOCK_BASE_CLASS( MockPackageFactory, host::PackageFactory_ABC )

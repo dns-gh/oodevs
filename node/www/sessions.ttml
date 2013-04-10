@@ -44,12 +44,22 @@
 [[ template "input_number"   sub "id" "time_factor"   "label" "Time Factor" "append" "&times;" "value" "{{time.factor}}" ]]
 [[ template "input_number"   sub "id" "time_end_tick" "label" "End" "prepend" 1 "prepend_value" "{{#is_positive time.end_tick}} checked=\"checked\"{{/is_positive}}" "append" "Ticks" "value" "{{time.end_tick}}" ]]
 [[ end ]]
+<!-- orbat settings -->
+[[ define "orbat_session_settings" ]]
+{{#each_pair sides.list}}
+    <div class="sides">
+    [[ template "input_checkbox" sub "id" "sides_{{key}}" "label" "Create {{value.name}}" "value" "{{#bool value.created}} checked=\"checked\"{{/bool}}" ]]
+    </div>
+{{/each_pair}}
+[[ template "input_checkbox" sub "id" "no_side_object_creation" "label" "Create objects without sides" "value" "{{#bool sides.no_side_objects}} checked=\"checked\"{{/bool}}" ]]
+[[ end ]]
 <!-- advanced settings -->
 [[ define "advanced_session_settings" ]]
 [[ template "input_number" sub "id" "pathfind_threads" "label" "Path Find" "append" "Threads" "value" "{{pathfind.threads}}" ]]
 [[ template "input_number" sub "id" "recorder_frequency" "label" "Recorder Frequency" "append" "Ticks" "value" "{{recorder.frequency}}" ]]
 [[ template "input_number" sub "id" "reports_clean_frequency" "label" "Report Clean Frequency" "append" "Ticks" "value" "{{reports.clean_frequency}}" ]]
 [[ end ]]
+
 <!-- rng context -->
 [[ define "rng_context" ]]
 <div class="control-group">
@@ -87,7 +97,7 @@
 [[ end ]]
 <!-- Settings Template -->
 <script type="text/template" id="session_settings_template">
-    <div class="modal fade">
+    <div class="modal fade modal_session">
         <div id="settings_slide" class="carousel slide">
             <div class="carousel-inner">
                 <div class="active item">
@@ -102,6 +112,7 @@
                             <li><a href="#tab_checkpoints" data-toggle="tab"> Checkpoints </a></li>
                             <li><a href="#tab_time" data-toggle="tab"> Time </a></li>
                             <li><a href="#tab_rng" data-toggle="tab"> Random </a></li>
+                            <li><a href="#tab_orbat" data-toggle="tab"> Orbat </a></li>
                             <li><a href="#tab_advanced" data-toggle="tab"> Advanced </a></li>
                             {{#if ui_plugins}}
                             <li><a href="#tab_plugins" data-toggle="tab"> Plugins </a></li>
@@ -114,6 +125,7 @@
                             <div class="tab-pane" id="tab_checkpoints"> [[ template "checkpoint_session_settings" . ]] </div>
                             <div class="tab-pane" id="tab_time"> [[ template "time_session_settings" . ]] </div>
                             <div class="tab-pane" id="tab_rng">  [[ template "rng_session_settings" . ]] </div>
+                            <div class="tab-pane" id="tab_orbat"> [[ template "orbat_session_settings" . ]] </div>
                             <div class="tab-pane" id="tab_advanced"> [[ template "advanced_session_settings" . ]] </div>
                             {{#if ui_plugins}}
                             <div class="tab-pane" id="tab_plugins">
