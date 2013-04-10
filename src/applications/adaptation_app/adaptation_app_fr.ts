@@ -670,8 +670,8 @@ Arrêt moteur allumé</translation>
         <translation>L&apos;unité %1 ne possède aucun équipage dans l&apos;équipement &apos;%2&apos;</translation>
     </message>
     <message>
-        <source>Equipment %1 has no repair type defined in maintenance system in a &apos;gravity&apos; category.</source>
-        <translation>L&apos;équipement %1 n&apos;a pas de type de réparation défini dans la chaîne de maintenance dans une catégorie &apos;gravité&apos;</translation>
+        <source>Maintenance system definition is incorrect for equipment &apos;%1&apos;. At least one breakdown type must be defined for each severity.</source>
+        <translation>Définition de la chaîne de maintenance incorrecte pour l&apos;équipement &apos;%1&apos;. Au moins un type de panne doit être défini pour chaque gravité.</translation>
     </message>
     <message>
         <source></source>

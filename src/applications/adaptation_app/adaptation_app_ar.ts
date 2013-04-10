@@ -658,7 +658,7 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Equipment %1 has no repair type defined in maintenance system in a &apos;gravity&apos; category.</source>
+        <source>Maintenance system definition is incorrect for equipment &apos;%1&apos;. At least one breakdown type must be defined for each severity.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
