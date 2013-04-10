@@ -481,7 +481,7 @@ eRC_ObjetNonDevalorisable = 509
 eRC_SurrenderedUnitRecognized = 510
 eRC_SurrenderedUnitIdentified = 511
 eRC_TransportRoundTrip = 512
-eNbr = 512
+eNbr = 513
 
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
