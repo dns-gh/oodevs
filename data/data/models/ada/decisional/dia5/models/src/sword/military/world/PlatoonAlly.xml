@@ -1487,8 +1487,16 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </return>
         </method>
+        <method name="transportCrowdRoundTrip">
+            <description>Returns the number of shuttles to transport crowd</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
         <method name="transportUnitRoundTrip">
-            <description>Returns the number of round-trip mandatory to transport unit</description>
+            <description>Returns the number of rshuttles to transport units</description>
             <return>
                 <type>
                     <simple name="numeric"/>

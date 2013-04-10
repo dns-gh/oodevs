@@ -862,6 +862,9 @@ return
     canTransportCrowd = function( self )
         return integration.canTransportCrowd( self )
     end,
+    transportCrowdRoundTrip = function( self, crowd )
+        return integration.transportCrowdRoundTrip( crowd )
+    end,
     isTransportingCrowd = function( self )
         return integration.isTransportingCrowd( self )
     end,
