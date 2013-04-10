@@ -240,7 +240,6 @@ Session::Session( const SessionDependencies& deps,
     , replays_     ()
 {
     NotifyNode();
-    FillExerciseSides();
     node_->UpdateSessionSize( id_, size_ );
     if( !process_ && !IsReplay() )
         ParseCheckpoints();
