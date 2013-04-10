@@ -173,6 +173,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Routes" )        , MakePixmap( "path_ahead" ) , controllers.options_, "Paths" );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Covered routes" ), MakePixmap( "path_behind" ), controllers.options_, "OldPaths" );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Direction" )     , MakePixmap( "direction" )  , controllers.options_, "Direction" );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Unit detail" )   , MakePixmap( "unit_detail" ), controllers.options_, "UnitDetails" );
     subMenu->insertSeparator();
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Convex hulls" ),     MakePixmap( "convex_hulls" )    , controllers.options_, "ConvexHulls", kernel::FourStateOption::Off() );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Current Mission" ),  MakePixmap( "current_mission" ) , controllers.options_, "MissionParameters" );

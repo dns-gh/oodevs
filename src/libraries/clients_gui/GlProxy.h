@@ -90,14 +90,15 @@ public:
     virtual void DrawLife         ( const geometry::Point2f& center, float height, float factor = 1.f, bool fixedSize = true ) const;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where ) const;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where, const QFont& font ) const;
-    virtual void DrawApp6Symbol   ( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f ) const;
-    virtual void DrawApp6Symbol   ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f ) const;
+    virtual void DrawApp6Symbol   ( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f, unsigned int direction = 0 ) const;
+    virtual void DrawApp6Symbol   ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f, unsigned int direction = 0 ) const;
     virtual void DrawIcon         ( const char** xpm, const geometry::Point2f& where, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawImage        ( const QImage& image, const geometry::Point2f& where ) const;
     virtual void DrawCell         ( const geometry::Point2f& center ) const;
     virtual void DrawSvg          ( const std::string& svg, const geometry::Point2f& center, float ratio = 1.f, bool fixedSize = true ) const;
     virtual void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined, bool fixedSize = true ) const;
-    virtual void DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor ) const;
+    virtual void DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const;
+    virtual void DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction ) const;
 
     virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection );
     virtual void FillSelection( const geometry::Point2f& point, T_ObjectsPicking& selection, E_LayerTypes type );

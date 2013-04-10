@@ -309,7 +309,7 @@ void Attributes::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, 
 {
     if( aggregated_
     || ! ( bDead_ || bRadioReceiverSilence_ || bRadioEmitterSilence_ || bRadarEnabled_ || bCommJammed_ || bUnderground_ )
-    || ! viewport.IsHotpointVisible() )
+    || ! viewport.IsHotpointVisible() || ! tools.ShouldDisplay( "UnitDetails" ) )
         return;
 
     glPushAttrib( GL_CURRENT_BIT );

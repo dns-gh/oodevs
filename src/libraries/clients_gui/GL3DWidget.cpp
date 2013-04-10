@@ -412,6 +412,8 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Un
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /* = 1.f*/, bool /*fixedSize = true */ ) const
 {
+    if( !GlToolsBase::ShouldDisplay( "UnitDetails" ) )
+        return;
     if( factor < -1.f )
         factor = GetAdaptiveZoomFactor( false );
     else
@@ -475,7 +477,7 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where, const 
 // Name: Gl3dWidget::DrawApp6Symbol
 // Created: AGE 2008-05-07
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float /*thickness = 1.f*/ ) const
+void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float /*thickness = 1.f*/, unsigned int direction /*= 0*/ ) const
 {
     if( factor < 0 )
         factor = GetAdaptiveZoomFactor( false );
@@ -492,6 +494,7 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& s
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
             glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
             UndoRotations();
+            glRotatef( - (GLfloat)direction, 0, 0, 1 );
             glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0 );
             glScalef( scaleRatio, - scaleRatio, scaleRatio );
             glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
@@ -506,18 +509,39 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& s
 // Name: GL3DWidget::DrawApp6SymbolFixedSize
 // Created: LGY 2013-03-12
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor ) const
+void Gl3dWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
 {
-    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, 1.f );
+    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, 1.f, direction );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::DrawUnitSymbol
+// Created: JSR 2013-04-09
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction ) const
+{
+    if( isMoving )
+    {
+        if( !moveSymbol.empty() )
+            DrawApp6SymbolFixedSize( moveSymbol, where, factor, direction );
+        else
+            DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
+    }
+    else
+    {
+        DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
+        if( !staticSymbol.empty() )
+            DrawApp6SymbolFixedSize( staticSymbol, where, factor, direction );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawApp6Symbol
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/ ) const
+void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /* = 0 */ ) const
 {
-    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, thickness );
+    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, thickness, direction );
 }
 
 // -----------------------------------------------------------------------------

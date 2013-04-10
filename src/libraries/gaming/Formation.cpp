@@ -104,8 +104,8 @@ void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& v
     if( !IsAggregated( *this ) && HasAggregatedSubordinate() && viewport.IsHotpointVisible() )
     {
         InitializeSymbol();
-        tools.DrawApp6SymbolFixedSize( symbolPath_, where, -2.f );
-        tools.DrawApp6SymbolFixedSize( levelPath_, where, -2.f );
+        tools.DrawApp6SymbolFixedSize( symbolPath_, where, -2.f, 0 );
+        tools.DrawApp6SymbolFixedSize( levelPath_, where, -2.f, 0 );
     }
 }
 

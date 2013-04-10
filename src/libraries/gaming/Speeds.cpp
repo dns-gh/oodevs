@@ -20,9 +20,8 @@ using namespace kernel;
 // Name: Speeds constructor
 // Created: AGE 2007-12-17
 // -----------------------------------------------------------------------------
-Speeds::Speeds( const CoordinateConverter_ABC& converter )
-    : converter_( converter )
-    , speed_    ( 0 )
+Speeds::Speeds()
+    : speed_    ( 0 )
 {
     // NOTHING
 }

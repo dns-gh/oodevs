@@ -84,7 +84,8 @@ namespace
 // -----------------------------------------------------------------------------
 void App6Symbol::FilterPerceptionLevel( std::string& symbol, E_PerceptionResult perception )
 {
-    symbol = symbol.substr( 0, symbol.find_last_of( '/' ) + ElementsToKeep( perception ) + 1 );
+    if( eIdentification != perception ) // keep all if identified
+        symbol = symbol.substr( 0, symbol.find_last_of( '/' ) + ElementsToKeep( perception ) + 1 );
 }
 
 // -----------------------------------------------------------------------------

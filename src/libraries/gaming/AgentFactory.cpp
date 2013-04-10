@@ -195,7 +195,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new Contaminations( controllers_.controller_, *result, static_.objectTypes_, dictionary, result->GetType() ) );
     result->Attach< ConvexHulls >( *new AgentConvexHulls( *result, static_.coordinateConverter_ ) );
     result->Attach( *new DecisionalStates() );
-    result->Attach( *new Speeds( static_.coordinateConverter_ ) );
+    result->Attach( *new Speeds() );
     result->Attach( *new Weapons( controllers_, static_.objectTypes_, static_.objectTypes_ ) );
     result->Attach( *new Affinities( *result,controllers_.controller_, model_.teams_, dictionary ) );
     if( message.has_color() )

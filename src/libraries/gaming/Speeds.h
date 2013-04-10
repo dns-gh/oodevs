@@ -39,7 +39,7 @@ class Speeds : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Speeds( const kernel::CoordinateConverter_ABC& converter );
+             Speeds();
     virtual ~Speeds();
     //@}
 
@@ -60,7 +60,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::CoordinateConverter_ABC& converter_;
     geometry::Vector2f direction_;
     float speed_;
     //@}

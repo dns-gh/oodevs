@@ -52,6 +52,8 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const sword::Un
     , criticalIntelligence_( "", false )
 {
     fullSymbol_  = realAgent_.GetType().GetSymbol();
+    moveSymbol_ = realAgent_.GetType().GetMoveSymbol();
+    staticSymbol_ = realAgent_.GetType().GetStaticSymbol();
     UpdateSymbol();
     AddExtension( *this );
 }
@@ -241,12 +243,13 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_A
     if( viewport.IsVisible( where ) )
     {
         const boost::tuple< bool, bool, bool > backupState = tools.UnSelect();
-        tools.DrawApp6SymbolFixedSize( currentSymbol_, where, -1 );
+        unsigned int direction = nDirection_.IsSet() ? (uint) nDirection_ : 0;
+        tools.DrawUnitSymbol( currentSymbol_, moveSymbol_, staticSymbol_, nSpeed_.IsSet() && ( uint )nSpeed_ > 0 , where, -1, direction );
         if( nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
         {
-            tools.DrawApp6SymbolFixedSize( realAgent_.GetType().GetLevelSymbol(), where, -1 );
+            tools.DrawApp6SymbolFixedSize( realAgent_.GetType().GetLevelSymbol(), where, -1, 0 );
             if( bIsPC_.IsSet() && bIsPC_ )
-                tools.DrawApp6SymbolFixedSize( realAgent_.GetType().GetHQSymbol(), where, -1 );
+                tools.DrawApp6SymbolFixedSize( realAgent_.GetType().GetHQSymbol(), where, -1, 0 );
         }
         tools.Select( backupState.get< 0 >(), backupState.get< 1 >(), backupState.get< 2 >() );
     }
@@ -312,6 +315,9 @@ void AgentKnowledge::UpdateSymbol()
 
     currentSymbol_ = fullSymbol_;
     App6Symbol::SetKarma( currentSymbol_, TeamKarma( perception ) );
+    App6Symbol::SetKarma( moveSymbol_, TeamKarma( perception ) );
+    App6Symbol::SetKarma( staticSymbol_, TeamKarma( perception ) );
+
     App6Symbol::FilterPerceptionLevel( currentSymbol_, perception );
 
     currentNature_ = Strip( realAgent_.GetType().GetNature().GetNature(), toKeep - 3 ); // $$$$ AGE 2006-10-25:

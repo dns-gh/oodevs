@@ -58,6 +58,8 @@ AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentTy
 
     nbcSuit_ = ENT_Tr::ConvertToAgentNbcSuit( nbcSuit );
     symbol_      = symbolFactory.CreateSymbol( nature->GetNature() );
+    moveSymbol_  = symbolFactory.CreateMoveSymbol( nature->GetNature() );
+    staticSymbol_ = symbolFactory.CreateStaticSymbol( nature->GetNature() );
     levelSymbol_ = symbolFactory.CreateLevelSymbol( nature->GetLevel() );
     hqSymbol_    = symbolFactory.CreateAutomatSymbol();
     nature_ = nature.release();
@@ -190,6 +192,24 @@ tools::Iterator< const DotationCapacityType& > AgentType::CreateResourcesIterato
 const std::string& AgentType::GetSymbol() const
 {
     return symbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetMoveSymbol
+// Created: LDC 2013-04-09
+// -----------------------------------------------------------------------------
+const std::string& AgentType::GetMoveSymbol() const
+{
+    return moveSymbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetStaticSymbol
+// Created: LDC 2013-04-09
+// -----------------------------------------------------------------------------
+const std::string& AgentType::GetStaticSymbol() const
+{
+    return staticSymbol_;
 }
 
 // -----------------------------------------------------------------------------

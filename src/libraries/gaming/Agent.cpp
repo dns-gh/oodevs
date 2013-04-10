@@ -35,12 +35,16 @@ Agent::Agent( const sword::UnitCreation& message, Controller& controller, const 
     , controller_( controller )
     , initialized_( false )
     , weight_( 0 )
+    , speed_( 0 )
+    , direction_( 0 )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.unit().id() );
 
     level_ = ( message.has_level() ) ? "levels/" + ENT_Tr::ConvertFromNatureLevel( static_cast< E_NatureLevel >( message.level() ) ) : type_.GetLevelSymbol();
     symbol_ = ( message.has_app6symbol() ) ? "symbols/" + message.app6symbol() : type_.GetSymbol();
+    moveSymbol_ = type_.GetMoveSymbol();
+    staticSymbol_ = type_.GetStaticSymbol();
 
     AddExtension( *this );
     CreateDictionary();
@@ -69,11 +73,13 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
         const Entity_ABC& team = Get< CommunicationHierarchies >().GetTop();
         const Diplomacies_ABC* diplo = team.Retrieve< Diplomacies_ABC >();
         kernel::App6Symbol::SetKarma( symbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
+        kernel::App6Symbol::SetKarma( moveSymbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
+        kernel::App6Symbol::SetKarma( staticSymbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
     }
     if( viewport.IsHotpointVisible() )
     {
-        tools.DrawApp6SymbolFixedSize( symbol_, where, -1.f );
-        tools.DrawApp6SymbolFixedSize( level_, where, -1.f );
+        tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, speed_ != 0, where, -1.f, direction_ );
+        tools.DrawApp6SymbolFixedSize( level_, where, -1.f, 0 );
     }
 }
 
@@ -128,4 +134,16 @@ void Agent::NotifyUpdated( const Equipments& equipments )
         weight_ = equipments.GetTotalWeight();
         controller_.Update( DictionaryUpdated( *( Entity_ABC* )this, tools::translate( "Agent", "Info" ) ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DoUpdate
+// Created: LDC 2013-04-09
+// -----------------------------------------------------------------------------
+void Agent::DoUpdate( const sword::UnitAttributes& message )
+{
+    if( message.has_speed()  )
+        speed_ = float( message.speed() );
+    if( message.has_direction() )
+        direction_ = message.direction().heading();
 }

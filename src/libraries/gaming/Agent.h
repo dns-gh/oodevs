@@ -13,6 +13,7 @@
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_gui/EntityImplementation.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "protocol/SimulationSenders.h"
@@ -21,6 +22,7 @@
 namespace sword
 {
     class UnitCreation;
+    class UnitAttributes;
 }
 
 namespace kernel
@@ -43,6 +45,7 @@ class Agent : public gui::EntityImplementation< kernel::Agent_ABC >
             , public tools::Observer_ABC
             , public tools::ElementObserver_ABC< Equipments >
             , public gui::Drawable_ABC
+            , public kernel::Updatable_ABC< sword::UnitAttributes >
 {
 public:
     //! @name Constructors/Destructor
@@ -59,6 +62,7 @@ public:
     virtual const kernel::AgentType& GetType() const;
 
     virtual void NotifyUpdated( const Equipments& equipments );
+    virtual void DoUpdate( const sword::UnitAttributes& attributes );
     //@}
 
 private:
@@ -75,9 +79,13 @@ private:
     const kernel::AgentType& type_;
     kernel::Controller& controller_;
     mutable std::string symbol_;
+    mutable std::string moveSymbol_;
+    mutable std::string staticSymbol_;
     std::string level_;
     mutable bool initialized_;
     float weight_;
+    float speed_;
+    unsigned int direction_;
     //@}
 };
 

@@ -57,8 +57,10 @@ public:
     tools::Iterator< const AgentComposition& > CreateIterator() const;
     tools::Iterator< const DotationCapacityType& > CreateResourcesIterator() const;
     unsigned int GetComponentCount( const ComponentType& ) const;
-
+    
     const std::string& GetSymbol() const;
+    const std::string& GetMoveSymbol() const;
+    const std::string& GetStaticSymbol() const;
     const std::string& GetLevelSymbol() const;
     const std::string& GetHQSymbol() const;
     const std::string& GetTypeName() const;
@@ -108,6 +110,8 @@ private:
     AgentNature* nature_;
     T_Components equipments_;
     std::string symbol_; // $$$$ AGE 2006-10-24: devrait etre dans nature
+    std::string moveSymbol_;
+    std::string staticSymbol_;
     std::string levelSymbol_;
     std::string hqSymbol_;
     E_AgentNbcSuit nbcSuit_;

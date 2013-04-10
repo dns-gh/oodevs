@@ -378,28 +378,38 @@ void GlProxy::Print( const std::string& message, const geometry::Point2f& where,
 // Name: GlProxy::DrawApp6Symbol
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/ ) const
+void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/ ) const
 {
-    tools_->DrawApp6Symbol( symbol, where, factor, thickness );
+    tools_->DrawApp6Symbol( symbol, where, factor, thickness, direction );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::DrawApp6Symbol
 // Created: AGE 2008-05-07
 // -----------------------------------------------------------------------------
-void GlProxy::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/ ) const
+void GlProxy::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/ ) const
 {
-    tools_->DrawApp6Symbol( symbol, style, where, factor, thickness );
+    tools_->DrawApp6Symbol( symbol, style, where, factor, thickness, direction );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::DrawApp6SymbolFixedSize
 // Created: MMC 2013-02-05
 // -----------------------------------------------------------------------------
-void GlProxy::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor ) const
+void GlProxy::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
 {
-    tools_->DrawApp6SymbolFixedSize( symbol, where, factor );
+    tools_->DrawApp6SymbolFixedSize( symbol, where, factor, direction );
 }
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::DrawUnitSymbol
+// Created: LDC 2013-04-09
+// -----------------------------------------------------------------------------
+void GlProxy::DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction ) const
+{
+    tools_->DrawUnitSymbol( symbol, moveSymbol, staticSymbol, isMoving, where, factor, direction );
+}
+    
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::DrawIcon

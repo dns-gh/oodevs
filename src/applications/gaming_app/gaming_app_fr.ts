@@ -2111,6 +2111,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>&amp;Windows</source>
         <translation>&amp;Fenêtres</translation>
     </message>
+    <message>
+        <source>Unit detail</source>
+        <translation>Détails des unités</translation>
+    </message>
 </context>
 <context>
     <name>MessagePanel</name>

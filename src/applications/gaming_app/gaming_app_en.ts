@@ -2107,6 +2107,10 @@ This data can&apos;t be projected.</source>
         <source>&amp;?</source>
         <translation>&amp;?</translation>
     </message>
+    <message>
+        <source>Unit detail</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MessagePanel</name>
