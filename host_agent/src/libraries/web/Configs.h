@@ -103,6 +103,10 @@ struct Config
     {
         int         frequency;
     }               recorder;
+    struct
+    {
+        int         clean_frequency;
+    }               reports;
 };
 
 bool ReadConfig ( Config& dst, const Plugins& plugins, const Tree& src );

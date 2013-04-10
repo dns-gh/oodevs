@@ -298,6 +298,15 @@ BOOST_FIXTURE_TEST_CASE( session_starts_and_reloads, Fixture )
     StopSession( *session, process );
 }
 
+BOOST_FIXTURE_TEST_CASE( session_updates, Fixture )
+{
+    SessionPtr session = MakeSession();
+    Tree save;
+    save.put( "reports.clean_frequency", 38 );
+    session->Update( save );
+    BOOST_CHECK_EQUAL( Get< int >( save, "reports.clean_frequency" ), 38 );
+}
+
 BOOST_FIXTURE_TEST_CASE( session_rejects_bind_to_another_process, Fixture )
 {
     SessionPtr session = MakeSession();

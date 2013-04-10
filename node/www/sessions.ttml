@@ -46,8 +46,9 @@
 [[ end ]]
 <!-- advanced settings -->
 [[ define "advanced_session_settings" ]]
-[[ template "input_number" sub "id" "pathfind_threads"   "label" "Path Find" "append" "Threads" "value" "{{pathfind.threads}}" ]]
+[[ template "input_number" sub "id" "pathfind_threads" "label" "Path Find" "append" "Threads" "value" "{{pathfind.threads}}" ]]
 [[ template "input_number" sub "id" "recorder_frequency" "label" "Recorder Frequency" "append" "Ticks" "value" "{{recorder.frequency}}" ]]
+[[ template "input_number" sub "id" "reports_clean_frequency" "label" "Report Clean Frequency" "append" "Ticks" "value" "{{reports.clean_frequency}}" ]]
 [[ end ]]
 <!-- rng context -->
 [[ define "rng_context" ]]

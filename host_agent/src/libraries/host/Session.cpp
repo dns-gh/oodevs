@@ -418,6 +418,7 @@ void WriteDispatcherConfiguration( Tree& tree, int base, const Config& cfg )
     tree.put( prefix + "plugins.web_control.<xmlattr>.server", base + WEB_CONTROL_PORT );
     tree.put( prefix + "plugins.web_control.<xmlattr>.library", "web_control_plugin" );
     tree.put( prefix + "plugins.recorder.<xmlattr>.fragmentfreq", cfg.recorder.frequency );
+    tree.put( prefix + "reports.<xmlattr>.frequency", cfg.reports.clean_frequency );
     BOOST_FOREACH( const Config::T_Plugins::value_type& value, cfg.plugins )
         WritePlugin( tree, prefix + "plugins." + value.first + ".", value.second );
 }

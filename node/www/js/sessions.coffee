@@ -236,6 +236,8 @@ validate_settings = (ui) ->
         return unless validate_number next, "threads", ui, "#pathfind_threads", 0, 8, "tab_advanced", "[0, 8] Only"
         next = data.recorder = {}
         return unless validate_number next, "frequency", ui, "#recorder_frequency", 1, Number.MAX_VALUE, "Invalid"
+        next = data.reports = {}
+        return unless validate_number next, "clean_frequency", ui, "#reports_clean_frequency", 1, Number.MAX_VALUE, "Invalid"
 
     if has_element ui, "#tab_plugins"
         validate_plugins ui, data
@@ -246,7 +248,7 @@ class SessionItem extends Backbone.Model
     view: SessionItemView
 
     sync: (method, model, options) =>
-        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins"]
+        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports"]
 
         if method == "create"
             data = select_attributes model.attributes, cfg_attributes

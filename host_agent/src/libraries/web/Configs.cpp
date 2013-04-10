@@ -63,6 +63,7 @@ session::Config::Config()
     time.paused = false;
     time.step = 10;
     rng.seed = 0;
+    reports.clean_frequency = 0;
 }
 
 namespace
@@ -234,6 +235,7 @@ bool web::session::ReadConfig( session::Config& dst, const Plugins& plugins, con
     modified |= TryRead( dst.pathfind.threads, src, "pathfind.threads" );
     modified |= TryRead( dst.recorder.frequency, src, "recorder.frequency" );
     modified |= TryRead( dst.rng.seed, src, "rng.seed" );
+    modified |= TryRead( dst.reports.clean_frequency, src, "reports.clean_frequency" );
     modified |= ReadRngConfig( dst.rng.breakdown, src, "rng.breakdown." );
     modified |= ReadRngConfig( dst.rng.fire, src, "rng.fire." );
     modified |= ReadRngConfig( dst.rng.perception, src, "rng.perception." );
@@ -259,6 +261,7 @@ void web::session::WriteConfig( Tree& dst, const session::Config& cfg )
     dst.put( "pathfind.threads", cfg.pathfind.threads );
     dst.put( "recorder.frequency", cfg.recorder.frequency );
     dst.put( "rng.seed", cfg.rng.seed );
+    dst.put( "reports.clean_frequency", cfg.reports.clean_frequency );
     WriteRngConfig( dst, "rng.breakdown.", cfg.rng.breakdown );
     WriteRngConfig( dst, "rng.fire.", cfg.rng.fire );
     WriteRngConfig( dst, "rng.perception.", cfg.rng.perception );
