@@ -425,6 +425,28 @@ bool PHY_RoleAction_Transport::CanTransportPion( MIL_Agent_ABC& transported, boo
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::GetNumberOfRoundTripToTransportPion
+// Created: GGE 2013-04-03
+// -----------------------------------------------------------------------------
+double PHY_RoleAction_Transport::GetNumberOfRoundTripToTransportPion( MIL_Agent_ABC& transported, bool bTransportOnlyLoadable ) const
+{
+    if( *owner_ == transported )
+        return 0.;
+
+    LoadableStrategy strategy( bTransportOnlyLoadable );
+    std::auto_ptr< TransportWeightComputer_ABC > weightComp( owner_->GetAlgorithms().transportComputerFactory_->CreateWeightComputer( &strategy ) );
+    transported.Execute( *weightComp );
+
+    if( weightComp->TotalTransportedWeight() <= 0. )
+        return 0.;
+
+    std::auto_ptr< TransportCapacityComputer_ABC > capacityComp( owner_->GetAlgorithms().transportComputerFactory_->CreateCapacityComputer() );
+    owner_->Execute( *capacityComp );
+
+    return weightComp->TotalTransportedWeight() / capacityComp->WeightCapacity();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::IsLoaded
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------
