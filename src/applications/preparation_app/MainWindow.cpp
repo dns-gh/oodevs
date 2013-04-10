@@ -378,7 +378,7 @@ void MainWindow::New()
 // Name: MainWindow::DoLoad
 // Created: LDC 2010-12-01
 // -----------------------------------------------------------------------------
-void MainWindow::DoLoad( const tools::Path& filename, bool checkConsistency /*= true*/ )
+void MainWindow::DoLoad( const tools::Path& filename )
 {
     if( filename.IsEmpty() )
         return;
@@ -395,7 +395,7 @@ void MainWindow::DoLoad( const tools::Path& filename, bool checkConsistency /*= 
     if( Load() )
     {
         SetWindowTitle( true );
-        LoadExercise( checkConsistency );
+        LoadExercise();
     }
     SetProgression( 100, tr( "Loading complete" ) );
 }
@@ -522,7 +522,7 @@ void MainWindow::DoClose()
 // Name: MainWindow::LoadExercise
 // Created: SBO 2008-08-21
 // -----------------------------------------------------------------------------
-void MainWindow::LoadExercise( bool checkConsistency /*= true*/ )
+void MainWindow::LoadExercise()
 {
     try
     {
@@ -542,8 +542,7 @@ void MainWindow::LoadExercise( bool checkConsistency /*= true*/ )
         icons_->GenerateSymbols( model_.teams_ );
         loading_ = false;
         controllers_.ChangeMode( eModes_Prepare );
-        if( checkConsistency )
-            emit CheckConsistency();
+        emit CheckConsistency();
         SetWindowTitle( !model_.GetLoadingErrors().empty() || model_.ghosts_.NeedSaving() || model_.HasConsistencyErrorsOnLoad() ||  model_.OldUrbanMode() );
     }
     catch( const std::exception& e )

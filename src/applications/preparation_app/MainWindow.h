@@ -107,13 +107,13 @@ private:
     //! @name Helpers
     //@{
     bool Load();
-    void LoadExercise( bool checkConsistency = true );
+    void LoadExercise();
     void CreateLayers( gui::ParametersLayer& parameters, gui::Layer& locations, gui::Layer& weather, gui::Layer& profilerLayer,
                        const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation,
                        gui::Elevation2dLayer& elevation2d );
     void closeEvent( QCloseEvent* pEvent );
     void DoClose();
-    void DoLoad( const tools::Path& filename, bool checkConsistency = true );
+    void DoLoad( const tools::Path& filename );
     void MigrateExercises();
     bool MigrateExercise( const tools::Path& path );
 
