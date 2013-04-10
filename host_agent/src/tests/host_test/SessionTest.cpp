@@ -84,12 +84,22 @@ namespace
         return root / boost::lexical_cast< std::string >( ++idx );
     }
 
+    struct SubFixture
+    {
+        MockFileSystem fs;
+        SubFixture()
+        {
+            MOCK_EXPECT( fs.Walk );
+        }
+    };
+
     struct Fixture
     {
         typedef boost::shared_ptr< Session > SessionPtr;
         typedef boost::shared_ptr< MockProcess > ProcessPtr;
+        SubFixture sub;
+        MockFileSystem& fs;
         MockClient client;
-        MockFileSystem fs;
         MockRuntime runtime;
         MockNodeController nodes;
         MockPortFactory ports;
@@ -97,18 +107,20 @@ namespace
         MockUuidFactory uuids;
         boost::shared_ptr< MockNode > node;
         const host::Path apps;
+        const web::Plugins plugins;
         int any_idx;
         Fixture()
             : node   ( boost::make_shared< MockNode >( defaultNode, FromJson( "{\"ident\":\"a\",\"name\":\"a\",\"port\":\"1\"}" ) ) )
+            , fs     ( sub.fs )
             , nodes  ( false )
             , apps   ( "apps" )
+            , plugins( fs, "" )
             , any_idx( 0 )
         {
             MOCK_EXPECT( fs.GetDirectorySize ).returns( 0 );
             MOCK_EXPECT( fs.IsDirectory ).returns( false) ;
             MOCK_EXPECT( fs.MakePaths );
             MOCK_EXPECT( fs.MakeAnyPath ).calls( boost::bind( &MakePath, boost::ref( any_idx ), _1 ) );
-            MOCK_EXPECT( fs.Walk );
             MOCK_EXPECT( fs.Rename ).returns( true );
             MOCK_EXPECT( fs.Remove ).returns( true );
             MOCK_EXPECT( node->UpdateSessionSize );
@@ -123,7 +135,6 @@ namespace
             web::session::Config cfg;
             cfg.name = defaultName;
             SessionPaths paths( "a", "b" );
-            web::Plugins plugins( fs, "" );
             SessionDependencies deps( fs, runtime, plugins, nodes, uuids, client, pool, ports );
             return boost::make_shared< Session >( deps, node, paths, cfg, defaultExercise, boost::uuids::nil_uuid() );
         }
@@ -138,7 +149,6 @@ namespace
             const Tree data = FromJson( links );
             MOCK_EXPECT( nodes.LinkExerciseTree ).once().with( mock::same( *node ), data ).returns( data );
             SessionPaths paths( "a", "b" );
-            web::Plugins plugins( fs, "" );
             SessionDependencies deps( fs, runtime, plugins, nodes, uuids, client, pool, ports );
             return boost::make_shared< Session >( deps, node, paths, tree );
         }
