@@ -16,7 +16,7 @@
 #endif
 
 #ifndef APP_PROJECT_VERSION
-#   define APP_PROJECT_VERSION 1.4.14
+#   define APP_PROJECT_VERSION 1.4.16
 #endif
 
 #ifndef APP_VERSION
@@ -25,7 +25,7 @@
 
 //$$$ Crap for Thales
 #ifndef APP_MODEL_VERSION
-#   define APP_MODEL_VERSION 4.9.2
+#   define APP_MODEL_VERSION 4.11.1
 #endif
 
 // -----------------------------------------------------------------------------
