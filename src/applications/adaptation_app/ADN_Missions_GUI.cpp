@@ -227,7 +227,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
         helpPanel_[ eMissionType ]->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Minimum );
 
         QGridLayout* subHelpLayout = new QGridLayout( helpPanel_[ eMissionType ] );
-        subHelpLayout->addWidget( new QLabel( tr( "<b>Wiki synthax</b>" ) ), 0, 0, 1, 1 );
+        subHelpLayout->addWidget( new QLabel( tr( "<b>Wiki syntax</b>" ) ), 0, 0, 1, 1 );
         subHelpLayout->addWidget( new QLabel( tr( "<b>Result</b>" ) ), 0, 1, 1, 1 );
         subHelpLayout->addWidget( new SelectableLabel( tr( "$$image.jpg$$" ) ), 1, 0, 1, 1 );
         subHelpLayout->addWidget( new QLabel( tr( "<img alt=\"image\"/>" ) ), 1, 1, 1, 1 );

@@ -2733,8 +2733,8 @@ PNG (*.png)</translation>
         <translation>&lt;b&gt;Résultat&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Wiki synthax&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Synthaxe Wiki&lt;/b&gt;</translation>
+        <source>&lt;b&gt;Wiki syntax&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Syntaxe Wiki&lt;/b&gt;</translation>
     </message>
     <message>
         <source>&apos;&apos;italic text&apos;&apos;</source>

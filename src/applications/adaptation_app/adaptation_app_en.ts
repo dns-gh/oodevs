@@ -2722,7 +2722,7 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;b&gt;Wiki synthax&lt;/b&gt;</source>
+        <source>&lt;b&gt;Wiki syntax&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
