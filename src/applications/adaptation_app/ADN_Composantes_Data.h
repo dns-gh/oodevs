@@ -107,6 +107,8 @@ public:
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
+        bool IsTypeValid() const;
+
     public:
         std::string strName_;
         ADN_Type_Bool bIsPresent_;
@@ -132,6 +134,8 @@ public:
         void ReadArchive( xml::xistream& input );
         void ReadInfo( const std::string& type, xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
+
+        bool IsRepairTypeValid() const;
 
     public:
         ADN_Type_Bool bIsTower_;
@@ -184,6 +188,8 @@ public:
         void ReadLogisticFunction( const std::string& type, xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
+        bool IsRepairTypeValid() const;
+
     public:
         ADN_Type_Bool       bHasHealthInfos_;
         LogHealthInfos      healthInfos_;
@@ -205,7 +211,6 @@ public:
         std::string GetItemName();
 
         BreakdownInfos* CreateCopy();
-
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( const std::string& origin, xml::xostream& output ) const;

@@ -706,6 +706,22 @@ bool DEC_AgentFunctions::CanRelievePion( MIL_Agent_ABC& callerAgent, const DEC_D
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::SurrenderAutomat
+// Created: MMC 2013-03-19
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::SurrenderAutomat( MIL_Agent_ABC& callerAgent, DEC_Decision_ABC* automat )
+{
+    if( !automat )
+        throw std::runtime_error( "Invalid automat in DEC_AgentFunctions::SurrenderAutomat" );
+    if( automat->GetAutomate().GetArmy() == callerAgent.GetArmy() )
+        return false;
+    if( automat->GetAutomate().IsSurrendered() )
+        return false;
+    automat->GetAutomate().SurrenderWithUnits( callerAgent.GetArmy() );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetPionsWithPC
 // Created: JVT 2004-12-20
 // -----------------------------------------------------------------------------
@@ -1289,6 +1305,20 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToMineWith
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::RetrieveUnitsAbleToDemineWithLocalisation
+// Created: LMT 2013-03-27
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToDemineWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation )
+{
+    std::vector< DEC_Decision_ABC* > unitsAbleToMine;
+    std::vector< DEC_Decision_ABC* >::const_iterator it;
+    for( it = units.begin(); it != units.end(); ++it )
+        if( AgentCanDemineObject( *it, type, localisation ) )
+            unitsAbleToMine.push_back( *it );
+    return unitsAbleToMine;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::RetrieveUnitsAbleToByPass
 // Created: LMT 2012-02-01
 // -----------------------------------------------------------------------------
@@ -1409,6 +1439,17 @@ bool DEC_AgentFunctions::AgentCanMineObject( const DEC_Decision_ABC* agent, cons
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanMineObject" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanMineTypeWithReinforcement( type, localisation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanDemineObject
+// Created: LMT 2013-03-27
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanDemineObject( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation )
+{
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in AgentCanDemineObject" );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDemineTypeWithReinforcement( type, localisation );
 }
 
 // -----------------------------------------------------------------------------

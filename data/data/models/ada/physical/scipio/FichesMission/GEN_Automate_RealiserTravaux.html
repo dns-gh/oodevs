@@ -22,10 +22,10 @@
 				<step>Distribuer les chantiers aux pions ;</step>
 			</li>
 			<li>
-				<step>Le premier échelon réalise les travaux sur chaque chantier (les obstacles de manoeuvre devront être activés par l'ordre de conduite "Activer obstacles") ;</step>
+				<step>Le premier échelon réalise les travaux sur chaque chantier (les obstacles de manoeuvre devront être activés par l'ordre de conduite "Activer obstacles"). Une seule unité sera affectée pour une construction, les unités supplémentaires, même si elles sont capables de construire ces objets, vont directement au point de regroupement ;</step>
 			</li>
 			<li>
-				<step>Le second échelon renforce le premier échelon ;</step>
+				<step>Si un pion n'a pas la capacité de construire un obstacle (manque de la capacité de construction ou de dotations) alors il le signale. Automatiquement l'automate lui assigne un renfort si il existe un pion capable d'effectuer cette construction.</step>
 			</li>
 			<li>
 				<step>Rejoindre le point de regroupement une fois les travaux terminés (et les obstacles de manoeuvre activés).</step>

@@ -93,10 +93,10 @@ MineAttribute::~MineAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MineAttribute::SetDotations
+// Name: MineAttribute::SetMaxDotations
 // Created: ABR 2012-03-20
 // -----------------------------------------------------------------------------
-void MineAttribute::SetDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation )
+void MineAttribute::SetMaxDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation )
 {
     dotation_            = &category;
     nFullNbrDotation_    = nFullNbrDotation;

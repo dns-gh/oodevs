@@ -21,6 +21,7 @@
 #include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -326,31 +327,43 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
     dataRecognition_.Update( perception.GetRecognitionData() );
     dataIdentification_.Update( perception.GetIdentificationData() );
     UpdatePerceptionSources( perception );
-    if( bMaxPerceptionLevelUpdated_ && !IsDead() && &perception.GetAgentPerceiving() != &perception.GetAgentPerceived() )
+    MIL_Agent_ABC& agentPerceived = perception.GetAgentPerceived();
+    if( bMaxPerceptionLevelUpdated_ && !IsDead() && &perception.GetAgentPerceiving() != &agentPerceived )
     {
         if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_ )
             MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_DetectedUnit );
         else if( const MIL_Army_ABC* army = GetArmy() )
         {
+            const PHY_PerceptionLevel& maxPerception = perception.GetMaxPerceptionLevel();
             if( pArmyKnowing_->IsAFriend( *army ) == eTristate_True )
             {
-                if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ )
+                if( maxPerception == PHY_PerceptionLevel::recognized_ )
                     MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_FriendUnitRecognized );
-                else if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
+                else if( maxPerception == PHY_PerceptionLevel::identified_ )
                     MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_FriendUnitIdentified );
             }
             else if( pArmyKnowing_->IsAnEnemy( *army ) == eTristate_True )
             {
-                if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ )
-                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_EnemyUnitRecognized );
-                else if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
-                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_EnemyUnitIdentified );
+                if( agentPerceived.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
+                {
+                    if( maxPerception == PHY_PerceptionLevel::recognized_ )
+                        MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_SurrenderedUnitRecognized );
+                    else if( maxPerception == PHY_PerceptionLevel::identified_ )
+                        MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_SurrenderedUnitIdentified );
+                }
+                else
+                {
+                    if( maxPerception == PHY_PerceptionLevel::recognized_ )
+                        MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_EnemyUnitRecognized );
+                    else if( maxPerception == PHY_PerceptionLevel::identified_ )
+                        MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_EnemyUnitIdentified );
+                }
             }
             else if( pArmyKnowing_->IsNeutral( *army ) == eTristate_True )
             {
-                if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ )
+                if( maxPerception == PHY_PerceptionLevel::recognized_ )
                     MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_NeutralUnitRecognized );
-                else if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
+                else if( maxPerception == PHY_PerceptionLevel::identified_ )
                     MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_NeutralUnitIdentified );
             }
         }

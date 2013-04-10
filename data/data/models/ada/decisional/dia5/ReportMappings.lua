@@ -51,3 +51,5 @@ tableRC[ eRC_ActivationObstacleDeManoeuvre ] = function( typeMessage, id, list )
 tableRC[ eRC_FollowingUnitIsDead ] = function( typeMessage, id, list ) return DEC_RC_String( myself, typeMessage, id, list[1] ) end
 tableRC[ eRC_CombatSupportUnitIsDead ] = function( typeMessage, id, list ) return DEC_RC_String( myself, typeMessage, id, list[1] ) end
 tableRC[ eRC_TirIndirectLessInterventionType ] = function( typeMessage, id, list ) return DEC_RC_String( myself, typeMessage, id, list[1] ) end
+tableRC[ eRC_TransportRoundTrip ] = function( typeMessage, id, list ) return DEC_RC_Float( myself, typeMessage, id, list[1], list[2] ) end
+tableRC[ eRC_TransportRoundTrip ] = function( typeMessage, id, list ) return DEC_RC_Float( myself, typeMessage, id, list[1], list[2] ) end

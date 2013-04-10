@@ -1487,6 +1487,14 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </return>
         </method>
+        <method name="transportUnitRoundTrip">
+            <description>Returns the number of round-trip mandatory to transport unit</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isCommandingFor">
