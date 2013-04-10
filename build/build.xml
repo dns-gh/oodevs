@@ -276,7 +276,7 @@
         </sequential>
     </macrodef>
 
-    <target name="adaptation_test" description="create and reopen new base, then load and save adaptation main data then check that output is the same as input">
+    <target name="adaptation_test" description="load, save then diff physical data">
         <test-adaptation-newbase/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/scipio"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
