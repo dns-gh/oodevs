@@ -77,6 +77,8 @@ public:
     //! @name Operations
     //@{
     QMessageBox::StandardButton CheckSaving( bool checkConsistency = false );
+
+    void Load();
     //@}
 
 public slots:
@@ -106,7 +108,7 @@ signals:
 private:
     //! @name Helpers
     //@{
-    bool Load();
+    bool DoLoad();
     void LoadExercise();
     void CreateLayers( gui::ParametersLayer& parameters, gui::Layer& locations, gui::Layer& weather, gui::Layer& profilerLayer,
                        const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, gui::AutomatsLayer& automats, gui::FormationLayer& formation,

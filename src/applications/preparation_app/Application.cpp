@@ -88,6 +88,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
 
     // GUI
     mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *config_, GetExpiration() );
+    mainWindow_->Load();
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
 }
 

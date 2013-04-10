@@ -233,14 +233,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     setMinimumSize( 800, 600 );
     setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );
 
-    // Load exercise IFN
-    if( config_.GetExerciseFile().Exists() )
-    {
-        SetProgression( 0, tr( "Initialize data ..." ) );
-        if( Load() )
-            LoadExercise();
-        SetProgression( 100, tr( "Loading complete" ) );
-    }
     controllers_.ChangeMode( eModes_Default );
     controllers_.Register( *this );
 }
@@ -253,6 +245,22 @@ MainWindow::~MainWindow()
 {
     controllers_.Unregister( *this );
     process_->kill();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::Load
+// Created: MCO 2013-04-10
+// -----------------------------------------------------------------------------
+void MainWindow::Load()
+{
+    // Load exercise IFN
+    if( config_.GetExerciseFile().Exists() )
+    {
+        SetProgression( 0, tr( "Initialize data ..." ) );
+        if( DoLoad() )
+            LoadExercise();
+        SetProgression( 100, tr( "Loading complete" ) );
+    }
 }
 
 namespace
@@ -392,7 +400,7 @@ void MainWindow::DoLoad( const tools::Path& filename )
         SetProgression( 100, "" );
         throw;
     }
-    if( Load() )
+    if( DoLoad() )
     {
         SetWindowTitle( true );
         LoadExercise();
@@ -456,10 +464,10 @@ void MainWindow::Open()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow::Load
+// Name: MainWindow::DoLoad
 // Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
-bool MainWindow::Load()
+bool MainWindow::DoLoad()
 {
     try
     {
