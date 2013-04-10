@@ -1300,7 +1300,8 @@ void ADN_Equipments_Data::ConsumptionsInfos::ReadDotation( xml::xistream& input,
 {
     std::auto_ptr<ConsumptionItem> spNew( new ConsumptionItem( type, equipmentCategories, 0 ) );
     spNew->ReadArchive( input );
-    vConsumptions_.AddItem( spNew.release() );
+    if( spNew->GetCrossedElement() )
+        vConsumptions_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
