@@ -442,7 +442,7 @@
             <arg value="--out-file=${out.dir}/sdk/doc/html/index.html"/>
             <arg value="${libraries.dir}/protocol/doc/sdk.txt"/>
         </python>
-        <python failonerror="true">
+        <python>
             <arg value="${bin.dir}/asciidoc/asciidoc/a2x.py"/>
             <arg value="--format=pdf"/>
             <arg value="--fop"/>
@@ -470,7 +470,7 @@
             <arg value="-c"/>
             <arg value='find \"${src.dir.unix}/libraries/simulation_kernel\" -name \"*.cpp\" | xargs grep -e \"brain\\.Register(\" -e \"brain\\[.*=\" | grep -v \"\\.svn\" | grep -o \".*\.cpp\" | sort -u > ${out.dir.unix}/dec_api/dec_files.txt'/>
         </exec>
-        <python failonerror="true">
+        <python>
             <arg value="decfilter.py"/>
             <arg value="${out.dir}/dec_api/dec_files.txt"/>
             <arg value="${src.dir}/libraries/simulation_kernel/"/>
@@ -687,7 +687,7 @@
             </exec>
             <delete file="${out.dir}/setup.exe"/>
             <copy file="${bin.dir}/7z/7zS.sfx" tofile="${out.dir}/setup.sfx"/>
-            <python failonerror="true">
+            <python>
                 <arg value="${root.dir}/build/editres.py"/>
                 <arg value="editversion"/>
                 <arg value="--version=${version.version}"/>
@@ -695,7 +695,7 @@
                 <arg value="--original-filename=@{file}"/>
                 <arg value="${out.dir}/setup.sfx"/>
             </python>
-            <python failonerror="true">
+            <python>
                 <arg value="${root.dir}/build/editres.py"/>
                 <arg value="copyicons"/>
                 <arg value="${out.dir}/release/applications/simulation_app/simulation_app.exe"/>
@@ -730,7 +730,7 @@
     ============================================================================
     -->
     <target name="checkproject" description="check project configuration">
-        <python failonerror="true">
+        <python>
             <arg value="${bin.dir}/buildtools/checkproject.py"/>
             <arg value="${root.dir}"/>
             <arg value="${root.dir}/build/vc100/sword.sln"/>
@@ -741,7 +741,7 @@
     </target>
 
     <target name="checkreports" description="check simulation reports">
-        <python failonerror="true">
+        <python>
             <arg value="${root.dir}/build/checkreports.py"/>
             <arg value="check"/>
             <arg value="${root.dir}"/>
@@ -750,7 +750,7 @@
     </target>
 
     <target name="checkdec" description="check models knows about our DEC functions">
-        <python failonerror="true">
+        <python>
             <arg value="${root.dir}/build/listdec.py"/>
             <arg value="check"/>
             <arg value="${data.dir}/data/models/decfunctions.txt"/>
@@ -759,12 +759,12 @@
     </target>
 
     <target name="checkproto" description="check protobuf definitions">
-        <python failonerror="true">
+        <python>
             <arg value="${bin.dir}/protolint/protolint.py"/>
             <arg value="style"/>
             <arg value="${src.dir}/libraries/protocol/proto"/>
         </python>
-        <python failonerror="true">
+        <python>
             <arg value="${bin.dir}/protolint/protolint.py"/>
             <arg value="compare"/>
             <!-- The RulesOfEngagement enumeration was changed since 5.1.x,
