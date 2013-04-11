@@ -675,6 +675,8 @@ double DEC_Knowledge_Agent::ComputeDangerosity( const MT_Vector3D& vTargetPositi
     const MT_Vector3D vDataPosition( position2d.rX_, position2d.rY_, dataDetection_.GetAltitude() );
     const double rDistBtwSourceAndTarget = vTargetPosition.Distance( vDataPosition );
     const T_KnowledgeComposanteVector& composantes = dataRecognition_.GetComposantes();
+    if ( bValid_ == false )
+        return 0.;
     for( auto itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
         if( itComposante->IsMajor() )
             rDangerosity = std::max( rDangerosity, itComposante->GetDangerosity( *pAgentKnown_, targetMajorComposante, rDistBtwSourceAndTarget, bUseAmmo ) );
@@ -694,6 +696,8 @@ double DEC_Knowledge_Agent::GetMaxRangeToFireOn( const MIL_Agent_ABC& target, do
         return 0.;
     double rRange = 0;
     const T_KnowledgeComposanteVector& composantes = dataRecognition_.GetComposantes();
+    if ( bValid_ == false )
+        return 0;
     for( auto itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
     {
         const DEC_Knowledge_AgentComposante& composante = *itComposante;
@@ -827,6 +831,7 @@ bool DEC_Knowledge_Agent::IsMilitia() const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Agent::IsCivilian() const
 {
+    assert( pAgentKnown_ );
     return pAgentKnown_->IsCivilian();
 }
 
@@ -1056,7 +1061,7 @@ bool DEC_Knowledge_Agent::IsWounded() const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Agent::IsInCrowd() const
 {
-    return pAgentKnown_->GetKnowledge().HasCollision();
+    return bValid_ ? pAgentKnown_->GetKnowledge().HasCollision() : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -1161,6 +1166,8 @@ const std::string& DEC_Knowledge_Agent::GetCriticalIntelligence() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Agent::SetCriticalIntelligenceFromAgentKnown()
 {
+    if ( bValid_ == false )
+        return;
     criticalIntelligence_ = pAgentKnown_->GetCriticalIntelligence();
     bCriticalIntelligenceUpdated_ = true;
 }
@@ -1220,7 +1227,7 @@ bool DEC_Knowledge_Agent::IsPerceptionDistanceHacked() const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Agent::IsTransported() const
 {
-    return pAgentKnown_->GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
+    return bValid_ ? pAgentKnown_->GetRole< transport::PHY_RoleInterface_Transported >().IsTransported() : false;
 }
 
 // -----------------------------------------------------------------------------
