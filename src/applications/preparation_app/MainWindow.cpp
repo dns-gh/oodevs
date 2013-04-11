@@ -253,7 +253,6 @@ MainWindow::~MainWindow()
 // -----------------------------------------------------------------------------
 void MainWindow::Load()
 {
-    // Load exercise IFN
     if( config_.GetExerciseFile().Exists() )
     {
         SetProgression( 0, tr( "Initialize data ..." ) );
@@ -717,7 +716,7 @@ void MainWindow::SetWindowTitle( bool needsSaving )
     if( QThread::currentThread() != thread() ) // si setCaption est appelé par un autre thread -> assert QT.
         return;
     SetNeedsSaving( needsSaving );
-    QString filename = "";
+    QString filename;
     QString mode = ENT_Tr::ConvertFromModes( GetCurrentMode(), ENT_Tr_ABC::eToTr ).c_str();
     if( model_.IsLoaded() && isVisible() )
     {
