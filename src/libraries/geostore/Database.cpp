@@ -30,7 +30,7 @@ namespace
             sqlite3_open_v2(
                 blc::utf_to_utf< char >( path.ToBoost().wstring() ).c_str(),
                 &db,
-                SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,
+                SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX,
                 0 ) )
             throw MASA_EXCEPTION_SQLITE( "Failed to initialize database" );
         sqlite3_enable_load_extension( db, 1 );
