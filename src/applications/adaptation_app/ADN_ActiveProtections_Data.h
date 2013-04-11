@@ -62,8 +62,6 @@ public:
         using ADN_RefWithName::CheckValidity;
         virtual void CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
 
-        T_ActiveProtectionsInfosWeaponsVector& GetActiveProtectionsInfosWeapons();
-
     public:
         ADN_TypePtr_InVector_ABC< ADN_Resources_Data::AmmoCategoryInfo > ptr_;
         ADN_Type_Double coefficient_;

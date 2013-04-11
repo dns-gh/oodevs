@@ -119,6 +119,8 @@ public:
             return false;
 
         ADN_Weapons_Data_PhSizeInfos* pPhSizeInfos = static_cast< ADN_Weapons_Data_PhSizeInfos* >( pItem );
+        if( !pPhSizeInfos->ptrSize_.GetData() )
+            return false;
         userIds_[ pItem ] = ++userId_;
         ADN_GraphData* pNewData = new ADN_GraphData( userIds_[ pItem ], graph_ );
         QColor color;
@@ -442,8 +444,10 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
         pTable->AddItem( nRow, 0, static_cast< int >( phsSizeInfos.size() ), 1, *it, ( *it )->strName_.GetData().c_str() );
 
         int nSubRow = 0;
-        for( auto it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2, ++nSubRow )
+        for( auto it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2 )
         {
+            if( !(*it2)->ptrSize_.GetData() )
+                continue;
             if( nSubRow > 0 )
                 pTable->AddItem( nRow + nSubRow, 0, *it, ( *it )->strName_.GetData().c_str() );
             pTable->AddItem( nRow + nSubRow, 1, *it, &(*it2)->ptrSize_.GetData()->strName_, ADN_StandardItem::eString );
@@ -458,6 +462,7 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
                 pTable->GetDelegate().AddColor( row, row, col, col, 0, 100 );
                 pTable->AddItem( row, col, *it, &(*it3)->rPerc_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
             }
+            ++nSubRow;
         }
         nRow += static_cast< int >( phsSizeInfos.size() );
     }
@@ -489,9 +494,11 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools
 
     auto& weapons = data_.weapons_;
     int n = 0;
-    for( auto it = weapons.begin(); it != weapons.end(); ++it, ++n )
+    for( auto it = weapons.begin(); it != weapons.end(); ++it )
     {
         ADN_Weapons_Data_WeaponInfos& weapon = **it;
+        if( !weapon.ptrLauncher_.GetData() || !weapon.ptrAmmunition_.GetData() )
+            continue;
         tools::Path strFileName = tools::Path::FromUnicode( tr( "WeaponSystem_%1.htm" ).arg( n ).toStdWString() );
         QString strLink = QString( "<a href=\"" ) + strFileName.ToUTF8().c_str() + "\">" + weapon.strName_.GetData().c_str() + "</a>";
         indexBuilder.ListItem( strLink );
@@ -525,8 +532,10 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools
             builder.BeginTable( static_cast< int >( phsSizeInfos.size() + 1 ), static_cast< int >( distancesSet.size() + 1 ) );
 
             int nRow = 1;
-            for( auto it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2, ++nRow )
+            for( auto it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2 )
             {
+                if( !( *it2 )->ptrSize_.GetData() )
+                    continue;
                 builder.TableItem( nRow, 0, (*it2)->ptrSize_.GetData()->strName_.GetData().c_str() );
                 auto& phs = (*it2)->vPhs_;
                 for( auto it3 = phs.begin(); it3 != phs.end(); ++it3 )
@@ -536,6 +545,7 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools
                     builder.TableItem( nRow, nIndex + 1, (*it3)->rPerc_.GetData() );
                     builder.TableItem( 0, nIndex + 1, QString( "%1m").arg( (*it3)->nDistance_.GetData() ).toStdString().c_str() );
                 }
+                ++nRow;
             }
             builder.EndTable();
         }
@@ -554,6 +564,7 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools
         }
         builder.EndHtml();
         builder.WriteToFile( strLocalPath / strFileName );
+        ++n;
     }
     indexBuilder.EndList();
     indexBuilder.EndHtml();
@@ -576,7 +587,7 @@ void ADN_Weapons_GUI::UpdateModifiers()
     double phModifier = 1.;
     double distanceModifier = 1.;
 
-    if( pInfos->bSimulation_.GetData() != 0 )
+    if( pInfos->bSimulation_.GetData() != 0 && pInfos->ptrLauncher_.GetData() )
     {
         int firePosture = pInfos->nFirePosture_.GetData();
         int targetPosture = pInfos->nTargetPosture_.GetData();

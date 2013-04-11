@@ -3958,10 +3958,6 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
 <context>
     <name>ADN_Sensors_Data</name>
     <message>
-        <source>Sensors - Invalid disaster &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sensors</source>
         <translation type="unfinished">Sensores</translation>
     </message>
@@ -5667,14 +5663,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>ADN_Urban_Data</name>
     <message>
-        <source>Urban data - Invalid material type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Urban data - Invalid roof-shape type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Urban data - Invalid accomodation type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6258,18 +6246,7 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation type="unfinished">Equipo - Actividad inválida &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Equipment - Invalid armor and/or volume</source>
-        <translation type="unfinished">Equipo - Blindaje y/o volumen inválido</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Funeral_Data</name>
-    <message>
-        <source>Invalid resource &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6282,10 +6259,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 </context>
 <context>
     <name>Models_Data</name>
-    <message>
-        <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
-        <translation>Modelos de doctrina - Orden parcial inválida &apos;%1&apos;</translation>
-    </message>
     <message>
         <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
         <translation>Modelos de doctrina - Misión inválida &apos;%1&apos;</translation>
@@ -6332,19 +6305,11 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>People_Data</name>
     <message>
-        <source>Population - Invalid resource &apos;%1/%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Population</source>
         <translation type="unfinished">Población</translation>
     </message>
     <message>
         <source>Invalid schedule - You have already an appointment on the same moment :</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population - Invalid accommodation &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6412,14 +6377,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation type="unfinished">Datos inválidos</translation>
     </message>
     <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Object type - Invalid object &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6429,10 +6386,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Sensors - Invalid stance &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid object &apos;%1&apos;</source>
-        <translation>Sensores - Objeto inválido &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Sensors - Invalid unit volume &apos;%1&apos;</source>
@@ -6489,10 +6442,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unit - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unit types - Invalid nbc suit level &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6503,25 +6452,9 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>RoofShape - Invalid roofShape type name</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Material attribute is empty for &apos;%1&apos; template.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>RoofShape attribute is empty for &apos;%1&apos; template.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Weapons_Data</name>
-    <message>
-        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid ammunition type</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
         <translation type="unfinished"></translation>

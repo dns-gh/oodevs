@@ -76,11 +76,11 @@ public:
 
         StockLogThresholdInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output ) const;
+        void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC<helpers::LogisticSupplyClass> ptrLogisticSupplyClass_;
-        ADN_Type_Double                                        rLogThreshold_;
+        ADN_TypePtr_InVector_ABC< helpers::LogisticSupplyClass > ptrLogisticSupplyClass_;
+        ADN_Type_Double rLogThreshold_;
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< StockLogThresholdInfos >, StockLogThresholdInfos_Vector )
 

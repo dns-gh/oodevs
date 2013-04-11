@@ -3944,10 +3944,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
 <context>
     <name>ADN_Sensors_Data</name>
     <message>
-        <source>Sensors - Invalid disaster &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sensors</source>
         <translation type="unfinished">أجهزة الاستشعار</translation>
     </message>
@@ -5651,14 +5647,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>ADN_Urban_Data</name>
     <message>
-        <source>Urban data - Invalid material type &apos;%1&apos;</source>
-        <translation type="unfinished">نوع البيانات الحضرية-المواد غير صالح &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Urban data - Invalid roof-shape type &apos;%1&apos;</source>
-        <translation type="unfinished">نوع البيانات الحضرية-سقف-الشكل غير صالح &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Urban data - Invalid accomodation type &apos;%1&apos;</source>
         <translation type="unfinished">نوع البيانات الحضرية-الإقامة في غير صالح &apos;%1&apos;</translation>
     </message>
@@ -6242,19 +6230,8 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">معدات-المنشأة غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Equipment - Invalid armor and/or volume</source>
-        <translation type="unfinished">معدات-الدروع غير صحيحة و/أو وحدة التخزين</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
         <translation type="unfinished">معدات-نوع التضاريس غير صالح &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>Funeral_Data</name>
-    <message>
-        <source>Invalid resource &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6266,10 +6243,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>Models_Data</name>
-    <message>
-        <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
-        <translation type="unfinished">نماذج نظرية-frag غير صالحة من أجل &apos;%1&apos;</translation>
-    </message>
     <message>
         <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
         <translation type="unfinished">نماذج نظرية-البعثة غير صالح &apos;%1&apos;</translation>
@@ -6316,19 +6289,11 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>People_Data</name>
     <message>
-        <source>Population - Invalid resource &apos;%1/%2&apos;</source>
-        <translation type="unfinished">السكان-الموارد غير صالح &apos;%1/%2&apos;</translation>
-    </message>
-    <message>
         <source>Population</source>
         <translation type="unfinished">السكان</translation>
     </message>
     <message>
         <source>Invalid schedule - You have already an appointment on the same moment :</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population - Invalid accommodation &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6396,14 +6361,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-طبيعة المورد غير صحيحة &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-فئة الإمداد اللوجستي المورد غير صالحة &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Object type - Invalid object &apos;%1&apos;</source>
         <translation type="unfinished">نوع الكائن-كائن غير صالح &apos;%1&apos;</translation>
     </message>
@@ -6413,10 +6370,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Sensors - Invalid stance &apos;%1&apos;</source>
         <translation type="unfinished">أجهزة الاستشعار-موقف غير صالح &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid object &apos;%1&apos;</source>
-        <translation type="unfinished">أجهزة الاستشعار--كائن غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Sensors - Invalid unit volume &apos;%1&apos;</source>
@@ -6443,10 +6396,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Unit types - Invalid equipment &apos;%1&apos;</source>
         <translation type="unfinished">أنواع وحدة-معدات غير صالحة &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Unit - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation type="unfinished">وحدة-فئة الإمداد اللوجستي المورد غير صالحة &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Units</source>
@@ -6484,28 +6433,12 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>Urban_Data</name>
     <message>
-        <source>Material attribute is empty for &apos;%1&apos; template.</source>
-        <translation type="unfinished">السمة المادية فارغ للقالب &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>RoofShape attribute is empty for &apos;%1&apos; template.</source>
-        <translation type="unfinished">السمة روفشابي فارغ للقالب &apos;%1&apos;.</translation>
-    </message>
-    <message>
         <source>RoofShape - Invalid roofShape type name</source>
         <translation type="unfinished">روفشابي-اسم نوع روفشابي غير صالحة</translation>
     </message>
 </context>
 <context>
     <name>Weapons_Data</name>
-    <message>
-        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
-        <translation type="unfinished">سلاح نظم &apos;%1&apos;/&apos;%2&apos;--نوع المشغل غير صالحة</translation>
-    </message>
-    <message>
-        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid ammunition type</source>
-        <translation type="unfinished">سلاح نظم &apos;%1&apos;/&apos;%2&apos;--نوع الذخيرة غير صالحة</translation>
-    </message>
     <message>
         <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
         <translation type="unfinished">سلاح %1-النيران غير المباشرة-مجموعة ماكس&lt; min range min=&quot;&quot;&gt;&lt;/ min range&gt;</translation>

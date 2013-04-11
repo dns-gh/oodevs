@@ -40,9 +40,7 @@ public:
         std::string GetItemName() { return strName_.GetData(); }
     };
 
-    typedef ADN_Type_Vector_ABC< SizeInfos >         T_SizeInfos_Vector;
-    typedef T_SizeInfos_Vector::iterator            IT_SizeInfos_Vector;
-    typedef T_SizeInfos_Vector::const_iterator     CIT_SizeInfos_Vector;
+    typedef ADN_Type_Vector_ABC< SizeInfos > T_SizeInfos_Vector;
 
 public:
              ADN_Categories_Data();
@@ -134,7 +132,7 @@ helpers::T_LogisticSupplyClass_Vector& ADN_Categories_Data::GetLogisticSupplyCla
 inline
 helpers::ArmorInfos* ADN_Categories_Data::FindArmor( const std::string& strName )
 {
-    helpers::IT_ArmorInfos_Vector it = std::find_if( vArmors_.begin(), vArmors_.end(), ADN_Tools::NameCmp< helpers::ArmorInfos >( strName ) );
+   auto it = std::find_if( vArmors_.begin(), vArmors_.end(), ADN_Tools::NameCmp< helpers::ArmorInfos >( strName ) );
     if( it == vArmors_.end() )
         return 0;
     return *it;
@@ -147,7 +145,7 @@ helpers::ArmorInfos* ADN_Categories_Data::FindArmor( const std::string& strName 
 inline
 ADN_Categories_Data::SizeInfos* ADN_Categories_Data::FindSize( const std::string& strName )
 {
-    for( IT_SizeInfos_Vector it = vSizes_.begin(); it != vSizes_.end(); ++it )
+    for( auto it = vSizes_.begin(); it != vSizes_.end(); ++it )
         if( ADN_Tools::CaselessCompare( (*it)->strName_.GetData(), strName ) )
             return *it;
     return 0;
@@ -160,7 +158,7 @@ ADN_Categories_Data::SizeInfos* ADN_Categories_Data::FindSize( const std::string
 inline
 helpers::ResourceNatureInfos* ADN_Categories_Data::FindDotationNature( const std::string& strName )
 {
-    for( helpers::IT_ResourceNatureInfos_Vector it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
+    for( auto it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
         if( ADN_Tools::CaselessCompare( (*it)->strName_.GetData(), strName ) )
             return *it;
     return 0;
@@ -173,8 +171,8 @@ helpers::ResourceNatureInfos* ADN_Categories_Data::FindDotationNature( const std
 inline
 helpers::LogisticSupplyClass* ADN_Categories_Data::FindLogisticSupplyClass( const std::string& strName )
 {
-    for( helpers::IT_LogisticSupplyClass_Vector it = vLogisticSupplyClasses_.begin(); it != vLogisticSupplyClasses_.end(); ++it )
-        if( ADN_Tools::CaselessCompare( (*it)->strName_.GetData(), strName ) )
+    for( auto it = vLogisticSupplyClasses_.begin(); it != vLogisticSupplyClasses_.end(); ++it )
+        if( ADN_Tools::CaselessCompare( ( *it )->strName_.GetData(), strName ) )
             return *it;
     return 0;
 }

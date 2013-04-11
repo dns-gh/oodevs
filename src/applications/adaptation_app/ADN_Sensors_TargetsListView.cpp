@@ -102,8 +102,7 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
     {
         // Add the weapon to the list.
         TargetInfos* pNewInfo = new TargetInfos();
-        pNewInfo->ptrObject_ = vObjects[ nMenuResult - 2 ];
-        pNewInfo->strName_ = pNewInfo->ptrObject_.GetData()->strName_.GetData();
+        pNewInfo->SetCrossedElement( vObjects[ nMenuResult - 2 ] );
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
@@ -123,7 +122,7 @@ bool ADN_Sensors_TargetsListView::Contains( const ADN_Objects_Data_ObjectInfos* 
     {
         ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
         TargetInfos* pData = static_cast< TargetInfos* >( pCurr->GetData() );
-        if( pData->ptrObject_.GetData() == pInfo )
+        if( pData->GetCrossedElement() == pInfo )
             return true;
     }
     return false;

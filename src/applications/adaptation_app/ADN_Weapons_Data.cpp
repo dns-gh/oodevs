@@ -134,6 +134,8 @@ void ADN_Weapons_Data::UpdateNames()
     for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
     {
         ADN_Weapons_Data_WeaponInfos* pWeapon = *it;
+        if( !pWeapon->ptrLauncher_.GetData() || !pWeapon->ptrAmmunition_.GetData() )
+            continue;
         pWeapon->strName_ = pWeapon->ptrLauncher_.GetData()->strName_.GetData()
                           + " & "
                           + pWeapon->ptrAmmunition_.GetData()->strName_.GetData();

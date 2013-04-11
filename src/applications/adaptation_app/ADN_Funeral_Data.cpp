@@ -93,7 +93,7 @@ void ADN_Funeral_Data::WriteArchive( xml::xostream& output )
                 << xml::attribute( "speed", fakeTransporterSpeed_ )
             << xml::end
             << xml::start( "packagings" );
-    for( IT_FuneralPackagingResource_Vector it = funeralPackagingResources_.begin(); it != funeralPackagingResources_.end(); ++it )
+    for( auto it = funeralPackagingResources_.begin(); it != funeralPackagingResources_.end(); ++it )
         (*it)->WriteArchive( output );
     output  << xml::end
         << xml::end;

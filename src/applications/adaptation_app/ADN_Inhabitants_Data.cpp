@@ -69,25 +69,20 @@ void ADN_Inhabitants_Data::EventInfos::ReadArchive( xml::xistream& input )
     day_ = ADN_Tr::ConvertToDays( day );
     from_ = input.attribute< std::string >( "from" );
     to_ = input.attribute< std::string >( "to" );
-    accommodation = input.attribute< std::string >( "motivation" );
-
-    ADN_Urban_Data::AccommodationInfos* pAccommodation = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindAccommodation( accommodation );
-    if( !pAccommodation )
-        throw MASA_EXCEPTION( tools::translate( "People_Data", "Population - Invalid accommodation '%1'" ).arg( accommodation.c_str() ).toStdString() );
-    ptrAccommodation_ = pAccommodation;
+    input >> xml::attribute( "motivation", ptrAccommodation_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EventInfos::WriteArchive
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
-void ADN_Inhabitants_Data::EventInfos::WriteArchive( xml::xostream& output ) const
+void ADN_Inhabitants_Data::EventInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "event" )
            << xml::attribute( "day", day_.Convert() )
            << xml::attribute( "from", from_ )
            << xml::attribute( "to", to_ )
-           << xml::attribute( "motivation", ptrAccommodation_.GetData()->strName_ )
+           << xml::attribute( "motivation", ptrAccommodation_ )
            << xml::end;
 }
 
@@ -96,10 +91,10 @@ void ADN_Inhabitants_Data::EventInfos::WriteArchive( xml::xostream& output ) con
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
 ADN_Inhabitants_Data::InhabitantsInfosConsumption::InhabitantsInfosConsumption()
-    : ptrResource_( ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos(), 0 )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos(), 0, true, "type" )
     , consumption_( 0 )
 {
-    BindExistenceTo( &ptrResource_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +103,7 @@ ADN_Inhabitants_Data::InhabitantsInfosConsumption::InhabitantsInfosConsumption()
 // -----------------------------------------------------------------------------
 std::string ADN_Inhabitants_Data::InhabitantsInfosConsumption::GetItemName()
 {
-    return ptrResource_.GetData()->strName_.GetData();
+    return GetCrossedElement() ? GetCrossedElement()->strName_.GetData() : "";
 }
 
 // -----------------------------------------------------------------------------
@@ -118,8 +113,7 @@ std::string ADN_Inhabitants_Data::InhabitantsInfosConsumption::GetItemName()
 ADN_Inhabitants_Data::InhabitantsInfosConsumption* ADN_Inhabitants_Data::InhabitantsInfosConsumption::CreateCopy()
 {
     InhabitantsInfosConsumption* pCopy = new InhabitantsInfosConsumption();
-    pCopy->ptrResource_ = ptrResource_.GetData();
-    pCopy->ptrResource_.SetVector( ptrResource_.GetVector() );
+    pCopy->SetCrossedElement( GetCrossedElement() );
     pCopy->consumption_ = consumption_.GetData();
     return pCopy;
 }
@@ -130,24 +124,19 @@ ADN_Inhabitants_Data::InhabitantsInfosConsumption* ADN_Inhabitants_Data::Inhabit
 // -----------------------------------------------------------------------------
 void ADN_Inhabitants_Data::InhabitantsInfosConsumption::ReadArchive( xml::xistream& xis )
 {
-    std::string strResource;
-    xis >> xml::attribute( "type", strResource )
-        >> xml::attribute( "need", consumption_ );
-    ADN_ResourceNetworks_Data::ResourceNetworkInfos* pResource = ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().FindResourceNetwork( strResource );
-    if( !pResource )
-        throw MASA_EXCEPTION( tools::translate( "People_Data", "Population - Invalid resource '%1/%2'" ).arg( strResource.c_str() ).toStdString() );
-    ptrResource_ = pResource;
+    ADN_CrossedRef< ADN_ResourceNetworks_Data::ResourceNetworkInfos >::ReadArchive( xis );
+    xis >> xml::attribute( "need", consumption_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantsInfosConsumption::WriteArchive
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-void ADN_Inhabitants_Data::InhabitantsInfosConsumption::WriteArchive( xml::xostream& xos ) const
+void ADN_Inhabitants_Data::InhabitantsInfosConsumption::WriteArchive( xml::xostream& xos )
 {
-    xos << xml::start( "resource" )
-            << xml::attribute( "type", ptrResource_.GetData()->strName_ )
-            << xml::attribute( "need", consumption_ )
+    xos << xml::start( "resource" );
+    ADN_CrossedRef< ADN_ResourceNetworks_Data::ResourceNetworkInfos >::WriteArchive( xos );
+    xos   << xml::attribute( "need", consumption_ )
         << xml::end;
 }
 
@@ -310,7 +299,7 @@ const std::string ADN_Inhabitants_Data::InhabitantsInfos::CheckErrors() const
 // Name: InhabitantsInfos::WriteArchive
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-void ADN_Inhabitants_Data::InhabitantsInfos::WriteArchive( xml::xostream& output ) const
+void ADN_Inhabitants_Data::InhabitantsInfos::WriteArchive( xml::xostream& output )
 {
     const std::string error = CheckErrors();
     if( error != "" )
@@ -318,7 +307,7 @@ void ADN_Inhabitants_Data::InhabitantsInfos::WriteArchive( xml::xostream& output
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "id", nId_ )
-            << xml::attribute( "associated-crowd", ptrModel_.GetData()->strName_ );
+            << xml::attribute( "associated-crowd", ptrModel_ );
     if( !strAngryCrowdMission_.GetData().empty() )
         output << xml::attribute( "angry-crowd-mission", strAngryCrowdMission_ );
     output << xml::start( "repartition" );
@@ -454,7 +443,7 @@ QStringList ADN_Inhabitants_Data::GetInhabitantsThatUse( ADN_Crowds_Data::Crowds
 {
     QStringList result;
     for( auto it = vInhabitants_.begin(); it != vInhabitants_.end(); ++it )
-        if( ( *it )->ptrModel_.GetData()->strName_.GetData() == population.strName_.GetData() )
+        if( ( *it )->ptrModel_.GetData() && ( *it )->ptrModel_.GetData()->strName_.GetData() == population.strName_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
     return result;
 }
@@ -467,8 +456,8 @@ QStringList ADN_Inhabitants_Data::GetInhabitantsThatUse( ADN_ResourceNetworks_Da
 {
     QStringList result;
     for( auto it = vInhabitants_.begin(); it != vInhabitants_.end(); ++it )
-        for( CIT_InhabitantsInfosConsumptionVector itConsumption = ( *it )->consumptions_.begin(); itConsumption != ( *it )->consumptions_.end(); ++itConsumption )
-            if( ( *itConsumption )->ptrResource_.GetData()->strName_.GetData() == network.strName_.GetData() )
+        for( auto itConsumption = ( *it )->consumptions_.begin(); itConsumption != ( *it )->consumptions_.end(); ++itConsumption )
+            if( ( *itConsumption )->GetCrossedElement() && ( *itConsumption )->GetCrossedElement()->strName_.GetData() == network.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
     return result;
 }

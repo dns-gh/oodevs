@@ -265,7 +265,7 @@ void ADN_FireClass_Data::FireClassInfos::ReadArchive( xml::xistream& input )
 void ADN_FireClass_Data::FireClassInfos::ReadAgent( xml::xistream& input )
 {
     std::string agent = input.attribute< std::string >( "agent" );
-    IT_ExtinguisherAgentInfos_Vector itAgent = std::find_if( agents_.begin(), agents_.end(), ADN_ExtinguisherAgentInfos::Cmp( agent ));
+    auto itAgent = std::find_if( agents_.begin(), agents_.end(), ADN_ExtinguisherAgentInfos::Cmp( agent ) );
     if( itAgent == agents_.end() )
         throw MASA_EXCEPTION( tr( "Fire class - Invalid extinguisher agent '%1'" ).arg( agent.c_str() ).toStdString() );
     ( *itAgent )->ReadArchive( input );
@@ -324,22 +324,22 @@ void ADN_FireClass_Data::FireClassInfos::WriteArchive( xml::xostream& output )
                << xml::attribute( "increase-rate", increaseRate_ )
                << xml::attribute( "decrease-rate", decreaseRate_ )
                << xml::start( "extinguisher-agents" );
-    for( IT_ExtinguisherAgentInfos_Vector itAgent = agents_.begin(); itAgent != agents_.end(); ++itAgent )
+    for( auto itAgent = agents_.begin(); itAgent != agents_.end(); ++itAgent )
         ( *itAgent )->WriteArchive( output );
     output     << xml::end
                << xml::start( "weather-effects" );
-    for( IT_WeatherFireEffects_Vector itWeather = weatherEffects_.begin(); itWeather != weatherEffects_.end(); ++itWeather )
+    for( auto itWeather = weatherEffects_.begin(); itWeather != weatherEffects_.end(); ++itWeather )
         ( *itWeather )->WriteArchive( output );
     output     << xml::end;
     injuryInfos_.WriteArchive( output );
     output     << xml::start( "urban-modifiers" );
-    for( helpers::IT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
+    for( auto itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
         ( *itUrbanAttrition )->WriteArchive( output );
     output     << xml::end;
     if( isSurface_.GetData() )
     {
         output << xml::start( "surfaces" );
-        for( IT_FireSurfaceInfos_Vector itSurface = surfaceInfos_.begin(); itSurface != surfaceInfos_.end(); ++itSurface )
+        for( auto itSurface = surfaceInfos_.begin(); itSurface != surfaceInfos_.end(); ++itSurface )
             ( *itSurface )->WriteArchive( output );
         output << xml::end;
     }
@@ -424,7 +424,7 @@ void ADN_FireClass_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "cell-size" )
                 << xml::attribute( "value", cellSize_ )
             << xml::end;
-    for( IT_FireClassInfosVector it = fireClasses_.begin(); it != fireClasses_.end(); ++it )
+    for( auto it = fireClasses_.begin(); it != fireClasses_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
 }
@@ -454,9 +454,12 @@ ADN_FireClass_Data::T_FireClassInfosVector& ADN_FireClass_Data::GetFireClassesIn
 QStringList ADN_FireClass_Data::GetFireThatUse( ADN_Resources_Data::CategoryInfo& infos )
 {
     QStringList result;
-    for( IT_FireClassInfosVector it = fireClasses_.begin(); it != fireClasses_.end(); ++it )
-        for( IT_ExtinguisherAgentInfos_Vector itAgent = ( *it )->agents_.begin(); itAgent != ( *it )->agents_.end(); ++itAgent )
-            if( ( *itAgent )->ptrAgent_.GetData()->strName_.GetData() == infos.strName_.GetData() )
+    for( auto it = fireClasses_.begin(); it != fireClasses_.end(); ++it )
+        for( auto itAgent = ( *it )->agents_.begin(); itAgent != ( *it )->agents_.end(); ++itAgent )
+        {
+            ADN_Resources_Data::CategoryInfo* catInfos = ( *itAgent )->GetCrossedElement();
+            if( catInfos && catInfos->strName_.GetData() == infos.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
+        }
     return result;
 }

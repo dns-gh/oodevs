@@ -53,7 +53,6 @@ public:
     //! @name Types
     //@{
     typedef ADN_Type_Vector_ABC< ResourceNetworkInfos >  T_ResourceNetworkInfosVector;
-    typedef T_ResourceNetworkInfosVector::iterator      IT_ResourceNetworkInfosVector;
     //@}
 
 public:

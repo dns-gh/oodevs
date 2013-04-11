@@ -516,10 +516,7 @@ void ADN_Urban_Data::InfrastructureInfos::WriteInfrastructure( xml::xostream& ou
     std::string strData = strName_.GetData();
     output << xml::start( "infrastructure" )
         << xml::attribute( "name",  trim( strData ) );
-    if( pSymbol_.GetData() )
-        output << xml::attribute( "symbol", pSymbol_.GetData()->strName_ );
-    else
-        output << xml::attribute( "symbol", "" );
+    output << xml::attribute( "symbol", pSymbol_.GetData() ? pSymbol_.GetData()->strName_.GetData() : "" );
 
     if( bMedical_.GetData() )
         output << xml::attribute( "medical", bMedical_.GetData() );
@@ -640,15 +637,14 @@ ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos( xml::xistream& input )
 {
     BindExistenceTo( &ptrMaterial_ );
     BindExistenceTo( &ptrRoofShape_ );
-    std::string material, roofShape;
     unsigned int red, green, blue;
     double alpha;
     input >> xml::start( "architecture" )
               >> xml::attribute( "floor-number", floor_ )
               >> xml::attribute( "height", height_ )
-              >> xml::attribute( "material", material )
+              >> xml::attribute( "material", ptrMaterial_ )
               >> xml::attribute( "occupation", occupation_ )
-              >> xml::attribute( "roof-shape", roofShape )
+              >> xml::attribute( "roof-shape", ptrRoofShape_ )
               >> xml::attribute( "trafficability", trafficability_ )
               >> xml::attribute( "parking-floors", parking_ )
           >> xml::end
@@ -666,14 +662,6 @@ ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos( xml::xistream& input )
     color.setAlphaF( alpha );
     color_ = color.name().toStdString();
     alpha_ = color.alpha();
-    ADN_Urban_Data::UrbanMaterialInfos* pMaterial = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindMaterial( material );
-    if( !pMaterial )
-        throw MASA_EXCEPTION( tools::translate( "ADN_Urban_Data", "Urban data - Invalid material type '%1'" ).arg( material.c_str() ).toStdString() );
-    ptrMaterial_ = pMaterial;
-    ADN_Urban_Data::RoofShapeInfos* pRoofShape = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindRoofShape( roofShape );
-    if( !pRoofShape )
-        throw MASA_EXCEPTION( tools::translate( "ADN_Urban_Data", "Urban data - Invalid roof-shape type '%1'" ).arg( roofShape.c_str() ).toStdString() );
-    ptrRoofShape_ = pRoofShape;
 }
 
 // -----------------------------------------------------------------------------
@@ -701,18 +689,14 @@ void ADN_Urban_Data::UrbanTemplateInfos::ReadUsage( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::UrbanTemplateInfos::Write( xml::xostream& output )
 {
-    if( !ptrMaterial_.GetData() )
-        throw MASA_EXCEPTION( tools::translate( "Urban_Data", "Material attribute is empty for '%1' template." ).arg( strName_.GetData().c_str() ).toStdString() );
-    if( !ptrRoofShape_.GetData() )
-        throw MASA_EXCEPTION( tools::translate( "Urban_Data", "RoofShape attribute is empty for '%1' template." ).arg( strName_.GetData().c_str() ).toStdString() );
     output << xml::start( "template" )
                << xml::attribute( "name", strName_ )
                << xml::start( "architecture" )
                    << xml::attribute( "floor-number", floor_ )
                    << xml::attribute( "height", height_ )
-                   << xml::attribute( "material", ptrMaterial_.GetData()->strName_ )
+                   << xml::attribute( "material", ptrMaterial_ )
                    << xml::attribute( "occupation", occupation_.GetData() / 100.f )
-                   << xml::attribute( "roof-shape", ptrRoofShape_.GetData()->strName_ )
+                   << xml::attribute( "roof-shape", ptrRoofShape_ )
                    << xml::attribute( "trafficability", trafficability_ )
                    << xml::attribute( "parking-floors", parking_ )
                << xml::end;
@@ -849,6 +833,8 @@ ADN_Urban_Data::UsageTemplateInfos::~UsageTemplateInfos()
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::UsageTemplateInfos::Write( xml::xostream& output )
 {
+    if( !accommodation_.GetData() )
+        return;
     double proportion = static_cast< double >( proportion_.GetData() ) / 100.f;
     output << xml::start( "usage" )
            << xml::attribute( "type", accommodation_.GetData()->strName_ )
@@ -878,8 +864,11 @@ QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( UrbanMaterialInfos& infos )
 {
     QStringList result;
     for( auto it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
-        if( ( *it )->ptrMaterial_.GetData()->strName_.GetData() == infos.strName_.GetData() )
+    {
+        ADN_Urban_Data::UrbanMaterialInfos* infosMat = ( *it )->ptrMaterial_.GetData();
+        if( infosMat && infosMat->strName_.GetData() == infos.strName_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
+    }
     return result;
 }
 
@@ -891,8 +880,11 @@ QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( RoofShapeInfos& infos )
 {
     QStringList result;
     for( auto it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
-        if( ( *it )->ptrRoofShape_.GetData()->strName_.GetData() == infos.strName_.GetData() )
+    {
+        ADN_Urban_Data::RoofShapeInfos* infosRoof = ( *it )->ptrRoofShape_.GetData();
+        if( infosRoof && infosRoof->strName_.GetData() == infos.strName_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
+    }
     return result;
 }
 
@@ -904,8 +896,11 @@ QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( AccommodationInfos& infos )
 {
     QStringList result;
     for( auto it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
-        for( CIT_UsageTemplateInfosVector itUsage = ( *it )->usages_.begin(); itUsage != ( *it )->usages_.end(); ++itUsage )
-            if( ( *itUsage )->accommodation_.GetData()->strName_.GetData() == infos.strName_.GetData() )
+        for( auto itUsage = ( *it )->usages_.begin(); itUsage != ( *it )->usages_.end(); ++itUsage )
+        {
+            AccommodationInfos* infosAcc = ( *itUsage )->accommodation_.GetData();
+            if( infosAcc && infosAcc->strName_.GetData() == infos.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
+        }
     return result;
 }

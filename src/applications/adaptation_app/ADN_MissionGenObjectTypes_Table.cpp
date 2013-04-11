@@ -82,7 +82,7 @@ void ADN_MissionGenObjectTypes_Table::dataChanged( const QModelIndex& topLeft, c
 void ADN_MissionGenObjectTypes_Table::AddRow( int row, void* data )
 {
     helpers::ADN_MissionGenObjectTypes_Infos* pInfos = static_cast< helpers::ADN_MissionGenObjectTypes_Infos* >( data );
-    if( !pInfos )
+    if( !pInfos || !pInfos->ptrObject_.GetData() )
         return;
     isAdding_ = true;
     AddItem( row, 0, data, &pInfos->ptrObject_.GetData()->strName_, ADN_StandardItem::eString );

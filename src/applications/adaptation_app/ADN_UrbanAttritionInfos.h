@@ -10,6 +10,7 @@
 #ifndef __ADN_UrbanAttritionInfos_h_
 #define __ADN_UrbanAttritionInfos_h_
 
+#include "ADN_CrossedRef.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_RefWithName.h"
 
@@ -22,9 +23,8 @@ namespace helpers
 */
 // Created: JSR 2010-12-02
 // =============================================================================
-class ADN_UrbanAttritionInfos : public ADN_RefWithName
+class ADN_UrbanAttritionInfos : public ADN_CrossedRef< ADN_Urban_Data::UrbanMaterialInfos >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -42,7 +42,6 @@ public:
 public:
     //! @name Member data
     //@{
-    ADN_TypePtr_InVector_ABC< ADN_Urban_Data::UrbanMaterialInfos > ptrMaterial_;
     ADN_Type_Double rCoeff_;
     //@}
 
@@ -56,7 +55,7 @@ public:
 
         bool operator()( ADN_UrbanAttritionInfos* tgtnfos ) const
         {
-            return tgtnfos->ptrMaterial_.GetData() == val_;
+            return tgtnfos->GetCrossedElement() == val_;
         }
     private:
         ADN_Urban_Data::UrbanMaterialInfos* val_;
@@ -70,7 +69,7 @@ public:
 
         bool operator()( ADN_UrbanAttritionInfos* tgtnfos ) const
         {
-            return tgtnfos->ptrMaterial_.GetData() && tgtnfos->ptrMaterial_.GetData()->strName_ == val_;
+            return tgtnfos->GetCrossedElement() && tgtnfos->GetCrossedElement()->strName_ == val_;
         }
     private:
         std::string val_;

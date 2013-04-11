@@ -3968,10 +3968,6 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
 <context>
     <name>ADN_Sensors_Data</name>
     <message>
-        <source>Sensors - Invalid disaster &apos;%1&apos;</source>
-        <translation>Capteurs - Désastre invalide  &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Données invalide dans l&apos;onglet &apos;%1&apos;, sous-onglet &apos;%2&apos;</translation>
     </message>
@@ -5686,14 +5682,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 <context>
     <name>ADN_Urban_Data</name>
     <message>
-        <source>Urban data - Invalid material type &apos;%1&apos;</source>
-        <translation>Urbain - Type de matériel invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Urban data - Invalid roof-shape type &apos;%1&apos;</source>
-        <translation>Urbain - Type de toit invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Urban data - Invalid accomodation type &apos;%1&apos;</source>
         <translation>Urbain - Type d&apos;activité invalide &apos;%1&apos;</translation>
     </message>
@@ -6277,19 +6265,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Equipement - Activité invalide &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Equipment - Invalid armor and/or volume</source>
-        <translation>Equipement - Blindage et/ou volume invalide</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
         <translation>Equipement - Type de terrain invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>Funeral_Data</name>
-    <message>
-        <source>Invalid resource &apos;%1&apos;</source>
-        <translation>Ressource invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -6301,10 +6278,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 </context>
 <context>
     <name>Models_Data</name>
-    <message>
-        <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
-        <translation>Modèles - Ordre de conduite invalide &apos;%1&apos;</translation>
-    </message>
     <message>
         <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
         <translation>Modèles - Mission invalide &apos;%1&apos;</translation>
@@ -6355,16 +6328,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Calendrier invalide - Vous avez deux événements au même moment :</translation>
     </message>
     <message>
-        <source>Population - Invalid resource &apos;%1/%2&apos;</source>
-        <translation>Population - Resource &apos;%1/%2&apos; invalide</translation>
-    </message>
-    <message>
         <source>Population</source>
         <translation>Population</translation>
-    </message>
-    <message>
-        <source>Population - Invalid accommodation &apos;%1&apos;</source>
-        <translation>Population - Activité invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -6431,14 +6396,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Donnée invalide</translation>
     </message>
     <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation>Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation>Equipement - Tranche logistique invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Object type - Invalid object &apos;%1&apos;</source>
         <translation>Type d&apos;object - Object invalide &apos;%1&apos;</translation>
     </message>
@@ -6448,10 +6405,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Sensors - Invalid stance &apos;%1&apos;</source>
         <translation>Capteurs - Posture invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid object &apos;%1&apos;</source>
-        <translation>Capteurs - Objet invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Sensors - Invalid unit volume &apos;%1&apos;</source>
@@ -6508,10 +6461,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Pions</translation>
     </message>
     <message>
-        <source>Unit - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation>Unité - Tranche logistique invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Unit types - Invalid nbc suit level &apos;%1&apos;</source>
         <translation>Type de pion - Niveau de protection nbc invalide</translation>
     </message>
@@ -6522,25 +6471,9 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>RoofShape - Invalid roofShape type name</source>
         <translation>Type de toit - Nom de type de toit invalide</translation>
     </message>
-    <message>
-        <source>Material attribute is empty for &apos;%1&apos; template.</source>
-        <translation>L&apos;attribut &apos;Matériau&apos; est vide pour le patron &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>RoofShape attribute is empty for &apos;%1&apos; template.</source>
-        <translation>L&apos;attribut &apos;Type de toit&apos; est vide pour le patron &apos;%1&apos;.</translation>
-    </message>
 </context>
 <context>
     <name>Weapons_Data</name>
-    <message>
-        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
-        <translation>Système d&apos;arme &apos;%1&apos;/&apos;%2&apos; - Type de lanceur invalide</translation>
-    </message>
-    <message>
-        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid ammunition type</source>
-        <translation>Système d&apos;arme &apos;%1&apos;/&apos;%2&apos; - Type de munition invalide</translation>
-    </message>
     <message>
         <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
         <translation>Arme %1 - Tir indirect - Portée max &lt; portée min</translation>

@@ -31,9 +31,10 @@ public:
 
     //! @name Operations
     //@{
-    void SetCrossedElement( T* element );
+    void SetCrossedElement( T* element, bool connect = true );
     T* GetCrossedElement() const;
     const ADN_Type_Vector_ABC< T >& GetVector() const;
+    void SetVector( const ADN_Type_Vector_ABC< T >& vector );
     virtual void ReadArchive( xml::xistream& xis );
     virtual void WriteArchive( xml::xostream& xos );
     using ADN_Ref_ABC::CheckValidity;
@@ -84,6 +85,16 @@ const ADN_Type_Vector_ABC< T >& ADN_CrossedRef< T >::GetVector() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_CrossedRef::SetVector
+// Created: JSR 2013-04-10
+// -----------------------------------------------------------------------------
+template< typename T >
+void ADN_CrossedRef< T >::SetVector( const ADN_Type_Vector_ABC< T >& vector )
+{
+    ptr_.SetVector( vector );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_CrossedRef::GetElement
 // Created: ABR 2013-02-11
 // -----------------------------------------------------------------------------
@@ -98,10 +109,10 @@ T* ADN_CrossedRef< T >::GetCrossedElement() const
 // Created: ABR 2013-02-11
 // -----------------------------------------------------------------------------
 template< typename T >
-void ADN_CrossedRef< T >::SetCrossedElement( T* element )
+void ADN_CrossedRef< T >::SetCrossedElement( T* element, bool connect /*= true*/ )
 {
     ptr_ = element;
-    if( element )
+    if( connect && element )
         strName_.Connect( &ptr_.GetData()->strName_ );
 }
 

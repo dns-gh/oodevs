@@ -52,7 +52,7 @@ ADN_Missions_Parameter* ADN_Missions_Parameter::CreateCopy()
     newParam->diaName_    = diaName_.GetData();
     newParam->isContext_  = isContext_;
     newParam->values_.reserve( values_.size() );
-    for( IT_MissionParameterValue_Vector it = values_.begin(); it != values_.end(); ++it )
+    for( auto it = values_.begin(); it != values_.end(); ++it )
     {
         ADN_Missions_ParameterValue* newParamValue = (*it)->CreateCopy();
         newParam->values_.AddItem( newParamValue );
@@ -67,9 +67,7 @@ ADN_Missions_Parameter* ADN_Missions_Parameter::CreateCopy()
             knowledgeObjects_.size() == newParam->knowledgeObjects_.size() );
     for( unsigned int i = 0; i < genObjects_.size(); ++i )
     {
-        assert( genObjects_[ i ]->name_.GetData() == newParam->genObjects_[ i ]->name_.GetData() &&
-                genObjects_[ i ]->ptrObject_.GetData() == newParam->genObjects_[ i ]->ptrObject_.GetData() &&
-                knowledgeObjects_[ i ]->name_.GetData() == newParam->knowledgeObjects_[ i ]->name_.GetData() &&
+        assert( genObjects_[ i ]->ptrObject_.GetData() == newParam->genObjects_[ i ]->ptrObject_.GetData() &&
                 knowledgeObjects_[ i ]->ptrObject_.GetData() == newParam->knowledgeObjects_[ i ]->ptrObject_.GetData() );
         newParam->genObjects_[ i ]->isAllowed_ = genObjects_[ i ]->isAllowed_.GetData();
         newParam->knowledgeObjects_[ i ]->isAllowed_ = knowledgeObjects_[ i ]->isAllowed_.GetData();
@@ -107,7 +105,7 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
     input >> xml::list( "value", *this, &ADN_Missions_Parameter::ReadValue );
     input >> xml::optional
               >> xml::start( "choice" )
-                  >> xml::list( "parameter", boost::bind( &ADN_Missions_Parameter::ReadChoice< T_Choice_Vector >, this, _1, boost::ref( choices_ ) ) )
+                  >> xml::list( "parameter", boost::bind( &ADN_Missions_Parameter::ReadChoiceVector, this, _1, boost::ref( choices_ ) ) )
               >> xml::end;
     if( type_.GetData() == eMissionParameterTypeGenObject || type_.GetData() == eMissionParameterTypeObjectKnowledge )
     {
@@ -117,7 +115,7 @@ void ADN_Missions_Parameter::ReadArchive( xml::xistream& input )
         else
         {
             input >> xml::start( "objects" )
-                      >> xml::list( "parameter", boost::bind( &ADN_Missions_Parameter::ReadChoice< helpers::T_MissionGenObjectTypes_Infos_Vector >, this, _1, boost::ref( vector ) ) )
+                      >> xml::list( "parameter", boost::bind( &ADN_Missions_Parameter::ReadChoiceGenObjects, this, _1, boost::ref( vector ) ) )
                   >> xml::end;
         }
     }
@@ -144,16 +142,35 @@ void ADN_Missions_Parameter::ReadValue( xml::xistream& input )
     values_.AddItem( spNew.release() );
 }
 
-template< typename T >
-void ADN_Missions_Parameter::ReadChoice( xml::xistream& input, T& data )
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Parameter::ReadChoiceVector
+// Created: JSR 2013-04-10
+// -----------------------------------------------------------------------------
+void ADN_Missions_Parameter::ReadChoiceVector( xml::xistream& input, T_Choice_Vector& data )
 {
-    std::string name;
-    input >> xml::attribute( "type", name );
+    std::string name = input.attribute< std::string >( "type" );
     for( std::size_t i = 0; i < data.size(); ++i )
     {
-        if( data[i]->name_ == name )
+        if( data[ i ]->name_ == name )
         {
-            data[i]->isAllowed_ = true;
+            data[ i ]->isAllowed_ = true;
+            return;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Parameter::ReadChoiceGenObjects
+// Created: JSR 2013-04-10
+// -----------------------------------------------------------------------------
+void ADN_Missions_Parameter::ReadChoiceGenObjects( xml::xistream& input, helpers::T_MissionGenObjectTypes_Infos_Vector& data )
+{
+    std::string name = input.attribute< std::string >( "type" );
+    for( std::size_t i = 0; i < data.size(); ++i )
+    {
+        if( data[ i ]->ptrObject_.GetData() && data[ i ]->ptrObject_.GetData()->strName_.GetData() == name )
+        {
+            data[ i ]->isAllowed_ = true;
             return;
         }
     }

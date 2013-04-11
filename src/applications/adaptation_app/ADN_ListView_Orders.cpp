@@ -142,7 +142,7 @@ void ADN_ListView_Orders::CreateNewItem( int n )
             if( cit->second == fragOrder->strName_.GetData() )
             {
                 pNewInfo->strName_   = fragOrder->strName_.GetData();
-                pNewInfo->fragOrder_ = fragOrder;
+                pNewInfo->SetCrossedElement( fragOrder );
             }
         }
         ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
@@ -159,7 +159,7 @@ void ADN_ListView_Orders::CreateNewItem( int n )
 void ADN_ListView_Orders::RemoveCurrentItem()
 {
     // delete composante
-    OrderInfos* pCurComposante = (OrderInfos*)GetCurrentData();
+    OrderInfos* pCurComposante = reinterpret_cast< OrderInfos* >( GetCurrentData() );
     if( pCurComposante )
     {
         // remove current data from list

@@ -20,7 +20,6 @@ using namespace helpers;
 ADN_MissionGenObjectTypes_Infos::ADN_MissionGenObjectTypes_Infos( ADN_Objects_Data_ObjectInfos* ptr )
     : ptrObject_( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), ptr )
     , isAllowed_( false )
-    , name_     ( ptrObject_.GetData()->strName_ )
 {
     BindExistenceTo( &ptrObject_ );
 }
@@ -32,7 +31,6 @@ ADN_MissionGenObjectTypes_Infos::ADN_MissionGenObjectTypes_Infos( ADN_Objects_Da
 ADN_MissionGenObjectTypes_Infos::ADN_MissionGenObjectTypes_Infos()
     : ptrObject_( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0 )
     , isAllowed_( false )
-    , name_     ( ptrObject_.GetData()->strName_ )
 {
     // NOTHING
 }
@@ -55,7 +53,7 @@ void ADN_MissionGenObjectTypes_Infos::WriteArchive( xml::xostream& output )
     if( isAllowed_.GetData() )
     {
         output << xml::start( "parameter" )
-                  << xml::attribute( "type", name_ )
+                  << xml::attribute( "type", ptrObject_ )
                << xml::end;
     }
 }
@@ -68,7 +66,6 @@ ADN_MissionGenObjectTypes_Infos* ADN_MissionGenObjectTypes_Infos::CreateCopy()
 {
     ADN_MissionGenObjectTypes_Infos* infos = new ADN_MissionGenObjectTypes_Infos();
     infos->ptrObject_ = ptrObject_.GetData();
-    infos->name_ = name_.GetData();
     infos->isAllowed_ = isAllowed_.GetData();
     return infos;
 }

@@ -234,7 +234,7 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
     {
         output  << xml::start( "convoys" )
                     << xml::attribute( "unit-type", ptrUnit_.GetData()->strName_ )
-                    << xml::attribute( "mission", ptrSupplyMission_.GetData()->strName_ );
+                    << xml::attribute( "mission", ptrSupplyMission_ );
         {
             output << xml::start( "type" )
                         << xml::start( "dotation-supply" )
@@ -247,25 +247,25 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
         }
         {
             output << xml::start( "constitution-times" );
-            for( IT_ConvoyTimeInfoVector it = vConvoySetupInfos_.begin(); it != vConvoySetupInfos_.end(); ++it )
+            for( auto it = vConvoySetupInfos_.begin(); it != vConvoySetupInfos_.end(); ++it )
                 (*it)->WriteArchive( "unit-time", "time", output );
             output << xml::end;
         }
         {
             output << xml::start( "loading-times" );
-            for( IT_ConvoyTimeInfoVector it = vConvoyLoadingInfos_.begin(); it != vConvoyLoadingInfos_.end(); ++it )
+            for( auto it = vConvoyLoadingInfos_.begin(); it != vConvoyLoadingInfos_.end(); ++it )
                 (*it)->WriteArchive( "unit-time", "time", output );
             output << xml::end;
         }
         {
             output << xml::start( "unloading-times" );
-            for( IT_ConvoyTimeInfoVector it = vConvoyUnloadingInfos_.begin(); it != vConvoyUnloadingInfos_.end(); ++it )
+            for( auto it = vConvoyUnloadingInfos_.begin(); it != vConvoyUnloadingInfos_.end(); ++it )
                 (*it)->WriteArchive( "unit-time", "time", output );
             output << xml::end;
         }
         {
             output << xml::start( "speed-modifiers" );
-            for( IT_ConvoyDoubleInfoVector it = vConvoySpeedModificatorInfos_.begin(); it != vConvoySpeedModificatorInfos_.end(); ++it )
+            for( auto it = vConvoySpeedModificatorInfos_.begin(); it != vConvoySpeedModificatorInfos_.end(); ++it )
                 (*it)->WriteArchive( "speed-modifier", "value", output );
             output << xml::end;
         }

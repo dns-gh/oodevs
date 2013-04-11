@@ -760,7 +760,7 @@ void ADN_Equipments_Data::SensorInfos::WriteArchive( xml::xostream& output )
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
 ADN_Equipments_Data::RadarInfos::RadarInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.vRadars_, 0 , true, "type" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_->vRadars_, 0 , true, "type" )
     , rHeight_( 10 )
 {
     // NOTHING
@@ -1063,7 +1063,7 @@ void ADN_Equipments_Data::ResourceInfos::WriteArchive( xml::xostream& output )
     {
         bool entered = false;
         for( auto it = categories_.begin(); it != categories_.end(); ++it )
-            if( ( *it )->ptrDotation_.GetData()->nType_ == static_cast< E_DotationFamily >( n ) )
+            if( ( *it )->ptrDotation_.GetData() && ( *it )->ptrDotation_.GetData()->nType_ == static_cast< E_DotationFamily >( n ) )
             {
                 if( !entered )
                 {
@@ -1667,16 +1667,10 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
           >> xml::optional >> xml::attribute( "codeLFRIL", strCodeLFRIL_ )
           >> xml::optional >> xml::attribute( "codeNNO",   strCodeNNO_   );
 
-    std::string strArmor, strSize;
-    input >> xml::attribute( "protection", strArmor )
-          >> xml::attribute( "size", strSize )
+    input >> xml::attribute( "protection", ptrArmor_ )
+          >> xml::attribute( "size", ptrSize_ )
           >> xml::attribute( "weight", rWeight_ );
     input >> xml::optional >> xml::content( "equipment-category", equipmentCategory_ );
-
-    ptrArmor_ = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindArmor( strArmor );
-    ptrSize_ = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindSize( strSize );
-    if( ! ptrArmor_.GetData() || ! ptrSize_.GetData() )
-        throw MASA_EXCEPTION( tools::translate( "Equipments_Data",  "Equipment - Invalid armor and/or volume" ).toStdString() );
 
     input >> xml::start( "speeds" )
             >> xml::attribute( "max", rMaxSpeed_ )
@@ -1790,7 +1784,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
 void ADN_Equipments_Data::EquipmentInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
     if( attritionBreakdowns_.vBreakdowns_.empty() || randomBreakdowns_.vBreakdowns_.empty() )
-        if( ptrArmor_.GetData()->nType_.GetData() == eProtectionType_Material )
+        if( ptrArmor_.GetData() && ptrArmor_.GetData()->nType_.GetData() == eProtectionType_Material )
             checker.AddError( eMissingBreakdown, strName_.GetData(), eEquipments );
     if( !logInfos_.IsRepairTypeValid() )
         checker.AddError( eMissingRepairType, strName_.GetData(), eEquipments );
@@ -1820,8 +1814,8 @@ void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output )
                << xml::attribute( "codeEMAT8", strCodeEMAT8_ )
                << xml::attribute( "codeLFRIL", strCodeLFRIL_ )
                << xml::attribute( "codeNNO",   strCodeNNO_   )
-               << xml::attribute( "protection", ptrArmor_.GetData()->strName_ )
-               << xml::attribute( "size", ptrSize_.GetData()->strName_ )
+               << xml::attribute( "protection", ptrArmor_ )
+               << xml::attribute( "size", ptrSize_ )
                << xml::attribute( "weight", rWeight_ );
 
     output << xml::start( "speeds" )
@@ -2116,7 +2110,7 @@ QStringList ADN_Equipments_Data::GetEquipmentsThatUse( helpers::ArmorInfos& armo
     for( auto it = vEquipments_.begin(); it != vEquipments_.end(); ++it )
     {
         EquipmentInfos* pComp = *it;
-        if( pComp->ptrArmor_.GetData()->strName_.GetData() == armor.strName_.GetData() )
+        if( pComp->ptrArmor_.GetData() && pComp->ptrArmor_.GetData()->strName_.GetData() == armor.strName_.GetData() )
                 result << pComp->strName_.GetData().c_str();
     }
     return result;
@@ -2132,7 +2126,7 @@ QStringList ADN_Equipments_Data::GetEquipmentsThatUse( ADN_Categories_Data::Size
     for( auto it = vEquipments_.begin(); it != vEquipments_.end(); ++it )
     {
         EquipmentInfos* pComp = *it;
-        if( pComp->ptrSize_.GetData()->strName_.GetData() == size.strName_.GetData() )
+        if( pComp->ptrSize_.GetData() && pComp->ptrSize_.GetData()->strName_.GetData() == size.strName_.GetData() )
             result << pComp->strName_.GetData().c_str();
     }
     return result;

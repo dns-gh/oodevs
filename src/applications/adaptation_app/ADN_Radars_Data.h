@@ -16,7 +16,6 @@
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
-#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  ADN_Radars_Data
@@ -60,14 +59,14 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_Enum<E_RadarType, eNbrRadarType>  nType_;
+        ADN_Type_Enum< E_RadarType, eNbrRadarType >  nType_;
         ADN_Type_Double rRange_;
         ADN_Type_Bool bHasMaxHeight_;
         ADN_Type_Double rMaxHeight_;
         ADN_Type_Bool bHasMinHeight_;
         ADN_Type_Double rMinHeight_;
         ADN_Type_Bool bHasDetectableActivities_;
-        ADN_Type_Bool detectableActivities_[eNbrConsumptionType];
+        ADN_Type_Bool detectableActivities_[ eNbrConsumptionType ];
         ADN_Type_Bool bHasDetectTimes_;
         DetectTimes detectTimes_;
         ADN_Type_Bool bHasHQDetectTimes_;
@@ -75,7 +74,6 @@ public:
     };
 
     typedef ADN_Type_Vector_ABC<RadarInfos > T_RadarInfos_Vector;
-    typedef T_RadarInfos_Vector::iterator   IT_RadarInfos_Vector;
 
 //*****************************************************************************
 public:

@@ -16,7 +16,6 @@
 
 namespace helpers
 {
-
 class LogisticSupplyClass : public ADN_RefWithName
 {
 public:
@@ -30,15 +29,7 @@ public:
 };
 
 typedef ADN_Type_Vector_ABC< LogisticSupplyClass > T_LogisticSupplyClass_Vector;
-typedef T_LogisticSupplyClass_Vector::iterator    IT_LogisticSupplyClass_Vector;
 
-}
-
-inline
-std::ostream& operator<<( std::ostream& os, helpers::LogisticSupplyClass& value )
-{
-    os << value.strName_.GetData();
-    return os;
 }
 
 #endif // __ADN_LogisticSupplyClass_h_

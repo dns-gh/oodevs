@@ -27,16 +27,15 @@
 // Created: AGN 2004-05-18
 // -----------------------------------------------------------------------------
 ADN_Models_Data::OrderInfos::OrderInfos()
-    : fragOrder_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), 0 )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), 0, true )
 {
-    this->BindExistenceTo( &fragOrder_ );
+    // NOTHING
 }
 
 ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_FragOrder* fragorder, const std::string& name )
-    : ADN_RefWithName( name )
-    , fragOrder_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), fragorder )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), fragorder, true )
 {
-    this->BindExistenceTo( &fragOrder_ );
+    strName_ = name;
 }
 
 // -----------------------------------------------------------------------------
@@ -45,11 +44,7 @@ ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_FragOrder* fragorder, cons
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::OrderInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ );
-    ADN_Missions_ABC* fragOrder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( strName_.GetData() );
-    if( !fragOrder )
-        throw MASA_EXCEPTION( tools::translate( "Models_Data", "Doctrine models - Invalid frag order '%1'" ).arg( strName_.GetData().c_str() ).toStdString() );
-    fragOrder_ = fragOrder;
+    ADN_CrossedRef< ADN_Missions_ABC >::ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,9 +53,9 @@ void ADN_Models_Data::OrderInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::OrderInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "fragorder" )
-            << xml::attribute( "name", fragOrder_.GetData()->strName_ )
-           << xml::end;
+    output << xml::start( "fragorder" );
+    ADN_CrossedRef< ADN_Missions_ABC >::WriteArchive( output );
+    output<< xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +65,7 @@ void ADN_Models_Data::OrderInfos::WriteArchive( xml::xostream& output )
 ADN_Models_Data::OrderInfos* ADN_Models_Data::OrderInfos::CreateCopy()
 {
     OrderInfos* result = new OrderInfos();
-    result->fragOrder_ = fragOrder_.GetData();
+    result->SetCrossedElement( GetCrossedElement() );
     result->strName_ = strName_.GetData();
     return result;
 }
@@ -110,8 +105,8 @@ ADN_Models_Data::MissionInfos* ADN_Models_Data::MissionInfos::CreateCopy()
     for( T_OrderInfos_Vector::iterator it = vOrders_.begin(); it != vOrders_.end(); ++it )
     {
         OrderInfos* pOrder = new OrderInfos();
-        pOrder->fragOrder_ = (*it)->fragOrder_.GetData();
-        pOrder->strName_   = (*it)->strName_.GetData();
+        pOrder->SetCrossedElement( ( *it )->GetCrossedElement() );
+        pOrder->strName_ = (*it)->strName_.GetData();
         pMission->vOrders_.AddItem( pOrder );
     }
     return pMission;
@@ -150,7 +145,7 @@ void ADN_Models_Data::MissionInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "mission" )
             << xml::attribute( "name", GetCrossedElement()->strName_ );
-    for( IT_OrderInfos_Vector it = vOrders_.begin(); it != vOrders_.end(); ++it )
+    for( auto it = vOrders_.begin(); it != vOrders_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }
@@ -203,7 +198,7 @@ ADN_Models_Data::ModelInfos::~ModelInfos()
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ModelInfos::AddFragOrder( ADN_Missions_FragOrder* fragorder, const std::string& name )
 {
-    std::auto_ptr<OrderInfos> spNew( new OrderInfos( fragorder, name ) );
+    std::auto_ptr< OrderInfos > spNew( new OrderInfos( fragorder, name ) );
     vFragOrders_.AddItem( spNew.release() );
 }
 
@@ -213,7 +208,7 @@ void ADN_Models_Data::ModelInfos::AddFragOrder( ADN_Missions_FragOrder* fragorde
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ModelInfos::RemoveFragOder( const std::string& order )
 {
-    for( T_OrderInfos_Vector::iterator it = vFragOrders_.begin(); it != vFragOrders_.end(); ++it )
+    for( auto it = vFragOrders_.begin(); it != vFragOrders_.end(); ++it )
         if( (*it)->strName_ == order)
         {
             vFragOrders_.RemItem( *it );
@@ -300,12 +295,12 @@ void ADN_Models_Data::ModelInfos::WriteArchive( const std::string& type, xml::xo
             <<  xml::attribute( "file", strFile_.GetData().Normalize() )
             <<  xml::attribute( "masalife", isMasalife_ )
             <<  xml::start( "missions" );
-    for( IT_MissionInfos_Vector it = vMissions_.begin(); it != vMissions_.end(); ++it )
-        (*it)->WriteArchive( output );
+    for( auto it = vMissions_.begin(); it != vMissions_.end(); ++it )
+        ( *it )->WriteArchive( output );
     output << xml::end
         << xml::start( "fragorders" );
-    for( IT_OrderInfos_Vector it = vFragOrders_.begin(); it != vFragOrders_.end(); ++it )
-        (*it)->WriteArchive( output );
+    for( auto it = vFragOrders_.begin(); it != vFragOrders_.end(); ++it )
+        ( *it )->WriteArchive( output );
     output << xml::end
         << xml::end;
 }
@@ -425,16 +420,16 @@ void ADN_Models_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "models" );
     ADN_Tools::AddSchema( output, "Models" );
     output  << xml::start( "units" );
-    for( IT_ModelInfos_Vector it1 = vUnitModels_.begin(); it1 != vUnitModels_.end(); ++it1 )
-        (*it1)->WriteArchive( "unit", output );
+    for( auto  it1 = vUnitModels_.begin(); it1 != vUnitModels_.end(); ++it1 )
+        ( *it1 )->WriteArchive( "unit", output );
     output << xml::end
             << xml::start( "automats" );
-    for( IT_ModelInfos_Vector it2 = vAutomataModels_.begin(); it2 != vAutomataModels_.end(); ++it2 )
-        (*it2)->WriteArchive( "automat", output );
+    for( auto it2 = vAutomataModels_.begin(); it2 != vAutomataModels_.end(); ++it2 )
+        ( *it2 )->WriteArchive( "automat", output );
     output << xml::end
             << xml::start( "crowd" );
-    for( IT_ModelInfos_Vector it2 = vPopulationModels_.begin(); it2 != vPopulationModels_.end(); ++it2 )
-        (*it2)->WriteArchive( "crowd", output );
+    for( auto it2 = vPopulationModels_.begin(); it2 != vPopulationModels_.end(); ++it2 )
+        ( *it2 )->WriteArchive( "crowd", output );
     output << xml::end
           << xml::end;
 }
@@ -453,12 +448,12 @@ QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_M
         currentVector = &vAutomataModels_;
     else
         currentVector = &vPopulationModels_;
-    for( IT_ModelInfos_Vector it = currentVector->begin(); it != currentVector->end(); ++it )
+    for( auto it = currentVector->begin(); it != currentVector->end(); ++it )
     {
         ModelInfos* pModel = *it;
         if( !pModel )
             continue;
-        for( IT_MissionInfos_Vector missionIt = pModel->vMissions_.begin(); missionIt != pModel->vMissions_.end(); ++missionIt )
+        for( auto missionIt = pModel->vMissions_.begin(); missionIt != pModel->vMissions_.end(); ++missionIt )
             if( ( *missionIt )->GetCrossedElement() == &mission )
             {
                 result << pModel->strName_.GetData().c_str();
@@ -482,10 +477,10 @@ QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_F
         currentVector = &vAutomataModels_;
     else
         currentVector = &vPopulationModels_;
-    for( ADN_Models_Data::IT_ModelInfos_Vector it = currentVector->begin(); it != currentVector->end(); ++it )
+    for( auto it = currentVector->begin(); it != currentVector->end(); ++it )
     {
         bool added = false;
-        for( ADN_Models_Data::T_OrderInfos_Vector::iterator itOrder = ( *it )->vFragOrders_.begin(); !added && itOrder != ( *it )->vFragOrders_.end(); ++itOrder )
+        for( auto itOrder = ( *it )->vFragOrders_.begin(); !added && itOrder != ( *it )->vFragOrders_.end(); ++itOrder )
         {
             if( ( *itOrder )->strName_.GetData() == fragOrder.strName_.GetData() )
             {
@@ -493,9 +488,9 @@ QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_F
                 result << ( *it )->strName_.GetData().c_str();
             }
         }
-        for( ADN_Models_Data::IT_MissionInfos_Vector itMission = ( *it )->vMissions_.begin(); !added && itMission != ( *it )->vMissions_.end(); ++itMission )
+        for( auto itMission = ( *it )->vMissions_.begin(); !added && itMission != ( *it )->vMissions_.end(); ++itMission )
         {
-            for( ADN_Models_Data::T_OrderInfos_Vector::iterator itOrder = ( *itMission )->vOrders_.begin(); !added && itOrder != ( *itMission )->vOrders_.end(); ++itOrder )
+            for( auto itOrder = ( *itMission )->vOrders_.begin(); !added && itOrder != ( *itMission )->vOrders_.end(); ++itOrder )
             {
                 if( ( *itOrder )->strName_.GetData() == fragOrder.strName_.GetData() )
                 {

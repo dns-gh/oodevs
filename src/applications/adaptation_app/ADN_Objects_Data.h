@@ -12,6 +12,7 @@
 #ifndef __ADN_Objects_Data_h_
 #define __ADN_Objects_Data_h_
 
+#include "ADN_CrossedRef.h"
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
@@ -24,24 +25,18 @@
 #include "ADN_Disasters_Data.h"
 #include <boost/tuple/tuple.hpp>
 
-namespace xml
-{
-    class xistream;
-}
-
 //*****************************************************************************
 // Created: JDY 03-06-25
 //*****************************************************************************
 class ADN_Objects_Data : public ADN_Data_ABC
 {
-
 public:
 //*****************************************************************************
     class ScoreLocationInfos : public ADN_Ref_ABC
     {
-
     public:
-        ScoreLocationInfos();
+                 ScoreLocationInfos();
+        virtual ~ScoreLocationInfos() {}
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -68,9 +63,9 @@ public:
     };
 
     typedef ADN_Type_Vector_ABC< ScoreLocationInfos > T_ScoreLocationInfosVector;
-    typedef T_ScoreLocationInfosVector::iterator     IT_ScoreLocationInfosVector;
 
-    template <typename T> struct NamedField
+    template< typename T >
+    struct NamedField
     {
     public:
         typedef T value_type;
@@ -115,7 +110,8 @@ public:
     class ADN_CapacityInfos_Disaster : public helpers::ADN_CapacityInfos_Default< helpers::eDisasterCapacity >
     {
     public:
-        ADN_CapacityInfos_Disaster();
+                 ADN_CapacityInfos_Disaster();
+        virtual ~ADN_CapacityInfos_Disaster() {}
 
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
@@ -129,8 +125,8 @@ public:
     class ADN_CapacityInfos_Attrition : public helpers::ADN_CapacityInfos_Default< helpers::eAttritionCapacity >
     {
     public:
-        ADN_CapacityInfos_Attrition();
-
+                 ADN_CapacityInfos_Attrition();
+        virtual ~ADN_CapacityInfos_Attrition() {}
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
     public:
@@ -163,7 +159,7 @@ public:
         void WriteArchive( xml::xostream& xos );
 
     public:
-        ADN_Type_Double  rDistance_;
+        ADN_Type_Double rDistance_;
     };
 
     class ADN_CapacityInfos_Bridging : public helpers::ADN_CapacityInfos_Default< helpers::eBridgingCapacity >
@@ -491,7 +487,7 @@ public:
                 Cmp( const std::string& name ) : name_( name ) {}
                 bool operator()( ModifierByFireClass* other ) const
                 {
-                    return other->ptrFireClass_.GetData()->strName_ == name_;
+                    return other->ptrFireClass_.GetData() && other->ptrFireClass_.GetData()->strName_ == name_;
                 }
 
             private:

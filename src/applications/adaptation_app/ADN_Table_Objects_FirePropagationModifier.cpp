@@ -49,7 +49,7 @@ ADN_Table_Objects_FirePropagationModifier::~ADN_Table_Objects_FirePropagationMod
 void ADN_Table_Objects_FirePropagationModifier::AddRow( int row, void* data )
 {
     ModifierByFireClass* pModifier = static_cast< ModifierByFireClass* >( data );
-    if( !pModifier )
+    if( !pModifier || !pModifier->ptrFireClass_.GetData() )
         return;
     if( pModifier->ptrFireClass_.GetData()->isSurface_.GetData() )
     {

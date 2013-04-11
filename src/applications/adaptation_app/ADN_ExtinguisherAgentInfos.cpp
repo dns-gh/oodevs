@@ -16,10 +16,10 @@
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_ExtinguisherAgentInfos::ADN_ExtinguisherAgentInfos( ADN_Resources_Data::CategoryInfo* agent )
-    : ptrAgent_        ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_AgentExtincteur ).categories_, agent )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_AgentExtincteur ).categories_, agent, true, "agent" )
     , heatDecreaseRate_( 0 )
 {
-    BindExistenceTo( &ptrAgent_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ ADN_ExtinguisherAgentInfos::~ADN_ExtinguisherAgentInfos()
 void ADN_ExtinguisherAgentInfos::CopyFrom( ADN_ExtinguisherAgentInfos& agent )
 {
     heatDecreaseRate_ = agent.heatDecreaseRate_.GetData();
-    ptrAgent_ = agent.ptrAgent_.GetData();
+    SetCrossedElement( agent.GetCrossedElement() );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,17 +57,7 @@ void ADN_ExtinguisherAgentInfos::ReadArchive( xml::xistream& xis )
 void ADN_ExtinguisherAgentInfos::WriteArchive( xml::xostream& xos, const std::string& tag )
 {
     xos << xml::start( tag )
-            << xml::attribute( "agent", ptrAgent_.GetData()->strName_ )
+            << xml::attribute( "agent", GetCrossedElement()->strName_ )
             << xml::attribute( "heat-decrease-rate", heatDecreaseRate_ )
         << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ExtinguisherAgentInfos::operator<<
-// Created: JSR 2010-12-01
-// -----------------------------------------------------------------------------
-xml::xostream& ADN_ExtinguisherAgentInfos::operator<<( xml::xostream& xos )
-{
-    WriteArchive( xos );
-    return xos;
 }

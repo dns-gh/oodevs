@@ -31,8 +31,11 @@ namespace
         //@{
         ADN_ListViewItem* CreateItem( void* pObj )
         {
+            ADN_Sensors_Data::DisasterInfos* infos = static_cast< ADN_Sensors_Data::DisasterInfos* >( pObj );
+            if( !infos || !infos->GetCrossedElement() )
+                return 0;
             ADN_ListViewItem* pItem = new ADN_ListViewItem( pObj );
-            pItem->Connect( &static_cast< ADN_Sensors_Data::DisasterInfos* >( pObj )->ptrDisaster_.GetData()->strName_ );
+            pItem->Connect( &infos->GetCrossedElement()->strName_ );
             return pItem;
         }
         //@}
@@ -109,7 +112,7 @@ void ADN_Sensors_DisastersListView::OnContextMenu( const QPoint& pt )
     {
         // Add the weapon to the list.
         ADN_Sensors_Data::DisasterInfos* pNewInfo = new ADN_Sensors_Data::DisasterInfos();
-        pNewInfo->ptrDisaster_ = vDisasters[ nMenuResult - 2 ];
+        pNewInfo->SetCrossedElement( vDisasters[ nMenuResult - 2 ] );
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
@@ -129,7 +132,7 @@ bool ADN_Sensors_DisastersListView::Contains( const ADN_Disasters_Data::Disaster
     {
         ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
         ADN_Sensors_Data::DisasterInfos* pData = static_cast< ADN_Sensors_Data::DisasterInfos* >( pCurr->GetData() );
-        if( pData->ptrDisaster_.GetData() == pInfo )
+        if( pData->GetCrossedElement() == pInfo )
             return true;
     }
     return false;

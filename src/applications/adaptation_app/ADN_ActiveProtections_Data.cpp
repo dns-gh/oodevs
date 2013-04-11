@@ -200,15 +200,6 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfos* ADN_ActiveProtections_Data::
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ActiveProtections_Data::ActiveProtectionsInfos::GetActiveProtectionsInfosWeapons
-// Created: FDS 2010-02-24
-// -----------------------------------------------------------------------------
-ADN_ActiveProtections_Data::T_ActiveProtectionsInfosWeaponsVector& ADN_ActiveProtections_Data::ActiveProtectionsInfos::GetActiveProtectionsInfosWeapons()
-{
-    return weapons_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_Data::ReadArchive
 // Created: LDC 2010-01-13
 // -----------------------------------------------------------------------------

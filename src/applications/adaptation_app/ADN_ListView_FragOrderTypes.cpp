@@ -104,19 +104,19 @@ namespace
             if( addForAllUnits_->isChecked() )
             {
                 ADN_Models_Data::T_ModelInfos_Vector& units = ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos();
-                for( ADN_Models_Data::IT_ModelInfos_Vector it1 = units.begin(); it1 != units.end(); ++it1 )
+                for( auto it1 = units.begin(); it1 != units.end(); ++it1 )
                     (*it1)->AddFragOrder( static_cast< FragOrder* >( element_ ), name );
             }
             if( addForAllAutomata_->isChecked() )
             {
                 ADN_Models_Data::T_ModelInfos_Vector& automata = ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos();
-                for( ADN_Models_Data::IT_ModelInfos_Vector it1 = automata.begin(); it1 != automata.end(); ++it1 )
+                for( auto it1 = automata.begin(); it1 != automata.end(); ++it1 )
                     (*it1)->AddFragOrder( static_cast< FragOrder* >( element_ ), name );
             }
             if( addForAllPops_->isChecked() )
             {
                 ADN_Models_Data::T_ModelInfos_Vector& pops = ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();
-                for( ADN_Models_Data::IT_ModelInfos_Vector it1 = pops.begin(); it1 != pops.end(); ++it1 )
+                for( auto it1 = pops.begin(); it1 != pops.end(); ++it1 )
                     (*it1)->AddFragOrder( static_cast< FragOrder* >( element_ ), name );
             }
              static_cast< FragOrder* >( element_ )->isAvailableWithoutMission_ = true;
@@ -208,15 +208,15 @@ void ADN_ListView_FragOrderTypes::OnToogled( bool isChecked )
 {
     if( pCurData_ == 0 || isChecked )
         return;
-    FragOrder* pInfos = (FragOrder*)pCurData_;
+    FragOrder* pInfos = reinterpret_cast< FragOrder* >( pCurData_ );
     const std::string& name = pInfos->strName_.GetData();
     ADN_Models_Data::T_ModelInfos_Vector& units = ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos();
     ADN_Models_Data::T_ModelInfos_Vector& automata = ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos();
     ADN_Models_Data::T_ModelInfos_Vector& pops = ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();
-    for( ADN_Models_Data::IT_ModelInfos_Vector it1 = units.begin(); it1 != units.end(); ++it1 )
-        (*it1)->RemoveFragOder( name );
-    for( ADN_Models_Data::IT_ModelInfos_Vector it1 = automata.begin(); it1 != automata.end(); ++it1 )
-        (*it1)->RemoveFragOder( name );
-    for( ADN_Models_Data::IT_ModelInfos_Vector it1 = pops.begin(); it1 != pops.end(); ++it1 )
-        (*it1)->RemoveFragOder( name );
+    for( auto it1 = units.begin(); it1 != units.end(); ++it1 )
+        ( *it1 )->RemoveFragOder( name );
+    for( auto it1 = automata.begin(); it1 != automata.end(); ++it1 )
+        ( *it1 )->RemoveFragOder( name );
+    for( auto it1 = pops.begin(); it1 != pops.end(); ++it1 )
+        ( *it1 )->RemoveFragOder( name );
 }

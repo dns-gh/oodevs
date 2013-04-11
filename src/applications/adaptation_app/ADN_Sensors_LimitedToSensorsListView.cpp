@@ -52,7 +52,7 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
     // Add the available sensors to the 'add sensor' submenu.
     ADN_Sensors_Data::T_SensorsInfos_Vector& vSensors = ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos();
 
-    for( ADN_Sensors_Data::IT_SensorsInfos_Vector itSensor = vSensors.begin(); itSensor != vSensors.end(); ++itSensor )
+    for( auto itSensor = vSensors.begin(); itSensor != vSensors.end(); ++itSensor )
     {
         ADN_Sensors_Data::SensorInfos* pSensor = *itSensor;
         // Don't add a sensor to the menu if it already is present in the list.
@@ -65,8 +65,8 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
     ADN_Tools::SortMenu( addSensorMenu );
 
     // Add the available radars to the 'add special sensor' submenu.
-    ADN_Radars_Data::T_RadarInfos_Vector& vRadars = ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.vRadars_;
-    for( ADN_Radars_Data::IT_RadarInfos_Vector itRadar = vRadars.begin(); itRadar != vRadars.end(); ++itRadar )
+    ADN_Radars_Data::T_RadarInfos_Vector& vRadars = ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_->vRadars_;
+    for( auto itRadar = vRadars.begin(); itRadar != vRadars.end(); ++itRadar )
     {
         ADN_Radars_Data::RadarInfos* pRadar = *itRadar;
         // Don't add a radar to the menu if it already is present in the list.

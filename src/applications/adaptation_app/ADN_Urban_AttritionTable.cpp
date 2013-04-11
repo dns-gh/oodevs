@@ -61,10 +61,10 @@ ADN_Urban_AttritionTable::~ADN_Urban_AttritionTable()
 void ADN_Urban_AttritionTable::AddRow( int row, void* data )
 {
     helpers::AttritionInfos* pAttrition = static_cast< helpers::AttritionInfos* >( data );
-    if( !pAttrition )
+    if( !pAttrition || !pAttrition->GetCrossedElement() )
         return;
 
-    AddItem( row, 0, data, &pAttrition->ptrArmor_.GetData()->strName_, ADN_StandardItem::eString );
+    AddItem( row, 0, data, &pAttrition->GetCrossedElement()->strName_, ADN_StandardItem::eString );
     AddItem( row, 1, data, &pAttrition->rDestroy_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
     AddItem( row, 2, data, &pAttrition->rRepairWithEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
     AddItem( row, 3, data, &pAttrition->rRepairNoEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );

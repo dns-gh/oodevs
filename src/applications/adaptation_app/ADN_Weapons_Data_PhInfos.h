@@ -57,8 +57,8 @@ public:
     void WriteArchive( xml::xostream& output );
 
 public:
-    ADN_TypePtr_InVector_ABC< ADN_Categories_Data::SizeInfos >  ptrSize_;
-    ADN_Type_Vector_ABC< ADN_Weapons_Data_PhInfos >             vPhs_;
+    ADN_TypePtr_InVector_ABC< ADN_Categories_Data::SizeInfos > ptrSize_;
+    ADN_Type_Vector_ABC< ADN_Weapons_Data_PhInfos > vPhs_;
 
 public:
     typedef ADN_Categories_Data::SizeInfos  T_Item;

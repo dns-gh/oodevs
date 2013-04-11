@@ -243,6 +243,8 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
                         nUnit += pUnit->min_.GetData();
                     }
                     assert( pUnit->GetCrossedElement() );
+                    if( !pUnit->GetCrossedElement() )
+                        continue;
                     ADN_Units_Data::UnitInfos& unit = *pUnit->GetCrossedElement();
                     nUnitInAutomat += nUnit;
 

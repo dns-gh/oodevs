@@ -297,7 +297,7 @@ void ADN_Radars_Data::Reset()
 // -----------------------------------------------------------------------------
 ADN_Radars_Data::RadarInfos* ADN_Radars_Data::FindRadar( const std::string& strName )
 {
-    IT_RadarInfos_Vector it = std::find_if( vRadars_.begin(), vRadars_.end(), ADN_Tools::NameCmp<RadarInfos>( strName ) );
+    auto it = std::find_if( vRadars_.begin(), vRadars_.end(), ADN_Tools::NameCmp<RadarInfos>( strName ) );
     if( it == vRadars_.end() )
         return 0;
     return *it;
@@ -321,7 +321,7 @@ void ADN_Radars_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Radars_Data::ReadRadar( xml::xistream& input )
 {
-    std::auto_ptr<RadarInfos> spNew( new RadarInfos() );
+    std::auto_ptr< RadarInfos > spNew( new RadarInfos() );
     spNew->ReadArchive( input );
     vRadars_.AddItem( spNew.release() );
 }
@@ -337,8 +337,8 @@ void ADN_Radars_Data::WriteArchive( xml::xostream& output )
                               .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( tools::translate( "ADN_Radars_Data", "Radars" ) ).toStdString() );
 
     output << xml::start( "radars" );
-    for( IT_RadarInfos_Vector it = vRadars_.begin(); it != vRadars_.end(); ++it )
-        (*it)->WriteArchive( output );
+    for( auto it = vRadars_.begin(); it != vRadars_.end(); ++it )
+        ( *it )->WriteArchive( output );
     output << xml::end;
 }
 

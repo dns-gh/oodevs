@@ -164,8 +164,8 @@ void ADN_Resources_AttritionGraph::Update()
 
     ADN_Health_Data::WoundInfo* wounds = ADN_Workspace::GetWorkspace().GetLogistic().GetData().GetElement< ADN_Health_Data >( eHealth ).wounds;
 
-    for( IT_Attritions it = attritions_.begin(); it != attritions_.end(); ++it )
-        if( (*it)->ptrArmor_.GetData()->strName_.GetData() == info->strName_.GetData() )
+    for( auto it = attritions_.begin(); it != attritions_.end(); ++it )
+        if( (*it)->GetCrossedElement() && ( *it )->GetCrossedElement()->strName_.GetData() == info->strName_.GetData() )
         {
             columns_.clear();
 

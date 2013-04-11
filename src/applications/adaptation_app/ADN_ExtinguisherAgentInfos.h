@@ -10,6 +10,7 @@
 #ifndef __ADN_ExtinguisherAgentInfos_h_
 #define __ADN_ExtinguisherAgentInfos_h_
 
+#include "ADN_CrossedRef.h"
 #include "ADN_Resources_Data.h"
 
 // =============================================================================
@@ -19,7 +20,7 @@
 */
 // Created: JSR 2010-12-01
 // =============================================================================
-class ADN_ExtinguisherAgentInfos : public ADN_Ref_ABC
+class ADN_ExtinguisherAgentInfos : public ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >
 {
 
 public:
@@ -37,31 +38,29 @@ public:
     //@}
 
 public:
-    //! @name Operators
-    //@{
-    xml::xostream& operator<<( xml::xostream& xos );
-    //@}
-
-public:
     typedef ADN_Resources_Data::CategoryInfo T_Item;
 
-    class CmpRef : public std::unary_function< ADN_ExtinguisherAgentInfos* , bool >
+    class CmpRef : public std::unary_function< ADN_ExtinguisherAgentInfos*, bool >
     {
     public:
-        CmpRef( ADN_Resources_Data::CategoryInfo* val ) : val_( val ){}
+        CmpRef( ADN_Resources_Data::CategoryInfo* val ) : val_( val ) {}
         bool operator()( ADN_ExtinguisherAgentInfos* other ) const
-        { return other->ptrAgent_.GetData() == val_; }
+        {
+            return other->GetCrossedElement() == val_;
+        }
 
     private:
         ADN_Resources_Data::CategoryInfo* val_;
     };
 
-    class Cmp : public std::unary_function< ADN_ExtinguisherAgentInfos* , bool >
+    class Cmp : public std::unary_function< ADN_ExtinguisherAgentInfos*, bool >
     {
     public:
         Cmp( const std::string& name ) : name_( name ) {}
         bool operator()( ADN_ExtinguisherAgentInfos* other ) const
-        { return other->ptrAgent_.GetData()->strName_ == name_; }
+        {
+            return other->GetCrossedElement() ? other->GetCrossedElement()->strName_ == name_ : false;
+        }
 
     private:
         std::string name_;
@@ -70,12 +69,10 @@ public:
 public:
     //! @name Member data
     //@{
-    ADN_TypePtr_InVector_ABC< ADN_Resources_Data::CategoryInfo > ptrAgent_;
     ADN_Type_Int heatDecreaseRate_;
     //@}
 };
 
 typedef ADN_Type_VectorFixed_ABC< ADN_ExtinguisherAgentInfos > T_ExtinguisherAgentInfos_Vector;
-typedef T_ExtinguisherAgentInfos_Vector::iterator             IT_ExtinguisherAgentInfos_Vector;
 
 #endif // __ADN_ExtinguisherAgentInfos_h_

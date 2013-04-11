@@ -10,17 +10,14 @@
 #ifndef __ADN_FuneralPackagingResource_h_
 #define __ADN_FuneralPackagingResource_h_
 
+#include "ADN_CrossedRef.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Resources_Data.h"
 
 class ADN_FuneralPackagingResource;
 
-typedef ADN_Type_Vector_ABC< ADN_FuneralPackagingResource >  T_FuneralPackagingResource_Vector;
-typedef T_FuneralPackagingResource_Vector::iterator         IT_FuneralPackagingResource_Vector;
-
-namespace xml { class xistream; }
-class xml::xostream;
+typedef ADN_Type_Vector_ABC< ADN_FuneralPackagingResource > T_FuneralPackagingResource_Vector;
 
 // =============================================================================
 /** @class  ADN_FuneralPackagingResource
@@ -28,7 +25,7 @@ class xml::xostream;
 */
 // Created: SBO 2006-08-04
 // =============================================================================
-class ADN_FuneralPackagingResource : public ADN_Ref_ABC
+class ADN_FuneralPackagingResource : public ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >
 {
 public:
     //! @name Constructors/Destructor
@@ -48,7 +45,6 @@ public:
 public:
     //! @name Member data
     //@{
-    ADN_TypePtr_InVector_ABC<ADN_Resources_Data::CategoryInfo> resource_;
     ADN_Type_Time processDuration_;
     ADN_Type_Bool terminal_;
     //@}

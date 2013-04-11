@@ -44,8 +44,8 @@ ADN_ExtinguisherAgentInfos_Table::~ADN_ExtinguisherAgentInfos_Table()
 void ADN_ExtinguisherAgentInfos_Table::AddRow( int row, void* data )
 {
     ADN_ExtinguisherAgentInfos* pInfos = static_cast< ADN_ExtinguisherAgentInfos* >( data );
-    if( !pInfos )
+    if( !pInfos || !pInfos->GetCrossedElement() )
         return;
-    AddItem( row, 0, data, &pInfos->ptrAgent_.GetData()->strName_, ADN_StandardItem::eString );
+    AddItem( row, 0, data, &pInfos->GetCrossedElement()->strName_, ADN_StandardItem::eString );
     AddItem( row, 1, data, &pInfos->heatDecreaseRate_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }

@@ -48,7 +48,7 @@ void ADN_Consumptions_Table::OnContextMenu( const QPoint& pt )
     bool bDisplayAdd = false;
     bool bDisplayRem = GetSelectedData() != 0;
     ADN_ResourceNetworks_Data::T_ResourceNetworkInfosVector& vAllResources = ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos();
-    for( ADN_ResourceNetworks_Data::IT_ResourceNetworkInfosVector it = vAllResources.begin(); it != vAllResources.end(); ++it )
+    for( auto it = vAllResources.begin(); it != vAllResources.end(); ++it )
     {
         if( this->Contains( **it ) )
             continue;
@@ -80,7 +80,7 @@ void ADN_Consumptions_Table::OnContextMenu( const QPoint& pt )
 void ADN_Consumptions_Table::CreateNewConsumption( int resource )
 {
     ADN_Inhabitants_Data::InhabitantsInfosConsumption* pNewInfo = new ADN_Inhabitants_Data::InhabitantsInfosConsumption();
-    pNewInfo->ptrResource_ = ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos()[ resource ];
+    pNewInfo->SetCrossedElement( ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos()[ resource ] );
     pNewInfo->consumption_ = 0;
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( pNewInfo );
@@ -112,7 +112,7 @@ bool ADN_Consumptions_Table::Contains( const ADN_ResourceNetworks_Data::Resource
     while( ADN_StandardItem* pItem =  static_cast< ADN_StandardItem* >( dataModel_.item( n, 1 ) ) )
     {
         ADN_Inhabitants_Data::InhabitantsInfosConsumption* pInfos = static_cast< ADN_Inhabitants_Data::InhabitantsInfosConsumption* >( pItem->GetData() );
-        if( pInfos->ptrResource_.GetData() == &infos )
+        if( pInfos->GetCrossedElement() == &infos )
             return true;
         ++n;
     }
@@ -129,6 +129,6 @@ void ADN_Consumptions_Table::AddRow( int row, void* data )
     if( !pCurResource )
         return;
 
-    AddItem( row, 0, data, QString( pCurResource->GetItemName().c_str() ), Qt::ItemIsSelectable );
+    AddItem( row, 0, data, &pCurResource->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
     AddItem( row, 1, data, &pCurResource->consumption_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }

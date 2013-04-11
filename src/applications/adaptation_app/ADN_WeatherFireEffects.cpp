@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_WeatherFireEffects.h"
 #include "ADN_Tr.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_WeatherFireEffects constructor
@@ -61,14 +60,4 @@ void ADN_WeatherFireEffects::WriteArchive( xml::xostream& xos, const std::string
             << xml::attribute( "weather", ADN_Tools::Scriptify( ADN_Tr::ConvertFromSensorWeatherModifiers( weatherType_ ) ) )
             << xml::attribute( "heat-decrease-rate", heatDecreaseRate_ )
         << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_WeatherFireEffects::operator<<
-// Created: JSR 2010-12-01
-// -----------------------------------------------------------------------------
-xml::xostream& ADN_WeatherFireEffects::operator<<( xml::xostream& xos )
-{
-    WriteArchive( xos );
-    return xos;
 }

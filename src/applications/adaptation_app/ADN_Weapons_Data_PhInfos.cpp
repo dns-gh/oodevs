@@ -144,7 +144,7 @@ void ADN_Weapons_Data_PhSizeInfos::ReadArchive( xml::xistream& input )
 void ADN_Weapons_Data_PhSizeInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "hit-probabilities" )
-        << xml::attribute( "target", ptrSize_.GetData()->strName_ );
+        << xml::attribute( "target", ptrSize_ );
     for( auto it = vPhs_.begin(); it != vPhs_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;

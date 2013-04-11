@@ -49,9 +49,9 @@ ADN_UrbanModifiersTable::~ADN_UrbanModifiersTable()
 void ADN_UrbanModifiersTable::AddRow( int row, void* data )
 {
     helpers::ADN_UrbanAttritionInfos* pAttritions = static_cast< helpers::ADN_UrbanAttritionInfos* >( data );
-    if( !pAttritions )
+    if( !pAttritions || !pAttritions->GetCrossedElement() )
         return;
 
-    AddItem( row, 0, data, &pAttritions->ptrMaterial_.GetData()->strName_, ADN_StandardItem::eString );
+    AddItem( row, 0, data, &pAttritions->GetCrossedElement()->strName_, ADN_StandardItem::eString );
     AddItem( row, 1, data, &pAttritions->rCoeff_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

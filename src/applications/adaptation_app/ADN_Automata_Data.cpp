@@ -59,7 +59,7 @@ void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
 // Name: UnitInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const UnitInfos& pc )
+void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const UnitInfos* pc )
 {
     output << xml::start( "unit" )
              << xml::attribute( "type", GetCrossedElement()->strName_ );
@@ -67,7 +67,7 @@ void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const Un
         output << xml::attribute( "min-occurs", min_ );
     if( max_.GetData() >= 0 )
         output << xml::attribute( "max-occurs", max_ );
-    if( this == &pc )
+    if( this == pc )
         output << xml::attribute( "command-post", true );
     output << xml::end;
 }
@@ -175,7 +175,7 @@ void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output )
     if( bStrengthRatioFeedbackTime_.GetData() )
         output << xml::attribute( "force-ratio-feedback-time", strengthRatioFeedbackTime_ );
     for( auto it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
-        ( *it )->WriteArchive( output, *ptrUnit_.GetData() );
+        ( *it )->WriteArchive( output, ptrUnit_.GetData() );
     output << xml::end;
 }
 

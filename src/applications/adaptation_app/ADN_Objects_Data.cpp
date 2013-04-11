@@ -390,9 +390,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Disaster::ADN_CapacityInfos_Disaster()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Disaster::ReadArchive( xml::xistream& xis )
 {
-    std::string model;
-    xis >> xml::attribute( "model", model );
-    disaster_ = ADN_Workspace::GetWorkspace().GetDisasters().GetData().FindDisaster( model );
+    xis >> xml::attribute( "model", disaster_ );
     if( disaster_.GetData() )
         bPresent_ = true;
 }
@@ -403,8 +401,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Disaster::ReadArchive( xml::xistream& x
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Disaster::WriteArchive( xml::xostream& xos )
 {
-    std::string model = disaster_.GetData() ? disaster_.GetData()->strName_.GetData() : "";
-    xos << xml::attribute( "model", model );
+    xos << xml::attribute( "model", disaster_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -471,11 +468,11 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::WriteArchive( xml::xostream& xos )
 {
     if( useAmmo_.GetData() && ammoCategory_.GetData() )
-        xos << xml::attribute( "category", ammoCategory_.GetData()->strName_ );
+        xos << xml::attribute( "category", ammoCategory_ );
     else if( useMine_.GetData() && mineCategory_.GetData() )
-        xos << xml::attribute( "category", mineCategory_.GetData()->strName_ );
+        xos << xml::attribute( "category", mineCategory_ );
     else if( useExplo_.GetData() && explosiveCategory_.GetData() )
-        xos << xml::attribute( "category", explosiveCategory_.GetData()->strName_ );
+        xos << xml::attribute( "category", explosiveCategory_ );
     else
         xos << xml::attribute( "category", "" );
 
@@ -488,7 +485,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::WriteArchive( xml::xostream&
 //@{
 
 ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::ADN_CapacityInfos_UrbanDestruction()
-    : modifUrbanBlocks_     ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
+    : modifUrbanBlocks_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
 {
     // NOTHING
 }
@@ -1152,7 +1149,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFire
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::WriteArchive( xml::xostream& xos )
 {
-    if( ptrFireClass_.GetData()->isSurface_.GetData() )
+    if( ptrFireClass_.GetData() && ptrFireClass_.GetData()->isSurface_.GetData() )
         xos << xml::start( "modifier" )
             << xml::attribute( "fire-class", ptrFireClass_.GetData()->strName_ )
             << xml::attribute( "ignition-threshold", ignitionThreshold_ )

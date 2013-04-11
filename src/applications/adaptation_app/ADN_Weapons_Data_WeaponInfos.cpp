@@ -109,21 +109,12 @@ void ADN_Weapons_Data_WeaponInfos::ReadTargetSize( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Weapons_Data_WeaponInfos::ReadArchive( xml::xistream& input )
 {
-    std::string strLauncher, strAmmunition;
-    input >> xml::attribute( "launcher", strLauncher )
-        >> xml::attribute( "munition", strAmmunition );
+    input >> xml::attribute( "launcher", ptrLauncher_ )
+        >> xml::attribute( "munition", ptrAmmunition_ );
 
-    ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
-    if( !pLauncher )
-        throw MASA_EXCEPTION( tools::translate( "Weapons_Data", "Weapon systems '%1'/'%2' - Invalid launcher type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).toStdString() );
-    ptrLauncher_ = pLauncher;
-
-    ADN_Resources_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( "munition", strAmmunition );
-    if( !pAmmo )
-        throw MASA_EXCEPTION( tools::translate( "Weapons_Data", "Weapon systems '%1'/'%2' - Invalid ammunition type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).toStdString() );
-    ptrAmmunition_ = (ADN_Resources_Data::AmmoCategoryInfo*)pAmmo;
-
-    strName_ = strLauncher + " & " + strAmmunition;
+    strName_ = ( ptrLauncher_.GetData() ? ptrLauncher_.GetData()->strName_.GetData() : "" )
+        + " & "
+        + ( ptrAmmunition_.GetData() ? ptrAmmunition_.GetData()->strName_.GetData() : "" );
     input >> xml::start( "burst" )
         >> xml::attribute( "munition", nRoundsPerBurst_ )
         >> xml::attribute( "duration", burstDuration_ )
@@ -154,8 +145,8 @@ void ADN_Weapons_Data_WeaponInfos::ReadArchive( xml::xistream& input )
 void ADN_Weapons_Data_WeaponInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "weapon-system" )
-        << xml::attribute( "launcher", ptrLauncher_  .GetData()->strName_ )
-        << xml::attribute( "munition", ptrAmmunition_.GetData()->strName_ )
+        << xml::attribute( "launcher", ptrLauncher_ )
+        << xml::attribute( "munition", ptrAmmunition_ )
         << xml::start( "burst" )
         << xml::attribute( "munition", nRoundsPerBurst_ )
         << xml::attribute( "duration", burstDuration_ )
@@ -194,6 +185,8 @@ void ADN_Weapons_Data_WeaponInfos::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 void ADN_Weapons_Data_WeaponInfos::ConnectLauncherAmmunition()
 {
+    if( !ptrLauncher_.GetData() || !ptrAmmunition_.GetData() )
+        return;
     LauncherOrAmmunitionChanged();
     connect( &ptrLauncher_.GetData()->bDirect_, SIGNAL( DataChanged( void* ) ), this, SLOT( LauncherOrAmmunitionChanged() ) );
     connect( &ptrLauncher_.GetData()->bIndirect_, SIGNAL( DataChanged( void* ) ), this, SLOT( LauncherOrAmmunitionChanged() ) );
@@ -207,6 +200,8 @@ void ADN_Weapons_Data_WeaponInfos::ConnectLauncherAmmunition()
 // -----------------------------------------------------------------------------
 bool ADN_Weapons_Data_WeaponInfos::IsValidOnChange( bool bDirect, bool bLauncher ) const
 {
+    if( !ptrLauncher_.GetData() || !ptrAmmunition_.GetData() )
+        return false;
     bool bNewLauncherDirect    = ( bLauncher && bDirect )? !ptrLauncher_.GetData()->bDirect_.GetData() : ptrLauncher_.GetData()->bDirect_.GetData();
     bool bNewLauncherIndirect  = ( bLauncher && !bDirect )? !ptrLauncher_.GetData()->bIndirect_.GetData() : ptrLauncher_.GetData()->bIndirect_.GetData();
     bool bNewAmmoDirect        = ( !bLauncher && bDirect )? !ptrAmmunition_.GetData()->bDirect_.GetData() : ptrAmmunition_.GetData()->bDirect_.GetData();
@@ -220,6 +215,8 @@ bool ADN_Weapons_Data_WeaponInfos::IsValidOnChange( bool bDirect, bool bLauncher
 // -----------------------------------------------------------------------------
 void ADN_Weapons_Data_WeaponInfos::LauncherOrAmmunitionChanged()
 {
+    if( !ptrLauncher_.GetData() || !ptrAmmunition_.GetData() )
+        return;
     bDirect_ = ptrLauncher_.GetData()->bDirect_.GetData() && ptrAmmunition_.GetData()->bDirect_.GetData();
     bIndirect_ = ptrLauncher_.GetData()->bIndirect_.GetData() && ptrAmmunition_.GetData()->bIndirect_.GetData();
 }

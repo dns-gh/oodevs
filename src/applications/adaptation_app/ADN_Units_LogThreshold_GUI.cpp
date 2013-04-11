@@ -51,8 +51,11 @@ void ADN_Units_LogThreshold_GUI::AddRow( int row, void* data )
 {
     ADN_Units_Data::StockLogThresholdInfos* pInfo = static_cast< ADN_Units_Data::StockLogThresholdInfos* >( data );
 
-    AddItem( row, 0, data, &pInfo->ptrLogisticSupplyClass_.GetData()->strName_, ADN_StandardItem::eString );
-    AddItem( row, 1, data, &pInfo->rLogThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    if( pInfo && pInfo->ptrLogisticSupplyClass_.GetData() )
+    {
+        AddItem( row, 0, data, &pInfo->ptrLogisticSupplyClass_.GetData()->strName_, ADN_StandardItem::eString );
+        AddItem( row, 1, data, &pInfo->rLogThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -68,7 +71,7 @@ void ADN_Units_LogThreshold_GUI::OnContextMenu( const QPoint& pt )
     helpers::T_LogisticSupplyClass_Vector& logisticSupplyClasses = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses();
 
     // Fill the popup menu with submenus, one for each dotation.
-    for( helpers::IT_LogisticSupplyClass_Vector it = logisticSupplyClasses.begin(); it != logisticSupplyClasses.end(); ++it )
+    for( auto it = logisticSupplyClasses.begin(); it != logisticSupplyClasses.end(); ++it )
     {
         bool found = false;
         for( int i = 0; i < numRows() && !found; ++i )

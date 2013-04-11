@@ -37,20 +37,16 @@ public:
     //@}
 
 public:
-    //! @name Operators
-    //@{
-    xml::xostream& operator<<( xml::xostream& xos );
-    //@}
-
-public:
     typedef ADN_Resources_Data::CategoryInfo T_Item;
 
-    class Cmp : public std::unary_function< ADN_WeatherFireEffects* , bool >
+    class Cmp : public std::unary_function< ADN_WeatherFireEffects*, bool >
     {
     public:
         Cmp( E_SensorWeatherModifiers val ) : val_( val ){}
         bool operator()( ADN_WeatherFireEffects* other ) const
-        { return val_ == other->weatherType_; }
+        {
+            return val_ == other->weatherType_;
+        }
 
     private:
         E_SensorWeatherModifiers val_;
@@ -65,6 +61,5 @@ public:
 };
 
 typedef ADN_Type_Vector_ABC< ADN_WeatherFireEffects > T_WeatherFireEffects_Vector;
-typedef T_WeatherFireEffects_Vector::iterator    IT_WeatherFireEffects_Vector;
 
 #endif // __ADN_WeatherFireEffects_h_

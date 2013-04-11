@@ -87,7 +87,7 @@ void ADN_Radars_ListView::ConnectItem( bool bConnect )
 void ADN_Radars_ListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< RadarInfos > wizard( tools::translate( "ADN_Radars_ListView", "Special sensors" ), ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.GetRadars(), this );
+    ADN_Wizard< RadarInfos > wizard( tools::translate( "ADN_Radars_ListView", "Special sensors" ), ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_->GetRadars(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {

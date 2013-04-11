@@ -34,7 +34,7 @@ public:
         UnitInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, const UnitInfos& pc );
+        void WriteArchive( xml::xostream& output, const UnitInfos* pc );
 
     public:
         ADN_Type_Int min_;

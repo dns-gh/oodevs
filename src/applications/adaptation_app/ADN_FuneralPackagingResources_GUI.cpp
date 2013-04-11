@@ -108,7 +108,7 @@ bool ADN_FuneralPackagingResources_GUI::Contains( ADN_Resources_Data::CategoryIn
         if( pItem )
         {
             ADN_FuneralPackagingResource* pCategory = static_cast<ADN_FuneralPackagingResource*>( pItem->GetData() );
-            if( pCategory->resource_ == &category )
+            if( pCategory && pCategory->GetCrossedElement() == &category )
                 return true;
         }
     }
@@ -122,8 +122,8 @@ bool ADN_FuneralPackagingResources_GUI::Contains( ADN_Resources_Data::CategoryIn
 void ADN_FuneralPackagingResources_GUI::AddNewDotation( ADN_Resources_Data::CategoryInfo& category )
 {
     ADN_FuneralPackagingResource* pNewInfo = new ADN_FuneralPackagingResource();
-    pNewInfo->resource_ = &category;
-    pNewInfo->resource_.SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( category.parentResource_.nType_ ).GetCategories() );
+    pNewInfo->SetCrossedElement( &category );
+    pNewInfo->SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( category.parentResource_.nType_ ).GetCategories() );
     pNewInfo->processDuration_ = "1h";
     pNewInfo->terminal_ = false;
 
@@ -139,10 +139,10 @@ void ADN_FuneralPackagingResources_GUI::AddNewDotation( ADN_Resources_Data::Cate
 void ADN_FuneralPackagingResources_GUI::AddRow( int row, void* data )
 {
     ADN_FuneralPackagingResource* pInfo = static_cast< ADN_FuneralPackagingResource* >( data );
-    if( !pInfo )
+    if( !pInfo || !pInfo->GetCrossedElement() )
         return;
 
-    AddItem( row, 0, data, &pInfo->resource_.GetData()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+    AddItem( row, 0, data, &pInfo->GetCrossedElement()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
     AddItem( row, 1, data, &pInfo->processDuration_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
     AddItem( row, 2, data, &pInfo->terminal_, ADN_StandardItem::eBool, Qt::ItemIsUserCheckable );
 }

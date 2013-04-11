@@ -86,7 +86,7 @@ void ADN_ResourceNetworks_Data::ResourceNetworkInfos::WriteArchive( xml::xostrea
     output << xml::start( "resource-network" )
                << xml::attribute( "name", strName_ )
                << xml::start( "resource" )
-                   << xml::attribute( "id", ptrCategory_.GetData()->nId_ )
+                   << xml::attribute( "id", ptrCategory_.GetData() ? ptrCategory_.GetData()->nId_.GetData() : 0 )
                << xml::end
                << xml::start( "color" )
                    << xml::attribute( "rgb", strColor_ )
@@ -149,7 +149,7 @@ ADN_ResourceNetworks_Data::T_ResourceNetworkInfosVector& ADN_ResourceNetworks_Da
 // -----------------------------------------------------------------------------
 ADN_ResourceNetworks_Data::ResourceNetworkInfos* ADN_ResourceNetworks_Data::FindResourceNetwork( const std::string& strName )
 {
-    IT_ResourceNetworkInfosVector it = std::find_if( resourceNetworks_.begin(), resourceNetworks_.end(), ADN_Tools::NameCmp< ResourceNetworkInfos >( strName ) );
+    auto it = std::find_if( resourceNetworks_.begin(), resourceNetworks_.end(), ADN_Tools::NameCmp< ResourceNetworkInfos >( strName ) );
     if( it == resourceNetworks_.end() )
         return 0;
     return *it;
@@ -189,7 +189,7 @@ void ADN_ResourceNetworks_Data::WriteArchive( xml::xostream& output )
 
     output << xml::start( "resource-networks" );
     ADN_Tools::AddSchema( output, "ResourceNetworks" );
-    for( IT_ResourceNetworkInfosVector it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
+    for( auto it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }
@@ -201,8 +201,8 @@ void ADN_ResourceNetworks_Data::WriteArchive( xml::xostream& output )
 QStringList ADN_ResourceNetworks_Data::GetResourceNetworksThatUse( ADN_Resources_Data::CategoryInfo& category )
 {
     QStringList result;
-    for( IT_ResourceNetworkInfosVector it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
-        if( ( *it )->ptrCategory_.GetData()->strName_.GetData() == category.strName_.GetData() )
+    for( auto it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
+        if( ( *it )->ptrCategory_.GetData() && ( *it )->ptrCategory_.GetData()->strName_.GetData() == category.strName_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
     return result;
 }

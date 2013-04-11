@@ -9,12 +9,12 @@ using namespace helpers;
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
 AttritionInfos::AttritionInfos( ArmorInfos* ptr )
-    : ptrArmor_        ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), ptr )
-    , rDestroy_        ( 0.0 )
-    , rRepairWithEvac_ ( 0.0 )
-    , rRepairNoEvac_   ( 0.0 )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), ptr, true )
+    , rDestroy_( 0 )
+    , rRepairWithEvac_( 0 )
+    , rRepairNoEvac_( 0 )
 {
-    BindExistenceTo( &ptrArmor_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,9 +37,9 @@ void AttritionInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "destruction", rDestroy_ )
         >> xml::attribute( "repairable-with-evacuation", rRepairWithEvac_ )
         >> xml::attribute( "repairable-without-evacuation", rRepairNoEvac_ );
-    rDestroy_        = rDestroy_.GetData() * 100.0;
-    rRepairWithEvac_ = rRepairWithEvac_.GetData() * 100.0;
-    rRepairNoEvac_   = rRepairNoEvac_.GetData() * 100.0;
+    rDestroy_ = rDestroy_.GetData() * 100;
+    rRepairWithEvac_ = rRepairWithEvac_.GetData() * 100;
+    rRepairNoEvac_ = rRepairNoEvac_.GetData() * 100;
 }
 
 // -----------------------------------------------------------------------------
@@ -49,21 +49,11 @@ void AttritionInfos::ReadArchive( xml::xistream& input )
 void AttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /* = "attrition"*/ )
 {
     output << xml::start( tag )
-        << xml::attribute( "protection", ptrArmor_.GetData()->strName_ )
+        << xml::attribute( "protection", GetCrossedElement()->strName_ )
         << xml::attribute( "destruction", rDestroy_.GetData() / 100.0 )
         << xml::attribute( "repairable-with-evacuation", rRepairWithEvac_.GetData() / 100.0 )
         << xml::attribute( "repairable-without-evacuation", rRepairNoEvac_.GetData() / 100.0 )
         << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttritionInfos::operator<<
-// Created: SLG 2010-07-01
-// -----------------------------------------------------------------------------
-xml::xostream& AttritionInfos::operator<<( xml::xostream& xos )
-{
-    WriteArchive( xos );
-    return xos;
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +62,7 @@ xml::xostream& AttritionInfos::operator<<( xml::xostream& xos )
 // -----------------------------------------------------------------------------
 AttritionInfos* AttritionInfos::CreateCopy()
 {
-    AttritionInfos* result = new AttritionInfos( ptrArmor_.GetData() );
+    AttritionInfos* result = new AttritionInfos( GetCrossedElement() );
     result->CopyFrom( *this );
     return result;
 }

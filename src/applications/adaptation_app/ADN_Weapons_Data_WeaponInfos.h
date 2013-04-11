@@ -38,8 +38,8 @@ public:
     void ConnectLauncherAmmunition();
 
 public:
-    ADN_TypePtr_InVector_ABC< ADN_Launchers_Data::LauncherInfos >         ptrLauncher_;
-    ADN_TypePtr_InVector_ABC< ADN_Resources_Data::AmmoCategoryInfo >     ptrAmmunition_;
+    ADN_TypePtr_InVector_ABC< ADN_Launchers_Data::LauncherInfos > ptrLauncher_;
+    ADN_TypePtr_InVector_ABC< ADN_Resources_Data::AmmoCategoryInfo > ptrAmmunition_;
 
     ADN_Type_Int    nRoundsPerBurst_;
     ADN_Type_Time   burstDuration_;
@@ -47,7 +47,7 @@ public:
     ADN_Type_Time   reloadDuration_;
 
     ADN_Type_Bool   bDirect_;
-    ADN_Type_VectorFixed_ABC< ADN_Weapons_Data_PhSizeInfos >    phs_;
+    ADN_Type_VectorFixed_ABC< ADN_Weapons_Data_PhSizeInfos > phs_;
 
     ADN_Type_Bool bSimulation_;
     ADN_Type_Enum< E_UnitPosture, eNbrUnitPosture > nFirePosture_;
@@ -76,6 +76,8 @@ public:
 
         bool operator()( ADN_Weapons_Data_WeaponInfos* tgtnfos ) const
         {
+            if( !tgtnfos->ptrLauncher_.GetData() || !tgtnfos->ptrAmmunition_.GetData() )
+                return false;
             return (  ADN_Tools::CaselessCompare( tgtnfos->ptrLauncher_.GetData()->strName_.GetData(), strLauncher_ )
                 && ADN_Tools::CaselessCompare( tgtnfos->ptrAmmunition_.GetData()->strName_.GetData(), strAmmo_ ) );
         }

@@ -122,24 +122,16 @@ void ADN_Resources_Data::CategoryInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "package-size", rNbrInPackage_ )
           >> xml::attribute( "package-mass", rPackageWeight_ )
           >> xml::attribute( "package-volume", rPackageVolume_ )
-          >> xml::attribute( "nature", dotationNature )
-          >> xml::attribute( "logistic-supply-class", logisticSupplyClass )
+          >> xml::attribute( "nature", ptrResourceNature_ )
+          >> xml::attribute( "logistic-supply-class", ptrLogisticSupplyClass_ )
           >> xml::attribute( "network-usable", bNetworkUsable_ );
-    helpers::ResourceNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( dotationNature );
-    if( !pNature )
-        throw MASA_EXCEPTION( tools::translate( "Resources_Data", "Equipment - Invalid resource nature '%1'" ).arg( dotationNature.c_str() ).toStdString() );
-    ptrResourceNature_ = pNature;
-    helpers::LogisticSupplyClass* pClass = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindLogisticSupplyClass( logisticSupplyClass );
-    if( !pClass )
-        throw MASA_EXCEPTION( tools::translate( "Resources_Data", "Equipment - Invalid resource logistic supply class '%1'" ).arg( logisticSupplyClass.c_str() ).toStdString() );
-    ptrLogisticSupplyClass_ = pClass;
 }
 
 // -----------------------------------------------------------------------------
 // Name: CategoryInfo::WriteArchive
 // Created: APE 2004-11-15
 // -----------------------------------------------------------------------------
-void ADN_Resources_Data::CategoryInfo::WriteArchive( xml::xostream& output ) const
+void ADN_Resources_Data::CategoryInfo::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "resource" );
     WriteContent( output );
@@ -159,7 +151,7 @@ void ADN_Resources_Data::CategoryInfo::Initialize()
 // Name: ADN_Resources_Data:::CategoryInfo::WriteContent
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Resources_Data::CategoryInfo::WriteContent( xml::xostream& output ) const
+void ADN_Resources_Data::CategoryInfo::WriteContent( xml::xostream& output )
 {
     output << xml::attribute( "category", category_ )
            << xml::attribute( "name", strName_ )
@@ -167,9 +159,9 @@ void ADN_Resources_Data::CategoryInfo::WriteContent( xml::xostream& output ) con
            << xml::attribute( "package-size", rNbrInPackage_ )
            << xml::attribute( "package-mass", rPackageWeight_ )
            << xml::attribute( "package-volume", rPackageVolume_ )
-           << xml::attribute( "nature", ptrResourceNature_.GetData()->strName_.GetData() )
-           << xml::attribute( "logistic-supply-class", ptrLogisticSupplyClass_.GetData()->strName_.GetData() )
-           << xml::attribute( "id-nature", ptrResourceNature_.GetData()->nId_ )
+           << xml::attribute( "nature", ptrResourceNature_ )
+           << xml::attribute( "logistic-supply-class", ptrLogisticSupplyClass_ )
+           << xml::attribute( "id-nature", ptrResourceNature_.GetData() ? ptrResourceNature_.GetData()->nId_.GetData() : 0 )
            << xml::attribute( "codeEMAT6", strCodeEMAT6_ )
            << xml::attribute( "codeEMAT8", strCodeEMAT8_ )
            << xml::attribute( "codeLFRIL", strCodeLFRIL_ )
@@ -575,7 +567,7 @@ void ADN_Resources_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
 // Name: AmmoCategoryInfo::WriteArchive
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Resources_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output ) const
+void ADN_Resources_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "resource" );
     CategoryInfo::WriteContent( output );
@@ -885,9 +877,10 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( ADN_Objects_Data_ObjectInfo
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         ResourceInfos* pComp = *it;
-        for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
+        for( auto itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
             if( AmmoCategoryInfo* ammoCategory = dynamic_cast< AmmoCategoryInfo* >( *itCategory ) )
                 if( ammoCategory->bIndirect_.GetData() && ammoCategory->indirectAmmoInfos_.bEffect_.GetData()
+                 && ammoCategory->indirectAmmoInfos_.objectType_.GetData()
                  && ammoCategory->indirectAmmoInfos_.objectType_.GetData()->strName_.GetData() == object.strName_.GetData() )
                     result << ( *itCategory )->strName_.GetData().c_str();
     }
@@ -904,9 +897,12 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::ResourceNatureInfo
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         ResourceInfos* pComp = *it;
-        for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
-            if( ( *itCategory )->ptrResourceNature_.GetData()->strName_.GetData() == object.strName_.GetData() )
+        for( auto itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
+        {
+            helpers::ResourceNatureInfos* infos = ( *itCategory )->ptrResourceNature_.GetData();
+            if( infos && infos->strName_.GetData() == object.strName_.GetData() )
                     result << ( *itCategory )->strName_.GetData().c_str();
+        }
     }
     return result;
 }
@@ -921,9 +917,12 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::LogisticSupplyClas
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         ResourceInfos* pComp = *it;
-        for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
-            if( ( *itCategory )->ptrLogisticSupplyClass_.GetData()->strName_.GetData() == object.strName_.GetData() )
+        for( auto itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
+        {
+            helpers::LogisticSupplyClass* infos = ( *itCategory )->ptrLogisticSupplyClass_.GetData();
+            if( infos && infos->strName_.GetData() == object.strName_.GetData() )
                 result << ( *itCategory )->strName_.GetData().c_str();
+        }
     }
     return result;
 }
@@ -938,7 +937,7 @@ QStringList ADN_Resources_Data::GetResourcesWithDirectFire()
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         ResourceInfos* pComp = *it;
-        for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
+        for( auto itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
             if( AmmoCategoryInfo* ammoCategory = dynamic_cast< AmmoCategoryInfo* >( *itCategory ) )
                 if( ammoCategory->bDirect_.GetData() )
                     result << ( *itCategory )->strName_.GetData().c_str();
@@ -955,8 +954,11 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( helpers::ResourceNatureInfo
     QStringList result;
     ResourceInfos& resourceInfos = GetResource( familly );
     for( auto it = resourceInfos.categories_.begin(); it != resourceInfos.categories_.end(); ++it )
-        if( ( *it )->ptrResourceNature_.GetData()->strName_.GetData() == object.strName_.GetData() )
-                    result << ( *it )->strName_.GetData().c_str();
+    {
+        helpers::ResourceNatureInfos* infos = ( *it )->ptrResourceNature_.GetData();
+        if(infos && infos->strName_.GetData() == object.strName_.GetData() )
+            result << ( *it )->strName_.GetData().c_str();
+    }
     return result;
 }
 

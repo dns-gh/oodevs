@@ -38,15 +38,12 @@ public:
         void WriteArchive( const std::string& section, const std::string& attribute, xml::xostream& output );
 
     public:
-        ADN_Type_Int  nNbrTrucks_;
-        T             value_;
+        ADN_Type_Int nNbrTrucks_;
+        T value_;
     };
 
-    typedef ADN_Type_Vector_ABC< ConvoyInfo< ADN_Type_Time > >  T_ConvoyTimeInfoVector;
-    typedef T_ConvoyTimeInfoVector::iterator                    IT_ConvoyTimeInfoVector;
-
+    typedef ADN_Type_Vector_ABC< ConvoyInfo< ADN_Type_Time > > T_ConvoyTimeInfoVector;
     typedef ADN_Type_Vector_ABC< ConvoyInfo< ADN_Type_Double > > T_ConvoyDoubleInfoVector;
-    typedef T_ConvoyDoubleInfoVector::iterator                   IT_ConvoyDoubleInfoVector;
 
     class SupplyDataInfos : public ADN_Ref_ABC
     {

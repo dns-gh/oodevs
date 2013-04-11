@@ -11,55 +11,54 @@
 #define __ADN_AttritionInfos_h_
 
 #include "ADN_ArmorInfos.h"
+#include "ADN_CrossedRef.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 
 namespace helpers
 {
 
-class AttritionInfos : public ADN_Ref_ABC
+class AttritionInfos : public ADN_CrossedRef< ArmorInfos >
 {
 
 public:
     explicit AttritionInfos( ArmorInfos* ptr );
+    virtual ~AttritionInfos() {}
 
     void CopyFrom( AttritionInfos& attritions );
-    void ReadArchive( xml::xistream& );
-    void WriteArchive( xml::xostream&, const std::string& tag = "attrition" );
+    void ReadArchive( xml::xistream& xis );
+    void WriteArchive( xml::xostream& xos, const std::string& tag = "attrition" );
 
     AttritionInfos* CreateCopy();
 
 public:
-    //! @name Operators
-    //@{
-    xml::xostream& operator<<( xml::xostream& xos );
-    //@}
-
-public:
-    ADN_TypePtr_InVector_ABC< ArmorInfos > ptrArmor_;
-    ADN_Type_Double                        rDestroy_;
-    ADN_Type_Double                        rRepairWithEvac_;
-    ADN_Type_Double                        rRepairNoEvac_;
+    ADN_Type_Double rDestroy_;
+    ADN_Type_Double rRepairWithEvac_;
+    ADN_Type_Double rRepairNoEvac_;
 
 public:
     typedef ArmorInfos  T_Item;
 
-    class CmpRef : public std::unary_function< AttritionInfos* , bool >
+    class CmpRef : public std::unary_function< AttritionInfos*, bool >
     {
     public:
-        CmpRef( ArmorInfos* val ) : val_(val){}
+        CmpRef( ArmorInfos* val ) : val_( val ) {}
         bool operator()( AttritionInfos* tgtnfos ) const
-        {   return tgtnfos->ptrArmor_.GetData() == val_;}
+        {
+            return tgtnfos->GetCrossedElement() == val_;
+        }
 
     private:
         ArmorInfos* val_;
     };
 
-    class Cmp : public std::unary_function< AttritionInfos* , bool >
+    class Cmp : public std::unary_function< AttritionInfos*, bool >
     {
     public:
-        Cmp( const std::string& name ) : name_(name) {}
+        Cmp( const std::string& name ) : name_( name ) {}
         bool operator()( AttritionInfos* tgtnfos ) const
-        {   return tgtnfos->ptrArmor_.GetData()->strName_ == name_;}
+        {
+            return tgtnfos->GetCrossedElement() ? tgtnfos->GetCrossedElement()->strName_ == name_ : false;
+        }
 
     private:
         std::string name_;

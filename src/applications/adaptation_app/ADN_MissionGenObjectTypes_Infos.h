@@ -25,7 +25,8 @@ namespace helpers
 // =============================================================================
 class ADN_MissionGenObjectTypes_Infos : public ADN_Ref_ABC
 {
-
+    // $$$$ JSR 2013-04-09: TODO Inherit from ADN_CrossedRef< ADN_Objects_Data_ObjectInfos >, to dynamically change objects names
+    // We cannot do it now because it takes too much time (we need to wait for global simplification of connectors)
 public:
     //! @name Constructors/Destructor
     //@{
@@ -45,7 +46,6 @@ public:
     //@{
     ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos > ptrObject_;
     ADN_Type_Bool isAllowed_;
-    ADN_Type_String& name_;
     //@}
 
 public:

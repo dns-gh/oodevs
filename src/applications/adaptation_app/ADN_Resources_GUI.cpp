@@ -504,14 +504,18 @@ ADN_Table* ADN_Resources_GUI::CreatePKTable()
         pTable->AddBoldGridRow( nRow );
         pTable->AddItem( nRow, 0, nRowSize, 1 , *it, ammoCategory.strName_.GetData().c_str() );
         int nSubRow = 0;
-        for( helpers::IT_AttritionInfos_Vector it2 = ammoCategory.attritions_.begin(); it2 != ammoCategory.attritions_.end(); ++it2, ++nSubRow )
+        for( helpers::IT_AttritionInfos_Vector it2 = ammoCategory.attritions_.begin(); it2 != ammoCategory.attritions_.end(); ++it2 )
         {
-            if( nSubRow > 0 )
-                pTable->AddItem( nRow + nSubRow, 0, *it, ammoCategory.strName_.GetData().c_str() );
-            pTable->AddItem( nRow + nSubRow, 1, *it, ( *it2 )->ptrArmor_.GetData()->strName_.GetData().c_str() );
-            pTable->AddItem( nRow + nSubRow, 2, *it, &( *it2 )->rRepairNoEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
-            pTable->AddItem( nRow + nSubRow, 3, *it, &( *it2 )->rRepairWithEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
-            pTable->AddItem( nRow + nSubRow, 4, *it, &( *it2 )->rDestroy_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+            if( ( *it2 )->GetCrossedElement() )
+            {
+                if( nSubRow > 0 )
+                    pTable->AddItem( nRow + nSubRow, 0, *it, ammoCategory.strName_.GetData().c_str() );
+                pTable->AddItem( nRow + nSubRow, 1, *it, ( *it2 )->GetCrossedElement()->strName_.GetData().c_str() );
+                pTable->AddItem( nRow + nSubRow, 2, *it, &( *it2 )->rRepairNoEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+                pTable->AddItem( nRow + nSubRow, 3, *it, &( *it2 )->rRepairWithEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+                pTable->AddItem( nRow + nSubRow, 4, *it, &( *it2 )->rDestroy_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+                ++nSubRow;
+            }
         }
         nRow += nRowSize;
     }
@@ -570,7 +574,7 @@ void ADN_Resources_GUI::NetworkUsableActivated( int state )
     {
         ADN_ResourceNetworks_Data::T_ResourceNetworkInfosVector& resourceNetworks = ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos();
         QString associatedResourceNetwork;
-        for( ADN_ResourceNetworks_Data::IT_ResourceNetworkInfosVector it = resourceNetworks.begin(); it != resourceNetworks.end(); ++it )
+        for( auto it = resourceNetworks.begin(); it != resourceNetworks.end(); ++it )
         {
             ADN_ResourceNetworks_Data::ResourceNetworkInfos* networkInfo = *it;
             if( networkInfo )

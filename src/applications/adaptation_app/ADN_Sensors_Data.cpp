@@ -11,17 +11,12 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Data.h"
-
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
-
-// =============================================================================
-//
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::LimitedToSensorsInfos::LimitedToSensorsInfos
@@ -83,11 +78,11 @@ void ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive( xml::xostream& outpu
 // Name: ModificatorSizeInfos::ModificatorSizeInfos
 // Created: JDY 03-08-28
 //-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorSizeInfos::ModificatorSizeInfos(ADN_Categories_Data::SizeInfos* ptr)
-    : ptrSize_(ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(),(ADN_Categories_Data::SizeInfos*)ptr)
-    , rCoeff_(0.0)
+ADN_Sensors_Data::ModificatorSizeInfos::ModificatorSizeInfos( ADN_Categories_Data::SizeInfos* ptr )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), ptr, true, "type" )
+    , rCoeff_( 0 )
 {
-    BindExistenceTo(&ptrSize_);
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -105,9 +100,9 @@ void ADN_Sensors_Data::ModificatorSizeInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::ModificatorSizeInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "distance-modifier" )
-            << xml::attribute( "type", ptrSize_.GetData()->strName_.GetData() )
-            << xml::attribute( "value", rCoeff_ )
+    output << xml::start( "distance-modifier" );
+    ADN_CrossedRef< ADN_Categories_Data::SizeInfos >::WriteArchive( output );
+    output   << xml::attribute( "value", rCoeff_ )
            << xml::end;
 }
 
@@ -119,9 +114,9 @@ void ADN_Sensors_Data::ModificatorSizeInfos::WriteArchive( xml::xostream& output
 // Name: ModificatorIlluminationInfos::ModificatorIlluminationInfos
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorIlluminationInfos::ModificatorIlluminationInfos(const E_LightingType& e)
-    : eType_(e)
-    , rCoeff_(0.0)
+ADN_Sensors_Data::ModificatorIlluminationInfos::ModificatorIlluminationInfos( const E_LightingType& e )
+    : eType_( e )
+    , rCoeff_( 0 )
 {
     // NOTHING
 }
@@ -155,9 +150,9 @@ void ADN_Sensors_Data::ModificatorIlluminationInfos::WriteArchive( xml::xostream
 // Name: ModificatorMeteoInfos::ModificatorMeteoInfos
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorMeteoInfos::ModificatorMeteoInfos(const E_SensorWeatherModifiers& e)
-    : eType_(e)
-    , rCoeff_(0.0)
+ADN_Sensors_Data::ModificatorMeteoInfos::ModificatorMeteoInfos( const E_SensorWeatherModifiers& e )
+    : eType_( e )
+    , rCoeff_( 0 )
 {
     // NOTHING
 }
@@ -191,9 +186,9 @@ void ADN_Sensors_Data::ModificatorMeteoInfos::WriteArchive( xml::xostream& outpu
 // Name: ModificatorEnvironmentInfos::ModificatorEnvironmentInfos
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorEnvironmentInfos::ModificatorEnvironmentInfos(const E_VisionObject& e)
-    : eType_(e)
-    , rCoeff_(0.0)
+ADN_Sensors_Data::ModificatorEnvironmentInfos::ModificatorEnvironmentInfos( const E_VisionObject& e )
+    : eType_( e )
+    , rCoeff_( 0 )
 {
     // NOTHING
 }
@@ -228,10 +223,10 @@ void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream&
 // Created: SLG 2010-03-02
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr )
-    : ptrMaterial_(ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(),(ADN_Urban_Data::UrbanMaterialInfos*)ptr)
-    , rCoeff_(0.0)
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr, true, "type" )
+    , rCoeff_( 0 )
 {
-    BindExistenceTo(&ptrMaterial_);
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -249,10 +244,10 @@ void ADN_Sensors_Data::ModificatorUrbanBlockInfos::ReadArchive( xml::xistream& i
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::ModificatorUrbanBlockInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "distance-modifier" )
-        << xml::attribute( "value", rCoeff_ )
-        << xml::attribute( "type", ptrMaterial_.GetData()->strName_ )
-        << xml::end;
+    output << xml::start( "distance-modifier" );
+    ADN_CrossedRef< ADN_Urban_Data::UrbanMaterialInfos >::WriteArchive( output );
+    output   << xml::attribute( "value", rCoeff_ )
+           << xml::end;
 }
 
 // =============================================================================
@@ -263,9 +258,9 @@ void ADN_Sensors_Data::ModificatorUrbanBlockInfos::WriteArchive( xml::xostream& 
 // Name: ModificatorPostureInfos::ModificatorPostureInfos
 // Created: JDY 03-09-29
 //-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorPostureInfos::ModificatorPostureInfos(const E_UnitPosture& e )
-    : eType_(e)
-    , rCoeff_(1.0)
+ADN_Sensors_Data::ModificatorPostureInfos::ModificatorPostureInfos( const E_UnitPosture& e )
+    : eType_( e )
+    , rCoeff_( 1 )
 {
     // NOTHING
 }
@@ -300,16 +295,13 @@ void ADN_Sensors_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& out
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::TargetInfos::TargetInfos()
-    : ptrObject_          ( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(),0)
-    , rDistanceDetection_ ( 0 )
-    , populationInfos_    ()
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0, true, "type" )
+    , rDistanceDetection_( 0 )
+    , populationInfos_()
 {
-    // Reference connection
-    BindExistenceTo(&ptrObject_);
-
     // Initialize the posture modificator infos
-    for( int i=0 ; i < eNbrUnitPosture ; ++i)
-        vModifStance_.AddItem( new ModificatorPostureInfos( (E_UnitPosture)i ) );
+    for( int i = 0 ; i < eNbrUnitPosture ; ++i )
+        vModifStance_.AddItem( new ModificatorPostureInfos( static_cast< E_UnitPosture >( i ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -327,16 +319,16 @@ ADN_Sensors_Data::TargetInfos::~TargetInfos()
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::TargetInfos* ADN_Sensors_Data::TargetInfos::CreateCopy()
 {
-    TargetInfos* pNew         = new TargetInfos();
-    pNew->ptrObject_          = ptrObject_.GetData();
-    pNew->strName_            = strName_.GetData();
+    TargetInfos* pNew = new TargetInfos();
+    pNew->SetCrossedElement( GetCrossedElement() );
+    pNew->strName_ = strName_.GetData();
     pNew->rDistanceDetection_ = rDistanceDetection_.GetData();
     pNew->populationInfos_.CopyFrom( populationInfos_ );
     for( unsigned int i = 0; i < vModifStance_.size(); ++i )
     {
-        ModificatorPostureInfos* pNewModif = new ModificatorPostureInfos( vModifStance_[i]->eType_ );
-        pNewModif->rCoeff_ = vModifStance_[i]->rCoeff_.GetData();
-        pNew->vModifStance_[i] = pNewModif;
+        ModificatorPostureInfos* pNewModif = new ModificatorPostureInfos( vModifStance_[ i ]->eType_ );
+        pNewModif->rCoeff_ = vModifStance_[ i ]->rCoeff_.GetData();
+        pNew->vModifStance_[ i ] = pNewModif;
     }
     return pNew;
 }
@@ -349,7 +341,7 @@ void ADN_Sensors_Data::TargetInfos::ReadPosture( xml::xistream& input )
 {
     const std::string type = input.attribute< std::string >( "type" );
     for( unsigned i = 0; i < eNbrUnitPosture; ++i )
-        if( type == ADN_Tools::ComputePostureScriptName( E_UnitPosture( i ) ) )
+        if( type == ADN_Tools::ComputePostureScriptName( static_cast< E_UnitPosture >( i ) ) )
         {
             vModifStance_.at( i )->ReadArchive( input );
             return;
@@ -363,14 +355,8 @@ void ADN_Sensors_Data::TargetInfos::ReadPosture( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::TargetInfos::ReadArchive( xml::xistream& input )
 {
-    std::string strType;
-    input >> xml::attribute( "type", strType );
-    ADN_Objects_Data_ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( strType );
-    if( !pObject )
-        throw MASA_EXCEPTION(tools::translate( "Sensor_Data", "Sensors - Invalid object '%1'" ).arg( strType.c_str() ).toStdString() );
-    ptrObject_ = pObject;
-    strName_ = ptrObject_.GetData()->strName_.GetData();
-
+    ADN_Objects_Data_ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( input.attribute< std::string >( "type" ) );
+    SetCrossedElement( pObject );
     input >> xml::attribute( "detection-distance", rDistanceDetection_ );
     populationInfos_.ReadArchive( input );
     input >> xml::start( "source-posture-modifiers" )
@@ -385,16 +371,15 @@ void ADN_Sensors_Data::TargetInfos::ReadArchive( xml::xistream& input )
 void ADN_Sensors_Data::TargetInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "object" )
-        << xml::attribute( "type", ptrObject_.GetData()->strType_ )
-        << xml::attribute( "detection-distance", rDistanceDetection_ );
+             << xml::attribute( "type", GetCrossedElement() ? GetCrossedElement()->strType_.GetData() : "" )
+             << xml::attribute( "detection-distance", rDistanceDetection_ );
     populationInfos_.WriteArchive( output );
 
-    output << xml::start( "source-posture-modifiers" );
-    for( IT_ModificatorPostureInfos_Vector it = vModifStance_.begin(); it != vModifStance_.end(); ++it )
-        (*it)->WriteArchive( output );
-    output << xml::end;
-
-    output << xml::end;
+    output     << xml::start( "source-posture-modifiers" );
+    for( auto it = vModifStance_.begin(); it != vModifStance_.end(); ++it )
+        ( *it )->WriteArchive( output );
+    output     << xml::end
+           << xml::end;
 }
 
 // =============================================================================
@@ -406,10 +391,10 @@ void ADN_Sensors_Data::TargetInfos::WriteArchive( xml::xostream& output )
 // Created: LGY 2012-12-03
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::DisasterInfos::DisasterInfos()
-    : ptrDisaster_        ( ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos(), 0 )
-    , rDetectionThreshold_( 0.)
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos(), 0, true )
+    , rDetectionThreshold_( 0)
 {
-    BindExistenceTo( &ptrDisaster_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -428,7 +413,7 @@ ADN_Sensors_Data::DisasterInfos::~DisasterInfos()
 ADN_Sensors_Data::DisasterInfos* ADN_Sensors_Data::DisasterInfos::CreateCopy()
 {
     DisasterInfos* pNew = new DisasterInfos();
-    pNew->ptrDisaster_ = ptrDisaster_.GetData();
+    pNew->SetCrossedElement( GetCrossedElement() );
     pNew->rDetectionThreshold_ = rDetectionThreshold_.GetData();
     return pNew;
 }
@@ -439,14 +424,8 @@ ADN_Sensors_Data::DisasterInfos* ADN_Sensors_Data::DisasterInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::DisasterInfos::ReadArchive( xml::xistream& input )
 {
-    std::string strType;
-    input >> xml::attribute( "type", strType )
-          >> xml::attribute( "detection-threshold", rDetectionThreshold_ );
-
-    ADN_Disasters_Data::DisasterInfos* pDisaster = ADN_Workspace::GetWorkspace().GetDisasters().GetData().FindDisaster( strType );
-    if( !pDisaster )
-        throw MASA_EXCEPTION(tools::translate( "ADN_Sensors_Data", "Sensors - Invalid disaster '%1'" ).arg( strType.c_str() ).toStdString() );
-    ptrDisaster_ = pDisaster;
+    ADN_CrossedRef< ADN_Disasters_Data::DisasterInfos >::ReadArchive( input );
+    input >> xml::attribute( "detection-threshold", rDetectionThreshold_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -455,9 +434,9 @@ void ADN_Sensors_Data::DisasterInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::DisasterInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "disaster" )
-               << xml::attribute( "type", ptrDisaster_.GetData()->strName_ )
-               << xml::attribute( "detection-threshold", rDetectionThreshold_ )
+    output << xml::start( "disaster" );
+    ADN_CrossedRef< ADN_Disasters_Data::DisasterInfos >::WriteArchive( output );
+    output     << xml::attribute( "detection-threshold", rDetectionThreshold_ )
            << xml::end;
 }
 
@@ -470,8 +449,8 @@ void ADN_Sensors_Data::DisasterInfos::WriteArchive( xml::xostream& output )
 // Created: SBO 2005-11-21
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::PopulationInfos::PopulationInfos()
-    : rDensity_  ( 0. )
-    , rModifier_ ( 0. )
+    : rDensity_( 0 )
+    , rModifier_( 0 )
 {
     // NOTHING
 }
@@ -562,30 +541,30 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
     unsigned int i = 0;
     for( i = 0; i< eNbrLightingType; ++i )
     {
-        ModificatorIlluminationInfos* pInfo = new ModificatorIlluminationInfos((E_LightingType)i);
+        ModificatorIlluminationInfos* pInfo = new ModificatorIlluminationInfos( static_cast< E_LightingType >( i ) );
         vModifIlluminations_.AddItem( pInfo );
     }
 
     // initialize meteo modificator infos
     for( i = 0; i< eNbrSensorWeatherModifiers; ++i )
     {
-        ModificatorMeteoInfos* pInfo = new ModificatorMeteoInfos((E_SensorWeatherModifiers)i);
+        ModificatorMeteoInfos* pInfo = new ModificatorMeteoInfos( static_cast< E_SensorWeatherModifiers >( i) );
         vModifWeather_.AddItem( pInfo );
     }
 
     // initialize environment modificator infos
     for( i = 0; i< eNbrVisionObjects; ++i )
     {
-        ModificatorEnvironmentInfos* pInfo = new ModificatorEnvironmentInfos((E_VisionObject)i);
+        ModificatorEnvironmentInfos* pInfo = new ModificatorEnvironmentInfos( static_cast< E_VisionObject >( i) );
         vModifEnvironments_.AddItem( pInfo );
     }
 
     // initialize posture modificator infos
     for( i = 0; i< eNbrUnitPosture; ++i )
     {
-        ModificatorPostureInfos* pInfo1 = new ModificatorPostureInfos((E_UnitPosture)i);
+        ModificatorPostureInfos* pInfo1 = new ModificatorPostureInfos( static_cast< E_UnitPosture >( i) );
         vModifStance_.AddItem( pInfo1 );
-        ModificatorPostureInfos* pInfo2 = new ModificatorPostureInfos((E_UnitPosture)i);
+        ModificatorPostureInfos* pInfo2 = new ModificatorPostureInfos( static_cast< E_UnitPosture >( i ) );
         vModifTargetStance_.AddItem( pInfo2 );
     }
 }
@@ -629,13 +608,13 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
     pCopy->activatedOnRequest_  = activatedOnRequest_.GetData();
     pCopy->populationInfos_.CopyFrom( populationInfos_ );
 
-    for( T_TargetsInfos_Vector::iterator itTarget = vTargets_.begin(); itTarget != vTargets_.end(); ++itTarget )
+    for( auto itTarget = vTargets_.begin(); itTarget != vTargets_.end(); ++itTarget )
     {
         TargetInfos* pNewInfo = (*itTarget)->CreateCopy();
         pCopy->vTargets_.AddItem( pNewInfo );
     }
 
-    for( IT_DisasterInfos_Vector it = vDisasters_.begin(); it != vDisasters_.end(); ++it )
+    for( auto it = vDisasters_.begin(); it != vDisasters_.end(); ++it )
     {
         DisasterInfos* pNewInfo = (*it)->CreateCopy();
         pCopy->vDisasters_.AddItem( pNewInfo );
@@ -643,36 +622,36 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
 
     // LTO begin
     pCopy->vLimitedToSensorsInfos_.reserve( vLimitedToSensorsInfos_.size() );
-    for( IT_LimitedToSensorsInfos_Vector it = vLimitedToSensorsInfos_.begin(); it != vLimitedToSensorsInfos_.end(); ++it )
+    for( auto it = vLimitedToSensorsInfos_.begin(); it != vLimitedToSensorsInfos_.end(); ++it )
     {
         LimitedToSensorsInfos* newInfos = (*it)->CreateCopy();
         pCopy->vLimitedToSensorsInfos_.AddItem( newInfos );
     }
     // LTO end
 
-    uint i;
-    for( i= 0 ; i< eNbrLightingType ; ++i)
-        pCopy->vModifIlluminations_[i]->rCoeff_ = vModifIlluminations_[i]->rCoeff_.GetData();
+    unsigned int i;
+    for( i = 0; i < eNbrLightingType; ++i )
+        pCopy->vModifIlluminations_[ i ]->rCoeff_ = vModifIlluminations_[ i ]->rCoeff_.GetData();
 
     // initialize meteo modificator infos
-    for( i= 0 ; i< eNbrSensorWeatherModifiers; ++i)
-        pCopy->vModifWeather_[i]->rCoeff_ = vModifWeather_[i]->rCoeff_.GetData();
+    for( i = 0; i < eNbrSensorWeatherModifiers; ++i )
+        pCopy->vModifWeather_[ i ]->rCoeff_ = vModifWeather_[ i ]->rCoeff_.GetData();
 
     // initialize environment modificator infos
-    for( i= 0 ; i< eNbrVisionObjects ; ++i)
-        pCopy->vModifEnvironments_[i]->rCoeff_ = vModifEnvironments_[i]->rCoeff_.GetData();
+    for( i= 0; i < eNbrVisionObjects; ++i )
+        pCopy->vModifEnvironments_[ i ]->rCoeff_ = vModifEnvironments_[ i ]->rCoeff_.GetData();
 
     // initialize posture modificator infos
-    for( i=0 ; i< eNbrUnitPosture ; ++i)
+    for( i = 0; i < eNbrUnitPosture; ++i )
     {
-        pCopy->vModifStance_[i]->rCoeff_ = vModifStance_[i]->rCoeff_.GetData();
-        pCopy->vModifTargetStance_[i]->rCoeff_ = vModifTargetStance_[i]->rCoeff_.GetData();
+        pCopy->vModifStance_[ i ]->rCoeff_ = vModifStance_[ i ]->rCoeff_.GetData();
+        pCopy->vModifTargetStance_[ i ]->rCoeff_ = vModifTargetStance_[ i ]->rCoeff_.GetData();
     }
 
-    for( T_ModificatorSizeInfos_Vector::iterator itSizeModif = vModifSizes_.begin(); itSizeModif != vModifSizes_.end(); ++itSizeModif )
+    for( auto itSizeModif = vModifSizes_.begin(); itSizeModif != vModifSizes_.end(); ++itSizeModif )
         pCopy->vModifSizes_[ std::distance( vModifSizes_.begin(), itSizeModif ) ]->rCoeff_ = (*itSizeModif)->rCoeff_.GetData();
 
-    for( T_ModificatorUrbanBlockInfos_Vector::iterator itUrbanBlockModif = vModifUrbanBlocks_.begin(); itUrbanBlockModif != vModifUrbanBlocks_.end(); ++itUrbanBlockModif )
+    for( auto itUrbanBlockModif = vModifUrbanBlocks_.begin(); itUrbanBlockModif != vModifUrbanBlocks_.end(); ++itUrbanBlockModif )
         pCopy->vModifUrbanBlocks_[ std::distance( vModifUrbanBlocks_.begin(), itUrbanBlockModif ) ]->rCoeff_ = (*itUrbanBlockModif)->rCoeff_.GetData();
 
     return pCopy;
@@ -714,7 +693,7 @@ void ADN_Sensors_Data::SensorInfos::ReadBaseDistance( xml::xistream& input )
 void ADN_Sensors_Data::SensorInfos::ReadSize( xml::xistream& input )
 {
     const std::string type = input.attribute< std::string >( "type" );
-    IT_ModificatorSizeInfos_Vector it = std::find_if( vModifSizes_.begin(), vModifSizes_.end(), ModificatorSizeInfos::Cmp( type ) );
+    auto it = std::find_if( vModifSizes_.begin(), vModifSizes_.end(), ModificatorSizeInfos::Cmp( type ) );
     if( it == vModifSizes_.end() )
         throw MASA_EXCEPTION( tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).toStdString() );
     (*it)->ReadArchive( input );
@@ -728,7 +707,7 @@ void ADN_Sensors_Data::SensorInfos::ReadPrecipitation( xml::xistream& input )
 {
     const std::string type = input.attribute< std::string >( "type" );
     for( unsigned i = 0; i < eNbrSensorWeatherModifiers; ++i )
-        if( ADN_Tools::Scriptify( ADN_Tr::ConvertFromSensorWeatherModifiers( E_SensorWeatherModifiers( i ) ) ) == type )
+        if( ADN_Tools::Scriptify( ADN_Tr::ConvertFromSensorWeatherModifiers( static_cast< E_SensorWeatherModifiers >( i ) ) ) == type )
         {
             vModifWeather_.at( i )->ReadArchive( input );
             return;
@@ -742,8 +721,7 @@ void ADN_Sensors_Data::SensorInfos::ReadPrecipitation( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadVisibility( xml::xistream& input )
 {
-    const std::string type = input.attribute< std::string >( "type" );
-    E_LightingType n = ENT_Tr::ConvertToLightingType( type );
+    E_LightingType n = ENT_Tr::ConvertToLightingType( input.attribute< std::string >( "type" ) );
     vModifIlluminations_.at( n )->ReadArchive( input );
 }
 
@@ -755,7 +733,7 @@ void ADN_Sensors_Data::SensorInfos::ReadSourcePosture( xml::xistream& input )
 {
     const std::string type = input.attribute< std::string >( "type" );
     for( unsigned i = 0; i < eNbrUnitPosture; ++i )
-        if( type == ADN_Tools::ComputePostureScriptName( E_UnitPosture( i ) ) )
+        if( type == ADN_Tools::ComputePostureScriptName( static_cast< E_UnitPosture >( i ) ) )
         {
             vModifStance_.at( i )->ReadArchive( input );
             return;
@@ -771,7 +749,7 @@ void ADN_Sensors_Data::SensorInfos::ReadTargetPosture( xml::xistream& input )
 {
     const std::string type = input.attribute< std::string >( "type" );
     for( unsigned i = 0; i < eNbrUnitPosture; ++i )
-        if( type == ADN_Tools::ComputePostureScriptName( E_UnitPosture( i ) ) )
+        if( type == ADN_Tools::ComputePostureScriptName( static_cast< E_UnitPosture >( i ) ) )
         {
             vModifTargetStance_.at( i )->ReadArchive( input );
             return;
@@ -785,8 +763,7 @@ void ADN_Sensors_Data::SensorInfos::ReadTargetPosture( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadTerrain( xml::xistream& input )
 {
-    const std::string type = input.attribute< std::string >( "type" );
-    E_VisionObject n = ADN_Tr::ConvertToVisionObject( type );
+    E_VisionObject n = ADN_Tr::ConvertToVisionObject( input.attribute< std::string >( "type" ) );
     vModifEnvironments_.at( n )->ReadArchive( input );
 }
 
@@ -797,10 +774,10 @@ void ADN_Sensors_Data::SensorInfos::ReadTerrain( xml::xistream& input )
 void ADN_Sensors_Data::SensorInfos::ReadUrbanBlockMaterial( xml::xistream& input )
 {
     const std::string type = input.attribute< std::string >( "type" );
-    IT_ModificatorUrbanBlockInfos_Vector it = std::find_if( vModifUrbanBlocks_.begin(), vModifUrbanBlocks_.end(), ModificatorUrbanBlockInfos::Cmp( type ) );
+    auto it = std::find_if( vModifUrbanBlocks_.begin(), vModifUrbanBlocks_.end(), ModificatorUrbanBlockInfos::Cmp( type ) );
     if( it == vModifUrbanBlocks_.end() )
         throw MASA_EXCEPTION( tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).toStdString() );
-    (*it)->ReadArchive( input );
+    ( *it )->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -926,7 +903,7 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "detection-delay", detectionDelay_ );
     if( activatedOnRequest_.GetData() )
-    output << xml::attribute( "activation-on-request", true );
+        output << xml::attribute( "activation-on-request", true );
 
     if( bCanDetectAgents_.GetData() )
     {
@@ -940,7 +917,7 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
         {
             output << xml::start( "limited-to-sensors" );
             for( unsigned int i = 0; i < vLimitedToSensorsInfos_.size(); ++i )
-                vLimitedToSensorsInfos_[i]->WriteArchive( output );
+                vLimitedToSensorsInfos_[ i ]->WriteArchive( output );
             output << xml::end;
         }
         // LTO end
@@ -963,38 +940,38 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
         populationInfos_.WriteArchive( output );
 
         output << xml::start( "size-modifiers" );
-        for( IT_ModificatorSizeInfos_Vector it1 = vModifSizes_.begin(); it1 != vModifSizes_.end(); ++it1 )
-            (*it1)->WriteArchive( output );
+        for( auto it1 = vModifSizes_.begin(); it1 != vModifSizes_.end(); ++it1 )
+            ( *it1 )->WriteArchive( output );
         output << xml::end;
 
         output << xml::start( "precipitation-modifiers" );
-        for( IT_ModificatorMeteoInfos_Vector it2 = vModifWeather_.begin(); it2 != vModifWeather_.end(); ++it2 )
-            (*it2)->WriteArchive( output );
+        for( auto it2 = vModifWeather_.begin(); it2 != vModifWeather_.end(); ++it2 )
+            ( *it2 )->WriteArchive( output );
         output << xml::end;
 
         output << xml::start( "visibility-modifiers" );
-        for( IT_ModificatorIlluminationInfos_Vector it3 = vModifIlluminations_.begin(); it3 != vModifIlluminations_.end(); ++it3 )
-            (*it3)->WriteArchive( output );
+        for( auto it3 = vModifIlluminations_.begin(); it3 != vModifIlluminations_.end(); ++it3 )
+            ( *it3 )->WriteArchive( output );
         output << xml::end;
 
         output << xml::start( "source-posture-modifiers" );
-        for( IT_ModificatorPostureInfos_Vector it4 = vModifStance_.begin(); it4 != vModifStance_.end(); ++it4 )
-            (*it4)->WriteArchive( output );
+        for( auto it4 = vModifStance_.begin(); it4 != vModifStance_.end(); ++it4 )
+            ( *it4 )->WriteArchive( output );
         output << xml::end;
 
         output << xml::start( "target-posture-modifiers" );
-        for( IT_ModificatorPostureInfos_Vector it5 = vModifTargetStance_.begin(); it5 != vModifTargetStance_.end(); ++it5 )
-            (*it5)->WriteArchive( output );
+        for( auto it5 = vModifTargetStance_.begin(); it5 != vModifTargetStance_.end(); ++it5 )
+            ( *it5 )->WriteArchive( output );
         output << xml::end;
 
         output << xml::start( "terrain-modifiers" );
-        for( IT_ModificatorEnvironmentInfos_Vector it6 = vModifEnvironments_.begin(); it6 != vModifEnvironments_.end(); ++it6 )
-            (*it6)->WriteArchive( output );
+        for( auto it6 = vModifEnvironments_.begin(); it6 != vModifEnvironments_.end(); ++it6 )
+            ( *it6 )->WriteArchive( output );
         output << xml::end;
 
         output << xml::start( "urbanBlock-material-modifiers" );
-        for( IT_ModificatorUrbanBlockInfos_Vector it7 = vModifUrbanBlocks_.begin(); it7 != vModifUrbanBlocks_.end(); ++it7 )
-            (*it7)->WriteArchive( output );
+        for( auto it7 = vModifUrbanBlocks_.begin(); it7 != vModifUrbanBlocks_.end(); ++it7 )
+            ( *it7 )->WriteArchive( output );
         output << xml::end;
 
         output << xml::end; // distance-modifiers
@@ -1004,16 +981,16 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
     if( bCanDetectObjects_.GetData() )
     {
         output << xml::start( "object-detection" );
-        for( IT_TargetsInfos_Vector it = vTargets_.begin(); it != vTargets_.end(); ++it )
-            (*it)->WriteArchive( output );
+        for( auto it = vTargets_.begin(); it != vTargets_.end(); ++it )
+            ( *it )->WriteArchive( output );
         output << xml::end;
     }
 
     if( bCanDetectDisasters_.GetData() )
     {
         output << xml::start( "disaster-detection" );
-        for( IT_DisasterInfos_Vector it = vDisasters_.begin(); it != vDisasters_.end(); ++it )
-            (*it)->WriteArchive( output );
+        for( auto it = vDisasters_.begin(); it != vDisasters_.end(); ++it )
+            ( *it )->WriteArchive( output );
         output << xml::end;
     }
 
@@ -1045,11 +1022,8 @@ ADN_Sensors_Data::ALATInfos::~ALATInfos()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::ALATInfos::ReadTime( xml::xistream& input )
 {
-    std::string terrain, time;
-    input >> xml::attribute( "terrain", terrain )
-          >> xml::attribute( "time", time );
-    E_VisionObject n = ADN_Tr::ConvertToVisionObject( terrain );
-    surveyTimes_[ n-1 ] = time;
+    E_VisionObject n = ADN_Tr::ConvertToVisionObject( input.attribute< std::string >( "terrain" ) );
+    surveyTimes_[ n-1 ] = input.attribute< std::string >( "time" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1072,7 +1046,7 @@ void ADN_Sensors_Data::ALATInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "alat-monitoring-times" );
     for( int n = 1; n < eNbrVisionObjects; ++n )
         output << xml::start( "alat-monitoring-time" )
-                << xml::attribute( "terrain", ADN_Tr::ConvertFromVisionObject( E_VisionObject(n) ) )
+                << xml::attribute( "terrain", ADN_Tr::ConvertFromVisionObject( static_cast< E_VisionObject >( n ) ) )
                 << xml::attribute( "time", surveyTimes_[ n-1 ] )
                << xml::end;
     output << xml::end;
@@ -1083,7 +1057,7 @@ void ADN_Sensors_Data::ALATInfos::WriteArchive( xml::xostream& output )
 // Created: APE 2005-01-17
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::CobraInfos::CobraInfos()
-    : rRange_( 0. )
+    : rRange_( 0 )
 {
     // NOTHING
 }
@@ -1125,7 +1099,7 @@ void ADN_Sensors_Data::CobraInfos::WriteArchive( xml::xostream& output )
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ADN_Sensors_Data()
     : ADN_Data_ABC( eSensors )
-    , radarData_( *new ADN_Radars_Data() )
+    , radarData_( new ADN_Radars_Data() )
 {
     vSensors_.AddUniquenessChecker( eError, duplicateName_ );
 }
@@ -1137,7 +1111,6 @@ ADN_Sensors_Data::ADN_Sensors_Data()
 ADN_Sensors_Data::~ADN_Sensors_Data()
 {
     Reset();
-    delete &radarData_;
 }
 
 //-----------------------------------------------------------------------------
@@ -1156,7 +1129,7 @@ void ADN_Sensors_Data::FilesNeeded( tools::Path::T_Paths& files ) const
 void ADN_Sensors_Data::Reset()
 {
     vSensors_.Reset();
-    radarData_.Reset();
+    radarData_->Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -1182,7 +1155,7 @@ void ADN_Sensors_Data::ReadArchive( xml::xistream& input )
             >> xml::end;
     alatInfos_ .ReadArchive( input );
     cobraInfos_.ReadArchive( input );
-    radarData_ .ReadArchive( input );
+    radarData_->ReadArchive( input );
     input >> xml::end;
     vSensors_.CheckValidity();
 }
@@ -1201,14 +1174,13 @@ void ADN_Sensors_Data::WriteArchive( xml::xostream& output )
     ADN_Tools::AddSchema( output, "Sensors" );
     alatInfos_ .WriteArchive( output );
     cobraInfos_.WriteArchive( output );
-    radarData_ .WriteArchive( output );
+    radarData_->WriteArchive( output );
 
-    output << xml::start( "sensors" );
-    for( IT_SensorsInfos_Vector it = vSensors_.begin(); it != vSensors_.end(); ++it )
-        (*it)->WriteArchive( output );
-    output << xml::end;
-
-    output << xml::end;
+    output  << xml::start( "sensors" );
+    for( auto it = vSensors_.begin(); it != vSensors_.end(); ++it )
+        ( *it )->WriteArchive( output );
+    output  << xml::end
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -1218,12 +1190,15 @@ void ADN_Sensors_Data::WriteArchive( xml::xostream& output )
 QStringList ADN_Sensors_Data::GetSensorsThatUse( ADN_Objects_Data_ObjectInfos& object )
 {
     QStringList result;
-    for( IT_SensorsInfos_Vector it = vSensors_.begin(); it != vSensors_.end(); ++it )
+    for( auto it = vSensors_.begin(); it != vSensors_.end(); ++it )
     {
         SensorInfos* pComp = *it;
-        for( T_TargetsInfos_Vector::iterator itTarget = pComp->vTargets_.begin(); itTarget != pComp->vTargets_.end(); ++itTarget )
-            if( (*itTarget)->ptrObject_.GetData()->strName_.GetData() == object.strName_.GetData() )
+        for( auto itTarget = pComp->vTargets_.begin(); itTarget != pComp->vTargets_.end(); ++itTarget )
+        {
+            ADN_Objects_Data_ObjectInfos* infos = ( *itTarget )->GetCrossedElement();
+            if( infos && infos->strName_.GetData() == object.strName_.GetData() )
                 result << pComp->strName_.GetData().c_str();
+        }
     }
     return result;
 }
@@ -1235,12 +1210,15 @@ QStringList ADN_Sensors_Data::GetSensorsThatUse( ADN_Objects_Data_ObjectInfos& o
 QStringList ADN_Sensors_Data::GetSensorsThatUse( ADN_Disasters_Data::DisasterInfos& disaster )
 {
     QStringList result;
-    for( IT_SensorsInfos_Vector it = vSensors_.begin(); it != vSensors_.end(); ++it )
+    for( auto it = vSensors_.begin(); it != vSensors_.end(); ++it )
     {
         SensorInfos* pComp = *it;
-        for( IT_DisasterInfos_Vector it = pComp->vDisasters_.begin(); it != pComp->vDisasters_.end(); ++it )
-            if( (*it)->ptrDisaster_.GetData()->strName_.GetData() == disaster.strName_.GetData() )
+        for( auto it = pComp->vDisasters_.begin(); it != pComp->vDisasters_.end(); ++it )
+        {
+            ADN_Disasters_Data::DisasterInfos* infos = ( *it )->GetCrossedElement();
+            if( infos && infos->strName_.GetData() == disaster.strName_.GetData() )
                 result << pComp->strName_.GetData().c_str();
+        }
     }
     return result;
 }

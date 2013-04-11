@@ -413,16 +413,19 @@ namespace
 {
     void FillUsingMissionFromObjectVector( const std::string& objectName, const std::string& missionName, helpers::T_MissionGenObjectTypes_Infos_Vector& vector, QStringList& result, const QString& prefix = "" )
     {
-        for( helpers::CIT_MissionGenObjectTypes_Infos_Vector itObject = vector.begin(); itObject != vector.end(); ++itObject )
-            if( ( *itObject )->isAllowed_.GetData() && ( *itObject )->ptrObject_.GetData()->strName_.GetData() == objectName )
+        for( auto itObject = vector.begin(); itObject != vector.end(); ++itObject )
+        {
+            ADN_Objects_Data_ObjectInfos* infos = ( *itObject )->ptrObject_.GetData();
+            if( infos && ( *itObject )->isAllowed_.GetData() && infos->strName_.GetData() == objectName )
                 result << ( ( prefix.isEmpty() ) ? missionName.c_str() : QString( "%1 - %2" ).arg( prefix ).arg( missionName.c_str() ) );
+        }
     }
 
     template< typename T >
     void FillUsingMission( const std::string& objectName, const ADN_Type_Vector_ABC< T >& vector, QStringList& result, const QString& prefix = "" )
     {
-        for( ADN_Type_Vector_ABC< T >::const_iterator itMission = vector.begin(); itMission != vector.end(); ++itMission )
-            for( ADN_Missions_Data::T_MissionParameter_Vector::const_iterator itParam = ( *itMission )->parameters_.begin(); itParam != ( *itMission )->parameters_.end(); ++itParam )
+        for( auto itMission = vector.begin(); itMission != vector.end(); ++itMission )
+            for( auto itParam = ( *itMission )->parameters_.begin(); itParam != ( *itMission )->parameters_.end(); ++itParam )
                 if( ( *itParam )->type_.GetData() == eMissionParameterTypeGenObject )
                     FillUsingMissionFromObjectVector( objectName, ( *itMission )->strName_.GetData(), ( *itParam )->genObjects_, result, prefix );
                 else if( ( *itParam )->type_.GetData() == eMissionParameterTypeObjectKnowledge )

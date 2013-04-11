@@ -11,7 +11,7 @@
 #define __ADN_Models_Data_h_
 
 #include "ADN_Data_ABC.h"
-#include "ADN_RefWithName.h"
+#include "ADN_CrossedRef.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Enums.h"
@@ -21,17 +21,14 @@
 
 enum E_EntityType;
 
-namespace xml { class xistream; }
-
 //*****************************************************************************
 // Created: JDY 03-07-24
 //*****************************************************************************
 class ADN_Models_Data : public ADN_Data_ABC
 {
-
 public:
 //*****************************************************************************
-    class OrderInfos : public ADN_RefWithName
+    class OrderInfos : public ADN_CrossedRef< ADN_Missions_ABC >
     {
 
     public:
@@ -41,13 +38,9 @@ public:
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
         OrderInfos* CreateCopy();
-
-    public:
-        ADN_TypePtr_InVector_ABC< ADN_Missions_ABC >       fragOrder_;
     };
 
-    typedef ADN_Type_Vector_ABC<OrderInfos> T_OrderInfos_Vector;
-    typedef T_OrderInfos_Vector::iterator   IT_OrderInfos_Vector;
+    typedef ADN_Type_Vector_ABC< OrderInfos > T_OrderInfos_Vector;
 
 //*****************************************************************************
     class MissionInfos : public ADN_CrossedRef< ADN_Missions_ABC >
@@ -63,11 +56,10 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        T_OrderInfos_Vector                      vOrders_;
+        T_OrderInfos_Vector  vOrders_;
     };
 
-    typedef ADN_Type_Vector_ABC<MissionInfos> T_MissionInfos_Vector;
-    typedef T_MissionInfos_Vector::iterator   IT_MissionInfos_Vector;
+    typedef ADN_Type_Vector_ABC< MissionInfos > T_MissionInfos_Vector;
 
 //*****************************************************************************
     class ModelInfos : public ADN_RefWithName
@@ -88,34 +80,33 @@ public:
 
     public:
         ADN_Missions_Data::T_Mission_Vector& missions_;
-        ADN_Type_String                     strDiaType_;
-        ADN_Type_Path                       strFile_;
-        ADN_Type_Bool                       isMasalife_;
-        T_MissionInfos_Vector               vMissions_;
-        T_OrderInfos_Vector                 vFragOrders_;
+        ADN_Type_String strDiaType_;
+        ADN_Type_Path strFile_;
+        ADN_Type_Bool isMasalife_;
+        T_MissionInfos_Vector vMissions_;
+        T_OrderInfos_Vector vFragOrders_;
     };
 
     typedef ADN_Type_Vector_ABC<ModelInfos> T_ModelInfos_Vector;
-    typedef T_ModelInfos_Vector::iterator   IT_ModelInfos_Vector;
 
 //*****************************************************************************
 public:
     explicit ADN_Models_Data();
     virtual ~ADN_Models_Data();
 
-    void            FilesNeeded(tools::Path::T_Paths& l) const;
-    void            Reset();
-    QStringList     GetModelsThatUse( E_EntityType type, ADN_Missions_Mission& model );
-    QStringList     GetModelsThatUse( E_EntityType type, ADN_Missions_FragOrder& fragOrder );
+    void FilesNeeded( tools::Path::T_Paths& l ) const;
+    void Reset();
+    QStringList GetModelsThatUse( E_EntityType type, ADN_Missions_Mission& model );
+    QStringList GetModelsThatUse( E_EntityType type, ADN_Missions_FragOrder& fragOrder );
 
-    T_ModelInfos_Vector&    GetUnitModelsInfos();
-    ModelInfos*             FindUnitModel( const std::string& strName );
+    T_ModelInfos_Vector& GetUnitModelsInfos();
+    ModelInfos* FindUnitModel( const std::string& strName );
 
-    T_ModelInfos_Vector&    GetAutomataModelsInfos();
-    ModelInfos*             FindAutomataModel( const std::string& strName );
+    T_ModelInfos_Vector& GetAutomataModelsInfos();
+    ModelInfos* FindAutomataModel( const std::string& strName );
 
-    T_ModelInfos_Vector&    GetPopulationModelsInfos();
-    ModelInfos*             FindPopulationModel( const std::string& strName );
+    T_ModelInfos_Vector& GetPopulationModelsInfos();
+    ModelInfos* FindPopulationModel( const std::string& strName );
 
 private:
     void ReadArchive( xml::xistream& input );
@@ -126,9 +117,9 @@ private:
     void WriteArchive( xml::xostream& output );
 
 private:
-    T_ModelInfos_Vector     vUnitModels_;
-    T_ModelInfos_Vector     vAutomataModels_;
-    T_ModelInfos_Vector     vPopulationModels_;
+    T_ModelInfos_Vector vUnitModels_;
+    T_ModelInfos_Vector vAutomataModels_;
+    T_ModelInfos_Vector vPopulationModels_;
 };
 
 //-----------------------------------------------------------------------------
@@ -148,7 +139,7 @@ ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetUnitModelsInfos()
 inline
 ADN_Models_Data::ModelInfos* ADN_Models_Data::FindUnitModel( const std::string& strName )
 {
-    IT_ModelInfos_Vector it = std::find_if( vUnitModels_.begin(), vUnitModels_.end(), ADN_Tools::NameCmp<ModelInfos>( strName ) );
+    auto it = std::find_if( vUnitModels_.begin(), vUnitModels_.end(), ADN_Tools::NameCmp< ModelInfos >( strName ) );
     if( it == vUnitModels_.end() )
         return 0;
     return *it;
@@ -171,7 +162,7 @@ ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetAutomataModelsInfos()
 inline
 ADN_Models_Data::ModelInfos* ADN_Models_Data::FindAutomataModel( const std::string& strName )
 {
-    IT_ModelInfos_Vector it = std::find_if( vAutomataModels_.begin(), vAutomataModels_.end(), ADN_Tools::NameCmp<ModelInfos>( strName ) );
+    auto it = std::find_if( vAutomataModels_.begin(), vAutomataModels_.end(), ADN_Tools::NameCmp< ModelInfos >( strName ) );
     if( it == vAutomataModels_.end() )
         return 0;
     return *it;
@@ -194,7 +185,7 @@ ADN_Models_Data::T_ModelInfos_Vector& ADN_Models_Data::GetPopulationModelsInfos(
 inline
 ADN_Models_Data::ModelInfos* ADN_Models_Data::FindPopulationModel( const std::string& strName )
 {
-    IT_ModelInfos_Vector it = std::find_if( vPopulationModels_.begin(), vPopulationModels_.end(), ADN_Tools::NameCmp<ModelInfos>( strName ) );
+    auto it = std::find_if( vPopulationModels_.begin(), vPopulationModels_.end(), ADN_Tools::NameCmp< ModelInfos >( strName ) );
     if( it == vPopulationModels_.end() )
         return 0;
     return *it;

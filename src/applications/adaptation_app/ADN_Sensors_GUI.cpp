@@ -126,7 +126,7 @@ public:
 ADN_Sensors_GUI::ADN_Sensors_GUI( ADN_Sensors_Data& data )
     : ADN_Tabbed_GUI_ABC( eSensors )
     , data_      ( data )
-    , radarGui_  ( *new ADN_Radars_GUI( data.radarData_ ) )
+    , radarGui_  ( *new ADN_Radars_GUI( *data.radarData_ ) )
 {
     // NOTHING
 }
@@ -430,7 +430,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
 
     // Fill the table.
     int nRow = 2;
-    for( ADN_Sensors_Data::IT_SensorsInfos_Vector it = data_.vSensors_.begin(); it != data_.vSensors_.end(); ++it )
+    for( auto it = data_.vSensors_.begin(); it != data_.vSensors_.end(); ++it )
     {
         ADN_Sensors_Data::SensorInfos& sensor = **it;
 
@@ -503,7 +503,7 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
     ADN_Table* pTable = new ADN_ObjectDetection_Table( std::string( std::string( strClassName_ ) + "_object-detection-consistency-table" ).c_str(), &data_.vSensors_ );
     // Fill the table
     int nRow = 2;
-    for( ADN_Sensors_Data::IT_SensorsInfos_Vector it = data_.vSensors_.begin(); it != data_.vSensors_.end(); ++it )
+    for( auto it = data_.vSensors_.begin(); it != data_.vSensors_.end(); ++it )
     {
         ADN_Sensors_Data::SensorInfos& sensor = **it;
         if( !sensor.bCanDetectObjects_.GetData() || sensor.vTargets_.empty() )
@@ -514,19 +514,22 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
         pTable->AddItem( nRow, 0, static_cast< int >( sensor.vTargets_.size() ), 1, &sensor, sensor.strName_.GetData().c_str() );
 
         int nSubRow = 0;
-        for( ADN_Sensors_Data::IT_TargetsInfos_Vector it2 = sensor.vTargets_.begin(); it2 != sensor.vTargets_.end(); ++it2, ++nSubRow )
+        for( auto it2 = sensor.vTargets_.begin(); it2 != sensor.vTargets_.end(); ++it2 )
         {
             if( nSubRow > 0 )
                 pTable->AddItem( nRow + nSubRow, 0, &sensor, sensor.strName_.GetData().c_str() );
             ADN_Sensors_Data::TargetInfos& target = **it2;
+            if( !target.GetCrossedElement() )
+                continue;
             int row = nRow + nSubRow;
-            pTable->AddItem( row, 1, &sensor, target.ptrObject_.GetData()->strName_.GetData().c_str() );
+            pTable->AddItem( row, 1, &sensor, target.GetCrossedElement()->strName_.GetData().c_str() );
             pTable->GetDelegate().AddSpinBox( row, row, 2, 2, 0, std::numeric_limits< int >::max() );
             pTable->AddItem( row, 2, &sensor, &target.rDistanceDetection_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
             pTable->GetDelegate().AddDoubleSpinBox( row, row, 3, 2 + eNbrUnitPosture, 0, 1, 0.001, 3 );
             pTable->GetDelegate().AddColor( row, row, 3, 2 + eNbrUnitPosture, 0, 1 );
             for( unsigned int i = 0; i < eNbrUnitPosture; ++i )
                 pTable->AddItem( row, 3 + i, &sensor, &target.vModifStance_[ i ]->rCoeff_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+            ++nSubRow;
         }
         nRow += static_cast< int >( sensor.vTargets_.size() );
     }

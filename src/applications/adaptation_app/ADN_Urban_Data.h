@@ -227,9 +227,7 @@ public:
         //@}
     };
 
-    typedef ADN_Type_Vector_ABC< UrbanTemplateInfos >     T_UrbanTemplateInfos_Vector;
-    typedef T_UrbanTemplateInfos_Vector::iterator        IT_UrbanTemplateInfos_Vector;
-    typedef T_UrbanTemplateInfos_Vector::const_iterator CIT_UrbanTemplateInfos_Vector;
+    typedef ADN_Type_Vector_ABC< UrbanTemplateInfos > T_UrbanTemplateInfos_Vector;
 
 //*****************************************************************************
 

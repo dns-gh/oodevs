@@ -17,13 +17,6 @@
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Crowds_Data.h"
 #include "ADN_ResourceNetworks_Data.h"
-#include <map>
-#include <boost/shared_ptr.hpp>
-
-namespace xml
-{
-    class xistream;
-}
 
 // =============================================================================
 /** @class  ADN_Inhabitants_Data
@@ -37,12 +30,12 @@ public:
     class EventInfos : public ADN_Ref_ABC
     {
     public:
-         EventInfos();
-        ~EventInfos();
+                 EventInfos();
+        virtual ~EventInfos();
 
         EventInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output ) const;
+        void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Enum< E_Days, eNbrDays > day_;
@@ -52,9 +45,8 @@ public:
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< EventInfos >, EventInfosVector )
 
-    class InhabitantsInfosConsumption : public ADN_Ref_ABC
+    class InhabitantsInfosConsumption : public ADN_CrossedRef< ADN_ResourceNetworks_Data::ResourceNetworkInfos >
     {
-
     public:
                  InhabitantsInfosConsumption();
         virtual ~InhabitantsInfosConsumption() {}
@@ -63,10 +55,9 @@ public:
         InhabitantsInfosConsumption* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& xos ) const;
+        void WriteArchive( xml::xostream& xos );
 
     public:
-        ADN_TypePtr_InVector_ABC< ADN_ResourceNetworks_Data::ResourceNetworkInfos > ptrResource_;
         ADN_Type_Int consumption_;
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< InhabitantsInfosConsumption >, InhabitantsInfosConsumptionVector )
@@ -81,7 +72,7 @@ public:
 
         InhabitantsInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output ) const;
+        void WriteArchive( xml::xostream& output );
 
     private:
         void ReadEvent( xml::xistream& input );

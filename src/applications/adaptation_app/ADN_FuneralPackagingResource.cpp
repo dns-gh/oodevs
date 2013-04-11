@@ -19,10 +19,11 @@
 // Created: SBO 2006-08-04
 // -----------------------------------------------------------------------------
 ADN_FuneralPackagingResource::ADN_FuneralPackagingResource()
-    : processDuration_( "0s" )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Funeraire ).GetCategories(), 0, true, "resource" )
+    , processDuration_( "0s" )
     , terminal_( false )
 {
-    BindExistenceTo( &resource_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,15 +41,11 @@ ADN_FuneralPackagingResource::~ADN_FuneralPackagingResource()
 // -----------------------------------------------------------------------------
 void ADN_FuneralPackagingResource::ReadArchive( xml::xistream& input )
 {
-    std::string resourceName;
-    input >> xml::attribute( "resource", resourceName )
-          >> xml::attribute( "process-duration", processDuration_ )
+    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::ReadArchive( input );
+    input >> xml::attribute( "process-duration", processDuration_ )
           >> xml::attribute( "terminal", terminal_ );
-    ADN_Resources_Data::CategoryInfo* resource = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( resourceName );
-    if( !resource )
-        throw MASA_EXCEPTION( tools::translate( "Funeral_Data", "Invalid resource '%1'" ).arg( resourceName.c_str() ).toStdString() );
-    resource_ = resource;
-    resource_.SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( resource->parentResource_.nType_ ).GetCategories() );
+    if( GetCrossedElement() )
+        SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( GetCrossedElement()->parentResource_.nType_ ).GetCategories() );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,9 +54,9 @@ void ADN_FuneralPackagingResource::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_FuneralPackagingResource::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "packaging" )
-            << xml::attribute( "resource", resource_.GetData()->strName_ )
-            << xml::attribute( "process-duration", processDuration_ )
+    output << xml::start( "packaging" );
+    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::WriteArchive( output );
+    output  << xml::attribute( "process-duration", processDuration_ )
             << xml::attribute( "terminal", terminal_ )
             << xml::end;
 }
@@ -70,17 +67,19 @@ void ADN_FuneralPackagingResource::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 void ADN_FuneralPackagingResource::ExchangeData( ADN_FuneralPackagingResource& packResource )
 {
-    ADN_Resources_Data::CategoryInfo* curResource = resource_.GetData();
+    ADN_Resources_Data::CategoryInfo* pcurResource = GetCrossedElement();
+    ADN_Resources_Data::CategoryInfo** curResource = &pcurResource;
     std::string curProcessDuration  = processDuration_.GetData();
     bool curTerminal                = terminal_.GetData();
 
-    resource_.SetData( packResource.resource_.GetData() );
-    resource_.SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( packResource.resource_.GetData()->parentResource_.nType_ ).GetCategories() );
+    if( packResource.GetCrossedElement() )
+        SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( packResource.GetCrossedElement()->parentResource_.nType_ ).GetCategories() );
+    SetCrossedElement( packResource.GetCrossedElement(), false );
     processDuration_    = packResource.processDuration_.GetData();
     terminal_           = packResource.terminal_.GetData();
 
-    packResource.resource_.SetData( curResource );
-    packResource.resource_.SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( curResource->parentResource_.nType_ ).GetCategories() );
+    packResource.SetVector( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( ( *curResource )->parentResource_.nType_ ).GetCategories() );
+    packResource.SetCrossedElement( *curResource, false );
     packResource.processDuration_   = curProcessDuration;
     packResource.terminal_          = curTerminal;
 }

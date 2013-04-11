@@ -45,11 +45,4 @@ std::string ResourceNatureInfos::GetItemName()
 
 }
 
-inline
-std::ostream& operator<<( std::ostream& os, helpers::ResourceNatureInfos& value )
-{
-    os << value.strName_.GetData();
-    return os;
-}
-
 #endif // __ADN_ResourceNatureInfos_h_

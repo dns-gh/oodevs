@@ -3957,10 +3957,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
 <context>
     <name>ADN_Sensors_Data</name>
     <message>
-        <source>Sensors - Invalid disaster &apos;%1&apos;</source>
-        <translation>Sensors - Invalid disaster &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Sensors</source>
         <translation>Sensors</translation>
     </message>
@@ -5664,14 +5660,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>ADN_Urban_Data</name>
     <message>
-        <source>Urban data - Invalid material type &apos;%1&apos;</source>
-        <translation>Urban data - Invalid material type &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Urban data - Invalid roof-shape type &apos;%1&apos;</source>
-        <translation>Urban data - Invalid roof-shape type &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Urban data - Invalid accomodation type &apos;%1&apos;</source>
         <translation>Urban data - Invalid accomodation type &apos;%1&apos;</translation>
     </message>
@@ -6255,19 +6243,8 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>Equipment - Invalid activty &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Equipment - Invalid armor and/or volume</source>
-        <translation>Equipment - Invalid armor and/or volume</translation>
-    </message>
-    <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
         <translation>Equipment - Invalid terrain type &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>Funeral_Data</name>
-    <message>
-        <source>Invalid resource &apos;%1&apos;</source>
-        <translation>Invalid resource &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -6279,10 +6256,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 </context>
 <context>
     <name>Models_Data</name>
-    <message>
-        <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
-        <translation>Doctrine models - Invalid frag order &apos;%1&apos;</translation>
-    </message>
     <message>
         <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
         <translation>Doctrine models - Invalid mission &apos;%1&apos;</translation>
@@ -6329,16 +6302,8 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>People_Data</name>
     <message>
-        <source>Population - Invalid resource &apos;%1/%2&apos;</source>
-        <translation>Population - Invalid resource &apos;%1/%2&apos;</translation>
-    </message>
-    <message>
         <source>Population</source>
         <translation>Population</translation>
-    </message>
-    <message>
-        <source>Population - Invalid accommodation &apos;%1&apos;</source>
-        <translation>Population - Invalid accommodation &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Invalid schedule - You have already an appointment on the same moment :</source>
@@ -6409,14 +6374,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>Invalid data</translation>
     </message>
     <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation>Equipment - Invalid resource nature &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation>Equipment - Invalid resource logistic supply class &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Object type - Invalid object &apos;%1&apos;</source>
         <translation>Object type - Invalid object &apos;%1&apos;</translation>
     </message>
@@ -6426,10 +6383,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Sensors - Invalid stance &apos;%1&apos;</source>
         <translation>Sensors - Invalid posture &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid object &apos;%1&apos;</source>
-        <translation>Sensors - Invalid object &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Sensors - Invalid unit volume &apos;%1&apos;</source>
@@ -6456,10 +6409,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Unit types - Invalid equipment &apos;%1&apos;</source>
         <translation>Unit types - Invalid equipment &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Unit - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation>Unit - Invalid resource logistic supply class &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Units</source>
@@ -6497,28 +6446,12 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>Urban_Data</name>
     <message>
-        <source>Material attribute is empty for &apos;%1&apos; template.</source>
-        <translation>Material attribute is empty for &apos;%1&apos; template.</translation>
-    </message>
-    <message>
-        <source>RoofShape attribute is empty for &apos;%1&apos; template.</source>
-        <translation>RoofShape attribute is empty for &apos;%1&apos; template.</translation>
-    </message>
-    <message>
         <source>RoofShape - Invalid roofShape type name</source>
         <translation>RoofShape - Invalid roofShape type name</translation>
     </message>
 </context>
 <context>
     <name>Weapons_Data</name>
-    <message>
-        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
-        <translation>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</translation>
-    </message>
-    <message>
-        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid ammunition type</source>
-        <translation>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid ammunition type</translation>
-    </message>
     <message>
         <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
         <translation>Weapon %1 - Indirect fire - max range &lt; min range</translation>

@@ -64,8 +64,8 @@ void ADN_Equipments_RadarsListView::OnContextMenu( const QPoint& pt )
     Q3PopupMenu addMenu( this );
 
     // Add the available radars to the 'add radar' submenu.
-    ADN_Radars_Data::T_RadarInfos_Vector& vRadars = ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.vRadars_;
-    for( ADN_Radars_Data::IT_RadarInfos_Vector it = vRadars.begin(); it != vRadars.end(); ++it )
+    ADN_Radars_Data::T_RadarInfos_Vector& vRadars = ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_->vRadars_;
+    for( auto it = vRadars.begin(); it != vRadars.end(); ++it )
     {
         ADN_Radars_Data::RadarInfos* pRadar = *it;
         // Don't add a radar to the menu if it already is present in the list.

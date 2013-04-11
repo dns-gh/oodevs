@@ -31,9 +31,7 @@ class ADN_Missions_Parameter : public ADN_RefWithName
 {
 public:
     typedef ADN_Type_Vector_ABC<ADN_Missions_ParameterValue>  T_MissionParameterValue_Vector;
-    typedef T_MissionParameterValue_Vector::iterator          IT_MissionParameterValue_Vector;
     typedef ADN_Type_Vector_ABC<ADN_Missions_Type>            T_Choice_Vector;
-    typedef T_Choice_Vector::iterator                         IT_Choice_Vector;
 
              ADN_Missions_Parameter();
     virtual ~ADN_Missions_Parameter();
@@ -41,10 +39,10 @@ public:
     std::string GetItemName();
     ADN_Missions_Parameter* CreateCopy();
 
-    void ReadArchive ( xml::xistream& input );
-    void ReadValue   ( xml::xistream& input );
-    template< typename T >
-    void ReadChoice  ( xml::xistream& input, T& data );
+    void ReadArchive( xml::xistream& input );
+    void ReadValue( xml::xistream& input );
+    void ReadChoiceVector( xml::xistream& input, T_Choice_Vector& data );
+    void ReadChoiceGenObjects( xml::xistream& input, helpers::T_MissionGenObjectTypes_Infos_Vector& data );
     void WriteArchive( xml::xostream& output );
 
 private:

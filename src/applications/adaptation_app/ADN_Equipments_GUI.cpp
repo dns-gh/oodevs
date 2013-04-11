@@ -538,7 +538,7 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
         builder.ListItem( tr( "Code LFRIL" ), composante.strCodeLFRIL_.GetData().c_str() );
         builder.ListItem( tr( "MOS Id" ), composante.nId_.GetData() );
         builder.ListItem( tr( "Armor-Plating" ), composante.ptrArmor_.GetData()->strName_.GetData().c_str() );
-        builder.ListItem( tr( "Volume" ), composante.ptrSize_.GetData()->strName_.GetData().c_str() );
+        builder.ListItem( tr( "Volume" ), composante.ptrSize_.GetData() ? composante.ptrSize_.GetData()->strName_.GetData().c_str() : "" );
         builder.ListItem( tr( "Weight" ), composante.rWeight_.GetData(), tr( "T" ) );
         if( composante.bMaxSlope_.GetData() )
             builder.ListItem( tr( "Max steepness" ), composante.rMaxSlope_.GetData() );

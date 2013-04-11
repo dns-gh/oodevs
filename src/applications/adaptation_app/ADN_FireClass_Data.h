@@ -130,7 +130,6 @@ public:
     //! @name Types
     //@{
     typedef ADN_Type_Vector_ABC< FireClassInfos > T_FireClassInfosVector;
-    typedef T_FireClassInfosVector::iterator     IT_FireClassInfosVector;
     //@}
 
     //! @name Constructors/Destructor

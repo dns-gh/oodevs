@@ -21,9 +21,6 @@
 #include "ADN_ResourceNatureInfos.h"
 #include "ADN_LogisticSupplyClass.h"
 #include "ADN_UrbanAttritionInfos.h"
-#include <boost/noncopyable.hpp>
-
-namespace xml { class xistream; }
 
 // =============================================================================
 /** @class  ADN_Resources_Data
@@ -48,8 +45,8 @@ public:
 
         virtual CategoryInfo* CreateCopy();
         virtual void ReadArchive( xml::xistream& );
-        virtual void WriteArchive( xml::xostream& ) const;
-        virtual void WriteContent( xml::xostream& ) const;
+        virtual void WriteArchive( xml::xostream& );
+        virtual void WriteContent( xml::xostream& );
         virtual void Initialize();
 
     public:
@@ -60,8 +57,8 @@ public:
         ADN_Type_String strCodeEMAT8_;
         ADN_Type_String strCodeLFRIL_;
         ADN_Type_String strCodeNNO_;
-        ADN_TypePtr_InVector_ABC<helpers::ResourceNatureInfos> ptrResourceNature_;
-        ADN_TypePtr_InVector_ABC<helpers::LogisticSupplyClass> ptrLogisticSupplyClass_;
+        ADN_TypePtr_InVector_ABC< helpers::ResourceNatureInfos > ptrResourceNature_;
+        ADN_TypePtr_InVector_ABC< helpers::LogisticSupplyClass > ptrLogisticSupplyClass_;
         ADN_Type_Double rNbrInPackage_;
         ADN_Type_Double rPackageVolume_;
         ADN_Type_Double rPackageWeight_;
@@ -158,7 +155,7 @@ public:
         void ReadArchive( xml::xistream& );
         void ReadAttrition( xml::xistream& );
         void ReadUrbanModifer( xml::xistream& );
-        void WriteArchive( xml::xostream& ) const;
+        void WriteArchive( xml::xostream& );
         bool HasUrbanAttrition() const;
         virtual void Initialize();
 
