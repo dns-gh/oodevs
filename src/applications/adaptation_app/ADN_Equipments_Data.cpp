@@ -1399,7 +1399,12 @@ ADN_Equipments_Data::EquipmentInfos::EquipmentInfos()
     , attritionBreakdowns_           ( "attrition" )
     , randomBreakdowns_              ( "random" )
     , bMaxSlope_                     ( false )
-    , rMaxSlope_                     ( 60 )
+    , rMaxSlope_                     ( 100 )
+    , length_                        ( 0. )
+    , width_                         ( 0. )
+	, frontSeparationDistance_       ( 0. )
+	, safetyDistance_                ( 0. )
+	, speedSafetyDistance_           ( 0. )
     , nPowerDirectFire_              ( 0 )
     , nPowerIndirectFire_            ( 0 )
     , nPowerCloseCombat_             ( 0 )
@@ -1434,7 +1439,12 @@ ADN_Equipments_Data::EquipmentInfos::EquipmentInfos( unsigned int id )
     , attritionBreakdowns_           ( "attrition" )
     , randomBreakdowns_              ( "random" )
     , bMaxSlope_                     ( false )
-    , rMaxSlope_                     ( 60 )
+    , rMaxSlope_                     ( 100 )
+    , length_                        ( 0. )
+    , width_                         ( 0. )
+	, frontSeparationDistance_       ( 0. )
+	, safetyDistance_                ( 0. )
+	, speedSafetyDistance_           ( 0. )
     , nPowerDirectFire_              ( 0 )
     , nPowerIndirectFire_            ( 0 )
     , nPowerCloseCombat_             ( 0 )
@@ -1565,6 +1575,11 @@ ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::EquipmentInfos::Create
 
     pCopy->bMaxSlope_ = bMaxSlope_.GetData();
     pCopy->rMaxSlope_ = rMaxSlope_.GetData();
+    pCopy->length_ = length_.GetData();
+    pCopy->width_ = width_.GetData();
+    pCopy->frontSeparationDistance_ = frontSeparationDistance_.GetData();
+    pCopy->safetyDistance_ = safetyDistance_.GetData();
+    pCopy->speedSafetyDistance_ = speedSafetyDistance_.GetData();
 
     pCopy->nPowerDirectFire_    = nPowerDirectFire_.GetData();
     pCopy->nPowerIndirectFire_  = nPowerIndirectFire_.GetData();
@@ -1740,11 +1755,17 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
     attritionBreakdowns_.ReadArchive( input );
 
     input >> xml::optional >> xml::attribute( "max-slope", rMaxSlope_ );
-    if( rMaxSlope_ != 60. )
+    if( rMaxSlope_ != 100. )
     {
         bMaxSlope_ = true;
         rMaxSlope_ =  rMaxSlope_.GetData() * 100.0;
     }
+
+    input >> xml::optional >> xml::attribute( "length", length_ );
+    input >> xml::optional >> xml::attribute( "width", width_ );
+    input >> xml::optional >> xml::attribute( "front-separation-distance", frontSeparationDistance_ );
+    input >> xml::optional >> xml::attribute( "safety-distance", safetyDistance_ );
+    input >> xml::optional >> xml::attribute( "speed-safety-distance", speedSafetyDistance_ );
 
     input >> xml::optional >> xml::start( "operational-information" )
             >> xml::optional >> xml::attribute( "native-country", strNativeCountry_ )
@@ -1901,6 +1922,16 @@ void ADN_Equipments_Data::EquipmentInfos::WriteArchive( xml::xostream& output )
     }
     if( bMaxSlope_.GetData() )
         output << xml::attribute( "max-slope", rMaxSlope_.GetData() / 100.0 );
+    if( length_.GetData() )
+        output << xml::attribute( "length", length_ );
+    if( width_.GetData() )
+        output << xml::attribute( "width", width_ );
+    if( frontSeparationDistance_.GetData() )
+        output << xml::attribute( "front-separation-distance", frontSeparationDistance_ );
+    if( safetyDistance_.GetData() )
+        output << xml::attribute( "safety-distance", safetyDistance_ );
+    if( speedSafetyDistance_.GetData() )
+        output << xml::attribute( "speed-safety-distance", speedSafetyDistance_ );
 
     if( !equipmentCategory_.GetData().empty() )
         output << xml::content( "equipment-category", equipmentCategory_ );

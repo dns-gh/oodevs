@@ -1444,6 +1444,34 @@ Arrêt moteur allumé</translation>
         <source>Code EMAT6</source>
         <translation>Code EMAT6</translation>
     </message>
+    <message>
+        <source>Equipment dimensions</source>
+        <translation">Dimensions</translation>
+    </message>
+    <message>
+        <source>Length</source>
+        <translation>Longueur</translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation>Largeur</translation>
+    </message>
+    <message>
+        <source>Front separation distance</source>
+        <translation>Distance de séparation frontale</translation>
+    </message>
+    <message>
+        <source>Safety Distance</source>
+        <translation>Distance de sécurité</translation>
+    </message>
+    <message>
+        <source>Speed Safety Distance</source>
+        <translation>Distance de sécurité en vitesse</translation>
+    </message>
+    <message>
+        <source>m</source>
+        <translation>m</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_RadarsListView</name>

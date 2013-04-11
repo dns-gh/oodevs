@@ -127,8 +127,14 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipments_GUI::eMaintenanceUnloadTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.unloadTime_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eTowerCapacity]->Connect( &pInfos->logInfos_.maintenanceInfos_.rCapacity_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eIsTower]->Connect( &pInfos->logInfos_.maintenanceInfos_.bIsTower_, bConnect );
-
+    
     vItemConnectors_[ADN_Equipments_GUI::eMaxSlope]->Connect( &pInfos->rMaxSlope_, bConnect );
+
+    vItemConnectors_[ADN_Equipments_GUI::eLength]->Connect( &pInfos->length_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eWidth]->Connect( &pInfos->width_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eFrontSeparationDistance]->Connect( &pInfos->frontSeparationDistance_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eSafetyDistance]->Connect( &pInfos->safetyDistance_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eSpeedSafetyDistance]->Connect( &pInfos->speedSafetyDistance_, bConnect );
 
     vItemConnectors_[ADN_Equipments_GUI::eNTI1 + ADN_Equipments_GUI::eMaxRepairTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI1Infos_.maxRepairTime_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eNTI1 + ADN_Equipments_GUI::eHasMaxRepairTime]->Connect( &pInfos->logInfos_.maintenanceInfos_.NTI1Infos_.bHasMaxRepairTime_, bConnect );

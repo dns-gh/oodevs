@@ -1436,6 +1436,34 @@ Parked engine running</translation>
         <source>Code EMAT6</source>
         <translation>Code EMAT6</translation>
     </message>
+    <message>
+        <source>Equipment dimensions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <translation type="unfinished">Width</translation>
+    </message>
+    <message>
+        <source>Front separation distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Safety Distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed Safety Distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipments_RadarsListView</name>

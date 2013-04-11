@@ -133,6 +133,13 @@ void ADN_Equipments_GUI::Build()
     builder.AddField< ADN_EditLine_String >( pInfoGroupBox, "information-origin", tr( "Information origin:" ), vInfosConnectors[ eInformationOrigin ] );
     builder.AddField< ADN_EditLine_String >( pInfoGroupBox, "category", tr( "Equipment category:" ), vInfosConnectors[ eEquipmentCategory ] );
 
+    Q3GroupBox* pDimensionsGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Equipment dimensions" ) );
+    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "length", tr( "Length" ), vInfosConnectors[ eLength ], tr("m"), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "width", tr( "Width" ), vInfosConnectors[ eWidth ], tr("m"), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "frontSeparationDistance", tr( "Front separation distance" ), vInfosConnectors[ eFrontSeparationDistance ], tr("m"), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "safetyDistance_", tr( "Safety Distance" ), vInfosConnectors[ eSafetyDistance ], tr("m"), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pDimensionsGroupBox, "speedSafetyDistance_", tr( "Speed Safety Distance" ), vInfosConnectors[ eSpeedSafetyDistance ], tr("m"), eGreaterEqualZero );
+
     // Breakdowns
     pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ) );
     ADN_Equipments_BreakdownsTable* pAttritionBreakdowns = new ADN_Equipments_BreakdownsTable( builder.GetChildName( "breakdowns-table" ),
@@ -242,7 +249,8 @@ void ADN_Equipments_GUI::Build()
     pDataPageLayout->addWidget( pInfoGroupBox       , 2, 0 );
     pDataPageLayout->addWidget( pBreakdownsGroup_   , 3, 0, 2, 1 );
 
-    pDataPageLayout->addWidget( pTroopGroupBox      , 0, 1, 3, 1 );
+    pDataPageLayout->addWidget( pTroopGroupBox      , 0, 1, 2, 1 );
+    pDataPageLayout->addWidget( pDimensionsGroupBox , 2, 1 );
     pDataPageLayout->addWidget( pSensorsGroup       , 3, 1 );
     pDataPageLayout->addWidget( pRadarsGroup        , 4, 1 );
 
