@@ -162,7 +162,7 @@ void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel
 
     blockSelect_ = true;
     selectionModel()->clearSelection();
-    for( std::vector< const kernel::Entity_ABC* >::const_iterator it = elements.begin(); it != elements.end(); ++it )
+    for( auto it = elements.begin(); it != elements.end(); ++it )
     {
         if( *it && !IsTypeRejected( **it ) )
             if( QStandardItem* item = dataModel_.FindDataItem( **it ) )
@@ -171,7 +171,7 @@ void EntityTreeView_ABC::NotifySelectionChanged( const std::vector< const kernel
                     if( index.isValid() )
                     {
                         selectionModel()->select( index, QItemSelectionModel::Select | QItemSelectionModel::Rows );
-                        scrollTo( index );
+                        QTimer::singleShot( 0, this, SLOT( OnScrollToSelected() ) );
                     }
             }
     }
@@ -268,4 +268,14 @@ Qt::ItemFlags EntityTreeView_ABC::ItemSpecificFlags( const kernel::Entity_ABC& /
 void EntityTreeView_ABC::ForceRedraw()
 {
     doItemsLayout();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::OnScrollToSelected
+// Created: NPT 2013-04-11
+// -----------------------------------------------------------------------------
+void EntityTreeView_ABC::OnScrollToSelected()
+{
+    if( !selectedIndexes().empty() )
+        scrollTo( selectedIndexes()[ 0 ] );
 }
