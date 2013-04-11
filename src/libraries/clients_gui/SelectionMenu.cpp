@@ -250,10 +250,6 @@ bool SelectionMenu::GenerateIcons()
                     pixmap = QPixmap( 32, 32 );
                     pixmap.fill( color );
                 }
-                else if( entity->GetTypeName() == kernel::Inhabitant_ABC::typeName_ )
-                {
-                    pixmap = MakePixmap( "inhabitants" );
-                }
                 else if( const TacticalHierarchies* hierarchies = entity->Retrieve< TacticalHierarchies >() )   // Entity & Knowledge ?
                 {
                     if( const kernel::Symbol_ABC* symbol = entity->Retrieve< kernel::TacticalHierarchies >() )
