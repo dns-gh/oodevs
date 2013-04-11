@@ -43,7 +43,6 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     , resources_       ( resources )
     , sourceNode_      ( 0 )
     , id_              ( 0 )
-    , enableDataUpdate_( true )
 {
     SubObjectName subObject( this->objectName() );
     Q3VBox* mainLayout = new Q3VBox( this );
@@ -192,7 +191,6 @@ void ResourceLinksDialog_ABC::DoMultipleSelect( const std::vector< const T* >& e
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Update()
 {
-    EnableDataUpdate( true );
     SubObjectName subObject( this->objectName() );
     if( selected_.size() != 1 )
         return;
@@ -276,7 +274,6 @@ void ResourceLinksDialog_ABC::OnProductionChanged( int value )
 {
     if( dotationList_->currentItem() )
         resourceNodes_[ dotationList_->currentItem()->text().toStdString() ].production_ = value;
-    EnableDataUpdate( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -287,7 +284,6 @@ void ResourceLinksDialog_ABC::OnConsumptionChanged( int value )
 {
     if( dotationList_->currentItem() )
         resourceNodes_[ dotationList_->currentItem()->text().toStdString() ].consumption_ = value;
-    EnableDataUpdate( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -298,7 +294,6 @@ void ResourceLinksDialog_ABC::OnCriticalChanged( bool on )
 {
     if( dotationList_->currentItem() )
         resourceNodes_[ dotationList_->currentItem()->text().toStdString() ].critical_ = on;
-    EnableDataUpdate( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -309,7 +304,6 @@ void ResourceLinksDialog_ABC::OnMaxStockChanged( int value )
 {
     if( dotationList_->currentItem() )
         resourceNodes_[ dotationList_->currentItem()->text().toStdString() ].maxStock_ = value;
-    EnableDataUpdate( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -320,7 +314,6 @@ void ResourceLinksDialog_ABC::OnStockChanged( int value )
 {
     if( dotationList_->currentItem() )
         resourceNodes_[ dotationList_->currentItem()->text().toStdString() ].stock_ = value;
-    EnableDataUpdate( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -346,7 +339,6 @@ void ResourceLinksDialog_ABC::OnValueChanged()
         }
         blockSlot_ = false;
     }
-    EnableDataUpdate( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -368,7 +360,6 @@ void ResourceLinksDialog_ABC::Validate()
         DoValidate();
         controllers_.controller_.Update( selected_.front()->Get< ResourceNetwork_ABC >() );
     }
-    enableDataUpdate_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -377,7 +368,6 @@ void ResourceLinksDialog_ABC::Validate()
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Cancel()
 {
-    enableDataUpdate_  =true;
     Show();
 }
 
@@ -401,7 +391,8 @@ void ResourceLinksDialog_ABC::NotifyDeleted( const Entity_ABC& element )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::NotifyUpdated( const gui::ResourceNetwork_ABC& /*element*/ )
 {
-    Show();
+    if( controllers_.GetCurrentMode() == eModes_Replay )
+        Show();
 }
 
 // -----------------------------------------------------------------------------
@@ -649,10 +640,17 @@ void ResourceLinksDialog_ABC::GenerateProduction()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceLinksDialog_ABC::EnableDataUpdate
-// Created: NPT 2013-03-28
+// Name: ResourceLinksDialog_ABC::IsDataUpdateEnabled
+// Created: NPT 2013-04-11
 // -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::EnableDataUpdate( bool enable )
+bool ResourceLinksDialog_ABC::IsDataUpdateEnabled()
 {
-    enableDataUpdate_ = enable;
+    if( !selectedItem_ )
+        return true;
+    std::string resource = selectedItem_->text().toStdString();
+    ResourceNetwork_ABC::ResourceNode& node = resourceNodes_[ resource ];
+    return ( production_->value() == ( int ) node.production_ 
+                 && consumption_->value() == ( int ) node.consumption_ 
+                 && maxStock_->value() == ( int ) node.maxStock_ ) 
+                 || controllers_.GetCurrentMode() == eModes_Replay;
 }

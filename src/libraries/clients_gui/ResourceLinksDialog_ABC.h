@@ -101,7 +101,7 @@ private:
     void DoNotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     template< class T >
     void DoMultipleSelect( const std::vector< const T* >& elements );
-    void EnableDataUpdate( bool enable );
+    bool IsDataUpdateEnabled();
     //@}
 
 protected:
@@ -128,7 +128,6 @@ protected:
     RichTableWidget* table_;
     RichPushButton* okButton_;
     RichPushButton* cancelButton_;
-    bool enableDataUpdate_;
     //@}
 };
 
