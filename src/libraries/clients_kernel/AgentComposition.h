@@ -39,6 +39,7 @@ public:
     const ComponentType& GetType() const;
     unsigned int GetCount() const;
     unsigned int GetCrew() const;
+    bool IsMajor() const;
     //@}
 
 private:
@@ -47,6 +48,7 @@ private:
     const ComponentType& type_;
     const unsigned int count_;
     const unsigned int crew_;
+    const bool major_;
     //@}
 };
 

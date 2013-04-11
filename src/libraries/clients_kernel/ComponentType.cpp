@@ -22,10 +22,14 @@ ComponentType::ComponentType( xml::xistream& xis )
     , hasMedical_( false )
     , hasSupply_( false )
     , weight_( 0 )
+    , width_( 0 )
+    , spacing_( 0 )
 {
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "id", id_ )
-        >> xml::attribute( "weight", weight_ );
+        >> xml::attribute( "weight", weight_ )
+        >> xml::optional >> xml::attribute( "width", width_ )
+        >> xml::optional >> xml::attribute( "front-separation-distance", spacing_ );
 
     xis >> xml::optional
         >> xml::start( "logistic-functions" )
@@ -77,4 +81,22 @@ unsigned long ComponentType::GetId() const
 float ComponentType::GetWeight() const
 {
     return weight_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ComponentType::GetWidth
+// Created: LDC 2013-04-11
+// -----------------------------------------------------------------------------
+float ComponentType::GetWidth() const
+{
+    return width_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ComponentType::GetSpacing
+// Created: LDC 2013-04-11
+// -----------------------------------------------------------------------------
+float ComponentType::GetSpacing() const
+{
+    return spacing_;
 }

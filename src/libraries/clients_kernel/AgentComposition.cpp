@@ -21,6 +21,7 @@ AgentComposition::AgentComposition( xml::xistream& xis, const tools::Resolver_AB
     : type_( resolver.Get( xis.attribute< std::string >( "type" ) ) )
     , count_( xis.attribute< unsigned int >( "count" ) )
     , crew_( xis.attribute< unsigned int >( "crew" ) )
+    , major_( xis.attribute< bool >( "major", false ) )
 {
     // NOTHING
 }
@@ -59,4 +60,13 @@ unsigned int AgentComposition::GetCount() const
 unsigned int AgentComposition::GetCrew() const
 {
     return crew_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentComposition::IsMajor
+// Created: LDC 2013-04-11
+// -----------------------------------------------------------------------------
+bool AgentComposition::IsMajor() const
+{
+    return major_;
 }

@@ -391,7 +391,7 @@ float GlWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 // -----------------------------------------------------------------------------
 float GlWidget::GetActualZoomFactor() const
 {
-    return 0.12f;
+    return 0.6f; // 1 pixel <=> 1 metre
 }
 
 // -----------------------------------------------------------------------------
@@ -882,7 +882,7 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
 {
     thickness *= ComputeZoomFactor( factor );
     DrawApp6Symbol( symbol, style, where, baseWidth_ * factor, viewport_
-                  , static_cast< unsigned int >( windowWidth_ * thickness ), static_cast< unsigned int >( windowHeight_ * thickness ), direction );
+                  , static_cast< unsigned int >( windowWidth_ * thickness ), static_cast< unsigned int >( windowHeight_ * thickness ), direction, 1., 1. );
 }
 
 // -----------------------------------------------------------------------------
@@ -892,29 +892,29 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
 void GlWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
 {
     ComputeZoomFactor( factor, false );
-    DrawApp6Symbol( symbol, DefaultStyle(), where, baseWidth_ * factor, Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) ), 4, 4, direction );
+    DrawApp6Symbol( symbol, DefaultStyle(), where, baseWidth_ * factor, Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) ), 4, 4, direction, 1., 1. );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GLWidget::DrawApp6SymbolScaledSize
 // Created: LDC 2013-04-11
 // -----------------------------------------------------------------------------
-void GlWidget::DrawApp6SymbolScaledSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
+void GlWidget::DrawApp6SymbolScaledSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
 {
     factor = fabs( factor ) * GetActualZoomFactor();
-    DrawApp6Symbol( symbol, DefaultStyle(), where, baseWidth_ * factor, Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) ), 4, 4, direction );
+    DrawApp6Symbol( symbol, DefaultStyle(), where, baseWidth_ * factor, Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) ), 4, 4, direction, width, depth );
 }
     
 // -----------------------------------------------------------------------------
 // Name: GLWidget::DrawUnitSymbol
 // Created: LDC 2013-04-09
 // -----------------------------------------------------------------------------
-void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction ) const
-{    
+void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
+{
     if( isMoving )
     {
         if( !moveSymbol.empty() )
-            DrawApp6SymbolScaledSize( moveSymbol, where, factor, direction );
+            DrawApp6SymbolScaledSize( moveSymbol, where, factor, direction, 1., 1. );
         else
             DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
     }
@@ -922,7 +922,11 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
     {
         DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
         if( !staticSymbol.empty() )
-            DrawApp6SymbolScaledSize( staticSymbol, where, factor, direction );
+        {
+            width = width ? width / 360 : 1;
+            depth = depth ? depth / 240 : 1;
+            DrawApp6SymbolScaledSize( staticSymbol, where, factor, direction, width, depth );
+        }
     }
 }
 
@@ -931,7 +935,7 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
 // Created: MMC 2012-02-04
 // -----------------------------------------------------------------------------
 void GlWidget::DrawApp6Symbol ( const std::string& symbol, const std::string& style, const geometry::Point2f& where
-                              , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight, unsigned int direction ) const
+                              , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight, unsigned int direction, float xFactor, float yFactor ) const
 {
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
@@ -947,6 +951,7 @@ void GlWidget::DrawApp6Symbol ( const std::string& symbol, const std::string& st
         glPushMatrix();
             glTranslatef( center.X(), center.Y(), 0.0f );
             glRotatef( - (GLfloat)direction, 0, 0, 1 );
+            glScalef( xFactor, yFactor, 1 );
             glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0.0f );
             glScalef( scaleRatio, -scaleRatio, 1 );
             glTranslatef( svgDeltaX, svgDeltaY, 0.0f );

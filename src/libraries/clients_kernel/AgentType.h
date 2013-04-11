@@ -64,6 +64,8 @@ public:
     const std::string& GetLevelSymbol() const;
     const std::string& GetHQSymbol() const;
     const std::string& GetTypeName() const;
+    float GetWidth() const;
+    float GetDepth() const;
     const float GetComposantesWeight() const;
     E_AgentNbcSuit GetNbcSuit() const;
 

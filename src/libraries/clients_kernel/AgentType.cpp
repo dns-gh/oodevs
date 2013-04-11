@@ -231,6 +231,34 @@ const std::string& AgentType::GetHQSymbol() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentType::GetWidth
+// Created: LDC 2013-04-11
+// -----------------------------------------------------------------------------
+float AgentType::GetWidth() const
+{
+    float result = 0.f;
+    for( auto it = equipments_.begin(); it != equipments_.end(); ++it )
+    {
+        if( (*it)->IsMajor() )
+        {
+            const ComponentType& type = (*it)->GetType();
+            unsigned int count = (*it)->GetCount();
+            result += type.GetWidth() * count + type.GetSpacing() * ( count - 1 );
+        }
+    }
+    return result;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetDepth
+// Created: LDC 2013-04-11
+// -----------------------------------------------------------------------------
+float AgentType::GetDepth() const
+{
+    return 0.f;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentType::GetTypeName
 // Created: MMC 2012-03-19
 // -----------------------------------------------------------------------------
