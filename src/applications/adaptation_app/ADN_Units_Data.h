@@ -20,7 +20,7 @@
 #include "ADN_Types.h"
 #include "ADN_Tools.h"
 #include "ADN_Type_Repartition.h"
-#include "ADN_UnitSymbols_Data.h"
+#include "ADN_Symbols_Data.h"
 
 //*****************************************************************************
 // Created: JDY 03-07-24
@@ -181,7 +181,7 @@ public:
         ADN_Type_Bool                                               bCanFly_;
         ADN_Type_Enum<E_CrossingHeight,eNbrCrossingHeight>          eCrossingHeight_;
         ADN_Type_Bool                                               bIsAutonomous_;
-        ADN_TypePtr_InVector_ABC< ADN_UnitSymbols_Data::UnitSymbolInfo > natureSymbol_;
+        ADN_TypePtr_InVector_ABC< ADN_Symbols_Data::SymbolsUnit >   natureSymbol_;
 
         T_ComposanteInfos_Vector                                    vComposantes_;
         T_PostureInfos_Vector                                       vPostures_;

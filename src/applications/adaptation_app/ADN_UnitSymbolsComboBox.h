@@ -11,7 +11,7 @@
 #define __ADN_UnitSymbolsComboBox_h_
 
 #include "ADN_ComboBox_Drawings.h"
-#include "ADN_UnitSymbols_Data.h"
+#include "ADN_Symbols_Data.h"
 
 // =============================================================================
 /** @class  ADN_UnitSymbolsComboBox
@@ -20,7 +20,7 @@
 // Created: MMC 2011-07-07
 // =============================================================================
 class ADN_UnitSymbolsComboBox
-    : public ADN_ComboBox_Drawings< ADN_UnitSymbols_Data::UnitSymbolInfo >
+    : public ADN_ComboBox_Drawings< ADN_Symbols_Data::SymbolsUnit >
 {
     Q_OBJECT;
 

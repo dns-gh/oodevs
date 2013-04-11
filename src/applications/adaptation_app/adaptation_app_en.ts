@@ -4453,6 +4453,13 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
 </context>
 <context>
+    <name>ADN_Symbols_Data</name>
+    <message>
+        <source> and &apos;</source>
+        <translation> and &apos;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Save</source>
@@ -5200,10 +5207,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>Symbols</translation>
     </message>
     <message>
-        <source>UnitSymbols</source>
-        <translation>UnitSymbols</translation>
-    </message>
-    <message>
         <source>Urban</source>
         <translation>Urban</translation>
     </message>
@@ -5397,13 +5400,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition must be 100%. Current value for &apos;%2&apos;: %3%.</source>
         <translation>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition must be 100%. Current value for &apos;%2&apos;: %3%.</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_UnitSymbols_Data</name>
-    <message>
-        <source> and &apos;</source>
-        <translation> and &apos;</translation>
     </message>
 </context>
 <context>

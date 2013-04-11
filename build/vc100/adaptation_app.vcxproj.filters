@@ -556,9 +556,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Units_Data.cpp">
       <Filter>Source Files\Workspace\Units\Units Data</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UnitSymbols_Data.cpp">
-      <Filter>Source Files\Workspace\Units\Units Data</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Units.cpp">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </ClCompile>
@@ -566,9 +563,6 @@
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Point_GUI.cpp">
-      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SymbolWidget.cpp">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Units_Composantes_GUI.cpp">
@@ -581,9 +575,6 @@
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Units_Postures_GUI.cpp">
-      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UnitSymbols_GUI.cpp">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UnitSymbolsComboBox.cpp">
@@ -1204,6 +1195,12 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_PhInfos.cpp">
       <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UnitSymbolWidget.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SymbolWidget_ABC.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1323,9 +1320,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Units_Data.h">
       <Filter>Source Files\Workspace\Units\Units Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UnitSymbols_Data.h">
-      <Filter>Source Files\Workspace\Units\Units Data</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Units.h">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </ClInclude>
@@ -1333,9 +1327,6 @@
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Units_Postures_GUI.h">
-      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UnitSymbols_GUI.h">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Models.h">
@@ -1931,9 +1922,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Nature_GUI.h">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_SymbolWidget.h">
-      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Units_Composantes_GUI.h">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </CustomBuild>
@@ -2208,6 +2196,12 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Weapons_Data_WeaponInfos.h">
       <Filter>Source Files\Workspace\Weapons\Weapons Data</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_UnitSymbolWidget.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_SymbolWidget_ABC.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

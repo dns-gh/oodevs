@@ -15,9 +15,8 @@
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Units_GUI.h"
-#include "ADN_SymbolWidget.h"
+#include "ADN_UnitSymbolWidget.h"
 #include "clients_kernel/SymbolFactory.h"
-#include "ADN_UnitSymbols_Data.h"
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
@@ -416,9 +415,7 @@ void ADN_Units_Data::UnitInfos::Initialize()
     for( int i = eUnitPosture_PosturePosteReflexe; i < eNbrUnitPosture; ++i )
         vPostures_.AddItem( new PostureInfos( static_cast< E_UnitPosture >( i )) );
 
-    ADN_UnitSymbols_Data& unitSymbolsData = ADN_Workspace::GetWorkspace().GetUnitSymbols().GetData();
-    natureSymbol_.SetVector( unitSymbolsData.GetSymbols() );
-    natureSymbol_.SetData( unitSymbolsData.GetSymbol() );
+    natureSymbol_.SetVector( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolsUnits() );
 }
 
 // -----------------------------------------------------------------------------
@@ -576,9 +573,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
         throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid 'Atlas' attribute '%1'" ).arg( atlas.c_str() ).toStdString() );
     eNatureAtlas_=eNatureAtlasType;
 
-    ADN_UnitSymbols_Data& unitSymbols = ADN_Workspace::GetWorkspace().GetUnitSymbols().GetData();
-    natureSymbol_.SetVector( unitSymbols.GetSymbols() );
-    natureSymbol_.SetData( unitSymbols.GetSymbol() );
+    natureSymbol_.SetVector( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolsUnits() );
 
     input >> xml::start( "equipments" )
             >> xml::list( "equipment", *this, &ADN_Units_Data::UnitInfos::ReadEquipment )
@@ -811,17 +806,11 @@ void ADN_Units_Data::UnitInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& c
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::UnitInfos::CleanupNature()
 {
-    std::string nature = strNature_.GetData();
-    if( nature.size() > 10 )
-    {
-        if( nature.compare( nature.size()-10, 10 ,"/undefined") == 0 )
-        {
-            nature.resize( nature.size()-10 );
-            strNature_ = nature;
-        }
-    }
-    if( !ADN_Workspace::GetWorkspace().GetUnits().GetGui().IsSymbolAvailable( strNature_.GetData() ) )
+    auto pSymbolUnit = ADN_Workspace::GetWorkspace().GetSymbols().GetData().FindSymbolUnit( strNature_.GetData() );
+    if( !pSymbolUnit )
         strNature_ = "undefined";
+    else if( strNature_ != pSymbolUnit->strName_.GetData() )
+        strNature_ = pSymbolUnit->strName_.GetData();
 }
 
 //-----------------------------------------------------------------------------

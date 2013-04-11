@@ -133,6 +133,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\EntityTreeView_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ExpandableGroupBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\FileDialog.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\GlContext.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Gradient.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HelpSystem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HierarchyTreeView_ABC.cpp" />
@@ -700,6 +701,7 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\FileDialog.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\FilterProxyModel.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\GlContext.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\GlTools_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Gradient.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\HierarchyTreeView.h" />

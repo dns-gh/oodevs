@@ -26,6 +26,7 @@
 #include "ADN_ProgressBar.h"
 #include "ADN_FileLoaderObserver.h"
 #include "clients_gui/FileDialog.h"
+#include "clients_gui/GlContext.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/resources.h"
@@ -84,6 +85,7 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
     , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , strAdminPassword_( ReadPassword() )
     , workspace_( ADN_Workspace::GetWorkspace() )
+    , openGLContext_( new gui::GlContext() )
     , config_( config )
     , pProjectLoadAction_( 0 )
     , pProjectMenu_( 0 )
@@ -98,6 +100,7 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
     , nIdChangeOpenMode_( 0 )
     , bSkipSave_( false )
 {
+    openGLContext_->Init( this->winId() );
     generalConfig_->Parse( argc, argv );
     setMinimumSize( 640, 480 );
     setIcon( gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ) ) );

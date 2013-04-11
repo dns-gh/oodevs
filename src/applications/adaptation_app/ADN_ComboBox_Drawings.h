@@ -12,6 +12,7 @@
 
 #include "ADN_ComboBox.h"
 #include "ADN_ComboBoxItem.h"
+#include "clients_gui/StandardIconProxyStyle.h"
 
 // =============================================================================
 /** @class  ADN_ComboBox_Drawings
@@ -25,7 +26,7 @@ class ADN_ComboBox_Drawings : public ADN_ComboBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ComboBox_Drawings( QWidget* pParent = 0 );
+             ADN_ComboBox_Drawings( QWidget* pParent = 0, int iconSize = 50 );
     virtual ~ADN_ComboBox_Drawings();
     //@}
 

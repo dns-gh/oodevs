@@ -4464,6 +4464,13 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
 </context>
 <context>
+    <name>ADN_Symbols_Data</name>
+    <message>
+        <source> and &apos;</source>
+        <translation> et &apos;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Save</source>
@@ -5215,10 +5222,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Symboles</translation>
     </message>
     <message>
-        <source>UnitSymbols</source>
-        <translation>Symboles de pion</translation>
-    </message>
-    <message>
         <source>Urban</source>
         <translation>Urbain</translation>
     </message>
@@ -5412,13 +5415,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition must be 100%. Current value for &apos;%2&apos;: %3%.</source>
         <translation>Répartition invalide sur l&apos;onglet &apos;%1&apos; - La répartition Hommes/Femmes/Enfants doit faire 100%. Valeur actuelle pour &apos;%2&apos; : %3%.</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_UnitSymbols_Data</name>
-    <message>
-        <source> and &apos;</source>
-        <translation> et &apos;</translation>
     </message>
 </context>
 <context>

@@ -22,7 +22,7 @@
 #include "ADN_MultiPercentage.h"
 #include "ADN_Nature_GUI.h"
 #include "ADN_Point_GUI.h"
-#include "ADN_SymbolWidget.h"
+#include "ADN_UnitSymbolWidget.h"
 #include "ADN_TimeField.h"
 #include "ADN_Tr.h"
 #include "ADN_UnitSymbolsComboBox.h"
@@ -49,8 +49,13 @@ ADN_Units_GUI::ADN_Units_GUI( ADN_Units_Data& data )
     , pStockGroup_( 0 )
     , pStockLogThreshold_( 0 )
     , pInstallationGroup_( 0 )
-    , pSymbolWidget_( 0 )
     , pNatureGui_( 0 )
+    , labelSymbol_( 0 )
+    , labelMoveSymbol_( 0 )
+    , labelStaticSymbol_( 0 )
+    , unitSymbolWidget_( 0 )
+    , unitSymbolMoveWidget_( 0 )
+    , unitSymbolStaticWidget_( 0 )
 {
     // NOTHING
 }
@@ -121,7 +126,8 @@ void ADN_Units_GUI::Build()
     // Nature group
     Q3GroupBox* pNatureGroup = new Q3GroupBox( 2, Qt::Horizontal, tr( "Nature" ) );
     {
-        QGroupBox* pNatureInternalGroup = new QGroupBox( pNatureGroup );
+        Q3VBox* natureLayout = new Q3VBox( pNatureGroup );
+        QGroupBox* pNatureInternalGroup = new QGroupBox( natureLayout );
         QGridLayout* pNatureInternalGroupLayout = new QGridLayout( pNatureInternalGroup );
         pNatureInternalGroupLayout->setMargin( 10 );
         pNatureInternalGroupLayout->setAlignment( Qt::AlignTop );
@@ -140,23 +146,22 @@ void ADN_Units_GUI::Build()
         pNatureInternalGroupLayout->addWidget( subLayout, 0, 0, 1, 2, Qt::AlignTop );
         pNatureGui_ = builder.AddWidget< ADN_Nature_GUI >( "nature", pNatureInternalGroupLayout, 2 );
         vInfosConnectors[ eNatureNature ] = &pNatureGui_->GetConnector();
-        // Symbol
-        Q3VBox* pSymbolLayout = new Q3VBox( pNatureGroup );
-        QLabel* pSymbolLabel = new QLabel( pSymbolLayout );
-        pSymbolWidget_ = builder.AddWidget< ADN_SymbolWidget, QWidget*, gui::GLSymbols& >( "symbols", pSymbolLayout, ADN_Workspace::GetWorkspace().GetUnitSymbols().GetData().GetGlSymbols() );
-        pSymbolWidget_->makeCurrent();
-        pSymbolWidget_->initializeGL();
-        pSymbolWidget_->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-        pSymbolWidget_->setMinimumSize( 130, 140 );
-        pSymbolWidget_->setMaximumSize( 130, 140 );
-        connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), pSymbolWidget_, SLOT( OnNatureChanged( const QString& ) ) );
-        connect( pSymbolWidget_, SIGNAL( SymbolChanged( const QString& ) ), pSymbolLabel, SLOT( setText( const QString& ) ) );
+
         // Symbol combo
-        QWidget* pHolder = builder.AddFieldHolder( pNatureGroup );
+        QWidget* pHolder = builder.AddFieldHolder( natureLayout );
         ADN_UnitSymbolsComboBox* unitSymbolsCombo = builder.AddField< ADN_UnitSymbolsComboBox >( pHolder, "unit-symbol", tr( "UnitSymbol" ), vInfosConnectors[ eNatureSymbol ] );
         unitSymbolsCombo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
         connect( unitSymbolsCombo, SIGNAL( UnitSymbolChanged( const QString& ) ), pNatureGui_, SLOT( OnUnitSymbolChanged( const QString& ) ) );
         connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), unitSymbolsCombo, SLOT( OnNatureChanged( const QString& ) ) );
+
+        // Symbol
+        Q3VBox* pSymbolLayout = new Q3VBox( pNatureGroup );
+        pSymbolLayout->layout()->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
+        CreateUnitSymbolWidget( builder, "symbols"       , pSymbolLayout, &ADN_Symbols_Data::SymbolsUnit::GetSamplePixmap,  &ADN_Symbols_Data::SymbolsUnit::GetSymbol       , labelSymbol_      , unitSymbolWidget_ );
+        CreateUnitSymbolWidget( builder, "move-symbols"  , pSymbolLayout, &ADN_Symbols_Data::SymbolsUnit::GetMovePixmap,    &ADN_Symbols_Data::SymbolsUnit::GetMoveSymbol   , labelMoveSymbol_  , unitSymbolMoveWidget_ );
+        CreateUnitSymbolWidget( builder, "static-symbols", pSymbolLayout, &ADN_Symbols_Data::SymbolsUnit::GetStaticPixmap,  &ADN_Symbols_Data::SymbolsUnit::GetStaticSymbol , labelStaticSymbol_, unitSymbolStaticWidget_ );    
+        SetOnlyApp6SymbolVisible();
+        connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNatureChanged() ) );        
     }
 
     // Commandement
@@ -354,6 +359,16 @@ void ADN_Units_GUI::OnComponentChanged()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Units_GUI::OnNatureChanged
+// Created: MMC 2013-04-11
+// -----------------------------------------------------------------------------
+void ADN_Units_GUI::OnNatureChanged()
+{
+    if( labelMoveSymbol_ && labelStaticSymbol_ )
+        SetOnlyApp6SymbolVisible( labelMoveSymbol_->text().isEmpty() && labelStaticSymbol_->text().isEmpty() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Units_GUI::UpdateValidators
 // Created: LGY 2010-07-28
 // -----------------------------------------------------------------------------
@@ -364,6 +379,37 @@ void ADN_Units_GUI::UpdateValidators()
         return;
     pNCOfficersEditLine_->GetValidator().setTop( GetCapacity( *pInfos ) - pInfos->nNbOfficer_.GetData() );
     pOfficersEditLine_->GetValidator().setTop( GetCapacity( *pInfos ) - pInfos->nNbNCOfficer_.GetData() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_GUI::CreateUnitSymbolWidget
+// Created: MMC 2013-04-10
+// -----------------------------------------------------------------------------
+void ADN_Units_GUI::CreateUnitSymbolWidget( ADN_GuiBuilder& builder, const std::string widgetName, QWidget* parent,
+                                            ADN_UnitSymbolWidget::T_PixmapExtractor pixmapAccessor,
+                                            ADN_UnitSymbolWidget::T_StringExtractor stringAccessor, 
+                                            QLabel*& pLabel, ADN_UnitSymbolWidget*& pSymbolWidget )
+{
+    pLabel = new QLabel( parent );
+    pSymbolWidget = builder.AddWidget< ADN_UnitSymbolWidget, QWidget*, ADN_UnitSymbolWidget::T_PixmapExtractor, ADN_UnitSymbolWidget::T_StringExtractor >( "symbols", parent, pixmapAccessor, stringAccessor );
+    pSymbolWidget->setMinimumSize( 130, 140 );
+    pSymbolWidget->setMaximumSize( 130, 140 );
+    connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), pSymbolWidget, SLOT( OnNatureChanged( const QString& ) ) );
+    connect( pSymbolWidget, SIGNAL( SymbolChanged( const QString& ) ), pLabel, SLOT( setText( const QString& ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_GUI::SetOnlyApp6SymbolVisible
+// Created: MMC 2013-04-10
+// -----------------------------------------------------------------------------
+void ADN_Units_GUI::SetOnlyApp6SymbolVisible( bool bVisible /*= true*/ )
+{
+    labelSymbol_->setVisible( bVisible );
+    unitSymbolWidget_->setVisible( bVisible );
+    labelMoveSymbol_->setVisible( !bVisible );
+    unitSymbolMoveWidget_->setVisible( !bVisible );
+    labelStaticSymbol_->setVisible( !bVisible );
+    unitSymbolStaticWidget_->setVisible( !bVisible );
 }
 
 // -----------------------------------------------------------------------------
@@ -397,39 +443,13 @@ void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Units_GUI::GetSymbolWidget
-// Created: RPD 2011-04-08
-// -----------------------------------------------------------------------------
-ADN_SymbolWidget* ADN_Units_GUI::GetSymbolWidget() const
-{
-    return pSymbolWidget_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Units_GUI::SetSymbolFactory
 // Created: ABR 2011-05-26
 // -----------------------------------------------------------------------------
 void ADN_Units_GUI::SetSymbolFactory( kernel::SymbolFactory& factory )
 {
-    if( pSymbolWidget_ )
-    {
-        pSymbolWidget_->SetSymbolFactory( factory );
-        assert( pNatureGui_ );
-        if( factory.GetSymbolRule() )
-            pNatureGui_->SetRootSymbolRule( *factory.GetSymbolRule() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_GUI::IsSymbolAvailable
-// Created: MMC 2011-07-06
-// -----------------------------------------------------------------------------
-bool ADN_Units_GUI::IsSymbolAvailable( const std::string& symbol )
-{
-    if( pSymbolWidget_ )
-        return pSymbolWidget_->IsAvailable( symbol );
-
-    return false;
+    if( pNatureGui_ && factory.GetSymbolRule() )
+        pNatureGui_->SetRootSymbolRule( *factory.GetSymbolRule() );
 }
 
 // -----------------------------------------------------------------------------

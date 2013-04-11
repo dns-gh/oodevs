@@ -991,6 +991,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Selection.cpp">
       <Filter>Source Files\gl\Strategies</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\GlContext.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1637,6 +1640,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\Selection.h">
       <Filter>Source Files\gl\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GlContext.h">
+      <Filter>Source Files\gl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

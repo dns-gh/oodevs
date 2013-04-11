@@ -16,6 +16,7 @@
 #include "ADN_EditLine.h"
 #include "ADN_Units_Data.h"
 #include "ADN_NavigationInfos.h"
+#include "ADN_UnitSymbolWidget.h"
 
 namespace kernel
 {
@@ -23,10 +24,10 @@ namespace kernel
     class SymbolRule;
 }
 
+class ADN_GuiBuilder;
 class ADN_GroupBox;
 class ADN_ListView_Units;
 class ADN_Nature_GUI;
-class ADN_SymbolWidget;
 class ADN_Units_LogThreshold_GUI;
 class QComboBox;
 class QLabel;
@@ -108,9 +109,7 @@ public:
     //@{
     void Build();
     void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath );
-    ADN_SymbolWidget* GetSymbolWidget() const;
     void SetSymbolFactory( kernel::SymbolFactory& factory );
-    bool IsSymbolAvailable( const std::string& symbol );
     void PreloadUnitSymbolComboBox( ADN_Units_Data::UnitInfos* pValidUnitInfos );
     //@}
 
@@ -122,12 +121,18 @@ private slots:
     void OnNbrOfOfficersChanged();
     void OnNbrOfNCOfficersChanged();
     void OnComponentChanged();
+    void OnNatureChanged();
     //@}
 
 private:
     //! @name Helpers
     //@{
     void UpdateValidators();
+    void CreateUnitSymbolWidget( ADN_GuiBuilder& builder, const std::string widgetName, QWidget* parent,
+                                 ADN_UnitSymbolWidget::T_PixmapExtractor pixmapAccessor,
+                                 ADN_UnitSymbolWidget::T_StringExtractor stringAccessor,
+                                 QLabel*& pLabel, ADN_UnitSymbolWidget*& pSymbolWidget );
+    void SetOnlyApp6SymbolVisible( bool bVisible = true );
     //@}
 
 private:
@@ -140,8 +145,13 @@ private:
     ADN_GroupBox* pStockGroup_;
     ADN_Units_LogThreshold_GUI* pStockLogThreshold_;
     ADN_GroupBox* pInstallationGroup_;
-    ADN_SymbolWidget* pSymbolWidget_;
     ADN_Nature_GUI* pNatureGui_;
+    QLabel* labelSymbol_;
+    QLabel* labelMoveSymbol_;
+    QLabel* labelStaticSymbol_;
+    ADN_UnitSymbolWidget* unitSymbolWidget_;
+    ADN_UnitSymbolWidget* unitSymbolMoveWidget_;
+    ADN_UnitSymbolWidget* unitSymbolStaticWidget_;
     //@}
 };
 

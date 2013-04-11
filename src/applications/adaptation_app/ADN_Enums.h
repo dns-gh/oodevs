@@ -18,7 +18,6 @@ enum E_WorkspaceElements
 {
     eCategories,
     eSymbols, // Must be before eUnits && before eUrban
-    eUnitSymbols,
     eUrban,
     eNBC,
     eLaunchers, // $$$$ ABR 2013-02-05: Here I am !

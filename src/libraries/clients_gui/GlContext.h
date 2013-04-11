@@ -3,37 +3,54 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2013 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __ADN_UnitSymbols_GUI_h_
-#define __ADN_UnitSymbols_GUI_h_
+#ifndef __GlContext_h_
+#define __GlContext_h_
 
-#include <boost/noncopyable.hpp>
-#include "ADN_GUI_ABC.h"
 
-class ADN_UnitSymbols_Data;
+namespace gui
+{
 
 // =============================================================================
-/** @class  ADN_Symbols_GUI
-@brief  ADN_Symbols_GUI
+/** @class  GlContext
+    @brief  GlContext
 */
-// Created: MMC 2011-07-07
+// Created: MMC 2013-04-10
 // =============================================================================
-class ADN_UnitSymbols_GUI : public ADN_GUI_ABC
+class GlContext
 {
 public:
+
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_UnitSymbols_GUI( ADN_UnitSymbols_Data& data );
-    virtual ~ADN_UnitSymbols_GUI();
+    GlContext();
+    ~GlContext();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Build();
+    void Init( HWND hWnd );
+    void Purge();
+    //@}
+
+private:
+
+    //! @name Operations
+    //@{
+    void Reset();
+    //@}
+
+    //! @name Member data
+    //@{
+    HWND hWnd_;
+    HDC hDC_;
+    HGLRC hRC_;
     //@}
 };
 
-#endif // __ADN_UnitSymbols_GUI_h_
+}
+
+#endif // __GlContext_h_

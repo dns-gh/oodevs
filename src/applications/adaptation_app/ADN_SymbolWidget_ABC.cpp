@@ -3,37 +3,29 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_UnitSymbols_GUI.h"
+#include "ADN_SymbolWidget_ABC.h"
+#include "moc_ADN_SymbolWidget_ABC.cpp"
 
 // -----------------------------------------------------------------------------
-// Name: ADN_UnitSymbols_GUI constructor
-// Created: MMC 2011-07-07
+// Name: ADN_SymbolWidget constructor
+// Created: NLD 2010-12-01
 // -----------------------------------------------------------------------------
-ADN_UnitSymbols_GUI::ADN_UnitSymbols_GUI( ADN_UnitSymbols_Data& /*data*/ )
-    : ADN_GUI_ABC( eUnitSymbols )
+ADN_SymbolWidget_ABC::ADN_SymbolWidget_ABC( QWidget* parent )
+    : QLabel( parent )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_UnitSymbols_GUI destructor
-// Created: MMC 2011-07-07
+// Name: ADN_SymbolWidget destructor
+// Created: NLD 2010-12-01
 // -----------------------------------------------------------------------------
-ADN_UnitSymbols_GUI::~ADN_UnitSymbols_GUI()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_UnitSymbols_GUI::Build
-// Created: MMC 2011-07-07
-// -----------------------------------------------------------------------------
-void ADN_UnitSymbols_GUI::Build()
+ADN_SymbolWidget_ABC::~ADN_SymbolWidget_ABC()
 {
     // NOTHING
 }

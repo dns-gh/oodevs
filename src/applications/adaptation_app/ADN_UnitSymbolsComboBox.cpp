@@ -16,7 +16,7 @@
 // Created: MMC 2011-07-07
 // -----------------------------------------------------------------------------
 ADN_UnitSymbolsComboBox::ADN_UnitSymbolsComboBox( QWidget* pParent )
-    : ADN_ComboBox_Drawings< ADN_UnitSymbols_Data::UnitSymbolInfo > ( pParent )
+    : ADN_ComboBox_Drawings< ADN_Symbols_Data::SymbolsUnit > ( pParent )
 {
     connect( this, SIGNAL( activated( int ) ), SLOT( OnSelectionChanged( int ) ) );
 }

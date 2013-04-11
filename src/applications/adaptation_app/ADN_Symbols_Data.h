@@ -26,7 +26,13 @@ namespace kernel
 {
     class SymbolFactory;
     class SymbolRule;
-};
+}
+
+namespace gui
+{
+    class SvglRenderer;
+    class GLSymbols;
+}
 
 // =============================================================================
 /** @class  ADN_Symbols_Data
@@ -36,6 +42,38 @@ namespace kernel
 // =============================================================================
 class ADN_Symbols_Data : public ADN_Data_ABC
 {
+//*****************************************************************************
+
+public:
+    class SymbolsUnit : public ADN_RefWithName
+    {
+    public:
+                 SymbolsUnit( const std::string& nature, kernel::SymbolFactory& factory, gui::GLSymbols& glSymbols );
+        virtual ~SymbolsUnit();
+
+        const QPixmap& GetSamplePixmap() const;
+        const QPixmap& GetMovePixmap() const;
+        const QPixmap& GetStaticPixmap() const;
+
+        const std::string& GetSymbol() const;
+        const std::string& GetMoveSymbol() const;
+        const std::string& GetStaticSymbol() const;
+
+    private:
+        QPixmap GenerateSymbol( std::string& symbol, gui::GLSymbols& glSymbols ) const;
+
+    private:
+        QPixmap sample_;
+        QPixmap moveSample_;
+        QPixmap staticSample_;
+
+        std::string symbol_;
+        std::string moveSymbol_;
+        std::string staticSymbol_;
+
+        static QPixmap* undefined_;
+    };
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< SymbolsUnit >, SymbolsUnits_Vector )
 
 //*****************************************************************************
 public:
@@ -44,8 +82,6 @@ public:
     public:
         explicit SymbolsInfra( xml::xistream& input );
         virtual ~SymbolsInfra();
-
-        bool operator==( const std::string& str );
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< SymbolsInfra >, SymbolsInfra_Vector )
 
@@ -60,17 +96,22 @@ public:
     //! @name Accessors
     //@{
     kernel::SymbolFactory& GetSymbolFactory();
-    T_SymbolsInfra_Vector& GetSymbolsInfras();
+
+    const T_SymbolsUnits_Vector& GetSymbolsUnits() const;
+    const T_SymbolsInfra_Vector& GetSymbolsInfras() const;
     SymbolsInfra* FindSymbolInfra( const std::string& strName ) const;
+
+    SymbolsUnit* FindSymbolUnit( const std::string& strNature ) const;
     //@}
 
+private:
     //! @name Operations
     //@{
     virtual void FilesNeeded( tools::Path::T_Paths& files ) const;
     virtual void Reset();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
     //@}
 
-private:
     //! @name Helpers
     //@{
     void ReadArchive( xml::xistream& xis );
@@ -81,19 +122,12 @@ private:
 private:
     //! @name Member data
     //@{
+    T_SymbolsUnits_Vector                  units_;
     T_SymbolsInfra_Vector                  infras_;
     std::auto_ptr< kernel::SymbolFactory > factory_;
+    std::auto_ptr< gui::SvglRenderer >     svgRender_;
+    std::auto_ptr< gui::GLSymbols >        glSymbols_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Symbols_Data::SymbolsInfra::operator==
-// Created: SLG 2010-12-20
-// -----------------------------------------------------------------------------
-inline
-bool ADN_Symbols_Data::SymbolsInfra::operator==( const std::string& str )
-{
-    return ADN_Tools::CaselessCompare( strName_.GetData(), str );
-}
 
 #endif // __ADN_Symbols_Data_h_

@@ -4440,6 +4440,13 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
 </context>
 <context>
+    <name>ADN_Symbols_Data</name>
+    <message>
+        <source> and &apos;</source>
+        <translation type="unfinished">و &apos;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Save</source>
@@ -5187,10 +5194,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">رموز</translation>
     </message>
     <message>
-        <source>UnitSymbols</source>
-        <translation type="unfinished">أونيتسيمبولس</translation>
-    </message>
-    <message>
         <source>Urban</source>
         <translation type="unfinished">المناطق الحضرية</translation>
     </message>
@@ -5384,13 +5387,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition must be 100%. Current value for &apos;%2&apos;: %3%.</source>
         <translation type="unfinished">يجب أن تكون إعادة تقسيم غير صالح في علامة التبويب &apos;%1&apos;--إعادة تقسيم الذكور/الإناث/الأطفال 100%. القيمة الحالية ل &apos;%2&apos;: % %3.</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_UnitSymbols_Data</name>
-    <message>
-        <source> and &apos;</source>
-        <translation type="unfinished">و &apos;</translation>
     </message>
 </context>
 <context>

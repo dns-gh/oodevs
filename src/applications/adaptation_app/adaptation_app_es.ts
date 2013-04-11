@@ -4454,6 +4454,13 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     </message>
 </context>
 <context>
+    <name>ADN_Symbols_Data</name>
+    <message>
+        <source> and &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Save</source>
@@ -5203,10 +5210,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>UnitSymbols</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Urban</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5399,13 +5402,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <name>ADN_Type_Repartition</name>
     <message>
         <source>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition must be 100%. Current value for &apos;%2&apos;: %3%.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_UnitSymbols_Data</name>
-    <message>
-        <source> and &apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

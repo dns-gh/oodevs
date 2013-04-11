@@ -283,7 +283,6 @@ ADN_Tr::T_ConverterWorkspaceElements ADN_Tr::workspaceElementsConverter_[] =
 {
     T_ConverterWorkspaceElements( "categories",       QT_TRANSLATE_NOOP("ADN_Tr", "Categories" ),           eCategories ),
     T_ConverterWorkspaceElements( "symbols",          QT_TRANSLATE_NOOP("ADN_Tr", "Symbols" ),              eSymbols ),
-    T_ConverterWorkspaceElements( "unitsymbols",      QT_TRANSLATE_NOOP("ADN_Tr", "UnitSymbols" ),          eUnitSymbols ),
     T_ConverterWorkspaceElements( "urban",            QT_TRANSLATE_NOOP("ADN_Tr", "Urban" ),                eUrban ),
     T_ConverterWorkspaceElements( "nbc",              QT_TRANSLATE_NOOP("ADN_Tr", "NBC" ),                  eNBC ),
     T_ConverterWorkspaceElements( "launcher",         QT_TRANSLATE_NOOP("ADN_Tr", "Launchers" ),            eLaunchers ),

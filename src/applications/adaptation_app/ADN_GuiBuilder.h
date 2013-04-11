@@ -80,6 +80,8 @@ public:
     T* AddWidget( const char* objectName, Param1 param1 );
     template< class T, class Param1, class Param2 >
     T* AddWidget( const char* objectName, Param1 param1, Param2 param2 );
+    template< class T, class Param1, class Param2, class Param3 >
+    T* AddWidget( const char* objectName, Param1 param1, Param2 param2, Param3 param3 );
 
     ADN_GroupBox* AddGroupBox( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, int strips = -1, Qt::Orientation orientation = Qt::Horizontal );
     ADN_GroupBox* AddGroupBox( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, int strips = -1, Qt::Orientation orientation = Qt::Horizontal );
@@ -169,6 +171,18 @@ template< class T, class Param1, class Param2 >
 T* ADN_GuiBuilder::AddWidget( const char* objectName, Param1 param1, Param2 param2 )
 {
     T* pField = new T( param1, param2 );
+    pField->setObjectName( GetChildName( objectName ) );
+    return pField;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddWidget
+// Created: ABR 2013-02-05
+// -----------------------------------------------------------------------------
+template< class T, class Param1, class Param2, class Param3 >
+T* ADN_GuiBuilder::AddWidget( const char* objectName, Param1 param1, Param2 param2, Param3 param3 )
+{
+    T* pField = new T( param1, param2, param3 );
     pField->setObjectName( GetChildName( objectName ) );
     return pField;
 }

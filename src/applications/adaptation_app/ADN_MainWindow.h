@@ -17,6 +17,7 @@
 namespace gui
 {
     class ConsistencyDialog_ABC;
+    class GlContext;
 }
 
 namespace tools
@@ -126,6 +127,8 @@ private:
     T_TableRegistrationMap      vTableRegistrations_;
     T_ListViewRegistrationMap   vListViewRegistrations_;
     bool            bSkipSave_;
+    std::auto_ptr< gui::GlContext > openGLContext_;
+
 };
 
 #endif // __ADN_MainWindow_h_

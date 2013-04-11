@@ -69,8 +69,6 @@
 #include "ADN_Symbols_GUI.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Units_GUI.h"
-#include "ADN_UnitSymbols_Data.h"
-#include "ADN_UnitSymbols_GUI.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
 #include "ADN_Weapons_Data.h"
@@ -140,7 +138,6 @@ void ADN_Workspace::Initialize()
     // Creation order
     elements_[eDrawings]          = new ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI>                   ( eDrawings );
     elements_[eSymbols]           = new ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI>                     ( eSymbols );
-    elements_[eUnitSymbols]       = new ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI>             ( eUnitSymbols );
     elements_[eCategories]        = new ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >              ( eCategories );
     elements_[eUrban]             = new ADN_WorkspaceElement< ADN_Urban_Data, ADN_Urban_GUI >                        ( eUrban );
     elements_[eNBC]               = new ADN_WorkspaceElement< ADN_NBC_Datas, ADN_NBC_GUI >                           ( eNBC );

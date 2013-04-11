@@ -143,7 +143,6 @@ public:
     ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& GetFireClasses();
     ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI >& GetDrawings() const;
     ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& GetSymbols() const;
-    ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI >& GetUnitSymbols() const;
     ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >& GetLogistic();
     ADN_WorkspaceElement< ADN_Disasters_Data, ADN_Disasters_GUI >& GetDisasters();
 
@@ -462,16 +461,6 @@ inline
 ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& ADN_Workspace::GetSymbols() const
 {
     return static_cast< ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& >( *elements_[ eSymbols ] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& ADN_Workspace::GetUnitSymbols
-// Created: MMC 2011-07-07
-// -----------------------------------------------------------------------------
-inline
-ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI >& ADN_Workspace::GetUnitSymbols() const
-{
-    return static_cast< ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI >& >( *elements_[ eUnitSymbols ] );
 }
 
 // -----------------------------------------------------------------------------
