@@ -61,6 +61,7 @@ ignored = set([
     "gui::ObjectPrototype_ABC",
     "gui::ConsistencyDialog_ABC",
     "Menu",
+    "QMenu",
     ])
 
 ignoredescendants = set([

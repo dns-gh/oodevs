@@ -381,7 +381,7 @@
                   dir="${run.dir}" failonerror="true">
                   <arg value="--debug-qt-names=@{outputfile}"/>
             </exec>
-            <python failonerror="false">
+            <python failonerror="true">
                 <arg value="${root.dir}/build/checkqtnames.py"/>
                 <arg value="@{outputfile}"/>
             </python>
