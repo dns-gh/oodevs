@@ -215,7 +215,7 @@ void ADN_KnowledgeGroups_Data::WriteArchive( xml::xostream& output )
 
     output << xml::start( "knowledge-groups" );
     ADN_Tools::AddSchema( output, "KnowledgeGroups" );
-    for( IT_GroupInfoVector it = vGroups_.begin(); it != vGroups_.end(); ++it )
+    for( auto it = vGroups_.begin(); it != vGroups_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }

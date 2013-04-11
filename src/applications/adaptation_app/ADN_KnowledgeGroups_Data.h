@@ -14,8 +14,6 @@
 #include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 
-namespace xml { class xistream; }
-
 // =============================================================================
 /** @class  ADN_KnowledgeGroups_Data
     @brief  ADN_KnowledgeGroups_Data
@@ -25,12 +23,10 @@ namespace xml { class xistream; }
 class ADN_KnowledgeGroups_Data
     : public ADN_Data_ABC
 {
-
 public:
 // *****************************************************************************
     class AgentGroupInfo : public ADN_Ref_ABC
     {
-
     public:
         AgentGroupInfo();
 
@@ -38,16 +34,15 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_Time   maxLifetime_;
+        ADN_Type_Time maxLifetime_;
         ADN_Type_Double rMaxDistance_;
-        ADN_Type_Bool   bInterpolationTime_;
-        ADN_Type_Time   interpolationTime_;
+        ADN_Type_Bool bInterpolationTime_;
+        ADN_Type_Time interpolationTime_;
     };
 
 // *****************************************************************************
     class PopulationGroupInfo : public ADN_Ref_ABC
     {
-
     public:
         PopulationGroupInfo();
 
@@ -55,7 +50,7 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_Time   maxLifetime_;
+        ADN_Type_Time maxLifetime_;
     };
 
 // *****************************************************************************
@@ -70,14 +65,12 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_Time       communicationDelay_; // LTO
-
-        AgentGroupInfo      agentInfos_;
+        ADN_Type_Time communicationDelay_; // LTO
+        AgentGroupInfo agentInfos_;
         PopulationGroupInfo populationInfos_;
     };
 
     typedef ADN_Type_Vector_ABC< GroupInfo > T_GroupInfoVector;
-    typedef T_GroupInfoVector::iterator     IT_GroupInfoVector;
 
 // *****************************************************************************
 public:

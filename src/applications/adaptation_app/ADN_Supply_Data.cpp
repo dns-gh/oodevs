@@ -279,7 +279,7 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
         pNew->WriteArchive( output );
     }
     else
-        for( IT_AvailabilityWarning_Vector it = vVectorWarnings_.begin(); it != vVectorWarnings_.end(); ++it )
+        for( auto it = vVectorWarnings_.begin(); it != vVectorWarnings_.end(); ++it )
             (*it)->WriteArchive( output );
     output << xml::end;
 

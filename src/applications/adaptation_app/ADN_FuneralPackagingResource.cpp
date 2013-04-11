@@ -41,7 +41,7 @@ ADN_FuneralPackagingResource::~ADN_FuneralPackagingResource()
 // -----------------------------------------------------------------------------
 void ADN_FuneralPackagingResource::ReadArchive( xml::xistream& input )
 {
-    ADN_CrossedRef< ADN_Resources_Data::CategoryInfo >::ReadArchive( input );
+    SetCrossedElement( ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( input.attribute< std::string >( "resource" ) ) );
     input >> xml::attribute( "process-duration", processDuration_ )
           >> xml::attribute( "terminal", terminal_ );
     if( GetCrossedElement() )

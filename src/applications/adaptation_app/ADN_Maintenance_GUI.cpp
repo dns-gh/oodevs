@@ -39,7 +39,7 @@ namespace
         {
             dataModel_.setColumnCount( static_cast< int >( data.vWorkingSchemes_.size() ) );
             QStringList horizontalHeaders;
-            for( ADN_Maintenance_Data::IT_WorkingSchemeInfo_Vector it = data.vWorkingSchemes_.begin(); it != data.vWorkingSchemes_.end(); ++it )
+            for( auto it = data.vWorkingSchemes_.begin(); it != data.vWorkingSchemes_.end(); ++it )
                 horizontalHeaders << tools::translate( "ADN_WorkingSchemeTable", "Shift " ) + QString::number( ( **it ).nIdx_.GetData() );
             dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
             horizontalHeader()->setResizeMode( QHeaderView::Stretch );
@@ -51,7 +51,7 @@ namespace
             dataModel_.setVerticalHeaderLabels( verticalHeaders );
 
             int n = 0;
-            for( ADN_Maintenance_Data::IT_WorkingSchemeInfo_Vector it = data.vWorkingSchemes_.begin(); it != data.vWorkingSchemes_.end(); ++it, ++n )
+            for( auto it = data.vWorkingSchemes_.begin(); it != data.vWorkingSchemes_.end(); ++it, ++n )
             {
                 ADN_Maintenance_Data::WorkingSchemeInfo& modifiers = **it;
                 AddItem( 0, n, &modifiers, &modifiers.nWorkTime_, ADN_StandardItem::eInt, Qt::ItemIsEditable );

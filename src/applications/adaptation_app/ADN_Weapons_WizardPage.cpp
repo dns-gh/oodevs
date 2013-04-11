@@ -47,7 +47,7 @@ QWidget* ADN_Weapons_WizardPage::CreateNameField()
     layout->addWidget( pComboAmmo_ );
 
     ADN_Launchers_Data::T_LauncherInfos_Vector& vLaunchers = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().GetLaunchersInfos();
-    for( ADN_Launchers_Data::IT_LauncherInfos_Vector itLauncher = vLaunchers.begin(); itLauncher != vLaunchers.end(); ++itLauncher )
+    for( auto itLauncher = vLaunchers.begin(); itLauncher != vLaunchers.end(); ++itLauncher )
         pComboLauncher_->insertItem( (*itLauncher)->strName_.GetData().c_str() );
     pComboLauncher_->model()->sort( 0 );
 

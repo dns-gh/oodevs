@@ -88,7 +88,7 @@ void ADN_Sensors_DisastersListView::OnContextMenu( const QPoint& pt )
     Q3PopupMenu addMenu( &popupMenu );
 
     ADN_Disasters_Data::T_DisasterInfos_Vector& vDisasters = ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos();
-    for( ADN_Disasters_Data::IT_DisasterInfos_Vector it = vDisasters.begin(); it != vDisasters.end(); ++it )
+    for( auto it = vDisasters.begin(); it != vDisasters.end(); ++it )
     {
         ADN_Disasters_Data::DisasterInfos* pDisaster = *it;
         if( Contains( pDisaster ) )

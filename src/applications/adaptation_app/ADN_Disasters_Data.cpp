@@ -421,7 +421,7 @@ void ADN_Disasters_Data::WriteArchive( xml::xostream& output )
 
     output << xml::start( "disasters" );
     ADN_Tools::AddSchema( output, "Disasters" );
-    for( IT_DisasterInfos_Vector it = vDisasters_.begin(); it != vDisasters_.end(); ++it )
+    for( auto it = vDisasters_.begin(); it != vDisasters_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }

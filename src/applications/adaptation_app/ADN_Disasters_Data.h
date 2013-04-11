@@ -14,11 +14,6 @@
 #include "ADN_Tools.h"
 #include "ADN_RefWithName.h"
 
-namespace xml
-{
-    class xistream;
-}
-
 // =============================================================================
 /** @class  ADN_Disasters_Data
     @brief  ADN_Disasters_Data
@@ -160,7 +155,6 @@ public:
     //! @name Types
     //@{
     typedef ADN_Type_Vector_ABC< DisasterInfos > T_DisasterInfos_Vector;
-    typedef T_DisasterInfos_Vector::iterator    IT_DisasterInfos_Vector;
     //@}
 
 public:
@@ -174,7 +168,7 @@ public:
     //! @name Accessors
     //@{
     T_DisasterInfos_Vector& GetDisastersInfos();
-    DisasterInfos*          FindDisaster( const std::string& strName );
+    DisasterInfos* FindDisaster( const std::string& strName );
     //@}
 
 private:
@@ -209,7 +203,7 @@ ADN_Disasters_Data::T_DisasterInfos_Vector& ADN_Disasters_Data::GetDisastersInfo
 inline
 ADN_Disasters_Data::DisasterInfos* ADN_Disasters_Data::FindDisaster( const std::string& strName )
 {
-    IT_DisasterInfos_Vector it = std::find_if( vDisasters_.begin(), vDisasters_.end(), ADN_Tools::NameCmp< ADN_Disasters_Data::DisasterInfos >( strName ) );
+    auto it = std::find_if( vDisasters_.begin(), vDisasters_.end(), ADN_Tools::NameCmp< ADN_Disasters_Data::DisasterInfos >( strName ) );
     if( it == vDisasters_.end() )
         return 0;
     return *it;

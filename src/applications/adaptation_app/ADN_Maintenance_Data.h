@@ -15,8 +15,6 @@
 #include "ADN_Enums.h"
 #include "ADN_AvailabilityWarning.h"
 
-namespace xml { class xistream; }
-
 // =============================================================================
 /** @class  ADN_Maintenance_Data
     @brief  ADN_Maintenance_Data
@@ -25,7 +23,6 @@ namespace xml { class xistream; }
 // =============================================================================
 class ADN_Maintenance_Data : public ADN_Data_ABC
 {
-
 public:
     class WorkingSchemeInfo : public ADN_Ref_ABC
     {
@@ -37,13 +34,12 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_Int  nIdx_;
-        ADN_Type_Int  nWorkTime_;
+        ADN_Type_Int nIdx_;
+        ADN_Type_Int nWorkTime_;
         ADN_Type_Time warningDelay_;
     };
 
-    typedef ADN_Type_Vector_ABC< WorkingSchemeInfo >  T_WorkingSchemeInfo_Vector;
-    typedef T_WorkingSchemeInfo_Vector::iterator     IT_WorkingSchemeInfo_Vector;
+    typedef ADN_Type_Vector_ABC< WorkingSchemeInfo > T_WorkingSchemeInfo_Vector;
 
 // *****************************************************************************
 public:

@@ -98,3 +98,14 @@ void ADN_Funeral_Data::WriteArchive( xml::xostream& output )
     output  << xml::end
         << xml::end;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Funeral_Data::CheckDatabaseValidity
+// Created: JSR 2013-04-11
+// -----------------------------------------------------------------------------
+void ADN_Funeral_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = funeralPackagingResources_.begin(); it != funeralPackagingResources_.end(); ++it )
+        ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eLogistic, eFuneral );
+
+}

@@ -96,6 +96,8 @@ public:
 
     void FilesNeeded( tools::Path::T_Paths& l ) const;
     void Reset();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
+    
     QStringList GetModelsThatUse( E_EntityType type, ADN_Missions_Mission& model );
     QStringList GetModelsThatUse( E_EntityType type, ADN_Missions_FragOrder& fragOrder );
 

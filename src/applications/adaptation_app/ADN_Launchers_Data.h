@@ -19,8 +19,6 @@
 #include "ADN_Enums.h"
 #include "ADN_Tools.h"
 
-namespace xml { class xistream; }
-
 //*****************************************************************************
 // Created: JDY 03-07-11
 //*****************************************************************************
@@ -33,7 +31,6 @@ public:
 //*****************************************************************************
     class LauncherInfos : public ADN_RefWithName
     {
-
     public:
                  LauncherInfos();
         virtual ~LauncherInfos();
@@ -45,15 +42,14 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_Bool                             bDirect_;
-        ADN_Type_Bool                             bIndirect_;
+        ADN_Type_Bool bDirect_;
+        ADN_Type_Bool bIndirect_;
 
         // Data for direct
-        ADN_Type_Tab_ABC<ModifPhsInfos>           tabModifs_;
+        ADN_Type_Tab_ABC< ModifPhsInfos > tabModifs_;
     };
 
-    typedef ADN_Type_Vector_ABC<LauncherInfos>          T_LauncherInfos_Vector;
-    typedef T_LauncherInfos_Vector::iterator            IT_LauncherInfos_Vector;
+    typedef ADN_Type_Vector_ABC< LauncherInfos > T_LauncherInfos_Vector;
 
 //*****************************************************************************
 public:
@@ -64,7 +60,7 @@ public:
     void Reset();
 
     T_LauncherInfos_Vector& GetLaunchersInfos();
-    LauncherInfos*          FindLauncher( const std::string& strName );
+    LauncherInfos* FindLauncher( const std::string& strName );
 
 private:
     void ReadLauncher( xml::xistream& input );
@@ -72,7 +68,7 @@ private:
     void WriteArchive( xml::xostream& output );
 
 private:
-    T_LauncherInfos_Vector      vLaunchers_;
+    T_LauncherInfos_Vector vLaunchers_;
 };
 
 //-----------------------------------------------------------------------------
@@ -92,7 +88,7 @@ ADN_Launchers_Data::T_LauncherInfos_Vector& ADN_Launchers_Data::GetLaunchersInfo
 inline
 ADN_Launchers_Data::LauncherInfos* ADN_Launchers_Data::FindLauncher( const std::string& strName )
 {
-    IT_LauncherInfos_Vector it = std::find_if( vLaunchers_.begin(), vLaunchers_.end(), ADN_Tools::NameCmp<ADN_Launchers_Data::LauncherInfos>( strName ) );
+    auto it = std::find_if( vLaunchers_.begin(), vLaunchers_.end(), ADN_Tools::NameCmp<ADN_Launchers_Data::LauncherInfos>( strName ) );
     if( it == vLaunchers_.end() )
         return 0;
     return *it;

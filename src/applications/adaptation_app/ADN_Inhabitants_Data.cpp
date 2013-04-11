@@ -461,3 +461,13 @@ QStringList ADN_Inhabitants_Data::GetInhabitantsThatUse( ADN_ResourceNetworks_Da
                 result << ( *it )->strName_.GetData().c_str();
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Inhabitants_Data::CheckDatabaseValidity
+// Created: JSR 2013-04-11
+// -----------------------------------------------------------------------------
+void ADN_Inhabitants_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = vInhabitants_.begin(); it != vInhabitants_.end(); ++it )
+        ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eInhabitants );
+}

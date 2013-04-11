@@ -13,8 +13,6 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
 
-namespace xml { class xistream; }
-
 // =============================================================================
 /** @class  ADN_Communications_Data
     @brief  ADN_Communications_Data

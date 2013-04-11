@@ -24,8 +24,6 @@
 
 enum E_MissionType;
 
-namespace xml { class xistream; }
-
 // =============================================================================
 /** @class  ADN_Missions_Data
     @brief  ADN_Missions_Data
@@ -39,19 +37,9 @@ class ADN_Missions_Data : public ADN_Data_ABC
 // =============================================================================
 public:
     typedef ADN_Type_Vector_ABC< ADN_Missions_ParameterValue > T_MissionParameterValue_Vector;
-    typedef T_MissionParameterValue_Vector::iterator          IT_MissionParameterValue_Vector;
-
-    typedef ADN_Type_Vector_ABC< ADN_Missions_Type>            T_Choice_Vector;
-    typedef T_Choice_Vector::iterator                         IT_Choice_Vector;
-    typedef T_Choice_Vector::const_iterator                  CIT_Choice_Vector;
-
-    typedef ADN_Type_Vector_ABC< ADN_Missions_Parameter >      T_MissionParameter_Vector;
-    typedef T_MissionParameter_Vector::iterator               IT_MissionParameter_Vector;
-    typedef T_MissionParameter_Vector::const_iterator        CIT_MissionParameter_Vector;
-
-    typedef ADN_Type_Vector_ABC< ADN_Missions_ABC >            T_Mission_Vector;
-    typedef T_Mission_Vector::iterator                        IT_Mission_Vector;
-    typedef T_Mission_Vector::const_iterator                 CIT_Mission_Vector;
+    typedef ADN_Type_Vector_ABC< ADN_Missions_Type> T_Choice_Vector;
+    typedef ADN_Type_Vector_ABC< ADN_Missions_Parameter > T_MissionParameter_Vector;
+    typedef ADN_Type_Vector_ABC< ADN_Missions_ABC > T_Mission_Vector;
 
 // =============================================================================
 // Main data
@@ -69,21 +57,21 @@ public:
     virtual void Reset();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
-    T_Mission_Vector&     GetFragOrders();
-    T_Mission_Vector&       GetUnitMissions();
-    T_Mission_Vector&       GetAutomatMissions();
-    T_Mission_Vector&       GetPopulationMissions();
+    T_Mission_Vector& GetFragOrders();
+    T_Mission_Vector& GetUnitMissions();
+    T_Mission_Vector& GetAutomatMissions();
+    T_Mission_Vector& GetPopulationMissions();
     ADN_Missions_ABC* FindFragOrder( const std::string& strName );
     ADN_Missions_ABC* FindMission( const T_Mission_Vector& missions, const std::string& strName );
     ADN_Missions_ABC* FindMission( int missionType, const std::string& strName );
     virtual void Initialize();
 
-    QStringList         GetAllMissionsThatUse( ADN_Objects_Data_ObjectInfos& object ); // $$$$ ABR 2012-08-03: Warning, return not only the name, but concatenation of tab name and mission name
+    QStringList GetAllMissionsThatUse( ADN_Objects_Data_ObjectInfos& object ); // $$$$ ABR 2012-08-03: Warning, return not only the name, but concatenation of tab name and mission name
 
-    QStringList         GetUnitMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
-    QStringList         GetAutomatMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
-    QStringList         GetPopulationMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
-    QStringList         GetFragOrdersThatUse( ADN_Objects_Data_ObjectInfos& object );
+    QStringList GetUnitMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
+    QStringList GetAutomatMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
+    QStringList GetPopulationMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
+    QStringList GetFragOrdersThatUse( ADN_Objects_Data_ObjectInfos& object );
 
     void NotifyElementDeleted( std::string elementName, E_MissionType missionType );
     tools::Path GenerateMissionSheet( int index, const QString& text );

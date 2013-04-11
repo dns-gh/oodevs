@@ -10,15 +10,7 @@
 #ifndef __ADN_Data_ABC_h_
 #define __ADN_Data_ABC_h_
 
-#include <boost/noncopyable.hpp>
-#include <list>
 #include "ADN_Enums.h"
-
-namespace xml
-{
-    class xistream;
-    class xostream;
-}
 
 namespace tools
 {
@@ -34,7 +26,6 @@ class ADN_ConsistencyChecker;
 // Created: APE 2004-12-06
 // =============================================================================
 class ADN_Data_ABC : public QObject
-                   , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

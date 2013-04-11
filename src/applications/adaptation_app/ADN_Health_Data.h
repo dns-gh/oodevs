@@ -15,8 +15,6 @@
 #include "ADN_Enums.h"
 #include "ADN_AvailabilityWarning.h"
 
-namespace xml { class xistream; }
-
 // =============================================================================
 /** @class  ADN_Health_Data
     @brief  ADN_Health_Data
@@ -25,7 +23,6 @@ namespace xml { class xistream; }
 // =============================================================================
 class ADN_Health_Data : public ADN_Data_ABC
 {
-
 public:
 // *****************************************************************************
     class WoundInfo
@@ -37,9 +34,9 @@ public:
         void WriteArchive( xml::xostream& output, int n );
 
     public:
-        ADN_Type_Time   lifeExpectancy_;
-        ADN_Type_Time   treatTime_;
-        ADN_Type_Time   restingTime_;
+        ADN_Type_Time lifeExpectancy_;
+        ADN_Type_Time treatTime_;
+        ADN_Type_Time restingTime_;
         ADN_Type_Double rPercentage_;
     };
 
@@ -64,17 +61,17 @@ private:
     void WriteArchive( xml::xostream& output );
 
 public:
-    ADN_Type_Time   diagnosticTime_;
-    ADN_Type_Time   sortingTime_;
+    ADN_Type_Time diagnosticTime_;
+    ADN_Type_Time sortingTime_;
 
-    WoundInfo wounds[eNbrDoctorSkills];
+    WoundInfo wounds[ eNbrDoctorSkills ];
 
-    ADN_Type_Time   shockTreatTime_;
-    ADN_Type_Time   shockRestingTime_;
+    ADN_Type_Time shockTreatTime_;
+    ADN_Type_Time shockRestingTime_;
     ADN_Type_Double rShockPercentage_;
 
-    ADN_Type_Time   contaminationTreatTime_;
-    ADN_Type_Time   contaminationRestingTime_;
+    ADN_Type_Time contaminationTreatTime_;
+    ADN_Type_Time contaminationRestingTime_;
     ADN_Type_Double diagnosisLifeExpectancyFactor_;
 
     T_AvailabilityWarning_Vector vChangeOverWarnings_;

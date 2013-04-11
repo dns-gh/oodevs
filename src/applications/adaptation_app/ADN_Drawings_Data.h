@@ -22,11 +22,6 @@ namespace svg
     class TextRenderer;
 }
 
-namespace xml
-{
-    class xistream;
-}
-
 namespace gui
 {
     class GlTools_ABC;
@@ -66,7 +61,7 @@ public:
 
     //! @name Types
     //@{
-    typedef ADN_Type_Vector_ABC< DrawingInfo >   T_DrawingInfoVector;
+    typedef ADN_Type_Vector_ABC< DrawingInfo > T_DrawingInfoVector;
     typedef std::map< std::string, T_DrawingInfoVector >  T_DrawingsMap;
     //@}
 

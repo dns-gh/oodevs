@@ -84,7 +84,6 @@ public:
     };
 
     typedef ADN_Type_Vector_ABC< FireSurfaceInfos > T_FireSurfaceInfos_Vector;
-    typedef T_FireSurfaceInfos_Vector::iterator    IT_FireSurfaceInfos_Vector;
 
     class FireClassInfos : public ADN_RefWithName
     {

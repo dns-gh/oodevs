@@ -502,3 +502,17 @@ QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_F
     }
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::CheckDatabaseValidity
+// Created: JSR 2013-04-11
+// -----------------------------------------------------------------------------
+void ADN_Models_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = vUnitModels_.begin(); it != vUnitModels_.end(); ++it )
+        ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eModels, eEntityType_Pawn );
+    for( auto it = vAutomataModels_.begin(); it != vAutomataModels_.end(); ++it )
+        ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eModels, eEntityType_Automat );
+    for( auto it = vPopulationModels_.begin(); it != vPopulationModels_.end(); ++it )
+        ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eModels, eEntityType_Population );
+}

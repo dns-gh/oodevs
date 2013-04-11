@@ -15,8 +15,6 @@
 #include "ADN_Enums.h"
 #include "ADN_FuneralPackagingResource.h"
 
-namespace xml { class xistream; }
-
 // =============================================================================
 /** @class  ADN_Funeral_Data
     @brief  ADN_Funeral_Data
@@ -37,6 +35,7 @@ public:
     //@{
     void FilesNeeded( tools::Path::T_Paths& vFiles ) const;
     void Reset();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     //@}
 
 private:

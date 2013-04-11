@@ -199,11 +199,11 @@ void ADN_Health_Data::WriteArchive( xml::xostream& output )
                 << xml::end
             << xml::end
             << xml::start( "resource-availability-alerts" );
-    for( IT_AvailabilityWarning_Vector it = vChangeOverWarnings_.begin(); it != vChangeOverWarnings_.end(); ++it )
+    for( auto it = vChangeOverWarnings_.begin(); it != vChangeOverWarnings_.end(); ++it )
         (*it)->WriteArchive( output, "resource", "relieve" );
-    for( IT_AvailabilityWarning_Vector it = vCollectingWarnings_.begin(); it != vCollectingWarnings_.end(); ++it )
+    for( auto it = vCollectingWarnings_.begin(); it != vCollectingWarnings_.end(); ++it )
         (*it)->WriteArchive( output, "resource", "collection" );
-    for( IT_AvailabilityWarning_Vector it = vDoctorsWarnings_.begin(); it != vDoctorsWarnings_.end(); ++it )
+    for( auto it = vDoctorsWarnings_.begin(); it != vDoctorsWarnings_.end(); ++it )
         (*it)->WriteArchive( output, "resource", "doctor" );
     output  << xml::end
           << xml::end;

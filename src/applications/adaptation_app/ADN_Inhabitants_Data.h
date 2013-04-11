@@ -100,6 +100,7 @@ public:
 
     void Reset();
     void FilesNeeded(tools::Path::T_Paths& l) const;
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     T_InhabitantsInfosVector& GetInhabitants();
     InhabitantsInfos* FindInhabitant( const std::string& strName );

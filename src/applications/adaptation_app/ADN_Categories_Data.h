@@ -23,8 +23,6 @@
 #include "ADN_LogisticSupplyClass.h"
 #include "tools/IdManager.h"
 
-namespace xml { class xistream; }
-
 //*****************************************************************************
 // Created: JDY 03-08-27
 //*****************************************************************************

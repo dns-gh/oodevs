@@ -305,7 +305,7 @@ void ADN_FireClass_Data::FireClassInfos::ReadSurface( xml::xistream& input )
     /*E_Location location = ENT_Tr::ConvertToLocation( type );
     if( location == static_cast< E_Location >( -1 ) )
         throw MASA_EXCEPTION( tr( "Fire - Invalid location type '%1'" ).arg( type.c_str() ).toStdString() );*/
-    IT_FireSurfaceInfos_Vector it = std::find_if( surfaceInfos_.begin(), surfaceInfos_.end(), FireSurfaceInfos::Cmp( type ) );
+    auto it = std::find_if( surfaceInfos_.begin(), surfaceInfos_.end(), FireSurfaceInfos::Cmp( type ) );
     if( it == surfaceInfos_.end() )
         throw MASA_EXCEPTION( tr( "Fire - Location type not found '%1'" ).arg( type.c_str() ).toStdString() );
     ( *it )->ReadArchive( input );

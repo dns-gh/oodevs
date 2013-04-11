@@ -493,9 +493,9 @@ QStringList ADN_Missions_Data::GetAllMissionsThatUse( ADN_Objects_Data_ObjectInf
 
 namespace
 {
-    void CheckMissionTypeUniqueness( ADN_ConsistencyChecker& checker, const ADN_Missions_Data::CIT_Mission_Vector& rhs, const ADN_Missions_Data::T_Mission_Vector& missions, int subTab )
+    void CheckMissionTypeUniqueness( ADN_ConsistencyChecker& checker, const ADN_Missions_Data::T_Mission_Vector::const_iterator& rhs, const ADN_Missions_Data::T_Mission_Vector& missions, int subTab )
     {
-        for( ADN_Missions_Data::CIT_Mission_Vector lhs = rhs + 1; lhs != missions.end(); ++lhs )
+        for( auto lhs = rhs + 1; lhs != missions.end(); ++lhs )
             if( (*lhs)->strName_.GetData() != (*rhs)->strName_.GetData() &&
                 (*lhs)->diaType_.GetData() == (*rhs)->diaType_.GetData() )
             {
@@ -508,7 +508,7 @@ namespace
 
     void CheckParameters( ADN_ConsistencyChecker& checker, const ADN_Missions_Data::T_MissionParameter_Vector& parameters, const std::string& missionName, int subTab )
     {
-        for( ADN_Missions_Data::CIT_MissionParameter_Vector it = parameters.begin(); it != parameters.end(); ++it )
+        for( auto it = parameters.begin(); it != parameters.end(); ++it )
             if( ( *it )->type_.GetData() == eMissionParameterTypeLocationComposite )
             {
                 bool hasChoice = false;

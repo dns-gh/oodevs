@@ -151,13 +151,13 @@ void ADN_Maintenance_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "maintenance" );
     ADN_Tools::AddSchema( output, "Maintenance" );
     output << xml::start( "working-schemes" );
-    for( IT_WorkingSchemeInfo_Vector it = vWorkingSchemes_.begin(); it != vWorkingSchemes_.end(); ++it )
+    for( auto it = vWorkingSchemes_.begin(); it != vWorkingSchemes_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end
         << xml::start( "resource-availability-alerts" );
-    for( IT_AvailabilityWarning_Vector it = vRepairerWarnings_.begin(); it != vRepairerWarnings_.end(); ++it )
+    for( auto it = vRepairerWarnings_.begin(); it != vRepairerWarnings_.end(); ++it )
         (*it)->WriteArchive( output, "resource", "AlerteDisponibiliteReparateurs" );
-    for( IT_AvailabilityWarning_Vector it = vHaulerWarnings_.begin(); it != vHaulerWarnings_.end(); ++it )
+    for( auto it = vHaulerWarnings_.begin(); it != vHaulerWarnings_.end(); ++it )
         (*it)->WriteArchive( output, "resource", "AlerteDisponibiliteRemorqueurs" );
     output << xml::end
         << xml::end;

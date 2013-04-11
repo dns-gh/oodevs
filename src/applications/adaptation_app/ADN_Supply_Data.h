@@ -15,8 +15,6 @@
 #include "ADN_Units_Data.h"
 #include "ADN_AvailabilityWarning.h"
 
-namespace xml { class xistream; }
-
 // =============================================================================
 /** @class  ADN_Supply_Data
     @brief  ADN_Supply_Data
@@ -25,7 +23,6 @@ namespace xml { class xistream; }
 // =============================================================================
 class ADN_Supply_Data : public ADN_Data_ABC
 {
-
 public:
 // *****************************************************************************
     template< typename T >
@@ -64,16 +61,16 @@ public:
         void ReadResourceAvailability( xml::xistream& input );
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos> ptrUnit_;
+        ADN_TypePtr_InVector_ABC< ADN_Units_Data::UnitInfos > ptrUnit_;
         ADN_TypePtr_InVector_ABC< ADN_Missions_ABC > ptrSupplyMission_;
 
-        T_ConvoyTimeInfoVector   vConvoySetupInfos_;
-        T_ConvoyTimeInfoVector   vConvoyLoadingInfos_;
-        T_ConvoyTimeInfoVector   vConvoyUnloadingInfos_;
+        T_ConvoyTimeInfoVector vConvoySetupInfos_;
+        T_ConvoyTimeInfoVector vConvoyLoadingInfos_;
+        T_ConvoyTimeInfoVector vConvoyUnloadingInfos_;
         T_ConvoyDoubleInfoVector vConvoySpeedModificatorInfos_;
         T_AvailabilityWarning_Vector vVectorWarnings_;
-        ADN_Type_Enum<E_SupplyConvoyType, eNbrSupplyConvoyType> dotationSupplyConvoyType_;
-        ADN_Type_Enum<E_SupplyConvoyType, eNbrSupplyConvoyType> stockSupplyConvoyType_;
+        ADN_Type_Enum< E_SupplyConvoyType, eNbrSupplyConvoyType > dotationSupplyConvoyType_;
+        ADN_Type_Enum< E_SupplyConvoyType, eNbrSupplyConvoyType > stockSupplyConvoyType_;
     };
 
 // *****************************************************************************
