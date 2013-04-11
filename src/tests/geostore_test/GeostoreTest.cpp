@@ -118,8 +118,13 @@ BOOST_FIXTURE_TEST_CASE( UrbanBlockAutoGeneration_Test, Fixture )
 BOOST_AUTO_TEST_CASE( LoadObsoleteDatabase_Test )
 {
     const tools::Path terrain = BOOST_RESOLVE( "obsolete" );
-    ( terrain / "Graphics/geostore.old" ).Copy( terrain / "Graphics/geostore.sqlite", tools::Path::OverwriteIfExists );
+    const tools::Path file = terrain / "Graphics/geostore.sqlite";
+    ( terrain / "Graphics/geostore.old" ).Copy( file, tools::Path::OverwriteIfExists );
     SpatialIndexer indexer;
-    geostore::Geostore( terrain, indexer );
-    ( terrain / "Graphics/geostore.sqlite" ).Remove();
+    {
+        geostore::Geostore geostore( terrain, indexer );
+        file.Remove();
+    }
+    BOOST_CHECK( file.Exists() );
+    file.Remove();
 }

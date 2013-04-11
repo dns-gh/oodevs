@@ -17,40 +17,54 @@
 
 using namespace geostore;
 
-namespace
+namespace geostore
 {
-    Database* Load( const tools::Path& layers, tools::Path& file, PointProjector_ABC& projector )
+    class Loader : boost::noncopyable
     {
-        try
+    public:
+        Loader( const tools::Path& terrain )
+            : file_     ( terrain / "Graphics/geostore.sqlite" )
+            , temporary_( file_ )
+        {}
+        ~Loader()
         {
-            return new Database( file, layers, projector );
+            try
+            {
+                temporary_.Rename( file_ );
+            }
+            catch( ... )
+            {}
         }
-        catch( ... )
+        Database* Load( const tools::Path& layers, PointProjector_ABC& projector )
         {
-            file = tools::Path::TemporaryFile();
-            return new Database( file, layers, projector );
+            try
+            {
+                return new Database( temporary_, layers, projector );
+            }
+            catch( ... )
+            {
+                temporary_ = tools::Path::TemporaryFile();
+                return new Database( temporary_, layers, projector );
+            }
         }
-    }
+    private:
+        const tools::Path file_;
+        tools::Path temporary_;
+    };
 }
 
 Geostore::Geostore( const tools::Path& terrain, const SpatialIndexer& index )
     : index_    ( index )
-    , file_     ( terrain / "Graphics/geostore.sqlite" )
-    , temporary_( file_ )
+    , loader_   ( new Loader( terrain ) )
     , projector_( new PointProjector( terrain ) )
-    , database_ ( Load( terrain / "Graphics", temporary_, *projector_ ) )
+    , database_ ( loader_->Load( terrain / "Graphics", *projector_ ) )
 {
     // NOTHING
 }
 
 Geostore::~Geostore()
 {
-    try
-    {
-        temporary_.Rename( file_ );
-    }
-    catch( ... )
-    {}
+    // NOTHING
 }
 
 const Database& Geostore::GetDatabase() const

@@ -25,6 +25,7 @@ namespace geostore
 {
     class Database;
     class SpatialIndexer;
+    class Loader;
 
 // =============================================================================
 /** @class  Geostore
@@ -49,8 +50,7 @@ private:
     //! @name Member data
     //@{
     const SpatialIndexer& index_;
-    const tools::Path file_;
-    tools::Path temporary_;
+    std::auto_ptr< Loader > loader_;
     std::auto_ptr< PointProjector_ABC > projector_;
     std::auto_ptr< Database > database_;
     //@}
