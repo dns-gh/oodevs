@@ -386,6 +386,15 @@ float GlWidget::GetAdaptiveZoomFactor( bool bVariableSize /*= true*/ ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GLWidget::GetActualZoomFactor
+// Created: LDC 2013-04-11
+// -----------------------------------------------------------------------------
+float GlWidget::GetActualZoomFactor() const
+{
+    return 0.12f;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::Pixels
 // Created: AGE 2007-04-05
 // -----------------------------------------------------------------------------
@@ -441,8 +450,7 @@ void GlWidget::DrawCross( const Point2f& at, float size /* = -1.f*/, E_Unit unit
     {
         if( size < 0 )
             size = 100.f;
-        if( unit == pixels )
-            size *= GetAdaptiveZoomFactor( false );
+        size *= GetAdaptiveZoomFactor( false );
     }
     else
     {        
@@ -888,6 +896,16 @@ void GlWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometr
 }
 
 // -----------------------------------------------------------------------------
+// Name: GLWidget::DrawApp6SymbolScaledSize
+// Created: LDC 2013-04-11
+// -----------------------------------------------------------------------------
+void GlWidget::DrawApp6SymbolScaledSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const
+{
+    factor = fabs( factor ) * GetActualZoomFactor();
+    DrawApp6Symbol( symbol, DefaultStyle(), where, baseWidth_ * factor, Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) ), 4, 4, direction );
+}
+    
+// -----------------------------------------------------------------------------
 // Name: GLWidget::DrawUnitSymbol
 // Created: LDC 2013-04-09
 // -----------------------------------------------------------------------------
@@ -896,7 +914,7 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
     if( isMoving )
     {
         if( !moveSymbol.empty() )
-            DrawApp6SymbolFixedSize( moveSymbol, where, factor, direction );
+            DrawApp6SymbolScaledSize( moveSymbol, where, factor, direction );
         else
             DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
     }
@@ -904,7 +922,7 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
     {
         DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
         if( !staticSymbol.empty() )
-            DrawApp6SymbolFixedSize( staticSymbol, where, factor, direction );
+            DrawApp6SymbolScaledSize( staticSymbol, where, factor, direction );
     }
 }
 
