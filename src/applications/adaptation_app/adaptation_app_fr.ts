@@ -1446,7 +1446,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment dimensions</source>
-        <translation">Dimensions</translation>
+        <translation>Dimensions</translation>
     </message>
     <message>
         <source>Length</source>
