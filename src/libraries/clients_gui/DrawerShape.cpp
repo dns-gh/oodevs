@@ -220,9 +220,11 @@ namespace
             VisitPoint( start );
             VisitLines( points );
         }
-        virtual void VisitCircle( const geometry::Point2f& /*center*/, float /*radius*/ )
+        virtual void VisitCircle( const geometry::Point2f& center, float radius )
         {
-            // $$$$ SBO 2008-05-30: TODO
+            VisitPoint( center );
+            const geometry::Point2f point( center + geometry::Vector2f( 0, 1.f ) * radius );
+            VisitPoint( point );
         }
         virtual void VisitPoint( const geometry::Point2f& point )
         {
