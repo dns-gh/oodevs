@@ -531,9 +531,9 @@ public:
         ADN_Type_Int nPowerEngineering_;
         ADN_Type_Double length_;
         ADN_Type_Double width_;
-		ADN_Type_Double frontSeparationDistance_;
-		ADN_Type_Double safetyDistance_;
-		ADN_Type_Double speedSafetyDistance_;
+        ADN_Type_Double frontSeparationDistance_;
+        ADN_Type_Double safetyDistance_;
+        ADN_Type_Double speedSafetyDistance_;
     public:
         class CmpId : public std::unary_function< EquipmentInfos*, bool >
         {
