@@ -93,7 +93,8 @@ void ADN_MissionParameters_Table::AddRow( int row, void* data )
     item->setBackground( brush );
 
     item = AddItem( row, 3, data, &pMissionParameter->isOptional_, ADN_StandardItem::eBool );
-    if( entityType_ == eEntityType_Automat && pMissionParameter->isContext_ && pMissionParameter->type_.GetData() == eMissionParameterTypeLimit )
+    if( entityType_ == eEntityType_Automat && pMissionParameter->isContext_ && pMissionParameter->type_.GetData() == eMissionParameterTypeLimit ||
+        pMissionParameter->isContext_ && pMissionParameter->type_.GetData() == eMissionParameterTypeDirection )
         item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsUserCheckable );
     else
         item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable );
