@@ -596,15 +596,18 @@ void MainWindow::Save( bool checkConsistency /* = true */ )
 // -----------------------------------------------------------------------------
 void MainWindow::SaveAs()
 {
+    static const QString title = tr( "Save exercise as ..." );
+    static const QString enterNewName = tr( "Enter an exercise name:" );
+    static const QString nameAlreadyExist = tr( "The exercise '%1' already exists. Please, enter a new exercise name:" );
+    static const QString content = tr( "Type exercise name here" );
     bool exist = false;
     tools::Path exerciseName;
     tools::Path exerciseDirectory;
+    QString name;
     do
     {
         bool ok = false;
-        QString name = QInputDialog::getText( tr( "Save exercise as ..." ),
-            ( exist ) ? tr( "The exercise '%1' already exists. Please, enter a new exercise name:" ).arg( name ) : tr( "Enter an exercise name:" ),
-            gui::RichLineEdit::Normal, tr( "Type exercise name here" ), &ok, this );
+        name = QInputDialog::getText( title, ( exist ) ? nameAlreadyExist.arg( name ) : enterNewName, gui::RichLineEdit::Normal, content, &ok, this );
         if( ok && !name.isEmpty() )
         {
             exerciseName = tools::Path::FromUnicode( name.toStdWString() );
@@ -615,6 +618,7 @@ void MainWindow::SaveAs()
         else
             return;
     } while( exist );
+
     exerciseDirectory.CreateDirectories();
     tools::Path newExerciseFile = config_.tools::ExerciseConfig::GeneralConfig::GetExerciseFile( exerciseName );
     config_.GetExerciseFile().Copy( newExerciseFile );
