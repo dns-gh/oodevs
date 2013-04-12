@@ -186,7 +186,6 @@ bool DEC_AgentFunctions::IsTransported( const MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::SetFlyingHeight( MIL_Agent_ABC& callerAgent, double height )
 {
-    assert( height >= 0. && "T'as deja essaye de voler à cette hauteur ?" );
     callerAgent.GetRole< PHY_RoleAction_InterfaceFlying >().SetFlyingHeight( height );
 }
 
@@ -660,7 +659,8 @@ int DEC_AgentFunctions::GetRulesOfEngagementState( const MIL_Agent_ABC& callerAg
 void DEC_AgentFunctions::NotifyRulesOfEngagementPopulationStateChanged( MIL_Agent_ABC& callerAgent, int population )
 {
     const PHY_RoePopulation* pRoe = PHY_RoePopulation::Find( population );
-    assert( pRoe );
+    if( !pRoe )
+        throw MASA_EXCEPTION( "Invalid RoE" );
     callerAgent.GetRole< DEC_RolePion_Decision >().NotifyRoePopulationChanged( *pRoe );
 }
 
@@ -904,7 +904,8 @@ int DEC_AgentFunctions::GetRoePopulation( const MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::ChannelPopulations( const TER_Localisation* location )
 {
-    assert( location );
+    if( !location )
+        throw MASA_EXCEPTION( "Invalid location in ChannelPopulation" );
     MIL_AgentServer::GetWorkspace().GetEntityManager().ChannelPopulations( *location );
 }
 
@@ -914,7 +915,8 @@ void DEC_AgentFunctions::ChannelPopulations( const TER_Localisation* location )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::AlertInhabitants( const TER_Localisation* location )
 {
-    assert( location );
+    if( !location )
+        throw MASA_EXCEPTION( "Invalid location in AlertInhabitants" );
     MIL_AgentServer::GetWorkspace().GetEntityManager().AlertInhabitants( *location );
 }
 
@@ -924,7 +926,8 @@ void DEC_AgentFunctions::AlertInhabitants( const TER_Localisation* location )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::UndoAlertInhabitants( const TER_Localisation* location )
 {
-    assert( location );
+    if( !location )
+        throw MASA_EXCEPTION( "Invalid location in UndoAlertInhabitants" );
     MIL_AgentServer::GetWorkspace().GetEntityManager().UndoAlertInhabitants( *location );
 }
 
@@ -934,7 +937,8 @@ void DEC_AgentFunctions::UndoAlertInhabitants( const TER_Localisation* location 
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsInhabitantsAlerted( const TER_Localisation* location )
 {
-    assert( location );
+    if( !location )
+        throw MASA_EXCEPTION( "Invalid location in IsInhabitantsAlerted" );
     return MIL_AgentServer::GetWorkspace().GetEntityManager().IsInhabitantsAlerted( *location );
 }
 
@@ -944,7 +948,8 @@ bool DEC_AgentFunctions::IsInhabitantsAlerted( const TER_Localisation* location 
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::ConfineInhabitants( const TER_Localisation* location )
 {
-    assert( location );
+    if( !location )
+        throw MASA_EXCEPTION( "Invalid location in ConfineInhabitants" );
     return MIL_AgentServer::GetWorkspace().GetEntityManager().ConfineInhabitants( *location );
 }
 
@@ -954,7 +959,8 @@ void DEC_AgentFunctions::ConfineInhabitants( const TER_Localisation* location )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::UndoConfineInhabitants( const TER_Localisation* location )
 {
-    assert( location );
+    if( !location )
+        throw MASA_EXCEPTION( "Invalid location in UndoConfineInhabitants" );
     return MIL_AgentServer::GetWorkspace().GetEntityManager().UndoConfineInhabitants( *location );
 }
 
@@ -964,7 +970,8 @@ void DEC_AgentFunctions::UndoConfineInhabitants( const TER_Localisation* locatio
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::IsInhabitantsConfined( const TER_Localisation* location )
 {
-    assert( location );
+    if( !location )
+        throw MASA_EXCEPTION( "Invalid location in IsInhabitantsConfined" );
     return MIL_AgentServer::GetWorkspace().GetEntityManager().IsInhabitantsConfined( *location );
 }
 
@@ -974,7 +981,6 @@ bool DEC_AgentFunctions::IsInhabitantsConfined( const TER_Localisation* location
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::UrbanBlockIsPopulated( const MIL_UrbanObject_ABC* pUrbanBlock )
 {
-     assert( pUrbanBlock );
      if ( pUrbanBlock )
         return pUrbanBlock->GetTotalInhabitants() > 0;
      return false;
@@ -986,7 +992,8 @@ bool DEC_AgentFunctions::UrbanBlockIsPopulated( const MIL_UrbanObject_ABC* pUrba
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::EvacuateInhabitants( const TER_Localisation* location )
 {
-    assert( location );
+    if( !location )
+        throw MASA_EXCEPTION( "Invalid location in EvacuateInhabitants" );
     return MIL_AgentServer::GetWorkspace().GetEntityManager().EvacuateInhabitants( *location );
 }
 
@@ -996,7 +1003,8 @@ void DEC_AgentFunctions::EvacuateInhabitants( const TER_Localisation* location )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::UndoEvacuateInhabitants( const TER_Localisation* location )
 {
-    assert( location );
+    if( !location )
+        throw MASA_EXCEPTION( "Invalid location in UndoEvacuateInhabitants" );
     return MIL_AgentServer::GetWorkspace().GetEntityManager().UndoEvacuateInhabitants( *location );
 }
 
