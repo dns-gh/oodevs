@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <role xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.roles.TC2" source-version="1.0.0" extends="france.military.platoon.roles.Pion">
-    <skills>
-        <skill name="france.military.platoon.combat.support.log.skills.AutoDeploy"/>
-    </skills>
-    <resources/>
-    <default-task label="Deploiement automatique">
-        <let name="fragOrdersToManage">
-            <value>
-                <call method="sword.military.queries.miscellaneous.getFragOrders"/>
-            </value>
-        </let>
-        <skills>
-            <skill name="france.military.platoon.combat.support.log.skills.AutoDeploy" main="true" priority="0.01"/>
-            <skill name="sword.military.platoon.skills.miscellaneous.ManageFragOrder">
-                <parameter name="fragOrders">
-                    <value>
-                        <parameter>fragOrdersToManage</parameter>
-                    </value>
-                </parameter>
-            </skill>
-        </skills>
-    </default-task>
+	<skills>
+		<skill name="france.military.platoon.combat.support.log.skills.AutoDeploy"/>
+	</skills>
+	<resources/>
+	<default-task label="Deploiement automatique">
+		<let name="fragOrdersToManage">
+			<value>
+				<call method="sword.military.queries.miscellaneous.getFragOrders"/>
+			</value>
+		</let>
+		<skills>
+			<skill name="france.military.platoon.combat.support.log.skills.AutoDeploy" main="true" priority="0.01"/>
+			<skill name="sword.military.platoon.skills.miscellaneous.ManageFragOrder">
+				<parameter name="fragOrders">
+					<value>
+						<parameter>fragOrdersToManage</parameter>
+					</value>
+				</parameter>
+			</skill>
+			<skill name="sword.military.platoon.skills.ReactToCoordinationLine"/>
+		</skills>
+	</default-task>
 </role>
