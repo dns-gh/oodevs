@@ -277,5 +277,11 @@ void EntityTreeView_ABC::ForceRedraw()
 void EntityTreeView_ABC::OnScrollToSelected()
 {
     if( !selectedIndexes().empty() )
-        scrollTo( selectedIndexes()[ 0 ] );
+    {
+        QModelIndexList indexList = selectedIndexes();
+        QModelIndex index = indexList[ 0 ];
+        blockSignals( true );
+        scrollTo( index );
+        blockSignals( false );
+    }
 }
