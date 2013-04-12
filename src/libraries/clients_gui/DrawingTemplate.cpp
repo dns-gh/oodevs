@@ -47,6 +47,7 @@ DrawingTemplate::DrawingTemplate( xml::xistream& input, const QString& category,
     , pointPixmap_  ( MAKE_PIXMAP( point ) )
     , polygonPixmap_( MAKE_PIXMAP( polygon ) )
     , circlePixmap_ ( MAKE_PIXMAP( circle ) )
+    , curvePixmap_  ( MAKE_PIXMAP( curve ) )
     , sampleColor_  ( new svg::Color( "blue" ) )
     , isDrawingSample_( false )
     , sampleMarkerRatio_( 1.f )
@@ -155,6 +156,8 @@ const QPixmap& DrawingTemplate::GetPixmap() const
         return polygonPixmap_;
     else if( type_ == "circle" )
         return circlePixmap_;
+    else if( type_ == "curve" )
+        return curvePixmap_;
 
     throw MASA_EXCEPTION( "Invalid drawing type " + type_.toStdString() );
 }

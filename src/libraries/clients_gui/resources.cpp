@@ -76,6 +76,7 @@
 #include "res/recrec.xpm"
 #include "res/recplay.xpm"
 #include "res/recstop.xpm"
+#include "res/curve.xpm"
 #include "res/search.xpm"
 #include "res/plus.xpm"
 #include "res/minus.xpm"

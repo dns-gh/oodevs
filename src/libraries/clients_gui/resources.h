@@ -51,6 +51,7 @@ DECLARE_ICON( visible );
 DECLARE_ICON( select );
 DECLARE_ICON( point );
 DECLARE_ICON( line );
+DECLARE_ICON( curve );
 DECLARE_ICON( circle );
 DECLARE_ICON( rectangle );
 DECLARE_ICON( polygon );
