@@ -518,21 +518,9 @@ void Gl3dWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geome
 // Name: GL3DWidget::DrawUnitSymbol
 // Created: JSR 2013-04-09
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float, float ) const
+void Gl3dWidget::DrawUnitSymbol( const std::string& symbol, const std::string& /*moveSymbol*/, const std::string& /*staticSymbol*/, bool /*isMoving*/, const geometry::Point2f& where, float factor, unsigned int /*direction*/, float /*width*/, float /*depth*/ ) const
 {
-    if( isMoving )
-    {
-        if( !moveSymbol.empty() )
-            DrawApp6SymbolFixedSize( moveSymbol, where, factor, direction );
-        else
-            DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
-    }
-    else
-    {
-        DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
-        if( !staticSymbol.empty() )
-            DrawApp6SymbolFixedSize( staticSymbol, where, factor, direction );
-    }
+    DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
 }
 
 // -----------------------------------------------------------------------------
