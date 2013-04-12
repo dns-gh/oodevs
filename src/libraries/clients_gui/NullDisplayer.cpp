@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "NullDisplayer.h"
 
-using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: NullDisplayer constructor
@@ -43,7 +43,7 @@ void NullDisplayer::Hide()
 // Name: NullDisplayer::SubItem
 // Created: AGE 2006-08-24
 // -----------------------------------------------------------------------------
-Displayer_ABC& NullDisplayer::SubItem( const QString&  )
+kernel::Displayer_ABC& NullDisplayer::SubItem( const QString&  )
 {
     return *this;
 }

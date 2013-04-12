@@ -997,6 +997,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\NullDisplayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1657,6 +1660,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\Color.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\NullDisplayer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,9 +10,9 @@
 #ifndef __NullDisplayer_h_
 #define __NullDisplayer_h_
 
-#include "Displayer_ABC.h"
+#include "clients_kernel/Displayer_ABC.h"
 
-namespace kernel
+namespace gui
 {
 
 // =============================================================================
@@ -21,7 +21,7 @@ namespace kernel
 */
 // Created: AGE 2006-08-24
 // =============================================================================
-class NullDisplayer : public Displayer_ABC
+class NullDisplayer : public kernel::Displayer_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -39,7 +39,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual Displayer_ABC& SubItem( const QString& name );
+    virtual kernel::Displayer_ABC& SubItem( const QString& name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();

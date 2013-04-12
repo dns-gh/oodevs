@@ -148,6 +148,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LongNameHelper.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ModalDialog.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\NullDisplayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichComboBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.cpp" />
@@ -782,6 +783,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\ModelObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\NullDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Pickable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichComboBox.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h" />

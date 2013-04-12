@@ -219,7 +219,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\TristateOption.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Displayer_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Formatter.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\NullDisplayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\EntityResolverFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\DictionaryExtensions.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\MergingTacticalHierarchies.cpp" />
@@ -401,7 +400,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Displayer_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Formatter.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Logger_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\NullDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\AgentKnowledgeConverter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\EntityResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\EntityResolverFacade.h" />

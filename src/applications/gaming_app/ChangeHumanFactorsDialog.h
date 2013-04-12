@@ -10,10 +10,10 @@
 #ifndef __ChangeHumanFactorsDialog_h_
 #define __ChangeHumanFactorsDialog_h_
 
+#include "clients_gui/NullDisplayer.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/NullDisplayer.h"
 
 namespace kernel
 {
@@ -47,7 +47,7 @@ class ChangeHumanFactorsDialog : public QDialog
                                , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                                , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                                , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
-                               , public kernel::NullDisplayer
+                               , public gui::NullDisplayer
                                , public tools::Caller< E_UnitTiredness >
                                , public tools::Caller< E_UnitMorale >
                                , public tools::Caller< E_UnitExperience >
