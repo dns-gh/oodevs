@@ -922,13 +922,14 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
     }
     else
     {
-        DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
         if( !staticSymbol.empty() )
         {
             width = width ? width / 360 : 1;
             depth = depth ? depth / 240 : 1;
             DrawApp6SymbolScaledSize( staticSymbol, where, factor, direction, width, depth );
         }
+        else
+            DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
     }
 }
 
