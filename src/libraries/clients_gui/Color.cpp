@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "Color.h"
 
-using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: Color constructor
@@ -43,7 +43,7 @@ bool Color::IsOverriden() const
 // Name: Color::GetColor
 // Created: LDC 2012-05-04
 // -----------------------------------------------------------------------------
-const Color_ABC::T_Color& Color::GetColor() const
+const kernel::Color_ABC::T_Color& Color::GetColor() const
 {
     if( !color_ )
         throw MASA_EXCEPTION( "Accessing invalid color" );

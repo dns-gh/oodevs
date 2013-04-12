@@ -10,10 +10,10 @@
 #ifndef __clientskernel_Color_h_
 #define __clientskernel_Color_h_
 
-#include "Color_ABC.h"
+#include "clients_kernel/Color_ABC.h"
 #include <boost/optional.hpp>
 
-namespace kernel
+namespace gui
 {
 // =============================================================================
 /** @class  Color
@@ -21,7 +21,7 @@ namespace kernel
 */
 // Created: LDC 2012-05-04
 // =============================================================================
-class Color : public Color_ABC
+class Color : public kernel::Color_ABC
 {
 
 public:

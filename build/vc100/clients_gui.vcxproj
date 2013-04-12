@@ -122,6 +122,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Color.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ColorController.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CommonDelegate.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.cpp" />
@@ -591,6 +592,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Color.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ColorController.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>

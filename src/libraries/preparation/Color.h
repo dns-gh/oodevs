@@ -10,7 +10,7 @@
 #ifndef __Color_h_
 #define __Color_h_
 
-#include "clients_kernel/Color.h"
+#include "clients_gui/Color.h"
 
 namespace xml
 {
@@ -29,7 +29,7 @@ namespace kernel
 */
 // Created: LGY 2011-06-24
 // =============================================================================
-class Color : public kernel::Color
+class Color : public gui::Color
 {
 public:
     //! @name Constructors/Destructor

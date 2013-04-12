@@ -994,6 +994,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\GlContext.cpp">
       <Filter>Source Files\gl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\Color.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1651,6 +1654,9 @@
       <Filter>Source Files\gl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\Pickable_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Color.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
