@@ -175,9 +175,11 @@ namespace
             VisitLines( points );
             points_.pop_back();
         }
-        virtual void VisitCircle( const geometry::Point2f& /*center*/, float /*radius*/ )
+        virtual void VisitCircle( const geometry::Point2f& center, float radius )
         {
-            // $$$$ SBO 2008-06-05: TODO
+            VisitPoint( center );
+            const geometry::Point2f point( center + geometry::Vector2f( 0, 1.f ) * radius );
+            VisitPoint( point );
         }
         virtual void VisitPoint( const geometry::Point2f& point )
         {
