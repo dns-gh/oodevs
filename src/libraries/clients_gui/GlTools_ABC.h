@@ -10,7 +10,7 @@
 #ifndef CLIENTS_GUI_GLTOOLS_ABC_H__
 #define CLIENTS_GUI_GLTOOLS_ABC_H__
 
-#include "clients_kernel/GLToolColors.h"
+#include "GLToolColors.h"
 #include "clients_kernel/Types.h"
 #include "Layer_ABC.h"
 
@@ -27,8 +27,12 @@ class QCursor;
 namespace kernel
 {
     class Controllers;
-    class GlTooltip_ABC;
     class Location_ABC;
+}
+
+namespace gui
+{
+    class GlTooltip_ABC;
 }
 
 namespace gui
@@ -93,7 +97,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< kernel::GlTooltip_ABC > CreateTooltip() const = 0;
+    virtual std::auto_ptr< gui::GlTooltip_ABC > CreateTooltip() const = 0;
 
     virtual void SetCurrentColor  ( float r, float g, float b, float a = 1 ) = 0;
     virtual void SetCurrentCursor ( const QCursor& cursor ) = 0;

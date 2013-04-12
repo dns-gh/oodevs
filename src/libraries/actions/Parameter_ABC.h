@@ -27,13 +27,13 @@ namespace sword
 namespace kernel
 {
     class Displayer_ABC;
-    class GlTooltip_ABC;
     class DisplayExtractor_ABC;
 }
 
 namespace gui
 {
     class GlTools_ABC;
+    class GlTooltip_ABC;
     class Viewport_ABC;
 }
 
@@ -105,7 +105,7 @@ private:
     //@{
     QString name_;
     geometry::Point2f position_;
-    std::auto_ptr< kernel::GlTooltip_ABC > toolTip_;
+    std::auto_ptr< gui::GlTooltip_ABC > toolTip_;
     bool isSet_;
     //@}
 };

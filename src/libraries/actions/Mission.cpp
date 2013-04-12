@@ -10,10 +10,10 @@
 #include "actions_pch.h"
 #include "Mission.h"
 #include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GlTooltip_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/GlTooltip_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -112,7 +112,7 @@ void Mission::Draw( const geometry::Point2f& where, const ::gui::Viewport_ABC& v
 {
     if( !tooltip_.get() )
     {
-        std::auto_ptr< kernel::GlTooltip_ABC > tooltip = tools.CreateTooltip();
+        std::auto_ptr< gui::GlTooltip_ABC > tooltip = tools.CreateTooltip();
         tooltip_ = tooltip;
         kernel::Displayer_ABC& displayer = *tooltip_;
         displayer.Display( "", GetName() );

@@ -409,7 +409,6 @@ void GlProxy::DrawUnitSymbol( const std::string& symbol, const std::string& move
 {
     tools_->DrawUnitSymbol( symbol, moveSymbol, staticSymbol, isMoving, where, factor, direction, width, depth );
 }
-    
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::DrawIcon
@@ -480,10 +479,10 @@ void GlProxy::Reset3d()
 // Name: GlProxy::CreateTooltip
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-std::auto_ptr< kernel::GlTooltip_ABC > GlProxy::CreateTooltip() const
+std::auto_ptr< GlTooltip_ABC > GlProxy::CreateTooltip() const
 {
     if( tooltipLayer_ )
-        return std::auto_ptr< kernel::GlTooltip_ABC >( new GlTooltip( *tooltipLayer_ ) );
+        return std::auto_ptr< GlTooltip_ABC >( new GlTooltip( *tooltipLayer_ ) );
     throw MASA_EXCEPTION( "ToolTipLayer not defined." );
 }
 

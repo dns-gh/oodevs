@@ -702,7 +702,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\FileDialog.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\FilterProxyModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\GlContext.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\GLToolColors.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\GlTools_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\GlTooltip_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Gradient.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\HierarchyTreeView.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\HierarchyTreeView_ABC.h">

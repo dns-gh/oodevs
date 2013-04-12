@@ -55,7 +55,7 @@ GlButton::~GlButton()
 // -----------------------------------------------------------------------------
 std::auto_ptr< gui::GlTooltip > GlButton::CreateTooltip( const QFont& font, bool hover )
 {
-    std::auto_ptr< kernel::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
+    std::auto_ptr< gui::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
     std::auto_ptr< gui::GlTooltip > concrete( (gui::GlTooltip*)tooltip.get() );
     tooltip.release();
     concrete->SetFrameDrawer( boost::bind( &GlButton::DrawFrame, this, _1, _2, hover ) );

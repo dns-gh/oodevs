@@ -11,11 +11,11 @@
 #include "MetricsLayer.h"
 
 #include "GlTools_ABC.h"
+#include "GlTooltip_ABC.h"
 #include "Tools.h"
 
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/GlTooltip_ABC.h"
 #include "clients_kernel/Styles.h"
 
 using namespace kernel;
@@ -80,7 +80,7 @@ void MetricsLayer::Paint( Viewport_ABC& )
             const QString message = tools::translate( "Règle GL", "2D: %L1m\n3D: %L2m\n%L3°" ).arg( ComputeRuleDistance( false ), 0, 'f', 1 ).arg( ComputeRuleDistance( true ), 0, 'f', 1 ).arg( ComputeAngle(), 0, 'f', 1 );
             if( !tooltip_.get() )
             {
-                std::auto_ptr< kernel::GlTooltip_ABC > tooltip( tools_.CreateTooltip() );
+                std::auto_ptr< GlTooltip_ABC > tooltip( tools_.CreateTooltip() );
                 tooltip_ = tooltip;
             }
             // $$$$ SBO 2008-03-19: GlTooltip_ABC maybe should be a Displayer_ABC...

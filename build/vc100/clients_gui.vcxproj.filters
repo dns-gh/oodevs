@@ -1644,6 +1644,12 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\GlContext.h">
       <Filter>Source Files\gl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GLToolColors.h">
+      <Filter>Source Files\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\GlTooltip_ABC.h">
+      <Filter>Source Files\gl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl">

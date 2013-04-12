@@ -16,6 +16,10 @@ namespace kernel
 {
     class MissionType;
     class Controller;
+}
+
+namespace gui
+{
     class GlTooltip_ABC;
 }
 
@@ -56,7 +60,7 @@ private:
     //@{
     kernel::Controller& controller_;
     bool registered_;
-    mutable std::auto_ptr< kernel::GlTooltip_ABC > tooltip_;
+    mutable std::auto_ptr< gui::GlTooltip_ABC > tooltip_;
     //@}
 };
 

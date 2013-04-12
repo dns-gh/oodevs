@@ -11,8 +11,8 @@
 #define __GlTooltip_h_
 
 #include "NoLinkDisplayer.h"
+#include "GlTooltip_ABC.h"
 #include "clients_kernel/Styles.h"
-#include "clients_kernel/GlTooltip_ABC.h"
 #include <boost/function.hpp>
 
 namespace gui
@@ -25,7 +25,7 @@ namespace gui
 */
 // Created: AGE 2006-06-29
 // =============================================================================
-class GlTooltip : public kernel::GlTooltip_ABC
+class GlTooltip : public GlTooltip_ABC
                 , public NoLinkDisplayer
                 , public tools::Caller< QColor >
                 , public tools::Caller< QFont >

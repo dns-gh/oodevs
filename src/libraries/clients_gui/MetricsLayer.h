@@ -15,12 +15,12 @@
 namespace kernel
 {
     class DetectionMap;
-    class GlTooltip_ABC;
 }
 
 namespace gui
 {
     class GlTools_ABC;
+    class GlTooltip_ABC;
 }
 
 namespace gui
@@ -71,9 +71,9 @@ private:
 private:
     //! @name Member data
     //@{
-    gui::GlTools_ABC& tools_;
+    GlTools_ABC& tools_;
     const kernel::DetectionMap& elevation_;
-    std::auto_ptr< kernel::GlTooltip_ABC > tooltip_;
+    std::auto_ptr< GlTooltip_ABC > tooltip_;
     bool multiRulingMode_;
     geometry::Point2f start_;
     geometry::Point2f end_;

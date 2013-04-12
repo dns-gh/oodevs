@@ -10,8 +10,8 @@
 #include "actions_pch.h"
 #include "Parameter_ABC.h"
 #include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/GlTooltip_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "clients_kernel/GlTooltip_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "protocol/Protocol.h"
@@ -106,7 +106,7 @@ void Parameter_ABC::DisplayTooltip( const gui::Viewport_ABC& viewport, const gui
 {
     if( !toolTip_.get() )
     {
-        std::auto_ptr< kernel::GlTooltip_ABC > tooltip( tools.CreateTooltip() );
+        std::auto_ptr< gui::GlTooltip_ABC > tooltip( tools.CreateTooltip() );
         const_cast< Parameter_ABC* >( this )->toolTip_ = tooltip;
     }
     DrawToolTip( viewport, tools );
@@ -122,7 +122,7 @@ void Parameter_ABC::DrawToolTip( const gui::Viewport_ABC& viewport, const gui::G
         return;
     if( !toolTip_.get() )
     {
-        std::auto_ptr< GlTooltip_ABC > tooltip( tools.CreateTooltip() );
+        std::auto_ptr< gui::GlTooltip_ABC > tooltip( tools.CreateTooltip() );
         const_cast< Parameter_ABC* >( this )->toolTip_ = tooltip;
     }
     DisplayInToolTip( *toolTip_ );

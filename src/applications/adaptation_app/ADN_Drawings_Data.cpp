@@ -21,8 +21,6 @@
 
 namespace
 {
-    class GlTooltip_ABC;
-
     class GlToolsSymbols : public gui::GlTools_ABC
     {
     public:
@@ -52,7 +50,7 @@ namespace
 
         //! @name Operations
         //@{
-        virtual std::auto_ptr< kernel::GlTooltip_ABC > CreateTooltip() const { return std::auto_ptr< kernel::GlTooltip_ABC >( 0 ); }
+        virtual std::auto_ptr< gui::GlTooltip_ABC > CreateTooltip() const { return std::auto_ptr< gui::GlTooltip_ABC >( 0 ); }
         virtual void SetCurrentColor  ( float, float, float, float ) {}
         virtual void SetCurrentCursor ( const QCursor& ) {}
         virtual void DrawCross        ( const geometry::Point2f&, float, E_Unit ) const {}
