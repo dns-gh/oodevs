@@ -976,6 +976,8 @@ void GlWidget::DrawTacticalGraphics( const std::string& symbol, const kernel::Lo
 // -----------------------------------------------------------------------------
 void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /* = -1.f*/, E_Unit unit /* = meters*/ ) const
 {
+    if( !GlToolsBase::ShouldDisplay( "UnitDetails" ) )
+        return;
     if( size < 0 )
         size = 32 * Pixels();
 
