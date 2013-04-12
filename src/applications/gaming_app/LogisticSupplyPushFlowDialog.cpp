@@ -27,7 +27,6 @@
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/RichSpinBox.h"
-#include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
