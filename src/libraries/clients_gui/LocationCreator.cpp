@@ -101,7 +101,7 @@ namespace
         {
             valid_ = pointAllowed_;
         }
-        virtual void VisitCurve( const geometry::Point2f&, const geometry::Point2f&, const geometry::Point2f& )
+        virtual void VisitCurve( const T_PointVector& )
         {
             valid_ = false;
         }

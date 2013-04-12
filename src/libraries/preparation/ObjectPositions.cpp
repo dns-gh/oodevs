@@ -243,7 +243,7 @@ void ObjectPositions::VisitCircle( const geometry::Point2f& center, float radius
 // Name: ObjectPositions::VisitCurve
 // Created: LGY 2013-04-12
 // -----------------------------------------------------------------------------
-void ObjectPositions::VisitCurve( const geometry::Point2f&, const geometry::Point2f&, const geometry::Point2f& )
+void ObjectPositions::VisitCurve( const T_PointVector& /*points*/ )
 {
     // NOTHING
 }

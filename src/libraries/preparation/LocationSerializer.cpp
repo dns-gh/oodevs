@@ -102,9 +102,10 @@ void LocationSerializer::VisitCircle( const geometry::Point2f& center, float rad
 // Name: LocationSerializer::VisitCurve
 // Created: LGY 2013-04-12
 // -----------------------------------------------------------------------------
-void LocationSerializer::VisitCurve( const geometry::Point2f& /*from*/, const geometry::Point2f& /*control*/, const geometry::Point2f& /*to*/ )
+void LocationSerializer::VisitCurve( const T_PointVector& points )
 {
-    // NOTHING
+    *xos_ << xml::attribute( "type", "curve" );
+    SetPoints( points );
 }
 
 // -----------------------------------------------------------------------------

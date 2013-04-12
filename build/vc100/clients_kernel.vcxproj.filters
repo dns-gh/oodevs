@@ -484,6 +484,9 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Settings.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Curve.cpp">
+      <Filter>Source Files\Tools\Locations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h">
@@ -1145,6 +1148,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Settings.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Curve.h">
+      <Filter>Source Files\Tools\Locations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

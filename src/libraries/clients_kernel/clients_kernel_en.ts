@@ -365,6 +365,10 @@
         <source>Rectangle</source>
         <translation>Rectangle</translation>
     </message>
+    <message>
+        <source>Curve</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Stock</name>

@@ -92,7 +92,7 @@ void SimpleLocationDrawer::VisitCircle( const geometry::Point2f& center, float r
 // Name: SimpleLocationDrawer::VisitCurve
 // Created: LGY 2013-04-12
 // -----------------------------------------------------------------------------
-void SimpleLocationDrawer::VisitCurve( const geometry::Point2f& /*from*/, const geometry::Point2f& /*control*/, const geometry::Point2f& /*to*/ )
+void SimpleLocationDrawer::VisitCurve( const T_PointVector& /*points*/ )
 {
     // NOTHING
 }

@@ -256,6 +256,8 @@ void DrawerPanel::StartDrawing()
             layer_.StartPoint( *shape );
         else if( selectedStyle_->GetType() == "circle" )
             layer_.StartCircle( *shape );
+        else if( selectedStyle_->GetType() == "curve" )
+            layer_.StartCurve( *shape );
         else
             throw MASA_EXCEPTION( "Unhandled shape geometry." );
     }

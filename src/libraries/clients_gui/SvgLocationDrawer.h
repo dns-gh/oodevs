@@ -64,7 +64,7 @@ private:
     virtual void VisitPolygon   ( const T_PointVector& points );
     virtual void VisitPath      ( const geometry::Point2f& point, const T_PointVector& points );
     virtual void VisitCircle    ( const geometry::Point2f& center, float radius );
-    virtual void VisitCurve    ( const geometry::Point2f& from, const geometry::Point2f& control, const geometry::Point2f& to );
+    virtual void VisitCurve     ( const T_PointVector& points );
     virtual void VisitPoint     ( const geometry::Point2f& point );
     //@}
 

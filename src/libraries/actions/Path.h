@@ -73,7 +73,7 @@ private:
     virtual void VisitCircle    ( const geometry::Point2f&, float ) {}
     virtual void VisitPoint     ( const geometry::Point2f& ) {}
     virtual void VisitPath      ( const geometry::Point2f& first, const T_PointVector& points );
-    virtual void VisitCurve     ( const geometry::Point2f& from, const geometry::Point2f& control, const geometry::Point2f& to );
+    virtual void VisitCurve     ( const T_PointVector& points );
     void AddPoints( const sword::Location& message );
     void ReadPoint( xml::xistream& xis );
     void AddPoint( const geometry::Point2f& p, std::size_t i, std::size_t count );

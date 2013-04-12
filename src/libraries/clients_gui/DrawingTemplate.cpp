@@ -17,6 +17,7 @@
 #include "clients_kernel/Circle.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/Point.h"
+#include "clients_kernel/Curve.h"
 #include "clients_kernel/Polygon.h"
 
 #include <svgl/svgl.h>
@@ -200,6 +201,9 @@ kernel::Location_ABC* DrawingTemplate::CreateLocation() const
         return new kernel::Polygon();
     if( type_ == "circle" )
         return new kernel::Circle();
+    if( type_ == "curve" )
+        return new kernel::Curve();
+
     throw MASA_EXCEPTION( "Invalid drawing geometry type." );
 }
 
@@ -468,6 +472,8 @@ void DrawingTemplate::DrawSample( const GlTools_ABC& tools )
         DrawOnPoint( tools );
     else if( type_ == "circle" )
         DrawOnCircle( tools );
+    else if( type_ == "curve" )
+        DrawOnCurve( tools );
 
     isDrawingSample_ = false;
 
@@ -537,6 +543,19 @@ void DrawingTemplate::DrawOnCircle( const GlTools_ABC& tools )
     for( float angle = 0; angle < twoPi; angle += twoPi / 20.f + 1e-7f )
         points.push_back( geometry::Point2f( SYMBOL_ICON_SIZE / 2  + ( SYMBOL_ICON_SIZE / 2 - SYMBOL_ICON_MARGIN ) * std::cos( angle ), SYMBOL_ICON_SIZE / 2  + ( SYMBOL_ICON_SIZE / 2 - SYMBOL_ICON_MARGIN ) * std::sin( angle ) ) );
     points.push_back( geometry::Point2f( SYMBOL_ICON_SIZE - SYMBOL_ICON_MARGIN, SYMBOL_ICON_SIZE / 2 ) );
+    DrawItem( points, tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingTemplate::DrawOnCurve
+// Created: LGY 2013-04-12
+// -----------------------------------------------------------------------------
+void DrawingTemplate::DrawOnCurve( const GlTools_ABC& tools )
+{
+    T_PointVector points;
+    static const float pi = std::acos( -1.f );
+    for( float angle = 0; angle < pi; angle += pi / 20.f + 1e-7f )
+        points.push_back( geometry::Point2f( SYMBOL_ICON_SIZE / 2  + ( SYMBOL_ICON_SIZE / 2 - SYMBOL_ICON_MARGIN ) * std::cos( angle ), SYMBOL_ICON_SIZE / 2  + ( SYMBOL_ICON_SIZE / 2 - SYMBOL_ICON_MARGIN ) * std::sin( angle ) ) );
     DrawItem( points, tools );
 }
 

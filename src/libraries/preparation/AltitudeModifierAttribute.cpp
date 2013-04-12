@@ -47,7 +47,7 @@ public:
     virtual void VisitCircle   ( const geometry::Point2f&, float ) {}
     virtual void VisitPoint    ( const geometry::Point2f& ) {}
     virtual void VisitPath     ( const geometry::Point2f&, const T_PointVector& ) {}
-    virtual void VisitCurve    ( const geometry::Point2f&, const geometry::Point2f&, const geometry::Point2f& ) {}
+    virtual void VisitCurve    ( const T_PointVector& ) {}
     //@}
 
 public:

@@ -113,6 +113,7 @@ private:
     void DrawOnLine( const GlTools_ABC& tools );
     void DrawOnPolygon( const GlTools_ABC& tools );
     void DrawOnCircle( const GlTools_ABC& tools );
+    void DrawOnCurve( const GlTools_ABC& tools );
     void DrawItem( const T_PointVector& points, const GlTools_ABC& tools );
     //@}
 

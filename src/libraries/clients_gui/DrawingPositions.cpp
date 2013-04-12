@@ -168,7 +168,7 @@ void DrawingPositions::VisitCircle( const geometry::Point2f& center, float radiu
 // Name: DrawingPositions::VisitCurve
 // Created: LGY 2013-04-12
 // -----------------------------------------------------------------------------
-void DrawingPositions::VisitCurve( const geometry::Point2f& /*from*/, const geometry::Point2f& /*control*/, const geometry::Point2f& /*to*/ )
+void DrawingPositions::VisitCurve( const T_PointVector& /*points*/ )
 {
     // NOTHING
 }

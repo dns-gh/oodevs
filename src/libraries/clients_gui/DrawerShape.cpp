@@ -234,9 +234,10 @@ namespace
                     << xml::attribute( "latitude", wgs.Y() )
                   << xml::end;
         }
-        virtual void VisitCurve( const geometry::Point2f& /*from*/, const geometry::Point2f& /*control*/, const geometry::Point2f& /*to*/ )
+        virtual void VisitCurve( const T_PointVector& points )
         {
-            // NOTHING
+            for( auto it = points.begin(); it != points.end(); ++it )
+                VisitPoint( *it );
         }
         xml::xostream* xos_;
         const kernel::CoordinateConverter_ABC& converter_;

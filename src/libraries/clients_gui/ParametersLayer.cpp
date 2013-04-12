@@ -18,6 +18,7 @@
 
 #include "clients_kernel/Circle.h"
 #include "clients_kernel/Lines.h"
+#include "clients_kernel/Curve.h"
 #include "clients_kernel/Path.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Polygon.h"
@@ -193,6 +194,16 @@ void ParametersLayer::StartLine( ShapeHandler_ABC& handler )
 {
     cursors_->SelectTool( MAKE_PIXMAP( line_cursor ), true );
     Start( handler, Lines() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParametersLayer::StartCurve
+// Created: LGY 2013-04-12
+// -----------------------------------------------------------------------------
+void ParametersLayer::StartCurve( ShapeHandler_ABC& handler )
+{
+    cursors_->SelectTool( MAKE_PIXMAP( line_cursor ), true );
+    Start( handler, Curve() );
 }
 
 // -----------------------------------------------------------------------------

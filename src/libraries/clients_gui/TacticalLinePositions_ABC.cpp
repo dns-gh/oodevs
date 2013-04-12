@@ -196,7 +196,7 @@ void TacticalLinePositions_ABC::VisitPoint( const geometry::Point2f& point )
 // Name: TacticalLinePositions_ABC::VisitCurve
 // Created: LGY 2013-04-12
 // -----------------------------------------------------------------------------
-void TacticalLinePositions_ABC::VisitCurve( const geometry::Point2f& /*from*/, const geometry::Point2f& /*control*/, const geometry::Point2f& /*to*/ )
+void TacticalLinePositions_ABC::VisitCurve( const T_PointVector& /*points*/ )
 {
     // NOTHING
 }

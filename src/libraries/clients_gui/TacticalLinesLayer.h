@@ -71,13 +71,13 @@ protected:
 
     virtual void Handle( kernel::Location_ABC& location );
 
-    virtual void VisitLines     ( const T_PointVector& points );
-    virtual void VisitRectangle ( const T_PointVector& /*points*/ ) {};
-    virtual void VisitPolygon   ( const T_PointVector& ) {};
-    virtual void VisitPath      ( const geometry::Point2f& , const T_PointVector& ) {};
-    virtual void VisitCircle    ( const geometry::Point2f& , float ) {};
-    virtual void VisitPoint     ( const geometry::Point2f& ) {};
-    virtual void VisitCurve( const geometry::Point2f&, const geometry::Point2f&, const geometry::Point2f& ) {};
+    virtual void VisitLines    ( const T_PointVector& points );
+    virtual void VisitRectangle( const T_PointVector& /*points*/ ) {};
+    virtual void VisitPolygon  ( const T_PointVector& ) {};
+    virtual void VisitPath     ( const geometry::Point2f& , const T_PointVector& ) {};
+    virtual void VisitCircle   ( const geometry::Point2f& , float ) {};
+    virtual void VisitPoint    ( const geometry::Point2f& ) {};
+    virtual void VisitCurve    ( const T_PointVector& ) {};
     //@}
 
 private slots:

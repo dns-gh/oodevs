@@ -189,11 +189,9 @@ namespace
         {
             VisitLines( points );
         }
-        virtual void VisitCurve( const geometry::Point2f& from, const geometry::Point2f& control, const geometry::Point2f& to )
+        virtual void VisitCurve( const T_PointVector& points )
         {
-            VisitPoint( from );
-            VisitPoint( to );
-            VisitPoint( control );
+            VisitLines( points );
         }
         std::vector< sword::CoordLatLong > points_;
         const kernel::CoordinateConverter_ABC* converter_;

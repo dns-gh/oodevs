@@ -116,6 +116,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Color.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Curve.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\DisasterType.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\DisasterTypes.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Drawing_ABC.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Color.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Curve.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisasterType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisasterTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisplayExtractor_ABC.h" />
