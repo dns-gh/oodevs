@@ -60,7 +60,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual QSize sizeHint() const;
     virtual void closeEvent( QCloseEvent * e );
     virtual void showEvent ( QShowEvent * e );
     //@}

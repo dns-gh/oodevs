@@ -49,27 +49,32 @@ ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model )
     }
 
     {
-        Q3VBox* box = new Q3VBox( this );
-        box->setMargin( 5 );
-        profileTypes_ = new Q3VButtonGroup( tr( "Select profiles to generate: " ), box );
+        profileTypes_ = new Q3VButtonGroup( tr( "Select profiles to generate: " ) );
         profileTypes_->setRadioButtonExclusive( true );
         profileTypes_->insert( new gui::RichRadioButton( "oneProfileSide", tr( "one profile per side" ), profileTypes_ )               , 0 );
         profileTypes_->insert( new gui::RichRadioButton( "oneProfileTopLevel", tr( "one profile per top-level formation" ), profileTypes_ ), 1 );
         profileTypes_->insert( new gui::RichRadioButton( "oneProfileFormation", tr( "one profile per formation" ), profileTypes_ )          , 2 );
         profileTypes_->setButton( 0 );
 
-        creationMode_ = new Q3HButtonGroup( tr( "Select creation mode: " ), box );
+        creationMode_ = new Q3HButtonGroup( tr( "Select creation mode: " ) );
         creationMode_->setRadioButtonExclusive( true );
         creationMode_->insert( new gui::RichRadioButton( "clearProfile", tr( "clear existing profiles" ), creationMode_ )     , 0 );
         creationMode_->insert( new gui::RichRadioButton( "addNewProfile", tr( "add new profiles to existing" ), creationMode_ ), 1 );
         creationMode_->setButton( 0 );
 
-        creationRight_ = new Q3HButtonGroup( tr( "Select creation permissions: " ), box );
+        creationRight_ = new Q3HButtonGroup( tr( "Select creation permissions: " ) );
         creationRight_->setRadioButtonExclusive( true );
         creationRight_->insert( new gui::RichRadioButton( "writeable", tr( "writeable" ), creationRight_ ), 0 );
         creationRight_->insert( new gui::RichRadioButton( "readonly", tr( "readonly" ) , creationRight_ ), 1 );
         creationRight_->setButton( 0 );
 
+        QWidget* box = new QWidget( this );
+        QVBoxLayout* boxLayout = new QVBoxLayout( box );
+        boxLayout->addWidget( profileTypes_ );
+        boxLayout->addWidget( creationMode_ );
+        boxLayout->addWidget( creationRight_ );
+        boxLayout->addStretch( 1 );
+        boxLayout->setMargin( 5 );
         grid->addWidget( box, 1, 0 );
     }
 

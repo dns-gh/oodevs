@@ -33,18 +33,21 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
     , lighting_( lighting )
 {
     SubObjectName subObject( "LightingPanel" );
-    Q3VBox* container = new Q3VBox( this );
+    QVBoxLayout* container = new QVBoxLayout( this );
+    container->setSizeConstraint( QLayout::SetMinimumSize );
+
     lighting_.SetAmbient( 0.2f, 0.2f, 0.2f );
     lighting_.SetDiffuse( 0.8f, 0.8f, 0.8f );
     lighting_.SetLightDirection( geometry::Vector3f( 0, 0, 1 ) );
 
     // $$$$ SBO 2007-01-03: Todo, handle lighting types different from fixed
-    lightingType_ = new ButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ), container );
+    lightingType_ = new ButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ) );
     lightingType_->resize( this->size() );
     lightingType_->insert( new RichRadioButton( "fixed", tr( "Fixed" ), lightingType_ ) );
     lightingType_->insert( new RichRadioButton( "cameraFixed", tr( "Camera fixed" ), lightingType_ ) );
     lightingType_->insert( new RichRadioButton( "simulationTime", tr( "Simulation time" ), lightingType_ ) );
     lightingType_->setButton( 0 );
+    container->addWidget( lightingType_ );
 
     connect( lightingType_, SIGNAL( clicked( int ) ), this, SLOT( OnLightingType( int ) ) );
 
@@ -55,7 +58,7 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
     QLabel* diffuseLabel = new QLabel( tr( "Diffuse color" ) );
     diffuse_ = new ColorButton( "diffuse", 0, "", QColor( 204, 204, 204 ) );
 
-    fixedLightBox_ = new RichGroupBox( "fixedLightBox", tr( "Parameters" ), container );
+    fixedLightBox_ = new RichGroupBox( "fixedLightBox", tr( "Parameters" ) );
     QGridLayout* fixedLightBoxLayout = new QGridLayout( fixedLightBox_ );
     fixedLightBoxLayout->addWidget( sourceLabel, 0, 0 );
     fixedLightBoxLayout->addWidget( direction_, 0 ,1 );
@@ -63,13 +66,14 @@ LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting, kernel::
     fixedLightBoxLayout->addWidget( ambient_, 1, 1 );
     fixedLightBoxLayout->addWidget( diffuseLabel, 2, 0) ;
     fixedLightBoxLayout->addWidget( diffuse_, 2, 1 );
-
+    container->addWidget( fixedLightBox_ );
+    container->addStretch( 1 );
 
     connect( direction_, SIGNAL( DirectionChanged( const geometry::Vector3f& ) ), this, SLOT( DirectionChanged( const geometry::Vector3f& ) ) );
     connect( ambient_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( AmbientChanged( const QColor& ) ) );
     connect( diffuse_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( DiffuseChanged( const QColor& ) ) );
 
-    setWidget( container );
+    setLayout( container );
     controllers_.Register( *this );
 }
 

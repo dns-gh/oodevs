@@ -44,6 +44,7 @@ InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controll
     QVBoxLayout* boxLayout = new QVBoxLayout( box );
     boxLayout->addWidget( densityGroup );
     boxLayout->addWidget( occupationGroup );
+    boxLayout->addStretch( 1 );
     setWidget( box );
 }
 

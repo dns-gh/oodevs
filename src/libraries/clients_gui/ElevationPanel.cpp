@@ -40,8 +40,8 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
     , strengthHs_         ( 1 )
     , previousStrengthHs_ ( 1 )
 {
-    Q3VBox* container = new Q3VBox( this );
-    container->setAutoFillBackground( true );
+    QVBoxLayout* container = new QVBoxLayout( this );
+    container->setSizeConstraint( QLayout::SetMinimumSize );
     {
         fitColorGradienttoViewPort_ = new CheckBox( "fitColorGradienttoViewPort", tr( "Fit color gradient to viewport" ) );
         fitColorGradienttoViewPort_->setChecked( true );
@@ -55,10 +55,12 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
         QVBoxLayout* gradientBoxLayout = new QVBoxLayout( gradientBox );
         gradientBoxLayout->addWidget( gradient_ );
 
-        RichGroupBox* box = new RichGroupBox( "elevationColor", tr( "Elevation colors" ), container );
+        RichGroupBox* box = new RichGroupBox( "elevationColor", tr( "Elevation colors" ) );
         QVBoxLayout* boxLayout = new QVBoxLayout( box );
         boxLayout->addWidget( fitColorGradienttoViewPort_ );
         boxLayout->addWidget( gradientBox );
+        boxLayout->addStretch();
+        container->addWidget( box, 100 );
     }
     {
         QLabel* directionLabel = new QLabel( tr( "Direction" ) );
@@ -70,7 +72,7 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
         hillShadeStrength_ = new QSlider( 1, 50, 1, int( strengthHs_ ), Qt::Horizontal );
         connect( hillShadeStrength_, SIGNAL( valueChanged( int ) ), SLOT( OnStrengthChanged( int ) ) );
 
-        hsBox_ = new RichGroupBox( "hsBox", tr( "Hillshade" ), container );
+        hsBox_ = new RichGroupBox( "hsBox", tr( "Hillshade" ) );
         connect( hsBox_, SIGNAL( toggled( bool ) ), SLOT( OnEnableHillshade( bool ) ) );
         hsBox_->setCheckable( true );
         hsBox_->setChecked( enableHs_ );
@@ -80,8 +82,11 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
         hsBoxLayout->addWidget( strengthLabel, 1, 0 );
         hsBoxLayout->addWidget( hillShadeStrength_, 1, 1 );
         hsBoxLayout->setColStretch( 1, 10 );
+        hsBoxLayout->setSizeConstraint( QLayout::SetMinimumSize );
+        container->addWidget( hsBox_, 1 );
+        container->addStretch( 1 );
     }
-    setWidget( container );
+    setLayout( container );
     controllers_.Register( *this );
 }
 

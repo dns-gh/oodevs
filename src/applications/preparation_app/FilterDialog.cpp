@@ -63,9 +63,9 @@ FilterDialog::FilterDialog( const QString& objectName, QWidget* parent, xml::xis
     
     //  Main Layout
     QVBoxLayout* mainLayout = new QVBoxLayout( this, 5, 5, "FilterDialog_MainLayout" );
-    mainLayout->addWidget( selectFilterBox );
-    mainLayout->addWidget( descriptionBox );
-    mainLayout->addWidget( stack_ );
+    mainLayout->addWidget( selectFilterBox, 100 );
+    mainLayout->addWidget( descriptionBox, 1 );
+    mainLayout->addWidget( stack_, 1 );
     mainLayout->addWidget( box );
 
     // Manager
@@ -89,15 +89,6 @@ FilterDialog::FilterDialog( const QString& objectName, QWidget* parent, xml::xis
 FilterDialog::~FilterDialog()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: FilterDialog::sizeHint
-// Created: ABR 2011-06-22
-// -----------------------------------------------------------------------------
-QSize FilterDialog::sizeHint() const
-{
-    return QSize( 400, 400 );
 }
 
 // -----------------------------------------------------------------------------

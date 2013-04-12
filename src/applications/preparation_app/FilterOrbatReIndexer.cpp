@@ -31,11 +31,10 @@ namespace
         return attribute == "id" || attribute == "knowledge-group" || attribute == "party";
     }
 
-    gui::RichCheckBox* AddCheckBox( QWidget* parent, const QString& text, const QString& name, bool checked = true )
+    gui::RichCheckBox* AddCheckBox( const QString& text, const QString& name, bool checked = true )
     {
         gui::RichCheckBox* checkbox = new gui::RichCheckBox( name, text );
         checkbox->setChecked( checked );
-        parent->layout()->addWidget( checkbox );
         return checkbox;
     }
 }
@@ -195,7 +194,7 @@ void FilterOrbatReIndexer::ReadDiplomacyLink( xml::xistream& xis, xml::xostream&
 // Name: FilterOrbatReIndexer::CreateParametersWidget
 // Created: ABR 2011-06-22
 // -----------------------------------------------------------------------------
-QWidget* FilterOrbatReIndexer::CreateParametersWidget( const QString& objectName, QWidget* parent )
+QWidget* FilterOrbatReIndexer::CreateParametersWidget( const QString& objectName, QWidget* /*parent*/ )
 {
     gui::SubObjectName subObject( objectName );
 
@@ -215,14 +214,16 @@ QWidget* FilterOrbatReIndexer::CreateParametersWidget( const QString& objectName
     
     //ParameterHBox
     gui::RichGroupBox* optionBox = new gui::RichGroupBox( "OptionGroupBox", tools::translate( "FilterOrbatReIndexer", "Import options:" ) );
-    optionBox->setLayout( new QVBoxLayout() );
-    objectsCheckBox_       = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Objects" )       , "ObjectsCheckBox" );
-    crowdsCheckBox_        = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Crowds" )        , "CrowdsCheckBox");
-    populationsCheckBox_   = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Populations" )   , "PopulationsCheckBox");
-    initialStateCheckBox_  = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Initial state" ) , "InitialStateCheckBox");
-    logisticLinksCheckBox_ = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Logistic links" ), "LogisticLinksCheckBox");
-    stocksCheckBox_        = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Stocks" )        , "StocksCheckBox");
-    diplomacyCheckBox_     = AddCheckBox( optionBox, tools::translate( "FilterOrbatReIndexer", "Diplomacy" )     , "DiplomacyCheckBox");
+    QVBoxLayout* optionBoxLayout = new QVBoxLayout( optionBox );
+    optionBoxLayout->addWidget( objectsCheckBox_ = AddCheckBox( tools::translate( "FilterOrbatReIndexer", "Objects" ), "ObjectsCheckBox" ) );
+    optionBoxLayout->addWidget( crowdsCheckBox_ = AddCheckBox( tools::translate( "FilterOrbatReIndexer", "Crowds" ), "CrowdsCheckBox") );
+    optionBoxLayout->addWidget( populationsCheckBox_ = AddCheckBox( tools::translate( "FilterOrbatReIndexer", "Populations" ), "PopulationsCheckBox") );
+    optionBoxLayout->addWidget( initialStateCheckBox_ = AddCheckBox( tools::translate( "FilterOrbatReIndexer", "Initial state" ) , "InitialStateCheckBox") );
+    optionBoxLayout->addWidget( logisticLinksCheckBox_ = AddCheckBox( tools::translate( "FilterOrbatReIndexer", "Logistic links" ), "LogisticLinksCheckBox") );
+    optionBoxLayout->addWidget( stocksCheckBox_ = AddCheckBox( tools::translate( "FilterOrbatReIndexer", "Stocks" ), "StocksCheckBox") );
+    optionBoxLayout->addWidget( diplomacyCheckBox_ = AddCheckBox( tools::translate( "FilterOrbatReIndexer", "Diplomacy" ), "DiplomacyCheckBox") );
+    optionBoxLayout->setMargin( 0 );
+    optionBoxLayout->setSpacing( 0 );
 
     partiesListView_ = new FilterPartiesListView( 0 );
     partiesListView_->setEnabled( false );
@@ -241,8 +242,7 @@ QWidget* FilterOrbatReIndexer::CreateParametersWidget( const QString& objectName
     QVBoxLayout* parametersWidgetLayout =  new QVBoxLayout( parametersWidget );
     parametersWidgetLayout->addWidget( orbatHBox );
     parametersWidgetLayout->addWidget( parametersbox );
-
-    parent->layout()->addWidget( parametersWidget );
+    parametersWidgetLayout->addStretch( 1 );
 
     return parametersWidget;
 }

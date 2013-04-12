@@ -78,12 +78,13 @@ ConsistencyDialog_ABC::ConsistencyDialog_ABC( const QString& objectName, QWidget
     QHBoxLayout* buttonLayout = new QHBoxLayout();
 
     // Layout management
-    mainLayout->addWidget( typeGroup_ );
-    mainLayout->addWidget( levelGroup_ );
-    mainLayout->addWidget( tableView_ );
-    mainLayout->addLayout( buttonLayout );
     buttonLayout->addWidget( refreshButton );
     buttonLayout->addWidget( closeButton );
+
+    mainLayout->addWidget( typeGroup_, 1 );
+    mainLayout->addWidget( levelGroup_, 1 );
+    mainLayout->addWidget( tableView_, 100 );
+    mainLayout->addLayout( buttonLayout );
 }
 
 // -----------------------------------------------------------------------------
