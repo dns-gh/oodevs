@@ -885,9 +885,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectHierarchies.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Pickable_ABC.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Positions.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>

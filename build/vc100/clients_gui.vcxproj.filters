@@ -1650,6 +1650,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\GlTooltip_ABC.h">
       <Filter>Source Files\gl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\Pickable_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl">

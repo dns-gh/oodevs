@@ -122,7 +122,7 @@ void Parameter_ABC::DrawToolTip( const gui::Viewport_ABC& viewport, const gui::G
         return;
     if( !toolTip_.get() )
     {
-        std::auto_ptr< gui::GlTooltip_ABC > tooltip( tools.CreateTooltip() );
+        std::auto_ptr< ::gui::GlTooltip_ABC > tooltip( tools.CreateTooltip() );
         const_cast< Parameter_ABC* >( this )->toolTip_ = tooltip;
     }
     DisplayInToolTip( *toolTip_ );

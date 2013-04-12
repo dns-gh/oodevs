@@ -11,8 +11,8 @@
 #define __BurnSurfaceAttribute_h_
 
 #include "clients_gui/Drawable_ABC.h"
+#include "clients_gui/Pickable_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/Pickable_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include <geometry/types.h>
 
@@ -37,7 +37,7 @@ class Publisher_ABC;
 // =============================================================================
 class BurnSurfaceAttribute : public kernel::BurnSurfaceAttribute_ABC
                            , public gui::Drawable_ABC
-                           , public kernel::Pickable_ABC
+                           , public gui::Pickable_ABC
 {
 public:
     //! @name Constructors/Destructor

@@ -780,6 +780,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\ModelObserver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\Pickable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichComboBox.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.h" />

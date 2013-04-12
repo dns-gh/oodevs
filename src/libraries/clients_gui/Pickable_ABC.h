@@ -15,7 +15,10 @@ class QStringList;
 namespace kernel
 {
     class Displayer_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  Pickable_ABC
     @brief  Pickable definition

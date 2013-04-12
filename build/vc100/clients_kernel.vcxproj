@@ -431,7 +431,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Moveable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectExtensions.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectHierarchies.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Pickable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Positions.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Serializable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\SimpleHierarchies.h" />

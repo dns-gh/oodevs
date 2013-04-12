@@ -10,10 +10,10 @@
 #include "clients_gui_pch.h"
 #include "ObjectsLayer.h"
 
+#include "Pickable_ABC.h"
 #include "TerrainPicker.h"
 
 #include "clients_kernel/ObjectType.h"
-#include "clients_kernel/Pickable_ABC.h"
 
 using namespace kernel;
 using namespace gui;
