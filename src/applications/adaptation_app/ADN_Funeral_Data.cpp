@@ -106,6 +106,5 @@ void ADN_Funeral_Data::WriteArchive( xml::xostream& output )
 void ADN_Funeral_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
     for( auto it = funeralPackagingResources_.begin(); it != funeralPackagingResources_.end(); ++it )
-        ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eLogistic, eFuneral );
-
+        ( *it )->CheckValidity( checker, ( *it )->strName_.GetData(), eLogistic, eFuneral, tools::translate( "ADN_Funeral_Data", "Packaging" ).toStdString() );
 }

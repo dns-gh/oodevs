@@ -22,7 +22,7 @@
 // Created: APE 2005-01-07
 // =============================================================================
 class ADN_FuneralPackagingResources_GUI
-: public ADN_Table
+    : public ADN_Table
 {
 public:
     explicit ADN_FuneralPackagingResources_GUI( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent = 0 );

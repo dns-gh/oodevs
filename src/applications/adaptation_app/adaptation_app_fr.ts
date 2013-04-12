@@ -1728,6 +1728,13 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
+    <name>ADN_Funeral_Data</name>
+    <message>
+        <source>Packaging</source>
+        <translation>Conditionnement</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Funeral_GUI</name>
     <message>
         <source>Fake transporter speed</source>

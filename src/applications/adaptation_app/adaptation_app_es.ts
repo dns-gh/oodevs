@@ -1724,6 +1724,13 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Funeral_Data</name>
+    <message>
+        <source>Packaging</source>
+        <translation type="unfinished">Empaquetado</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Funeral_GUI</name>
     <message>
         <source>Fake transporter speed</source>

@@ -28,7 +28,7 @@ ADN_GUI_Container::ADN_GUI_Container( E_WorkspaceElements workspaceElement, ADN_
 // -----------------------------------------------------------------------------
 ADN_GUI_Container::~ADN_GUI_Container()
 {
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         delete it->second.second;
     elements_.clear();
 }
@@ -39,7 +39,7 @@ ADN_GUI_Container::~ADN_GUI_Container()
 // -----------------------------------------------------------------------------
 void ADN_GUI_Container::Build()
 {
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second.second->Build();
 }
 
@@ -49,7 +49,7 @@ void ADN_GUI_Container::Build()
 // -----------------------------------------------------------------------------
 void ADN_GUI_Container::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second.second->RegisterTable( mainWindow );
 }
 
@@ -59,7 +59,7 @@ void ADN_GUI_Container::RegisterTable( ADN_MainWindow& mainWindow )
 // -----------------------------------------------------------------------------
 void ADN_GUI_Container::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::Path& strPath )
 {
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second.second->ExportHtml( mainIndexBuilder, strPath );
 }
 
@@ -69,7 +69,7 @@ void ADN_GUI_Container::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const too
 // -----------------------------------------------------------------------------
 const QString& ADN_GUI_Container::GetTitle( int index )
 {
-    CIT_Elements it = elements_.find( index );
+    auto it = elements_.find( index );
     assert( it != elements_.end() );
     return it->second.first;
 }

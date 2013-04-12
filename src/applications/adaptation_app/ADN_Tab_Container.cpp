@@ -16,6 +16,7 @@
 // -----------------------------------------------------------------------------
 ADN_Tab_Container::ADN_Tab_Container( E_WorkspaceElements workspaceElement, ADN_Data_Container& data )
     : ADN_GUI_Container( workspaceElement, data )
+    , pTabWidget_( 0 )
 {
     // NOTHING
 }
@@ -39,11 +40,11 @@ void ADN_Tab_Container::Build()
     assert( pMainWidget_ == 0 );
 
     // Tab management
-    QTabWidget* pTabWidget = new QTabWidget();
+    pTabWidget_ = new QTabWidget();
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         it->second.second->GetMainWidget()->reparent( pMainWidget_, QPoint( 0, 0 ) );
-        pTabWidget->addTab( it->second.second->GetMainWidget(), it->second.first );
+        pTabWidget_->addTab( it->second.second->GetMainWidget(), it->second.first );
     }
 
     // Main widget
@@ -51,5 +52,16 @@ void ADN_Tab_Container::Build()
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
     pMainLayout->setSpacing( 10 );
     pMainLayout->setMargin( 10 );
-    pMainLayout->addWidget( pTabWidget );
+    pMainLayout->addWidget( pTabWidget_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tab_Container::ChangeCurrentSubTab
+// Created: JSR 2013-04-12
+// -----------------------------------------------------------------------------
+void ADN_Tab_Container::ChangeCurrentSubTab( int subTab )
+{
+    assert( pTabWidget_ );
+    if( pTabWidget_ )
+        pTabWidget_->setCurrentIndex( subTab );
 }

@@ -55,9 +55,7 @@ protected:
 protected:
     //! @name Types
     //@{
-    typedef std::map< int, std::pair< QString, ADN_GUI_ABC* > >  T_Elements;
-    typedef T_Elements::iterator          IT_Elements;
-    typedef T_Elements::const_iterator   CIT_Elements;
+    typedef std::map< int, std::pair< QString, ADN_GUI_ABC* > > T_Elements;
     //@}
 
 protected:

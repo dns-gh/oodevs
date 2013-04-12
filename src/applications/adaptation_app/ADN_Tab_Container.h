@@ -31,6 +31,13 @@ public:
     //! @name Operations
     //@{
     virtual void Build();
+    virtual void ChangeCurrentSubTab( int subTab );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    QTabWidget* pTabWidget_;
     //@}
 };
 
