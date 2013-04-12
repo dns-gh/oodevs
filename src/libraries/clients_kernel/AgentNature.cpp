@@ -18,11 +18,13 @@ using namespace kernel;
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
 AgentNature::AgentNature( xml::xistream& xis )
+    : depth_( 0.f )
 {
     xis >> xml::start( "nature" )
             >> xml::attribute( "level", level_ )
             >> xml::attribute( "nature-app6", nature_ )
             >> xml::attribute( "atlas-nature", atlas_ )
+            >> xml::optional >> xml::attribute( "depth", depth_ )
         >> xml::end;
 }
 
@@ -60,4 +62,13 @@ const std::string& AgentNature::GetNature() const
 const std::string& AgentNature::GetAtlas() const
 {
     return atlas_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentNature::GetDepth
+// Created: LDC 2013-04-12
+// -----------------------------------------------------------------------------
+const float AgentNature::GetDepth() const
+{
+    return depth_;
 }

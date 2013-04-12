@@ -38,6 +38,7 @@ public:
     const std::string& GetLevel() const;
     const std::string& GetNature() const;
     const std::string& GetAtlas() const;
+    const float GetDepth() const;
     //@}
 
 private:
@@ -53,6 +54,7 @@ private:
     std::string level_;
     std::string nature_;
     std::string atlas_;
+    float depth_;
     //@}
 };
 
