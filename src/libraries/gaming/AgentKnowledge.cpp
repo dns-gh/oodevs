@@ -244,9 +244,10 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_A
     {
         const boost::tuple< bool, bool, bool > backupState = tools.UnSelect();
         unsigned int direction = nDirection_.IsSet() ? (uint) nDirection_ : 0;
-        float width = realAgent_.GetType().GetWidth();
-        float depth = realAgent_.GetType().GetDepth();
-        tools.DrawUnitSymbol( currentSymbol_, moveSymbol_, staticSymbol_, nSpeed_.IsSet() && ( uint )nSpeed_ > 0 , where, -1, direction, width, depth );
+        bool isMoving = nSpeed_.IsSet() && ( uint )nSpeed_ > 0;
+        float width = isMoving? 0.f : realAgent_.GetType().GetWidth();
+        float depth = isMoving? realAgent_.GetType().GetLength() : realAgent_.GetType().GetDepth();
+        tools.DrawUnitSymbol( currentSymbol_, moveSymbol_, staticSymbol_, isMoving, where, -1, direction, width, depth );
         if( nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
         {
             tools.DrawApp6SymbolFixedSize( realAgent_.GetType().GetLevelSymbol(), where, -1, 0 );

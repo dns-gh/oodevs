@@ -906,28 +906,26 @@ void GlWidget::DrawApp6SymbolScaledSize( const std::string& symbol, const geomet
     const float svgDeltaY = -80 + 120; // Offset of 80 in our svg files + half of 240 which is the defautl height...
     DrawApp6Symbol( symbol, DefaultStyle(), where, baseWidth_ * factor, Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) ), 4, 4, direction, width, depth, svgDeltaX, svgDeltaY );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: GLWidget::DrawUnitSymbol
 // Created: LDC 2013-04-09
 // -----------------------------------------------------------------------------
 void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
 {
+    width = width ? width / 360 : 1;
+    depth = depth ? depth / 240 : 1;
     if( isMoving )
     {
         if( !moveSymbol.empty() )
-            DrawApp6SymbolScaledSize( moveSymbol, where, factor, direction, 1., 1. );
+            DrawApp6SymbolScaledSize( moveSymbol, where, factor, direction, width, depth );
         else
             DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
     }
     else
     {
         if( !staticSymbol.empty() )
-        {
-            width = width ? width / 360 : 1;
-            depth = depth ? depth / 240 : 1;
             DrawApp6SymbolScaledSize( staticSymbol, where, factor, direction, width, depth );
-        }
         else
             DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
     }

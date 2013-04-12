@@ -24,12 +24,18 @@ ComponentType::ComponentType( xml::xistream& xis )
     , weight_( 0 )
     , width_( 0 )
     , spacing_( 0 )
+    , length_( 0 )
+    , safetyDistance_( 0 )
+    , speedSafetyDistance_()
 {
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "id", id_ )
         >> xml::attribute( "weight", weight_ )
         >> xml::optional >> xml::attribute( "width", width_ )
-        >> xml::optional >> xml::attribute( "front-separation-distance", spacing_ );
+        >> xml::optional >> xml::attribute( "front-separation-distance", spacing_ )
+        >> xml::optional >> xml::attribute( "length" , length_ )
+        >> xml::optional >> xml::attribute( "safety-distance" , safetyDistance_ )
+        >> xml::optional >> xml::attribute( "speed-safety-distance" , speedSafetyDistance_ );
 
     xis >> xml::optional
         >> xml::start( "logistic-functions" )
@@ -99,4 +105,31 @@ float ComponentType::GetWidth() const
 float ComponentType::GetSpacing() const
 {
     return spacing_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ComponentType::GetLength
+// Created: MMC 2013-04-12
+// -----------------------------------------------------------------------------
+float ComponentType::GetLength() const
+{
+    return length_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ComponentType::GetSafetyDistance
+// Created: MMC 2013-04-12
+// -----------------------------------------------------------------------------
+float ComponentType::GetSafetyDistance() const
+{
+    return safetyDistance_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ComponentType::GetSpeedSafetyDistance
+// Created: MMC 2013-04-12
+// -----------------------------------------------------------------------------
+float ComponentType::GetSpeedSafetyDistance() const
+{
+    return speedSafetyDistance_;
 }

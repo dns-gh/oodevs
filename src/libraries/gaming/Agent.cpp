@@ -78,9 +78,10 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
     }
     if( viewport.IsHotpointVisible() )
     {
-        float width = type_.GetWidth();
-        float depth = type_.GetDepth();
-        tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, speed_ != 0, where, -1.f, direction_, width, depth );
+        bool isMoving = ( speed_ != 0 );
+        float width = isMoving? 0.f : type_.GetWidth();
+        float depth = isMoving? type_.GetLength() : type_.GetDepth();
+        tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, isMoving, where, -1.f, direction_, width, depth );
         tools.DrawApp6SymbolFixedSize( level_, where, -1.f, 0 );
     }
 }

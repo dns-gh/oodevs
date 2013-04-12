@@ -259,6 +259,21 @@ float AgentType::GetDepth() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentType::GetLength
+// Created: MMC 2013-04-12
+// -----------------------------------------------------------------------------
+float AgentType::GetLength( bool isSpeedSafety /*= false*/ ) const
+{
+    float result = 0.f;
+    for( auto it = equipments_.begin(); it != equipments_.end(); ++it )
+    {
+        const ComponentType& type = (*it)->GetType();
+        result += (*it)->GetCount() * ( type.GetLength() + ( isSpeedSafety ? type.GetSpeedSafetyDistance() : type.GetSafetyDistance() ) );
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentType::GetTypeName
 // Created: MMC 2012-03-19
 // -----------------------------------------------------------------------------

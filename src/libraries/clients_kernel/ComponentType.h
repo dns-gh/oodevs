@@ -37,6 +37,9 @@ public:
     float GetWeight() const;
     float GetWidth() const;
     float GetSpacing() const;
+    float GetLength() const;
+    float GetSafetyDistance() const;
+    float GetSpeedSafetyDistance() const;
     //@}
 
 private:
@@ -59,6 +62,9 @@ private:
     float weight_;
     float width_;
     float spacing_;
+    float length_;
+    float safetyDistance_;
+    float speedSafetyDistance_;
 
     bool hasMaintenance_;
     bool hasMedical_;
