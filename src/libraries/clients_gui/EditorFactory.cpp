@@ -9,13 +9,13 @@
 
 #include "clients_gui_pch.h"
 #include "EditorFactory.h"
-#include "clients_kernel/ValueEditor.h"
-#include "clients_kernel/Units.h"
+#include "ValueEditor.h"
 #include "SubObjectName.h"
 #include "RichLineEdit.h"
 #include "RichSpinBox.h"
 #include "ValuedComboBox.h"
 #include "Tools.h"
+#include "clients_kernel/Units.h"
 
 using namespace gui;
 using namespace kernel;

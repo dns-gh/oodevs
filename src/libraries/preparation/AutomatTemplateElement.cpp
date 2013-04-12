@@ -15,7 +15,7 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/EntityType.h"
 #include "preparation/ColorController.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
@@ -28,7 +28,7 @@
 // -----------------------------------------------------------------------------
 AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents, const kernel::Automat_ABC& automat )
     : agents_( agents )
-    , type_  ( automat.Get< kernel::EntityType< kernel::AutomatType > >().GetType() )
+    , type_  ( automat.Get< gui::EntityType< kernel::AutomatType > >().GetType() )
     , name_  ( automat.GetName() )
 {
     const kernel::DictionaryExtensions& extensions = automat.Get< kernel::DictionaryExtensions >();

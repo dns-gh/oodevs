@@ -52,7 +52,7 @@ EUrbanLevel UrbanHierarchies::GetLevel() const
 // -----------------------------------------------------------------------------
 void UrbanHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
 {
-    kernel::EntityHierarchies< kernel::Hierarchies >::ChangeSuperior( &superior );
+    gui::EntityHierarchies< kernel::Hierarchies >::ChangeSuperior( &superior );
 }
 
 // -----------------------------------------------------------------------------

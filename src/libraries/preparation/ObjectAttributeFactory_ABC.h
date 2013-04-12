@@ -17,7 +17,7 @@ namespace xml
     class xistream;
 }
 
-namespace kernel
+namespace gui
 {
     class PropertiesDictionary;
 }
@@ -33,7 +33,7 @@ public:
 
     //! @name Register
     //@{
-    virtual void Create( const std::string& attribute, kernel::Object_ABC& object, kernel::PropertiesDictionary& dico, xml::xistream& xis ) = 0;
+    virtual void Create( const std::string& attribute, kernel::Object_ABC& object, gui::PropertiesDictionary& dico, xml::xistream& xis ) = 0;
     //@}
 };
 

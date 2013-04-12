@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "MineAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: MineAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+MineAttribute::MineAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : density_( 0, Units::percentage )
 {
     CreateDictionary( dictionary, entity );
@@ -30,7 +30,7 @@ MineAttribute::MineAttribute( kernel::PropertiesDictionary& dictionary, const ke
 // Name: MineAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+MineAttribute::MineAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : density_( xis.attribute< float >( "density", 0. ) * 100., Units::percentage )
 {
     CreateDictionary( dictionary, entity );
@@ -60,8 +60,8 @@ void MineAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void MineAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "mine" ) 
-            << xml::attribute( "density", ( density_.value_ != 0 ) ? density_.value_ / 100. : 0. ) 
+    xos << xml::start( "mine" )
+            << xml::attribute( "density", ( density_.value_ != 0 ) ? density_.value_ / 100. : 0. )
         << xml::end;
 }
 
@@ -78,7 +78,7 @@ void MineAttribute::SetDensity( float density )
 // Name: MineAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void MineAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void MineAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "MineAttribute", "Info/Improvable/Value" ), density_ );
 }

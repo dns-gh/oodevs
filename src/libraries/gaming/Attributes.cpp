@@ -15,10 +15,10 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/SensorType.h"
 #include "clients_kernel/Tools.h"
 #include "statusicons.h"
@@ -34,7 +34,7 @@ using namespace kernel;
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
 Attributes::Attributes( kernel::Entity_ABC& entity, Controller& controller, const CoordinateConverter_ABC& converter,
-                        PropertiesDictionary& dictionary, const tools::Resolver_ABC< Team_ABC >& teamResolver )
+                        gui::PropertiesDictionary& dictionary, const tools::Resolver_ABC< Team_ABC >& teamResolver )
     : entity_                           ( entity )
     , controller_                       ( controller )
     , converter_                        ( converter )
@@ -90,7 +90,7 @@ Attributes::~Attributes()
 // Name: Attributes::CreateDictionary
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
+void Attributes::CreateDictionary( gui::PropertiesDictionary& dictionary ) const
 {
     // $$$$ AGE 2006-06-22: unité !
     dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Info/Operational state" ),               nRawOpState_ );
@@ -261,7 +261,7 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
         crowdTransported_ = message.transported_crowd();
 
     BOOST_FOREACH( const std::string& content, updated )
-        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Attributes", content.c_str() ) ) );
+        controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "Attributes", content.c_str() ) ) );
 
     if( message.has_headquarters() )
     {

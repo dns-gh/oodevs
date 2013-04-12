@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AutomatTacticalHierarchies.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -60,7 +61,7 @@ void AutomatTacticalHierarchies::DoUpdate( const sword::AutomatChangeSuperior& m
 void AutomatTacticalHierarchies::DoUpdate( const InstanciationComplete& message )
 {
     SetSuperior( &superior_ );
-    kernel::MergingTacticalHierarchies::DoUpdate( message );
+    MergingTacticalHierarchies::DoUpdate( message );
 }
 
 // -----------------------------------------------------------------------------

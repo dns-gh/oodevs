@@ -20,8 +20,12 @@ namespace kernel
 {
     class Displayer_ABC;
     class NBCAgent;
-    class PropertiesDictionary;
     class Entity_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -48,9 +52,9 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit NBCAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+    explicit NBCAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
              NBCAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents,
-                           kernel::PropertiesDictionary& dico, const kernel::Entity_ABC& entity );
+                           gui::PropertiesDictionary& dico, const kernel::Entity_ABC& entity );
     virtual ~NBCAttribute();
     //@}
 
@@ -70,7 +74,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+    void CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     void ReadNbcAgent( xml::xistream& xis, const tools::Resolver_ABC< kernel::NBCAgent, std::string >& nbcAgents );
     //@}
 

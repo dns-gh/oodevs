@@ -13,8 +13,12 @@
 namespace kernel
 {
     class ActionController;
-    class EditorFactory_ABC;
     class Entity_ABC;
+}
+
+namespace gui
+{
+    class EditorFactory_ABC;
 }
 
 namespace gui
@@ -30,7 +34,7 @@ class PropertyDelegate : public QItemDelegate
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertyDelegate( kernel::ActionController& controllers, kernel::EditorFactory_ABC& factory );
+             PropertyDelegate( kernel::ActionController& controllers, EditorFactory_ABC& factory );
     virtual ~PropertyDelegate();
     //@}
 
@@ -45,7 +49,7 @@ private:
     //! @name Member data
     //@{
     kernel::ActionController& actionController_;
-    kernel::EditorFactory_ABC& factory_;
+    EditorFactory_ABC& factory_;
     //@}
 };
 

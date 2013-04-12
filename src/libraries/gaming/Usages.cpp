@@ -15,9 +15,9 @@
 // Name: Usages constructor
 // Created: LGY 2011-04-14
 // -----------------------------------------------------------------------------
-Usages::Usages( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
+Usages::Usages( const sword::UrbanAttributes& message, gui::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
                 float livingSpace, kernel::Entity_ABC& owner )
-    : kernel::Usages( dictionary, accommodationTypes, livingSpace, owner )
+    : gui::Usages( dictionary, accommodationTypes, livingSpace, owner )
 {
     for( int i = 0; i <  message.usages_size(); ++i )
     {

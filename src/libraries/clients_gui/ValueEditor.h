@@ -10,7 +10,7 @@
 #ifndef __ValueEditor_h_
 #define __ValueEditor_h_
 
-namespace kernel
+namespace gui
 {
 
 template< typename T >

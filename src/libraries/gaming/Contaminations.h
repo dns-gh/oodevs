@@ -25,9 +25,13 @@ namespace kernel
     class Controller;
     class Displayer_ABC;
     class NBCAgent;
-    class PropertiesDictionary;
     class Entity_ABC;
     class AgentType;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -44,7 +48,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Contaminations( kernel::Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::NBCAgent >& resolver,
-                             kernel::PropertiesDictionary& dico, const kernel::AgentType& type );
+                             gui::PropertiesDictionary& dico, const kernel::AgentType& type );
     virtual ~Contaminations();
     //@}
 

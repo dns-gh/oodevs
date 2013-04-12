@@ -16,7 +16,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/LogisticLevel.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -24,7 +24,7 @@
 // Name: LogisticAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( kernel::PropertiesDictionary& dictionary, kernel::Controllers& controllers, const kernel::Object_ABC& object )
+LogisticAttribute::LogisticAttribute( gui::PropertiesDictionary& dictionary, kernel::Controllers& controllers, const kernel::Object_ABC& object )
     : controllers_( controllers )
     , logisticBase_( 0 )
     , object_      ( object )
@@ -41,7 +41,7 @@ LogisticAttribute::LogisticAttribute( kernel::PropertiesDictionary& dictionary, 
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
 LogisticAttribute::LogisticAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
-                                      const tools::Resolver_ABC< kernel::Formation_ABC >& formations, kernel::PropertiesDictionary& dictionary,
+                                      const tools::Resolver_ABC< kernel::Formation_ABC >& formations, gui::PropertiesDictionary& dictionary,
                                       kernel::Controllers& controllers, const kernel::Object_ABC& object )
     : controllers_( controllers )
     , logisticBase_( 0 )
@@ -150,7 +150,7 @@ void LogisticAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: LogisticAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void LogisticAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void LogisticAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary )
 {
     dictionary.RegisterExtension( object_, this, tools::translate( "LogisticAttribute", "Info/Camp attributes/Logistic base" ), logisticBase_ );
 }

@@ -57,13 +57,13 @@
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
-#include "clients_kernel/CriticalIntelligence.h"
 #include "clients_kernel/Color_ABC.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/CriticalIntelligence.h"
+#include "clients_gui/EntityType.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -98,9 +98,9 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Automat_ABC& parent, const kern
     Agent* result = new Agent( type, controllers_.controller_, idManager_ );
     if( !name.isEmpty() )
         result->Rename( name );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
-    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
+    result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, symbolsFactory_ ) );
     result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dictionary, tools::translate( "Affinities", "Affinities" ) ) );
@@ -120,8 +120,8 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Automat_ABC& parent, const kern
 kernel::Automat_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const kernel::AutomatType& type, const QString& name )
 {
     Automat* result = new Automat( type, controllers_.controller_, idManager_, name );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach( *new kernel::EntityType< kernel::AutomatType >( *result, type, dictionary ) );
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
+    result->Attach( *new gui::EntityType< kernel::AutomatType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
     const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
@@ -153,9 +153,9 @@ kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
     else
         top = const_cast< kernel::Entity_ABC* >( &parent.Get< kernel::CommunicationHierarchies >().GetTop() );
     Population* result = new Population( type, number, controllers_.controller_, idManager_ );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach( *new kernel::EntityType< kernel::PopulationType >( *result, type, dictionary ) );
-    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
+    result->Attach( *new gui::EntityType< kernel::PopulationType >( *result, type, dictionary ) );
+    result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< kernel::Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
     result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary, *result ) );
@@ -179,7 +179,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
         top = const_cast< kernel::Entity_ABC* >( &parent.Get< kernel::CommunicationHierarchies >().GetTop() );
 
     Inhabitant* result = new Inhabitant( type, number, name, controllers_.controller_, idManager_ );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
 
     kernel::Positions& positions = *new InhabitantPositions( controllers_.controller_, static_.coordinateConverter_, location, model_.urban_, *result, dictionary );
     if( positions.GetPosition() == geometry::Point2f( 0, 0 ) )
@@ -188,7 +188,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
         delete result;
         return 0;
     }
-    result->Attach( *new kernel::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
+    result->Attach( *new gui::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( positions );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, top ) );
     result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary, *result ) );
@@ -227,8 +227,8 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     if( !type )
         return 0;
     Agent* result = new Agent( xis, controllers_.controller_, idManager_, *type, symbolsFactory_ );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( xis, controllers_.controller_, *result, dictionary ) );
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
+    result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( xis, controllers_.controller_, *result, dictionary ) );
     const geometry::Point2f position = model_.ReadPosition( xis, result );
     result->Attach< kernel::Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, symbolsFactory_ ) );
@@ -253,8 +253,8 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     if( !type )
         return 0;
     Automat* result = new Automat( xis, controllers_.controller_, idManager_, *type );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach( *new kernel::EntityType< kernel::AutomatType >( *result, *type, dictionary ) );
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
+    result->Attach( *new gui::EntityType< kernel::AutomatType >( *result, *type, dictionary ) );
     result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis, std::string() ) );
     result->Attach< kernel::AutomatDecisions_ABC >( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
@@ -279,9 +279,9 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
 kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_ABC& parent, const kernel::PopulationType& type )
 {
     Population* result = new Population( xis, type, controllers_.controller_, idManager_ );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach( *new kernel::EntityType< kernel::PopulationType >( *result, type, dictionary ) );
-    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( xis, controllers_.controller_, *result, dictionary ) );
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
+    result->Attach( *new gui::EntityType< kernel::PopulationType >( *result, type, dictionary ) );
+    result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( xis, controllers_.controller_, *result, dictionary ) );
     const geometry::Point2f position = model_.ReadPosition( xis, result );
     result->Attach< kernel::Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
@@ -300,8 +300,8 @@ kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_A
 kernel::Inhabitant_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_ABC& parent, const kernel::InhabitantType& type )
 {
     Inhabitant* result = new Inhabitant( xis, controllers_.controller_, idManager_ );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach( *new kernel::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
+    result->Attach( *new gui::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( *new InhabitantPositions( xis, controllers_.controller_, static_.coordinateConverter_, model_.urban_, *result, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary, *result ) );
@@ -321,9 +321,9 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
     assert( ghost.GetGhostType() == eGhostType_Agent );
     Agent* result = new Agent( type, controllers_.controller_, idManager_ );
     result->Rename( ghost.GetName() );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
-    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
+    result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     // Hierarchies
     {
         const kernel::TacticalHierarchies* ghostHierarchy = ghost.Retrieve< kernel::TacticalHierarchies >();
@@ -353,8 +353,8 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
     assert( ghost.GetGhostType() == eGhostType_Automat );
 
     Automat* result = new Automat( type, controllers_.controller_, idManager_, ghost.GetName() );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach( *new kernel::EntityType< kernel::AutomatType >( *result, type, dictionary ) );
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
+    result->Attach( *new gui::EntityType< kernel::AutomatType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );
     const kernel::Karma& karma = ghost.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );

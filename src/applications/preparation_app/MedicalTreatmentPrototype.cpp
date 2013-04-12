@@ -12,7 +12,7 @@
 #include "clients_kernel/MedicalTreatmentType.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
 #include "preparation/TeamsModel.h"
 #include "clients_gui/LoadableLineEdit.h"
@@ -49,7 +49,7 @@ void MedicalTreatmentPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         MedicalTreatmentAttribute* attribute = new MedicalTreatmentAttribute( resolver_, dictionary, *creation_ );
         attribute->SetDoctors( doctors_->value() );
         attribute->SetReferenceID( std::string( referenceID_->text().toStdString() ) );

@@ -19,6 +19,10 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class ObjectTypes;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -43,9 +47,9 @@ class PhysicalAttribute : public kernel::PhysicalAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PhysicalAttribute( const kernel::Entity_ABC* parent, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
+             PhysicalAttribute( const kernel::Entity_ABC* parent, gui::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
                                 UrbanObject& urbanObject, kernel::Controllers& controllers, const kernel::ObjectTypes& objectTypes );
-             PhysicalAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
+             PhysicalAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
                                 UrbanObject& urbanObject, kernel::Controllers& controllers, const kernel::ObjectTypes& objectTypes );
     virtual ~PhysicalAttribute();
     //@}

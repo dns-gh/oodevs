@@ -24,11 +24,11 @@
 #include "clients_gui/RichComboBox.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_gui/Tools.h"
+#include "clients_gui/ValueEditor.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/Karma.h"
-#include "clients_kernel/ValueEditor.h"
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/KnowledgeGroupType.h"
@@ -93,7 +93,7 @@ namespace
 {
     template< typename Entity, typename Resolver, typename EditorType = Entity* >
     class SimpleResolverEditor : public gui::ValuedComboBox< const Entity* >
-                               , public kernel::ValueEditor< EditorType >
+                               , public gui::ValueEditor< EditorType >
     {
     public:
         SimpleResolverEditor( QWidget* parent, const Resolver& resolver, bool selectionField = false, const QString& selectionText = " - " )
@@ -181,7 +181,7 @@ namespace
 {
     template< typename Enum >
     class EnumEditor : public gui::RichComboBox
-                     , public kernel::ValueEditor< Enum >
+                     , public gui::ValueEditor< Enum >
     {
     public:
         explicit EnumEditor( QWidget* parent )
@@ -372,7 +372,7 @@ void EditorFactory::Call( kernel::CriticalIntelligenceType* const& value )
 namespace
 {
     class DisasterEditor : public gui::ValuedComboBox< std::string >
-                         , public kernel::ValueEditor< kernel::DisasterDirectory >
+                         , public gui::ValueEditor< kernel::DisasterDirectory >
     {
     public:
                 DisasterEditor( QWidget* parent, const tools::GeneralConfig& config )

@@ -11,9 +11,9 @@
 #include "HumanFactors.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/foreach.hpp>
@@ -24,7 +24,7 @@ using namespace kernel;
 // Name: HumanFactors constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-HumanFactors::HumanFactors( kernel::Entity_ABC& entity, Controller& controller, PropertiesDictionary& dictionary )
+HumanFactors::HumanFactors( kernel::Entity_ABC& entity, Controller& controller, gui::PropertiesDictionary& dictionary )
     : entity_    ( entity )
     , controller_( controller )
     , experience_( ( E_UnitExperience ) 0 )
@@ -48,7 +48,7 @@ HumanFactors::~HumanFactors()
 // Name: HumanFactors::CreateDictionary
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-void HumanFactors::CreateDictionary( kernel::PropertiesDictionary& dictionary ) const
+void HumanFactors::CreateDictionary( gui::PropertiesDictionary& dictionary ) const
 {
     dictionary.Register( entity_, tools::translate( "Human factors", "Human factors/Experience" ), experience_ );
     dictionary.Register( entity_, tools::translate( "Human factors", "Human factors/Tiredness" ), tiredness_ );
@@ -68,7 +68,7 @@ void HumanFactors::DoUpdate( const sword::UnitAttributes& message )
     UPDATE_PROPERTY( message, tiredness_, tiredness, "Human factors/Tiredness", updated );
     UPDATE_PROPERTY( message, stress_, stress, "Human factors/Stress", updated );
     BOOST_FOREACH( const std::string& content, updated )
-        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Attributes", content.c_str() ) ) );
+        controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "Attributes", content.c_str() ) ) );
     controller_.Update( *(HumanFactors_ABC*)this );
 }
 

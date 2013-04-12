@@ -22,7 +22,6 @@ namespace kernel
     class CoordinateConverter_ABC;
     class Location_ABC;
     class Inhabitant_ABC;
-    class PropertiesDictionary;
     class Controller;
     class UrbanObject_ABC;
 }
@@ -30,6 +29,7 @@ namespace kernel
 namespace gui
 {
     class GlTools_ABC;
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -62,9 +62,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              InhabitantPositions( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location,
-                                  const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary );
+                                  const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, gui::PropertiesDictionary& dictionary );
              InhabitantPositions( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel,
-                                  kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary );
+                                  kernel::Inhabitant_ABC& inhabitant, gui::PropertiesDictionary& dictionary );
     virtual ~InhabitantPositions();
     //@}
 
@@ -108,7 +108,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     const UrbanModel& urbanModel_;
     kernel::Inhabitant_ABC& inhabitant_;
-    kernel::PropertiesDictionary& dictionary_;
+    gui::PropertiesDictionary& dictionary_;
     geometry::Point2f position_;
     T_UrbanObjectVector livingUrbanObject_;
     T_UrbanObjectVector edition_;

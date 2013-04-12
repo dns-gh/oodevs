@@ -34,9 +34,9 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/GhostPrototype.h"
 #include "clients_kernel/LogisticLevel.h"
-#include "clients_kernel/MergingTacticalHierarchies.h"
+#include "clients_gui/MergingTacticalHierarchies.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/SubTypes.h"
 #include "clients_kernel/SymbolFactory.h"
@@ -131,7 +131,7 @@ Ghost::Ghost( Controller& controller, const Model& model, tools::IdManager& idMa
         std::string levelSymbol = pHierarchy->GetLevel();
         if( !levelSymbol.empty() )
         {
-            level_ = MergingTacticalHierarchies::DecreaseLevel( levelSymbol );
+            level_ = gui::MergingTacticalHierarchies::DecreaseLevel( levelSymbol );
             if( level_.find( "levels/" ) != std::string::npos )
                 level_.erase( 0, 7 );
         }
@@ -189,7 +189,7 @@ void Ghost::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
 // -----------------------------------------------------------------------------
 void Ghost::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Ghost type" ), ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToTr ) );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Type" ), type_ );
 }

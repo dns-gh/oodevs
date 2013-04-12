@@ -10,7 +10,7 @@
 #ifndef UrbanColorEditor_h
 #define UrbanColorEditor_h
 
-#include "clients_kernel/ValueEditor.h"
+#include "clients_gui/ValueEditor.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 
 // =============================================================================
@@ -20,7 +20,7 @@
 // Created: LGY 2012-08-17
 // =============================================================================
 class UrbanColorEditor : public QColorDialog
-                       , public kernel::ValueEditor< kernel::UrbanBlockColor >
+                       , public gui::ValueEditor< kernel::UrbanBlockColor >
 {
     Q_OBJECT
 

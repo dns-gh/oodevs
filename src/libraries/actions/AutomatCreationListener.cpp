@@ -18,7 +18,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/EntityType.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ bool AutomatCreationListener::OnMessageReceived( const sword::SimToClient& messa
         geometry::Point2f point = point_;
         for( unsigned int i = 0; i < number; ++i )
         {
-            if( pcSet || &composition.GetType() != automat->Get< kernel::EntityType< kernel::AutomatType > >().GetType().GetTypePC() )
+            if( pcSet || &composition.GetType() != automat->Get< ::gui::EntityType< kernel::AutomatType > >().GetType().GetTypePC() )
                 point = geometry::Point2f( 100.f * std::sin( current++ * angle ), 100.f * std::cos( current * angle ) ) + point_.ToVector();
             actions::Action_ABC* action = actionsModel_.CreateAgentCreationAction( agentType, point, *automat );
             action->Attach( *new actions::ActionTiming( controller_, time_ ) );

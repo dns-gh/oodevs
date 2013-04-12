@@ -19,7 +19,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/Tools.h"
@@ -128,7 +128,7 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
     if( viewport.IsHotpointVisible() )
     {
         InitializeSymbol();
-        
+
         float width = type_.GetWidth();
         float depth = type_.GetDepth();
         tools.DrawUnitSymbol( symbolPath_, moveSymbol_, staticSymbol_, false, where, -1.f, 0, width, depth );
@@ -160,7 +160,7 @@ const AgentType& Agent::GetType() const
 // -----------------------------------------------------------------------------
 void Agent::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), type_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Weight" ), weight_ );
 }

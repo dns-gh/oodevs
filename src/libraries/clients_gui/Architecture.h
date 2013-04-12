@@ -16,10 +16,14 @@
 namespace kernel
 {
     class MaterialCompositionType;
-    class PropertiesDictionary;
     class RoofShapeType;
     class ObjectTypes;
     class UrbanObject_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace gui
@@ -35,7 +39,7 @@ class Architecture : public kernel::Architecture_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Architecture( kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
+             Architecture( kernel::UrbanObject_ABC& object, PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
     virtual ~Architecture();
     //@}
 
@@ -63,7 +67,7 @@ protected:
     //! @name Member Data
     //@{
     kernel::UrbanObject_ABC&            object_;
-    kernel::PropertiesDictionary&       dictionary_;
+    PropertiesDictionary&               dictionary_;
     const kernel::ObjectTypes&          objectTypes_;
     kernel::MaterialCompositionType*    material_;
     kernel::RoofShapeType*              roofShape_;

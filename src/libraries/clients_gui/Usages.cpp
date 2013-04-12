@@ -7,15 +7,16 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "Usages.h"
-#include "AccommodationType.h"
-#include "AccommodationTypes.h"
 #include "DictionaryUpdated.h"
 #include "PropertiesDictionary.h"
-#include "Tools.h"
+#include "clients_kernel/AccommodationType.h"
+#include "clients_kernel/AccommodationTypes.h"
+#include "clients_kernel/Tools.h"
 
 using namespace kernel;
+using namespace gui;
 
 const std::string Usages::defaultStr_ = "default";
 
@@ -44,7 +45,7 @@ Usages::~Usages()
 namespace
 {
     template< typename T >
-    void CreateProperties( kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary, const QString& name, T& value )
+    void CreateProperties( kernel::Entity_ABC& entity, PropertiesDictionary& dictionary, const QString& name, T& value )
     {
         dictionary.Register( entity, name, value, true, eUrbanTemplate );
     }

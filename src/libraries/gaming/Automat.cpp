@@ -11,12 +11,12 @@
 #include "Automat.h"
 #include "Diplomacies.h"
 #include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Karma.h"
-#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Tools.h"
@@ -54,7 +54,7 @@ Automat::~Automat()
 // -----------------------------------------------------------------------------
 void Automat::CreateDictionary( const kernel::AutomatType& type )
 {
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     if( type.IsTC2() ) //$$$ NAZE
         dictionary.Register( *this, tools::translate( "Automat", "Info/LogisticLevel" ), *logisticLevel_ );
 }

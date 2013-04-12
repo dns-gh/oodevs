@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef kernel_PropertiesGroupDictionary_h
-#define kernel_PropertiesGroupDictionary_h
+#ifndef gui_PropertiesGroupDictionary_h
+#define gui_PropertiesGroupDictionary_h
 
 #include "PropertiesDictionary.h"
 
@@ -16,18 +16,22 @@ namespace kernel
 {
     class UrbanObject_ABC;
     class Displayer_ABC;
+}
+
+namespace gui
+{
 // =============================================================================
 /** @class  PropertiesGroupDictionary
     @brief  Properties group dictionary
 */
 // Created: LGY 2013-01-03
 // =============================================================================
-class PropertiesGroupDictionary : public kernel::PropertiesDictionary
+class PropertiesGroupDictionary : public PropertiesDictionary
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesGroupDictionary( Controller& controller, Displayer_ABC& comparator );
+             PropertiesGroupDictionary( kernel::Controller& controller, kernel::Displayer_ABC& comparator );
     virtual ~PropertiesGroupDictionary();
     //@}
 
@@ -45,10 +49,10 @@ private:
 private:
     //! @name Member data
     //@{
-    Displayer_ABC& comparator_;
+    kernel::Displayer_ABC& comparator_;
     //@}
 };
 
 }
 
-#endif // kernel_PropertiesGroupDictionary_h
+#endif // gui_PropertiesGroupDictionary_h

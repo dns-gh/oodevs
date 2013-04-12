@@ -11,7 +11,7 @@
 #include "ResourceNetworkModel.h"
 #include "ResourceNetwork.h"
 #include "clients_gui/ResourceNetworkSelectionObserver.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkModel constructor
@@ -41,7 +41,7 @@ ResourceNetworkModel::~ResourceNetworkModel()
 // -----------------------------------------------------------------------------
 void ResourceNetworkModel::Create( kernel::Entity_ABC& entity )
 {
-    kernel::PropertiesDictionary* dico = entity.Retrieve< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary* dico = entity.Retrieve< gui::PropertiesDictionary >();
     ResourceNetwork* element = new ResourceNetwork( controllers_, entity, model_.urbanObjects_, model_.objects_, staticModel_.objectTypes_, dico );
     entity.Attach< gui::ResourceNetwork_ABC >( *element );
 }

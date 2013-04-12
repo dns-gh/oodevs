@@ -13,13 +13,13 @@
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/ResourceNetworkType.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 #include <time.h>
@@ -34,7 +34,7 @@ double ResourceNetwork::stippleFactor_ = 1;
 // Name: ResourceNetwork constructor
 // Created: JSR 2011-03-04
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, PropertiesDictionary* dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, gui::PropertiesDictionary* dico )
     : controllers_            ( controllers )
     , entity_                 ( entity )
     , urbanResolver_          ( urbanResolver )
@@ -49,7 +49,7 @@ ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& 
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, PropertiesDictionary* dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, gui::PropertiesDictionary* dico )
     : controllers_            ( controllers )
     , entity_                 ( entity )
     , urbanResolver_          ( urbanResolver )
@@ -66,7 +66,7 @@ ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& 
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, PropertiesDictionary* dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, gui::PropertiesDictionary* dico )
     : controllers_            ( controllers )
     , entity_                 ( entity )
     , urbanResolver_          ( urbanResolver )
@@ -225,7 +225,7 @@ void ResourceNetwork::UpdateNetwork( Entity_ABC* entity, const sword::ResourceNe
     if( entity )
     {
         const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + resource.c_str() + "/";
-        controllers_.controller_.Update( DictionaryUpdated( *entity, baseName ) );
+        controllers_.controller_.Update( gui::DictionaryUpdated( *entity, baseName ) );
     }
 }
 
@@ -262,7 +262,7 @@ void ResourceNetwork::UpdateStipple( int value ) const
 // Name: ResourceNetwork::CreateDictionary
 // Created: JSR 2010-08-23
 // -----------------------------------------------------------------------------
-void ResourceNetwork::CreateDictionary( PropertiesDictionary& dico ) const
+void ResourceNetwork::CreateDictionary( gui::PropertiesDictionary& dico ) const
 {
     for( auto node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {

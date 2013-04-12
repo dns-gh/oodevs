@@ -33,7 +33,7 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/Dotations_ABC.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/EntityType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Location_ABC.h"
@@ -405,7 +405,7 @@ void LogisticSupplyPushFlowDialog::ComputeRecipients()
         const Automat_ABC& automat = it.NextElement();
         if( (const Entity_ABC*)&automat != selected_ )
         {
-            const AutomatType& type = automat.Get< kernel::EntityType< kernel::AutomatType > >().GetType();
+            const AutomatType& type = automat.Get< gui::EntityType< kernel::AutomatType > >().GetType();
             if( type.IsLogisticSupply() && &automat.Get< TacticalHierarchies >().GetTop() == &team )
                 recipientsNames_[ automat.GetName() + QString( " [" ) + QString::number( automat.GetId() ) + QString( "]" ) ] = &automat;
         }

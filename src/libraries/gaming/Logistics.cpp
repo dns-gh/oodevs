@@ -22,7 +22,7 @@
 // Name: Logistics constructor
 // Created: AGE 2006-03-01
 // -----------------------------------------------------------------------------
-Logistics::Logistics( kernel::Entity_ABC& holder, kernel::Controller& controller, Model& model, const StaticModel& staticModel, kernel::PropertiesDictionary& dico )
+Logistics::Logistics( kernel::Entity_ABC& holder, kernel::Controller& controller, Model& model, const StaticModel& staticModel, gui::PropertiesDictionary& dico )
     : holder_    ( holder )
     , controller_( controller )
     , model_     ( model )

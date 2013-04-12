@@ -9,8 +9,8 @@
 
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/InstanciationComplete.h"
-#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
+#include "PropertiesDictionary.h"
 
 namespace gui
 {

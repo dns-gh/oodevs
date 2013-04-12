@@ -17,11 +17,11 @@ namespace kernel
     class AccommodationTypes;
     class Controller;
     class ObjectTypes;
-    class PropertiesDictionary;
 }
 
 namespace gui
 {
+    class PropertiesDictionary;
     class UrbanObject;
 }
 
@@ -42,7 +42,7 @@ class PhysicalAttribute : public kernel::PhysicalAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PhysicalAttribute( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
+             PhysicalAttribute( const sword::UrbanAttributes& message, gui::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
                                 gui::UrbanObject& urbanObject, const kernel::ObjectTypes& objectTypes );
     virtual ~PhysicalAttribute();
     //@}

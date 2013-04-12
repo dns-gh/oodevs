@@ -14,10 +14,10 @@
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Tools.h"
@@ -121,7 +121,7 @@ void Agent::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Agent::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), type_, true );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Weight" ), weight_, true );
 }
@@ -135,7 +135,7 @@ void Agent::NotifyUpdated( const Equipments& equipments )
     if( Retrieve< Equipments >() == &equipments )
     {
         weight_ = equipments.GetTotalWeight();
-        controller_.Update( DictionaryUpdated( *( Entity_ABC* )this, tools::translate( "Agent", "Info" ) ) );
+        controller_.Update( gui::DictionaryUpdated( *( Entity_ABC* )this, tools::translate( "Agent", "Info" ) ) );
     }
 }
 

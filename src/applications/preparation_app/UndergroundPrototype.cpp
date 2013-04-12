@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "UndergroundPrototype.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/LoadableComboBox.h"
 #include "preparation/UndergroundAttribute.h"
 
@@ -45,7 +45,7 @@ void UndergroundPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         UndergroundAttribute* attribute = new UndergroundAttribute( dictionary, controller_, *creation_ );
         attribute->SetNetwork( network_->currentText().toStdString() );
         creation_->Attach( *attribute );

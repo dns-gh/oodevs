@@ -26,7 +26,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/EntityType.h"
 #include "gaming/StaticModel.h"
 #include "gaming/PopulationDecisions.h"
 #include "protocol/SimulationSenders.h"
@@ -115,7 +115,7 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
     AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     AddReloadBrainMenu(magicMenu, static_.types_.populationModels_,
             entity.Retrieve<PopulationDecisions>() ? entity.Retrieve<PopulationDecisions>()->ModelName() : "unknown",
-            entity.Get< kernel::EntityType< kernel::PopulationType > >().GetType().GetDecisionalModel().GetName() );
+            entity.Get< gui::EntityType< kernel::PopulationType > >().GetType().GetDecisionalModel().GetName() );
     AddMagic( tr( "Kill all" ), SLOT( KillAllPopulation() ), magicMenu );
     AddValuedMagic( magicMenu, menu, tr( "Change armed individuals:" ), SLOT( ChangeArmedIndividuals() ) );
     kernel::ContextMenu* choiceMenu = new kernel::ContextMenu( magicMenu );

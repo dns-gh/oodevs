@@ -15,7 +15,7 @@
 // Name: Architecture constructor
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-Architecture::Architecture( const sword::UrbanAttributes& message, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
+Architecture::Architecture( const sword::UrbanAttributes& message, kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes )
     : gui::Architecture( object, dictionary, objectTypes )
 {
     if( message.has_architecture() )

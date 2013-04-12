@@ -10,34 +10,39 @@
 #ifndef __PropertiesDictionary_h_
 #define __PropertiesDictionary_h_
 
-#include "Extension_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
+
 #include "Property_ABC.h"
+#include "DictionaryUpdated.h"
+
 #pragma warning( push, 0 )
 #include <QtCore/qstringlist.h>
 #pragma warning( pop )
 #include <boost/noncopyable.hpp>
-#include "DictionaryUpdated.h"
-#include "Entity_ABC.h"
 
 namespace kernel
 {
     class Displayer_ABC;
     class Controller;
     class Extension_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  PropertiesDictionary
     @brief  Properties dictionary
 */
 // Created: SBO 2006-10-17
 // =============================================================================
-class PropertiesDictionary : public Extension_ABC
-                           , private boost::noncopyable
+class PropertiesDictionary : public kernel::Extension_ABC
+                           , public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PropertiesDictionary( Controller& controller );
+    explicit PropertiesDictionary( kernel::Controller& controller );
     virtual ~PropertiesDictionary();
     //@}
 
@@ -52,19 +57,19 @@ public:
     //@{
     bool HasKey( const QString& name ) const;
     void Remove( const QString& name );
-    void Display( Displayer_ABC& displayer );
-    void Display( const QString& name, Displayer_ABC& displayer );
+    void Display( kernel::Displayer_ABC& displayer );
+    void Display( const QString& name, kernel::Displayer_ABC& displayer );
     const T_Properties& GetProperties() const;
 
     template< typename T, typename Setter, typename OwnerExtension >
     void RegisterExtension( const kernel::Entity_ABC& owner, const OwnerExtension* ownerExtension, const QString& name, T& value, const Setter& setter, bool readOnly = false, E_Category category = eNothing )
     {
         if( HasKey( name ) )
-            controller_.Delete( kernel::DictionaryUpdated( owner, name ) );
+            controller_.Delete( DictionaryUpdated( owner, name ) );
         Property_ABC*& property = properties_[ name ];
         delete property;
         property = new Property< T, Setter, OwnerExtension >( controller_, owner, value, setter, name, readOnly, category, ownerExtension );
-        controller_.Create( kernel::DictionaryUpdated( owner, name ) );
+        controller_.Create( DictionaryUpdated( owner, name ) );
     }
 
     template< typename T > struct setter;
@@ -132,7 +137,7 @@ public:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    kernel::Controller& controller_;
     //@}
 
 protected:

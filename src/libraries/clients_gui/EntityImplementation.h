@@ -18,6 +18,10 @@
 namespace kernel
 {
     class Controller;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -77,7 +81,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    kernel::PropertiesDictionary* dictionary_;
+    PropertiesDictionary* dictionary_;
     //@}
 
 protected:
@@ -99,7 +103,7 @@ EntityImplementation< I >::EntityImplementation( kernel::Controller& controller,
     , id_        ( id )
     , displayId_ ( GetDisplayId() )
     , name_      ( name )
-    , dictionary_( new kernel::PropertiesDictionary( controller ) )
+    , dictionary_( new PropertiesDictionary( controller ) )
 {
     Attach( *dictionary_ );
     dictionary_->Register( *this, tools::translate( "EntityImplementation", "Info/Identifier" ), displayId_ );

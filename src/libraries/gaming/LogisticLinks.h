@@ -33,9 +33,13 @@ namespace kernel
     class Formation_ABC;
     class Displayer_ABC;
     class AutomatType;
-    class PropertiesDictionary;
     class LogisticLevel;
     class Entity_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 class LogisticLink;
@@ -60,7 +64,7 @@ public:
                             const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
                             const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
                             const kernel::LogisticLevel& currentLevel,
-                            kernel::PropertiesDictionary& dictionary,
+                            gui::PropertiesDictionary& dictionary,
                             kernel::Entity_ABC& entity );
     virtual ~LogisticLinks();
     //@}

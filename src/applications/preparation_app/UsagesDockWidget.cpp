@@ -15,13 +15,13 @@
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichComboBox.h"
 #include "clients_gui/RichTableWidget.h"
+#include "clients_gui/Usages.h"
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_kernel/Usages.h"
 #include "clients_kernel/Usages_ABC.h"
 #include "preparation/StaticModel.h"
 #include <boost/foreach.hpp>
@@ -223,7 +223,7 @@ void UsagesDockWidget::Load()
     const kernel::Usages_ABC& usagesExtension = pPhysical.GetUsages();
     const kernel::T_Usages& usages = usagesExtension.GetUsages();
     BOOST_FOREACH( const kernel::T_Usages::value_type& usage, usages )
-        if( usage.first != kernel::Usages::defaultStr_ )
+        if( usage.first != gui::Usages::defaultStr_ )
             AddItem( usage.first, usage.second );
 }
 
@@ -251,7 +251,7 @@ void UsagesDockWidget::Initialize()
     while( it.HasMoreElements() )
     {
         const std::string& usage = it.NextElement().GetRole();
-        if( usage != kernel::Usages::defaultStr_ )
+        if( usage != gui::Usages::defaultStr_ )
             pMotivations_->addItem( usage.c_str() );
     }
 }

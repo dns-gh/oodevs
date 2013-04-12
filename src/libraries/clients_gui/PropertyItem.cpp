@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "PropertyItem.h"
 #include "PropertyDisplayer.h"
-#include "clients_kernel/Property_ABC.h"
+#include "Property_ABC.h"
 
 using namespace gui;
 
@@ -18,7 +18,7 @@ using namespace gui;
 // Name: PropertyItem constructor
 // Created: LGY 2012-08-13
 // -----------------------------------------------------------------------------
-PropertyItem::PropertyItem( kernel::Property_ABC& property, PropertyDisplayer& displayer )
+PropertyItem::PropertyItem( Property_ABC& property, PropertyDisplayer& displayer )
     : displayer_( displayer )
     , property_ ( property )
 {

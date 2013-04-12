@@ -20,7 +20,7 @@
 #include "UrbanPositions.h"
 #include "clients_gui/UrbanObject.h"
 #include "clients_gui/UrbanDisplayOptions.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
 
@@ -62,7 +62,7 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     }
     const kernel::ObjectType& type = static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" );
     gui::UrbanObject* pTerrainObject = new gui::UrbanObject( controllers_, message.name(), id, type, static_.accommodationTypes_, *urbanDisplayOptions_ );
-    kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = pTerrainObject->Get< gui::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( message.attributes() ) );
     pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( message.location(), static_.coordinateConverter_, *pTerrainObject ) );
     pTerrainObject->Attach< kernel::PhysicalAttribute_ABC >( *new PhysicalAttribute( message.attributes(), dictionary, static_.accommodationTypes_, *pTerrainObject, static_.objectTypes_ ) );
@@ -84,7 +84,7 @@ void UrbanModel::Update( const sword::UrbanUpdate& message )
         if( pTerrainObject )
         {
             if( message.attributes().has_structure() && pTerrainObject->Retrieve< kernel::StructuralStateAttribute_ABC >() == 0 )
-                pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( *pTerrainObject, controllers_.controller_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
+                pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( *pTerrainObject, controllers_.controller_, pTerrainObject->Get< gui::PropertiesDictionary >() ) );
             if( pTerrainObject->Retrieve< gui::ResourceNetwork_ABC >() == 0 )
             {
                 if( message.attributes().has_infrastructures() && message.attributes().infrastructures().resource_network_size() > 0 )
@@ -96,7 +96,7 @@ void UrbanModel::Update( const sword::UrbanUpdate& message )
             {
                 if( message.attributes().infrastructures().has_infrastructure() && pTerrainObject->Retrieve< gui::Infrastructure_ABC >() == 0 )
                 {
-                    pTerrainObject->Attach< gui::Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, static_.objectTypes_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
+                    pTerrainObject->Attach< gui::Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, static_.objectTypes_, pTerrainObject->Get< gui::PropertiesDictionary >() ) );
                     pTerrainObject->Get< kernel::UrbanPositions_ABC >().SetInfrastructurePresent( true );
                 }
             }

@@ -19,16 +19,16 @@ namespace kernel
 {
     class Entity_ABC;
     class Controllers;
-    class EditorFactory_ABC;
-    class DictionaryUpdated;
     class UrbanObject_ABC;
-    class PropertiesGroupDictionary;
 }
 
 namespace gui
 {
+    class DictionaryUpdated;
+    class EditorFactory_ABC;
     class GlProxy;
     class PropertyDisplayer;
+    class PropertiesGroupDictionary;
     class PropertyTreeView;
     class PropertyModel;
     class PropertyDelegate;
@@ -44,7 +44,7 @@ class PropertiesPanel : public QScrollArea
                       , public tools::Observer_ABC
                       , public tools::SelectionObserver< kernel::Entity_ABC >
                       , public tools::ElementObserver_ABC< kernel::Entity_ABC >
-                      , public tools::ElementObserver_ABC< kernel::DictionaryUpdated >
+                      , public tools::ElementObserver_ABC< DictionaryUpdated >
                       , public kernel::MultipleSelectionObserver< kernel::UrbanObject_ABC >
 {
     Q_OBJECT
@@ -52,7 +52,7 @@ class PropertiesPanel : public QScrollArea
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, kernel::EditorFactory_ABC& factory,
+             PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, EditorFactory_ABC& factory,
                               PropertyDisplayer& displayer, PropertyDisplayer& comparator, const GlProxy& glProxy );
     virtual ~PropertiesPanel();
     //@}
@@ -64,9 +64,9 @@ private:
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements );
     virtual void NotifyDeleted( const kernel::Entity_ABC& element );
-    virtual void NotifyUpdated( const kernel::DictionaryUpdated& message );
-    virtual void NotifyDeleted( const kernel::DictionaryUpdated& message );
-    virtual void NotifyCreated( const kernel::DictionaryUpdated& message );
+    virtual void NotifyUpdated( const DictionaryUpdated& message );
+    virtual void NotifyDeleted( const DictionaryUpdated& message );
+    virtual void NotifyCreated( const DictionaryUpdated& message );
     //@}
 
 private slots:
@@ -84,14 +84,14 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&                               controllers_;
-    const GlProxy&                                     glProxy_;
-    PropertyTreeView*                                  view_;
-    PropertyModel*                                     model_;
-    PropertyDelegate*                                  delegate_;
-    const kernel::Entity_ABC*                          selected_;
-    std::vector< const kernel::UrbanObject_ABC* >      urbanObjects_;
-    std::auto_ptr< kernel::PropertiesGroupDictionary > pMultiProperties_;
+    kernel::Controllers&                          controllers_;
+    const GlProxy&                                glProxy_;
+    PropertyTreeView*                             view_;
+    PropertyModel*                                model_;
+    PropertyDelegate*                             delegate_;
+    const kernel::Entity_ABC*                     selected_;
+    std::vector< const kernel::UrbanObject_ABC* > urbanObjects_;
+    std::auto_ptr< PropertiesGroupDictionary >    pMultiProperties_;
     //@}
 };
 

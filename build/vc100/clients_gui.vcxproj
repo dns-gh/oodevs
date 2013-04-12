@@ -126,11 +126,13 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\ColorController.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CommonDelegate.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\CriticalIntelligence.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CriticalIntelligenceDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListEditor.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DisasterPrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DisplayExtractor.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Drawer.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\EditorFactory_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\EntityTreeView_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ExpandableGroupBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\FileDialog.cpp" />
@@ -147,8 +149,12 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkItemDelegate.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LongNameHelper.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\MergingTacticalHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ModalDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NullDisplayer.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesDictionary.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesGroup.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesGroupDictionary.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichComboBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.cpp" />
@@ -268,6 +274,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\UrbanLayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UrbanObject.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UrbanPositions.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\Usages.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\VerticalHeaderTableView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Viewport_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\WatershedLayer.cpp" />
@@ -680,12 +687,16 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\CriticalIntelligence.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\DictionaryUpdated.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropHelpers.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Drawable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Drawer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DrawVisitor.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DummyModelObserver.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\EditorFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\EntityHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\EntityImplementation.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\EntityTreeView.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\EntityTreeView_ABC.h">
@@ -702,6 +713,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\clients_gui\EntityType.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\FileDialog.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\FilterProxyModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\GlContext.h" />
@@ -767,6 +779,7 @@
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\Layer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LogisticTreeView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LongNameHelper.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\MergingTacticalHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ModalDialog.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -785,6 +798,10 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\ModelObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\NullDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Pickable_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\PropertiesDictionary.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\PropertiesGroup.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\PropertiesGroupDictionary.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\Property_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichComboBox.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.h" />
@@ -1259,6 +1276,8 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\UrbanDisplayOptions.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\UrbanObject.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\UrbanPositions.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\Usages.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\ValueEditor.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\VerticalHeaderTableView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Viewport_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\View_ABC.h" />
@@ -2520,6 +2539,7 @@
     <None Include="..\..\src\libraries\clients_gui\clients_gui_en.ts" />
     <None Include="..\..\src\libraries\clients_gui\CommonDelegate.inl" />
     <None Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.inl" />
+    <None Include="..\..\src\libraries\clients_gui\EntityHierarchies.inl" />
     <None Include="..\..\src\libraries\clients_gui\EntityImplementation.inl" />
     <None Include="..\..\src\libraries\clients_gui\EntityTreeView.inl" />
     <None Include="..\..\src\libraries\clients_gui\HierarchyTreeView.inl" />

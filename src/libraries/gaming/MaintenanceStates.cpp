@@ -12,9 +12,9 @@
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include <boost/foreach.hpp>
 
 using namespace kernel;
@@ -24,7 +24,7 @@ using namespace kernel;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 MaintenanceStates::MaintenanceStates( kernel::Entity_ABC& entity, Controller& controller,const tools::Resolver_ABC< kernel::EquipmentType >& resolver,
-                                      const tools::Resolver_ABC< Automat_ABC >& automatResolver, PropertiesDictionary& dico )
+                                      const tools::Resolver_ABC< Automat_ABC >& automatResolver, gui::PropertiesDictionary& dico )
     : entity_         ( entity )
     , controller_     ( controller )
     , resolver_       ( resolver )
@@ -48,7 +48,7 @@ MaintenanceStates::~MaintenanceStates()
 // Name: MaintenanceStates::CreateDictionary
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+void MaintenanceStates::CreateDictionary( gui::PropertiesDictionary& dico ) const
 {
     dico.Register( entity_, tools::translate( "MaintenanceStates", "Maintenance system/System enabled" ), bChainEnabled_ );
     dico.Register( entity_, tools::translate( "MaintenanceStates", "Maintenance system/Priorities" ), priorities_ );
@@ -94,7 +94,7 @@ void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
     }
 
     if( message.has_priorities() || message.has_work_rate() || message.has_tactical_priorities() || message.has_chain() )
-        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "MaintenanceStates", "Maintenance system" ) ) );
+        controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "MaintenanceStates", "Maintenance system" ) ) );
     controller_.Update( *this );
 }
 

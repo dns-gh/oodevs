@@ -7,15 +7,14 @@
 //
 // *****************************************************************************
 
-#include "Entity_ABC.h"
-#include "Controller.h"
-#include "PropertiesDictionary.h"
-#include "TacticalHierarchies.h"
-#include "Tools.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Tools.h"
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
 
-namespace kernel
+namespace gui
 {
 
 // -----------------------------------------------------------------------------
@@ -23,8 +22,8 @@ namespace kernel
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
 template< typename Interface >
-EntityHierarchies< Interface >::EntityHierarchies( Controller& controller, Entity_ABC& entity, Entity_ABC* superior )
-    : Creatable< Interface >( controller, this )
+EntityHierarchies< Interface >::EntityHierarchies( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::Entity_ABC* superior )
+    : kernel::Creatable< Interface >( controller, this )
     , controller_( controller )
     , entity_    ( entity )
     , superior_  ( superior )
@@ -42,10 +41,10 @@ EntityHierarchies< Interface >::~EntityHierarchies()
 {
     if( Interface* superiorHierarchy = SuperiorHierarchy() )
         superiorHierarchy->UnregisterSubordinate( entity_ );
-    tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
+    tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
-        Interface* child = const_cast< Entity_ABC& >( it.NextElement() ).Retrieve< Interface >();
+        Interface* child = const_cast< kernel::Entity_ABC& >( it.NextElement() ).Retrieve< Interface >();
         if( child )
             child->UnregisterParent();
     }
@@ -56,7 +55,7 @@ EntityHierarchies< Interface >::~EntityHierarchies()
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 template< typename Interface >
-const Entity_ABC* EntityHierarchies< Interface >::GetSuperior() const
+const kernel::Entity_ABC* EntityHierarchies< Interface >::GetSuperior() const
 {
     return superior_;
 }
@@ -66,7 +65,7 @@ const Entity_ABC* EntityHierarchies< Interface >::GetSuperior() const
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 template< typename Interface >
-const Entity_ABC& EntityHierarchies< Interface >::GetEntity() const
+const kernel::Entity_ABC& EntityHierarchies< Interface >::GetEntity() const
 {
     return entity_;
 }
@@ -76,7 +75,7 @@ const Entity_ABC& EntityHierarchies< Interface >::GetEntity() const
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
 template< typename Interface >
-tools::Iterator< const Entity_ABC& > EntityHierarchies< Interface >::CreateSubordinateIterator() const
+tools::Iterator< const kernel::Entity_ABC& > EntityHierarchies< Interface >::CreateSubordinateIterator() const
 {
     return CreateIterator();
 }
@@ -96,7 +95,7 @@ long EntityHierarchies< Interface >::CountSubordinates() const
 // Created: AGE 2006-11-20
 // -----------------------------------------------------------------------------
 template< typename Interface >
-void EntityHierarchies< Interface >::RegisterSubordinate( Entity_ABC& entity )
+void EntityHierarchies< Interface >::RegisterSubordinate( kernel::Entity_ABC& entity )
 {
     Register( entity.GetId(), entity );
 }
@@ -106,7 +105,7 @@ void EntityHierarchies< Interface >::RegisterSubordinate( Entity_ABC& entity )
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 template< typename Interface >
-void EntityHierarchies< Interface >::AddSubordinate( Entity_ABC& entity )
+void EntityHierarchies< Interface >::AddSubordinate( kernel::Entity_ABC& entity )
 {
     RegisterSubordinate( entity );
     controller_.Update( *(Interface*)this );
@@ -117,7 +116,7 @@ void EntityHierarchies< Interface >::AddSubordinate( Entity_ABC& entity )
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 template< typename Interface >
-void EntityHierarchies< Interface >::RemoveSubordinate( const Entity_ABC& entity )
+void EntityHierarchies< Interface >::RemoveSubordinate( const kernel::Entity_ABC& entity )
 {
     UnregisterSubordinate( entity );
     controller_.Update( *(Interface*)this );
@@ -128,7 +127,7 @@ void EntityHierarchies< Interface >::RemoveSubordinate( const Entity_ABC& entity
 // Created: SBO 2006-10-03
 // -----------------------------------------------------------------------------
 template< typename Interface >
-void EntityHierarchies< Interface >::UnregisterSubordinate( const Entity_ABC& entity )
+void EntityHierarchies< Interface >::UnregisterSubordinate( const kernel::Entity_ABC& entity )
 {
     Remove( entity.GetId() );
 }
@@ -148,7 +147,7 @@ void EntityHierarchies< Interface >::UnregisterParent()
 // Created: AGE 2006-11-20
 // -----------------------------------------------------------------------------
 template< typename Interface >
-void EntityHierarchies< Interface >::ChangeSuperior( Entity_ABC* superior )
+void EntityHierarchies< Interface >::ChangeSuperior( kernel::Entity_ABC* superior )
 {
     if( GetSuperior() == superior )
         return;
@@ -166,7 +165,7 @@ void EntityHierarchies< Interface >::ChangeSuperior( Entity_ABC* superior )
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 template< typename Interface >
-void EntityHierarchies< Interface >::SetSuperior( Entity_ABC* superior )
+void EntityHierarchies< Interface >::SetSuperior( kernel::Entity_ABC* superior )
 {
     if( Interface* superiorHierarchy = SuperiorHierarchy() )
         superiorHierarchy->UnregisterSubordinate( entity_ );
@@ -180,7 +179,7 @@ void EntityHierarchies< Interface >::SetSuperior( Entity_ABC* superior )
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
 template< typename Interface >
-void EntityHierarchies< Interface >::SetSuperiorInternal( Entity_ABC* superior )
+void EntityHierarchies< Interface >::SetSuperiorInternal( kernel::Entity_ABC* superior )
 {
     superior_ = superior;
 }
@@ -190,7 +189,7 @@ void EntityHierarchies< Interface >::SetSuperiorInternal( Entity_ABC* superior )
 // Created: AGE 2006-10-26
 // -----------------------------------------------------------------------------
 template< typename Interface >
-const Hierarchies* EntityHierarchies< Interface >::RetrieveHierarchies( const Entity_ABC& entity ) const
+const kernel::Hierarchies* EntityHierarchies< Interface >::RetrieveHierarchies( const kernel::Entity_ABC& entity ) const
 {
     return entity.Retrieve< Interface >();
 }
@@ -202,7 +201,7 @@ const Hierarchies* EntityHierarchies< Interface >::RetrieveHierarchies( const En
 template< typename Interface >
 Interface* EntityHierarchies< Interface >::SuperiorHierarchy()
 {
-    Entity_ABC* superior = const_cast< Entity_ABC* >( GetSuperior() );
+    kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( GetSuperior() );
     return superior ? superior->Retrieve< Interface >() : 0;
 }
 

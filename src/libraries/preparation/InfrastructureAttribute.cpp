@@ -13,10 +13,10 @@
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Tools.h"
@@ -43,7 +43,7 @@ namespace
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
 InfrastructureAttribute::InfrastructureAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object,
-                                                  kernel::PropertiesDictionary& dictionary )
+                                                  gui::PropertiesDictionary& dictionary )
     : controllers_      ( controllers )
     , dictionary_       ( dictionary )
     , type_             ( 0 )
@@ -63,7 +63,7 @@ InfrastructureAttribute::InfrastructureAttribute( kernel::Controllers& controlle
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
 InfrastructureAttribute::InfrastructureAttribute( xml::xistream& xis, kernel::Controllers& controllers,
-                                                  kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary,
+                                                  kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary,
                                                   const kernel::ObjectTypes& objectTypes )
     : controllers_      ( controllers )
     , dictionary_       ( dictionary )

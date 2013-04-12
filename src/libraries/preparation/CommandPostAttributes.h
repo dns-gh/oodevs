@@ -17,8 +17,12 @@
 namespace kernel
 {
     class Entity_ABC;
-    class PropertiesDictionary;
     class AgentType;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -40,9 +44,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              CommandPostAttributes( xml::xistream& xis, const kernel::Entity_ABC& entity, const kernel::AgentType& type,
-                                    kernel::PropertiesDictionary& dictionary );
+                                    gui::PropertiesDictionary& dictionary );
              CommandPostAttributes( const kernel::Entity_ABC& entity, const kernel::AgentType& type,
-                                    kernel::PropertiesDictionary& dictionary, bool commandPost = false );
+                                    gui::PropertiesDictionary& dictionary, bool commandPost = false );
     virtual ~CommandPostAttributes();
     //@}
 
@@ -60,7 +64,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( gui::PropertiesDictionary& dictionary );
     //@}
 
 private:

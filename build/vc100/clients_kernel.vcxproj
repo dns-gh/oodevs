@@ -114,7 +114,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Curve.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\DisasterType.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\DisasterTypes.cpp" />
@@ -126,8 +125,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\ModeController.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesGroup.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesGroupDictionary.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Settings.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\StaticModel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\App6Symbol.cpp" />
@@ -147,7 +144,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UserRights.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanTemplateType.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\Usages.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Workers.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Circle.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Lines.cpp" />
@@ -221,7 +217,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Formatter.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\EntityResolverFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\DictionaryExtensions.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\MergingTacticalHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\ObjectHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\StockAttribute_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalHierarchies.cpp" />
@@ -241,8 +236,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationConcentration_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationFlow_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\PopulationKnowledge_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\EditorFactory_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\XmlDescription.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -251,13 +244,11 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ChangePopulationDisplay.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Curve.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisasterType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisasterTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisplayExtractor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\EntityHelpers.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Filter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ConsistencyChecker_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisplayableModesObserver_ABC.h" />
@@ -277,9 +268,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\ModesObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\MultipleSelectionObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\OverFlyingObserver_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesGroup.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesGroupDictionary.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Property_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ReadOnlyModable.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\RectangleSelectionHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\PhysicalAttribute_ABC.h" />
@@ -312,12 +300,12 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Tools.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Types.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Units.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Updatable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanObject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanTemplateType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UserRights.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\VariantPointer.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Usages.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Workers.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\WorkerTask_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Circle.h" />
@@ -418,12 +406,10 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Diplomacies_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Displayable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Dotations_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Extension_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Hierarchies.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LivingArea_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LivingAreaVisitor_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\MergingTacticalHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Moveable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectExtensions.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ObjectHierarchies.h" />
@@ -432,7 +418,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\SimpleHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\StockAttribute_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalHierarchies.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Updatable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanExtensions.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions_ABC.h" />
@@ -458,10 +443,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationKnowledge_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationPart_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\PopulationPrototype.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\DictionaryUpdated.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\EditorFactory_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\ValueEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl" />
@@ -469,7 +450,6 @@
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_en.ts" />
     <None Include="..\..\src\libraries\clients_kernel\Displayer_ABC.inl" />
     <None Include="..\..\src\libraries\clients_kernel\Creatable.inl" />
-    <None Include="..\..\src\libraries\clients_kernel\EntityHierarchies.inl" />
     <None Include="..\..\src\libraries\clients_kernel\Hierarchies.inl" />
     <None Include="..\..\src\libraries\clients_kernel\SimpleHierarchies.inl" />
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_es.ts" />

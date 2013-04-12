@@ -16,8 +16,12 @@
 
 namespace kernel
 {
-    class PropertiesDictionary;
     class Entity_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -37,8 +41,8 @@ class DisasterAttribute : public kernel::DisasterAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DisasterAttribute( kernel::PropertiesDictionary& dictionary, const tools::Path& source, const QDateTime& date, const kernel::Entity_ABC& entity );
-             DisasterAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             DisasterAttribute( gui::PropertiesDictionary& dictionary, const tools::Path& source, const QDateTime& date, const kernel::Entity_ABC& entity );
+             DisasterAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~DisasterAttribute();
     //@}
 
@@ -50,7 +54,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+    void CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 private:

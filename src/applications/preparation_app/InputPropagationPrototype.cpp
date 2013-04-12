@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "InputPropagationPrototype.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "preparation/InputToxicCloudAttribute.h"
 #include "clients_gui/RichCheckBox.h"
 
@@ -44,7 +44,7 @@ void InputPropagationPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         creation_->Attach( *new InputToxicCloudAttribute( dictionary, propagationFiles_->currentText(),
                             dataField_->GetValue().c_str(), exportData_->isChecked(), *creation_ ) );
     }

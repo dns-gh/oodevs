@@ -13,12 +13,12 @@
 #include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
 #include "clients_gui/RichTextEdit.h"
+#include "clients_gui/Usages.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UrbanTypes.h"
-#include "clients_kernel/Usages.h"
 #include "clients_kernel/Usages_ABC.h"
 
 #include "preparation/StaticModel.h"
@@ -166,7 +166,7 @@ namespace
         {
             const kernel::Usages_ABC::T_Occupations& occupations = usages.GetOccupations();
             for( kernel::Usages_ABC::CIT_Occupations it = occupations.begin(); it != occupations.end(); ++it )
-                if(it->first != kernel::Usages::defaultStr_ )
+                if(it->first != gui::Usages::defaultStr_ )
                 {
                     totalCapacity += it->second.first;
                     motivationsCapacities[ it->first ] += it->second.first;

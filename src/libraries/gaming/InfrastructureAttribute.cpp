@@ -14,10 +14,10 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/InfrastructureType.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
 #include "Tools.h"
 #include "protocol/Protocol.h"
@@ -28,7 +28,7 @@ using namespace kernel;
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( Controllers& controllers, kernel::UrbanObject_ABC& object, const tools::StringResolver< InfrastructureType >& resolver, PropertiesDictionary& dictionary )
+InfrastructureAttribute::InfrastructureAttribute( Controllers& controllers, kernel::UrbanObject_ABC& object, const tools::StringResolver< InfrastructureType >& resolver, gui::PropertiesDictionary& dictionary )
     : controllers_( controllers )
     , resolver_   ( resolver )
     , object_     ( object )
@@ -53,7 +53,7 @@ InfrastructureAttribute::~InfrastructureAttribute()
 // Name: InfrastructureAttribute::CreateDictionary
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::CreateDictionary( PropertiesDictionary& dictionary ) const
+void InfrastructureAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary ) const
 {
     dictionary.Register( object_, tools::translate( "Block", "Infrastructure/Enable" ), enabled_ );
     dictionary.Register( object_, tools::translate( "Block", "Infrastructure/Threshold" ), threshold_ );
@@ -97,7 +97,7 @@ void InfrastructureAttribute::UpdateData( const T& message )
             updated.insert( "Infrastructure" );
         type_ = resolver_.Find( role_ );
         if( !updated.empty() )
-            controllers_.controller_.Update( kernel::DictionaryUpdated( object_, tools::translate( "Block", "Infrastructure" ) ) );
+            controllers_.controller_.Update( gui::DictionaryUpdated( object_, tools::translate( "Block", "Infrastructure" ) ) );
 
         controllers_.controller_.Update( object_ );
     }

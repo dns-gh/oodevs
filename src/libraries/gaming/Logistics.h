@@ -17,6 +17,10 @@ namespace kernel
 {
     class Entity_ABC;
     class Controller;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -45,7 +49,7 @@ class Logistics : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Logistics( kernel::Entity_ABC& holder, kernel::Controller& controller, Model& model, const StaticModel& staticModel, kernel::PropertiesDictionary& dico );
+             Logistics( kernel::Entity_ABC& holder, kernel::Controller& controller, Model& model, const StaticModel& staticModel, gui::PropertiesDictionary& dico );
     virtual ~Logistics();
     //@}
 
@@ -70,7 +74,7 @@ private:
     kernel::Controller& controller_;
     Model& model_;
     const StaticModel& static_;
-    kernel::PropertiesDictionary& dico_;
+    gui::PropertiesDictionary& dico_;
     //@}
 };
 

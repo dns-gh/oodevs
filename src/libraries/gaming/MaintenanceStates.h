@@ -21,6 +21,10 @@ namespace kernel
     class Displayer_ABC;
     class EquipmentType;
     class Automat_ABC;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -42,7 +46,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MaintenanceStates( kernel::Entity_ABC& entity, kernel::Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver,
-                                const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, kernel::PropertiesDictionary& dico );
+                                const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, gui::PropertiesDictionary& dico );
     virtual ~MaintenanceStates();
     //@}
 
@@ -65,7 +69,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    void CreateDictionary( gui::PropertiesDictionary& dico ) const;
     //@}
 
     //! @name Types

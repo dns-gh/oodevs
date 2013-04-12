@@ -18,7 +18,7 @@
 // Name: PhysicalAttribute constructor
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-PhysicalAttribute::PhysicalAttribute( const kernel::Entity_ABC* parent, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
+PhysicalAttribute::PhysicalAttribute( const kernel::Entity_ABC* parent, gui::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
                                       UrbanObject& urbanObject, kernel::Controllers& controllers, const kernel::ObjectTypes& objectTypes )
 {
     architecture_.reset( new Architecture( parent, controllers, urbanObject, dictionary, objectTypes ) );
@@ -29,7 +29,7 @@ PhysicalAttribute::PhysicalAttribute( const kernel::Entity_ABC* parent, kernel::
 // Name: PhysicalAttribute constructor
 // Created: ABR 2012-05-22
 // -----------------------------------------------------------------------------
-PhysicalAttribute::PhysicalAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
+PhysicalAttribute::PhysicalAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
                                       UrbanObject& urbanObject, kernel::Controllers& controllers, const kernel::ObjectTypes& objectTypes )
 {
     if( xis.has_child( "physical" ) )

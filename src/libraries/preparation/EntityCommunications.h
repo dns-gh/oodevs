@@ -10,7 +10,7 @@
 #ifndef __EntityCommunications_h_
 #define __EntityCommunications_h_
 
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_gui/EntityHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 
 namespace kernel
@@ -25,7 +25,7 @@ namespace kernel
 */
 // Created: SBO 2006-10-09
 // =============================================================================
-class EntityCommunications : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
+class EntityCommunications : public gui::EntityHierarchies< kernel::CommunicationHierarchies >
 {
 public:
     //! @name Constructors/Destructor

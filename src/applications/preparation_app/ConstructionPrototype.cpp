@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ConstructionPrototype.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/LoadableSpinBox.h"
 #include "preparation/ConstructionAttribute.h"
 
@@ -42,7 +42,7 @@ void ConstructionPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        kernel::PropertiesDictionary& dictionary = creation_->Get< kernel::PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         ConstructionAttribute* attribute = new ConstructionAttribute( dictionary, *creation_ );
         attribute->SetCompletion( completion_->value() );
         creation_->Attach( *attribute );

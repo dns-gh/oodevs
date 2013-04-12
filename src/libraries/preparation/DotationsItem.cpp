@@ -10,10 +10,10 @@
 #include "preparation_pch.h"
 #include "DotationsItem.h"
 #include "Dotation.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/Entity_ABC.h"
 
 using namespace kernel;
@@ -22,7 +22,7 @@ using namespace kernel;
 // Name: DotationsItem constructor
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-DotationsItem::DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, const QString& propertyName, tools::Resolver< Dotation >& dotations, bool isStock )
+DotationsItem::DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, gui::PropertiesDictionary& dico, const QString& propertyName, tools::Resolver< Dotation >& dotations, bool isStock )
     : controller_( controller )
     , owner_( owner )
     , dico_( dico )
@@ -109,7 +109,7 @@ void DotationsItem::Clear()
 // -----------------------------------------------------------------------------
 void DotationsItem::Update()
 {
-    controller_.Update( kernel::DictionaryUpdated( owner_, propertyName_ ) );
+    controller_.Update( gui::DictionaryUpdated( owner_, propertyName_ ) );
 }
 
 // -----------------------------------------------------------------------------

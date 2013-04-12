@@ -22,6 +22,10 @@ namespace kernel
 {
     class Controller;
     class Entity_ABC;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -38,8 +42,8 @@ class GhostCommandPostAttributes : public kernel::CommandPostAttributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             GhostCommandPostAttributes( const kernel::Entity_ABC& entity, bool isCommandPost, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary );
-             GhostCommandPostAttributes( const kernel::Entity_ABC& entity, xml::xistream& xis, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary );
+             GhostCommandPostAttributes( const kernel::Entity_ABC& entity, bool isCommandPost, kernel::Controller& controller, gui::PropertiesDictionary& dictionary );
+             GhostCommandPostAttributes( const kernel::Entity_ABC& entity, xml::xistream& xis, kernel::Controller& controller, gui::PropertiesDictionary& dictionary );
     virtual ~GhostCommandPostAttributes();
     //@}
 
@@ -56,7 +60,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( gui::PropertiesDictionary& dictionary );
     void Update( const bool& commandPost );
     //@}
 

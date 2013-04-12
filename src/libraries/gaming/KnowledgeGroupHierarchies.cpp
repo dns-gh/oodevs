@@ -18,7 +18,7 @@
 // -----------------------------------------------------------------------------
 KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( kernel::Controller& controller, kernel::Entity_ABC* superior, kernel::KnowledgeGroup_ABC& holder
                                                     , tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& resolver, bool jam )
-    : kernel::EntityHierarchies< kernel::CommunicationHierarchies >( controller, holder, superior )
+    : gui::EntityHierarchies< kernel::CommunicationHierarchies >( controller, holder, superior )
     , resolver_( resolver )
     , controller_( controller )
     , jam_ ( jam )

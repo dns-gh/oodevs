@@ -32,7 +32,7 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "tools/GeneralConfig.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -489,7 +489,7 @@ namespace
         if( Concrete* concrete = dynamic_cast< Concrete* >( entity ) )
         {
             concrete->Rename( text );
-            controllers.controller_.Update( kernel::DictionaryUpdated( *concrete, property ) );
+            controllers.controller_.Update( gui::DictionaryUpdated( *concrete, property ) );
         }
     }
 }

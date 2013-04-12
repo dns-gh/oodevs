@@ -10,13 +10,17 @@
 #ifndef __Usages_h_
 #define __Usages_h_
 
-#include "clients_kernel/Usages.h"
+#include "clients_gui/Usages.h"
 
 namespace kernel
 {
     class AccommodationTypes;
     class Controller;
     class Entity_ABC;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -31,12 +35,12 @@ namespace sword
 */
 // Created: LGY 2011-04-14
 // =============================================================================
-class Usages : public kernel::Usages
+class Usages : public gui::Usages
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Usages( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
+             Usages( const sword::UrbanAttributes& message, gui::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
                      float livingSpace, kernel::Entity_ABC& owner );
     virtual ~Usages();
     //@}

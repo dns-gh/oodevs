@@ -13,7 +13,10 @@
 namespace kernel
 {
     class Entity_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  DictionaryUpdated
     @brief  Dictionary update message

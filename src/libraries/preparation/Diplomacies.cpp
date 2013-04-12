@@ -14,7 +14,7 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -25,7 +25,7 @@ using namespace kernel;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 Diplomacies::Diplomacies( Controller& controller, const tools::Resolver_ABC< Team_ABC >& resolver,
-                          const Team_ABC& team, PropertiesDictionary& dictionary, TeamKarmas& karmas )
+                          const Team_ABC& team, gui::PropertiesDictionary& dictionary, TeamKarmas& karmas )
     : controller_( controller )
     , resolver_  ( resolver )
     , team_      ( team )
@@ -39,7 +39,7 @@ Diplomacies::Diplomacies( Controller& controller, const tools::Resolver_ABC< Tea
 // Created: SBO 2008-12-10
 // -----------------------------------------------------------------------------
 Diplomacies::Diplomacies( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< Team_ABC >& resolver,
-                          const Team_ABC& team, PropertiesDictionary& dictionary, TeamKarmas& karmas )
+                          const Team_ABC& team, gui::PropertiesDictionary& dictionary, TeamKarmas& karmas )
     : controller_( controller )
     , resolver_  ( resolver )
     , team_      ( team )
@@ -62,7 +62,7 @@ Diplomacies::~Diplomacies()
 // Name: Diplomacies::CreateDictionary
 // Created: SBO 2008-12-10
 // -----------------------------------------------------------------------------
-void Diplomacies::CreateDictionary( PropertiesDictionary& dictionary )
+void Diplomacies::CreateDictionary( gui::PropertiesDictionary& dictionary )
 {
     dictionary.Register( static_cast< const Entity_ABC& >( team_ ), tools::translate( "preparation::Team", "Info/Karma" ), karma_, *this, &Diplomacies::SetKarma );
 }

@@ -12,8 +12,8 @@
 #include "clients_kernel/Availability.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/PropertiesDictionary.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
@@ -23,7 +23,7 @@ using namespace kernel;
 // Name: SupplyStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-SupplyStates::SupplyStates( kernel::Entity_ABC& entity, Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< DotationType >& dotationResolver, PropertiesDictionary& dico )
+SupplyStates::SupplyStates( kernel::Entity_ABC& entity, Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< DotationType >& dotationResolver, gui::PropertiesDictionary& dico )
     : entity_          ( entity )
     , controller_      ( controller )
     , resolver_        ( resolver )
@@ -46,7 +46,7 @@ SupplyStates::~SupplyStates()
 // Name: SupplyStates::CreateDictionary
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+void SupplyStates::CreateDictionary( gui::PropertiesDictionary& dico ) const
 {
     dico.Register( entity_, property_, bChainEnabled_ );
 }
@@ -88,8 +88,8 @@ void SupplyStates::DoUpdate( const sword::LogSupplyState& message )
     }
 
     if( message.has_chain() )
-        controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
-        
+        controller_.Update( gui::DictionaryUpdated( entity_, property_ ) );
+
     controller_.Update( *this );
 }
 

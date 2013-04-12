@@ -15,15 +15,14 @@
 namespace kernel
 {
     class Controllers;
-    class EditorFactory_ABC;
 }
 
 namespace gui
 {
+    class EditorFactory_ABC;
     class GlProxy;
     class PropertyDisplayer;
 }
-
 
 // =============================================================================
 /** @class  PropertiesBase
@@ -43,7 +42,7 @@ public:
 protected:
     //! @name Member data
     //@{
-    std::auto_ptr< kernel::EditorFactory_ABC > editorFactory_;
+    std::auto_ptr< gui::EditorFactory_ABC > editorFactory_;
     std::auto_ptr< gui::PropertyDisplayer > propertyDisplayer_;
     std::auto_ptr< gui::PropertyDisplayer > propertyComparator_;
     //@}

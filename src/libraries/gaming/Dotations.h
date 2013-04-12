@@ -25,8 +25,12 @@ namespace kernel
 {
     class Controller;
     class DotationType;
-    class PropertiesDictionary;
     class Entity_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 class Dotation;
@@ -46,7 +50,7 @@ class Dotations : public kernel::Dotations_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Dotations( kernel::Entity_ABC& entity, kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType >& resolver, kernel::PropertiesDictionary& dico
+             Dotations( kernel::Entity_ABC& entity, kernel::Controller& controller, const tools::Resolver_ABC< kernel::DotationType >& resolver, gui::PropertiesDictionary& dico
                       , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~Dotations();
     //@}
@@ -68,7 +72,7 @@ private:
     //@{
     virtual void DoUpdate( const sword::UnitAttributes& message );
     virtual void SetSuperior( const kernel::Entity_ABC& superior );
-    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    void CreateDictionary( gui::PropertiesDictionary& dico ) const;
     void Update( const std::vector< Dotation >& differences );
     //@}
 
@@ -78,7 +82,7 @@ public:
     kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::DotationType >& resolver_;
-    kernel::PropertiesDictionary& dictionary_;
+    gui::PropertiesDictionary& dictionary_;
     bool bEmptyGasTank_;
     const QString property_;
     //@}

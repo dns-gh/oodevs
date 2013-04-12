@@ -19,7 +19,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Tools.h"
@@ -91,7 +91,7 @@ Inhabitant::~Inhabitant()
 // -----------------------------------------------------------------------------
 void Inhabitant::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Male" ), male_, true );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Female" ), female_, true );
@@ -127,7 +127,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             const sword::PopulationUpdate_MotivationSatisfaction& motivation = msg.satisfaction().motivations( i );
             motivationSatisfactions_[ motivation.motivation() ] = ToInt( motivation.percentage() );
             const QString key = tools::translate( "Inhabitant", "Satisfactions/Usage/" ) + motivation.motivation().c_str();
-            PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+            gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
             if( !dictionary.HasKey( key ) )
             {
                 auto it = motivationSatisfactions_.find( motivation.motivation() );
@@ -142,7 +142,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
                 continue;
             resourceSatisfactions_[ dotation ] = ToInt( resource.value() );
             const QString key = tools::translate( "Inhabitant", "Satisfactions/Resource/" ) + dotation->GetName().c_str();
-            PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+            gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
             if( !dictionary.HasKey( key ) )
             {
                 const T_ResourceSatisfactions::const_iterator it = resourceSatisfactions_.find( dotation );
@@ -275,7 +275,7 @@ bool Inhabitant::IsAggregated() const
 // -----------------------------------------------------------------------------
 void Inhabitant::UpdateUrbanObjectsDictionnary()
 {
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
 
     accomodationCapacties_.clear();
     infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0;

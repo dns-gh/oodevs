@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "DelayPrototype.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/LoadableTimeEdit.h"
 #include "preparation/DelayAttribute.h"
 
@@ -44,7 +44,7 @@ void DelayPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         DelayAttribute* attribute = new DelayAttribute( dictionary, *creation_ );
         attribute->SetDelay( 3600 * delayTime_->time().hour() +
                                60 * delayTime_->time().minute() +

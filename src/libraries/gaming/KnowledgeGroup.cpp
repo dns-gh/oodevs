@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "KnowledgeGroup.h"
 #include "clients_kernel/KnowledgeGroupType.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 
@@ -92,7 +92,7 @@ void KnowledgeGroup::DoUpdate( const sword::KnowledgeGroupUpdate& message )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::CreateDictionary()
 {
-    kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Type/Name" ), type_ );
     dictionary.Register( *this, tools::translate( "KnowledgeGroup", "Type/Delay" ), delay_ ); // LTO
 }

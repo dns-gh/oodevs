@@ -10,7 +10,7 @@
 #ifndef __AutomatTacticalHierarchies_h_
 #define __AutomatTacticalHierarchies_h_
 
-#include "clients_kernel/MergingTacticalHierarchies.h"
+#include "clients_gui/MergingTacticalHierarchies.h"
 #include "tools/Resolver_ABC.h"
 
 namespace sword
@@ -30,7 +30,7 @@ namespace kernel
 */
 // Created: AGE 2006-10-19
 // =============================================================================
-class AutomatTacticalHierarchies : public kernel::MergingTacticalHierarchies
+class AutomatTacticalHierarchies : public gui::MergingTacticalHierarchies
                                  , public kernel::Updatable_ABC< sword::AutomatChangeSuperior >
 {
 public:

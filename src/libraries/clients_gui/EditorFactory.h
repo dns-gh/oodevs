@@ -10,7 +10,7 @@
 #ifndef __gui_EditorFactory_h_
 #define __gui_EditorFactory_h_
 
-#include "clients_kernel/EditorFactory_ABC.h"
+#include "EditorFactory_ABC.h"
 
 namespace gui
 {
@@ -20,7 +20,7 @@ namespace gui
 */
 // Created: SBO 2006-10-18
 // =============================================================================
-class EditorFactory : public kernel::EditorFactory_ABC
+class EditorFactory : public EditorFactory_ABC
                     , public tools::Caller< QString* >
                     , public tools::Caller< QTime* >
                     , public tools::Caller< QDateTime* >

@@ -12,7 +12,7 @@
 #include "TacticalLinePositions.h"
 #include "tools/IdManager.h"
 #include "clients_gui/GlTools_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 

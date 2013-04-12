@@ -23,6 +23,10 @@ namespace kernel
 {
     class Controller;
     class Displayer_ABC;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -38,7 +42,7 @@ class HumanFactors : public kernel::HumanFactors_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HumanFactors( kernel::Entity_ABC& entity, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary );
+             HumanFactors( kernel::Entity_ABC& entity, kernel::Controller& controller, gui::PropertiesDictionary& dictionary );
     virtual ~HumanFactors();
     //@}
 
@@ -64,7 +68,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary ) const;
+    void CreateDictionary( gui::PropertiesDictionary& dictionary ) const;
     virtual void DoUpdate( const sword::UnitAttributes& message );
     //@}
 

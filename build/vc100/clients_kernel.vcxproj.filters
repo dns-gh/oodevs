@@ -59,9 +59,6 @@
     <Filter Include="Source Files\Model\Entities\Population">
       <UniqueIdentifier>{4948de49-3c0c-459a-a964-acfe665f4a3d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Editor">
-      <UniqueIdentifier>{c4237bd6-81f1-4efe-b604-c0dca4826eab}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Translations">
       <UniqueIdentifier>{e6a01cec-02a0-4fab-96f8-49fd3920e55b}</UniqueIdentifier>
     </Filter>
@@ -73,12 +70,6 @@
     </Filter>
     <Filter Include="Source Files\Model\Entities\Urban">
       <UniqueIdentifier>{be79ce9d-0e9f-4bb3-98df-ae385d46baf8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Model\Properties">
-      <UniqueIdentifier>{7f72eb9e-3625-4240-8eee-1c750147cbf0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Model\Entities\Properties">
-      <UniqueIdentifier>{450f5794-88f3-48c2-b928-3634428956db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -346,9 +337,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\DictionaryExtensions.cpp">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\MergingTacticalHierarchies.cpp">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\ObjectHierarchies.cpp">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClCompile>
@@ -421,9 +409,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\TacticalLineHierarchies_ABC.cpp">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\Usages.cpp">
-      <Filter>Source Files\Model\Extensions\Urban</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanKnowledge_ABC.cpp">
       <Filter>Source Files\Model\Entities\Urban</Filter>
     </ClCompile>
@@ -448,15 +433,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanTemplateType.cpp">
       <Filter>Source Files\XML model</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\EditorFactory_ABC.cpp">
-      <Filter>Source Files\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.cpp">
-      <Filter>Source Files\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.cpp">
-      <Filter>Source Files\Model\Entities\Properties</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\EntityHelpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -465,12 +441,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\DisasterType.cpp">
       <Filter>Source Files\XML model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesGroup.cpp">
-      <Filter>Source Files\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\PropertiesGroupDictionary.cpp">
-      <Filter>Source Files\Editor</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\ModeController.cpp">
       <Filter>Source Files\kernel</Filter>
@@ -849,9 +819,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Dotations_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityHierarchies.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Extension_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
@@ -862,9 +829,6 @@
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\LivingAreaVisitor_ABC.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\MergingTacticalHierarchies.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Moveable_ABC.h">
@@ -889,9 +853,6 @@
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\TacticalHierarchies.h">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Updatable_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Agent_ABC.h">
@@ -1011,9 +972,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.h">
       <Filter>Source Files\Model\Extensions\Urban</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Usages.h">
-      <Filter>Source Files\Model\Extensions\Urban</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Usages_ABC.h">
       <Filter>Source Files\Model\Extensions\Urban</Filter>
     </ClInclude>
@@ -1071,27 +1029,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\ValueEditor.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\DictionaryUpdated.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\EditorFactory_ABC.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesDictionary.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Property_ABC.h">
-      <Filter>Source Files\Model\Properties</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.h">
-      <Filter>Source Files\Model\Entities\Properties</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityType.h">
-      <Filter>Source Files\Model\Entities\Properties</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\ReadOnlyModable.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
@@ -1113,12 +1050,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisasterType.h">
       <Filter>Source Files\XML model</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesGroup.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\PropertiesGroupDictionary.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\GraphicalEntity_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
     </ClInclude>
@@ -1131,6 +1062,9 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Curve.h">
       <Filter>Source Files\Tools\Locations</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Updatable_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">
@@ -1140,9 +1074,6 @@
       <Filter>Source Files\Display</Filter>
     </None>
     <None Include="..\..\src\libraries\clients_kernel\Creatable.inl">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </None>
-    <None Include="..\..\src\libraries\clients_kernel\EntityHierarchies.inl">
       <Filter>Source Files\Model\Extensions</Filter>
     </None>
     <None Include="..\..\src\libraries\clients_kernel\Hierarchies.inl">

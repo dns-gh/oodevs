@@ -7,13 +7,15 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "MergingTacticalHierarchies.h"
-#include "SymbolHierarchy_ABC.h"
-#include "Diplomacies_ABC.h"
+#include "PropertiesDictionary.h"
+#include "clients_kernel/SymbolHierarchy_ABC.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "ENT/ENT_Tr_Gen.h"
 
 using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: MergingTacticalHierarchies constructor

@@ -18,6 +18,10 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -39,8 +43,8 @@ class Architecture : public gui::Architecture
 public:
     //! @name Constructors/Destructor
     //@{
-             Architecture( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
-             Architecture( kernel::Controllers& controllers, xml::xistream& xis, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
+             Architecture( const kernel::Entity_ABC* parent, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
+             Architecture( kernel::Controllers& controllers, xml::xistream& xis, kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
     virtual ~Architecture();
     //@}
 

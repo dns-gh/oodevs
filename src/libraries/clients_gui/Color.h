@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __clientskernel_Color_h_
-#define __clientskernel_Color_h_
+#ifndef __clientsgui_Color_h_
+#define __clientsgui_Color_h_
 
 #include "clients_kernel/Color_ABC.h"
 #include <boost/optional.hpp>
@@ -54,4 +54,4 @@ protected:
 };
 }
 
-#endif // __clientskernel_Color_h_
+#endif // __clientsgui_Color_h_

@@ -10,15 +10,15 @@
 #include "clients_gui_pch.h"
 #include "Architecture.h"
 
+#include "PropertiesDictionary.h"
 #include "UrbanObject.h"
+#include "Usages.h"
 
-#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
-#include "clients_kernel/Usages.h"
 
 using namespace kernel;
 using namespace gui;

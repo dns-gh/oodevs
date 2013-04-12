@@ -10,7 +10,7 @@
 #ifndef __TeamTacticalHierarchies_h_
 #define __TeamTacticalHierarchies_h_
 
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_gui/EntityHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 // =============================================================================
@@ -19,7 +19,7 @@
 */
 // Created: AGE 2006-10-20
 // =============================================================================
-class TeamTacticalHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
+class TeamTacticalHierarchies : public gui::EntityHierarchies< kernel::TacticalHierarchies >
 {
 public:
     //! @name Constructors/Destructor

@@ -16,9 +16,13 @@
 namespace kernel
 {
     class Entity_ABC;
-    class PropertiesDictionary;
     class DotationType;
     class Controller;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 class Dotation;
@@ -34,7 +38,7 @@ class DotationsItem : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, const QString& propertyName, tools::Resolver< Dotation >& dotations, bool isStock );
+             DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, gui::PropertiesDictionary& dico, const QString& propertyName, tools::Resolver< Dotation >& dotations, bool isStock );
     virtual ~DotationsItem();
     //@}
 
@@ -55,7 +59,7 @@ private:
     //@{
     kernel::Controller& controller_;
     kernel::Entity_ABC& owner_;
-    kernel::PropertiesDictionary& dico_;
+    gui::PropertiesDictionary& dico_;
     QString propertyName_;
     tools::Resolver< Dotation >& dotations_;
     bool isStock_;

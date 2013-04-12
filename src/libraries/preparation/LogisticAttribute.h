@@ -25,8 +25,12 @@ namespace kernel
     class Formation_ABC;
     class Controllers;
     class Displayer_ABC;
-    class PropertiesDictionary;
     class Object_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -51,9 +55,9 @@ class LogisticAttribute : public kernel::LogisticAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticAttribute( kernel::PropertiesDictionary& dictionary, kernel::Controllers& controllers, const kernel::Object_ABC& object );
+             LogisticAttribute( gui::PropertiesDictionary& dictionary, kernel::Controllers& controllers, const kernel::Object_ABC& object );
              LogisticAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
-                                const tools::Resolver_ABC< kernel::Formation_ABC >& formations, kernel::PropertiesDictionary& dictionary,
+                                const tools::Resolver_ABC< kernel::Formation_ABC >& formations, gui::PropertiesDictionary& dictionary,
                                 kernel::Controllers& controllers, const kernel::Object_ABC& object );
     virtual ~LogisticAttribute();
     //@}
@@ -77,7 +81,7 @@ private:
     //@{
     virtual void NotifyDeleted( const kernel::Automat_ABC& entity );
     virtual void NotifyDeleted( const kernel::Formation_ABC& entity );
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( gui::PropertiesDictionary& dictionary );
     //@}
 
 private:

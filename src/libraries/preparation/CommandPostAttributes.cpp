@@ -21,7 +21,7 @@
 // Created: SBO 2007-03-27
 // -----------------------------------------------------------------------------
 CommandPostAttributes::CommandPostAttributes( xml::xistream& xis, const kernel::Entity_ABC& entity, const kernel::AgentType& type,
-                                              kernel::PropertiesDictionary& dictionary )
+                                              gui::PropertiesDictionary& dictionary )
     : entity_     ( entity )
     , type_       ( type )
     , commandPost_( xis.attribute< bool >( "command-post", false ) )
@@ -34,7 +34,7 @@ CommandPostAttributes::CommandPostAttributes( xml::xistream& xis, const kernel::
 // Created: LGY 2011-11-03
 // -----------------------------------------------------------------------------
 CommandPostAttributes::CommandPostAttributes( const kernel::Entity_ABC& entity, const kernel::AgentType& type,
-                                              kernel::PropertiesDictionary& dictionary, bool commandPost )
+                                              gui::PropertiesDictionary& dictionary, bool commandPost )
     : entity_     ( entity )
     , type_       ( type )
     , commandPost_( commandPost )
@@ -55,7 +55,7 @@ CommandPostAttributes::~CommandPostAttributes()
 // Name: CommandPostAttributes::CreateDictionary
 // Created: LGY 2011-11-03
 // -----------------------------------------------------------------------------
-void CommandPostAttributes::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void CommandPostAttributes::CreateDictionary( gui::PropertiesDictionary& dictionary )
 {
     dictionary.Register( entity_, tools::translate( "Agent", "Info/Command post" ), commandPost_ );
 }

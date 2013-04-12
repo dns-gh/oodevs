@@ -13,7 +13,7 @@
 #include "PropertyDialog.h"
 
 #include "clients_kernel/SubTypes.h"
-#include "clients_kernel/ValueEditor.h"
+#include "ValueEditor.h"
 
 #include <boost/noncopyable.hpp>
 
@@ -31,7 +31,7 @@ namespace gui
 // Created: ABR 2012-07-05
 // =============================================================================
 class CriticalIntelligenceDialog : public gui::PropertyDialog
-                                 , public kernel::ValueEditor< kernel::CriticalIntelligenceType >
+                                 , public ValueEditor< kernel::CriticalIntelligenceType >
 {
     Q_OBJECT
 

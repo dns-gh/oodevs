@@ -19,8 +19,8 @@
 // Name: Usages constructor
 // Created: ABR 2012-05-25
 // -----------------------------------------------------------------------------
-Usages::Usages( const kernel::Entity_ABC* parent, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner )
-    : kernel::Usages( dictionary, accommodationTypes, livingSpace, owner )
+Usages::Usages( const kernel::Entity_ABC* parent, gui::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner )
+    : gui::Usages( dictionary, accommodationTypes, livingSpace, owner )
 {
     if( parent )
     {
@@ -28,7 +28,7 @@ Usages::Usages( const kernel::Entity_ABC* parent, kernel::PropertiesDictionary& 
         const kernel::Usages_ABC& parentUsage = parentPhysicalAttribute.GetUsages();
         const kernel::T_Usages& usages = parentUsage.GetUsages();
         for( kernel::CIT_Usages it = usages.begin(); it != usages.end(); ++it )
-            if( it->first != kernel::Usages::defaultStr_ )
+            if( it->first != gui::Usages::defaultStr_ )
                 Add( it->first, it->second );
     }
 }
@@ -37,8 +37,8 @@ Usages::Usages( const kernel::Entity_ABC* parent, kernel::PropertiesDictionary& 
 // Name: Usages constructor
 // Created: LGY 2011-04-14
 // -----------------------------------------------------------------------------
-Usages::Usages( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner  )
-    : kernel::Usages( dictionary, accommodationTypes, livingSpace, owner )
+Usages::Usages( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner  )
+    : gui::Usages( dictionary, accommodationTypes, livingSpace, owner )
 {
     xis >> xml::start( "usages" )
             >> xml::list( "usage", *this, &Usages::ReadUsages )

@@ -11,14 +11,14 @@
 #include "LodgingAttribute.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: LodgingAttribute constructor
 // Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-LodgingAttribute::LodgingAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+LodgingAttribute::LodgingAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     CreateDictionary( dictionary, entity );
 }
@@ -27,7 +27,7 @@ LodgingAttribute::LodgingAttribute( kernel::PropertiesDictionary& dictionary, co
 // Name: LodgingAttribute constructor
 // Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-LodgingAttribute::LodgingAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+LodgingAttribute::LodgingAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     xis >> xml::attribute( "capacity", lodgingCapacity_ );
     CreateDictionary( dictionary, entity );
@@ -75,7 +75,7 @@ void LodgingAttribute::SetLodgingCapacity( unsigned int capacity )
 // Name: LodgingAttribute::CreateDictionary
 // Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-void LodgingAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void LodgingAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "LodgingAttribute", "Info/Lodging attributes/Capacity" ), lodgingCapacity_ );
 }

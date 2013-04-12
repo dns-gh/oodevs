@@ -16,9 +16,9 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -30,7 +30,7 @@ using namespace kernel;
 // Name: AgentPositions constructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-AgentPositions::AgentPositions( Agent_ABC& agent, const CoordinateConverter_ABC& converter, Controller& controller, const Point2f& position, PropertiesDictionary& dico )
+AgentPositions::AgentPositions( Agent_ABC& agent, const CoordinateConverter_ABC& converter, Controller& controller, const Point2f& position, gui::PropertiesDictionary& dico )
     : agent_     ( agent )
     , converter_ ( converter )
     , controller_( controller )
@@ -55,7 +55,7 @@ namespace
 // Name: AgentPositions constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-AgentPositions::AgentPositions( xml::xistream& xis, Agent_ABC& agent, const CoordinateConverter_ABC& converter, Controller& controller, PropertiesDictionary& dico )
+AgentPositions::AgentPositions( xml::xistream& xis, Agent_ABC& agent, const CoordinateConverter_ABC& converter, Controller& controller, gui::PropertiesDictionary& dico )
     : agent_( agent )
     , converter_( converter )
     , controller_( controller )
@@ -163,14 +163,14 @@ void AgentPositions::SerializeAttributes( xml::xostream& xos ) const
 void AgentPositions::Move( const geometry::Point2f& position )
 {
     position_ = position;
-    controller_.Update( kernel::DictionaryUpdated( agent_, tools::translate( "AgentPositions", "Info/Position" ) ) );
+    controller_.Update( gui::DictionaryUpdated( agent_, tools::translate( "AgentPositions", "Info/Position" ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentPositions::CreateDictionary
 // Created: SBO 2008-03-25
 // -----------------------------------------------------------------------------
-void AgentPositions::CreateDictionary( kernel::PropertiesDictionary& dico )
+void AgentPositions::CreateDictionary( gui::PropertiesDictionary& dico )
 {
     dico.Register( agent_, tools::translate( "AgentPositions", "Info/Position" ), moveable_ );
 }

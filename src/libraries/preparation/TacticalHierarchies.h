@@ -10,7 +10,7 @@
 #ifndef __TacticalHierarchies_h_
 #define __TacticalHierarchies_h_
 
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_gui/EntityHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 namespace kernel
@@ -25,7 +25,7 @@ namespace kernel
 */
 // Created: AGE 2006-09-19
 // =============================================================================
-class TacticalHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
+class TacticalHierarchies : public gui::EntityHierarchies< kernel::TacticalHierarchies >
 {
 public:
     //! @name Constructors/Destructor

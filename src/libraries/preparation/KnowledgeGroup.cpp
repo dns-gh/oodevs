@@ -12,7 +12,7 @@
 #include "tools/IdManager.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/KnowledgeGroupType.h" // LTO
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -80,7 +80,7 @@ KnowledgeGroupType* KnowledgeGroup::ResolveType( const std::string& typeName, to
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary>();
+    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary>();
     const Entity_ABC& constSelf = static_cast< const Entity_ABC& >( *this );
     dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Name" ), type_, *this, &KnowledgeGroup::SetType );
     dictionary.Register( constSelf, tools::translate( "KnowledgeGroup", "Type/Delay" ), communicationDelay_, true ); // LTO

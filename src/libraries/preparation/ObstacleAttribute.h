@@ -19,8 +19,12 @@ namespace kernel
 {
     class Displayer_ABC;
     class NBCAgent;
-    class PropertiesDictionary;
     class Entity_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -40,9 +44,9 @@ class ObstacleAttribute : public kernel::ObstacleAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ObstacleAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
-             ObstacleAttribute( kernel::PropertiesDictionary& dictionary, Enum_DemolitionTargetType type, const kernel::Entity_ABC& entity );
-             ObstacleAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+    explicit ObstacleAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             ObstacleAttribute( gui::PropertiesDictionary& dictionary, Enum_DemolitionTargetType type, const kernel::Entity_ABC& entity );
+             ObstacleAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~ObstacleAttribute();
     //@}
 
@@ -77,7 +81,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::PropertiesDictionary& dictionary_;
+    gui::PropertiesDictionary& dictionary_;
     Enum_DemolitionTargetType     type_;
     bool                          bActivated_;
     QTime                         activationTime_;

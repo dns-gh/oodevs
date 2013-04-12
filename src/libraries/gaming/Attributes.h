@@ -31,9 +31,13 @@ namespace kernel
     class Controller;
     class CoordinateConverter_ABC;
     class Entity_ABC;
-    class PropertiesDictionary;
     class SensorType;
     class Team_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -52,7 +56,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Attributes( kernel::Entity_ABC& entity, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter
-                       , kernel::PropertiesDictionary& dictionary, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
+                       , gui::PropertiesDictionary& dictionary, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~Attributes();
     //@}
 
@@ -74,7 +78,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    void CreateDictionary( gui::PropertiesDictionary& dico ) const;
     void UpdateHierarchies();
     virtual void DoUpdate( const sword::UnitAttributes& message );
     virtual void Aggregate( const bool& );

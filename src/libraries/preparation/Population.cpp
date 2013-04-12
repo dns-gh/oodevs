@@ -12,7 +12,7 @@
 #include "tools/IdManager.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -155,7 +155,7 @@ void Population::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Population::CreateDictionary()
 {
-    kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     const kernel::Entity_ABC& constEntity = *static_cast< const kernel::Entity_ABC* >( this );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Mood" ), attitude_ );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Info/Armed-Individuals" ), armedIndividuals_ );
@@ -165,10 +165,10 @@ void Population::CreateDictionary()
     dictionary.Register( constEntity, tools::translate( "Crowd", "Humans/Wounded" ), wounded_ );
     dictionary.Register( constEntity, tools::translate( "Crowd", "Humans/Dead" ), dead_ );
 
-    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Repartition" ), repartition_, false, kernel::ePopulationRepartition );
-    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Male" ), repartition_->male_, true, kernel::ePopulationRepartition );
-    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Female" ), repartition_->female_, true, kernel::ePopulationRepartition );
-    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Children" ), repartition_->children_, true, kernel::ePopulationRepartition );
+    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Repartition" ), repartition_, false, gui::ePopulationRepartition );
+    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Male" ), repartition_->male_, true, gui::ePopulationRepartition );
+    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Female" ), repartition_->female_, true, gui::ePopulationRepartition );
+    dictionary.Register( constEntity, tools::translate( "Crowd", "Male\\Female\\Children/Children" ), repartition_->children_, true, gui::ePopulationRepartition );
 }
 
 // -----------------------------------------------------------------------------

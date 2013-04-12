@@ -11,7 +11,7 @@
 #include "LogisticLevelAttribute.h"
 #include "LogisticBaseStates.h"
 #include "clients_kernel/LogisticLevel.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 #include <QtGui/qmessagebox.h>
@@ -20,7 +20,7 @@
 // Name: LogisticLevelAttribute constructor
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-LogisticLevelAttribute::LogisticLevelAttribute( kernel::Controller& controller, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
+LogisticLevelAttribute::LogisticLevelAttribute( kernel::Controller& controller, const kernel::Entity_ABC& entity, bool active, gui::PropertiesDictionary& dictionary )
     : controller_   ( controller )
     , entity_       ( entity )
     , logisticLevel_( active ? &kernel::LogisticLevel::logistic_base_ : &kernel::LogisticLevel::none_ ) // Logistic brain is enabled by default for type "tc2"
@@ -32,7 +32,7 @@ LogisticLevelAttribute::LogisticLevelAttribute( kernel::Controller& controller, 
 // Name: LogisticLevelAttribute constructor
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-LogisticLevelAttribute::LogisticLevelAttribute( kernel::Controller& controller, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary )
+LogisticLevelAttribute::LogisticLevelAttribute( kernel::Controller& controller, const kernel::Entity_ABC& entity, gui::PropertiesDictionary& dictionary )
     : controller_   ( controller )
     , entity_       ( entity )
     , logisticLevel_( &kernel::LogisticLevel::none_ )
@@ -44,7 +44,7 @@ LogisticLevelAttribute::LogisticLevelAttribute( kernel::Controller& controller, 
 // Name: LogisticLevelAttribute constructor
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-LogisticLevelAttribute::LogisticLevelAttribute( kernel::Controller& controller, xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary )
+LogisticLevelAttribute::LogisticLevelAttribute( kernel::Controller& controller, xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, gui::PropertiesDictionary& dictionary )
     : controller_   ( controller )
     , entity_       ( entity )
     , logisticLevel_( &kernel::LogisticLevel::none_ )
@@ -59,7 +59,7 @@ LogisticLevelAttribute::LogisticLevelAttribute( kernel::Controller& controller, 
 // Name: LogisticLevelAttribute::CreateDictionary
 // Created: LGY 2011-07-20
 // -----------------------------------------------------------------------------
-void LogisticLevelAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, bool active )
+void LogisticLevelAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, bool active )
 {
     if( active )
         dictionary.Register( entity_, tools::translate( "LogisticLevelAttribute", "Info/LogisticLevel" ), logisticLevel_, *this, &LogisticLevelAttribute::SetLogisticLevel );

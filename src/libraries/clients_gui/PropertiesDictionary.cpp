@@ -7,11 +7,12 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "PropertiesDictionary.h"
-#include "Displayer_ABC.h"
+#include "clients_kernel/Displayer_ABC.h"
 
 using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesDictionary constructor
@@ -44,7 +45,7 @@ void PropertiesDictionary::Remove( const QString& name )
         IT_Properties curIt = it++;
         if( curIt->first.startsWith( name, Qt::CaseInsensitive ) )
         {
-            controller_.Delete( kernel::DictionaryUpdated( curIt->second->GetOwner(), curIt->first ) );
+            controller_.Delete( DictionaryUpdated( curIt->second->GetOwner(), curIt->first ) );
             properties_.erase( curIt );
         }
     }

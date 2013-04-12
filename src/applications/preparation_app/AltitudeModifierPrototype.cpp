@@ -11,7 +11,7 @@
 #include "AltitudeModifierPrototype.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/LoadableSpinBox.h"
 #include "preparation/AltitudeModifierAttribute.h"
 
@@ -47,7 +47,7 @@ void AltitudeModifierPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         AltitudeModifierAttribute* attribute = new AltitudeModifierAttribute( dictionary, detection_, *creation_, controllers_, *creation_ );
         attribute->SetHeight( height_->value() );
         creation_->Attach( *attribute );

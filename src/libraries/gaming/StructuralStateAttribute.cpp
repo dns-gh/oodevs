@@ -11,8 +11,8 @@
 #include "StructuralStateAttribute.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/PropertiesDictionary.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
@@ -22,7 +22,7 @@ using namespace kernel;
 // Name: StructuralStateAttribute constructor
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-StructuralStateAttribute::StructuralStateAttribute( kernel::Entity_ABC& entity, kernel::Controller& controller, PropertiesDictionary& dictionary )
+StructuralStateAttribute::StructuralStateAttribute( kernel::Entity_ABC& entity, kernel::Controller& controller, gui::PropertiesDictionary& dictionary )
     : entity_         ( entity )
     , controller_     ( controller )
     , structuralState_( 100 )
@@ -53,7 +53,7 @@ unsigned int StructuralStateAttribute::GetValue() const
 // Name: StructuralStateAttribute::CreateDictionary
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-void StructuralStateAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary ) const
+void StructuralStateAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary ) const
 {
     dictionary.RegisterExtension( entity_, this, property_, structuralState_ );
 }
@@ -87,7 +87,7 @@ void StructuralStateAttribute::UpdateData( const T& message )
     UPDATE_SUBPROPERTY( message, structuralState_, structure, state, "Info", updated );
     if( !updated.empty() )
     {
-        controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
+        controller_.Update( gui::DictionaryUpdated( entity_, property_ ) );
         controller_.Update( static_cast< kernel::StructuralStateAttribute_ABC& >( *this ) );
     }
 }

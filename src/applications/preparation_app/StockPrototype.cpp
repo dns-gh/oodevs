@@ -11,7 +11,7 @@
 #include "StockPrototype.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/LoadableSpinBox.h"
 #include "preparation/StockAttribute.h"
 #include <boost/foreach.hpp>
@@ -45,7 +45,7 @@ void StockPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         StockAttribute* attribute = new StockAttribute( dictionary, *creation_ );
         BOOST_FOREACH( DotationWidget* dotationWidget, dotationWidgets_ )
             attribute->SetDotation( *dotationWidget->dotationType_->GetValue(), dotationWidget->stock_->value(), dotationWidget->maxStock_->value() );

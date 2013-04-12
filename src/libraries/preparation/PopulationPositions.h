@@ -17,8 +17,12 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
-    class PropertiesDictionary;
     class Controller;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -42,9 +46,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              PopulationPositions( Population& owner, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                                  const geometry::Point2f& position, kernel::PropertiesDictionary& dictionary );
+                                  const geometry::Point2f& position, gui::PropertiesDictionary& dictionary );
              PopulationPositions( xml::xistream& xis, Population& owner, kernel::Controller& controller,
-                                  const kernel::CoordinateConverter_ABC& converter, kernel::PropertiesDictionary& dictionary );
+                                  const kernel::CoordinateConverter_ABC& converter, gui::PropertiesDictionary& dictionary );
     virtual ~PopulationPositions();
     //@}
 
@@ -71,7 +75,7 @@ private:
     //@{
     static geometry::Point2f ReadPosition( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     void UpdatePosition();
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( gui::PropertiesDictionary& dictionary );
 
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
     virtual void Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;

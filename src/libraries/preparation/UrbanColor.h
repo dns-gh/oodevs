@@ -17,8 +17,12 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
-    class PropertiesDictionary;
     class UrbanObject_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -38,8 +42,8 @@ class UrbanColor : public kernel::UrbanColor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanColor( const kernel::Entity_ABC* parent, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary );
-             UrbanColor( xml::xistream& xis, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary );
+             UrbanColor( const kernel::Entity_ABC* parent, kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary );
+             UrbanColor( xml::xistream& xis, kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary );
     virtual ~UrbanColor();
     //@}
 

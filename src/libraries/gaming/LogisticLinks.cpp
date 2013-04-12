@@ -15,11 +15,11 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/LogisticHelpers.h"
 #include "protocol/Protocol.h"
@@ -42,7 +42,7 @@ LogisticLinks::LogisticLinks( Controller& controller,
                               const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
                               const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
                               const kernel::LogisticLevel& currentLevel,
-                              PropertiesDictionary& dictionary,
+                              gui::PropertiesDictionary& dictionary,
                               kernel::Entity_ABC& entity )
     : controller_       ( controller )
     , automatResolver_  ( automatResolver )
@@ -102,7 +102,7 @@ void LogisticLinks::DoUpdate( const sword::LogSupplyQuotas& message )
     LogisticLink* link = FindLogisticLink( *supplier );
     if( link )
         link->Update( message.quotas(), dotationResolver_ );
-    controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
+    controller_.Update( gui::DictionaryUpdated( entity_, property_ ) );
     controller_.Update( *this );
 }
 
@@ -121,7 +121,7 @@ void LogisticLinks::DoUpdate( const sword::ChangeLogisticLinks& message )
         superiorLinks_.push_back( boost::make_shared< LogisticLink >( *superior ) );
         superiors_.push_back( superior );
     }
-    controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
+    controller_.Update( gui::DictionaryUpdated( entity_, property_ ) );
     controller_.Update( *this );
 }
 

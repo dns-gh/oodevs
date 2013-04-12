@@ -10,10 +10,11 @@
 #ifndef __Property_ABC_h_
 #define __Property_ABC_h_
 
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Displayer_ABC.h"
+
 #include "ValueEditor.h"
-#include "Controller.h"
 #include "EditorFactory_ABC.h"
-#include "Displayer_ABC.h"
 #pragma warning( push, 0 )
 #include <QtGui/qwidget.h>
 #pragma warning( pop )
@@ -21,9 +22,11 @@
 namespace kernel
 {
     class Displayer_ABC;
-    class Property_ABC;
     class Entity_ABC;
+}
 
+namespace gui
+{
     enum E_Category
     {
         eNothing,
@@ -50,7 +53,7 @@ public:
     //@{
     virtual QWidget* CreateEditor( QWidget* parent, EditorFactory_ABC& factory ) = 0;
     virtual void SetValueFromEditor( QWidget* editor ) = 0;
-    virtual void Display( Displayer_ABC& displayer ) = 0;
+    virtual void Display( kernel::Displayer_ABC& displayer ) = 0;
     virtual const QString& GetName() const = 0;
     virtual E_Category GetCategory() const = 0;
     virtual void AddSubProperty( Property_ABC* property ) = 0;
@@ -69,7 +72,7 @@ template< typename T, typename Setter, typename SpecificOwner >
 class Property : public Property_ABC
 {
 public:
-    Property( Controller& controller, const kernel::Entity_ABC& owner, T& value, const Setter& setter,
+    Property( kernel::Controller& controller, const kernel::Entity_ABC& owner, T& value, const Setter& setter,
               const QString& name, bool readOnly, E_Category category, const SpecificOwner* pSpecificOwner = nullptr )
         : controller_( controller )
         , owner_     ( owner )
@@ -87,7 +90,7 @@ public:
         // NOTHING
     }
 
-    virtual void Display( Displayer_ABC& displayer )
+    virtual void Display( kernel::Displayer_ABC& displayer )
     {
         displayer.Display( *data_ );
     }
@@ -133,7 +136,7 @@ public:
     }
 
 private:
-    Controller& controller_;
+    kernel::Controller& controller_;
     const kernel::Entity_ABC& owner_;
     const SpecificOwner* specificOwner_;
     T* data_;

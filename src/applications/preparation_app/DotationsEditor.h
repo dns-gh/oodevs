@@ -12,7 +12,7 @@
 
 #include "clients_gui/PropertyDialog.h"
 #include "clients_kernel/Resolver2.h"
-#include "clients_kernel/ValueEditor.h"
+#include "clients_gui/ValueEditor.h"
 #include "tools/Resolver.h"
 
 namespace kernel
@@ -38,7 +38,7 @@ class DotationsItem;
 // Created: SBO 2006-11-10
 // =============================================================================
 class DotationsEditor : public gui::PropertyDialog
-                      , public kernel::ValueEditor< DotationsItem* >
+                      , public gui::ValueEditor< DotationsItem* >
 {
     Q_OBJECT
 

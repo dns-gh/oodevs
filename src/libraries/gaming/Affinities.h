@@ -22,7 +22,7 @@ namespace actions
     }
 }
 
-namespace kernel
+namespace gui
 {
     class PropertiesDictionary;
 }
@@ -51,7 +51,7 @@ class Affinities : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Affinities( kernel::Entity_ABC& entity, kernel::Controller& controller, TeamsModel& teams, kernel::PropertiesDictionary& dico );
+             Affinities( kernel::Entity_ABC& entity, kernel::Controller& controller, TeamsModel& teams, gui::PropertiesDictionary& dico );
     virtual ~Affinities();
     //@}
 
@@ -92,7 +92,7 @@ private:
     kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
     TeamsModel& teams_;
-    kernel::PropertiesDictionary& dico_;
+    gui::PropertiesDictionary& dico_;
     const QString baseName_;
     T_Affinities affinities_;
     T_Affinities changingAffinities_;

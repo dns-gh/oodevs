@@ -33,7 +33,7 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/Dotations_ABC.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/EntityType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Location_ABC.h"

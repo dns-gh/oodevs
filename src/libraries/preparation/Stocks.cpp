@@ -13,7 +13,7 @@
 #include "DotationsItem.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -23,7 +23,7 @@ using namespace kernel;
 // Name: Stocks constructor
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-Stocks::Stocks( Controller& controller, Entity_ABC& entity, PropertiesDictionary& dico )
+Stocks::Stocks( Controller& controller, Entity_ABC& entity, gui::PropertiesDictionary& dico )
     : controller_( controller )
 {
     CreateDictionary( entity, dico );
@@ -33,7 +33,7 @@ Stocks::Stocks( Controller& controller, Entity_ABC& entity, PropertiesDictionary
 // Name: Stocks constructor
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-Stocks::Stocks( xml::xistream& xis, Controller& controller, Entity_ABC& entity, const tools::Resolver_ABC< DotationType, std::string >& resolver, PropertiesDictionary& dico )
+Stocks::Stocks( xml::xistream& xis, Controller& controller, Entity_ABC& entity, const tools::Resolver_ABC< DotationType, std::string >& resolver, gui::PropertiesDictionary& dico )
     : controller_( controller )
 {
     invalidDotations_.clear();
@@ -149,7 +149,7 @@ void Stocks::SerializeAttributes( xml::xostream& xos ) const
 // Name: Stocks::CreateDictionary
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void Stocks::CreateDictionary( Entity_ABC& entity, PropertiesDictionary& dico )
+void Stocks::CreateDictionary( Entity_ABC& entity, gui::PropertiesDictionary& dico )
 {
     item_ = new DotationsItem( controller_, entity, dico, tools::translate( "Stocks", "Stocks" ), *static_cast< Resolver< Dotation >* >( this ), true );
     dico.Register( entity, tools::translate( "Stocks", "Stocks/Edit Stocks" ), item_ );

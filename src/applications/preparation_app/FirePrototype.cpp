@@ -11,7 +11,7 @@
 #include "FirePrototype.h"
 #include "clients_kernel/FireClass.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/LoadableSpinBox.h"
 #include "preparation/FireAttribute.h"
 
@@ -45,7 +45,7 @@ void FirePrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         FireAttribute* attribute = new FireAttribute( dictionary, *creation_ );
         attribute->SetClass( *fireClass_->GetValue() );
         attribute->SetMaxCombustionEnergy( maxCombustionEnergy_->value() );

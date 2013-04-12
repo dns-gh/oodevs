@@ -18,10 +18,10 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/PopulationType.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
-#include "clients_kernel/DictionaryUpdated.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/DictionaryUpdated.h"
+#include "clients_gui/EntityType.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/foreach.hpp>
@@ -188,7 +188,7 @@ void Population::DoUpdate( const sword::CrowdConcentrationCreation& message )
 {
     if( ! tools::Resolver< PopulationConcentration_ABC >::Find( message.concentration().id() ) )
     {
-        PopulationConcentration* entity = new PopulationConcentration( message, converter_, Get< kernel::EntityType< kernel::PopulationType > >().GetType().GetDensity() );
+        PopulationConcentration* entity = new PopulationConcentration( message, converter_, Get< gui::EntityType< kernel::PopulationType > >().GetType().GetDensity() );
         entity->Attach< Positions >( *new PopulationPartPositionsProxy( *entity ) );
         tools::Resolver< PopulationConcentration_ABC >::Register( message.concentration().id(), *entity );
         ComputeCenter();
@@ -239,7 +239,7 @@ void Population::DoUpdate( const sword::CrowdUpdate& message )
     }
 
     BOOST_FOREACH( const std::string& content, updated )
-        controllers_.controller_.Update( kernel::DictionaryUpdated( *static_cast< Entity_ABC* >( this ), tools::translate( "Crowd", content.c_str() ) ) );
+        controllers_.controller_.Update( gui::DictionaryUpdated( *static_cast< Entity_ABC* >( this ), tools::translate( "Crowd", content.c_str() ) ) );
 
     controllers_.controller_.Update( *static_cast< Entity_ABC* >( this ) );
 }
@@ -371,7 +371,7 @@ void Population::Accept( LocationVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void Population::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Domination" ), nDomination_, true );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Armed individuals" ), armedIndividuals_, true );

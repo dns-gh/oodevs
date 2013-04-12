@@ -9,10 +9,10 @@
 
 #include "clients_gui_pch.h"
 #include "Team.h"
+#include "PropertiesDictionary.h"
 
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 

@@ -18,9 +18,13 @@ namespace kernel
 {
     class Displayer_ABC;
     class NBCAgent;
-    class PropertiesDictionary;
     class DotationType;
     class Entity_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -40,8 +44,8 @@ class ConstructionAttribute : public kernel::ConstructionAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ConstructionAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
-             ConstructionAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+    explicit ConstructionAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             ConstructionAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~ConstructionAttribute();
     //@}
 
@@ -66,7 +70,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+    void CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 private:

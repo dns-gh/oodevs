@@ -11,12 +11,12 @@
 #define __EditorFactory_ABC_h_
 
 #include "tools/VirtualTemplate.h"
-#include "Units.h"
+#include "clients_kernel/Units.h"
 #include <boost/noncopyable.hpp>
 
 class QWidget;
 
-namespace kernel
+namespace gui
 {
 // =============================================================================
 /** @class  EditorFactory_ABC

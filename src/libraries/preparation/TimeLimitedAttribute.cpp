@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "TimeLimitedAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: TimeLimitedAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-TimeLimitedAttribute::TimeLimitedAttribute( PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+TimeLimitedAttribute::TimeLimitedAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : activityTime_( 0, 0 )
 {
     CreateDictionary( dictionary, entity );
@@ -30,7 +30,7 @@ TimeLimitedAttribute::TimeLimitedAttribute( PropertiesDictionary& dictionary, co
 // Name: TimeLimitedAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis, PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : activityTime_( 0, 0 )
 {
     QTime activityTime;
@@ -83,7 +83,7 @@ void TimeLimitedAttribute::SetActivityTime( unsigned int time )
 // Name: TimeLimitedAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::CreateDictionary( PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void TimeLimitedAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "TimeLimitedAttribute", "Info/Mine parameters/Activity time" ), activityTime_ );
 }

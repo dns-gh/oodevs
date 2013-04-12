@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __clientskernel_Team_h_
-#define __clientskernel_Team_h_
+#ifndef __clientsgui_Team_h_
+#define __clientsgui_Team_h_
 
 #include "EntityImplementation.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
@@ -59,4 +59,4 @@ protected:
 };
 }
 
-#endif // __clientskernel_Team_h_
+#endif // __clientsgui_Team_h_

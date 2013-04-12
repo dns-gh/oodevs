@@ -9,7 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "TrafficabilityPrototype.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_gui/LoadableLineEdit.h"
 #include "preparation/TrafficabilityAttribute.h"
@@ -45,7 +45,7 @@ void TrafficabilityPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         TrafficabilityAttribute* attribute = new TrafficabilityAttribute( dictionary, maxWeight_->text().toDouble(), *creation_ );
         creation_->Attach( *attribute );
     }

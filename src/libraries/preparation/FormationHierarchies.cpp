@@ -24,7 +24,7 @@
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
 FormationHierarchies::FormationHierarchies( kernel::Controller& controller, kernel::Formation_ABC& holder, kernel::Entity_ABC* superior, kernel::SymbolFactory& factory )
-    : kernel::MergingTacticalHierarchies( controller, holder, 0 )
+    : gui::MergingTacticalHierarchies( controller, holder, 0 )
     , superior_( superior )
     , level_   ( factory.CreateLevelSymbol( ENT_Tr::ConvertFromNatureLevel( holder.GetLevel() ) ) )
     , symbolFactory_( factory )
@@ -65,7 +65,7 @@ void FormationHierarchies::SetLevel( E_NatureLevel level )
 // -----------------------------------------------------------------------------
 void FormationHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
 {
-    kernel::MergingTacticalHierarchies::ChangeSuperior( &superior );
+    gui::MergingTacticalHierarchies::ChangeSuperior( &superior );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ void FormationHierarchies::SerializeLogistics( xml::xostream& xos ) const
 void FormationHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
 {
     SetSuperior( superior_ );
-    kernel::MergingTacticalHierarchies::DoUpdate( ic );
+    gui::MergingTacticalHierarchies::DoUpdate( ic );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,6 +144,6 @@ void FormationHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
 // -----------------------------------------------------------------------------
 const kernel::Entity_ABC* FormationHierarchies::GetSuperior() const
 {
-    const kernel::Entity_ABC* superior = kernel::MergingTacticalHierarchies::GetSuperior();
+    const kernel::Entity_ABC* superior = gui::MergingTacticalHierarchies::GetSuperior();
     return superior ? superior : superior_;
 }

@@ -11,7 +11,7 @@
 #include "ConstructionAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -19,7 +19,7 @@
 // Name: ConstructionAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+ConstructionAttribute::ConstructionAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : completion_   ( 0, kernel::Units::percentageGTzero )
     , dotationType_ ( 0 )
     , dotationCount_( 0 )
@@ -31,7 +31,7 @@ ConstructionAttribute::ConstructionAttribute( kernel::PropertiesDictionary& dict
 // Name: ConstructionAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+ConstructionAttribute::ConstructionAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : completion_   ( unsigned int( xis.attribute< float >( "completion", 1.f ) * 100 ), kernel::Units::percentageGTzero )
     , dotationType_ ( 0 )
     , dotationCount_( 0 )
@@ -89,7 +89,7 @@ void ConstructionAttribute::SerializeObjectAttributes( xml::xostream& xos ) cons
 // Name: ConstructionAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void ConstructionAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "Object", "Info/Construction/Completion" ), completion_ );
     dictionary.RegisterExtension( entity, this, tools::translate( "Object", "Info/Construction/Resource/Type" ), dotationType_ );

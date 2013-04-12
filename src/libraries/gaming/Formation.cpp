@@ -14,7 +14,7 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Karma.h"
@@ -64,7 +64,7 @@ E_NatureLevel Formation::GetLevel() const
 // -----------------------------------------------------------------------------
 void Formation::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/LogisticLevel" ), *logisticLevel_ );
 }
 

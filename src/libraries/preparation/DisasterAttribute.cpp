@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "DisasterAttribute.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -17,7 +17,7 @@
 // Name: DisasterAttribute constructor
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-DisasterAttribute::DisasterAttribute( kernel::PropertiesDictionary& dictionary, const tools::Path& source, const QDateTime& date, const kernel::Entity_ABC& entity )
+DisasterAttribute::DisasterAttribute( gui::PropertiesDictionary& dictionary, const tools::Path& source, const QDateTime& date, const kernel::Entity_ABC& entity )
     : source_( source )
     , date_  ( date )
 {
@@ -28,7 +28,7 @@ DisasterAttribute::DisasterAttribute( kernel::PropertiesDictionary& dictionary, 
 // Name: DisasterAttribute constructor
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-DisasterAttribute::DisasterAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+DisasterAttribute::DisasterAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     std::string date;
     xis >> xml::attribute( "source", source_ )
@@ -54,7 +54,7 @@ DisasterAttribute::~DisasterAttribute()
 // Name: DisasterAttribute::CreateDictionary
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-void DisasterAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void DisasterAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "DisasterAttribute", "Info/Data source" ), source_ );
     if( !date_.isNull() )

@@ -14,7 +14,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/tools.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "tools/Iterator.h"
 #include <xeumeuleu/xml.hpp>
@@ -23,7 +23,7 @@
 // Name: PeopleAffinities constructor
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-PeopleAffinities::PeopleAffinities( kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+PeopleAffinities::PeopleAffinities( kernel::Controllers& controllers, Model& model, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : Affinities( model )
     , controllers_( controllers )
     , dictionary_ ( dictionary )
@@ -37,7 +37,7 @@ PeopleAffinities::PeopleAffinities( kernel::Controllers& controllers, Model& mod
 // Name: PeopleAffinities constructor
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-PeopleAffinities::PeopleAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+PeopleAffinities::PeopleAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : Affinities( xis, model )
     , controllers_( controllers )
     , dictionary_ ( dictionary )

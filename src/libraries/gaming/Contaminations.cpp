@@ -14,8 +14,8 @@
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/DictionaryUpdated.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/DictionaryUpdated.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/Tools.h"
 #include "statusicons.h"
@@ -28,7 +28,7 @@ using namespace kernel;
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
 Contaminations::Contaminations( Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< NBCAgent >& resolver,
-                                PropertiesDictionary& dico, const kernel::AgentType& type )
+                                gui::PropertiesDictionary& dico, const kernel::AgentType& type )
     : controller_            ( controller )
     , entity_                ( entity )
     , resolver_              ( resolver )
@@ -87,7 +87,7 @@ void Contaminations::DoUpdate( const sword::UnitAttributes& message )
    UPDATE_PROPERTY( message, bNbcProtectionSuitWorn_, protective_suits, "NBC/NBC suit", updated );
 
    BOOST_FOREACH( const std::string& content, updated )
-       controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "NBC", content.c_str() ) ) );
+       controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "NBC", content.c_str() ) ) );
 
     controller_.Update( *this );
 }

@@ -7,21 +7,23 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "PropertiesGroupDictionary.h"
-#include "UrbanObject_ABC.h"
 #include "PropertiesGroup.h"
-#include "Displayer_ABC.h"
+
+#include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/Displayer_ABC.h"
 #include <boost/foreach.hpp>
 
 using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesGroupDictionary constructor
 // Created: LGY 2013-01-03
 // -----------------------------------------------------------------------------
 PropertiesGroupDictionary::PropertiesGroupDictionary( kernel::Controller& controller, Displayer_ABC& comparator )
-    : kernel::PropertiesDictionary( controller )
+    : PropertiesDictionary( controller )
     , comparator_( comparator )
 {
     // NOTHING
@@ -45,12 +47,12 @@ void PropertiesGroupDictionary::Fill( const std::vector< const kernel::UrbanObje
     Clear();
 
     BOOST_FOREACH( const kernel::UrbanObject_ABC* block, urbanBlocks )
-        if( const kernel::PropertiesDictionary* dictionary = block->Retrieve< kernel::PropertiesDictionary >() )
+        if( const PropertiesDictionary* dictionary = block->Retrieve< PropertiesDictionary >() )
             BOOST_FOREACH( const T_Properties::value_type& property, dictionary->GetProperties() )
             {
                 IT_Properties propertyGroup = properties_.find( property.first );
                 if( propertyGroup == properties_.end() )
-                    properties_[ property.first ] = new kernel::PropertiesGroup( comparator_ , *block );
+                    properties_[ property.first ] = new PropertiesGroup( comparator_ , *block );
                  properties_[ property.first ]->AddSubProperty( property.second );
             }
 }

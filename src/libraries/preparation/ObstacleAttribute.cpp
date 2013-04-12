@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "ObstacleAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: ObstacleAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+ObstacleAttribute::ObstacleAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : dictionary_    ( dictionary )
     , type_          ( eDemolitionTargetType_Preliminary )
     , bActivated_    ( true )
@@ -34,7 +34,7 @@ ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dictionary, 
 // Name: ObstacleAttribute constructor
 // Created: JCR 2008-06-11
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( kernel::PropertiesDictionary& dictionary, Enum_DemolitionTargetType type, const kernel::Entity_ABC& entity )
+ObstacleAttribute::ObstacleAttribute( gui::PropertiesDictionary& dictionary, Enum_DemolitionTargetType type, const kernel::Entity_ABC& entity )
     : dictionary_    ( dictionary )
     , type_          ( type )
     , bActivated_    ( type_.GetValue() == eDemolitionTargetType_Preliminary )
@@ -70,7 +70,7 @@ namespace
 // Name: ObstacleAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+ObstacleAttribute::ObstacleAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : dictionary_    ( dictionary )
     , type_          ( xis.attribute< std::string >( "type", std::string() ) )
     , bActivated_    ( xis.attribute< bool >( "activated" ) )

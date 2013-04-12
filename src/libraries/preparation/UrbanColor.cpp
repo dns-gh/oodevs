@@ -11,7 +11,7 @@
 #include "UrbanColor.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
@@ -21,7 +21,7 @@
 // Name: UrbanColor constructor
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanColor::UrbanColor( const kernel::Entity_ABC* parent, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
+UrbanColor::UrbanColor( const kernel::Entity_ABC* parent, kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary )
 {
     if( parent )
     {
@@ -29,14 +29,14 @@ UrbanColor::UrbanColor( const kernel::Entity_ABC* parent, kernel::UrbanObject_AB
         SetColor( parentColor.Red(), parentColor.Green(), parentColor.Blue(), static_cast< int >( parentColor.Alpha() * 255 + 0.5 ) );
         initial_ = current_;
     }
-    dictionary.Register( object, tools::translate( "UrbanColor", "Info/Color" ), current_, false, kernel::eUrbanTemplate );
+    dictionary.Register( object, tools::translate( "UrbanColor", "Info/Color" ), current_, false, gui::eUrbanTemplate );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanColor constructor
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
-UrbanColor::UrbanColor( xml::xistream& xis, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
+UrbanColor::UrbanColor( xml::xistream& xis, kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary )
 {
     if( xis.has_child( "color" ) )
     {
@@ -46,7 +46,7 @@ UrbanColor::UrbanColor( xml::xistream& xis, kernel::UrbanObject_ABC& object, ker
         initial_ = current_;
         xis >> xml::end;
     }
-    dictionary.Register( object, tools::translate( "UrbanColor", "Info/Color" ), current_, false, kernel::eUrbanTemplate );
+    dictionary.Register( object, tools::translate( "UrbanColor", "Info/Color" ), current_, false, gui::eUrbanTemplate );
 }
 
 // -----------------------------------------------------------------------------

@@ -16,7 +16,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Color_ABC.h"
 #include <xeumeuleu/xml.hpp>
@@ -127,7 +127,7 @@ void Object::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Object::CreateDictionary()
 {
-    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     const Entity_ABC* constEntity = static_cast< const Entity_ABC* >( this );
     dictionary.Register( *constEntity, tools::translate( "Object", "Info/Type" ), type_.GetName(), true );
 }

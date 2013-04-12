@@ -7,19 +7,22 @@
 //
 // *****************************************************************************
 
-#ifndef __kernel_EntityHierarchies_h_
-#define __kernel_EntityHierarchies_h_
+#ifndef __gui_EntityHierarchies_h_
+#define __gui_EntityHierarchies_h_
 
-#include "Hierarchies.h"
+#include "PropertiesDictionary.h"
+#include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/Creatable.h"
 #include "tools/Resolver.h"
-#include "Creatable.h"
 #include "boost/noncopyable.hpp"
 
 namespace kernel
 {
     class Controller;
-    class PropertiesDictionary;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  EntityHierarchies
     @brief  Entity hierarchies
@@ -28,50 +31,50 @@ namespace kernel
 // =============================================================================
 template< typename Interface >
 class EntityHierarchies : public Interface
-                        , public tools::Resolver< Entity_ABC >
-                        , public Creatable< Interface >
+                        , public tools::Resolver< kernel::Entity_ABC >
+                        , public kernel::Creatable< Interface >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityHierarchies( Controller& controller, Entity_ABC& entity, Entity_ABC* superior );
+             EntityHierarchies( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::Entity_ABC* superior );
     virtual ~EntityHierarchies();
     //@}
 
     //! @name Accessors
     //@{
-    virtual const Entity_ABC* GetSuperior() const;
-    virtual const Entity_ABC& GetEntity() const;
-    virtual tools::Iterator< const Entity_ABC& > CreateSubordinateIterator() const;
+    virtual const kernel::Entity_ABC* GetSuperior() const;
+    virtual const kernel::Entity_ABC& GetEntity() const;
+    virtual tools::Iterator< const kernel::Entity_ABC& > CreateSubordinateIterator() const;
     virtual long CountSubordinates() const;
     //@}
 
     //! @name Modifiers
     //@{
-    virtual void RegisterSubordinate  (       Entity_ABC& entity );
-    virtual void AddSubordinate       (       Entity_ABC& entity );
-    virtual void RemoveSubordinate    ( const Entity_ABC& entity );
-    virtual void UnregisterSubordinate( const Entity_ABC& entity );
+    virtual void RegisterSubordinate  (       kernel::Entity_ABC& entity );
+    virtual void AddSubordinate       (       kernel::Entity_ABC& entity );
+    virtual void RemoveSubordinate    ( const kernel::Entity_ABC& entity );
+    virtual void UnregisterSubordinate( const kernel::Entity_ABC& entity );
     virtual void UnregisterParent     ();
-    virtual void NotifySuperiorChanged( const Entity_ABC* /*newSuperior*/ ){};
+    virtual void NotifySuperiorChanged( const kernel::Entity_ABC* /*newSuperior*/ ){};
     //@}
 
 protected:
     //! @name Helpers
     //@{
-    virtual const Hierarchies* RetrieveHierarchies( const Entity_ABC& entity ) const;
+    virtual const kernel::Hierarchies* RetrieveHierarchies( const kernel::Entity_ABC& entity ) const;
     Interface* SuperiorHierarchy();
-    void ChangeSuperior( Entity_ABC* superior );
-    void SetSuperior( Entity_ABC* superior );
-    virtual void SetSuperiorInternal( Entity_ABC* superior );
+    void ChangeSuperior( kernel::Entity_ABC* superior );
+    void SetSuperior( kernel::Entity_ABC* superior );
+    virtual void SetSuperiorInternal( kernel::Entity_ABC* superior );
     virtual void CreateDictionary( PropertiesDictionary& dico ) const;
     //@}
 
     //! @name Member data
     //@{
-    Controller& controller_;
-    Entity_ABC& entity_;
-    const Entity_ABC* superior_;
+    kernel::Controller& controller_;
+    kernel::Entity_ABC& entity_;
+    const kernel::Entity_ABC* superior_;
     //@}
 };
 
@@ -89,4 +92,4 @@ void EntityHierarchies< Interface >::CreateDictionary( PropertiesDictionary& dic
 
 #include "EntityHierarchies.inl"
 
-#endif // __kernel_EntityHierarchies_h_
+#endif // __gui_EntityHierarchies_h_

@@ -21,7 +21,7 @@
 // Created: SBO 2006-10-26
 // -----------------------------------------------------------------------------
 AutomatHierarchies::AutomatHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : kernel::MergingTacticalHierarchies( controller, holder, 0 )
+    : gui::MergingTacticalHierarchies( controller, holder, 0 )
     , superior_( superior )
 {
     // NOTHING
@@ -170,6 +170,6 @@ std::string AutomatHierarchies::GetLevel() const
 // -----------------------------------------------------------------------------
 const kernel::Entity_ABC* AutomatHierarchies::GetSuperior() const
 {
-    const kernel::Entity_ABC* superior = kernel::MergingTacticalHierarchies::GetSuperior();
+    const kernel::Entity_ABC* superior = gui::MergingTacticalHierarchies::GetSuperior();
     return superior ? superior : superior_;
 }

@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "OccupantAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: OccupantAttribute constructor
 // Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
-OccupantAttribute::OccupantAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+OccupantAttribute::OccupantAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : iMaxSize_( 0 )
 {
     CreateDictionary( dictionary, entity );
@@ -30,7 +30,7 @@ OccupantAttribute::OccupantAttribute( kernel::PropertiesDictionary& dictionary, 
 // Name: OccupantAttribute constructor
 // Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
-OccupantAttribute::OccupantAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+OccupantAttribute::OccupantAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : iMaxSize_( xis.attribute< int >("max-size") )
 {
     CreateDictionary( dictionary, entity );
@@ -79,7 +79,7 @@ void OccupantAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: OccupantAttribute::CreateDictionary
 // Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
-void OccupantAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void OccupantAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "Object", "Info/Occupant attributes/Max Entities" ), iMaxSize_ );
 }

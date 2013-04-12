@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "SupplyRouteAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: SupplyRouteAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-SupplyRouteAttribute::SupplyRouteAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+SupplyRouteAttribute::SupplyRouteAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : flow_     ( 0, Units::vehiclesPerHour )
     , width_    ( 0, Units::meters )
     , length_   ( 0, Units::meters )
@@ -34,7 +34,7 @@ SupplyRouteAttribute::SupplyRouteAttribute( kernel::PropertiesDictionary& dictio
 // Name: SupplyRouteAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-SupplyRouteAttribute::SupplyRouteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+SupplyRouteAttribute::SupplyRouteAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : flow_     ( 0, Units::vehiclesPerHour )
     , width_    ( 0, Units::meters )
     , length_   ( 0, Units::meters )
@@ -136,7 +136,7 @@ void SupplyRouteAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: SupplyRouteAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void SupplyRouteAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Flow" ), flow_ );
     dictionary.RegisterExtension( entity, this, tools::translate( "SupplyRouteAttribute", "Info/Logistic route attributes/Width" ), width_ );

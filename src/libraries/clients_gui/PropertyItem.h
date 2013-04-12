@@ -12,13 +12,9 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace kernel
-{
-    class Property_ABC;
-}
-
 namespace gui
 {
+    class Property_ABC;
     class PropertyDisplayer;
 // =============================================================================
 /** @class  PropertyItem
@@ -32,7 +28,7 @@ class PropertyItem : public QStandardItem
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertyItem( kernel::Property_ABC& property, PropertyDisplayer& displayer );
+             PropertyItem( Property_ABC& property, PropertyDisplayer& displayer );
     virtual ~PropertyItem();
     //@}
 
@@ -44,8 +40,8 @@ public:
 private:
     //! @name Member data
     //@{
-    PropertyDisplayer&    displayer_;
-    kernel::Property_ABC& property_;
+    PropertyDisplayer& displayer_;
+    Property_ABC&      property_;
     //@}
 };
 

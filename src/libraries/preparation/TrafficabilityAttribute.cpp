@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "TrafficabilityAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: TrafficabilityAttribute constructor
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
-TrafficabilityAttribute::TrafficabilityAttribute( kernel::PropertiesDictionary& dictionary, double value, const kernel::Entity_ABC& entity )
+TrafficabilityAttribute::TrafficabilityAttribute( gui::PropertiesDictionary& dictionary, double value, const kernel::Entity_ABC& entity )
     : max_( value, Units::tons )
 {
     CreateDictionary( dictionary, entity );
@@ -30,7 +30,7 @@ TrafficabilityAttribute::TrafficabilityAttribute( kernel::PropertiesDictionary& 
 // Name: TrafficabilityAttribute constructor
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
-TrafficabilityAttribute::TrafficabilityAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+TrafficabilityAttribute::TrafficabilityAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : max_( xis.attribute< double >( "max" ), Units::tons )
 {
     CreateDictionary( dictionary, entity );
@@ -70,7 +70,7 @@ void TrafficabilityAttribute::SerializeObjectAttributes( xml::xostream& xos ) co
 // Name: TrafficabilityAttribute::CreateDictionary
 // Created: LGY 2011-08-23
 // -----------------------------------------------------------------------------
-void TrafficabilityAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void TrafficabilityAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "TrafficabilityAttribute", "Info/Trafficability/Max:" ), double( max_.value_ ) );
 }

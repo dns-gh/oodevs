@@ -16,8 +16,9 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Diplomacies_ABC.h"
-#include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "clients_gui/EntityHierarchies.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "protocol/SimulationSenders.h"
 
 // -----------------------------------------------------------------------------

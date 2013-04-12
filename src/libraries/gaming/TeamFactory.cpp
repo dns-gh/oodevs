@@ -71,7 +71,7 @@ TeamFactory::~TeamFactory()
 kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
 {
     Team* result = new Team( message, controllers_ );
-    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
     result->Attach( *new UrbanKnowledges( *result, controllers_.controller_, model_.urbanKnowledgeFactory_ ) );
     result->Attach< kernel::Diplomacies_ABC > ( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
@@ -135,7 +135,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
 
     Formation* result = new Formation( message, controllers_.controller_ );
     result->Attach< Lives_ABC >( *new FormationLives( *result ) );
-    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     std::string symbol = message.has_app6symbol() ? message.app6symbol() : std::string();
     const kernel::Karma& karma = superior->Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     symbol = symbol.empty() ? model_.symbolsFactory_.GetSymbolBase( karma ) : symbol;

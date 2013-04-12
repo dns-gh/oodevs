@@ -22,6 +22,10 @@ namespace kernel
     class EquipmentType;
     class Automat_ABC;
     class Displayer_ABC;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -42,7 +46,7 @@ class MedicalStates : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalStates( kernel::Entity_ABC& entity, kernel::Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, kernel::PropertiesDictionary& dico );
+             MedicalStates( kernel::Entity_ABC& entity, kernel::Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, gui::PropertiesDictionary& dico );
     virtual ~MedicalStates();
     //@}
 
@@ -61,7 +65,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    void CreateDictionary( gui::PropertiesDictionary& dico ) const;
     //@}
 
     //! @name Types

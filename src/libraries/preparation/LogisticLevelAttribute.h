@@ -17,6 +17,10 @@
 namespace kernel
 {
     class Controller;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -37,9 +41,9 @@ class LogisticLevelAttribute: public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticLevelAttribute( kernel::Controller& controller, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary );
-             LogisticLevelAttribute( kernel::Controller& controller, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary );
-             LogisticLevelAttribute( kernel::Controller& controller, xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, kernel::PropertiesDictionary& dictionary );
+             LogisticLevelAttribute( kernel::Controller& controller, const kernel::Entity_ABC& entity, bool active, gui::PropertiesDictionary& dictionary );
+             LogisticLevelAttribute( kernel::Controller& controller, const kernel::Entity_ABC& entity, gui::PropertiesDictionary& dictionary );
+             LogisticLevelAttribute( kernel::Controller& controller, xml::xistream& xis, const kernel::Entity_ABC& entity, bool active, gui::PropertiesDictionary& dictionary );
     virtual ~LogisticLevelAttribute();
     //@}
 
@@ -59,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary, bool active );
+    void CreateDictionary( gui::PropertiesDictionary& dictionary, bool active );
     void SetLogisticLevel( const kernel::EntityLogisticLevel& logisticLevel );
     //@}
 

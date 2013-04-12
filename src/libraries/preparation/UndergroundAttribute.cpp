@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "UndergroundAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: UndergroundAttribute constructor
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-UndergroundAttribute::UndergroundAttribute( PropertiesDictionary& dictionary, kernel::Controller& controller, kernel::Entity_ABC& entity )
+UndergroundAttribute::UndergroundAttribute( gui::PropertiesDictionary& dictionary, kernel::Controller& controller, kernel::Entity_ABC& entity )
     : controller_( controller )
 {
     CreateDictionary( dictionary, entity );
@@ -30,7 +30,7 @@ UndergroundAttribute::UndergroundAttribute( PropertiesDictionary& dictionary, ke
 // Name: UndergroundAttribute constructor
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-UndergroundAttribute::UndergroundAttribute( xml::xistream& xis, kernel::Controller& controller, PropertiesDictionary& dictionary, kernel::Entity_ABC& entity )
+UndergroundAttribute::UndergroundAttribute( xml::xistream& xis, kernel::Controller& controller, gui::PropertiesDictionary& dictionary, kernel::Entity_ABC& entity )
     : controller_( controller )
 {
     xis >> xml::attribute( "network", network_ );
@@ -100,7 +100,7 @@ void UndergroundAttribute::SetNetwork( const std::string& network )
 // Name: UndergroundAttribute::CreateDictionary
 // Created: JSR 2011-07-07
 // -----------------------------------------------------------------------------
-void UndergroundAttribute::CreateDictionary( PropertiesDictionary& dictionary, kernel::Entity_ABC& entity )
+void UndergroundAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "UndergroundAttribute", "Info/Underground/Network" ), network_ );
 }

@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "BypassPrototype.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_gui/LoadableSpinBox.h"
 #include "preparation/BypassAttribute.h"
@@ -45,7 +45,7 @@ void BypassPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        kernel::PropertiesDictionary& dico = creation_->Get< kernel::PropertiesDictionary >();
+        gui::PropertiesDictionary& dico = creation_->Get< gui::PropertiesDictionary >();
         BypassAttribute* attribute = new BypassAttribute( dico, *creation_ );
         attribute->SetBypassConstruction( bypassConstructionPercentage_->value() );
         creation_->Attach( *attribute );

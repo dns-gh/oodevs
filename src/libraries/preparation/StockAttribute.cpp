@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "StockAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -22,7 +22,7 @@ using namespace kernel;
 // Name: StockAttribute constructor
 // Created: BCI 2011-02-04
 // -----------------------------------------------------------------------------
-StockAttribute::StockAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+StockAttribute::StockAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     CreateDictionary( dictionary, entity );
 }
@@ -31,7 +31,7 @@ StockAttribute::StockAttribute( kernel::PropertiesDictionary& dictionary, const 
 // Name: StockAttribute constructor
 // Created: BCI 2011-02-04
 // -----------------------------------------------------------------------------
-StockAttribute::StockAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+StockAttribute::StockAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     xis >> xml::list( "resource", *this, &StockAttribute::ReadResource, boost::cref( resolver ) );
     CreateDictionary( dictionary, entity );
@@ -82,7 +82,7 @@ void StockAttribute::ReadResource( xml::xistream& xis, const tools::Resolver_ABC
 // Name: StockAttribute::CreateDictionary
 // Created: BCI 2011-02-04
 // -----------------------------------------------------------------------------
-void StockAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void StockAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     for( StockDotations::const_iterator it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
     {

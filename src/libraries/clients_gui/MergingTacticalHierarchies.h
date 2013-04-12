@@ -10,24 +10,23 @@
 #ifndef __MergingTacticalHierarchies_h_
 #define __MergingTacticalHierarchies_h_
 
-#include "TacticalHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "EntityHierarchies.h"
 
-namespace kernel
+namespace gui
 {
-
 // =============================================================================
 /** @class  MergingTacticalHierarchies
     @brief  MergingTacticalHierarchies
 */
 // Created: AGE 2006-11-22
 // =============================================================================
-class MergingTacticalHierarchies : public EntityHierarchies< TacticalHierarchies >
+class MergingTacticalHierarchies : public EntityHierarchies< kernel::TacticalHierarchies >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MergingTacticalHierarchies( Controller& controller, Entity_ABC& entity, Entity_ABC* superior );
+             MergingTacticalHierarchies( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::Entity_ABC* superior );
     virtual ~MergingTacticalHierarchies();
     //@}
 
@@ -70,8 +69,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    Entity_ABC& entity_;
+    kernel::Controller& controller_;
+    kernel::Entity_ABC& entity_;
     bool symbolCanBeUpdated_;
     //@}
 };

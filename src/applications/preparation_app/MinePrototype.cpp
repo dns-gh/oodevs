@@ -11,7 +11,7 @@
 #include "MinePrototype.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/LoadableSpinBox.h"
 #include "preparation/MineAttribute.h"
 
@@ -46,7 +46,7 @@ void MinePrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         MineAttribute* attribute = new MineAttribute( dictionary, *creation_ );
         attribute->SetDensity( static_cast< float >( density_->value() ) );
         creation_->Attach( *attribute );

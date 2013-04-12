@@ -10,16 +10,16 @@
 #include "clients_gui_pch.h"
 #include "PropertiesPanel.h"
 #include "moc_PropertiesPanel.cpp"
+#include "GlProxy.h"
 #include "PropertyTreeView.h"
 #include "PropertyModel.h"
 #include "PropertyDelegate.h"
+#include "PropertyDisplayer.h"
+#include "clients_gui/PropertiesDictionary.h"
+#include "clients_gui/DictionaryUpdated.h"
+#include "clients_gui/PropertiesGroupDictionary.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/DictionaryUpdated.h"
-#include "clients_kernel/PropertiesGroupDictionary.h"
-#include "PropertyDisplayer.h"
-#include "GlProxy.h"
 
 using namespace gui;
 
@@ -27,7 +27,7 @@ using namespace gui;
 // Name: PropertiesPanel constructor
 // Created: SBO 2008-04-08
 // -----------------------------------------------------------------------------
-PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, kernel::EditorFactory_ABC& factory,
+PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controllers, EditorFactory_ABC& factory,
                                   PropertyDisplayer& displayer, PropertyDisplayer& comparator, const GlProxy& glProxy )
     : QScrollArea( parent )
     , controllers_     ( controllers )
@@ -36,7 +36,7 @@ PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controll
     , view_            ( new PropertyTreeView( "propertyView" ) )
     , delegate_        ( new PropertyDelegate( controllers.actions_, factory ) )
     , model_           ( new PropertyModel( displayer ) )
-    , pMultiProperties_( new kernel::PropertiesGroupDictionary( controllers.controller_, comparator ) )
+    , pMultiProperties_( new PropertiesGroupDictionary( controllers.controller_, comparator ) )
 {
     view_->setModel( model_ );
     view_->setItemDelegate( delegate_ );
@@ -85,7 +85,7 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
     {
         ClearSelection();
         if( element )
-            if( kernel::PropertiesDictionary* dictionary = const_cast< kernel::Entity_ABC* >( element )->Retrieve< kernel::PropertiesDictionary >() )
+            if( gui::PropertiesDictionary* dictionary = const_cast< kernel::Entity_ABC* >( element )->Retrieve< gui::PropertiesDictionary >() )
             {
                 dictionary->Display( *model_ );
                 view_->Display();
@@ -127,7 +127,7 @@ void PropertiesPanel::NotifyDeleted( const kernel::Entity_ABC& element )
 // Name: PropertiesPanel::NotifyUpdated
 // Created: LGY 2012-08-20
 // -----------------------------------------------------------------------------
-void PropertiesPanel::NotifyUpdated( const kernel::DictionaryUpdated& message )
+void PropertiesPanel::NotifyUpdated( const DictionaryUpdated& message )
 {
     if( selected_ && selected_->GetId() == message.GetEntity().GetId() )
         model_->Update( message.GetEntry() );
@@ -137,7 +137,7 @@ void PropertiesPanel::NotifyUpdated( const kernel::DictionaryUpdated& message )
 // Name: PropertiesPanel::NotifyDeleted
 // Created: LGY 2012-08-22
 // -----------------------------------------------------------------------------
-void PropertiesPanel::NotifyDeleted( const kernel::DictionaryUpdated& message )
+void PropertiesPanel::NotifyDeleted( const DictionaryUpdated& message )
 {
     if( selected_ && selected_->GetId() == message.GetEntity().GetId() )
         model_->Delete( message.GetEntry() );
@@ -147,13 +147,13 @@ void PropertiesPanel::NotifyDeleted( const kernel::DictionaryUpdated& message )
 // Name: PropertiesPanel::NotifyCreated
 // Created: LGY 2012-09-05
 // -----------------------------------------------------------------------------
-void PropertiesPanel::NotifyCreated( const kernel::DictionaryUpdated& message )
+void PropertiesPanel::NotifyCreated( const DictionaryUpdated& message )
 {
     if( selected_ && selected_->GetId() == message.GetEntity().GetId() )
     {
         if( view_->Exist( message.GetEntry() ) )
             NotifyUpdated( message );
-        else if( kernel::PropertiesDictionary* dictionary = const_cast< kernel::Entity_ABC* >( selected_ )->Retrieve< kernel::PropertiesDictionary >() )
+        else if( PropertiesDictionary* dictionary = const_cast< kernel::Entity_ABC* >( selected_ )->Retrieve< PropertiesDictionary >() )
         {
             dictionary->Display( message.GetEntry(), *model_ );
             view_->Display();

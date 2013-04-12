@@ -93,4 +93,4 @@ private:
 
 } //! namespace kernel
 
-#endif // __kernel_Gradient_h_
+#endif // __gui_Gradient_h_

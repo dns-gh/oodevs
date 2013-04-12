@@ -10,13 +10,17 @@
 #ifndef __Usages_h_
 #define __Usages_h_
 
-#include "clients_kernel/Usages.h"
+#include "clients_gui/Usages.h"
 
 namespace kernel
 {
     class AccommodationTypes;
     class Controller;
     class Entity_ABC;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -31,13 +35,13 @@ namespace xml
 */
 // Created: LGY 2011-04-14
 // =============================================================================
-class Usages : public kernel::Usages
+class Usages : public gui::Usages
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Usages( const kernel::Entity_ABC* parent, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner );
-             Usages( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner );
+             Usages( const kernel::Entity_ABC* parent, gui::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner );
+             Usages( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace, kernel::Entity_ABC& owner );
     virtual ~Usages();
     //@}
 

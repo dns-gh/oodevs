@@ -34,7 +34,6 @@ namespace kernel
     class Controllers;
     class AccommodationTypes;
     class ObjectType;
-    class PropertiesDictionary;
 }
 
 namespace gui

@@ -19,9 +19,13 @@ namespace kernel
 {
     class Controller;
     class EquipmentType;
-    class PropertiesDictionary;
     class Entity_ABC;
     class Automat_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace sword
@@ -48,7 +52,7 @@ class Equipments : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Equipments( kernel::Entity_ABC& entity, kernel::Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, kernel::PropertiesDictionary& dico
+             Equipments( kernel::Entity_ABC& entity, kernel::Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, gui::PropertiesDictionary& dico
                        , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~Equipments();
     //@}
@@ -78,7 +82,7 @@ private:
     kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::EquipmentType >& resolver_;
-    kernel::PropertiesDictionary& dico_;
+    gui::PropertiesDictionary& dico_;
     const QString property_;
     //@}
 };

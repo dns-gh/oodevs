@@ -11,7 +11,7 @@
 #include "GhostCommandPostAttributes.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include <xeumeuleu/xml.h>
 
@@ -19,7 +19,7 @@
 // Name: GhostCommandPostAttributes constructor
 // Created: ABR 2012-07-09
 // -----------------------------------------------------------------------------
-GhostCommandPostAttributes::GhostCommandPostAttributes( const kernel::Entity_ABC& entity, bool isCommandPost, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary )
+GhostCommandPostAttributes::GhostCommandPostAttributes( const kernel::Entity_ABC& entity, bool isCommandPost, kernel::Controller& controller, gui::PropertiesDictionary& dictionary )
     : entity_    ( entity )
     , controller_( controller )
     , isPc_      ( isCommandPost )
@@ -31,7 +31,7 @@ GhostCommandPostAttributes::GhostCommandPostAttributes( const kernel::Entity_ABC
 // Name: GhostCommandPostAttributes constructor
 // Created: ABR 2012-07-09
 // -----------------------------------------------------------------------------
-GhostCommandPostAttributes::GhostCommandPostAttributes( const kernel::Entity_ABC& entity, xml::xistream& xis, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary )
+GhostCommandPostAttributes::GhostCommandPostAttributes( const kernel::Entity_ABC& entity, xml::xistream& xis, kernel::Controller& controller, gui::PropertiesDictionary& dictionary )
     : entity_    ( entity )
     , controller_( controller )
     , isPc_      ( xis.attribute< bool >( "command-post", false ) )
@@ -61,7 +61,7 @@ bool GhostCommandPostAttributes::IsCommandPost() const
 // Name: GhostCommandPostAttributes::CreateDictionary
 // Created: ABR 2012-07-09
 // -----------------------------------------------------------------------------
-void GhostCommandPostAttributes::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void GhostCommandPostAttributes::CreateDictionary( gui::PropertiesDictionary& dictionary )
 {
     dictionary.Register( entity_, tools::translate( "Agent", "Info/Command post" ), isPc_, *this, &GhostCommandPostAttributes::Update );
 }

@@ -56,7 +56,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam()
 {
     Team* result = new Team( controllers_, idManager_ );
     result->Attach( *new Objects() );
-    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( controllers_.controller_, model_.GetTeamResolver(), *result, dico, staticModel_.teamKarmas_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
@@ -76,7 +76,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
 {
     Team* result = new Team( xis, controllers_, idManager_ );
     result->Attach( *new Objects() );
-    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach< kernel::Diplomacies_ABC >( *new Diplomacies( xis, controllers_.controller_, model_.GetTeamResolver(), *result, dico, staticModel_.teamKarmas_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );

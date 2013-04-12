@@ -24,7 +24,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ObjectHierarchies.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Color_ABC.h"
 #include "protocol/Simulation.h"

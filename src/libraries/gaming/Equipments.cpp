@@ -12,8 +12,8 @@
 #include "Equipment.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/EquipmentType.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/PropertiesDictionary.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include "protocol/Protocol.h"
@@ -25,7 +25,7 @@ using namespace kernel;
 // Name: Equipments constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Equipments::Equipments( kernel::Entity_ABC& entity, Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, PropertiesDictionary& dico
+Equipments::Equipments( kernel::Entity_ABC& entity, Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, gui::PropertiesDictionary& dico
                        , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver
                        , const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver
                        , const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver )
@@ -70,7 +70,7 @@ float Equipments::GetTotalWeight() const
 // -----------------------------------------------------------------------------
 void Equipments::UpdateController()
 {
-    controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
+    controller_.Update( gui::DictionaryUpdated( entity_, property_ ) );
     controller_.Update( *this );
 }
 

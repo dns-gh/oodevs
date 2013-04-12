@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ActivityTimePrototype.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/LoadableTimeEdit.h"
 #include "preparation/TimeLimitedAttribute.h"
 
@@ -44,7 +44,7 @@ void ActivityTimePrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         TimeLimitedAttribute* attribute = new TimeLimitedAttribute( dictionary, *creation_ );
         QTime t = activityTime_->time();
         attribute->SetActivityTime( 3600 * t.hour() +

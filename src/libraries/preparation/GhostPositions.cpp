@@ -15,9 +15,9 @@
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -39,7 +39,7 @@ namespace
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
 GhostPositions::GhostPositions( const kernel::Ghost_ABC& ghost, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller,
-                                const geometry::Point2f& position, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+                                const geometry::Point2f& position, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : ghost_     ( ghost )
     , converter_ ( converter )
     , controller_( controller )
@@ -56,7 +56,7 @@ GhostPositions::GhostPositions( const kernel::Ghost_ABC& ghost, const kernel::Co
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
 GhostPositions::GhostPositions( xml::xistream& xis, const kernel::Ghost_ABC& ghost, const kernel::CoordinateConverter_ABC& converter,
-                                kernel::Controller& controller, kernel::PropertiesDictionary& dico, const kernel::Entity_ABC& entity )
+                                kernel::Controller& controller, gui::PropertiesDictionary& dico, const kernel::Entity_ABC& entity )
     : ghost_     ( ghost )
     , converter_ ( converter )
     , controller_( controller )
@@ -173,14 +173,14 @@ bool GhostPositions::IsAggregated() const
 void GhostPositions::Move( const geometry::Point2f& position )
 {
     position_ = position;
-    controller_.Update( kernel::DictionaryUpdated( ghost_, tools::translate( "GhostPositions", "Info" ) ) );
+    controller_.Update( gui::DictionaryUpdated( ghost_, tools::translate( "GhostPositions", "Info" ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GhostPositions::CreateDictionary
 // Created: ABR 2011-10-19
 // -----------------------------------------------------------------------------
-void GhostPositions::CreateDictionary( kernel::PropertiesDictionary& dico, const kernel::Entity_ABC& entity )
+void GhostPositions::CreateDictionary( gui::PropertiesDictionary& dico, const kernel::Entity_ABC& entity )
 {
     dico.RegisterExtension( entity, this, tools::translate( "GhostPositions", "Info/Position" ), moveable_ );
 }

@@ -19,7 +19,7 @@
 // Name: PhysicalAttribute constructor
 // Created: ABR 2012-05-25
 // -----------------------------------------------------------------------------
-PhysicalAttribute::PhysicalAttribute( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
+PhysicalAttribute::PhysicalAttribute( const sword::UrbanAttributes& message, gui::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
                                       gui::UrbanObject& urbanObject, const kernel::ObjectTypes& objectTypes )
 {
     architecture_.reset( new Architecture( message, urbanObject, dictionary, objectTypes ) );

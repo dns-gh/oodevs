@@ -23,6 +23,10 @@ namespace kernel
 {
     class CoordinateConverter_ABC;
     class UrbanObject_ABC;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -38,9 +42,9 @@ class UrbanPositions : public gui::UrbanPositions
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanPositions( kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
-             UrbanPositions( const geometry::Polygon2f& location, kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
-             UrbanPositions( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
+             UrbanPositions( gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
+             UrbanPositions( const geometry::Polygon2f& location, gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
+             UrbanPositions( xml::xistream& xis, gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter );
     virtual ~UrbanPositions();
     //@}
 

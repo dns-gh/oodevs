@@ -18,7 +18,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/ContextMenu.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/EntityType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -456,7 +456,7 @@ void TacticalTreeView::ChangeAutomatType()
     if( !contextMenuEntity_ )
         return;
     if( contextMenuEntity_->GetTypeName() == kernel::Automat_ABC::typeName_ )
-        typeName = contextMenuEntity_->Get< kernel::EntityType< kernel::AutomatType > >().GetType().GetName();
+        typeName = contextMenuEntity_->Get< gui::EntityType< kernel::AutomatType > >().GetType().GetName();
     else if( contextMenuEntity_->GetTypeName() == kernel::Ghost_ABC::typeName_ )
         typeName = static_cast< const kernel::Ghost_ABC& >( *contextMenuEntity_ ).GetType();
     else

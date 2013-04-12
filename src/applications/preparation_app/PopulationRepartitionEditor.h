@@ -11,7 +11,7 @@
 #define __PopulationRepartitionEditor_h_
 
 #include "clients_gui/PropertyDialog.h"
-#include "clients_kernel/ValueEditor.h"
+#include "clients_gui/ValueEditor.h"
 
 namespace kernel
 {
@@ -33,7 +33,7 @@ class PopulationRepartition;
 // Created: JSR 2011-03-08
 // =============================================================================
 class PopulationRepartitionEditor : public gui::PropertyDialog
-                                  , public kernel::ValueEditor< PopulationRepartition* >
+                                  , public gui::ValueEditor< PopulationRepartition* >
 {
     Q_OBJECT
 

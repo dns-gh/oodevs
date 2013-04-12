@@ -10,7 +10,7 @@
 #ifndef __AutomatHierarchies_h_
 #define __AutomatHierarchies_h_
 
-#include "clients_kernel/MergingTacticalHierarchies.h"
+#include "clients_gui/MergingTacticalHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "TacticalHierarchies.h"
 
@@ -20,7 +20,7 @@
 */
 // Created: SBO 2006-10-26
 // =============================================================================
-class AutomatHierarchies : public kernel::MergingTacticalHierarchies
+class AutomatHierarchies : public gui::MergingTacticalHierarchies
                          , public kernel::Serializable_ABC
 {
 public:

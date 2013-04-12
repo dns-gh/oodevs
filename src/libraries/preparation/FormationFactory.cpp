@@ -57,7 +57,7 @@ FormationFactory::~FormationFactory()
 kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, E_NatureLevel level, const QString& name )
 {
     Formation* formation = new Formation( controllers_.controller_, level, idManager_ );
-    kernel::PropertiesDictionary& dico = formation->Get< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary& dico = formation->Get< gui::PropertiesDictionary >();
     if( !name.isEmpty() )
         formation->Rename( name );
     const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
@@ -80,7 +80,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, E_N
 kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Entity_ABC& parent )
 {
     Formation* formation = new Formation( xis, controllers_.controller_, idManager_ );
-    kernel::PropertiesDictionary& dico = formation->Get< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary& dico = formation->Get< gui::PropertiesDictionary >();
     const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis, symbolsFactory_.GetSymbolBase( karma ) ) );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );

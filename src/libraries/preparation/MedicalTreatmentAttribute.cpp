@@ -11,11 +11,11 @@
 #include "MedicalTreatmentAttribute.h"
 #include "clients_gui/Infrastructure_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/MedicalTreatmentType.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include <xeumeuleu/xml.hpp>
@@ -27,7 +27,7 @@ using namespace kernel;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute::MedicalTreatmentAttribute( const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes,
-                                                      kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& owner, bool bUrban /*= false*/, kernel::Controllers* controllers /* = 0 */ )
+                                                      gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& owner, bool bUrban /*= false*/, kernel::Controllers* controllers /* = 0 */ )
     : controllers_( controllers )
     , dictionary_ ( dictionary )
     , owner_      ( owner )
@@ -46,7 +46,7 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( const tools::Resolver_ABC<
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes,
-                                                      kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& owner, bool bUrban /*= false*/, kernel::Controllers* controllers /* = 0 */ )
+                                                      gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& owner, bool bUrban /*= false*/, kernel::Controllers* controllers /* = 0 */ )
     : controllers_( controllers )
     , dictionary_ ( dictionary )
     , owner_      ( owner )

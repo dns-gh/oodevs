@@ -30,8 +30,8 @@
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
 LogisticBaseStates::LogisticBaseStates( kernel::Controller& controller, kernel::Entity_ABC& entity,
-                                        const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico, bool canHaveQuotas )
-    : kernel::EntityHierarchies< LogisticHierarchiesBase >( controller, entity, 0 )
+                                        const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, gui::PropertiesDictionary& dico, bool canHaveQuotas )
+    : gui::EntityHierarchies< LogisticHierarchiesBase >( controller, entity, 0 )
     , controller_   ( controller )
     , entity_       ( entity )
     , resolver_     ( resolver )
@@ -55,7 +55,7 @@ LogisticBaseStates::~LogisticBaseStates()
 // Name: MaintenanceStates::CreateDictionary
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-void LogisticBaseStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& entity )
+void LogisticBaseStates::CreateDictionary( gui::PropertiesDictionary& dico, kernel::Entity_ABC& entity )
 {
     dico.RegisterExtension( entity, static_cast< const LogisticHierarchiesBase* >( this ), tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetLogisticSuperior );
     if( canHaveQuotas_ )
@@ -161,7 +161,7 @@ void LogisticBaseStates::ReadDotation( xml::xistream& xis )
 void LogisticBaseStates::SetSuperiorInternal( kernel::Entity_ABC* superior )
 {
     superior_ = superior;
-    kernel::EntityHierarchies< LogisticHierarchiesBase >::SetSuperiorInternal( superior );
+    gui::EntityHierarchies< LogisticHierarchiesBase >::SetSuperiorInternal( superior );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +171,7 @@ void LogisticBaseStates::SetSuperiorInternal( kernel::Entity_ABC* superior )
 void LogisticBaseStates::SetLogisticSuperior( const kernel::LogisticBaseSuperior& superior )
 {
     const kernel::Entity_ABC* tmp = superior;
-    kernel::EntityHierarchies< LogisticHierarchiesBase >::SetSuperior( const_cast< kernel::Entity_ABC* >( tmp ) );
+    gui::EntityHierarchies< LogisticHierarchiesBase >::SetSuperior( const_cast< kernel::Entity_ABC* >( tmp ) );
     controller_.Update( *this );
 }
 

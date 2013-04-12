@@ -11,7 +11,7 @@
 #define __KnowledgeGroupHierarchies_h_
 
 #include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_gui/EntityHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "protocol/SimulationSenders.h"
 
@@ -27,7 +27,7 @@ namespace kernel
 */
 // Created: AGE 2006-09-20
 // =============================================================================
-class KnowledgeGroupHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
+class KnowledgeGroupHierarchies : public gui::EntityHierarchies< kernel::CommunicationHierarchies >
                                 , public kernel::Updatable_ABC< sword::KnowledgeGroupUpdate >
 {
 public:

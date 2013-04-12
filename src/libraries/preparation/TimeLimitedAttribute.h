@@ -17,8 +17,12 @@
 namespace kernel
 {
     class Displayer_ABC;
-    class PropertiesDictionary;
     class Entity_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -38,8 +42,8 @@ class TimeLimitedAttribute : public kernel::TimeLimitedAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TimeLimitedAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
-             TimeLimitedAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+    explicit TimeLimitedAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             TimeLimitedAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~TimeLimitedAttribute();
     //@}
 
@@ -63,7 +67,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+    void CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 private:

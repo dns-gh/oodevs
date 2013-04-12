@@ -10,10 +10,10 @@
 #include "gaming_pch.h"
 #include "Transports.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace kernel;
@@ -22,7 +22,7 @@ using namespace kernel;
 // Name: Transports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Transports::Transports( kernel::Entity_ABC& entity, Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, PropertiesDictionary& dico )
+Transports::Transports( kernel::Entity_ABC& entity, Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, gui::PropertiesDictionary& dico )
     : entity_     ( entity )
     , controller_ ( controller )
     , resolver_   ( resolver )
@@ -44,7 +44,7 @@ Transports::~Transports()
 // Name: Transports::CreateDictionary
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-void Transports::CreateDictionary( PropertiesDictionary& dico ) const
+void Transports::CreateDictionary( gui::PropertiesDictionary& dico ) const
 {
     dico.Register( entity_, tools::translate( "Transports", "Transports/Tow trucks" ), transporter_ );
     dico.Register( entity_, tools::translate( "Transports", "Transports/Towed units" ), transported_ );
@@ -66,7 +66,7 @@ void Transports::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_transporting_unit() )
         transporter_ = resolver_.Find( message.transporting_unit().id() );
     if( message.has_transported_units() || message.has_transporting_unit() )
-        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Transports", "Transports" ) ) );
+        controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "Transports", "Transports" ) ) );
 }
 
 // -----------------------------------------------------------------------------

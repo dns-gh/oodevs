@@ -8,6 +8,8 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
+#include "DictionaryUpdated.h"
+#include "PropertiesDictionary.h"
 #include "UrbanObject.h"
 #include "UrbanDisplayOptions.h"
 
@@ -19,9 +21,7 @@
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/Architecture_ABC.h"
-#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/StructuralStateAttribute_ABC.h"
@@ -129,7 +129,7 @@ QString UrbanObject::GetName() const
 void UrbanObject::CreateDictionary( bool readOnly )
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    dictionary.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Template" ), templateType_, *this, &UrbanObject::ApplyTemplate, readOnly, kernel::eUrbanTemplate );
+    dictionary.Register( static_cast< const UrbanObject_ABC& >( *this ), tools::translate( "Block", "Info/Template" ), templateType_, *this, &UrbanObject::ApplyTemplate, readOnly, eUrbanTemplate );
     dictionary.Register( static_cast< const EntityImplementation& >( *this ), tools::translate( "EntityImplementation", "Info/Name" ), name_, static_cast< EntityImplementation& >( *this ), &EntityImplementation::Rename, !readOnly );
 }
 
@@ -145,7 +145,7 @@ void UrbanObject::ApplyTemplate( const UrbanTemplateTypePtr& urbanTemplate )
         templateType_ = urbanTemplate;
         urbanTemplate->Fill( *this );
         controllers_.controller_.Update( static_cast< const UrbanObject_ABC& >( *this ) );
-        controllers_.controller_.Update( kernel::DictionaryUpdated( *this, tools::translate( "Block", "PhysicalFeatures/Architecture" ) ) );
+        controllers_.controller_.Update( DictionaryUpdated( *this, tools::translate( "Block", "PhysicalFeatures/Architecture" ) ) );
         fillingTemplate_ = false;
     }
 }

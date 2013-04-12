@@ -98,7 +98,7 @@ namespace
         item.setData( *variant, role );
     }
 
-    void CreateRow( QStandardItem& parent, const QString& name, kernel::Property_ABC& property, gui::PropertyDisplayer& displayer )
+    void CreateRow( QStandardItem& parent, const QString& name, Property_ABC& property, gui::PropertyDisplayer& displayer )
     {
         QList< QStandardItem* > items;
         items << new QStandardItem( name );
@@ -130,7 +130,7 @@ namespace
 // Name: PropertyModel::Call
 // Created: LGY 2012-08-13
 // -----------------------------------------------------------------------------
-void PropertyModel::Call( kernel::Property_ABC* const& property )
+void PropertyModel::Call( Property_ABC* const& property )
 {
     QStandardItem* parent = invisibleRootItem();
     QString name;
@@ -158,8 +158,8 @@ void PropertyModel::Update( QWidget* editor, const QModelIndex& index )
     if( PropertyItem* item = static_cast< PropertyItem* >( itemFromIndex( index ) ) )
     {
         item->Update( editor );
-        kernel::E_Category category = static_cast< kernel::E_Category >( item->data( Qt::UserRole + 1 ).toInt() );
-        if( category != kernel::eNothing )
+        E_Category category = static_cast< E_Category >( item->data( Qt::UserRole + 1 ).toInt() );
+        if( category != eNothing )
             Update( invisibleRootItem(), category );
     }
 }
@@ -168,14 +168,14 @@ void PropertyModel::Update( QWidget* editor, const QModelIndex& index )
 // Name: PropertyModel::Update
 // Created: LGY 2012-08-20
 // -----------------------------------------------------------------------------
-void PropertyModel::Update( QStandardItem* parent, kernel::E_Category category )
+void PropertyModel::Update( QStandardItem* parent, E_Category category )
 {
     for( int i = 0; i< parent->rowCount(); ++i )
         if( QStandardItem* childItem = parent->child( i, 0 ) )
         {
             Update( childItem, category );
             if( PropertyItem* item = static_cast< PropertyItem* >( parent->child( i, 1 ) ) )
-                if( static_cast< kernel::E_Category >( item->data( Qt::UserRole + 1 ).toInt () ) == category )
+                if( static_cast< E_Category >( item->data( Qt::UserRole + 1 ).toInt () ) == category )
                     item->Update();
         }
 }

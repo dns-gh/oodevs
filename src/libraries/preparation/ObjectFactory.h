@@ -16,6 +16,10 @@
 namespace kernel
 {
     class Controllers;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -54,7 +58,7 @@ private:
     //! @name Helper
     //@{
     void Initialize();
-    void ReadAttributes( const std::string& attr, xml::xistream& xis, kernel::Object_ABC& object, kernel::PropertiesDictionary& dico );
+    void ReadAttributes( const std::string& attr, xml::xistream& xis, kernel::Object_ABC& object, gui::PropertiesDictionary& dico );
     //@}
 
 private:

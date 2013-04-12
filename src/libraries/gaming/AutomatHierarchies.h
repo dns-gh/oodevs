@@ -10,7 +10,7 @@
 #ifndef __AutomatHierarchies_h_
 #define __AutomatHierarchies_h_
 
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_gui/EntityHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 
@@ -23,6 +23,10 @@ namespace sword
 namespace kernel
 {
     class KnowledgeGroup_ABC;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -32,7 +36,7 @@ namespace kernel
 */
 // Created: AGE 2006-10-06
 // =============================================================================
-class AutomatHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
+class AutomatHierarchies : public gui::EntityHierarchies< kernel::CommunicationHierarchies >
                          , public kernel::Updatable_ABC< sword::AutomatCreation >
                          , public kernel::Updatable_ABC< sword::AutomatChangeKnowledgeGroup >
 {
@@ -41,7 +45,7 @@ public:
     //@{
              AutomatHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder,
                                  const tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver,
-                                 kernel::PropertiesDictionary& dictionary );
+                                 gui::PropertiesDictionary& dictionary );
     virtual ~AutomatHierarchies();
     //@}
 

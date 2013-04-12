@@ -46,7 +46,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Color_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/function.hpp>
@@ -65,7 +65,7 @@ namespace
     private:
         //! @name Types
         //@{
-        typedef boost::function3< void, Object_ABC&, PropertiesDictionary&, xml::xistream& > T_CallBack;
+        typedef boost::function3< void, Object_ABC&, gui::PropertiesDictionary&, xml::xistream& > T_CallBack;
         typedef std::map< std::string, T_CallBack > T_CallBacks;
         typedef T_CallBacks::const_iterator       CIT_Callbacks;
         //@}
@@ -80,7 +80,7 @@ namespace
                 throw MASA_EXCEPTION( "Capacity '" + attribute + "' already registered." );
         }
 
-        void Create( const std::string& attribute, Object_ABC& object, PropertiesDictionary& dico, xml::xistream& xis )
+        void Create( const std::string& attribute, Object_ABC& object, gui::PropertiesDictionary& dico, xml::xistream& xis )
         {
             const CIT_Callbacks it = callbacks_.find( attribute );
             if( it != callbacks_.end() )
@@ -97,31 +97,31 @@ namespace
     struct AttributeBuilder
     {
         template< typename T >
-        static void Attach( Object_ABC& result, PropertiesDictionary& dico, xml::xistream& xis )
+        static void Attach( Object_ABC& result, gui::PropertiesDictionary& dico, xml::xistream& xis )
         {
             result.Attach( *new T( xis, dico, result ) );
         }
 
         template< typename T >
-        static void Attach( Object_ABC& result, PropertiesDictionary& dico, kernel::Controller& controller, xml::xistream& xis )
+        static void Attach( Object_ABC& result, gui::PropertiesDictionary& dico, kernel::Controller& controller, xml::xistream& xis )
         {
             result.Attach( *new T( xis, controller, dico, result ) );
         }
 
         template< typename T, typename Helper >
-        static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis )
+        static void Attach( Object_ABC& result, gui::PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis )
         {
             result.Attach( *new T( xis, helper, dico, result ) );
         }
 
         template< typename T, typename Helper >
-        static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis, Controllers& controllers )
+        static void Attach( Object_ABC& result, gui::PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis, Controllers& controllers )
         {
             result.Attach( *new T( xis, helper, dico, controllers, result ) );
         }
 
         template< typename T, typename Helper1, typename Helper2 >
-        static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper1& helper1, const Helper2& helper2, xml::xistream& xis, Controllers& controllers )
+        static void Attach( Object_ABC& result, gui::PropertiesDictionary& dico, const Helper1& helper1, const Helper2& helper2, xml::xistream& xis, Controllers& controllers )
         {
             result.Attach( *new T( xis, helper1, helper2, dico, controllers, result ) );
         }
@@ -131,7 +131,7 @@ namespace
     struct AttributeBuilder< FloodAttribute_ABC >
     {
         template< typename T, typename Helper >
-        static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis, Controllers& controllers )
+        static void Attach( Object_ABC& result, gui::PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis, Controllers& controllers )
         {
             result.Attach( *new T( xis, helper, result.Get< Positions >(), dico, controllers, result ) );
         }
@@ -141,7 +141,7 @@ namespace
     struct AttributeBuilder< AltitudeModifierAttribute_ABC >
     {
         template< typename T, typename Helper >
-        static void Attach( Object_ABC& result, PropertiesDictionary& dico, Helper& helper, xml::xistream& xis, Controllers& controllers )
+        static void Attach( Object_ABC& result, gui::PropertiesDictionary& dico, Helper& helper, xml::xistream& xis, Controllers& controllers )
         {
             result.Attach( *new T( xis, helper, result, dico, controllers, result ) );
         }
@@ -151,7 +151,7 @@ namespace
     struct AttributeBuilder< LogisticAttribute_ABC >
     {
         template< typename T >
-        static void Attach( Object_ABC& result, PropertiesDictionary& dico,
+        static void Attach( Object_ABC& result, gui::PropertiesDictionary& dico,
                             const tools::Resolver_ABC< Automat_ABC >& automats, const tools::Resolver_ABC< Formation_ABC >& formations,
                             xml::xistream& xis, Controllers& controllers )
         {
@@ -176,7 +176,7 @@ namespace
     struct AttributeBuilder< MedicalTreatmentAttribute_ABC >
     {
         template< typename T, typename Helper >
-        static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis )
+        static void Attach( Object_ABC& result, gui::PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis )
         {
             result.Attach( *new T( xis, helper, dico, result ) );
         }
@@ -280,7 +280,7 @@ Object_ABC* ObjectFactory::CreateObject( const ObjectType& type, const Team_ABC&
 Object_ABC* ObjectFactory::CreateObject( xml::xistream& xis, const Team_ABC& team, const kernel::ObjectType& type )
 {
     std::auto_ptr< Object > result( new Object( xis, controllers_.controller_, staticModel_.coordinateConverter_, type, idManager_ ) );
-    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
+    gui::PropertiesDictionary& dico = result->Get< gui::PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( xis, controllers_.controller_, staticModel_.coordinateConverter_, result->GetType() ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );
     result->Attach< kernel::Color_ABC >( *new ::Color( xis ) );
@@ -296,7 +296,7 @@ Object_ABC* ObjectFactory::CreateObject( xml::xistream& xis, const Team_ABC& tea
 // Name: ObjectFactory::ReadAttributes
 // Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
-void ObjectFactory::ReadAttributes( const std::string& attr, xml::xistream& xis, Object_ABC& object, PropertiesDictionary& dico )
+void ObjectFactory::ReadAttributes( const std::string& attr, xml::xistream& xis, Object_ABC& object, gui::PropertiesDictionary& dico )
 {
     if( ! factory_.get() )
         Initialize();

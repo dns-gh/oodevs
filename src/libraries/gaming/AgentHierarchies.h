@@ -15,8 +15,8 @@
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Diplomacies_ABC.h"
-#include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "clients_gui/EntityHierarchies.h"
 #include "ENT/ENT_Tr_Gen.h"
 
 namespace sword
@@ -39,7 +39,7 @@ namespace kernel
 // Created: AGE 2006-09-20
 // =============================================================================
 template< typename I >
-class AgentHierarchies : public kernel::EntityHierarchies< I  >
+class AgentHierarchies : public gui::EntityHierarchies< I  >
                        , public kernel::Updatable_ABC< sword::UnitCreation >
                        , public kernel::Updatable_ABC< sword::UnitChangeSuperior >
 {
@@ -90,11 +90,11 @@ private:
 // -----------------------------------------------------------------------------
 template< typename I >
 AgentHierarchies< I >::AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver )
-    : kernel::EntityHierarchies< I  >( controller, holder, 0 )
-    , controller_                    ( controller )
-    , symbol_                        ( holder.GetType().GetSymbol() )
-    , level_                         ( holder.GetType().GetLevelSymbol() )
-    , automatResolver_               ( automatResolver )
+    : gui::EntityHierarchies< I  >( controller, holder, 0 )
+    , controller_                 ( controller )
+    , symbol_                     ( holder.GetType().GetSymbol() )
+    , level_                      ( holder.GetType().GetLevelSymbol() )
+    , automatResolver_            ( automatResolver )
 {
     // NOTHING
 }

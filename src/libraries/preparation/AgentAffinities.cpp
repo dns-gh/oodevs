@@ -15,8 +15,8 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/tools.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/PropertiesDictionary.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "tools/Iterator.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/foreach.hpp>
@@ -26,7 +26,7 @@
 // Created: LGY 2011-03-14
 // -----------------------------------------------------------------------------
 AgentAffinities::AgentAffinities( kernel::Entity_ABC& agent, kernel::Controllers& controllers, Model& model,
-                                  kernel::PropertiesDictionary& dictionary, const QString& propertyName )
+                                  gui::PropertiesDictionary& dictionary, const QString& propertyName )
     : Affinities( model )
     , agent_       ( agent )
     , controllers_ ( controllers )
@@ -42,7 +42,7 @@ AgentAffinities::AgentAffinities( kernel::Entity_ABC& agent, kernel::Controllers
 // Created: LGY 2011-01-14
 // -----------------------------------------------------------------------------
 AgentAffinities::AgentAffinities( xml::xistream& xis, kernel::Entity_ABC& agent, kernel::Controllers& controllers, Model& model,
-                                  kernel::PropertiesDictionary& dictionary, const QString& propertyName )
+                                  gui::PropertiesDictionary& dictionary, const QString& propertyName )
     : Affinities( xis, model )
     , agent_       ( agent )
     , controllers_ ( controllers )
@@ -71,7 +71,7 @@ void AgentAffinities::Add( unsigned long team, float affinity )
     affinities_[ team ] = affinity;
     CIT_Affinities it = affinities_.find( team );
     dictionary_.Register( agent_, propertyName_ + "/" + teams_[ team ].c_str(), it->second );
-    controllers_.controller_.Update( kernel::DictionaryUpdated( agent_, propertyName_ ) );
+    controllers_.controller_.Update( gui::DictionaryUpdated( agent_, propertyName_ ) );
 }
 
 // -----------------------------------------------------------------------------

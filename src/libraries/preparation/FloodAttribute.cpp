@@ -16,7 +16,7 @@
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "propagation/FloodDrawer.h"
 #include "propagation/FloodModel.h"
 #include <xeumeuleu/xml.hpp>
@@ -27,7 +27,7 @@ using namespace kernel;
 // Name: FloodAttribute constructor
 // Created: JSR 2010-12-07
 // -----------------------------------------------------------------------------
-FloodAttribute::FloodAttribute( PropertiesDictionary& dictionary, const kernel::DetectionMap& detection,
+FloodAttribute::FloodAttribute( gui::PropertiesDictionary& dictionary, const kernel::DetectionMap& detection,
                                 const kernel::Positions& positions, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
     : detection_  ( detection )
     , positions_  ( positions )
@@ -46,7 +46,7 @@ FloodAttribute::FloodAttribute( PropertiesDictionary& dictionary, const kernel::
 // Created: JSR 2010-12-07
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute( xml::xistream& xis, const kernel::DetectionMap& detection,
-                                const kernel::Positions& positions, PropertiesDictionary& dictionary, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
+                                const kernel::Positions& positions, gui::PropertiesDictionary& dictionary, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
     : detection_  ( detection )
     , positions_  ( positions )
     , controllers_( controllers )
@@ -161,7 +161,7 @@ void FloodAttribute::EndDrag() const
 // Name: FloodAttribute::CreateDictionary
 // Created: JSR 2010-12-07
 // -----------------------------------------------------------------------------
-void FloodAttribute::CreateDictionary( PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void FloodAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "FloodAttribute", "Info/Flood parameters/Depth" ), depth_ );
     dictionary.RegisterExtension( entity, this, tools::translate( "FloodAttribute", "Info/Flood parameters/Reference distance" ), refDist_ );

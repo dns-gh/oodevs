@@ -15,8 +15,12 @@
 namespace kernel
 {
     class Controller;
-    class PropertiesDictionary;
     class Entity_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -30,7 +34,7 @@ class StructuralStateAttribute : public kernel::StructuralStateAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StructuralStateAttribute( kernel::Entity_ABC& entity, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary );
+             StructuralStateAttribute( kernel::Entity_ABC& entity, kernel::Controller& controller, gui::PropertiesDictionary& dictionary );
     virtual ~StructuralStateAttribute();
     //@}
 
@@ -42,7 +46,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary ) const;
+    void CreateDictionary( gui::PropertiesDictionary& dictionary ) const;
 
     virtual void DoUpdate( const sword::UrbanUpdate& message );
     virtual void DoUpdate( const sword::UrbanCreation& message );

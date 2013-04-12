@@ -41,7 +41,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/EntityType.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_gui/LongNameHelper.h"
 #include "meteo/Meteo.h"
@@ -118,11 +118,11 @@ namespace
     {
         if( const kernel::Agent_ABC* pAgent = dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
             return pAgent->GetType().GetName();
-        else if( const kernel::EntityType< kernel::InhabitantType >* type = entity.Retrieve< kernel::EntityType< kernel::InhabitantType > >() )
+        else if( const gui::EntityType< kernel::InhabitantType >* type = entity.Retrieve< gui::EntityType< kernel::InhabitantType > >() )
             return type->GetType().GetName();
-        else if( const kernel::EntityType< kernel::PopulationType >* type = entity.Retrieve< kernel::EntityType< kernel::PopulationType > >() )
+        else if( const gui::EntityType< kernel::PopulationType >* type = entity.Retrieve< gui::EntityType< kernel::PopulationType > >() )
             return type->GetType().GetName();
-        else if( const kernel::EntityType< kernel::AutomatType >* type = entity.Retrieve< kernel::EntityType< kernel::AutomatType > >() )
+        else if( const gui::EntityType< kernel::AutomatType >* type = entity.Retrieve< gui::EntityType< kernel::AutomatType > >() )
             return type->GetType().GetName();
         return "";
     }

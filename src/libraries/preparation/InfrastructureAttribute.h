@@ -19,9 +19,13 @@ namespace kernel
     class Controllers;
     class Displayer_ABC;
     class InfrastructureType;
-    class PropertiesDictionary;
     class ObjectTypes;
     class UrbanObject_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -42,9 +46,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              InfrastructureAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object,
-                                      kernel::PropertiesDictionary& dictionary );
+                                      gui::PropertiesDictionary& dictionary );
              InfrastructureAttribute( xml::xistream& xis, kernel::Controllers& controllers, kernel::UrbanObject_ABC& object,
-                                      kernel::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
+                                      gui::PropertiesDictionary& dictionary, const kernel::ObjectTypes& objectTypes );
     virtual ~InfrastructureAttribute();
     //@}
 
@@ -80,7 +84,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controllers&          controllers_;
-    kernel::PropertiesDictionary& dictionary_;
+    gui::PropertiesDictionary& dictionary_;
     kernel::InfrastructureType*   type_;
     kernel::UrbanObject_ABC&      object_;
     bool                          enabled_;

@@ -24,6 +24,10 @@ namespace kernel
     class Agent_ABC;
     class Controller;
     class Displayer_ABC;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -39,7 +43,7 @@ class Transports : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Transports( kernel::Entity_ABC& entity, kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::PropertiesDictionary& dico );
+             Transports( kernel::Entity_ABC& entity, kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, gui::PropertiesDictionary& dico );
     virtual ~Transports();
     //@}
 
@@ -62,7 +66,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    void CreateDictionary( gui::PropertiesDictionary& dico ) const;
     virtual void DoUpdate( const sword::UnitAttributes& message );
     //@}
 

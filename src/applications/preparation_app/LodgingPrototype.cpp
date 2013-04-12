@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "LodgingPrototype.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "preparation/LodgingAttribute.h"
 
 // -----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ void LodgingPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        kernel::PropertiesDictionary& dictionary = creation_->Get< kernel::PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         LodgingAttribute* attribute = new LodgingAttribute( dictionary, *creation_ );
         attribute->SetLodgingCapacity( lodgingCapacity_->value() );
         creation_->Attach( *attribute );

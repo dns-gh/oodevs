@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "BypassAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: BypassAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( kernel::PropertiesDictionary& dico, const kernel::Entity_ABC& entity )
+BypassAttribute::BypassAttribute( gui::PropertiesDictionary& dico, const kernel::Entity_ABC& entity )
     : rBypassConstructionPercentage_( 0, Units::percentage )
 {
     CreateDictionary( dico, entity );
@@ -30,7 +30,7 @@ BypassAttribute::BypassAttribute( kernel::PropertiesDictionary& dico, const kern
 // Name: BypassAttribute constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( xml::xistream& xis, kernel::PropertiesDictionary& /*dictionary*/, const kernel::Entity_ABC& /*entity*/ )
+BypassAttribute::BypassAttribute( xml::xistream& xis, gui::PropertiesDictionary& /*dictionary*/, const kernel::Entity_ABC& /*entity*/ )
     : rBypassConstructionPercentage_ ( 0, Units::percentage )
 {
     float percentage = xis.attribute< float >( "value" );
@@ -80,7 +80,7 @@ void BypassAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: BypassAttribute::CreateDictionary
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::CreateDictionary( kernel::PropertiesDictionary& dico, const kernel::Entity_ABC& entity )
+void BypassAttribute::CreateDictionary( gui::PropertiesDictionary& dico, const kernel::Entity_ABC& entity )
 {
     dico.RegisterExtension( entity, this, tools::translate( "Object", "Info/Breaching/Value" ), rBypassConstructionPercentage_ );
 }

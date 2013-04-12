@@ -23,7 +23,7 @@
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 
@@ -76,7 +76,7 @@ namespace
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
 InhabitantPositions::InhabitantPositions( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location,
-                                          const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary )
+                                          const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, gui::PropertiesDictionary& dictionary )
     : controller_( controller )
     , converter_ ( converter )
     , urbanModel_( urbanModel )
@@ -100,7 +100,7 @@ InhabitantPositions::InhabitantPositions( kernel::Controller& controller, const 
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
 InhabitantPositions::InhabitantPositions( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel,
-                                          kernel::Inhabitant_ABC& inhabitant , kernel::PropertiesDictionary& dictionary )
+                                          kernel::Inhabitant_ABC& inhabitant , gui::PropertiesDictionary& dictionary )
     : controller_( controller )
     , converter_ ( converter )
     , urbanModel_( urbanModel )

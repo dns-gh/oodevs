@@ -11,8 +11,8 @@
 #include "MedicalStates.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/PropertiesDictionary.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
@@ -22,7 +22,7 @@ using namespace kernel;
 // Name: MedicalStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MedicalStates::MedicalStates( kernel::Entity_ABC& entity, Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< Automat_ABC >& automatResolver, PropertiesDictionary& dico )
+MedicalStates::MedicalStates( kernel::Entity_ABC& entity, Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< Automat_ABC >& automatResolver, gui::PropertiesDictionary& dico )
     : entity_         ( entity )
     , controller_     ( controller )
     , resolver_       ( resolver )
@@ -44,7 +44,7 @@ MedicalStates::~MedicalStates()
 // Name: MedicalStates::CreateDictionary
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-void MedicalStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+void MedicalStates::CreateDictionary( gui::PropertiesDictionary& dico ) const
 {
     dico.Register( entity_, tools::translate( "MedicalStates", "Medical system/System enabled" ), bChainEnabled_ );
     dico.Register( entity_, tools::translate( "MedicalStates", "Medical system/Priorities" ), priorities_ );
@@ -90,7 +90,7 @@ void MedicalStates::DoUpdate( const sword::LogMedicalState& message )
             dispoDoctors_[i] = kernel::Availability( resolver_, message.doctors().elem( i ) );
     }
     if( message.has_chain() || message.has_priorities() || message.has_tactical_priorities() )
-        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "MedicalStates", "Medical system" ) ) );
+        controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "MedicalStates", "Medical system" ) ) );
 
     controller_.Update( *this );
 }

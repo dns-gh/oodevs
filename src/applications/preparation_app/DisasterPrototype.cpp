@@ -12,7 +12,7 @@
 #include "preparation/DisasterAttribute.h"
 #include "preparation/WeatherModel.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/LoadableTimeEdit.h"
 #include "clients_gui/RichCheckBox.h"
@@ -58,7 +58,7 @@ void DisasterPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         QDateTime date;
         if( checkbox_->isChecked() )
             date = date_->dateTime();

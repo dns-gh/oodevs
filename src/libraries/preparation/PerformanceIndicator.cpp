@@ -28,7 +28,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/EntityType.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "tools/Loader_ABC.h"
@@ -214,7 +214,7 @@ void PerformanceIndicator::TeamGetInfoFunctor::Compute( TeamData& teamData, cons
             teamData.automats_++;
             const Automat* pAutomat = dynamic_cast< const Automat* >( &entity );
             if( pAutomat )
-                teamData.automatTypes_[ pAutomat->Get< kernel::EntityType< kernel::AutomatType > >().GetType().GetTypeName() ]++;
+                teamData.automatTypes_[ pAutomat->Get< gui::EntityType< kernel::AutomatType > >().GetType().GetTypeName() ]++;
             Compute( teamData, entity );
         }
         else if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )

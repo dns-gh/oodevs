@@ -12,7 +12,7 @@
 
 #include "clients_kernel/UrbanTypes.h"
 #include "clients_kernel/Hierarchies.h"
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_gui/EntityHierarchies.h"
 #include <boost/noncopyable.hpp>
 
 // =============================================================================
@@ -21,7 +21,7 @@
 */
 // Created: JSR 2012-05-14
 // =============================================================================
-class UrbanHierarchies : public kernel::EntityHierarchies< kernel::Hierarchies >
+class UrbanHierarchies : public gui::EntityHierarchies< kernel::Hierarchies >
                        , public kernel::Serializable_ABC
                        , private boost::noncopyable
 {

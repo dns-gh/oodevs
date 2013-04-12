@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "DelayAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: DelayAttribute constructor
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+DelayAttribute::DelayAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : delay_( 0, Units::hours )
 {
     CreateDictionary( dictionary, entity );
@@ -30,7 +30,7 @@ DelayAttribute::DelayAttribute( PropertiesDictionary& dictionary, const kernel::
 // Name: DelayAttribute constructor
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( xml::xistream& xis, PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+DelayAttribute::DelayAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : delay_( 0, Units::hours )
 {
     xis >> xml::attribute( "value", delay_.value_ );
@@ -80,7 +80,7 @@ void DelayAttribute::SetDelay( unsigned int time )
 // Name: DelayAttribute::CreateDictionary
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::CreateDictionary( PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void DelayAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "DelayAttribute", "Info/Delay parameters/Delay" ), delay_ );
 }

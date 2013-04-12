@@ -11,7 +11,7 @@
 #include "CrossingSitePrototype.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/LoadableSpinBox.h"
 #include "clients_gui/LoadableCheckBox.h"
 #include "preparation/CrossingSiteAttribute.h"
@@ -47,7 +47,7 @@ void CrossingSitePrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         CrossingSiteAttribute* attribute = new CrossingSiteAttribute( dictionary, *creation_ );
         attribute->SetWidth( width_->value() );
         attribute->SetDepth( depth_->value() );

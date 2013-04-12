@@ -17,8 +17,12 @@
 namespace kernel
 {
     class Controllers;
-    class PropertiesDictionary;
     class UrbanObject_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -33,8 +37,8 @@ class StructuralStateAttribute : public kernel::StructuralStateAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StructuralStateAttribute( xml::xistream& xis, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary );
-             StructuralStateAttribute( kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary );
+             StructuralStateAttribute( xml::xistream& xis, kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary );
+             StructuralStateAttribute( kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary );
     virtual ~StructuralStateAttribute();
     //@}
 
@@ -53,7 +57,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary );
+    void CreateDictionary( kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary );
     //@}
 
 private:

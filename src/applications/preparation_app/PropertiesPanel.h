@@ -50,7 +50,7 @@ public:
 protected:
     //! @name Member data
     //@{
-    std::auto_ptr< kernel::EditorFactory_ABC > editorFactory_;
+    std::auto_ptr< gui::EditorFactory_ABC > editorFactory_;
     std::auto_ptr< gui::PropertyDisplayer > propertiesComparator_;
     std::auto_ptr< gui::PropertyDisplayer > propertiesDisplayer_;
     //@}

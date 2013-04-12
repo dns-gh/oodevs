@@ -12,8 +12,8 @@
 #include "TeamsModel.h"
 #include "AffinitiesVisitor_ABC.h"
 #include "actions/ParameterList.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/PropertiesDictionary.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/Team_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "Tools.h"
@@ -23,7 +23,7 @@
 // Name: Affinities constructor
 // Created: ABR 2011-01-28
 // -----------------------------------------------------------------------------
-Affinities::Affinities( kernel::Entity_ABC& entity, kernel::Controller& controller, TeamsModel& teams, kernel::PropertiesDictionary& dico )
+Affinities::Affinities( kernel::Entity_ABC& entity, kernel::Controller& controller, TeamsModel& teams, gui::PropertiesDictionary& dico )
     : entity_    ( entity )
     , controller_( controller )
     , teams_     ( teams )
@@ -94,7 +94,7 @@ void Affinities::Update( const T& message )
             kernel::Team_ABC& team = teams_.GetTeam( adhesion.party().id() );
             CIT_Affinities it = affinities_.find( adhesion.party().id() );
             dico_.RegisterExtension( entity_, this, baseName_ + QString( "/%1" ).arg( team.GetName() ), it->second );
-            controller_.Update( kernel::DictionaryUpdated( entity_, baseName_ ) );
+            controller_.Update( gui::DictionaryUpdated( entity_, baseName_ ) );
         }
     }
 }

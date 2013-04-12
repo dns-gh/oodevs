@@ -12,7 +12,7 @@
 #include "tools/IdManager.h"
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/DictionaryExtensions.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -76,7 +76,7 @@ Inhabitant::~Inhabitant()
 // -----------------------------------------------------------------------------
 void Inhabitant::CreateDictionary()
 {
-    kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
     dictionary.Register( constEntity, tools::translate( "Population", "Info/Info" ), text_ );
     dictionary.Register( constEntity, tools::translate( "Population", "Human/Alive" ), healthy_ );

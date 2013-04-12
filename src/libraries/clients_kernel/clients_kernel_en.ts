@@ -45,29 +45,6 @@
     </message>
 </context>
 <context>
-    <name>Block</name>
-    <message>
-        <source>PhysicalFeatures/Motivations/</source>
-        <translation>PhysicalFeatures/Motivations/</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation>Default</translation>
-    </message>
-    <message>
-        <source>/Percentage</source>
-        <translation>/Percentage</translation>
-    </message>
-    <message>
-        <source>/Nominal capacity</source>
-        <translation>/Nominal capacity</translation>
-    </message>
-    <message>
-        <source>/Maximal capacity</source>
-        <translation>/Maximal capacity</translation>
-    </message>
-</context>
-<context>
     <name>CoordinateSystems</name>
     <message>
         <source>UTM MGRS</source>
@@ -84,13 +61,6 @@
     <message>
         <source>Local coordinates</source>
         <translation>Local coordinates</translation>
-    </message>
-</context>
-<context>
-    <name>CriticalIntelligence</name>
-    <message>
-        <source>Info/Critical intelligence</source>
-        <translation>Info/Critical intelligence</translation>
     </message>
 </context>
 <context>
@@ -270,20 +240,6 @@
     <message>
         <source>Fumigene</source>
         <translation>Fumigene</translation>
-    </message>
-</context>
-<context>
-    <name>EntityHierarchies</name>
-    <message>
-        <source>Hierarchies/Superior</source>
-        <translation>Hierarchies/Superior</translation>
-    </message>
-</context>
-<context>
-    <name>EntityType</name>
-    <message>
-        <source>Info/Type</source>
-        <translation>Info/Type</translation>
     </message>
 </context>
 <context>

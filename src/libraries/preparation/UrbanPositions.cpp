@@ -11,7 +11,7 @@
 #include "UrbanPositions.h"
 
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -42,7 +42,7 @@ namespace
 // Name: UrbanPositions constructor for city or district from list view context menu
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
+UrbanPositions::UrbanPositions( gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
     : gui::UrbanPositions( level, object )
     , converter_( converter )
     , level_( level )
@@ -55,7 +55,7 @@ UrbanPositions::UrbanPositions( kernel::PropertiesDictionary& dictionary, EUrban
 // Name: UrbanPositions constructor for urban blocs from buttons
 // Created: ABR 2012-06-04
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( const geometry::Polygon2f& location, kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
+UrbanPositions::UrbanPositions( const geometry::Polygon2f& location, gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
     : gui::UrbanPositions( level, object, location.Vertices() )
     , converter_( converter )
     , level_( level )
@@ -68,7 +68,7 @@ UrbanPositions::UrbanPositions( const geometry::Polygon2f& location, kernel::Pro
 // Name: UrbanPositions constructor for any urban object from xis
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
+UrbanPositions::UrbanPositions( xml::xistream& xis, gui::PropertiesDictionary& dictionary, EUrbanLevel level, const kernel::UrbanObject_ABC& object, const kernel::CoordinateConverter_ABC& converter )
     : gui::UrbanPositions( level, object, Convert( xis, level, converter ) )
     , converter_( converter )
     , level_( level )

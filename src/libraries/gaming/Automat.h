@@ -19,7 +19,6 @@
 namespace kernel
 {
     class Controller;
-    class PropertiesDictionary;
     class LogisticLevel;
     class StaticModel;
     class AutomatType;

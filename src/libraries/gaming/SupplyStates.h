@@ -22,8 +22,12 @@ namespace kernel
     class EquipmentType;
     class DotationType;
     class Displayer_ABC;
-    class PropertiesDictionary;
     class Availability;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace sword
@@ -48,7 +52,7 @@ public:
              SupplyStates( kernel::Entity_ABC& entity, kernel::Controller& controller,
                            const tools::Resolver_ABC< kernel::EquipmentType >& resolver,
                            const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
-                           kernel::PropertiesDictionary& dico );
+                           gui::PropertiesDictionary& dico );
     virtual ~SupplyStates();
     //@}
 
@@ -67,7 +71,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    void CreateDictionary( gui::PropertiesDictionary& dico ) const;
     //@}
 
     //! @name Types

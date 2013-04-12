@@ -78,7 +78,7 @@ const kernel::Entity_ABC* FormationHierarchy::GetSuperior() const
 void FormationHierarchy::UnregisterParent()
 {
     superior_ = 0;
-    kernel::MergingTacticalHierarchies::UnregisterParent();
+    gui::MergingTacticalHierarchies::UnregisterParent();
 }
 
 // -----------------------------------------------------------------------------

@@ -44,7 +44,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/DotationCapacityType.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/EntityType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
@@ -61,7 +61,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/EntityType.h"
 #include "ENT/ENT_Tr_Gen.h"
 #include "tools/GeneralConfig.h"
 #include "tools/RealFileLoaderObserver_ABC.h"
@@ -699,7 +699,7 @@ void ModelConsistencyChecker::CheckLogisticFormation()
     while( it.HasMoreElements() )
     {
         const Automat_ABC& automat = it.NextElement();
-        const kernel::AutomatType& type = automat.Get< kernel::EntityType< kernel::AutomatType > >().GetType();
+        const kernel::AutomatType& type = automat.Get< gui::EntityType< kernel::AutomatType > >().GetType();
         if( !type.HasLogistics() )
             continue;
         if( automat.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
@@ -725,7 +725,7 @@ void ModelConsistencyChecker::CheckLogisticSubordinates()
     while( it.HasMoreElements() )
     {
         const Automat_ABC& automat = it.NextElement();
-        const kernel::AutomatType& type = automat.Get< kernel::EntityType< kernel::AutomatType > >().GetType();
+        const kernel::AutomatType& type = automat.Get< gui::EntityType< kernel::AutomatType > >().GetType();
         if( !type.HasLogistics() )
             continue;
         if( automat.GetLogisticLevel() != kernel::LogisticLevel::logistic_base_ )

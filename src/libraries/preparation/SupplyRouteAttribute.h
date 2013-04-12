@@ -17,8 +17,12 @@
 namespace kernel
 {
     class Displayer_ABC;
-    class PropertiesDictionary;
     class Entity_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -38,8 +42,8 @@ class SupplyRouteAttribute : public kernel::SupplyRouteAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SupplyRouteAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
-             SupplyRouteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+    explicit SupplyRouteAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             SupplyRouteAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~SupplyRouteAttribute();
     //@}
 
@@ -67,7 +71,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+    void CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 public:

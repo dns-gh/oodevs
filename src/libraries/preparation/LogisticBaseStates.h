@@ -13,7 +13,7 @@
 #include "tools/Resolver.h"
 #include "LogisticHierarchiesBase.h"
 #include "clients_gui/Drawable_ABC.h"
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_gui/EntityHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/SubTypes.h"
 #include <boost/noncopyable.hpp>
@@ -23,6 +23,10 @@ namespace kernel
     class DotationType;
     class Controller;
     class Entity_ABC;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -35,7 +39,7 @@ class DotationsItem;
 */
 // Created: AHC 2010-09-29
 // =============================================================================
-class LogisticBaseStates : public kernel::EntityHierarchies< LogisticHierarchiesBase >
+class LogisticBaseStates : public gui::EntityHierarchies< LogisticHierarchiesBase >
                          , public kernel::Serializable_ABC
                          , public tools::Resolver< Dotation >
                          , public gui::Drawable_ABC
@@ -45,7 +49,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticBaseStates( kernel::Controller& controller, kernel::Entity_ABC& entity,
-                 const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico, bool canHaveQuotas = true );
+                 const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, gui::PropertiesDictionary& dico, bool canHaveQuotas = true );
     virtual ~LogisticBaseStates();
     //@}
 
@@ -63,7 +67,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner );
+    virtual void CreateDictionary( gui::PropertiesDictionary& dico, kernel::Entity_ABC& owner );
     virtual void SetSuperiorInternal( kernel::Entity_ABC* superior );
 
     void Load( xml::xistream& xis, const kernel::Entity_ABC* superior );

@@ -11,7 +11,7 @@
 #include "StructuralStateAttribute.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/UrbanObject_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -19,7 +19,7 @@
 // Name: StructuralStateAttribute constructor
 // Created: JSR 2012-09-05
 // -----------------------------------------------------------------------------
-StructuralStateAttribute::StructuralStateAttribute( xml::xistream& xis, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
+StructuralStateAttribute::StructuralStateAttribute( xml::xistream& xis, kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary )
     : structuralState_( 100, kernel::Units::percentage )
 {
     xis >> xml::optional >> xml::start( "structural-state" )
@@ -32,7 +32,7 @@ StructuralStateAttribute::StructuralStateAttribute( xml::xistream& xis, kernel::
 // Name: StructuralStateAttribute constructor
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-StructuralStateAttribute::StructuralStateAttribute( kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
+StructuralStateAttribute::StructuralStateAttribute( kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary )
     : structuralState_( 100, kernel::Units::percentage )
 {
     CreateDictionary( object, dictionary );
@@ -90,7 +90,7 @@ unsigned int StructuralStateAttribute::GetValue() const
 // Name: StructuralStateAttribute::CreateDictionary
 // Created: JSR 2012-09-05
 // -----------------------------------------------------------------------------
-void StructuralStateAttribute::CreateDictionary( kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
+void StructuralStateAttribute::CreateDictionary( kernel::UrbanObject_ABC& object, gui::PropertiesDictionary& dictionary )
 {
     dictionary.Register( object, tools::translate( "StructuralStateAttribute", "Info/StructuralState" ), structuralState_ );
 }

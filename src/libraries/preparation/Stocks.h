@@ -18,8 +18,12 @@ namespace kernel
 {
     class Controller;
     class DotationType;
-    class PropertiesDictionary;
     class Entity_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -43,8 +47,8 @@ class Stocks : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Stocks( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
-             Stocks( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico );
+             Stocks( kernel::Controller& controller, kernel::Entity_ABC& entity, gui::PropertiesDictionary& dico );
+             Stocks( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, gui::PropertiesDictionary& dico );
     virtual ~Stocks();
     void SetDotation( const kernel::DotationType& type, unsigned int quantity, bool add );
     void DeleteAll();
@@ -65,7 +69,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::Entity_ABC& entity, gui::PropertiesDictionary& dico );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     void ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver );
     bool IsToSerialize() const;

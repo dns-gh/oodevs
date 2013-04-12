@@ -16,7 +16,7 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -63,7 +63,7 @@ public:
 // Name: AltitudeModifierAttribute constructor
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-AltitudeModifierAttribute::AltitudeModifierAttribute( kernel::PropertiesDictionary& dictionary, kernel::DetectionMap& detection,
+AltitudeModifierAttribute::AltitudeModifierAttribute( gui::PropertiesDictionary& dictionary, kernel::DetectionMap& detection,
                                                       const kernel::Object_ABC& object, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
     : detection_  ( detection )
     , object_     ( object )
@@ -79,7 +79,7 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( kernel::PropertiesDictiona
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
 AltitudeModifierAttribute::AltitudeModifierAttribute( xml::xistream& xis, kernel::DetectionMap& detection, const kernel::Object_ABC& object,
-                                                      kernel::PropertiesDictionary& dictionary, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
+                                                      gui::PropertiesDictionary& dictionary, kernel::Controllers& controllers, const kernel::Entity_ABC& entity )
     : detection_  ( detection )
     , object_     ( object )
     , controllers_( controllers )
@@ -192,7 +192,7 @@ void AltitudeModifierAttribute::EndDrag() const
 // Name: AltitudeModifierAttribute::CreateDictionary
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void AltitudeModifierAttribute::CreateDictionary( PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void AltitudeModifierAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "AltitudeModifierAttribute", "Info/Altitude modifier/Height" ), height_ );
 }

@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-#ifndef kernel_CriticalIntelligence_h
-#define kernel_CriticalIntelligence_h
+#ifndef gui_CriticalIntelligence_h
+#define gui_CriticalIntelligence_h
 
-#include "Extension_ABC.h"
-#include "Serializable_ABC.h"
-#include "Updatable_ABC.h"
-#include "SubTypes.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/SubTypes.h"
 #include <boost/noncopyable.hpp>
 
 namespace xml
@@ -30,26 +30,34 @@ namespace sword
 namespace kernel
 {
     class Entity_ABC;
-    class PropertiesDictionary;
     class Controller;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
+}
+
+namespace gui
+{
 // =============================================================================
 /** @class  CriticalIntelligence
     @brief  Critical intelligence
 */
 // Created: LGY 2012-08-28
 // =============================================================================
-class CriticalIntelligence : public Extension_ABC
-                           , public Serializable_ABC
-                           , public Updatable_ABC< sword::CrowdUpdate >
-                           , public Updatable_ABC< sword::UnitAttributes >
+class CriticalIntelligence : public kernel::Extension_ABC
+                           , public kernel::Serializable_ABC
+                           , public kernel::Updatable_ABC< sword::CrowdUpdate >
+                           , public kernel::Updatable_ABC< sword::UnitAttributes >
                            , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             CriticalIntelligence( Entity_ABC& entity, Controller& controller,
+             CriticalIntelligence( kernel::Entity_ABC& entity, kernel::Controller& controller,
                                    PropertiesDictionary& dictionary );
-             CriticalIntelligence( xml::xistream& xis, Controller& controller, Entity_ABC& entity,
+             CriticalIntelligence( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& entity,
                                    PropertiesDictionary& dictionary );
     virtual ~CriticalIntelligence();
     //@}
@@ -63,7 +71,7 @@ public:
 
     //! @name Accessors
     //@{
-    CriticalIntelligenceType& GetType();
+    kernel::CriticalIntelligenceType& GetType();
     //@}
 
 private:
@@ -76,13 +84,13 @@ private:
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
-    Entity_ABC& entity_;
+    kernel::Controller& controller_;
+    kernel::Entity_ABC& entity_;
     const QString property_;
-    CriticalIntelligenceType value_;
+    kernel::CriticalIntelligenceType value_;
     //@}
 };
 
 }
 
-#endif // kernel_CriticalIntelligence_h
+#endif // gui_CriticalIntelligence_h

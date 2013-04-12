@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef kernel_PropertiesGroup_h
-#define kernel_PropertiesGroup_h
+#ifndef gui_PropertiesGroup_h
+#define gui_PropertiesGroup_h
 
 #include "Property_ABC.h"
 
@@ -16,7 +16,10 @@ namespace kernel
 {
     class Displayer_ABC;
     class Entity_ABC;
+}
 
+namespace gui
+{
 // =============================================================================
 /** @class  PropertiesGroup
     @brief  Properties group
@@ -28,7 +31,7 @@ class PropertiesGroup : public Property_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PropertiesGroup( Displayer_ABC& comparator, const Entity_ABC& owner );
+    explicit PropertiesGroup( kernel::Displayer_ABC& comparator, const kernel::Entity_ABC& owner );
     virtual ~PropertiesGroup();
     //@}
 
@@ -36,7 +39,7 @@ public:
     //@{
     virtual QWidget* CreateEditor( QWidget* parent, EditorFactory_ABC& factory );
     virtual void SetValueFromEditor( QWidget* editor );
-    virtual void Display( Displayer_ABC& displayer );
+    virtual void Display( kernel::Displayer_ABC& displayer );
     virtual const QString& GetName() const;
     virtual E_Category GetCategory() const;
     virtual const kernel::Entity_ABC& GetOwner() const;
@@ -63,11 +66,11 @@ private:
     //! @name Member data
     //@{
     T_SubProperties subProperties_;
-    Displayer_ABC& comparator_;
-    const Entity_ABC& owner_;
+    kernel::Displayer_ABC& comparator_;
+    const kernel::Entity_ABC& owner_;
     //@}
 };
 
 }
 
-#endif // kernel_PropertiesGroup_h
+#endif // gui_PropertiesGroup_h

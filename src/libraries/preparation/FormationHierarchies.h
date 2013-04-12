@@ -10,7 +10,7 @@
 #ifndef __FormationHierarchies_h_
 #define __FormationHierarchies_h_
 
-#include "clients_kernel/MergingTacticalHierarchies.h"
+#include "clients_gui/MergingTacticalHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel {
@@ -25,7 +25,7 @@ namespace kernel {
 */
 // Created: SBO 2006-09-21
 // =============================================================================
-class FormationHierarchies : public kernel::MergingTacticalHierarchies
+class FormationHierarchies : public gui::MergingTacticalHierarchies
                            , public kernel::Serializable_ABC
 {
 public:

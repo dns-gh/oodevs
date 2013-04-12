@@ -7,15 +7,16 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "CriticalIntelligence.h"
 #include "PropertiesDictionary.h"
 #include "DictionaryUpdated.h"
-#include "Tools.h"
+#include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: CriticalIntelligence constructor
@@ -101,7 +102,7 @@ void CriticalIntelligence::UpdateData( const T& message )
         if( value.c_str() != value_() )
         {
             value_ = value.c_str();
-            controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
+            controller_.Update( DictionaryUpdated( entity_, property_ ) );
         }
     }
 }

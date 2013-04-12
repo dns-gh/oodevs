@@ -26,10 +26,14 @@ namespace sword
 namespace kernel
 {
     class ResourceNetworkType;
-    class PropertiesDictionary;
     class Object_ABC;
     class Entity_ABC;
     class UrbanObject_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -45,9 +49,9 @@ class ResourceNetwork : public gui::ResourceNetwork_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetwork( kernel::Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, kernel::PropertiesDictionary* dico );
-             ResourceNetwork( kernel::Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary* dico );
-             ResourceNetwork( kernel::Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, kernel::PropertiesDictionary* dico );
+             ResourceNetwork( kernel::Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, gui::PropertiesDictionary* dico );
+             ResourceNetwork( kernel::Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, gui::PropertiesDictionary* dico );
+             ResourceNetwork( kernel::Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, gui::PropertiesDictionary* dico );
     virtual ~ResourceNetwork();
     //@}
 
@@ -66,7 +70,7 @@ private:
     void UpdateNetwork( kernel::Entity_ABC* entity, const sword::ResourceNetwork& msg );
     void SetColor( const std::string& resource ) const;
     void UpdateStipple( int value ) const;
-    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    void CreateDictionary( gui::PropertiesDictionary& dico ) const;
     geometry::Point2f GetPosition( const kernel::Entity_ABC& entity ) const;
     //@}
 

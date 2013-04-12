@@ -12,7 +12,7 @@
 #include "clients_kernel/NBCAgent.h"
 #include "tools/Iterator.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/VariantPointer.h"
 #include "preparation/NBCAttribute.h"
 #include "clients_gui/RichLabel.h"
@@ -49,7 +49,7 @@ void NBCPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         NBCAttribute* attribute = new NBCAttribute( dictionary, *creation_ );
         {
             attribute->SetState( nbcStates_->GetValue() );

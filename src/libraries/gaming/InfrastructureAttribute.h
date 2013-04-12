@@ -18,9 +18,13 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
-    class PropertiesDictionary;
     class InfrastructureType;
     class UrbanObject_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -34,7 +38,7 @@ class InfrastructureAttribute : public gui::Infrastructure_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InfrastructureAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, const tools::StringResolver< kernel::InfrastructureType >& resolver, kernel::PropertiesDictionary& dictionary );
+             InfrastructureAttribute( kernel::Controllers& controllers, kernel::UrbanObject_ABC& object, const tools::StringResolver< kernel::InfrastructureType >& resolver, gui::PropertiesDictionary& dictionary );
     virtual ~InfrastructureAttribute();
     //@}
 
@@ -55,7 +59,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary ) const;
+    void CreateDictionary( gui::PropertiesDictionary& dictionary ) const;
 
     virtual void DoUpdate( const sword::UrbanUpdate& message );
     virtual void DoUpdate( const sword::UrbanCreation& message );

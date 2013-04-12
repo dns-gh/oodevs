@@ -11,7 +11,7 @@
 #define __PositionEditor_h_
 
 #include "clients_gui/PropertyDialog.h"
-#include "clients_kernel/ValueEditor.h"
+#include "clients_gui/ValueEditor.h"
 
 namespace kernel
 {
@@ -32,7 +32,7 @@ namespace gui
 // Created: AME 2010-03-08
 // =============================================================================
 class PositionEditor : public gui::PropertyDialog
-                     , public kernel::ValueEditor< kernel::Moveable_ABC* >
+                     , public gui::ValueEditor< kernel::Moveable_ABC* >
 {
     Q_OBJECT
 

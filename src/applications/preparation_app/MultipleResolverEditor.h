@@ -11,7 +11,7 @@
 #define __MultipleResolverEditor_h_
 
 #include "clients_gui/PropertyDialog.h"
-#include "clients_kernel/ValueEditor.h"
+#include "clients_gui/ValueEditor.h"
 
 namespace gui
 {
@@ -26,7 +26,7 @@ namespace gui
 // =============================================================================
 template< typename Entity, typename Resolver >
 class MultipleResolverEditor : public gui::PropertyDialog
-                             , public kernel::ValueEditor< std::vector< Entity* > >
+                             , public gui::ValueEditor< std::vector< Entity* > >
 {
 
 public:

@@ -7,11 +7,12 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "clients_gui_pch.h"
 #include "PropertiesGroup.h"
 #include <boost/foreach.hpp>
 
 using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesGroup constructor

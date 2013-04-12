@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "CrossingSiteAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: CrossingSiteAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-CrossingSiteAttribute::CrossingSiteAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+CrossingSiteAttribute::CrossingSiteAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : width_            ( 0, Units::meters )
     , depth_            ( 0, Units::meters )
     , speed_            ( 0, Units::metersPerSecond )
@@ -33,7 +33,7 @@ CrossingSiteAttribute::CrossingSiteAttribute( kernel::PropertiesDictionary& dict
 // Name: CrossingSiteAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-CrossingSiteAttribute::CrossingSiteAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+CrossingSiteAttribute::CrossingSiteAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : width_            ( 0, Units::meters )
     , depth_            ( 0, Units::meters )
     , speed_            ( 0, Units::metersPerSecond )
@@ -122,7 +122,7 @@ void CrossingSiteAttribute::SerializeObjectAttributes( xml::xostream& xos ) cons
 // Name: CrossingSiteAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void CrossingSiteAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Width" ), width_ );
     dictionary.RegisterExtension( entity, this, tools::translate( "CrossingSiteAttribute", "Info/Crossing site attributes/Depth" ), depth_ );

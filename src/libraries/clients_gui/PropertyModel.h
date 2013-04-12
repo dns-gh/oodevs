@@ -12,7 +12,7 @@
 
 #include <QtGui/qstandarditemmodel.h>
 #include "KeyModel.h"
-#include "clients_kernel/Property_ABC.h"
+#include "clients_gui/Property_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/VariantPointer.h"
 
@@ -27,7 +27,7 @@ namespace gui
 // =============================================================================
 class PropertyModel : public KeyModel
                     , public kernel::Displayer_ABC
-                    , public tools::Caller< kernel::Property_ABC* >
+                    , public tools::Caller< Property_ABC* >
 {
     Q_OBJECT
 
@@ -42,12 +42,11 @@ public:
     //@{
     virtual void Clear();
     virtual void Hide();
-    virtual void Call( kernel::Property_ABC* const& property );
+    virtual void Call( Property_ABC* const& property );
 
     void Update( QWidget* editor, const QModelIndex& index );
     void Update( const QString& category );
     //@}
-
 
 private:
     //! @name Operations
@@ -60,7 +59,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Update( QStandardItem* parent, kernel::E_Category category );
+    void Update( QStandardItem* parent, E_Category category );
     void Update( QStandardItem* parent, QStandardItem* property );
     //@}
 

@@ -11,7 +11,7 @@
 #include "FireAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/FireClass.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: FireAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+FireAttribute::FireAttribute( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
     : fireClass_          ( 0 )
     , maxCombustionEnergy_( 0 )
 {
@@ -32,7 +32,7 @@ FireAttribute::FireAttribute( kernel::PropertiesDictionary& dictionary, const ke
 // Name: FireAttribute constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     std::string className;
     xis >> xml::attribute( "class", className )
@@ -97,7 +97,7 @@ void FireAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 // Name: FireAttribute::CreateDictionary
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void FireAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
+void FireAttribute::CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity )
 {
     dictionary.RegisterExtension( entity, this, tools::translate( "FireAttribute", "Info/Fire attributes/Fire class" ), fireClass_ );
     dictionary.RegisterExtension( entity, this, tools::translate( "FireAttribute", "Info/Fire attributes/Max combustion energy" ), maxCombustionEnergy_ );

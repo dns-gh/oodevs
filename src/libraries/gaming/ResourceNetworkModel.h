@@ -64,7 +64,7 @@ private:
 template< typename T >
 void ResourceNetworkModel::Create( kernel::Entity_ABC& entity, const T& msg )
 {
-    kernel::PropertiesDictionary* dico = entity.Retrieve< kernel::PropertiesDictionary >();
+    gui::PropertiesDictionary* dico = entity.Retrieve< gui::PropertiesDictionary >();
     ResourceNetwork* element = new ResourceNetwork( controllers_, entity, model_.urbanObjects_, model_.objects_, staticModel_.objectTypes_, msg, dico );
     entity.Attach< gui::ResourceNetwork_ABC >( *element );
 }

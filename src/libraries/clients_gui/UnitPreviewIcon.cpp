@@ -22,7 +22,7 @@
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
-#include "clients_kernel/MergingTacticalHierarchies.h"
+#include "clients_gui/MergingTacticalHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "tools/App6Symbol.h"
 

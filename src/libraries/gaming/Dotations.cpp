@@ -10,12 +10,12 @@
 #include "gaming_pch.h"
 #include "Dotations.h"
 #include "Dotation.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_gui/GlTools_ABC.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
 #include "statusicons.h"
 #include "protocol/SimulationSenders.h"
@@ -26,7 +26,7 @@ using namespace kernel;
 // Name: Dotations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Dotations::Dotations( kernel::Entity_ABC& entity, Controller& controller, const tools::Resolver_ABC< DotationType >& resolver, PropertiesDictionary& dico
+Dotations::Dotations( kernel::Entity_ABC& entity, Controller& controller, const tools::Resolver_ABC< DotationType >& resolver, gui::PropertiesDictionary& dico
                     , const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver )
     : HierarchicExtension_ABC( automatResolver, formationResolver, teamResolver )
     , entity_       ( entity )
@@ -52,7 +52,7 @@ Dotations::~Dotations()
 // Name: Dotations::CreateDictionary
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-void Dotations::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+void Dotations::CreateDictionary( gui::PropertiesDictionary& dico ) const
 {
     dico.RegisterExtension( entity_, this, tools::translate( "Dotations", "Resources/Out of gas" ), bEmptyGasTank_ );
 }
@@ -105,7 +105,7 @@ void Dotations::Update( const std::vector< Dotation >& differences )
     if( kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( GetSuperior() ) )
         if( Dotations* dotations = dynamic_cast< Dotations* >( superior->Retrieve< Dotations_ABC >() ) )
             dotations->Update( differences );
-    controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );
+    controller_.Update( gui::DictionaryUpdated( entity_, property_ ) );
 
     controller_.Update( *(Dotations_ABC*)this );
 }

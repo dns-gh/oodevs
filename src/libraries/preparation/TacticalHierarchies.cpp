@@ -17,7 +17,7 @@
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
 TacticalHierarchies::TacticalHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder, superior )
+    : gui::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder, superior )
 {
     // NOTHING
 }
@@ -37,5 +37,5 @@ TacticalHierarchies::~TacticalHierarchies()
 // -----------------------------------------------------------------------------
 void TacticalHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
 {
-    kernel::EntityHierarchies< kernel::TacticalHierarchies >::ChangeSuperior( &superior );
+    gui::EntityHierarchies< kernel::TacticalHierarchies >::ChangeSuperior( &superior );
 }

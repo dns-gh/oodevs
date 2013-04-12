@@ -15,10 +15,10 @@
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PopulationType.h"
-#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_gui/DictionaryUpdated.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/PropertiesDictionary.h"
+#include "clients_gui/EntityType.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -28,7 +28,7 @@
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
 PopulationPositions::PopulationPositions( Population& owner, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                                          const geometry::Point2f& position, kernel::PropertiesDictionary& dictionary )
+                                          const geometry::Point2f& position, gui::PropertiesDictionary& dictionary )
     : converter_   ( converter )
     , owner_       ( owner )
     , controller_  ( controller )
@@ -46,7 +46,7 @@ PopulationPositions::PopulationPositions( Population& owner, kernel::Controller&
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
 PopulationPositions::PopulationPositions( xml::xistream& xis, Population& owner, kernel::Controller& controller,
-                                          const kernel::CoordinateConverter_ABC& converter, kernel::PropertiesDictionary& dictionary )
+                                          const kernel::CoordinateConverter_ABC& converter, gui::PropertiesDictionary& dictionary )
     : converter_   ( converter )
     , owner_       ( owner )
     , controller_  ( controller )
@@ -90,7 +90,7 @@ void PopulationPositions::UpdatePosition()
     if( owner_.GetTotalLivingHumans() != livingHumans_ )
     {
         livingHumans_ = owner_.GetTotalLivingHumans();
-        const float density = owner_.Get< kernel::EntityType< kernel::PopulationType > >().GetType().GetDensity();
+        const float density = owner_.Get< gui::EntityType< kernel::PopulationType > >().GetType().GetDensity();
         if( density > 0 )
             radius_ = std::sqrt( ( livingHumans_ / density ) * oneOnpi );
         radius_ = std::max( radius_, 50.f );
@@ -121,7 +121,7 @@ float PopulationPositions::GetHeight( bool ) const
 // Name: PopulationPositions::CreateDictionary
 // Created: LGY 2012-05-07
 // -----------------------------------------------------------------------------
-void PopulationPositions::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void PopulationPositions::CreateDictionary( gui::PropertiesDictionary& dictionary )
 {
     dictionary.Register( owner_, tools::translate( "Crowd", "Info/Position" ), moveable_ );
 }
@@ -189,7 +189,7 @@ void PopulationPositions::SerializeAttributes( xml::xostream& xos ) const
 void PopulationPositions::Move( const geometry::Point2f& position )
 {
     center_ = position;
-    controller_.Update( kernel::DictionaryUpdated( owner_, tools::translate( "Crowd", "Info/Position" ) ) );
+    controller_.Update( gui::DictionaryUpdated( owner_, tools::translate( "Crowd", "Info/Position" ) ) );
 }
 
 // -----------------------------------------------------------------------------

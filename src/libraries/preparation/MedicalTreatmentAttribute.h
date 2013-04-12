@@ -22,8 +22,12 @@ namespace kernel
     class Displayer_ABC;
     class Entity_ABC;
     class MedicalTreatmentType;
-    class PropertiesDictionary;
     class UrbanObject_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -42,9 +46,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              MedicalTreatmentAttribute( const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes,
-                                        kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& owner, bool bUrban = false, kernel::Controllers* controllers = 0 );
+                                        gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& owner, bool bUrban = false, kernel::Controllers* controllers = 0 );
              MedicalTreatmentAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& treatmentTypes,
-                                        kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& owner, bool bUrban = false, kernel::Controllers* controllers = 0 );
+                                        gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& owner, bool bUrban = false, kernel::Controllers* controllers = 0 );
     virtual ~MedicalTreatmentAttribute();
     //@}
 
@@ -90,7 +94,7 @@ public:
     //@{
     const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver_;
     const kernel::Controllers*      controllers_;
-    kernel::PropertiesDictionary&   dictionary_;
+    gui::PropertiesDictionary&   dictionary_;
     const kernel::Entity_ABC&       owner_;
     int                             serializableModes_;
     int                             doctors_;

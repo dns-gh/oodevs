@@ -42,7 +42,7 @@
 #include "LocationPositions.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/Object_ABC.h"

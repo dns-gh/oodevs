@@ -20,6 +20,10 @@ namespace kernel
     class Controllers;
     class Team_ABC;
     class Entity_ABC;
+}
+
+namespace gui
+{
     class PropertiesDictionary;
 }
 
@@ -39,9 +43,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentAffinities( kernel::Entity_ABC& agent, kernel::Controllers& controllers, Model& model,
-                              kernel::PropertiesDictionary& dictionary, const QString& propertyName );
+                              gui::PropertiesDictionary& dictionary, const QString& propertyName );
              AgentAffinities( xml::xistream& xis, kernel::Entity_ABC& agent, kernel::Controllers& controllers, Model& model,
-                              kernel::PropertiesDictionary& dictionary, const QString& propertyName );
+                              gui::PropertiesDictionary& dictionary, const QString& propertyName );
     virtual ~AgentAffinities();
     //@}
 
@@ -71,7 +75,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::Entity_ABC& agent_;
-    kernel::PropertiesDictionary& dictionary_;
+    gui::PropertiesDictionary& dictionary_;
     QString propertyName_;
     T_Teams teams_;
     //@}

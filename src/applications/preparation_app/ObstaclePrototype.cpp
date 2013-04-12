@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ObstaclePrototype.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/LoadableCheckBox.h"
 #include "preparation/ObstacleAttribute.h"
 
@@ -45,7 +45,7 @@ void ObstaclePrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         ObstacleAttribute* attribute = new ObstacleAttribute( dictionary, types_->GetValue(), *creation_ );
         unsigned int activationTime = GetActivationTime();
         attribute->SetActivationTime( activationTime );

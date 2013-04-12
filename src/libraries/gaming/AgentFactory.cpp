@@ -75,13 +75,13 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/CriticalIntelligence.h"
-#include "clients_kernel/EntityType.h"
+#include "clients_gui/CriticalIntelligence.h"
+#include "clients_gui/EntityType.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -117,8 +117,8 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     if( !type )
         return 0;
     Automat* result = new Automat( message, controllers_.controller_, *type );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach( *new kernel::EntityType< kernel::AutomatType >( *result, *type, dictionary ) );
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
+    result->Attach( *new gui::EntityType< kernel::AutomatType >( *result, *type, dictionary ) );
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dictionary ) );
     kernel::Entity_ABC* superior = 0;
 
@@ -165,8 +165,8 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
 kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
 {
     Agent* result = new Agent( message, controllers_.controller_, static_.types_ );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
+    result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< Lives_ABC >( *new Lives( controllers_.controller_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, message, static_.types_ ) ); // $$$$ LDC Warning: Must be before new Attributes because Attributes uses it without knowing it to paint the headquarters symbol...
     result->Attach( *new Attributes( *result, controllers_.controller_, static_.coordinateConverter_, dictionary, model_.teams_ ) );
@@ -219,9 +219,9 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
     if( !type )
         return 0;
     Population* result = new Population( message, controllers_, static_.coordinateConverter_, *type );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach( *new kernel::EntityType< kernel::PopulationType >( *result, *type, dictionary ) );
-    result->Attach< kernel::CriticalIntelligence >( *new kernel::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
+    result->Attach( *new gui::EntityType< kernel::PopulationType >( *result, *type, dictionary ) );
+    result->Attach< gui::CriticalIntelligence >( *new gui::CriticalIntelligence( *result, controllers_.controller_, dictionary ) );
     result->Attach< kernel::Positions >( *new PopulationPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result, *type ) );
@@ -241,8 +241,8 @@ kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& m
 {
     const kernel::InhabitantType& type = static_.types_.tools::Resolver< kernel::InhabitantType >::Get( message.type().id() );
     Inhabitant* result = new Inhabitant( message, controllers_.controller_, model_.urbanObjects_, type, static_.objectTypes_ );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach( *new kernel::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
+    gui::PropertiesDictionary& dictionary = result->Get< gui::PropertiesDictionary >();
+    result->Attach( *new gui::EntityType< kernel::InhabitantType >( *result, type, dictionary ) );
     result->Attach< kernel::Positions >( *new InhabitantPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dictionary ) );

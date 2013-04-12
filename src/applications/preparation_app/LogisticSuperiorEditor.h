@@ -11,7 +11,7 @@
 #define __LogisticSuperiorEditor_h_
 
 #include "clients_gui/ValuedComboBox.h"
-#include "clients_kernel/ValueEditor.h"
+#include "clients_gui/ValueEditor.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "preparation/LogisticSuperior.h"
@@ -32,7 +32,7 @@ namespace kernel
 // Created: SBO 2006-10-25
 // =============================================================================
 class LogisticSuperiorEditor : public gui::ValuedComboBox< const kernel::Entity_ABC* >
-                             , public kernel::ValueEditor< kernel::LogisticBaseSuperior >
+                             , public gui::ValueEditor< kernel::LogisticBaseSuperior >
                              , public tools::Observer_ABC
                              , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                              , public tools::ElementObserver_ABC< kernel::Automat_ABC >

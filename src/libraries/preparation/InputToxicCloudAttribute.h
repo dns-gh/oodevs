@@ -16,8 +16,12 @@
 
 namespace kernel
 {
-    class PropertiesDictionary;
     class Entity_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -37,9 +41,9 @@ class InputToxicCloudAttribute : public kernel::ToxicCloudAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InputToxicCloudAttribute( kernel::PropertiesDictionary& dictionary, const QString& source,
+             InputToxicCloudAttribute( gui::PropertiesDictionary& dictionary, const QString& source,
                                        const QString& dataField, bool bExport, const kernel::Entity_ABC& entity );
-             InputToxicCloudAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             InputToxicCloudAttribute( xml::xistream& xis, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~InputToxicCloudAttribute();
     //@}
 
@@ -57,7 +61,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+    void CreateDictionary( gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     //@}
 
 private:

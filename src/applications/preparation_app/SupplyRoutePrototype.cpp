@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "SupplyRoutePrototype.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesDictionary.h"
 #include "clients_gui/LoadableSpinBox.h"
 #include "clients_gui/LoadableCheckBox.h"
 #include "preparation/SupplyRouteAttribute.h"
@@ -46,7 +46,7 @@ void SupplyRoutePrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
     {
-        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        gui::PropertiesDictionary& dictionary = creation_->Get< gui::PropertiesDictionary >();
         SupplyRouteAttribute* attribute = new SupplyRouteAttribute( dictionary, *creation_ );
         {
             attribute->SetFlow( flow_->value() );

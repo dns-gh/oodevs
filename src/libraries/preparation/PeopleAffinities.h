@@ -16,9 +16,13 @@
 namespace kernel
 {
     class Controllers;
-    class PropertiesDictionary;
     class Team_ABC;
     class Entity_ABC;
+}
+
+namespace gui
+{
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -42,8 +46,8 @@ class PeopleAffinities : public Affinities
 public:
     //! @name Constructors/Destructor
     //@{
-             PeopleAffinities( kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
-             PeopleAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             PeopleAffinities( kernel::Controllers& controllers, Model& model, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
+             PeopleAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, gui::PropertiesDictionary& dictionary, const kernel::Entity_ABC& entity );
     virtual ~PeopleAffinities();
     //@}
 
@@ -73,7 +77,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::PropertiesDictionary& dictionary_;
+    gui::PropertiesDictionary& dictionary_;
     T_Teams teams_;
     const kernel::Entity_ABC& entity_;
     //@}
