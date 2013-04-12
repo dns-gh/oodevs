@@ -122,7 +122,7 @@ private:
     //@{
     float ComputeZoomFactor( float& factor, bool bVariableSize = true ) const;
     void DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where
-        , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight, unsigned int angle, float xFactor, float yFactor ) const;
+        , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight, unsigned int angle, float xFactor, float yFactor, float svgDeltaX = -20, float svgDeltaY = -80 ) const;
     //@}
 
 private:

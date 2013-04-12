@@ -902,7 +902,9 @@ void GlWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometr
 void GlWidget::DrawApp6SymbolScaledSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
 {
     factor = fabs( factor ) * GetActualZoomFactor();
-    DrawApp6Symbol( symbol, DefaultStyle(), where, baseWidth_ * factor, Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) ), 4, 4, direction, width, depth );
+    const float svgDeltaX = -20; // Offset of 20 in our svg files...
+    const float svgDeltaY = -80 + 120; // Offset of 80 in our svg files + half of 240 which is the defautl height...
+    DrawApp6Symbol( symbol, DefaultStyle(), where, baseWidth_ * factor, Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) ), 4, 4, direction, width, depth, svgDeltaX, svgDeltaY );
 }
     
 // -----------------------------------------------------------------------------
@@ -935,10 +937,10 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
 // Created: MMC 2012-02-04
 // -----------------------------------------------------------------------------
 void GlWidget::DrawApp6Symbol ( const std::string& symbol, const std::string& style, const geometry::Point2f& where
-                              , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight, unsigned int direction, float xFactor, float yFactor ) const
+                              , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth
+                              , unsigned int printHeight, unsigned int direction, float xFactor, float yFactor
+                              , const float svgDeltaX, const float svgDeltaY ) const
 {
-    const float svgDeltaX = -20;
-    const float svgDeltaY = -80;
     const float svgWidth = 360;
     const float expectedHeight = expectedWidth * 0.660f;
     const Point2f center = Point2f( where.X() /*- expectedWidth * 0.5f*/, where.Y() /*+ expectedHeight*/ );
