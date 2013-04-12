@@ -151,7 +151,8 @@ integration.addKnowledgeInQueue = function( knowledge, onlyLoadable )
     DEC_TransportConnaissance_AjouterPion( myself, knowledge.source, onlyLoadable )
 end
 
-integration.readyForLoad = function( unit, distanceMin )
+-- distanceMin is equal to -1 if the unit is ready to load when it is into an area.
+integration.readyForLoad = function( unit, distanceMin, area )
     if not distanceMin then
         distanceMin = 300
     end
@@ -163,14 +164,16 @@ integration.readyForLoad = function( unit, distanceMin )
         or integration.getAnyType( mission ) == "platoon.tasks.SeFaireTransporter"
         or integration.getAnyType( mission ) == "agent.tasks.GetTransported"
         or integration.getAnyType( mission ) == "france.military.platoon.tasks.SeFaireTransporter" ) then
-        if DEC_Geometrie_Distance( meKnowledge:getPosition() , unit:getPosition() ) < distanceMin then -- $$$$ HARD CODDED VALUE
+        if ( distanceMin == -1 and integration.isPointInLocalisation( unit , area ) ) or 
+           ( DEC_Geometrie_Distance( meKnowledge:getPosition() , unit:getPosition() ) < distanceMin ) then
             return true 
         end
     end
     return false
 end
-    
-integration.knowledgeReadyForLoad = function( knowledge, distanceMin )
+
+-- distanceMin is equal to -1 if the knowledge is ready to load when it is into an area.
+integration.knowledgeReadyForLoad = function( knowledge, distanceMin, area )
     if not distanceMin then
         distanceMin = 300
     end
@@ -181,7 +184,8 @@ integration.knowledgeReadyForLoad = function( knowledge, distanceMin )
                          or integration.getAnyType( mission ) == "platoon.tasks.SeFaireTransporter"
                          or integration.getAnyType( mission ) == "agent.tasks.GetTransported"
                          or integration.getAnyType( mission ) == "france.military.platoon.tasks.SeFaireTransporter" ) then
-       if DEC_Geometrie_Distance( meKnowledge:getPosition() , knowledge:getPosition() ) < distanceMin then -- $$$$ HARD CODDED VALUE
+         if ( distanceMin == -1 and integration.isPointInLocalisation( knowledge , area ) ) or 
+           ( DEC_Geometrie_Distance( meKnowledge:getPosition() , knowledge:getPosition() ) < distanceMin ) then
             return true 
         end
     end
