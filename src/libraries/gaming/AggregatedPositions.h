@@ -62,9 +62,6 @@ private:
     //@{
     void UpdateChildrenPositions() const;
     void ComputeHull() const;
-    bool IsAggregated( const kernel::Entity_ABC& entity ) const;
-    bool IsAgent( const kernel::Entity_ABC& entity ) const;
-    bool HasSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun ) const;
     //@}
 
 private:

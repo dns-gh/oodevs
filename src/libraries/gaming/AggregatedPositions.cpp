@@ -42,6 +42,43 @@ AggregatedPositions::~AggregatedPositions()
     // NOTHING
 }
 
+namespace
+{
+    // -----------------------------------------------------------------------------
+    // Name: HasSubordinate
+    // Created: LGY 2011-03-10
+    // -----------------------------------------------------------------------------
+    bool HasSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun )
+    {
+        tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+            return fun( it.NextElement() );
+        return false;
+    }
+
+    // -----------------------------------------------------------------------------
+    // Name: IsAgent
+    // Created: LGY 2011-07-18
+    // -----------------------------------------------------------------------------
+    bool IsAgent( const kernel::Entity_ABC& entity )
+    {
+        if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
+            return true;
+        return HasSubordinate( entity, &IsAgent );
+    }
+    
+    // -----------------------------------------------------------------------------
+    // Name: IsAggregated
+    // Created: LGY 2011-07-18
+    // -----------------------------------------------------------------------------
+    bool IsAggregated( const kernel::Entity_ABC& entity )
+    {
+        if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
+            return positions->IsAggregated();
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AggregatedPositions::GetPosition
 // Created: AGE 2006-10-06
@@ -59,7 +96,7 @@ Point2f AggregatedPositions::GetPosition( bool aggregated ) const
             const kernel::Entity_ABC& child = children.NextElement();
             const Positions& childPositions = child.Get< Positions >();
             fallback = childPositions.GetPosition( false );
-            if( childPositions.CanAggregate() && HasSubordinate( child, boost::bind( &AggregatedPositions::IsAgent, this, _1 ) ) )
+            if( childPositions.CanAggregate() && ( IsAgent( child ) || HasSubordinate( child, IsAgent ) ) )
             {
                 const Point2f childPosition = fallback;
                 aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
@@ -133,7 +170,7 @@ void AggregatedPositions::Accept( LocationVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void AggregatedPositions::Draw( const Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() && !aggregated_ && HasSubordinate( entity_, boost::bind( &AggregatedPositions::IsAggregated, this, _1 ) ) )
+    if( viewport.IsHotpointVisible() && !aggregated_ && HasSubordinate( entity_, &::IsAggregated ) )
         tools.DrawCross( where, GL_CROSSSIZE, gui::GlTools_ABC::pixels );
 }
 
@@ -169,38 +206,4 @@ void AggregatedPositions::Aggregate( const bool& value )
 bool AggregatedPositions::IsAggregated() const
 {
     return aggregated_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregatedPositions::IsAggregated
-// Created: LGY 2011-07-18
-// -----------------------------------------------------------------------------
-bool AggregatedPositions::IsAggregated( const kernel::Entity_ABC& entity ) const
-{
-    if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
-        return positions->IsAggregated();
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregatedPositions::IsAgent
-// Created: LGY 2011-07-18
-// -----------------------------------------------------------------------------
-bool AggregatedPositions::IsAgent( const kernel::Entity_ABC& entity ) const
-{
-    if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
-        return true;
-    return HasSubordinate( entity, boost::bind( &AggregatedPositions::IsAgent, this, _1 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregatedPositions::HasSubordinate
-// Created: LGY 2011-03-10
-// -----------------------------------------------------------------------------
-bool AggregatedPositions::HasSubordinate( const kernel::Entity_ABC& entity, boost::function< bool( const kernel::Entity_ABC& ) > fun ) const
-{
-    tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-        return fun( it.NextElement() );
-    return false;
 }
