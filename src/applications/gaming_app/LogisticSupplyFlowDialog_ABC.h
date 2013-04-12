@@ -155,6 +155,7 @@ protected:
     virtual void VisitCircle   ( const geometry::Point2f& /*center*/, float /*radius*/ ) {}
     virtual void VisitPoint    ( const geometry::Point2f& point );
     virtual void VisitPath     ( const geometry::Point2f& /*first*/, const T_PointVector& /*points*/ ) {}
+    virtual void VisitCurve    ( const geometry::Point2f& /*from*/, const geometry::Point2f& /*control*/, const geometry::Point2f& /*to*/ ) {}
     //@}
 
 protected:

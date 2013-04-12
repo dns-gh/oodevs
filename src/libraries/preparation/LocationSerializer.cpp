@@ -99,6 +99,15 @@ void LocationSerializer::VisitCircle( const geometry::Point2f& center, float rad
 }
 
 // -----------------------------------------------------------------------------
+// Name: LocationSerializer::VisitCurve
+// Created: LGY 2013-04-12
+// -----------------------------------------------------------------------------
+void LocationSerializer::VisitCurve( const geometry::Point2f& /*from*/, const geometry::Point2f& /*control*/, const geometry::Point2f& /*to*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: LocationSerializer::VisitPoint
 // Created: SBO 2006-09-12
 // -----------------------------------------------------------------------------

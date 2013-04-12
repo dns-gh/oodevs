@@ -67,6 +67,7 @@ protected:
     virtual void VisitPolygon( const T_PointVector& ) {}
     virtual void VisitCircle( const geometry::Point2f&, float ) {}
     virtual void VisitPath( const geometry::Point2f&, const T_PointVector& ) {}
+    virtual void VisitCurve( const geometry::Point2f& from, const geometry::Point2f& control, const geometry::Point2f& to );
     //@}
 
 protected:

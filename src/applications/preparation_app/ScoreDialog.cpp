@@ -12,7 +12,6 @@
 #include "ScoreList.h"
 #include "moc_ScoreDialog.cpp"
 #include "actions_gui/InterfaceBuilder.h"
-#include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichLineEdit.h"
 #include "clients_gui/RichGroupBox.h"

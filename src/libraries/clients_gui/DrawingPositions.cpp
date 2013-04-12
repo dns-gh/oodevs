@@ -165,6 +165,15 @@ void DrawingPositions::VisitCircle( const geometry::Point2f& center, float radiu
 }
 
 // -----------------------------------------------------------------------------
+// Name: DrawingPositions::VisitCurve
+// Created: LGY 2013-04-12
+// -----------------------------------------------------------------------------
+void DrawingPositions::VisitCurve( const geometry::Point2f& /*from*/, const geometry::Point2f& /*control*/, const geometry::Point2f& /*to*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: DrawingPositions::VisitPoint
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------

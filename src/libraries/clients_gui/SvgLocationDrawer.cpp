@@ -160,6 +160,15 @@ void SvgLocationDrawer::VisitPoint( const geometry::Point2f& point )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SvgLocationDrawer::VisitCurve
+// Created: LGY 2013-04-12
+// -----------------------------------------------------------------------------
+void SvgLocationDrawer::VisitCurve( const geometry::Point2f& /*from*/, const geometry::Point2f& /*control*/, const geometry::Point2f& /*to*/ )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: SvgLocationDrawer::DrawShape
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------

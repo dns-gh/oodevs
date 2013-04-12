@@ -21,7 +21,6 @@
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/RichLineEdit.h"
 #include "clients_gui/RichTabWidget.h"
-#include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "indicators/Gauge.h"
 #include "indicators/Primitive.h"

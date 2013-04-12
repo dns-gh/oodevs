@@ -116,6 +116,15 @@ void Path::VisitPath( const geometry::Point2f& , const T_PointVector& points )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Path::VisitCurve
+// Created: LGY 2013-04-12
+// -----------------------------------------------------------------------------
+void Path::VisitCurve( const geometry::Point2f& /*from*/, const geometry::Point2f& /*control*/, const geometry::Point2f& /*to*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: Path::AddPoint
 // Created: AGE 2007-07-10
 // -----------------------------------------------------------------------------

@@ -165,6 +165,15 @@ void LocationBase::VisitCircle( const geometry::Point2f& center, float radius )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LocationBase::VisitCurve
+// Created: LGY 2013-04-12
+// -----------------------------------------------------------------------------
+void LocationBase::VisitCurve( const geometry::Point2f& /*from*/, const geometry::Point2f& /*control*/, const geometry::Point2f& /*to*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: LocationBase::VisitPoint
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------

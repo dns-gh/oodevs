@@ -74,7 +74,8 @@ namespace
     struct LocationValidator : public LocationVisitor_ABC
     {
         LocationValidator( bool point, bool line, bool polygon, bool circle, bool rectangle )
-            : pointAllowed_( point ), lineAllowed_( line ), polygonAllowed_( polygon ), circleAllowed_( circle ), rectangleAllowed_( rectangle )
+            : pointAllowed_( point ), lineAllowed_( line ), polygonAllowed_( polygon ),
+              circleAllowed_( circle ), rectangleAllowed_( rectangle )
             , valid_( false ) {}
         virtual void VisitLines( const T_PointVector& )
         {
@@ -100,6 +101,11 @@ namespace
         {
             valid_ = pointAllowed_;
         }
+        virtual void VisitCurve( const geometry::Point2f&, const geometry::Point2f&, const geometry::Point2f& )
+        {
+            valid_ = false;
+        }
+
         bool pointAllowed_, lineAllowed_, polygonAllowed_, circleAllowed_, rectangleAllowed_;
         bool valid_;
     };
