@@ -86,7 +86,7 @@ void ADN_AutomatLog_ListView::BuildHeaders()
 void ADN_AutomatLog_ListView::BuildBody()
 {
     // Automats
-    for( ADN_Automata_Data::IT_AutomatonInfosVector it = data_.vAutomata_.begin(); it != data_.vAutomata_.end(); ++it )
+    for( auto it = data_.vAutomata_.begin(); it != data_.vAutomata_.end(); ++it )
     {
         ADN_Automata_Data::AutomatonInfos& automaton = **it;
         if( automaton.vSubUnits_.empty() )
@@ -110,7 +110,7 @@ void ADN_AutomatLog_ListView::BuildBody()
         nCompInAutomat += AddUnit( pAutomatItem, QString( "[PC] - %1" ).arg( pcName.c_str() ), *pUnit->GetCrossedElement(), 1 );
 
         // Units - Not PC
-        for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); it2 != automaton.vSubUnits_.end(); ++it2 )
+        for( auto it2 = automaton.vSubUnits_.begin(); it2 != automaton.vSubUnits_.end(); ++it2 )
         {
             ADN_Automata_Data::UnitInfos* pUnitInfos = *it2;
             if( !pUnitInfos->GetCrossedElement() )
@@ -159,7 +159,7 @@ uint ADN_AutomatLog_ListView::AddUnit( ADN_Rich_ListViewItem* parent, const QStr
 
     // Component
     uint nCompInUnit = 0;
-    for( ADN_Units_Data::CIT_ComposanteInfos_Vector it3 = unit.vComposantes_.begin(); it3 != unit.vComposantes_.end(); ++it3 )
+    for( auto it3 = unit.vComposantes_.begin(); it3 != unit.vComposantes_.end(); ++it3 )
     {
         ADN_Rich_ListViewItem* pCompItem = new ADN_Rich_ListViewItem( pUnitItem, Qt::AlignCenter );
         pCompItem->setText( eColumnTarget, (*it3)->GetCrossedElement()->strName_.GetData().c_str() );
@@ -307,7 +307,7 @@ void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                    
 double ADN_AutomatLog_ListView::GetMinMoveAutonomy( const T_CategoryEntry& entry ) const
 {
     double rMin = std::numeric_limits< double >::max();
-    for( ADN_AutomatLog_ListView::CIT_CategoryEntry it = entry.begin(); it != entry.end(); ++it )
+    for( auto it = entry.begin(); it != entry.end(); ++it )
         if( it->second && it->second->rMoveAutonomy_ < rMin )
             rMin = it->second->rMoveAutonomy_;
     return ( rMin >= 0 ) ? rMin : std::numeric_limits< double >::max();
@@ -320,7 +320,7 @@ double ADN_AutomatLog_ListView::GetMinMoveAutonomy( const T_CategoryEntry& entry
 double ADN_AutomatLog_ListView::GetMinEngineStoppedAutonomy( const T_CategoryEntry& entry ) const
 {
     double rMin = std::numeric_limits< double >::max();
-    for( ADN_AutomatLog_ListView::CIT_CategoryEntry it = entry.begin(); it != entry.end(); ++it )
+    for( auto it = entry.begin(); it != entry.end(); ++it )
         if( it->second && it->second->rEngineStoppedAutonomy_ < rMin )
             rMin = it->second->rEngineStoppedAutonomy_;
     return ( rMin >= 0 ) ? rMin : std::numeric_limits< double >::max();
@@ -333,7 +333,7 @@ double ADN_AutomatLog_ListView::GetMinEngineStoppedAutonomy( const T_CategoryEnt
 double ADN_AutomatLog_ListView::GetMinEngineStartedAutonomy( const T_CategoryEntry& entry ) const
 {
     double rMin = std::numeric_limits< double >::max();
-    for( ADN_AutomatLog_ListView::CIT_CategoryEntry it = entry.begin(); it != entry.end(); ++it )
+    for( auto it = entry.begin(); it != entry.end(); ++it )
         if( it->second && it->second->rEngineStartedAutonomy_ < rMin )
             rMin = it->second->rEngineStartedAutonomy_;
     return ( rMin >= 0 ) ? rMin : std::numeric_limits< double >::max();
@@ -367,7 +367,7 @@ void ADN_AutomatLog_ListView::AddEntryToTotal( const T_CategoryEntry& entry, T_C
 // -----------------------------------------------------------------------------
 void ADN_AutomatLog_ListView::ClearEntry( T_CategoryEntry& entry )
 {
-    for( IT_CategoryEntry it = entry.begin(); it != entry.end(); )
+    for( auto it = entry.begin(); it != entry.end(); )
     {
         delete it->second;
         it = entry.erase( it );

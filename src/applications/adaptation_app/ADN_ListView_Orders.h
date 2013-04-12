@@ -56,8 +56,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< int, std::string >        T_FragOrders;
-    typedef T_FragOrders::const_iterator CIT_FragOrders;
+    typedef std::map< int, std::string > T_FragOrders;
     //@}
 
 private:

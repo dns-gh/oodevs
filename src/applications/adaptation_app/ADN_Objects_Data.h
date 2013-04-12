@@ -182,9 +182,6 @@ public:
         void ReadDotation( xml::xistream& xis );
 
     public:
-        typedef ADN_Type_Vector_ABC< ADN_Equipments_Data::CategoryInfos > ::const_iterator CIT_Categories;
-
-    public:
         ADN_Type_Vector_ABC< ADN_Equipments_Data::CategoryInfos > categories_;
     };
 
@@ -238,9 +235,6 @@ public:
 
     private:
         void ReadDotation( xml::xistream& xis );
-
-    public:
-        typedef ADN_Type_Vector_ABC< ADN_Equipments_Data::CategoryInfos > ::const_iterator CIT_Categories;
 
     public:
         ADN_Type_Vector_ABC< ADN_Equipments_Data::CategoryInfos > categories_;
@@ -496,7 +490,6 @@ public:
         };
 
         typedef ADN_Type_VectorFixed_ABC< ModifierByFireClass > T_ModifierByFireClass_Vector;
-        typedef T_ModifierByFireClass_Vector::iterator         IT_ModifierByFireClass_Vector;
 
         T_ModifierByFireClass_Vector modifiers_;
 
@@ -522,8 +515,6 @@ public:
 //*****************************************************************************
 
     typedef ADN_Type_Vector_ABC< ADN_Objects_Data_ObjectInfos > T_ObjectsInfos_Vector;
-    typedef T_ObjectsInfos_Vector::iterator                    IT_ObjectsInfos_Vector;
-    typedef T_ObjectsInfos_Vector::const_iterator             CIT_ObjectsInfos_Vector;
 
 //*****************************************************************************
 public:
@@ -589,7 +580,7 @@ namespace
 inline
 ADN_Objects_Data_ObjectInfos* ADN_Objects_Data::FindObject( const std::string& strName )
 {
-    IT_ObjectsInfos_Vector it = std::find_if( vObjectInfos_.begin(), vObjectInfos_.end(), TypeCmp< ADN_Objects_Data_ObjectInfos >( strName ) );
+    auto it = std::find_if( vObjectInfos_.begin(), vObjectInfos_.end(), TypeCmp< ADN_Objects_Data_ObjectInfos >( strName ) );
     if( it == vObjectInfos_.end() )
         return 0;
     return *it;

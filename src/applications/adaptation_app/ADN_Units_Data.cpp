@@ -201,7 +201,7 @@ void ADN_Units_Data::StockInfos::WriteArchive( const std::string& strName, xml::
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::StockInfos::CopyFrom( StockInfos& src )
 {
-    for( IT_StockLogThresholdInfos_Vector it = src.vLogThresholds_.begin(); it != src.vLogThresholds_.end(); ++it )
+    for( auto it = src.vLogThresholds_.begin(); it != src.vLogThresholds_.end(); ++it )
         vLogThresholds_.AddItemNoEmit( (*it)->CreateCopy() );
 }
 
@@ -520,7 +520,7 @@ void ADN_Units_Data::UnitInfos::ReadCrew( xml::xistream& input )
 void ADN_Units_Data::UnitInfos::ReadPosture( xml::xistream& input )
 {
     std::string posture = input.attribute< std::string >( "name" );
-    IT_PostureInfos_Vector itPosture = std::find_if( vPostures_.begin(), vPostures_.end(), PostureInfos::Cmp( posture ) );
+    auto itPosture = std::find_if( vPostures_.begin(), vPostures_.end(), PostureInfos::Cmp( posture ) );
     if( itPosture != vPostures_.end() )
         (*itPosture)->ReadArchive( input );
     else
@@ -690,7 +690,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
     output << xml::end;
 
     output << xml::start( "equipments" );
-    for( CIT_ComposanteInfos_Vector itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
+    for( auto itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
         (*itComposante)->WriteArchive( output );
     output << xml::end;
 
@@ -723,7 +723,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
         stocks_.WriteArchive( "stocks", output );
 
     output << xml::start( "postures" );
-    for( CIT_PostureInfos_Vector itPosture = vPostures_.begin(); itPosture != vPostures_.end(); ++itPosture )
+    for( auto itPosture = vPostures_.begin(); itPosture != vPostures_.end(); ++itPosture )
         (*itPosture)->WriteArchive( output );
     output << xml::end;
 
@@ -741,7 +741,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
     if( ! vPointInfos_.empty() )
     {
         output << xml::start( "distance-before-points" );
-        for( CIT_PointInfos_Vector itPoint = vPointInfos_.begin(); itPoint != vPointInfos_.end(); ++itPoint )
+        for( auto itPoint = vPointInfos_.begin(); itPoint != vPointInfos_.end(); ++itPoint )
             (*itPoint)->WriteArchive( output );
         output << xml::end;
     }
@@ -908,10 +908,10 @@ void ADN_Units_Data::WriteArchive( xml::xostream& output )
 QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Equipments_Data::EquipmentInfos& composante )
 {
     QStringList result;
-    for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
+    for( auto it = vUnits_.begin(); it != vUnits_.end(); ++it )
     {
         UnitInfos* pUnit = *it;
-        for( IT_ComposanteInfos_Vector it2 = pUnit->vComposantes_.begin(); it2 != pUnit->vComposantes_.end(); ++it2 )
+        for( auto  it2 = pUnit->vComposantes_.begin(); it2 != pUnit->vComposantes_.end(); ++it2 )
             if( (*it2)->GetCrossedElement() == &composante )
             {
                 result << pUnit->strName_.GetData().c_str();
@@ -928,7 +928,7 @@ QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Equipments_Data::EquipmentInfos
 QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Models_Data::ModelInfos& model )
 {
     QStringList result;
-    for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
+    for( auto it = vUnits_.begin(); it != vUnits_.end(); ++it )
     {
         UnitInfos* pUnit = *it;
         if( (*it)->ptrModel_.GetData() == &model )
@@ -944,8 +944,8 @@ QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Models_Data::ModelInfos& model 
 QStringList ADN_Units_Data::GetUnitsThatUse( helpers::LogisticSupplyClass& supply )
 {
     QStringList result;
-    for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
-        for( CIT_StockLogThresholdInfos_Vector itStock = ( *it )->stocks_.vLogThresholds_.begin(); itStock != ( *it )->stocks_.vLogThresholds_.end(); ++itStock )
+    for( auto it = vUnits_.begin(); it != vUnits_.end(); ++it )
+        for( auto itStock = ( *it )->stocks_.vLogThresholds_.begin(); itStock != ( *it )->stocks_.vLogThresholds_.end(); ++itStock )
         {
             helpers::LogisticSupplyClass* infos = ( *itStock )->ptrLogisticSupplyClass_.GetData();
             if( infos && infos->strName_.GetData() == supply.strName_.GetData() )

@@ -462,7 +462,7 @@ void GQ_PlotData::DeletePoint( uint nIndex )
     pData_->erase( pData_->begin() + nIndex );
 
     // Update the selection.
-    for( IT_IndexVector it = selectedIndexes_.begin(); it != selectedIndexes_.end(); )
+    for( auto it = selectedIndexes_.begin(); it != selectedIndexes_.end(); )
     {
         // Remove the removed item from the selection.
         if( (*it) == (int)nIndex )
@@ -952,7 +952,7 @@ void GQ_PlotData::SetSelected( uint nIndex, bool bSelected )
     }
     else
     {
-        IT_IndexVector it = std::find( selectedIndexes_.begin(), selectedIndexes_.end(), nIndex );
+        auto it = std::find( selectedIndexes_.begin(), selectedIndexes_.end(), nIndex );
         if( it != selectedIndexes_.end() )
         {
             selectedIndexes_.erase( it );
@@ -968,7 +968,7 @@ void GQ_PlotData::SetSelected( uint nIndex, bool bSelected )
 // -----------------------------------------------------------------------------
 void GQ_PlotData::SetSelection( T_DataItemVector& selection )
 {
-    for( IT_DataItemVector it = selection.begin(); it != selection.end(); ++it )
+    for( auto it = selection.begin(); it != selection.end(); ++it )
     {
         if( (*it).first != this )
             continue;
@@ -994,7 +994,7 @@ void GQ_PlotData::GetSelection( T_DataItemVector& selection )
         return;
     }
 
-    for( IT_IndexVector it = selectedIndexes_.begin(); it != selectedIndexes_.end(); ++it )
+    for( auto it = selectedIndexes_.begin(); it != selectedIndexes_.end(); ++it )
         selection.push_back( T_DataItem( this, *it ) );
 }
 
@@ -1008,7 +1008,7 @@ int GQ_PlotData::DataAt( const T_Point& point )
 {
     if( bDrawBars_ )
     {
-        for( IT_RangeVector it = barLimits_.begin(); it != barLimits_.end(); ++it )
+        for( auto it = barLimits_.begin(); it != barLimits_.end(); ++it )
         {
             if( point.first >= (*it).first && point.first <= (*it).second )
                 return static_cast< int >( std::distance( barLimits_.begin(), it ) );

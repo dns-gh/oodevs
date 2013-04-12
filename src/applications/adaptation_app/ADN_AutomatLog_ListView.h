@@ -92,8 +92,6 @@ private:
     };
 
     typedef std::map< const ADN_Resources_Data::CategoryInfo*, ADN_AutomatLog_Entry* > T_CategoryEntry;
-    typedef T_CategoryEntry::iterator                                                   IT_CategoryEntry;
-    typedef T_CategoryEntry::const_iterator                                             CIT_CategoryEntry;
     //@}
 
     //! @name CategoryEntry tools

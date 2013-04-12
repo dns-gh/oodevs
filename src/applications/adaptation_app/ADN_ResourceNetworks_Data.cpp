@@ -65,10 +65,10 @@ void ADN_ResourceNetworks_Data::ResourceNetworkInfos::ReadArchive( xml::xistream
               >> xml::attribute( "production", nProduction_ )
           >> xml::end;
     ADN_Resources_Data::T_ResourceInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources();
-    for( ADN_Resources_Data::IT_ResourceInfos_Vector itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
+    for( auto itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
     {
         ADN_Resources_Data::T_CategoryInfos_Vector& categories = ( *itDotation )->GetCategories();
-        for( ADN_Resources_Data::IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
+        for( auto itCat = categories.begin(); itCat != categories.end(); ++itCat )
             if( ( *itCat )->nId_ == id && ( *itCat )->bNetworkUsable_.GetData() )
             {
                 ptrCategory_ = *itCat;

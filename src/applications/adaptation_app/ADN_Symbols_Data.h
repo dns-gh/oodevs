@@ -73,7 +73,7 @@ public:
 
         static QPixmap* undefined_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< SymbolsUnit >, SymbolsUnits_Vector )
+    typedef ADN_Type_Vector_ABC< SymbolsUnit > T_SymbolsUnits_Vector;
 
 //*****************************************************************************
 public:
@@ -83,7 +83,7 @@ public:
         explicit SymbolsInfra( xml::xistream& input );
         virtual ~SymbolsInfra();
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< SymbolsInfra >, SymbolsInfra_Vector )
+    typedef ADN_Type_Vector_ABC< SymbolsInfra > T_SymbolsInfra_Vector;
 
 //*****************************************************************************
 public:

@@ -497,7 +497,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::ReadArchive( xml::xis
         static void Read( xml::xistream& xis, helpers::T_UrbanAttritionInfos_Vector& urbanData )
         {
             std::string material( xis.attribute< std::string >( "material-type" ) );
-            helpers::IT_UrbanAttritionInfos_Vector it = std::find_if( urbanData.begin(), urbanData.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
+            auto it = std::find_if( urbanData.begin(), urbanData.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
             if( it == urbanData.end() )
                 throw MASA_EXCEPTION( tr( "Object - Invalid Urban Material type '%1'" ).arg( material.c_str() ).toStdString() );
             (*it)->ReadArchive( xis );
@@ -510,7 +510,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::ReadArchive( xml::xis
 
 void ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::WriteArchive( xml::xostream& xos )
 {
-    for( helpers::CIT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
+    for( auto itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
         (*itUrbanAttrition)->WriteArchive( xos );
 }
 
@@ -1104,7 +1104,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadArchive( x
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::WriteArchive( xml::xostream& xos )
 {
-    for( IT_ModifierByFireClass_Vector it = modifiers_.begin(); it != modifiers_.end(); ++it )
+    for( auto it = modifiers_.begin(); it != modifiers_.end(); ++it )
         ( *it )->WriteArchive( xos );
 }
 
@@ -1115,7 +1115,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::WriteArchive( 
 void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadModifier( xml::xistream& xis )
 {
     std::string fireClass = xis.attribute< std::string >( "fire-class" );
-    IT_ModifierByFireClass_Vector itModifier = std::find_if( modifiers_.begin(), modifiers_.end(), ModifierByFireClass::Cmp( fireClass ) );
+    auto itModifier = std::find_if( modifiers_.begin(), modifiers_.end(), ModifierByFireClass::Cmp( fireClass ) );
     if( itModifier == modifiers_.end() )
         throw MASA_EXCEPTION( tr( "Fire propagation modifier - Invalid fire class '%1'" ).arg( fireClass.c_str() ).toStdString() );
     ( *itModifier )->ReadArchive( xis );
@@ -1303,9 +1303,9 @@ ADN_Objects_Data::~ADN_Objects_Data()
 
 namespace
 {
-    void CheckObjectTypeUniqueness( ADN_ConsistencyChecker& checker, const ADN_Objects_Data::CIT_ObjectsInfos_Vector& rhs, const ADN_Objects_Data::T_ObjectsInfos_Vector& objects )
+    void CheckObjectTypeUniqueness( ADN_ConsistencyChecker& checker, const ADN_Objects_Data::T_ObjectsInfos_Vector::const_iterator& rhs, const ADN_Objects_Data::T_ObjectsInfos_Vector& objects )
     {
-        for( ADN_Objects_Data::CIT_ObjectsInfos_Vector lhs = rhs + 1; lhs != objects.end(); ++lhs )
+        for( auto lhs = rhs + 1; lhs != objects.end(); ++lhs )
             if( (*lhs)->strName_.GetData() != (*rhs)->strName_.GetData() &&
                 (*lhs)->strType_.GetData() == (*rhs)->strType_.GetData() )
             {
@@ -1372,7 +1372,7 @@ void ADN_Objects_Data::ReadArchive( xml::xistream& xis )
             >> xml::list( "object", *this, &ADN_Objects_Data::ReadObject )
         >> xml::end;
 
-    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+    for( auto it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
     {
         ADN_Objects_Data::ADN_CapacityInfos_Spawn* spawn = static_cast< ADN_Objects_Data::ADN_CapacityInfos_Spawn* >( ( *it )->capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Spawn::TAG ].get() );
         spawn->Load( ( *it )->strName_.GetData() );
@@ -1392,7 +1392,7 @@ void ADN_Objects_Data::WriteArchive( xml::xostream& xos )
 
     xos << xml::start( "objects" );
     ADN_Tools::AddSchema( xos, "Objects" );
-    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+    for( auto it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
         ( *it )->WriteArchive( xos );
     xos << xml::end;
 }
@@ -1404,7 +1404,7 @@ void ADN_Objects_Data::WriteArchive( xml::xostream& xos )
 QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Objects_Data_ObjectInfos& object )
 {
     QStringList result;
-    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+    for( auto it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
     {
         ADN_CapacityInfos_Spawn* spawn = static_cast< ADN_CapacityInfos_Spawn* >( ( *it )->capacities_[ ADN_CapacityInfos_Spawn::TAG ].get() );
         if( spawn )
@@ -1424,7 +1424,7 @@ QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Objects_Data_ObjectInfos& o
 QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Resources_Data::CategoryInfo& object )
 {
     QStringList result;
-    for( IT_ObjectsInfos_Vector itObject = vObjectInfos_.begin(); itObject != vObjectInfos_.end(); ++itObject )
+    for( auto itObject = vObjectInfos_.begin(); itObject != vObjectInfos_.end(); ++itObject )
     {
         bool added = false;
         ADN_CapacityInfos_Constructor* constructor = static_cast< ADN_CapacityInfos_Constructor* >( ( *itObject )->capacities_[ ADN_CapacityInfos_Constructor::TAG ].get() );
@@ -1432,7 +1432,7 @@ QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Resources_Data::CategoryInf
         {
             // Buildable
             if( constructor->ptrBuildable_.get() && constructor->ptrBuildable_->bPresent_.GetData() )
-                for( ADN_CapacityInfos_Buildable::CIT_Categories it = constructor->ptrBuildable_->categories_.begin(); !added && it != constructor->ptrBuildable_->categories_.end(); ++it )
+                for( auto it = constructor->ptrBuildable_->categories_.begin(); !added && it != constructor->ptrBuildable_->categories_.end(); ++it )
                 {
                     ADN_Resources_Data::CategoryInfo* infos = ( *it )->GetCrossedElement();
                     if( infos && infos->strName_.GetData() == object.strName_.GetData() )
@@ -1443,7 +1443,7 @@ QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Resources_Data::CategoryInf
                 }
             // Improvable
             if( !added && constructor->ptrImprovable_.get() && constructor->ptrImprovable_->bPresent_.GetData() )
-                for( ADN_CapacityInfos_Buildable::CIT_Categories it = constructor->ptrImprovable_->categories_.begin(); !added && it != constructor->ptrImprovable_->categories_.end(); ++it )
+                for( auto it = constructor->ptrImprovable_->categories_.begin(); !added && it != constructor->ptrImprovable_->categories_.end(); ++it )
                 {
                     ADN_Resources_Data::CategoryInfo* infos = ( *it )->GetCrossedElement();
                     if( infos && infos->strName_.GetData() == object.strName_.GetData() )
@@ -1475,7 +1475,7 @@ QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Resources_Data::CategoryInf
 QStringList ADN_Objects_Data::GetObjectsWithCapacity( const std::string& tag )
 {
     QStringList result;
-    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+    for( auto it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
     {
         helpers::ADN_TypeCapacity_Infos* capacity = ( *it )->capacities_[ tag ].get();
         if( capacity->bPresent_.GetData() )
@@ -1491,7 +1491,7 @@ QStringList ADN_Objects_Data::GetObjectsWithCapacity( const std::string& tag )
 QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Disasters_Data::DisasterInfos& disaster )
 {
     QStringList result;
-    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+    for( auto it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
     {
         ADN_CapacityInfos_Disaster* disasterCapacity = static_cast< ADN_CapacityInfos_Disaster* >( ( *it )->capacities_[ ADN_CapacityInfos_Disaster::TAG ].get() );
         if( disasterCapacity && disasterCapacity->bPresent_.GetData() )

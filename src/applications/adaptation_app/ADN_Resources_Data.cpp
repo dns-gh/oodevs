@@ -494,7 +494,7 @@ void ADN_Resources_Data::AmmoCategoryInfo::ReadAttrition( xml::xistream& input )
 {
     bDirect_ = true;
     std::string protection = input.attribute< std::string >( "protection" );
-    helpers::IT_AttritionInfos_Vector itAttrition = std::find_if( attritions_.begin(), attritions_.end(), helpers::AttritionInfos::Cmp( protection ));
+    auto itAttrition = std::find_if( attritions_.begin(), attritions_.end(), helpers::AttritionInfos::Cmp( protection ));
     if( itAttrition == attritions_.end() )
         throw MASA_EXCEPTION( tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).toStdString() );
     (*itAttrition)->ReadArchive( input );
@@ -507,7 +507,7 @@ void ADN_Resources_Data::AmmoCategoryInfo::ReadAttrition( xml::xistream& input )
 void ADN_Resources_Data::AmmoCategoryInfo::ReadUrbanModifer( xml::xistream& input )
 {
     std::string material = input.attribute< std::string >( "material-type" );
-    helpers::IT_UrbanAttritionInfos_Vector it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
+    auto it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
     if( it == modifUrbanBlocks_.end() )
         throw MASA_EXCEPTION( tr( "Equipment - Invalid urban Material type '%1'" ).arg( material.c_str() ).toStdString() );
     (*it)->ReadArchive( input );
@@ -591,14 +591,14 @@ void ADN_Resources_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output )
     if( bDirect_.GetData() == true )
     {
         output << xml::start( "attritions" );
-        for( helpers::CIT_AttritionInfos_Vector itAttrition = attritions_.begin(); itAttrition != attritions_.end(); ++itAttrition )
+        for( auto itAttrition = attritions_.begin(); itAttrition != attritions_.end(); ++itAttrition )
             (*itAttrition)->WriteArchive( output );
         output << xml::end;
     }
     if( HasUrbanAttrition() )
     {
         output << xml::start( "urban-modifiers" );
-        for( helpers::CIT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
+        for( auto itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
             (*itUrbanAttrition)->WriteArchive( output );
         output << xml::end;
     }
@@ -624,7 +624,7 @@ void ADN_Resources_Data::AmmoCategoryInfo::Initialize()
 // -----------------------------------------------------------------------------
 bool ADN_Resources_Data::AmmoCategoryInfo::HasUrbanAttrition() const
 {
-    for( helpers::CIT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
+    for( auto itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
         if( (*itUrbanAttrition)->rCoeff_.GetData() != 0 )
             return true;
     return false;
@@ -675,7 +675,7 @@ ADN_Resources_Data::T_CategoryInfos_Vector& ADN_Resources_Data::ResourceInfos::G
 // -----------------------------------------------------------------------------
 ADN_Resources_Data::CategoryInfo* ADN_Resources_Data::ResourceInfos::FindCategory( const std::string& strName )
 {
-    IT_CategoryInfos_Vector it = std::find_if( categories_.begin(), categories_.end(), ADN_Tools::NameCmp<CategoryInfo>( strName ) );
+    auto it = std::find_if( categories_.begin(), categories_.end(), ADN_Tools::NameCmp<CategoryInfo>( strName ) );
     if( it == categories_.end() )
         return 0;
     return *it;
@@ -787,7 +787,7 @@ void ADN_Resources_Data::ReadArchive( xml::xistream& input )
     for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         T_CategoryInfos_Vector& categories = ( *it )->categories_;
-        for( IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
+        for( auto itCat = categories.begin(); itCat != categories.end(); ++itCat )
         {
             CategoryInfo* category = *itCat;
             if( !category )

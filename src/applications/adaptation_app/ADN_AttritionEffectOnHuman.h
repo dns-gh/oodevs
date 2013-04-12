@@ -35,8 +35,7 @@ public:
     ADN_Type_Int nDeadPercentage_;
 };
 
-typedef ADN_Type_Vector_ABC<AttritionEffectOnHuman>   T_AttritionEffectOnHuman_Vector;
-typedef T_AttritionEffectOnHuman_Vector::iterator    IT_AttritionEffectOnHuman_Vector;
+typedef ADN_Type_Vector_ABC< AttritionEffectOnHuman > T_AttritionEffectOnHuman_Vector;
 
 }
 

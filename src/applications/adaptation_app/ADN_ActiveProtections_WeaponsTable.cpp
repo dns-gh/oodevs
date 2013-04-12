@@ -60,7 +60,7 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( const QPoint& pt )
     Q3PopupMenu addMenu( &menu );
 
     ADN_Resources_Data::T_CategoryInfos_Vector& pWeapon = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition ).categories_;
-    for( ADN_Resources_Data::IT_CategoryInfos_Vector it = pWeapon.begin(); it != pWeapon.end(); ++it )
+    for( auto it = pWeapon.begin(); it != pWeapon.end(); ++it )
     {
         if( Contains( **it ) )
             continue;

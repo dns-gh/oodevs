@@ -49,7 +49,7 @@ ADN_Missions_FragOrder* ADN_Missions_FragOrder::CreateCopy()
     newFragOrder->strName_ = strName_.GetData();
     newFragOrder->missionSheetPath_ = missionSheetPath_.GetData();
     newFragOrder->parameters_.reserve( parameters_.size() );
-    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
     {
         ADN_Missions_Parameter* newParam = (*it)->CreateCopy();
         newFragOrder->parameters_.AddItem( newParam );

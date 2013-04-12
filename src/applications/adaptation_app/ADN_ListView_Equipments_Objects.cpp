@@ -115,7 +115,7 @@ void ADN_ListView_Equipments_Objects::OnContextMenu( const QPoint& pt )
 
     // Add the available objects to the 'add objects' submenu.
     ADN_Objects_Data::T_ObjectsInfos_Vector& vObjects = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos();
-    for( ADN_Objects_Data::IT_ObjectsInfos_Vector it = vObjects.begin(); it != vObjects.end(); ++it )
+    for( auto it = vObjects.begin(); it != vObjects.end(); ++it )
     {
         ADN_Objects_Data_ObjectInfos* pObject = *it;
         // Don't add a object to the menu if it already is present in the list.

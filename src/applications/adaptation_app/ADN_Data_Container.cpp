@@ -45,7 +45,7 @@ void ADN_Data_Container::FilesNeeded( tools::Path::T_Paths& vFiles ) const
 // -----------------------------------------------------------------------------
 void ADN_Data_Container::Reset()
 {
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Reset();
 }
 
@@ -55,7 +55,7 @@ void ADN_Data_Container::Reset()
 // -----------------------------------------------------------------------------
 void ADN_Data_Container::Load( const tools::Loader_ABC& fileLoader )
 {
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Load( fileLoader );
 }
 
@@ -65,7 +65,7 @@ void ADN_Data_Container::Load( const tools::Loader_ABC& fileLoader )
 // -----------------------------------------------------------------------------
 void ADN_Data_Container::Initialize()
 {
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Initialize();
 }
 
@@ -75,7 +75,7 @@ void ADN_Data_Container::Initialize()
 // -----------------------------------------------------------------------------
 void ADN_Data_Container::Save()
 {
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Save();
 }
 
@@ -95,7 +95,7 @@ void ADN_Data_Container::CheckDatabaseValidity( ADN_ConsistencyChecker& checker 
 // -----------------------------------------------------------------------------
 void ADN_Data_Container::ReadArchive( xml::xistream& input )
 {
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->ReadArchive( input );
 }
 
@@ -105,6 +105,6 @@ void ADN_Data_Container::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Data_Container::WriteArchive( xml::xostream& output )
 {
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->WriteArchive( output );
 }

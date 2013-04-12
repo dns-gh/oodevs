@@ -47,7 +47,7 @@ public:
         ADN_Type_Double rCoeff_;
         //@}
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< NbcSuitRatioInfos >, NbcSuitRatioInfosVector )
+    typedef ADN_Type_Vector_ABC< NbcSuitRatioInfos > T_NbcSuitRatioInfosVector;
 
 public:
 //*****************************************************************************
@@ -81,7 +81,7 @@ public:
         ADN_Type_Bool contamination_;
         //@}
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< AttritionThresholdInfos >, AttritionThresholdInfosVector )
+    typedef ADN_Type_Vector_ABC< AttritionThresholdInfos > T_AttritionThresholdInfosVector;
 
 public:
 //*****************************************************************************
@@ -110,7 +110,7 @@ public:
         ADN_Type_Bool display_;
         //@}
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< ConcentrationThresholdInfos >, ConcentrationThresholdInfosVector )
+    typedef ADN_Type_Vector_ABC< ConcentrationThresholdInfos > T_ConcentrationThresholdInfosVector;
 
 public:
 //*****************************************************************************

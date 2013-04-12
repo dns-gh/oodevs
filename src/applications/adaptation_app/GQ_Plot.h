@@ -42,19 +42,15 @@ class GQ_Plot : public QWidget
     Q_OBJECT
 
 public:
-    typedef std::pair< double, double >    T_Point;
-    typedef std::vector< GQ_PlotData* >    T_PlotLayer;
-    typedef std::map< int, T_PlotLayer >   T_LayerMap; //!< map< layer depth, layer >
-    typedef T_LayerMap::iterator          IT_LayerMap;
-    typedef T_LayerMap::const_iterator   CIT_LayerMap;
-    typedef std::pair< int, int >          T_DataIndex;
+    typedef std::pair< double, double >  T_Point;
+    typedef std::vector< GQ_PlotData* >  T_PlotLayer;
+    typedef std::map< int, T_PlotLayer > T_LayerMap; //!< map< layer depth, layer >
+    typedef std::pair< int, int > T_DataIndex;
 
     typedef GQ_ValueConvertor< T_Point, QString > T_CoordToString; //!< string convertor for coordinates display
 
     typedef std::pair< GQ_PlotData*, int >  T_DataItem;
-    typedef std::vector< T_DataItem >   T_DataItemVector;
-    typedef T_DataItemVector::iterator          IT_DataItemVector;
-    typedef T_DataItemVector::const_iterator   CIT_DataItemVector;
+    typedef std::vector< T_DataItem >  T_DataItemVector;
 
     struct iterator
     {

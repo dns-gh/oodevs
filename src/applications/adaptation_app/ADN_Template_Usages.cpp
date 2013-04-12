@@ -47,7 +47,7 @@ void ADN_Template_Usages::OnContextMenu( const QPoint& point )
     Q3PopupMenu menu( this );
     Q3PopupMenu addMenu( &menu );
     ADN_Urban_Data::T_AccommodationInfos_Vector& accommodations = ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos();
-    for( ADN_Urban_Data::IT_AccommodationInfos_Vector it = accommodations.begin(); it != accommodations.end(); ++it )
+    for( auto it = accommodations.begin(); it != accommodations.end(); ++it )
     {
         if( Contains( **it ) )
             continue;

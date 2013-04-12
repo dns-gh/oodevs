@@ -61,7 +61,7 @@ public:
             std::string val_;
         };
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<ComposanteInfos>, ComposanteInfos_Vector )
+    typedef ADN_Type_Vector_ABC< ComposanteInfos > T_ComposanteInfos_Vector;
 
     //*****************************************************************************
     typedef ADN_Equipments_Data::ResourceInfos ResourceInfos;
@@ -82,7 +82,7 @@ public:
         ADN_TypePtr_InVector_ABC< helpers::LogisticSupplyClass > ptrLogisticSupplyClass_;
         ADN_Type_Double rLogThreshold_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< StockLogThresholdInfos >, StockLogThresholdInfos_Vector )
+    typedef ADN_Type_Vector_ABC< StockLogThresholdInfos > T_StockLogThresholdInfos_Vector;
 
     //*****************************************************************************
     class StockInfos : public ADN_Ref_ABC
@@ -130,7 +130,7 @@ public:
             std::string str_;
         };
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<PostureInfos>, PostureInfos_Vector )
+    typedef ADN_Type_Vector_ABC< PostureInfos > T_PostureInfos_Vector;
 
     //*****************************************************************************
     class PointInfos : public ADN_Ref_ABC
@@ -146,7 +146,7 @@ public:
         E_KeyPoint   nTypeTerrain_;  //$$$$
         ADN_Type_Int nDistance_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< PointInfos >, PointInfos_Vector )
+    typedef ADN_Type_Vector_ABC< PointInfos > T_PointInfos_Vector;
 
     //*****************************************************************************
     class UnitInfos : public ADN_RefWithName
@@ -168,59 +168,59 @@ public:
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     public:
-        ADN_Type_Int                                                nId_;
-        ADN_Type_Enum<E_AgentTypePion,eNbrAgentTypePion>            eTypeId_;
-        ADN_Type_Enum<E_AgentNbcSuit,eNbrAgentNbcSuit>              eNbcSuit_;
-        ADN_TypePtr_InVector_ABC<ADN_Models_Data::ModelInfos>       ptrModel_;
-        ADN_Type_Enum<E_NatureLevel,eNbrNatureLevel>                eNatureLevel_;
-        ADN_Type_Enum<E_NatureAtlasType, eNbrNatureAtlasType>       eNatureAtlas_;
-        ADN_Type_String                                             strNature_;
-        ADN_Type_Int                                                nNbOfficer_;        // officer
-        ADN_Type_Int                                                nNbNCOfficer_;      // non-commisioned officer
-        ADN_Type_Time                                               decontaminationDelay_;
-        ADN_Type_Bool                                               bCanFly_;
-        ADN_Type_Enum<E_CrossingHeight,eNbrCrossingHeight>          eCrossingHeight_;
-        ADN_Type_Bool                                               bIsAutonomous_;
-        ADN_TypePtr_InVector_ABC< ADN_Symbols_Data::SymbolsUnit >   natureSymbol_;
-        ADN_Type_Double                                             footprint_;
+        ADN_Type_Int nId_;
+        ADN_Type_Enum< E_AgentTypePion, eNbrAgentTypePion > eTypeId_;
+        ADN_Type_Enum< E_AgentNbcSuit, eNbrAgentNbcSuit > eNbcSuit_;
+        ADN_TypePtr_InVector_ABC< ADN_Models_Data::ModelInfos > ptrModel_;
+        ADN_Type_Enum< E_NatureLevel, eNbrNatureLevel > eNatureLevel_;
+        ADN_Type_Enum< E_NatureAtlasType, eNbrNatureAtlasType > eNatureAtlas_;
+        ADN_Type_String strNature_;
+        ADN_Type_Int nNbOfficer_;        // officer
+        ADN_Type_Int nNbNCOfficer_;      // non-commisioned officer
+        ADN_Type_Time decontaminationDelay_;
+        ADN_Type_Bool bCanFly_;
+        ADN_Type_Enum< E_CrossingHeight, eNbrCrossingHeight > eCrossingHeight_;
+        ADN_Type_Bool bIsAutonomous_;
+        ADN_TypePtr_InVector_ABC< ADN_Symbols_Data::SymbolsUnit > natureSymbol_;
+        ADN_Type_Double footprint_;
 
-        T_ComposanteInfos_Vector                                    vComposantes_;
-        T_PostureInfos_Vector                                       vPostures_;
-        T_PointInfos_Vector                                         vPointInfos_;
+        T_ComposanteInfos_Vector vComposantes_;
+        T_PostureInfos_Vector vPostures_;
+        T_PointInfos_Vector vPointInfos_;
 
-        ADN_Type_Bool                                               bTC1_;
-        ResourceInfos                                               contenancesTC1_;
-        ADN_Type_Bool                                               bStock_;
-        StockInfos                                                  stocks_;
+        ADN_Type_Bool bTC1_;
+        ResourceInfos contenancesTC1_;
+        ADN_Type_Bool bStock_;
+        StockInfos stocks_;
 
-        ADN_Type_Bool                                               bProbe_;
-        ADN_Type_Double                                             rProbeWidth_;
-        ADN_Type_Double                                             rProbeLength_;
+        ADN_Type_Bool bProbe_;
+        ADN_Type_Double rProbeWidth_;
+        ADN_Type_Double rProbeLength_;
 
-        ADN_Type_Bool                                               bRanges_;
-        ADN_Type_Int                                                nSensorRange_;
-        ADN_Type_Int                                                nEquipmentRange_;
+        ADN_Type_Bool bRanges_;
+        ADN_Type_Int nSensorRange_;
+        ADN_Type_Int nEquipmentRange_;
 
-        ADN_Type_Bool                                               bStrengthRatioFeedbackTime_;
-        ADN_Type_Time                                               strengthRatioFeedbackTime_;
+        ADN_Type_Bool bStrengthRatioFeedbackTime_;
+        ADN_Type_Time strengthRatioFeedbackTime_;
 
-        ADN_Type_Bool                                               bInstallationDelay_;
-        ADN_Type_Time                                               installationDelay_;
-        ADN_Type_Time                                               uninstallationDelay_;
+        ADN_Type_Bool bInstallationDelay_;
+        ADN_Type_Time installationDelay_;
+        ADN_Type_Time uninstallationDelay_;
 
-        ADN_Type_Int                                                nReconEfficiency_;
-        ADN_Type_Int                                                nCombatSupportEfficiency_;
-        ADN_Type_Int                                                nCombatEfficiency_;
-        ADN_Type_Int                                                nMobilitySupportEfficiency_;
-        ADN_Type_Int                                                nCounterMobilitySupportEfficiency_;
-        ADN_Type_Int                                                nProtectionSupportEfficiency_;
-        ADN_Type_Int                                                nEngineeringReconEfficiency_;
-        ADN_Type_Int                                                nUrbanAreaEfficiency_;
+        ADN_Type_Int nReconEfficiency_;
+        ADN_Type_Int nCombatSupportEfficiency_;
+        ADN_Type_Int nCombatEfficiency_;
+        ADN_Type_Int nMobilitySupportEfficiency_;
+        ADN_Type_Int nCounterMobilitySupportEfficiency_;
+        ADN_Type_Int nProtectionSupportEfficiency_;
+        ADN_Type_Int nEngineeringReconEfficiency_;
+        ADN_Type_Int nUrbanAreaEfficiency_;
 
-        ADN_Type_Bool                                               bIsCivilian_;
-        ADN_Type_Repartition                                        repartition_;
+        ADN_Type_Bool bIsCivilian_;
+        ADN_Type_Repartition repartition_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<UnitInfos>, UnitInfos_Vector )
+    typedef ADN_Type_Vector_ABC< UnitInfos > T_UnitInfos_Vector;
 
     //*****************************************************************************
 public:
@@ -268,7 +268,7 @@ ADN_Units_Data::T_UnitInfos_Vector& ADN_Units_Data::GetUnitsInfos()
 inline
 ADN_Units_Data::UnitInfos* ADN_Units_Data::FindUnit( const std::string& strName )
 {
-    IT_UnitInfos_Vector it = std::find_if( vUnits_.begin(), vUnits_.end(), ADN_Tools::NameCmp<UnitInfos>( strName ) );
+    auto it = std::find_if( vUnits_.begin(), vUnits_.end(), ADN_Tools::NameCmp<UnitInfos>( strName ) );
     if( it == vUnits_.end() )
         return 0;
     return *it;

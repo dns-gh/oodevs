@@ -131,7 +131,7 @@ void ADN_ListView_Orders::ConnectItem( bool /*bConnect*/ )
 // -----------------------------------------------------------------------------
 void ADN_ListView_Orders::CreateNewItem( int n )
 {
-    CIT_FragOrders cit = fragOrders_.find( n );
+    auto cit = fragOrders_.find( n );
     if( cit != fragOrders_.end() )
     {
         OrderInfos* pNewInfo = new OrderInfos();

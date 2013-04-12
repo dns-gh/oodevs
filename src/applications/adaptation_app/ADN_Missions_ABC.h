@@ -37,11 +37,8 @@ class ADN_Missions_ABC : private boost::noncopyable
             virtual ~ADN_Missions_Attachment(){}
         };
 
-        typedef ADN_Type_Vector_ABC<ADN_Missions_Attachment>      T_MissionAttachment_Vector;
-        typedef T_MissionAttachment_Vector::iterator             IT_MissionAttachment_Vector;
-
-        typedef ADN_Type_Vector_ABC<ADN_Missions_Parameter>       T_MissionParameter_Vector;
-        typedef T_MissionParameter_Vector::iterator              IT_MissionParameter_Vector;
+        typedef ADN_Type_Vector_ABC< ADN_Missions_Attachment > T_MissionAttachment_Vector;
+        typedef ADN_Type_Vector_ABC< ADN_Missions_Parameter > T_MissionParameter_Vector;
 
 public:
     //! @name Constructors/Destructor

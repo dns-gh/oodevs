@@ -466,7 +466,7 @@ void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools
     indexBuilder.TableItem( 0, 2, tr( "Geometry" ).toStdString().c_str(), true );
     indexBuilder.TableItem( 0, 3, tr( "Capacities" ).toStdString().c_str(), true );
     int n = 1;
-    for( ADN_Objects_Data::IT_ObjectsInfos_Vector it = objects.begin(); it != objects.end(); ++it, ++n )
+    for( auto it = objects.begin(); it != objects.end(); ++it, ++n )
     {
         ADN_Objects_Data_ObjectInfos& object = **it;
         indexBuilder.TableItem( n, 0, object.strName_.GetData().c_str() );
@@ -475,7 +475,7 @@ void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools
 
         ADN_HtmlBuilder listBuilder;
         listBuilder.BeginList();
-        for( ADN_Objects_Data_ObjectInfos::CIT_CapacityMap itCapacity = object.capacities_.begin(); itCapacity != object.capacities_.end(); ++itCapacity )
+        for( auto itCapacity = object.capacities_.begin(); itCapacity != object.capacities_.end(); ++itCapacity )
         {
             if( itCapacity->second->bPresent_.GetData() )
                 listBuilder.ListItem( itCapacity->first.c_str() );

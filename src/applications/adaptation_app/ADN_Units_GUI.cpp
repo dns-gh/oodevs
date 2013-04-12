@@ -430,7 +430,7 @@ void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const tools::
     indexBuilder.TableItem( 0, 0, tr( "Name" ).toStdString().c_str(), true );
     indexBuilder.TableItem( 0, 1, tr( "Type" ).toStdString().c_str(), true );
     int n = 1;
-    for( ADN_Units_Data::IT_UnitInfos_Vector it = units.begin(); it != units.end(); ++it, ++n )
+    for( auto it = units.begin(); it != units.end(); ++it, ++n )
     {
         ADN_Units_Data::UnitInfos& unit = **it;
         indexBuilder.TableItem( n, 0, unit.strName_.GetData().c_str() );

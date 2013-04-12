@@ -74,7 +74,7 @@ void ADN_Breakdowns_PartsTable::OnContextMenu( const QPoint& pt )
     Q3PopupMenu subMenu( &menu );
 
     ADN_Resources_Data::T_CategoryInfos_Vector& parts = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).categories_;
-    for( ADN_Resources_Data::IT_CategoryInfos_Vector it = parts.begin(); it != parts.end(); ++it )
+    for( auto it = parts.begin(); it != parts.end(); ++it )
     {
         if( Contains( **it ) )
             continue;

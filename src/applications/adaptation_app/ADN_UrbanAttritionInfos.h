@@ -76,7 +76,7 @@ public:
     };
 };
 
-TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC< ADN_UrbanAttritionInfos >, UrbanAttritionInfos_Vector );
+typedef ADN_Type_VectorFixed_ABC< ADN_UrbanAttritionInfos > T_UrbanAttritionInfos_Vector;
 
 } // end namespace helpers
 

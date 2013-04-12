@@ -495,7 +495,7 @@ ADN_Table* ADN_Resources_GUI::CreatePKTable()
     ADN_Resources_Data::ResourceInfos& ammo = data_.GetResource( eDotationFamily_Munition );
     int nRowSize = static_cast< int >( armorInfos.size() );
     int nRow = 0;
-    for( ADN_Resources_Data::IT_CategoryInfos_Vector it = ammo.categories_.begin(); it != ammo.categories_.end(); ++it )
+    for( auto it = ammo.categories_.begin(); it != ammo.categories_.end(); ++it )
     {
         ADN_Resources_Data::AmmoCategoryInfo& ammoCategory = *static_cast< ADN_Resources_Data::AmmoCategoryInfo* >( *it );
         if( !ammoCategory.bDirect_.GetData() )
@@ -504,7 +504,7 @@ ADN_Table* ADN_Resources_GUI::CreatePKTable()
         pTable->AddBoldGridRow( nRow );
         pTable->AddItem( nRow, 0, nRowSize, 1 , *it, ammoCategory.strName_.GetData().c_str() );
         int nSubRow = 0;
-        for( helpers::IT_AttritionInfos_Vector it2 = ammoCategory.attritions_.begin(); it2 != ammoCategory.attritions_.end(); ++it2 )
+        for( auto it2 = ammoCategory.attritions_.begin(); it2 != ammoCategory.attritions_.end(); ++it2 )
         {
             if( ( *it2 )->GetCrossedElement() )
             {
@@ -562,7 +562,7 @@ void ADN_Resources_GUI::NetworkUsableActivated( int state )
         return;
 
     bool founded = false;
-    for( ADN_Resources_Data::CIT_CategoryInfos_Vector it = networkUsableVector.begin(); it != networkUsableVector.end() && !founded; ++it )
+    for( auto it = networkUsableVector.begin(); it != networkUsableVector.end() && !founded; ++it )
         if( ( *it )->nId_.GetData() == current->nId_.GetData() )
             founded = true;
 

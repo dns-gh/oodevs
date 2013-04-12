@@ -87,13 +87,13 @@ void ADN_Equipments_Resources_ListView::OnContextMenu( const QPoint& pt )
     ADN_Resources_Data::T_ResourceInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources();
 
     // Fill the popup menu with submenus, one for each dotation.
-    for( ADN_Resources_Data::IT_ResourceInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )
+    for( auto it = dotations.begin(); it != dotations.end(); ++it )
     {
         Q3PopupMenu* pSubMenu = new Q3PopupMenu( &targetMenu );
 
         // Fill the submenu with an entry for each equipement category.
         ADN_Resources_Data::T_CategoryInfos_Vector& categories = (*it)->GetCategories();
-        for( ADN_Resources_Data::IT_CategoryInfos_Vector it2 = categories.begin(); it2 != categories.end(); ++it2 )
+        for( auto it2 = categories.begin(); it2 != categories.end(); ++it2 )
         {
             // Avoid offering to add items already present.
             if( Contains( *it2 ) )

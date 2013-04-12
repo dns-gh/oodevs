@@ -18,9 +18,7 @@
 
 class ADN_ComboBoxItem;
 
-typedef std::vector<ADN_ComboBoxItem*>            T_PtrComboBoxItem_Vector;
-typedef T_PtrComboBoxItem_Vector::iterator        IT_PtrComboBoxItem_Vector;
-typedef T_PtrComboBoxItem_Vector::const_iterator  CIT_PtrComboBoxItem_Vector;
+typedef std::vector< ADN_ComboBoxItem* > T_PtrComboBoxItem_Vector;
 
 //*****************************************************************************
 // Created: JDY 03-07-18

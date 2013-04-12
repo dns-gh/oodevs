@@ -76,7 +76,7 @@ void ADN_Missions_ABC::ReadParameter( xml::xistream& input )
 void ADN_Missions_ABC::CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, E_MissionType type )
 {
     CheckFieldDataConsistency( descriptionContext_.GetData(), checker, type );
-    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         CheckFieldDataConsistency( (*it)->description_.GetData(), checker, type );
     CheckFieldDataConsistency( descriptionBehavior_.GetData(), checker, type );
     CheckFieldDataConsistency( descriptionSpecific_.GetData(), checker, type );
@@ -110,7 +110,7 @@ void ADN_Missions_ABC::ReadMissionSheetParametersDescriptions( xml::xistream& xi
     xml::xisubstream sub( xis );
     FromXmlToWiki( sub, parameterData );
     xis >> xml::attribute( "name", parameterName );
-    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         if( (*it)->strName_ == parameterName )
         {
             (*it)->description_ = parameterData;
@@ -133,7 +133,7 @@ void ADN_Missions_ABC::ReadMissionSheetAttachments( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::WriteMissionSheetParametersDescriptions( xml::xostream& xos )
 {
-    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
     {
         xos << xml::start( "parameter" )
             << xml::attribute( "name", (*it)->strName_ );
@@ -148,7 +148,7 @@ void ADN_Missions_ABC::WriteMissionSheetParametersDescriptions( xml::xostream& x
 // -----------------------------------------------------------------------------
 void ADN_Missions_ABC::WriteMissionSheetAttachments( xml::xostream& xos )
 {
-    for( IT_MissionAttachment_Vector it = attachments_.begin(); it != attachments_.end(); ++it )
+    for( auto it = attachments_.begin(); it != attachments_.end(); ++it )
         xos << xml::start( "attachment" )
         << xml::attribute( "name", (*it)->strName_ )
         << xml::end;
@@ -160,7 +160,7 @@ void ADN_Missions_ABC::WriteMissionSheetAttachments( xml::xostream& xos )
 // -----------------------------------------------------------------------------
 bool ADN_Missions_ABC::IsFileInAttachmentList( const std::string& fileName )
 {
-    for( IT_MissionAttachment_Vector it = attachments_.begin(); it != attachments_.end(); ++it )
+    for( auto it = attachments_.begin(); it != attachments_.end(); ++it )
         if( fileName == (*it)->strName_.GetData() )
             return true;
     return false;
@@ -310,7 +310,7 @@ bool ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const t
 // -----------------------------------------------------------------------------
 bool ADN_Missions_ABC::IsEmptyParameterList()
 {
-    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         if( !(*it)->description_.GetData().empty() )
             return false;
     return true;

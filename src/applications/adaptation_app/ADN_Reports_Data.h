@@ -45,9 +45,8 @@ public:
         ADN_Type_String name_;
     };
 
-    typedef ADN_Type_Vector_ABC<ReportParameterValue>  T_ReportParameterValue_Vector;
-    typedef T_ReportParameterValue_Vector::iterator   IT_ReportParameterValue_Vector;
-
+    typedef ADN_Type_Vector_ABC< ReportParameterValue > T_ReportParameterValue_Vector;
+    
 public:
     class ReportParameter : public ADN_RefWithName
     {
@@ -64,11 +63,10 @@ public:
 
     public:
         ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType > type_;
-        T_ReportParameterValue_Vector                                     values_;
+        T_ReportParameterValue_Vector values_;
     };
 
-    typedef ADN_Type_Vector_ABC<ReportParameter>  T_ReportParameter_Vector;
-    typedef T_ReportParameter_Vector::iterator   IT_ReportParameter_Vector;
+    typedef ADN_Type_Vector_ABC< ReportParameter > T_ReportParameter_Vector;
 
 // *****************************************************************************
 // Report info
@@ -97,8 +95,7 @@ public:
         T_ReportParameter_Vector parameters_;
     };
 
-    typedef ADN_Type_Vector_ABC<ReportInfo>  T_ReportInfo_Vector;
-    typedef T_ReportInfo_Vector::iterator   IT_ReportInfo_Vector;
+    typedef ADN_Type_Vector_ABC< ReportInfo > T_ReportInfo_Vector;
 
 public:
     //! @name Constructors/Destructor

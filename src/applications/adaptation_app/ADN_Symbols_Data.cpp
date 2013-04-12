@@ -229,7 +229,7 @@ ADN_Symbols_Data::ADN_Symbols_Data()
 // -----------------------------------------------------------------------------
 ADN_Symbols_Data::~ADN_Symbols_Data()
 {
-    for( IT_SymbolsInfra_Vector it = infras_.begin(); it != infras_.end(); ++it )
+    for( auto it = infras_.begin(); it != infras_.end(); ++it )
         delete *it;
     infras_.clear();
 }

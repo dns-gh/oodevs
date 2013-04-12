@@ -92,7 +92,7 @@ private:
     virtual void OnPercentageChanged();
     virtual void OnEditingFinished()
     {
-        for( IT_EditLines it = lines_.begin(); it != lines_.end(); ++it )
+        for( auto it = lines_.begin(); it != lines_.end(); ++it )
             ( *it )->GetValidator().setTop( 100 );
     }
     //@}
@@ -100,8 +100,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< EditLine* >        T_EditLines;
-    typename typedef T_EditLines::iterator IT_EditLines;
+    typedef std::vector< EditLine* > T_EditLines;
     //@}
 
 private:

@@ -86,11 +86,11 @@ bool ADN_Type_Vector_ABC< T >::RemItemPrivate( void* pItem )
     T* pCastItem = static_cast< T* >( pItem );
 
     // rem item from vector
-    IT_PtrVector it = std::find( begin(), end(), pCastItem );
+    auto it = std::find( begin(), end(), pCastItem );
     if( it == end() )
         return false;
 
-    erase(it);
+    erase( it );
 
     // rem ref
     if( bAutoRef_ )
@@ -113,23 +113,23 @@ void ADN_Type_Vector_ABC<T>::EndVector()
 // Name: ADN_Type_Vector_ABC<T>::SwapItemPrivate
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
-template <class T>
-void ADN_Type_Vector_ABC<T>::SwapItemPrivate(int i,int j)
+template< class T >
+void ADN_Type_Vector_ABC< T >::SwapItemPrivate( int i, int j )
 {
-    if (size()==0 || i==j)
+    if( size() == 0 || i == j )
         return;
-    else if (i < 0 )
-        SwapItem(0,j);
-    else if (j>=(int)size())
-        SwapItem(i,(int)size()-1);
-    else if (i>j)
-        SwapItem(j,i);
+    else if( i < 0 )
+        SwapItem( 0, j) ;
+    else if( j >= ( int ) size() )
+        SwapItem( i, ( int ) size() - 1 );
+    else if( i > j )
+        SwapItem( j , i );
     else
     {
-        T *tmp=at(i);
-        at(i)=at(j);
-        at(j)=tmp;
-        emit ItemSwapped(i,j);
+        T* tmp = at( i );
+        at( i ) = at( j );
+        at( j ) = tmp;
+        emit ItemSwapped( i, j );
     }
 }
 
@@ -137,23 +137,23 @@ void ADN_Type_Vector_ABC<T>::SwapItemPrivate(int i,int j)
 // Name: ADN_Type_Vector_ABC<T>::InvalidatePrivate
 // Created: JDY 03-08-25
 //-----------------------------------------------------------------------------
-template <class T>
+template < class T >
 void ADN_Type_Vector_ABC<T>::InvalidatePrivate(void *item,bool bDel)
 {
-    IT_PtrVector it=std::find(begin(),end(),(T*)item);
+    auto it = std::find( begin(), end(), ( T* )item);
     if (it!= end() )
     {
         // rem item from vector
         // and invalidate it
-        erase(it);
-        emit ItemRemoved(item);
-        emit Invalidated(item,false);
+        erase( it );
+        emit ItemRemoved( item );
+        emit Invalidated( item, false );
 
         // rem ref
         if( bAutoRef_ )
         {
-            disconnect( static_cast<ADN_Ref_ABC*>( item ), SIGNAL(Invalidated(void *,bool)),
-                        this,                              SLOT(Invalidate(void *,bool)));
+            disconnect( static_cast< ADN_Ref_ABC* >( item ), SIGNAL( Invalidated( void*, bool ) ),
+                        this,                              SLOT( Invalidate( void*, bool ) ) );
 
         }
 
@@ -229,7 +229,7 @@ template <class T>
 void ADN_Type_Vector_ABC<T>::Initialize( ADN_Connector_Vector_ABC& dest ) const
 {
     dest.Clear( true );
-    for (CIT_PtrVector it=begin();it!=end();++it)
+    for( auto it = begin(); it != end(); ++it )
     {
         T* pObj = *it;
         dest.AddItemNoEmit( pObj );

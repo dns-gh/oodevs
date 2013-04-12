@@ -53,7 +53,7 @@ QWidget* ADN_Weapons_WizardPage::CreateNameField()
 
     ADN_Resources_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition );
     ADN_Resources_Data::T_CategoryInfos_Vector& vAmmo = ammoDotation.GetCategories();
-    for( ADN_Resources_Data::IT_CategoryInfos_Vector itAmmo = vAmmo.begin(); itAmmo != vAmmo.end(); ++itAmmo )
+    for( auto itAmmo = vAmmo.begin(); itAmmo != vAmmo.end(); ++itAmmo )
         pComboAmmo_->insertItem( (*itAmmo)->strName_.GetData().c_str() );
     pComboAmmo_->model()->sort( 0 );
 

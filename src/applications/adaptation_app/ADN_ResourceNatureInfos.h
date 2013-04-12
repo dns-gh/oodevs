@@ -31,7 +31,6 @@ public:
 };
 
 typedef ADN_Type_Vector_ABC< ResourceNatureInfos > T_ResourceNatureInfos_Vector;
-typedef T_ResourceNatureInfos_Vector::iterator    IT_ResourceNatureInfos_Vector;
 
 // -----------------------------------------------------------------------------
 // Name: ArmorInfos::GetItemName

@@ -59,9 +59,7 @@ public:
         //@}
     };
 
-    typedef ADN_Type_Vector_ABC< AccommodationInfos >     T_AccommodationInfos_Vector;
-    typedef T_AccommodationInfos_Vector::iterator        IT_AccommodationInfos_Vector;
-    typedef T_AccommodationInfos_Vector::const_iterator CIT_AccommodationInfos_Vector;
+    typedef ADN_Type_Vector_ABC< AccommodationInfos > T_AccommodationInfos_Vector;
 
 //*****************************************************************************
 public:
@@ -77,8 +75,6 @@ public:
         InfrastructureInfos* CreateCopy();
 
         typedef std::map< std::string, boost::shared_ptr< helpers::ADN_TypeCapacity_Infos > > T_CapacityMap;
-        typedef T_CapacityMap::iterator IT_CapacityMap;
-        typedef T_CapacityMap::const_iterator CIT_CapacityMap;
 
     private:
         void ReadCapacityArchive( const std::string& type, xml::xistream& xis );
@@ -92,8 +88,6 @@ public:
     };
 
     typedef ADN_Type_Vector_ABC< InfrastructureInfos >     T_InfrastructureInfos_Vector;
-    typedef T_InfrastructureInfos_Vector::iterator        IT_InfrastructureInfos_Vector;
-    typedef T_InfrastructureInfos_Vector::const_iterator CIT_InfrastructureInfos_Vector;
 
 //*****************************************************************************
 public:
@@ -122,9 +116,7 @@ public:
         //@}
     };
 
-    typedef ADN_Type_Vector_ABC< UrbanMaterialInfos >     T_UrbanMaterialInfos_Vector;
-    typedef T_UrbanMaterialInfos_Vector::iterator        IT_UrbanMaterialInfos_Vector;
-    typedef T_UrbanMaterialInfos_Vector::const_iterator CIT_UrbanMaterialInfos_Vector;
+    typedef ADN_Type_Vector_ABC< UrbanMaterialInfos > T_UrbanMaterialInfos_Vector;
 
 //*****************************************************************************
 
@@ -142,8 +134,6 @@ public:
     };
 
     typedef ADN_Type_Vector_ABC< RoofShapeInfos >     T_RoofShapeInfos_Vector;
-    typedef T_RoofShapeInfos_Vector::iterator        IT_RoofShapeInfos_Vector;
-    typedef T_RoofShapeInfos_Vector::const_iterator CIT_RoofShapeInfos_Vector;
 
 //*****************************************************************************
 
@@ -156,7 +146,6 @@ public:
         std::string GetItemName() { return strName_.GetData(); }
     };
     typedef ADN_Type_Vector_ABC< UrbanInfos > T_UrbanInfos_Vector;
-    typedef T_UrbanInfos_Vector::iterator    IT_UrbanInfos_Vector;
 
 //*****************************************************************************
 
@@ -193,8 +182,6 @@ public:
         ADN_Ref_ABC* parent_;
     };
 
-    typedef T_UsageTemplateInfosVector::iterator        IT_UsageTemplateInfosVector;
-    typedef T_UsageTemplateInfosVector::const_iterator CIT_UsageTemplateInfosVector;
 //*****************************************************************************
 
 public:
@@ -381,7 +368,7 @@ bool ADN_Urban_Data::AccommodationInfos::operator==( const std::string& str )
 inline
 ADN_Urban_Data::AccommodationInfos* ADN_Urban_Data::FindAccommodation( const std::string& strName )
 {
-    for( IT_AccommodationInfos_Vector it = vAccommodations_.begin(); it != vAccommodations_.end(); ++it )
+    for( auto it = vAccommodations_.begin(); it != vAccommodations_.end(); ++it )
         if( **it == strName )
             return *it;
     return 0;
@@ -424,7 +411,7 @@ bool ADN_Urban_Data::RoofShapeInfos::operator==( const std::string& str )
 inline
 ADN_Urban_Data::InfrastructureInfos* ADN_Urban_Data::FindInfrastructure( const std::string& strName )
 {
-    for( IT_InfrastructureInfos_Vector it = vInfrastructures_.begin(); it != vInfrastructures_.end(); ++it )
+    for( auto it = vInfrastructures_.begin(); it != vInfrastructures_.end(); ++it )
         if( **it == strName )
             return *it;
     return 0;

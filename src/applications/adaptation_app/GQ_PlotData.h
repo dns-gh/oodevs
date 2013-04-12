@@ -39,20 +39,15 @@ class GQ_PlotData : public QObject
 
 public:
     typedef std::pair< double, double > T_Point;
-    typedef std::vector< T_Point >      T_Data;
+    typedef std::vector< T_Point > T_Data;
 
-    typedef std::pair< double, double >     T_Range;
-    typedef std::vector< T_Range >          T_RangeVector;
-    typedef T_RangeVector::iterator        IT_RangeVector;
-    typedef T_RangeVector::const_iterator CIT_RangeVector;
+    typedef std::pair< double, double > T_Range;
+    typedef std::vector< T_Range > T_RangeVector;
 
-    typedef std::vector< int >           T_IndexVector;
-    typedef T_IndexVector::iterator     IT_IndexVector;
+    typedef std::vector< int > T_IndexVector;
 
-    typedef std::pair< GQ_PlotData*, int >       T_DataItem;
-    typedef std::vector< T_DataItem >            T_DataItemVector;
-    typedef T_DataItemVector::iterator          IT_DataItemVector;
-    typedef T_DataItemVector::const_iterator   CIT_DataItemVector;
+    typedef std::pair< GQ_PlotData*, int > T_DataItem;
+    typedef std::vector< T_DataItem > T_DataItemVector;
 
     enum E_PointShapeType
     {

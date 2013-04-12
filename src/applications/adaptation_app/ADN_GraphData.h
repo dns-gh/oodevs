@@ -31,9 +31,7 @@ class ADN_GraphData : public GQ_PlotData
 {
 
 public:
-    typedef std::vector< ADN_GraphValue* >         T_GraphValue_Vector;
-    typedef T_GraphValue_Vector::iterator         IT_GraphValue_Vector;
-    typedef T_GraphValue_Vector::const_iterator  CIT_GraphValue_Vector;
+    typedef std::vector< ADN_GraphValue* > T_GraphValue_Vector;
 
 public:
     //! @name Constructors/Destructor
@@ -97,7 +95,7 @@ ADN_GraphValue& ADN_GraphData::GetGraphValue( uint nIndex )
 inline
 int ADN_GraphData::GetDataIndex( const ADN_GraphValue& value ) const
 {
-    CIT_GraphValue_Vector it = std::find( graphValueList_.begin(), graphValueList_.end(), &value );
+    auto it = std::find( graphValueList_.begin(), graphValueList_.end(), &value );
     assert( it != graphValueList_.end() );
     return static_cast< int >( std::distance( graphValueList_.begin(), it ) );
 }

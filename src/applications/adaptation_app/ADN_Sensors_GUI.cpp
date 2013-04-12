@@ -103,7 +103,7 @@ public:
         AddBoldGridCol( nCol );
         AddItem( 0, nCol, 1, static_cast< int >( materials.size() ), this, szName );
         unsigned int n = 0;
-        for( ADN_Urban_Data::CIT_UrbanMaterialInfos_Vector it = materials.begin(); it != materials.end(); ++it, ++n )
+        for( auto it = materials.begin(); it != materials.end(); ++it, ++n )
             AddItem( 1, nCol + n, this, (*it)->strName_.GetData().c_str() );
         nCol += static_cast< int >( materials.size() );
     }

@@ -84,7 +84,7 @@ void ADN_GUI_Container::AddElement( int index, const QString& title )
 template< typename GuiBaseType >
 GuiBaseType& ADN_GUI_Container::GetElement( int index )
 {
-    CIT_Elements it = elements_.find( index );
+    auto it = elements_.find( index );
     assert( it != elements_.end() );
     assert( dynamic_cast< GuiBaseType* >( it->second.second ) != 0 );
     return *static_cast< GuiBaseType* >( it->second.second );

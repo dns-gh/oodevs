@@ -276,7 +276,7 @@ void ADN_Urban_Data::UrbanMaterialInfos::WriteMaterial( xml::xostream& output )
     output << xml::start( "material-composition-type" )
            << xml::attribute( "name",  trim( strData ) )
               << xml::start( "attritions" );
-    for( IT_AttritionInfos_Vector it = vAttritionInfos_.begin(); it != vAttritionInfos_.end(); ++it )
+    for( auto it = vAttritionInfos_.begin(); it != vAttritionInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
     output   << xml::end
            << xml::end;
@@ -290,7 +290,7 @@ ADN_Urban_Data::UrbanMaterialInfos* ADN_Urban_Data::UrbanMaterialInfos::CreateCo
 {
     ADN_Urban_Data::UrbanMaterialInfos* result = new ADN_Urban_Data::UrbanMaterialInfos();
     result->vAttritionInfos_.Clear();
-    for( IT_AttritionInfos_Vector it = vAttritionInfos_.begin(); it != vAttritionInfos_.end(); ++it )
+    for( auto it = vAttritionInfos_.begin(); it != vAttritionInfos_.end(); ++it )
         result->vAttritionInfos_.AddItem( ( *it )->CreateCopy() );
     return result;
 }
@@ -334,7 +334,7 @@ ADN_Urban_Data::UrbanMaterialInfos::~UrbanMaterialInfos()
 void ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition( xml::xistream& input )
 {
     std::string protection = input.attribute< std::string >( "protection" );
-    helpers::IT_AttritionInfos_Vector itAttrition = std::find_if( vAttritionInfos_.begin(), vAttritionInfos_.end(), helpers::AttritionInfos::Cmp( protection ) );
+    auto itAttrition = std::find_if( vAttritionInfos_.begin(), vAttritionInfos_.end(), helpers::AttritionInfos::Cmp( protection ) );
     if( itAttrition == vAttritionInfos_.end() )
         throw MASA_EXCEPTION( tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).toStdString() );
     ( *itAttrition )->ReadArchive( input );

@@ -289,7 +289,7 @@ void ADN_FireClass_Data::FireClassInfos::ReadWeatherEffect( xml::xistream& input
 void ADN_FireClass_Data::FireClassInfos::ReadUrbanModifer( xml::xistream& input )
 {
     std::string material = input.attribute< std::string >( "material-type" );
-    helpers::IT_UrbanAttritionInfos_Vector it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
+    auto it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
     if( it == modifUrbanBlocks_.end() )
         throw MASA_EXCEPTION( tr( "Fire class - Invalid urban Material type '%1'" ).arg( material.c_str() ).toStdString() );
     ( *it )->ReadArchive( input );

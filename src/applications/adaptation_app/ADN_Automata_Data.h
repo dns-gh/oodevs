@@ -41,7 +41,7 @@ public:
         ADN_Type_Int max_;
     };
 
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< UnitInfos >, UnitInfosVector );
+    typedef ADN_Type_Vector_ABC< UnitInfos > T_UnitInfosVector;
 
 // *****************************************************************************
     class AutomatonInfos : public ADN_RefWithName
@@ -68,7 +68,7 @@ public:
         ADN_Type_Time strengthRatioFeedbackTime_;
     };
 
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< AutomatonInfos >, AutomatonInfosVector )
+    typedef ADN_Type_Vector_ABC< AutomatonInfos > T_AutomatonInfosVector;
 
 // *****************************************************************************
 public:

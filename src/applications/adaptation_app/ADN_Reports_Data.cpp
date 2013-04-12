@@ -111,7 +111,7 @@ ADN_Reports_Data::ReportParameter* ADN_Reports_Data::ReportParameter::CreateCopy
     newParam->strName_ = strName_.GetData();
     newParam->type_    = type_.GetData();
     newParam->values_.reserve( values_.size() );
-    for( IT_ReportParameterValue_Vector it = values_.begin(); it != values_.end(); ++it )
+    for( auto it = values_.begin(); it != values_.end(); ++it )
     {
         ReportParameterValue* newParamValue = (*it)->CreateCopy();
         newParam->values_.AddItem( newParamValue );
@@ -191,7 +191,7 @@ ADN_Reports_Data::ReportInfo* ADN_Reports_Data::ReportInfo::CreateCopy()
     ReportInfo* newReport = new ReportInfo();
     newReport->message_ = message_.GetData();
     newReport->parameters_.reserve( parameters_.size() );
-    for( IT_ReportParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
     {
         ReportParameter* newParam = (*it)->CreateCopy();
         newReport->parameters_.AddItem( newParam );

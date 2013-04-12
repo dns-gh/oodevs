@@ -132,7 +132,7 @@ void ADN_Resources_AttritionGraph::AddAttrition( helpers::AttritionInfos& info )
 // -----------------------------------------------------------------------------
 void ADN_Resources_AttritionGraph::RemoveAttrition( helpers::AttritionInfos& info )
 {
-    for( IT_Attritions it = attritions_.begin(); it != attritions_.end(); ++it )
+    for( auto it = attritions_.begin(); it != attritions_.end(); ++it )
         if( *it == &info )
         {
             attritions_.erase( it );
@@ -198,7 +198,7 @@ void ADN_Resources_AttritionGraph::Update()
             visuWithEvac.value_ = ( int )rReparableWithEvacuation;
             visuDestroyed.value_ = ( int )rDestroyed;
 
-            for( ADN_Type_Vector_ABC< helpers::AttritionEffectOnHuman >::CIT_PtrVector effect = info->vAttritionEffects_.begin(); effect != info->vAttritionEffects_.end(); ++effect )
+            for( auto effect = info->vAttritionEffects_.begin(); effect != info->vAttritionEffects_.end(); ++effect )
             {
                 int injured = ( *effect )->nInjuredPercentage_.GetData();
                 int dead = ( *effect )->nDeadPercentage_.GetData();
@@ -245,12 +245,12 @@ void ADN_Resources_AttritionGraph::Update()
 // -----------------------------------------------------------------------------
 QString ADN_Resources_AttritionGraph::GetTextTooltip( const QPoint& point, QRect& rc ) const
 {
-    for( CIT_Columns column = columns_.begin(); column != columns_.end(); ++column )
+    for( auto column = columns_.begin(); column != columns_.end(); ++column )
     {
-        GraphData::CIT_Values value = column->values_.begin();
-        std::vector< QString >::const_iterator string = effectStrings_.begin();
+        auto value = column->values_.begin();
+        auto string = effectStrings_.begin();
 
-        for( GraphData::CIT_Rectangles rect = column->rectangles_.begin(); rect != column->rectangles_.end(); ++rect, ++value, ++string )
+        for( auto rect = column->rectangles_.begin(); rect != column->rectangles_.end(); ++rect, ++value, ++string )
         {
             if( rect->contains( point ) )
             {
@@ -317,7 +317,7 @@ void ADN_Resources_AttritionGraph::paintEvent( QPaintEvent* )
     // Legends with color
     int index = 0;
     std::vector< QColor >::iterator itColor = effectColors_.begin();
-    for( std::vector< QString >::iterator itString = effectStrings_.begin(); itString != effectStrings_.end(); ++itString, ++itColor )
+    for( auto itString = effectStrings_.begin(); itString != effectStrings_.end(); ++itString, ++itColor )
     {
         int y = Margin + ( fh + Margin ) * index++;
         painter.setPen( QColor( 64, 64, 64 ) );
@@ -330,7 +330,7 @@ void ADN_Resources_AttritionGraph::paintEvent( QPaintEvent* )
 
     unsigned int columnWidth = static_cast< unsigned int >( ( width() - LeftMargin - Margin - ( columns_.size() - 1 ) * IntervalWidth ) / columns_.size() );
     unsigned int columnIndex = 0;
-    for( IT_Columns column = columns_.begin(); column != columns_.end(); ++column )
+    for( auto column = columns_.begin(); column != columns_.end(); ++column )
     {
         int columnX = LeftMargin + ( columnWidth + IntervalWidth ) * columnIndex++;
 
@@ -370,7 +370,7 @@ void ADN_Resources_AttritionGraph::paintEvent( QPaintEvent* )
 
             column->rectangles_.clear();
 
-            for( GraphData::IT_Values values = column->values_.begin(); values != column->values_.end(); ++values )
+            for( auto values = column->values_.begin(); values != column->values_.end(); ++values )
             {
                 colorIndex = ( colorIndex + 1 ) % effectColors_.size();
 

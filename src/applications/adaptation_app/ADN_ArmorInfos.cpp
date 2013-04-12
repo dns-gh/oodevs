@@ -110,7 +110,7 @@ void ArmorInfos::WriteArchive( xml::xostream& output )
             << xml::attribute( "neva", rBreakdownNEVA_ )
             << xml::end
             << xml::start( "attrition-effects" );
-        for( IT_AttritionEffectOnHuman_Vector it = vAttritionEffects_.begin(); it != vAttritionEffects_.end(); ++it )
+        for( auto it = vAttritionEffects_.begin(); it != vAttritionEffects_.end(); ++it )
             (*it)->WriteArchive( output );
         output << xml::end;
     }
@@ -129,7 +129,7 @@ ArmorInfos* ArmorInfos::CreateCopy()
     pCopy->neutralizationVariance_ = neutralizationVariance_.GetData();
     pCopy->rBreakdownEVA_ = rBreakdownEVA_.GetData();
     pCopy->rBreakdownNEVA_ = rBreakdownNEVA_.GetData();
-    for( IT_AttritionEffectOnHuman_Vector it = vAttritionEffects_.begin(); it != vAttritionEffects_.end(); ++it )
+    for( auto it = vAttritionEffects_.begin(); it != vAttritionEffects_.end(); ++it )
         pCopy->vAttritionEffects_.AddItem( *it );
     return pCopy;
 }

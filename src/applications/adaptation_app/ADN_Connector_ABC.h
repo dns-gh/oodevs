@@ -72,9 +72,7 @@ private:
     bool bAutoClear_;
 };
 
-typedef std::vector<ADN_Connector_ABC*>          T_ConnectorVector;
-typedef T_ConnectorVector::iterator             IT_ConnectorVector;
-typedef T_ConnectorVector::const_iterator      CIT_ConnectorVector;
+typedef std::vector< ADN_Connector_ABC* > T_ConnectorVector;
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_ABC::SetAutoClear

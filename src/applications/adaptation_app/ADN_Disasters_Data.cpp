@@ -252,12 +252,12 @@ ADN_Disasters_Data::DisasterInfos::~DisasterInfos()
 ADN_Disasters_Data::DisasterInfos* ADN_Disasters_Data::DisasterInfos::CreateCopy()
 {
     DisasterInfos* pCopy = new DisasterInfos();
-    for( IT_ConcentrationThresholdInfosVector it = concentrationThresholds_.begin(); it != concentrationThresholds_.end(); ++it )
+    for( auto it = concentrationThresholds_.begin(); it != concentrationThresholds_.end(); ++it )
     {
         ConcentrationThresholdInfos* pNew = (*it)->CreateCopy();
         pCopy->concentrationThresholds_.AddItem( pNew );
     }
-    for( IT_AttritionThresholdInfosVector it = attritionThresholds_.begin(); it != attritionThresholds_.end(); ++it )
+    for( auto it = attritionThresholds_.begin(); it != attritionThresholds_.end(); ++it )
     {
         AttritionThresholdInfos* pNew = (*it)->CreateCopy();
         pCopy->attritionThresholds_.AddItem( pNew );
@@ -336,15 +336,15 @@ void ADN_Disasters_Data::DisasterInfos::WriteArchive( xml::xostream& output )
                << xml::attribute( "name", strName_ )
                << xml::attribute( "toxicity-exponent", toxicityExponent_ )
                    << xml::start( "contamination" );
-    for( IT_ConcentrationThresholdInfosVector it = concentrationThresholds_.begin(); it != concentrationThresholds_.end(); ++it )
+    for( auto it = concentrationThresholds_.begin(); it != concentrationThresholds_.end(); ++it )
         (*it)->WriteArchive( output );
     output        << xml::end
                   << xml::start( "attrition" );
-    for( IT_AttritionThresholdInfosVector it = attritionThresholds_.begin(); it != attritionThresholds_.end(); ++it )
+    for( auto it = attritionThresholds_.begin(); it != attritionThresholds_.end(); ++it )
         (*it)->WriteArchive( output );
     output        << xml::end
                   << xml::start( "protections" );
-    for( IT_NbcSuitRatioInfosVector it = nbcSuitRatio_.begin(); it != nbcSuitRatio_.end(); ++it )
+    for( auto it = nbcSuitRatio_.begin(); it != nbcSuitRatio_.end(); ++it )
         (*it)->WriteArchive( output );
     output        << xml::end
          << xml::end;

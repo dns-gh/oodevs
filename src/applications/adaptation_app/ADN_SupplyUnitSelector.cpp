@@ -49,7 +49,7 @@ void ADN_SupplyUnitSelector::OnButtonPressed()
         = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos();
 
     // Fill the popup menu with items, one for each log unit.
-    for( ADN_Units_Data::IT_UnitInfos_Vector it = units.begin(); it != units.end(); ++it )
+    for( auto it = units.begin(); it != units.end(); ++it )
     {
         if( (*it)->eTypeId_ != eAgentTypePionLOGConvoi )
             continue;

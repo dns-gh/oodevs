@@ -36,12 +36,9 @@ public:
                 values_.push_back( i == number - 1 ? 100. : 0 );
         }
 
-        typedef std::vector < double >      T_Values;
-        typedef T_Values::iterator         IT_Values;
-        typedef T_Values::const_iterator  CIT_Values;
+        typedef std::vector < double > T_Values;
 
-        typedef std::vector < QRect >          T_Rectangles;
-        typedef T_Rectangles::const_iterator CIT_Rectangles;
+        typedef std::vector < QRect > T_Rectangles;
 
         unsigned int value_;
         T_Values     values_;
@@ -75,15 +72,11 @@ protected:
 private:
     //! @name Member data
     //@{
-    typedef std::vector < GraphData >   T_Columns;
-    typedef T_Columns::iterator        IT_Columns;
-    typedef T_Columns::const_iterator CIT_Columns;
-    T_Columns columns_;
-
+    typedef std::vector < GraphData > T_Columns;
     typedef std::vector< helpers::AttritionInfos* > T_Attritions;
-    typedef T_Attritions::iterator                             IT_Attritions;
-    T_Attritions attritions_;
 
+    T_Columns columns_;
+    T_Attritions attritions_;
     std::vector < QColor > effectColors_;
     std::vector < QString > effectStrings_;
     //@}

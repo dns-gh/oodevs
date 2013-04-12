@@ -104,7 +104,7 @@ QStandardItem* ADN_MultiRefWarningDialog::CreateItem( const QString& text )
 void ADN_MultiRefWarningDialog::FillModel( QStandardItemModel& model, const ADN_Workspace::T_UsingElements& elements )
 {
     int row = 0;
-    for( ADN_Workspace::CIT_UsingElements it = elements.begin(); it != elements.end(); ++it )
+    for( auto it = elements.begin(); it != elements.end(); ++it )
     {
         if( it->second.isEmpty() )
         {

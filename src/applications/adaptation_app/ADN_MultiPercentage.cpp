@@ -19,10 +19,10 @@ template<>
 void ADN_MultiPercentage< ADN_EditLine_Int >::OnPercentageChanged()
 {
     int sum = 0;
-    for( IT_EditLines it = lines_.begin(); it != lines_.end(); ++it )
+    for( auto it = lines_.begin(); it != lines_.end(); ++it )
     {
         int otherSum = 0;
-        for( IT_EditLines it2 = lines_.begin(); it2 != lines_.end(); ++it2 )
+        for( auto it2 = lines_.begin(); it2 != lines_.end(); ++it2 )
             if( it != it2 )
                 otherSum += ( *it2 )->text().toInt();
         ( *it )->GetValidator().setTop( 100 - otherSum );
@@ -40,10 +40,10 @@ template<>
 void ADN_MultiPercentage< ADN_EditLine_Double >::OnPercentageChanged()
 {
     double sum = 0;
-    for( IT_EditLines it = lines_.begin(); it != lines_.end(); ++it )
+    for( auto it = lines_.begin(); it != lines_.end(); ++it )
     {
         double otherSum = 0;
-        for( IT_EditLines it2 = lines_.begin(); it2 != lines_.end(); ++it2 )
+        for( auto it2 = lines_.begin(); it2 != lines_.end(); ++it2 )
             if( it != it2 )
                 otherSum += ( *it2 )->text().toDouble();
         ( *it )->GetValidator().setTop( 100 - otherSum );

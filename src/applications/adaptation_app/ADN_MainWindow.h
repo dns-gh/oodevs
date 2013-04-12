@@ -94,15 +94,10 @@ private:
     void CloseApplication( bool bAskSave = true );
 
 private:
-    typedef std::pair< QString, ADN_Callback_ABC<ADN_Table*>* > T_TableRegistrationItem;
-
-    typedef std::map< int, T_TableRegistrationItem >            T_TableRegistrationMap;
-    typedef T_TableRegistrationMap::iterator                   IT_TableRegistrationMap;
-
-    typedef std::pair< QString, ADN_Callback_ABC<ADN_ListView*>* > T_ListViewRegistrationItem;
-
-    typedef std::map< int, T_ListViewRegistrationItem >            T_ListViewRegistrationMap;
-    typedef T_ListViewRegistrationMap::iterator                   IT_ListViewRegistrationMap;
+    typedef std::pair< QString, ADN_Callback_ABC< ADN_Table* >* > T_TableRegistrationItem;
+    typedef std::map< int, T_TableRegistrationItem > T_TableRegistrationMap;
+    typedef std::pair< QString, ADN_Callback_ABC< ADN_ListView* >* > T_ListViewRegistrationItem;
+    typedef std::map< int, T_ListViewRegistrationItem > T_ListViewRegistrationMap;
 
 private:
     std::auto_ptr< tools::GeneralConfig >       generalConfig_;

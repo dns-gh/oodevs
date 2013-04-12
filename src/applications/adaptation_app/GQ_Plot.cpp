@@ -319,7 +319,7 @@ GQ_Plot::T_DataIndex GQ_Plot::GetNextDataIndex( T_DataIndex dataIndex ) const
     int nCurrentDepth = dataIndex.first;
     int nCurrentIndex = dataIndex.second;
 
-    CIT_LayerMap it = layerMap_.lower_bound( nCurrentDepth );
+    auto it = layerMap_.lower_bound( nCurrentDepth );
     if( it == layerMap_.end() )
         return T_DataIndex( 0, -1 );
 
@@ -348,7 +348,7 @@ GQ_PlotData& GQ_Plot::GetPlotData( T_DataIndex dataIndex ) const
     if( dataIndex.second == -1 )
         throw MASA_EXCEPTION( "invalid iterator" );
 
-    CIT_LayerMap it = layerMap_.find( dataIndex.first );
+    auto it = layerMap_.find( dataIndex.first );
     if( it == layerMap_.end() || dataIndex.second >= ( int )it->second.size() )
         throw MASA_EXCEPTION( "invalid iterator" );
 
@@ -561,7 +561,7 @@ void GQ_Plot::UpdateDataPlot( const QColorGroup& colors )
 
     int nLastDepth = -1;
 
-    for( IT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         int nDepth = it->first;
         T_PlotLayer& layer = it->second;
@@ -613,7 +613,7 @@ void GQ_Plot::CenterOnPlotRect( QPainter& painter )
 // -----------------------------------------------------------------------------
 void GQ_Plot::RegisterPlotData( GQ_PlotData& data, int nDepth )
 {
-    IT_LayerMap it = layerMap_.find( nDepth );
+    auto it = layerMap_.find( nDepth );
     if( it == layerMap_.end() )
         it = layerMap_.insert( std::make_pair( nDepth, T_PlotLayer() ) ).first;
 
@@ -635,7 +635,7 @@ void GQ_Plot::RegisterPlotData( GQ_PlotData& data, int nDepth )
 // -----------------------------------------------------------------------------
 bool GQ_Plot::UnregisterPlotData( GQ_PlotData& data, bool bDestroy )
 {
-    for( IT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         T_PlotLayer& layer = it->second;
 
@@ -662,7 +662,7 @@ bool GQ_Plot::UnregisterPlotData( GQ_PlotData& data, bool bDestroy )
 // -----------------------------------------------------------------------------
 void GQ_Plot::UnregisterAllPlotData( bool bDestroy )
 {
-    for( IT_LayerMap itLayer = layerMap_.begin(); itLayer != layerMap_.end(); ++itLayer )
+    for( auto itLayer = layerMap_.begin(); itLayer != layerMap_.end(); ++itLayer )
     {
         T_PlotLayer& layer = itLayer->second;
 
@@ -687,7 +687,7 @@ void GQ_Plot::UnregisterAllPlotData( bool bDestroy )
 // -----------------------------------------------------------------------------
 void GQ_Plot::SetLayerVisible( bool bVisible, int nDepth )
 {
-    IT_LayerMap it = layerMap_.find( nDepth );
+    auto it = layerMap_.find( nDepth );
     if( it == layerMap_.end() )
         return;
 
@@ -709,7 +709,7 @@ void GQ_Plot::SetLayerVisible( bool bVisible, int nDepth )
 // -----------------------------------------------------------------------------
 void GQ_Plot::SetAllVisible( bool bVisible )
 {
-    for( IT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         int nDepth = it->first;
         SetLayerVisible( bVisible, nDepth );
@@ -724,7 +724,7 @@ void GQ_Plot::SetAllVisible( bool bVisible )
 // -----------------------------------------------------------------------------
 void GQ_Plot::ClearLayerData( int nDepth )
 {
-    IT_LayerMap it = layerMap_.find( nDepth );
+    auto it = layerMap_.find( nDepth );
     if( it == layerMap_.end() )
         return;
 
@@ -744,7 +744,7 @@ void GQ_Plot::ClearLayerData( int nDepth )
 // -----------------------------------------------------------------------------
 void GQ_Plot::ClearAllData()
 {
-    for( IT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         int nDepth = it->first;
         ClearLayerData( nDepth );
@@ -759,7 +759,7 @@ void GQ_Plot::ClearAllData()
 // -----------------------------------------------------------------------------
 GQ_PlotData* GQ_Plot::GetPlotData( uint nPlotIndex, int nDepth ) const
 {
-    CIT_LayerMap it = layerMap_.find( nDepth );
+    auto it = layerMap_.find( nDepth );
     if( it == layerMap_.end() )
         return 0;
 

@@ -201,12 +201,12 @@ ADN_Inhabitants_Data::InhabitantsInfos* ADN_Inhabitants_Data::InhabitantsInfos::
     pCopy->securityGainPerHour_ = securityGainPerHour_.GetData();
     pCopy->healthNeed_ = healthNeed_.GetData();
 
-    for( IT_EventInfosVector it = schedule_.begin(); it != schedule_.end(); ++it )
+    for( auto it = schedule_.begin(); it != schedule_.end(); ++it )
     {
         EventInfos* pNew = ( *it )->CreateCopy();
         pCopy->schedule_.AddItem( pNew );
     }
-    for( IT_InhabitantsInfosConsumptionVector itConsumption = consumptions_.begin(); itConsumption != consumptions_.end(); ++itConsumption )
+    for( auto itConsumption = consumptions_.begin(); itConsumption != consumptions_.end(); ++itConsumption )
     {
         InhabitantsInfosConsumption* pNew = ( *itConsumption )->CreateCopy();
         pCopy->consumptions_.AddItem( pNew );
@@ -284,8 +284,8 @@ namespace
 // -----------------------------------------------------------------------------
 const std::string ADN_Inhabitants_Data::InhabitantsInfos::CheckErrors() const
 {
-    for( CIT_EventInfosVector it1 = schedule_.begin(); it1 != schedule_.end(); ++it1 )
-        for( CIT_EventInfosVector it2 = schedule_.begin(); it2 != schedule_.end(); ++it2 )
+    for( auto it1 = schedule_.begin(); it1 != schedule_.end(); ++it1 )
+        for( auto it2 = schedule_.begin(); it2 != schedule_.end(); ++it2 )
             if( it1 != it2 && ( *it1 )->day_.GetData() == ( *it2 )->day_.GetData() &&
                 !CheckTime( ( *it1 )->from_.GetData(), ( *it1 )->to_.GetData(), ( *it2 )->from_.GetData(), ( *it2 )->to_.GetData() ) )
                 return tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).toStdString() + std::string( "\n" ) +

@@ -23,9 +23,7 @@ class ADN_Type_Vector_ABC : public ADN_Connector_Vector_ABC
 {
 
 public:
-    typedef std::vector<T*>                T_PtrVector;
-    typedef T_PtrVector::iterator          IT_PtrVector;
-    typedef T_PtrVector::const_iterator    CIT_PtrVector;
+    typedef std::vector< T* > T_PtrVector;
 
     typedef ADN_Type_ABC< std::string >& ( *T_Extractor )( T& );
     class UniquenessChecker : public ADN_Checker

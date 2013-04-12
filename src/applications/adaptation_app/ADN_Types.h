@@ -17,29 +17,11 @@
 
 class QWidget;
 
-typedef ADN_Type_ABC<bool>          ADN_Type_Bool;
-typedef ADN_Type_ABC<int>           ADN_Type_Int;
-typedef ADN_Type_ABC<double>        ADN_Type_Double;
-typedef ADN_Type_ABC<std::string>   ADN_Type_String;
-typedef ADN_Type_ABC<std::string>   ADN_Type_Time;
-typedef ADN_Type_ABC<tools::Path>   ADN_Type_Path;
-
-#define TYPEDEF_DECLARATION( BaseType, NewName )                        \
-    typedef BaseType T_ ## NewName;
-
-#define TYPEDEF_WITH_ITERATOR_DECLARATION( BaseType, NewName )          \
-    TYPEDEF_DECLARATION( BaseType, NewName )                            \
-    typedef BaseType::iterator IT_ ## NewName;
-
-#define TYPEDEF_WITH_CONST_ITERATOR_DECLARATION( BaseType, NewName )    \
-    TYPEDEF_DECLARATION( BaseType, NewName )                            \
-    typedef BaseType::const_iterator CIT_ ## NewName;
-
-#define TYPEDEF_FULL_DECLARATION( BaseType, NewName )                   \
-    TYPEDEF_DECLARATION( BaseType, NewName )                            \
-    typedef BaseType::iterator IT_ ## NewName;                          \
-    typedef BaseType::const_iterator CIT_ ## NewName;
-
-TYPEDEF_FULL_DECLARATION( std::vector<QWidget*>, PtrWidgetVector )
+typedef ADN_Type_ABC< bool >        ADN_Type_Bool;
+typedef ADN_Type_ABC< int >         ADN_Type_Int;
+typedef ADN_Type_ABC< double >      ADN_Type_Double;
+typedef ADN_Type_ABC< std::string > ADN_Type_String;
+typedef ADN_Type_ABC< std::string > ADN_Type_Time;
+typedef ADN_Type_ABC< tools::Path > ADN_Type_Path;
 
 #endif // __ADN_Types_h_

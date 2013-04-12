@@ -10,8 +10,6 @@
 #ifndef __ADN_WizardPage_h_
 #define __ADN_WizardPage_h_
 
-#include <boost/noncopyable.hpp>
-
 // =============================================================================
 /** @class  ADN_WizardPage
     @brief  ADN_WizardPage
@@ -20,12 +18,10 @@
 // =============================================================================
 template< typename T >
 class ADN_WizardPage : public QWizardPage
-                     , private boost::noncopyable
 {
 
 public:
-    typedef std::vector< T* >                       T_ItemVector;
-    typedef typename T_ItemVector::const_iterator CIT_ItemVector;
+    typedef std::vector< T* > T_ItemVector;
 
 public:
     //! @name Constructors/Destructor

@@ -56,9 +56,7 @@ public slots:
 private:
     //! @name Types
     //@{
-    typedef std::map< E_WorkspaceElements, int >    T_ElementIndexMap;
-    typedef T_ElementIndexMap::iterator            IT_ElementIndexMap;
-    typedef T_ElementIndexMap::const_iterator     CIT_ElementIndexMap;
+    typedef std::map< E_WorkspaceElements, int > T_ElementIndexMap;
     //@}
 
 private:

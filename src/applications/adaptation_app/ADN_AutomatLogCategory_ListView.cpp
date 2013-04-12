@@ -200,7 +200,7 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
 {
     // Dotation (eg. ration)
     ADN_Resources_Data::T_ResourceInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources();
-    for( ADN_Resources_Data::IT_ResourceInfos_Vector itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
+    for( auto itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
     {
         ADN_Resources_Data::ResourceInfos& dotation = **itDotation;
         ADN_Rich_ListViewItem* pDotationItem = new ADN_Rich_ListViewItem( this, Qt::AlignVCenter | Qt::AlignRight );
@@ -208,14 +208,14 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
 
         // Dotation category (eg. bouffe)
         ADN_Resources_Data::T_CategoryInfos_Vector& categories = dotation.GetCategories();
-        for( ADN_Resources_Data::IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
+        for( auto itCat = categories.begin(); itCat != categories.end(); ++itCat )
         {
             ADN_Resources_Data::CategoryInfo& category = **itCat;
             ADN_Rich_ListViewItem* pCatItem = new ADN_Rich_ListViewItem( pDotationItem, Qt::AlignVCenter | Qt::AlignRight );
             pCatItem->setText( eColumnTarget, category.strName_.GetData().c_str() );
 
             // Automat
-            for( ADN_Automata_Data::IT_AutomatonInfosVector it = data_.vAutomata_.begin(); it != data_.vAutomata_.end(); ++it )
+            for( auto it = data_.vAutomata_.begin(); it != data_.vAutomata_.end(); ++it )
             {
                 ADN_Automata_Data::AutomatonInfos& automaton = **it;
                 ADN_Rich_ListViewItem* pAutomatItem = 0;
@@ -223,7 +223,7 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
                 // Unit
                 uint nUnitInAutomat = 0;
                 uint nCompInAutomat = 0;
-                for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); nUnitInAutomat == 0 || it2 != automaton.vSubUnits_.end(); )
+                for( auto it2 = automaton.vSubUnits_.begin(); nUnitInAutomat == 0 || it2 != automaton.vSubUnits_.end(); )
                 {
                     ADN_Automata_Data::UnitInfos* pUnit = 0;
                     ADN_Rich_ListViewItem* pUnitItem = 0;
@@ -250,7 +250,7 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
 
                     // Component
                     uint nCompInUnit = 0;
-                    for( ADN_Units_Data::IT_ComposanteInfos_Vector it3 = unit.vComposantes_.begin(); it3 != unit.vComposantes_.end(); ++it3 )
+                    for( auto it3 = unit.vComposantes_.begin(); it3 != unit.vComposantes_.end(); ++it3 )
                     {
                         T_Entry compTotal;
                         Context context( pAutomatItem, pUnitItem, pCatItem, automaton, nUnitInAutomat, nUnit, unit, compTotal );

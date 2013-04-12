@@ -152,7 +152,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
     int nRow = 0;
     ADN_Automata_Data::T_AutomatonInfosVector automats = data_.vAutomata_;
     std::sort( automats.begin(), automats.end(), ADN_Tools::NameSort<ADN_Automata_Data::AutomatonInfos>() );
-    for( ADN_Automata_Data::IT_AutomatonInfosVector it = automats.begin(); it != automats.end(); ++it )
+    for( auto it = automats.begin(); it != automats.end(); ++it )
     {
         ADN_Automata_Data::AutomatonInfos& automaton = **it;
         pTable->setNumRows( std::max( pTable->numRows(), nRow + 1 ) );
@@ -162,7 +162,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
         unsigned int nAutoNCOfficer = 0;
         int  nAutoTroops = 0;
 
-        for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); nSubRow == 0 || it2 != automaton.vSubUnits_.end(); )
+        for( auto it2 = automaton.vSubUnits_.begin(); nSubRow == 0 || it2 != automaton.vSubUnits_.end(); )
         {
             ADN_Automata_Data::UnitInfos* pUnit = ( nSubRow == 0 ) ? automaton.ptrUnit_.GetData() : *it2;
             assert( pUnit && pUnit->GetCrossedElement() != 0 );
@@ -178,7 +178,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
 
             int nSubSubRow = 0;
             int nTroops = 0;
-            for( ADN_Units_Data::IT_ComposanteInfos_Vector it3 = unit.vComposantes_.begin(); it3 != unit.vComposantes_.end(); ++it3, ++nSubSubRow )
+            for( auto it3 = unit.vComposantes_.begin(); it3 != unit.vComposantes_.end(); ++it3, ++nSubSubRow )
             {
                 ADN_Units_Data::ComposanteInfos* composantes = *it3;
                 pTable->setNumRows( std::max( pTable->numRows(), nRow + nSubRow + nSubSubRow + 1 ) );

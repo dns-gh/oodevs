@@ -103,7 +103,6 @@ public:
 
 public:
     typedef std::map< E_WorkspaceElements, QStringList >  T_UsingElements;
-    typedef T_UsingElements::const_iterator             CIT_UsingElements;
 
 public:
     void Build( ADN_MainWindow& mainWindow );

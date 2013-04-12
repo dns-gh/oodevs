@@ -43,7 +43,7 @@ public:
         ADN_Type_String to_;
         ADN_TypePtr_InVector_ABC< ADN_Urban_Data::AccommodationInfos > ptrAccommodation_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< EventInfos >, EventInfosVector )
+    typedef ADN_Type_Vector_ABC< EventInfos > T_EventInfosVector;
 
     class InhabitantsInfosConsumption : public ADN_CrossedRef< ADN_ResourceNetworks_Data::ResourceNetworkInfos >
     {
@@ -60,7 +60,7 @@ public:
     public:
         ADN_Type_Int consumption_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< InhabitantsInfosConsumption >, InhabitantsInfosConsumptionVector )
+    typedef ADN_Type_Vector_ABC< InhabitantsInfosConsumption > T_InhabitantsInfosConsumptionVector;
 
 // *****************************************************************************
     class InhabitantsInfos : public ADN_RefWithName
@@ -91,7 +91,7 @@ public:
         T_EventInfosVector schedule_;
         T_InhabitantsInfosConsumptionVector consumptions_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< InhabitantsInfos >, InhabitantsInfosVector )
+    typedef ADN_Type_Vector_ABC< InhabitantsInfos > T_InhabitantsInfosVector;
 
 // *****************************************************************************
 public:
@@ -137,7 +137,7 @@ ADN_Inhabitants_Data::T_InhabitantsInfosVector& ADN_Inhabitants_Data::GetInhabit
 inline
 ADN_Inhabitants_Data::InhabitantsInfos* ADN_Inhabitants_Data::FindInhabitant( const std::string& strName )
 {
-    IT_InhabitantsInfosVector it = std::find_if( vInhabitants_.begin(), vInhabitants_.end(), ADN_Tools::NameCmp< InhabitantsInfos >( strName ) );
+    auto it = std::find_if( vInhabitants_.begin(), vInhabitants_.end(), ADN_Tools::NameCmp< InhabitantsInfos >( strName ) );
     if( it == vInhabitants_.end() )
         return 0;
     return *it;

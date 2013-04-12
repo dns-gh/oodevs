@@ -117,7 +117,7 @@ void ADN_Objects_Data_ObjectInfos::InitializeCapacities()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data_ObjectInfos::ReadCapacityArchive( const std::string& type, xml::xistream& xis )
 {
-    IT_CapacityMap it = capacities_.find( type );
+    auto it = capacities_.find( type );
     if( it != capacities_.end() )
         it->second->ReadArchive( xis );
 }

@@ -54,8 +54,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, boost::shared_ptr< helpers::ADN_TypeCapacity_Infos > > T_CapacityMap;
-    typedef T_CapacityMap::iterator                                                      IT_CapacityMap;
-    typedef T_CapacityMap::const_iterator                                               CIT_CapacityMap;
     //@}
 
     //! @name Member data

@@ -41,7 +41,6 @@ public:
 };
 
 typedef ADN_Type_Vector_ABC< ArmorInfos > T_ArmorInfos_Vector;
-typedef T_ArmorInfos_Vector::iterator    IT_ArmorInfos_Vector;
 
 // -----------------------------------------------------------------------------
 // Name: ArmorInfos::GetItemName

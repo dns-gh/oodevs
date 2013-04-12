@@ -53,7 +53,7 @@ void ADN_GraphData::AddData( ADN_GraphValue& value )
 // -----------------------------------------------------------------------------
 void ADN_GraphData::DeleteData( void* pRelatedObject )
 {
-    for( IT_GraphValue_Vector it = graphValueList_.begin(); it != graphValueList_.end(); )
+    for( auto it = graphValueList_.begin(); it != graphValueList_.end(); )
     {
         ADN_GraphValue& value = **it;
         // Check if the value is related to the object being deleted.
@@ -80,7 +80,7 @@ void ADN_GraphData::DeleteData( void* pRelatedObject )
 // -----------------------------------------------------------------------------
 void ADN_GraphData::OnDataChanged( ADN_GraphValue& value )
 {
-    IT_GraphValue_Vector it = std::find( graphValueList_.begin(), graphValueList_.end(), &value );
+    auto it = std::find( graphValueList_.begin(), graphValueList_.end(), &value );
     assert( it != graphValueList_.end() );
     T_Point newPoint = value.GetPoint();
     this->ChangePoint( static_cast< unsigned int >( std::distance( graphValueList_.begin(), it ) ), newPoint );
@@ -96,7 +96,7 @@ void ADN_GraphData::OnDataChanged( ADN_GraphValue& value )
 void ADN_GraphData::SelectRelatedData( void* pObj )
 {
     SetSelected( false );
-    for( IT_GraphValue_Vector it = graphValueList_.begin(); it != graphValueList_.end(); ++it )
+    for( auto it = graphValueList_.begin(); it != graphValueList_.end(); ++it )
     {
         ADN_GraphValue* pValue = *it;
         if( pValue->GetRelatedObject() == pObj )

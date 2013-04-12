@@ -97,8 +97,7 @@ private:
     BaseType ComputeLinkedSum() const;
 
 private:
-    typedef std::vector< ADN_Type_ABC< BaseType >* >    T_ValuesVector;
-    typedef typename T_ValuesVector::const_iterator   CIT_ValuesVector;
+    typedef std::vector< ADN_Type_ABC< BaseType >* > T_ValuesVector;
 
 private:
     T_ValuesVector linkedValues_;

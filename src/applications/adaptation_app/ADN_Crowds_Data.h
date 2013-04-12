@@ -63,7 +63,7 @@ public:
             helpers::ArmorInfos* val_;
         };
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC< FireEffectProtectionInfos >, FireEffectProtectionInfosVector )
+    typedef ADN_Type_VectorFixed_ABC< FireEffectProtectionInfos > T_FireEffectProtectionInfosVector;
 
 // *****************************************************************************
     class FireEffectInfos : public ADN_RefWithName
@@ -98,7 +98,7 @@ public:
             E_PopulationAttitude val_;
         };
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< FireEffectInfos >, FireEffectInfosVector )
+    typedef ADN_Type_Vector_ABC< FireEffectInfos > T_FireEffectInfosVector;
 
 // *****************************************************************************
     class FireEffectRoeInfos : public ADN_RefWithName
@@ -117,7 +117,7 @@ public:
         ADN_Type_Double rAttritionSurface_;
         ADN_Type_Double rPH_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< FireEffectRoeInfos >, FireEffectRoeInfosVector )
+    typedef ADN_Type_Vector_ABC< FireEffectRoeInfos > T_FireEffectRoeInfosVector;
 
 // *****************************************************************************
     class SpeedEffectVolumeInfos : public ADN_CrossedRef< ADN_Categories_Data::SizeInfos >
@@ -151,7 +151,7 @@ public:
             ADN_Categories_Data::SizeInfos* val_;
         };
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC< SpeedEffectVolumeInfos >, SpeedEffectVolumeInfosVector )
+    typedef ADN_Type_VectorFixed_ABC< SpeedEffectVolumeInfos > T_SpeedEffectVolumeInfosVector;
 
 // *****************************************************************************
     class SpeedEffectInfos : public ADN_RefWithName
@@ -168,7 +168,7 @@ public:
         E_PopulationAttitude nAttitude_;
         T_SpeedEffectVolumeInfosVector vVolumeInfos_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< SpeedEffectInfos >, SpeedEffectInfosVector )
+    typedef ADN_Type_Vector_ABC< SpeedEffectInfos > T_SpeedEffectInfosVector;
 
 // *****************************************************************************
     class UrbanEffectInfos : public ADN_RefWithName
@@ -185,7 +185,7 @@ public:
         ADN_Type_Double rDensity_;
         ADN_Type_Time rTime_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< UrbanEffectInfos >, UrbanEffectInfosVector )
+    typedef ADN_Type_Vector_ABC< UrbanEffectInfos > T_UrbanEffectInfosVector;
 
 // *****************************************************************************
     class CrowdsInfos : public ADN_RefWithName
@@ -220,7 +220,7 @@ public:
         T_FireEffectRoeInfosVector vFireEffectRoeInfos_;
         T_UrbanEffectInfosVector vUrbanEffectInfos_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< CrowdsInfos >, CrowdsInfosVector )
+    typedef ADN_Type_Vector_ABC< CrowdsInfos > T_CrowdsInfosVector;
 
 // *****************************************************************************
     class ReloadingSpeedEffectInfos : public ADN_Ref_ABC
@@ -281,7 +281,7 @@ ADN_Crowds_Data::T_CrowdsInfosVector& ADN_Crowds_Data::GetCrowds()
 inline
 ADN_Crowds_Data::CrowdsInfos* ADN_Crowds_Data::FindCrowd( const std::string& strName )
 {
-    IT_CrowdsInfosVector it = std::find_if( vCrowds_.begin(), vCrowds_.end(), ADN_Tools::NameCmp< CrowdsInfos >( strName ) );
+    auto it = std::find_if( vCrowds_.begin(), vCrowds_.end(), ADN_Tools::NameCmp< CrowdsInfos >( strName ) );
     if( it == vCrowds_.end() )
         return 0;
     return *it;

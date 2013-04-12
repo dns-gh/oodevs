@@ -596,7 +596,7 @@ bool ADN_MainWindow::SelectOpenMode()
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::ShowCoheranceTable( int nId )
 {
-    IT_TableRegistrationMap itTable = vTableRegistrations_.find( nId );
+    auto itTable = vTableRegistrations_.find( nId );
     if( itTable != vTableRegistrations_.end() )
     {
         T_TableRegistrationItem& item = itTable->second;
@@ -610,7 +610,7 @@ void ADN_MainWindow::ShowCoheranceTable( int nId )
         delete pDialog;
         return;
     }
-    IT_ListViewRegistrationMap itListView = vListViewRegistrations_.find( nId );
+    auto itListView = vListViewRegistrations_.find( nId );
     if( itListView != vListViewRegistrations_.end() )
     {
         T_ListViewRegistrationItem& item = itListView->second;

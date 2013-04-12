@@ -66,7 +66,7 @@ public:
     };
 };
 
-TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC< ADN_MissionGenObjectTypes_Infos >, MissionGenObjectTypes_Infos_Vector );
+typedef ADN_Type_VectorFixed_ABC< ADN_MissionGenObjectTypes_Infos > T_MissionGenObjectTypes_Infos_Vector;
 
 } // end namespace helpers
 

@@ -71,7 +71,7 @@ ADN_Missions_Mission* ADN_Missions_Mission::CreateCopy()
     newMission->missionSheetPath_        = missionSheetPath_.GetData();
     newMission->symbol_                  = symbol_.GetData();
     newMission->parameters_.reserve( parameters_.size() );
-    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
     {
         ADN_Missions_Parameter* newParam = (*it)->CreateCopy();
         newMission->parameters_.AddItem( newParam );

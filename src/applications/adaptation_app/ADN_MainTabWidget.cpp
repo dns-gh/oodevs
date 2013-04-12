@@ -95,7 +95,7 @@ void ADN_MainTabWidget::OnCurrentChanged( int index )
 // -----------------------------------------------------------------------------
 void ADN_MainTabWidget::OnChangeTab( E_WorkspaceElements target )
 {
-    CIT_ElementIndexMap it = elementIndexMap_.find( target );
+    auto it = elementIndexMap_.find( target );
     assert( it != elementIndexMap_.end() );
     setCurrentIndex( it->second );
 }

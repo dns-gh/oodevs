@@ -57,8 +57,6 @@ private:
     //! @name Types
     //@{
     typedef std::map< int, ADN_Data_ABC* >  T_Elements;
-    typedef T_Elements::iterator           IT_Elements;
-    typedef T_Elements::const_iterator    CIT_Elements;
     //@}
 
 private:
@@ -86,7 +84,7 @@ void ADN_Data_Container::AddElement( int index )
 template< typename DataBaseType >
 DataBaseType& ADN_Data_Container::GetElement( int index )
 {
-    CIT_Elements it = elements_.find( index );
+    auto it = elements_.find( index );
     assert( it != elements_.end() );
     assert( dynamic_cast< DataBaseType* >( it->second ) != 0 );
     return *static_cast< DataBaseType* >( it->second );

@@ -64,7 +64,7 @@ public:
         ADN_Type_Double rPackageWeight_;
         ADN_Type_Bool   bNetworkUsable_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<CategoryInfo>, CategoryInfos_Vector );
+    typedef ADN_Type_Vector_ABC< CategoryInfo > T_CategoryInfos_Vector;
 
 //*****************************************************************************
     class ModificatorPostureInfos : public ADN_Ref_ABC
@@ -93,7 +93,7 @@ public:
              E_UnitPosture val_;
         };
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<ModificatorPostureInfos>, ModificatorPostureInfos_Vector );
+    typedef ADN_Type_Vector_ABC<ModificatorPostureInfos> T_ModificatorPostureInfos_Vector;
 
 // *****************************************************************************
     class IndirectAmmoInfos : public ADN_Ref_ABC
@@ -211,8 +211,6 @@ public:
 
         virtual void CheckValidity();
     };
-    typedef T_ResourceInfos_Vector::iterator         IT_ResourceInfos_Vector;
-    typedef T_ResourceInfos_Vector::const_iterator  CIT_ResourceInfos_Vector;
 
 // *****************************************************************************
 public:
