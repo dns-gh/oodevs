@@ -328,6 +328,7 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     , bCanFly_                          ( false )
     , eCrossingHeight_                  ( static_cast< E_CrossingHeight >( 0 ) )
     , bIsAutonomous_                    ( false )
+    , footprint_                        ( 0. )
     , bInstallationDelay_               ( false )
     , installationDelay_                ( "0s" )
     , uninstallationDelay_              ( "0s" )
@@ -374,6 +375,7 @@ ADN_Units_Data::UnitInfos::UnitInfos( unsigned int id )
     , bCanFly_                          ( false )
     , eCrossingHeight_                  ( static_cast< E_CrossingHeight >( 0 ) )
     , bIsAutonomous_                    ( false )
+    , footprint_                        ( 0. )
     , bInstallationDelay_               ( false )
     , installationDelay_                ( "0s" )
     , uninstallationDelay_              ( "0s" )
@@ -438,6 +440,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->bCanFly_ = bCanFly_.GetData();
     pCopy->eCrossingHeight_ = eCrossingHeight_.GetData();
     pCopy->bIsAutonomous_ = bIsAutonomous_.GetData();
+    pCopy->footprint_ = footprint_.GetData();
 
     for( T_ComposanteInfos_Vector::iterator itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
         pCopy->vComposantes_.AddItem( (*itComposante)->CreateCopy() );
@@ -560,6 +563,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
             >> xml::attribute( "level", level )
             >> xml::attribute( "atlas-nature", atlas )
             >> xml::attribute( "nature-app6", strNature_ )
+            >> xml::optional >> xml::attribute( "depth", footprint_ )
           >> xml::end;
     CleanupNature();
 
@@ -680,8 +684,10 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "nature" )
             << xml::attribute( "level", eNatureLevel_.Convert() )
             << xml::attribute( "atlas-nature", eNatureAtlas_.Convert() )
-            << xml::attribute( "nature-app6", strNature_ )
-          << xml::end;
+            << xml::attribute( "nature-app6", strNature_ );
+    if( footprint_.GetData() )
+        output << xml::attribute( "depth", footprint_ );
+    output << xml::end;
 
     output << xml::start( "equipments" );
     for( CIT_ComposanteInfos_Vector itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )

@@ -5630,6 +5630,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>NBC suit</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Footprint</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>

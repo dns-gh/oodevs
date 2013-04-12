@@ -25,6 +25,7 @@
 											<xs:documentation>niveau hierarchique du pion.</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
+                  <xs:attribute name="depth" type="T_NonNegativeDouble" use="optional"/>
 								</xs:complexType>
 							</xs:element>
 							<xs:element name="equipments">

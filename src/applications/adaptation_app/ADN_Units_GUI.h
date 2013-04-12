@@ -74,6 +74,7 @@ public:
         eCanFly,
         eCrossingHeight,
         eIsAutonomous,
+        eFootprint,
         eHasInstallation,
         eInstallationDelay,
         eUninstallationDelay,

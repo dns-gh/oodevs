@@ -5649,6 +5649,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>NBC suit</source>
         <translation>Protection NBC</translation>
     </message>
+    <message>
+        <source>Footprint</source>
+        <translation>Emprise</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>

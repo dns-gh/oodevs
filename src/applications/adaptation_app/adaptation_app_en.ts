@@ -5627,6 +5627,10 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>NBC suit</source>
         <translation>NBC suit</translation>
     </message>
+    <message>
+        <source>Footprint</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>

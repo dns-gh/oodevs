@@ -112,6 +112,8 @@ void ADN_Units_GUI::Build()
     // Is autonomous
     builder.AddField< ADN_CheckBox >( pInfoHolder, "is-autonomous", tr( "Is autonomous (UAV)" ), vInfosConnectors[ eIsAutonomous ] );
     builder.AddStretcher( pInfoHolder, Qt::Vertical );
+    // Footprint
+    builder.AddField< ADN_EditLine_Double >( pInfoHolder, "footprint", tr( "Footprint" ), vInfosConnectors[eFootprint], tr( "m" ) );
 
     // Coup de sonde
     ADN_GroupBox* pReconGroup = builder.AddGroupBox( 0, "can-probe", tr( "Scan" ), vInfosConnectors[eCanProbe], 3 );

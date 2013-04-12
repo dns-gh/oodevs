@@ -77,6 +77,7 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Units_GUI::eCanFly ]->Connect( &pInfos->bCanFly_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eCrossingHeight ]->Connect( &pInfos->eCrossingHeight_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eIsAutonomous ]->Connect( &pInfos->bIsAutonomous_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eFootprint ]->Connect( &pInfos->footprint_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eInstallationDelay ]->Connect( &pInfos->installationDelay_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eUninstallationDelay ]->Connect( &pInfos->uninstallationDelay_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eHasInstallation ]->Connect( &pInfos->bInstallationDelay_, bConnect );
