@@ -90,6 +90,8 @@ private:
     E_NatureLevel            level_;
     const kernel::AgentType& type_;
     mutable std::string      symbolPath_;
+    mutable std::string      moveSymbol_;
+    mutable std::string      staticSymbol_;
     mutable std::string      levelPath_;
     std::string              nature_;
     bool                     overridenSymbol_;

@@ -37,6 +37,8 @@ Agent::Agent( const AgentType& type, Controller& controller, tools::IdManager& i
     : EntityImplementation< Agent_ABC >( controller, idManager.GetNextId(), type.GetName().c_str() )
     , type_                ( type )
     , symbolPath_          ( type_.GetSymbol() )
+    , moveSymbol_          ( type_.GetMoveSymbol() )
+    , staticSymbol_        ( type_.GetStaticSymbol() )
     , level_               ( ENT_Tr::ConvertToNatureLevel( type.GetNature().GetLevel() ) )
     , overridenSymbol_     ( false )
     , nature_              ( type.GetNature().GetNature() )
@@ -64,6 +66,8 @@ Agent::Agent( xml::xistream& xis, Controller& controller, tools::IdManager& idMa
     : EntityImplementation< Agent_ABC >( controller, xis.attribute< unsigned long >( "id" ), ReadName( xis ) )
     , type_           ( type )
     , symbolPath_     ( type_.GetSymbol() )
+    , moveSymbol_          ( type_.GetMoveSymbol() )
+    , staticSymbol_        ( type_.GetStaticSymbol() )
     , overridenSymbol_( xis.attribute< bool >( "overridden-symbol", false ) )
     , nature_         ( type.GetNature().GetNature() )
     , weight_         ( type.GetComposantesWeight() )
@@ -111,6 +115,8 @@ void Agent::InitializeSymbol() const
     levelPath_ = level;
     const kernel::Karma& karma = Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     kernel::App6Symbol::SetKarma( symbolPath_, karma );
+    kernel::App6Symbol::SetKarma( moveSymbol_, karma );
+    kernel::App6Symbol::SetKarma( staticSymbol_, karma );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +128,10 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
     if( viewport.IsHotpointVisible() )
     {
         InitializeSymbol();
-        tools.DrawApp6SymbolFixedSize( symbolPath_, where, -1.f, 0 );
+        
+        float width = type_.GetWidth();
+        float depth = type_.GetDepth();
+        tools.DrawUnitSymbol( symbolPath_, moveSymbol_, staticSymbol_, false, where, -1.f, 0, width, depth );
         tools.DrawApp6SymbolFixedSize( levelPath_, where, -1.f, 0 );
     }
 }
