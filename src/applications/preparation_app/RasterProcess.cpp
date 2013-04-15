@@ -12,15 +12,18 @@
 #include "moc_RasterProcess.cpp"
 #include "Config.h"
 #include "MT_Tools/MT_Logger.h"
-#include <tools/Path.h>
 #include <tools/EncodingConverter.h>
+#include <tools/Path.h>
+#include <tools/StdFileWrapper.h>
 #include <boost/make_shared.hpp>
 #include <boost/lexical_cast.hpp>
 
-RasterProcess::RasterProcess( const RasterCallback& callback, const tools::Path& output )
+RasterProcess::RasterProcess( const RasterCallback& callback, const tools::Path& output,
+       const tools::Path& logfile )
     : callback_( callback )
     , output_( output )
     , fired_( false )
+    , logfile_( logfile )
 {
     connect( this, SIGNAL( finished( int, QProcess::ExitStatus ) ),
         SLOT( OnExit( int, QProcess::ExitStatus ) ) );
@@ -48,6 +51,17 @@ void RasterProcess::Fire( int code, const tools::Path& output )
 {
     if( fired_ )
         return;
+    if( logfile_.Exists() )
+    {
+        tools::Ifstream fp( logfile_, std::ios::in );
+        std::string line;
+        while( std::getline( fp, line ))
+        {
+            MT_LOG_INFO_MSG( line );
+        }
+        fp.close();
+        logfile_.Remove();
+    }
     fired_ = true;
     callback_( code, output );
 }
@@ -59,13 +73,15 @@ boost::shared_ptr< QProcess > RunRasterApp( const tools::Path& input, int pixelS
     tools::Path cfgPath = config.BuildTerrainChildFile( "config.xml" )
         .SystemComplete();
     tools::Path output = config.GetGraphicsDirectory() / "~~tmp.texture.bin";
+    tools::Path logpath = output + ".log";
     parameters << ( std::string( "--config=" ) + cfgPath.ToUTF8()).c_str();
     parameters << ( std::string( "--raster=" ) + input.ToUTF8()).c_str();
     parameters << ( std::string( "--pixelsize=" )
         + boost::lexical_cast< std::string >( pixelSize ) ).c_str();
     parameters << ( std::string( "--file=" ) + output.SystemComplete().ToUTF8() ).c_str();
+    parameters << ( std::string( "--logfile=" ) + logpath.SystemComplete().ToUTF8() ).c_str();
 
-    auto p = boost::make_shared< RasterProcess >( callback, output );
+    auto p = boost::make_shared< RasterProcess >( callback, output, logpath );
     auto workingDirectory = tools::Path( "../Terrain/applications/" ).SystemComplete();
     p->setWorkingDirectory( workingDirectory.ToUTF8().c_str() );
     tools::Path exePath = workingDirectory / "raster_app.exe";

@@ -31,7 +31,8 @@ class RasterProcess : public QProcess
     Q_OBJECT
 
 public:
-    RasterProcess( const RasterCallback& callback, const tools::Path& output );
+    RasterProcess( const RasterCallback& callback, const tools::Path& output,
+           const tools::Path& logfile );
     virtual ~RasterProcess();
 
 private slots:
@@ -44,6 +45,7 @@ private:
 private:
     RasterCallback callback_;
     tools::Path output_;
+    tools::Path logfile_;
     bool fired_;
 };
 
