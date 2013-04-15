@@ -62,8 +62,8 @@ int main( int, char** )
     {
         debugDir.CreateDirectories();
         boost::scoped_ptr< MT_FileLogger >( new MT_FileLogger(
-            debugDir / "preparation.log", 1, -1,
-            MT_Logger_ABC::eLogLevel_All ) ).swap( logger );
+            debugDir / "preparation.log", 1, -1, MT_Logger_ABC::eLogLevel_All,
+            false, MT_Logger_ABC::ePreparation ) ).swap( logger );
         MT_LOG_REGISTER_LOGGER( *logger );
         MT_CrashHandler::SetRootDirectory( debugDir );
     }

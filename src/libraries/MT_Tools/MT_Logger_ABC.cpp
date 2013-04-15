@@ -77,6 +77,10 @@ const char* MT_Logger_ABC::GetTypeAsString() const
         return "Dispatcher";
     case eLoggerPlugin:
         return "Logger plugin";
+    case ePreparation:
+        return "Preparation";
+    case eGaming:
+        return "Gaming";
     default:
         return "Unknown type";
     }

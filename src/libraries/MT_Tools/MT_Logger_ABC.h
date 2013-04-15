@@ -43,7 +43,9 @@ public:
     {
         eSimulation = 0,
         eDispatcher,
-        eLoggerPlugin
+        eLoggerPlugin,
+        ePreparation,
+        eGaming,
     };
     //@}
 
