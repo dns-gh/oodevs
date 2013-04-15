@@ -91,6 +91,7 @@ private:
     bool overlined_;
     E_Dash_style dashStyle_;
     svg::DashArray dashed_;
+    svg::DashArray dashDot_;
     //@}
 };
 

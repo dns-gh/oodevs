@@ -101,6 +101,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     combo->setIconSize( pix.size() );
     combo->addItem( QIcon( pix ), "" );
     combo->addItem( QIcon( MakePixmap( "line_dashed" ) ), "" );
+    combo->addItem( QIcon( MakePixmap( "line_dash_dot" ) ), "" );
     connect( combo, SIGNAL( currentIndexChanged( int ) ), SLOT( OnLineChanged( int ) ) );
 
     //parent group

@@ -67,6 +67,8 @@ namespace
     {
         if( name == "dashed" )
             return eDashed;
+        if( name == "dash_dot" )
+            return eDash_dot;
         return eSolid;
     }
 
@@ -263,6 +265,8 @@ namespace
     {
         if( style == eDashed )
             return "dashed";
+        if( style == eDash_dot )
+            return "dash_dot";
         return "solid";
     }
 }

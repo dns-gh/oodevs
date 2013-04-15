@@ -21,7 +21,8 @@ namespace gui
 enum E_Dash_style
 {
     eSolid,
-    eDashed
+    eDashed,
+    eDash_dot
 };
 
 }

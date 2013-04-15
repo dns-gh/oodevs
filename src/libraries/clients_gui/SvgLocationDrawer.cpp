@@ -48,6 +48,7 @@ SvgLocationDrawer::SvgLocationDrawer( const DrawingTemplate& style )
     , zoom_     ( 1.f )
     , dashStyle_( eSolid )
     , dashed_   ( "10px,2px" )
+    , dashDot_  ( "20px,4px,6px,4px" )
 {
     GenerateCircle();
 }
@@ -222,12 +223,12 @@ void SvgLocationDrawer::DrawShape( const T& shape )
         context_->PushProperty( svg::RenderingContext_ABC::color, svgColor );
         context_->PushProperty( svg::RenderingContext_ABC::fillOpacity, opacity );
         context_->PushProperty( svg::RenderingContext_ABC::strokeOpacity, opacity );
-        if( dashStyle_ == eDashed )
-            context_->PushProperty( svg::RenderingContext_ABC::strokeDasharray, dashed_ );
+        if( dashStyle_ != eSolid )
+            context_->PushProperty( svg::RenderingContext_ABC::strokeDasharray, dashStyle_ == eDashed ? dashed_ : dashDot_ );
         if( tools_->IsPickingMode() )
             context_->EnablePickingMode( 5.f );
         style_.Draw( shape, *context_, *tools_, zoom_ );
-        if( dashStyle_ == eDashed )
+        if( dashStyle_ != eSolid )
             context_->PopProperty( svg::RenderingContext_ABC::strokeDasharray );
         context_->DisablePickingMode();
         context_->PopProperty( svg::RenderingContext_ABC::strokeOpacity );
