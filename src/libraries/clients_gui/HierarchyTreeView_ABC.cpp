@@ -172,8 +172,21 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
                 QStandardItem* currentSuperiorItem = entityItem->parent();
                 if( currentSuperiorItem != newSuperiorItem )
                 {
-                    QList< QStandardItem* > rowItems = currentSuperiorItem ? currentSuperiorItem->takeRow( entityItem->row() ) : dataModel_.invisibleRootItem()->takeRow( entityItem->row() );
-                    newSuperiorItem->appendRow( rowItems );
+                    QObject::blockSignals( true );
+                    QList< QStandardItem* > rowItems;
+                    if( currentSuperiorItem )
+                    {
+                        if( entityItem->row() < currentSuperiorItem->rowCount() )
+                            currentSuperiorItem->takeRow( entityItem->row() );
+                    }
+                    else
+                    {
+                        if( entityItem->row() < dataModel_.rowCount() )
+                            dataModel_.invisibleRootItem()->takeRow( entityItem->row() );
+                    }
+                    QObject::blockSignals( false );
+                    if( !rowItems.isEmpty() )
+                        newSuperiorItem->appendRow( rowItems );
                 }
             }
             else
