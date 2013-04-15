@@ -192,3 +192,24 @@ func (s *TestSuite) TestStoppingSimProcess(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(sim.Success(), Equals, true)
 }
+
+// Test --legacy=0/1
+func (s *TestSuite) TestLegacyOption(c *C) {
+	runOne := func(legacy bool) {
+		session := simu.CreateDefaultSession()
+		session.EndTick = 1
+		opts := MakeOpts()
+		opts.Legacy = legacy
+		WriteSession(c, opts, session)
+		sim, err := simu.StartSim(opts)
+		c.Assert(err, IsNil)
+		defer sim.Kill()
+		c.Assert(sim.Wait(2*time.Minute), Equals, true)
+		logData := ReadTextFile(c, opts.GetSimLogPath())
+		re, err := regexp.Compile("(?s).*- Release - Legacy mode.*")
+		c.Assert(err, IsNil)
+		c.Assert(re.MatchString(logData), Equals, legacy)
+	}
+	runOne(false)
+	runOne(true)
+}
