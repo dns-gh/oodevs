@@ -12393,7 +12393,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Groupe PROTERRE" id="419" name="Ztest jour" type="Pion INF">
-    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry/undefined"/>
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Ztest jour"/>
     </equipments>
@@ -19222,4 +19222,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0858561587" -->
+<!-- signature="3223083274" -->
