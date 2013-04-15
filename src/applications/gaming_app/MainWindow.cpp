@@ -623,12 +623,4 @@ void MainWindow::OnRasterProcessExited( int exitCode, const tools::Path& output 
     }
     else
         QMessageBox::warning( this, tr( "Error loading image file" ), tr( "Error while loading Raster source." ) );
-    try
-    {
-        output.Remove();
-    }
-    catch( ... )
-    {
-        // NOTHING
-    }
 }

@@ -52,7 +52,8 @@ private:
 // Execute raster_app.exe on the input file with specified pixel quality.
 // Return the spawned QProcess instance, and eventually fire the callback
 // with a zero-exit code on success and the path of generated texture layer,
-// or a non-zero exit code.
+// or a non-zero exit code. Generated texture files is only valid during
+// the callback execution.
 boost::shared_ptr< QProcess > RunRasterApp( const tools::Path& input,
     int pixelSize, const tools::ExerciseConfig& config, const RasterCallback& callback );
 

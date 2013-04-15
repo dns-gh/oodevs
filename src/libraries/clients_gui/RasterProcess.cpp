@@ -64,6 +64,14 @@ void RasterProcess::Fire( int code, const tools::Path& output )
     }
     fired_ = true;
     callback_( code, output );
+
+    try
+    {
+        output.Remove();
+    }
+    catch( const std::exception& )
+    {
+    }
 }
 
 boost::shared_ptr< QProcess > RunRasterApp( const tools::Path& input, int pixelSize,
