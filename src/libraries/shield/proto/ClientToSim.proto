@@ -1,0 +1,200 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+package MsgsClientToSim;
+
+import "Common.proto"; 
+
+message MsgControlDatetimeChange {
+   required Common.MsgDateTime date_time = 1;
+}
+
+message MsgControlCheckPointSaveNow {
+   optional string name = 1;
+}
+
+message MsgFragOrder {
+   required Common.Tasker               tasker     = 1;
+   required Common.FragOrderType        frag_order = 2;
+   optional Common.MsgMissionParameters parameters = 3;
+}
+
+message MsgSetAutomatMode {
+   required Common.AutomatId       automate = 1;
+   required Common.EnumAutomatMode mode     = 2;
+}
+
+// Magic Action
+message MsgUnitMagicAction {
+   enum Type {
+        move_to                           = 0;
+        surrender_to                      = 1;
+        cancel_surrender                  = 2;
+        recover_transporters              = 3;
+        destroy_component                 = 4;
+        recover_all                       = 5;
+        recover_troops                    = 6;
+        recover_equipments                = 7;
+        recover_resources                 = 8;
+        destroy_all                       = 9;
+        change_human_factors              = 10;
+        partial_recovery                  = 11;
+        unit_creation                     = 12;
+        create_fire_order                 = 13;
+        crowd_total_destruction           = 14;
+        crowd_change_health_state         = 15;
+        crowd_change_attitude             = 16;
+        crowd_change_affinities           = 17;
+        crowd_change_armed_individuals    = 18;
+        change_knowledge_group            = 19;
+        change_logistic_links             = 20;
+        unit_change_superior              = 21;
+        change_automat_superior           = 22;
+        change_formation_superior         = 23;
+        knowledge_group_update            = 24;
+        log_supply_push_flow              = 25;
+        log_supply_change_quotas          = 26;
+        automat_creation                  = 27;
+        formation_creation                = 28;
+        crowd_creation                    = 29;
+        log_supply_pull_flow              = 30;
+        inhabitant_change_health_state    = 31;
+        inhabitant_change_affinities      = 32;
+        unit_change_affinities            = 33;
+        change_extension                  = 34;
+        change_critical_intelligence      = 35;
+        transfer_equipment                = 36;
+        knowledge_creation                = 37;
+        change_equipment_human_size       = 38;
+        create_breakdowns                 = 39;
+        create_wounds                     = 40;
+        log_finish_handlings              = 41;
+        delete_unit                       = 42;
+    }
+   required Common.Tasker               tasker     = 1;
+   required Type                        type       = 2;
+   required Common.MsgMissionParameters parameters = 3;
+}
+
+message MsgKnowledgeMagicAction {
+   enum Type {
+        enable                 = 0;
+        update_party           = 1;
+        update_party_parent    = 2;
+        update_type            = 3;
+    }
+   required Common.KnowledgeGroupId     knowledge_group = 1;
+   required Type                        type            = 2;
+   required Common.MsgMissionParameters parameters      = 3;
+}
+
+message MsgObjectMagicAction {
+   enum Type {
+        create  = 0;
+        update  = 1;
+        destroy = 2;
+   }
+   
+   enum Attribute {
+        construction          = 0;
+        obstacle              = 1;
+        valorisation          = 2;
+        activity_time         = 3;
+        bypass                = 4;
+        logistic              = 5;
+        nbc                   = 6;
+        crossing_site         = 7;
+        supply_route          = 8;
+        toxic_cloud           = 9;
+        fire                  = 10;
+        medical_treatment     = 11;
+        interaction_height    = 12;
+        stock                 = 13;
+        nbc_agent             = 14;
+        effect_delay          = 15;
+        flood                 = 16;
+        burn_surface          = 17;
+        structural_state      = 18;
+        infrastructure        = 19;
+        usages                = 20;
+        lodging               = 21;
+        trafficability        = 22;
+        underground           = 23;
+        density               = 24; // FT 370059
+   }
+   
+   required Common.ObjectId             object     = 1;
+   required Type                        type       = 2;
+   required Common.MsgMissionParameters parameters = 3;
+}
+
+message MsgMagicAction {
+   enum Type {
+        global_weather                      = 0;
+        local_weather                       = 1;
+        local_weather_destruction           = 2;
+        change_diplomacy                    = 3;
+        create_knowledge_group              = 4;
+        change_resource_network_properties  = 5;
+        create_fire_order_on_location       = 6;
+    }
+   required Type                        type       = 1;
+   required Common.MsgMissionParameters parameters = 2;
+}
+
+message MsgControlCheckPointSetFrequency {
+   required int32 frequency = 1;
+}
+
+message MsgControlCheckPointDeleteRequest {
+   required string checkpoint = 1;
+}
+
+message MsgControlExportRequest {
+   required string directory_name = 1;
+}
+
+message MsgControlCheckPointListRequest {}
+
+
+message MsgControlEnableVisionCones {
+   required bool vision_cones = 1;
+}
+
+message MsgOrderStream {
+    required string serialized_order = 1;
+}
+
+message MsgClientToSim {
+    message Content {
+       optional Common.MsgControlStop                  control_stop                         = 1;
+       optional Common.MsgControlPause                 control_pause                        = 2;
+       optional Common.MsgControlResume                control_resume                       = 3;
+       optional Common.MsgControlChangeTimeFactor      control_change_time_factor           = 4;
+       optional MsgControlDatetimeChange               control_date_time_change             = 5;
+       optional MsgControlCheckPointSaveNow            control_checkpoint_save_now          = 6;
+       optional MsgControlCheckPointSetFrequency       control_checkpoint_set_frequency     = 7;
+       optional MsgControlEnableVisionCones            control_toggle_vision_cones          = 8;
+       optional Common.MsgUnitOrder                    unit_order                           = 9;
+       optional Common.MsgAutomatOrder                 automat_order                        = 10;
+       optional Common.MsgCrowdOrder                   crowd_order                          = 11;
+       optional MsgFragOrder                           frag_order                           = 12;
+       optional MsgSetAutomatMode                      set_automat_mode                     = 13;
+       optional MsgUnitMagicAction                     unit_magic_action                    = 14;
+       optional MsgObjectMagicAction                   object_magic_action                  = 15;
+       optional MsgKnowledgeMagicAction                knowledge_magic_action               = 16;
+       optional MsgMagicAction                         magic_action                         = 17;
+       optional MsgControlCheckPointListRequest        control_checkpoint_list_request      = 18;
+       optional MsgControlCheckPointDeleteRequest      control_checkpoint_delete_request    = 19;
+       optional MsgControlExportRequest                control_export                       = 20;
+       optional MsgOrderStream                         order_stream                         = 21;
+    }
+    optional int32   context = 1;
+    required Content message = 2;
+}

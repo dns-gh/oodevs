@@ -1,0 +1,154 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+package MsgsMessengerToClient;
+
+import "Common.proto";
+
+// Drawing/shapes
+message MsgShapeCreation {
+   required Common.DrawingId id    = 1;
+   required Common.MsgShape shape = 2;
+}
+
+message MsgShapeUpdate {
+   required Common.DrawingId id    = 1;
+   required Common.MsgShape  shape = 2;
+}
+
+message MsgShapeDestruction {
+   required Common.DrawingId id = 1;
+}
+
+message ShapeRequestAck {
+    enum ErrorCode {
+        no_error               = 0;
+        error_invalid_oid      = 1;
+        error_invalid_geometry = 2;
+    }
+}
+message MsgShapeCreationRequestAck {
+    required ShapeRequestAck.ErrorCode error_code = 1;
+}
+
+message MsgShapeUpdateRequestAck {
+    optional ShapeRequestAck.ErrorCode error_code = 1;
+}
+
+message MsgShapeDestructionRequestAck {
+    required ShapeRequestAck.ErrorCode error_code = 1;
+}
+
+// markers (used during exercise and in AAR)
+
+message MsgMarkerCreation {
+    required Common.MarkerId            marker      = 1;
+	required Common.MsgMarker           definition  = 2;
+	required Common.MsgDateTime		    date	    = 3;
+}
+
+message MsgMarkerUpdate {
+    required Common.MarkerId            marker               = 1;
+    required Common.MsgDateTime         date                 = 2;
+    optional string                     name                 = 3; 
+    optional string                     description          = 4;
+    optional Common.MarkerId            parent               = 5; 
+    optional string                     optional_information = 6;
+}
+
+message MsgMarkerDestruction {
+	required Common.MarkerId            marker      = 1;
+}
+
+message MarkerRequestAck {
+    enum ErrorCode {
+        no_error                 = 0;
+        error_invalid_id         = 1;
+        error_invalid_parent     = 2;
+    }
+}
+message MsgMarkerCreationRequestAck {
+    required MarkerRequestAck.ErrorCode error_code = 1;
+}
+
+message MsgMarkerUpdateRequestAck {
+    optional MarkerRequestAck.ErrorCode error_code = 1;
+}
+
+message MsgMarkerDestructionRequestAck {
+    required MarkerRequestAck.ErrorCode error_code = 1;
+}
+
+// client objects
+
+message ClientObjectAck {
+    enum ErrorCode {
+        success                     = 0;
+        duplicate_attribute_name    = 1;
+        invalid_attribute_name      = 2;
+        invalid_object_id           = 3;
+    }
+}
+
+message MsgClientObjectCreation {
+    required Common.ClientObjectId object           = 1;
+    required string name                            = 2;
+    repeated Common.ClientObjectProperty properties = 3;
+}
+
+message MsgClientObjectUpdate {
+    required Common.ClientObjectId       object     = 1;
+    optional string                      name       = 2;
+    repeated Common.ClientObjectProperty properties = 3;
+}
+
+message MsgClientObjectDestruction {
+    required Common.ClientObjectId object           = 1;
+}
+
+message MsgClientObjectCreationRequestAck {
+    required string    name                             = 1;
+    required ClientObjectAck.ErrorCode error_code       = 2;
+}
+
+message MsgClientObjectUpdateRequestAck {
+    required Common.ClientObjectId object               = 1;
+    required ClientObjectAck.ErrorCode error_code       = 2;
+}
+
+message MsgClientObjectDestructionRequestAck {
+    required Common.ClientObjectId object               = 1;
+    required ClientObjectAck.ErrorCode error_code       = 2;
+}
+
+// message container
+message MsgMessengerToClient {
+    message Content {
+        optional MsgShapeCreation                       shape_creation                          = 1;
+        optional MsgShapeUpdate                         shape_update                            = 2;
+        optional MsgShapeDestruction                    shape_destruction                       = 3;
+        optional MsgShapeCreationRequestAck             shape_creation_request_ack              = 4;
+        optional MsgShapeDestructionRequestAck          shape_destruction_request_ack           = 5;
+        optional MsgShapeUpdateRequestAck               shape_update_request_ack                = 6;
+        optional MsgMarkerCreation                      marker_creation                         = 7;
+        optional MsgMarkerUpdate                        marker_update                           = 8;
+        optional MsgMarkerDestruction                   marker_destruction                      = 9;
+        optional MsgClientObjectCreation                client_object_creation                  = 10;
+        optional MsgClientObjectUpdate                  client_object_update                    = 11;
+        optional MsgClientObjectDestruction             client_object_destruction               = 12;
+        optional MsgClientObjectCreationRequestAck      client_object_creation_ack              = 13;
+        optional MsgClientObjectUpdateRequestAck        client_object_update_ack                = 14;
+        optional MsgClientObjectDestructionRequestAck   client_object_destruction_ack           = 15;
+        optional MsgMarkerCreationRequestAck            marker_creation_ack                     = 16;
+        optional MsgMarkerUpdateRequestAck              marker_update_ack                       = 17;
+        optional MsgMarkerDestructionRequestAck         marker_destruction_ack                  = 18;   
+    }
+    optional int32   context = 1;
+    required Content message = 2;
+}
