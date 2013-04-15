@@ -172,8 +172,12 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
                 QStandardItem* currentSuperiorItem = entityItem->parent();
                 if( currentSuperiorItem != newSuperiorItem )
                 {
+                    blockSignals( true );
+                    dataModel_.blockSignals( true );
                     QList< QStandardItem* > rowItems = currentSuperiorItem ? currentSuperiorItem->takeRow( entityItem->row() ) : dataModel_.invisibleRootItem()->takeRow( entityItem->row() );
                     newSuperiorItem->appendRow( rowItems );
+                    dataModel_.blockSignals( false );
+                    blockSignals( false );
                 }
             }
             else
