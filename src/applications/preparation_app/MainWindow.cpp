@@ -869,15 +869,15 @@ void MainWindow::OnRasterProcessExited( int exitCode, const tools::Path& output 
         dialogContainer_->GetPrefDialog().AddLayer( tr( "User layer [%1]" ).arg( dialogContainer_->GetAddRasterDialog().GetName() ), raster, true );
         raster.NotifyUpdated( kernel::ModelLoaded( config_ ) );
         raster.GenerateTexture();
-        try
-        {
-            output.Remove();
-        }
-        catch( const std::exception& )
-        {
-            // NOTHING
-        }
     }
     else
         QMessageBox::warning( this, tr( "Error loading image file" ), tr( "Error while loading Raster source." ) );
+    try
+    {
+        output.Remove();
+    }
+    catch( const std::exception& )
+    {
+        // NOTHING
+    }
 }
