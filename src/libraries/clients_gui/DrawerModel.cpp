@@ -195,9 +195,9 @@ void DrawerModel::NotifyDeleted( const kernel::Drawing_ABC& shape )
 // Name: DrawerModel::Create
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-kernel::Drawing_ABC* DrawerModel::Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const
+kernel::Drawing_ABC* DrawerModel::Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, E_Dash_style dashStyle ) const
 {
-    return factory_.CreateShape( style, color, entity );
+    return factory_.CreateShape( style, color, entity, dashStyle );
 }
 
 // -----------------------------------------------------------------------------

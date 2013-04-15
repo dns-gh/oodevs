@@ -689,6 +689,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\CriticalIntelligence.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\DashStyle.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DictionaryUpdated.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropHelpers.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\DragAndDropObserver_ABC.h" />

@@ -35,6 +35,19 @@ Drawing::Drawing( unsigned int id, const sword::ShapeCreationRequest& asn, const
         diffusion_ = asn.shape().diffusion();
     for( int i = 0; i < asn.shape().points().elem_size(); ++i )
         points_.push_back( asn.shape().points().elem( i ) );
+    if( asn.shape().has_pen_style() )
+        style_ = asn.shape().pen_style();
+}
+
+namespace
+{
+    sword::EnumPenStyle ReadStyle( xml::xistream& xis )
+    {
+        const std::string style = xis.attribute( "style", "" );
+        if( style == "dashed" )
+            return sword::dashed;
+        return sword::solid;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -50,6 +63,8 @@ Drawing::Drawing( unsigned int id, xml::xistream& xis, const boost::optional< sw
     , diffusion_( diffusion )
 {
     xis >> xml::list( "point", *this, &Drawing::ReadPoint );
+    if( xis.has_attribute( "style" ) )
+        style_ = ReadStyle( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,6 +79,7 @@ Drawing::Drawing( unsigned int id, const Drawing& rhs )
     , pattern_  ( rhs.pattern_ )
     , points_   ( rhs.points_ )
     , diffusion_( rhs.diffusion_ )
+    , style_    ( rhs.style_ )
 {
     // NOTHING
 }
@@ -170,6 +186,8 @@ void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     message().mutable_shape()->set_pattern( pattern_ );
     if( diffusion_ )
         *message().mutable_shape()->mutable_diffusion() = *diffusion_;
+    if( style_)
+        message().mutable_shape()->set_pen_style( *style_ );
     sword::CoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
     for( CIT_Points iter = points_.begin(); iter != points_.end(); ++iter )
         *points->add_elem() = *iter;        //const_cast< CoordLatLong* >( &points_.front() );

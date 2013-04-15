@@ -21,6 +21,7 @@
 #include "RichGroupBox.h"
 #include "RichToolButton.h"
 #include "SubObjectName.h"
+#include "ImageWrapper.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -30,6 +31,12 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;
+
+
+QPixmap MakePixmap( const tools::Path& name )
+{
+    return gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( tools::Path( "images/gui" ) / name + ".png" ) );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DrawerPanel constructor
@@ -44,6 +51,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     , selectedStyle_  ( 0 )
     , selectedDrawing_( controllers )
     , selectedEntity_ ( controllers )
+    , dashStyle_      ( eSolid )
 {
     SubObjectName subObject( "DrawerPanel" );
 
@@ -53,6 +61,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     box->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
     box->setBackgroundMode( Qt::PaletteButton );
     box->setFrameStyle( QFrame::StyledPanel | Q3Frame::Raised );
+    box->setSpacing( 2 );
 
     RichToolButton* btn = new RichToolButton( "LoadDrawings", box );
     btn->setAutoRaise( true );
@@ -85,7 +94,15 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     btn->setFixedSize( 25, 25 );
     QToolTip::add( btn, tr( "Start drawing" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( StartDrawing() ) );
-    
+
+    QComboBox* combo = new QComboBox( box );
+    combo->setEditable( false );
+    QPixmap pix( MakePixmap( "line_solid" ) );
+    combo->setIconSize( pix.size() );
+    combo->addItem( QIcon( pix ), "" );
+    combo->addItem( QIcon( MakePixmap( "line_dashed" ) ), "" );
+    connect( combo, SIGNAL( currentIndexChanged( int ) ), SLOT( OnLineChanged( int ) ) );
+
     //parent group
     QLabel* parentLabelText = new QLabel( tr( "Parent:" ) );
     parentLabel_ = new QLabel( "---" );
@@ -247,7 +264,7 @@ void DrawerPanel::StartDrawing()
 {
     if( selectedStyle_ )
     {
-        Drawing* shape = static_cast< Drawing* >( model_.Create( *selectedStyle_, color_->GetColor(), selectedEntity_ ) );
+        Drawing* shape = static_cast< Drawing* >( model_.Create( *selectedStyle_, color_->GetColor(), selectedEntity_, dashStyle_ ) );
         if( selectedStyle_->GetType() == "line" )
             layer_.StartLine( *shape );
         else if( selectedStyle_->GetType() == "polygon" )
@@ -314,4 +331,13 @@ void DrawerPanel::Clear()
 {
     model_.Purge();
     selectedDrawing_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::OnLineChanged
+// Created: LGY 2013-04-15
+// -----------------------------------------------------------------------------
+void DrawerPanel::OnLineChanged( int index )
+{
+    dashStyle_ = E_Dash_style( index );
 }

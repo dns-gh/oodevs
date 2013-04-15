@@ -93,7 +93,7 @@ void TacticalGraphics::SetCurrentColor( float r, float g, float b, float a )
 void TacticalGraphics::Draw( const std::string& symbol, const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool overlined, float zoom )
 {
     if( boost::shared_ptr< SvgLocationDrawer > renderer = FindRenderer( symbol ) )
-        renderer->Draw( location, viewport, tools, color_, overlined, zoom );
+        renderer->Draw( location, viewport, tools, color_, overlined, eSolid, zoom );
     else
     {
         SimpleLocationDrawer drawer( tools );

@@ -50,7 +50,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DrawerShape( kernel::Controllers& controllers, unsigned long id, const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
-                          kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter );
+                          kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter, E_Dash_style dashStyle );
              DrawerShape( kernel::Controllers& controllers, unsigned long id, xml::xistream& xis, const kernel::Entity_ABC* entity, const DrawingTypes& types,
                           kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter );
     virtual ~DrawerShape();

@@ -33,8 +33,9 @@ using namespace gui;
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
 DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, const DrawingTemplate& style, const QColor& color,
-                          const kernel::Entity_ABC* entity, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter )
-    : Drawing( controllers.controller_, id, style.GetName() )
+                          const kernel::Entity_ABC* entity, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter,
+                          E_Dash_style dashStyle )
+    : Drawing( controllers.controller_, id, style.GetName(), dashStyle )
     , controller_         ( controllers.controller_ )
     , style_              ( style )
     , location_           ( location )
@@ -61,6 +62,21 @@ namespace
         const std::string name = xis.attribute< std::string >( "color" );
         return QColor( name.c_str() );
     }
+
+    E_Dash_style Convert( const std::string& name )
+    {
+        if( name == "dashed" )
+            return eDashed;
+        return eSolid;
+    }
+
+    E_Dash_style ReadDashStyle( xml::xistream& xis )
+    {
+        std::string style;
+        xis >> xml::optional
+            >> xml::attribute( "style", style );
+        return Convert( style );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +85,7 @@ namespace
 // -----------------------------------------------------------------------------
 DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, xml::xistream& xis, const kernel::Entity_ABC* entity, const DrawingTypes& types,
                           kernel::LocationProxy& proxy, const kernel::CoordinateConverter_ABC& coordinateConverter )
-    : Drawing( controllers.controller_, id, ReadStyle( xis, types ).GetName() )
+    : Drawing( controllers.controller_, id, ReadStyle( xis, types ).GetName(), ReadDashStyle( xis ) )
     , controller_         ( controllers.controller_ )
     , style_              ( ReadStyle( xis, types ) )
     , location_           ( proxy )
@@ -169,7 +185,7 @@ void DrawerShape::Translate( const geometry::Point2f& from, const geometry::Vect
 // -----------------------------------------------------------------------------
 void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool overlined ) const
 {
-    drawer_->Draw( location_, viewport, tools, tools.IsPickingMode() ? tools.GetPickingColor() : color_, overlined, tools.GetAdaptiveZoomFactor() );
+    drawer_->Draw( location_, viewport, tools, tools.IsPickingMode() ? tools.GetPickingColor() : color_, overlined, dashStyle_, tools.GetAdaptiveZoomFactor() );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,7 +195,7 @@ void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC
 void DrawerShape::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     // $$$$ SBO 2008-06-03: check viewport
-    drawer_->Draw( location, viewport, tools, color_, true );
+    drawer_->Draw( location, viewport, tools, color_, true, dashStyle_, 1.f );
 }
 
 // -----------------------------------------------------------------------------
@@ -242,6 +258,13 @@ namespace
         xml::xostream* xos_;
         const kernel::CoordinateConverter_ABC& converter_;
     };
+
+    std::string SerializeDash( E_Dash_style style )
+    {
+        if( style == eDashed )
+            return "dashed";
+        return "solid";
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -254,6 +277,8 @@ void DrawerShape::Serialize( xml::xostream& xos ) const
     {
         xos << xml::start( "shape" )
                 << xml::attribute( "color", color_.name() );
+        if( dashStyle_ != eSolid )
+            xos << xml::attribute( "style", SerializeDash( dashStyle_ ) );
         style_.Serialize( xos );
         XmlSerializer serializer( xos, coordinateConverter_ );
         location_.Accept( serializer );

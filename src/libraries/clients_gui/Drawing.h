@@ -10,6 +10,7 @@
 #ifndef __gui_Drawing_h_
 #define __gui_Drawing_h_
 
+#include "DashStyle.h"
 #include "ShapeHandler_ABC.h"
 #include "EntityImplementation.h"
 #include "clients_kernel/Drawing_ABC.h"
@@ -39,7 +40,7 @@ class Drawing : public EntityImplementation< kernel::Drawing_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Drawing( kernel::Controller& controller, unsigned long id, const QString& name );
+             Drawing( kernel::Controller& controller, unsigned long id, const QString& name, E_Dash_style style = eSolid );
     virtual ~Drawing();
     //@}
 
@@ -57,6 +58,11 @@ protected:
     //@{
     virtual void Create() = 0;
     virtual void Update() = 0;
+    //@}
+
+    //! @name Member Data
+    //@{
+    E_Dash_style dashStyle_;
     //@}
 };
 

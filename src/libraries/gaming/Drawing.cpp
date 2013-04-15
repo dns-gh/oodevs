@@ -19,12 +19,25 @@
 #include "clients_kernel/LocationProxy.h"
 #include "protocol/Protocol.h"
 
+namespace
+{
+    gui::E_Dash_style Convert( const sword::ShapeCreation& message )
+    {
+        if( message.shape().has_pen_style() )
+            return gui::E_Dash_style( message.shape().has_pen_style() );
+        return gui::eSolid;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Drawing constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-Drawing::Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& message, const kernel::Entity_ABC* entity, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : gui::DrawerShape( controllers, message.id().id(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ), QColor( message.shape().color().red(), message.shape().color().green(), message.shape().color().blue() ), entity, proxy, converter )
+Drawing::Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& message, const kernel::Entity_ABC* entity, const gui::DrawingTypes& types,
+                  kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
+    : gui::DrawerShape( controllers, message.id().id(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ),
+                         QColor( message.shape().color().red(), message.shape().color().green(), message.shape().color().blue() ),
+                         entity, proxy, converter, Convert( message ) )
     , publisher_    ( publisher )
     , converter_    ( converter )
     , publishUpdate_( true )
@@ -37,8 +50,10 @@ Drawing::Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& 
 // Name: Drawing constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-Drawing::Drawing( kernel::Controllers& controllers, const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : gui::DrawerShape( controllers, 0, style, color, entity, proxy, converter )
+Drawing::Drawing( kernel::Controllers& controllers, const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
+                  kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
+                  gui::E_Dash_style dashStyle )
+    : gui::DrawerShape( controllers, 0, style, color, entity, proxy, converter, dashStyle )
     , publisher_    ( publisher )
     , converter_    ( converter )
     , publishUpdate_( true )
@@ -104,6 +119,8 @@ void Drawing::Create()
     message().mutable_shape()->mutable_color()->set_green( color_.green() );
     message().mutable_shape()->mutable_color()->set_blue( color_.blue() );
     message().mutable_shape()->set_pattern( style_.GetName().toStdString() );
+    if( dashStyle_ != gui::eSolid )
+        message().mutable_shape()->set_pen_style( sword::EnumPenStyle( dashStyle_ ) );
     if( entity_ )
     {
         if( entity_->GetTypeName() == kernel::Automat_ABC::typeName_ )

@@ -10,6 +10,7 @@
 #ifndef __DrawerModel_h_
 #define __DrawerModel_h_
 
+#include "DashStyle.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
 #include <boost/noncopyable.hpp>
@@ -61,7 +62,7 @@ public:
     void Save( const tools::Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
-    kernel::Drawing_ABC* Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const;
+    kernel::Drawing_ABC* Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, E_Dash_style dashStyle ) const;
     void Delete( unsigned long id );
     //@}
 

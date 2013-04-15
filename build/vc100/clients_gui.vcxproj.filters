@@ -1725,6 +1725,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\Property_ABC.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\DashStyle.h">
+      <Filter>Source Files\Creation\Drawings\Model\Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl">

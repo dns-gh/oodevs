@@ -62,10 +62,10 @@ kernel::Drawing_ABC* DrawingFactory::CreateShape( const sword::ShapeCreation& me
 // Name: DrawingFactory::CreateShape
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-kernel::Drawing_ABC* DrawingFactory::CreateShape( const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const
+kernel::Drawing_ABC* DrawingFactory::CreateShape( const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, gui::E_Dash_style dashStyle ) const
 {
     DrawingPositions* location = new DrawingPositions();
-    kernel::Drawing_ABC* drawing = new Drawing( controllers_, style, color, entity, *location, publisher_, converter_ );
+    kernel::Drawing_ABC* drawing = new Drawing( controllers_, style, color, entity, *location, publisher_, converter_, dashStyle );
     drawing->Attach< kernel::Positions >( *location );
     return drawing;
 }

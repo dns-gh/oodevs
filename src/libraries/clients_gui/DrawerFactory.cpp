@@ -44,10 +44,10 @@ DrawerFactory::~DrawerFactory()
 // Name: DrawerFactory::CreateShape
 // Created: AGE 2008-05-19
 // -----------------------------------------------------------------------------
-kernel::Drawing_ABC* DrawerFactory::CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const
+kernel::Drawing_ABC* DrawerFactory::CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, E_Dash_style dashStyle ) const
 {
     DrawingPositions* positions = new DrawingPositions();
-    std::auto_ptr< kernel::Drawing_ABC > shape( new DrawerShape( controllers_, ++idManager_, style, color, entity, *positions, coordinateConverter_ ) );
+    std::auto_ptr< kernel::Drawing_ABC > shape( new DrawerShape( controllers_, ++idManager_, style, color, entity, *positions, coordinateConverter_, dashStyle ) );
     shape->Attach< kernel::Positions >( *positions );
     return shape.release();
 }

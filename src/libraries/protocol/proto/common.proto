@@ -1309,6 +1309,16 @@ message TacticalLine {
     required Diffusion diffusion = 3;
 }
 
+/** @enum EnumPenStyle
+    @brief Defines the pen style of a shape
+*/
+enum EnumPenStyle {
+    //! Solid
+    solid  = 0;
+    //! Dashed
+    dashed = 1;
+}
+
 /** @struct Shape
     @brief Defines a shape
 */
@@ -1323,6 +1333,8 @@ message Shape {
     required CoordLatLongList points    = 4;
     //! The Diffusion
     optional Diffusion        diffusion = 5;
+    //! The pen style
+    optional EnumPenStyle     pen_style = 6;
 }
 
 /** @struct ChatTarget

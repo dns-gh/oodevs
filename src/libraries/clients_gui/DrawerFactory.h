@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Drawing_ABC* CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const;
+    virtual kernel::Drawing_ABC* CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, E_Dash_style dashStyle ) const;
     virtual kernel::Drawing_ABC* CreateShape( xml::xistream& xis, const kernel::Entity_ABC* entity ) const;
     //@}
 

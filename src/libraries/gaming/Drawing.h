@@ -45,8 +45,12 @@ class Drawing : public gui::DrawerShape
 public:
     //! @name Constructors/Destructor
     //@{
-             Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& asn, const kernel::Entity_ABC* entity, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
-             Drawing( kernel::Controllers& controllers, const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
+             Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& asn, const kernel::Entity_ABC* entity,
+                      const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher,
+                      const kernel::CoordinateConverter_ABC& converter );
+             Drawing( kernel::Controllers& controllers, const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity,
+                      kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter,
+                      gui::E_Dash_style dashStyle = gui::eSolid );
              Drawing( kernel::Controllers& controllers, xml::xistream& xis, const kernel::Entity_ABC* entity, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
     virtual ~Drawing();
     //@}

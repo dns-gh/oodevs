@@ -11,6 +11,7 @@
 #define __DrawerPanel_h_
 
 #include "InfoPanel_ABC.h"
+#include "Drawing.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
@@ -73,6 +74,7 @@ private slots:
     void OnSelect( const DrawingTemplate& style );
     void OnColorChange( const QColor& color );
     void StartDrawing();
+    void OnLineChanged( int index );
     //@}
 
 private:
@@ -113,6 +115,7 @@ private:
     kernel::SafePointer< Drawing > selectedDrawing_;
     T_CategoryItems categories_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
+    E_Dash_style dashStyle_;
     //@}
 };
 

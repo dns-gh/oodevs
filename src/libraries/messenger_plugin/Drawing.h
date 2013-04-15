@@ -91,6 +91,7 @@ private:
     std::string pattern_;
     T_Points points_;
     boost::optional< sword::Diffusion > diffusion_;
+    boost::optional< sword::EnumPenStyle > style_;
     //@}
 };
 

@@ -16,8 +16,9 @@ using namespace gui;
 // Name: Drawing constructor
 // Created: SBO 2008-05-29
 // -----------------------------------------------------------------------------
-Drawing::Drawing( kernel::Controller& controller, unsigned long id, const QString& name )
+Drawing::Drawing( kernel::Controller& controller, unsigned long id, const QString& name, E_Dash_style style )
     : gui::EntityImplementation< Drawing_ABC >( controller, id, name )
+    , dashStyle_( style )
 {
     // NOTHING
 }

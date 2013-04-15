@@ -10,7 +10,9 @@
 #ifndef __SvgLocationDrawer_h_
 #define __SvgLocationDrawer_h_
 
+#include "DashStyle.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include <svgl/DashArray.h>
 
 namespace kernel
 {
@@ -26,10 +28,7 @@ namespace gui
 {
     class DrawingTemplate;
     class GlTools_ABC;
-}
 
-namespace gui
-{
 // =============================================================================
 /** @class  SvgLocationDrawer
     @brief  SvgLocationDrawer
@@ -47,7 +46,8 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, const QColor& color, bool overlined, float zoom = 1.f );
+    void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport,
+               const GlTools_ABC& tools, const QColor& color, bool overlined, E_Dash_style dashStyle, float zoom = 1.f );
     //@}
 
 private:
@@ -89,6 +89,8 @@ private:
     QColor complement_;
     float zoom_;
     bool overlined_;
+    E_Dash_style dashStyle_;
+    svg::DashArray dashed_;
     //@}
 };
 

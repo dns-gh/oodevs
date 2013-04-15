@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Property_ABC_h_
-#define __Property_ABC_h_
+#ifndef gui_Property_ABC_h_
+#define gui_Property_ABC_h_
 
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -148,4 +148,4 @@ private:
 
 }
 
-#endif // __Property_ABC_h_
+#endif // gui_Property_ABC_h_

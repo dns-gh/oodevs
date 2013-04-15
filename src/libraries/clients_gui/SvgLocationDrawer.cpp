@@ -46,6 +46,8 @@ SvgLocationDrawer::SvgLocationDrawer( const DrawingTemplate& style )
     , overlined_( false )
     , tools_    ( 0 )
     , zoom_     ( 1.f )
+    , dashStyle_( eSolid )
+    , dashed_   ( "10px,2px" )
 {
     GenerateCircle();
 }
@@ -88,13 +90,15 @@ void SvgLocationDrawer::SetColor( const QColor& color )
 // Name: SvgLocationDrawer::Draw
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
-void SvgLocationDrawer::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, const QColor& color, bool overlined, float zoom )
+void SvgLocationDrawer::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools,
+                              const QColor& color, bool overlined, E_Dash_style dashStyle, float zoom )
 {
     SetColor( color );
     viewport_ = viewport;
     overlined_ = overlined;
     tools_ = &tools;
     zoom_ = zoom;
+    dashStyle_ = dashStyle;
     location.Accept( *this );
 }
 
@@ -218,9 +222,13 @@ void SvgLocationDrawer::DrawShape( const T& shape )
         context_->PushProperty( svg::RenderingContext_ABC::color, svgColor );
         context_->PushProperty( svg::RenderingContext_ABC::fillOpacity, opacity );
         context_->PushProperty( svg::RenderingContext_ABC::strokeOpacity, opacity );
+        if( dashStyle_ == eDashed )
+            context_->PushProperty( svg::RenderingContext_ABC::strokeDasharray, dashed_ );
         if( tools_->IsPickingMode() )
             context_->EnablePickingMode( 5.f );
         style_.Draw( shape, *context_, *tools_, zoom_ );
+        if( dashStyle_ == eDashed )
+            context_->PopProperty( svg::RenderingContext_ABC::strokeDasharray );
         context_->DisablePickingMode();
         context_->PopProperty( svg::RenderingContext_ABC::strokeOpacity );
         context_->PopProperty( svg::RenderingContext_ABC::fillOpacity );

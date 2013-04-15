@@ -10,6 +10,7 @@
 #ifndef __DrawingFactory_ABC_h_
 #define __DrawingFactory_ABC_h_
 
+#include "DashStyle.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -44,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Drawing_ABC* CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const = 0;
+    virtual kernel::Drawing_ABC* CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, E_Dash_style dashStyle ) const = 0;
     virtual kernel::Drawing_ABC* CreateShape( xml::xistream& xis, const kernel::Entity_ABC* diffusionEntity ) const = 0;
     //@}
 };
