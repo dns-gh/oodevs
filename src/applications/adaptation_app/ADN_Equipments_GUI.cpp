@@ -82,7 +82,7 @@ void ADN_Equipments_GUI::Build()
     ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
     nameField->ConnectWithRefValidity( data_.GetEquipments() );
     // Comments
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, "comments", tr( "Comments" ), vInfosConnectors[ eComments ] );
+    builder.AddOptionalField< ADN_EditLine_String >( pInfoHolder, "comments", tr( "Comments" ), vInfosConnectors[ eComments ], optionalWidgets_ );
     // Armors
     QComboBox* pCombo = builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "armor-plating", tr( "Armor-Plating" ), vInfosConnectors[ eArmor ] );
     connect( pCombo, SIGNAL( activated( const QString& ) ), this, SLOT( OnProtectionTypeChanged() ) );
@@ -120,6 +120,7 @@ void ADN_Equipments_GUI::Build()
 
     // ID groupbox
     Q3GroupBox* pIdGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Military codes" ) );
+    optionalWidgets_.push_back( pIdGroupBox );
     builder.AddField< ADN_EditLine_String >( pIdGroupBox, "code-nno", tr( "Code NNO" ),   vInfosConnectors[ eNNOCode ] );
     builder.AddField< ADN_EditLine_String >( pIdGroupBox, "code-emat8", tr( "Code EMAT8" ), vInfosConnectors[ eEMAT8Code ] );
     builder.AddField< ADN_EditLine_String >( pIdGroupBox, "code-emat6", tr( "Code EMAT6" ), vInfosConnectors[ eEMAT6Code ] );
@@ -127,6 +128,7 @@ void ADN_Equipments_GUI::Build()
 
     // Operational information groupbox
     Q3GroupBox* pInfoGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Operational Information" ) );
+    optionalWidgets_.push_back( pInfoGroupBox );
     builder.AddField< ADN_EditLine_String >( pInfoGroupBox, "native-country", tr( "Native country:" )    , vInfosConnectors[ eNativeCountry ] );
     builder.AddField< ADN_EditLine_String >( pInfoGroupBox, "starting-country", tr( "Starting country:" )  , vInfosConnectors[ eStartingCountry ] );
     builder.AddField< ADN_DateEdit >       ( pInfoGroupBox, "starting-date", tr( "Starting date:" )     , vInfosConnectors[ eStartingDate ] );
@@ -245,12 +247,12 @@ void ADN_Equipments_GUI::Build()
     pDataPageLayout->setAlignment( Qt::AlignTop );
 
     pDataPageLayout->addWidget( pInfoHolder         , 0, 0 );
-    pDataPageLayout->addWidget( pIdGroupBox         , 1, 0 );
-    pDataPageLayout->addWidget( pInfoGroupBox       , 2, 0 );
+    pDataPageLayout->addWidget( pIdGroupBox         , 2, 0 );
+    pDataPageLayout->addWidget( pInfoGroupBox       , 2, 1 );
     pDataPageLayout->addWidget( pBreakdownsGroup_   , 3, 0, 2, 1 );
 
     pDataPageLayout->addWidget( pTroopGroupBox      , 0, 1, 2, 1 );
-    pDataPageLayout->addWidget( pDimensionsGroupBox , 2, 1 );
+    pDataPageLayout->addWidget( pDimensionsGroupBox , 1, 0 );
     pDataPageLayout->addWidget( pSensorsGroup       , 3, 1 );
     pDataPageLayout->addWidget( pRadarsGroup        , 4, 1 );
 
@@ -271,8 +273,9 @@ void ADN_Equipments_GUI::Build()
     QTabWidget* pTabWidget = new QTabWidget();
     pTabWidget->addTab( CreateScrollArea( builder.GetChildName( "data-tab" ), *pContent, 0 ), tr( "Data" ) );
     pTabWidget->addTab( CreateScrollArea( builder.GetChildName( "log-tab" ), *pLogPage, 0 ), tr( "Log" ) );
-    pTabWidget->addTab( CreateScrollArea( builder.GetChildName( "power-indicator-tab" ), *pPowerIndicatorsPage, 0 ), tr( "Power indicators" ) );
-
+    QWidget* widget = CreateScrollArea( builder.GetChildName( "power-indicator-tab" ), *pPowerIndicatorsPage, 0 );
+    int tabIndex = pTabWidget->addTab( widget, tr( "Power indicators" ) );
+    optionalTabs_[ pTabWidget->tabText( tabIndex ) ] = OptionalTab( pTabWidget, tabIndex, widget );
     // Main widget
     pMainWidget_ = CreateScrollArea( builder.GetName(), *pTabWidget, pSearchListView, true, true, false );
 }

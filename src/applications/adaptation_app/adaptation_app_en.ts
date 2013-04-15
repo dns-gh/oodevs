@@ -2562,6 +2562,10 @@ PNG (*.png)
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
+    <message>
+        <source>Show optional fields</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>

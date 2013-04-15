@@ -73,6 +73,8 @@ public:
     //@{
     QWidget* AddFieldHolder( QWidget* pParent );
 
+    typedef std::vector< QWidget* > T_optionalWidgets;
+
     // $$$$ ABR 2013-02-07: TODO Change ADN_Table constructor (remove objectName parameter) so it can use the following helpers
     template< class T >
     T* AddWidget( const char* objectName );
@@ -97,6 +99,11 @@ public:
     T* AddField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szUnit = 0, E_Validator nValidator = eNone, QWidget* sideWidget = 0 );
     template< class T >
     T* AddField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit = 0, E_Validator nValidator = eNone, QWidget* sideWidget = 0 );
+
+    template< class T >
+    T* AddOptionalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, T_optionalWidgets& optionalFields, const char* szUnit = 0, E_Validator nValidator = eNone, QWidget* sideWidget = 0 );
+    template< class T >
+    T* AddOptionalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, T_optionalWidgets& optionalFields, const char* szUnit = 0, E_Validator nValidator = eNone, QWidget* sideWidget = 0 );
 
     template< class T >
     T* AddCheckableField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiOptionConnector, ADN_Connector_ABC*& pGuiConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
@@ -291,7 +298,74 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* objectName, const cha
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_GuiBuilder::AddOptionnalField
+// Name: ADN_GuiBuilder::AddOptionalField
+// Created: NPT 2013-04-15
+// -----------------------------------------------------------------------------
+template< class T >
+T* ADN_GuiBuilder::AddOptionalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector, T_optionalWidgets& optionalFields, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/, QWidget* sideWidget /*= 0*/ )
+{
+    assert( szUnit == 0 || sideWidget == 0 );
+    // Create the field and labels.
+    QLabel* pNameLabel = new QLabel( szName, pParent );
+    T* pField = new T( pParent );
+    pField->setObjectName( GetChildName( objectName ) );
+    QWidget* thirdWidget = 0;
+    if( szUnit != 0 )
+        thirdWidget = new QLabel( szUnit, pParent );
+    else if( sideWidget != 0 )
+        thirdWidget = sideWidget;
+
+    pCurrentFieldWidget1_ = pNameLabel;
+    pCurrentFieldWidget2_ = pField;
+    pCurrentFieldGfx2_ = pField;
+    pCurrentFieldWidget3_ = thirdWidget;
+
+    // Lay them out if necessary.
+    this->DoFieldLayout( pParent, pNameLabel, pField, thirdWidget );
+    this->DoValidator( pField, nValidator );
+
+    pGuiConnector = &pField->GetConnector();
+    optionalFields.push_back( pNameLabel );
+    optionalFields.push_back( pField );
+    return pField;
+}
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddOptionalField
+// Created: NPT 2013-04-15
+// -----------------------------------------------------------------------------
+template< class T >
+T* ADN_GuiBuilder::AddOptionalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, T_optionalWidgets& optionalFields, const char* szUnit /*= 0*/, E_Validator nValidator /*= eNone*/, QWidget* sideWidget /*= 0*/ )
+{
+    assert( szUnit == 0 || sideWidget == 0 );
+    // Create the field and labels.
+    QLabel* pNameLabel = new QLabel( szName, pParent );
+    T* pField = new T( pParent );
+    pField->setObjectName( GetChildName( objectName ) );
+    QWidget* thirdWidget = 0;
+    if( szUnit != 0 )
+        thirdWidget = new QLabel( szUnit, pParent );
+    else if( sideWidget != 0 )
+        thirdWidget = sideWidget;
+
+    pCurrentFieldWidget1_ = pNameLabel;
+    pCurrentFieldWidget2_ = pField;
+    pCurrentFieldGfx2_ = pField;
+    pCurrentFieldWidget3_ = thirdWidget;
+
+    // Lay them out if necessary.
+    this->DoFieldLayout( pParent, pNameLabel, pField, thirdWidget );
+    this->DoValidator( pField, nValidator );
+
+    ADN_Connector_ABC* pConnector = &pField->GetConnector();
+    assert( pConnector );
+    pConnector->Connect( &itemConnector );
+    optionalFields.push_back( pNameLabel );
+    optionalFields.push_back( pField );
+    return pField;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddCheckableField
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 template< class T >
@@ -324,7 +398,7 @@ T* ADN_GuiBuilder::AddCheckableField( QWidget* pParent, const char* objectName, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_GuiBuilder::AddOptionnalField
+// Name: ADN_GuiBuilder::AddCheckableField
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename T >

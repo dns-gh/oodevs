@@ -149,10 +149,10 @@ void ADN_Resources_GUI::BuildGeneric( E_DotationFamily nType )
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vConnectors[ eName ] );
     nameField->ConnectWithRefValidity( data_.GetResources() );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, "code-nno", tr( "Code NNO" ), vConnectors[ eGenNNOCode ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, "code-emat8", tr( "Code EMAT8" ), vConnectors[ eGenEMAT8Code ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, "code-emat6", tr( "Code EMAT6" ), vConnectors[ eGenEMAT6Code ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, "code-lfril", tr( "Code LFRIL" ), vConnectors[ eGenLFRILCode ] );
+    builder.AddOptionalField< ADN_EditLine_String >( pInfoHolder, "code-nno", tr( "Code NNO" ), vConnectors[ eGenNNOCode ], optionalWidgets_ );
+    builder.AddOptionalField< ADN_EditLine_String >( pInfoHolder, "code-emat8", tr( "Code EMAT8" ), vConnectors[ eGenEMAT8Code ], optionalWidgets_ );
+    builder.AddOptionalField< ADN_EditLine_String >( pInfoHolder, "code-emat6", tr( "Code EMAT6" ), vConnectors[ eGenEMAT6Code ], optionalWidgets_ );
+    builder.AddOptionalField< ADN_EditLine_String >( pInfoHolder, "code-lfril", tr( "Code LFRIL" ), vConnectors[ eGenLFRILCode ], optionalWidgets_ );
     if( ADN_Resources_Data::IsMineOrExplosive( nType ) )
         builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vConnectors[ eGenType ] );
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "nature", tr( "Nature" ), vConnectors[ eGenNature] );
@@ -247,10 +247,10 @@ void ADN_Resources_GUI::BuildAmmunition()
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vConnectors[ eAmmoName ] );
     nameField->ConnectWithRefValidity( data_.GetResources() );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, "code-nno", tr( "Code NNO" ), vConnectors[ eNNOCode ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, "code-emat8", tr( "Code EMAT8" ), vConnectors[ eEMAT8Code ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, "code-emat6", tr( "Code EMAT6" ), vConnectors[ eEMAT6Code ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, "code-lfril", tr( "Code LFRIL" ), vConnectors[ eLFRILCode ] );
+    builder.AddOptionalField< ADN_EditLine_String >( pInfoHolder, "code-nno", tr( "Code NNO" ), vConnectors[ eNNOCode ], optionalWidgets_ );
+    builder.AddOptionalField< ADN_EditLine_String >( pInfoHolder, "code-emat8", tr( "Code EMAT8" ), vConnectors[ eEMAT8Code ], optionalWidgets_ );
+    builder.AddOptionalField< ADN_EditLine_String >( pInfoHolder, "code-emat6", tr( "Code EMAT6" ), vConnectors[ eEMAT6Code ], optionalWidgets_ );
+    builder.AddOptionalField< ADN_EditLine_String >( pInfoHolder, "code-lfril", tr( "Code LFRIL" ), vConnectors[ eLFRILCode ], optionalWidgets_ );
     builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vConnectors[ eType ] );
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "nature", tr( "Nature" ), vConnectors[ eNature ] );
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "logistic-supply-class", tr( "Logistic supply class" ), vConnectors[ eLogisticSupplyClass] );

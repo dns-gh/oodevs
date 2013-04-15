@@ -46,6 +46,24 @@ signals:
     //@}
 };
 
+struct OptionalTab
+{
+    OptionalTab( QTabWidget* tab, int index, QWidget* widget )
+        : tab_( tab )
+        , index_( index )
+        , widget_( widget )
+    {
+        // NOTHING
+    }
+    OptionalTab()
+    {
+        // NOTHING
+    }
+    QTabWidget* tab_;
+    int index_;
+    QWidget * widget_;
+};
+
 // =============================================================================
 /** @class  ADN_GUI_ABC
     @brief  ADN_GUI_ABC
@@ -69,6 +87,7 @@ public:
     virtual void ChangeCurrentSubTab( int ) {}
     virtual void FindSubTabAndSelectItem( const QString& /*name*/ ) {}
     virtual bool SelectItem( const QString& name );
+    virtual void UpdateOptionalFieldsVisibility( bool hide );
 
     void ApplyFilter( const ADN_NavigationInfos::UsedBy& usedByInfos );
     void ClearFilters();
@@ -85,6 +104,9 @@ protected:
     const QString strClassName_;
     QWidget* pMainWidget_;
     ADN_ListView* pListView_;
+    std::vector< QWidget* > optionalWidgets_;
+    std::map< QString, OptionalTab > optionalTabs_;
+
     //@}
 };
 

@@ -115,6 +115,7 @@ private:
     Q3PopupMenu*    pHelpMenu_;
     QAction*        pActionSave_;
     QAction*        pActionSaveAs_;
+    QAction*        pOptional_;
     int             rIdSaveAs_;
     int             nIdSaveTable_;
     int             nIdPrint_;

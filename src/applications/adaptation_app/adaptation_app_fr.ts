@@ -303,7 +303,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Weapons</source>
-        <translation>Systèmes d'armes</translation>
+        <translation>Systèmes d&apos;armes</translation>
     </message>
     <message>
         <source>Active Protections</source>
@@ -1022,7 +1022,7 @@ Arrêt moteur allumé</translation>
     <name>ADN_Equipments_Data</name>
     <message>
         <source>Resources</source>
-        <translation >Ressources</translation>
+        <translation>Ressources</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -2573,6 +2573,10 @@ PNG (*.png)</translation>
     <message>
         <source>Error</source>
         <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>Show optional fields</source>
+        <translation>Montrer les champs optionnels</translation>
     </message>
 </context>
 <context>
@@ -5971,7 +5975,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <name>ADN_Weapons_Data</name>
     <message>
         <source>Weapons</source>
-        <translation>Systèmes d'armes</translation>
+        <translation>Systèmes d&apos;armes</translation>
     </message>
 </context>
 <context>

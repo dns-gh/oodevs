@@ -160,6 +160,7 @@ signals:
 public slots:
     void OnUsersListRequested( const ADN_NavigationInfos::UsedBy& usedByInfo );
     void OnGoToRequested( const ADN_NavigationInfos::GoTo& goToInfo );
+    void OnChooseOptional( bool choice );
 
 private:
     void Initialize();

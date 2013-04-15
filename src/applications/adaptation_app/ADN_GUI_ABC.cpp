@@ -126,6 +126,23 @@ bool ADN_GUI_ABC::SelectItem( const QString& name )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_GUI_ABC::UpdateOptionalFields
+// Created: NPT 2013-04-15
+// -----------------------------------------------------------------------------
+void ADN_GUI_ABC::UpdateOptionalFieldsVisibility( bool show )
+{
+    for( auto it = optionalWidgets_.begin(); it != optionalWidgets_.end(); ++it )
+        ( *it )->setVisible( show );
+    for( auto it = optionalTabs_.begin(); it != optionalTabs_.end(); ++it )
+    {
+        if( show )
+            it->second.tab_->insertTab( it->second.index_, it->second.widget_, it->first );
+        else
+            it->second.tab_->removeTab( it->second.index_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // ADN_Tabbed_GUI_ABC
 // -----------------------------------------------------------------------------
 

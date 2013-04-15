@@ -146,6 +146,10 @@ void ADN_MainWindow::Build()
     connect( mainTabWidget_.get(), SIGNAL( BackEnabled( bool ) ), pBack, SLOT( setEnabled( bool ) ) );
     QAction* pForward = new QAction( qApp->style()->standardIcon( QStyle::SP_ArrowRight ), tr( "Forward (ctrl + right)" ), Qt::CTRL + Qt::Key_Right, this, "forward" );
     connect( pForward, SIGNAL( activated() ), mainTabWidget_.get(), SLOT( OnForward() ) );
+    pOptional_ = new QAction( tr( "Show optional fields" ), 0 );
+    pOptional_->setCheckable( true );
+    pOptional_->setChecked( true );
+    connect( pOptional_, SIGNAL( toggled( bool ) ), &workspace_, SLOT( OnChooseOptional( bool ) ) );
     connect( mainTabWidget_.get(), SIGNAL( ForwardEnabled( bool ) ), pForward, SLOT( setEnabled( bool ) ) );
 
     // Project toolbar
@@ -174,6 +178,7 @@ void ADN_MainWindow::Build()
         pProjectMenu_->insertSeparator();
         pProjectMenu_->insertItem( tr( "&Export HTML" ), this, SLOT(ExportHtml()) );
         pProjectMenu_->insertItem( tr( "Consistency analysis" ), consistencyDialog_.get(), SLOT( Display() ) );
+        pOptional_->addTo( pProjectMenu_ );
 
         pProjectMenu_->insertSeparator();
         pProjectMenu_->insertItem( tr("E&xit"),  this, SLOT(close()) );

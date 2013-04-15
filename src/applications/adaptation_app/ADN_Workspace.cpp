@@ -573,6 +573,16 @@ void ADN_Workspace::OnGoToRequested( const ADN_NavigationInfos::GoTo& goToInfo )
         elements_[ goToInfo.targetTab_ ]->GetGuiABC().FindSubTabAndSelectItem( goToInfo.targetName_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::OnChooseOptional
+// Created: NPT 2013-04-15
+// -----------------------------------------------------------------------------
+void ADN_Workspace::OnChooseOptional( bool show )
+{
+    for( int n = 0; n < eNbrWorkspaceElements; ++n )
+        elements_[ n ]->GetGuiABC().UpdateOptionalFieldsVisibility( show );
+}
+
 namespace
 {
     template< typename T, typename DATA >
