@@ -31756,7 +31756,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="00010242" codeLFRIL="" codeNNO="1111110020242" comment="" id="339" name="Fantassin Oeil" protection="Combattant" size="Personnel" weight="0.08">
+  <equipment codeEMAT6="" codeEMAT8="00010242" codeLFRIL="" codeNNO="1111110020242" comment="" id="339" name="Ztest jour" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="5">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -31797,7 +31797,7 @@
       </category>
     </composition>
     <sensors>
-      <sensor height="2" type="Oeil"/>
+      <sensor height="2" type="Ztest jour"/>
     </sensors>
     <radars/>
     <transports/>
@@ -32677,7 +32677,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="00010249" codeLFRIL="" codeNNO="1111110020249" comment="" id="349" name="Fantassin I.L." protection="Combattant" size="Personnel" weight="0.08">
+  <equipment codeEMAT6="" codeEMAT8="00010249" codeLFRIL="" codeNNO="1111110020249" comment="" id="349" name="Ztest nuit" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="5">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -32718,7 +32718,7 @@
       </category>
     </composition>
     <sensors>
-      <sensor height="2" type="I.L Fantassin"/>
+      <sensor height="2" type="Ztest nuit"/>
     </sensors>
     <radars/>
     <transports/>
@@ -35894,4 +35894,4 @@
     <operational-information native-country="USA"/>
   </equipment>
 </equipments>
-<!-- signature="2621471231" -->
+<!-- signature="3628580852" -->

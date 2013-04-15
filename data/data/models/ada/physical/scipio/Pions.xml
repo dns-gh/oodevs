@@ -12392,10 +12392,10 @@
     <efficiencies combat="10" combat-support="50" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.Groupe PROTERRE" id="419" name="INF . Fantassin oeil" type="Pion INF">
-    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry"/>
+  <unit decisional-model="Masalife.INF.Groupe PROTERRE" id="419" name="Ztest jour" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat service support/traffic control"/>
     <equipments>
-      <equipment count="1" crew="1" major="true" type="Fantassin Oeil"/>
+      <equipment count="1" crew="1" major="true" type="Ztest jour"/>
     </equipments>
     <sensors-range range="4000"/>
     <equipments-range range="1200"/>
@@ -14418,13 +14418,13 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.Groupe PROTERRE" id="495" name="INF . Fantassin I.L." type="Pion INF">
+  <unit decisional-model="Masalife.INF.Groupe PROTERRE" id="495" name="Ztest nuit" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry"/>
     <equipments>
-      <equipment count="1" crew="1" loadable="true" major="true" type="Fantassin I.L."/>
+      <equipment count="1" crew="1" major="true" type="Ztest nuit"/>
     </equipments>
-    <sensors-range range="200"/>
-    <equipments-range range="0"/>
+    <sensors-range range="4000"/>
+    <equipments-range range="1200"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="0" type="SousOfficier"/>
@@ -19222,4 +19222,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0982988830" -->
+<!-- signature="3942826960" -->
