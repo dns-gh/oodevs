@@ -124,7 +124,7 @@ std::vector< geometry::Point2f > ConvexHulls::GetPolylineFacing( float radians, 
     }
     else
     {
-        for( int i = head; i < count; ++i )
+        for( int i = head; i < static_cast< int >( count ); ++i )
             PushPoint( centers, offsets, i, offset, center, hull_ );
         for( int i = 0; i <= tail; ++i )
             PushPoint( centers, offsets, i, offset, center, hull_ );
