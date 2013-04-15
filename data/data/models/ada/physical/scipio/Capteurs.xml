@@ -8755,13 +8755,6 @@
         <object detection-distance="300" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.01"/>
             <distance-modifier type="MouvementDiscret" value="0.02"/>
             <distance-modifier type="Arret" value="0.1"/>
@@ -8774,13 +8767,6 @@
         <object detection-distance="500" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.5"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -8800,25 +8786,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="500" type="barricade">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -8838,25 +8810,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="300" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -8876,13 +8834,6 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="400" type="discontinuous pontoon bridge">
@@ -8895,25 +8846,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="500" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.9"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -8926,13 +8863,6 @@
         <object detection-distance="500" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.9"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -8952,25 +8882,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="100" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.9"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -8983,13 +8899,6 @@
         <object detection-distance="100" type="cobra deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.9"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9002,13 +8911,6 @@
         <object detection-distance="100" type="mrls deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.9"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9028,25 +8930,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="1000" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9066,25 +8954,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="500" type="decontamination site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9104,25 +8978,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="500" type="trail">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9142,25 +9002,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="100" type="mortar deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9180,25 +9026,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="1000" type="installation">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9287,20 +9119,6 @@
         <object detection-distance="300" type="mines">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.01"/>
             <distance-modifier type="MouvementDiscret" value="0.02"/>
             <distance-modifier type="Arret" value="0.1"/>
@@ -9313,20 +9131,6 @@
         <object detection-distance="500" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.5"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9346,39 +9150,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="500" type="barricade">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9398,39 +9174,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="300" type="road destruction">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9450,20 +9198,6 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="400" type="discontinuous pontoon bridge">
@@ -9476,39 +9210,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="500" type="firing post">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.9"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9521,20 +9227,6 @@
         <object detection-distance="500" type="safe zone">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.9"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9554,39 +9246,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="100" type="gun artillery deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.9"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9599,20 +9263,6 @@
         <object detection-distance="100" type="cobra deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.9"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9625,20 +9275,6 @@
         <object detection-distance="100" type="mrls deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="0.9"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9658,39 +9294,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="1000" type="refugees camp">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9710,39 +9318,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="500" type="decontamination site">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9762,39 +9342,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="500" type="trail">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9814,39 +9366,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="100" type="mortar deployment area">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9866,39 +9390,11 @@
             <distance-modifier type="Poste" value="1"/>
             <distance-modifier type="PosteAmenage" value="1"/>
             <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
         <object detection-distance="1000" type="installation">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
             <distance-modifier type="Arret" value="1"/>
@@ -9912,4 +9408,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="1774710070" -->
+<!-- signature="3579915218" -->
