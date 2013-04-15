@@ -191,7 +191,7 @@ float Gl3dWidget::ElevationAt( const Point2f& point ) const
 // Name: Gl3dWidget::DrawLine
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawLine( const Point2f& from, const Point2f& to ) const
+void Gl3dWidget::DrawLine( const Point2f& from, const Point2f& to, float ) const
 {
     Vector2f u( from, to );
     const float distance = u.Length();
@@ -294,7 +294,7 @@ void Gl3dWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /
 // Name: Gl3dWidget::DrawArc
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawArc( const Point2f& center, const Point2f& from, const Point2f& to ) const
+void Gl3dWidget::DrawArc( const Point2f& center, const Point2f& from, const Point2f& to, float ) const
 {
     const float radius = center.Distance( from );
     if( radius == 0 )

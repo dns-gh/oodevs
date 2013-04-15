@@ -54,7 +54,7 @@ namespace
         virtual void SetCurrentColor  ( float, float, float, float ) {}
         virtual void SetCurrentCursor ( const QCursor& ) {}
         virtual void DrawCross        ( const geometry::Point2f&, float, E_Unit ) const {}
-        virtual void DrawLine         ( const geometry::Point2f&, const geometry::Point2f& ) const {}
+        virtual void DrawLine         ( const geometry::Point2f&, const geometry::Point2f&, float ) const {}
         virtual void DrawStippledLine ( const geometry::Point2f&, const geometry::Point2f& ) const {}
         virtual void DrawLines        ( const T_PointVector& ) const {}
         virtual void DrawRectangle    ( const T_PointVector& ) const {}
@@ -63,7 +63,7 @@ namespace
         virtual void DrawDecoratedPolygon( const geometry::Polygon2f&, const std::string&, unsigned int ) {}
         virtual void DrawArrow        ( const geometry::Point2f&, const geometry::Point2f&, float, E_Unit ) const {}
         virtual void DrawCurvedArrow  ( const geometry::Point2f&, const geometry::Point2f&, float, float, E_Unit ) const {}
-        virtual void DrawArc          ( const geometry::Point2f&, const geometry::Point2f&, const geometry::Point2f& ) const {}
+        virtual void DrawArc          ( const geometry::Point2f&, const geometry::Point2f&, const geometry::Point2f&, float ) const {}
         virtual void DrawCircle       ( const geometry::Point2f&, float, E_Unit ) const {}
         virtual void DrawDisc         ( const geometry::Point2f&, float, E_Unit ) const {}
         virtual void DrawLife         ( const geometry::Point2f&, float, float, bool ) const {}

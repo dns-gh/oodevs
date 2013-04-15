@@ -461,6 +461,7 @@ void GlWidget::DrawCross( const Point2f& at, float size /* = -1.f*/, E_Unit unit
     }
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
+    glLineWidth( 1. );
     glBegin( GL_LINES );
         glVertex2f( at.X() - size, at.Y() - size );
         glVertex2f( at.X() + size, at.Y() + size );
@@ -474,10 +475,11 @@ void GlWidget::DrawCross( const Point2f& at, float size /* = -1.f*/, E_Unit unit
 // Name: GlWidget::DrawLine
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void GlWidget::DrawLine( const Point2f& from, const Point2f& to ) const
+void GlWidget::DrawLine( const Point2f& from, const Point2f& to, float width ) const
 {
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
+    glLineWidth( width );
     glBegin( GL_LINES );
         glVertex2f( from.X(), from.Y() );
         glVertex2f( to.X()  , to.Y() );
@@ -519,6 +521,7 @@ void GlWidget::DrawLines( const T_PointVector& points ) const
     {
         glPushAttrib( GL_LINE_BIT );
         glEnable( GL_LINE_SMOOTH );
+        glLineWidth( 1. );
         glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
         glDrawArrays( GL_LINE_STRIP, 0, static_cast< GLsizei >( points.size() ) );
         glPopAttrib();
@@ -535,6 +538,7 @@ void GlWidget::DrawRectangle( const T_PointVector& points ) const
     {
         glPushAttrib( GL_LINE_BIT );
         glEnable( GL_LINE_SMOOTH );
+        glLineWidth( 1. );
         glBegin( GL_LINE_LOOP );
             glVertex2f( points.front().X(), points.front().Y() );
             glVertex2f( points.front().X(), points.back().Y() );
@@ -570,6 +574,7 @@ void GlWidget::DrawPolygon( const T_PointVector& points ) const
     glPopAttrib();
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
+    glLineWidth( 1. );
     glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( points.size() ) );
     glPopAttrib();
     glDisable( GL_STENCIL_TEST );
@@ -583,7 +588,6 @@ void GlWidget::DrawSelectedPolygon( const T_PointVector& points ) const
 {
     if( points.empty() )
         return;
-    glLineWidth( 1.5 );
     if( points.size() > 3 )
         UpdateStipple();
     float color[ 4 ];
@@ -594,8 +598,8 @@ void GlWidget::DrawSelectedPolygon( const T_PointVector& points ) const
     color[ 3 ] = 0.5f;
     glColor4fv( color );
     for( auto it = points.begin(); it + 1 != points.end(); ++it )
-        DrawLine( *it, *(it+1) );
-    DrawLine( points.back(), points.front() );
+        DrawLine( *it, *(it+1), 1.5 );
+    DrawLine( points.back(), points.front(), 1.5 );
     glDisable( GL_LINE_STIPPLE );
 }
 
@@ -642,8 +646,8 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const s
     gluTessEndPolygon( tesselator_ );
 
     for( auto it = vertices.begin(); it + 1 != vertices.end(); ++it )
-        DrawLine( *it, *(it+1) );
-    DrawLine( vertices.back(), vertices.front() );
+        DrawLine( *it, *(it+1), 1. );
+    DrawLine( vertices.back(), vertices.front(), 1. );
 
     if( !name.empty() )
         DrawTextLabel( name, polygon.BoundingBoxCenter(), fontHeight );
@@ -674,6 +678,7 @@ void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /* 
 
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
+    glLineWidth( 1. );
     glBegin( GL_LINES );
         glVertex2f( end.X(), end.Y() );
         glVertex2f( left.X(), left.Y() );
@@ -689,7 +694,7 @@ void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /* 
 // Name: GlWidget::DrawArc
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-void GlWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f& from, const geometry::Point2f& to ) const
+void GlWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f& from, const geometry::Point2f& to, float width ) const
 {
     const float radius = center.Distance( from );
     if( radius == 0 )
@@ -709,6 +714,7 @@ void GlWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f
     glMatrixMode(GL_MODELVIEW);
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
+    glLineWidth( width );
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
         glScalef    ( radius, radius, 1.f );
@@ -756,6 +762,7 @@ void GlWidget::DrawCircle( const Point2f& center, float radius /* = -1.f*/, E_Un
 
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
+    glLineWidth( 1. );
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
@@ -780,6 +787,7 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit
 
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
+    glLineWidth( 1. );
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
@@ -811,7 +819,7 @@ void GlWidget::DrawLife( const Point2f& where, float h, float factor /* = 1.f*/,
     const float xdelta = h * halfWidth * 2;
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
-        glLineWidth( 1 );
+        glLineWidth( 1. );
         glColor3f( 0.8f, 0.8f, 0.8f );  // light gray
         glBegin( GL_QUADS );
             glVertex2f( x - halfWidth + xdelta, y - ydelta );
@@ -947,6 +955,7 @@ void GlWidget::DrawApp6Symbol ( const std::string& symbol, const std::string& st
 
     gl::Initialize();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+    glLineWidth( 1. );
     glEnable( GL_LINE_SMOOTH );
         glMatrixMode( GL_MODELVIEW );
         glPushMatrix();

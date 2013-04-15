@@ -103,7 +103,7 @@ public:
     virtual void SetCurrentCursor ( const QCursor& cursor ) = 0;
 
     virtual void DrawCross        ( const geometry::Point2f& at, float size = -1.f, E_Unit unit = meters ) const = 0;
-    virtual void DrawLine         ( const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
+    virtual void DrawLine         ( const geometry::Point2f& from, const geometry::Point2f& to, float width = 1. ) const = 0;
     virtual void DrawStippledLine ( const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
     virtual void DrawLines        ( const T_PointVector& points ) const = 0;
     virtual void DrawRectangle    ( const T_PointVector& points ) const = 0;
@@ -112,7 +112,7 @@ public:
     virtual void DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const std::string& name, unsigned int fontHeight ) = 0;
     virtual void DrawArrow        ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawCurvedArrow  ( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f, E_Unit unit = meters ) const = 0;
-    virtual void DrawArc          ( const geometry::Point2f& center, const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
+    virtual void DrawArc          ( const geometry::Point2f& center, const geometry::Point2f& from, const geometry::Point2f& to, float width = 1. ) const = 0;
     virtual void DrawCircle       ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawDisc         ( const geometry::Point2f& center, float radius = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawLife         ( const geometry::Point2f& center, float height, float factor = 1.f, bool fixedSize = true ) const = 0;

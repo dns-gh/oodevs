@@ -243,9 +243,9 @@ void GlProxy::DrawCross( const geometry::Point2f& at, float size /* = -1.f*/, E_
 // Name: GlProxy::DrawLine
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawLine( const geometry::Point2f& from, const geometry::Point2f& to ) const
+void GlProxy::DrawLine( const geometry::Point2f& from, const geometry::Point2f& to, float width ) const
 {
-    tools_->DrawLine( from, to );
+    tools_->DrawLine( from, to, width );
 }
 
 // -----------------------------------------------------------------------------
@@ -324,9 +324,9 @@ void GlProxy::DrawCurvedArrow( const geometry::Point2f& from, const geometry::Po
 // Name: GlProxy::DrawArc
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-void GlProxy::DrawArc( const geometry::Point2f& center, const geometry::Point2f& p1, const geometry::Point2f& p2 ) const
+void GlProxy::DrawArc( const geometry::Point2f& center, const geometry::Point2f& p1, const geometry::Point2f& p2, float width ) const
 {
-    tools_->DrawArc( center, p1, p2 );
+    tools_->DrawArc( center, p1, p2, width );
 }
 
 // -----------------------------------------------------------------------------

@@ -93,24 +93,25 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
             float offset = 500.;
             std::vector< geometry::Point2f > baseLine = hulls.GetPolylineFacing( radians, offset );
             size_t size = baseLine.size();
+            float lineWidth = 4.;
             if( size == 2 )
-                tools.DrawLine( baseLine[0], baseLine[1] );
+                tools.DrawLine( baseLine[0], baseLine[1], lineWidth );
             else if( size > 2 )
             {
                 size_t size = baseLine.size() - 3;
                 size_t i = 1;
                 for( ; i < size; i+=3 )
                 {
-                    tools.DrawLine( baseLine[i-1], baseLine[i] );
+                    tools.DrawLine( baseLine[i-1], baseLine[i], lineWidth );
                     geometry::Segment2f segment( baseLine[i], baseLine[i+2] );
                     geometry::Point2f middle( (baseLine[i].X() + baseLine[i+2].X()) / 2, (baseLine[i].Y() + baseLine[i+2].Y()) / 2 );
                     geometry::Vector2f normal = segment.Normal();
                     normal.Normalize();
                     geometry::Segment2f bisect( middle + offset * normal, middle - offset * normal );
                     geometry::Point2f center = bisect.Project( baseLine[i+1] );
-                    tools.DrawArc( center, baseLine[i], baseLine[i+2] );
+                    tools.DrawArc( center, baseLine[i], baseLine[i+2], lineWidth );
                 }
-                tools.DrawLine( baseLine[i-1], baseLine[i] );
+                tools.DrawLine( baseLine[i-1], baseLine[i], lineWidth );
             }
             tools::Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
             while( children.HasMoreElements() )
