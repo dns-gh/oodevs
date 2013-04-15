@@ -104,7 +104,7 @@ void ADN_Units_GUI::Build()
     ADN_TimeField* pTimeField = builder.AddField< ADN_TimeField >( pInfoHolder, "decontamination-delay", tr( "Decontamination delay" ), vInfosConnectors[ eDecontaminationDelay ], 0, eGreaterZero );
     pTimeField->SetMinimumValueInSecond( 1 );
     // Feedback time
-    builder.AddOptionnalField<ADN_TimeField>( pInfoHolder, "force-ratio-feedback-time", tr( "Force ratio feedback time" ), vInfosConnectors[ eHasStrengthRatioFeedbackTime ], vInfosConnectors[ eStrengthRatioFeedbackTime ] );
+    builder.AddCheckableField<ADN_TimeField>( pInfoHolder, "force-ratio-feedback-time", tr( "Force ratio feedback time" ), vInfosConnectors[ eHasStrengthRatioFeedbackTime ], vInfosConnectors[ eStrengthRatioFeedbackTime ] );
     // Can fly
     builder.AddField< ADN_CheckBox >( pInfoHolder, "can-fly", tr( "Can fly" ), vInfosConnectors[ eCanFly ] );
     // Crossing height

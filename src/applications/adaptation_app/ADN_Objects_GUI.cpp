@@ -287,9 +287,9 @@ void ADN_Objects_GUI::Build()
         // Detection
         ADN_GroupBox* detection = CreateCapacityGroupBox( 3, builder, "detection", tr( "Detection" ), vInfosConnectors[ eDetectionCapacityPresent ] );
         // LTO begin
-        builder.AddOptionnalField< ADN_TimeField >( detection, "duration", tr( "Detection duration" ), vInfosConnectors[ eDetectionCapacity_HasDetectionTime ], vInfosConnectors[ eDetectionCapacity_DetectionTime ] );
-        builder.AddOptionnalField< ADN_TimeField >( detection, "recognition-duration", tr( "Recognition duration" ), vInfosConnectors[ eDetectionCapacity_HasRecoTime ], vInfosConnectors[ eDetectionCapacity_RecoTime ] );
-        builder.AddOptionnalField< ADN_TimeField >( detection, "identification-duration", tr( "Identification duration" ), vInfosConnectors[ eDetectionCapacity_HasIdentificationTime ], vInfosConnectors[ eDetectionCapacity_IdentificationTime ] );
+        builder.AddCheckableField< ADN_TimeField >( detection, "duration", tr( "Detection duration" ), vInfosConnectors[ eDetectionCapacity_HasDetectionTime ], vInfosConnectors[ eDetectionCapacity_DetectionTime ] );
+        builder.AddCheckableField< ADN_TimeField >( detection, "recognition-duration", tr( "Recognition duration" ), vInfosConnectors[ eDetectionCapacity_HasRecoTime ], vInfosConnectors[ eDetectionCapacity_RecoTime ] );
+        builder.AddCheckableField< ADN_TimeField >( detection, "identification-duration", tr( "Identification duration" ), vInfosConnectors[ eDetectionCapacity_HasIdentificationTime ], vInfosConnectors[ eDetectionCapacity_IdentificationTime ] );
         // LTO end
         builder.PopSubName(); // !detection
 

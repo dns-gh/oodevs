@@ -91,7 +91,7 @@ void ADN_Equipments_GUI::Build()
     // Weight
     builder.AddField< ADN_EditLine_Double >( pInfoHolder, "weight", tr( "Weight" ), vInfosConnectors[ eWeight ], tr( "T" ), eGreaterZero );
     // Max slope
-    builder.AddOptionnalField< ADN_EditLine_Double >( pInfoHolder, "max-slope", tr( "Max slope" ), vInfosConnectors[ eHasMaxSlope ], vInfosConnectors[ eMaxSlope ], tr( "%" ), eGreaterZero );
+    builder.AddCheckableField< ADN_EditLine_Double >( pInfoHolder, "max-slope", tr( "Max slope" ), vInfosConnectors[ eHasMaxSlope ], vInfosConnectors[ eMaxSlope ], tr( "%" ), eGreaterZero );
 
     // Troop/Crew groupbox
     Q3GroupBox* pTroopGroupBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Troop/Crew" ) );
@@ -195,25 +195,25 @@ void ADN_Equipments_GUI::Build()
     T_ConnectorVector vInfoObjectsConnectors( eNbrObjGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
     QWidget* pObjectGrid = builder.AddFieldHolder( pObjectsGroup );
     // InitialBuildTime
-    builder.AddOptionnalField< ADN_TimeField >( pObjectGrid, "initial-construction-time", tr( "Initial Construction Time" ), vInfoObjectsConnectors[ eHasInitialBuildTime ], vInfoObjectsConnectors[ eInitialBuildTime ] ) ;
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "initial-construction-time", tr( "Initial Construction Time" ), vInfoObjectsConnectors[ eHasInitialBuildTime ], vInfoObjectsConnectors[ eInitialBuildTime ] ) ;
     // InitialDestructionTime
-    builder.AddOptionnalField< ADN_TimeField >( pObjectGrid, "initial-destruction-time", tr( "Initial Destruction Time" ), vInfoObjectsConnectors[ eHasInitialDestructionTime ], vInfoObjectsConnectors[ eInitialDestructionTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "initial-destruction-time", tr( "Initial Destruction Time" ), vInfoObjectsConnectors[ eHasInitialDestructionTime ], vInfoObjectsConnectors[ eInitialDestructionTime ] );
     // CoeffBuildTime
-    builder.AddOptionnalField< ADN_TimeField >( pObjectGrid, "time-construction-coefficient", tr( "Time Construction Coefficient" ), vInfoObjectsConnectors[ eHasCoeffBuildTime ], vInfoObjectsConnectors[ eCoeffBuildTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "time-construction-coefficient", tr( "Time Construction Coefficient" ), vInfoObjectsConnectors[ eHasCoeffBuildTime ], vInfoObjectsConnectors[ eCoeffBuildTime ] );
     // CoeffDestructionTime
-    builder.AddOptionnalField< ADN_TimeField >( pObjectGrid, "time-destruction-coefficient", tr( "Time Destruction Coefficient" ), vInfoObjectsConnectors[ eHasCoeffDestructionTime ], vInfoObjectsConnectors[ eCoeffDestructionTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "time-destruction-coefficient", tr( "Time Destruction Coefficient" ), vInfoObjectsConnectors[ eHasCoeffDestructionTime ], vInfoObjectsConnectors[ eCoeffDestructionTime ] );
     // ValorizationTime
-    builder.AddOptionnalField< ADN_TimeField >( pObjectGrid, "mining-time", tr( "Mining time" ), vInfoObjectsConnectors[ eHasValorizationTime ], vInfoObjectsConnectors[ eValorizationTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "mining-time", tr( "Mining time" ), vInfoObjectsConnectors[ eHasValorizationTime ], vInfoObjectsConnectors[ eValorizationTime ] );
     // DevalorizationTime
-    builder.AddOptionnalField< ADN_TimeField >( pObjectGrid, "demining-time", tr( "Demining time" ), vInfoObjectsConnectors[ eHasDevalorizationTime ], vInfoObjectsConnectors[ eDevalorizationTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "demining-time", tr( "Demining time" ), vInfoObjectsConnectors[ eHasDevalorizationTime ], vInfoObjectsConnectors[ eDevalorizationTime ] );
     // ExtinguishingTime
-    builder.AddOptionnalField< ADN_TimeField >( pObjectGrid, "extinguishing-time", tr( "Extinguishing time" ), vInfoObjectsConnectors[ eHasExtinguishingTime ], vInfoObjectsConnectors[ eExtinguishingTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pObjectGrid, "extinguishing-time", tr( "Extinguishing time" ), vInfoObjectsConnectors[ eHasExtinguishingTime ], vInfoObjectsConnectors[ eExtinguishingTime ] );
     // CoeffCircTime
-    builder.AddOptionnalField< ADN_EditLine_Double >( pObjectGrid, "bypass-coefficient", tr( "Bypass coefficient" ), vInfoObjectsConnectors[ eHasCoeffCircTime ], vInfoObjectsConnectors[ eCoeffCircTime ], 0, eGreaterEqualZero );
+    builder.AddCheckableField< ADN_EditLine_Double >( pObjectGrid, "bypass-coefficient", tr( "Bypass coefficient" ), vInfoObjectsConnectors[ eHasCoeffCircTime ], vInfoObjectsConnectors[ eCoeffCircTime ], 0, eGreaterEqualZero );
     // SpeedCirc
-    builder.AddOptionnalField< ADN_EditLine_Double >( pObjectGrid, "speed-when-bypassed", tr( "Speed when bypassed" ), vInfoObjectsConnectors[ eHasSpeedCirc ], vInfoObjectsConnectors[ eSpeedCirc ], tr( "km/h" ) );
+    builder.AddCheckableField< ADN_EditLine_Double >( pObjectGrid, "speed-when-bypassed", tr( "Speed when bypassed" ), vInfoObjectsConnectors[ eHasSpeedCirc ], vInfoObjectsConnectors[ eSpeedCirc ], tr( "km/h" ) );
     // SpeedNotCirc
-    builder.AddOptionnalField< ADN_EditLine_Double >( pObjectGrid, "speed-when-not-bypassed", tr( "Speed when not bypassed" ), vInfoObjectsConnectors[ eHasSpeedNotCirc ], vInfoObjectsConnectors[ eSpeedNotCirc ], tr( "km/h" ) );
+    builder.AddCheckableField< ADN_EditLine_Double >( pObjectGrid, "speed-when-not-bypassed", tr( "Speed when not bypassed" ), vInfoObjectsConnectors[ eHasSpeedNotCirc ], vInfoObjectsConnectors[ eSpeedNotCirc ], tr( "km/h" ) );
     pListObjects->SetItemConnectors( vInfoObjectsConnectors );
 
     builder.PopSubName(); //! data-tab
@@ -421,7 +421,7 @@ QWidget* ADN_Equipments_GUI::BuildNTI( QWidget* pParent, const char* objectName,
 
     ADN_GroupBox* pNTIGroup = builder.AddGroupBox( pParent, objectName, szName, vInfosConnectors[ nIndex + eNTIIsPresent ], 1 );
 
-    builder.AddOptionnalField< ADN_TimeField >( pNTIGroup, "max-repair-duration", tr( "Max repair duration" ), vInfosConnectors[ nIndex + eHasMaxRepairTime ], vInfosConnectors[nIndex + eMaxRepairTime] );
+    builder.AddCheckableField< ADN_TimeField >( pNTIGroup, "max-repair-duration", tr( "Max repair duration" ), vInfosConnectors[ nIndex + eHasMaxRepairTime ], vInfosConnectors[nIndex + eMaxRepairTime] );
     builder.AddField< ADN_CheckBox >( pNTIGroup, "can-fix-eletronic-breakdowns", tr( "Can fix electronic breakdowns" ), vInfosConnectors[ nIndex + eCanRepairEA ] );
     builder.AddField< ADN_CheckBox >( pNTIGroup, "can-fix-mobility-breakdowns", tr( "Can fix mobility breakdowns" ), vInfosConnectors[ nIndex + eCanRepairM ] );
 

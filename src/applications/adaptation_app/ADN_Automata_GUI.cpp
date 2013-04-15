@@ -82,7 +82,7 @@ void ADN_Automata_GUI::Build()
     // Unit
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "command-post", tr( "Command post" ), vInfosConnectors[eUnit] );
     // Feedback time
-    builder.AddOptionnalField<ADN_TimeField>( pInfoHolder, "force-ratio-feedback-time", tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
+    builder.AddCheckableField<ADN_TimeField>( pInfoHolder, "force-ratio-feedback-time", tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
 
     // Sub units
     QGroupBox* pSubUnitsGroup = new QGroupBox( tr( "Sub-units" ) );

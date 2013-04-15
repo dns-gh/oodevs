@@ -61,8 +61,8 @@ void ADN_Radars_GUI::Build()
 
     builder.AddEnumField( pInfoHolder, "type", tr( "Type" ), vConnectors[ eType ] );
     builder.AddField< ADN_EditLine_Double >( pInfoHolder, "range", tr( "Range" ), vConnectors[ eRange ], tr( "m" ), eGreaterEqualZero );
-    builder.AddOptionnalField< ADN_EditLine_Double >( pInfoHolder, "min-height", tr( "Min. height" ), vConnectors[ eHasMinHeight ], vConnectors[ eMinHeight ], tr( "m" ), eGreaterEqualZero );
-    builder.AddOptionnalField< ADN_EditLine_Double >( pInfoHolder, "max-height", tr( "Max. height" ), vConnectors[ eHasMaxHeight ], vConnectors[ eMaxHeight ], tr( "m" ), eGreaterEqualZero );
+    builder.AddCheckableField< ADN_EditLine_Double >( pInfoHolder, "min-height", tr( "Min. height" ), vConnectors[ eHasMinHeight ], vConnectors[ eMinHeight ], tr( "m" ), eGreaterEqualZero );
+    builder.AddCheckableField< ADN_EditLine_Double >( pInfoHolder, "max-height", tr( "Max. height" ), vConnectors[ eHasMaxHeight ], vConnectors[ eMaxHeight ], tr( "m" ), eGreaterEqualZero );
 
     // Detectable activities
     ADN_GroupBox* pDetectableActivitiesGroup = builder.AddGroupBox( 0, "detectable", tr( "Detectable activities" ), vConnectors[ eHasDetectableActivities ], 3 );
@@ -76,14 +76,14 @@ void ADN_Radars_GUI::Build()
 
     // Detect times
     ADN_GroupBox* pDetectTimesGroup = builder.AddGroupBox( 0, "durations", tr( "Durations" ), vConnectors[ eHasDetectionTimes ], 3 );
-    builder.AddOptionnalField< ADN_TimeField >( pDetectTimesGroup, "detection-duration", tr( "Detection duration" ), vConnectors[ eHasDetectionTime ], vConnectors[ eDetectionTime ] );
-    builder.AddOptionnalField< ADN_TimeField >( pDetectTimesGroup, "recognition-duration", tr( "Recognition duration" ), vConnectors[ eHasRecoTime ], vConnectors[ eRecoTime ] );
-    builder.AddOptionnalField< ADN_TimeField >( pDetectTimesGroup, "identification-duration", tr( "Identification duration" ), vConnectors[ eHasIdentificationTime ], vConnectors[ eIdentificationTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pDetectTimesGroup, "detection-duration", tr( "Detection duration" ), vConnectors[ eHasDetectionTime ], vConnectors[ eDetectionTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pDetectTimesGroup, "recognition-duration", tr( "Recognition duration" ), vConnectors[ eHasRecoTime ], vConnectors[ eRecoTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pDetectTimesGroup, "identification-duration", tr( "Identification duration" ), vConnectors[ eHasIdentificationTime ], vConnectors[ eIdentificationTime ] );
 
     ADN_GroupBox* pHQDetectTimesGroup = builder.AddGroupBox( pDetectTimesGroup, "cp-durations", tr( "CP durations" ), vConnectors[ eHasHQDetectionTimes ], 3 );
-    builder.AddOptionnalField< ADN_TimeField >( pHQDetectTimesGroup, "detection-duration", tr( "Detection duration" ), vConnectors[ eHasHQDetectionTime ], vConnectors[ eHQDetectionTime ] );
-    builder.AddOptionnalField< ADN_TimeField >( pHQDetectTimesGroup, "recognition-duration", tr( "Recognition duration" ), vConnectors[ eHasHQRecoTime ], vConnectors[ eHQRecoTime ] );
-    builder.AddOptionnalField< ADN_TimeField >( pHQDetectTimesGroup, "identification-duration", tr( "Identification duration" ), vConnectors[ eHasHQIdentificationTime ], vConnectors[ eHQIdentificationTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pHQDetectTimesGroup, "detection-duration", tr( "Detection duration" ), vConnectors[ eHasHQDetectionTime ], vConnectors[ eHQDetectionTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pHQDetectTimesGroup, "recognition-duration", tr( "Recognition duration" ), vConnectors[ eHasHQRecoTime ], vConnectors[ eHQRecoTime ] );
+    builder.AddCheckableField< ADN_TimeField >( pHQDetectTimesGroup, "identification-duration", tr( "Identification duration" ), vConnectors[ eHasHQIdentificationTime ], vConnectors[ eHQIdentificationTime ] );
 
     QLabel* pLabel = new QLabel( pDetectTimesGroup );
     pLabel->setText( tr( "When 'Durations' is unchecked, units are recognized instantly.\n"

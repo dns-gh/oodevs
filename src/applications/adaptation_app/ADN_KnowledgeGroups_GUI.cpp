@@ -60,7 +60,7 @@ void ADN_KnowledgeGroups_GUI::Build()
     Q3GroupBox* pAgentGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Parameters on known units" ) );
     builder.AddField< ADN_TimeField >( pAgentGroup, "maximum-life-span", tr( "Maximum life span" ), vInfosConnectors[eAgentMaxLifetime] )->SetMinimumValueInSecond( 1 );
     builder.AddField< ADN_EditLine_Double >( pAgentGroup, "maximum-distance-between-known-unit", tr( "Maximum distance between known unit and real unit positions" ), vInfosConnectors[eAgentMaxDistance], 0, eGreaterZero );
-    builder.AddOptionnalField<ADN_TimeField>( pAgentGroup, "extrapolation-duration", tr( "Extrapolation duration" ), vInfosConnectors[eAgentHasInterpolationTime], vInfosConnectors[eAgentInterpolationTime] );
+    builder.AddCheckableField<ADN_TimeField>( pAgentGroup, "extrapolation-duration", tr( "Extrapolation duration" ), vInfosConnectors[eAgentHasInterpolationTime], vInfosConnectors[eAgentInterpolationTime] );
 
     Q3GroupBox* pPopulationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Parameters on known crowds" ) );
     builder.AddField< ADN_TimeField >( pPopulationGroup, "maximum-life-span", tr( "Maximum life span" ), vInfosConnectors[ePopulationMaxLifetime] )->SetMinimumValueInSecond( 1 );

@@ -99,9 +99,9 @@ public:
     T* AddField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit = 0, E_Validator nValidator = eNone, QWidget* sideWidget = 0 );
 
     template< class T >
-    T* AddOptionnalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiOptionConnector, ADN_Connector_ABC*& pGuiConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
+    T* AddCheckableField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiOptionConnector, ADN_Connector_ABC*& pGuiConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
     template< class T >
-    T* AddOptionnalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemOptionConnector, ADN_Connector_ABC& itemConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
+    T* AddCheckableField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemOptionConnector, ADN_Connector_ABC& itemConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
 
     ADN_ComboBox_Enum* AddEnumField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiConnector );
     ADN_ComboBox_Enum* AddEnumField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemConnector );
@@ -295,7 +295,7 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* objectName, const cha
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 template< class T >
-T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiOptionConnector, ADN_Connector_ABC*& pGuiConnector, const char* szUnit, E_Validator nValidator )
+T* ADN_GuiBuilder::AddCheckableField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC*& pGuiOptionConnector, ADN_Connector_ABC*& pGuiConnector, const char* szUnit, E_Validator nValidator )
 {
     // Create the field and labels.
     ADN_CheckBox* pCheckbox = new ADN_CheckBox( szName, pParent );
@@ -328,7 +328,7 @@ T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* objectName, 
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename T >
-T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemOptionConnector, ADN_Connector_ABC& itemConnector, const char* szUnit, E_Validator nValidator )
+T* ADN_GuiBuilder::AddCheckableField( QWidget* pParent, const char* objectName, const char* szName, ADN_Connector_ABC& itemOptionConnector, ADN_Connector_ABC& itemConnector, const char* szUnit, E_Validator nValidator )
 {
     // Create the field and labels.
     ADN_CheckBox* pCheckbox = new ADN_CheckBox( szName, pParent );
