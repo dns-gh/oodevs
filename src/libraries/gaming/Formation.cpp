@@ -65,7 +65,7 @@ E_NatureLevel Formation::GetLevel() const
 void Formation::CreateDictionary()
 {
     gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/LogisticLevel" ), *logisticLevel_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/LogisticLevel" ), GetLogisticLevel() );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,35 +78,13 @@ const kernel::LogisticLevel& Formation::GetLogisticLevel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Formation::InitializeSymbol
-// Created: LGY 2011-03-08
-// -----------------------------------------------------------------------------
-void Formation::InitializeSymbol() const
-{
-    const kernel::TacticalHierarchies& hierarchies = Get< kernel::TacticalHierarchies >();
-    const std::string symbol = hierarchies.GetSymbol();
-    const std::string level = hierarchies.GetLevel();
-    if( symbolPath_ == symbol && levelPath_ == level )
-        return;
-    symbolPath_ = symbol;
-    levelPath_ = level;
-    const Entity_ABC& team = hierarchies.GetTop();
-    const Diplomacies_ABC* diplo = team.Retrieve< Diplomacies_ABC >();
-    App6Symbol::SetKarma( symbolPath_, diplo ? diplo->GetKarma() : Karma::unknown_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Formation::Draw
 // Created: LGY 2011-03-08
 // -----------------------------------------------------------------------------
 void Formation::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( !IsAggregated( *this ) && HasAggregatedSubordinate() && viewport.IsHotpointVisible() )
-    {
-        InitializeSymbol();
-        tools.DrawApp6SymbolFixedSize( symbolPath_, where, -2.f, 0 );
-        tools.DrawApp6SymbolFixedSize( levelPath_, where, -2.f, 0 );
-    }
+        drawable_.Draw( *this, where, viewport, tools, -2.f );
 }
 
 // -----------------------------------------------------------------------------

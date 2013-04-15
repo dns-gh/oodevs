@@ -51,6 +51,98 @@ void ConvexHulls::Draw( const Point2f& , const gui::Viewport_ABC& , gui::GlTools
     }
 }
 
+namespace
+{
+    void PushPoint( std::vector< geometry::Point2f >& result, std::vector< geometry::Point2f >& offsets, const int i, const float offset, const geometry::Point2f& center, const T_PointVector& hull )
+    {        
+        Vector2f current( center, hull[i] );
+        result.push_back( hull[i] );
+        offsets.push_back( hull[i] + ( offset * current.Normalize() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< geometry::Point2f > ConvexHulls::GetPolylineFacing
+// Created: LDC 2013-04-12
+// -----------------------------------------------------------------------------
+std::vector< geometry::Point2f > ConvexHulls::GetPolylineFacing( float radians, float offset ) const
+{
+    std::vector< geometry::Point2f > result;
+    Update();
+    size_t count = hull_.size();
+    if( count < 3 )
+        return result;
+    double barycenterX = 0.;
+    double barycenterY = 0.;
+    for( auto it = hull_.begin(); it != hull_.end(); ++it )
+    {
+        barycenterX += static_cast< double >( it->X() );
+        barycenterY += static_cast< double >( it->Y() );
+    }
+    geometry::Point2f center( (float)(barycenterX/count), (float)(barycenterY/count) );
+    Vector2f directionVector( 0, 1. );
+    directionVector.Rotate( radians );
+    bool tailAdded = false;
+    bool headAdded = false;
+    int head = 0;
+    int tail = 0;
+    for( int i = 0; i < static_cast< int >( count ); ++i )
+    {
+        Vector2f current( center, hull_[i] );
+        if( current.DotProduct( directionVector ) <= 0 )
+        {
+            if( !tailAdded && !headAdded )
+            {
+                head = i - 1;
+                headAdded = true;
+            }
+            if( tailAdded && headAdded )
+            {
+                head = i - 1;
+                headAdded = false;
+            }
+        }
+        else
+        {
+            if( headAdded && !tailAdded )
+            {
+                tail = i;
+                tailAdded = true;
+            }
+        }
+    }
+    if( headAdded && !tailAdded )
+        tail = 0;
+    if( head == -1 )
+        head = static_cast< int >( count ) - 1;
+    std::vector< geometry::Point2f > centers;
+    std::vector< geometry::Point2f > offsets;
+    if( head < tail )
+    {
+        for( int i = head; i <= tail; ++i )
+            PushPoint( centers, offsets, i, offset, center, hull_ );
+    }
+    else
+    {
+        for( int i = head; i < count; ++i )
+            PushPoint( centers, offsets, i, offset, center, hull_ );
+        for( int i = 0; i <= tail; ++i )
+            PushPoint( centers, offsets, i, offset, center, hull_ );
+    }
+    result.push_back( offsets[ 0 ] );
+    size_t centersSize = centers.size() - 1;
+    for( size_t i = 1; i < centersSize; ++i )
+    {
+        Segment2f segment1( offsets[i-1], offsets[i] );
+        result.push_back( segment1.Project( centers[i] ) );
+        result.push_back( centers[i] );
+        Segment2f segment2( offsets[i], offsets[i+1] );
+        result.push_back( segment2.Project( centers[i] ) );
+    }
+    result.push_back( offsets[ centersSize ] );
+    return result;
+}
+
 // -----------------------------------------------------------------------------
 // Name: ConvexHulls::Update
 // Created: AGE 2007-05-30

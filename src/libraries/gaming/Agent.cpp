@@ -87,6 +87,24 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::ShouldDisplayStaticSymbol
+// Created: LDC 2013-04-12
+// -----------------------------------------------------------------------------
+bool Agent::ShouldDisplayStaticSymbol() const
+{
+    return ( speed_ == 0 ) && !staticSymbol_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetDirection
+// Created: LDC 2013-04-12
+// -----------------------------------------------------------------------------
+unsigned int Agent::GetDirection() const
+{
+    return direction_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::Pick
 // Created: LGY 2013-02-20
 // -----------------------------------------------------------------------------

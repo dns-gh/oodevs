@@ -808,6 +808,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\SimulationController.cpp">
       <Filter>Source Files\Model\Simulation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\DrawableUnitContainer.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1538,6 +1541,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\SimulationController.h">
       <Filter>Source Files\Model\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\DrawableUnitContainer.h">
+      <Filter>Source Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

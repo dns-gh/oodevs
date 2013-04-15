@@ -107,6 +107,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\gaming\CommandPostAttributes.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\DrawableUnitContainer.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\FloodProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\gaming_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -337,6 +338,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\CommandPostAttributes.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\DrawableUnitContainer.h" />
     <ClInclude Include="..\..\src\libraries\gaming\FloodProxy.h" />
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h" />
     <ClInclude Include="..\..\src\libraries\gaming\HumanState.h" />

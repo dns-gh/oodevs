@@ -12,6 +12,7 @@
 
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_gui/EntityImplementation.h"
+#include "DrawableUnitContainer.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "tools/Resolver_ABC.h"
@@ -62,16 +63,14 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( const kernel::AutomatType& type );
-    void InitializeSymbol() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::AutomatType& type_;
-    mutable std::string symbol_; // $$$$ RC LDC: code duplication with preparation
-    mutable std::string level_;
     const kernel::LogisticLevel* logisticLevel_;
+    DrawableUnitContainer drawable_;
     //@}
 };
 

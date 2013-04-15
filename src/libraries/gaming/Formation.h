@@ -12,6 +12,7 @@
 
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_gui/EntityImplementation.h"
+#include "DrawableUnitContainer.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "tools/Resolver_ABC.h"
 
@@ -79,8 +80,7 @@ private:
     kernel::Controller&          controller_;
     E_NatureLevel                level_;
     const kernel::LogisticLevel* logisticLevel_;
-    mutable std::string          symbolPath_; // $$$$ RC LDC: code duplication with preparation
-    mutable std::string          levelPath_;
+    DrawableUnitContainer        drawable_;
     //@}
 };
 

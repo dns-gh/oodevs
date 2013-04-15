@@ -9,17 +9,10 @@
 
 #include "gaming_pch.h"
 #include "Automat.h"
-#include "Diplomacies.h"
-#include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/PropertiesDictionary.h"
-#include "clients_gui/Viewport_ABC.h"
-#include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Karma.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/LogisticLevel.h"
-#include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -56,23 +49,18 @@ void Automat::CreateDictionary( const kernel::AutomatType& type )
 {
     gui::PropertiesDictionary& dictionary = Get< gui::PropertiesDictionary >();
     if( type.IsTC2() ) //$$$ NAZE
-        dictionary.Register( *this, tools::translate( "Automat", "Info/LogisticLevel" ), *logisticLevel_ );
+        dictionary.Register( *this, tools::translate( "Automat", "Info/LogisticLevel" ), GetLogisticLevel() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Automat::Draw
-// Created: AGE 2006-10-06
+// Created: LDC 2013-04-15
 // -----------------------------------------------------------------------------
 void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() )
-    {
-        InitializeSymbol();
-        tools.DrawApp6SymbolFixedSize( symbol_, where, -1.5f, 0 );
-        tools.DrawApp6SymbolFixedSize( level_, where, -1.5f, 0 );
-    }
+    drawable_.Draw( *this, where, viewport, tools, -1.5f);
 }
-
+    
 // -----------------------------------------------------------------------------
 // Name: Automat::Pick
 // Created: LGY 2013-02-20
@@ -80,24 +68,6 @@ void Automat::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& vie
 void Automat::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     Draw( where, viewport, tools );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::InitializeSymbol
-// Created: AGE 2006-10-25
-// -----------------------------------------------------------------------------
-void Automat::InitializeSymbol() const
-{
-    const kernel::TacticalHierarchies& hierarchies = Get< kernel::TacticalHierarchies >();
-    const std::string symbol = hierarchies.GetSymbol();
-    const std::string level = hierarchies.GetLevel();
-    if( symbol_ == symbol && level_ == level )
-        return;
-    symbol_ = symbol;
-    level_ = level;
-    const Entity_ABC& team = hierarchies.GetTop();
-    const Diplomacies_ABC* diplo = team.Retrieve< Diplomacies_ABC >();
-    App6Symbol::SetKarma( symbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
 }
 
 // -----------------------------------------------------------------------------

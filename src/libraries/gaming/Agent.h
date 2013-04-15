@@ -63,6 +63,9 @@ public:
 
     virtual void NotifyUpdated( const Equipments& equipments );
     virtual void DoUpdate( const sword::UnitAttributes& attributes );
+
+    bool ShouldDisplayStaticSymbol() const;
+    unsigned int GetDirection() const;
     //@}
 
 private:
