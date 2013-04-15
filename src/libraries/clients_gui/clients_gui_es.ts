@@ -341,7 +341,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>USRP database (TRANSH01.THF);;Images (*.tif *.bmp *.png *.jpg *.jp2);;All Files (*.*)</source>
+        <source>Images (*.tif *.bmp *.png *.jpg *.jp2);;USRP database (TRANSH01.THF);;All Files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

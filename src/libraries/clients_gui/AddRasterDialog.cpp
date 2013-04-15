@@ -123,7 +123,11 @@ void AddRasterDialog::OnValueChanged()
 // -----------------------------------------------------------------------------
 void AddRasterDialog::OnBrowse()
 {
-    tools::Path::T_Paths strRasterPathFiles = gui::FileDialog::getOpenFileNames( this, tr( "Select USRP header file or GeoTIFF File" ), "", tr( "USRP database (TRANSH01.THF);;Images (*.tif *.bmp *.png *.jpg *.jp2);;All Files (*.*)" ) );
+    tools::Path::T_Paths strRasterPathFiles = gui::FileDialog::getOpenFileNames( this,
+            tr( "Select USRP header file or GeoTIFF File" ), "",
+            tr( "Images (*.tif *.bmp *.png *.jpg *.jp2);;"
+                "USRP database (TRANSH01.THF);;"
+                "All Files (*.*)" ) );
     if( strRasterPathFiles.empty() )
         return;
 

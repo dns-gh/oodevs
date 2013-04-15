@@ -345,8 +345,8 @@
         <translation>Selectionnez un fichier header USRP ou un fichier GeoTIFF</translation>
     </message>
     <message>
-        <source>USRP database (TRANSH01.THF);;Images (*.tif *.bmp *.png *.jpg *.jp2);;All Files (*.*)</source>
-        <translation>Base de donnée USRP (TRANSH01.THF);;Images (*.tif *.bmp *.png *.jpg *.jp2);;Tous les fichiers (*.*)</translation>
+        <source>Images (*.tif *.bmp *.png *.jpg *.jp2);;USRP database (TRANSH01.THF);;All Files (*.*)</source>
+        <translation>Images (*.tif *.bmp *.png *.jpg *.jp2);;Base de donnée USRP (TRANSH01.THF);;Tous les fichiers (*.*)</translation>
     </message>
     <message>
         <source>Enter files to import</source>

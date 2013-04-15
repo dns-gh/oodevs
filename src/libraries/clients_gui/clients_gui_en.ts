@@ -353,8 +353,8 @@
         <translation>Select USRP header file or GeoTIFF File</translation>
     </message>
     <message>
-        <source>USRP database (TRANSH01.THF);;Images (*.tif *.bmp *.png *.jpg *.jp2);;All Files (*.*)</source>
-        <translation>USRP database (TRANSH01.THF);;Images (*.tif *.bmp *.png *.jpg *.jp2);;All Files (*.*)</translation>
+        <source>Images (*.tif *.bmp *.png *.jpg *.jp2);;USRP database (TRANSH01.THF);;All Files (*.*)</source>
+        <translation>Images (*.tif *.bmp *.png *.jpg *.jp2);;USRP database (TRANSH01.THF);;All Files (*.*)</translation>
     </message>
 </context>
 <context>
