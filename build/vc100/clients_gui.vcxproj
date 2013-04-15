@@ -155,6 +155,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesDictionary.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesGroup.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesGroupDictionary.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RasterProcess.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichComboBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.cpp" />
@@ -802,6 +803,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertiesGroup.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertiesGroupDictionary.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Property_ABC.h" />
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\RasterProcess.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichComboBox.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.h" />

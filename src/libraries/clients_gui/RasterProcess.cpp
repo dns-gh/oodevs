@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "RasterProcess.h"
 #include "moc_RasterProcess.cpp"
-#include "Config.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/ExerciseConfig.h"
 #include <tools/EncodingConverter.h>
 #include <tools/Path.h>
 #include <tools/StdFileWrapper.h>
@@ -67,7 +67,7 @@ void RasterProcess::Fire( int code, const tools::Path& output )
 }
 
 boost::shared_ptr< QProcess > RunRasterApp( const tools::Path& input, int pixelSize,
-        const Config& config, const RasterCallback& callback )
+        const tools::ExerciseConfig& config, const RasterCallback& callback )
 {
     QStringList parameters;
     tools::Path cfgPath = config.BuildTerrainChildFile( "config.xml" )

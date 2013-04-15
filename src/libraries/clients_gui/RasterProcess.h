@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef PREPARATION_RASTER_PROCESS_H
-#define PREPARATION_RASTER_PROCESS_H
+#ifndef CLIENTS_GUI_RASTER_PROCESS_H
+#define CLIENTS_GUI_RASTER_PROCESS_H
 
 #include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
@@ -16,9 +16,9 @@
 namespace tools
 {
     class Path;
+    class ExerciseConfig;
 }
 
-class Config;
 class QProcess;
 
 typedef boost::function<void (int, const tools::Path&)> RasterCallback;
@@ -54,6 +54,6 @@ private:
 // with a zero-exit code on success and the path of generated texture layer,
 // or a non-zero exit code.
 boost::shared_ptr< QProcess > RunRasterApp( const tools::Path& input,
-    int pixelSize, const Config& config, const RasterCallback& callback );
+    int pixelSize, const tools::ExerciseConfig& config, const RasterCallback& callback );
 
-#endif  // PREPARATION_RASTER_PROCESS_H
+#endif  // CLIENTS_GUI_RASTER_PROCESS_H

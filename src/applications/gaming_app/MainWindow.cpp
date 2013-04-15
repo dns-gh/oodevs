@@ -84,6 +84,7 @@
 #include "clients_gui/Elevation3dLayer.h"
 #include "clients_gui/TerrainLayer.h"
 #include "clients_gui/RasterLayer.h"
+#include "clients_gui/RasterProcess.h"
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/GridLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
@@ -110,11 +111,7 @@
 #include "protocol/ReplaySenders.h"
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 4511 )
-#include <boost/lexical_cast.hpp>
-#pragma warning( pop )
-
+#include <boost/bind.hpp>
 
 using namespace kernel;
 
@@ -253,10 +250,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, *selector_, &dockContainer_->GetProfilingPanel() );
     pStatus->SetModes( eModes_Default, eModes_None, true );
 
-    // Raster_app process
-    process_.reset( new QProcess( this ) );
-    connect( process_.get(), SIGNAL( finished( int, QProcess::ExitStatus ) ), this, SLOT( OnRasterProcessExited( int, QProcess::ExitStatus ) ) );
-
     // Initialize
     setCentralWidget( selector_.get() );
     setAttribute( Qt::WA_DeleteOnClose, true );
@@ -277,7 +270,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 // -----------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
-    process_->kill();
+    if( process_ )
+        process_->kill();
     controllers_.Unregister( *this );
     dockContainer_.reset();
     glProxy_.reset();
@@ -593,14 +587,11 @@ void MainWindow::OnAddRaster()
         QDialog::DialogCode result = static_cast< QDialog::DialogCode >( addRasterDialog_->exec() );
         if( result == QDialog::Accepted )
         {
-            QStringList parameters;
-            parameters << ( std::string( "--config=" ) + config_.BuildTerrainChildFile( "config.xml" ).SystemComplete().ToUTF8() ).c_str();
-            parameters << ( std::string( "--raster=" ) + addRasterDialog_->GetFiles().toStdString() ).c_str();
-            parameters << ( std::string( "--pixelsize=" ) + boost::lexical_cast< std::string >( addRasterDialog_->GetPixelSize() ) ).c_str();
-            parameters << ( std::string( "--file=" ) + ( config_.GetGraphicsDirectory() / "~~tmp.texture.bin" ).SystemComplete().ToUTF8() ).c_str();
-            tools::Path workingDirectory = tools::Path( "../Terrain/applications/" ).SystemComplete();
-            process_->setWorkingDirectory( workingDirectory.ToUTF8().c_str() );
-            process_->start( ( workingDirectory / "raster_app.exe" ).ToUTF8().c_str(), parameters );
+            auto input = tools::Path::FromUnicode( addRasterDialog_->GetFiles().toStdWString() );
+            auto callback = boost::bind( &MainWindow::OnRasterProcessExited,
+                    this, _1, _2 );
+            process_ = RunRasterApp( input, addRasterDialog_->GetPixelSize(),
+                    config_, callback );
         }
     }
     catch( const geodata::ProjectionException& )
@@ -618,27 +609,26 @@ void MainWindow::OnAddRaster()
 // Name: MainWindow::OnRasterProcessExited
 // Created: ABR 2012-06-12
 // -----------------------------------------------------------------------------
-void MainWindow::OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitStatus )
+void MainWindow::OnRasterProcessExited( int exitCode, const tools::Path& output )
 {
-    if( exitStatus == QProcess::NormalExit && exitCode == EXIT_SUCCESS )
+    if( !exitCode )
     {
-        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_, "~~tmp.texture.bin" );
+        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_,
+                output.FileName().ToUTF8() );
         raster.SetPasses( "main" );
         selector_->AddLayer( raster );
         preferenceDialog_->AddLayer( tr( "User layer [%1]" ).arg( addRasterDialog_->GetName() ), raster, true );
         raster.NotifyUpdated( kernel::ModelLoaded( config_ ) );
         raster.GenerateTexture();
-        try
-        {
-            const tools::Path aggregated = config_.GetGraphicsDirectory() / "~~tmp.texture.bin";
-            if( aggregated.Exists() )
-                aggregated.Remove();
-        }
-        catch( ... )
-        {
-            // NOTHING
-        }
     }
     else
         QMessageBox::warning( this, tr( "Error loading image file" ), tr( "Error while loading Raster source." ) );
+    try
+    {
+        output.Remove();
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
 }

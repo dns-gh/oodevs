@@ -1021,6 +1021,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Usages.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RasterProcess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -2108,6 +2111,9 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\TerrainPreference.h">
       <Filter>Source Files\Preferences</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\RasterProcess.h">
+      <Filter>Source Files</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

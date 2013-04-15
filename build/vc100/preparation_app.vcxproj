@@ -245,7 +245,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\ProfilesChecker.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\PropertiesComparator.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\PropertyDisplayer.cpp" />
-    <ClCompile Include="..\..\src\applications\preparation_app\RasterProcess.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\RemoveBlocksDialog.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\SymbolDialog.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\SymbolEditor.cpp" />
@@ -729,11 +728,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\preparation_app\PropertiesComparator.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\PropertyDisplayer.h" />
-    <Qt_file_Mocing Include="..\..\src\applications\preparation_app\RasterProcess.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </Qt_file_Mocing>
     <ClInclude Include="..\..\src\applications\preparation_app\ResourceNetworkPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\StockPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\SupplyRoutePrototype.h" />

@@ -13,6 +13,7 @@
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/ModesObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 namespace kernel
 {
@@ -42,6 +43,11 @@ namespace gui
     class TerrainLayer;
     class TerrainPicker;
     class Elevation2dLayer;
+}
+
+namespace tools
+{
+    class Path;
 }
 
 class Config;
@@ -97,7 +103,7 @@ public slots:
     void ToggleFullScreen();
     void ToggleDocks();
     void OnAddRaster();
-    void OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitStatus );
+    void OnRasterProcessExited( int exitCode, const tools::Path& output );
     //@}
 
 signals:
@@ -137,7 +143,7 @@ private:
     std::auto_ptr< gui::Painter_ABC > pPainter_;
     std::auto_ptr< ColorController > pColorController_;
     std::auto_ptr< DockContainer > dockContainer_;
-    std::auto_ptr< QProcess > process_;
+    boost::shared_ptr< QProcess > process_;
     std::auto_ptr< gui::AddRasterDialog > addRasterDialog_;
     std::auto_ptr< gui::PreferencesDialog > preferenceDialog_;
     std::auto_ptr< gui::EntitySymbols > icons_;

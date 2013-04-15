@@ -34,7 +34,6 @@
 #include "LocationEditorToolbar.h"
 #include "LivingAreaPanel.h"
 #include "OrbatPanel.h"
-#include "RasterProcess.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
@@ -63,6 +62,7 @@
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RasterLayer.h"
+#include "clients_gui/RasterProcess.h"
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/RichLineEdit.h"
 #include "clients_gui/SelectionColorModifier.h"
@@ -239,6 +239,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 // -----------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
+    if( process_ )
+        process_->kill();
     controllers_.Unregister( *this );
 }
 
