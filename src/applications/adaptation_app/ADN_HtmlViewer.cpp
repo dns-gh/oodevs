@@ -16,7 +16,7 @@
 // Name: ADN_HtmlViewer constructor
 // Created: NPT 2013-01-04
 // -----------------------------------------------------------------------------
-ADN_HtmlViewer::ADN_HtmlViewer( QWidget* parent /*= 0*/ )
+ADN_HtmlViewer::ADN_HtmlViewer( QWidget* parent /* = 0 */ )
     : QWebView( parent )
 {
     pConnector_ = new ADN_Connector_String< ADN_HtmlViewer >( this );

@@ -11,6 +11,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_UrbanAccommodation_Type.h"
 #include "ADN_Connector_ListView.h"
+#include "ADN_Inhabitants_Data.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
 #include "ADN_Tr.h"
@@ -75,6 +76,12 @@ std::string ADN_ListView_UrbanAccommodation_Type::GetToolTipFor( const QModelInd
     void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     ADN_Urban_Data::AccommodationInfos* pCastData = static_cast< ADN_Urban_Data::AccommodationInfos* >( pData );
     assert( pCastData != 0 );
-    return FormatUsersList( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Templates" ),
-                            ADN_Workspace::GetWorkspace().GetUrban().GetData().GetUrbanTemplateThatUse( *pCastData ) );
+    std::string result;
+    FillMultiUsersList( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Templates" ),
+                            ADN_Workspace::GetWorkspace().GetUrban().GetData().GetUrbanTemplateThatUse( *pCastData ), result );
+    FillMultiUsersList( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Inhabitants" ),
+                            ADN_Workspace::GetWorkspace().GetInhabitants().GetData().GetSchedulesThatUse( *pCastData ), result );
+    if( result.empty() )
+        result = tr( "<b>Unused</b>" ).toStdString();
+    return result;
 }

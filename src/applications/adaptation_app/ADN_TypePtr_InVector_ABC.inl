@@ -278,7 +278,7 @@ void ADN_TypePtr_InVector_ABC< T >::Initialize( ADN_Connector_ABC& dest ) const
 // Created: JSR 2013-04-03
 // -----------------------------------------------------------------------------
 template< class T >
-void ADN_TypePtr_InVector_ABC< T >::Initialize( T_TypeVector* vector /*= 0*/ )
+void ADN_TypePtr_InVector_ABC< T >::Initialize( T_TypeVector* vector /* = 0 */ )
 {
     if( vector )
         pVector_ = vector;
@@ -309,5 +309,5 @@ template< class T >
 void ADN_TypePtr_InVector_ABC< T >::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab /*= -1*/, const std::string& optional /*= ""*/ )
 {
     if( pData_ == 0 )
-        checker.AddError( eInvalidCrossedRef, name, tab, subTab, optional );
+        checker.AddError( eInvalidPtrInVector, name, tab, subTab, optional );
 }

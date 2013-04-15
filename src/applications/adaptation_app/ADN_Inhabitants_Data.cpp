@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2004 Math?tiques Appliqu? SA (MASA)
 //
 // *****************************************************************************
 
@@ -29,6 +29,7 @@ ADN_Inhabitants_Data::EventInfos::EventInfos()
     , from_( "00:00" )
     , to_( "00:00" )
 {
+    BindExistenceTo( &ptrAccommodation_ );
     day_.SetAlphabeticalSort( false );
 }
 
@@ -340,7 +341,18 @@ void ADN_Inhabitants_Data::InhabitantsInfos::ReadEvent( xml::xistream& input )
 {
     std::auto_ptr< EventInfos > spNew( new EventInfos() );
     spNew->ReadArchive( input );
-    schedule_.AddItem( spNew.release() );
+    if( spNew->ptrAccommodation_.GetData() )
+        schedule_.AddItem( spNew.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eInhabitants, -1, tools::translate( "ADN_Inhabitants_Data", "Schedule" ).toStdString() );
+}
+// -----------------------------------------------------------------------------
+// Name: ADN_Inhabitants_Data::CheckDatabaseValidity
+// Created: JSR 2013-04-12
+// -----------------------------------------------------------------------------
+void ADN_Inhabitants_Data::InhabitantsInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab /* = -1 */, const std::string& /* optional = "" */ )
+{
+    ptrModel_.CheckValidity( checker, name, tab, subTab, tools::translate( "ADN_Inhabitants_Data", "Associated Crowd").toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -351,8 +363,12 @@ void ADN_Inhabitants_Data::InhabitantsInfos::ReadConsumption( xml::xistream& inp
 {
     std::auto_ptr< InhabitantsInfosConsumption > spNew( new InhabitantsInfosConsumption() );
     spNew->ReadArchive( input );
-    consumptions_.AddItem( spNew.release() );
+    if( spNew->GetCrossedElement() )
+        consumptions_.AddItem( spNew.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eInhabitants, -1, tools::translate( "ADN_Inhabitants_Data", "Consumptions" ).toStdString() );
 }
+
 
 // =============================================================================
 // ADN_Inhabitants_Data
@@ -459,6 +475,21 @@ QStringList ADN_Inhabitants_Data::GetInhabitantsThatUse( ADN_ResourceNetworks_Da
         for( auto itConsumption = ( *it )->consumptions_.begin(); itConsumption != ( *it )->consumptions_.end(); ++itConsumption )
             if( ( *itConsumption )->GetCrossedElement() && ( *itConsumption )->GetCrossedElement()->strName_.GetData() == network.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Inhabitants_Data::GetSchedulesThatUse
+// Created: JSR 2013-04-15
+// -----------------------------------------------------------------------------
+QStringList ADN_Inhabitants_Data::GetSchedulesThatUse( ADN_Urban_Data::AccommodationInfos& accomodation )
+{
+    QStringList result;
+    for( auto it = vInhabitants_.begin(); it != vInhabitants_.end(); ++it )
+        for( auto itSchedule = ( *it )->schedule_.begin(); itSchedule!= ( *it )->schedule_.end(); ++itSchedule )
+            if( ( *itSchedule )->ptrAccommodation_.GetData() && ( *itSchedule )->ptrAccommodation_.GetData()->strName_.GetData() == accomodation.strName_.GetData() )
+                if( !result.contains( ( *it )->strName_.GetData().c_str() ) )
+                    result << ( *it )->strName_.GetData().c_str();
     return result;
 }
 

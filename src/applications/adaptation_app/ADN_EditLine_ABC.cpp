@@ -23,7 +23,7 @@
 // Name: ADN_EditLine_ToolTiped constructor
 // Created: ABR 2012-04-11
 // -----------------------------------------------------------------------------
-ADN_EditLine_ToolTiped::ADN_EditLine_ToolTiped( QWidget* parent, const char * name /*= 0*/ )
+ADN_EditLine_ToolTiped::ADN_EditLine_ToolTiped( QWidget* parent, const char * name /* = 0 */ )
     : QLineEdit( parent, name )
 {
     setAlignment( Qt::AlignLeft );

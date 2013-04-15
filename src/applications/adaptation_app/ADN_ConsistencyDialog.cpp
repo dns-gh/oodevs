@@ -31,7 +31,7 @@ namespace
                type == eMissionTypeUniqueness ||
                type == eObjectTypeUniqueness ||
                type == eMissingRepairType ||
-               type == eInvalidCrossedRef ||
+               type == eInvalidPtrInVector ||
                type == eNoCrew;
     }
 
@@ -84,7 +84,8 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingArmor ]           = tr( "At least one armor must be defined" ) + error;
     errorDescriptions_[ eMissingDisaster ]        = tr( "No disaster model for object %1" ) + error;
     errorDescriptions_[ eNoCrew ]                 = tr( "Unit %1 has no crew in equipment '%2'" ) + error;
-    errorDescriptions_[ eInvalidCrossedRef ]      = tr( "Field '%2' is invalid in '%1'" ) + error;
+    errorDescriptions_[ eInvalidPtrInVector ]     = tr( "Field '%2' is invalid in '%1'" ) + error;
+    errorDescriptions_[ eInvalidCrossedRef ]      = tr( "'%1' has one unfound field of type '%2', it will be deleted at next save." );
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );
@@ -116,7 +117,7 @@ void ADN_ConsistencyDialog::OnSelectionChanged( const QModelIndex& index )
     {
         QMenu* menu = new QMenu( this );
         // Create menu
-        for( ADN_ConsistencyChecker::CIT_Items it = gotoList->begin(); it != gotoList->end(); ++it )
+        for( auto it = gotoList->begin(); it != gotoList->end(); ++it )
             menu->addAction( ( *it )->targetName_ );
 
         if( QAction* action = menu->exec( QCursor::pos() ) )
@@ -136,9 +137,17 @@ void ADN_ConsistencyDialog::OnSelectionChanged( const QModelIndex& index )
 void ADN_ConsistencyDialog::UpdateDataModel()
 {
     T_Parent::UpdateDataModel();
+    DoUpdateDataModel( static_cast< ADN_ConsistencyChecker& >( checker_ ).GetConsistencyErrors() );
+    DoUpdateDataModel( static_cast< ADN_ConsistencyChecker& >( checker_ ).GetLoadingErrors() );
+}
 
-    const ADN_ConsistencyChecker::T_ConsistencyErrors& errors = static_cast< ADN_ConsistencyChecker& >( checker_ ).GetConsistencyErrors();
-    for( ADN_ConsistencyChecker::CIT_ConsistencyErrors it = errors.begin(); it != errors.end(); ++it )
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyDialog::DoUpdateDataModel
+// Created: JSR 2013-04-12
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyDialog::DoUpdateDataModel( const ADN_ConsistencyChecker::T_ConsistencyErrors& errors )
+{
+    for( auto it = errors.begin(); it != errors.end(); ++it )
     {
         const ADN_ConsistencyChecker::ConsistencyError& error = *it;
         QList< QStandardItem* > items;

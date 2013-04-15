@@ -20,7 +20,7 @@ using namespace gui;
 // Name: ADN_Nature_GUI constructor
 // Created: ABR 2011-11-02
 // -----------------------------------------------------------------------------
-ADN_Nature_GUI::ADN_Nature_GUI( QGridLayout* parent, int row /*= 0*/ )
+ADN_Nature_GUI::ADN_Nature_GUI( QGridLayout* parent, int row /* = 0 */ )
     : NatureEditionWidget( parent, row )
     , ADN_Gfx_ABC()
 {

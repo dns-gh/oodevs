@@ -21,7 +21,7 @@ tools::IdManager ADN_Automata_Data::idManager_;
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Automata_Data::UnitInfos::UnitInfos( const ADN_Units_Data::T_UnitInfos_Vector& vector, ADN_Units_Data::UnitInfos* element /* = 0 */ )
-    : ADN_CrossedRef( vector, element, true )
+    : ADN_CrossedRef( vector, element, true, "type" )
     , min_( 0 )
     , max_( -1 )
 {
@@ -46,11 +46,7 @@ ADN_Automata_Data::UnitInfos* ADN_Automata_Data::UnitInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
 {
-    std::string type = input.attribute< std::string >( "type" );
-    ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( type );
-    if( ! pUnit )
-        throw MASA_EXCEPTION( tools::translate( "Automata_Data", "Automat - Invalid unit type '%1'" ).arg( type.c_str() ).toStdString() );
-    SetCrossedElement( pUnit );
+    ADN_CrossedRef::ReadArchive( input );
     input >> xml::optional >> xml::attribute( "min-occurs", min_ )
           >> xml::optional >> xml::attribute( "max-occurs", max_ );
 }
@@ -61,8 +57,8 @@ void ADN_Automata_Data::UnitInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const UnitInfos* pc )
 {
-    output << xml::start( "unit" )
-             << xml::attribute( "type", GetCrossedElement()->strName_ );
+    output << xml::start( "unit" );
+    ADN_CrossedRef::WriteArchive( output );
     if( min_.GetData() != 0 )
         output << xml::attribute( "min-occurs", min_ );
     if( max_.GetData() >= 0 )
@@ -138,11 +134,16 @@ void ADN_Automata_Data::AutomatonInfos::ReadUnit( xml::xistream& input )
 {
     std::auto_ptr< UnitInfos > spNew( new UnitInfos( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos() ) );
     spNew->ReadArchive( input );
-    bool cp = false;
-    input >> xml::optional >> xml::attribute( "command-post", cp );
-    if( cp )
-        ptrUnit_ = spNew.get();
-    vSubUnits_.AddItem( spNew.release() );
+    if( spNew->GetCrossedElement() )
+    {
+        bool cp = false;
+        input >> xml::optional >> xml::attribute( "command-post", cp );
+        if( cp )
+            ptrUnit_ = spNew.get();
+        vSubUnits_.AddItem( spNew.release() );
+    }
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eAutomata, -1, tools::translate( "ADN_Automata_Data", "Sub-units" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

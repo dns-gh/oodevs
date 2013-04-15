@@ -18,7 +18,7 @@ using namespace helpers;
 // Name: ADN_UrbanModifiersTable constructor
 // Created: SLG 2010-04-13
 //-----------------------------------------------------------------------------
-ADN_UrbanModifiersTable::ADN_UrbanModifiersTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_UrbanModifiersTable::ADN_UrbanModifiersTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 2 );

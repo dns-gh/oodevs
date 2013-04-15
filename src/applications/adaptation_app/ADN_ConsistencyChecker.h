@@ -36,7 +36,10 @@ public:
     virtual bool CheckConsistency();
     void AddError( ConsistencyError error );
     void AddError( E_ConsistencyCheck type, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
-    ADN_NavigationInfos::GoTo* CreateGotoInfo( const std::string& name, int tab, int subTab = -1 );
+    static ADN_NavigationInfos::GoTo* CreateGotoInfo( const std::string& name, int tab, int subTab = -1 );
+    static void AddLoadingError( E_ConsistencyCheck type, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
+    static void ClearLoadingErrors();
+    const T_ConsistencyErrors& GetLoadingErrors() const;
     //@}
 
 private:
@@ -44,6 +47,12 @@ private:
     //@{
     void CheckValidDatabase();
     bool IsAlreadyRegistered( const std::string& code, E_ConsistencyCheck type ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    static T_ConsistencyErrors loadingErrors_;
     //@}
 };
 

@@ -15,7 +15,7 @@
 // Name: ADN_ActiveProtections_WeaponsTable constructor
 // Created: FDS 2010-02-24
 //-----------------------------------------------------------------------------
-ADN_ActiveProtections_WeaponsTable::ADN_ActiveProtections_WeaponsTable( const QString& strName, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_ActiveProtections_WeaponsTable::ADN_ActiveProtections_WeaponsTable( const QString& strName, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     setShowGrid( false );

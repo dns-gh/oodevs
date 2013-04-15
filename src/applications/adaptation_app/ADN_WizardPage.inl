@@ -17,7 +17,7 @@
 // Created: ABR 2012-07-27
 // -----------------------------------------------------------------------------
 template< typename T >
-ADN_WizardPage< T >::ADN_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* parent /*= 0*/ )
+ADN_WizardPage< T >::ADN_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* parent /* = 0 */ )
     : QWizardPage( parent )
     , existingItems_( existingItems )
     , csword_       ( "resources/images/gui/logo32x32.png" )

@@ -19,7 +19,7 @@ typedef ADN_Units_Data::UnitInfos    UnitInfos;
 // Name: ADN_Automata_SubUnitsTable constructor
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
-ADN_Automata_SubUnitsTable::ADN_Automata_SubUnitsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Automata_SubUnitsTable::ADN_Automata_SubUnitsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 3 );

@@ -158,7 +158,7 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, const QSt
 // Created: NPT 2012-11-07
 // -----------------------------------------------------------------------------
 inline
-QStandardItem* ADN_Table::AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags /*= 0*/ )
+QStandardItem* ADN_Table::AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags /* = 0 */ )
 {
     QStandardItem* item = AddItem( row, col, parentData, text, flags );
     if( item && ( rowSpan > 1 || columnSpan > 1 ) )
@@ -209,7 +209,7 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_
 // -----------------------------------------------------------------------------
 template< typename Enum, int Max >
 inline
-QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_Enum< Enum, Max >* data, const QStringList& content, Qt::ItemFlags flags /*= 0*/ )
+QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_Enum< Enum, Max >* data, const QStringList& content, Qt::ItemFlags flags /* = 0 */ )
 {
     if( !data || !parentData )
         return 0;
@@ -237,7 +237,7 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_TypePtr_InVector_ABC< T >* data, Qt::ItemFlags flags /*= 0*/ )
+QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_TypePtr_InVector_ABC< T >* data, Qt::ItemFlags flags /* = 0 */ )
 {
     if( !data || !parentData )
         return 0;

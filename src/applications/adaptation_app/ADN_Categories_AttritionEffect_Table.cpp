@@ -17,7 +17,7 @@
 // Name: ADN_Categories_AttritionEffect_Table::ADN_Categories_AttritionEffect_Table
 // Created: ABR 2012-10-18
 // -----------------------------------------------------------------------------
-ADN_Categories_AttritionEffect_Table::ADN_Categories_AttritionEffect_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Categories_AttritionEffect_Table::ADN_Categories_AttritionEffect_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 3 );

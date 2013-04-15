@@ -15,7 +15,7 @@
 // Name: ADN_AvailabilityWarningTable constructor
 // Created: SBO 2006-08-03
 // -----------------------------------------------------------------------------
-ADN_AvailabilityWarningTable::ADN_AvailabilityWarningTable( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /*= 0*/ )
+ADN_AvailabilityWarningTable::ADN_AvailabilityWarningTable( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, vector, pParent )
 {
     setFixedHeight( 300 );

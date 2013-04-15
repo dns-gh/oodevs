@@ -16,7 +16,7 @@
 // Created: ABR 2011-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-inline ADN_ComboBox_Drawings< T >::ADN_ComboBox_Drawings( QWidget* pParent /*= 0*/, int iconSize /* = 50 */)
+inline ADN_ComboBox_Drawings< T >::ADN_ComboBox_Drawings( QWidget* pParent /* = 0 */, int iconSize /* = 50 */)
     : ADN_ComboBox( pParent )
 {
     setIconSize( QSize( iconSize, iconSize ) );

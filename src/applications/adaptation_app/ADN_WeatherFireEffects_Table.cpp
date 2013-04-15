@@ -15,7 +15,7 @@
 // Name: ADN_WeatherFireEffects_Table constructor
 // Created: BCI 2010-12-02
 //-----------------------------------------------------------------------------
-ADN_WeatherFireEffects_Table::ADN_WeatherFireEffects_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_WeatherFireEffects_Table::ADN_WeatherFireEffects_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     setShowGrid( false );

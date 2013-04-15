@@ -872,7 +872,7 @@ void ADN_ListView::mousePressEvent( QMouseEvent* event )
 // Name: ADN_ListView::SetGoToOnDoubleClick
 // Created: ABR 2012-03-05
 // -----------------------------------------------------------------------------
-void ADN_ListView::SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab /*= -1*/, int col /*= 0*/ )
+void ADN_ListView::SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab /*= -1*/, int col /* = 0 */ )
 {
     goToInfo_.targetTab_ = targetTab;
     goToInfo_.subTargetTab_ = subTargetTab;

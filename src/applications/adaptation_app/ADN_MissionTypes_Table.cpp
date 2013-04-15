@@ -15,7 +15,7 @@
 // Name: ADN_MissionTypes_Table constructor
 // Created: LDC 2010-08-19
 // -----------------------------------------------------------------------------
-ADN_MissionTypes_Table::ADN_MissionTypes_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_MissionTypes_Table::ADN_MissionTypes_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     setShowGrid( false );

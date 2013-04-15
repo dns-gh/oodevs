@@ -121,7 +121,10 @@ void ADN_Breakdowns_Data::BreakdownInfo::ReadPart( xml::xistream& input )
 {
     std::auto_ptr< RepairPartInfo > spNew( new RepairPartInfo() );
     spNew->ReadArchive( input );
-    vRepairParts_.AddItem( spNew.release() );
+    if( spNew->GetCrossedElement() )
+        vRepairParts_.AddItem( spNew.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eBreakdowns, -1, tools::translate( "ADN_Breakdowns_Data", "Required parts" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

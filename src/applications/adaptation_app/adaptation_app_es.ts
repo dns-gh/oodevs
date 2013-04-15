@@ -280,6 +280,41 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Automata_Data</name>
+    <message>
+        <source>Sub-units</source>
+        <translation type="unfinished">Sub-unidades</translation>
+    </message>
+    <message>
+        <source>Breakdowns</source>
+        <translation type="unfinished">Fallas</translation>
+    </message>
+    <message>
+        <source>Consumptions</source>
+        <translation type="unfinished">Consumos</translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">Sensores</translation>
+    </message>
+    <message>
+        <source>Radars</source>
+        <translation type="unfinished">Radares</translation>
+    </message>
+    <message>
+        <source>Weapons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active Protections</source>
+        <translation type="unfinished">Protecciones activas</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">Objetos</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Automata_GUI</name>
     <message>
         <source>Name</source>
@@ -677,6 +712,10 @@ estacionado con motor encendido</translation>
         <source>Field &apos;%2&apos; is invalid in &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&apos;%1&apos; has one unfound field of type &apos;%2&apos;, it will be deleted at next save.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -706,6 +745,10 @@ estacionado con motor encendido</translation>
     <message>
         <source>Speeds</source>
         <translation type="unfinished">Velocidades</translation>
+    </message>
+    <message>
+        <source>Behavior model</source>
+        <translation type="unfinished">Modelo de comportamiento</translation>
     </message>
 </context>
 <context>
@@ -969,6 +1012,21 @@ estacionado con motor encendido</translation>
     <message>
         <source>Delete</source>
         <translation>Eliminar</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipments_Data</name>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished">Recursos</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">Volumen</translation>
+    </message>
+    <message>
+        <source>Armor-Plating</source>
+        <translation type="unfinished">Blindaje</translation>
     </message>
 </context>
 <context>
@@ -1486,10 +1544,9 @@ estacionado con motor encendido</translation>
 </context>
 <context>
     <name>ADN_Equipments_Resources_ListView</name>
-    <message id="0">
+    <message>
         <source>Resources</source>
-        <oldsource>Categories</oldsource>
-        <translation type="unfinished">ADN_Sensors_Environments_GU</translation>
+        <translation type="unfinished">Recursos</translation>
     </message>
     <message>
         <source>Add resource</source>
@@ -1594,17 +1651,17 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Extinguisher agents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban attritions</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_FireClass_Data::FireClassInfos</name>
-    <message>
-        <source>Fire class - Invalid extinguisher agent &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fire class - Invalid urban Material type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
@@ -1728,6 +1785,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     <message>
         <source>Packaging</source>
         <translation type="unfinished">Empaquetado</translation>
+    </message>
+    <message>
+        <source>Packagings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1892,6 +1953,21 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
     <message>
         <source>Fatigue</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Inhabitants_Data</name>
+    <message>
+        <source>Schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consumptions</source>
+        <translation type="unfinished">Consumos</translation>
+    </message>
+    <message>
+        <source>Associated Crowd</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2292,6 +2368,14 @@ PNG (*.png)
     <message>
         <source>Activities</source>
         <translation type="unfinished">Actividas</translation>
+    </message>
+    <message>
+        <source>Inhabitants</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2815,6 +2899,14 @@ PNG (*.png)
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frag orders</source>
+        <translation type="unfinished">Orden parcial</translation>
     </message>
 </context>
 <context>
@@ -4101,6 +4193,10 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
         <source>Modifiers</source>
         <translation>Modificadores</translation>
     </message>
+    <message>
+        <source>Environments</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_GUI</name>
@@ -4287,6 +4383,10 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
         <source>Modifiers</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Illumination</source>
+        <translation type="unfinished">Iluminación(alumbrado)</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_LimitedToSensorsListView</name>
@@ -4313,6 +4413,10 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
         <source>Modifiers</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Meteos</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Postures_GUI</name>
@@ -4326,6 +4430,10 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     <message>
         <source>Modifiers</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Volumes</source>
+        <translation type="unfinished">Volumenes</translation>
     </message>
 </context>
 <context>
@@ -4348,6 +4456,10 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     <message>
         <source>Modifiers</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Material</source>
+        <translation type="unfinished">Material</translation>
     </message>
 </context>
 <context>
@@ -5696,13 +5808,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Urban_Data</name>
-    <message>
-        <source>Urban data - Invalid accomodation type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
@@ -5839,6 +5944,13 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>This will delete all the following associated weapon systems :</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Weapons_Data</name>
+    <message>
+        <source>Weapons</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6158,7 +6270,7 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 </context>
 <context>
     <name>ActiveProtections_Data</name>
-    <message id="-1">
+    <message>
         <source>Resource</source>
         <translation type="unfinished">Dotación</translation>
     </message>
@@ -6203,10 +6315,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 </context>
 <context>
     <name>Automata_Data</name>
-    <message>
-        <source>Automat - Invalid unit type &apos;%1&apos;</source>
-        <translation>Autómata – Tipo de unidad inválido &apos;%1&apos;</translation>
-    </message>
     <message>
         <source>Doctrine model</source>
         <translation type="unfinished"></translation>

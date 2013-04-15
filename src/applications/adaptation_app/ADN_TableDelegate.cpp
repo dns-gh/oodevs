@@ -23,7 +23,7 @@
 // Name: ADN_TableDelegate constructor
 // Created: ABR 2012-10-22
 // -----------------------------------------------------------------------------
-ADN_TableDelegate::ADN_TableDelegate( QTableView* parent /*= 0*/ )
+ADN_TableDelegate::ADN_TableDelegate( QTableView* parent /* = 0 */ )
     : gui::CommonDelegate( parent )
 {
     gridPen_ = QPen( Qt::black, 2, Qt::SolidLine, Qt::RoundCap );

@@ -268,6 +268,41 @@ Parked engine running</source>
     </message>
 </context>
 <context>
+    <name>ADN_Automata_Data</name>
+    <message>
+        <source>Sub-units</source>
+        <translation type="unfinished">الوحدات الفرعية</translation>
+    </message>
+    <message>
+        <source>Breakdowns</source>
+        <translation type="unfinished">أعطال</translation>
+    </message>
+    <message>
+        <source>Consumptions</source>
+        <translation type="unfinished">استهلاكها</translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation type="unfinished">أجهزة الاستشعار</translation>
+    </message>
+    <message>
+        <source>Radars</source>
+        <translation type="unfinished">الرادار</translation>
+    </message>
+    <message>
+        <source>Weapons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active Protections</source>
+        <translation type="unfinished">الحماية النشطة</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">الكائنات</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Automata_GUI</name>
     <message>
         <source>Name</source>
@@ -665,6 +700,10 @@ Parked engine running</source>
         <source>Field &apos;%2&apos; is invalid in &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&apos;%1&apos; has one unfound field of type &apos;%2&apos;, it will be deleted at next save.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -694,6 +733,10 @@ Parked engine running</source>
     <message>
         <source>Speeds</source>
         <translation type="unfinished">بسرعة</translation>
+    </message>
+    <message>
+        <source>Behavior model</source>
+        <translation type="unfinished">نموذج السلوك</translation>
     </message>
 </context>
 <context>
@@ -957,6 +1000,21 @@ Parked engine running</source>
     <message>
         <source>Delete</source>
         <translation type="unfinished">حذف</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipments_Data</name>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">وحدة التخزين</translation>
+    </message>
+    <message>
+        <source>Armor-Plating</source>
+        <translation type="unfinished">دروع</translation>
     </message>
 </context>
 <context>
@@ -1470,7 +1528,7 @@ Parked engine running</source>
 </context>
 <context>
     <name>ADN_Equipments_Resources_ListView</name>
-    <message id="0">
+    <message>
         <source>Resources</source>
         <oldsource>Categories</oldsource>
         <translation type="unfinished">ADN_Sensors_Environments_GUI</translation>
@@ -1579,17 +1637,17 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
         <translation type="unfinished">النار &apos;%1&apos;--بيانات الإصابات المبلغ &gt; 100</translation>
     </message>
+    <message>
+        <source>Extinguisher agents</source>
+        <translation type="unfinished">وكلاء مطفأة</translation>
+    </message>
+    <message>
+        <source>Urban attritions</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_FireClass_Data::FireClassInfos</name>
-    <message>
-        <source>Fire class - Invalid extinguisher agent &apos;%1&apos;</source>
-        <translation type="unfinished">فئة النار-عامل مطفأة غير صالح &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Fire class - Invalid urban Material type &apos;%1&apos;</source>
-        <translation type="unfinished">فئة النار-نوع المواد الحضرية &apos;%1&apos; غير صالح</translation>
-    </message>
     <message>
         <source>Fire - Location type not found &apos;%1&apos;</source>
         <translation type="unfinished">النار-موقع النوع لا تم العثور على &apos;%1&apos;</translation>
@@ -1713,6 +1771,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     <message>
         <source>Packaging</source>
         <translation type="unfinished">التعبئة والتغليف</translation>
+    </message>
+    <message>
+        <source>Packagings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1878,6 +1940,21 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     <message>
         <source>Fatigue</source>
         <translation type="unfinished">التعب</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Inhabitants_Data</name>
+    <message>
+        <source>Schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consumptions</source>
+        <translation type="unfinished">استهلاكها</translation>
+    </message>
+    <message>
+        <source>Associated Crowd</source>
+        <translation type="unfinished">الحشد المرتبطين بها</translation>
     </message>
 </context>
 <context>
@@ -2276,6 +2353,14 @@ PNG (*.png)
     <message>
         <source>Templates</source>
         <translation type="unfinished">قوالب</translation>
+    </message>
+    <message>
+        <source>Inhabitants</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2799,6 +2884,14 @@ PNG (*.png)
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missions</source>
+        <translation type="unfinished">البعثات</translation>
+    </message>
+    <message>
+        <source>Frag orders</source>
+        <translation type="unfinished">أوامر frag</translation>
     </message>
 </context>
 <context>
@@ -4087,6 +4180,10 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <source>Modifiers</source>
         <translation type="unfinished">المعدلات</translation>
     </message>
+    <message>
+        <source>Environments</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_GUI</name>
@@ -4273,6 +4370,10 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <source>Modifiers</source>
         <translation type="unfinished">المعدلات</translation>
     </message>
+    <message>
+        <source>Illumination</source>
+        <translation type="unfinished">الإضاءة</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_LimitedToSensorsListView</name>
@@ -4299,6 +4400,10 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <source>Modifiers</source>
         <translation type="unfinished">المعدلات</translation>
     </message>
+    <message>
+        <source>Meteos</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Postures_GUI</name>
@@ -4312,6 +4417,10 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Modifiers</source>
         <translation type="unfinished">المعدلات</translation>
+    </message>
+    <message>
+        <source>Volumes</source>
+        <translation type="unfinished">وحدات التخزين</translation>
     </message>
 </context>
 <context>
@@ -4334,6 +4443,10 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Modifiers</source>
         <translation type="unfinished">المعدلات</translation>
+    </message>
+    <message>
+        <source>Material</source>
+        <translation type="unfinished">المواد</translation>
     </message>
 </context>
 <context>
@@ -5680,13 +5793,6 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Urban_Data</name>
-    <message>
-        <source>Urban data - Invalid accomodation type &apos;%1&apos;</source>
-        <translation type="unfinished">نوع البيانات الحضرية-الإقامة في غير صالح &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
@@ -5824,6 +5930,13 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Proceed anyway ?</source>
         <translation type="unfinished">هل تريد المتابعة على أية حال؟</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Weapons_Data</name>
+    <message>
+        <source>Weapons</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6142,7 +6255,7 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>ActiveProtections_Data</name>
-    <message id="-1">
+    <message>
         <source>Resource</source>
         <translation type="unfinished">الموارد</translation>
     </message>
@@ -6187,10 +6300,6 @@ Click &quot;Ok&quot; to delete it.</source>
 </context>
 <context>
     <name>Automata_Data</name>
-    <message>
-        <source>Automat - Invalid unit type &apos;%1&apos;</source>
-        <translation type="unfinished">[اوتومت]-نوع الوحدة غير صالح &apos;%1&apos;</translation>
-    </message>
     <message>
         <source>Doctrine model</source>
         <translation type="unfinished">طراز مذهب</translation>

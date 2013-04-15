@@ -61,7 +61,10 @@ void ADN_Funeral_Data::ReadFuneralPackagingResource( xml::xistream& input )
 {
     std::auto_ptr< ADN_FuneralPackagingResource > pNew( new ADN_FuneralPackagingResource() );
     pNew->ReadArchive( input );
-    funeralPackagingResources_.AddItem( pNew.release() );
+    if( pNew->GetCrossedElement() )
+        funeralPackagingResources_.AddItem( pNew.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, "Funeral", eFuneral, -1, tools::translate( "ADN_Funeral_Data", "Packagings" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

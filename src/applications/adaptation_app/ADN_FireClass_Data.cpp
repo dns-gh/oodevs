@@ -267,8 +267,9 @@ void ADN_FireClass_Data::FireClassInfos::ReadAgent( xml::xistream& input )
     std::string agent = input.attribute< std::string >( "agent" );
     auto itAgent = std::find_if( agents_.begin(), agents_.end(), ADN_ExtinguisherAgentInfos::Cmp( agent ) );
     if( itAgent == agents_.end() )
-        throw MASA_EXCEPTION( tr( "Fire class - Invalid extinguisher agent '%1'" ).arg( agent.c_str() ).toStdString() );
-    ( *itAgent )->ReadArchive( input );
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eFireClasses, -1, tools::translate( "ADN_FireClass_Data", "Extinguisher agents" ).toStdString() );
+    else
+        ( *itAgent )->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -291,8 +292,9 @@ void ADN_FireClass_Data::FireClassInfos::ReadUrbanModifer( xml::xistream& input 
     std::string material = input.attribute< std::string >( "material-type" );
     auto it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
     if( it == modifUrbanBlocks_.end() )
-        throw MASA_EXCEPTION( tr( "Fire class - Invalid urban Material type '%1'" ).arg( material.c_str() ).toStdString() );
-    ( *it )->ReadArchive( input );
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eFireClasses, -1, tools::translate( "ADN_FireClass_Data", "Urban attritions" ).toStdString() );
+    else
+        ( *it )->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------

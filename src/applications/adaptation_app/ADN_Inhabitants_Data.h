@@ -73,6 +73,7 @@ public:
         InhabitantsInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
 
     private:
         void ReadEvent( xml::xistream& input );
@@ -81,7 +82,7 @@ public:
 
     public:
         ADN_Type_Int nId_;
-        ADN_TypePtr_InVector_ABC<ADN_Crowds_Data::CrowdsInfos> ptrModel_;
+        ADN_TypePtr_InVector_ABC< ADN_Crowds_Data::CrowdsInfos > ptrModel_;
         ADN_Type_String strAngryCrowdMission_;
         ADN_Type_Repartition repartition_;
         ADN_Type_Time transferTime_;
@@ -107,6 +108,7 @@ public:
 
     QStringList GetInhabitantsThatUse( ADN_Crowds_Data::CrowdsInfos& population );
     QStringList GetInhabitantsThatUse( ADN_ResourceNetworks_Data::ResourceNetworkInfos& network );
+    QStringList GetSchedulesThatUse( ADN_Urban_Data::AccommodationInfos& accomodations );
 
 private:
     void ReadArchive( xml::xistream& input );

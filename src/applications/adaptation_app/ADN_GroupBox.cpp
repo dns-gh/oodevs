@@ -130,7 +130,7 @@ void ADN_GroupBox::UpdateEnableState()
 // Name: ADN_GroupBox::ADN_GroupBox2
 // Created: ABR 2012-01-23
 // -----------------------------------------------------------------------------
-ADN_GroupBox2::ADN_GroupBox2( QWidget * parent /*= 0*/, const char * name /*= 0*/ )
+ADN_GroupBox2::ADN_GroupBox2( QWidget * parent /* = 0 */, const char * name /* = 0 */ )
     : QGroupBox( parent, name )
     , ADN_Gfx_ABC()
 {
@@ -145,7 +145,7 @@ ADN_GroupBox2::ADN_GroupBox2( QWidget * parent /*= 0*/, const char * name /*= 0*
 // Name: ADN_GroupBox::ADN_GroupBox2
 // Created: ABR 2012-01-23
 // -----------------------------------------------------------------------------
-ADN_GroupBox2::ADN_GroupBox2( const QString & title, QWidget * parent /*= 0*/, const char * name /*= 0*/ )
+ADN_GroupBox2::ADN_GroupBox2( const QString & title, QWidget * parent /* = 0 */, const char * name /* = 0 */ )
     : QGroupBox( title, parent, name )
     , ADN_Gfx_ABC()
 {

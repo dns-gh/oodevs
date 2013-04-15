@@ -15,7 +15,7 @@
 // Name: ADN_Connector_StandardItem::ADN_Connector_StandardItem
 // Created: ABR 2012-10-30
 // -----------------------------------------------------------------------------
-ADN_Connector_StandardItem::ADN_Connector_StandardItem( ADN_StandardItem& item, ADN_StandardItem::E_Type type, const QStringList* enumContent /*= 0*/ )
+ADN_Connector_StandardItem::ADN_Connector_StandardItem( ADN_StandardItem& item, ADN_StandardItem::E_Type type, const QStringList* enumContent /* = 0 */ )
     : ADN_Connector_ABC()
     , item_( item )
     , type_( type )

@@ -15,7 +15,7 @@
 // Name: ADN_ExtinguisherAgentInfos_Table constructor
 // Created: BCI 2010-12-03
 //-----------------------------------------------------------------------------
-ADN_ExtinguisherAgentInfos_Table::ADN_ExtinguisherAgentInfos_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_ExtinguisherAgentInfos_Table::ADN_ExtinguisherAgentInfos_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     setShowGrid( false );

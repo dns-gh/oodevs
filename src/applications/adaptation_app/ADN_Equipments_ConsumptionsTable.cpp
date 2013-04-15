@@ -17,7 +17,7 @@
 // Name: ADN_Equipments_ConsumptionsTable constructor
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
-ADN_Equipments_ConsumptionsTable::ADN_Equipments_ConsumptionsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Equipments_ConsumptionsTable::ADN_Equipments_ConsumptionsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( eNbrConsumptionType );

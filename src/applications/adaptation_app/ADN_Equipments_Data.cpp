@@ -636,13 +636,16 @@ void ADN_Equipments_Data::BreakdownGroupInfos::CopyFrom( BreakdownGroupInfos& sr
 // Name: ADN_Equipments_Data::BreakdownGroupInfos::ReadBreakdown
 // Created: AGE 2007-08-20
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::BreakdownGroupInfos::ReadBreakdown( xml::xistream& input )
+void ADN_Equipments_Data::BreakdownGroupInfos::ReadBreakdown( xml::xistream& input, const std::string& parentName )
 {
     if( input.attribute< std::string >( "origin" ) == strName_ )
     {
         std::auto_ptr< BreakdownInfos > spNew( new BreakdownInfos() );
         spNew->ReadArchive( input );
-        vBreakdowns_.AddItem( spNew.release() );
+        if( spNew->GetCrossedElement() )
+            vBreakdowns_.AddItem( spNew.release() );
+        else
+            ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, parentName, eEquipments, -1, tools::translate( "ADN_Automata_Data", "Breakdowns" ).toStdString() );
     }
 }
 
@@ -650,11 +653,11 @@ void ADN_Equipments_Data::BreakdownGroupInfos::ReadBreakdown( xml::xistream& inp
 // Name: BreakdownGroupInfos::ReadArchive
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::BreakdownGroupInfos::ReadArchive( xml::xistream& input )
+void ADN_Equipments_Data::BreakdownGroupInfos::ReadArchive( xml::xistream& input, const std::string& parentName )
 {
     input >> xml::optional
           >> xml::start( "breakdowns" )
-            >> xml::list( "breakdown", *this, &ADN_Equipments_Data::BreakdownGroupInfos::ReadBreakdown )
+            >> xml::list( "breakdown", *this, &ADN_Equipments_Data::BreakdownGroupInfos::ReadBreakdown, parentName )
           >> xml::end;
 }
 
@@ -1025,32 +1028,35 @@ void ADN_Equipments_Data::ResourceInfos::CopyFrom( ADN_Equipments_Data::Resource
 // Name: ADN_Equipments_Data::ResourceInfos::ReadCategory
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ResourceInfos::ReadCategory( xml::xistream& input )
+void ADN_Equipments_Data::ResourceInfos::ReadCategory( xml::xistream& input, const std::string& parentName )
 {
     E_DotationFamily family = ENT_Tr::ConvertToDotationFamily( input.attribute< std::string >( "name" ) );
     ADN_Resources_Data::ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( family );
 
-    input >> xml::list( "resource", *this, &ADN_Equipments_Data::ResourceInfos::ReadDotation, dotation );
+    input >> xml::list( "resource", *this, &ADN_Equipments_Data::ResourceInfos::ReadDotation, dotation, parentName );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipments_Data::ResourceInfos::ReadDotation
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ResourceInfos::ReadDotation( xml::xistream& input, ADN_Resources_Data::ResourceInfos& dotation )
+void ADN_Equipments_Data::ResourceInfos::ReadDotation( xml::xistream& input, ADN_Resources_Data::ResourceInfos& dotation, const std::string& parentName )
 {
     std::auto_ptr< CategoryInfos > pInfo( new CategoryInfos( dotation ) );
     pInfo->ReadArchive( input );
-    categories_.AddItem( pInfo.release() );
+    if( pInfo->GetCrossedElement() )
+        categories_.AddItem( pInfo.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, parentName, eEquipments, -1, tools::translate( "ADN_Equipments_Data", "Resources" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ResourceInfos::ReadArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ResourceInfos::ReadArchive( xml::xistream& input )
+void ADN_Equipments_Data::ResourceInfos::ReadArchive( xml::xistream& input, const std::string& parentName )
 {
-    input >> xml::list( "category", *this, &ADN_Equipments_Data::ResourceInfos::ReadCategory );
+    input >> xml::list( "category", *this, &ADN_Equipments_Data::ResourceInfos::ReadCategory, parentName );
 }
 
 // -----------------------------------------------------------------------------
@@ -1282,36 +1288,38 @@ void ADN_Equipments_Data::ConsumptionsInfos::CopyFrom( ConsumptionsInfos& source
 // Name: ADN_Equipments_Data::ConsumptionsInfos::ReadConsumption
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ConsumptionsInfos::ReadConsumption( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories )
+void ADN_Equipments_Data::ConsumptionsInfos::ReadConsumption( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName )
 {
     std::string status;
     input >> xml::attribute( "status", status );
     E_ConsumptionType type = ADN_Tr::ConvertToConsumptionType( status );
     if( type == E_ConsumptionType( -1 ) )
         throw MASA_EXCEPTION( tools::translate( "Equipments_Data",  "Equipment - Invalid activty '%1'" ).arg( status.c_str() ).toStdString() );
-    input >> xml::list( "resource", *this, &ADN_Equipments_Data::ConsumptionsInfos::ReadDotation, type, equipmentCategories );
+    input >> xml::list( "resource", *this, &ADN_Equipments_Data::ConsumptionsInfos::ReadDotation, type, equipmentCategories, parentName );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipments_Data::ConsumptionsInfos::ReadDotation
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ConsumptionsInfos::ReadDotation( xml::xistream& input, const E_ConsumptionType& type, T_CategoryInfos_Vector& equipmentCategories )
+void ADN_Equipments_Data::ConsumptionsInfos::ReadDotation( xml::xistream& input, const E_ConsumptionType& type, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName )
 {
     std::auto_ptr<ConsumptionItem> spNew( new ConsumptionItem( type, equipmentCategories, 0 ) );
     spNew->ReadArchive( input );
     if( spNew->GetCrossedElement() )
         vConsumptions_.AddItem( spNew.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, parentName, eEquipments, -1, tools::translate( "ADN_Automata_Data", "Consumptions" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ConsumptionsInfos::ReadArchive
 // Created: APE 2005-01-25
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ConsumptionsInfos::ReadArchive( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories )
+void ADN_Equipments_Data::ConsumptionsInfos::ReadArchive( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName )
 {
     input >> xml::start( "consumptions" )
-            >> xml::list( "consumption", *this, &ADN_Equipments_Data::ConsumptionsInfos::ReadConsumption, equipmentCategories )
+            >> xml::list( "consumption", *this, &ADN_Equipments_Data::ConsumptionsInfos::ReadConsumption, equipmentCategories, parentName )
           >> xml::end;
 }
 
@@ -1617,7 +1625,10 @@ void ADN_Equipments_Data::EquipmentInfos::ReadSensor( xml::xistream& input )
 {
     std::auto_ptr<SensorInfos> spNew( new SensorInfos() );
     spNew->ReadArchive( input );
-    vSensors_.AddItem( spNew.release() );
+    if( spNew->GetCrossedElement() )
+        vSensors_.AddItem( spNew.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eEquipments, -1, tools::translate( "ADN_Automata_Data", "Sensors" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1628,7 +1639,10 @@ void ADN_Equipments_Data::EquipmentInfos::ReadRadar( xml::xistream& input )
 {
     std::auto_ptr<RadarInfos> spNew( new RadarInfos() );
     spNew->ReadArchive( input );
-    vRadars_.AddItem( spNew.release() );
+    if( spNew->GetCrossedElement() )
+        vRadars_.AddItem( spNew.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eEquipments, -1, tools::translate( "ADN_Automata_Data", "Radars" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1639,7 +1653,10 @@ void ADN_Equipments_Data::EquipmentInfos::ReadWeapon( xml::xistream& input )
 {
     std::auto_ptr<WeaponInfos> spNew( new WeaponInfos() );
     spNew->ReadArchive( input );
-    vWeapons_.AddItem( spNew.release() );
+    if( spNew->GetCrossedElement() )
+        vWeapons_.AddItem( spNew.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eEquipments, -1, tools::translate( "ADN_Automata_Data", "Weapons" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1650,7 +1667,10 @@ void ADN_Equipments_Data::EquipmentInfos::ReadActiveProtection( xml::xistream& i
 {
     std::auto_ptr<ActiveProtectionsInfos> spNew( new ActiveProtectionsInfos() );
     spNew->ReadArchive( input );
-    vActiveProtections_.AddItem( spNew.release() );
+    if( spNew->GetCrossedElement() )
+        vActiveProtections_.AddItem( spNew.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eEquipments, -1, tools::translate( "ADN_Automata_Data", "Active Protections" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1661,7 +1681,10 @@ void ADN_Equipments_Data::EquipmentInfos::ReadObject( xml::xistream& input )
 {
     std::auto_ptr<ObjectInfos> spNew( new ObjectInfos() );
     spNew->ReadArchive( input );
-    vObjects_.AddItem( spNew.release() );
+    if( spNew->GetCrossedElement() )
+        vObjects_.AddItem( spNew.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eEquipments, -1, tools::translate( "ADN_Automata_Data", "Objects" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1693,7 +1716,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
           >> xml::end;
 
     input >> xml::start( "composition" );
-    resources_.ReadArchive( input );
+    resources_.ReadArchive( input, strName_.GetData() );
     input >> xml::end;
 
     input >> xml::start( "sensors" )
@@ -1727,7 +1750,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
     bCanCarryCargo_ = rWeightTransportCapacity_ != 0.;
     bCanCarryCrowd_ = nCrowdTransportCapacity_ != 0;
 
-    consumptions_.ReadArchive( input, resources_.categories_ );
+    consumptions_.ReadArchive( input, resources_.categories_, strName_.GetData() );
     FillMissingConsumptions();
 
     input >> xml::start( "weapon-systems" )
@@ -1751,8 +1774,8 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
 
     logInfos_.ReadArchive( input );
 
-    randomBreakdowns_.ReadArchive( input );
-    attritionBreakdowns_.ReadArchive( input );
+    randomBreakdowns_.ReadArchive( input, strName_.GetData() );
+    attritionBreakdowns_.ReadArchive( input, strName_.GetData() );
 
     input >> xml::optional >> xml::attribute( "max-slope", rMaxSlope_ );
     if( rMaxSlope_ != 100. )
@@ -1802,11 +1825,15 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_Equipments_Data::CheckDatabaseValidity
 // Created: PHC 2011-01-20
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::EquipmentInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+void ADN_Equipments_Data::EquipmentInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker )
 {
+    ptrSize_.CheckValidity( checker, strName_.GetData(), eEquipments, -1, tools::translate( "ADN_Equipments_Data", "Volume").toStdString() );
     if( attritionBreakdowns_.vBreakdowns_.empty() || randomBreakdowns_.vBreakdowns_.empty() )
+    {
+        ptrArmor_.CheckValidity( checker, strName_.GetData(), eEquipments, -1, tools::translate( "ADN_Equipments_Data", "Armor-Plating").toStdString() );
         if( ptrArmor_.GetData() && ptrArmor_.GetData()->nType_.GetData() == eProtectionType_Material )
             checker.AddError( eMissingBreakdown, strName_.GetData(), eEquipments );
+    }
     if( !logInfos_.IsRepairTypeValid() )
         checker.AddError( eMissingRepairType, strName_.GetData(), eEquipments );
 }

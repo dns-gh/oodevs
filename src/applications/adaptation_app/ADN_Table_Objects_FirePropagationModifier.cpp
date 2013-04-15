@@ -17,7 +17,7 @@ typedef ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByF
 // Name: ADN_Table_Objects_FirePropagationModifier constructor
 // Created: BCI 2010-12-02
 //-----------------------------------------------------------------------------
-ADN_Table_Objects_FirePropagationModifier::ADN_Table_Objects_FirePropagationModifier( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Table_Objects_FirePropagationModifier::ADN_Table_Objects_FirePropagationModifier( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 3 );

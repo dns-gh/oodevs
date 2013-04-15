@@ -13,6 +13,8 @@
 #include "ADN_Equipments_Data.h"
 #include "ADN_Resources_Data.h"
 
+ADN_ConsistencyChecker::T_Parent::T_ConsistencyErrors ADN_ConsistencyChecker::loadingErrors_;
+
 // -----------------------------------------------------------------------------
 // Name: ADN_ConsistencyChecker constructor
 // Created: ABR 2012-06-06
@@ -65,6 +67,19 @@ void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const std::strin
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::AddLoadingError
+// Created: JSR 2013-04-12
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyChecker::AddLoadingError( E_ConsistencyCheck type, const std::string& name, int tab, int subTab /*= -1*/, const std::string& optional /*= ""*/ )
+{
+    ConsistencyError error( type );
+    error.items_.push_back( CreateGotoInfo( name, tab, subTab ) );
+    if( !optional.empty() )
+        error.optional_ = optional;
+    loadingErrors_.push_back( error );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_ConsistencyChecker::CreateGotoInfoFromNNOElement
 // Created: ABR 2012-06-08
 // -----------------------------------------------------------------------------
@@ -98,4 +113,22 @@ bool ADN_ConsistencyChecker::IsAlreadyRegistered( const std::string& code, E_Con
         if( it->type_ == type && it->optional_ == code )
             return true;
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::GetLoadingErrors
+// Created: JSR 2013-04-12
+// -----------------------------------------------------------------------------
+const ADN_ConsistencyChecker::T_Parent::T_ConsistencyErrors& ADN_ConsistencyChecker::GetLoadingErrors() const
+{
+    return loadingErrors_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::ClearLoadingErrors
+// Created: JSR 2013-04-12
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyChecker::ClearLoadingErrors()
+{
+    loadingErrors_.clear();
 }

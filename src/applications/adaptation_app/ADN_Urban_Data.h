@@ -1,43 +1,24 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-08-27 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Categories_Data.h $
-// $Author: Ape $
-// $Modtime: 13/04/05 15:10 $
-// $Revision: 8 $
-// $Workfile: ADN_Categories_Data.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __ADN_Urban_Data_h_
 #define __ADN_Urban_Data_h_
 
 #include "ADN_AttritionInfos.h"
 #include "ADN_CapacityInfos.h"
-#include "ADN_Categories_Data.h"
 #include "ADN_Data_ABC.h"
-#include "ADN_Enums.h"
-#include "ADN_Tools.h"
 #include "ADN_Type_Vector_ABC.h"
-#include "ADN_Type_VectorFixed_ABC.h"
-#include "ADN_Types.h"
 #include "ADN_Symbols_Data.h"
 #include "ADN_RefWithName.h"
-#include <string>
-#include <map>
-#include <boost/shared_ptr.hpp>
 
-namespace xml
-{
-    class xistream;
-}
-
-//*****************************************************************************
-// Created: JDY 03-08-27
-//*****************************************************************************
 class ADN_Urban_Data : public ADN_Data_ABC
 {
-
 //*****************************************************************************
 public:
     class AccommodationInfos : public ADN_RefWithName
@@ -87,7 +68,7 @@ public:
         //@}
     };
 
-    typedef ADN_Type_Vector_ABC< InfrastructureInfos >     T_InfrastructureInfos_Vector;
+    typedef ADN_Type_Vector_ABC< InfrastructureInfos > T_InfrastructureInfos_Vector;
 
 //*****************************************************************************
 public:
@@ -133,7 +114,7 @@ public:
         RoofShapeInfos* CreateCopy() { return new RoofShapeInfos(); }
     };
 
-    typedef ADN_Type_Vector_ABC< RoofShapeInfos >     T_RoofShapeInfos_Vector;
+    typedef ADN_Type_Vector_ABC< RoofShapeInfos > T_RoofShapeInfos_Vector;
 
 //*****************************************************************************
 
@@ -149,7 +130,7 @@ public:
 
 //*****************************************************************************
 
-    class UsageTemplateInfos : public ADN_Ref_ABC
+    class UsageTemplateInfos : public ADN_CrossedRef< AccommodationInfos >
     {
     public:
                  UsageTemplateInfos();
@@ -162,7 +143,6 @@ public:
         UsageTemplateInfos* CreateCopy();
 
     public:
-        ADN_TypePtr_InVector_ABC< AccommodationInfos > accommodation_;
         ADN_Type_Int proportion_;
     };
 

@@ -24,7 +24,7 @@
 // Name: ADN_Weapons_PhTable constructor
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
-ADN_Weapons_PhTable::ADN_Weapons_PhTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Weapons_PhTable::ADN_Weapons_PhTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     // Selection and sorting.

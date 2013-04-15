@@ -10,7 +10,6 @@
 #ifndef __ADN_ConsistencyDialog_h_
 #define __ADN_ConsistencyDialog_h_
 
-#include <boost/noncopyable.hpp>
 #include "clients_gui/ConsistencyDialog_ABC.h"
 #include "ADN_ConsistencyErrorTypes.h"
 #include "ADN_ConsistencyChecker.h"
@@ -43,6 +42,7 @@ private:
     //! @name Helpers
     //@{
     virtual void UpdateDataModel();
+    void DoUpdateDataModel( const ADN_ConsistencyChecker::T_ConsistencyErrors& errors );
     //@}
 
 signals:

@@ -201,8 +201,8 @@ public:
 
         bool Contains( ADN_Breakdowns_Data::BreakdownInfo& breakdown ) const;
         void CopyFrom( BreakdownGroupInfos& src );
-        void ReadArchive( xml::xistream& input );
-        void ReadBreakdown( xml::xistream& input );
+        void ReadArchive( xml::xistream& input, const std::string& parentName );
+        void ReadBreakdown( xml::xistream& input, const std::string& parentName );
         void WriteArchive( xml::xostream& output, const std::string& composante );
 
     public:
@@ -381,9 +381,9 @@ public:
         virtual ~ResourceInfos() {}
 
         void CopyFrom( ResourceInfos& src );
-        void ReadCategory( xml::xistream& input );
-        void ReadArchive( xml::xistream& input );
-        void ReadDotation( xml::xistream& input, ADN_Resources_Data::ResourceInfos& dotation );
+        void ReadCategory( xml::xistream& input, const std::string& parentName );
+        void ReadArchive( xml::xistream& input, const std::string& parentName );
+        void ReadDotation( xml::xistream& input, ADN_Resources_Data::ResourceInfos& dotation, const std::string& parentName );
         void WriteArchive( xml::xostream& output );
 
     public:
@@ -453,9 +453,9 @@ public:
         virtual ~ConsumptionsInfos() {}
 
         void CopyFrom( ConsumptionsInfos& source );
-        void ReadArchive( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories );
-        void ReadConsumption( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories );
-        void ReadDotation( xml::xistream& input, const E_ConsumptionType& type, T_CategoryInfos_Vector& equipmentCategories );
+        void ReadArchive( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName );
+        void ReadConsumption( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName );
+        void ReadDotation( xml::xistream& input, const E_ConsumptionType& type, T_CategoryInfos_Vector& equipmentCategories, const std::string& parentName );
         void FillMissingConsumptions( T_CategoryInfos_Vector& equipmentCategories );
         void WriteArchive( xml::xostream& output );
 
@@ -481,7 +481,7 @@ public:
         void ReadActiveProtection( xml::xistream& input );
         void ReadObject( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
-        void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& checker );
         void FillMissingConsumptions();
 
     public:

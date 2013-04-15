@@ -14,7 +14,7 @@
 // Created: ABR 2013-02-11
 // -----------------------------------------------------------------------------
 template< typename SourceType, typename TargetType >
-ADN_VectorEditionDialog< SourceType, TargetType >::ADN_VectorEditionDialog( const QString& objectName, const QString& title, QWidget* parent /*= 0*/ )
+ADN_VectorEditionDialog< SourceType, TargetType >::ADN_VectorEditionDialog( const QString& objectName, const QString& title, QWidget* parent /* = 0 */ )
     : QDialog( parent )
 {
     // Initialization

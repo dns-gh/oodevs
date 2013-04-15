@@ -250,7 +250,10 @@ void ADN_Models_Data::ModelInfos::ReadMission( xml::xistream& input )
 {
     std::auto_ptr<MissionInfos> spNew( new MissionInfos( missions_ ) );
     spNew->ReadArchive( input );
-    vMissions_.AddItem( spNew.release() );
+    if( spNew->GetCrossedElement() )
+        vMissions_.AddItem( spNew.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eModels, -1, tools::translate( "ADN_Models_Data", "Missions" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -261,7 +264,10 @@ void ADN_Models_Data::ModelInfos::ReadOrder( xml::xistream& input )
 {
     std::auto_ptr<OrderInfos> spNew( new OrderInfos() );
     spNew->ReadArchive( input );
-    vFragOrders_.AddItem( spNew.release() );
+    if( spNew->GetCrossedElement() )
+        vFragOrders_.AddItem( spNew.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, strName_.GetData(), eModels, -1, tools::translate( "ADN_Models_Data", "Frag orders" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

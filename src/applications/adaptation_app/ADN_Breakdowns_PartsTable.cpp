@@ -25,7 +25,7 @@
 // Name: ADN_Breakdowns_PartsTable constructor
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
-ADN_Breakdowns_PartsTable::ADN_Breakdowns_PartsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Breakdowns_PartsTable::ADN_Breakdowns_PartsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     setShowGrid( false );

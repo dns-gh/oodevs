@@ -20,7 +20,7 @@ typedef ADN_Equipments_Data::EquipmentInfos ComposanteInfos;
 // Name: ADN_Equipments_Speeds_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Equipments_Speeds_GUI::ADN_Equipments_Speeds_GUI( QLineEdit* maxSpeed, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Equipments_Speeds_GUI::ADN_Equipments_Speeds_GUI( QLineEdit* maxSpeed, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
     , maxSpeed_( maxSpeed )
     , popupIsDisplayed_( false )

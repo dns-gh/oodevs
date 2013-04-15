@@ -1,19 +1,16 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-08-27 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Categories_Data.cpp $
-// $Author: Ape $
-// $Modtime: 22/04/05 16:12 $
-// $Revision: 12 $
-// $Workfile: ADN_Categories_Data.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Urban_Data.h"
+#include "ADN_Categories_Data.h"
 #include "ADN_Project_Data.h"
-#include "ADN_Tools.h"
-#include "ADN_Tr.h"
 #include "ADN_Workspace.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
@@ -516,7 +513,7 @@ void ADN_Urban_Data::InfrastructureInfos::WriteInfrastructure( xml::xostream& ou
     std::string strData = strName_.GetData();
     output << xml::start( "infrastructure" )
         << xml::attribute( "name",  trim( strData ) );
-    output << xml::attribute( "symbol", pSymbol_.GetData() ? pSymbol_.GetData()->strName_.GetData() : "" );
+    output << xml::attribute( "symbol", pSymbol_ );
 
     if( bMedical_.GetData() )
         output << xml::attribute( "medical", bMedical_.GetData() );
@@ -545,14 +542,9 @@ ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input )
     : pSymbol_( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolsInfras(), 0 )
     , bMedical_( false )
 {
-    std::string symbol;
     input >> xml::attribute( "name", strName_ )
-          >> xml::attribute( "symbol", symbol )
+          >> xml::attribute( "symbol", pSymbol_ )
           >> xml::optional >> xml::attribute( "medical", bMedical_ );
-    ADN_Symbols_Data::SymbolsInfra* pSymbol = ADN_Workspace::GetWorkspace().GetSymbols().GetData().FindSymbolInfra( symbol );
-    if( !pSymbol )
-        return;
-    pSymbol_ = pSymbol;
 }
 
 // -----------------------------------------------------------------------------
@@ -602,7 +594,7 @@ ADN_Urban_Data::T_UsageTemplateInfosVector::~T_UsageTemplateInfosVector()
 bool ADN_Urban_Data::T_UsageTemplateInfosVector::AddItemPrivate( void* pObj )
 {
     if( parent_ && pObj )
-        parent_->BindExistenceTo( &static_cast< UsageTemplateInfos* >( pObj )->accommodation_ );
+        parent_->BindExistenceTo( static_cast< ADN_CrossedRef< AccommodationInfos >* >( pObj ) );
     return ADN_Type_Vector_ABC< UsageTemplateInfos >::AddItemPrivate( pObj );
 }
 
@@ -786,8 +778,8 @@ void ADN_Urban_Data::RoofShapeInfos::WriteRoofShape( xml::xostream& output )
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos()
-    : accommodation_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0 )
-    , proportion_   ( 100 )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0, true, "type" )
+    , proportion_( 100 )
 {
     // NOTHING
 }
@@ -797,14 +789,10 @@ ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos()
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( xml::xistream& input )
-    : accommodation_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0 )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0, true, "type" )
     , proportion_   ( static_cast< unsigned int >( input.attribute< double >( "proportion" ) * 100 ) )
 {
-    std::string type = input.attribute< std::string >( "type" );
-    ADN_Urban_Data::AccommodationInfos* accomodation = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindAccommodation( type );
-    if( !accomodation )
-        throw MASA_EXCEPTION( tools::translate( "ADN_Urban_Data", "Urban data - Invalid accomodation type '%1'" ).arg( type.c_str() ).toStdString() );
-    accommodation_ = accomodation;
+    ADN_CrossedRef::ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -812,7 +800,7 @@ ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( xml::xistream& input )
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( ADN_Urban_Data::AccommodationInfos& accomodation, ADN_Type_Int proportion )
-    : accommodation_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), &accomodation )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), &accomodation, "type" )
     , proportion_   ( proportion.GetData() )
 {
     // NOTHING
@@ -833,12 +821,10 @@ ADN_Urban_Data::UsageTemplateInfos::~UsageTemplateInfos()
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::UsageTemplateInfos::Write( xml::xostream& output )
 {
-    if( !accommodation_.GetData() )
-        return;
     double proportion = static_cast< double >( proportion_.GetData() ) / 100.f;
-    output << xml::start( "usage" )
-           << xml::attribute( "type", accommodation_.GetData()->strName_ )
-           << xml::attribute( "proportion", proportion )
+    output << xml::start( "usage" );
+    ADN_CrossedRef::WriteArchive( output );
+    output << xml::attribute( "proportion", proportion )
            << xml::end;
 }
 
@@ -850,7 +836,7 @@ ADN_Urban_Data::UsageTemplateInfos* ADN_Urban_Data::UsageTemplateInfos::CreateCo
 {
     ADN_Urban_Data::UsageTemplateInfos* result = new ADN_Urban_Data::UsageTemplateInfos();
 
-    result->accommodation_ = accommodation_.GetData();
+    result->SetCrossedElement( GetCrossedElement() );
     result->proportion_ = proportion_.GetData();
 
     return result;
@@ -898,7 +884,7 @@ QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( AccommodationInfos& infos )
     for( auto it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
         for( auto itUsage = ( *it )->usages_.begin(); itUsage != ( *it )->usages_.end(); ++itUsage )
         {
-            AccommodationInfos* infosAcc = ( *itUsage )->accommodation_.GetData();
+            AccommodationInfos* infosAcc = ( *itUsage )->GetCrossedElement();
             if( infosAcc && infosAcc->strName_.GetData() == infos.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
         }

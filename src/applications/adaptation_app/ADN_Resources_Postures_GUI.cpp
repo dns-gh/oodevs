@@ -21,7 +21,7 @@ typedef ADN_Resources_Data::ModificatorPostureInfos ModificatorPostureInfos;
 // Name: ADN_Resources_Postures_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Resources_Postures_GUI::ADN_Resources_Postures_GUI( const QString& objectName, const QString& strColCaption, ADN_Connector_ABC*& connector,  QWidget* pParent /*= 0*/ )
+ADN_Resources_Postures_GUI::ADN_Resources_Postures_GUI( const QString& objectName, const QString& strColCaption, ADN_Connector_ABC*& connector,  QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 2 );

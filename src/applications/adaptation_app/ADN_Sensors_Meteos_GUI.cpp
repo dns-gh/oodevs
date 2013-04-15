@@ -17,7 +17,7 @@
 // Name: ADN_Sensors_Meteos_GUI constructor
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
-ADN_Sensors_Meteos_GUI::ADN_Sensors_Meteos_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Sensors_Meteos_GUI::ADN_Sensors_Meteos_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Sensors_ModificatorTable_ABC( tools::translate( "ADN_Sensors_Meteos_GUI", "Meteos"), tools::translate( "ADN_Sensors_Meteos_GUI", "Modifiers"), objectName, connector, pParent )
 {
     // NOTHING

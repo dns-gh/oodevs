@@ -16,8 +16,6 @@
 #include "ADN_Resources_Data.h"
 #include "ADN_Weapons_Data_WeaponInfos.h"
 
-namespace xml { class xistream; }
-
 // =============================================================================
 /** @class  ADN_Weapons_Data
 */
@@ -32,12 +30,12 @@ public:
     void FilesNeeded( tools::Path::T_Paths& l ) const;
     void Reset();
 
-    ADN_Type_Vector_ABC< ADN_Weapons_Data_WeaponInfos >&    GetWeaponInfos();
-    ADN_Weapons_Data_WeaponInfos*   FindWeapon( const std::string& strLauncher, const std::string& strAmmunition );
-    int                             GetIndex( ADN_Weapons_Data_WeaponInfos& weapon );
-    QStringList                     GetWeaponThatUse( ADN_Launchers_Data::LauncherInfos& launcher );
-    QStringList                     GetWeaponThatUse( ADN_Resources_Data::AmmoCategoryInfo& ammunition );
-    void                            UpdateNames();
+    ADN_Type_Vector_ABC< ADN_Weapons_Data_WeaponInfos >& GetWeaponInfos();
+    ADN_Weapons_Data_WeaponInfos* FindWeapon( const std::string& strLauncher, const std::string& strAmmunition );
+    int GetIndex( ADN_Weapons_Data_WeaponInfos& weapon );
+    QStringList GetWeaponThatUse( ADN_Launchers_Data::LauncherInfos& launcher );
+    QStringList GetWeaponThatUse( ADN_Resources_Data::AmmoCategoryInfo& ammunition );
+    void UpdateNames();
 
 private:
     void ReadWeapon( xml::xistream& input );

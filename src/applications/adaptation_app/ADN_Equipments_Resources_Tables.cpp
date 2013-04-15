@@ -18,7 +18,7 @@
 // Name: ADN_Equipments_Resources_Tables constructor
 // Created: ABR 2012-11-30
 // -----------------------------------------------------------------------------
-ADN_Equipments_Resources_Tables::ADN_Equipments_Resources_Tables( const QString& objectName, ADN_Connector_ABC*& dotationConnector, ADN_Connector_ABC*& allocationConnector, ADN_Connector_ABC*& consumptionConnector, QWidget* parent /*= 0*/ )
+ADN_Equipments_Resources_Tables::ADN_Equipments_Resources_Tables( const QString& objectName, ADN_Connector_ABC*& dotationConnector, ADN_Connector_ABC*& allocationConnector, ADN_Connector_ABC*& consumptionConnector, QWidget* parent /* = 0 */ )
     : QWidget( parent )
 {
     setObjectName( objectName );

@@ -192,7 +192,7 @@ T* ADN_GuiBuilder::AddWidget( const char* objectName, Param1 param1, Param2 para
 // Created: ABR 2013-02-06
 // -----------------------------------------------------------------------------
 template< class T >
-ADN_SearchListView* ADN_GuiBuilder::AddSearchListView( ADN_GUI_ABC* gui, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /*= 0*/ )
+ADN_SearchListView* ADN_GuiBuilder::AddSearchListView( ADN_GUI_ABC* gui, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /* = 0 */ )
 {
     T* pListView = new T( parent );
     ADN_SearchListView* searchListView = new ADN_SearchListView( GetChildName( "list" ), gui, *pListView, reference, connector, subTab, parent );
@@ -205,7 +205,7 @@ ADN_SearchListView* ADN_GuiBuilder::AddSearchListView( ADN_GUI_ABC* gui, ADN_Ref
 // Created: ABR 2013-02-06
 // -----------------------------------------------------------------------------
 template< class T, class Param1 >
-ADN_SearchListView* ADN_GuiBuilder::AddSearchListView( ADN_GUI_ABC* gui, Param1& param1, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /*= 0*/ )
+ADN_SearchListView* ADN_GuiBuilder::AddSearchListView( ADN_GUI_ABC* gui, Param1& param1, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /* = 0 */ )
 {
     T* pListView = new T( parent, param1 );
     ADN_SearchListView* searchListView = new ADN_SearchListView( GetChildName( "list" ), gui, *pListView, reference, connector, subTab, parent );
@@ -218,7 +218,7 @@ ADN_SearchListView* ADN_GuiBuilder::AddSearchListView( ADN_GUI_ABC* gui, Param1&
 // Created: ABR 2013-02-06
 // -----------------------------------------------------------------------------
 template< class T, class Param1, class Param2 >
-ADN_SearchListView* ADN_GuiBuilder::AddSearchListView( ADN_GUI_ABC* gui, Param1& param1, Param2& param2, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /*= 0*/ )
+ADN_SearchListView* ADN_GuiBuilder::AddSearchListView( ADN_GUI_ABC* gui, Param1& param1, Param2& param2, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /* = 0 */ )
 {
     T* pListView = new T( parent, param1, param2 );
     ADN_SearchListView* searchListView = new ADN_SearchListView( GetChildName( "list" ), gui, *pListView, reference, connector, subTab, parent );

@@ -17,7 +17,7 @@
 // Name: ADN_Resources_AttritionTable constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Resources_AttritionTable::ADN_Resources_AttritionTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Resources_AttritionTable::ADN_Resources_AttritionTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 4 );

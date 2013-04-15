@@ -77,7 +77,10 @@ void ADN_Weapons_Data::ReadWeapon( xml::xistream& input )
 {
     std::auto_ptr< ADN_Weapons_Data_WeaponInfos > spNew( new ADN_Weapons_Data_WeaponInfos() );
     spNew->ReadArchive( input );
-    weapons_.AddItem( spNew.release() );
+    if( spNew->ptrLauncher_.GetData() && spNew->ptrAmmunition_.GetData() )
+        weapons_.AddItem( spNew.release() );
+    else
+        ADN_ConsistencyChecker::AddLoadingError( eInvalidCrossedRef, spNew->strName_.GetData(), eWeapons, -1, tools::translate( "ADN_Weapons_Data", "Weapons" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

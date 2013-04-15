@@ -16,7 +16,7 @@
 // Name: ADN_MissionGenObjectTypes_Table constructor
 // Created: LGY 2012-04-18
 // -----------------------------------------------------------------------------
-ADN_MissionGenObjectTypes_Table::ADN_MissionGenObjectTypes_Table( QCheckBox* all, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_MissionGenObjectTypes_Table::ADN_MissionGenObjectTypes_Table( QCheckBox* all, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
     , all_( all )
     , isAdding_( false )

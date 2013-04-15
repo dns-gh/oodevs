@@ -628,7 +628,7 @@ void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output )
 // Name: ADN_Crowds_Data::CrowdsInfos::CheckValidity
 // Created: JSR 2013-04-04
 // -----------------------------------------------------------------------------
-void ADN_Crowds_Data::CrowdsInfos::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab /*= -1*/, const std::string& /*optional = ""*/ )
+void ADN_Crowds_Data::CrowdsInfos::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab /* = -1 */, const std::string& /* optional = "" */ )
 {
     ptrModel_.CheckValidity( checker, name, tab, subTab, tools::translate( "ADN_Crowds_Data", "Behavior model" ).toStdString() );
     for( auto it = vFireEffectInfos_.begin(); it != vFireEffectInfos_.end(); ++it )

@@ -16,7 +16,7 @@
 // Name: ADN_Sensors_Postures_GUI constructor
 // Created: ABR 2012-01-24
 // -----------------------------------------------------------------------------
-ADN_Sensors_Postures_GUI::ADN_Sensors_Postures_GUI( const QString& strColCaption, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Sensors_Postures_GUI::ADN_Sensors_Postures_GUI( const QString& strColCaption, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Sensors_ModificatorTable_ABC( strColCaption + tools::translate( "ADN_Sensors_Postures_GUI", "" ), tools::translate( "ADN_Sensors_Postures_GUI", "Modifiers" ), objectName, connector, pParent ) // hack : first translation not seen by Qt (unknown reason)
 {
     // NOTHING

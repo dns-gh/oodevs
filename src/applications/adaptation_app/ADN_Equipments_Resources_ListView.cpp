@@ -43,7 +43,7 @@ namespace
 // Name: ADN_Equipments_Resources_ListView constructor
 // Created: ABR 2012-11-30
 // -----------------------------------------------------------------------------
-ADN_Equipments_Resources_ListView::ADN_Equipments_Resources_ListView( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* parent /*= 0*/ )
+ADN_Equipments_Resources_ListView::ADN_Equipments_Resources_ListView( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* parent /* = 0 */ )
     : ADN_ListView( parent, objectName , tools::translate( "ADN_Equipments_Resources_ListView", "Resources" ) )
 {
     pConnector_ = new ADN_Connector_ListView_Equipment_Resource( *this );

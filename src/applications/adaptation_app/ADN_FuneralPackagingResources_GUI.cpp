@@ -24,7 +24,7 @@
 // Name: ADN_FuneralPackagingResources_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_FuneralPackagingResources_GUI::ADN_FuneralPackagingResources_GUI( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /*= 0*/ )
+ADN_FuneralPackagingResources_GUI::ADN_FuneralPackagingResources_GUI( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /* = 0 */ )
 : ADN_Table( objectName, vector, pParent )
 {
     setMinimumHeight( 200 );

@@ -15,7 +15,7 @@
 // Name: ADN_Template_Usages constructor
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-ADN_Template_Usages::ADN_Template_Usages( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Template_Usages::ADN_Template_Usages( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     setShowGrid( false );
@@ -87,7 +87,7 @@ bool ADN_Template_Usages::Contains( ADN_Urban_Data::AccommodationInfos& accommod
     {
         const QModelIndex index = dataModel_.index( row, 1 );
         ADN_Urban_Data::UsageTemplateInfos* pInfos = static_cast< ADN_Urban_Data::UsageTemplateInfos* >( GetDataFromIndex( index ) );
-        if( pInfos && pInfos->accommodation_.GetData() && pInfos->accommodation_.GetData()->strName_.GetData() == accommodation.strName_.GetData() )
+        if( pInfos && pInfos->GetCrossedElement() && pInfos->GetCrossedElement()->strName_.GetData() == accommodation.strName_.GetData() )
             return true;
     }
     return false;
@@ -100,8 +100,8 @@ bool ADN_Template_Usages::Contains( ADN_Urban_Data::AccommodationInfos& accommod
 void ADN_Template_Usages::AddRow( int row, void* data )
 {
     ADN_Urban_Data::UsageTemplateInfos* pInfos = static_cast< ADN_Urban_Data::UsageTemplateInfos* >( data );
-    if( !pInfos || !pInfos->accommodation_.GetData() )
+    if( !pInfos || !pInfos->GetCrossedElement() )
         return;
-    AddItem( row, 0, data, &pInfos->accommodation_.GetData()->strName_, ADN_StandardItem::eString );
+    AddItem( row, 0, data, &pInfos->GetCrossedElement()->strName_, ADN_StandardItem::eString );
     AddItem( row, 1, data, &pInfos->proportion_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }

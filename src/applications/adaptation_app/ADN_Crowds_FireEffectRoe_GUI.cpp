@@ -22,7 +22,7 @@ typedef ADN_Crowds_Data::FireEffectRoeInfos FireEffectRoeInfos;
 // Name: ADN_Crowds_FireEffectRoe_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Crowds_FireEffectRoe_GUI::ADN_Crowds_FireEffectRoe_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Crowds_FireEffectRoe_GUI::ADN_Crowds_FireEffectRoe_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 3 );

@@ -25,7 +25,7 @@ using namespace ExcelFormat;
 // Name: ADN_Table::ADN_Table
 // Created: ABR 2012-11-05
 // -----------------------------------------------------------------------------
-ADN_Table::ADN_Table( const QString& objectName, QWidget* pParent /*= 0*/ )
+ADN_Table::ADN_Table( const QString& objectName, QWidget* pParent /* = 0 */ )
     : QTableView( pParent )
     , dataModel_( pParent )
     , delegate_ ( this )
@@ -37,7 +37,7 @@ ADN_Table::ADN_Table( const QString& objectName, QWidget* pParent /*= 0*/ )
 // Name: ADN_Table::ADN_Table
 // Created: NPT 2012-11-05
 // -----------------------------------------------------------------------------
-ADN_Table::ADN_Table( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /*= 0*/ )
+ADN_Table::ADN_Table( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /* = 0 */ )
     : QTableView( pParent )
     , dataModel_( pParent )
     , delegate_ ( this )
@@ -52,7 +52,7 @@ ADN_Table::ADN_Table( const QString& objectName, ADN_Ref_ABC& vector, QWidget* p
 // Name: ADN_Table::ADN_Table
 // Created: ABR 2012-10-18
 // -----------------------------------------------------------------------------
-ADN_Table::ADN_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Table::ADN_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : QTableView( pParent )
     , dataModel_( pParent )
     , delegate_ ( this )
@@ -225,7 +225,7 @@ void ADN_Table::dataChanged( const QModelIndex& topLeft, const QModelIndex& bott
 // Name: ADN_Table::SetGoToOnDoubleClick
 // Created: ABR 2012-10-23
 // -----------------------------------------------------------------------------
-void ADN_Table::SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab /*= -1*/, int col /*= 0*/ )
+void ADN_Table::SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab /*= -1*/, int col /* = 0 */ )
 {
     goToInfo_.targetTab_ = targetTab;
     goToInfo_.subTargetTab_ = subTargetTab;

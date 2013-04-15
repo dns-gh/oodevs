@@ -586,7 +586,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
             >> xml::list( "crew-rank", *this, &ADN_Units_Data::UnitInfos::ReadCrew )
           >> xml::end
           >> xml::optional >> xml::start( "logistics" )
-            >> xml::list( "category", contenancesTC1_, &ADN_Equipments_Data::ResourceInfos::ReadCategory )
+            >> xml::list( "category", contenancesTC1_, &ADN_Equipments_Data::ResourceInfos::ReadCategory, strName_.GetData() )
           >> xml::end;
     bTC1_ = ! contenancesTC1_.categories_.empty();
     for( ADN_Equipments_Data::T_CategoryInfos_Vector::iterator it = contenancesTC1_.categories_.begin(); it != contenancesTC1_.categories_.end(); ++it )

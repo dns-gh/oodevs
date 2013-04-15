@@ -24,7 +24,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ADN_NbcSuitTable( const QString& objectName, ADN_Connector_ABC*& connector,
-                               QWidget* pParent /*= 0*/ );
+                               QWidget* pParent /* = 0 */ );
     virtual ~ADN_NbcSuitTable();
     //@}
 

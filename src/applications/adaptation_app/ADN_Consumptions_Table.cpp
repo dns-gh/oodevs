@@ -15,7 +15,7 @@
 // Name: ADN_Consumptions_Table constructor
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-ADN_Consumptions_Table::ADN_Consumptions_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Consumptions_Table::ADN_Consumptions_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 2 );

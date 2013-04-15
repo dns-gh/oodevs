@@ -22,7 +22,7 @@ typedef ADN_Equipments_Data::SensorInfos SensorInfos;
 // Name: ADN_Equipments_Sensors_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Equipments_Sensors_GUI::ADN_Equipments_Sensors_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Equipments_Sensors_GUI::ADN_Equipments_Sensors_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     // peut etre selectionne & trie

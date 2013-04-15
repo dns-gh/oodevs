@@ -35,6 +35,7 @@ enum E_ConsistencyCheck
 
     eNoCrew,
     eInvalidCrossedRef,
+    eInvalidPtrInVector,
     eOthersMask
 };
 

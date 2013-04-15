@@ -17,7 +17,7 @@
 // Name: ADN_Urban_AttritionTable constructor
 // Created: ABR 2012-10-24
 // -----------------------------------------------------------------------------
-ADN_Urban_AttritionTable::ADN_Urban_AttritionTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Urban_AttritionTable::ADN_Urban_AttritionTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 4 );

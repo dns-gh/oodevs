@@ -26,7 +26,7 @@ typedef ADN_Supply_Data::ConvoyInfo< ADN_Type_Double > ConvoyInfo;
 // Name: ADN_Supply_TrucksDoubleTable constructor
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
-ADN_Supply_TrucksDoubleTable::ADN_Supply_TrucksDoubleTable( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /*= 0*/ )
+ADN_Supply_TrucksDoubleTable::ADN_Supply_TrucksDoubleTable( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /* = 0 */ )
 : ADN_Table( objectName, vector, pParent )
 {
     setSortingEnabled( true );
