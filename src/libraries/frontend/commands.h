@@ -38,7 +38,6 @@ namespace frontend
         std::map< unsigned int, QString > ListSides( const tools::GeneralConfig& config, const tools::Path& exercise );
         tools::Path::T_Paths ListCheckpoints     ( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session );
         tools::Path::T_Paths ListModels          ( const tools::GeneralConfig& config );
-        tools::Path::T_Paths ListPropagations    ( const tools::GeneralConfig& config );
         tools::Path::T_Paths ListPhysicalModels  ( const tools::GeneralConfig& config, const tools::Path& model );
         tools::Path::T_Paths ListScripts         ( const tools::GeneralConfig& config, const tools::Path& exercise );
         tools::Path::T_Paths ListOrders          ( const tools::GeneralConfig& config, const tools::Path& exercise );

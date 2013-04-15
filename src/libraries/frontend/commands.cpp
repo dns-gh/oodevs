@@ -171,16 +171,6 @@ namespace frontend
             return ( config.GetExerciseDir( exercise ) / "orders" ).ListElements( boost::bind( &IsValidOrder, _1 ) );
         }
 
-        bool IsValidPropagation( const tools::Path& child )
-        {
-            return child.IsDirectory() && ( child / "propagation" ).Exists() && ( child / "propagation" ).IsDirectory() && ( child / "propagation.xml" ).Exists();
-        }
-
-        tools::Path::T_Paths ListPropagations( const tools::GeneralConfig& config )
-        {
-            return ( config.GetRootDir() / "data/propagations" ).ListElements( boost::bind( &IsValidPropagation, _1 ) );
-        }
-
         bool IsOther( const tools::Path& child )
         {
             return child.IsDirectory() && child.FileName() != "sessions";
