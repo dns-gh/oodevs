@@ -34,6 +34,7 @@
 #include "LocationEditorToolbar.h"
 #include "LivingAreaPanel.h"
 #include "OrbatPanel.h"
+#include "RasterProcess.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
@@ -107,10 +108,8 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
 #include "ENT/ENT_Tr_Gen.h"
-#include "MT_Tools/MT_Logger.h"
 #include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
@@ -223,10 +222,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     controllers_.LoadOptions( eModes_Prepare );
     controllers_.modes_.LoadGeometry( eModes_Prepare );
 
-    // Raster_app process
-    process_.reset( new QProcess( this ) );
-    connect( process_.get(), SIGNAL( finished( int, QProcess::ExitStatus ) ), this, SLOT( OnRasterProcessExited( int, QProcess::ExitStatus ) ) );
-
     // Initialize
     setCentralWidget( selector_.get() );
     SetWindowTitle( false );
@@ -245,7 +240,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 MainWindow::~MainWindow()
 {
     controllers_.Unregister( *this );
-    process_->kill();
 }
 
 // -----------------------------------------------------------------------------
@@ -843,20 +837,10 @@ void MainWindow::OnAddRaster()
         QDialog::DialogCode result = static_cast< QDialog::DialogCode >( dialog.exec() );
         if( result == QDialog::Accepted )
         {
-            QStringList parameters;
-            parameters << ( std::string( "--config=" ) + config_.BuildTerrainChildFile( "config.xml" ).SystemComplete().ToUTF8() ).c_str();
-            parameters << ( std::string( "--raster=" ) + dialog.GetFiles().toStdString() ).c_str();
-            parameters << ( std::string( "--pixelsize=" ) + boost::lexical_cast< std::string >( dialog.GetPixelSize() ) ).c_str();
-            parameters << ( std::string( "--file=" ) + ( config_.GetGraphicsDirectory() / "~~tmp.texture.bin" ).SystemComplete().ToUTF8() ).c_str();
-            tools::Path workingDirectory = tools::Path( "../Terrain/applications/" ).SystemComplete();
-            process_->setWorkingDirectory( workingDirectory.ToUTF8().c_str() );
-            tools::Path exePath = workingDirectory / "raster_app.exe";
-            std::stringstream cmd;
-            cmd << exePath.ToDebug() << " ";
-            for( int i = 0; i != parameters.count(); ++i )
-                cmd << parameters.at( i ).toStdString() << " ";
-            MT_LOG_INFO_MSG( "Executing: " << cmd.str() );
-            process_->start( exePath.ToUTF8().c_str(), parameters );
+            auto input = tools::Path::FromUnicode( dialog.GetFiles().toStdWString() );
+            auto callback = boost::bind( &MainWindow::OnRasterProcessExited,
+                    this, _1, _2 );
+            process_ = RunRasterApp( input, dialog.GetPixelSize(), config_, callback );
         }
     }
     catch( const geodata::ProjectionException& )
@@ -874,11 +858,12 @@ void MainWindow::OnAddRaster()
 // Name: MainWindow::OnRasterProcessExited
 // Created: JSR 2012-02-10
 // -----------------------------------------------------------------------------
-void MainWindow::OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitStatus )
+void MainWindow::OnRasterProcessExited( int exitCode, const tools::Path& output )
 {
-    if( exitStatus == QProcess::NormalExit && exitCode == EXIT_SUCCESS )
+    if( !exitCode )
     {
-        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_, "~~tmp.texture.bin" );
+        gui::RasterLayer& raster = *new gui::RasterLayer( controllers_.controller_,
+                output.FileName().ToUTF8() );
         raster.SetPasses( "main" );
         selector_->AddLayer( raster );
         dialogContainer_->GetPrefDialog().AddLayer( tr( "User layer [%1]" ).arg( dialogContainer_->GetAddRasterDialog().GetName() ), raster, true );
@@ -886,11 +871,9 @@ void MainWindow::OnRasterProcessExited( int exitCode, QProcess::ExitStatus exitS
         raster.GenerateTexture();
         try
         {
-            const tools::Path aggregated = config_.GetGraphicsDirectory() / "~~tmp.texture.bin";
-            if( aggregated.Exists() )
-                aggregated.Remove();
+            output.Remove();
         }
-        catch( ... )
+        catch( const std::exception& )
         {
             // NOTHING
         }

@@ -532,6 +532,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\PropertiesComparator.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\RasterProcess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -989,6 +992,9 @@
   <ItemGroup>
     <Qt_file_Mocing Include="..\..\src\applications\preparation_app\LimitsLayer.h">
       <Filter>Source Files\Layers</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\preparation_app\RasterProcess.h">
+      <Filter>Source Files</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>
