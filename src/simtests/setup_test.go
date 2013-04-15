@@ -23,6 +23,7 @@ var (
 	rootdir     string
 	rundir      string
 	testPort    int
+	legacy      bool
 )
 
 func init() {
@@ -34,6 +35,7 @@ func init() {
 		"path application run directory, default to application directory")
 	flag.IntVar(&testPort, "test-port", 35000,
 		"base port for spawned simulations")
+	flag.BoolVar(&legacy, "legacy", false, "run in legacy mode")
 }
 
 const ExCrossroadSmallOrbat = "crossroad-small-orbat"
@@ -50,6 +52,7 @@ func MakeOpts() *simu.SimOpts {
 	opts.ExerciseName = "crossroad-small-empty"
 	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort+5)
 	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+6)
+	opts.Legacy = legacy
 	return &opts
 }
 

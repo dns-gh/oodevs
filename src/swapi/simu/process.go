@@ -10,6 +10,7 @@ package simu
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"net"
 	"os/exec"
@@ -26,6 +27,7 @@ type SimOpts struct {
 	DataDir      string
 	SessionName  string
 	ExerciseName string
+	Legacy       bool
 
 	// Network address:port of dispatcher server, default to session if empty.
 	DispatcherAddr string
@@ -224,6 +226,11 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	if len(opts.SimulationAddr) > 0 {
 		args = append(args, "--simulation-address="+opts.SimulationAddr)
 	}
+	legacy := 0
+	if opts.Legacy {
+		legacy = 1
+	}
+	args = append(args, fmt.Sprintf("--legacy=%d", legacy))
 
 	cmd := exec.Command(opts.Executable, args...)
 	rundir := opts.RunDir

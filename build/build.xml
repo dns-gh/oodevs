@@ -36,26 +36,42 @@
         <go cmd="install"/>
     </target>
 
-    <target name="test">
-        <echo message="test.port=${test.port}"/>
-        <go cmd="vet"/>
-        <go cmd="test">
-            <arg value="-i"/>
-        </go>
-        <go cmd="test">
-            <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
-            <!-- We currently need this to avoid port collisions in tests
-                 belonging to the same module. Note that it does not prevent
-                 tests belonging to different modules to run concurrently. We
-                 need a port allocation solution instead.
-            -->
-            <arg value="-test.parallel=1"/>
-            <arg value="--application=${run.dir}/simulation_app.exe"/>
-            <arg value="--root-dir=${data.dir}"/>
-            <arg value="--test-port=${test.port}"/>
-            <!--arg value="-v=true"/-->
-        </go>
+    <macrodef name="runtests">
+        <element name="args" implicit="true" optional="true"/>
+        <sequential>
+            <echo message="test.port=${test.port}"/>
+            <go cmd="vet"/>
+            <go cmd="test">
+                <arg value="-i"/>
+            </go>
+            <go cmd="test">
+                <env key="BKMASA_LICENSE_FILE" path="${licensepath}"/>
+                <!-- We currently need this to avoid port collisions in tests
+                     belonging to the same module. Note that it does not prevent
+                     tests belonging to different modules to run concurrently. We
+                     need a port allocation solution instead.
+                -->
+                <arg value="-test.parallel=1"/>
+                <arg value="--application=${run.dir}/simulation_app.exe"/>
+                <arg value="--root-dir=${data.dir}"/>
+                <arg value="--test-port=${test.port}"/>
+                <!--arg value="-v=true"/-->
+                <args/>
+            </go>
+        </sequential>
+    </macrodef>
+
+    <target name="test-legacy">
+        <runtests>
+            <arg value="--legacy"/>
+        </runtests>
     </target>
+
+    <target name="test-nonlegacy">
+        <runtests/>
+    </target>
+
+    <target name="test" depends="test-legacy,test-nonlegacy"/>
 
     <target name="package">
         <go_package/>

@@ -23,6 +23,7 @@ var (
 	rootdir     string
 	rundir      string
 	testPort    int
+	legacy      bool
 )
 
 func init() {
@@ -34,6 +35,7 @@ func init() {
 		"path application run directory, default to application directory")
 	flag.IntVar(&testPort, "test-port", 35000,
 		"base port for spawned simulations")
+	flag.BoolVar(&legacy, "legacy", false, "run in legacy mode")
 }
 
 func (s *TestSuite) TestSimOpts(c *C) {
@@ -57,6 +59,7 @@ func MakeOpts() *SimOpts {
 	opts.DispatcherAddr = fmt.Sprintf("localhost:%d", testPort)
 	opts.SimulationAddr = fmt.Sprintf("localhost:%d", testPort+1)
 	opts.ConnectTimeout = 600 * time.Second
+	opts.Legacy = legacy
 	return &opts
 }
 
