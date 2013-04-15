@@ -107,6 +107,7 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter.h"
 #include "ENT/ENT_Tr_Gen.h"
+#include "MT_Tools/MT_Logger.h"
 #include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
@@ -849,7 +850,13 @@ void MainWindow::OnAddRaster()
             parameters << ( std::string( "--file=" ) + ( config_.GetGraphicsDirectory() / "~~tmp.texture.bin" ).SystemComplete().ToUTF8() ).c_str();
             tools::Path workingDirectory = tools::Path( "../Terrain/applications/" ).SystemComplete();
             process_->setWorkingDirectory( workingDirectory.ToUTF8().c_str() );
-            process_->start( ( workingDirectory / "raster_app.exe" ).ToUTF8().c_str(), parameters );
+            tools::Path exePath = workingDirectory / "raster_app.exe";
+            std::stringstream cmd;
+            cmd << exePath.ToDebug() << " ";
+            for( int i = 0; i != parameters.count(); ++i )
+                cmd << parameters.at( i ).toStdString() << " ";
+            MT_LOG_INFO_MSG( "Executing: " << cmd.str() );
+            process_->start( exePath.ToUTF8().c_str(), parameters );
         }
     }
     catch( const geodata::ProjectionException& )
