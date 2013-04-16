@@ -69,7 +69,6 @@ void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_
     if( ! tools.ShouldDisplay( "VisionLines" ) || detections_.empty() )
         return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-    glLineWidth( 1.f );
     for( auto it = detections_.begin(); it != detections_.end(); ++it )
     {
         const Agent_ABC& agent = *it->first;
@@ -83,7 +82,7 @@ void AgentDetections::Draw( const geometry::Point2f& where, const gui::Viewport_
                 glColor4f( COLOR_RECORDED );
             else
                 glColor4f( COLOR_DETECTED );
-            tools.DrawLine( where, it->first->Get< Positions >().GetPosition() );
+            tools.DrawLine( where, it->first->Get< Positions >().GetPosition(), 1.f );
         }
     }
     glPopAttrib();

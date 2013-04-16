@@ -461,7 +461,6 @@ void GlWidget::DrawCross( const Point2f& at, float size /* = -1.f*/, E_Unit unit
     }
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
-    glLineWidth( 1. );
     glBegin( GL_LINES );
         glVertex2f( at.X() - size, at.Y() - size );
         glVertex2f( at.X() + size, at.Y() + size );
@@ -521,7 +520,6 @@ void GlWidget::DrawLines( const T_PointVector& points ) const
     {
         glPushAttrib( GL_LINE_BIT );
         glEnable( GL_LINE_SMOOTH );
-        glLineWidth( 1. );
         glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
         glDrawArrays( GL_LINE_STRIP, 0, static_cast< GLsizei >( points.size() ) );
         glPopAttrib();
@@ -538,7 +536,6 @@ void GlWidget::DrawRectangle( const T_PointVector& points ) const
     {
         glPushAttrib( GL_LINE_BIT );
         glEnable( GL_LINE_SMOOTH );
-        glLineWidth( 1. );
         glBegin( GL_LINE_LOOP );
             glVertex2f( points.front().X(), points.front().Y() );
             glVertex2f( points.front().X(), points.back().Y() );
@@ -574,7 +571,6 @@ void GlWidget::DrawPolygon( const T_PointVector& points ) const
     glPopAttrib();
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
-    glLineWidth( 1. );
     glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( points.size() ) );
     glPopAttrib();
     glDisable( GL_STENCIL_TEST );
@@ -678,7 +674,6 @@ void GlWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /* 
 
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
-    glLineWidth( 1. );
     glBegin( GL_LINES );
         glVertex2f( end.X(), end.Y() );
         glVertex2f( left.X(), left.Y() );
@@ -762,7 +757,6 @@ void GlWidget::DrawCircle( const Point2f& center, float radius /* = -1.f*/, E_Un
 
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
-    glLineWidth( 1. );
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
@@ -787,7 +781,6 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /* = -1.f*/, E_Unit
 
     glPushAttrib( GL_LINE_BIT );
     glEnable( GL_LINE_SMOOTH );
-    glLineWidth( 1. );
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.f );
@@ -955,7 +948,6 @@ void GlWidget::DrawApp6Symbol ( const std::string& symbol, const std::string& st
 
     gl::Initialize();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    glLineWidth( 1. );
     glEnable( GL_LINE_SMOOTH );
         glMatrixMode( GL_MODELVIEW );
         glPushMatrix();
