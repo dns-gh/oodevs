@@ -64,21 +64,32 @@ void SetLowFragmentationHeapAlgorithm()
 int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
     tools::WinArguments winArgs( lpCmdLine );
-    tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
-    MT_CrashHandler::SetRootDirectory( debugDir );
-    tools::InitCrashHandler( &CrashHandler );
     tools::InitPureCallHandler();
 
-    // Init logger
-    debugDir.CreateDirectories();
-    MT_FileLogger fileLogger( debugDir / "Sim.log", 1, -1, MT_Logger_ABC::eLogLevel_All );
-    const tools::Path filename = debugDir / "Crash Version " + tools::AppProjectVersion() + ".log";
-    MT_FileLogger crashFileLogger( filename, 1, -1,  MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError );
-    MT_LOG_REGISTER_LOGGER( fileLogger );
-    MT_LOG_REGISTER_LOGGER( crashFileLogger );
-    InitializeTerrainLogger();
+    // Init logger & crash handler
+    boost::scoped_ptr< MT_FileLogger > fileLogger;
+    boost::scoped_ptr< MT_FileLogger > crashFileLogger;
+    try
+    {
+        tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
+        debugDir.CreateDirectories();
 
-    SIM_App* app = 0;
+        MT_CrashHandler::SetRootDirectory( debugDir );
+        tools::InitCrashHandler( &CrashHandler );
+
+        fileLogger.reset( new MT_FileLogger( debugDir / "Sim.log", 1, -1, MT_Logger_ABC::eLogLevel_All ) );
+        const tools::Path filename = debugDir / "Crash Version " + tools::AppProjectVersion() + ".log";
+        crashFileLogger.reset( new MT_FileLogger( filename, 1, -1,  MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError ) );
+        MT_LOG_REGISTER_LOGGER( *fileLogger );
+        MT_LOG_REGISTER_LOGGER( *crashFileLogger );
+        InitializeTerrainLogger();
+    }
+    catch( std::exception& )
+    {
+        // NOTHING
+    }
+
+    boost::scoped_ptr< SIM_App > app;
     int nResult = EXIT_FAILURE;
     int maxConnections = 1;
     // verbose mode
@@ -112,8 +123,8 @@ int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
         // Execute simulation
         GOOGLE_PROTOBUF_VERIFY_VERSION;
-        app = new SIM_App( hinstance, hPrevInstance, lpCmdLine, nCmdShow, maxConnections, verbose );
-        MT_LOG_UNREGISTER_LOGGER( fileLogger );
+        app.reset( new SIM_App( hinstance, hPrevInstance, lpCmdLine, nCmdShow, maxConnections, verbose ) );
+        MT_LOG_UNREGISTER_LOGGER( *fileLogger );
         nResult = app->Execute();
     }
     catch( const FlexLmLicense::LicenseError& e )
@@ -125,8 +136,8 @@ int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
         MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
     google::protobuf::ShutdownProtobufLibrary();
-    delete app;
-    MT_LOG_UNREGISTER_LOGGER( crashFileLogger );
-    MT_LOG_UNREGISTER_LOGGER( fileLogger );
+    app.reset();
+    MT_LOG_UNREGISTER_LOGGER( *crashFileLogger );
+    MT_LOG_UNREGISTER_LOGGER( *fileLogger );
     return nResult;
 }

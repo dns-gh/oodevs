@@ -41,14 +41,23 @@ void CrashHandler( EXCEPTION_POINTERS* exception )
 int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
     tools::WinArguments winArgs( lpCmdLine );
-    tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
-    debugDir.CreateDirectories();
-    MT_CrashHandler::SetRootDirectory( debugDir );
-    tools::InitCrashHandler( &CrashHandler );
     tools::InitPureCallHandler();
 
+    try
+    {
+        tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
+        debugDir.CreateDirectories();
+
+        MT_CrashHandler::SetRootDirectory( debugDir );
+        tools::InitCrashHandler( &CrashHandler );
+    }
+    catch( std::exception& )
+    {
+        // NOTHING
+    }
+
     int nResult = EXIT_SUCCESS;
-    MT_ConsoleLogger        consoleLogger;
+    MT_ConsoleLogger consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
     try
     {
