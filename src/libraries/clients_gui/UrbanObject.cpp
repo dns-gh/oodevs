@@ -14,6 +14,7 @@
 #include "UrbanDisplayOptions.h"
 
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/PhysicalAttribute_ABC.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/Usages_ABC.h"
@@ -96,6 +97,13 @@ UrbanObject::UrbanObject( xml::xistream& xis, Controllers& controllers, const Ob
 // -----------------------------------------------------------------------------
 UrbanObject::~UrbanObject()
 {
+    kernel::Hierarchies* hierarchies = Retrieve< kernel::Hierarchies >();
+    if( hierarchies )
+    {
+        Entity_ABC* superior = const_cast< Entity_ABC* >( hierarchies->GetSuperior() );
+        if( superior )
+            superior->Get< kernel::Hierarchies >().RemoveSubordinate( *this );
+    }
     controllers_.Unregister( *this );
     if( UrbanColor_ABC* pColor = Retrieve< UrbanColor_ABC >() )
         pColor->Restore();
