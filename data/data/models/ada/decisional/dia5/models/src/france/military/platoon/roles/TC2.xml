@@ -20,6 +20,7 @@
 				</parameter>
 			</skill>
 			<skill name="sword.military.platoon.skills.ReactToCoordinationLine"/>
+			<skill name="sword.military.platoon.skills.miscellaneous.SetPace"/>
 		</skills>
 	</default-task>
 </role>
