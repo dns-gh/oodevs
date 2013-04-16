@@ -21,6 +21,7 @@
 #include "RichGroupBox.h"
 #include "RichToolButton.h"
 #include "SubObjectName.h"
+#include "RichComboBox.h"
 #include "ImageWrapper.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -95,7 +96,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     QToolTip::add( btn, tr( "Start drawing" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( StartDrawing() ) );
 
-    QComboBox* combo = new QComboBox( box );
+    RichComboBox* combo = new RichComboBox( "line", box );;
     combo->setEditable( false );
     QPixmap pix( MakePixmap( "line_solid" ) );
     combo->setIconSize( pix.size() );
