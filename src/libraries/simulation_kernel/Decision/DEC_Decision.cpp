@@ -1610,7 +1610,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
             + "} cwd='" + includePath.ToUTF8() + "'", logger ) );
     pArchetypeBrain->RegisterFunction( "LoadResourcesFile", boost::function< void( const std::string& ) >(
         boost::bind( &LoadResourcesFile, _1, integrationDir, boost::ref( *pArchetypeBrain ) ) ) );
-    pArchetypeBrain->GetScriptRef( "include" )( brainFile.ToUTF8(), includePath.ToUTF8(), type );
+    pArchetypeBrain->GetScriptRef( "include" )( brainFile, includePath, type );
     if( !reload )
         brainTable[idx] = pArchetypeBrain;
     if( reload )
