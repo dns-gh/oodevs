@@ -127,6 +127,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.mutable_position()->set_latitude( 42. );
                 message.mutable_position()->set_longitude( 1. );
                 message.mutable_direction()->set_heading( 43 );
+                message.mutable_sensors_direction()->set_heading( 181 );
                 message.set_height( 23 );
                 message.set_altitude( 12 );
                 message.set_speed( 69 );
