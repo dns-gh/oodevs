@@ -94,8 +94,9 @@ void ADN_Equipments_GUI::Build()
     builder.AddCheckableField< ADN_EditLine_Double >( pInfoHolder, "max-slope", tr( "Max slope" ), vInfosConnectors[ eHasMaxSlope ], vInfosConnectors[ eMaxSlope ], tr( "%" ), eGreaterZero );
 
     // Troop/Crew groupbox
-    Q3GroupBox* pTroopGroupBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Troop/Crew" ) );
+    QGroupBox* pTroopGroupBox = new QGroupBox( tr( "Troop/Crew" ) );
 
+    //troop transport
     builder.PushSubName( "troop-transport" );
     ADN_GroupBox* pEmbarkTimesGroupBox = builder.AddGroupBox( pTroopGroupBox, "troop-transport", tr( "Troop transport" ), vInfosConnectors[ eHasEmbarkTimes ], 3 );
     builder.AddField< ADN_TimeField >( pEmbarkTimesGroupBox, "embark-time-per-person", tr( "Embark time per person" ), vInfosConnectors[ eEmbarkingTimePerPerson ] );
@@ -117,6 +118,12 @@ void ADN_Equipments_GUI::Build()
     builder.AddField< ADN_TimeField >( pCrowdGroupBox, "embark-time-per-person", tr( "Embark time per person" ), vInfosConnectors[ eCrowdEmbarkingTimePerPerson ] );
     builder.AddField< ADN_TimeField >( pCrowdGroupBox, "disembark-time-per-person", tr( "Disembark time per person" ), vInfosConnectors[ eCrowdDisembarkingTimePerPerson ] );
     builder.PopSubName(); //! crowd-transport
+
+    // Troop/Crew layout
+    QVBoxLayout* pTroopGroupBoxLayout = new QVBoxLayout( pTroopGroupBox );
+    pTroopGroupBoxLayout->addWidget( pEmbarkTimesGroupBox );
+    pTroopGroupBoxLayout->addWidget( pCargoGroupBox );
+    pTroopGroupBoxLayout->addWidget( pCrowdGroupBox );
 
     // ID groupbox
     Q3GroupBox* pIdGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Military codes" ) );
