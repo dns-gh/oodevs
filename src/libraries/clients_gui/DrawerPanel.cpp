@@ -22,7 +22,6 @@
 #include "RichToolButton.h"
 #include "SubObjectName.h"
 #include "RichComboBox.h"
-#include "ImageWrapper.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -33,10 +32,20 @@
 
 using namespace gui;
 
-
-QPixmap MakePixmap( const tools::Path& name )
+namespace
 {
-    return gui::Pixmap( tools::GeneralConfig::BuildResourceChildFile( tools::Path( "images/gui" ) / name + ".png" ) );
+    QPixmap CreatePixmap( QVector< qreal >& dashes )
+    {
+        QPixmap pix( 55, 10 );
+        pix.fill( Qt::transparent );
+        QPainter painter( &pix );
+        QPen pen( QBrush( Qt::black ), 5 );
+        if( !dashes.empty() )
+            pen.setDashPattern( dashes );
+        painter.setPen( pen );
+        painter.drawLine( 1, 5, 54, 5 );
+        return pix;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -98,11 +107,20 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
 
     RichComboBox* combo = new RichComboBox( "line", box );;
     combo->setEditable( false );
-    QPixmap pix( MakePixmap( "line_solid" ) );
-    combo->setIconSize( pix.size() );
-    combo->addItem( QIcon( pix ), "" );
-    combo->addItem( QIcon( MakePixmap( "line_dashed" ) ), "" );
-    combo->addItem( QIcon( MakePixmap( "line_dash_dot" ) ), "" );
+
+    QVector< qreal > dashes;
+    QPixmap solid = CreatePixmap( dashes );
+    combo->setIconSize( solid.size() );
+    combo->addItem( QIcon( solid ), "" );
+
+    dashes << 1 << 2;
+    QPixmap dashed = CreatePixmap( dashes );
+    combo->addItem( dashed, "" );
+
+    dashes.clear();
+    dashes << 3 << 2 << 1 << 2 << 3 << 2;
+    QPixmap dashdot =  CreatePixmap( dashes );
+    combo->addItem( dashdot, "" );
     connect( combo, SIGNAL( currentIndexChanged( int ) ), SLOT( OnLineChanged( int ) ) );
 
     //parent group

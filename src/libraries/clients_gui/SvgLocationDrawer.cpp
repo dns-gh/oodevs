@@ -47,7 +47,7 @@ SvgLocationDrawer::SvgLocationDrawer( const DrawingTemplate& style )
     , tools_    ( 0 )
     , zoom_     ( 1.f )
     , dashStyle_( eSolid )
-    , dashed_   ( "10px,2px" )
+    , dashed_   ( "40px,20px" )
     , dashDot_  ( "20px,4px,6px,4px" )
 {
     GenerateCircle();
