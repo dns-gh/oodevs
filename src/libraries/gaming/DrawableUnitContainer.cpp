@@ -67,7 +67,7 @@ namespace
             const Agent* child = dynamic_cast< const Agent* >( &children.NextElement() );
             if( child )
             {
-                float radians = child->GetDirection() * 3.14f/180;
+                float radians = child->GetSensorsDirection() * 3.14f/180;
                 geometry::Vector2f directionVector( 0., 1. );
                 directionVector.Rotate( - radians ); // Direction is clockwise, rotate is counterclockwise...
                 direction = direction + directionVector;

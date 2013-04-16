@@ -59,6 +59,7 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Network/NET_AgentServer.h"
+#include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "Urban/MIL_UrbanCache.h"
@@ -1282,6 +1283,9 @@ void PHY_RolePion_Perceiver::SendDebugState() const
 void PHY_RolePion_Perceiver::SendFullState( client::UnitAttributes& msg ) const
 {
     msg().set_radar_active( IsUsingActiveRadar() );
+    MT_Vector2D direction;
+    GetMainPerceptionDirection( direction );
+    NET_ASN_Tools::WriteDirection( direction, *msg().mutable_sensors_direction() );
 }
 
 // -----------------------------------------------------------------------------

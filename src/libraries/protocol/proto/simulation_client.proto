@@ -1330,6 +1330,8 @@ message UnitAttributes {
     optional string                      decisional_model           = 52;
     //! Whether the unit is the headquarters of its automata
     optional bool                        headquarters               = 53;
+    //! The direction of sensors
+    optional Heading                     sensors_direction          = 54;
 }
 
 /** @struct UnitPathFind

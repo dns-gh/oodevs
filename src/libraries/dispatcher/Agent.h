@@ -174,6 +174,7 @@ private:
     geometry::Point2d                          position_; // x = longitude, y = latitude
     sword::RgbColor                            color_;
     unsigned int                               nDirection_;
+    unsigned int                               nSensorsDirection_;
     unsigned int                               nHeight_;
     unsigned int                               nAltitude_;
     unsigned int                               nSpeed_;

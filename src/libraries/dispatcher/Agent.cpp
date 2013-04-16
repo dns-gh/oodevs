@@ -40,6 +40,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , name_                       ( msg.name() )
     , automat_                    ( &model.Automats().Get( msg.automat().id() ) )
     , nDirection_                 ( 0 )
+    , nSensorsDirection_          ( 0 )
     , nHeight_                    ( 0 )
     , nAltitude_                  ( 0 )
     , nSpeed_                     ( 0 )
@@ -164,6 +165,8 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         position_.Set( message.position().latitude(), message.position().longitude() );
     if( message.has_direction() )
         nDirection_ = message.direction().heading();
+    if( message.has_sensors_direction() )
+        nSensorsDirection_ = message.sensors_direction().heading();
 
     UPDATE_ASN_ATTRIBUTE( height, nHeight_ );
     UPDATE_ASN_ATTRIBUTE( altitude, nAltitude_ );
@@ -528,6 +531,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().mutable_position()->set_latitude( position_.X() );
         asn().mutable_position()->set_longitude( position_.Y() );
         asn().mutable_direction()->set_heading( nDirection_ );
+        asn().mutable_sensors_direction()->set_heading( nSensorsDirection_ );
         asn().set_height( nHeight_ );
         asn().set_altitude( nAltitude_ );
         asn().set_speed( nSpeed_ );

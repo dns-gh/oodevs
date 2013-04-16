@@ -37,6 +37,7 @@ Agent::Agent( const sword::UnitCreation& message, Controller& controller, const 
     , weight_( 0 )
     , speed_( 0 )
     , direction_( 0 )
+    , sensorsDirection_( 0 )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.unit().id() );
@@ -81,7 +82,8 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
         bool isMoving = ( speed_ != 0 );
         float width = isMoving? 0.f : type_.GetWidth();
         float depth = isMoving? type_.GetLength() : type_.GetDepth();
-        tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, isMoving, where, -1.f, direction_, width, depth );
+        unsigned int direction = isMoving ? direction_ : sensorsDirection_;
+        tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, isMoving, where, -1.f, direction, width, depth );
         tools.DrawApp6SymbolFixedSize( level_, where, -1.f, 0 );
     }
 }
@@ -96,12 +98,12 @@ bool Agent::ShouldDisplayStaticSymbol() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::GetDirection
-// Created: LDC 2013-04-12
+// Name: Agent::GetSensorsDirection
+// Created: LDC 2013-04-16
 // -----------------------------------------------------------------------------
-unsigned int Agent::GetDirection() const
+unsigned int Agent::GetSensorsDirection() const
 {
-    return direction_;
+    return sensorsDirection_;
 }
 
 // -----------------------------------------------------------------------------
@@ -167,4 +169,6 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         speed_ = float( message.speed() );
     if( message.has_direction() )
         direction_ = message.direction().heading();
+    if( message.has_sensors_direction() )
+        sensorsDirection_ = message.sensors_direction().heading();
 }

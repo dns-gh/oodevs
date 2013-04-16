@@ -755,6 +755,9 @@ void RolePion_Perceiver::SendDebugState() const
 void RolePion_Perceiver::SendFullState( client::UnitAttributes& msg ) const
 {
     msg().set_radar_active( IsUsingActiveRadar() );
+    MT_Vector2D direction;
+    GetMainPerceptionDirection( direction );
+    NET_ASN_Tools::WriteDirection( direction, *msg().mutable_sensors_direction() );
 }
 
 // -----------------------------------------------------------------------------

@@ -65,7 +65,7 @@ public:
     virtual void DoUpdate( const sword::UnitAttributes& attributes );
 
     bool ShouldDisplayStaticSymbol() const;
-    unsigned int GetDirection() const;
+    unsigned int GetSensorsDirection() const;
     //@}
 
 private:
@@ -89,6 +89,7 @@ private:
     float weight_;
     float speed_;
     unsigned int direction_;
+    unsigned int sensorsDirection_;
     //@}
 };
 
