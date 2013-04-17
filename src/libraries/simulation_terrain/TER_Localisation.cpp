@@ -883,18 +883,21 @@ void TER_Localisation::Convexify()
 
 namespace
 {
+    MT_Vector2D GetMidPoint( MT_Vector2D a, MT_Vector2D b )
+    {
+        return ( a + b ) / 2;
+    }
+
     T_PointVector GetVectorWithAdditionalPoint( const T_PointVector& pointVector )
     {
         T_PointVector result;
-        MT_Vector2D midPoint;
-        for( int i = 0; i < 3; ++i )
+        for( int i = 0; i < pointVector.size() - 1; ++i )
         {
-            midPoint = pointVector[i] + pointVector[i+1] ;
-            midPoint /= 2;
             result.push_back( pointVector[i] );
-            result.push_back( midPoint );
+            result.push_back( GetMidPoint( pointVector[i], pointVector[i+1] ) );
         }
-        result.push_back( pointVector[3] );
+        result.push_back( pointVector.back() );
+        result.push_back( GetMidPoint( pointVector.back(), pointVector.front() ) );
         return result;
     }
 }
@@ -912,7 +915,7 @@ void TER_Localisation::Scale( double rDist )
         MT_Vector2D vBarycenter = ComputeBarycenter();
         // Scale (homothety from the barycenter)
         T_PointVector newPointVector;
-        if( pointVector_.size() == 4 )
+        if( pointVector_.size() == 3 )
         {
             T_PointVector polygonWithAtLeastFourSides = GetVectorWithAdditionalPoint( pointVector_ );
             polygon_.Reset( polygonWithAtLeastFourSides, false );

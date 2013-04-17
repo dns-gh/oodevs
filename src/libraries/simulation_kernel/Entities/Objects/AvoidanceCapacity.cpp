@@ -150,7 +150,6 @@ void AvoidanceCapacity::ResetDynamicData( MIL_Object_ABC& object )
     avoid_.Scale( distance_ );
 
     const T_PointVector& points = avoid_.GetPoints();
-    assert( points.size() > 3 );
-
-    data_ = CreateAndRegisterDynamicData( points, "" );
+    if( points.size() > 3 )
+        data_ = CreateAndRegisterDynamicData( points, "" );
 }
