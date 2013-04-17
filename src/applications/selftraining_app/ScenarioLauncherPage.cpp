@@ -67,26 +67,6 @@ namespace
         return isValid;
     }
 
-    std::string ReadTargetApplication( const tools::Path& fileName, const tools::Loader_ABC& fileLoader )
-    {
-        std::string target = "gaming";
-        try
-        {
-            std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( fileName );
-            *xis >> xml::start( "exercise" )
-                    >> xml::optional >> xml::start( "meta" )
-                        >> xml::optional >> xml::start( "tutorial" )
-                            >> xml::attribute( "target", target )
-                    >> xml::end
-                >> xml::end;
-        }
-        catch( ... )
-        {
-            // NOTHING
-        }
-        return target;
-    }
-
     struct ResourcesLoadingWrapper
     {
         ResourcesLoadingWrapper( QStringList& list ) : stringList_ ( list ) { }
@@ -278,60 +258,26 @@ void ScenarioLauncherPage::OnStart()
         return;
     const tools::Path exerciseName = exercise_->GetName();
 
-    const std::string target = ReadTargetApplication( config_.GetExerciseFile( exerciseName ), fileLoader_ );
-    if( target == "gaming" )
-    {
-        const tools::Path session = session_.IsEmpty() ? tools::Path::FromUTF8( BuildSessionName() ) : session_;
-        CreateSession( exerciseName, session );
+    const tools::Path session = session_.IsEmpty() ? tools::Path::FromUTF8( BuildSessionName() ) : session_;
+    CreateSession( exerciseName, session );
 
-        std::map< std::string, std::string > arguments = boost::assign::map_list_of( "legacy", isLegacy_ ? "true" : "false" )
-                                                                                   ( "checkpoint", checkpoint_.ToUTF8().c_str() )
-                                                                                   ( "filter-pathfinds", pathfindFilter_.toStdString().c_str() );
-        if( !integrationDir_.IsEmpty() )
-            arguments[ "integration-dir" ] = "\"" + integrationDir_.ToUTF8() + "\"";
-        if( !dumpPathfindDirectory_.IsEmpty() )
-            arguments[ "dump-pathfinds" ] = "\"" + dumpPathfindDirectory_.ToUTF8() + "\"";
+    std::map< std::string, std::string > arguments = boost::assign::map_list_of( "legacy", isLegacy_ ? "true" : "false" )
+                                                                                ( "checkpoint", checkpoint_.ToUTF8().c_str() )
+                                                                                ( "filter-pathfinds", pathfindFilter_.toStdString().c_str() );
+    if( !integrationDir_.IsEmpty() )
+        arguments[ "integration-dir" ] = "\"" + integrationDir_.ToUTF8() + "\"";
+    if( !dumpPathfindDirectory_.IsEmpty() )
+        arguments[ "dump-pathfinds" ] = "\"" + dumpPathfindDirectory_.ToUTF8() + "\"";
 
-        auto list = boost::make_shared< CompositeProcessWrapper >( *progressPage_ );
-        list->Add( boost::make_shared< frontend::StartExercise >(
-            config_, exerciseName, session, arguments, true, true, "", "" ) );
-        if( !noClient_ )
-            list->Add( boost::make_shared< frontend::JoinExercise >(
-                config_, exerciseName, session, profile_.GetLogin(), true ) );
-        progressPage_->Attach( list );
-        list->Start();
-        progressPage_->show();
-    }
-    else if( target == "preparation" )
-    {
-        boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, exerciseName, true ) );
-        boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
-        progressPage_->Attach( process );
-        process->Start();
-        progressPage_->show();
-    }
-    else if( target == "replayer" )
-    {
-        const unsigned int port = exercise_->GetPort();
-        CreateSession( exerciseName, "default" );
-        auto replay = boost::make_shared< frontend::StartReplay >( config_, exerciseName, "default", port, true );
-        auto client = boost::make_shared< frontend::JoinAnalysis >( config_, exerciseName, "default", profile_.GetLogin(), true );
-        auto list = boost::make_shared< CompositeProcessWrapper >( *progressPage_ );
-        list->Add( replay );
-        list->Add( client );
-        progressPage_->Attach( list );
-        list->Start();
-        progressPage_->show();
-    }
-    if( target != "gaming" )
-    {
-        const QStringList resources = GetResources( config_.GetExerciseFile( exerciseName ), fileLoader_ );
-        if( !resources.empty() )
-        {
-            tools::Path file = tools::Path::FromUnicode( resources.begin()->toStdWString() );
-            interpreter_.Interprete( MakeLink( config_.GetExerciseDir( exerciseName ) / file ) );
-        }
-    }
+    auto list = boost::make_shared< CompositeProcessWrapper >( *progressPage_ );
+    list->Add( boost::make_shared< frontend::StartExercise >(
+        config_, exerciseName, session, arguments, true, true, "", "" ) );
+    if( !noClient_ )
+        list->Add( boost::make_shared< frontend::JoinExercise >(
+            config_, exerciseName, session, profile_.GetLogin(), true ) );
+    progressPage_->Attach( list );
+    list->Start();
+    progressPage_->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -379,18 +325,12 @@ void ScenarioLauncherPage::ClearSelection()
 // -----------------------------------------------------------------------------
 bool ScenarioLauncherPage::CanBeStarted() const
 {
-    if( exercise_ )
-    {
-        const tools::Path exerciseFile = config_.GetExerciseFile( exercise_->GetName() );
-        if( !IsValid( exerciseFile, fileLoader_ ) )
-            return false;
-        const std::string target = ReadTargetApplication( exerciseFile, fileLoader_ );
-        if( target == "gaming" || target == "replayer" )
-            return profile_.IsValid() || noClient_;
-        if( target == "preparation" )
-            return true;
-    }
-    return false;
+    if( !exercise_ )
+        return false;
+    const tools::Path exerciseFile = config_.GetExerciseFile( exercise_->GetName() );
+    if( !IsValid( exerciseFile, fileLoader_ ) )
+        return false;
+    return profile_.IsValid() || noClient_;
 }
 
 // -----------------------------------------------------------------------------
