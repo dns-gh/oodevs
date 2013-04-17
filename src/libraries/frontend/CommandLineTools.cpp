@@ -10,23 +10,7 @@
 #include "frontend_pch.h"
 #include "CommandLineTools.h"
 
-namespace frontend
+uint16_t frontend::GetPort( unsigned idx, Ports port )
 {
-    // -----------------------------------------------------------------------------
-    // Name: SimulationPort
-    // Created: SBO 2008-02-20
-    // -----------------------------------------------------------------------------
-    unsigned short SimulationPort( unsigned int exerciseNumber )
-    {
-        return static_cast< unsigned short >( 10000 + ( exerciseNumber - 1 ) * 2 );
-    }
-
-    // -----------------------------------------------------------------------------
-    // Name: DispatcherPort
-    // Created: SBO 2008-02-20
-    // -----------------------------------------------------------------------------
-    unsigned short DispatcherPort( unsigned int exerciseNumber )
-    {
-        return SimulationPort( exerciseNumber ) + 1;
-    }
+    return static_cast< uint16_t >( 10000 + (idx-1) * NUM_PORTS + port );
 }

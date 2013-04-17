@@ -115,17 +115,17 @@ void SessionConfigPanel::Commit( const tools::Path& exercise, const tools::Path&
     }
     {
         action.SetOption( "session/config/simulation/network/@port", "localhost:" +  // $$$$ AGE 2007-10-09:
-                            boost::lexical_cast< std::string >( frontend::SimulationPort( exerciseNumber_->value() ) ) );
+                            boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_->value(), SIMULATION_PORT ) ) );
     }
     {
         action.SetOption( "session/config/dispatcher/network/@client", "localhost:" +  // $$$$ AGE 2007-10-09:
-                            boost::lexical_cast< std::string >( frontend::SimulationPort( exerciseNumber_->value() ) ) );
+                            boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_->value(), SIMULATION_PORT ) ) );
         action.SetOption( "session/config/dispatcher/network/@server", "0.0.0.0:" +  // $$$$ AGE 2007-10-09:
-                            boost::lexical_cast< std::string >( frontend::DispatcherPort( exerciseNumber_->value() ) ) );
+                            boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_->value(), DISPATCHER_PORT ) ) );
     }
     {
         action.SetOption( "session/config/gaming/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09:
-                                    boost::lexical_cast< std::string >( frontend::DispatcherPort( exerciseNumber_->value() ) ) );
+                                    boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_->value(), DISPATCHER_PORT ) ) );
     }
     action.Commit();
 }

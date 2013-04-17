@@ -52,7 +52,7 @@ Config::Config()
     po::options_description desc( "Launcher options" );
     desc.add_options()
         ( "launcher-port", po::value( &launcherPort_ ), "specify the launcher server port number" )
-        ( "dispatcher-port", po::value( &dispatcherPort_ )->default_value( frontend::DispatcherPort( 1 ) ), "specify the dispatcher server port number" )
+        ( "dispatcher-port", po::value( &dispatcherPort_ )->default_value( frontend::GetPort( 1, frontend::DISPATCHER_PORT ) ), "specify the dispatcher server port number" )
         ( "test", "enable test mode" )
     ;
     AddOptions( desc );

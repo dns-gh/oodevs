@@ -10,10 +10,18 @@
 #ifndef __CommandLineTools_h_
 #define __CommandLineTools_h_
 
+#include <cstdint>
+
 namespace frontend
 {
-    unsigned short SimulationPort( unsigned exerciseNumber );
-    unsigned short DispatcherPort( unsigned exerciseNumber );
+    enum Ports
+    {
+        SIMULATION_PORT,
+        DISPATCHER_PORT,
+        NUM_PORTS,
+    };
+
+    uint16_t GetPort( unsigned idx, Ports port );
 }
 
 #endif // __CommandLineTools_h_
