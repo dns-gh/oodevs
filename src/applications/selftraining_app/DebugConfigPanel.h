@@ -30,7 +30,8 @@ class DebugConfigPanel : public frontend::PluginConfig_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config );
+             DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config,
+                               bool legacy );
     virtual ~DebugConfigPanel();
     //@}
 
@@ -83,7 +84,7 @@ private:
 private slots:
     //! @name Operations
     //@{
-    void SwordVersionChecked( bool state );
+    void SwordVersionChecked( int state );
     void OnChangeIntegrationDirectory();
     void OnEditIntegrationDirectory( const QString& );
     void OnChangeDataDirectory();

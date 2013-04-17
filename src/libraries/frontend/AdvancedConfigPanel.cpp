@@ -21,16 +21,15 @@ using namespace frontend;
 
 namespace
 {
-    bool ReadRegistry( const std::string& key )
+    void AddControl( QLayout* layout, QWidget* label, QWidget* field )
     {
-        QSettings settings( "MASA Group", "SWORD" );
-        return settings.value( ( "/sword/" + key ).c_str() ).toBool();
+        QWidget* container = new QWidget();
+        QHBoxLayout* inner = new QHBoxLayout( container );
+        inner->addWidget( label );
+        inner->addWidget( field );
+        layout->addWidget( container );
     }
-    void WriteRegistry( const std::string& key, bool value )
-    {
-        QSettings settings( "MASA Group", "SWORD" );
-        settings.setValue( ( "/sword/" + key ).c_str(), value );
-    }
+
     void AddSpinBox( QVBoxLayout* boxLayout, QLabel*& label, QSpinBox*& spin, int rangeMin, int rangeMax, int step, int spinValue )
     {
         label = new QLabel();
@@ -38,13 +37,15 @@ namespace
         spin->setRange(rangeMin, rangeMax );
         spin->setSingleStep( step );
         spin->setValue( spinValue );
+        AddControl( boxLayout, label, spin );
+    }
 
-        QWidget* innerBox = new QWidget();
-        QHBoxLayout* innerBoxLayout = new QHBoxLayout( innerBox );
-        innerBoxLayout->addWidget( label );
-        innerBoxLayout->addWidget( spin );
-
-        boxLayout->addWidget( innerBox );
+    void AddCheckBox( QVBoxLayout* layout, QLabel*& label, QCheckBox*& checkbox, bool checked )
+    {
+        label = new QLabel();
+        checkbox = new QCheckBox();
+        checkbox->setCheckState( checked ? Qt::Checked : Qt::Unchecked );
+        AddControl( layout, label, checkbox );
     }
 }
 
@@ -52,7 +53,8 @@ namespace
 // Name: AdvancedConfigPanel constructor
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
-AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
+AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralConfig& config,
+                                          bool hasClient )
     : PluginConfig_ABC( parent )
     , config_( config )
 {
@@ -95,7 +97,7 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     timeBoxLayout->addWidget( endtickSpin_, 1, 1, 1, 1 );
     timeBoxLayout->addWidget( pausedLabel_, 1, 2, 1, 1 );
     timeBoxLayout->addWidget( pausedCheckBox_, 1, 3, 1, 1 );
-    
+
     QGroupBox* miscellaneousBox = new QGroupBox();
     QVBoxLayout* miscellaneousBoxLayout = new QVBoxLayout( miscellaneousBox );
     miscellaneousBoxLayout->setMargin( 5 );
@@ -103,16 +105,8 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     AddSpinBox( miscellaneousBoxLayout, fragmentsFrequencyLabel_, fragmentsFrequencySpin_, 0, std::numeric_limits< int >::max(), 1, 200 );
 
     //client box
-    QWidget* clientBox = new QWidget();
-    QHBoxLayout* clientBoxLayout = new QHBoxLayout( clientBox );
-    noClientLabel_ = new QLabel();
-    noClientCheckBox_ = new QCheckBox();
-    noClientCheckBox_->setChecked( false );
-    connect( noClientCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( NoClientChecked( int ) ) );
-
-    clientBoxLayout->addWidget( noClientLabel_ );
-    clientBoxLayout->addWidget( noClientCheckBox_ );
-    miscellaneousBoxLayout->addWidget( clientBox );
+    AddCheckBox( miscellaneousBoxLayout, noClientLabel_, noClientCheckBox_, !hasClient );
+    connect( noClientCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( OnClientChecked( int ) ) );
 
     AddSpinBox( miscellaneousBoxLayout, reportsFrequencyLabel_, reportsFrequencySpin_, 1, std::numeric_limits< int >::max(), 1, 100 );
 
@@ -177,12 +171,10 @@ void AdvancedConfigPanel::Commit( const tools::Path& exercise, const tools::Path
 }
 
 // -----------------------------------------------------------------------------
-// Name: AdvancedConfigPanel::SwordVersionChecked
+// Name: AdvancedConfigPanel::OnClientChecked
 // Created: RBA 2012-01-30
 // -----------------------------------------------------------------------------
-void AdvancedConfigPanel::NoClientChecked( int state )
+void AdvancedConfigPanel::OnClientChecked( int state )
 {
-    const bool noClientSelected = state == Qt::Checked;
-    WriteRegistry( "NoClientSelected", noClientSelected );
-    emit NoClientSelected( noClientSelected );
+    emit OnClientEnabled( state == Qt::Unchecked );
 }

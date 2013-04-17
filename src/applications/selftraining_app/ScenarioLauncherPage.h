@@ -71,7 +71,7 @@ private slots:
     void ClearSelection();
     void OnSelectCheckpoint( const tools::Path& session, const tools::Path& checkpoint );
     void OnSwordVersionSelected( bool isLegacy );
-    void OnNoClientSelected( bool noClient );
+    void OnClientEnabled( bool enabled );
     void OnIntegrationPathSelected( const tools::Path& integrationDir );
     void OnDumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
     //@}
@@ -84,7 +84,7 @@ protected:
     virtual std::string BuildSessionName() const;
     void CreateSession( const tools::Path& exercise, const tools::Path& session );
     template< typename T >
-    T* AddPlugin();
+    T* AddPlugin( T* plugin );
     bool CanBeStarted() const;
     //@}
 
@@ -113,7 +113,7 @@ protected:
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;
     bool                          isLegacy_;
-    bool                          noClient_;
+    bool                          hasClient_;
     //@}
 };
 

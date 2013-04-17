@@ -57,8 +57,7 @@ namespace
         {
             std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( fileName );
             *xis >> xml::start( "exercise" )
-                    >> xml::optional >> xml::attribute( "valid", isValid )
-                 >> xml::end;
+                    >> xml::optional >> xml::attribute( "valid", isValid );
         }
         catch( ... )
         {
@@ -91,10 +90,7 @@ namespace
             *xis >> xml::start( "exercise" )
                     >> xml::optional >> xml::start( "meta" )
                         >> xml::optional >> xml::start( "resources" )
-                            >> xml::list( "resource", loadingWrapper, &ResourcesLoadingWrapper::ReadResource )
-                        >> xml::end
-                    >> xml::end
-                >> xml::end;
+                            >> xml::list( "resource", loadingWrapper, &ResourcesLoadingWrapper::ReadResource );
         }
         catch( ... )
         {
@@ -102,10 +98,17 @@ namespace
         }
         return result;
     }
-    bool ReadRegistry( const std::string& key )
+
+    bool ReadBoolSetting( const QString& key )
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.value( ( "/sword/" + key ).c_str() ).toBool();
+        return settings.value( "/sword/" + key ).toBool();
+    }
+
+    void WriteBoolSetting( const QString& key, bool value )
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        settings.setValue( "/sword/" + key, value );
     }
 }
 
@@ -115,15 +118,15 @@ namespace
 // -----------------------------------------------------------------------------
 ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : LauncherClientPage( pages, previous, eButtonBack | eButtonStart, launcher )
-    , config_      ( config )
-    , fileLoader_  ( fileLoader )
-    , controllers_ ( controllers )
-    , interpreter_ ( interpreter )
-    , progressPage_( new ProgressPage( app, pages, *this ) )
-    , exercise_    ( 0 )
-    , noClient_    ( ReadRegistry( "NoClientSelected" ) )
-    , isLegacy_    ( ReadRegistry( "IsLegacy" ) )
-    , integrationDir_( "" )
+    , config_           ( config )
+    , fileLoader_       ( fileLoader )
+    , controllers_      ( controllers )
+    , interpreter_      ( interpreter )
+    , progressPage_     ( new ProgressPage( app, pages, *this ) )
+    , exercise_         ( 0 )
+    , hasClient_        ( !ReadBoolSetting( "NoClientSelected" ) )
+    , isLegacy_         ( ReadBoolSetting( "IsLegacy" ) )
+    , integrationDir_   ( "" )
 {
     setWindowTitle( "ScenarioLauncherPage" );
 
@@ -143,30 +146,30 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     // Settings tab
     configTabs_ = new QTabWidget();
 
-    frontend::CheckpointConfigPanel* checkpointPanel = AddPlugin< frontend::CheckpointConfigPanel >();
+    frontend::CheckpointConfigPanel* checkpointPanel = AddPlugin( new frontend::CheckpointConfigPanel( configTabs_, config_ ) );
     connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), checkpointPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
     connect( exercises_, SIGNAL( ClearSelection() ), checkpointPanel, SLOT( ClearSelection() ) );
     connect( checkpointPanel, SIGNAL( CheckpointSelected( const tools::Path&, const tools::Path& ) ), SLOT( OnSelectCheckpoint( const tools::Path&, const tools::Path& ) ) );
 
     //session config config panel
-    AddPlugin< frontend::SessionConfigPanel >();
+    AddPlugin( new frontend::SessionConfigPanel( configTabs_, config_ ) );
 
     //random config panel
-    AddPlugin< frontend::RandomPluginConfigPanel >();
+    AddPlugin( new frontend::RandomPluginConfigPanel( configTabs_, config_ ) );
 
     //advanced config panel
-    frontend::AdvancedConfigPanel* advancedPanel = AddPlugin< frontend::AdvancedConfigPanel >();
-    connect( advancedPanel, SIGNAL( NoClientSelected( bool ) ), SLOT( OnNoClientSelected( bool ) ) );
+    frontend::AdvancedConfigPanel* advancedPanel = AddPlugin( new frontend::AdvancedConfigPanel( configTabs_, config_, hasClient_ ) );
+    connect( advancedPanel, SIGNAL( OnClientEnabled( bool ) ), SLOT( OnClientEnabled( bool ) ) );
 
     //orbat config panel
-    OrbatConfigPanel* pOrbatConfigPanel = AddPlugin< OrbatConfigPanel >();
+    OrbatConfigPanel* pOrbatConfigPanel = AddPlugin( new OrbatConfigPanel( configTabs_, config_ ) );
     connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), pOrbatConfigPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
     connect( exercises_, SIGNAL( ClearSelection() ), pOrbatConfigPanel, SLOT( ClearSelection() ) );
 
     //debug config panel
     if( config.IsOnDebugMode() )
     {
-        DebugConfigPanel* configPanel = AddPlugin< DebugConfigPanel >();
+        DebugConfigPanel* configPanel = AddPlugin( new DebugConfigPanel( configTabs_, config_, isLegacy_ ) );
         connect( configPanel, SIGNAL( SwordVersionSelected( bool ) ), SLOT( OnSwordVersionSelected( bool ) ) );
         connect( configPanel, SIGNAL( IntegrationPathSelected( const QString& ) ), SLOT( OnIntegrationPathSelected(const QString& ) ) );
         connect( configPanel, SIGNAL( DumpPathfindOptionsChanged( const QString&, const tools::Path& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const tools::Path& ) ) );
@@ -193,9 +196,9 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
 // Created: SBO 2009-12-09
 // -----------------------------------------------------------------------------
 template< typename T >
-T* ScenarioLauncherPage::AddPlugin()
+T* ScenarioLauncherPage::AddPlugin( T* ptr )
 {
-    std::auto_ptr< T > plugin( new T( configTabs_, config_ ) );
+    std::auto_ptr< T > plugin( ptr );
     if( plugin.get() && plugin->IsAvailable() )
     {
         configTabs_->addTab( plugin.get(), "" );
@@ -272,7 +275,7 @@ void ScenarioLauncherPage::OnStart()
     auto list = boost::make_shared< CompositeProcessWrapper >( *progressPage_ );
     list->Add( boost::make_shared< frontend::StartExercise >(
         config_, exerciseName, session, arguments, true, true, "", "" ) );
-    if( !noClient_ )
+    if( hasClient_ )
         list->Add( boost::make_shared< frontend::JoinExercise >(
             config_, exerciseName, session, profile_.GetLogin(), true ) );
     progressPage_->Attach( list );
@@ -330,7 +333,7 @@ bool ScenarioLauncherPage::CanBeStarted() const
     const tools::Path exerciseFile = config_.GetExerciseFile( exercise_->GetName() );
     if( !IsValid( exerciseFile, fileLoader_ ) )
         return false;
-    return profile_.IsValid() || noClient_;
+    return profile_.IsValid() || !hasClient_;
 }
 
 // -----------------------------------------------------------------------------
@@ -344,12 +347,13 @@ void ScenarioLauncherPage::OnSelectCheckpoint( const tools::Path& session, const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScenarioLauncherPage::OnSwordVersionSelected
+// Name: ScenarioLauncherPage::OnClientEnabled
 // Created: RBA 2012-10-17
 // -----------------------------------------------------------------------------
-void ScenarioLauncherPage::OnNoClientSelected( bool noClient )
+void ScenarioLauncherPage::OnClientEnabled( bool enabled )
 {
-    noClient_ = noClient;
+    WriteBoolSetting( "NoClientSelected", !enabled );
+    hasClient_ = enabled;
 }
 
 // -----------------------------------------------------------------------------
@@ -358,6 +362,7 @@ void ScenarioLauncherPage::OnNoClientSelected( bool noClient )
 // -----------------------------------------------------------------------------
 void ScenarioLauncherPage::OnSwordVersionSelected( bool isLegacy )
 {
+    WriteBoolSetting( "IsLegacy", isLegacy );
     isLegacy_ = isLegacy;
 }
 

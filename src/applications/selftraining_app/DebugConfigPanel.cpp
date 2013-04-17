@@ -18,27 +18,16 @@ namespace
 {
     const int maxIntegrationDir = 5;
 
-    bool ReadBoolRegistry( const std::string& key )
+    QString ReadStringSetting( const QString& key )
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.value( ( "/sword/" + key ).c_str() ).toBool();
-    }
-    void WriteBoolRegistry( const std::string& key, bool value )
-    {
-        QSettings settings( "MASA Group", "SWORD" );
-        settings.setValue( ( "/sword/" + key ).c_str(), value );
+        return settings.value( "/sword/" + key ).toString();
     }
 
-    QString ReadStringRegistryValue( const std::string& key )
+    void WriteStringSetting( const QString& key, const QString& value )
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.value( ( "/sword/" + key ).c_str(), "" ).toString();
-    }
-
-    void WriteStringRegistryValue( const std::string& key, QString stringValue )
-    {
-        QSettings settings( "MASA Group", "SWORD" );
-        settings.setValue( ( "/sword/" + key ).c_str(), stringValue );
+        settings.setValue( "/sword/" + key, value );
     }
 }
 
@@ -46,7 +35,8 @@ namespace
 // Name: DebugConfigPanel constructor
 // Created: NPT 2013-01-03
 // -----------------------------------------------------------------------------
-DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
+DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config,
+                                    bool legacy )
     : PluginConfig_ABC( parent )
     , config_( config )
     , profilingBox_( 0 )
@@ -62,8 +52,8 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     //legacy box
     legacyCheckBox_ = new QCheckBox();
     legacyCheckBox_->setCheckable( true );
-    legacyCheckBox_->setChecked( ReadBoolRegistry( "IsLegacy" ) );
-    connect( legacyCheckBox_, SIGNAL( clicked ( bool ) ), SLOT( SwordVersionChecked( bool ) ) );
+    legacyCheckBox_->setChecked( legacy );
+    connect( legacyCheckBox_, SIGNAL( stateChanged( int ) ), SLOT( SwordVersionChecked( int ) ) );
 
     legacyBox_ = new QGroupBox();
 
@@ -73,7 +63,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     //integration level combobox
     integrationComboBox_ = new QComboBox();
     integrationComboBox_->setEditable( true );
-    QString pathValue = ReadStringRegistryValue( "IntegrationLayerPaths" );
+    QString pathValue = ReadStringSetting( "IntegrationLayerPaths" );
     if( !pathValue.isEmpty() )
     {
         pathList_ = pathValue.split( ';' );
@@ -159,10 +149,9 @@ DebugConfigPanel::~DebugConfigPanel()
 // Name: DebugConfigPanel::SwordVersionChecked
 // Created: NPT 2013-01-03
 // -----------------------------------------------------------------------------
-void DebugConfigPanel::SwordVersionChecked( bool state )
+void DebugConfigPanel::SwordVersionChecked( int state )
 {
-    WriteBoolRegistry( "IsLegacy", state );
-    emit SwordVersionSelected( state );
+    emit SwordVersionSelected( state == Qt::Checked );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +183,7 @@ void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
             integrationComboBox_->addItems( pathList_ );
 
             //save in registry
-            WriteStringRegistryValue( "IntegrationLayerPaths", pathList_.join( ";" ) );
+            WriteStringSetting( "IntegrationLayerPaths", pathList_.join( ";" ) );
         }
         emit IntegrationPathSelected( path );
     }

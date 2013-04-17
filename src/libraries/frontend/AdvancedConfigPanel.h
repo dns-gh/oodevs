@@ -36,7 +36,8 @@ class AdvancedConfigPanel : public PluginConfig_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AdvancedConfigPanel( QWidget* parent, const tools::GeneralConfig& config );
+             AdvancedConfigPanel( QWidget* parent, const tools::GeneralConfig& config,
+                                  bool hasClient );
     virtual ~AdvancedConfigPanel();
     //@}
 
@@ -50,13 +51,13 @@ public:
 signals:
     //! @name Signals
     //@{
-    void NoClientSelected( bool isLegacy );
+    void OnClientEnabled( bool enabled );
     //@}
 
 private slots:
     //! @name Operations
     //@{
-    void NoClientChecked( int state );
+    void OnClientChecked( int state );
     //@}
 
 private:
