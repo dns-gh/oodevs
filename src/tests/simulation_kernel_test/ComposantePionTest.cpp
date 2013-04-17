@@ -31,6 +31,7 @@ BOOST_AUTO_TEST_CASE( if_a_pion_is_transported_its_composantes_can_not_perceive 
                                     "</volumes>" );
     PHY_Volume::Initialize( xisVolumes );
 
+    PHY_Protection::Terminate();
     xml::xistringstream xisProtection( "<protections>"
                                        "    <protection name='protection1' type='humain'>"
                                        "        <neutralization average-time='10s' variance='1s'/>"
