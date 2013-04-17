@@ -22,6 +22,7 @@
 #include "frontend/JoinAnalysis.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPage constructor
@@ -41,7 +42,7 @@ ReplayPage::ReplayPage( Application& app, QStackedWidget* pages, Page_ABC& previ
     mainBoxLayout->setMargin( 10 );
     mainBoxLayout->setSpacing( 10 );
 
-    //exercise list 
+    //exercise list
     exercises_ = new ExerciseList( mainBox, config, fileLoader_, controllers, false, true, false );
     connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelectExercise( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
     connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
@@ -96,11 +97,13 @@ void ReplayPage::StartExercise()
     const tools::Path exerciseName = exercise_->GetName();
     const unsigned int port = exercise_->GetPort();
     ConfigureSession( exerciseName, session_ );
-    boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exerciseName, session_, port, true ) );
-    boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exerciseName, session_, profile_.GetLogin(), true ) );
-    boost::shared_ptr< CompositeProcessWrapper >  process( new CompositeProcessWrapper( *progressPage_, replay, client ) );
-    progressPage_->Attach( process );
-    process->Start();
+    auto replay = boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, port, true );
+    auto client = boost::make_shared< frontend::JoinAnalysis >( config_, exerciseName, session_, profile_.GetLogin(), true );
+    auto list = boost::make_shared< CompositeProcessWrapper >( *progressPage_ );
+    list->Add( replay );
+    list->Add( client );
+    progressPage_->Attach( list );
+    list->Start();
     progressPage_->show();
 }
 

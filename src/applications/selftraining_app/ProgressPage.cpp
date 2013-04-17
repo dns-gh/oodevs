@@ -71,11 +71,10 @@ void ProgressPage::UpdateProgress()
 {
     unsigned int percentage = 0;
     std::string message;
-    boost::shared_ptr< frontend::Process_ABC > process = process_.lock();
-    if( process )
+    if( process_ )
     {
-        percentage = process->GetPercentage();
-        message = process->GetStatus().toStdString();
+        percentage = process_->GetPercentage();
+        message = process_->GetStatus().toStdString();
     }
     label_->setText( message.c_str() );
     progressBar_->setValue( percentage );

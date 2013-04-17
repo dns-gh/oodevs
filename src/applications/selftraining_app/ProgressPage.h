@@ -58,7 +58,7 @@ private:
     //! @name Member data
     //@{
     Application& app_;
-    boost::weak_ptr< frontend::Process_ABC > process_;
+    boost::shared_ptr< frontend::Process_ABC > process_;
     QLabel* label_;
     QProgressBar* progressBar_;
     QTimer* timer_;

@@ -11,9 +11,11 @@
 #define __CompositeProcessWrapper_h_
 
 #include "frontend/Process_ABC.h"
+#include <boost/function.hpp>
 
 namespace boost
 {
+    class mutex;
     class thread;
 }
 
@@ -22,6 +24,9 @@ namespace frontend
     class ProcessObserver_ABC;
     class SpawnCommand;
 }
+
+typedef boost::shared_ptr< frontend::SpawnCommand > T_Spawn;
+typedef std::vector< T_Spawn > T_Spawns;
 
 // =============================================================================
 /** @class  CompositeProcessWrapper
@@ -34,12 +39,13 @@ class CompositeProcessWrapper : public frontend::Process_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CompositeProcessWrapper( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > process1, boost::shared_ptr< frontend::SpawnCommand > process2 );
+             CompositeProcessWrapper( frontend::ProcessObserver_ABC& observer );
     virtual ~CompositeProcessWrapper();
     //@}
 
     //! @name Operations
     //@{
+    virtual void         Add( const T_Spawn& spawn );
     virtual unsigned int GetPercentage() const;
     virtual QString      GetStatus() const;
     virtual tools::Path  GetStartedExercise() const;
@@ -53,16 +59,19 @@ private:
     //! @name Helpers
     //@{
     void Run();
+    void SetCurrent( const T_Spawn& spawn );
+    T_Spawns GetSpawns() const;
+    void Apply( const boost::function< void( frontend::SpawnCommand& ) >& operand );
     //@}
 
 private:
     //! @name Member data
     //@{
     frontend::ProcessObserver_ABC& observer_;
-    boost::shared_ptr< frontend::SpawnCommand > current_;
-    boost::shared_ptr< frontend::SpawnCommand > first_;
-    boost::shared_ptr< frontend::SpawnCommand > second_;
+    T_Spawns spawns_;
+    T_Spawn current_;
     std::auto_ptr< boost::thread > thread_;
+    std::auto_ptr< boost::mutex > mutex_;
     //@}
 };
 

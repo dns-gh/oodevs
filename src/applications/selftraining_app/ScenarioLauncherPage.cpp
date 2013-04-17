@@ -37,6 +37,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
 #include <boost/assign/list_of.hpp>
+#include <boost/make_shared.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace bpt = boost::posix_time;
@@ -166,7 +167,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), checkpointPanel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
     connect( exercises_, SIGNAL( ClearSelection() ), checkpointPanel, SLOT( ClearSelection() ) );
     connect( checkpointPanel, SIGNAL( CheckpointSelected( const tools::Path&, const tools::Path& ) ), SLOT( OnSelectCheckpoint( const tools::Path&, const tools::Path& ) ) );
-    
+
     //session config config panel
     AddPlugin< frontend::SessionConfigPanel >();
 
@@ -291,21 +292,14 @@ void ScenarioLauncherPage::OnStart()
         if( !dumpPathfindDirectory_.IsEmpty() )
             arguments[ "dump-pathfinds" ] = "\"" + dumpPathfindDirectory_.ToUTF8() + "\"";
 
-        boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exerciseName, session, arguments,
-                                                                                             true, true, "", "" ) );
-        if ( ! noClient_ )
-        {
-            boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinExercise( config_, exerciseName, session, profile_.GetLogin(), true ) );
-            boost::shared_ptr< CompositeProcessWrapper > process( new CompositeProcessWrapper( *progressPage_, simulation, client ) );
-            progressPage_->Attach( process );
-            process->Start();
-        }
-        else
-        {
-            boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, simulation ) );
-            progressPage_->Attach( process );
-            process->Start();
-        }
+        auto list = boost::make_shared< CompositeProcessWrapper >( *progressPage_ );
+        list->Add( boost::make_shared< frontend::StartExercise >(
+            config_, exerciseName, session, arguments, true, true, "", "" ) );
+        if( !noClient_ )
+            list->Add( boost::make_shared< frontend::JoinExercise >(
+                config_, exerciseName, session, profile_.GetLogin(), true ) );
+        progressPage_->Attach( list );
+        list->Start();
         progressPage_->show();
     }
     else if( target == "preparation" )
@@ -320,11 +314,13 @@ void ScenarioLauncherPage::OnStart()
     {
         const unsigned int port = exercise_->GetPort();
         CreateSession( exerciseName, "default" );
-        boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exerciseName, "default", port, true ) );
-        boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exerciseName, "default", profile_.GetLogin(), true ) );
-        boost::shared_ptr< CompositeProcessWrapper >  process( new CompositeProcessWrapper( *progressPage_, replay, client ) );
-        progressPage_->Attach( process );
-        process->Start();
+        auto replay = boost::make_shared< frontend::StartReplay >( config_, exerciseName, "default", port, true );
+        auto client = boost::make_shared< frontend::JoinAnalysis >( config_, exerciseName, "default", profile_.GetLogin(), true );
+        auto list = boost::make_shared< CompositeProcessWrapper >( *progressPage_ );
+        list->Add( replay );
+        list->Add( client );
+        progressPage_->Attach( list );
+        list->Start();
         progressPage_->show();
     }
     if( target != "gaming" )

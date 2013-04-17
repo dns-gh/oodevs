@@ -13,17 +13,20 @@
 #include "frontend/SpawnCommand.h"
 #pragma warning( push, 0 )
 #include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>
+
+// warning C4127: conditional expression is constant
+#pragma warning( disable: 4127 )
 
 // -----------------------------------------------------------------------------
 // Name: CompositeProcessWrapper constructor
 // Created: SBO 2008-10-15
 // -----------------------------------------------------------------------------
-CompositeProcessWrapper::CompositeProcessWrapper( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > process1, boost::shared_ptr< frontend::SpawnCommand > process2 )
+CompositeProcessWrapper::CompositeProcessWrapper( frontend::ProcessObserver_ABC& observer )
     : observer_( observer )
-    , first_( process1 )
-    , second_( process2 )
+    , mutex_   ( new boost::mutex() )
 {
     // NOTHING
 }
@@ -34,7 +37,52 @@ CompositeProcessWrapper::CompositeProcessWrapper( frontend::ProcessObserver_ABC&
 // -----------------------------------------------------------------------------
 CompositeProcessWrapper::~CompositeProcessWrapper()
 {
-    observer_.NotifyStopped();
+    /// prevent bad mojo when this is destroyed before thread_
+    thread_->join();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CompositeProcessWrapper::Add
+// Created: BAX 2013-04-15
+// -----------------------------------------------------------------------------
+void CompositeProcessWrapper::Add( const T_Spawn& spawn )
+{
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    spawns_.push_back( spawn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CompositeProcessWrapper::GetSpawns
+// Created: BAX 2013-04-15
+// -----------------------------------------------------------------------------
+T_Spawns CompositeProcessWrapper::GetSpawns() const
+{
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    return spawns_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CompositeProcessWrapper::Apply
+// Created: BAX 2013-04-15
+// -----------------------------------------------------------------------------
+void CompositeProcessWrapper::Apply( const boost::function< void( frontend::SpawnCommand& ) >& operand )
+{
+    const T_Spawns spawns = GetSpawns();
+    for( auto it = spawns.begin(); it != spawns.end(); ++it )
+    {
+        SetCurrent( *it );
+        operand( **it );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CompositeProcessWrapper::Apply
+// Created: BAX 2013-04-15
+// -----------------------------------------------------------------------------
+void CompositeProcessWrapper::SetCurrent( const T_Spawn& spawn )
+{
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    current_ = spawn;
 }
 
 // -----------------------------------------------------------------------------
@@ -43,11 +91,26 @@ CompositeProcessWrapper::~CompositeProcessWrapper()
 // -----------------------------------------------------------------------------
 void CompositeProcessWrapper::Start()
 {
-    if( first_.get() )
-        first_->Attach( shared_from_this() );
-    if( second_.get() )
-        second_->Attach( shared_from_this() );
+    for( auto it = spawns_.begin(); it != spawns_.end(); ++it )
+        ( *it )->Attach( shared_from_this() );
     thread_.reset( new boost::thread( boost::bind( &CompositeProcessWrapper::Run, this ) ) );
+}
+
+namespace
+{
+    void WaitAny( const T_Spawns& spawns )
+    {
+        while( true )
+            for( auto it = spawns.begin(); it != spawns.end(); ++it )
+                if( !(*it)->Wait() )
+                    return;
+    }
+
+    void Wait( frontend::SpawnCommand& spawn )
+    {
+        while( spawn.Wait() )
+            continue;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -56,25 +119,19 @@ void CompositeProcessWrapper::Start()
 // -----------------------------------------------------------------------------
 void CompositeProcessWrapper::Run()
 {
-    if( first_.get() && second_.get() )
+    try
     {
-        try
-        {
-            current_ = first_;
-            first_->Start();
-            current_ = second_;
-            second_->Start();
-            while( first_->Wait() && second_->Wait() ) {}
-            current_.reset();
-            first_.reset();
-            second_.reset();
-        }
-        catch( const std::exception& e )
-        {
-            current_.reset();
-            Stop();
-            observer_.NotifyError( tools::GetExceptionMsg( e ) );
-        }
+        Apply( boost::bind( &frontend::SpawnCommand::Start, _1 ) );
+        WaitAny( GetSpawns() );
+        boost::lock_guard< boost::mutex > lock( *mutex_ );
+        current_.reset();
+        spawns_.clear();
+        observer_.NotifyStopped();
+    }
+    catch( const std::exception& e )
+    {
+        Stop();
+        observer_.NotifyError( tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -84,16 +141,8 @@ void CompositeProcessWrapper::Run()
 // -----------------------------------------------------------------------------
 void CompositeProcessWrapper::Stop()
 {
-    if( first_.get() )
-    {
-        first_->Stop();
-        while( first_->Wait() ) {}
-    }
-    if( second_.get() )
-    {
-        second_->Stop();
-        while( second_->Wait() ) {}
-    }
+    Apply( boost::bind( &frontend::SpawnCommand::Stop, _1 ) );
+    Apply( boost::bind( &Wait, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +151,11 @@ void CompositeProcessWrapper::Stop()
 // -----------------------------------------------------------------------------
 unsigned int CompositeProcessWrapper::GetPercentage() const
 {
-    return first_.get() && second_.get() ? ( first_->GetPercentage() + second_->GetPercentage() ) / 2 : 0;
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    unsigned sum = 0;
+    for( auto it = spawns_.begin(); it != spawns_.end(); ++it )
+            sum += (*it)->GetPercentage();
+    return spawns_.empty() ? 0 : sum / static_cast< unsigned int >( spawns_.size() );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +164,8 @@ unsigned int CompositeProcessWrapper::GetPercentage() const
 // -----------------------------------------------------------------------------
 QString CompositeProcessWrapper::GetStatus() const
 {
-    return current_.get() ? current_->GetStatus() : "";
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    return current_ ? current_->GetStatus() : "";
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +174,10 @@ QString CompositeProcessWrapper::GetStatus() const
 // -----------------------------------------------------------------------------
 tools::Path CompositeProcessWrapper::GetStartedExercise() const
 {
-    return first_.get() ? first_->GetStartedExercise() : tools::Path();
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    if( spawns_.empty() )
+        return tools::Path();
+    return spawns_.front()->GetStartedExercise();
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +186,10 @@ tools::Path CompositeProcessWrapper::GetStartedExercise() const
 // -----------------------------------------------------------------------------
 tools::Path CompositeProcessWrapper::GetExercise() const
 {
-    return first_.get() ? first_->GetExercise() : tools::Path();
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    if( spawns_.empty() )
+        return tools::Path();
+    return spawns_.front()->GetExercise();
 }
 
 // -----------------------------------------------------------------------------
@@ -138,5 +198,8 @@ tools::Path CompositeProcessWrapper::GetExercise() const
 // -----------------------------------------------------------------------------
 tools::Path CompositeProcessWrapper::GetSession() const
 {
-    return first_.get() ? first_->GetSession() : tools::Path();
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    if( spawns_.empty() )
+        return tools::Path();
+    return spawns_.front()->GetSession();
 }
