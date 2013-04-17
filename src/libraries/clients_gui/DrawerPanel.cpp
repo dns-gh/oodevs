@@ -36,14 +36,14 @@ namespace
 {
     QPixmap CreatePixmap( QVector< qreal >& dashes )
     {
-        QPixmap pix( 55, 10 );
+        QPixmap pix( 60, 10 );
         pix.fill( Qt::transparent );
         QPainter painter( &pix );
-        QPen pen( QBrush( Qt::black ), 5 );
+        QPen pen( QBrush( Qt::black ), 3 );
         if( !dashes.empty() )
             pen.setDashPattern( dashes );
         painter.setPen( pen );
-        painter.drawLine( 1, 5, 54, 5 );
+        painter.drawLine( 1, 5, 59, 5 );
         return pix;
     }
 }
@@ -118,7 +118,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     combo->addItem( dashed, "" );
 
     dashes.clear();
-    dashes << 3 << 2 << 1 << 2 << 3 << 2;
+    dashes << 3 << 2 << 1 << 2;
     QPixmap dashdot =  CreatePixmap( dashes );
     combo->addItem( dashdot, "" );
     connect( combo, SIGNAL( currentIndexChanged( int ) ), SLOT( OnLineChanged( int ) ) );
