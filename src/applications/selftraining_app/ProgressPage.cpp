@@ -11,7 +11,6 @@
 #include "ProgressPage.h"
 #include "moc_ProgressPage.cpp"
 #include "Application.h"
-#include "CustomEvent.h"
 #include "frontend/Process_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
@@ -94,14 +93,14 @@ void ProgressPage::UpdateProgress()
 // -----------------------------------------------------------------------------
 void ProgressPage::NotifyStopped()
 {
-    QApplication::postEvent( qApp, new CustomEvent( 667, static_cast< void* >( this ) ) );
+    QTimer::singleShot( 0, this, SLOT( OnNotifyStopped() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProgressPage::DoNotifyStopped
 // Created: JSR 2012-07-26
 // -----------------------------------------------------------------------------
-void ProgressPage::DoNotifyStopped()
+void ProgressPage::OnNotifyStopped()
 {
     timer_->stop();
     process_.reset();
@@ -117,6 +116,14 @@ void ProgressPage::DoNotifyStopped()
 void ProgressPage::NotifyError( const std::string& error, std::string /*commanderEndpoint = "" */ )
 {
     NotifyStopped();
-    QString* message = new QString( error.c_str() );
-    QApplication::postEvent( qApp, new CustomEvent( 666, static_cast< void* >( message ) ) );
+    QMetaObject::invokeMethod( this, "OnNotifyError", Q_ARG( QString, QString( error.c_str() ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProgressPage::OnNotifyError
+// Created: BAX 2013-04-16
+// -----------------------------------------------------------------------------
+void ProgressPage::OnNotifyError( const QString& message )
+{
+    QMessageBox::critical( 0, tools::translate( "Application", "Error" ), message );
 }

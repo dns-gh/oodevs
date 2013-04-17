@@ -148,7 +148,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\selftraining_app\Application.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\Config.cpp" />
-    <ClCompile Include="..\..\src\applications\selftraining_app\CustomEvent.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\DataWidget.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\DebugConfigPanel.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\ExerciseListView.cpp" />
@@ -227,7 +226,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\selftraining_app\CustomEvent.h" />
     <CustomBuild Include="..\..\src\applications\selftraining_app\DebugConfigPanel.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>

@@ -11,7 +11,6 @@
 #include "Application.h"
 #include "moc_Application.cpp"
 #include "Config.h"
-#include "CustomEvent.h"
 #include "Launcher.h"
 #include "MainWindow.h"
 #include "MessageDialog.h"
@@ -51,7 +50,6 @@ Application::Application( gui::ApplicationMonitor& monitor, int argc, char** arg
     // GUI
     mainWindow_ = new MainWindow( *this, *config_, *fileLoader_, *controllers_, *launcherClient_ );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
-    qApp->installEventFilter( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,25 +143,4 @@ Launcher& Application::GetLauncher() const
 QWidget* Application::GetMainWindow()
 {
     return mainWindow_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Application::notify
-// Created: SBO 2011-03-24
-// -----------------------------------------------------------------------------
-bool Application::eventFilter( QObject* emitter, QEvent* event )
-{
-    if( event && event->type() == QEvent::User + 666 )
-        if( QString* message = static_cast< QString* >( static_cast< CustomEvent* >( event )->GetData() ) )
-        {
-            QMessageBox::critical( 0, tools::translate( "Application", "Error" ), *message );
-            delete message;
-            return true;
-        }
-    if( event && event->type() == QEvent::User + 667 )
-    {
-        static_cast< ProgressPage* >( static_cast< CustomEvent* >( event )->GetData() )->DoNotifyStopped();
-        return true;
-    }
-    return Application_ABC::eventFilter( emitter, event );
 }
