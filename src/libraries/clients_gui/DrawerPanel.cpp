@@ -118,7 +118,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     combo->addItem( dashed, "" );
 
     dashes.clear();
-    dashes << 3 << 2 << 1 << 2;
+    dashes << 5 << 4 << 1 << 4;
     QPixmap dashdot =  CreatePixmap( dashes );
     combo->addItem( dashdot, "" );
     connect( combo, SIGNAL( currentIndexChanged( int ) ), SLOT( OnLineChanged( int ) ) );
