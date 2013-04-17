@@ -16,7 +16,6 @@
 #include "MockRoleLocation.h"
 #include "MockAgent.h"
 #include "Fixture.h"
-#include "MockObjectTypeResolver.h"
 
 BOOST_AUTO_TEST_CASE( if_a_pion_is_transported_its_composantes_can_not_perceive )
 {
@@ -24,7 +23,7 @@ BOOST_AUTO_TEST_CASE( if_a_pion_is_transported_its_composantes_can_not_perceive 
     FixturePion fixture( effectManager );
 
     MockMIL_Time_ABC time;
-    MOCK_EXPECT( time.GetTickDuration ).returns( 10u );
+    MOCK_EXPECT( time, GetTickDuration ).returns( 10u );
 
     xml::xistringstream xisVolumes( "<volumes>"
                                     "    <volume name='Big'/>"
@@ -49,9 +48,7 @@ BOOST_AUTO_TEST_CASE( if_a_pion_is_transported_its_composantes_can_not_perceive 
                                                "</bla>" );
     xisComposanteTypePion.start( "bla" );
 
-    MockObjectTypeResolver resolver;
-
-    PHY_ComposanteTypePion type( time, "composanteTypePion", xisComposanteTypePion, resolver );
+    PHY_ComposanteTypePion type( time, "composanteTypePion", xisComposanteTypePion );
     PHY_RolePion_Composantes composantes( *fixture.pPion_, false );
     PHY_ComposantePion composante( time, type, composantes, 1, true, true, true );
 
@@ -66,7 +63,7 @@ BOOST_AUTO_TEST_CASE( if_a_pion_is_transported_its_composantes_can_not_perceive 
     MockRoleLocation* locationRole = new MockRoleLocation();
     transporter.RegisterRole( *locationRole );
     const MT_Vector2D sourcePosition( 42, 42 );
-    MOCK_EXPECT( locationRole->GetPosition ).once().returns( sourcePosition );
+    MOCK_EXPECT( locationRole, GetPosition ).once().returns( sourcePosition );
 
     bool bTransportedByAnother;
     roleTransported->LoadForTransport( transporter, true, bTransportedByAnother );
