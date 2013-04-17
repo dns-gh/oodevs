@@ -47,8 +47,8 @@ SvgLocationDrawer::SvgLocationDrawer( const DrawingTemplate& style )
     , tools_    ( 0 )
     , zoom_     ( 1.f )
     , dashStyle_( eSolid )
-    , dashed_   ( "40px,20px" )
-    , dashDot_  ( "20px,4px,6px,4px" )
+    , dashed_   ( "8px,8px" )
+    , dashDot_  ( "24px,8px,8px,8px" )
 {
     GenerateCircle();
 }
@@ -171,8 +171,8 @@ namespace
         unsigned int result =  static_cast< unsigned int >( from.Distance( to ) );
         if( result < 2 )
             result = 2;
-        if( result > 100 )
-            result = 100;
+        if( result > 20 )
+            result = 20;
         return result;
     }
     geometry::Point2f Compute( const geometry::Point2f& from, const geometry::Point2f& control, const geometry::Point2f& to,
