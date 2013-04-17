@@ -40,6 +40,7 @@ integration.computeRelationObject = function( object )
 end
 
 --  Get unit perception level
+--  Return 100 if agent is perceived, 0 otherwise
 -- @param knowledge on an unit
 -- @author SLG -- modi MIA
 -- @release 2010-01-27
@@ -47,10 +48,20 @@ integration.getAgentPerceptionLevel = function( unit )
     if DEC_ConnaissanceAgent_EstPercuParUnite( unit.source ) then
         return 100
     else
-        return 0 -- currently not seen by ME
+        return 0
     end
 end
 
+--  Get crowd perception level
+--  Return 100 if agent is perceived, 0 otherwise
+-- @param knowledge on a crowd
+integration.getCrowdPerceptionLevel = function( crowd )
+    if DEC_ConnaissancePopulation_EstPercueParUnite( crowd.source ) then
+        return 100
+    else
+        return 0
+    end
+end
 
 --- Get object perception
 -- @param knowledge on an object
