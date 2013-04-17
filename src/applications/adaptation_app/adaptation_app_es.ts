@@ -5235,6 +5235,14 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Remove equipment</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Edit groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_GUI</name>
@@ -5440,6 +5448,25 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Speed reduction modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Units_Groups_GUI</name>
+    <message>
+        <source>Equipment</source>
+        <translation type="unfinished">Equipo</translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished">Total</translation>
+    </message>
+    <message>
+        <source>Add group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete group</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

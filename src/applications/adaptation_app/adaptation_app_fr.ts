@@ -5239,6 +5239,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Remove equipment</source>
         <translation>Supprimer équipement</translation>
     </message>
+    <message>
+        <source>Edit groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_Data::UnitInfos</name>
@@ -5452,6 +5460,25 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Speed reduction modifier</source>
         <translation>Coefficient de réduction de la vitesse</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Units_Groups_GUI</name>
+    <message>
+        <source>Equipment</source>
+        <translation type="unfinished">Equipement</translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished">Total</translation>
+    </message>
+    <message>
+        <source>Add group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete group</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

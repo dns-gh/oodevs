@@ -32,6 +32,7 @@ public:
 
 private slots:
     void MenuListItemSelected();
+    void OnEditGroups();
 
 private:
     bool bMenuListItemSelected_;

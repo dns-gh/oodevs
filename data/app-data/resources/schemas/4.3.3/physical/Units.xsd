@@ -32,6 +32,14 @@
 									<xs:sequence>
 										<xs:element name="equipment" minOccurs="0" maxOccurs="unbounded">
 											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="group" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:attribute name="name" type="xs:string" use="required"/>
+															<xs:attribute name="count" type="xs:nonNegativeInteger" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
 												<xs:attribute name="convoyer" type="xs:boolean"/>
 												<xs:attribute name="count" type="xs:nonNegativeInteger" use="required"/>
 												<xs:attribute name="type" type="xs:string" use="required"/>
