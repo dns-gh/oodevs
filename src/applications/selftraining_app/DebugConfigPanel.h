@@ -31,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config,
-                               bool legacy );
+                               bool legacy, bool timeline );
     virtual ~DebugConfigPanel();
     //@}
 
@@ -46,6 +46,7 @@ signals:
     //! @name Signals
     //@{
     void SwordVersionSelected( bool isLegacy );
+    void TimelineEnabled( bool enabled );
     void IntegrationPathSelected( const tools::Path& integrationPath );
     void DumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
     //@}
@@ -57,9 +58,14 @@ private:
     const tools::GeneralConfig& config_;
 
     QStringList pathList_; // $$$$ ABR 2013-03-04: TODO Extract this to a new ComboBox class which will handle a registry based historic
+
+    QGroupBox* topBox_;
+
     //legacy
     QCheckBox* legacyCheckBox_;
-    QGroupBox* legacyBox_;
+
+    // timeline
+    QCheckBox* timelineCheckBox_;
 
     //Integration Layer Configuration
     QLabel* integrationLabel_;
@@ -85,6 +91,7 @@ private slots:
     //! @name Operations
     //@{
     void SwordVersionChecked( int state );
+    void OnTimelineChecked( int state );
     void OnChangeIntegrationDirectory();
     void OnEditIntegrationDirectory( const QString& );
     void OnChangeDataDirectory();

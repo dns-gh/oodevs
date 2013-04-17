@@ -166,6 +166,9 @@
     <ClCompile Include="..\..\src\libraries\frontend\FileList.cpp">
       <Filter>Source Files\Panels\Optional plugins</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\frontend\StartTimeline.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\frontend\CommandLineTools.h">
@@ -294,6 +297,9 @@
     <ClInclude Include="..\..\src\libraries\frontend\ProfileVisitor_ABC.h">
       <Filter>Source Files\Model\Profiles</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\frontend\StartTimeline.h">
+      <Filter>Source Files\Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\frontend\frontend_es.ts">
@@ -308,11 +314,6 @@
     <None Include="..\..\src\libraries\frontend\frontend_en.ts">
       <Filter>Translations</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuildStep Include="..\..\src\libraries\frontend\SessionConfigPanel.h">
-      <Filter>Source Files\Panels\Plugins config</Filter>
-    </CustomBuildStep>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\frontend\SpawnCommand.h">
@@ -336,5 +337,10 @@
     <CustomBuild Include="..\..\src\libraries\frontend\FileList.h">
       <Filter>Source Files\Panels\Optional plugins</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Qt_file_Mocing Include="..\..\src\libraries\frontend\SessionConfigPanel.h">
+      <Filter>Source Files\Panels\Plugins config</Filter>
+    </Qt_file_Mocing>
   </ItemGroup>
 </Project>

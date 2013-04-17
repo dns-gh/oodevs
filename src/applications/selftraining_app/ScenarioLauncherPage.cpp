@@ -30,6 +30,7 @@
 #include "frontend/SessionConfigPanel.h"
 #include "frontend/StartExercise.h"
 #include "frontend/StartReplay.h"
+#include "frontend/StartTimeline.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/LinkInterpreter_ABC.h"
 #include "clients_kernel/Tools.h"
@@ -126,7 +127,9 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     , exercise_         ( 0 )
     , hasClient_        ( !ReadBoolSetting( "NoClientSelected" ) )
     , isLegacy_         ( ReadBoolSetting( "IsLegacy" ) )
+    , hasTimeline_      ( ReadBoolSetting( "HasTimeline" ) )
     , integrationDir_   ( "" )
+    , exerciseNumber_   ( 1 )
 {
     setWindowTitle( "ScenarioLauncherPage" );
 
@@ -152,7 +155,8 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     connect( checkpointPanel, SIGNAL( CheckpointSelected( const tools::Path&, const tools::Path& ) ), SLOT( OnSelectCheckpoint( const tools::Path&, const tools::Path& ) ) );
 
     //session config config panel
-    AddPlugin( new frontend::SessionConfigPanel( configTabs_, config_ ) );
+    auto* panel = AddPlugin( new frontend::SessionConfigPanel( configTabs_, config_, exerciseNumber_ ) );
+    connect( panel, SIGNAL( exerciseNumberChanged( int ) ), SLOT( OnExerciseNumberChanged( int ) ) );
 
     //random config panel
     AddPlugin( new frontend::RandomPluginConfigPanel( configTabs_, config_ ) );
@@ -169,10 +173,11 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     //debug config panel
     if( config.IsOnDebugMode() )
     {
-        DebugConfigPanel* configPanel = AddPlugin( new DebugConfigPanel( configTabs_, config_, isLegacy_ ) );
+        DebugConfigPanel* configPanel = AddPlugin( new DebugConfigPanel( configTabs_, config_, isLegacy_, hasTimeline_ ) );
         connect( configPanel, SIGNAL( SwordVersionSelected( bool ) ), SLOT( OnSwordVersionSelected( bool ) ) );
         connect( configPanel, SIGNAL( IntegrationPathSelected( const tools::Path& ) ), SLOT( OnIntegrationPathSelected( const tools::Path& ) ) );
         connect( configPanel, SIGNAL( DumpPathfindOptionsChanged( const QString&, const tools::Path& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const tools::Path& ) ) );
+        connect( configPanel, SIGNAL( TimelineEnabled( bool ) ), SLOT( OnTimelineEnabled( bool ) ) );
     }
 
     //general settings tab
@@ -278,6 +283,9 @@ void ScenarioLauncherPage::OnStart()
     if( hasClient_ )
         list->Add( boost::make_shared< frontend::JoinExercise >(
             config_, exerciseName, session, profile_.GetLogin(), true ) );
+    if( hasTimeline_ )
+        list->Add( boost::make_shared< frontend::StartTimeline >(
+            config_, exerciseName, session, exerciseNumber_, profile_ ) );
     progressPage_->Attach( list );
     list->Start();
     progressPage_->show();
@@ -383,4 +391,23 @@ void ScenarioLauncherPage::OnDumpPathfindOptionsChanged( const QString& filter, 
 {
     pathfindFilter_ = filter;
     dumpPathfindDirectory_ = directory;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioLauncherPage::OnTimelineEnabled
+// Created: BAX 2013-04-16
+// -----------------------------------------------------------------------------
+void ScenarioLauncherPage::OnTimelineEnabled( bool enabled )
+{
+    WriteBoolSetting( "HasTimeline", enabled );
+    hasTimeline_ = enabled;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioLauncherPage::OnExerciseNumberChanged
+// Created: BAX 2013-04-17
+// -----------------------------------------------------------------------------
+void ScenarioLauncherPage::OnExerciseNumberChanged( int value )
+{
+    exerciseNumber_ = value;
 }

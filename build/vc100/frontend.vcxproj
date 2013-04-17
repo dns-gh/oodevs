@@ -130,6 +130,7 @@
     <ClCompile Include="..\..\src\libraries\frontend\StartExercise.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\StartReplay.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\ConfigurationManipulator.cpp" />
+    <ClCompile Include="..\..\src\libraries\frontend\StartTimeline.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\XmlNode.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\ProcessList.cpp" />
     <ClCompile Include="..\..\src\libraries\frontend\ProcessWrapper.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="..\..\src\libraries\frontend\StartExercise.h" />
     <ClInclude Include="..\..\src\libraries\frontend\StartReplay.h" />
     <ClInclude Include="..\..\src\libraries\frontend\ConfigurationManipulator.h" />
+    <ClInclude Include="..\..\src\libraries\frontend\StartTimeline.h" />
     <ClInclude Include="..\..\src\libraries\frontend\XmlNode.h" />
     <ClInclude Include="..\..\src\libraries\frontend\ProcessList.h" />
     <ClInclude Include="..\..\src\libraries\frontend\ProcessObserver_ABC.h" />
@@ -281,7 +283,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuildStep Include="..\..\src\libraries\frontend\SessionConfigPanel.h" />
+    <Qt_file_Mocing Include="..\..\src\libraries\frontend\SessionConfigPanel.h" />
     <ClInclude Include="..\..\src\libraries\frontend\CompositePluginConfig.h" />
     <ClInclude Include="..\..\src\libraries\frontend\PluginConfig.h" />
     <ClInclude Include="..\..\src\libraries\frontend\PluginConfigBuilder.h" />

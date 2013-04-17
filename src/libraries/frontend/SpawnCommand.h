@@ -67,6 +67,7 @@ protected:
     void AddExerciseArgument( const tools::Path& exercise );
     void AddSessionArgument ( const tools::Path& session );
     void AddArgument( const QString& arg );
+    virtual bool IsHidden() const;
     //@}
 
 private:

@@ -81,6 +81,15 @@ void SpawnCommand::AddSessionArgument( const tools::Path& session )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SpawnCommand::IsHidden
+// Created: BAX 2013-04-16
+// -----------------------------------------------------------------------------
+bool SpawnCommand::IsHidden() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SpawnCommand::Start
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
@@ -93,6 +102,11 @@ void SpawnCommand::Start()
     startupInfo.dwY = (DWORD)CW_USEDEFAULT;
     startupInfo.dwXSize = (DWORD)CW_USEDEFAULT;
     startupInfo.dwYSize = (DWORD)CW_USEDEFAULT;
+    if( IsHidden() )
+    {
+        startupInfo.dwFlags |= STARTF_USESHOWWINDOW;
+        startupInfo.wShowWindow = SW_HIDE;
+    }
 
     // CreateProcessW() can modify the input command line buffer
     std::wstring cmd = commandLine_.toStdWString();

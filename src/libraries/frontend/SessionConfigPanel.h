@@ -31,10 +31,12 @@ namespace frontend
 // =============================================================================
 class SessionConfigPanel : public PluginConfig_ABC
 {
+    Q_OBJECT;
+
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionConfigPanel( QWidget* parent, const tools::GeneralConfig& config );
+             SessionConfigPanel( QWidget* parent, const tools::GeneralConfig& config, int exerciseNumber );
     virtual ~SessionConfigPanel();
     //@}
 
@@ -44,6 +46,9 @@ public:
     virtual QString GetName() const;
     virtual void Commit( const tools::Path& exercise, const tools::Path& session );
     //@}
+
+signals:
+    void exerciseNumberChanged( int );
 
 private:
     //! @name Member data

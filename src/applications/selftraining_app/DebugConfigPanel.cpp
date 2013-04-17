@@ -36,7 +36,7 @@ namespace
 // Created: NPT 2013-01-03
 // -----------------------------------------------------------------------------
 DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig& config,
-                                    bool legacy )
+                                    bool legacy, bool timeline )
     : PluginConfig_ABC( parent )
     , config_( config )
     , profilingBox_( 0 )
@@ -55,7 +55,10 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     legacyCheckBox_->setChecked( legacy );
     connect( legacyCheckBox_, SIGNAL( stateChanged( int ) ), SLOT( SwordVersionChecked( int ) ) );
 
-    legacyBox_ = new QGroupBox();
+    timelineCheckBox_ = new QCheckBox();
+    timelineCheckBox_->setCheckable( true );
+    timelineCheckBox_->setChecked( timeline );
+    connect( timelineCheckBox_, SIGNAL( stateChanged( int ) ), SLOT( OnTimelineChecked( int ) ) );
 
     //integration level label
     integrationLabel_ = new QLabel();
@@ -86,9 +89,11 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     integrationBoxLayout->setStretch( 2, 1 );
     integrationBoxLayout->setMargin( 5 );
 
-    QVBoxLayout* commentBoxLayout = new QVBoxLayout( legacyBox_ );
+    topBox_ = new QGroupBox();
+    QVBoxLayout* commentBoxLayout = new QVBoxLayout( topBox_ );
     commentBoxLayout->setMargin( 5 );
     commentBoxLayout->addWidget( legacyCheckBox_ );
+    commentBoxLayout->addWidget( timelineCheckBox_ );
     commentBoxLayout->addLayout( integrationBoxLayout );
 
     //profiling group box
@@ -130,7 +135,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
 
     //general Layout
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
-    mainLayout->addWidget( legacyBox_ );
+    mainLayout->addWidget( topBox_ );
     mainLayout->addWidget( profilingBox_ );
     mainLayout->addWidget( pathfindsBox_ );
     mainLayout->setAlignment( Qt::AlignTop );
@@ -196,6 +201,7 @@ void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
 void DebugConfigPanel::OnLanguageChanged()
 {
     legacyCheckBox_->setText( tools::translate( "DebugConfigPanel", "Enable Legacy Mode" ) );
+    timelineCheckBox_->setText( tools::translate( "DebugConfigPanel", "Enable Web Timeline" ) );
     integrationLabel_->setText( tools::translate( "DebugConfigPanel", "Integration layer directory" ) );
     profilingBox_->setTitle( tools::translate( "DebugConfigPanel", "Profiling settings" ) );
     decCallsBox_->setText( tools::translate( "DebugConfigPanel", "Decisional functions" ) );
@@ -255,4 +261,13 @@ void DebugConfigPanel::OnChangeDataDirectory()
 void DebugConfigPanel::OnChangeDataFilter()
 {
     emit DumpPathfindOptionsChanged( filterEdit_->text(), tools::Path::FromUnicode( dataDirectory_->text().toStdWString() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugConfigPanel::OnTimelineChecked
+// Created: BAX 2013-04-16
+// -----------------------------------------------------------------------------
+void DebugConfigPanel::OnTimelineChecked( int state )
+{
+    emit TimelineEnabled( state == Qt::Checked );
 }

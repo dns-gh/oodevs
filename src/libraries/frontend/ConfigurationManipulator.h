@@ -49,7 +49,6 @@ public:
     void Commit();
     //@}
 
-private:
     //! @name Helpers
     //@{
     static tools::Path GetSessionXml( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session );

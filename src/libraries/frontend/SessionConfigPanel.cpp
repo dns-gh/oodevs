@@ -18,13 +18,15 @@
 #include <QtGui/qspinbox.h>
 #pragma warning( pop )
 
+#include "moc_SessionConfigPanel.cpp"
+
 using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: SessionConfigPanel constructor
 // Created: JSR 2010-11-05
 // -----------------------------------------------------------------------------
-SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
+SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralConfig& config, int exerciseNumber )
     : PluginConfig_ABC( parent )
     , config_( config )
 {
@@ -56,7 +58,8 @@ SessionConfigPanel::SessionConfigPanel( QWidget* parent, const tools::GeneralCon
     exerciseNumber_ = new QSpinBox();
     exerciseNumber_->setRange( 1, 10 );
     exerciseNumber_->setSingleStep( 1 );
-    exerciseNumber_->setValue( 1 );
+    exerciseNumber_->setValue( exerciseNumber );
+    connect( exerciseNumber_, SIGNAL( valueChanged( int ) ), SIGNAL( exerciseNumberChanged( int ) ) );
 
     //Exercise box
     QWidget* exerciseNumberBox = new QWidget();

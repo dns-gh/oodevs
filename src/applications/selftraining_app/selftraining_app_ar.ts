@@ -187,6 +187,10 @@
         <source>Dump pathfinds directory :</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Enable Web Timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>

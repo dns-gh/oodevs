@@ -189,6 +189,10 @@
         <source>Dump pathfinds directory :</source>
         <translation>Répertoire de sortie:</translation>
     </message>
+    <message>
+        <source>Enable Web Timeline</source>
+        <translation>Démarrer le serveur web de timeline</translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>

@@ -829,6 +829,7 @@
         <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>
         <update name="terrain"/>
         <update name="terrain" package="terraintools_${platform}" todir="${out.dir}/terraintools"/>
+        <update name="timeline"/>
         <update name="tools"/>
         <update name="turtle"/>
         <update name="vcredist" package="vcredist"/>
