@@ -891,13 +891,17 @@ namespace
     T_PointVector GetVectorWithAdditionalPoint( const T_PointVector& pointVector )
     {
         T_PointVector result;
-        for( int i = 0; i < pointVector.size() - 1; ++i )
+        size_t pointVectorSize = pointVector.size();
+        if( pointVectorSize > 0 )
         {
-            result.push_back( pointVector[i] );
-            result.push_back( GetMidPoint( pointVector[i], pointVector[i+1] ) );
+            for( size_t i = 0; i < pointVectorSize - 1; ++i )
+            {
+                result.push_back( pointVector[i] );
+                result.push_back( GetMidPoint( pointVector[i], pointVector[i+1] ) );
+            }
+            result.push_back( pointVector.back() );
+            result.push_back( GetMidPoint( pointVector.back(), pointVector.front() ) );
         }
-        result.push_back( pointVector.back() );
-        result.push_back( GetMidPoint( pointVector.back(), pointVector.front() ) );
         return result;
     }
 }
