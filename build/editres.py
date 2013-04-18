@@ -1,6 +1,7 @@
 # Edit Windows executable/DLLs resources
 #
 import sys, os, ctypes, struct, binascii, shutil, datetime, optparse
+import pickle, pprint
 import ctypes.wintypes
 
 class Abort(Exception):
@@ -61,6 +62,14 @@ RT_HTML = 23
 RT_MANIFEST = 24
 RT_GROUP_CURSOR = RT_CURSOR + 11
 RT_GROUP_ICON = RT_ICON + 11
+
+_resnames = ("RT_CURSOR RT_BITMAP RT_ICON RT_MENU RT_DIALOG RT_STRING RT_FONTDIR "
+    "RT_FONT RT_ACCELERATOR RT_RCDATA RT_MESSAGETABLE RT_VERSION RT_DLGINCLUDE "
+    "RT_PLUGPLAY RT_VXD RT_ANICURSOR RT_ANIICON RT_HTML RT_MANIFEST RT_GROUP_CURSOR "
+    "RT_GROUP_ICON")
+resnames = {}
+for n in _resnames.split():
+    resnames[n.lower()] = globals()[n]
 
 # LoadLibrary flags
 DONT_RESOLVE_DLL_REFERENCES = 0x1
@@ -340,15 +349,49 @@ def editversion(args):
     path, = args
     updateresources(path, opts)
 
-def copyicons(args):
+def _loadresources(path, rtypes):
+    resources = pickle.load(file(path, 'rb'))
+    kept = []
+    for r in resources:
+        if not rtypes or r[0] in rtypes:
+            kept.append(r)
+    return kept
+
+def loadresources(path, rtypes):
+    try:
+        resources = _loadresources(path, rtypes)
+    except Exception, e:
+        resources = getresources(path, rtypes)
+    return resources
+
+def dumpresources(args):
     parser = optparse.OptionParser()
     opts, args = parser.parse_args(args)
-    source, dest = args
+    inpath, outpath = args
+    rtypes = [RT_VERSION, RT_ICON, RT_GROUP_ICON]
+    resources = getresources(inpath, rtypes)
+    packed = []
+    for k in resources:
+        sys.stdout.write('saving %r\n' % (k[:-1],))
+        rtype, name, langs, data = k
+        packed.append((rtype, name, langs, data))
+    pickle.dump(packed, file(outpath, 'wb'))
 
-    # Load source icons
-    rtypes = [RT_ICON, RT_GROUP_ICON]
-    newresources = getresources(source, rtypes)
+def makeresfilter(s):
+    types = []
+    for p in s.split(','):
+        p = p.strip()
+        try:
+            t = int(p)
+        except ValueError:
+            if p.lower() not in resnames:
+                raise Abort('unknown resource type: %s' % p)
+            t = resnames[p.lower()]
+        types.append(t)
+    return set(types)
 
+def copyres(source, dest, rtypes):
+    newresources = loadresources(source, rtypes)
     destresources = getresources(dest, rtypes)
     # Remove destination icons first
     destresources = [(k[0], k[1], k[2], None) for k in destresources]
@@ -356,10 +399,42 @@ def copyicons(args):
     destresources.extend(newresources)
     setresources(dest, destresources)
 
+def copyicons(args):
+    parser = optparse.OptionParser()
+    opts, args = parser.parse_args(args)
+    source, dest = args
+    # Load source icons
+    rtypes = [RT_ICON, RT_GROUP_ICON]
+    copyres(source, dest, rtypes)
+
+def copyresources(args):
+    parser = optparse.OptionParser()
+    parser.add_option("--types", help="types of resource to copy")
+    opts, args = parser.parse_args(args)
+    if opts.types is None:
+        raise Abort('no --types specified')
+    source, dest = args
+    rtypes = makeresfilter(opts.types)
+    copyres(source, dest, rtypes)
+
+def printversion(args):
+    parser = optparse.OptionParser()
+    opts, args = parser.parse_args(args)
+    source, = args
+    resources = loadresources(source, [RT_VERSION])
+    for k in resources:
+        ver = parseversion(k[-1])
+        ver = pprint.pformat(ver)
+        s = 'id=%s name=%s langs=%r\n%s\n\n' % (k[0], k[1], k[2], ver)
+        sys.stdout.write(s)
+
 if __name__ == '__main__':
     cmds = {
         'editversion': editversion,
         'copyicons': copyicons,
+        'copy': copyresources,
+        'dump': dumpresources,
+        'print': printversion,
         }
     args = sys.argv[1:]
     cmd = args[0]
