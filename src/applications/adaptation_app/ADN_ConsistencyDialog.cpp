@@ -73,7 +73,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1" ) + error;
     errorDescriptions_[ eObjectTypeUniqueness ]   = tr( "Duplicate type for objects %1" ) + error;
 
-    errorDescriptions_[ eMissingPart ]            = tr( "The breakdown %1 has no replacement part" ) + error;
+    errorDescriptions_[ eMissingPart ]            = tr( "The breakdown %1 has no replacement part" );
     errorDescriptions_[ eMissingBreakdown ]       = tr( "Equipment %1 requires at least one breakdown" ) + error;
     errorDescriptions_[ eMissingConvoy ]          = tr( "Convoy unit type not defined in Log/Supply" ) + error;
     errorDescriptions_[ eMissingConvoyMission ]   = tr( "Convoy mission not defined in Log/Supply" ) + error;
