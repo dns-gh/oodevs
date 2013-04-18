@@ -58,7 +58,6 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingNNo     ] = tr( "%1 has no NNO code defined." );
     errorDescriptions_[ eMissingEmat    ] = tr( "%1 has no EMAT8 code defined." );
     errorDescriptions_[ eLowerCaseEmat  ] = tr( "%1 has lower case EMAT8 code." );
-    errorDescriptions_[ eMissingRepairType ] = tr( "%1 has no repair type defined in maintenance system in a 'gravity' category." );
 
     errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1." );
     errorDescriptions_[ eMissingPart ]            = tr( "The breakdown '%1' has no replacement part." );

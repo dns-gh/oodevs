@@ -39,8 +39,6 @@ include "bit.lua"
         self._namedParams.unitesAHelitransporter = self.params[3]
         self._namedParams.avecMateriel = self.params[4]
         self._namedParams.ePathType = self.params[5]
-        self._namedParams.nombreNorias = self.params[6]
-        self.noriaCourante = 1
     end,
 
     activate = function( self )
@@ -158,8 +156,6 @@ self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat =
                     Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
                     if( self.eEtat == eActionEffectuee ) then
                         self.eEtat = eActionEnCours
-                        DEC_RC( eRC_TransportRoundTrip, self.noriaCourante, self._namedParams.nombreNorias )
-                        self.noriaCourante = self.noriaCourante + 1
                         self.ePhase = eTransporterAllerDebarquer
                         do return end
                     end

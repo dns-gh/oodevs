@@ -124,22 +124,6 @@ unsigned int DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration( cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgePopulationFunctions::GetAllHumans
-// Created: GGE 2013-04-04
-// -----------------------------------------------------------------------------
-unsigned int DEC_KnowledgePopulationFunctions::GetAllHumans( const DEC_Decision_ABC& callerAgent, int knowledgeId )
-{
-    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
-    if( bbKg )
-    {
-        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
-        if( pKnowledge )
-            return pKnowledge->GetPopulationKnown().GetAllHumans();
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgePopulationFunctions::ClosestPoint
 // Created: NLD 2005-12-05
 // -----------------------------------------------------------------------------

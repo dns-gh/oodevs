@@ -23,8 +23,6 @@ namespace launcher
     class Launcher;
 }
 
-class MT_FileLogger;
-
 // =============================================================================
 /** @class  LauncherFacade
     @brief  Launcher facade
@@ -60,7 +58,6 @@ private:
     //@{
     std::auto_ptr< launcher::Config > config_;
     std::auto_ptr< launcher::Launcher > launcher_;
-    std::auto_ptr< MT_FileLogger > logger_;
     std::string lastError_;
     //@}
 };

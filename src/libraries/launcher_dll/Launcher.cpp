@@ -13,7 +13,6 @@
 #include "LauncherPublisher.h"
 #include "LauncherService.h"
 #include "ProcessService.h"
-#include "MT_Tools/MT_Logger.h"
 #include "tools/NullFileLoaderObserver.h"
 #include "tools/DefaultLoader.h"
 #include "protocol/LauncherSenders.h"
@@ -191,7 +190,6 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionS
 // -----------------------------------------------------------------------------
 void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionStopRequest& message )
 {
-    MT_LOG_INFO_MSG( "Handle Session Stop Request" );
     SessionStopResponse response;
     response().set_exercise( message.exercise() );
     response().set_session( message.session() );

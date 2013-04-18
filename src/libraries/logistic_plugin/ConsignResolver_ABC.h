@@ -57,7 +57,6 @@ public:
     void SetMaxLinesInFile( int maxLines ) { maxLinesInFile_ = maxLines; }
     int GetConsignCount() const;
     void ClearFilesAfterTick( int tick );
-    int GetCurrentTick() const { return curTick_; }
     //@}
 
 protected:

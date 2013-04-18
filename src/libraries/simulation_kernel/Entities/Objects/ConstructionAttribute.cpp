@@ -78,10 +78,10 @@ ConstructionAttribute::~ConstructionAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConstructionAttribute::SetMaxDotations
+// Name: ConstructionAttribute::SetDotations
 // Created: ABR 2012-03-20
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::SetMaxDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation )
+void ConstructionAttribute::SetDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation )
 {
     nFullNbrDotation_    = nFullNbrDotation;
     nCurrentNbrDotation_ = static_cast< int >( constructionPercentage_.Get() * nFullNbrDotation );
@@ -330,7 +330,7 @@ bool ConstructionAttribute::IsConstructed() const
 unsigned int ConstructionAttribute::GetDotationNeededForConstruction( double rDeltaPercentage ) const
 {
     const double rNewPercentage = std::max( 0., std::min( 1., constructionPercentage_.Get() + rDeltaPercentage ) );
-    return static_cast< unsigned int >( rNewPercentage * nFullNbrDotation_ ) - nCurrentNbrDotation_;
+    return (unsigned int)( rNewPercentage * nFullNbrDotation_ ) - nCurrentNbrDotation_;
 }
 
 // -----------------------------------------------------------------------------
@@ -340,7 +340,7 @@ unsigned int ConstructionAttribute::GetDotationNeededForConstruction( double rDe
 unsigned int ConstructionAttribute::GetDotationRecoveredWhenDestroying( double rDeltaPercentage ) const
 {
     const double rNewPercentage = std::max( 0., std::min( 1., constructionPercentage_.Get() - rDeltaPercentage ) );
-    return nCurrentNbrDotation_ - static_cast< unsigned int >( rNewPercentage * nFullNbrDotation_ );
+    return nCurrentNbrDotation_ - (unsigned int)( rNewPercentage * nFullNbrDotation_ );
 }
 
 // -----------------------------------------------------------------------------

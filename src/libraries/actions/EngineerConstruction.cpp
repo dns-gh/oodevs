@@ -85,15 +85,13 @@ void EngineerConstruction::SetParameters( const sword::PlannedWork& message, con
     }
     if( message.has_activation_time() )
     {
-        const OrderParameter param( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toAscii().constData(), "integer", true );
-        Numeric* numeric = new Numeric( param, static_cast< float >( message.activation_time() ) );
+        Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toAscii().constData(), "integer", true ), message.activation_time() );
         numeric->SetIdentifier( "ActivationTime" );
         AddParameter( *numeric );
     }
     if( message.has_activity_time() )
     {
-        const OrderParameter param( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toAscii().constData(), "integer", true );
-        Numeric* numeric = new Numeric( param, static_cast< float >( message.activity_time() ) );
+        Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toAscii().constData(), "integer", true ), message.activity_time() );
         numeric->SetIdentifier( "ActivityTime" );
         AddParameter( *numeric );
     }
@@ -165,12 +163,6 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
         else if( identifier == "ActivationTime" )
         {
             Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toAscii().constData(), "integer", true ), xis );
-            numeric->SetIdentifier( identifier );
-            AddParameter( *numeric );
-        }
-        else if( identifier == "Density" )  
-        {
-            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "actions::gui::ParamObstacle", "Density per 100 square meter" ).toAscii().constData(), "float", true ), xis );
             numeric->SetIdentifier( identifier );
             AddParameter( *numeric );
         }

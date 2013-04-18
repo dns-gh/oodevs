@@ -124,8 +124,7 @@ integration.capture = function( units, message )
 
     for _, unit in pairs( units ) do
         if not myself.CRCaptureSomeone[unit] and not DEC_ConnaissanceAgent_EstPrisonnier( unit.source ) then
-            local agent = DEC_ConnaissanceAgent_EnAgent(unit.source)
-            DEC_Agent_AutomateForcerReddition( DEC_GetAutomate( agent ))
+            DEC_Agent_ForcerSilenceRadio( unit.source, true )
             DEC_UnitDecisionalState( unit.source, "hostage", "true" )
             DEC_Connaissance_Transporter( myself, unit.source )
             meKnowledge:RC( message, unit.source )

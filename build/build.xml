@@ -13,7 +13,7 @@
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
     <property name="version.project.major" value="1.4"/>
-    <property name="version.project" value="${version.project.major}.16"/>
+    <property name="version.project" value="${version.project.major}.15"/>
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword"/>
     <property name="version.major" value="4.3.3"/>
@@ -1264,7 +1264,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.binaries,package.app,package.debug,package.otpacks,package.decisional,package.wise-driver,package.ts,package.plugins" description="package the installers and packs"/>
+    <target name="package" depends="package.app,package.debug,package.otpacks,package.decisional,package.wise-driver,package.ts,package.plugins" description="package the installers and packs"/>
 
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.hla,package.plugin.bml,package.plugin.dis" description="package plugin individual installers"/>
@@ -1322,18 +1322,7 @@
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
-    <target name="package.binaries" description="create a zip with all binaries">
-        <local name="output"/>
-        <property name="output" value="${out.dir}/Scipio_binaries_${platform}_${version.project.major}.zip"/>
-        <zip destfile="${output}" duplicate="fail">
-            <mappedresources>
-                <fileset dir="${out.dir}/release/applications" includes="**/*.exe"/>
-                <flattenmapper/>
-            </mappedresources>
-            <fileset dir="${run.dir}"/>
-        </zip>
-        <safe-move file="${output}"/>
-    </target>
+
     <target name="package.debug" description="create a zip with all PDB files">
         <safe-move file="${out.dir}/SWORD_debug_${platform}_${version.project}.zip">
             <copy todir="${out.dir}/pdb" flatten="true">

@@ -28,7 +28,6 @@ rootnode
         if not meKnowledge:isTransportingCrowd() then
             Feedback( self.feedbacks.done )
         end
-        self.roundTrip = self.roundTrip + 1
     end,
 
     unloaded = function( self )
@@ -39,8 +38,6 @@ rootnode
 
     -- init
     create = function( self )
-        self.numberOfRoundTrip = 0
-        self.roundTrip = 1
         meKnowledge.isStoppingTransport = false
         -- init crowd's concentration information
         meKnowledge.crowdTransporting = self.params.crowd
@@ -52,8 +49,6 @@ rootnode
         self.arrivedDestination = false
         self.loadFinished = false
         self.unloadFinished = false
-        --compute and display the number of round trip
-        self.numberOfRoundTrip = math.ceil( meKnowledge:transportCrowdRoundTrip( meKnowledge.crowdTransporting ) )
     end,
 
     activate = function( self )
@@ -79,7 +74,7 @@ rootnode
  
         if self.arrivedLoadPoint and not self.loadFinished then
             -- Load Crowd
-            Activate( skill.nodes.LoadCrowd, 1, { crowd = meKnowledge.crowdTransporting, concentration = self.concentration, roundTrip = self.numberOfRoundTrip, currentRoundTrip = self.roundTrip } )
+            Activate( skill.nodes.LoadCrowd, 1, { crowd = meKnowledge.crowdTransporting, concentration = self.concentration } )
         end
 
         if self.unloadFinished then
@@ -104,16 +99,9 @@ rootnode
 
 node "LoadCrowd"
 {
-
-    connections = { skill.nodes.ReportsWithParameters },
-        
     feedbacks = { "loaded" },
 
     acquire = { [ skill.resources.loadcapacity ] = 1 },
-    
-    create = function( self )
-        Activate( skill.nodes.ReportsWithParameters, 1, { RC = eRC_TransportRoundTrip, roundTrip = self.params.roundTrip, current = self.params.currentRoundTrip } )
-    end,
 
     select = function( self )
         if self.params.crowd:loadIt( self.params.concentration ) then
@@ -132,13 +120,6 @@ node "UnloadCrowd"
         if self.params.crowd:unloadIt( self.params.position ) then
             Feedback( self.feedbacks.unloaded )
         end
-    end,
-}
-
-node "ReportsWithParameters"
-{
-    create = function( self )
-        meKnowledge:RC( self.params.RC, self.params.current , self.params.roundTrip )
     end,
 }
 

@@ -19,8 +19,6 @@
 #include "ADN_Units_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_TableItem_CheckItem.h"
-#include "ADN_Units_Groups_GUI.h"
-#include "ADN_MainWindow.h"
 #include "MT_ValuedListViewItem.h"
 
 typedef ADN_Units_Data::ComposanteInfos ComposanteInfos;
@@ -158,10 +156,6 @@ ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI( QWidget * parent )
 
     // connector creation
     pConnector_ = new ADN_Units_Composantes_GUI_Connector( *this );
-
-    QPushButton* pGroups = new QPushButton( tr( "Edit groups" ), parent );
-    connect( pGroups, SIGNAL( clicked() ), SLOT( OnEditGroups() ) );
-    connect( this, SIGNAL( valueChanged( int, int ) ), SLOT( ResetGroups( int, int ) ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -237,42 +231,4 @@ void ADN_Units_Composantes_GUI::MenuListItemSelected()
 {
     bMenuListItemSelected_ = true;
     QApplication::exit_loop();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_Composantes_GUI::OnEditGroups
-// Created: MCO 2013-04-10
-// -----------------------------------------------------------------------------
-void ADN_Units_Composantes_GUI::OnEditGroups()
-{
-    if( numRows() == 0 )
-        return;
-    QDialog dialog( this );
-    dialog.setModal( true );
-    dialog.setCaption( tr( "Groups" ) );
-    QDialogButtonBox* buttons = new QDialogButtonBox( QDialogButtonBox::Ok | QDialogButtonBox::Cancel );
-    connect( buttons, SIGNAL( accepted() ), &dialog, SLOT( accept() ) );
-    connect( buttons, SIGNAL( rejected() ), &dialog, SLOT( reject() ) );
-    ADN_Units_Groups_GUI* groups = new ADN_Units_Groups_GUI( *this, &dialog );
-    connect( &dialog, SIGNAL( accepted() ), groups, SLOT( Commit() ) );
-    QVBoxLayout* layout = new QVBoxLayout( &dialog );
-    layout->add( groups );
-    layout->add( buttons );
-    QMainWindow* pMainWindow = ADN_App::pApplication_->GetMainWindow();
-    dialog.resize( static_cast< int >( pMainWindow->width() * 0.8 ), static_cast< int >( pMainWindow->height() * 0.8 ) );
-    dialog.move( pMainWindow->x() + static_cast< int >( pMainWindow->width() * 0.1 ), pMainWindow->y() +  static_cast< int >( pMainWindow->height() * 0.1 ) );
-    dialog.exec();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_Composantes_GUI::ResetGroups
-// Created: MCO 2013-04-18
-// -----------------------------------------------------------------------------
-void ADN_Units_Composantes_GUI::ResetGroups( int row, int column )
-{
-    if( column != 1 )
-        return;
-    ADN_TableItem_ABC* pItem = static_cast< ADN_TableItem_ABC* >( item( row, column ) );
-    ComposanteInfos* pInfos = static_cast< ComposanteInfos* >( pItem->GetData() );
-    pInfos->groups_.clear();
 }

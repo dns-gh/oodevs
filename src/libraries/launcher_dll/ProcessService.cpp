@@ -306,10 +306,7 @@ sword::SessionStopResponse::ErrorCode ProcessService::StopSession( const sword::
     {
         boost::shared_ptr< SwordFacade > process( it->second );
         process->Stop();
-        // processes_ can be removed from processes_ by NotifyStopped from another thread...
-        ProcessContainer::iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
-        if( it != processes_.end() )
-            processes_.erase( it );
+        processes_.erase( it );
         std::remove( GetSessionTmpFilename().c_str() );
         return sword::SessionStopResponse::success;
     }

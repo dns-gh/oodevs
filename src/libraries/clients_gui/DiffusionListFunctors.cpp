@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "DiffusionListFunctors.h"
 #include "LongNameHelper.h"
-#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ExtensionType.h"
@@ -104,6 +103,7 @@ void DiffusionListReceiversExtractor::operator()( const kernel::Entity_ABC& agen
     {
         QString longName = LongNameHelper::GetEntityLongName( agent ).c_str();
         longName = ( longName.isEmpty() ? agent.GetName() : longName );
+        assert( targets_.find( longName ) == targets_.end() );
         targets_[ longName ] = &agent;
     }
 }
@@ -186,17 +186,6 @@ DiffusionListGenerator::~DiffusionListGenerator()
     // NOTHING
 }
 
-namespace
-{
-    void FillDiffusionList( const Entity_ABC& entity, QStringList& generatedDiffusionList, const std::string& level )
-    {
-        DictionaryExtensions* entityDico = const_cast< DictionaryExtensions* >( entity.Retrieve< DictionaryExtensions >() );
-        const TacticalHierarchies& entityHierarchy = entity.Get< TacticalHierarchies >();
-        if( entityDico && !entityDico->GetValue( "TypePC" ).empty() && entityDico->GetValue( "TypePC" ) != "PasCorresp" && entityHierarchy.GetLevel() == level )
-            generatedDiffusionList << QString::number( entity.GetId() );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: DiffusionListGenerator::operator()
 // Created: ABR 2011-05-04
@@ -221,22 +210,14 @@ void DiffusionListGenerator::operator()( const Entity_ABC& agent ) const
     assert( grandFather );
     const TacticalHierarchies& grandFatherHierarchy = grandFather->Get< TacticalHierarchies >();
     tools::Iterator< const Entity_ABC& > it = grandFatherHierarchy.CreateSubordinateIterator();
-    std::string level = grandFatherHierarchy.GetLevel();
     while( it.HasMoreElements() )
     {
-        const Entity_ABC& uncle = it.NextElement();
-        const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &uncle );
-        if( automat )
-        {
-            tools::Iterator< const Entity_ABC& > itCousins = uncle.Get< TacticalHierarchies >().CreateSubordinateIterator();
-            while( itCousins.HasMoreElements() )
-            {
-                const Entity_ABC& entity = itCousins.NextElement();
-                FillDiffusionList( entity, generatedDiffusionList_, level );
-            }
-        }
-        else
-            FillDiffusionList( uncle, generatedDiffusionList_, level );
+        const Entity_ABC& entity = it.NextElement();
+
+        DictionaryExtensions* entityDico = const_cast< DictionaryExtensions* >( entity.Retrieve< DictionaryExtensions >() );
+        const TacticalHierarchies& entityHierarchy = entity.Get< TacticalHierarchies >();
+        if( entityDico && !entityDico->GetValue( "TypePC" ).empty() && entityDico->GetValue( "TypePC" ) != "PasCorresp" && entityHierarchy.GetLevel() == grandFatherHierarchy.GetLevel() )
+            generatedDiffusionList_ << QString::number( entity.GetId() );
     }
 }
 

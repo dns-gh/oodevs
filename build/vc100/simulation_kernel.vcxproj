@@ -362,7 +362,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\PostureComputerFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\decision\DEC_RolePion_Decision.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Decision\DEC_RolePion_Decision_2.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Decision\DEC_RolePion_Decision_3.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\network\NET_RoleInterface_Dotations.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\network\NET_RolePion_Dotations.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\ConsumptionComputerFactory.cpp" />

@@ -11,13 +11,8 @@
 #include "LauncherFacade.h"
 #include "Launcher.h"
 #include "Config.h"
-#include "MT_Tools/MT_FileLogger.h"
-#include "MT_Tools/MT_Logger.h"
-#include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 #include <windows.h>
-
-namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: LauncherFacade constructor
@@ -47,10 +42,7 @@ LauncherFacade::LauncherFacade( const std::string& path )
 // -----------------------------------------------------------------------------
 LauncherFacade::~LauncherFacade()
 {
-    if( logger_.get() )
-    {
-        MT_LOG_UNREGISTER_LOGGER( *logger_ );
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -62,11 +54,6 @@ void LauncherFacade::Initialize( int argc, char** argv )
     try
     {
         config_->Parse( argc, argv );
-        
-        bfs::path path = bfs::system_complete( bfs::path( argv[0] ) );
-        logger_.reset( new MT_FileLogger( bfs::path( path.parent_path() / "LauncherService.log" ).string().c_str(), 1, -1, MT_Logger_ABC::eLogLevel_All ) );
-        MT_LOG_REGISTER_LOGGER( *logger_ );
-
         launcher_.reset( new launcher::Launcher( *config_ ) );
     }
     catch( std::exception& e )

@@ -21,7 +21,7 @@ rootnode
 
     elementFailed = function( self, params, additionalParams )
       if additionalParams.reason == "demine" then
-        integration.setNeedReinforcement( meKnowledge, "demine", additionalParams.element )
+        integration.setNeedReinforcement( meKnowledge, "destroy", additionalParams.element )
         self.report = eRC_ObjetNonDevalorisable
       else
         integration.setNeedReinforcement( meKnowledge, "destroy", additionalParams.element )

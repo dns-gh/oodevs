@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<automats model-version="4.11.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Automats.xsd">
+<automats model-version="4.10.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Automats.xsd">
   <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="621" name="ASS . Artillerie Animation AUF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . PC Batterie ASS"/>
     <unit max-occurs="2" min-occurs="2" type="ASS . Artillerie Animation AUF1"/>
@@ -539,8 +539,7 @@
   </automat>
   <automat decisional-model="Masalife.Automate.INF.Commando" id="742" name="INF . Section Commandos" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . PC Commando"/>
-    <unit max-occurs="3" type="INF . Groupe Commando"/>
-    <unit type="INF . Equipe Commando"/>
+    <unit max-occurs="3" min-occurs="3" type="INF . Groupe Commando"/>
   </automat>
   <automat decisional-model="Masalife.Automate.INF.Commando" id="743" name="GLAISE - INF . Section commandos" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - INF . PC Commando"/>
@@ -1486,71 +1485,5 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASA . PC Section MISTRAL NC1 40"/>
     <unit max-occurs="6" min-occurs="6" type="ASA . Piece MISTRAL T20/13"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="943" name="LOG . TC2 BP" type="Automate LOG TC2">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . TC2 BP"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="944" name="INF . Compagnie CBT quaternaire BP" type="Automate INF">
-    <unit max-occurs="3" min-occurs="3" type="INF . Section CBT quaternaire BP"/>
-    <unit max-occurs="1" min-occurs="1" type="INF . GROUPE ACMP BP"/>
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT CIE quaternaire BP"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.INF" id="945" name="INF . Groupe MO81 BP" type="Automate INF">
-    <unit max-occurs="1" min-occurs="1" type="INF . Groupe MO81 BP"/>
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Groupe CDT BP"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.INF.TE" id="946" name="INF . Groupe TE BP" type="Automate INF">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Groupe CDT BP"/>
-    <unit max-occurs="4" min-occurs="4" type="INF . Groupe TE BP"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="947" name="LOG . Secteur appro BATLOG BP" type="Automate LOG BLD Ravitaillement">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG RAV BATLOG BP"/>
-    <unit type="LOG . Groupe Appro Vivre Eau BATLOG BP"/>
-    <unit type="LOG . Groupe Trspt CARB 35m3 BATLOG BP"/>
-    <unit type="LOG . Groupe Munitions TD BATLOG BP"/>
-    <unit type="LOG . Groupe Munitions TT - D BATLOG BP"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="948" name="LOG . Groupe Recuperation Evacuation BATLOG BP" type="Automate LOG BLD Maintenance">
-    <unit type="LOG . Groupe Recuperation Evacuation BATLOG BP"/>
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG MAINT BATLOG BP"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="949" name="LOG . Secteur EVASAN BATLOG BP" type="Automate LOG BLD Sante">
-    <unit type="LOG . Equipe HM EVASAN"/>
-    <unit type="LOG . Groupe VS VAB BATLOG BP"/>
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG SAN BATLOG BP"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.LOG" id="950" name="LOG . Secteur triage BATLOG BP" type="Automate LOG BLD Sante">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG . PC LOG SAN BATLOG BP"/>
-    <unit type="LOG . Section Triage modulaire BATLOG BP"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.DLOP" id="951" name="ASS . EOP BP" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . EOP BP"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.TRANS.DIV" id="952" name="TRANS . PC BP" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC BP"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASS.Batterie Tir" id="953" name="ASS . Groupe de tir 120 RTF1 2 pieces BP" type="Automate ASS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . PC Groupe Mortier 120 BP"/>
-    <unit min-occurs="2" type="ASS . Equipe Mortier 120 1 pcs BP"/>
-  </automat>
-  <automat decisional-model="Masalife.Automate.ASA" id="954" name="ASA . Groupe MISTRAL BP" type="Automate ASA">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ASA . PC Groupe MISTRAL BP"/>
-    <unit min-occurs="3" type="ASA . Piece MISTRAL BP"/>
-  </automat>
-  <automat decisional-model="Sgpt Tigre" id="955" name="UK - AVIATION . Attack Sqn A" type="Automate ALAT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="UK - AVIATION . HQ Flight AH A"/>
-    <unit max-occurs="2" type="UK - AVIATION . Flight AH Apache"/>
-  </automat>
-  <automat decisional-model="Sgpt Hm" id="956" name="UK - AVIATION . Utility Sqn C" type="Automate ALAT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="UK - AVIATION . HQ Flight SH C"/>
-    <unit max-occurs="5" type="UK - AVIATION . Flight SH C"/>
-  </automat>
-  <automat decisional-model="Sgpt Tigre" id="957" name="UK - AVIATION . Attack Sqn L" type="Automate ALAT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="UK - AVIATION . HQ Flight AH L"/>
-    <unit max-occurs="2" type="UK - AVIATION . Flight AH Lynx"/>
-  </automat>
-  <automat decisional-model="Sgpt Hm" id="958" name="UK - AVIATION . Utility Sqn S" type="Automate ALAT">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="UK - AVIATION . HQ Flight SH S"/>
-    <unit max-occurs="5" type="UK - AVIATION . Flight SH S"/>
-  </automat>
 </automats>
-<!-- signature="2696341157" -->
+<!-- signature="3952647005" -->

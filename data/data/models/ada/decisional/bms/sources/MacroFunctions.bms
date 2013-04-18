@@ -431,8 +431,6 @@ tableRC[ eRC_RiposteContreAgressionParPopulation ] =
     function( typeMessage, id, list ) return DEC_RC_PopulationKnowledge( myself, typeMessage, id, list[1] ) end
 tableRC[ eRC_PopulationVictimeExplosionMines ] = 
     function( typeMessage, id, list ) return DEC_RC_Float_Float( myself, typeMessage, id, list[1], list[2] ) end
-tableRC[ eRC_TransportRoundTrip ] = 
-    function( typeMessage, id, list ) return DEC_RC_Float_Float( myself, typeMessage, id, list[1], list[2] ) end
 
 RC_WithParams = function( RC_Function, type_rc, id, list )
     if list[1] then

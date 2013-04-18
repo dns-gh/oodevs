@@ -146,9 +146,9 @@ void BuildableCapacity::Finalize( MIL_Object_ABC& object )
     {
         nFullNbrDotation_ = GetDotationNumber( location );
         if( unitType_ == ConstructionCapacity::eRaw )
-            object.GetAttribute< ConstructionAttribute >().SetMaxDotations( *dotation_, nFullNbrDotation_ );
+            object.GetAttribute< ConstructionAttribute >().SetDotations( *dotation_, nFullNbrDotation_ );
         else if( unitType_ == ConstructionCapacity::eDensity )
-            object.GetAttribute< ConstructionAttribute >().SetMaxDotations( *dotation_, nFullNbrDotation_ );
+            object.GetAttribute< ConstructionAttribute >().SetDotations( *dotation_, nFullNbrDotation_ );
     }
     finalised_ = true; // $$$$ LDC FIXME the nFullNbrDotation_ should be in the object or attribute not the capacity
 }
@@ -179,7 +179,7 @@ unsigned int BuildableCapacity::GetDotationNumber( const TER_Localisation& locat
 // -----------------------------------------------------------------------------
 void BuildableCapacity::SetDensity( double density )
 {
-    nFullNbrDotation_ = static_cast< unsigned int >( density * 10000 ); // $$$$ LDC Density of 0.1 = 1 mine per 100 square meter (from TTA 702 \\install\Masa\simulation\projects\scipio\doc\V1.STAB\DOC MODELISATION\DOCTRINE et memento\GEN\Doctrine page 131)
+    nFullNbrDotation_ = ( density * 10000 ); // $$$$ LDC Density of 0.1 = 1 mine per 100 square meter (from TTA 702 \\install\Masa\simulation\projects\scipio\doc\V1.STAB\DOC MODELISATION\DOCTRINE et memento\GEN\Doctrine page 131)
 }
 
 // -----------------------------------------------------------------------------

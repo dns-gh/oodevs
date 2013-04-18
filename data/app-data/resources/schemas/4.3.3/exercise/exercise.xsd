@@ -17,7 +17,7 @@
 				<xs:element name="sic" minOccurs="0">
 					<xs:complexType>
 						<xs:attribute name="atlas" type="xs:string" use="required"/>
-						<xs:attribute name="dqp-manager" type="xs:string" use="required"/>
+						<xs:attribute name="dqp_manager" type="xs:string" use="required"/>
 						<xs:attribute name="sicf" type="xs:string" use="required"/>
 						<xs:attribute name="sir" type="xs:string" use="required"/>
 					</xs:complexType>

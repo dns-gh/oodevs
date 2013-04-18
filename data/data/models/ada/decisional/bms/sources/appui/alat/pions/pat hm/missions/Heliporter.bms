@@ -62,13 +62,6 @@ include "bit.lua"
 
             end
         end
-        --calcul du nombre d'aller retour
-        self.nombreNorias = 0 -- permet de remettre à jour à chaque tic au cas ou des unités à transporter ne sont plus transportables (meurrent par exemple)
-        for _,x in pairs( self.listePionsAHeliporter or emptyTable ) do
-            local unit = x
-            self.nombreNorias = self.nombreNorias + DEC_Agent_TransportNombreAllerRetour( unit, not self._namedParams.avecMateriel )
-        end
-        self.nombreNorias = math.ceil(self.nombreNorias)
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
         Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
@@ -141,7 +134,7 @@ do
                         end
                     end
 
-                    Activate( self.activations.BEH_Transport_Pion_ALAT_HM_Helitransporter, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointEmbarquement_, self.pointDeDebarquement, self.listePionsAHeliporter, self._namedParams.mission.avecMateriel_, eTypeItiInfiltration, self.nombreNorias, } )
+                    Activate( self.activations.BEH_Transport_Pion_ALAT_HM_Helitransporter, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointEmbarquement_, self.pointDeDebarquement, self.listePionsAHeliporter, self._namedParams.mission.avecMateriel_, eTypeItiInfiltration, } )
 self.done_BEH_Transport_Pion_ALAT_HM_Helitransporter = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 elseif switch_1 == eSExfiltrer then

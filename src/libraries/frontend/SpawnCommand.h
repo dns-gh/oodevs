@@ -72,7 +72,7 @@ private:
 
     //! @name Helpers
     //@{
-    bool StopProcess();
+    void StopProcess();
     void FillProcessInformation( unsigned long processId );
     //@}
 
