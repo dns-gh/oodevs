@@ -231,7 +231,7 @@ void SwordFacade::Update( const T& message )
 // -----------------------------------------------------------------------------
 bool SwordFacade::IsRunning() const
 {
-    return process_->IsRunning();
+    return process_ && process_->IsRunning();
 }
 
 // -----------------------------------------------------------------------------
