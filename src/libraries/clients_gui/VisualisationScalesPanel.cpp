@@ -40,7 +40,8 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
     , controllers_( controllers )
 {
     SubObjectName subObject( "VisualisationScalesPanel" );
-    RichGroupBox* box = new RichGroupBox( "visuScales", tr( "Visualisation scales" ), this );
+    QVBoxLayout* mainLayout = new QVBoxLayout( this );
+    RichGroupBox* box = new RichGroupBox( "visuScales", tr( "Visualisation scales" ) );
     QGridLayout* boxLayout = new QGridLayout( box );
 
     const QString elements[ 14 ] =
@@ -64,7 +65,6 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
     scales.push_back( "1:5000000" );
     scales.push_back( "1:10000000" );
 
-    new QWidget( box );
     QLabel* minlabel = new QLabel( tr( "Min Scale" ), box );
     QLabel* maxLabel = new QLabel( tr( "Max Scale" ), box );
     boxLayout->addWidget( minlabel, 0, 1 );
@@ -92,7 +92,10 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
     RichPushButton* button = new RichPushButton( "reset", tr( "Reset" ) );
     connect( button, SIGNAL( clicked() ), this, SLOT( OnReset() ) );
     boxLayout->addWidget( button, 15, 0 );
-    setWidget( box );
+    box->setMinimumHeight( 500 );
+    mainLayout->addWidget( box );
+    mainLayout->addStretch( 1 );
+    setLayout( mainLayout );
     controllers_.Register( *this );
 }
 

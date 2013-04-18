@@ -54,13 +54,15 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
         RichGroupBox* gradientBox = new RichGroupBox( "gradientMap", tr( "Gradient map" ) );
         QVBoxLayout* gradientBoxLayout = new QVBoxLayout( gradientBox );
         gradientBoxLayout->addWidget( gradient_ );
+        gradientBoxLayout->addStretch();
 
         RichGroupBox* box = new RichGroupBox( "elevationColor", tr( "Elevation colors" ) );
         QVBoxLayout* boxLayout = new QVBoxLayout( box );
-        boxLayout->addWidget( fitColorGradienttoViewPort_ );
+        boxLayout->addWidget( fitColorGradienttoViewPort_, 1 );
         boxLayout->addWidget( gradientBox );
         boxLayout->addStretch();
-        container->addWidget( box, 100 );
+        container->addWidget( box );
+        container->addStretch();
     }
     {
         QLabel* directionLabel = new QLabel( tr( "Direction" ) );
@@ -76,14 +78,18 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
         connect( hsBox_, SIGNAL( toggled( bool ) ), SLOT( OnEnableHillshade( bool ) ) );
         hsBox_->setCheckable( true );
         hsBox_->setChecked( enableHs_ );
-        QGridLayout* hsBoxLayout = new QGridLayout( hsBox_ );
-        hsBoxLayout->addWidget( directionLabel, 0, 0 );
+        QGridLayout* hsBoxLayout = new QGridLayout();
         hsBoxLayout->addWidget( hsDial_, 0, 1 );
         hsBoxLayout->addWidget( strengthLabel, 1, 0 );
         hsBoxLayout->addWidget( hillShadeStrength_, 1, 1 );
         hsBoxLayout->setColStretch( 1, 10 );
-        hsBoxLayout->setSizeConstraint( QLayout::SetMinimumSize );
-        container->addWidget( hsBox_, 1 );
+        container->addWidget( hsBox_ );
+
+        QVBoxLayout* hsLayout = new QVBoxLayout( hsBox_ );
+        hsLayout->addLayout( hsBoxLayout );
+        hsLayout->addStretch();
+
+        hsBoxLayout->addWidget( directionLabel, 0, 0 );
         container->addStretch( 1 );
     }
     setLayout( container );

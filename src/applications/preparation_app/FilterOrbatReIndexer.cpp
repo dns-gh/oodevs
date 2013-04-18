@@ -222,8 +222,8 @@ QWidget* FilterOrbatReIndexer::CreateParametersWidget( const QString& objectName
     optionBoxLayout->addWidget( logisticLinksCheckBox_ = AddCheckBox( tools::translate( "FilterOrbatReIndexer", "Logistic links" ), "LogisticLinksCheckBox") );
     optionBoxLayout->addWidget( stocksCheckBox_ = AddCheckBox( tools::translate( "FilterOrbatReIndexer", "Stocks" ), "StocksCheckBox") );
     optionBoxLayout->addWidget( diplomacyCheckBox_ = AddCheckBox( tools::translate( "FilterOrbatReIndexer", "Diplomacy" ), "DiplomacyCheckBox") );
-    optionBoxLayout->setMargin( 0 );
-    optionBoxLayout->setSpacing( 0 );
+    optionBoxLayout->setMargin( 5 );
+    optionBoxLayout->setSpacing( 5 );
 
     partiesListView_ = new FilterPartiesListView( 0 );
     partiesListView_->setEnabled( false );

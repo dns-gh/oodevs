@@ -886,7 +886,7 @@ Please check access permissions or write protection.</source>
     <name>gui::GraphicPreferences</name>
     <message>
         <source>Colors and line thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>Couleurs et épaisseurs de trait</translation>
     </message>
 </context>
 <context>

@@ -60,8 +60,9 @@ void GraphicPreferences::ReadTerrainPreference( xml::xistream& xis )
 void GraphicPreferences::Display( QWidget* parent ) const
 {
     RichGroupBox* colorBox = new RichGroupBox( "colorBox", tools::translate( "gui::GraphicPreferences", "Colors and line thickness" ), parent );
-    colorBox->setLayout( new QVBoxLayout() );
+    QVBoxLayout* colorBoxLayout = new QVBoxLayout( colorBox );
     std::for_each( displays_.begin(), displays_.end(), boost::bind( &TerrainPreference::Display, _1, colorBox ) );
+    colorBoxLayout->addStretch();
 }
 
 // -----------------------------------------------------------------------------
