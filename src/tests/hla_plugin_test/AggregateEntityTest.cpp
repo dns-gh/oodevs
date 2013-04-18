@@ -9,9 +9,11 @@
 
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/AggregateEntity.h"
+#include "hla_plugin/Spatial.h"
 #include "rpr/EntityIdentifier.h"
 #include "rpr/EntityType.h"
 #include "rpr/ForceIdentifier.h"
+#include "DeserializationTools.h"
 #include "MockAgent.h"
 #include "MockUpdateFunctor.h"
 #include "MockMarkingFactory.h"
@@ -239,4 +241,15 @@ BOOST_FIXTURE_TEST_CASE( equipment_changed_event_is_serialized, RegisteredFixtur
     MOCK_EXPECT( functor.Visit ).once().in( s ).with( "SilentEntities", mock::any );
     entity.Serialize( functor, false );
     entity.Serialize( functor, false );
+}
+
+BOOST_FIXTURE_TEST_CASE( spatial_uses_drm_fpw_when_updated, RegisteredFixture )
+{
+    plugins::hla::Spatial recvSpatial;
+    BOOST_REQUIRE( listener );
+    listener->SpatialChanged( 1., 2., 3., 4., 5. );
+    MOCK_EXPECT( functor.Visit ).once().with( "Spatial", boost::bind( &GetSerializedValue<plugins::hla::Spatial>, _1, boost::ref(recvSpatial) ) );
+    entity.Serialize( functor, false );
+    BOOST_CHECK_EQUAL( recvSpatial.isStatic_, false );
+    BOOST_CHECK_EQUAL( recvSpatial.deadReckoningAlgorithm_, 2 );
 }

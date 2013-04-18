@@ -109,7 +109,7 @@ void Aircraft::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla:
 // -----------------------------------------------------------------------------
 void Aircraft::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
 {
-    spatial_.Refresh( true, latitude, longitude, altitude, speed, direction );
+    spatial_.Refresh( false, latitude, longitude, altitude, speed, direction );
     attributesUpdater_->Update( "Spatial", spatial_ );
     listeners_->Moved( identifier_, latitude, longitude );
 }

@@ -90,12 +90,13 @@ void Netn2TransferSender::RequestTransfer(const std::string& agentID, const Tran
     std::vector< char > uniqueId( GetUniqueId( agentID, agentResolver_, callsignResolver_ ) );
     if( uniqueId.size() == 0 )
     {
-        logger_.LogError( std::string( "Trying to tranfer unknown entity " ) + agentID );
+        logger_.LogError( std::string( "Trying to transfer unknown entity " ) + agentID );
         return;
     }
     transfer.instances.list.push_back( NETN_UUID( uniqueId ) );
-    BOOST_FOREACH( const ::hla::AttributeIdentifier& attr, attributes )
+    for( auto it=attributes.begin(); attributes.end()!=it; ++it )
     {
+        const ::hla::AttributeIdentifier& attr = *it;
         transfer.attributes.list.push_back( UnicodeString( attr.ToString() ) );
     }
     transfer.capabilityType = static_cast< uint32_t >( interactions::TMR::TotalTransfer );
@@ -130,12 +131,13 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
     std::transform( request.attributes.list.begin(), request.attributes.list.end(), attributes.begin(), std::mem_fun_ref( &UnicodeString::str ) );
     bool resp( true );
     interactions::TMR::TransferTypeEnum32 transferType( static_cast< interactions::TMR::TransferTypeEnum32 >( request.transferType ) );
-    BOOST_FOREACH( const NETN_UUID& uniqueId, request.instances.list )
+    for( auto it = request.instances.list.begin(); it!=request.instances.list.end(); ++it )
     {
+        const NETN_UUID& uniqueId = *it;
         std::string agentId( GetAgentId( uniqueId.data(), agentResolver_, callsignResolver_ ) );
         if( agentId.size() == 0 )
         {
-            logger_.LogError( std::string( "Trying to tranfer unknown entity " ) + uniqueId.str() );
+            logger_.LogError( std::string( "Trying to transfer unknown entity " ) + uniqueId.str() );
             resp = false;
             break;
         }
@@ -156,8 +158,9 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
 
     if( resp )
     {
-        BOOST_FOREACH( const NETN_UUID& uniqueId, request.instances.list )
+        for( auto it = request.instances.list.begin(); it!=request.instances.list.end(); ++it )
         {
+            const NETN_UUID& uniqueId = *it;
             std::string agentId( GetAgentId( uniqueId.data(), agentResolver_, callsignResolver_ ) );
             if( transferType == interactions::TMR::Acquire )
                 ownershipController_.PerformDivestiture( agentId, attributes );

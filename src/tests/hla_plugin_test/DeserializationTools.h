@@ -11,6 +11,12 @@
 #define hla_plugin_test_DeserializationTools_h
 
 #include <hla/Deserializer.h>
+#include <hla/Serializer.h>
+
+namespace hla
+{
+typedef boost::shared_ptr< Serializer_ABC > T_SerializerPtr;
+}
 
 namespace
 {
@@ -32,6 +38,16 @@ namespace
     {
         for( unsigned int i = 0; i < N; ++i )
             BOOST_CHECK_EQUAL( 0, Read< int8_t >( deserializer ) );
+    }
+    template < typename T >
+    bool GetSerializedValue( ::hla::T_SerializerPtr serializer, T& val )
+    {
+        std::vector< uint8_t > buffer( serializer->GetSize() );
+        if( !buffer.empty() )
+            serializer->CopyTo( &buffer[0] );
+        ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
+        val.Deserialize( deserializer );
+        return true;
     }
 }
 
