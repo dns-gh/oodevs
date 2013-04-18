@@ -144,11 +144,11 @@ function( add_target target group dir )
     endif()
     if( executable OR shared )
         add_custom_target( "${target}_rc" ALL
-            COMMAND "${PYTHONEXE}" "${root_dir}/build/editres.py" copy
+            COMMAND "${PYTHONEXE}" "${root_dir}/bin/buildtools/editres.py" copy
                 "${root_dir}/build/template.res"
                 "$<TARGET_FILE:${target}>"
                 "--types=RT_VERSION"
-            COMMAND "${PYTHONEXE}" "${root_dir}/build/editres.py" editversion
+            COMMAND "${PYTHONEXE}" "${root_dir}/bin/buildtools/editres.py" editversion
                 "--original-filename=$<TARGET_FILE_NAME:${target}>"
                 "--product-name=${PRODUCT}"
                 "--version=${MASA_VERSION}"

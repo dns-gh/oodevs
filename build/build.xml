@@ -688,7 +688,7 @@
             <delete file="${out.dir}/setup.exe"/>
             <copy file="${bin.dir}/7z/7zS.sfx" tofile="${out.dir}/setup.sfx"/>
             <python>
-                <arg value="${root.dir}/build/editres.py"/>
+                <arg value="${root.dir}/bin/buildtools/editres.py"/>
                 <arg value="editversion"/>
                 <arg value="--version=${version.version}"/>
                 <arg value="--product-name=Sword"/>
@@ -696,7 +696,7 @@
                 <arg value="${out.dir}/setup.sfx"/>
             </python>
             <python>
-                <arg value="${root.dir}/build/editres.py"/>
+                <arg value="${root.dir}/bin/buildtools/editres.py"/>
                 <arg value="copyicons"/>
                 <arg value="${out.dir}/release/applications/simulation_app/simulation_app.exe"/>
                 <arg value="${out.dir}/setup.sfx"/>
