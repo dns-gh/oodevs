@@ -47,16 +47,13 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_gdal.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_graphics.props" />
-    <Import Project="Property sheets\link_spatialcontainer.props" />
-    <Import Project="Property sheets\link_pathfind.props" />
-    <Import Project="Property sheets\link_geodata.props" />
-    <Import Project="Property sheets\link_analysis.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -67,16 +64,13 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_gdal.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_graphics.props" />
-    <Import Project="Property sheets\link_spatialcontainer.props" />
-    <Import Project="Property sheets\link_pathfind.props" />
-    <Import Project="Property sheets\link_geodata.props" />
-    <Import Project="Property sheets\link_analysis.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -87,16 +81,13 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_gdal.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_graphics.props" />
-    <Import Project="Property sheets\link_spatialcontainer.props" />
-    <Import Project="Property sheets\link_pathfind.props" />
-    <Import Project="Property sheets\link_geodata.props" />
-    <Import Project="Property sheets\link_analysis.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -107,45 +98,39 @@
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_urban.props" />
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_gdal.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_graphics.props" />
-    <Import Project="Property sheets\link_spatialcontainer.props" />
-    <Import Project="Property sheets\link_pathfind.props" />
-    <Import Project="Property sheets\link_geodata.props" />
-    <Import Project="Property sheets\link_analysis.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
-    </PostBuildEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>log4cxxd.lib;psapi.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>log4cxxd.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;masalloc_d.lib;geodata_d.lib;analysis_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
     <PostBuildEvent />
     <ClCompile>
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>log4cxxd.lib;psapi.lib;core_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>log4cxxd.lib;psapi.lib;spatialcontainer_d.lib;pathfind_d.lib;masalloc_d.lib;analysis_d.lib;geodata_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
     <PostBuildEvent />
     <ClCompile>
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <PostBuildEvent>
       <Command>cd $(RunDir)
@@ -155,35 +140,26 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>log4cxx.lib;psapi.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>log4cxx.lib;psapi.lib;spatialcontainer.lib;pathfind.lib;masalloc.lib;geodata.lib;analysis.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <ClCompile>
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>log4cxx.lib;psapi.lib;core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>log4cxx.lib;psapi.lib;spatialcontainer.lib;pathfind.lib;masalloc.lib;geodata.lib;analysis.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <ClCompile>
       <AdditionalIncludeDirectories>../../src/libraries/simulation_kernel;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
-    <PostBuildEvent>
-      <Command>cd $(RunDir)
-$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\Fixture.h" />
-    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockObjectTypeResolver.h" />
-    <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockSink.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockAgent.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockAgentFactory.h" />
@@ -223,7 +199,6 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRolePerceiver.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockRoleUrbanLocation.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\MockToxicAttribute.h" />
-    <ClInclude Include="..\..\src\tests\simulation_kernel_test\SingletonTerminator.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubDEC_Decision.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubDEC_KnowledgeResolver_ABC.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_AgentPion.h" />
@@ -235,17 +210,16 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Object_ABC.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Population.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_PopulationType.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubMIL_Time_ABC.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubPHY_RoleInterface_Dotation.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\StubTER_World.h" />
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestIndirectFireModifier.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestPhDirectFire.h" />
+    <ClInclude Include="..\..\src\tests\simulation_kernel_test\TestPk.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\ComposantePionTest.cpp" />
-    <ClCompile Include="..\..\src\tests\simulation_kernel_test\DEC_GeometryFunctionsTest.cpp" />
-    <ClCompile Include="..\..\src\tests\simulation_kernel_test\DEC_Path_KnowledgeAgentTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\MIL_DecontaminationTest.cpp" />
-    <ClCompile Include="..\..\src\tests\simulation_kernel_test\PHY_RawVisionDataTest.cpp" />
-    <ClCompile Include="..\..\src\tests\simulation_kernel_test\PostureComputerTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -266,12 +240,12 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\HumanTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\MissionParametersTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\SimpleBrainTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\FactoriesTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\AutomateFactoryPtrSerializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\NetworkBufferedPercentageValueTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\SerializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\MIL_IntoxicationEffectTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\ScheduleInhabitantTest.cpp" />
-    <ClCompile Include="..\..\src\tests\simulation_kernel_test\SingletonTerminator.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\SpeedComputerTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\ActiveProtectionTest.cpp">
       <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|win32'">false</PreprocessToFile>
@@ -313,7 +287,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ProjectReference Include="ENT.vcxproj">
       <Project>{f03cbc87-1ed6-45ad-8ed7-9a94c248b556}</Project>
     </ProjectReference>
-    <ProjectReference Include="propagation.vcxproj">
+    <ProjectReference Include="flood.vcxproj">
       <Project>{de65a391-dd7f-423c-a0b3-d86985657dec}</Project>
     </ProjectReference>
     <ProjectReference Include="meteo.vcxproj">
