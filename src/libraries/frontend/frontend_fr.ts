@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>Time factor:</source>
-        <translation>Facteur de temps:</translation>
+        <translation type="unfinished">Facteur de vitesse:</translation>
     </message>
     <message>
         <source>End tick:</source>
