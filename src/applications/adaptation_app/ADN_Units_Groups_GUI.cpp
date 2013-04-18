@@ -52,6 +52,11 @@ public:
             return "";
         return widgets_[ column ]->text().toStdString();
     }
+    void Edit( int column )
+    {
+        if( column < widgets_.size() && widgets_[ column ] )
+            widgets_[ column ]->setFocus();
+    }
 
 private:
     virtual void paintEvent( QPaintEvent* e )
@@ -77,7 +82,8 @@ public:
         const int row = index.row();
         int max = dataModel_.item( row, 1 )->text().toInt();
         for( int c = 2; c < dataModel_.columnCount(); ++c )
-            max -= dataModel_.item( row, c )->text().toInt();
+            if( c != index.column() )
+                max -= dataModel_.item( row, c )->text().toInt();
         return new gui::RichSpinBox( parent, 0, max );
     }
     const QStandardItemModel& dataModel_;
@@ -140,6 +146,7 @@ void ADN_Units_Groups_GUI::AddItem( int row, int column, const QString& text, vo
 {
     QStandardItem* item = new QStandardItem( text );
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
+    item->setTextAlignment( Qt::AlignRight );
     if( data )
         item->setData( QVariant::fromValue( data ) );
     dataModel_.setItem( row, column, item );
@@ -190,7 +197,7 @@ void ADN_Units_Groups_GUI::contextMenuEvent( QContextMenuEvent* event )
     if( result == 1 )
         RemoveGroup( index.column() );
     else if( result == 0 )
-        AddGroup( "", dataModel_.rowCount() );
+        header_->Edit( AddGroup( "", dataModel_.rowCount() ) );
 }
 
 // -----------------------------------------------------------------------------
