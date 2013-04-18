@@ -81,6 +81,14 @@ function( set_output_directory target dir )
     set_target_properties( ${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${dir} )
 endfunction()
 
+if( IS_VISUAL_STUDIO )
+    add_custom_target( snapdir "${MASA_BIN}/snapdir.exe"
+        --input "${root_dir}/src"
+        --output "${CMAKE_CURRENT_BINARY_DIR}/.snapdir"
+    )
+    masa_set_target_folder( snapdir "cmake" )
+endif()
+
 function( add_target target group dir )
     message( "-- ${target}" )
     masa_extract_options( options ${ARGN} )
@@ -126,6 +134,9 @@ function( add_target target group dir )
     if( has_protocol )
         masa_add_target_include( ${target} "${CMAKE_CURRENT_BINARY_DIR}/protocol.out" )
         target_link_libraries( ${target} protocol )
+    endif()
+    if( IS_VISUAL_STUDIO )
+        add_dependencies( ${target} snapdir )
     endif()
 endfunction()
 
