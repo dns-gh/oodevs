@@ -126,5 +126,5 @@ StartTimeline::~StartTimeline()
 // -----------------------------------------------------------------------------
 bool StartTimeline::IsHidden() const
 {
-    return false;
+    return true;
 }
