@@ -118,6 +118,7 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
     APPLY( InitializePath, 2, void, ( size_t path, const SWORD_Model* entity ) ) \
     APPLY( GetPathHandler, 1, const void*, ( size_t identifier ) ) \
     APPLY( HasKnowledgeObject, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \
+    APPLY( GetAgentListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
 
 #define REGISTERED_AND_USED_HOOKS( APPLY ) \
     APPLY( ComputeHeight, 1, double, ( const SWORD_Model* entity ) )
@@ -135,7 +136,8 @@ namespace movement
                                                                     ( "magic move" )
                                                                     ( "follow" )
                                                                     ( "orientate" )
-                                                                    ( "compute height" ) )
+                                                                    ( "compute height" )
+                                                                    ( "interact with trafficability" ) )
         {}
     };
 }

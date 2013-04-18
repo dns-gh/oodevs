@@ -86,6 +86,7 @@ public:
     virtual void SetSpeedModificator( double rFactor );
     virtual void SetMaxSpeedModificator( double rFactor );
     virtual double GetMaxSpeedModificator() const;
+    virtual void ApplyTrafficModifier();
     virtual bool HasResources();
     virtual bool CanMove() const;
 
@@ -143,6 +144,7 @@ private:
     double                      rSpeed_;
     double                      rSpeedModificator_;
     double                      rMaxSpeedModificator_;
+    double                      rTrafficModificator_;
     // Network
     bool                        bCurrentPathHasChanged_;
     bool                        bEnvironmentHasChanged_;

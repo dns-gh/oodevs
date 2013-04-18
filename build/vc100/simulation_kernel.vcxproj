@@ -149,6 +149,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Perceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Sink.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\SinkRoleExtender.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\TrafficabilityInteractionEventListener.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\Brain.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Logger.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.cpp" />
@@ -889,6 +890,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Sink.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\SinkRoleExtender.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Sink_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\TrafficabilityInteractionEventListener.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\Brain.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\BrainIterate.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\BrainTemplate.h" />

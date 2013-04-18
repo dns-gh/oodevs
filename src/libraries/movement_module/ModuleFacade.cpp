@@ -11,6 +11,7 @@
 #include "Agent_Path.h"
 #include "Agent_PathClass.h"
 #include "PathType.h"
+#include "InteractWithTrafficabilityCommand.h"
 #include "MoveCommand.h"
 #include "MagicMoveCommand.h"
 #include "OrientateCommand.h"
@@ -212,6 +213,7 @@ ModuleFacade::ModuleFacade( const wrapper::View& model )
     wrapper::RegisterCommand< OrientateCommand >( "orientate" );
     wrapper::RegisterCommand< ComputeHeightCommand >( "compute height" );
     wrapper::RegisterCommand< FollowCommand >( "follow" );
+    wrapper::RegisterCommand< InteractWithTrafficabilityCommand >( "interact with trafficability" );
 }
 
 // -----------------------------------------------------------------------------

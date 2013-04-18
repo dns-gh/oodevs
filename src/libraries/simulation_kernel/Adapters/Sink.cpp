@@ -39,6 +39,7 @@
 #include "MovementEventListener.h"
 #include "AlatMonitoringEventListener.h"
 #include "FlyingShellPerceptionEventListener.h"
+#include "TrafficabilityInteractionEventListener.h"
 #include "PopulationFactory_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
@@ -270,6 +271,7 @@ void Sink::Initialize()
     listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire pion callback" ) );
     listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire population callback" ) );
     listeners_.push_back( new FlyingShellPerceptionEventListener( *facade_ ) );
+    listeners_.push_back( new TrafficabilityInteractionEventListener( *model_, *facade_ ) );
     FireHooks::Initialize();
     PerceptionHooks::Initialize();
     MovementHooks::Initialize();
@@ -478,6 +480,7 @@ namespace
         movement[ "max-slope" ] = pion.CallRole( &moving::PHY_RoleAction_InterfaceMoving::GetMaxSlope, 1.0 );
         movement[ "has-resources" ] = pion.CallRole( &RoleAction_Moving::HasResources, false );
         movement[ "can-move" ] = pion.CallRole( &RoleAction_Moving::CanMove, false );
+        movement[ "can-be-traffic-impacted" ] = pion.CanBeImpactedByTraffic();
         entity[ "knowledges" ] = pion.GetKnowledgeGroup()->GetId();
         UpdatePerceptions( entity[ "perceptions/notifications" ] );
         core::Model& components = entity[ "components" ];
@@ -799,6 +802,7 @@ void Sink::StartContinuousCommands( const MIL_AgentPion& pion )
     parameters[ "identifier" ] = id;
     commands_.insert( std::make_pair( id, StartCommand( "compute height", parameters ) ) );
     commands_.insert( std::make_pair( id, StartCommand( "perception", parameters ) ) );
+    commands_.insert( std::make_pair( id, StartCommand( "interact with trafficability", parameters ) ) );
 }
 
 // -----------------------------------------------------------------------------

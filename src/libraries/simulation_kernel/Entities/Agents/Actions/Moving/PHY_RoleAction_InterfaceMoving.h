@@ -52,6 +52,7 @@ public:
 
     virtual void SetSpeedModificator( double rFactor ) = 0;
     virtual void SetMaxSpeedModificator( double rFactor ) = 0;
+    virtual void ApplyTrafficModifier() = 0;
     //@}
 
 private:

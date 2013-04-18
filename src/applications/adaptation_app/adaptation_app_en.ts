@@ -5754,6 +5754,18 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Footprint</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Traffic</source>
+        <translation>Traffic</translation>
+    </message>
+    <message>
+        <source>Footprint radius</source>
+        <translation>Footprint radius</translation>
+    </message>
+    <message>
+        <source>Speed reduction modifier</source>
+        <translation>Speed reduction modifier</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>

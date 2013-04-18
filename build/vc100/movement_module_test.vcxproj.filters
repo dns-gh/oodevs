@@ -39,5 +39,8 @@
     <ClCompile Include="..\..\src\tests\movement_module_test\FollowCommandTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\movement_module_test\InteractWithTrafficabilityCommandTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

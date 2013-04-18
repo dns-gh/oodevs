@@ -2676,6 +2676,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionMoveAlong.cpp">
       <Filter>Source Files\Entities\Populations\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\TrafficabilityInteractionEventListener.cpp">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5470,6 +5473,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionMoveAlong.h">
       <Filter>Source Files\Entities\Populations\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\TrafficabilityInteractionEventListener.h">
+      <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

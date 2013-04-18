@@ -203,6 +203,11 @@ void ADN_Units_GUI::Build()
     if( QAbstractProxyModel* model = static_cast< QAbstractProxyModel* >( pComposantes->model() ) )
         connect( model->sourceModel(), SIGNAL( itemChanged( QStandardItem* ) ), this, SLOT( OnComponentChanged() ) );
 
+    // Trafic
+    Q3GroupBox* pTrafficGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Traffic" ) );
+    builder.AddField< ADN_EditLine_Int >( pTrafficGroup, "footprint-radius", tr( "Footprint radius" ), vInfosConnectors[ eFootprintRadius ], tr( "m" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pTrafficGroup, "speed-reduction-modifier", tr( "Speed reduction modifier" ), vInfosConnectors[ eSpeedModifier ], 0, eZeroOne );
+
     // Dotations
     ADN_GroupBox* pDotationsGroup = builder.AddGroupBox( 0, "complementary-resources", tr( "Complementary resources" ), vInfosConnectors[ eHasTC1 ], 1 );
     ADN_Equipments_Dotations_GUI* pDotations = new ADN_Equipments_Dotations_GUI( builder.GetChildName( "resources-table" ), vInfosConnectors[ eContenancesTC1 ], pDotationsGroup, ADN_Equipments_Dotations_GUI::eColumn_All ^ ADN_Equipments_Dotations_GUI::eColumn_Consumption, QHeaderView::ResizeToContents );
@@ -261,6 +266,7 @@ void ADN_Units_GUI::Build()
     pContentLayout->addMultiCellWidget( pSkillsGroup, 4, 4, 4, 5 );
     pContentLayout->addMultiCellWidget( pEfficienciesGroup, 5, 5, 4, 5 );
     pContentLayout->addMultiCellWidget( pCivilianGroup, 6, 6, 4, 5 );
+    pContentLayout->addMultiCellWidget( pTrafficGroup, 7, 7, 0, 3 );
 
     // List view
     QWidget* pSearchListView = builder.AddSearchListView< ADN_ListView_Units >( this, data_.GetUnitsInfos(), vInfosConnectors );

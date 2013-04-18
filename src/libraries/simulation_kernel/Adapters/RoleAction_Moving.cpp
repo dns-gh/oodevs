@@ -20,6 +20,7 @@
 #include "AlgorithmsFactories.h"
 #include "Entities/Agents/Actions/Moving/SpeedComputerStrategy.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -41,6 +42,7 @@ RoleAction_Moving::RoleAction_Moving()
     , rSpeed_              ( 0.)
     , rSpeedModificator_   ( 1. )
     , rMaxSpeedModificator_( 1. )
+    , rTrafficModificator_ ( 1. )
     , bHasMove_            ( false )
     , bTheoricMaxSpeed_    ( false )
 {
@@ -57,6 +59,7 @@ RoleAction_Moving::RoleAction_Moving( MIL_AgentPion& pion, const core::Model& en
     , rSpeed_              ( 0.)
     , rSpeedModificator_   ( 1. )
     , rMaxSpeedModificator_( 1. )
+    , rTrafficModificator_ ( 1. )
     , bHasMove_            ( false )
     , bTheoricMaxSpeed_    ( false )
 {
@@ -325,4 +328,13 @@ void RoleAction_Moving::Execute( posture::PostureComputer_ABC& algorithm ) const
 bool RoleAction_Moving::HasKnowledgeObject( const MIL_Object_ABC& object ) const
 {
     return owner_->GetKnowledgeGroup()->GetKnowledgeObjectContainer().HasKnowledgeObject( object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::ApplyTrafficModifier
+// Created: JSR 2012-01-12
+// -----------------------------------------------------------------------------
+void RoleAction_Moving::ApplyTrafficModifier()
+{
+    rTrafficModificator_ *= owner_->GetType().GetUnitType().GetSpeedModifier();
 }

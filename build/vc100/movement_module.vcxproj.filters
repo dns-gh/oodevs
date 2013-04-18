@@ -115,6 +115,9 @@
     <ClInclude Include="..\..\src\libraries\movement_module\FollowCommand.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\movement_module\InteractWithTrafficabilityCommand.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\movement_module\Speeds.cpp">
@@ -133,6 +136,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\movement_module\FollowCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\movement_module\InteractWithTrafficabilityCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

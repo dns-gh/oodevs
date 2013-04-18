@@ -82,6 +82,7 @@ public:
     virtual void SetTheoricSpeed( bool ) const;
 
     bool HasResources();
+    virtual void ApplyTrafficModifier();
     //@}
 
 private:
@@ -92,6 +93,7 @@ private:
     double             rSpeed_;
     double             rSpeedModificator_;
     double             rMaxSpeedModificator_;
+    double             rTrafficModificator_;
     // Network         
     bool               bHasMove_;
     mutable bool       bTheoricMaxSpeed_;

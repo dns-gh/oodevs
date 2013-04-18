@@ -24,6 +24,7 @@
 #include "SpeedComputerStrategy.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -51,6 +52,7 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving()
     , rSpeed_                ( 0.)
     , rSpeedModificator_     ( 1. )
     , rMaxSpeedModificator_  ( 1. )
+    , rTrafficModificator_   ( 1. )
     , bCurrentPathHasChanged_( true )
     , bEnvironmentHasChanged_( true )
     , bHasMove_              ( false )
@@ -69,6 +71,7 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving( MIL_AgentPion& pion )
     , rSpeed_                ( 0.)
     , rSpeedModificator_     ( 1. )
     , rMaxSpeedModificator_  ( 1. )
+    , rTrafficModificator_   ( 1. )
     , bCurrentPathHasChanged_( true )
     , bEnvironmentHasChanged_( true )
     , bHasMove_              ( false )
@@ -104,7 +107,7 @@ void PHY_RoleAction_Moving::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::ApplyMaxSpeedModificators( double rSpeed ) const
 {
-    rSpeed *= rMaxSpeedModificator_;
+    rSpeed *= rMaxSpeedModificator_ * rTrafficModificator_;
     return rSpeed;
 }
 
@@ -125,7 +128,7 @@ double PHY_RoleAction_Moving::ApplySpeedModificators( double rSpeed ) const
 void PHY_RoleAction_Moving::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
     if( !bTheoricMaxSpeed_ )
-        algorithm.AddModifier( rMaxSpeedModificator_, true );
+        algorithm.AddModifier( rMaxSpeedModificator_ * rTrafficModificator_, true );
     algorithm.AddModifier( rSpeedModificator_, false );
 }
 
@@ -508,6 +511,7 @@ void PHY_RoleAction_Moving::Clean()
     bHasMove_               = false;
     bIntentToMove_          = false;
     bTheoricMaxSpeed_       = false;
+    rTrafficModificator_    = 1.;
 }
 
 // -----------------------------------------------------------------------------
@@ -564,6 +568,15 @@ void PHY_RoleAction_Moving::SetMaxSpeedModificator( double rFactor )
 double PHY_RoleAction_Moving::GetMaxSpeedModificator() const
 {
     return rMaxSpeedModificator_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::ApplyTrafficModifier
+// Created: JSR 2012-01-12
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::ApplyTrafficModifier()
+{
+    rTrafficModificator_ *= owner_->GetType().GetUnitType().GetSpeedModifier();
 }
 
 // -----------------------------------------------------------------------------

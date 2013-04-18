@@ -64,6 +64,11 @@ MOCK_BASE_CLASS( MockAgent, MIL_Agent_ABC )
     MOCK_METHOD( GetKnowledge, 0 );
 
     MOCK_METHOD( GetLogisticHierarchy, 0 );
+
+    MOCK_METHOD( CanInteractWithTraffic, 0 );
+    MOCK_METHOD( CanBeImpactedByTraffic, 0 );
+    MOCK_METHOD( InteractWithTraffic, 1, void( const std::vector< TER_Agent_ABC* >& agents ), InteractWithTrafficAgents );
+    MOCK_METHOD( InteractWithTraffic, 1, void( const MIL_Agent_ABC& agent ), InteractWithTrafficAgent );
 };
 
 #endif // __MockAgent_h_

@@ -953,6 +953,8 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         GetKnowledgeGroup()->AppendAddedKnowledge( perceivableAgents, perceivableObjects, perceivableConcentrations, perceivableFlows );
 
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( position, maxPerceptionDistance, perceivableAgents );
+        owner_->InteractWithTraffic( perceivableAgents );
+
         for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
             (**it).Execute( perceivableAgents, *owner_->GetAlgorithms().detectionComputerFactory_ );
 

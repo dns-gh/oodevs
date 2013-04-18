@@ -48,6 +48,7 @@
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
@@ -1371,6 +1372,63 @@ void MIL_AgentPion::NotifyAttacking( MIL_Agent_ABC& target, bool mustReport ) co
 void MIL_AgentPion::NotifyAttacking( MIL_Population& /*target*/ ) const
 {
     //$$$ CRS ??
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::CanInteractWithTraffic
+// Created: JSR 2012-01-12
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::CanInteractWithTraffic() const
+{
+    if ( GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() != 0 || 
+        GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() ||
+        GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground() ||
+        GetRole< transport::PHY_RolePion_Transported >().IsTransported() )
+        return false;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::CanBeImpactedByTraffic
+// Created: MMC 2013-04-15
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::CanBeImpactedByTraffic() const
+{
+    assert( pType_ );
+    return ( pType_->GetUnitType().GetSpeedModifier() < 1. ) && CanInteractWithTraffic();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::InteractWithTraffic
+// Created: JSR 2012-01-12
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::InteractWithTraffic( const std::vector< TER_Agent_ABC* >& agents )
+{
+    if( CanBeImpactedByTraffic() )
+        for( std::vector< TER_Agent_ABC* >::const_iterator itAgent = agents.begin(); itAgent != agents.end(); ++itAgent )
+            InteractWithTraffic( static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::InteractWithTraffic
+// Created: MMC 2013-04-15
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::InteractWithTraffic( const MIL_Agent_ABC& agent )
+{
+    assert( pType_ );
+    if( CanBeImpactedByTraffic() && &agent != this && agent.CanInteractWithTraffic() )
+    {
+        MT_Vector2D position = GetRole< PHY_RoleInterface_Location >().GetPosition();
+        MT_Vector2D positionAgent = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
+        MT_Vector2D direction = GetRole< PHY_RoleInterface_Location >().GetDirection();
+        unsigned int distance = pType_->GetUnitType().GetFootprintRadius() + agent.GetType().GetUnitType().GetFootprintRadius();
+        if( position.SquareDistance( positionAgent ) < distance * distance )
+        {
+            MT_Vector2D directionAgent = positionAgent - position;
+            if( directionAgent * direction > 0 )
+                GetRole< moving::PHY_RoleAction_InterfaceMoving >().ApplyTrafficModifier();
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
