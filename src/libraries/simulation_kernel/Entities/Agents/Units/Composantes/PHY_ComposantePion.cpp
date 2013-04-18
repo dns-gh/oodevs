@@ -1177,7 +1177,7 @@ bool PHY_ComposantePion::CanPerceive( const transport::PHY_RoleAction_Loading* r
     if( !CanComponentBeUsed( roleLoading, false ) )
         return false;
     const transport::PHY_RoleInterface_Transported* roleTransported = pRole_->GetPion().RetrieveRole< transport::PHY_RoleInterface_Transported >();
-    return !roleTransported || !roleTransported->HasHumanTransportersToRecover();
+    return bLoadable_ || !roleTransported || !roleTransported->HasHumanTransportersToRecover();
 }
 
 // -----------------------------------------------------------------------------
