@@ -21,13 +21,6 @@ find_package( OpenGL REQUIRED )
 masa_find_with_prefix( ZLIB zlib REQUIRED )
 masa_find_qt4( REQUIRED QtCore QtGui QtNetwork QtOpenGL QtWebKit )
 
-# Cannot use ${PYTHON} for now in a cygwin environment as it picks
-# the cygwin python and not the native one, which fails hard with
-# the input native Windows paths.
-find_program( PYTHONEXE python
-    PATHS "${root_dir}/bin/python" NO_DEFAULT_PATH
-)
-
 masa_set_library( FLEX_LIBRARIES
     lm_new_md
     libnoact_md
@@ -143,19 +136,7 @@ function( add_target target group dir )
         add_dependencies( ${target} snapdir )
     endif()
     if( executable OR shared )
-        add_custom_target( "${target}_rc" ALL
-            COMMAND "${PYTHONEXE}" "${root_dir}/bin/buildtools/editres.py" copy
-                "${root_dir}/build/template.res"
-                "$<TARGET_FILE:${target}>"
-                "--types=RT_VERSION"
-            COMMAND "${PYTHONEXE}" "${root_dir}/bin/buildtools/editres.py" editversion
-                "--original-filename=$<TARGET_FILE_NAME:${target}>"
-                "--product-name=${PRODUCT}"
-                "--version=${MASA_VERSION}"
-                "$<TARGET_FILE:${target}>"
-            DEPENDS ${target}
-            COMMENT "Updating resources of ${target}"
-            SOURCES "${root_dir}/build/template.res" )
+        masa_add_version( ${target} "${root_dir}/build/template.res" "${PRODUCT}" )
     endif()
 endfunction()
 
