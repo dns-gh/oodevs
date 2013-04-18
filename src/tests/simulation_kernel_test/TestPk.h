@@ -45,6 +45,7 @@ public:
             "<attritions><attrition destruction=\"0\" protection=\"CharLourd\" repairable-with-evacuation=\"0\" repairable-without-evacuation=\"0.05\"/></attritions></material-composition-type>"
             "</material-composition-types><facade-types/><roof-shape-types/></urban-block-types></urban>" );
         PHY_MaterialCompositionType::Initialize( xisUrbanType );
+        PHY_Protection::Terminate();
         xml::xistringstream xisProtection( "<protections><protection name='protection1' type='humain'><neutralization average-time='10s' variance='1s'/></protection></protections>" );
         PHY_Protection::Initialize( xisProtection );
         xml::xistringstream xisDotationNature( "<natures><nature type='Solide' id='1'/></natures>" );
