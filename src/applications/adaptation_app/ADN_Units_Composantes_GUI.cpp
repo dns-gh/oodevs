@@ -160,7 +160,8 @@ ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI( QWidget * parent )
     pConnector_ = new ADN_Units_Composantes_GUI_Connector( *this );
 
     QPushButton* pGroups = new QPushButton( tr( "Edit groups" ), parent );
-    connect( pGroups, SIGNAL( clicked() ), this, SLOT( OnEditGroups() ) );
+    connect( pGroups, SIGNAL( clicked() ), SLOT( OnEditGroups() ) );
+    connect( this, SIGNAL( valueChanged( int, int ) ), SLOT( ResetGroups( int, int ) ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -261,4 +262,17 @@ void ADN_Units_Composantes_GUI::OnEditGroups()
     dialog.resize( static_cast< int >( pMainWindow->width() * 0.8 ), static_cast< int >( pMainWindow->height() * 0.8 ) );
     dialog.move( pMainWindow->x() + static_cast< int >( pMainWindow->width() * 0.1 ), pMainWindow->y() +  static_cast< int >( pMainWindow->height() * 0.1 ) );
     dialog.exec();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Composantes_GUI::ResetGroups
+// Created: MCO 2013-04-18
+// -----------------------------------------------------------------------------
+void ADN_Units_Composantes_GUI::ResetGroups( int row, int column )
+{
+    if( column != 1 )
+        return;
+    ADN_TableItem_ABC* pItem = static_cast< ADN_TableItem_ABC* >( item( row, column ) );
+    ComposanteInfos* pInfos = static_cast< ComposanteInfos* >( pItem->GetData() );
+    pInfos->groups_.clear();
 }

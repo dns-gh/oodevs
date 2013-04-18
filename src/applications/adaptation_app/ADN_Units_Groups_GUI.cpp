@@ -84,19 +84,6 @@ public:
 };
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Units_Groups_GUI::AddItem
-// Created: MCO 2013-04-17
-// -----------------------------------------------------------------------------
-void ADN_Units_Groups_GUI::AddItem( int row, int column, const QString& text, void* data )
-{
-    QStandardItem* item = new QStandardItem( text );
-    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
-    if( data )
-        item->setData( QVariant::fromValue( data ) );
-    dataModel_.setItem( row, column, item );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Units_Groups_GUI constructor
 // Created: MCO 2013-04-16
 // -----------------------------------------------------------------------------
@@ -143,6 +130,19 @@ ADN_Units_Groups_GUI::ADN_Units_Groups_GUI( const Q3Table& model, QWidget* paren
 ADN_Units_Groups_GUI::~ADN_Units_Groups_GUI()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Groups_GUI::AddItem
+// Created: MCO 2013-04-17
+// -----------------------------------------------------------------------------
+void ADN_Units_Groups_GUI::AddItem( int row, int column, const QString& text, void* data )
+{
+    QStandardItem* item = new QStandardItem( text );
+    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
+    if( data )
+        item->setData( QVariant::fromValue( data ) );
+    dataModel_.setItem( row, column, item );
 }
 
 // -----------------------------------------------------------------------------
