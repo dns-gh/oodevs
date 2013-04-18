@@ -12,12 +12,13 @@
 
 #include "Parameter.h"
 
-namespace sword {
-    class PushFlowParameters;
+namespace sword
+{
     class PointList;
 }
 
-namespace kernel {
+namespace kernel
+{
     class DotationType;
     class Automat_ABC;
     class EntityResolver_ABC;
@@ -25,8 +26,10 @@ namespace kernel {
     class CoordinateConverter_ABC;
 }
 
-namespace actions {
-    namespace parameters {
+namespace actions
+{
+    namespace parameters
+    {
 
 // =============================================================================
 /** @class  MedicalPriorities
@@ -39,7 +42,7 @@ class PushFlowParameters : public Parameter< QString >
 public:
     //! @name Constructors/Destructor
     //@{
-             PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter );
+             PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, bool isSupply );
              PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis );
     virtual ~PushFlowParameters();
     //@}
@@ -65,7 +68,7 @@ private:
         T_Resources resources_;
         T_PointVector path_;
     };
-    typedef std::map< const kernel::Automat_ABC*, Recipient >    T_Recipients;
+    typedef std::map< const kernel::Automat_ABC*, Recipient > T_Recipients;
     typedef std::map< const kernel::EquipmentType*, unsigned long > T_Equipments;
     //@}
 
@@ -86,6 +89,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
+    bool isSupply_;
     T_Recipients recipients_;
     T_Equipments transporters_;
     T_PointVector wayBackPath_;

@@ -1036,6 +1036,8 @@ message PushFlowParameters {
     //! The optional way points the convey has to take when going back
     //! to its logistic base
     optional PointList             wayBackPath  = 3;
+    //! Message is used to supply if set to true, push flow otherwise
+    optional bool                  supply       = 4;
 }
 
 /** @struct PullFlowParameters

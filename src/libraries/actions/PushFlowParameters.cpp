@@ -9,21 +9,16 @@
 
 #include "actions_pch.h"
 #include "PushFlowParameters.h"
-#include "LocationBase.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
-
 #include <boost/algorithm/string.hpp>
-#include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
-#include <xeumeuleu/xml.hpp>
 
-using namespace kernel;
 using namespace actions;
 using namespace parameters;
 
@@ -31,9 +26,10 @@ using namespace parameters;
 // Name: PushFlowParameters constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-PushFlowParameters::PushFlowParameters( const OrderParameter& parameter, const CoordinateConverter_ABC& converter )
+PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, bool isSupply )
     : Parameter< QString >( parameter )
-    , converter_          ( converter )
+    , converter_( converter )
+    , isSupply_( isSupply )
 {
     // NOTHING
 }
@@ -55,13 +51,17 @@ namespace
 // Name: PushFlowParameters constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis )
+PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver, xml::xistream& xis )
     : Parameter< QString >( parameter )
-    , converter_          ( converter )
+    , converter_( converter )
+    , isSupply_( false )
 {
     xis >> xml::list( boost::bind( &WalkPath, this, boost::ref( wayBackPath_ ), &PushFlowParameters::ReadPoint, _1, _2, _3 ) );
     xis >> xml::list( "recipient", *this, &PushFlowParameters::ReadRecipient, entityResolver, dotationTypeResolver )
         >> xml::list( "transporter", *this, &PushFlowParameters::ReadTransporter, equipmentTypeResolver );
+    xis >> xml::optional >> xml::start( "type" )
+            >> xml::attribute( "supply", isSupply_ )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -79,8 +79,7 @@ PushFlowParameters::~PushFlowParameters()
 // -----------------------------------------------------------------------------
 void PushFlowParameters::ReadRecipient( xml::xistream& xis, const kernel::EntityResolver_ABC& entityResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver )
 {
-    const unsigned int idTmp = xis.attribute< unsigned int >("id" );
-    Automat_ABC& automat = entityResolver.GetAutomat( idTmp );
+    kernel::Automat_ABC& automat = entityResolver.GetAutomat( xis.attribute< unsigned int >( "id" ) );
     Recipient& recipient = recipients_[ &automat ];
     xis >> xml::list( "resource", *this, &PushFlowParameters::ReadResource, dotationTypeResolver, recipient.resources_ )
         >> xml::start( "path" )
@@ -94,8 +93,7 @@ void PushFlowParameters::ReadRecipient( xml::xistream& xis, const kernel::Entity
 // -----------------------------------------------------------------------------
 void PushFlowParameters::ReadResource( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver, T_Resources& resources )
 {
-    const unsigned int idTmp = xis.attribute< unsigned int >( "id" );
-    const DotationType& dotationType = dotationTypeResolver.Get( idTmp );
+    const kernel::DotationType& dotationType = dotationTypeResolver.Get( xis.attribute< unsigned int >( "id" ) );
     const unsigned int quantity = xis.attribute< unsigned int >( "quantity" );
     resources[ &dotationType ] += quantity;
 }
@@ -106,8 +104,7 @@ void PushFlowParameters::ReadResource( xml::xistream& xis, const tools::Resolver
 // -----------------------------------------------------------------------------
 void PushFlowParameters::ReadTransporter( xml::xistream& xis, const tools::Resolver_ABC< kernel::EquipmentType >& equipmentTypeResolver )
 {
-    const unsigned int idTmp = xis.attribute< unsigned int >( "id" );
-    const EquipmentType& type = equipmentTypeResolver.Get( idTmp );
+    const kernel::EquipmentType& type = equipmentTypeResolver.Get( xis.attribute< unsigned int >( "id" ) );
     const unsigned int quantity = xis.attribute< unsigned int >( "quantity" );
     transporters_[ &type ] += quantity;
 }
@@ -118,17 +115,13 @@ void PushFlowParameters::ReadTransporter( xml::xistream& xis, const tools::Resol
 // -----------------------------------------------------------------------------
 void PushFlowParameters::ReadPoint( xml::xistream& xis, T_PointVector& points )
 {
-    std::string mgrs;
-    xis >> xml::attribute( "coordinates", mgrs );
-
+    std::string mgrs = xis.attribute< std::string> ( "coordinates" );
     std::vector< std::string > result;
     boost::algorithm::split( result, mgrs, boost::is_any_of(" ") );
     geometry::Point2f point;
     if( result.size() == 2 ) //Location in WGS84
-    {
         point = converter_.ConvertFromGeo( geometry::Point2d( boost::lexical_cast< double >( result[ 0 ] ),
                                                       boost::lexical_cast< double >( result[ 1 ] ) ) );
-    }
     else
         point = converter_.ConvertToXY( mgrs );
     points.push_back( point );
@@ -212,6 +205,8 @@ void PushFlowParameters::CommitTo( sword::MissionParameter_Value& message ) cons
 
     if( !wayBackPath_.empty() )
         CommitTo( wayBackPath_, *msgPushFlow->mutable_waybackpath() );
+    if( isSupply_ )
+        msgPushFlow->set_supply( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -269,6 +264,10 @@ void PushFlowParameters::Serialize( xml::xostream& xos ) const
             << xml::end;
     }
     Serialize( wayBackPath_, "waybackpath", xos );
+    if( isSupply_ )
+        xos << xml::start( "type" )
+            << xml::attribute( "supply", isSupply_ )
+            << xml::end;
 }
 
 // -----------------------------------------------------------------------------

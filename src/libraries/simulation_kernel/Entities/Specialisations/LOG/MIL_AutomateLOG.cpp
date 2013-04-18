@@ -26,6 +26,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalCollectionAmbulance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Logistic/SupplyConsign_ABC.h"
+#include "Entities/Agents/Roles/Logistic/SupplyDotationManualRequestBuilder.h"
 #include "Entities/Agents/Roles/Logistic/SupplyStockPushFlowRequestBuilder.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestManualDispatcher.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestContainer.h"
@@ -493,7 +494,11 @@ bool MIL_AutomateLOG::SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& 
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::OnReceiveLogSupplyPushFlow( const sword::PushFlowParameters& parameters, const AutomateFactory_ABC& automateResolver )
 {
-    boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > builder( new logistic::SupplyStockPushFlowRequestBuilder( parameters, *this, automateResolver ) );
+    boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > builder;
+    if( parameters.has_supply() && parameters.supply() == true )
+        builder.reset( new logistic::SupplyDotationManualRequestBuilder( parameters, *this, automateResolver ) );
+    else
+        builder.reset( new logistic::SupplyStockPushFlowRequestBuilder( parameters, *this, automateResolver ) );
     boost::shared_ptr< logistic::SupplyRequestContainer > requestContainer( new logistic::SupplyRequestContainer( builder ) );
     logistic::SupplyRequestManualDispatcher dispatcher( *this );
     requestContainer->Execute( dispatcher );

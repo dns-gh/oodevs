@@ -67,7 +67,8 @@ template< typename Archive >
 void RolePion_Composantes::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RolePion_Composantes >( *this )
-        & entity_;
+        & entity_
+        & components_;
 }
 
 namespace

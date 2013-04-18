@@ -1510,6 +1510,14 @@ Reason: %3
         <source>Remove recipient</source>
         <translation>Remove recipient</translation>
     </message>
+    <message>
+        <source>Supply</source>
+        <translation>Supply</translation>
+    </message>
+    <message>
+        <source>Log Supply</source>
+        <translation>Log Supply</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyRecompletionDialog</name>

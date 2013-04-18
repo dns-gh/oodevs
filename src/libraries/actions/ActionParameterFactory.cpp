@@ -187,7 +187,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_extensionlist() )
         return ( nullValue ) ? new parameters::ExtensionList( parameter )                   : new parameters::ExtensionList( parameter, message.extensionlist() );
     if( message.has_push_flow_parameters() )
-        return new parameters::PushFlowParameters( parameter, converter_ );
+        return new parameters::PushFlowParameters( parameter, converter_, false );
     if( message.has_pull_flow_parameters() )
         return new parameters::PullFlowParameters( parameter, converter_ );
     return 0;

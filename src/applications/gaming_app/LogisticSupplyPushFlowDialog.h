@@ -21,7 +21,7 @@
 class LogisticSupplyPushFlowDialog : public LogisticSupplyFlowDialog_ABC
                                    , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -39,7 +39,8 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void Show();
+    void PushFlow();
+    void Supply();
     virtual void Validate();
     virtual void Reject();
     void AddRecipient( const QString& recipientName );
@@ -48,12 +49,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LogisticSupplyPushFlowDialog( const LogisticSupplyPushFlowDialog& );            //!< Copy constructor
-    LogisticSupplyPushFlowDialog& operator=( const LogisticSupplyPushFlowDialog& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void InsertMenuEntry( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
@@ -61,6 +56,7 @@ private:
     virtual void SetSuppliesToTable( const kernel::Automat_ABC& recipient );
 
     void Clear();
+    void Show();
     void ClearRecipientsData();
     void ComputeRecipients();
     void ComputeAvailableRecipients( QStringList& displayRecipientsNames );
@@ -84,6 +80,7 @@ private:
 private:
     //! @name Member data
     //@{
+    bool isPushFlow_;
     LogisticSupplyExclusiveListWidget* recipientsList_;
     T_Recipients recipients_;
     T_RecipientSupplies recipientSupplies_;

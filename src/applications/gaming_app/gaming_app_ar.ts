@@ -1511,6 +1511,14 @@ Reason: %3
         <source>Remove recipient</source>
         <translation type="unfinished">إزالة مستلم</translation>
     </message>
+    <message>
+        <source>Supply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log Supply</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyRecompletionDialog</name>

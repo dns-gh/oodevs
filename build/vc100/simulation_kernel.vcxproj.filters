@@ -196,9 +196,6 @@
     <Filter Include="Source Files\Entities\Agents\Roles\Decision">
       <UniqueIdentifier>{7be8b48e-770f-443d-8f25-ed69f5f3a51c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Entities\Agents\Roles\Network">
-      <UniqueIdentifier>{28df29b1-0670-4e0e-8c43-7f158bacfe2e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Entities\Agents\Roles\Dotations">
       <UniqueIdentifier>{ee3bf927-74b7-4210-b9f5-96b39dd61aa1}</UniqueIdentifier>
     </Filter>
@@ -540,6 +537,9 @@
     </Filter>
     <Filter Include="Source Files\Entities\Agents\Roles\Reinforcement">
       <UniqueIdentifier>{85eab082-1ef0-480e-a451-218a48c223f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Agents\Roles\Perception\Network">
+      <UniqueIdentifier>{28df29b1-0670-4e0e-8c43-7f158bacfe2e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1159,10 +1159,10 @@
       <Filter>Source Files\Entities\Agents\Roles\Decision</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\network\NET_RoleInterface_Dotations.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Network</Filter>
+      <Filter>Source Files\Entities\Agents\Roles\Perception\Network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\network\NET_RolePion_Dotations.cpp">
-      <Filter>Source Files\Entities\Agents\Roles\Network</Filter>
+      <Filter>Source Files\Entities\Agents\Roles\Perception\Network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\ConsumptionComputerFactory.cpp">
       <Filter>Source Files\Entities\Agents\Roles\Dotations</Filter>
@@ -2679,6 +2679,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\TrafficabilityInteractionEventListener.cpp">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyDotationManualRequestBuilder.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -3495,22 +3498,22 @@
       <Filter>Source Files\Entities\Agents\Roles\Decision</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\network\NET_RoleInterface_Dotations.h">
-      <Filter>Source Files\Entities\Agents\Roles\Network</Filter>
+      <Filter>Source Files\Entities\Agents\Roles\Perception\Network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\roles\network\NET_RolePion_Dotations.h">
-      <Filter>Source Files\Entities\Agents\Roles\Network</Filter>
+      <Filter>Source Files\Entities\Agents\Roles\Perception\Network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\NetworkMessageSender_ABC.h">
-      <Filter>Source Files\Entities\Agents\Roles\Network</Filter>
+      <Filter>Source Files\Entities\Agents\Roles\Perception\Network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\NetworkNotificationHandler_ABC.h">
-      <Filter>Source Files\Entities\Agents\Roles\Network</Filter>
+      <Filter>Source Files\Entities\Agents\Roles\Perception\Network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\NetworkUnitAttributesMessageSender_ABC.h">
-      <Filter>Source Files\Entities\Agents\Roles\Network</Filter>
+      <Filter>Source Files\Entities\Agents\Roles\Perception\Network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\VisionConeNotificationHandler_ABC.h">
-      <Filter>Source Files\Entities\Agents\Roles\Network</Filter>
+      <Filter>Source Files\Entities\Agents\Roles\Perception\Network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\ConsumeDotationNotificationHandler_ABC.h">
       <Filter>Source Files\Entities\Agents\Roles\Dotations</Filter>
@@ -5476,6 +5479,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\TrafficabilityInteractionEventListener.h">
       <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyDotationManualRequestBuilder.h">
+      <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

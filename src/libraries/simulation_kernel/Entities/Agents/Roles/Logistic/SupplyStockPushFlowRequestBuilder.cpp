@@ -58,7 +58,7 @@ SupplyStockPushFlowRequestBuilder::~SupplyStockPushFlowRequestBuilder()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: SupplyStockPushFlowRequestBuilder::CreateRequest
+// Name: SupplyStockPushFlowRequestBuilder::Process
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
 void SupplyStockPushFlowRequestBuilder::Process( SupplyRequestContainer_ABC& container )

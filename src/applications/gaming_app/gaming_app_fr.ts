@@ -1513,6 +1513,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Remove recipient</source>
         <translation>Enlever destinataire</translation>
     </message>
+    <message>
+        <source>Supply</source>
+        <translation>Ravitailler</translation>
+    </message>
+    <message>
+        <source>Log Supply</source>
+        <translation>Ravitaillement</translation>
+    </message>
 </context>
 <context>
     <name>LogisticSupplyRecompletionDialog</name>
