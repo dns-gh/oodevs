@@ -105,11 +105,25 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
           >> xml::optional >> xml::attribute( "major", bMajor_ )
           >> xml::optional >> xml::attribute( "crew", nNbrHumanInCrew_ )
           >> xml::optional >> xml::attribute( "convoyer", bConveyor_ )
-          >> xml::optional >> xml::attribute( "loadable", bLoadable_ );
+          >> xml::optional >> xml::attribute( "loadable", bLoadable_ )
+          >> xml::list( "group", *this, &ADN_Units_Data::ComposanteInfos::ReadGroup );
     ADN_Composantes_Data::ComposanteInfos* pComposante = ADN_Workspace::GetWorkspace().GetComposantes().GetData().FindComposante( strName );
     if( pComposante == 0 )
         throw ADN_DataException( tools::translate( "Units_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "Units_Data", "Unit types - Invalid equipment '%1'" ).arg( strName.c_str() ).toAscii().constData() );
     ptrComposante_ = pComposante;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::ComposanteInfos::ReadGroup
+// Created: MCO 2013-04-09
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::ComposanteInfos::ReadGroup( xml::xistream& input )
+{
+    std::string name;
+    int count;
+    input >> xml::attribute( "name", name )
+          >> xml::attribute( "count", count );
+    groups_.push_back( std::make_pair( name, count ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,6 +146,11 @@ void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output, bool 
         output << xml::attribute( "convoyer", bConveyor_ );
     if( bLoadable_.GetData() )
         output << xml::attribute( "loadable", bLoadable_ );
+    for( auto it = groups_.begin(); it != groups_.end(); ++it )
+        output << xml::start( "group" )
+            << xml::attribute( "name", (*it).first )
+            << xml::attribute( "count", (*it).second )
+        << xml::end;
     output << xml::end;
 }
 

@@ -43,6 +43,9 @@ public:
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output, bool bIsAutonomous ) const;
 
+    private:
+        void ReadGroup( xml::xistream& input );
+
     public:
         ADN_TypePtr_InVector_ABC<ADN_Composantes_Data::ComposanteInfos> ptrComposante_;
         ADN_Type_Bool                                                   bMajor_;
@@ -50,6 +53,7 @@ public:
         ADN_Type_Bool                                                   bConveyor_;
         ADN_Type_Int                                                    nNbrHumanInCrew_;
         ADN_Type_Int                                                    nNb_;
+        std::vector< std::pair< std::string, int > >                    groups_;
 
     public:
         class Cmp : public std::unary_function< ComposanteInfos* , bool >

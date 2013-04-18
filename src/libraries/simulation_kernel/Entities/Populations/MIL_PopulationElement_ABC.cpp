@@ -458,7 +458,7 @@ void MIL_PopulationElement_ABC::SetAttitude( const MIL_PopulationAttitude& attit
         {
             boost::shared_ptr< DEC_Knowledge_Population > pKnPopulation = ( *it )->GetKnowledge().ResolveKnowledgePopulation( *pPopulation_ );
             if( !pKnPopulation )
-                return;
+                continue;
             MIL_Report::PostEvent( **it, MIL_Report::eRC_CloseCrowdAttitudeChanged, pKnPopulation, GetAttitude().GetID() );
         }
     }

@@ -83,12 +83,14 @@ public:
     static bool AgentCanDestroyObjectType( const DEC_Decision_ABC* agent, const std::string& type );
     static bool AgentCanDestroyObjectTypeWithLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation );
     static bool AgentCanMineObject( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation );
+    static bool AgentCanDemineObject( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation );
     static bool AgentCanByPassObjectWithLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation );
 
     static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToBuild( const std::vector< DEC_Decision_ABC* >& units, const std::string& type );
     static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToBuildWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation );
     static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToMine( const std::vector< DEC_Decision_ABC* >& units, const std::string& type );
     static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToMineWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation );
+    static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToDemineWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation );
     static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToDestroy( const std::vector< DEC_Decision_ABC* >& units, const std::string& type );
     static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToDestroyWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation );
     static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToByPass( const std::vector< DEC_Decision_ABC* >& units, const std::string& type );
@@ -202,6 +204,9 @@ public:
     // Relève
     static bool RelievePion( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* agentToRelieve );
     static bool CanRelievePion( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* agentToRelieve );
+
+    // Surrender target
+    static bool SurrenderAutomat( MIL_Agent_ABC& callerAgent, DEC_Decision_ABC* automat );
 
     // Populations couvrantes
     static void AlertInhabitants( const TER_Localisation* location ); // $$$$ BCI 2011-02-01: je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...

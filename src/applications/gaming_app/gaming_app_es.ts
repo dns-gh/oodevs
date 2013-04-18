@@ -1310,7 +1310,7 @@ Reason: %3
 <context>
     <name>KnowledgeLayer</name>
     <message>
-        <source>Knowledge</source>
+        <source>Knowledges</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

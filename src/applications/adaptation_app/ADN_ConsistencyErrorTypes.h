@@ -23,6 +23,7 @@ enum E_ConsistencyCheck
     eMissingPart            = 0x0003 << 4,
     eMissingChoiceComposite = 0x0004 << 4,
     eLowerCaseEmat          = 0x0005 << 4,
+    eMissingRepairType      = 0x0006 << 4,
 
     eOthersMask             = 0x000f << 8,
 };

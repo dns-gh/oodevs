@@ -80,7 +80,7 @@ namespace
     {
         if( sic == "atlas" )
             return Exercise::eSicAtlas;
-        if( sic == "dqp_manager" )
+        if( sic == "dqp-manager" )
             return Exercise::eSicDQPManager;
         if( sic == "sicf" )
             return Exercise::eSicSICF;
@@ -129,7 +129,7 @@ void Exercise::Load( xml::xistream& xis )
     if( sicPresent )
         xis >> xml::optional >> xml::start( "sic" )
                 >> xml::attribute( "atlas", sicVersions_[ eSicAtlas ] )
-                >> xml::attribute( "dqp_manager", sicVersions_[ eSicDQPManager ] )
+                >> xml::attribute( "dqp-manager", sicVersions_[ eSicDQPManager ] )
                 >> xml::attribute( "sicf", sicVersions_[ eSicSICF ] )
                 >> xml::attribute( "sir", sicVersions_[ eSicSIR ] )
             >> xml::end; // sic

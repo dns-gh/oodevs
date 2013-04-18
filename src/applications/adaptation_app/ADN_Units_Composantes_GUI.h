@@ -32,6 +32,8 @@ public:
 
 private slots:
     void MenuListItemSelected();
+    void OnEditGroups();
+    void ResetGroups( int row, int column );
 
 private:
     bool bMenuListItemSelected_;

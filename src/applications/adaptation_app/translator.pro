@@ -171,6 +171,7 @@ ADN_Template_Usages.cpp \
 ADN_Tr.cpp \
 ADN_Type_Repartition.cpp \
 ADN_Units_Composantes_GUI.cpp \
+ADN_Units_Groups_GUI.cpp \
 ADN_Units_Data.cpp \
 ADN_Units_GUI.cpp \
 ADN_Units_LogThreshold_GUI.cpp \

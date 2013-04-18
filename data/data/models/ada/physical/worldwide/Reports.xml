@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<reports model-version="4.10.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Reports.xsd">
+<reports model-version="4.11.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Reports.xsd">
   <report category="operational" id="0" message="NTR"/>
   <report category="operational" id="1" message="blocked by obstacle %1">
     <parameter type="ObjectKnowledge"/>
@@ -693,5 +693,11 @@
   </report>
   <report category="operational" id="508" message="Impossible Indirect Fire : unit neutralized"/>
   <report category="operational" id="509" message="Work impossible : no demine capacity"/>
+  <report category="operational" id="510" message="Surrendered unit recognized"/>
+  <report category="operational" id="511" message="Surrendered unit identified"/>
+  <report category="operational" id="512" message="%1 of %2 shuttle(s) betwween loading and unloading">
+    <parameter type="Integer"/>
+    <parameter type="Integer"/>
+  </report>
 </reports>
-<!-- signature="3648769055" -->
+<!-- signature="3345903870" -->

@@ -18,6 +18,7 @@
 #include "NotificationMessageHandler.h"
 #include "client_proxy/SwordProxy.h"
 #include "frontend/ProcessWrapper.h"
+#include "MT_Tools\MT_Logger.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/AuthenticationSenders.h"
@@ -89,9 +90,11 @@ void SwordFacade::Stop( bool forceProcessStop /*= true*/ )
     {
         if( IsConnected() && client_.get() )
         {
+            MT_LOG_INFO_MSG( "Stopping process: Disconnecting client" );
             client_->Disconnect();
             client_->UnregisterMessageHandler( this );
             client_.reset();
+            MT_LOG_INFO_MSG( "Stopping process: Disconnected client" );
         }
         process_.lock()->Stop( forceProcessStop );
     }

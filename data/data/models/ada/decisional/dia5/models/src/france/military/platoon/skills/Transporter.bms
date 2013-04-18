@@ -11,7 +11,8 @@ rootnode
         skill.nodes.QueueForLoad,
         skill.nodes.LoadQueue,
         skill.nodes.UnloadQueue,
-        skill.nodes.Reports },
+        skill.nodes.Reports
+        },
 
     -- unite arrivee a destination
     done = function( self, params, additionalParams )
@@ -32,7 +33,12 @@ rootnode
     
     -- changement de destination quand le (de)chargement est fini
     loaded = function( self )
+    if self.position ~= self.params.destination then
+        meKnowledge:RC( eRC_TransportRoundTrip, self.roundTrip, self.numberOfRoundTrip )
+        self.roundTrip = self.roundTrip + 1
+    end
         self.position = self.params.destination
+
     end,
     unloaded = function( self )
         self.position = self.params.loadingPoint
@@ -46,6 +52,8 @@ rootnode
 
     -- init
     create = function( self )
+        self.numberOfRoundTrip = 0
+        self.roundTrip = 1
         meKnowledge.isStoppingTransport = false
         -- filtrer les unites transportables
         self.loadableUnits = {}
@@ -53,6 +61,7 @@ rootnode
         for _, unit in pairs( self.params.units ) do
             if unit:canTransportIt( self.onlyLoadable ) then
                 self.loadableUnits[ unit ] = true
+                self.numberOfRoundTrip = self.numberOfRoundTrip + unit:transportUnitRoundTrip( self.onlyLoadable )
             end
         end
         if not next(self.loadableUnits) then
@@ -64,6 +73,8 @@ rootnode
         self.arrivedDestination = false
         self.everybodyQueued = false
         self.newqueued = false
+        --information sur le nombre d'aller retour
+        self.numberOfRoundTrip = math.ceil(self.numberOfRoundTrip)
     end,
 
     activate = function( self )
@@ -112,6 +123,7 @@ node "QueueForLoad"
 
 node "LoadQueue"
 {
+
     feedbacks = { "loaded" },
     
     acquire = { [ skill.resources.loadcapacity ] = 1 },

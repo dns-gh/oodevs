@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<exercise model-version="4.10.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/exercise.xsd">
+<exercise model-version="4.9.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/exercise.xsd">
   <meta>
     <briefing/>
     <resources/>
@@ -11,6 +11,6 @@
   <model dataset="ada" physical="scipio"/>
   <terrain name="Drosoville"/>
   <drawings file="drawings.xml"/>
-  <sic atlas="2.0.20" dqp_manager="2.1.3" sicf="2.5_Rev_A" sir="XP_2009_SSI"/>
+  <sic atlas="2.0.20" dqp-manager="2.1.3" sicf="2.5_Rev_A" sir="XP_2009_SSI"/>
 </exercise>
-<!-- signature="2983322164" -->
+<!-- signature="1630268176" -->

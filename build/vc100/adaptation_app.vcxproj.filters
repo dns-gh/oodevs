@@ -1246,6 +1246,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Infos.cpp">
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Units_Groups_GUI.cpp">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -2293,6 +2296,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionParameterType.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Units_Groups_GUI.h">
+      <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

@@ -503,6 +503,7 @@ void RegisterObjectFunctions( directia::brain::Brain& brain )
     brain[ "DEC_GetAgentsPouvantContournerAvecLocalisation" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToByPassWithLocalisation;
     brain[ "DEC_GetAgentsPouvantDetruire" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToDestroy;
     brain[ "DEC_GetAgentsPouvantDetruireAvecLocalisation" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToDestroyWithLocalisation;
+    brain[ "DEC_GetAgentsPouvantDevaloriserAvecLocalisation" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToDemineWithLocalisation;
 }
 
 // -----------------------------------------------------------------------------
