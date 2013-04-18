@@ -133,7 +133,12 @@ void ProcessWrapper::Run()
     catch( const std::exception& e )
     {
         Stop();
-        observer_.NotifyError( tools::GetExceptionMsg( e ) );
+        boost::mutex::scoped_lock lock( *mutex_ );
+        const std::string endpoint = spawns_.empty()
+                                    ? std::string()
+                                    : spawns_.front()->GetCommanderEndpoint();
+        lock.unlock();
+        observer_.NotifyError( tools::GetExceptionMsg( e ), endpoint );
     }
 }
 
