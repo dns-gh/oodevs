@@ -11,6 +11,7 @@
 #include "SpawnCommand.h"
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
+#include "MT_Tools\MT_Logger.h"
 #include <windows.h>
 #include <tlhelp32.h>
 
@@ -138,7 +139,7 @@ namespace
         if( IsWindow( hwnd ) )
         {
             DWORD_PTR result;
-            SendMessageTimeout( hwnd, WM_CLOSE, 0, 0, SMTO_ABORTIFHUNG | SMTO_BLOCK, 0, &result );
+            SendMessageTimeout( hwnd, WM_CLOSE, 0, 0, SMTO_ABORTIFHUNG | SMTO_BLOCK, 100, &result );
         }
         return TRUE;
     }
@@ -157,22 +158,27 @@ void SpawnCommand::Attach( boost::shared_ptr< Process_ABC > process )
 // Name: SpawnCommand::StopProcess
 // Created: SBO 2010-11-05
 // -----------------------------------------------------------------------------
-void SpawnCommand::StopProcess()
+bool SpawnCommand::StopProcess()
 {
     if( internal_.get() && internal_->pid_.hProcess )
     {
         HANDLE hThreadSnap = INVALID_HANDLE_VALUE;
         THREADENTRY32 te32;
 
+        MT_LOG_INFO_MSG( "Spawn Command : Stopping process" );
         // Take a snapshot of all running threads
         hThreadSnap = CreateToolhelp32Snapshot( TH32CS_SNAPTHREAD, internal_->pid_.dwThreadId );
         if( hThreadSnap == INVALID_HANDLE_VALUE )
-            return;
+        {            
+            MT_LOG_INFO_MSG( "Spawn Command : Invalid snapshot" );
+            return false;
+        }
         te32.dwSize = sizeof( THREADENTRY32 );
         if( !Thread32First( hThreadSnap, &te32 ) )
         {
+            MT_LOG_INFO_MSG( "Spawn Command : No first thread" );
             CloseHandle( hThreadSnap ); // Must clean up the snapshot object!
-            return;
+            return false;
         }
         do
         {
@@ -181,8 +187,15 @@ void SpawnCommand::StopProcess()
         }
         while( Thread32Next( hThreadSnap, &te32 ) );
         EnumThreadWindows( internal_->pid_.dwThreadId, &::CloseWndProc, 0 );
-        TerminateProcess( internal_->pid_.hProcess, 0 );
+        MT_LOG_INFO_MSG( "Spawn Command : Calling TerminateProcess" );
+        int failure = TerminateProcess( internal_->pid_.hProcess, 0 );
+        if( failure )
+        {
+            MT_LOG_INFO_MSG( "Spawn Command : TerminateProcess Failure" );
+            return false;
+        }
         CloseHandle( hThreadSnap );
+        return true;
     }
 }
 
@@ -261,8 +274,16 @@ bool SpawnCommand::Wait()
             return true;
         }
     }
-    if( attach_ || forceProcessStop_)
-        StopProcess();
+    if( attach_ || forceProcessStop_ )
+    {
+        bool stopped = StopProcess();
+        if( !stopped )
+        {
+            ::Sleep( 100 );
+            return true;
+        }
+    }
+
     return false;
 }
 

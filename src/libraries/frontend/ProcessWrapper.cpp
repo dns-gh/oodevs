@@ -131,7 +131,7 @@ void ProcessWrapper::Stop( bool forceProcessStop /*= true*/ )
     {
         stop_ = true;
         process_->Stop( forceProcessStop );
-        while( process_->Wait() ) {}
+        while( process_.get() && process_->Wait() ) {}
     }
 }
 
