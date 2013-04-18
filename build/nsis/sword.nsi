@@ -98,6 +98,10 @@ Section "!${PRODUCT_NAME}"
     ;modules
     File "${RUNDIR}\*_module.dll"
 
+    ; timeline
+    File "${RUNDIR}\timeline_server.exe"
+    File "${RUNDIR}\timeline.pak"
+
     ; PDB (Jira 8204)
     File "${OUTDIR}\release\applications\adaptation_app\*.pdb"
     File "${OUTDIR}\release\applications\dispatcher_app\*.pdb"
