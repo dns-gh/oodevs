@@ -10,7 +10,6 @@
 #include "selftraining_app_pch.h"
 #include "ScenarioLauncherPage.h"
 #include "moc_ScenarioLauncherPage.cpp"
-#include "CompositeProcessWrapper.h"
 #include "DebugConfigPanel.h"
 #include "OrbatConfigPanel.h"
 #include "ExerciseList.h"
@@ -277,17 +276,17 @@ void ScenarioLauncherPage::OnStart()
     if( !dumpPathfindDirectory_.IsEmpty() )
         arguments[ "dump-pathfinds" ] = "\"" + dumpPathfindDirectory_.ToUTF8() + "\"";
 
-    auto list = boost::make_shared< CompositeProcessWrapper >( *progressPage_ );
-    list->Add( boost::make_shared< frontend::StartExercise >(
+    auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
+    process->Add( boost::make_shared< frontend::StartExercise >(
         config_, exerciseName, session, arguments, true, true, "", "" ) );
     if( hasClient_ )
-        list->Add( boost::make_shared< frontend::JoinExercise >(
+        process->Add( boost::make_shared< frontend::JoinExercise >(
             config_, exerciseName, session, profile_.GetLogin(), true ) );
     if( hasTimeline_ )
-        list->Add( boost::make_shared< frontend::StartTimeline >(
+        process->Add( boost::make_shared< frontend::StartTimeline >(
             config_, exerciseName, session, exerciseNumber_, profile_ ) );
-    progressPage_->Attach( list );
-    list->Start();
+    progressPage_->Attach( process );
+    process->Start();
     progressPage_->show();
 }
 

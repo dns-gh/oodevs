@@ -19,6 +19,7 @@
 #include "clients_kernel/Controllers.h"
 #include "frontend/ProcessWrapper.h"
 #include "frontend/StartAuthoring.h"
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: AuthoringPage constructor
@@ -86,8 +87,8 @@ void AuthoringPage::OnAuthoring()
         return;
     }
 
-    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::StartAuthoring( config_, true ) );
-    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
+    auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
+    process->Add( boost::make_shared< frontend::StartAuthoring >( config_, true ) );
     progressPage_->Attach( process );
     process->Start();
     progressPage_->show();

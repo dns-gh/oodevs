@@ -19,6 +19,7 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/EnvHelpers.h"
 #include <boost/bind.hpp>
+#include <boost/make_shared.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -288,13 +289,13 @@ void FilterCommand::Execute()
             emit ForceSaveAndAddActionPlanning( "melmil.xml" );
     }
     assert( !path_.IsEmpty() );
-    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::SpawnCommand( config_, path_ / command_ + tools::Path::FromUTF8( argumentsLine_ ), true ) );
+    auto process = boost::make_shared< frontend::ProcessWrapper >( *this );
+    auto command = boost::make_shared< frontend::SpawnCommand >( config_, path_ / command_ + tools::Path::FromUTF8( argumentsLine_ ), true );
+    process->Add( command );
     command->SetWorkingDirectory( path_ );
-    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *this, command ) );
-    if( nonBlocking_ )
-        process->Start();
-    else
-        process->StartAndBlockMainThread();
+    process->Start();
+    if( !nonBlocking_ )
+        process->Join();
 }
 
 // -----------------------------------------------------------------------------
@@ -310,7 +311,7 @@ void FilterCommand::NotifyStopped()
 // Name: FilterCommand::NotifyError
 // Created: ABR 2011-06-22
 // -----------------------------------------------------------------------------
-void FilterCommand::NotifyError( const std::string& error, std::string /*commanderEndpoint*/  )
+void FilterCommand::NotifyError( const std::string& error, const std::string& /*commanderEndpoint*/  )
 {
     reloadExercise_ = false;
     QMessageBox::critical( QApplication::activeModalWidget(), tools::translate( "FilterDialog", "Error on filter execution" ), error.c_str() );

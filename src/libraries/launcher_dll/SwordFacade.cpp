@@ -17,6 +17,7 @@
 #include "protocol/AuthenticationSenders.h"
 #include "protocol/DispatcherSenders.h"
 #include <boost/foreach.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace launcher;
 
@@ -50,9 +51,9 @@ void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_
 {
     if( ! config.GetTestMode() )
     {
-        boost::shared_ptr< frontend::ProcessWrapper > wrapper( new frontend::ProcessWrapper( observer, command ) );
-        wrapper->Start();
-        process_ = wrapper;
+        process_ = boost::make_shared< frontend::ProcessWrapper >( observer );
+        process_->Add( command );
+        process_->Start();
     }
     if( isDispatcher_ )
     {
@@ -68,8 +69,7 @@ void SwordFacade::Start( frontend::ProcessObserver_ABC& observer, boost::shared_
 // -----------------------------------------------------------------------------
 void SwordFacade::Stop()
 {
-    boost::shared_ptr< frontend::ProcessWrapper > process = process_.lock();
-    if( ! process )
+    if( !process_ )
         return;
     if( IsConnected() && client_ )
     {
@@ -77,7 +77,7 @@ void SwordFacade::Stop()
         client_->UnregisterMessageHandler( this );
         client_.reset();
     }
-    process->Stop();
+    process_->Stop();
 }
 
 // -----------------------------------------------------------------------------
@@ -231,7 +231,7 @@ void SwordFacade::Update( const T& message )
 // -----------------------------------------------------------------------------
 bool SwordFacade::IsRunning() const
 {
-    return !process_.expired();
+    return process_->IsRunning();
 }
 
 // -----------------------------------------------------------------------------
@@ -250,5 +250,5 @@ void SwordFacade::Update() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< frontend::ProcessWrapper > SwordFacade::GetProcess()
 {
-    return process_.lock();
+    return process_;
 }

@@ -11,7 +11,6 @@
 #include "ReplayPage.h"
 #include "moc_ReplayPage.cpp"
 #include "ExerciseList.h"
-#include "CompositeProcessWrapper.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "SessionList.h"
@@ -20,6 +19,7 @@
 #include "frontend/Exercise_ABC.h"
 #include "frontend/StartReplay.h"
 #include "frontend/JoinAnalysis.h"
+#include "frontend/ProcessWrapper.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include <boost/make_shared.hpp>
@@ -97,13 +97,11 @@ void ReplayPage::StartExercise()
     const tools::Path exerciseName = exercise_->GetName();
     const unsigned int port = exercise_->GetPort();
     ConfigureSession( exerciseName, session_ );
-    auto replay = boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, port, true );
-    auto client = boost::make_shared< frontend::JoinAnalysis >( config_, exerciseName, session_, profile_.GetLogin(), true );
-    auto list = boost::make_shared< CompositeProcessWrapper >( *progressPage_ );
-    list->Add( replay );
-    list->Add( client );
-    progressPage_->Attach( list );
-    list->Start();
+    auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
+    process->Add( boost::make_shared< frontend::StartReplay >( config_, exerciseName, session_, port, true ) );
+    process->Add( boost::make_shared< frontend::JoinAnalysis >( config_, exerciseName, session_, profile_.GetLogin(), true ) );
+    progressPage_->Attach( process );
+    process->Start();
     progressPage_->show();
 }
 

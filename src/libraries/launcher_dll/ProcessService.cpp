@@ -235,30 +235,41 @@ void ProcessService::NotifyStopped()
             ++it;
 }
 
+namespace
+{
+    void NotifyError( const std::string& endpoint,
+                      const LauncherService& server,
+                      ProcessService::ProcessContainer& processes )
+    {
+        if( endpoint.empty() )
+            return;
+        for( auto cur = processes.begin(); cur != processes.end(); ++cur )
+        {
+            const auto spawns = cur->second->GetProcess()->GetSpawns();
+            for( auto it = spawns.begin(); it != spawns.end(); ++it )
+            {
+                auto cmd = *it;
+                if( cmd->GetCommanderEndpoint() != endpoint )
+                    continue;
+                SessionStatus msg;
+                msg().set_status( sword::SessionStatus::not_running );
+                msg().set_exercise( cmd->GetExercise().ToUTF8() );
+                msg().set_session( cmd->GetSession().ToUTF8() );
+                msg.Send( server.ResolveClient( endpoint ) );
+                processes.erase( cur );
+                return;
+            }
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ProcessService::NotifyError
 // Created: SBO 2010-12-09
 // -----------------------------------------------------------------------------
-void ProcessService::NotifyError( const std::string& /*error*/, std::string commanderEndpoint /*= ""*/ )
+void ProcessService::NotifyError( const std::string& /*error*/, const std::string& endpoint )
 {
-    if( !commanderEndpoint.empty() )
-{
-        LauncherPublisher& publisher = server_.ResolveClient( commanderEndpoint );
-        for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
-        {
-            const frontend::SpawnCommand* command = it->second->GetProcess()->GetCommand();
-            if( command && command->GetCommanderEndpoint() == commanderEndpoint )
-            {
-                SessionStatus statusMessage;
-                statusMessage().set_status( sword::SessionStatus::not_running );
-                statusMessage().set_exercise( command->GetExercise().ToUTF8() );
-                statusMessage().set_session( command->GetSession().ToUTF8() );
-                statusMessage.Send( publisher );
-                processes_.erase( it );
-                break;
-            }
-        }
-    }
+    ::NotifyError( endpoint, server_, processes_ );
     NotifyStopped();
 }
 
@@ -488,22 +499,24 @@ void ProcessService::SendConnectedProfiles( const std::string& endpoint, const s
 // -----------------------------------------------------------------------------
 void ProcessService::SendSessionsStatuses( const std::string& endpoint )
 {
-    if( !endpoint.empty() )
+    if( endpoint.empty() )
+        return;
+    LauncherPublisher& publisher = server_.ResolveClient( endpoint );
+    for( ProcessContainer::iterator cur = processes_.begin(); cur != processes_.end(); ++cur )
     {
-        LauncherPublisher& publisher = server_.ResolveClient( endpoint );
-        for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
+        const auto spawns = cur->second->GetProcess()->GetSpawns();
+        for( auto it = spawns.begin(); it != spawns.end(); ++it )
         {
-            const frontend::SpawnCommand* command = it->second->GetProcess()->GetCommand();
-            if( command && command->GetCommanderEndpoint() == endpoint )
-            {
-                SessionStatus statusMessage;
-                tools::Path exercise = command->GetExercise();
-                tools::Path session = command->GetSession();
-                statusMessage().set_status( IsRunning( exercise, session )? sword::SessionStatus::running : sword::SessionStatus::not_running );
-                statusMessage().set_exercise( exercise.ToUTF8() );
-                statusMessage().set_session( session.ToUTF8() );
-                statusMessage.Send( publisher );
-            }
+            auto cmd = *it;
+            if( cmd->GetCommanderEndpoint() != endpoint )
+                continue;
+            SessionStatus msg;
+            const tools::Path exercise = cmd->GetExercise();
+            const tools::Path session = cmd->GetSession();
+            msg().set_status( IsRunning( exercise, session )? sword::SessionStatus::running : sword::SessionStatus::not_running );
+            msg().set_exercise( exercise.ToUTF8() );
+            msg().set_session( session.ToUTF8() );
+            msg.Send( publisher );
         }
     }
 }

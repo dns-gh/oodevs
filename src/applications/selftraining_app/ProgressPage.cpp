@@ -112,7 +112,7 @@ void ProgressPage::OnNotifyStopped()
 // Name: ProgressPage::NotifyError
 // Created: SBO 2010-12-09
 // -----------------------------------------------------------------------------
-void ProgressPage::NotifyError( const std::string& error, std::string /*commanderEndpoint = "" */ )
+void ProgressPage::NotifyError( const std::string& error, const std::string& /*commanderEndpoint = "" */ )
 {
     NotifyStopped();
     QMetaObject::invokeMethod( this, "OnNotifyError", Q_ARG( QString, QString( error.c_str() ) ) );

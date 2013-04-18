@@ -13,161 +13,214 @@
 #include "SpawnCommand.h"
 #pragma warning( push, 0 )
 #include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>
+
+// warning C4127: conditional expression is constant
+#pragma warning( disable: 4127 )
 
 using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: ProcessWrapper constructor
-// Created: SBO 2008-10-14
+// Created: BAX 2013-04-18
 // -----------------------------------------------------------------------------
-ProcessWrapper::ProcessWrapper( ProcessObserver_ABC& observer, boost::shared_ptr< SpawnCommand > process )
+ProcessWrapper::ProcessWrapper( ProcessObserver_ABC& observer )
     : observer_( observer )
-    , process_( process )
+    , mutex_   ( new boost::mutex() )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessWrapper destructor
-// Created: SBO 2008-10-14
+// Created: BAX 2013-04-18
 // -----------------------------------------------------------------------------
 ProcessWrapper::~ProcessWrapper()
 {
-    observer_.NotifyStopped();
+    /// prevent bad mojo when this is destroyed before thread_
+    Join();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::Add
+// Created: BAX 2013-04-18
+// -----------------------------------------------------------------------------
+void ProcessWrapper::Add( const T_Spawn& spawn )
+{
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    spawns_.push_back( spawn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::GetSpawns
+// Created: BAX 2013-04-18
+// -----------------------------------------------------------------------------
+ProcessWrapper::T_Spawns ProcessWrapper::GetSpawns() const
+{
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    return spawns_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::Apply
+// Created: BAX 2013-04-18
+// -----------------------------------------------------------------------------
+void ProcessWrapper::Apply( const boost::function< void( SpawnCommand& ) >& operand )
+{
+    const T_Spawns spawns = GetSpawns();
+    for( auto it = spawns.begin(); it != spawns.end(); ++it )
+    {
+        SetCurrent( *it );
+        operand( **it );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::Apply
+// Created: BAX 2013-04-18
+// -----------------------------------------------------------------------------
+void ProcessWrapper::SetCurrent( const T_Spawn& spawn )
+{
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    current_ = spawn;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessWrapper::Start
-// Created: SBO 2010-11-10
+// Created: BAX 2013-04-18
 // -----------------------------------------------------------------------------
 void ProcessWrapper::Start()
 {
-    process_->Attach( shared_from_this() );
+    for( auto it = spawns_.begin(); it != spawns_.end(); ++it )
+        ( *it )->Attach( shared_from_this() );
     thread_.reset( new boost::thread( boost::bind( &ProcessWrapper::Run, this ) ) );
+}
+
+namespace
+{
+    void WaitAny( const ProcessWrapper::T_Spawns& spawns )
+    {
+        while( true )
+            for( auto it = spawns.begin(); it != spawns.end(); ++it )
+                if( !(*it)->Wait() )
+                    return;
+    }
+
+    void Wait( SpawnCommand& spawn )
+    {
+        while( spawn.Wait() )
+            continue;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessWrapper::Run
-// Created: SBO 2008-10-14
+// Created: BAX 2013-04-18
 // -----------------------------------------------------------------------------
 void ProcessWrapper::Run()
 {
-    if( process_.get() )
+    try
     {
-        try
-        {
-            process_->Start();
-            while( process_->Wait() ) {}
-            process_.reset();
-        }
-        catch( const std::exception& e )
-        {
-            Stop();
-            observer_.NotifyError( tools::GetExceptionMsg( e ), process_->GetCommanderEndpoint() );
-            return;
-        }
+        Apply( boost::bind( &SpawnCommand::Start, _1 ) );
+        WaitAny( GetSpawns() );
+        boost::lock_guard< boost::mutex > lock( *mutex_ );
+        current_.reset();
+        spawns_.clear();
+        observer_.NotifyStopped();
+    }
+    catch( const std::exception& e )
+    {
+        Stop();
+        observer_.NotifyError( tools::GetExceptionMsg( e ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProcessWrapper::StartAndBlockMainThread
-// Created: ABR 2011-06-27
+// Name: ProcessWrapper::IsRunning
+// Created: BAX 2013-04-18
 // -----------------------------------------------------------------------------
-void ProcessWrapper::StartAndBlockMainThread()
+bool ProcessWrapper::IsRunning() const
 {
-    process_->Attach( shared_from_this() );
-    thread_.reset( new boost::thread( boost::bind( &ProcessWrapper::RunBlockingMainThread, this ) ) );
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    return !spawns_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::Join
+// Created: BAX 2013-04-18
+// -----------------------------------------------------------------------------
+void ProcessWrapper::Join() const
+{
     thread_->join();
-    process_.reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProcessWrapper::RunBlockingMainThread
-// Created: ABR 2011-06-27
-// -----------------------------------------------------------------------------
-void ProcessWrapper::RunBlockingMainThread()
-{
-    if( process_.get() )
-    {
-        try
-        {
-            process_->Start();
-            while( process_->Wait() ) {}
-        }
-        catch( const std::exception& e )
-        {
-            Stop();
-            observer_.NotifyError( tools::GetExceptionMsg( e ), process_->GetCommanderEndpoint() );
-            return;
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessWrapper::Stop
-// Created: SBO 2010-11-10
+// Created: BAX 2013-04-18
 // -----------------------------------------------------------------------------
 void ProcessWrapper::Stop()
 {
-    if( process_.get() )
-    {
-        process_->Stop();
-        while( process_->Wait() ) {}
-    }
+    Apply( boost::bind( &SpawnCommand::Stop, _1 ) );
+    Apply( boost::bind( &Wait, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessWrapper::GetPercentage
-// Created: SBO 2008-10-14
+// Created: BAX 2013-04-18
 // -----------------------------------------------------------------------------
 unsigned int ProcessWrapper::GetPercentage() const
 {
-    return process_.get() ? process_->GetPercentage() : 0;
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    unsigned sum = 0;
+    for( auto it = spawns_.begin(); it != spawns_.end(); ++it )
+            sum += (*it)->GetPercentage();
+    return spawns_.empty() ? 0 : sum / static_cast< unsigned int >( spawns_.size() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessWrapper::GetStatus
-// Created: SBO 2008-10-14
+// Created: BAX 2013-04-18
 // -----------------------------------------------------------------------------
 QString ProcessWrapper::GetStatus() const
 {
-    return process_.get() ? process_->GetStatus() : "";
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    return current_ ? current_->GetStatus() : "";
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessWrapper::GetStartedExercise
-// Created: LDC 2008-10-23
+// Created: BAX 2013-04-18
 // -----------------------------------------------------------------------------
 tools::Path ProcessWrapper::GetStartedExercise() const
 {
-    return process_->GetStartedExercise();
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    if( spawns_.empty() )
+        return tools::Path();
+    return spawns_.front()->GetStartedExercise();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessWrapper::GetExercise
-// Created: RPD 2011-09-12
+// Created: BAX 2013-04-18
 // -----------------------------------------------------------------------------
 tools::Path ProcessWrapper::GetExercise() const
 {
-    return process_->GetExercise();
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    if( spawns_.empty() )
+        return tools::Path();
+    return spawns_.front()->GetExercise();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessWrapper::GetSession
-// Created: RPD 2011-09-12
+// Created: BAX 2013-04-18
 // -----------------------------------------------------------------------------
 tools::Path ProcessWrapper::GetSession() const
 {
-    return process_->GetSession();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProcessWrapper::GetProcess
-// Created: RPD 2011-09-12
-// -----------------------------------------------------------------------------
-const SpawnCommand* ProcessWrapper::GetCommand() const
-{
-    return process_.get();
+    boost::lock_guard< boost::mutex > lock( *mutex_ );
+    if( spawns_.empty() )
+        return tools::Path();
+    return spawns_.front()->GetSession();
 }

@@ -14,9 +14,6 @@
     <Filter Include="Source Files\Widgets">
       <UniqueIdentifier>{33d27dfc-d602-4801-b81f-df7ba35e40d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Processes">
-      <UniqueIdentifier>{6ca6d4d6-5f00-4695-8207-c90f736f4727}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Systray">
       <UniqueIdentifier>{98309bfb-21eb-4239-a99a-3abd19c2661b}</UniqueIdentifier>
     </Filter>
@@ -121,9 +118,6 @@
     <ClCompile Include="..\..\src\applications\selftraining_app\Side.cpp">
       <Filter>Source Files\Widgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\selftraining_app\CompositeProcessWrapper.cpp">
-      <Filter>Source Files\Processes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\selftraining_app\SessionTray.cpp">
       <Filter>Source Files\Systray</Filter>
     </ClCompile>
@@ -170,9 +164,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\selftraining_app\Side.h">
       <Filter>Source Files\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\selftraining_app\CompositeProcessWrapper.h">
-      <Filter>Source Files\Processes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\selftraining_app\SessionTray.h">
       <Filter>Source Files\Systray</Filter>

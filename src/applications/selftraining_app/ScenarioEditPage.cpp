@@ -21,6 +21,7 @@
 #include "frontend/Exercise_ABC.h"
 #include "frontend/ImportExercise.h"
 #include "frontend/ProcessWrapper.h"
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioEditPage constructor
@@ -44,7 +45,7 @@ ScenarioEditPage::ScenarioEditPage( Application& app, QWidget* parent, QStackedW
     connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC& ) ) );
     connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
     connect( exercises_, SIGNAL( ExercisePropertiesChanged() ), SLOT( OnExercisePropertiesChanged() ) );
-    
+
     // eTabs_Create
     createExerciceWidget_ = new CreateExerciceWidget( *this, box, config, fileLoader );
     mainTabs_->addTab( createExerciceWidget_, "" );
@@ -126,8 +127,8 @@ void ScenarioEditPage::OnEdit()
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::Edit( const tools::Path& exercise )
 {
-    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, exercise, true ) );
-    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
+    auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
+    process->Add( boost::make_shared< frontend::EditExercise >( config_, exercise, true ) );
     progressPage_->Attach( process );
     process->Start();
     progressPage_->show();
@@ -230,8 +231,8 @@ void ScenarioEditPage::OnExercisePropertiesChanged()
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::LaunchScenarioImport( const tools::Path& inputScenario, const tools::Path& outputScenario )
 {
-    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::ImportExercise( config_, inputScenario, outputScenario, true ) );
-    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
+    auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
+    process->Add( boost::make_shared< frontend::ImportExercise >( config_, inputScenario, outputScenario, true ) );
     progressPage_->Attach( process );
     process->Start();
     progressPage_->show();
@@ -244,8 +245,8 @@ void ScenarioEditPage::LaunchScenarioImport( const tools::Path& inputScenario, c
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::LaunchPreparation( const tools::Path& outputScenario )
 {
-    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::EditExercise( config_, outputScenario, true ) );
-    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
+    auto process = boost::make_shared< frontend::ProcessWrapper >( *progressPage_ );
+    process->Add( boost::make_shared< frontend::EditExercise >( config_, outputScenario, true ) );
     progressPage_->Attach( process );
     process->Start();
     progressPage_->show();

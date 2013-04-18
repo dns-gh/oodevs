@@ -112,7 +112,7 @@ private:
     bool isDispatcher_;
     bool isConnected_;
     bool isAuthenticated_;
-    boost::weak_ptr< frontend::ProcessWrapper > process_;
+    boost::shared_ptr< frontend::ProcessWrapper > process_;
     boost::shared_ptr< SwordProxy > client_;
     HandlerContainer messageHandlers_;
     std::vector< T_Handler > permanentHandler_;

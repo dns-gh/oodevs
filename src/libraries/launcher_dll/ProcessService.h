@@ -66,7 +66,7 @@ public:
     void SendConnectedProfiles( const std::string& endpoint, const sword::ConnectedProfileListRequest& message );
     void SendSessionsStatuses( const std::string& endpoint );
     virtual void NotifyStopped();
-    virtual void NotifyError( const std::string& error, std::string commanderEndpoint = "" );
+    virtual void NotifyError( const std::string& error, const std::string& commanderEndpoint = "" );
     void Update();
     void SendRunningExercices( const std::string& endpoint ) const;
     //@}
@@ -81,7 +81,7 @@ private:
     void SaveCheckpoint( const tools::Path& name, SwordFacade& facade );
     //@}
 
-private:
+public:
     //! @name Types
     //@{
     typedef std::map< std::pair< tools::Path, tools::Path >, boost::shared_ptr< SwordFacade > > ProcessContainer;

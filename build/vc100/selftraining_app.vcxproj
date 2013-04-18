@@ -188,7 +188,6 @@
     <ClCompile Include="..\..\src\applications\selftraining_app\ProfileList.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\SessionList.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\Side.cpp" />
-    <ClCompile Include="..\..\src\applications\selftraining_app\CompositeProcessWrapper.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\SessionTray.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\TrayMenu.cpp" />
   </ItemGroup>
@@ -686,7 +685,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\selftraining_app\Side.h" />
-    <ClInclude Include="..\..\src\applications\selftraining_app\CompositeProcessWrapper.h" />
     <ClInclude Include="..\..\src\applications\selftraining_app\SessionTray.h" />
     <CustomBuild Include="..\..\src\applications\selftraining_app\TrayMenu.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>

@@ -55,7 +55,8 @@ boost::shared_ptr< frontend::ProcessWrapper > CreateTerrain(
     const tools::Path& name )
 {
     auto cmd = boost::make_shared< TerrainCommand >( config, name );
-    auto process = boost::make_shared< ProcessWrapper >( observer, cmd );
+    auto process = boost::make_shared< ProcessWrapper >( observer );
+    process->Add( cmd );
     return process;
 }
 

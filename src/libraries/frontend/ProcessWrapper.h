@@ -7,13 +7,15 @@
 //
 // *****************************************************************************
 
-#ifndef __frontend_ProcessWrapper_h_
-#define __frontend_ProcessWrapper_h_
+#ifndef __ProcessWrapper_h_
+#define __ProcessWrapper_h_
 
-#include "Process_ABC.h"
+#include "frontend/Process_ABC.h"
+#include <boost/function.hpp>
 
 namespace boost
 {
+    class mutex;
     class thread;
 }
 
@@ -21,51 +23,65 @@ namespace frontend
 {
     class ProcessObserver_ABC;
     class SpawnCommand;
+}
 
+namespace frontend
+{
 // =============================================================================
 /** @class  ProcessWrapper
     @brief  ProcessWrapper
 */
-// Created: SBO 2008-10-14
+// Created: BAX 2013-04-18
 // =============================================================================
 class ProcessWrapper : public Process_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ProcessWrapper( ProcessObserver_ABC& observer, boost::shared_ptr< SpawnCommand > process );
+             ProcessWrapper( ProcessObserver_ABC& observer );
     virtual ~ProcessWrapper();
+    //@}
+
+    //! @name Helpers
+    //@{
+    typedef boost::shared_ptr< SpawnCommand > T_Spawn;
+    typedef std::vector< T_Spawn > T_Spawns;
     //@}
 
     //! @name Operations
     //@{
+    virtual void         Add( const T_Spawn& spawn );
     virtual unsigned int GetPercentage() const;
     virtual QString      GetStatus() const;
     virtual tools::Path  GetStartedExercise() const;
     virtual tools::Path  GetExercise() const;
     virtual tools::Path  GetSession() const;
-    void                 StartAndBlockMainThread();
     void                 Start();
     void                 Stop();
-    const SpawnCommand*  GetCommand() const;
+    bool                 IsRunning() const;
+    T_Spawns             GetSpawns() const;
+    void                 Join() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
     void Run();
-    void RunBlockingMainThread();
+    void SetCurrent( const T_Spawn& spawn );
+
+    void Apply( const boost::function< void( SpawnCommand& ) >& operand );
     //@}
 
 private:
     //! @name Member data
     //@{
     ProcessObserver_ABC& observer_;
-    boost::shared_ptr< SpawnCommand > process_;
+    T_Spawns spawns_;
+    T_Spawn current_;
     std::auto_ptr< boost::thread > thread_;
+    std::auto_ptr< boost::mutex > mutex_;
     //@}
 };
-
 }
 
-#endif // __frontend_ProcessWrapper_h_
+#endif // __ProcessWrapper_h_
