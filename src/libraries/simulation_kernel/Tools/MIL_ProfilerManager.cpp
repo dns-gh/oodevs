@@ -31,8 +31,15 @@ MIL_ProfilerManager::MIL_ProfilerManager( const MIL_Config& config )
         MT_LOG_INFO_MSG( "Profiling mode enabled at startup time : dec functions profiled" );
     else
         MT_LOG_INFO_MSG( "Profiling mode not enabled at startup time : dec functions won't be profiled" );
-    tools::Path( "./Profiling" ).CreateDirectories();
-    decisionUpdateFile_.open( "./Profiling/DecisionUpdate.txt", std::ios_base::out | std::ios_base::trunc );
+    try
+    {
+        tools::Path( "./Profiling" ).CreateDirectories();
+        decisionUpdateFile_.open( "./Profiling/DecisionUpdate.txt", std::ios_base::out | std::ios_base::trunc );
+    }
+    catch( std::exception& e)
+    {
+         // NOTHING
+    }
 }
 
 //-----------------------------------------------------------------------------
