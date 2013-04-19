@@ -1,4 +1,4 @@
-;AddItem macro
+﻿;AddItem macro
 !macro AddItem Path
     FileWrite $UninstLog "${Path}$\r$\n"
 !macroend

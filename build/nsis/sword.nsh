@@ -1,4 +1,4 @@
-!define MUI_ICON "resources\sword.ico"
+﻿!define MUI_ICON "resources\sword.ico"
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_RIGHT
 !define MUI_HEADERIMAGE_BITMAP "resources\sword-header.bmp"

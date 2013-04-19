@@ -1,9 +1,9 @@
-; ------------------------------------------------------------------------------
+ï»¿; ------------------------------------------------------------------------------
 ;
 ; This file is part of a MASA library or program.
 ; Refer to the included end-user license agreement for restrictions.
 ;
-; Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+; Copyright (c) 2010 MathÃ©matiques AppliquÃ©es SA (MASA)
 ;
 ; ------------------------------------------------------------------------------
 

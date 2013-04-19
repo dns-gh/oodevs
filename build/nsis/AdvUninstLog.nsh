@@ -1,4 +1,4 @@
-     ;_____________________________ HEADER FILE BEGIN ____________________________
+﻿     ;_____________________________ HEADER FILE BEGIN ____________________________
 
      # Advanced Uninstall Log NSIS header
      # Version 1.0 2007-01-31

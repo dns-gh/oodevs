@@ -1,4 +1,4 @@
-;------------------------------------------------------------------------------
+ï»¿;------------------------------------------------------------------------------
 ;
 ; Officer Training Installation / Uninstallation helpers
 ;
@@ -187,8 +187,8 @@
     SetOutPath "$INSTDIR\doc\fr"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_General_Sword.pdf"
-    CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur General Sword.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_General_Sword.pdf"
+    CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\FranÃ§ais"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\FranÃ§ais\Guide Utilisateur General Sword.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_General_Sword.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
 !macroend
@@ -377,7 +377,7 @@
     ifSilent +7 0
     Push English
     Push ${LANG_FRENCH}
-    Push Français
+    Push FranÃ§ais
     Push A ; auto count languages
     LangDLL::LangDialog "Installer Language" "Please select the language of the installer"
     Pop $LANGUAGE
@@ -427,8 +427,8 @@
         SetOutPath "$INSTDIR\doc\fr"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DOCDIR}\fr\final\Manuel_Installation_IDE.pdf"
-        CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français"
-        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Manuel d'installation MASA Life IDE.lnk" "$INSTDIR\doc\fr\Manuel_Installation_IDE.pdf"
+        CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\FranÃ§ais"
+        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\FranÃ§ais\Manuel d'installation MASA Life IDE.lnk" "$INSTDIR\doc\fr\Manuel_Installation_IDE.pdf"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
        
     SectionEnd

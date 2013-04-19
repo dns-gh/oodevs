@@ -1,9 +1,9 @@
-; ------------------------------------------------------------------------------
+ï»¿; ------------------------------------------------------------------------------
 ;
 ; This ${File} is part of a MASA library or program.
 ; Refer to the included end-user license agreement for restrictions.
 ;
-; Copyright (c) 2011 Mathématiques Appliquées SA (MASA)
+; Copyright (c) 2011 MathÃ©matiques AppliquÃ©es SA (MASA)
 ;
 ; ------------------------------------------------------------------------------
 
@@ -62,6 +62,6 @@
     ${File} "${DOCDIR}\fr\final\" "HLA_Plugin.pdf"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     CreateShortCut "$SMPROGRAMS\${PRODUCT_SUITE_NAME}\Documentation\English\HLA Plugin.lnk" "$INSTDIR\doc\en\HLA_Plugin.pdf"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_SUITE_NAME}\Documentation\Français\HLA Plugin.lnk" "$INSTDIR\doc\fr\HLA_Plugin.pdf"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_SUITE_NAME}\Documentation\FranÃ§ais\HLA Plugin.lnk" "$INSTDIR\doc\fr\HLA_Plugin.pdf"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 !macroend

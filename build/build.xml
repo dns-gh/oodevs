@@ -542,7 +542,7 @@
         <attribute name="name"/>
         <sequential>
             <safe-move file="${out.dir}/SWORD_plugin-@{name}_${platform}_${version.project}.exe">
-                <nsis name="sword-plugin" script="sword-plugin.nsi" license="true" todir="${out.dir}">
+                <nsis name="sword-plugin" script="sword-plugin.nsi" license="true" todir="${out.dir}" makensis="${bin.dir}/nsis/makensis">
                     <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
                     <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
                     <arg value="/DPLUGIN=plugin-@{name}"/>
@@ -670,7 +670,7 @@
 
     <target name="package.app" description="package des applications runtime">
         <safe-move file="${out.dir}/SWORD_${platform}_${version.project}.exe">
-            <nsis name="sword" script="sword.nsi" nsh="config.nsh" todir="${out.dir}">
+            <nsis name="sword" script="sword.nsi" nsh="config.nsh" todir="${out.dir}" makensis="${bin.dir}/nsis/makensis">
                 <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
                 <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
                 <arg value="/DOUTFILE=${out.dir}/setup.exe"/>
@@ -816,6 +816,7 @@
         <update name="models" package="propagations-dev" todir="${data.dir}/data/propagations"/>
         <update name="models" package="terrains-dev" todir="${data.dir}/data/terrains"/>
         <update name="mongoose"/>
+        <update name="nsis"/>
         <update name="openssl"/>
         <update name="proj4"/>
         <update name="protobuf"/>

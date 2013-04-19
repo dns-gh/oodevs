@@ -1,4 +1,4 @@
-; NSIS SERVICE LIBRARY - servicelib.nsh
+﻿; NSIS SERVICE LIBRARY - servicelib.nsh
 ; Version 1.8 - Mar 24th, 2011
 ; Questions/Comments - dselkirk@hotmail.com
 ;
