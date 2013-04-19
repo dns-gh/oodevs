@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.3">
+  <xs:element name="packages">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="package" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="package-activity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="activities"/>
+        <xs:element ref="packages"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="package">
+    <xs:complexType>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="activity">
+    <xs:complexType>
+      <xs:attribute name="package" type="xs:string" use="required"/>
+      <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+      <xs:attribute name="name" type="xs:string" use="required"/>
+      <xs:attribute name="doc" type="xs:string" use="required"/>
+      <xs:attribute name="melee" type="xs:boolean" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="activities">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="activity" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

@@ -395,6 +395,9 @@
     <Filter Include="Source Files\Tools\Consistency">
       <UniqueIdentifier>{095a10bc-af39-4fff-a3af-28c38df1c342}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Workspace\Activities">
+      <UniqueIdentifier>{be5e845b-c4d4-422e-9496-e0d34833be72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\adaptation_app\adaptation_app_pch.cpp">
@@ -1249,6 +1252,15 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Units_Groups_GUI.cpp">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Activities_Data.cpp">
+      <Filter>Source Files\Workspace\Activities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Activities_ListView.cpp">
+      <Filter>Source Files\Workspace\Activities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Packages_ListView.cpp">
+      <Filter>Source Files\Workspace\Activities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1898,6 +1910,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableItem_CheckItem.h">
       <Filter>Source Files\Common widgets\Table</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Activities_Data.h">
+      <Filter>Source Files\Workspace\Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Activities_ListView.h">
+      <Filter>Source Files\Workspace\Activities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Packages_ListView.h">
+      <Filter>Source Files\Workspace\Activities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

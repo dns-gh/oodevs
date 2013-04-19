@@ -53,4 +53,5 @@ static const char* physicalXml =
 "  <scores file=\"scores.xml\"/>\n"
 "  <filters file=\"Filters/Filters.xml\"/>\n"
 "  <urban-templates file=\"UrbanTemplates.xml\"/>\n"
+"  <activities file=\"activities.xml\"/>\n"
 "</physical>";

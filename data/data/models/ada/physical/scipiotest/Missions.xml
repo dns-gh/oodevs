@@ -121,7 +121,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Decrocher" dia-type="france.military.platoon.tasks.Test02" id="28803" name="TEST 02 Parametres Obligatoires">
+    <mission dia-behavior="france.military.platoon.tasks.Decrocher" dia-type="france.military.platoon.tasks.Test02" id="28803" name="TEST 02 Parametres Obligatoires" package="attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -202,7 +202,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Decrocher" dia-type="france.military.platoon.tasks.Test01" id="28804" name="TEST 01 Parametres Optionnels">
+    <mission dia-behavior="france.military.platoon.tasks.Decrocher" dia-type="france.military.platoon.tasks.Test01" id="28804" name="TEST 01 Parametres Optionnels" package="attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -365,7 +365,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.air.tasks.FaireMouvement" dia-type="france.military.company.combat.support.air.tasks.FaireMouvement" id="28766" mrt-dia-behavior="france.military.company.combat.support.air.tasks.FaireMouvement" name="AUTOMATE AIR Faire Mouvement">
+    <mission cdt-dia-behavior="france.military.company.combat.support.air.tasks.FaireMouvement" dia-type="france.military.company.combat.support.air.tasks.FaireMouvement" id="28766" mrt-dia-behavior="france.military.company.combat.support.air.tasks.FaireMouvement" name="AUTOMATE AIR Faire Mouvement" package="attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -375,7 +375,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.air.tasks.Suivre" dia-type="france.military.company.combat.support.air.tasks.Suivre" id="28767" mrt-dia-behavior="france.military.company.combat.support.air.tasks.Suivre" name="AUTOMATE AIR Suivre">
+    <mission cdt-dia-behavior="france.military.company.combat.support.air.tasks.Suivre" dia-type="france.military.company.combat.support.air.tasks.Suivre" id="28767" mrt-dia-behavior="france.military.company.combat.support.air.tasks.Suivre" name="AUTOMATE AIR Suivre" package="attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -422,4 +422,4 @@
   </populations>
   <fragorders/>
 </missions>
-<!-- signature="0503122433" -->
+<!-- signature="0947985630" -->

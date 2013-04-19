@@ -41,7 +41,23 @@ public:
         eCDTBehavior,
         eBehavior,
         eSymbol,
+        eAssociatedPackage,
         eNbrGuiElements
+    };
+
+    enum E_ActivityGuiElements
+    {
+        eActivityName,
+        eActivityDescription,
+        eActivityMelee,
+        ePackage,
+        eNbrActivityGuiElements
+    };
+
+    enum E_PackageGuiElements
+    {
+        ePackageName,
+        eNbrPackageGuiElements
     };
 
     //! @name Constructors/Destructor
@@ -64,6 +80,7 @@ private:
     QWidget* BuildAutomatMissions();
     QWidget* BuildPopulationMissions();
     QWidget* BuildFragOrders();
+    QWidget* BuildSICActibities();
     //@}
 
 private:
@@ -74,6 +91,7 @@ private:
     QWidget* pAutomatMissionsWidget_;
     QWidget* pPopulationMissionsWidget_;
     QWidget* pFragOrderWidget_;
+    QWidget* pSicActivities_;
     //@}
 };
 

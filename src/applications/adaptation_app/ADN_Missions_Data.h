@@ -14,6 +14,7 @@
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 #include "ADN_Drawings_Data.h"
+#include "ADN_Activities_Data.h"
 #include "ADN_MissionGenObjectTypes_Infos.h"
 #include "tools/IdManager.h"
 
@@ -141,7 +142,7 @@ public:
         ADN_Type_String mrtDiaBehavior_;
         ADN_Type_String doctrineDescription_;
         ADN_Type_String usageDescription_;
-        ADN_Type_String strPackage_;
+        ADN_TypePtr_InVector_ABC< ADN_Activities_Data::PackageInfos > strPackage_;
         ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbol_;
     };
 
@@ -207,11 +208,13 @@ public:
 
 private:
     void ReadArchive( xml::xistream& input );
+    void ReadActivity( xml::xistream& input );
     void ReadFragOrder( xml::xistream& input );
     void ReadMission( xml::xistream& input, T_Mission_Vector& missions, std::size_t contextLength );
     void ReadContext( xml::xistream& input, T_MissionParameter_Vector& context );
     void ReadContextParameter( xml::xistream& input, T_MissionParameter_Vector& context );
     void WriteArchive( xml::xostream& output );
+    void WriteActivityArchive();
 
 public:
     T_MissionParameter_Vector   unitContext_;
@@ -221,6 +224,7 @@ public:
     T_MissionParameter_Vector   populationContext_;
     T_Mission_Vector            populationMissions_;
     T_FragOrder_Vector          fragOrders_;
+    std::auto_ptr< ADN_Activities_Data > activitiesData_;
 
 private:
     static tools::IdManager idManager_;

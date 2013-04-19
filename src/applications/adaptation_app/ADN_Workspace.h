@@ -74,6 +74,7 @@ class ADN_Urban_Data;
 class ADN_Urban_GUI;
 class ADN_Weapons_Data;
 class ADN_Weapons_GUI;
+class ADN_Activities_Data;
 class QtCommand;
 class QtUndoStack;
 enum E_OpenMode;

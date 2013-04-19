@@ -348,6 +348,7 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::Mission::Mission()
     : id_( ADN_Missions_Data::idManager_.GetNextId() )
+    , strPackage_( ADN_Workspace::GetWorkspace().GetMissions().GetData().activitiesData_->GetPackages(), 0 )
 {
     symbol_.SetParentNode( *this );
 }
@@ -358,6 +359,7 @@ ADN_Missions_Data::Mission::Mission()
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::Mission::Mission( unsigned int id )
     : id_( id )
+    , strPackage_( ADN_Workspace::GetWorkspace().GetMissions().GetData().activitiesData_->GetPackages(), 0 )
 {
     ADN_Missions_Data::idManager_.Lock( id );
     symbol_.SetParentNode( *this );
@@ -410,7 +412,7 @@ ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, std::size_t contextLength )
 {
-    std::string doctrineDesc, usageDesc, symbol;
+    std::string doctrineDesc, usageDesc, symbol, strPackage;
     std::size_t index = 0;
     input >> xml::attribute( "name", strName_ )
         >> xml::attribute( "dia-type", diaType_ )
@@ -422,8 +424,15 @@ void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, std::size_t 
             >> xml::optional >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
             >> xml::optional >> xml::start( "usage" ) >> usageDesc >> xml::end
         >> xml::end
-        >> xml::optional >> xml::attribute( "package", strPackage_ )
-        >> xml::list( "parameter", boost::bind( &ADN_Missions_Data::Mission::ReadParameter, this , _1,  boost::ref( index ), contextLength ) );
+        >> xml::optional >> xml::attribute( "package", strPackage );
+    if( !strPackage.empty() )
+    {
+        ADN_Activities_Data::PackageInfos* pPackage = ADN_Workspace::GetWorkspace().GetMissions().GetData().activitiesData_->FindPackage( strPackage );
+        if( !pPackage )
+            throw ADN_DataException( tools::translate( "Mission_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Mission_Data", "Mission '%1' - Invalid package type '%2'" ).arg( strName_.GetData().c_str(), strPackage.c_str() ).toAscii().constData() );
+        strPackage_ = pPackage;
+    }
+    input >> xml::list( "parameter", boost::bind( &ADN_Missions_Data::Mission::ReadParameter, this , _1,  boost::ref( index ), contextLength ) );
     doctrineDescription_ = doctrineDesc;
     usageDescription_ = usageDesc;
     const std::string code = symbol.empty() ? " - " : symbol;
@@ -480,8 +489,8 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
     if( code != "" && code != " - " )
         output << xml::attribute( "symbol", code );
 
-    if ( ! strPackage_.GetData().empty() )
-        output << xml::attribute( "package", strPackage_);
+    if ( ! strPackage_.GetData()->strName_.GetData().empty() )
+        output << xml::attribute( "package", strPackage_.GetData()->strName_.GetData() );
 
     if( !isAutomat )
     {
@@ -662,6 +671,7 @@ void ADN_Missions_Data::FragOrder::WriteArchive( xml::xostream& output )
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::ADN_Missions_Data()
+    : activitiesData_( new ADN_Activities_Data() )
 {
     // NOTHING
 }
@@ -683,6 +693,7 @@ ADN_Missions_Data::~ADN_Missions_Data()
 void ADN_Missions_Data::FilesNeeded( T_StringList& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szMissions_.GetData() );
+    activitiesData_->FilesNeeded( files );
 }
 
 // -----------------------------------------------------------------------------
@@ -708,6 +719,11 @@ void ADN_Missions_Data::Load( const tools::Loader_ABC& fileLoader )
     FilesNeeded( fileList );
     if( ! fileList.empty() )
     {
+        if( fileList.size() == 2 )
+        {
+            const std::string strFile2 = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + fileList.back();
+            ReadActivity( *fileLoader.LoadFile( strFile2 ).get() );
+        }
         const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + fileList.front();
         fileLoader.LoadFile( strFile, boost::bind( &ADN_Missions_Data::ReadArchive, this, _1 ) );
     }
@@ -753,6 +769,15 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
                 >> xml::list( "fragorder", *this, &ADN_Missions_Data::ReadFragOrder )
             >> xml::end
           >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::ReadActivity
+// Created: NPT 2013-04-16
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::ReadActivity( xml::xistream& input )
+{
+    activitiesData_->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -827,6 +852,27 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
         fragOrders_[i]->WriteArchive( output );
     output << xml::end
         << xml::end;
+    WriteActivityArchive();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::WriteActivityArchive
+// Created: NPT 2013-04-18
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::WriteActivityArchive()
+{
+    T_StringList fileList;
+    FilesNeeded( fileList );
+    if( ! fileList.empty() && fileList.size() == 2 )
+    {
+        std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + fileList.back();
+        ADN_Tools::CreatePathToFile( strFile );
+        {
+            xml::xofstream output( strFile );
+            activitiesData_->WriteArchive( output );
+        }
+        tools::WriteXmlCrc32Signature( strFile );
+    }
 }
 
 // -----------------------------------------------------------------------------

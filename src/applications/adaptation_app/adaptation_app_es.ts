@@ -2589,6 +2589,26 @@ tirador</translation>
         <source>all</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>SIC Activities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Melee activity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Associated package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>
@@ -6191,6 +6211,17 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
         <translation>Sistema logístico médico - Tipo de herido inválido&apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Mission_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Mission &apos;%1&apos; - Invalid package type &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

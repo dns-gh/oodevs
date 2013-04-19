@@ -82,6 +82,7 @@ public:
         ADN_Type_String szScores_;
         ADN_Type_String szSymbols_;
         ADN_Type_String szFilters_;
+        ADN_Type_String szActivities_;
     };
 
 //*****************************************************************************

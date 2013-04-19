@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<package-activity model-version="4.11.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/activities.xsd">
+  <activities>
+  </activities>
+  <packages>
+    <package name="attack"/>
+    <package name="move"/>
+    <package name="none"/>
+    <package name="control"/>
+    <package name="intelligence"/>
+    <package name="defence"/>
+    <package name="support"/>
+  </packages>
+</package-activity>
+<!-- signature="0475680807" -->

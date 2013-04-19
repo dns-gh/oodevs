@@ -137,6 +137,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Activities_Data.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Activities_ListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AnchorType.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_App.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
@@ -197,6 +199,7 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionParameter_GroupBox.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MultiRefWarningDialog.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Packages_ListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SearchListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableDialog.cpp" />
@@ -1724,6 +1727,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Activities_Data.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Activities_ListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AnchorType.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_App.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\UnitsFilter.h">
@@ -2053,6 +2058,7 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NavigationInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Packages_ListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tab_Container.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_ABC.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_Choice.h" />

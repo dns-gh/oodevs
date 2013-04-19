@@ -109,6 +109,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "symbols", szSymbols_ );
     ReadFile( input, "scores", szScores_ );
     ReadFile( input, "urban-templates", szUrbanTemplates_ );
+    ReadFile( input, "activities", szActivities_ );
     ReadOptionalFile( input, "extensions", szExtensions_ );
     ReadOptionalFile( input, "filters", szFilters_ );
     
@@ -166,6 +167,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "symbols", szSymbols_ );
     WriteFile( output, "filters", szFilters_);
     WriteFile( output, "urban-templates", szUrbanTemplates_ );
+    WriteFile( output, "activities", szActivities_ );
     output << xml::end;
 }
 

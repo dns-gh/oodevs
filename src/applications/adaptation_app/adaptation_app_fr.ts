@@ -2590,6 +2590,26 @@ du tireur</translation>
         <source>all</source>
         <translation>tout</translation>
     </message>
+    <message>
+        <source>SIC Activities</source>
+        <translation>Activités SIC</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>Melee activity</source>
+        <translation>Activité de melée</translation>
+    </message>
+    <message>
+        <source>Associated package</source>
+        <translation>Package associé</translation>
+    </message>
+    <message>
+        <source>Package</source>
+        <translation>Package</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Missions_Parameter</name>
@@ -6202,6 +6222,17 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
         <translation>Chaîne médicale - Type de blessure invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Mission_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Mission &apos;%1&apos; - Invalid package type &apos;%2&apos;</source>
+        <translation>Mission &apos;%1&apos; - Type de package invalide &apos;%2&apos;</translation>
     </message>
 </context>
 <context>

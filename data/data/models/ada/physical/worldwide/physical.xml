@@ -39,5 +39,6 @@
   <symbols file="symbols.xml"/>
   <filters file="Filters/Filters.xml"/>
   <urban-templates file="UrbanTemplates.xml"/>
+  <activities file="activities.xml"/>
 </physical>
-<!-- signature="3197718131" -->
+<!-- signature="2504076102" -->

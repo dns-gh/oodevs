@@ -14,6 +14,8 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_ListView_MissionTypes.h"
 #include "ADN_ListView_FragOrderTypes.h"
+#include "ADN_Activities_ListView.h"
+#include "ADN_Packages_ListView.h"
 #include "ADN_MissionParameter_GroupBox.h"
 #include "ADN_MissionParameters_Table.h"
 #include "ADN_MissionGenObjectTypes_Table.h"
@@ -34,6 +36,7 @@ ADN_Missions_GUI::ADN_Missions_GUI( ADN_Missions_Data& data )
     , pAutomatMissionsWidget_( 0 )
     , pPopulationMissionsWidget_( 0 )
     , pFragOrderWidget_( 0 )
+    , pSicActivities_( 0 )
         
 {
     // NOTHING
@@ -62,6 +65,7 @@ void ADN_Missions_GUI::Build()
     pTabWidget_->addTab( BuildAutomatMissions(), tr( "Automat missions" ) );
     pTabWidget_->addTab( BuildPopulationMissions(), tr( "Crowd missions" ) );
     pTabWidget_->addTab( BuildFragOrders(), tr( "Fragmentary orders" ) );
+    pTabWidget_->addTab( BuildSICActibities(), tr( "SIC Activities" ) );
 
     // Main widget
     pMainWidget_ = new QWidget();
@@ -98,6 +102,12 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
         builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Behavior" ), vInfosConnectors[eBehavior] );
 
     QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( pInfoHolder, tr( "Symbol" ), vInfosConnectors[ eSymbol ] );
+    
+    if( eEntityType == ADN_Models_Data::ModelInfos::eAutomat || eEntityType == ADN_Models_Data::ModelInfos::ePawn )
+    {
+        builder.AddField< ADN_ComboBox_Vector< ADN_Activities_Data::PackageInfos > >( pInfoHolder, tr( "Package" ), vInfosConnectors[ eAssociatedPackage ] );
+    }
+
     combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
 
     // Parameters
@@ -270,6 +280,65 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Missions_GUI::BuildSICActibities
+// Created: NPT 2013-04-16
+// -----------------------------------------------------------------------------
+QWidget* ADN_Missions_GUI::BuildSICActibities()
+{
+    ADN_GuiBuilder builder;
+    T_ConnectorVector vInfosConnectors( eNbrActivityGuiElements, (ADN_Connector_ABC*)0 );
+
+    // Content
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eActivityName ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Description" ), vInfosConnectors[ eActivityDescription ] );
+    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Melee activity" ) , vInfosConnectors[ eActivityMelee ] );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Activities_Data::PackageInfos > >( pInfoHolder, tr( "Associated package" ), vInfosConnectors[ ePackage ]  );
+
+    // Packages
+    QGroupBox* pPackagesGroup = new QGroupBox( tr( "Package" ) );
+
+    T_ConnectorVector vPackageInfosConnectors( eNbrPackageGuiElements,( ADN_Connector_ABC* )0 );
+
+    // Package name modifier
+    Q3VGroupBox* pGroup = new Q3VGroupBox( pPackagesGroup );
+    pGroup->setInsideMargin(20);
+    pGroup->setInsideSpacing(20);
+    builder.AddField< ADN_EditLine_String >( pGroup, tr( "Package" ), vPackageInfosConnectors[ ePackageName ] );
+
+    // Packages list
+    ADN_Packages_ListView* packageList =new ADN_Packages_ListView( pPackagesGroup );
+    static_cast< ADN_Connector_Vector_ABC* >( &packageList->GetConnector() )->Connect( &data_.activitiesData_->GetPackages() );
+    packageList->SetItemConnectors( vPackageInfosConnectors );
+
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Parameters layout
+    QGridLayout* packageLayout = new QGridLayout( pPackagesGroup, 5, 1 );
+    packageLayout->setMargin( 10 );
+    packageLayout->setSpacing( 10 );
+    packageLayout->addWidget( packageList );
+    packageLayout->addWidget( pGroup );
+
+    // Content layout
+    pSicActivities_ = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pSicActivities_ );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+    pContentLayout->addWidget( pPackagesGroup );
+
+    // List view
+    ADN_SearchListView< ADN_Activities_ListView >* pSearchListView = new ADN_SearchListView< ADN_Activities_ListView >( this, data_.activitiesData_->GetActivities(), vInfosConnectors );
+    vListViews_.push_back( pSearchListView->GetListView() );
+
+    // Main page
+    return CreateScrollArea( *pSicActivities_, pSearchListView );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::Enable
 // Created: JSR 2010-05-21
 // -----------------------------------------------------------------------------
@@ -279,4 +348,5 @@ void ADN_Missions_GUI::Enable( bool enable )
     pAutomatMissionsWidget_->setEnabled( enable );
     pPopulationMissionsWidget_->setEnabled( enable );
     pFragOrderWidget_->setEnabled( enable );
+    pSicActivities_->setEnabled( enable );
 }

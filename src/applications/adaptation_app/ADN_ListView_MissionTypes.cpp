@@ -66,6 +66,8 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
         vItemConnectors_[ADN_Missions_GUI::eCDTBehavior]->Connect( &pInfos->cdtDiaBehavior_, bConnect );
     }
     vItemConnectors_[ ADN_Missions_GUI::eSymbol ]->Connect( &pInfos->symbol_, bConnect );
+    if( vItemConnectors_[ ADN_Missions_GUI::eAssociatedPackage ] )
+        vItemConnectors_[ ADN_Missions_GUI::eAssociatedPackage ]->Connect( &pInfos->strPackage_, bConnect );
 }
 
 // -----------------------------------------------------------------------------
