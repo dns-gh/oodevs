@@ -63,6 +63,7 @@ private:
     virtual void NotifySelectionChanged( const std::vector< const kernel::Drawing_ABC* >& elements );
     virtual void NotifyContextMenu( const kernel::Drawing_ABC& shape, kernel::ContextMenu& menu );
     virtual bool HandleKeyPress( QKeyEvent* key );
+    virtual void NotifyDeleted( const kernel::Drawing_ABC& drawing );
     //@}
 
 private:

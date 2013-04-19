@@ -11,6 +11,7 @@
 #include "DrawerModel.h"
 #include "DrawingFactory_ABC.h"
 #include "DrawerShape.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/EntityResolver_ABC.h"
@@ -188,7 +189,21 @@ void DrawerModel::NotifyCreated( const kernel::Drawing_ABC& shape )
 // -----------------------------------------------------------------------------
 void DrawerModel::NotifyDeleted( const kernel::Drawing_ABC& shape )
 {
-    Delete( shape.GetId() );
+    InternalDelete( shape.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerModel::Delete
+// Created: MMC 2013-04-18
+// -----------------------------------------------------------------------------
+void DrawerModel::Delete( unsigned long id )
+{
+    if( kernel::Drawing_ABC* drawing = Find( id ) )
+    {
+        if( controllers_.actions_.IsSelected( drawing ) )
+            controllers_.actions_.DeselectAll();
+        delete drawing;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -201,10 +216,10 @@ kernel::Drawing_ABC* DrawerModel::Create( const DrawingTemplate& style, const QC
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerModel::Delete
+// Name: DrawerModel::InternalDelete
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-void DrawerModel::Delete( unsigned long id )
+void DrawerModel::InternalDelete( unsigned long id )
 {
     if( const kernel::Drawing_ABC* drawing = Find( id ) )
         drawing->NotifyDestruction();

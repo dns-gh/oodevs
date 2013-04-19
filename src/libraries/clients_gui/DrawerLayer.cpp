@@ -83,6 +83,17 @@ void DrawerLayer::OnDeleteDrawing()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DrawerLayer::NotifyDeleted
+// Created: MMC 2013-04-18
+// -----------------------------------------------------------------------------
+void DrawerLayer::NotifyDeleted( const kernel::Drawing_ABC& drawing )
+{
+    if( selected_ == &drawing )
+        selected_ = 0;
+    EntityLayer< kernel::Drawing_ABC >::NotifyDeleted( drawing );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DrawerLayer::Paint
 // Created: SBO 2008-06-03
 // -----------------------------------------------------------------------------

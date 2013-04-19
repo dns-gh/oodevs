@@ -75,6 +75,7 @@ private:
     void ReadShape( xml::xistream& xis, const kernel::Entity_ABC* diffusionEntity );
     virtual void NotifyCreated( const kernel::Drawing_ABC& );
     virtual void NotifyDeleted( const kernel::Drawing_ABC& );
+    void InternalDelete( unsigned long id );
     //@}
 
 private:
