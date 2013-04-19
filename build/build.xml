@@ -350,12 +350,14 @@
 
     <macrodef name="check-gui">
         <attribute name="app"/>
+        <attribute name="logfile" default=""/>
         <element name="elements" optional="true" implicit="true"/>
         <sequential>
             <python taskname="@{app}" failonerror="true">
                 <arg value="checkgui.py"/>
-                <arg value="--run_dir"/>
-                <arg value="${run.dir}"/>
+                <arg value="--run_dir=${run.dir}"/>
+                <arg value="--logfile=@{logfile}"/>
+                <arg value="--"/>
                 <arg value="${out.dir}/release/applications/@{app}/@{app}.exe"/>
                 <elements/>
             </python>
@@ -401,10 +403,11 @@
             <arg value="--dispatcher-port=${test.portnumber2}"/>
             <arg value="--test"/>
         </check-gui>
-        <check-gui app="gaming_app">
+        <check-gui app="gaming_app" logfile="${out.dir}/app_test_gaming/gaming.log">
             <arg value="--root-dir=${data.dir}"/>
             <arg value="--exercise=worldwide/Egypt"/>
             <arg value="--session=default"/>
+            <arg value="--debug-dir=${out.dir}/app_test_gaming"/>
         </check-gui>
         <check-app app="dispatcher_app">
             <arg value="--root-dir=${data.dir}"/>

@@ -19,23 +19,21 @@ parser = optparse.OptionParser(
         usage = "check_start_gui.py [--run_dir <dir>] <app.exe> <args>*" )
 parser.add_option("-r", "--run_dir", action="store", type="string",
         dest="run_dir", help="Run directory")
+parser.add_option("--logfile", help="log file path")
 
 def split_args():
     sub = sys.argv[:1]
     args = []
-    opt = False
     is_sub = True
     # does not support flags but we don't care
     for arg in sys.argv[1:]:
-        if is_sub and arg.startswith("--"):
-            sub.append(arg)
-            opt = True
-        elif is_sub and opt:
-            sub.append(arg)
-            opt = False
+        if is_sub:
+            if arg == "--":
+                is_sub = False
+            else:
+                sub.append(arg)
         else:
             args.append(arg)
-            is_sub = False
     return sub, args
 
 def main(opts, args):
@@ -46,6 +44,8 @@ def main(opts, args):
         if not os.path.isdir(opts.run_dir):
             sys.stderr.write("Invalid directory: " + opts.run_dir)
             sys.exit(-1)
+    if opts.logfile and os.path.isfile(opts.logfile):
+        os.unlink(opts.logfile)
 
     null = open(os.devnull, "w")
     proc = subprocess.Popen(args, cwd = opts.run_dir,
@@ -56,6 +56,13 @@ def main(opts, args):
         wait_for_shutdown(proc.pid, TIMEOUT_S*1000)
         proc.wait()
         kill = False
+        if proc.returncode and opts.logfile:
+            try:
+                log = file(opts.logfile, 'rb').read()
+                sys.stderr.write(log)
+                sys.stderr.write('\n')
+            except (IOError, OSError):
+                pass
         return proc.returncode
     finally:
         if kill:
