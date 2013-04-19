@@ -70,10 +70,7 @@ void DEC_Knowledge_RapFor_ABC::ApplyValue( double rTotalFightScoreFriend, double
     else
         rNewRapForValue = std::min( rNewRapForValue + (rRapForMidValue_ - 1), rRapForBoundMax_ );
 
-    if( rNewRapForValue <= rRapForValue_ )
-        rRapForValue_ = rNewRapForValue;
-    else
-        rRapForValue_ += std::min( rNewRapForValue - rRapForValue_, rRapForIncreasePerTimeStepValue );
+    rRapForValue_ = std::min( rNewRapForValue, rRapForValue_ + rRapForIncreasePerTimeStepValue );
 }
 
 // -----------------------------------------------------------------------------
