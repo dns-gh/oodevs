@@ -14,7 +14,9 @@
 #include "ADN_TableItem_ABC.h"
 #include "ADN_TableItem_Edit.h"
 #include "clients_gui/RichSpinBox.h"
+#include "clients_gui/CommonDelegate.h"
 #include <boost/make_shared.hpp>
+#include <boost/lexical_cast.hpp>
 
 typedef ADN_Units_Data::ComposanteInfos UnitComposanteInfos;
 
@@ -25,6 +27,7 @@ public:
         : QHeaderView( Qt::Horizontal, parent )
     {
         setClickable( true );
+        setDefaultAlignment( Qt::AlignLeft );
     }
 public:
     int AddHeader( const std::string& name )
@@ -73,12 +76,14 @@ private:
 class GroupsDelegate : public gui::CommonDelegate
 {
 public:
-    explicit GroupsDelegate( QObject* parent, const QStandardItemModel& dataModel )
+    explicit GroupsDelegate( QObject* parent, const QSortFilterProxyModel& proxyModel, const QStandardItemModel& dataModel )
         : gui::CommonDelegate( parent )
-        , dataModel_( dataModel )
+        , proxyModel_( proxyModel )
+        , dataModel_ ( dataModel )
     {}
-    virtual QWidget* createEditor( QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& index ) const
+    virtual QWidget* createEditor( QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& i ) const
     {
+        const QModelIndex index = proxyModel_.mapToSource( i );
         const int row = index.row();
         int max = dataModel_.item( row, 1 )->text().toInt();
         for( int c = 2; c < dataModel_.columnCount(); ++c )
@@ -86,6 +91,7 @@ public:
                 max -= dataModel_.item( row, c )->text().toInt();
         return new gui::RichSpinBox( parent, 0, max );
     }
+    const QSortFilterProxyModel& proxyModel_;
     const QStandardItemModel& dataModel_;
 };
 
@@ -97,7 +103,7 @@ ADN_Units_Groups_GUI::ADN_Units_Groups_GUI( const Q3Table& model, QWidget* paren
     : QTableView( parent )
     , header_   ( new GroupsHeader( this ) )
     , dataModel_( parent )
-    , delegate_ ( new GroupsDelegate( this, dataModel_ ) )
+    , delegate_ ( new GroupsDelegate( this, proxyModel_, dataModel_ ) )
 {
     setObjectName( "groups" );
     proxyModel_.setSourceModel( &dataModel_ );
@@ -138,6 +144,16 @@ ADN_Units_Groups_GUI::~ADN_Units_Groups_GUI()
     // NOTHING
 }
 
+namespace
+{
+    bool IsInt( const QString& text )
+    {
+        bool result = false;
+        text.toInt( &result );
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Groups_GUI::AddItem
 // Created: MCO 2013-04-17
@@ -146,7 +162,8 @@ void ADN_Units_Groups_GUI::AddItem( int row, int column, const QString& text, vo
 {
     QStandardItem* item = new QStandardItem( text );
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
-    item->setTextAlignment( Qt::AlignRight );
+    if( IsInt( text ) )
+        item->setTextAlignment( Qt::AlignRight );
     if( data )
         item->setData( QVariant::fromValue( data ) );
     dataModel_.setItem( row, column, item );
@@ -164,9 +181,10 @@ int ADN_Units_Groups_GUI::AddGroup( const std::string& name, int rows )
         delegate_->AddSpinBoxOnColumn( column );
         for( int row = 0; row < rows; ++row )
         {
-            QStandardItem* item = new QStandardItem( 0 );
-            dataModel_.setItem( row, column, item );
+            QStandardItem* item = new QStandardItem( "0" );
             item->setFlags( item->flags() | Qt::ItemIsEditable );
+            item->setTextAlignment( Qt::AlignRight );
+            dataModel_.setItem( row, column, item );
         }
     }
     return column;
@@ -197,7 +215,10 @@ void ADN_Units_Groups_GUI::contextMenuEvent( QContextMenuEvent* event )
     if( result == 1 )
         RemoveGroup( index.column() );
     else if( result == 0 )
-        header_->Edit( AddGroup( "", dataModel_.rowCount() ) );
+    {
+        static int id = 0;
+        header_->Edit( AddGroup( "Group " + boost::lexical_cast< std::string >( id++ ), dataModel_.rowCount() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

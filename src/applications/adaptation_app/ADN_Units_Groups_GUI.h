@@ -11,7 +11,6 @@
 #define __ADN_Units_Groups_GUI_h_
 
 #include "ADN_Types.h"
-#include "clients_gui/CommonDelegate.h"
 #include <boost/shared_ptr.hpp>
 #include <string>
 
