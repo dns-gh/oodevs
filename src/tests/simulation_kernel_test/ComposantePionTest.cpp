@@ -49,14 +49,17 @@ BOOST_AUTO_TEST_CASE( if_a_pion_is_transported_its_composantes_can_not_perceive 
 
     PHY_ComposanteTypePion type( time, "composanteTypePion", xisComposanteTypePion );
     PHY_RolePion_Composantes composantes( *fixture.pPion_, false );
-    PHY_ComposantePion composante( time, type, composantes, 1, true, true, true );
+    PHY_ComposantePion composanteLoadable( time, type, composantes, 1, true, true, true );
+    PHY_ComposantePion composanteUnloadable( time, type, composantes, 1, true, false, true );
 
-    BOOST_CHECK( composante.CanPerceive( 0 ) );
+    BOOST_CHECK( composanteLoadable.CanPerceive( 0 ) );
+    BOOST_CHECK( composanteUnloadable.CanPerceive( 0 ) );
 
     transport::PHY_RolePion_Transported* roleTransported = new transport::PHY_RolePion_Transported( *fixture.pPion_ );
     fixture.pPion_->RegisterRole( *roleTransported );
 
-    BOOST_CHECK( composante.CanPerceive( 0 ) );
+    BOOST_CHECK( composanteLoadable.CanPerceive( 0 ) );
+    BOOST_CHECK( composanteUnloadable.CanPerceive( 0 ) );
 
     MockAgent transporter;
     MockRoleLocation* locationRole = new MockRoleLocation();
@@ -67,7 +70,8 @@ BOOST_AUTO_TEST_CASE( if_a_pion_is_transported_its_composantes_can_not_perceive 
     bool bTransportedByAnother;
     roleTransported->LoadForTransport( transporter, true, bTransportedByAnother );
 
-    BOOST_CHECK( !composante.CanPerceive( 0 ) );
+    BOOST_CHECK( composanteLoadable.CanPerceive( 0 ) );
+    BOOST_CHECK( !composanteUnloadable.CanPerceive( 0 ) );
     PHY_Protection::Terminate();
     PHY_Volume::Terminate();
 }
