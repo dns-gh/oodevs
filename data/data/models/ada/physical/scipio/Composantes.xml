@@ -25382,7 +25382,9 @@
       <weapon-system launcher="Fusil Assaut AK 47" munition="CART 5.56 BAL ORD F1"/>
     </weapon-systems>
     <human-protections/>
-    <objects/>
+    <objects>
+      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="60s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" non-bypassed-speed="5" type="logistic support area"/>
+    </objects>
     <breakdowns>
       <breakdown origin="random" percentage="20" type="Panne Glaise NTI"/>
       <breakdown origin="random" percentage="20" type="Panne Glaise NTI1 Evac"/>
@@ -35875,7 +35877,9 @@
       <weapon-system launcher="Fusil Assaut SA-80" munition="CART 5.56 F1A F1"/>
     </weapon-systems>
     <human-protections/>
-    <objects/>
+    <objects>
+      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="60s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" non-bypassed-speed="5" type="logistic support area"/>
+    </objects>
     <breakdowns>
       <breakdown origin="random" percentage="20" type="Panne Glaise NTI"/>
       <breakdown origin="random" percentage="20" type="Panne Glaise NTI1 Evac"/>
@@ -35894,4 +35898,4 @@
     <operational-information native-country="USA"/>
   </equipment>
 </equipments>
-<!-- signature="3628580852" -->
+<!-- signature="0857202655" -->
