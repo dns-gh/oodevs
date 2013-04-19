@@ -66,7 +66,7 @@ public:
     const std::string& GetTypeName() const;
     float GetWidth() const;
     float GetDepth() const;
-    float GetLength( bool isSpeedSafety = false ) const;
+    float GetLength( bool isSpeedSafety = true ) const;
     const float GetComposantesWeight() const;
     E_AgentNbcSuit GetNbcSuit() const;
 
