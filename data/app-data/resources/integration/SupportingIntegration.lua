@@ -33,3 +33,25 @@ integration.getPositionToSupportFriend = function( friendToSupport )
     end
     return nil
 end
+
+integration.computeSupportFriendEfficiency = function( friendToSupport )
+    local rangeDistance = integration.firingRangeToSupport( friendToSupport )
+    if not rangeDistance[3] then -- direct fire case
+        if integration.hasMission( meKnowledge.source ) then
+            local mission = DEC_GetRawMission( meKnowledge.source )
+            local dir = integration.getDangerousDirection( mission )
+            local friendPos = friendToSupport:getPosition()
+            local positionToSupport = DEC_Geometrie_PositionTranslateDir( friendPos, dir, - rangeDistance[2] )
+            local position = CreateKnowledge( integration.ontology.types.point, positionToSupport )
+            return integration.normalizedInversedDistance( position, self ) / 100
+        end
+        return 0
+    else --indirect fire case (stay on firing range)
+        local distance = integration.distance( meKnowledge, friendToSupport )
+        if distance > rangeDistance[1] and distance < rangeDistance[2] then
+            return 1
+        else 
+            return 0
+        end
+    end
+end

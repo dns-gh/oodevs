@@ -165,7 +165,7 @@ end
 
 -- Coordination Manager
 integration.communication.SlowDown = function( content )
-    myself.speedModulation.coordination = 0.1
+    myself.speedModulation.coordination = 0.01
 end
 
 integration.communication.Continue = function( content )
