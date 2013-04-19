@@ -107,6 +107,7 @@ private:
     bool bRefugeeManaged_;
     std::string criticalIntelligence_;
     T_Optionals optionals_;
+    sword::UnitAttributes::Posture posture_;
     //@}
 };
 

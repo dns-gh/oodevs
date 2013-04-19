@@ -42,6 +42,7 @@ AgentKnowledge::AgentKnowledge( Model& model, const sword::UnitKnowledgeCreation
     , bPrisoner_                    ( false )
     , bRefugeeManaged_              ( false )
     , criticalIntelligence_         ( "" )
+    , posture_                      ( sword::UnitAttributes::moving )
 {
     optionals_.pertinencePresent = 0;
     optionals_.identification_levelPresent = 0;
@@ -139,6 +140,8 @@ void AgentKnowledge::DoUpdate( const sword::UnitKnowledgeUpdate& message )
             automatePerceptions_.push_back( message.perceptions().elem().Get(i) );
         optionals_.perceptionsPresent = 1;
     }
+    if( message.has_posture() )
+        posture_ = message.posture();
 }
 
 // -----------------------------------------------------------------------------
@@ -188,6 +191,7 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( optionals_.perceptionsPresent )
         for( unsigned int i = 0; i < automatePerceptions_.size(); ++i )
             *message().mutable_perceptions()->add_elem() = automatePerceptions_[ i ];
+    message().set_posture( posture_ );
     message.Send( publisher );
 }
 

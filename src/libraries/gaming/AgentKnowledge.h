@@ -106,6 +106,7 @@ public:
     kernel::OptionalValue< bool >                       bRefugies_;
     kernel::OptionalValue< uint >                       nRelevance_;
     kernel::OptionalValue< std::string >                criticalIntelligence_;
+    kernel::OptionalValue< E_UnitPosture >              posture_;
 };
 
 #endif // __AgentKnowledge_h_

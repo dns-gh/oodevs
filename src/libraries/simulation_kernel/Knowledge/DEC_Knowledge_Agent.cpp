@@ -20,9 +20,11 @@
 #include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Effects/MIL_Effect_KillOfficers.h"
 #include "Entities/Effects/MIL_EffectManager.h"
@@ -500,7 +502,8 @@ void DEC_Knowledge_Agent::SendChangedState()
         asnMsg().set_critical_intelligence( criticalIntelligence_ );
         bCriticalIntelligenceUpdated_ = false;
     }
-
+    if( pAgentKnown_ )
+        asnMsg().set_posture( pAgentKnown_->GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture().GetAsnID() );
     dataDetection_.SendChangedState( asnMsg() );
     dataRecognition_.SendChangedState( asnMsg() );
     dataIdentification_.SendChangedState( asnMsg() );
@@ -530,6 +533,8 @@ void DEC_Knowledge_Agent::SendFullState()
     dataDetection_.SendFullState( asnMsg() );
     dataRecognition_ .SendFullState( asnMsg() );
     dataIdentification_.SendFullState( asnMsg() );
+    if( pAgentKnown_ )
+        asnMsg().set_posture( pAgentKnown_->GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture().GetAsnID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 

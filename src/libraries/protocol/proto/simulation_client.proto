@@ -1457,6 +1457,8 @@ message UnitKnowledgeUpdate {
     optional bool                     refugees_managed         = 16;
     //! The unit critical intelligence
     optional string                   critical_intelligence    = 17;
+    //! The unit posture
+    optional UnitAttributes.Posture   posture                  = 18;
 }
 
 /** @struct UnitKnowledgeDestruction

@@ -14,6 +14,7 @@
 
 #include "MT_Tools/MT_Vector2DTypes.h"
 #include "MT_Tools/MT_String.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace sword
 {
@@ -74,17 +75,6 @@ public:
 private:
     //! @name Types
     //@{
-    enum E_PostureType
-    {
-        ePostureMouvement         = 0,
-        ePostureMouvementDiscret  = 1,
-        ePostureArret             = 2,
-        ePosturePosteReflexe      = 3,
-        ePosturePoste             = 4,
-        ePosturePosteAmenage      = 5,
-        ePosturePostePrepareGenie = 6
-    };
-
     enum E_PostureFlags
     {
         ePostureCanModifyPH        = 0x01,
@@ -96,7 +86,7 @@ private:
 private:
     //! @name Constructors/Destructor
     //@{
-     PHY_Posture( const std::string& strName, E_PostureType nType, sword::UnitAttributes_Posture nAsnID, const PHY_ConsumptionType& consumptionMode, unsigned int nFlags, const PHY_Posture* pNextAutoPosture = 0, const PHY_Posture* pPreviousAutoPosture = 0 );
+     PHY_Posture( const std::string& strName, E_UnitPosture nType, sword::UnitAttributes_Posture nAsnID, const PHY_ConsumptionType& consumptionMode, unsigned int nFlags, const PHY_Posture* pNextAutoPosture = 0, const PHY_Posture* pPreviousAutoPosture = 0 );
     ~PHY_Posture();
     //@}
 
@@ -104,7 +94,7 @@ private:
     //! @name Member data
     //@{
     const std::string                   strName_;
-    const E_PostureType                 nType_;
+    const E_UnitPosture                 nType_;
     const sword::UnitAttributes_Posture nAsnID_;
     const unsigned int                  nFlags_;
     const PHY_ConsumptionType&          consumptionMode_;

@@ -18,13 +18,13 @@
 
 PHY_Posture::T_PostureMap PHY_Posture::postures_;
 
-const PHY_Posture PHY_Posture::mouvement_        ( "Mouvement"        , ePostureMouvement        , sword::UnitAttributes::moving                          , PHY_ConsumptionType::moving_       , ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous );
-const PHY_Posture PHY_Posture::mouvementDiscret_ ( "MouvementDiscret" , ePostureMouvementDiscret , sword::UnitAttributes::infiltrating                    , PHY_ConsumptionType::moving_       , ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous );
-const PHY_Posture PHY_Posture::arret_            ( "Arret"            , ePostureArret            , sword::UnitAttributes::stopping                        , PHY_ConsumptionType::engineStarted_, ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous, &posteReflexe_ );
-const PHY_Posture PHY_Posture::posteReflexe_     ( "PosteReflexe"     , ePosturePosteReflexe     , sword::UnitAttributes::short_stopping                  , PHY_ConsumptionType::engineStarted_, ePostureCanModifyDetection | ePostureCanModifyPH                        , &poste_       , &arret_ );
-const PHY_Posture PHY_Posture::poste_            ( "Poste"            , ePosturePoste            , sword::UnitAttributes::parked                          , PHY_ConsumptionType::engineStopped_, ePostureCanModifyDetection | ePostureCanModifyPH                        , &posteAmenage_, &posteReflexe_ );
-const PHY_Posture PHY_Posture::posteAmenage_     ( "PosteAmenage"     , ePosturePosteAmenage     , sword::UnitAttributes::parked_on_self_prepared_area    , PHY_ConsumptionType::engineStopped_, ePostureCanModifyDetection | ePostureCanModifyPH                        , 0             , &poste_ );
-const PHY_Posture PHY_Posture::postePrepareGenie_( "PostePrepareGenie", ePosturePostePrepareGenie, sword::UnitAttributes::parked_on_engineer_prepared_area, PHY_ConsumptionType::engineStopped_, ePostureCanModifyDetection | ePostureCanModifyPH );
+const PHY_Posture PHY_Posture::mouvement_        ( "Mouvement"        , eUnitPosture_PostureMouvement        , sword::UnitAttributes::moving                          , PHY_ConsumptionType::moving_       , ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous );
+const PHY_Posture PHY_Posture::mouvementDiscret_ ( "MouvementDiscret" , eUnitPosture_PostureMouvementDiscret , sword::UnitAttributes::infiltrating                    , PHY_ConsumptionType::moving_       , ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous );
+const PHY_Posture PHY_Posture::arret_            ( "Arret"            , eUnitPosture_PostureArret            , sword::UnitAttributes::stopping                        , PHY_ConsumptionType::engineStarted_, ePostureCanModifyDetection | ePostureCanModifyPH | ePostureInstantaneous, &posteReflexe_ );
+const PHY_Posture PHY_Posture::posteReflexe_     ( "PosteReflexe"     , eUnitPosture_PosturePosteReflexe     , sword::UnitAttributes::short_stopping                  , PHY_ConsumptionType::engineStarted_, ePostureCanModifyDetection | ePostureCanModifyPH                        , &poste_       , &arret_ );
+const PHY_Posture PHY_Posture::poste_            ( "Poste"            , eUnitPosture_PosturePoste            , sword::UnitAttributes::parked                          , PHY_ConsumptionType::engineStopped_, ePostureCanModifyDetection | ePostureCanModifyPH                        , &posteAmenage_, &posteReflexe_ );
+const PHY_Posture PHY_Posture::posteAmenage_     ( "PosteAmenage"     , eUnitPosture_PosturePosteAmenage     , sword::UnitAttributes::parked_on_self_prepared_area    , PHY_ConsumptionType::engineStopped_, ePostureCanModifyDetection | ePostureCanModifyPH                        , 0             , &poste_ );
+const PHY_Posture PHY_Posture::postePrepareGenie_( "PostePrepareGenie", eUnitPosture_PosturePostePrepareGenie, sword::UnitAttributes::parked_on_engineer_prepared_area, PHY_ConsumptionType::engineStopped_, ePostureCanModifyDetection | ePostureCanModifyPH );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Posture::Initialize
@@ -55,7 +55,7 @@ void PHY_Posture::Terminate()
 // Name: PHY_Posture constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Posture::PHY_Posture( const std::string& strName, E_PostureType nType, sword::UnitAttributes_Posture nAsnID, const PHY_ConsumptionType& consumptionMode, unsigned int nFlags, const PHY_Posture* pNextAutoPosture, const PHY_Posture* pPreviousAutoPosture )
+PHY_Posture::PHY_Posture( const std::string& strName, E_UnitPosture nType, sword::UnitAttributes_Posture nAsnID, const PHY_ConsumptionType& consumptionMode, unsigned int nFlags, const PHY_Posture* pNextAutoPosture, const PHY_Posture* pPreviousAutoPosture )
     : strName_             ( strName )
     , nType_               ( nType )
     , nAsnID_              ( nAsnID )

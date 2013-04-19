@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Agent.h"
+#include "Attributes.h"
 #include "Diplomacies.h"
 #include "equipments.h"
 #include "clients_gui/GlTools_ABC.h"
@@ -79,7 +80,7 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
     }
     if( viewport.IsHotpointVisible() )
     {
-        bool isMoving = ( speed_ != 0 );
+        bool isMoving = ( Get< Attributes >().nCurrentPosture_ <= eUnitPosture_PostureArret );
         float width = isMoving? 0.f : type_.GetWidth();
         float depth = isMoving? type_.GetLength() : type_.GetDepth();
         unsigned int direction = isMoving ? direction_ : sensorsDirection_;
