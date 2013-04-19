@@ -104,9 +104,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( pInfoHolder, tr( "Symbol" ), vInfosConnectors[ eSymbol ] );
     
     if( eEntityType == ADN_Models_Data::ModelInfos::eAutomat || eEntityType == ADN_Models_Data::ModelInfos::ePawn )
-    {
         builder.AddField< ADN_ComboBox_Vector< ADN_Activities_Data::PackageInfos > >( pInfoHolder, tr( "Package" ), vInfosConnectors[ eAssociatedPackage ] );
-    }
 
     combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
 
@@ -307,8 +305,9 @@ QWidget* ADN_Missions_GUI::BuildSICActibities()
     builder.AddField< ADN_EditLine_String >( pGroup, tr( "Package" ), vPackageInfosConnectors[ ePackageName ] );
 
     // Packages list
-    ADN_Packages_ListView* packageList =new ADN_Packages_ListView( pPackagesGroup );
+    ADN_Packages_ListView* packageList = new ADN_Packages_ListView( pPackagesGroup );
     static_cast< ADN_Connector_Vector_ABC* >( &packageList->GetConnector() )->Connect( &data_.activitiesData_->GetPackages() );
+    connect( packageList, SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     packageList->SetItemConnectors( vPackageInfosConnectors );
 
     // -------------------------------------------------------------------------

@@ -4,7 +4,6 @@
   <packages>
     <package name="attack"/>
     <package name="move"/>
-    <package name="none"/>
     <package name="control"/>
     <package name="intelligence"/>
     <package name="defence"/>

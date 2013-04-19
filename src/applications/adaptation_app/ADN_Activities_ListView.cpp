@@ -21,11 +21,11 @@ typedef ADN_Activities_Data::ActivityInfos Activity;
 // Name: ADN_Activities_ListView constructor
 // Created: NPT 2013-04-16
 // -----------------------------------------------------------------------------
-ADN_Activities_ListView::ADN_Activities_ListView( QWidget* pParent /*= 0*/, const char* szName /*= 0*/, Qt::WFlags f /*= 0*/ )
+ADN_Activities_ListView::ADN_Activities_ListView( QWidget* pParent /* = 0 */, const char* szName /* = 0 */, Qt::WFlags f /* = 0 */ )
     : ADN_ListView( pParent, szName, f )
 {
     // Add one column.
-    addColumn( tr( "Activities" ) );
+    addColumn( tools::translate( "ADN_Activities_ListView", "Activities" ) );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< Activity >( *this );

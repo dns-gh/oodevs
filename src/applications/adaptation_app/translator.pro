@@ -9,6 +9,7 @@ ADN_ActiveProtectionsListView.cpp \
 ADN_ActiveProtections_Data.cpp \
 ADN_ActiveProtections_GUI.cpp \
 ADN_ActiveProtections_WeaponsTable.cpp \
+ADN_Activities_ListView.cpp \
 ADN_AddElementCommand.cpp \
 ADN_AddElementCommand.inl \
 ADN_AiEngine_Data.cpp \
@@ -125,6 +126,7 @@ ADN_Objects_Data.cpp \
 ADN_Objects_GUI.cpp \
 ADN_OpenFile_Exception.cpp \
 ADN_OpenMode_Dialog.cpp \
+ADN_Packages_ListView.cpp \
 ADN_People_Data.cpp \
 ADN_People_GUI.cpp \
 ADN_People_ListView.cpp \

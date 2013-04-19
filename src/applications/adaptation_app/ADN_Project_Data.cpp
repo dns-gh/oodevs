@@ -109,7 +109,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "symbols", szSymbols_ );
     ReadFile( input, "scores", szScores_ );
     ReadFile( input, "urban-templates", szUrbanTemplates_ );
-    ReadFile( input, "activities", szActivities_ );
+    ReadOptionalFile( input, "activities", szActivities_ );
     ReadOptionalFile( input, "extensions", szExtensions_ );
     ReadOptionalFile( input, "filters", szFilters_ );
     

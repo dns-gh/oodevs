@@ -204,6 +204,8 @@ public:
     FragOrder*          FindFragOrder( const std::string& strName );
     Mission*            FindMission( T_Mission_Vector& missions, const std::string& strName );
     virtual void Load( const tools::Loader_ABC& fileLoader );
+    QStringList GetUnitMissionsThatUse( ADN_Activities_Data::PackageInfos& package );
+    QStringList GetAutomataMissionsThatUse( ADN_Activities_Data::PackageInfos& package );
     //@}
 
 private:

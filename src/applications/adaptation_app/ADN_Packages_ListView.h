@@ -20,9 +20,7 @@
 // Created: NPT 2013-04-17
 // =============================================================================
 class ADN_Packages_ListView : public ADN_ListView
-                            , private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -34,6 +32,7 @@ public:
     //@{
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
+    virtual std::string GetToolTipFor( Q3ListViewItem& item );
     //@}
 };
 

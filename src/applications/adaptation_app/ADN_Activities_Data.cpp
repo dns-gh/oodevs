@@ -69,6 +69,8 @@ ADN_Activities_Data::PackageInfos* ADN_Activities_Data::PackageInfos::CreateCopy
 // -----------------------------------------------------------------------------
 void ADN_Activities_Data::PackageInfos::WriteArchive( xml::xostream& output )
 {
+    if( strName_ == " - " )
+        return;
     output  << xml::start( "package" )
                 << xml::attribute( "name", strName_ )
             << xml::end;
@@ -92,7 +94,11 @@ void ADN_Activities_Data::PackageInfos::ReadArchive( xml::xistream& input )
 // Created: NPT 2013-04-16
 // -----------------------------------------------------------------------------
 ADN_Activities_Data::ActivityInfos::ActivityInfos()
-    : package_( ADN_Workspace::GetWorkspace().GetMissions().GetData().activitiesData_->GetPackages(), 0 )
+    : id_( 0 )
+    , strName_( "" )
+    , description_( "" )
+    , meleeActivity_( false )
+    , package_( ADN_Workspace::GetWorkspace().GetMissions().GetData().activitiesData_->GetPackages(), 0 )
 {
     // NOTHING
 }
@@ -147,9 +153,12 @@ void ADN_Activities_Data::ActivityInfos::WriteArchive( xml::xostream& output )
                 << xml::attribute( "id", id_ )
                 << xml::attribute( "name", strName_ )
                 << xml::attribute( "doc", description_ )
-                << xml::attribute( "melee", meleeActivity_ )
-                << xml::attribute( "package", package_.GetData()->strName_.GetData() )
-            << xml::end;
+                << xml::attribute( "melee", meleeActivity_ );
+    if( package_.GetData()->strName_.GetData() == " - " )
+        output << xml::attribute( "package", "none" );
+    else
+        output << xml::attribute( "package", package_.GetData()->strName_.GetData() );
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -180,7 +189,7 @@ void ADN_Activities_Data::ActivityInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 ADN_Activities_Data::ADN_Activities_Data()
 {
-        // NOTHING
+     packages_.AddItem( new PackageInfos( " - " ) );
 }
 
 // -----------------------------------------------------------------------------

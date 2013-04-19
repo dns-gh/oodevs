@@ -79,6 +79,13 @@
     </message>
 </context>
 <context>
+    <name>ADN_Activities_ListView</name>
+    <message>
+        <source>Activities</source>
+        <translation type="unfinished">Actividas</translation>
+    </message>
+</context>
+<context>
     <name>ADN_AddElementCommand</name>
     <message>
         <source>Add </source>
@@ -3291,6 +3298,29 @@ Asegúrese que el archivo existe.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Packages_ListView</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit missions</source>
+        <translation type="unfinished">Misiones de unidad</translation>
+    </message>
+    <message>
+        <source>Automata missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_People_GUI</name>
     <message>
         <source>Name</source>
@@ -6211,17 +6241,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
         <translation>Sistema logístico médico - Tipo de herido inválido&apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>Mission_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Mission &apos;%1&apos; - Invalid package type &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

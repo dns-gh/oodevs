@@ -20,9 +20,7 @@
 // Created: NPT 2013-04-16
 // =============================================================================
 class ADN_Activities_ListView : public ADN_ListView
-                              , private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -427,9 +427,11 @@ void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, std::size_t 
         >> xml::optional >> xml::attribute( "package", strPackage );
     if( !strPackage.empty() )
     {
+        if( strPackage == "none" )
+            strPackage = " - ";
         ADN_Activities_Data::PackageInfos* pPackage = ADN_Workspace::GetWorkspace().GetMissions().GetData().activitiesData_->FindPackage( strPackage );
         if( !pPackage )
-            throw ADN_DataException( tools::translate( "Mission_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Mission_Data", "Mission '%1' - Invalid package type '%2'" ).arg( strName_.GetData().c_str(), strPackage.c_str() ).toAscii().constData() );
+            ADN_Workspace::GetWorkspace().GetMissions().GetData().activitiesData_->GetPackages().AddItem( new ADN_Activities_Data::PackageInfos( strPackage ) );
         strPackage_ = pPackage;
     }
     input >> xml::list( "parameter", boost::bind( &ADN_Missions_Data::Mission::ReadParameter, this , _1,  boost::ref( index ), contextLength ) );
@@ -489,8 +491,14 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
     if( code != "" && code != " - " )
         output << xml::attribute( "symbol", code );
 
-    if ( ! strPackage_.GetData()->strName_.GetData().empty() )
-        output << xml::attribute( "package", strPackage_.GetData()->strName_.GetData() );
+    if ( strPackage_.GetData() != 0 && ! strPackage_.GetData()->strName_.GetData().empty() )
+    {
+        std::string val = strPackage_.GetData()->strName_.GetData();
+        if( strPackage_.GetData()->strName_.GetData() == " - " )
+            output << xml::attribute( "package", "none" );
+        else
+            output << xml::attribute( "package", strPackage_.GetData()->strName_.GetData() );
+    }
 
     if( !isAutomat )
     {
@@ -727,6 +735,38 @@ void ADN_Missions_Data::Load( const tools::Loader_ABC& fileLoader )
         const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + fileList.front();
         fileLoader.LoadFile( strFile, boost::bind( &ADN_Missions_Data::ReadArchive, this, _1 ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetUnitThatUse
+// Created: NPT 2013-04-19
+// -----------------------------------------------------------------------------
+QStringList ADN_Missions_Data::GetUnitMissionsThatUse( ADN_Activities_Data::PackageInfos& package )
+{
+    QStringList result;
+    for( auto it = unitMissions_.begin(); it != unitMissions_.end(); ++it )
+    {
+        Mission* mission = *it;
+        if( mission->strPackage_.GetData()->strName_.GetData() == package.strName_.GetData() )
+            result << mission->strName_.GetData().c_str();
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetAutomataThatUse
+// Created: NPT 2013-04-19
+// -----------------------------------------------------------------------------
+QStringList ADN_Missions_Data::GetAutomataMissionsThatUse( ADN_Activities_Data::PackageInfos& package )
+{
+    QStringList result;
+    for( auto it = automatMissions_.begin(); it != automatMissions_.end(); ++it )
+    {
+        Mission* mission = *it;
+        if( mission->strPackage_.GetData()->strName_.GetData() == package.strName_.GetData() )
+            result << mission->strName_.GetData().c_str();
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------

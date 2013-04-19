@@ -79,6 +79,13 @@
     </message>
 </context>
 <context>
+    <name>ADN_Activities_ListView</name>
+    <message>
+        <source>Activities</source>
+        <translation>Activités</translation>
+    </message>
+</context>
+<context>
     <name>ADN_AddElementCommand</name>
     <message>
         <source>Add </source>
@@ -3294,6 +3301,29 @@ Assurez vous que le fichier existe.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Packages_ListView</name>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Packages</source>
+        <translation>Packages</translation>
+    </message>
+    <message>
+        <source>Unit missions</source>
+        <translation>Missions pions</translation>
+    </message>
+    <message>
+        <source>Automata missions</source>
+        <translation>Missions Automates</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_People_GUI</name>
     <message>
         <source>Name</source>
@@ -6222,17 +6252,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
         <translation>Chaîne médicale - Type de blessure invalide &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>Mission_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Mission &apos;%1&apos; - Invalid package type &apos;%2&apos;</source>
-        <translation>Mission &apos;%1&apos; - Type de package invalide &apos;%2&apos;</translation>
     </message>
 </context>
 <context>
