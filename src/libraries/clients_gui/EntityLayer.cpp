@@ -317,6 +317,7 @@ namespace
 void EntityLayerBase::ExtractElements( T_LayerElements& extractedElement, const T_ObjectsPicking& selection )
 {
     selection_.clear();
+    infoTooltip_->Hide();
     for( auto it = entities_.begin(); it != entities_.end(); ++it )
     {
         const kernel::Entity_ABC& entity = **it;

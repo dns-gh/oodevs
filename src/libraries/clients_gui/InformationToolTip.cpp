@@ -221,7 +221,7 @@ void InformationToolTip::DirtyImage()
 // -----------------------------------------------------------------------------
 void InformationToolTip::Draw()
 {
-    if( !isVisible() && !image_.isNull() )
+    if( !isVisible() && !image_.isNull() && QApplication::activePopupWidget() == 0 )
         show();
 
     if( image_.isNull() )
