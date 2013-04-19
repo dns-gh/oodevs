@@ -144,9 +144,9 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
     try
     {
         std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.GetExerciseFile( exercise->GetName() ) );
-        currentTerrain_.clear();
-        currentData_.clear();
-        currentPhysical_.clear();
+        currentTerrain_.Clear();
+        currentData_.Clear();
+        currentPhysical_.Clear();
         tools::Path image;
         *xis >> xml::start( "exercise" )
                 >> xml::start( "terrain" )
@@ -174,9 +174,9 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
         if( terrainList_ )
         {
             const QStringList terrainList = fc::PathListToQStringList( fc::ListTerrains( config_ ) );
-            int index = terrainList.indexOf( currentTerrain_.c_str() );
+            int index = terrainList.indexOf( QString::fromStdWString( currentTerrain_.ToUnicode().c_str() ) );
             terrainList_->setCurrentIndex( index + 1 );
-            int modelIndex = modelList_->findText( QString( "%1/%2" ).arg( currentData_.c_str() ).arg( currentPhysical_.c_str() ) );
+            int modelIndex = modelList_->findText( QString( "%1/%2" ).arg( QString::fromStdWString( currentData_.ToUnicode().c_str() ) ).arg( QString::fromStdWString( currentPhysical_.ToUnicode().c_str() ) ) );
             if( modelIndex != -1 )
                 modelList_->setCurrentIndex( modelIndex );
         }
@@ -220,7 +220,7 @@ void ExerciseProperties::ModelChanged()
 bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
 {
     // Be sure to commit if mismatched terrain or data, even if no changes has occured
-    if( terrainList_ && terrainList_->currentIndex() > 0 && terrainList_->currentText().toStdString() != currentTerrain_ )
+    if( terrainList_ && terrainList_->currentIndex() > 0 && terrainList_->currentText() != QString::fromStdWString( currentTerrain_.ToUnicode().c_str() ) )
     {
         MessageDialog message( parent_, tools::translate( "ExerciseProperties", "Warning" ), tools::translate( "ExerciseProperties", "The selected terrain is not the one referenced by the selected exercise.\nDo really you want to replace it ?" ), QMessageBox::Yes, QMessageBox::No );
         if( message.exec() == QMessageBox::Yes )
@@ -231,7 +231,7 @@ bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
     if( modelList_ && modelList_->currentIndex() > 0 )
     {
         const QStringList model = QString( modelList_->currentText() ).split( "/" );
-        if( model.front().toStdString() != currentData_ || model.back().toStdString() != currentPhysical_ )
+        if( model.front() != QString::fromStdWString( currentData_.ToUnicode().c_str() ) || model.back() != QString::fromStdWString( currentPhysical_.ToUnicode().c_str() ) )
         {
             MessageDialog message( parent_, tools::translate( "ExerciseProperties", "Warning" ), tools::translate( "ExerciseProperties", "The selected model is not the one referenced by the selected exercise.\nDo really you want to replace it ?" ), QMessageBox::Yes, QMessageBox::No );
             if( message.exec() == QMessageBox::Yes )

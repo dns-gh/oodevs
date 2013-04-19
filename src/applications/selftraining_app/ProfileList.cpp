@@ -76,9 +76,12 @@ void ProfileList::ReadProfiles( const tools::Path& exercise )
     }
     {
         const tools::Path file = config_.BuildChildPath( config_.GetExerciseFile( exercise ), profilesFile );
-        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( file );
-        *xis >> xml::start( "profiles" )
+        if( file.Exists() )
+        {
+            std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( file );
+            *xis >> xml::start( "profiles" )
                 >> xml::list( "profile", *this, &ProfileList::ReadProfile );
+        }
     }
 }
 

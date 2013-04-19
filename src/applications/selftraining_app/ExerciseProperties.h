@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include "clients_gui/LanguageChangeObserver_ABC.h"
+#include <tools/Path.h>
 
 namespace frontend
 {
@@ -86,9 +87,9 @@ private:
     QComboBox* terrainList_;
     QComboBox* modelList_;
     bool dataChanged_;
-    std::string currentData_;
-    std::string currentPhysical_;
-    std::string currentTerrain_;
+    tools::Path currentData_;
+    tools::Path currentPhysical_;
+    tools::Path currentTerrain_;
     //@}
 };
 
