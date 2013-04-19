@@ -36,7 +36,7 @@ MIL_ProfilerManager::MIL_ProfilerManager( const MIL_Config& config )
         tools::Path( "./Profiling" ).CreateDirectories();
         decisionUpdateFile_.open( "./Profiling/DecisionUpdate.txt", std::ios_base::out | std::ios_base::trunc );
     }
-    catch( std::exception& e)
+    catch( std::exception& )
     {
          // NOTHING
     }
