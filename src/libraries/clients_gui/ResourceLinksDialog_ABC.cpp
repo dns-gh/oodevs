@@ -239,8 +239,8 @@ void ResourceLinksDialog_ABC::Update()
             table_->setCellWidget( j, 2, 0 );
             table_->setItem( j, 2, new QTableWidgetItem() );
             RichSpinBox* capacity = new RichSpinBox( "capacity" );
-            capacity->setEnabled( controllers_.GetCurrentMode() != eModes_Replay );
             capacity->setEnabled( limited );
+            capacity->setEnabled( controllers_.GetCurrentMode() != eModes_Replay );
             capacity->setRange( 0, std::numeric_limits< int >::max() );
             capacity->setValue( limited ? node.links_[ j ].capacity_ : 0 );
             table_->setCellWidget( j, 2, capacity );
