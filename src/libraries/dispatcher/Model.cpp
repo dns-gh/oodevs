@@ -705,7 +705,8 @@ void Model::DeleteCheckpoint( const std::string& name )
 // -----------------------------------------------------------------------------
 void Model::ClearOldReports( unsigned int tick )
 {
-    if( tick % config_.GetReportsClearFrequency() == 0 )
+    const unsigned hz = config_.GetReportsClearFrequency();
+    if( hz && !( tick % hz ) )
         reports_.DeleteAll();
 }
 
