@@ -411,7 +411,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Disaster::WriteArchive( xml::xostream& 
 void ADN_Objects_Data::ADN_CapacityInfos_Disaster::CheckDatabaseValidity( ADN_ConsistencyChecker& checker,
                                                                           const ADN_Type_String& objectName ) const
 {
-    if( !disaster_.GetData() && bPresent_.GetData() )
+    if( !disaster_.GetData() )
         checker.AddError( eMissingDisaster, objectName.GetData(), eObjects );
 }
 //@}
@@ -439,25 +439,24 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
     if( dotation != "" )
     {
         ADN_Resources_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( dotation );
-        if( pCategory == 0 )
-            throw MASA_EXCEPTION( "Invalid dotation: " + dotation );
-        if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToSim ) )
+        if( pCategory )
         {
-            ammoCategory_ = pCategory;
-            useAmmo_ = true;
+            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToSim ) )
+            {
+                ammoCategory_ = pCategory;
+                useAmmo_ = true;
+            }
+            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Mine, ENT_Tr_ABC::eToSim ) )
+            {
+                mineCategory_ = pCategory;
+                useMine_ = true;
+            }
+            if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Explosif, ENT_Tr_ABC::eToSim ) )
+            {
+                explosiveCategory_ = pCategory;
+                useExplo_ = true;
+            }
         }
-        if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Mine, ENT_Tr_ABC::eToSim ) )
-        {
-            mineCategory_ = pCategory;
-            useMine_ = true;
-        }
-        if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Explosif, ENT_Tr_ABC::eToSim ) )
-        {
-            explosiveCategory_ = pCategory;
-            useExplo_ = true;
-        }
-        if( !useAmmo_.GetData() && !useMine_.GetData() && !useExplo_.GetData() )
-            throw MASA_EXCEPTION( "Invalid attrition capacity" );
     }
     else
         bPresent_ = false;
@@ -479,6 +478,17 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::WriteArchive( xml::xostream&
     xos << xml::attribute( "attrition-surface", attritionSurface_.GetData() )
         << xml::attribute( "ph", ph_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Attrition::CheckDatabaseValidity
+// Created: JSR 2013-04-18
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Attrition::CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName )
+{
+    if( !useAmmo_.GetData() && !useMine_.GetData() && !useExplo_.GetData() )
+        ammoCategory_.CheckValidity( checker, objectName.GetData(), eObjects, -1, tools::translate( "ADN_Objects_Data", "Attrition" ).toStdString() );
+}
+
 //@}
 
 //! @name ADN_CapacityInfos_UrbanDestruction
@@ -498,9 +508,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::ReadArchive( xml::xis
         {
             std::string material( xis.attribute< std::string >( "material-type" ) );
             auto it = std::find_if( urbanData.begin(), urbanData.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
-            if( it == urbanData.end() )
-                throw MASA_EXCEPTION( tr( "Object - Invalid Urban Material type '%1'" ).arg( material.c_str() ).toStdString() );
-            (*it)->ReadArchive( xis );
+            if( it != urbanData.end() )
+                ( *it )->ReadArchive( xis );
         }
     };
 
@@ -922,28 +931,24 @@ void ADN_Objects_Data::ADN_CapacityInfos_Spawn::ReadArchive( xml::xistream& inpu
 // Name: ADN_Objects_Data::Load
 // Created: LGY 2011-05-24
 // -----------------------------------------------------------------------------
-void ADN_Objects_Data::ADN_CapacityInfos_Spawn::Load( const std::string& parentName )
+void ADN_Objects_Data::ADN_CapacityInfos_Spawn::Load( const std::string& /*parentName*/ )
 {
     if( !bPresent_.GetData() )
         return;
 
-    if( objectName_.empty() )
-    {
-        QMessageBox::warning( 0, qApp->translate( "ADN_Objects_Data", "Reference error" ),
-                              qApp->translate( "ADN_Objects_Data", "Empty object referenced by object '%1'.\nThe spawn capacity will be disabled." ).arg( parentName.c_str() ).arg( objectName_.c_str() ),
-                              QMessageBox::Ok | QMessageBox::Default );
-        bPresent_ = false;
-        return;
-    }
-
-    object_ = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( objectName_ );
+    if( !objectName_.empty() )
+        object_ = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( objectName_ );
     if( object_.GetData() == 0 )
-    {
-        QMessageBox::warning( 0, qApp->translate( "ADN_Objects_Data", "Reference error" ),
-                              qApp->translate( "ADN_Objects_Data", "Unknown object '%2' referenced by object '%1'.\nThe spawn capacity will be disabled." ).arg( parentName.c_str() ).arg( objectName_.c_str() ),
-                              QMessageBox::Ok | QMessageBox::Default );
         bPresent_ = false;
-    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Spawn::CheckDatabaseValidity
+// Created: JSR 2013-04-18
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Spawn::CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName )
+{
+    object_.CheckValidity( checker, objectName.GetData(), eObjects, -1, tools::translate( "ADN_Objects_Data", "Spawn" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1116,9 +1121,18 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadModifier( 
 {
     std::string fireClass = xis.attribute< std::string >( "fire-class" );
     auto itModifier = std::find_if( modifiers_.begin(), modifiers_.end(), ModifierByFireClass::Cmp( fireClass ) );
-    if( itModifier == modifiers_.end() )
-        throw MASA_EXCEPTION( tr( "Fire propagation modifier - Invalid fire class '%1'" ).arg( fireClass.c_str() ).toStdString() );
-    ( *itModifier )->ReadArchive( xis );
+    if( itModifier != modifiers_.end() )
+        ( *itModifier )->ReadArchive( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::CheckDatabaseValidity
+// Created: JSR 2013-04-18
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName )
+{
+    for( auto it = modifiers_.begin(); it != modifiers_.end(); ++it  )
+        ( *it )->CheckValidity( checker, objectName.GetData(), eObjects, -1, tools::translate( "ADN_Objects_Data", "Fire class" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1126,11 +1140,11 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadModifier( 
 // Created: BCI 2010-12-06
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::ModifierByFireClass( ADN_FireClass_Data::FireClassInfos* p )
-    : ptrFireClass_       ( ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos(), p )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos(), p, true, "fire-class" )
     , ignitionThreshold_  ( 0 )
     , maxCombustionEnergy_( 0 )
 {
-    BindExistenceTo( &ptrFireClass_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1149,12 +1163,14 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFire
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::WriteArchive( xml::xostream& xos )
 {
-    if( ptrFireClass_.GetData() && ptrFireClass_.GetData()->isSurface_.GetData() )
-        xos << xml::start( "modifier" )
-            << xml::attribute( "fire-class", ptrFireClass_.GetData()->strName_ )
-            << xml::attribute( "ignition-threshold", ignitionThreshold_ )
+    if( GetCrossedElement() && GetCrossedElement()->isSurface_.GetData() )
+    {
+        xos << xml::start( "modifier" );
+        ADN_CrossedRef::WriteArchive( xos );
+        xos << xml::attribute( "ignition-threshold", ignitionThreshold_ )
             << xml::attribute( "max-combustion-energy", maxCombustionEnergy_ )
             << xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------

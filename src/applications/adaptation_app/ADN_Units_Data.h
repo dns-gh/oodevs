@@ -68,7 +68,7 @@ public:
 
     //*****************************************************************************
 
-    class StockLogThresholdInfos : public ADN_Ref_ABC
+    class StockLogThresholdInfos : public ADN_CrossedRef< helpers::LogisticSupplyClass >
     {
 
     public:
@@ -79,7 +79,6 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC< helpers::LogisticSupplyClass > ptrLogisticSupplyClass_;
         ADN_Type_Double rLogThreshold_;
     };
     typedef ADN_Type_Vector_ABC< StockLogThresholdInfos > T_StockLogThresholdInfos_Vector;

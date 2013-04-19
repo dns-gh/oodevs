@@ -998,6 +998,23 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::SensorInfos::CheckDatabaseValidity
+// Created: JSR 2013-04-19
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::SensorInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    if( bCanDetectDisasters_.GetData() )
+    {
+        for( auto it = vDisasters_.begin(); it != vDisasters_.end(); ++it )
+            ( *it )->CheckValidity( checker, strName_.GetData(), eSensors, -1, tools::translate( "ADN_Sensors_Data", "Disasters" ).toStdString() );
+        for( auto it = vModifUrbanBlocks_.begin(); it != vModifUrbanBlocks_.end(); ++it )
+            ( *it )->CheckValidity( checker, strName_.GetData(), eSensors, -1, tools::translate( "ADN_Sensors_Data", "UrbanBlock material modifiers" ).toStdString() );
+        for( auto it = vModifSizes_.begin(); it != vModifSizes_.end(); ++it )
+            ( *it )->CheckValidity( checker, strName_.GetData(), eSensors, -1, tools::translate( "ADN_Sensors_Data", "Target size" ).toStdString() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ALATInfos::ALATInfos
 // Created: APE 2005-01-17
 // -----------------------------------------------------------------------------
@@ -1221,4 +1238,14 @@ QStringList ADN_Sensors_Data::GetSensorsThatUse( ADN_Disasters_Data::DisasterInf
         }
     }
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::CheckDatabaseValidity
+// Created: JSR 2013-04-19
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = vSensors_.begin(); it != vSensors_.end(); ++it )
+        ( *it )->CheckDatabaseValidity( checker );
 }

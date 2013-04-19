@@ -210,7 +210,8 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
 void ADN_Objects_Data_ObjectInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
     for( auto it = capacities_.begin(); capacities_.end() != it; ++it )
-        it->second->CheckDatabaseValidity( checker, strName_ );
+        if( it->second->bPresent_.GetData() )
+            it->second->CheckDatabaseValidity( checker, strName_ );
 
     for( int i = 0; i < 4; ++i )
         if( geometries_[ i ].GetData() )

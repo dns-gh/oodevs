@@ -24,7 +24,7 @@ class ADN_Sensors_LimitedToSensorsListView : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Sensors_LimitedToSensorsListView();
+             ADN_Sensors_LimitedToSensorsListView( QWidget* pParent );
     virtual ~ADN_Sensors_LimitedToSensorsListView();
     //@}
 

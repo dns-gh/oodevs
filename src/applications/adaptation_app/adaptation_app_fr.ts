@@ -3119,38 +3119,20 @@ PNG (*.png)</translation>
 <context>
     <name>ADN_Objects_Data</name>
     <message>
-        <source>Empty object referenced by object &apos;%1&apos;.
-The spawn capacity will be disabled.</source>
-        <translation>Objet vide référencé par l&apos;object &apos;%1&apos;.
-La capacité d&apos;engendrer un autre objet vas être désactivée.</translation>
-    </message>
-    <message>
-        <source>Unknown object &apos;%2&apos; referenced by object &apos;%1&apos;.
-The spawn capacity will be disabled.</source>
-        <translation>Objet inconnu &apos;%2&apos; référencé par l&apos;objet &apos;%1&apos;.
-La capacité d&apos;engendrer un autre objet vas être désactivée.</translation>
-    </message>
-    <message>
-        <source>Reference error</source>
-        <translation>Erreur de référence</translation>
-    </message>
-    <message>
         <source>Duplicate type</source>
         <translation>Type dupliqué</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier</name>
     <message>
-        <source>Fire propagation modifier - Invalid fire class &apos;%1&apos;</source>
-        <translation>Modification propagation feu - classe de feu non valide &apos;%1&apos;</translation>
+        <source>Attrition</source>
+        <translation>Attrition</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction</name>
     <message>
-        <source>Object - Invalid Urban Material type &apos;%1&apos;</source>
-        <translation>Objet - Type de matériel urbain invalide &apos;%1&apos;</translation>
+        <source>Spawn</source>
+        <translation>Engendre un autre objet</translation>
+    </message>
+    <message>
+        <source>Fire class</source>
+        <translation>Classe de feu</translation>
     </message>
 </context>
 <context>
@@ -3729,6 +3711,13 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
 </context>
 <context>
+    <name>ADN_ResourceNetworks_Data</name>
+    <message>
+        <source>Resource</source>
+        <translation>Dotation</translation>
+    </message>
+</context>
+<context>
     <name>ADN_ResourceNetworks_GUI</name>
     <message>
         <source>Name</source>
@@ -3801,6 +3790,18 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Données invalide dans l&apos;onglet &apos;%1&apos;, sous-onglet &apos;%2&apos;</translation>
+    </message>
+    <message>
+        <source>Nature</source>
+        <translation>Nature</translation>
+    </message>
+    <message>
+        <source>Logistic supply class</source>
+        <translation>Tranche logistique</translation>
+    </message>
+    <message>
+        <source>Created object</source>
+        <translation>Objet créé</translation>
     </message>
 </context>
 <context>
@@ -4106,6 +4107,18 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <message>
         <source>Sensors</source>
         <translation>Capteurs</translation>
+    </message>
+    <message>
+        <source>Disasters</source>
+        <translation>Désastre</translation>
+    </message>
+    <message>
+        <source>UrbanBlock material modifiers</source>
+        <translation>Modificateurs des matériaux de bloc urbain</translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation>Volume de la cible</translation>
     </message>
 </context>
 <context>
@@ -5569,6 +5582,17 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Units_Data</name>
+    <message>
+        <source>Equipments</source>
+        <translation>Equipements</translation>
+    </message>
+    <message>
+        <source>Stock</source>
+        <translation>Stock</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Units_Data::UnitInfos</name>
     <message>
         <source></source>
@@ -5844,6 +5868,25 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Urban_Data</name>
+    <message>
+        <source>Material</source>
+        <translation>Matériau</translation>
+    </message>
+    <message>
+        <source>Roof shape</source>
+        <translation>Forme du toit</translation>
+    </message>
+    <message>
+        <source>Accomodation</source>
+        <translation>Accomodation</translation>
+    </message>
+    <message>
+        <source>Infrastructure</source>
+        <translation>Infrastructure</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
@@ -5988,6 +6031,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Weapons</source>
         <translation>Systèmes d&apos;armes</translation>
+    </message>
+    <message>
+        <source>Launcher</source>
+        <translation>Lanceur</translation>
+    </message>
+    <message>
+        <source>Ammunition</source>
+        <translation>Munition</translation>
     </message>
 </context>
 <context>

@@ -176,3 +176,16 @@ int ADN_Weapons_Data::GetIndex( ADN_Weapons_Data_WeaponInfos& weapon )
     assert( it != weapons_.end() );
     return static_cast< int >( std::distance( weapons_.begin(), it ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_Data::CheckDatabaseValidity
+// Created: JSR 2013-04-19
+// -----------------------------------------------------------------------------
+void ADN_Weapons_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
+    {
+        ( *it )->ptrLauncher_.CheckValidity( checker, ( *it )->strName_.GetData(), eWeapons, -1, tools::translate( "ADN_Weapons_Data", "Launcher" ).toStdString() );
+        ( *it )->ptrAmmunition_.CheckValidity( checker, ( *it )->strName_.GetData(), eWeapons, -1, tools::translate( "ADN_Weapons_Data", "Ammunition" ).toStdString() );
+    }
+}

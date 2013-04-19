@@ -29,6 +29,7 @@ public:
 
     void FilesNeeded( tools::Path::T_Paths& l ) const;
     void Reset();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     ADN_Type_Vector_ABC< ADN_Weapons_Data_WeaponInfos >& GetWeaponInfos();
     ADN_Weapons_Data_WeaponInfos* FindWeapon( const std::string& strLauncher, const std::string& strAmmunition );

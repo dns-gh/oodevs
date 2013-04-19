@@ -238,8 +238,11 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     // Limited to sensors parameters
     ADN_GroupBox* pLimitedToSensorsGroupBox = builder.AddGroupBox( 0, "limited", tr( "Limited To Sensors" ), vConnectors[ eLimitedToSensors ], 1 );
 
-    ADN_Sensors_LimitedToSensorsListView* pLimitedToSensorsListView = builder.AddWidget< ADN_Sensors_LimitedToSensorsListView >( "limited-list" );
+    ADN_Sensors_LimitedToSensorsListView* pLimitedToSensorsListView = builder.AddWidget< ADN_Sensors_LimitedToSensorsListView >( "limited-list", pLimitedToSensorsGroupBox );
     vConnectors[ eLimitedSensorsList ] = &pLimitedToSensorsListView->GetConnector();
+
+//     QHBoxLayout* pLimitedToSensorsGroupLayout = new QHBoxLayout( pLimitedToSensorsGroupBox );
+//     pLimitedToSensorsGroupLayout->addWidget( pLimitedToSensorsListView );
 
     // Object detection parameters
     ADN_GroupBox* pObjectParamGroupBox = builder.AddGroupBox( 0, "can-detect-objects", tr( "Can detect objects" ), vConnectors[ eCanDetectObjects ] );
@@ -328,10 +331,8 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     QHBoxLayout* pLimitedAndObjectsGroupLayout = new QHBoxLayout();
     pLimitedAndObjectsGroupLayout->setSpacing( 5 );
     pLimitedAndObjectsGroupLayout->setAlignment( Qt::AlignTop );
-    pLimitedAndObjectsGroupLayout->addWidget( pLimitedToSensorsGroupBox );
-    pLimitedAndObjectsGroupLayout->addWidget( pObjectParamGroupBox );
-    pLimitedAndObjectsGroupLayout->setStretchFactor( pLimitedToSensorsGroupBox, 1 );
-    pLimitedAndObjectsGroupLayout->setStretchFactor( pObjectParamGroupBox, 2 );
+    pLimitedAndObjectsGroupLayout->addWidget( pLimitedToSensorsGroupBox, 1 );
+    pLimitedAndObjectsGroupLayout->addWidget( pObjectParamGroupBox, 2 );
 
     // Content layout
     QWidget* pContent = new QWidget();

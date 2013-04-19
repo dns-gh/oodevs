@@ -717,6 +717,22 @@ void ADN_Resources_Data::ResourceInfos::Initialize()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Resources_Data::CheckDatabaseValidity
+// Created: JSR 2013-04-18
+// -----------------------------------------------------------------------------
+void ADN_Resources_Data::ResourceInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = categories_.begin(); it != categories_.end(); ++it )
+    {
+        ( *it )->ptrResourceNature_.CheckValidity( checker, strName_.GetData(), eResources, -1, tools::translate( "ADN_Resources_Data", "Nature" ).toStdString() );
+        ( *it )->ptrLogisticSupplyClass_.CheckValidity( checker, strName_.GetData(), eResources, -1, tools::translate( "ADN_Resources_Data", "Logistic supply class" ).toStdString() );
+        if( AmmoCategoryInfo* ammoCategory = dynamic_cast< AmmoCategoryInfo* >( *it ) )
+            if( ammoCategory->bIndirect_.GetData() && ammoCategory->indirectAmmoInfos_.bEffect_.GetData() )
+                ammoCategory->indirectAmmoInfos_.objectType_.CheckValidity( checker, strName_.GetData(), eResources, -1, tools::translate( "ADN_Resources_Data", "Created object" ).toStdString() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Resources_Data constructor
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
@@ -1004,4 +1020,14 @@ void ADN_Resources_Data::T_ResourceInfos_Vector::CheckValidity()
     }
 
     SetErrorStatus( errorStatus );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Resources_Data::CheckDatabaseValidity
+// Created: JSR 2013-04-18
+// -----------------------------------------------------------------------------
+void ADN_Resources_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
+        ( *it )->CheckDatabaseValidity( checker );
 }

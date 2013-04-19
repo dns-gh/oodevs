@@ -890,3 +890,20 @@ QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( AccommodationInfos& infos )
         }
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::CheckDatabaseValidity
+// Created: JSR 2013-04-19
+// -----------------------------------------------------------------------------
+void ADN_Urban_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
+    {
+        ( *it )->ptrMaterial_.CheckValidity( checker, ( *it )->strName_.GetData(), eUrban, -1, tools::translate( "ADN_Urban_Data", "Material" ).toStdString() );
+        ( *it )->ptrRoofShape_.CheckValidity( checker, ( *it )->strName_.GetData(), eUrban, -1, tools::translate( "ADN_Urban_Data", "Roof shape" ).toStdString() );
+        for( auto itUsage = ( *it )->usages_.begin(); itUsage != ( *it )->usages_.end(); ++itUsage )
+            ( *itUsage )->CheckValidity( checker, ( *it )->strName_.GetData(), eUrban, -1, tools::translate( "ADN_Urban_Data", "Accomodation" ).toStdString() );
+    }
+    for( auto it = vInfrastructures_.begin(); it != vInfrastructures_.end(); ++it )
+        ( *it )->pSymbol_.CheckValidity( checker, ( *it )->strName_.GetData(), eUrban, -1, tools::translate( "ADN_Urban_Data", "Infrastructure" ).toStdString() );
+}

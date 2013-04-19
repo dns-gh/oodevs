@@ -129,6 +129,7 @@ public:
         virtual ~ADN_CapacityInfos_Attrition() {}
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName );
     public:
         ADN_TypePtr_InVector_ABC< ADN_Resources_Data::CategoryInfo > ammoCategory_;
         ADN_TypePtr_InVector_ABC< ADN_Resources_Data::CategoryInfo > mineCategory_;
@@ -383,6 +384,7 @@ public:
         void Load( const std::string& parentName );
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName );
 
     public:
         ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos > object_;
@@ -441,13 +443,13 @@ public:
         ADN_CapacityInfos_FirePropagationModifier();
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName );
 
     public:
-        class ModifierByFireClass : public ADN_Ref_ABC
+        class ModifierByFireClass : public ADN_CrossedRef< ADN_FireClass_Data::FireClassInfos >
         {
         public:
             explicit ModifierByFireClass( ADN_FireClass_Data::FireClassInfos* );
-            ADN_TypePtr_InVector_ABC< ADN_FireClass_Data::FireClassInfos > ptrFireClass_;
             ADN_Type_Int ignitionThreshold_;
             ADN_Type_Int maxCombustionEnergy_;
 
@@ -468,7 +470,7 @@ public:
                 CmpRef( ADN_FireClass_Data::FireClassInfos* val ) : val_( val ){}
                 bool operator()( ModifierByFireClass* other ) const
                 {
-                    return other->ptrFireClass_.GetData() == val_;
+                    return other->GetCrossedElement() == val_;
                 }
 
             private:
@@ -481,7 +483,7 @@ public:
                 Cmp( const std::string& name ) : name_( name ) {}
                 bool operator()( ModifierByFireClass* other ) const
                 {
-                    return other->ptrFireClass_.GetData() && other->ptrFireClass_.GetData()->strName_ == name_;
+                    return other->GetCrossedElement() && other->GetCrossedElement()->strName_ == name_;
                 }
 
             private:

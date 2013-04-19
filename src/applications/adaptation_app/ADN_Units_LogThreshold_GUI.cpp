@@ -51,9 +51,9 @@ void ADN_Units_LogThreshold_GUI::AddRow( int row, void* data )
 {
     ADN_Units_Data::StockLogThresholdInfos* pInfo = static_cast< ADN_Units_Data::StockLogThresholdInfos* >( data );
 
-    if( pInfo && pInfo->ptrLogisticSupplyClass_.GetData() )
+    if( pInfo && pInfo->GetCrossedElement() )
     {
-        AddItem( row, 0, data, &pInfo->ptrLogisticSupplyClass_.GetData()->strName_, ADN_StandardItem::eString );
+        AddItem( row, 0, data, &pInfo->GetCrossedElement()->strName_, ADN_StandardItem::eString );
         AddItem( row, 1, data, &pInfo->rLogThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
     }
 }
@@ -107,7 +107,7 @@ void ADN_Units_LogThreshold_GUI::OnContextMenu( const QPoint& pt )
 void ADN_Units_LogThreshold_GUI::AddNewLogSupplyClass( helpers::LogisticSupplyClass& category )
 {
     ADN_Units_Data::StockLogThresholdInfos* pNewInfo = new ADN_Units_Data::StockLogThresholdInfos();
-    pNewInfo->ptrLogisticSupplyClass_ = &category;
+    pNewInfo->SetCrossedElement( &category );
     pNewInfo->rLogThreshold_ = 10;
 
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );

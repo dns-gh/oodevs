@@ -3107,38 +3107,20 @@ PNG (*.png)
 <context>
     <name>ADN_Objects_Data</name>
     <message>
-        <source>Empty object referenced by object &apos;%1&apos;.
-The spawn capacity will be disabled.</source>
-        <translation>Empty object referenced by object &apos;%1&apos;.
-The spawn capacity will be disabled.</translation>
-    </message>
-    <message>
-        <source>Unknown object &apos;%2&apos; referenced by object &apos;%1&apos;.
-The spawn capacity will be disabled.</source>
-        <translation>Unknown object &apos;%2&apos; referenced by object &apos;%1&apos;.
-The spawn capacity will be disabled.</translation>
-    </message>
-    <message>
-        <source>Reference error</source>
-        <translation>Reference error</translation>
-    </message>
-    <message>
         <source>Duplicate type</source>
         <translation>Duplicate type</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier</name>
     <message>
-        <source>Fire propagation modifier - Invalid fire class &apos;%1&apos;</source>
-        <translation>Fire propagation modifier - Invalid fire class &apos;%1&apos;</translation>
+        <source>Attrition</source>
+        <translation>Attrition</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction</name>
     <message>
-        <source>Object - Invalid Urban Material type &apos;%1&apos;</source>
-        <translation>Object - Invalid Urban Material type &apos;%1&apos;</translation>
+        <source>Spawn</source>
+        <translation>Spawn</translation>
+    </message>
+    <message>
+        <source>Fire class</source>
+        <translation>Fire class</translation>
     </message>
 </context>
 <context>
@@ -3717,6 +3699,13 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
 </context>
 <context>
+    <name>ADN_ResourceNetworks_Data</name>
+    <message>
+        <source>Resource</source>
+        <translation>Resource</translation>
+    </message>
+</context>
+<context>
     <name>ADN_ResourceNetworks_GUI</name>
     <message>
         <source>Name</source>
@@ -3789,6 +3778,18 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</translation>
+    </message>
+    <message>
+        <source>Nature</source>
+        <translation>Nature</translation>
+    </message>
+    <message>
+        <source>Logistic supply class</source>
+        <translation>Logistic supply class</translation>
+    </message>
+    <message>
+        <source>Created object</source>
+        <translation>Created object</translation>
     </message>
 </context>
 <context>
@@ -4094,6 +4095,18 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</translation>
+    </message>
+    <message>
+        <source>Disasters</source>
+        <translation>Disasters</translation>
+    </message>
+    <message>
+        <source>UrbanBlock material modifiers</source>
+        <translation>UrbanBlock material modifiers</translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation>Target size</translation>
     </message>
 </context>
 <context>
@@ -5553,6 +5566,17 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Units_Data</name>
+    <message>
+        <source>Equipments</source>
+        <translation>Equipment</translation>
+    </message>
+    <message>
+        <source>Stock</source>
+        <translation>Stock</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Units_GUI</name>
     <message>
         <source>Name</source>
@@ -5821,6 +5845,25 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Urban_Data</name>
+    <message>
+        <source>Material</source>
+        <translation>Material</translation>
+    </message>
+    <message>
+        <source>Roof shape</source>
+        <translation>Roof shape</translation>
+    </message>
+    <message>
+        <source>Accomodation</source>
+        <translation>Accomodation</translation>
+    </message>
+    <message>
+        <source>Infrastructure</source>
+        <translation>Infrastructure</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
@@ -5965,6 +6008,14 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Weapons</source>
         <translation>Weapons</translation>
+    </message>
+    <message>
+        <source>Launcher</source>
+        <translation>Launcher</translation>
+    </message>
+    <message>
+        <source>Ammunition</source>
+        <translation>Ammunition</translation>
     </message>
 </context>
 <context>

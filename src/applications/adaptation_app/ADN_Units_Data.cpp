@@ -107,8 +107,8 @@ void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output ) cons
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
 ADN_Units_Data::StockLogThresholdInfos::StockLogThresholdInfos()
-    : ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
-    , rLogThreshold_      ( 0. )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0, false, "logistic-supply-class" )
+    , rLogThreshold_( 0. )
 {
     // NOTHING
 }
@@ -119,8 +119,8 @@ ADN_Units_Data::StockLogThresholdInfos::StockLogThresholdInfos()
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "logistic-supply-class", ptrLogisticSupplyClass_ )
-          >> xml::attribute( "threshold", rLogThreshold_ );
+    ADN_CrossedRef::ReadArchive( input );
+    input >> xml::attribute( "threshold", rLogThreshold_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,9 +129,9 @@ void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "stock" )
-            << xml::attribute( "logistic-supply-class", ptrLogisticSupplyClass_ )
-            << xml::attribute( "threshold", rLogThreshold_ )
+    output << xml::start( "stock" );
+    ADN_CrossedRef::WriteArchive( output );
+    output  << xml::attribute( "threshold", rLogThreshold_ )
            << xml::end;
 }
 
@@ -142,7 +142,7 @@ void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( xml::xostream& output
 ADN_Units_Data::StockLogThresholdInfos* ADN_Units_Data::StockLogThresholdInfos::CreateCopy()
 {
     StockLogThresholdInfos* pCopy = new StockLogThresholdInfos();
-    pCopy->ptrLogisticSupplyClass_ = ptrLogisticSupplyClass_.GetData();
+    pCopy->SetCrossedElement( GetCrossedElement() );
     pCopy->rLogThreshold_ = rLogThreshold_.GetData();
     return pCopy;
 }
@@ -156,7 +156,7 @@ ADN_Units_Data::StockLogThresholdInfos* ADN_Units_Data::StockLogThresholdInfos::
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
 ADN_Units_Data::StockInfos::StockInfos()
-    : vLogThresholds_     ()
+    : vLogThresholds_()
 {
 }
 
@@ -822,7 +822,10 @@ void ADN_Units_Data::UnitInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& c
     {
         if( (*itComposante)->nNbrHumanInCrew_.GetData() == 0 )
             checker.AddError( eNoCrew, strName_.GetData().c_str(), eUnits, -1, (*itComposante)->GetCrossedElement()->strName_.GetData().c_str() );
+        ( *itComposante )->CheckValidity( checker, strName_.GetData(), eUnits, -1, tools::translate( "ADN_Units_Data", "Equipments" ).toStdString() );
     }
+    for( auto it = stocks_.vLogThresholds_.begin(); it != stocks_.vLogThresholds_.end(); ++it )
+        ( *it )->CheckValidity( checker, strName_.GetData(), eUnits, -1, tools::translate( "ADN_Units_Data", "Stock" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -966,7 +969,7 @@ QStringList ADN_Units_Data::GetUnitsThatUse( helpers::LogisticSupplyClass& suppl
     for( auto it = vUnits_.begin(); it != vUnits_.end(); ++it )
         for( auto itStock = ( *it )->stocks_.vLogThresholds_.begin(); itStock != ( *it )->stocks_.vLogThresholds_.end(); ++itStock )
         {
-            helpers::LogisticSupplyClass* infos = ( *itStock )->ptrLogisticSupplyClass_.GetData();
+            helpers::LogisticSupplyClass* infos = ( *itStock )->GetCrossedElement();
             if( infos && infos->strName_.GetData() == supply.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
         }

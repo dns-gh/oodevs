@@ -49,11 +49,11 @@ ADN_Table_Objects_FirePropagationModifier::~ADN_Table_Objects_FirePropagationMod
 void ADN_Table_Objects_FirePropagationModifier::AddRow( int row, void* data )
 {
     ModifierByFireClass* pModifier = static_cast< ModifierByFireClass* >( data );
-    if( !pModifier || !pModifier->ptrFireClass_.GetData() )
+    if( !pModifier || !pModifier->GetCrossedElement() )
         return;
-    if( pModifier->ptrFireClass_.GetData()->isSurface_.GetData() )
+    if( pModifier->GetCrossedElement()->isSurface_.GetData() )
     {
-        AddItem( row, 0, data, &pModifier->ptrFireClass_.GetData()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+        AddItem( row, 0, data, &pModifier->GetCrossedElement()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
         AddItem( row, 1, data, &pModifier->ignitionThreshold_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
         AddItem( row, 2, data, &pModifier->maxCombustionEnergy_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
     }

@@ -15,8 +15,6 @@
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 
-namespace xml { class xistream; }
-
 // =============================================================================
 /** @class  ADN_Reports_Data
     @brief  ADN_Reports_Data

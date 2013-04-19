@@ -15,8 +15,6 @@
 #include "ADN_Resources_Data.h"
 #include "ADN_Weapons_Data_PhInfos.h"
 
-namespace xml { class xistream; }
-
 // =============================================================================
 /** @class  ADN_Weapons_Data_WeaponInfos
 */

@@ -344,7 +344,7 @@ void ADN_Weapons_GUI::Build()
     connect( pStressCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
 
     // Indirect group
-    ADN_GroupBox* pIndirectGroup = builder.AddGroupBox( 0, "indirect-fire", tr( "Indirect fire" ), vInfosConnectors[ eIndirect ], 1 );
+    ADN_GroupBox* pIndirectGroup = builder.AddGroupBox( 0, "indirect-fire", tr( "Indirect fire" ), vInfosConnectors[ eIndirect ], 3 );
     pIndirectGroup->GetConnector().bAutoHide_ = true;
     pIndirectGroup->setCheckable( false );
 

@@ -3110,35 +3110,19 @@ PNG (*.png)
 <context>
     <name>ADN_Objects_Data</name>
     <message>
-        <source>Empty object referenced by object &apos;%1&apos;.
-The spawn capacity will be disabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown object &apos;%2&apos; referenced by object &apos;%1&apos;.
-The spawn capacity will be disabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reference error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Duplicate type</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier</name>
     <message>
-        <source>Fire propagation modifier - Invalid fire class &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Attrition</source>
+        <translation type="unfinished">Daños</translation>
     </message>
-</context>
-<context>
-    <name>ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction</name>
     <message>
-        <source>Object - Invalid Urban Material type &apos;%1&apos;</source>
+        <source>Spawn</source>
+        <translation type="unfinished">Herencia</translation>
+    </message>
+    <message>
+        <source>Fire class</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3718,6 +3702,13 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     </message>
 </context>
 <context>
+    <name>ADN_ResourceNetworks_Data</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished">Dotación</translation>
+    </message>
+</context>
+<context>
     <name>ADN_ResourceNetworks_GUI</name>
     <message>
         <source>Name</source>
@@ -3789,6 +3780,18 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     </message>
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature</source>
+        <translation type="unfinished">Nature</translation>
+    </message>
+    <message>
+        <source>Logistic supply class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Created object</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4095,6 +4098,18 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disasters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UrbanBlock material modifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation type="unfinished">Volumen de blanco</translation>
     </message>
 </context>
 <context>
@@ -5556,6 +5571,17 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Units_Data</name>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stock</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Units_GUI</name>
     <message>
         <source>Name</source>
@@ -5824,6 +5850,25 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Urban_Data</name>
+    <message>
+        <source>Material</source>
+        <translation type="unfinished">Material</translation>
+    </message>
+    <message>
+        <source>Roof shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accomodation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infrastructure</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
         <source>Equipment - Invalid armor type &apos;%1&apos;</source>
@@ -5968,6 +6013,14 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Weapons</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Launcher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ammunition</source>
+        <translation type="unfinished">Munición</translation>
     </message>
 </context>
 <context>

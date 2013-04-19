@@ -19,8 +19,8 @@ typedef ADN_Sensors_Data::LimitedToSensorsInfos LimitedToSensorsInfos;
 // Name: ADN_Sensors_LimitedToSensorsListView constructor
 // Created: JSR 2010-03-17
 // -----------------------------------------------------------------------------
-ADN_Sensors_LimitedToSensorsListView::ADN_Sensors_LimitedToSensorsListView()
-    : ADN_ListView( 0, "ADNSensorsLimitedToSensorsListView", tools::translate( "ADN_Sensors_LimitedToSensorsListView", "Sensors" ) )
+ADN_Sensors_LimitedToSensorsListView::ADN_Sensors_LimitedToSensorsListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADNSensorsLimitedToSensorsListView", tools::translate( "ADN_Sensors_LimitedToSensorsListView", "Sensors" ) )
 {
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<LimitedToSensorsInfos>(*this);

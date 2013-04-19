@@ -350,6 +350,7 @@ public:
         void ReadUrbanBlockMaterial( xml::xistream& input );
         void ReadItem( const std::string& name, xml::xistream& input );
         void WriteArchive( xml::xostream& output );
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     public:
         ADN_Type_Bool                           bCanDetectAgents_;
@@ -417,6 +418,7 @@ public:
 
     void FilesNeeded( tools::Path::T_Paths& l ) const;
     void Reset();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     T_SensorsInfos_Vector& GetSensorsInfos();
     SensorInfos* FindSensor( const std::string& strName );

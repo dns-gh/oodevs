@@ -197,6 +197,7 @@ public:
         void ReadArchive( xml::xistream& );
         void WriteArchive( xml::xostream& ) const;
         void Initialize();
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     public:
         E_DotationFamily       nType_;
@@ -220,6 +221,7 @@ public:
 public:
     void FilesNeeded(tools::Path::T_Paths& files ) const;
     void Reset();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     T_ResourceInfos_Vector& GetResources();
     ResourceInfos&          GetResource( E_DotationFamily nType );

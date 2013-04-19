@@ -206,3 +206,13 @@ QStringList ADN_ResourceNetworks_Data::GetResourceNetworksThatUse( ADN_Resources
             result << ( *it )->strName_.GetData().c_str();
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ResourceNetworks_Data::CheckDatabaseValidity
+// Created: JSR 2013-04-18
+// -----------------------------------------------------------------------------
+void ADN_ResourceNetworks_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( auto it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
+        ( *it )->ptrCategory_.CheckValidity( checker, ( *it )->strName_.GetData(), eResourceNetworks, -1, tools::translate( "ADN_ResourceNetworks_Data", "Resource" ).toStdString() );
+}

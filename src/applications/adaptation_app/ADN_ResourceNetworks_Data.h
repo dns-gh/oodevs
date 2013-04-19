@@ -69,6 +69,7 @@ public:
     T_ResourceNetworkInfosVector& GetResourceNetworksInfos();
     ResourceNetworkInfos* FindResourceNetwork( const std::string& strName );
     QStringList GetResourceNetworksThatUse( ADN_Resources_Data::CategoryInfo& category );
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     //@}
 
 private:

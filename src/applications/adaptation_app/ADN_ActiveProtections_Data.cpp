@@ -251,8 +251,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::WriteArchive( xml::xost
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ActiveProtectionsInfos::CheckValidity( ADN_ConsistencyChecker& checker, const std::string& name, int tab, int subTab /* = -1 */, const std::string& /* optional = "" */ )
 {
-    const QString s = tools::translate( "ActiveProtections_Data", "Resource" );
-    ptr_.CheckValidity( checker, name, tab, subTab, s.toStdString() );
+    ptr_.CheckValidity( checker, name, tab, subTab, tools::translate( "ActiveProtections_Data", "Resource" ).toStdString() );
     for( auto it = weapons_.begin(); it != weapons_.end(); ++it )
         ( *it )->CheckValidity( checker, name, tab, subTab, tools::translate( "ActiveProtections_Data", "Ammunitions" ).toStdString() );
 }

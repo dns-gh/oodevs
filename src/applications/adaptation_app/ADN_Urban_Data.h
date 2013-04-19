@@ -204,6 +204,7 @@ public:
 
     virtual void FilesNeeded( tools::Path::T_Paths& l ) const;
     virtual void Reset();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     virtual void Save();
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void ReadArchive( xml::xistream& input );
