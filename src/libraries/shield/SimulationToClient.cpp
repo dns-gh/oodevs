@@ -858,6 +858,13 @@ void SimulationToClient::Convert( const sword::UnitKnowledgeUpdate& from, MsgsSi
     CONVERT_ID( surrendered_unit );
     CONVERT_TO( prisoner, prisonnier );
     CONVERT_TO( refugees_managed, refugie_pris_en_compte );
+    CONVERT_ENUM( posture, ( sword::UnitAttributes::moving,                             MsgsSimToClient::MsgUnitAttributes::mouvement )
+                           ( sword::UnitAttributes::infiltrating,                       MsgsSimToClient::MsgUnitAttributes::mouvement_discret )
+                           ( sword::UnitAttributes::stopping,                           MsgsSimToClient::MsgUnitAttributes::arret ) 
+                           ( sword::UnitAttributes::short_stopping,                     MsgsSimToClient::MsgUnitAttributes::poste_reflexe ) 
+                           ( sword::UnitAttributes::parked,                             MsgsSimToClient::MsgUnitAttributes::poste )
+                           ( sword::UnitAttributes::parked_on_self_prepared_area,       MsgsSimToClient::MsgUnitAttributes::poste_amenage )
+                           ( sword::UnitAttributes::parked_on_engineer_prepared_area,   MsgsSimToClient::MsgUnitAttributes::poste_prepare_genie ) );
 }
 
 // -----------------------------------------------------------------------------

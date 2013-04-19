@@ -579,6 +579,7 @@ message MsgUnitKnowledgeUpdate {
     optional bool                        prisonnier                 = 15;
     optional bool                        refugie_pris_en_compte     = 16;
     optional string                      critical_intelligence      = 17;
+    optional MsgUnitAttributes.Posture   posture                    = 18;
 }
 
 message MsgUnitKnowledgeDestruction {
