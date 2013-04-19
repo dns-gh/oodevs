@@ -1078,11 +1078,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Speed on breached object</source>
-        <translation type="unfinished">Vitesse sur objet breché</translation>
+        <translation>Vitesse sur objet breché</translation>
     </message>
     <message>
         <source>Speed on non breached object</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse sur objet non breché</translation>
     </message>
 </context>
 <context>
@@ -1565,19 +1565,19 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
     <message>
         <source>Code NNO</source>
-        <translation type="unfinished">Code NNO</translation>
+        <translation>Code NNO</translation>
     </message>
     <message>
         <source>Code LFRIL</source>
-        <translation type="unfinished">Code LFRIL</translation>
+        <translation>Code LFRIL</translation>
     </message>
     <message>
         <source>Code EMAT8</source>
-        <translation type="unfinished">Code EMAT8</translation>
+        <translation>Code EMAT8</translation>
     </message>
     <message>
         <source>Code EMAT6</source>
-        <translation type="unfinished">Code EMAT6</translation>
+        <translation>Code EMAT6</translation>
     </message>
 </context>
 <context>
@@ -5261,11 +5261,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Edit groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Editer groupes</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Groupes</translation>
     </message>
 </context>
 <context>
@@ -5486,19 +5486,19 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <name>ADN_Units_Groups_GUI</name>
     <message>
         <source>Equipment</source>
-        <translation type="unfinished">Equipement</translation>
+        <translation>Equipement</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation type="unfinished">Total</translation>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter groupe</translation>
     </message>
     <message>
         <source>Delete group</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer groupe</translation>
     </message>
 </context>
 <context>
@@ -6117,7 +6117,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
     <message>
         <source>Invalid mission parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètre de mission invalide</translation>
     </message>
 </context>
 <context>
