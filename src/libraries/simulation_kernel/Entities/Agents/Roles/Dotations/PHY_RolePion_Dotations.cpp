@@ -568,9 +568,14 @@ void PHY_RolePion_Dotations::Execute( dotation::DotationComputer_ABC& algorithm 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::ChangeConsumptionMode(ConsumptionModeChangeRequest_ABC& request)
 {
+    const PHY_ConsumptionType* current = pCurrentConsumptionMode_;
+    const PHY_ConsumptionType* previous = pPreviousConsumptionMode_;
     bool ok = SetConsumptionMode(request.GetType());
     request.ConsumptionModeChanged(ok, this);
+    pCurrentConsumptionMode_ = current;
+    pPreviousConsumptionMode_ = previous;
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Dotations::SetForbiddenDotoation
 // Created: HBD 2010-04-21
