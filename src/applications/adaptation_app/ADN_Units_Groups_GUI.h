@@ -28,7 +28,6 @@ public slots:
 private:
     virtual void contextMenuEvent( QContextMenuEvent* event );
 
-    int AddHeader( const std::string& name );
     int AddGroup( const QString& name, int rows );
     void AddItem( int row, int column, const QString& text, void* data = 0 );
 
