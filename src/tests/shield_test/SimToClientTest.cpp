@@ -545,7 +545,8 @@ BOOST_FIXTURE_TEST_CASE( unit_knowledge_update_to_client_is_converted, ContextFi
     content.mutable_unit_knowledge_update()->mutable_surrendered_unit()->set_id( 80 );
     content.mutable_unit_knowledge_update()->set_prisoner( true );
     content.mutable_unit_knowledge_update()->set_refugees_managed( true );
-    MOCK_EXPECT( client.SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_knowledge_update { knowledge { id: 7 } knowledge_group { id: 8 } pertinence: 9 identification_level: reconnue max_identification_level: detectee etat_op: 10 mort: true position { latitude: 17.23 longitude: 23.17 } direction { heading: 77 } speed: 78 party { id: 79 } nature_pc: true perception_par_compagnie { elem { automat { id: 100 } identification_level: signale } elem { automat { id: 100 } identification_level: signale } } surrendered_unit { id: 80 } prisonnier: true refugie_pris_en_compte: true } }" ) );
+    content.mutable_unit_knowledge_update()->set_posture( sword::UnitAttributes::moving );
+    MOCK_EXPECT( client.SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_knowledge_update { knowledge { id: 7 } knowledge_group { id: 8 } pertinence: 9 identification_level: reconnue max_identification_level: detectee etat_op: 10 mort: true position { latitude: 17.23 longitude: 23.17 } direction { heading: 77 } speed: 78 party { id: 79 } nature_pc: true perception_par_compagnie { elem { automat { id: 100 } identification_level: signale } elem { automat { id: 100 } identification_level: signale } } surrendered_unit { id: 80 } prisonnier: true refugie_pris_en_compte: true posture: mouvement } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
