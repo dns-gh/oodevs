@@ -11,10 +11,7 @@
 #define __ADN_Units_Groups_GUI_h_
 
 #include "ADN_Types.h"
-#include <boost/shared_ptr.hpp>
-#include <string>
 
-class GroupsHeader;
 class GroupsDelegate;
 
 class ADN_Units_Groups_GUI : public QTableView
@@ -31,13 +28,14 @@ public slots:
 private:
     virtual void contextMenuEvent( QContextMenuEvent* event );
 
-    int AddGroup( const std::string& name, int rows );
-    void RemoveGroup( int column );
-
+    int AddHeader( const std::string& name );
+    int GetGroup( const std::string& name, int rows );
+    int AddGroup( const QString& name, int rows );
     void AddItem( int row, int column, const QString& text, void* data = 0 );
 
+    QString InputName( const QString& label, const QString& previous );
+
 private:
-    GroupsHeader* header_;
     QStandardItemModel dataModel_;
     QSortFilterProxyModel proxyModel_;
     std::auto_ptr< GroupsDelegate > delegate_;

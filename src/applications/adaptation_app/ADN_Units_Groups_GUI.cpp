@@ -11,7 +11,6 @@
 #include "ADN_Units_Groups_GUI.h"
 #include "moc_ADN_Units_Groups_GUI.cpp"
 #include "ADN_Units_Data.h"
-#include "ADN_TableItem_ABC.h"
 #include "ADN_TableItem_Edit.h"
 #include "clients_gui/RichSpinBox.h"
 #include "clients_gui/CommonDelegate.h"
@@ -19,59 +18,6 @@
 #include <boost/lexical_cast.hpp>
 
 typedef ADN_Units_Data::ComposanteInfos UnitComposanteInfos;
-
-class GroupsHeader : public QHeaderView
-{
-public:
-    GroupsHeader( QWidget* parent )
-        : QHeaderView( Qt::Horizontal, parent )
-    {
-        setClickable( true );
-        setDefaultAlignment( Qt::AlignLeft );
-    }
-public:
-    int AddHeader( const std::string& name )
-    {
-        int column = 2;
-        for( ; column < widgets_.size(); ++column )
-            if( widgets_[ column ]->text() == name.c_str() )
-                return column;
-        widgets_.resize( column + 1 );
-        QTextEdit*& edit = widgets_[ column ];
-        edit = new QTextEdit( name.c_str(), this );
-        edit->setVisible( true );
-        return column;
-    }
-    void RemoveHeader( int column )
-    {
-        if( column >= widgets_.size() )
-            return;
-        delete widgets_[ column ];
-        widgets_.erase( widgets_.begin() + column );
-    }
-    std::string GetHeader( int column ) const
-    {
-        if( column >= widgets_.size() || ! widgets_[ column ] )
-            return "";
-        return widgets_[ column ]->text().toStdString();
-    }
-    void Edit( int column )
-    {
-        if( column < widgets_.size() && widgets_[ column ] )
-            widgets_[ column ]->setFocus();
-    }
-
-private:
-    virtual void paintEvent( QPaintEvent* e )
-    {
-        for( int i = 2; i < count(); ++i )
-            widgets_[ i ]->setGeometry( sectionViewportPosition( i ), 0, sectionSize( i ) - 2, height() );
-        QHeaderView::paintEvent( e );
-    }
-
-private:
-    std::vector< QTextEdit* > widgets_;
-};
 
 class GroupsDelegate : public gui::CommonDelegate
 {
@@ -101,7 +47,6 @@ public:
 // -----------------------------------------------------------------------------
 ADN_Units_Groups_GUI::ADN_Units_Groups_GUI( const Q3Table& model, QWidget* parent /*= 0*/ )
     : QTableView( parent )
-    , header_   ( new GroupsHeader( this ) )
     , dataModel_( parent )
     , delegate_ ( new GroupsDelegate( this, proxyModel_, dataModel_ ) )
 {
@@ -116,11 +61,12 @@ ADN_Units_Groups_GUI::ADN_Units_Groups_GUI( const Q3Table& model, QWidget* paren
     setSelectionMode( SingleSelection );
     setSelectionBehavior( SelectItems );
     verticalHeader()->setVisible( false );
-    setHorizontalHeader( header_ );
     QStringList horizontalHeaders;
     horizontalHeaders << tr( "Equipment" ) << tr( "Total" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    horizontalHeader()->setClickable( true );
+    horizontalHeader()->setDefaultAlignment( Qt::AlignLeft );
     for( int row = 0; row < model.numRows(); ++row )
     {
         ADN_TableItem_ABC* item = static_cast< ADN_TableItem_ABC* >( model.item( row, 0 ) );
@@ -129,7 +75,7 @@ ADN_Units_Groups_GUI::ADN_Units_Groups_GUI( const Q3Table& model, QWidget* paren
         AddItem( row, 1, QString::number( infos->nNb_.GetData() ) );
         for( auto it = infos->groups_.begin(); it != infos->groups_.end(); ++it )
         {
-            const int column = AddGroup( it->first, model.numRows() );
+            const int column = AddGroup( it->first.c_str(), model.numRows() );
             dataModel_.item( row, column )->setText( QString::number( it->second ) );
         }
     }
@@ -173,31 +119,23 @@ void ADN_Units_Groups_GUI::AddItem( int row, int column, const QString& text, vo
 // Name: ADN_Units_Groups_GUI::AddGroup
 // Created: MCO 2013-04-16
 // -----------------------------------------------------------------------------
-int ADN_Units_Groups_GUI::AddGroup( const std::string& name, int rows )
+int ADN_Units_Groups_GUI::AddGroup( const QString& name, int rows )
 {
-    int column = header_->AddHeader( name );
-    if( column >= dataModel_.columnCount() )
+    int column = 2;
+    for( ; column < dataModel_.columnCount(); ++column )
+        if( dataModel_.horizontalHeaderItem( column )->text() == name )
+            return column;
+    QStandardItem* item = new QStandardItem( name );
+    dataModel_.setHorizontalHeaderItem( column, item );
+    delegate_->AddSpinBoxOnColumn( column );
+    for( int row = 0; row < rows; ++row )
     {
-        delegate_->AddSpinBoxOnColumn( column );
-        for( int row = 0; row < rows; ++row )
-        {
-            QStandardItem* item = new QStandardItem( "0" );
-            item->setFlags( item->flags() | Qt::ItemIsEditable );
-            item->setTextAlignment( Qt::AlignRight );
-            dataModel_.setItem( row, column, item );
-        }
+        QStandardItem* item = new QStandardItem( "0" );
+        item->setFlags( item->flags() | Qt::ItemIsEditable );
+        item->setTextAlignment( Qt::AlignRight );
+        dataModel_.setItem( row, column, item );
     }
     return column;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_Groups_GUI::RemoveGroup
-// Created: MCO 2013-04-16
-// -----------------------------------------------------------------------------
-void ADN_Units_Groups_GUI::RemoveGroup( int column )
-{
-    dataModel_.removeColumn( column );
-    header_->RemoveHeader( column );
 }
 
 // -----------------------------------------------------------------------------
@@ -210,15 +148,37 @@ void ADN_Units_Groups_GUI::contextMenuEvent( QContextMenuEvent* event )
     menu.insertItem( tr( "Add group" ), 0 );
     QModelIndex index = indexAt( event->pos() );
     if( index.column() >= 2 )
+    {
         menu.insertItem( tr( "Delete group" ), 1 );
+        menu.insertItem( tr( "Rename group" ), 2 );
+    }
     int result = menu.exec( event->globalPos() );
     if( result == 1 )
-        RemoveGroup( index.column() );
+        dataModel_.removeColumn( index.column() );
     else if( result == 0 )
     {
-        static int id = 0;
-        header_->Edit( AddGroup( "Group " + boost::lexical_cast< std::string >( id++ ), dataModel_.rowCount() ) );
+        const QString group = InputName( tr( "Create group" ), "" );
+        if( !group.isEmpty() )
+            AddGroup( group, dataModel_.rowCount() );
     }
+    else if( result == 2 )
+    {
+        const QString group = InputName( tr( "Rename group" ),
+            dataModel_.horizontalHeaderItem( index.column() )->text() );
+        if( !group.isEmpty() )
+            dataModel_.horizontalHeaderItem( index.column() )->setText( group );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Groups_GUI::InputName
+// Created: MCO 2013-04-19
+// -----------------------------------------------------------------------------
+QString ADN_Units_Groups_GUI::InputName( const QString& label, const QString& previous )
+{
+    bool ok;
+    return QInputDialog::getText(
+        this, label, tr( "Group name" ), QLineEdit::Normal, previous, &ok );
 }
 
 // -----------------------------------------------------------------------------
@@ -236,7 +196,8 @@ void ADN_Units_Groups_GUI::Commit() const
         {
             const int count = dataModel_.item( row, column )->text().toInt();
             if( count != 0 )
-                infos->groups_.push_back( std::make_pair( header_->GetHeader( column ), count ) );
+                infos->groups_.push_back(
+                    std::make_pair( dataModel_.horizontalHeaderItem( column )->text().toStdString(), count ) );
         }
     }
 }
