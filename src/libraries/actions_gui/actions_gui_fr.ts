@@ -115,21 +115,6 @@
     </message>
 </context>
 <context>
-    <name>actions::gui::ParamFirePropagationList</name>
-    <message>
-        <source>Fire class</source>
-        <translation>Type de feu</translation>
-    </message>
-    <message>
-        <source>Ignition threshold</source>
-        <translation>Seuil d&apos;ignition</translation>
-    </message>
-    <message>
-        <source>Max combustion energy</source>
-        <translation>Energie de combustion maximale</translation>
-    </message>
-</context>
-<context>
     <name>actions::gui::ParamHumanWoundList</name>
     <message>
         <source>Add...</source>
