@@ -366,12 +366,17 @@
 
     <macrodef name="check-app">
         <attribute name="app"/>
+        <attribute name="logfile" default=""/>
         <element name="elements" optional="true" implicit="true"/>
         <sequential>
-            <exec taskname="@{app}" executable="${out.dir}/release/applications/@{app}/@{app}.exe"
-                  dir="${run.dir}" failonerror="true">
+            <python taskname="@{app}" failonerror="true">
+                <arg value="checkapp.py"/>
+                <arg value="--run-dir=${run.dir}"/>
+                <arg value="--logfile=@{logfile}"/>
+                <arg value="--"/>
+                <arg value="${out.dir}/release/applications/@{app}/@{app}.exe"/>
                 <elements/>
-            </exec>
+            </python>
         </sequential>
     </macrodef>
 
@@ -409,11 +414,13 @@
             <arg value="--session=default"/>
             <arg value="--debug-dir=${out.dir}/app_test_gaming"/>
         </check-gui>
-        <check-app app="dispatcher_app">
+        <check-app app="dispatcher_app"
+            logfile="${out.dir}/app_test_dispatcher/dispatcher.log">
             <arg value="--root-dir=${data.dir}"/>
             <arg value="--exercise=worldwide/Egypt"/>
             <arg value="--session=default"/>
             <arg value="--dispatcher-address=${test.portnumber}"/>
+            <arg value="--debug-dir=${out.dir}/app_test_dispatcher"/>
             <arg value="--test"/>
         </check-app>
         <check-app app="launcher_app">
@@ -422,11 +429,13 @@
         <check-app app="launcher_test_app">
             <arg value="--test"/>
         </check-app>
-        <check-app app="replayer_app">
+        <check-app app="replayer_app"
+            logfile="${out.dir}/app_test_replayer/replayer.log">
             <arg value="--root-dir=${data.dir}"/>
             <arg value="--exercise=worldwide/Egypt"/>
             <arg value="--session=default"/>
             <arg value="--dispatcher-address=${test.portnumber}"/>
+            <arg value="--debug-dir=${out.dir}/app_test_replayer"/>
             <arg value="--test"/>
         </check-app>
     </target>
