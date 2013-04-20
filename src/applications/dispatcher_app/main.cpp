@@ -10,28 +10,53 @@
 #include "Application.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
+#include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Codec.h"
 #include "tools/WinArguments.h"
 #include <license_gui/LicenseDialog.h>
 #include <tools/Exception.h>
+#include <tools/win32/CrashHandler.h>
 #include <windows.h>
+#include <boost/smart_ptr.hpp>
+
+namespace
+{
+
+void CrashHandler( EXCEPTION_POINTERS* exception )
+{
+    MT_CrashHandler::ExecuteHandler( exception );
+}
+
+}  // namespace
 
 //-----------------------------------------------------------------------------
-// Name: Run()
-// Created: NLD 2004-02-04
+// Name: main constructor
+// Created: FBD 02-11-22
 //-----------------------------------------------------------------------------
-int Run( LPWSTR lpCmdLine )
+int WINAPI wWinMain( HINSTANCE /*hinstance*/, HINSTANCE /*hPrevInstance*/, LPWSTR lpCmdLine, int /*nCmdShow*/ )
 {
     // Init logger
+    tools::WinArguments winArgs( lpCmdLine );
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
+    boost::scoped_ptr< MT_FileLogger > fileLogger;
+    tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "" ) );
+    if( !debugDir.IsEmpty() )
+    {
+        debugDir.CreateDirectories();
+        MT_CrashHandler::SetRootDirectory( debugDir );
+        fileLogger.reset( new MT_FileLogger( debugDir / "Dispatcher.log", 1, -1,
+            MT_Logger_ABC::eLogLevel_All ) );
+        MT_LOG_REGISTER_LOGGER( *fileLogger );
+    }
+    tools::InitPureCallHandler();
+    tools::InitCrashHandler( &CrashHandler );
 
     int maxConnections = 1;
     int nResult = EXIT_FAILURE;
     try
     {
-        tools::WinArguments winArgs( lpCmdLine );
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
         // verbose mode
         const bool verbose = winArgs.HasOption( "--verbose" );
@@ -50,22 +75,8 @@ int Run( LPWSTR lpCmdLine )
         MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 
+    if( fileLogger )
+        MT_LOG_UNREGISTER_LOGGER( *fileLogger );
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return nResult;
-}
-
-//-----------------------------------------------------------------------------
-// Name: main constructor
-// Created: FBD 02-11-22
-//-----------------------------------------------------------------------------
-int WINAPI wWinMain( HINSTANCE /*hinstance*/, HINSTANCE /*hPrevInstance*/, LPWSTR lpCmdLine, int /*nCmdShow*/ )
-{
-    __try
-    {
-        return Run( lpCmdLine );
-    }
-    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
-    {
-    }
-    return 0;
 }
