@@ -10,6 +10,7 @@
 #include "App.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_CrashHandler.h"
+#include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Codec.h"
 #include "tools/WinArguments.h"
@@ -42,12 +43,23 @@ int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 {
     tools::WinArguments winArgs( lpCmdLine );
     tools::InitPureCallHandler();
+    boost::scoped_ptr< MT_FileLogger > fileLogger;
+    tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "" ));
+    if( !debugDir.IsEmpty() )
+    {
+        debugDir.CreateDirectories();
+        fileLogger.reset( new MT_FileLogger( debugDir / "replayer.log", 1, -1,
+            MT_Logger_ABC::eLogLevel_All ) );
+        MT_LOG_REGISTER_LOGGER( *fileLogger );
+    }
+    else
+    {
+        debugDir = tools::Path::FromUTF8( "./Debug" );
+    }
 
     try
     {
-        tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
         debugDir.CreateDirectories();
-
         MT_CrashHandler::SetRootDirectory( debugDir );
         tools::InitCrashHandler( &CrashHandler );
     }
@@ -73,6 +85,8 @@ int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
         MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
         nResult = EXIT_FAILURE;
     }
+    if( fileLogger )
+        MT_LOG_UNREGISTER_LOGGER( *fileLogger );
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return nResult;
 }
