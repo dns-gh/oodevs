@@ -49,6 +49,13 @@ func MakeString(value string) *sword.MissionParameter {
 		})
 }
 
+func MakeIdentifier(value uint32) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Identifier: proto.Uint32(value),
+		})
+}
+
 // Return the first value of the index-th parameter of params, or nil.
 func GetParameterValue(params *sword.MissionParameters,
 	index int) *sword.MissionParameter_Value {

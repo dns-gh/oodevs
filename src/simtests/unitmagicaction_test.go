@@ -230,3 +230,72 @@ func (s *TestSuite) TestDeleteUnit(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(model.GetData().FindUnit(unit.Id), IsNil)
 }
+
+func (s *TestSuite) TestCreateAutomat(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	model := client.Model
+
+	formations := model.GetData().ListFormations()
+	c.Assert(len(formations), Greater, 0)
+	formation := formations[0]
+
+	// We want two knowledge groups from different parties, one of which
+	// matches selected formation.
+	knowledgeGroups := model.GetData().ListKnowledgeGroups()
+	c.Assert(len(knowledgeGroups), Greater, 1)
+	kg0 := knowledgeGroups[0]
+	kg1 := knowledgeGroups[1]
+	if kg0.PartyId != formation.PartyId {
+		kg0 = knowledgeGroups[1]
+		kg1 = knowledgeGroups[0]
+	}
+	c.Assert(kg0.PartyId, Equals, formation.PartyId)
+	c.Assert(kg0.PartyId, Not(Equals), kg1.Id)
+
+	// Random existing automat identifier, we should parse the physical
+	// database instead.
+	automatType := uint32(117)
+
+	// No parent formation or automat
+	_, err := client.CreateAutomat(0, 0, automatType, kg0.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// Invalid formation
+	_, err = client.CreateAutomat(1234, 0, automatType, kg0.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// Invalid automat
+	_, err = client.CreateAutomat(formation.Id, 1234, automatType, kg0.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// Invalid automat type
+	_, err = client.CreateAutomat(formation.Id, 0, 12345, kg0.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// Invalid knowledge group
+	_, err = client.CreateAutomat(formation.Id, 0, automatType, 12345)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Knowledge group not belonging to formation party
+	_, err = client.CreateAutomat(formation.Id, 0, automatType, kg1.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Create automat in formation
+	a, err := client.CreateAutomat(formation.Id, 0, automatType, kg0.Id)
+	c.Assert(err, IsNil)
+	c.Assert(a, NotNil)
+
+	// Create automat in previous automat
+	aa, err := client.CreateAutomat(0, a.Id, automatType, kg0.Id)
+	c.Assert(err, IsNil)
+	c.Assert(aa, NotNil)
+	a = model.GetAutomat(a.Id)
+	aa, ok := a.Automats[aa.Id]
+	c.Assert(ok, Equals, true)
+
+	// Knowledge group not belonging to parent automat party
+	aa, err = client.CreateAutomat(0, a.Id, automatType, kg1.Id)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	c.Assert(aa, IsNil)
+}

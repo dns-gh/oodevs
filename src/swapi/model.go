@@ -322,6 +322,17 @@ func (model *Model) GetFormation(formationId uint32) *Formation {
 	return f
 }
 
+func (model *Model) GetAutomat(automatId uint32) *Automat {
+	var a *Automat
+	model.waitCommand(func(model *Model) {
+		automat := model.data.FindAutomat(automatId)
+		if automat != nil {
+			a = automat.Copy()
+		}
+	})
+	return a
+}
+
 func (model *Model) WaitUntilTick(tick int32) bool {
 	return model.waitCond(model.WaitTimeout, func(model *Model) bool {
 		return tick <= model.data.Tick

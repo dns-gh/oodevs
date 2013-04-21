@@ -19,12 +19,16 @@ var (
 	ErrContinue = errors.New("continue")
 )
 
+func makeError(format string, args ...interface{}) error {
+	return errors.New(fmt.Sprintf(format, args...))
+}
+
 func mismatch(name string, a, b interface{}) error {
-	return errors.New(fmt.Sprintf("%v mismatch %v != %v", name, a, b))
+	return makeError("%v mismatch %v != %v", name, a, b)
 }
 
 func invalid(name string, value interface{}) error {
-	return errors.New(fmt.Sprintf("invalid %v: %v", name, value))
+	return makeError("invalid %v: %v", name, value)
 }
 
 func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
@@ -178,6 +182,59 @@ func (c *Client) DeleteUnit(unitId uint32) error {
 		return nil
 	}
 	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) CreateAutomat(formationId, automatId, automatType,
+	knowledgeGroupId uint32) (*Automat, error) {
+	tasker := &sword.Tasker{}
+	if automatId != 0 {
+		tasker.Automat = &sword.AutomatId{
+			Id: proto.Uint32(automatId),
+		}
+	}
+	if formationId != 0 {
+		tasker.Formation = &sword.FormationId{
+			Id: proto.Uint32(formationId),
+		}
+	}
+	actionType := sword.UnitMagicAction_automat_creation
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				UnitMagicAction: &sword.UnitMagicAction{
+					Tasker: tasker,
+					Type:   &actionType,
+					Parameters: MakeParameters(
+						MakeIdentifier(automatType),
+						MakeIdentifier(knowledgeGroupId),
+					),
+				},
+			},
+		},
+	}
+	var created *Automat
+	handler := func(msg *sword.SimToClient_Content) error {
+		if reply := msg.GetAutomatCreation(); reply != nil {
+			// Ignore this message, its context should not be set anyway
+			return ErrContinue
+		}
+		reply := msg.GetUnitMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		_, err := GetUnitMagicActionAck(reply)
+		if err != nil {
+			return err
+		}
+		value := GetParameterValue(reply.GetResult(), 0)
+		if value == nil {
+			return invalid("result", reply.GetResult())
+		}
+		created = c.Model.GetAutomat(value.GetAutomat().GetId())
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return created, err
 }
 
 func getControlAckError(code sword.ControlAck_ErrorCode) error {
