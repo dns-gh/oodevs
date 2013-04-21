@@ -658,19 +658,21 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis, const MIL_Config& 
 // Name: MIL_EntityManager::CreateAutomat
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Entity_ABC& parent )
+MIL_Automate& MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Entity_ABC& parent )
 {
-    automateFactory_->Create( xis, parent );
+    return automateFactory_->Create( xis, parent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreateAutomat
 // Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateAutomat( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int nCtx,
+MIL_Automate& MIL_EntityManager::CreateAutomat( const MIL_AutomateType& type,
+        unsigned int knowledgeGroup, const std::string& name,
+        MIL_Entity_ABC& parent, unsigned int nCtx,
         const MIL_DictionaryExtensions& extensions )
 {
-    automateFactory_->Create( type, knowledgeGroup, name, parent, nCtx, extensions );
+    return automateFactory_->Create( type, knowledgeGroup, name, parent, nCtx, extensions );
 }
 
 // -----------------------------------------------------------------------------
@@ -1104,9 +1106,9 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             break;
         case UnitMagicAction::automat_creation:
             if( MIL_Automate*  pAutomate = FindAutomate( id ) )
-                ProcessAutomatCreationRequest( message, *pAutomate, nCtx );
+                ProcessAutomatCreationRequest( message, *pAutomate, nCtx, ack() );
             else if( MIL_Formation* pFormation = FindFormation( id ) )
-                ProcessAutomatCreationRequest( message, *pFormation, nCtx );
+                ProcessAutomatCreationRequest( message, *pFormation, nCtx, ack() );
             else
                 throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
             break;
@@ -1160,54 +1162,50 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
 // Name: MIL_EntityManager::ProcessAutomatCreationRequest
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& msg, MIL_Entity_ABC& entity, unsigned int nCtx )
+void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& msg, MIL_Entity_ABC& entity, unsigned int nCtx, sword::UnitMagicActionAck& ack )
 {
-    try
-    {
-        if( msg.type() != UnitMagicAction::automat_creation )
-            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
+    if( msg.type() != UnitMagicAction::automat_creation )
+        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
 
-        if( !msg.has_parameters() || msg.parameters().elem_size() < 2 )
-            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
+    if( !msg.has_parameters() || msg.parameters().elem_size() < 2 )
+        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
 
-        const MissionParameter& id = msg.parameters().elem( 0 );
-        if( id.value_size() != 1 || !id.value().Get( 0 ).has_identifier() )
-            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
+    const MissionParameter& id = msg.parameters().elem( 0 );
+    if( id.value_size() != 1 || !id.value().Get( 0 ).has_identifier() )
+        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
 
-        const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( id.value().Get( 0 ).identifier() );
-        if( !pType )
-            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
-
-        const MissionParameter& groupId = msg.parameters().elem( 1 );
-        if( groupId.value_size() != 1 || ! ( groupId.value().Get( 0 ).has_identifier() || groupId.value().Get( 0 ).has_knowledgegroup() ) )
-            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
-
-        unsigned int theGroupId = groupId.value().Get( 0 ).has_identifier() ? groupId.value().Get( 0 ).identifier() : groupId.value().Get( 0 ).knowledgegroup().id();
-        boost::shared_ptr< MIL_KnowledgeGroup > group = entity.GetArmy().FindKnowledgeGroup( theGroupId );
-        if( !group || group->IsJammed() )
-            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
-
-        std::string name;
-        if( msg.parameters().elem_size() > 2 )
-        {
-            const MissionParameter& nameParam = msg.parameters().elem( 2 );
-            if( nameParam.value_size() != 1 || !nameParam.value().Get( 0 ).has_acharstr() )
-                throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
-            name = nameParam.value().Get( 0 ).acharstr();
-        }
-
-        MIL_DictionaryExtensions extensions;
-        if( msg.parameters().elem_size() > 3 )
-        {
-            extensions.ReadExtensions( msg.parameters().elem( 3 ).value().Get(0).extensionlist() );
-        }
-        MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, theGroupId, name, entity, nCtx, extensions ); // auto-registration
-    }
-    catch( const std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
+    const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( id.value().Get( 0 ).identifier() );
+    if( !pType )
         throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
+
+    const MissionParameter& groupId = msg.parameters().elem( 1 );
+    if( groupId.value_size() != 1 || ! ( groupId.value().Get( 0 ).has_identifier() || groupId.value().Get( 0 ).has_knowledgegroup() ) )
+        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
+
+    unsigned int theGroupId = groupId.value().Get( 0 ).has_identifier() ? groupId.value().Get( 0 ).identifier() : groupId.value().Get( 0 ).knowledgegroup().id();
+    boost::shared_ptr< MIL_KnowledgeGroup > group = entity.GetArmy().FindKnowledgeGroup( theGroupId );
+    if( !group || group->IsJammed() )
+        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
+
+    std::string name;
+    if( msg.parameters().elem_size() > 2 )
+    {
+        const MissionParameter& nameParam = msg.parameters().elem( 2 );
+        if( nameParam.value_size() != 1 || !nameParam.value().Get( 0 ).has_acharstr() )
+            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
+        name = nameParam.value().Get( 0 ).acharstr();
     }
+
+    MIL_DictionaryExtensions extensions;
+    if( msg.parameters().elem_size() > 3 )
+    {
+        extensions.ReadExtensions( msg.parameters().elem( 3 ).value().Get(0).extensionlist() );
+    }
+    // auto-registration
+    const MIL_Automate& a = MIL_AgentServer::GetWorkspace().GetEntityManager()
+        .CreateAutomat( *pType, theGroupId, name, entity, nCtx, extensions );
+    ack.mutable_result()->add_elem()->add_value()->mutable_automat()
+        ->set_id( a.GetID() );
 }
 
 // -----------------------------------------------------------------------------
