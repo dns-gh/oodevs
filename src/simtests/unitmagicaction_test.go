@@ -176,8 +176,16 @@ func (s *TestSuite) TestCreateFormation(c *C) {
           PartyId: -
           Level: o
           LogLevel: none
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group [3]
 Party[-]
   Name: party2
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group[4]
 `
 	c.Assert(dump, Equals, expected)
 

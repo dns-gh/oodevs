@@ -51,6 +51,12 @@ func (p *prettyPrinter) GetOutput() string {
 }
 
 func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
+	printKnowledgeGroup := func(p *prettyPrinter, group *swapi.KnowledgeGroup) {
+		p.P("Id: %s", p.Unstable(group.Id))
+		p.P("PartyId: %s", p.Unstable(group.PartyId))
+		p.P("Name: %s", group.Name)
+	}
+
 	printPopulation := func(p *prettyPrinter, pop *swapi.Population) {
 		p.P("Id: %s", p.Unstable(pop.Id))
 		p.P("PartyId: %s", p.Unstable(pop.PartyId))
@@ -189,6 +195,21 @@ func printParties(p *prettyPrinter, model *swapi.ModelData) *prettyPrinter {
 			p.Unshift()
 			p.Unshift()
 		}
+
+		keys = []int{}
+		for k := range party.KnowledgeGroups {
+			keys = append(keys, int(k))
+		}
+		sort.Ints(keys)
+		for _, k := range keys {
+			child := party.KnowledgeGroups[uint32(k)]
+			p.Shift()
+			p.P("KnowledgeGroup[%s]", p.Unstable(k))
+			p.Shift()
+			printKnowledgeGroup(p, child)
+			p.Unshift()
+			p.Unshift()
+		}
 	}
 
 	keys := []int{}
@@ -293,8 +314,16 @@ func (s *TestSuite) TestModelInitialization(c *C) {
       Id: -
       PartyId: -
       Name: population
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group [3]
 Party[-]
   Name: empty-party
+    KnowledgeGroup[-]
+      Id: -
+      PartyId: -
+      Name: knowledge group[4]
 `
 	c.Assert(dump, Equals, expected)
 	client.Close()

@@ -181,6 +181,15 @@ func (model *Model) update(msg *SwordMessage) {
 			}
 		} else if mm := m.GetUnitDestruction(); mm != nil {
 			d.removeUnit(mm.GetUnit().GetId())
+		} else if mm := m.GetKnowledgeGroupCreation(); mm != nil {
+			group := NewKnowledgeGroup(
+				mm.GetKnowledgeGroup().GetId(),
+				mm.GetName(),
+				mm.GetParent().GetId(),
+				mm.GetParty().GetId())
+			if !d.addKnowledgeGroup(group) {
+				// XXX report error here
+			}
 		}
 	} else if msg.AuthenticationToClient != nil {
 		m := msg.AuthenticationToClient.GetMessage()

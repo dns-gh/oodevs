@@ -150,21 +150,43 @@ func (formation *Formation) Copy() *Formation {
 	return f
 }
 
+type KnowledgeGroup struct {
+	Id       uint32
+	Name     string
+	PartyId  uint32
+	ParentId uint32
+}
+
+func NewKnowledgeGroup(id uint32, name string, parentId, partyId uint32) *KnowledgeGroup {
+	return &KnowledgeGroup{
+		Id:       id,
+		PartyId:  partyId,
+		ParentId: parentId,
+		Name:     name,
+	}
+}
+
+func (k *KnowledgeGroup) Copy() *KnowledgeGroup {
+	return NewKnowledgeGroup(k.Id, k.Name, k.ParentId, k.PartyId)
+}
+
 type Party struct {
-	Id          uint32
-	Name        string
-	Formations  map[uint32]*Formation
-	Crowds      map[uint32]*Crowd
-	Populations map[uint32]*Population
+	Id              uint32
+	Name            string
+	Formations      map[uint32]*Formation
+	Crowds          map[uint32]*Crowd
+	Populations     map[uint32]*Population
+	KnowledgeGroups map[uint32]*KnowledgeGroup
 }
 
 func NewParty(id uint32, name string) *Party {
 	return &Party{
-		Id:          id,
-		Name:        name,
-		Formations:  map[uint32]*Formation{},
-		Crowds:      map[uint32]*Crowd{},
-		Populations: map[uint32]*Population{},
+		Id:              id,
+		Name:            name,
+		Formations:      map[uint32]*Formation{},
+		Crowds:          map[uint32]*Crowd{},
+		Populations:     map[uint32]*Population{},
+		KnowledgeGroups: map[uint32]*KnowledgeGroup{},
 	}
 }
 
@@ -178,6 +200,9 @@ func (party *Party) Copy() *Party {
 	}
 	for k, v := range party.Populations {
 		p.Populations[k] = v.Copy()
+	}
+	for k, v := range party.KnowledgeGroups {
+		p.KnowledgeGroups[k] = v.Copy()
 	}
 	return p
 }
@@ -392,4 +417,23 @@ func (model *ModelData) removeProfile(login string) bool {
 		delete(model.Profiles, login)
 	}
 	return ok
+}
+
+func (model *ModelData) ListKnowledgeGroups() []*KnowledgeGroup {
+	groups := []*KnowledgeGroup{}
+	for _, party := range model.Parties {
+		for _, group := range party.KnowledgeGroups {
+			groups = append(groups, group)
+		}
+	}
+	return groups
+}
+
+func (model *ModelData) addKnowledgeGroup(group *KnowledgeGroup) bool {
+	party, ok := model.Parties[group.PartyId]
+	if ok {
+		party.KnowledgeGroups[group.Id] = group
+		return true
+	}
+	return false
 }
