@@ -138,6 +138,78 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 	return created, nil
 }
 
+func (c *Client) createUnit(automatId, unitType uint32, location *Point,
+	name *string, pc *bool) (*Unit, error) {
+	tasker := &sword.Tasker{}
+	if automatId != 0 {
+		tasker.Automat = &sword.AutomatId{
+			Id: proto.Uint32(automatId),
+		}
+	}
+	actionType := sword.UnitMagicAction_unit_creation
+	params := []*sword.MissionParameter{
+		MakeIdentifier(unitType),
+		MakePointParam(location),
+	}
+	if name != nil {
+		params = append(params, MakeString(*name))
+	}
+	if pc != nil {
+		params = append(params, MakeBoolean(*pc))
+	}
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				UnitMagicAction: &sword.UnitMagicAction{
+					Tasker:     tasker,
+					Type:       &actionType,
+					Parameters: MakeParameters(params...),
+				},
+			},
+		},
+	}
+	var created *Unit
+	handler := func(msg *sword.SimToClient_Content) error {
+		if reply := msg.GetUnitCreation(); reply != nil {
+			// Context should not be set on this
+			return ErrContinue
+		}
+		if reply := msg.GetUnitAttributes(); reply != nil {
+			// Context should not be set on this
+			return ErrContinue
+		}
+		if reply := msg.GetUnitEnvironmentType(); reply != nil {
+			// Context should not be set on this
+			return ErrContinue
+		}
+		reply := msg.GetUnitMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		_, err := GetUnitMagicActionAck(reply)
+		if err != nil {
+			return err
+		}
+		value := GetParameterValue(reply.GetResult(), 0)
+		if value == nil {
+			return invalid("result", reply.GetResult())
+		}
+		created = c.Model.GetUnit(value.GetAgent().GetId())
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return created, err
+}
+
+func (c *Client) CreateUnit(automatId, unitType uint32, location *Point) (*Unit, error) {
+	return c.createUnit(automatId, unitType, location, nil, nil)
+}
+
+func (c *Client) CreateUnitWithName(automatId, unitType uint32, location *Point,
+	name string, pc bool) (*Unit, error) {
+	return c.createUnit(automatId, unitType, location, &name, &pc)
+}
+
 func (c *Client) DeleteUnit(unitId uint32) error {
 	tasker := &sword.Tasker{
 		Unit: &sword.UnitId{

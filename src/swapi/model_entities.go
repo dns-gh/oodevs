@@ -12,6 +12,15 @@ import (
 	"time"
 )
 
+type Point struct {
+	X float64
+	Y float64
+}
+
+func MakePoint(x, y float64) *Point {
+	return &Point{X: x, Y: y}
+}
+
 type Profile struct {
 	Login      string
 	Password   string
@@ -70,18 +79,20 @@ type Unit struct {
 	Id        uint32
 	AutomatId uint32
 	Name      string
+	Pc        bool
 }
 
-func NewUnit(id, automatId uint32, name string) *Unit {
+func NewUnit(id, automatId uint32, name string, pc bool) *Unit {
 	return &Unit{
 		Id:        id,
 		AutomatId: automatId,
 		Name:      name,
+		Pc:        pc,
 	}
 }
 
 func (u *Unit) Copy() *Unit {
-	return NewUnit(u.Id, u.AutomatId, u.Name)
+	return NewUnit(u.Id, u.AutomatId, u.Name, u.Pc)
 }
 
 type Automat struct {
@@ -233,6 +244,15 @@ func (model *ModelData) Copy() *ModelData {
 		m.Profiles[k] = v.Copy()
 	}
 	return m
+}
+
+func (model *ModelData) FindPartyByName(name string) *Party {
+	for _, party := range model.Parties {
+		if party.Name == name {
+			return party
+		}
+	}
+	return nil
 }
 
 func (model *ModelData) ListFormations() []*Formation {

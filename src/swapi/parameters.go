@@ -49,10 +49,47 @@ func MakeString(value string) *sword.MissionParameter {
 		})
 }
 
+func MakeBoolean(value bool) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			BooleanValue: proto.Bool(value),
+		})
+}
+
 func MakeIdentifier(value uint32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
 			Identifier: proto.Uint32(value),
+		})
+}
+
+func MakeCoords(points ...*Point) *sword.CoordLatLongList {
+	coords := []*sword.CoordLatLong{}
+	for _, p := range points {
+		coords = append(coords, &sword.CoordLatLong{
+			Latitude:  proto.Float64(p.Y),
+			Longitude: proto.Float64(p.X),
+		})
+	}
+	return &sword.CoordLatLongList{
+		Elem: coords,
+	}
+}
+
+func MakePointLocation(point *Point) *sword.Location {
+	coordType := sword.Location_point
+	return &sword.Location{
+		Type:        &coordType,
+		Coordinates: MakeCoords(point),
+	}
+}
+
+func MakePointParam(point *Point) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Point: &sword.Point{
+				Location: MakePointLocation(point),
+			},
 		})
 }
 

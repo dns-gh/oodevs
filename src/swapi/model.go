@@ -123,7 +123,8 @@ func (model *Model) update(msg *SwordMessage) {
 			unit := NewUnit(
 				mm.GetUnit().GetId(),
 				mm.GetAutomat().GetId(),
-				mm.GetName())
+				mm.GetName(),
+				mm.GetPc())
 			if !d.addUnit(unit) {
 				// XXX report the error here
 			}
@@ -331,6 +332,17 @@ func (model *Model) GetAutomat(automatId uint32) *Automat {
 		}
 	})
 	return a
+}
+
+func (model *Model) GetUnit(unitId uint32) *Unit {
+	var u *Unit
+	model.waitCommand(func(model *Model) {
+		unit := model.data.FindUnit(unitId)
+		if unit != nil {
+			u = unit.Copy()
+		}
+	})
+	return u
 }
 
 func (model *Model) WaitUntilTick(tick int32) bool {

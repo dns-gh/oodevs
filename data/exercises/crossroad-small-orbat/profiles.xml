@@ -25,6 +25,14 @@
       </readwrite>
     </rights>
   </profile>
+  <profile name="user-readonly" password="user-readonly" supervision="false">
+    <rights>
+      <readonly>
+        <side id="1"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
   <profile name="alluser" password="alluser" supervision="false">
     <rights>
       <readonly/>

@@ -17,6 +17,12 @@ import (
 	"sword"
 )
 
+const (
+	// Random existing automat identifier, we should parse the physical
+	// database instead.
+	AutomatType = uint32(117)
+)
+
 // For a given tasker type, send a unit magic action which is not
 // implemented by target type. It used to return nothing, not even an
 // error. This test should be adjusted if actions support more types.
@@ -210,6 +216,86 @@ Party[-]
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 }
 
+func (s *TestSuite) TestCreateUnit(c *C) {
+	sim, client := connectAndWaitModel(c, "user", "user", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	data := client.Model.GetData()
+
+	party := data.FindPartyByName("party")
+	c.Assert(party, NotNil)
+
+	c.Assert(len(party.Formations), Greater, 0)
+	var formation *swapi.Formation
+	for _, f := range party.Formations {
+		formation = f
+		break
+	}
+	// Find a suitable knowledge group matching the formation, this should be
+	// simpler...
+	var kg *swapi.KnowledgeGroup
+	for _, g := range data.ListKnowledgeGroups() {
+		if g.PartyId == formation.PartyId {
+			kg = g
+			break
+		}
+	}
+	c.Assert(kg, NotNil)
+
+	automat, err := client.CreateAutomat(formation.Id, 0, AutomatType, kg.Id)
+	c.Assert(err, IsNil)
+
+	pos := swapi.MakePoint(0, 0)
+
+	// Valid unit type, should be read from physical database instead
+	unitType := uint32(1)
+
+	// Invalid automat
+	_, err = client.CreateUnit(12345, unitType, pos)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// Invalid unit type
+	_, err = client.CreateUnit(automat.Id, 12345, pos)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// Add unit to automat, automatically becomes PC
+	u, err := client.CreateUnit(automat.Id, unitType, pos)
+	c.Assert(err, IsNil)
+	c.Assert(u, NotNil)
+	c.Assert(u.Pc, Equals, true)
+	automat = client.Model.GetAutomat(automat.Id)
+	c.Assert(automat.Units[u.Id], NotNil)
+
+	// Second unit, not PC
+	u, err = client.CreateUnit(automat.Id, unitType, pos)
+	c.Assert(err, IsNil)
+	c.Assert(u, NotNil)
+	c.Assert(u.Pc, Equals, false)
+
+	automat, err = client.CreateAutomat(formation.Id, 0, AutomatType, kg.Id)
+	c.Assert(err, IsNil)
+
+	// Add unit with name, becomes a PC even if PC is false (wut?)
+	name := "some unit"
+	u, err = client.CreateUnitWithName(automat.Id, unitType, pos, name, false)
+	c.Assert(err, IsNil)
+	c.Assert(u, NotNil)
+	c.Assert(u.Name, Equals, name)
+	c.Assert(u.Pc, Equals, true)
+
+	// Try to create another, it creates a unit but not a Pc, silently
+	u, err = client.CreateUnitWithName(automat.Id, unitType, pos, name, true)
+	c.Assert(err, IsNil)
+	c.Assert(u, NotNil)
+	c.Assert(u.Pc, Equals, false)
+
+	// Read-only user can create unit (wut?)
+	client.Close()
+	client = loginAndWaitModel(c, sim, "user-readonly", "user-readonly",
+		ExCrossroadSmallOrbat)
+	u, err = client.CreateUnit(automat.Id, unitType, pos)
+	c.Assert(err, IsNil)
+}
+
 func (s *TestSuite) TestDeleteUnit(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
@@ -253,9 +339,7 @@ func (s *TestSuite) TestCreateAutomat(c *C) {
 	c.Assert(kg0.PartyId, Equals, formation.PartyId)
 	c.Assert(kg0.PartyId, Not(Equals), kg1.Id)
 
-	// Random existing automat identifier, we should parse the physical
-	// database instead.
-	automatType := uint32(117)
+	automatType := AutomatType
 
 	// No parent formation or automat
 	_, err := client.CreateAutomat(0, 0, automatType, kg0.Id)
