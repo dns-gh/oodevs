@@ -194,7 +194,7 @@ public:
     void OnReceiveFragOrder( const sword::FragOrder& msg );
     void OnReceiveSetAutomateMode( const sword::SetAutomatMode& msg );
     void OnReceiveUnitCreationRequest( const sword::UnitCreationRequest& msg, unsigned int nCtx );
-    void OnReceiveUnitCreationRequest( const sword::UnitMagicAction& msg, unsigned int nCtx );
+    unsigned int OnReceiveUnitCreationRequest( const sword::UnitMagicAction& msg, unsigned int nCtx );
     void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies );
     void OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg );
     void OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies );

@@ -922,7 +922,7 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitCreationReques
 // Name: MIL_Automate::OnReceiveUnitCreationRequest
 // Created: JSR 2010-04-16
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& msg, unsigned int nCtx )
+unsigned int MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& msg, unsigned int nCtx )
 {
     if( msg.type() != sword::UnitMagicAction_Type_unit_creation )
         throw MASA_BADPARAM_UNIT( "invalid message type" );
@@ -954,6 +954,7 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), position );
     try
     {
+        MIL_AgentPion* pion = 0;
         if( msg.parameters().elem_size() >= 3 )
         {
             MIL_DictionaryExtensions extensions;
@@ -963,16 +964,22 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
             }
 
             std::string name = msg.parameters().elem( 2 ).value().Get( 0 ).acharstr();
-            MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, name, nCtx, extensions ); // Auto-registration
-
+            // Auto-registration
+            pion = &MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion(
+                    *pType, *this, position, name, nCtx, extensions );
             if( msg.parameters().elem_size() >= 4 )
             {
                 bool isPc =  msg.parameters().elem( 3 ).value().Get( 0 ).booleanvalue();
-                pion.SetPionAsCommandPost( isPc );
+                pion->SetPionAsCommandPost( isPc );
             }
         }
         else
-            MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, nCtx ); // Auto-registration
+        {
+            // Auto-registration
+            pion = &MIL_AgentServer::GetWorkspace().GetEntityManager()
+                .CreatePion( *pType, *this, position, nCtx );
+        }
+        return pion->GetID();
     }
     catch( const std::exception& e )
     {

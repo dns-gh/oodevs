@@ -1070,7 +1070,12 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             break;
         case UnitMagicAction::unit_creation :
             if( MIL_Automate*  pAutomate = FindAutomate( id ) )
-                pAutomate->OnReceiveUnitCreationRequest( message, nCtx );
+            {
+                unsigned int unitId = pAutomate->OnReceiveUnitCreationRequest(
+                        message, nCtx );
+                ack().mutable_result()->add_elem()->add_value()->mutable_agent()
+                    ->set_id( unitId );
+            }
             else
                 throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
             break;
