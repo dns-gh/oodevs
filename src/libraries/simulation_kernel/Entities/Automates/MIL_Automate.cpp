@@ -50,6 +50,8 @@
 
 using namespace sword;
 
+#define MASA_BADPARAM_UNIT( name ) MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, name )
+
 namespace
 {
     template< typename R >
@@ -923,30 +925,30 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitCreationReques
 void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& msg, unsigned int nCtx )
 {
     if( msg.type() != sword::UnitMagicAction_Type_unit_creation )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "invalid message type" );
     if( !msg.has_parameters() || msg.parameters().elem_size() < 2 || msg.parameters().elem_size() > 5 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "invalid parameters count" );
     const sword::MissionParameter& id = msg.parameters().elem( 0 );
     if( id.value_size() != 1 || !id.value().Get(0).has_identifier() )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be an Identifier" );
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( id.value().Get(0).identifier() );
     if( !pType )
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_unit );
     const sword::MissionParameter& location = msg.parameters().elem( 1 );
     if( location.value_size() != 1 || !location.value().Get(0).has_point() )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "parameters[1] must be a Point" );
     const sword::Point& point = location.value().Get(0).point();
     if( point.location().type() != sword::Location::point || point.location().coordinates().elem_size() != 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "parameters[1] must be a point Location" );
     if( msg.parameters().elem_size() >= 3 )
         if( msg.parameters().elem( 2 ).value_size() != 1 || !msg.parameters().elem( 2 ).value().Get(0).has_acharstr() )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_BADPARAM_UNIT( "parameters[2] must be an ACharStr" );
     if( msg.parameters().elem_size() >= 4 )
         if( msg.parameters().elem( 3 ).value_size() != 1 || !msg.parameters().elem( 3 ).value().Get(0).has_booleanvalue() )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_BADPARAM_UNIT( "parameters[3] must be a BooleanValue" );
     if( msg.parameters().elem_size() >= 5 )
         if( msg.parameters().elem( 4 ).value_size() != 1 || !msg.parameters().elem( 4 ).value().Get(0).has_extensionlist() )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+            throw MASA_BADPARAM_UNIT( "parameters[4] must be an ExtensionList" );
 
     MT_Vector2D position;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), position );
@@ -975,10 +977,6 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
     catch( const std::exception& e )
     {
         MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_unit );
-    }
-    catch( ... )
-    {
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_unit );
     }
 }

@@ -45,4 +45,18 @@ private:
 
 #define MASA_EXCEPTION_ASN( ErrorIdType, ErrorId ) NET_AsnException< ErrorIdType >( ErrorId, __FILE__, __FUNCTION__, __LINE__, "Invalid parameter in ASN message" )
 
+template< typename T>
+class NET_AsnBadParam : public NET_AsnException< T >
+{
+public:
+             NET_AsnBadParam( T nErrorID, const std::string& file,
+                     const std::string& function, const unsigned int line,
+                     const std::string& what ) throw()
+                 : NET_AsnException( nErrorID, file, function, line, what )
+             {}
+    virtual ~NET_AsnBadParam() throw() {}
+};
+
+#define MASA_BADPARAM_ASN( ErrorIdType, ErrorId, Name ) NET_AsnBadParam< ErrorIdType >( ErrorId, __FILE__, __FUNCTION__, __LINE__, Name )
+
 #endif // __NET_AsnException_h_

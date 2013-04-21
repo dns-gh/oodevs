@@ -1146,6 +1146,11 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             break;
         }
     }
+    catch( const NET_AsnBadParam< UnitActionAck::ErrorCode >& e )
+    {
+        ack().set_error_code( e.GetErrorID() );
+        ack().set_error_msg( e.what() );
+    }
     catch( const NET_AsnException< UnitActionAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
