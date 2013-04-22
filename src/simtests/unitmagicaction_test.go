@@ -282,18 +282,25 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	c.Assert(u1.Name, Equals, name)
 	c.Assert(u1.Pc, Equals, true)
 
-	// Try to create another, it creates a unit but not a Pc, silently
+	// Try to create another, it creates a not Pc unit and upgrades it to Pc.
 	u2, err := client.CreateUnitWithName(automat.Id, unitType, pos, name, true)
 	c.Assert(err, IsNil)
 	c.Assert(u2, NotNil)
 	c.Assert(u2.Pc, Equals, false)
+	ok := client.Model.WaitCondition(func(data *swapi.ModelData) bool {
+		return data.FindUnit(u2.Id).Pc
+	})
+	c.Assert(ok, Equals, true)
+	ok = client.Model.WaitCondition(func(data *swapi.ModelData) bool {
+		return !data.FindUnit(u1.Id).Pc
+	})
+	c.Assert(ok, Equals, true)
 
 	// Delete the PC, the other unit becomes the Pc eventually
-	err = client.DeleteUnit(u1.Id)
+	err = client.DeleteUnit(u2.Id)
 	c.Assert(err, IsNil)
-	ok := client.Model.WaitCondition(func(data *swapi.ModelData) bool {
-		unit := data.FindUnit(u2.Id)
-		return unit.Pc
+	ok = client.Model.WaitCondition(func(data *swapi.ModelData) bool {
+		return data.FindUnit(u1.Id).Pc
 	})
 	c.Assert(ok, Equals, true)
 
