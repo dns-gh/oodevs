@@ -750,15 +750,23 @@
     </target>
 
     <target name="package.sdk" description="package sdk documentation">
-        <delete dir="${dist.dir}/sdk-${platform}"/>
-        <copy file="${out.dir}/sdk/doc/sdk.pdf"
-            tofile="${dist.dir}/sdk-${platform}/SWORD_API_Reference_${version.project}.pdf"/>
-        <copy todir="${dist.dir}/sdk-${platform}/SWORD_API_Reference_${version.project}-html">
-            <fileset dir="${out.dir}/sdk/doc/html"/>
-        </copy>
-        <copy todir="${dist.dir}/sdk-${platform}/proto">
-            <fileset dir="${src.dir}/libraries/protocol/proto" includes="*.proto"/>
-        </copy>
+        <local name="sdk.prefix"/>
+        <property name="sdk.prefix" value="SWORD_API_${version.project}"/>
+        <safe-move file="${out.dir}/sdk.zip" todir="${dist.internal.dir}">
+            <zip destfile="@{file}" duplicate="fail">
+                <zipfileset dir="${out.dir}/sdk/doc"
+                    includes="sdk.pdf"
+                    fullpath="${sdk.prefix}/SWORD_API_Reference_${version.project}.pdf"/>
+                <zipfileset dir="${out.dir}/sdk/doc/html"
+                    includes="**"
+                    prefix="${sdk.prefix}/SWORD_API_Reference_${version.project}-html"/>
+                <zipfileset dir="${src.dir}/libraries/protocol/proto"
+                    includes="*.proto"
+                    prefix="${sdk.prefix}/SWORD_API_Protocol"/>
+            </zip>
+        </safe-move>
+        <copy file="${dist.internal.dir}/sdk.zip"
+            tofile="${dist.dir}/SWORD_API_Documentation_${version.project}.zip"/>
     </target>
 
     <!--
