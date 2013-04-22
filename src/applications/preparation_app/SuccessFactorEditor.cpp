@@ -31,10 +31,11 @@ SuccessFactorEditor::SuccessFactorEditor( QWidget* parent, kernel::Controllers& 
 {
     gui::SubObjectName subObject( "SuccessFactorEditor" );
     setCaption( tr( "Success factor editor" ) );
-    QGridLayout* grid = new QGridLayout( this, 3, 2, 0, 5 );
+    QGridLayout* grid = new QGridLayout( this );
+    grid->setSpacing( 5 );
     grid->setMargin( 5 );
     grid->setColStretch( 1, 5 );
-    grid->setRowStretch( 1, 5 );
+    grid->setRowStretch( 1, 4 );
     {
         gui::SubObjectName subObject( "information" );
         QLabel* nameLabel = new QLabel( tr( "Name:" ) );
@@ -46,35 +47,37 @@ SuccessFactorEditor::SuccessFactorEditor( QWidget* parent, kernel::Controllers& 
         QHBoxLayout* informationBoxLayout = new QHBoxLayout( informationBox );
         informationBoxLayout->addWidget( nameLabel );
         informationBoxLayout->addWidget( name_ );
-        grid->addWidget( informationBox, 0, 0, 1, 5 );
+        grid->addWidget( informationBox, 0, 0, 1, 2 );
     }
     {
         gui::SubObjectName subObject( "profiles" );
         profiles_ = new SuccessFactorProfileList( "profilesList", controllers );
 
         gui::RichGroupBox* profilesBox = new gui::RichGroupBox( "profiles", tr( "Profiles" ), this );
-        QHBoxLayout* profilesBoxLayout = new QHBoxLayout( profilesBox );
+        QVBoxLayout* profilesBoxLayout = new QVBoxLayout( profilesBox );
         profilesBoxLayout->addWidget( profiles_ );
-        grid->addWidget( profilesBox, 1, 0, 2, 1 );
+        grid->addWidget( profilesBox, 1, 0, 1, 1 );
     }
+    QVBoxLayout* vLayout = new QVBoxLayout;
     {
         gui::SubObjectName subObject( "conditions" );
         conditions_ = new SuccessFactorConditionsEditor( "conditionsList", scores );
-
         gui::RichGroupBox* conditionsBox = new gui::RichGroupBox( "conditions", tr( "Conditions" ), this );
-        QHBoxLayout* conditionsBoxLayout = new QHBoxLayout( conditionsBox );
+        QVBoxLayout* conditionsBoxLayout = new QVBoxLayout( conditionsBox );
         conditionsBoxLayout->addLayout( conditions_ );
-        grid->addWidget( conditionsBox, 1, 1, 1, 4 );
+        vLayout->addWidget( conditionsBox );
     }
     {
         gui::SubObjectName subObject( "actions" );
         actions_ = new SuccessFactorActionsEditor( "actionsEditor", actionTypes );
 
         gui::RichGroupBox* actionsBox = new gui::RichGroupBox( "actions", tr( "Actions" ), this );
-        QHBoxLayout* actionsBoxLayout = new QHBoxLayout( actionsBox );
+        QVBoxLayout* actionsBoxLayout = new QVBoxLayout( actionsBox );
         actionsBoxLayout->addLayout( actions_ );
-        grid->addWidget( actionsBox, 2, 1, 1, 4 );
+        vLayout->addWidget( actionsBox );
     }
+    vLayout->addStretch();
+    grid->addLayout( vLayout, 1, 1, 1, 1 );
     {
         QHBoxLayout* layout = new QHBoxLayout();
         ok_ = new gui::RichPushButton( "ok", tr( "Ok" ) );
@@ -85,7 +88,7 @@ SuccessFactorEditor::SuccessFactorEditor( QWidget* parent, kernel::Controllers& 
         connect( cancel, SIGNAL( clicked() ), SLOT( Cancel() ) );
         layout->addWidget( ok_ );
         layout->addWidget( cancel );
-        grid->addLayout( layout, 3, 1, Qt::AlignRight );
+        grid->addLayout( layout, 2, 1, Qt::AlignRight );
     }
 }
 
