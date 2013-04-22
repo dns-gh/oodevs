@@ -181,6 +181,67 @@ integration.normalizedInversedDistance = function( pos1, pos2 )
     return LinearInterpolation( 1, 100, 10, distanceMax, false, integration.distance( pos1, pos2 ) )
 end
 
+-- ============================================================================
+-- MOVEMENT MANAGEMENT
+-- Manage Mount and dismount terrain constraints / speed of movement etc.
+-- ============================================================================
+
+-- ****************************************************************************
+-- Speed of movement modulation for MILITARY agent
+-- ****************************************************************************
+integration.setMovementPace = function( modulation, maxSpeed ) -- maxSpeed TRUE/FALSE 
+
+    -- -------------------------------------------------------------------------------- 
+    -- Urgency, moves at maximum.
+    -- --------------------------------------------------------------------------------
+    if maxSpeed then
+        DEC_ModulationVitesseMax( 1 )
+        return
+    end
+
+    -- -------------------------------------------------------------------------------- 
+    -- Moderate the speed of movement
+    -- --------------------------------------------------------------------------------
+    myself.speedModulations = myself.speedModulations or {}
+    local currentModulation = modulation or 0.5
+
+    -- -------------------------------------------------------------------------------- 
+    -- Terrain modulation
+    -- --------------------------------------------------------------------------------
+    if integration.isAgentInsideTown() and not integration.isFlying() then -- $$$ MIA TODO integration.isFlying à virer qd on aura fait un moveto pour les flying agent.
+        currentModulation = currentModulation / 2
+    end
+
+    -- -------------------------------------------------------------------------------- 
+    -- Safety vs. cover vs. normal modulation
+    -- --------------------------------------------------------------------------------
+    if myself.safetyMode then
+        myself.speedModulations.safetyModulation = currentModulation / 2
+    else
+        myself.speedModulations.safetyModulation = currentModulation
+    end
+
+    -- integration.getForceRatio: 0 signifie very good, 1 very bad
+    if myself.coverMode then
+        myself.speedModulations.coverModulation = math.min( currentModulation / 2, 
+                                                            integration.getForceRatio() )
+    else
+        myself.speedModulations.coverModulation = currentModulation
+    end
+
+    if myself.slowDown then
+        myself.speedModulations.slowDownModulation = 0.01
+    else
+        myself.speedModulations.slowDownModulation = currentModulation
+    end
+
+    -- Determine global pace
+    for _, modulation in pairs( myself.speedModulations ) do
+        currentModulation = math.min( currentModulation , modulation )
+    end
+    DEC_ModulationVitesseMax( math.max( currentModulation, 0.01 ) )
+end
+
 -- -----------------------------------------------------------------------------
 -- Determine the pace of a security agent
 -- -----------------------------------------------------------------------------
@@ -200,10 +261,6 @@ integration.speedMaxModulation = function( modulation )
     DEC_ModulationVitesseMax( modulation )
 end
 
--- ============================================================================
--- MOVEMENT MANAGEMENT
--- Manage Mount and dismount terrain constraints
--- ============================================================================
 --  Tool functions
 -- check if two points are inside same urban block
 local pointsInsideSameUrbanBlock = function( simPosA, simPosB )
@@ -237,15 +294,15 @@ end
 -- ****************************************************************************
 integration.moveToItGeneric = masalife.brain.integration.startStopAction( 
 { 
-    start   = function( entity, pathType )
-               return integration.startMoveToIt( entity, pathType ) 
-              end,
+    start = function( entity, pathType )
+        return integration.startMoveToIt( entity, pathType ) 
+    end,
     started = function( entity, pathType )
-               return integration.updateMoveToIt( entity, pathType )
-              end, 
-    stop    = function( entity, pathType )
-               return integration.deselectMoveToIt( entity )
-              end,
+        return integration.updateMoveToIt( entity, pathType )
+    end, 
+    stop = function( entity, pathType )
+        return integration.deselectMoveToIt( entity )
+    end,
 } )
 
 -- ****************************************************************************
@@ -314,7 +371,6 @@ end
 --
 -- ****************************************************************************
 integration.updateMoveToIt = function( objective, pathType )
-
     local etat = objective[ myself ].etat
 
     -- -------------------------------------------------------------------------------- 

@@ -188,9 +188,7 @@ end
 -- en cas de prise à partie.
 -- --------------------------------------------------------------------------------
 integration.switchOnSafetyMode = function( self )
-    myself.speedModulation.switchOnSafetyMode = 0.3 -- modulationMax / 10
     DEC_Perception_ActiverCoupsDeSonde()
-    DEC_Agent_ChangerAmbianceEnSurete( true )
     if integration.isFlying() and myself.altitude then
         DEC_Agent_HauteurDeVol( myself.altitude * 0.2 )
     end
@@ -198,6 +196,9 @@ integration.switchOnSafetyMode = function( self )
          myself.reportSafetyMode = true
          integration.pionRC( eRC_AmbianceSurete )
     end
+    myself.speedModulation = myself.speedModulation or {}
+    myself.speedModulation.switchOnSafetyMode = 0.3 -- modulationMax / 10 Scipio
+    myself.safetyMode = true -- WW base
 end
 
 -- -------------------------------------------------------------------------------- 
@@ -207,11 +208,16 @@ end
 -- Modulation de la vitesse max [0;1]. 
 -- --------------------------------------------------------------------------------
 integration.switchOnCoverMode = function( self )
-    if meKnowledge:hasBadForceRatio() then
+    --scipio
+    myself.speedModulation = myself.speedModulation or {}
+	if meKnowledge:hasBadForceRatio() then
         myself.speedModulation.switchOnCoverMode = 0.3
     else
         myself.speedModulation.switchOnCoverMode = 0.4
     end
+
+	-- WW base
+	myself.coverMode = true
 end
 
 -- -------------------------------------------------------------------------------- 
@@ -220,9 +226,7 @@ end
 -- @release 2010-09-09
 -- --------------------------------------------------------------------------------
 integration.switchOffSafetyMode = function( self )
-    myself.speedModulation.switchOnSafetyMode = 1
     DEC_Perception_DesactiverCoupsDeSonde()
-    DEC_Agent_ChangerAmbianceEnSurete( false )
     if integration.isFlying() and myself.altitude then
         DEC_Agent_HauteurDeVol( myself.altitude )
     end
@@ -230,6 +234,10 @@ integration.switchOffSafetyMode = function( self )
         myself.reportSafetyMode = false
         integration.pionRC( eRC_AmbianceVitesse )
     end
+
+    myself.speedModulation = myself.speedModulation or {}
+    myself.speedModulation.switchOnSafetyMode = 1 -- scipio
+    myself.safetyMode = false  -- ww base
 end
 
 -- -------------------------------------------------------------------------------- 
@@ -239,9 +247,10 @@ end
 -- --------------------------------------------------------------------------------
 integration.switchOffCoverMode = function( self )
     DEC_Perception_DesactiverCoupsDeSonde()
-    DEC_Agent_ChangerAmbianceEnSurete( false )
-    myself.speedModulation.switchOnCoverMode = 1
     integration.pionRC( eRC_CouvertureDesactive )
+	myself.speedModulation = myself.speedModulation or {}
+	myself.speedModulation.switchOnCoverMode = 1 --scipio
+    myself.coverMode = false -- ww base
 end
 -- -------------------------------------------------------------------------------- 
 -- @return The unit can dismount

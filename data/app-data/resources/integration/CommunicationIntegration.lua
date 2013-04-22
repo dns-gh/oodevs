@@ -165,11 +165,15 @@ end
 
 -- Coordination Manager
 integration.communication.SlowDown = function( content )
-    myself.speedModulation.coordination = 0.01
+    myself.speedModulation = myself.speedModulation or {}
+    myself.speedModulation.coordination = 0.1 -- scipio 
+    myself.slowDown = true -- ww base
 end
 
 integration.communication.Continue = function( content )
-    myself.speedModulation.coordination = 1
+    myself.speedModulation = myself.speedModulation or {}
+    myself.speedModulation.coordination = 1 -- scipio 
+    myself.slowDown = false -- ww base
 end
 
 integration.RetrieveAutomateTask = function( entity, targetTask )

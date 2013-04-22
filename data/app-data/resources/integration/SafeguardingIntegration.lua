@@ -53,3 +53,37 @@ integration.getSafetyPositionsFromFireObjects = function( objects, distance )
     end
     return points
 end
+
+-- Compute a position away from issued agents.
+-- /!\ /!\ /!\ CAN RETURN A NIL VALUE
+integration.getSimPositionAwayFromknowledgeAgents = function( knowledgeAgents, distanceToGo )
+
+    -- security: verifying the 'knowledgeAgents' is not empty. If yes return a nil value.
+    if not next( knowledgeAgents ) then return nil end
+
+    -- Computing to average distance between the agent and the given agents
+    local totalDistance = 0
+    for _, kAgent in pairs ( knowledgeAgents ) do
+        totalDistance = totalDistance + DEC_Geometrie_Distance( kAgent:getPosition(), meKnowledge:getPosition() )
+    end
+    local averageDistance = totalDistance / #knowledgeAgents
+
+    -- Get the agents located into the circle with a radius defined by the average distance
+    local simAgentsInCircle = {}
+    for _, kAgent in pairs ( knowledgeAgents ) do
+        if DEC_Geometrie_Distance( kAgent:getPosition(), meKnowledge:getPosition() ) < averageDistance + 100 then -- + 100 meters to avoid precision errors
+            simAgentsInCircle[ #simAgentsInCircle + 1 ] = kAgent.source
+       end
+    end
+
+    -- Computing a position by getting the barycenter of units located into the circle.
+    -- The position is returned if it is located away from the agent. Else it is not returned
+    local simBaryPos = DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents( simAgentsInCircle )
+    local dangerDirection = DEC_Geometrie_CreerDirection( simBaryPos, meKnowledge:getPosition() )
+    local safetyPos = DEC_Geometrie_PositionTranslateDir( simBaryPos, dangerDirection, distanceToGo )
+    if DEC_Geometrie_Distance( simBaryPos, meKnowledge:getPosition() ) < DEC_Geometrie_Distance( simBaryPos, safetyPos ) then
+        return safetyPos
+    else
+        return nil
+    end
+end
