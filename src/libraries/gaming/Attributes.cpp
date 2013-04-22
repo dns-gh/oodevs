@@ -68,6 +68,7 @@ Attributes::Attributes( kernel::Entity_ABC& entity, Controller& controller, cons
     , bRefugeesManaged_                 ( false )
     , aggregated_                       ( false )
     , isPC_                             ( false )
+    , bAmbianceSafety_                  ( false )
     , surrenderedTo_                    ( 0 )
     , fLodgingSatisfactionPercent_      ( 0.0f )
     , fSecuritySatisfactionPercent_     ( 0.0f )
@@ -259,6 +260,9 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
 
     if( message.has_transported_crowd() )
         crowdTransported_ = message.transported_crowd();
+
+    if( message.has_ambiance_safety() )
+        bAmbianceSafety_ = message.ambiance_safety();
 
     BOOST_FOREACH( const std::string& content, updated )
         controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "Attributes", content.c_str() ) ) );

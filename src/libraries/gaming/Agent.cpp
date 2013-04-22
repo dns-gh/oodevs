@@ -82,7 +82,7 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
     {
         bool isMoving = ( Get< Attributes >().nCurrentPosture_ <= eUnitPosture_PostureArret );
         float width = isMoving? 0.f : type_.GetWidth();
-        float depth = isMoving? type_.GetLength() : type_.GetDepth();
+        float depth = isMoving? type_.GetLength( !Get< Attributes >().bAmbianceSafety_ ) : type_.GetDepth();
         unsigned int direction = isMoving ? direction_ : sensorsDirection_;
         tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, isMoving, where, -1.f, direction, width, depth );
         tools.DrawApp6SymbolFixedSize( level_, where, -1.f, 0 );

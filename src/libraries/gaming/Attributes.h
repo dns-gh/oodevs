@@ -132,6 +132,7 @@ public:
     float fSecuritySatisfactionPercent_;
     float fHealthSatisfactionPercent_;
     int crowdTransported_;
+    bool bAmbianceSafety_;
     //@}
 };
 

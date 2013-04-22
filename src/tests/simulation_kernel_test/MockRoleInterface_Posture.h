@@ -45,6 +45,8 @@ MOCK_BASE_CLASS( MockRoleInterface_Posture, PHY_RoleInterface_Posture )
     MOCK_METHOD( GetElongationFactor, 0 );
 
     MOCK_METHOD( IsStealth, 0 );
+
+    MOCK_METHOD( SetAmbianceSafety, 1 );
 };
 
 #endif // __MockRoleImplantable_h_

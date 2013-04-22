@@ -148,6 +148,7 @@ public:
     static bool IsJammed( DEC_Decision_ABC* pAgent );
     static bool IsInEmissionBlackout( DEC_Decision_ABC* pAgent );
     static bool IsInReceptionBlackout( DEC_Decision_ABC* pAgent );
+    static void SetToAmbianceSafety( MIL_Agent_ABC& callerAgent, bool safety );
     
     // Etat d'un agent
     static double GetRapForLocalAgent( const DEC_Decision_ABC* agent );

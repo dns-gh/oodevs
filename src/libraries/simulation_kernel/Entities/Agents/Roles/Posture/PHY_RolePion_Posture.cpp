@@ -50,12 +50,14 @@ PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_Agent_ABC& pion )
     , bPostureHasChanged_                  ( true  )
     , bStealthFactorHasChanged_            ( true  )
     , bPercentageHasChanged_               ( true  )
+    , bAmbianceSafetyHasChanged_           ( true  )
     , bIsStealth_                          ( false )
     , bInstallationSetUpInProgress_        ( false )
     , bIsParkedOnEngineerArea_             ( false )
     , bInstallationStateHasChanged_        ( true )
     , rLastPostureCompletionPercentageSent_( 0. )
     , rLastInstallationStateSent_          ( 0. )
+    , bAmbianceSafety_                     ( false )
 {
     // NOTHING
 }
@@ -90,7 +92,8 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const unsigned i
          >> rLastPostureCompletionPercentageSent_
          >> rInstallationState_
          >> rLastInstallationStateSent_
-         >> bIsParkedOnEngineerArea_;
+         >> bIsParkedOnEngineerArea_
+         >> bAmbianceSafety_;
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +116,8 @@ void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const unsigned 
          << rLastPostureCompletionPercentageSent_
          << rInstallationState_
          << rLastInstallationStateSent_
-         << bIsParkedOnEngineerArea_;
+         << bIsParkedOnEngineerArea_
+         << bAmbianceSafety_;
 }
 
 // -----------------------------------------------------------------------------
@@ -260,6 +264,10 @@ void PHY_RolePion_Posture::SendChangedState( client::UnitAttributes& msg ) const
         msg().set_installation( static_cast< unsigned int >( rInstallationState_ * 100. ) );
         rLastInstallationStateSent_ = rInstallationState_;
     }
+    if( bAmbianceSafetyHasChanged_ )
+    {
+        msg().set_ambiance_safety( bAmbianceSafety_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -274,6 +282,7 @@ void PHY_RolePion_Posture::SendFullState( client::UnitAttributes& msg ) const
     rLastPostureCompletionPercentageSent_        = rPostureCompletionPercentage_;
     msg().set_stealth( ( rStealthFactor_ < 1. ) );
     msg().set_installation( static_cast< unsigned int >( rInstallationState_ * 100. ) );
+    msg().set_ambiance_safety( bAmbianceSafety_ );
     rLastInstallationStateSent_                = rInstallationState_;
 }
 
@@ -330,7 +339,7 @@ void PHY_RolePion_Posture::DisableDiscreteMode()
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Posture::HasChanged() const
 {
-    return bPostureHasChanged_ || bPercentageHasChanged_ || bInstallationStateHasChanged_;
+    return bPostureHasChanged_ || bPercentageHasChanged_ || bInstallationStateHasChanged_ || bAmbianceSafetyHasChanged_;
 }
 
 // -----------------------------------------------------------------------------
@@ -344,6 +353,7 @@ void PHY_RolePion_Posture::Clean()
     bStealthFactorHasChanged_     = false;
     bInstallationSetUpInProgress_ = false;
     bInstallationStateHasChanged_ = false;
+    bAmbianceSafetyHasChanged_    = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -415,6 +425,16 @@ bool PHY_RolePion_Posture::IsInstalled() const
 bool PHY_RolePion_Posture::IsUninstalled() const
 {
     return rInstallationState_ <= 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::SetAmbianceSafety
+// Created: MMC 2013-04-19
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::SetAmbianceSafety( bool safety )
+{
+    bAmbianceSafetyHasChanged_ = true;
+    bAmbianceSafety_ = safety;
 }
 
 // -----------------------------------------------------------------------------

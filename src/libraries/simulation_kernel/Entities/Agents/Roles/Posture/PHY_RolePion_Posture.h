@@ -111,6 +111,7 @@ public:
     virtual const PHY_Posture& GetCurrentPosture() const;
     virtual double GetPostureCompletionPercentage() const;
     virtual bool IsStealth() const;
+    virtual void SetAmbianceSafety( bool safety );
     //@}
 
     //! @name Network
@@ -155,8 +156,10 @@ private:
     bool                bPostureHasChanged_;
     bool                bStealthFactorHasChanged_;
     bool                bPercentageHasChanged_;
+    bool                bAmbianceSafetyHasChanged_;
     mutable double      rLastPostureCompletionPercentageSent_;
     mutable double      rLastInstallationStateSent_;
+    bool                bAmbianceSafety_;
     //@}
 };
 

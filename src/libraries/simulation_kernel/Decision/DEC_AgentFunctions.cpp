@@ -30,6 +30,7 @@
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
@@ -1284,6 +1285,15 @@ bool DEC_AgentFunctions::IsInEmissionBlackout( DEC_Decision_ABC* pAgent )
 bool DEC_AgentFunctions::IsInReceptionBlackout( DEC_Decision_ABC* pAgent )
 {
     return pAgent && pAgent->GetPion().CallRole( &PHY_RolePion_Communications::IsInReceptionBlackout, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::SetToAmbianceSafety
+// Created: MMC 2013-04-19
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::SetToAmbianceSafety( MIL_Agent_ABC& callerAgent, bool safety )
+{
+    callerAgent.GetRole< PHY_RolePion_Posture >().SetAmbianceSafety( safety );
 }
 
 // -----------------------------------------------------------------------------
