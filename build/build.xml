@@ -585,7 +585,7 @@
 
     <!-- Package misc -->
     <target name="package.debug" description="create a zip with all PDB files">
-        <safe-move file="${out.dir}/SWORD_debug_${platform}_${version.project}.zip">
+        <safe-move file="${out.dir}/debug_${platform}.zip" todir="${dist.internal.dir}">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
                     <fileset dir="${out.dir}/release/applications" includes="**/*.pdb"/>
@@ -597,6 +597,9 @@
                 </mappedresources>
              </zip>
         </safe-move>
+        <!-- temporary, until downstream projects are migrated -->
+        <copy file="${dist.internal.dir}/debug_${platform}.zip"
+            tofile="${dist.dir}/SWORD_debug_${platform}_${version.project}.zip"/>
     </target>
 
     <target name="package.proto" description="package protobuf for other projects">
