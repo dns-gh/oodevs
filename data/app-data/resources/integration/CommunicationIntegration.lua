@@ -166,7 +166,7 @@ end
 -- Coordination Manager
 integration.communication.SlowDown = function( content )
     myself.speedModulation = myself.speedModulation or {}
-    myself.speedModulation.coordination = 0.1 -- scipio 
+    myself.speedModulation.coordination = 0.01 -- scipio 
     myself.slowDown = true -- ww base
 end
 
