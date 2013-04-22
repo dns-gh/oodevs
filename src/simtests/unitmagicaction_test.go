@@ -276,17 +276,26 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 
 	// Add unit with name, becomes a PC even if PC is false (wut?)
 	name := "some unit"
-	u, err = client.CreateUnitWithName(automat.Id, unitType, pos, name, false)
+	u1, err := client.CreateUnitWithName(automat.Id, unitType, pos, name, false)
 	c.Assert(err, IsNil)
-	c.Assert(u, NotNil)
-	c.Assert(u.Name, Equals, name)
-	c.Assert(u.Pc, Equals, true)
+	c.Assert(u1, NotNil)
+	c.Assert(u1.Name, Equals, name)
+	c.Assert(u1.Pc, Equals, true)
 
 	// Try to create another, it creates a unit but not a Pc, silently
-	u, err = client.CreateUnitWithName(automat.Id, unitType, pos, name, true)
+	u2, err := client.CreateUnitWithName(automat.Id, unitType, pos, name, true)
 	c.Assert(err, IsNil)
-	c.Assert(u, NotNil)
-	c.Assert(u.Pc, Equals, false)
+	c.Assert(u2, NotNil)
+	c.Assert(u2.Pc, Equals, false)
+
+	// Delete the PC, the other unit becomes the Pc eventually
+	err = client.DeleteUnit(u1.Id)
+	c.Assert(err, IsNil)
+	ok := client.Model.WaitCondition(func(data *swapi.ModelData) bool {
+		unit := data.FindUnit(u2.Id)
+		return unit.Pc
+	})
+	c.Assert(ok, Equals, true)
 
 	// Read-only user can create unit (wut?)
 	client.Close()

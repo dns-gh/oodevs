@@ -128,6 +128,15 @@ func (model *Model) update(msg *SwordMessage) {
 			if !d.addUnit(unit) {
 				// XXX report the error here
 			}
+		} else if mm := m.GetUnitAttributes(); mm != nil {
+			unit := d.FindUnit(mm.GetUnit().GetId())
+			if unit == nil {
+				// XXX report there error here
+				return
+			}
+			if mm.Headquarters != nil {
+				unit.Pc = *mm.Headquarters
+			}
 		} else if mm := m.GetAutomatCreation(); mm != nil {
 			automat := NewAutomat(
 				mm.GetAutomat().GetId(),
@@ -349,4 +358,21 @@ func (model *Model) WaitUntilTick(tick int32) bool {
 	return model.waitCond(model.WaitTimeout, func(model *Model) bool {
 		return tick <= model.data.Tick
 	})
+}
+
+// Wait for condition to return true. Return false if the timeout kicks in
+// before the condition.
+func (model *Model) WaitConditionTimeout(timeout time.Duration,
+	condition func(data *ModelData) bool) bool {
+	wrapper := func(model *Model) bool {
+		return condition(model.data)
+	}
+	return model.waitCond(timeout, wrapper)
+}
+
+func (model *Model) WaitCondition(condition func(data *ModelData) bool) bool {
+	wrapper := func(model *Model) bool {
+		return condition(model.data)
+	}
+	return model.waitCond(model.WaitTimeout, wrapper)
 }
