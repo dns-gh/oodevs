@@ -105,7 +105,8 @@ message UnitMagicAction {
         //! parameters[0], Identifier: the unit type.
         //! parameters[1], Point: the unit location in WGS84.
         //! parameters[2], ACharStr, optional: the unit name.
-        //! parameters[3], BooleanValue, optional: ignored.
+        //! parameters[3], BooleanValue, optional: if true, force the unit to
+        //!    become the new PC for this automat.
         unit_creation                     = 12;
         //! A create fire order magic action
         create_fire_order                 = 13;
