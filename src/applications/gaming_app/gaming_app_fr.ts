@@ -1514,11 +1514,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Enlever destinataire</translation>
     </message>
     <message>
-        <source>Supply</source>
+        <source>Resupply</source>
         <translation>Ravitailler</translation>
     </message>
     <message>
-        <source>Log Supply</source>
+        <source>Log Resupply</source>
         <translation>Ravitaillement</translation>
     </message>
 </context>

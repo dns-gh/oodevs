@@ -22,11 +22,13 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/DotationType.h"
 #include "clients_gui/EntityType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "gaming/Dotations.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/LogisticHelpers.h"
 #include "gaming/StaticModel.h"
@@ -96,7 +98,7 @@ void LogisticSupplyPushFlowDialog::InsertMenuEntry( const kernel::Entity_ABC& ag
 {
     selected_ = &agent;
     menu.InsertItem( "Command", tr( "Push supply flow" ), this, SLOT( PushFlow() ) );
-    menu.InsertItem( "Command", tr( "Supply" ), this, SLOT( Supply() ) );
+    menu.InsertItem( "Command", tr( "Resupply" ), this, SLOT( Supply() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +119,7 @@ void LogisticSupplyPushFlowDialog::PushFlow()
 void LogisticSupplyPushFlowDialog::Supply()
 {
     isPushFlow_ = false;
-    setCaption( tr( "Supply" ) );
+    setCaption( tr( "Resupply" ) );
     Show();
 }
 
@@ -175,7 +177,7 @@ void LogisticSupplyPushFlowDialog::Validate()
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( ( selected_->GetTypeName() == kernel::Automat_ABC::typeName_ ) ? "automat_log_supply_push_flow" : "formation_log_supply_push_flow" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, isPushFlow_ ? tr( "Log Supply Push Flow" ) : tr( "Log Supply" ), true );
+    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, isPushFlow_ ? tr( "Log Supply Push Flow" ) : tr( "Log Resupply" ), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
     actions::parameters::PushFlowParameters* pushFlowParameters = new actions::parameters::PushFlowParameters( it.NextElement(), static_.coordinateConverter_, !isPushFlow_ );
@@ -351,16 +353,37 @@ void LogisticSupplyPushFlowDialog::GetSuppliesFromTable( const kernel::Automat_A
     }
 }
 
+namespace
+{
+    bool HasDotation( const kernel::Automat_ABC& recipient, const QString& dotationName )
+    {
+        const Dotations* dotations = static_cast< const Dotations* >( recipient.Retrieve< kernel::Dotations_ABC >() );
+        if( dotations )
+        {
+            const std::string strDotationName = dotationName.toStdString();
+            auto it = dotations->CreateIterator();
+            while( it.HasMoreElements() )
+            {
+                const Dotation& dotation = it.NextElement();
+                if( dotation.type_ && dotation.type_->GetName() == strDotationName )
+                    return true;
+            }
+        }
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog::SetSuppliesToTable
 // Created: MMC 2012-10-16
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::SetSuppliesToTable( const kernel::Automat_ABC& recipient )
 {
-    QMap< QString, int > maxQuantities, quantities;
+    QMap< QString, int > maxQuantities;
     for( auto it = availableSupplies_.begin(); it != availableSupplies_.end(); ++it )
         if( !it->first.isEmpty() && it->second.type_ && it->second.quantity_ > 0 )
-            maxQuantities[ it->first ] = it->second.quantity_;
+            if( isPushFlow_ || HasDotation( recipient, it->first ) )
+                maxQuantities[ it->first ] = it->second.quantity_;
     resourcesTable_->SetQuantities( recipientSupplies_[ &recipient ], maxQuantities );
 }
 

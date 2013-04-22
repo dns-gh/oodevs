@@ -1512,11 +1512,11 @@ Reason: %3
         <translation type="unfinished">إزالة مستلم</translation>
     </message>
     <message>
-        <source>Supply</source>
+        <source>Resupply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Log Supply</source>
+        <source>Log Resupply</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1511,12 +1511,12 @@ Reason: %3
         <translation>Remove recipient</translation>
     </message>
     <message>
-        <source>Supply</source>
-        <translation>Supply</translation>
+        <source>Resupply</source>
+        <translation>Resupply</translation>
     </message>
     <message>
-        <source>Log Supply</source>
-        <translation>Log Supply</translation>
+        <source>Log Resupply</source>
+        <translation>Log Resupply</translation>
     </message>
 </context>
 <context>
