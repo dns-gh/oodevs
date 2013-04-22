@@ -23,7 +23,6 @@ namespace gui
 {
     class ItemFactory_ABC;
     class HelpSystem;
-    class LinkInterpreter_ABC;
     class RichAction;
 }
 
@@ -48,7 +47,7 @@ public:
     //@{
              Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog,
                    UserProfileDialog& profileDialog, gui::ItemFactory_ABC& factory, const QString& license,
-                   gui::LinkInterpreter_ABC& interpreter, Network& network, kernel::Logger_ABC& logger );
+                   Network& network, kernel::Logger_ABC& logger );
     virtual ~Menu();
     //@}
 

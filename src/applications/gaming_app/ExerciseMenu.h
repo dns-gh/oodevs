@@ -20,11 +20,6 @@ namespace kernel
     class ModelUnLoaded;
 }
 
-namespace gui
-{
-    class LinkInterpreter_ABC;
-}
-
 namespace xml
 {
     class xistream;
@@ -51,7 +46,7 @@ class ExerciseMenu : public gui::RichMenu
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseMenu( QWidget* parent, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter, const QString& title = "" );
+             ExerciseMenu( QWidget* parent, kernel::Controllers& controllers, const QString& title = "" );
     virtual ~ExerciseMenu();
     //@}
 
@@ -62,12 +57,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ExerciseMenu( const ExerciseMenu& );            //!< Copy constructor
-    ExerciseMenu& operator=( const ExerciseMenu& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
@@ -81,7 +70,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::LinkInterpreter_ABC& interpreter_;
     tools::Path::T_Paths links_;
     //@}
 };

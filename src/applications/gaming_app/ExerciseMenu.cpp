@@ -16,15 +16,15 @@
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
 #include <Qt3Support/q3url.h>
+#include <shellapi.h>
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseMenu constructor
 // Created: SBO 2008-08-27
 // -----------------------------------------------------------------------------
-ExerciseMenu::ExerciseMenu( QWidget* parent, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter, const QString& title /* = "" */ )
+ExerciseMenu::ExerciseMenu( QWidget* parent, kernel::Controllers& controllers, const QString& title /* = "" */ )
     : gui::RichMenu( "exerciseMenu", parent, controllers, title )
     , controllers_( controllers )
-    , interpreter_( interpreter )
 {
     connect( this, SIGNAL( activated( int ) ), SLOT( OnSelect( int ) ) );
     controllers_.Update( *this );
@@ -97,12 +97,7 @@ void ExerciseMenu::OnSelect( int index )
     if( index >= 0 && index < int( links_.size() ) )
     {
         tools::Path& link = links_[ index ];
-        tools::Path drive = link.Root();
-        tools::Path path = link.Relative();
-        QString tmp = path.ToUTF8().c_str();
-        Q3Url::encode( tmp );
-        tmp = QString( "%1:%2" ).arg( drive.ToUTF8().c_str() ).arg( tmp );
-        interpreter_.Interprete( QString( "file://%1" ).arg( tmp ) );
+        ShellExecuteW( 0, NULL, link.ToUnicode().c_str(), NULL, NULL, SW_NORMAL );
     }
 }
 

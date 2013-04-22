@@ -72,7 +72,7 @@ bool LinkInterpreter_ABC::ExecuteCommand( const Q3Url& url )
     openPage.addArgument( "cmd" );
     openPage.addArgument( "/c" );
     openPage.addArgument( "start" );
-    openPage.addArgument( url.toString( true, true ) );
+    openPage.addArgument( url.toString( true, true ) ); // $$$$ ABR 2013-04-22: Bugged, use ShellExecuteW instead LinkInterpreter if it's a file:// url
     return openPage.start();
 }
 

@@ -141,7 +141,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog, UserProfileDialog& profileDialog, ItemFactory_ABC& factory, const QString& license, gui::LinkInterpreter_ABC& interpreter, Network& network, kernel::Logger_ABC& logger )
+Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog, UserProfileDialog& profileDialog, ItemFactory_ABC& factory, const QString& license, Network& network, kernel::Logger_ABC& logger )
     : QMenuBar( pParent )
     , controllers_( controllers )
     , profileDialog_( profileDialog )
@@ -265,7 +265,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     addMenu( menu );
 
     // Exercise
-    menu = new ExerciseMenu( this, controllers, interpreter, tools::translate( "Menu", "&Exercise" ) );
+    menu = new ExerciseMenu( this, controllers, tools::translate( "Menu", "&Exercise" ) );
     menu->SetModes( eModes_Default, eModes_All ^ eModes_Default, true );
     addMenu( menu );
 
