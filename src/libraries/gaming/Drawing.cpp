@@ -24,7 +24,7 @@ namespace
     gui::E_Dash_style Convert( const sword::ShapeCreation& message )
     {
         if( message.shape().has_pen_style() )
-            return gui::E_Dash_style( message.shape().has_pen_style() );
+            return gui::E_Dash_style( message.shape().pen_style() );
         return gui::eSolid;
     }
 }

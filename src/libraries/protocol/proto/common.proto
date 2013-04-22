@@ -1316,9 +1316,11 @@ message TacticalLine {
 */
 enum EnumPenStyle {
     //! Solid
-    solid  = 0;
+    solid    = 0;
     //! Dashed
-    dashed = 1;
+    dashed   = 1;
+    //! Dash dot
+    dash_dot = 2;
 }
 
 /** @struct Shape
