@@ -67,6 +67,7 @@ struct Fixture
     {
         MOCK_EXPECT( fs.IsFile ).with( boost::bind( &EndWith, "gaming_app.exe", _1 ) ).returns( false );
         MOCK_EXPECT( fs.Exists ).with( boost::bind( &EndWith, "orbat.xml", _1 ) ).returns( false );
+        MOCK_EXPECT( fs.Exists ).with( boost::bind( &EndWith, "profiles.xml", _1 ) ).returns( false );
     }
 
     size_t idx;

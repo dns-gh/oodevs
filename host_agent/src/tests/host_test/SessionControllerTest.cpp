@@ -39,7 +39,7 @@ namespace
 {
     struct SubFixture
     {
-        SubFixture( const Path& root, const Path& simulation, const Path& replayer )
+        SubFixture( const Path& root, const Path& simulation, const Path& replayer, const Path& timeline )
             : nodes( false )
             , idx  ( 0 )
         {
@@ -47,6 +47,7 @@ namespace
             MOCK_EXPECT( fs.IsDirectory ).with( root ).returns( true );
             MOCK_EXPECT( fs.IsFile ).with( simulation ).returns( true );
             MOCK_EXPECT( fs.IsFile ).with( replayer ).returns( true );
+            MOCK_EXPECT( fs.IsFile ).with( timeline ).returns( true );
             MOCK_EXPECT( fs.MakeAnyPath ).calls( boost::bind( &SubFixture::MakePath, this, _1 ) );
             MOCK_EXPECT( fs.Remove ).returns( true );
         };
@@ -102,14 +103,16 @@ namespace
             : root      ( "e:/root" )
             , simulation( "e:/apps/sim.exe" )
             , replayer  ( "e:/apps/sim.exe" )
-            , sub       ( root, simulation, replayer )
-            , control   ( sub.log, sub.runtime, sub.fs, sub.factory, sub.nodes, root, simulation, replayer, sub.pool )
+            , timeline  ( "e:/apps/timeline.exe" )
+            , sub       ( root, simulation, replayer, timeline )
+            , control   ( sub.log, sub.runtime, sub.fs, sub.factory, sub.nodes, root, simulation, replayer, timeline, sub.pool )
         {
             // NOTHING
         }
         const Path root;
         const Path simulation;
         const Path replayer;
+        const Path timeline;
         SubFixture sub;
         SessionController control;
         boost::shared_ptr< MockSession > active;
@@ -187,7 +190,7 @@ BOOST_FIXTURE_TEST_CASE( session_controller_starts, Fixture )
 {
     Reload();
     const std::string checkpoint = "checkpoint";
-    MOCK_EXPECT( idle->Start ).once().with( mock::any, checkpoint ).returns( true );
+    MOCK_EXPECT( idle->Start ).once().with( mock::any, mock::any, checkpoint ).returns( true );
     SessionController::T_Session session = control.Start( idNode, idIdle, checkpoint );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
 }
@@ -203,10 +206,10 @@ BOOST_FIXTURE_TEST_CASE( session_controller_stops, Fixture )
 BOOST_FIXTURE_TEST_CASE( session_controller_starts_with_right_app, Fixture )
 {
     Reload();
-    MOCK_EXPECT( idle->Start ).once().with( simulation, mock::any ).returns( true );
+    MOCK_EXPECT( idle->Start ).once().with( simulation, timeline, mock::any ).returns( true );
     control.Start( idNode, idIdle, std::string() );
     MOCK_RESET( idle->IsReplay );
     MOCK_EXPECT( idle->IsReplay ).once().returns( true );
-    MOCK_EXPECT( idle->Start ).once().with( replayer, mock::any ).returns( true );
+    MOCK_EXPECT( idle->Start ).once().with( replayer, timeline, mock::any ).returns( true );
     control.Start( idNode, idIdle, std::string() );
 }

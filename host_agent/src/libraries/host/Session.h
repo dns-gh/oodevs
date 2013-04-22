@@ -142,7 +142,6 @@ public:
     virtual Path GetRoot() const;
     virtual Uuid GetNode() const;
     virtual Path GetExercise() const;
-    virtual void FillExerciseSides();
     virtual std::string GetName() const;
     virtual int GetPort() const;
     virtual Tree GetProperties() const;
@@ -156,7 +155,7 @@ public:
     virtual Path  GetPath( const std::string& type ) const;
     virtual Path  GetOutput() const;
     virtual Tree  Save() const;
-    virtual bool  Start( const Path& app, const std::string& checkpoint );
+    virtual bool  Start( const Path& app, const Path& timeline, const std::string& checkpoint );
     virtual bool  Stop();
     virtual bool  Refresh();
     virtual bool  RefreshSize();
@@ -204,6 +203,12 @@ private:
     bool Archive( boost::upgrade_lock< boost::shared_mutex >& lock );
     void ClearOutput( const Path& path );
     void ParseCheckpoints();
+    void ParseExerciseProperties();
+    T_Process StartSimulation( boost::upgrade_lock< boost::shared_mutex >& lock,
+                               Status next,
+                               const std::string& checkpoint,
+                               bool replay,
+                               const Path& app );
     //@}
 
 private:
@@ -222,6 +227,7 @@ private:
     //@{
     mutable boost::shared_mutex access_;
     T_Process process_;
+    T_Process timeline_;
     boost::shared_ptr< node::Token > running_;
     Status status_;
     bool polling_;

@@ -72,6 +72,15 @@ struct Side
     bool created;
 };
 
+struct Profile
+{
+    Profile( const std::string& username, const std::string& password );
+    bool operator<( const Profile& other ) const;
+    bool operator==( const Profile& other ) const;
+    std::string username;
+    std::string password;
+};
+
 // -----------------------------------------------------------------------------
 // Name: session::Config
 // Created: BAX 2012-08-02
@@ -81,6 +90,7 @@ struct Config
     Config();
     typedef std::map< std::string, PluginConfig > T_Plugins;
     typedef std::map< std::string, Side > T_Sides;
+    typedef std::set< Profile > T_Profiles;
     std::string     name;
     T_Plugins       plugins;
     struct
@@ -121,10 +131,12 @@ struct Config
         bool        no_side_objects;
         T_Sides     list;
     }               sides;
+    T_Profiles      profiles;
 };
 
 bool ReadConfig ( Config& dst, const Plugins& plugins, const Tree& src );
 void WriteConfig( Tree& dst, const Config& cfg );
+void WriteProfileConfig( Tree& dst, const std::string& prefix, const session::Config::T_Profiles& src );
 }
 
 namespace node

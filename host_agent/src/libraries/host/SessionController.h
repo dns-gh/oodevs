@@ -56,6 +56,7 @@ public:
                                 const Path& root,
                                 const Path& simulation,
                                 const Path& replayer,
+                                const Path& timeline,
                                 runtime::Pool_ABC& pool );
     virtual ~SessionController();
     //@}
@@ -113,6 +114,7 @@ private:
     const Path trash_;
     const Path simulation_;
     const Path replayer_;
+    const Path timeline_;
     Container< Session_ABC > sessions_;
     runtime::Timer timer_;
     runtime::Timer sizes_;

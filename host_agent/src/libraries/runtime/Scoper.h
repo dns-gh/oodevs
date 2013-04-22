@@ -38,6 +38,10 @@ struct Scoper : public boost::noncopyable
         task_ = task;
         return *this;
     }
+    void Reset()
+    {
+        task_ = Task();
+    }
     ~Scoper()
     {
         if( task_ )

@@ -13,6 +13,7 @@
 #include "runtime/FileSystem_ABC.h"
 #include "runtime/PropertyTree.h"
 #include "runtime/Utf8.h"
+#include "web/Configs.h"
 #include "web/Chunker_ABC.h"
 #include "web/HttpException.h"
 
@@ -641,12 +642,31 @@ namespace
         return sides;
     }
 
-    Tree ConvertSides( const T_Sides& sides ) 
+    Tree ConvertSides( const T_Sides& sides )
     {
         Tree tree;
         for( auto it = sides.begin(); it != sides.end(); ++it )
             tree.put( it->first, it->second );
         return tree;
+    }
+
+    typedef web::session::Config::T_Profiles T_Profiles;
+
+    T_Profiles GetProfiles( const FileSystem_ABC& fs, const Path& path )
+    {
+        if( !fs.Exists( path ) )
+            return T_Profiles();
+        const Tree src = FromXml( fs.ReadFile( path ) );
+        const auto opt = src.get_child_optional( "profiles" );
+        if( !opt )
+            return T_Profiles();
+        T_Profiles profiles;
+        BOOST_FOREACH( const auto& it, *opt )
+            if( it.first == "profile" )
+                profiles.insert( web::session::Profile(
+                    Get< std::string >( it.second, "<xmlattr>.name" ),
+                    Get< std::string >( it.second, "<xmlattr>.password" ) ) );
+        return profiles;
     }
 }
 
@@ -658,6 +678,7 @@ struct Exercise : public Item
         , model_   ( Get< std::string >( more, "exercise.model.<xmlattr>.dataset" ) )
         , terrain_ ( Get< std::string >( more, "exercise.terrain.<xmlattr>.name" ) )
         , sides_   ( GetSides( fs, file.parent_path() / "orbat.xml" ) )
+        , profiles_( GetProfiles( fs, file.parent_path() / "profiles.xml" ) )
     {
         // NOTHING
     }
@@ -669,6 +690,7 @@ struct Exercise : public Item
         tree.put( "model", model_ );
         tree.put( "terrain", terrain_ );
         tree.put_child( "sides", ConvertSides( sides_ ) );
+        web::session::WriteProfileConfig( tree, "profiles.", profiles_ );
         return tree;
     }
 
@@ -721,6 +743,7 @@ struct Exercise : public Item
     const std::string model_;
     const std::string terrain_;
     const T_Sides     sides_;
+    const T_Profiles  profiles_;
 };
 
 struct Client : public Item

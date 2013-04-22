@@ -159,7 +159,7 @@ namespace
             MOCK_EXPECT( runtime.Start ).once().returns( process );
             MOCK_EXPECT( fs.WriteFile ).once().returns( true );
             MOCK_EXPECT( node->StartSession ).once().returns( boost::make_shared< host::node::Token >() );
-            BOOST_REQUIRE( session.Start( apps, checkpoint ) );
+            BOOST_REQUIRE( session.Start( apps, apps, checkpoint ) );
             return process;
         }
 
@@ -342,7 +342,7 @@ BOOST_FIXTURE_TEST_CASE( session_can_start_twice, Fixture )
 {
     SessionPtr session = MakeSession();
     StartSession( *session, processPid, processName );
-    BOOST_CHECK( !session->Start( apps, std::string() ) );
+    BOOST_CHECK( !session->Start( apps, apps, std::string() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_can_pause_and_restart, Fixture )
@@ -353,7 +353,7 @@ BOOST_FIXTURE_TEST_CASE( session_can_pause_and_restart, Fixture )
     BOOST_CHECK( session->Pause() );
     BOOST_CHECK( !session->Pause() );
     ExpectWebRequest( "/play", 200 );
-    BOOST_CHECK( session->Start( apps, std::string() ) );
+    BOOST_CHECK( session->Start( apps, apps, std::string() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_discards_outdated_updates_due_to_invalidated_process, Fixture )
@@ -399,7 +399,7 @@ BOOST_FIXTURE_TEST_CASE( session_discard_outdated_updates_due_to_invalidated_cou
     ExpectWebRequest( "/pause", 200 );
     session->Pause();
     ExpectWebRequest( "/play", 200 );
-    session->Start( apps, std::string() );
+    session->Start( apps, apps, std::string() );
     BOOST_CHECK_EQUAL( GetState( *session ), "playing" );
 
     endPause.Signal();
@@ -427,7 +427,7 @@ BOOST_FIXTURE_TEST_CASE( session_cannot_restart_with_replays, Fixture )
     ProcessPtr process = StartSession( *session, processPid, processName );
     Session_ABC::T_Ptr replay = ReplaySession( *session );
     StopSession( *session, process );
-    BOOST_CHECK_THROW( session->Start( apps, std::string() ), web::HttpException );
+    BOOST_CHECK_THROW( session->Start( apps, apps, std::string() ), web::HttpException );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_cannot_archive_if_not_stopped, Fixture )

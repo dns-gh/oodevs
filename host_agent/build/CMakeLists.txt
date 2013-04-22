@@ -75,6 +75,7 @@ target_link_libraries( web
 # host
 masa_add_target( host libraries "libraries/host" )
 target_link_libraries( host
+    web
     ${BCRYPT_LIBRARIES}
     ${SQLITE3_LIBRARIES}
 )
@@ -84,7 +85,6 @@ masa_add_target( cloud_server applications "applications/cloud_server" OPTIONS e
 target_link_libraries( cloud_server
     host
     runtime
-    web
 )
 
 # client
@@ -108,7 +108,6 @@ masa_set_target_folder( host_test tests )
 target_link_libraries( host_test
     host
     runtime
-    web
 )
 
 # web_test

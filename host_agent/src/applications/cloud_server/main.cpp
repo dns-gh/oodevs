@@ -154,6 +154,7 @@ struct Configuration
     {
         Path simulation;
         Path replayer;
+        Path timeline;
     } session;
 
     bool Parse( cpplog::BaseLogger& log, int argc, const char* argv[] )
@@ -177,6 +178,7 @@ struct Configuration
             found |= ReadParameter( node.min_play_seconds, "--node_min_play", i, argc, argv );
             found |= ReadParameter( session.simulation, "--simulation", i, argc, argv );
             found |= ReadParameter( session.replayer, "--replayer", i, argc, argv );
+            found |= ReadParameter( session.timeline, "--timeline", i, argc, argv );
             found |= ReadToggle( ssl.enabled, "--ssl", argv[i] );
             found |= ReadParameter( ssl.certificate, "--ssl_certificate", i, argc, argv );
             found |= ReadParameter( ssl.key, "--ssl_key", i, argc, argv );
@@ -316,7 +318,7 @@ int Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const F
     fnodes.observer = &nodes;
     NodeController cluster( log, runtime, fs, plugins, fnodes, cfg.root, cfg.node.app, cfg.node.root, Path(), "cluster", host->Get(), pool, proxy );
     SessionFactory fsessions( fs, runtime, plugins, uuids, nodes, ports, client, pool );
-    SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.simulation, cfg.session.replayer, pool );
+    SessionController sessions( log, runtime, fs, fsessions, nodes, cfg.root, cfg.session.simulation, cfg.session.replayer, cfg.session.timeline, pool );
     Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
     Crypt crypt;
     Sql db( cfg.root / "host" / "host_agent.db" );
@@ -379,6 +381,7 @@ void PrintConfiguration( cpplog::BaseLogger& log, const Configuration& cfg )
     LOG_INFO( log ) << "[cfg] node.min_play_seconds " << cfg.node.min_play_seconds;
     LOG_INFO( log ) << "[cfg] session.simulation "    << cfg.session.simulation;
     LOG_INFO( log ) << "[cfg] session.replayer "      << cfg.session.replayer;
+    LOG_INFO( log ) << "[cfg] session.timeline "      << cfg.session.timeline;
     LOG_INFO( log ) << "[cfg] ssl "                   << ( cfg.ssl.enabled ? "true" : "false" );
     if( cfg.ssl.enabled )
     {
@@ -400,7 +403,7 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     const Path bin = Path( module ).remove_filename();
     Configuration cfg;
     cfg.root                  = Utf8( GetTree( tree, "root", Utf8( root ) ) );
-    cfg.ports.period          = GetTree( tree, "ports.period", 40 );
+    cfg.ports.period          = GetTree( tree, "ports.period", 12 );
     cfg.ports.min             = GetTree( tree, "ports.min", 50000 );
     cfg.ports.max             = GetTree( tree, "ports.max", 60000 );
     cfg.ports.proxy           = GetTree( tree, "ports.proxy", 8080 );
@@ -414,6 +417,7 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     cfg.node.min_play_seconds = GetTree( tree, "node.min_play_s", 5*60 );
     cfg.session.simulation    = Utf8( GetTree( tree, "session.simulation", Utf8( bin / "simulation_app.exe" ) ) );
     cfg.session.replayer      = Utf8( GetTree( tree, "session.replayer", Utf8( bin / "replayer_app.exe" ) ) );
+    cfg.session.timeline      = Utf8( GetTree( tree, "session.timeline", Utf8( bin / "timeline_server.exe" ) ) );
     fs.WriteFile( config, ToJson( tree ) );
 
     bool valid = cfg.Parse( log, argc, argv );

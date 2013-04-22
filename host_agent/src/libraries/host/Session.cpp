@@ -28,6 +28,7 @@
 #include <boost/assign/list_of.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
+#include <boost/format.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -41,6 +42,10 @@
 #   pragma warning( pop )
 #endif
 
+#include <boost/thread/condition_variable.hpp>
+#include <boost/thread/thread.hpp>
+#include <boost/asio.hpp>
+
 using namespace host;
 using namespace property_tree;
 using namespace web::session;
@@ -49,6 +54,8 @@ using runtime::FileSystem_ABC;
 using runtime::Runtime_ABC;
 using runtime::Utf8;
 using web::Client_ABC;
+namespace aio = boost::asio;
+using boost::asio::ip::tcp;
 
 namespace
 {
@@ -59,6 +66,8 @@ enum SessionPort
     WEB_CONTROL_PORT,
     DIA_DEBUGGER_PORT,
     NETWORK_LOGGER_PORT,
+    TIMELINE_PORT,
+    TIMELINE_WEB_PORT,
     SESSION_PORT_COUNT,
 };
 
@@ -116,9 +125,9 @@ Port AcquirePort( int wanted, PortFactory_ABC& ports )
     }
 }
 
-Session::T_Process GetProcess( const Tree& tree, const runtime::Runtime_ABC& runtime )
+Session::T_Process GetProcess( const Tree& tree, const std::string& key, const runtime::Runtime_ABC& runtime )
 {
-    const boost::optional< int > pid = tree.get_optional< int >( "process.pid" );
+    const boost::optional< int > pid = tree.get_optional< int >( key + ".pid" );
     if( pid == boost::none )
         return Session::T_Process();
     return runtime.GetProcess( *pid );
@@ -129,17 +138,17 @@ Session::Status GetIdleStatus( bool replay )
     return replay ? Session::STATUS_WAITING : Session::STATUS_STOPPED;
 }
 
-Session::T_Process AcquireProcess( const Tree& tree, const runtime::Runtime_ABC& runtime, int expected )
+Session::T_Process AcquireProcess( const Tree& tree, const std::string& key, const runtime::Runtime_ABC& runtime, int expected )
 {
-    Session::T_Process ptr = GetProcess( tree, runtime );
+    Session::T_Process ptr = GetProcess( tree, key, runtime );
     if( !ptr  )
         return Session::T_Process();
-    if( expected != Get< int >( tree, "port" ) || ptr->GetName() != Get< std::string >( tree, "process.name" ) )
+    if( expected != Get< int >( tree, "port" ) || ptr->GetName() != Get< std::string >( tree, key + ".name" ) )
         return Session::T_Process();
     return ptr;
 }
 
-Path GetPath( const Tree& src, const std::string& key )
+Path GetPathFrom( const Tree& src, const std::string& key )
 {
     return Utf8( Get< std::string >( src, key ) );
 }
@@ -192,6 +201,7 @@ Session::Session( const SessionDependencies& deps,
     , replay_      ( replay )
     , running_     ()
     , process_     ()
+    , timeline_    ()
     , status_      ( GetIdleStatus( !replay_.is_nil() ) )
     , polling_     ( false )
     , counter_     ( 0 )
@@ -205,7 +215,7 @@ Session::Session( const SessionDependencies& deps,
     , replays_     ()
 {
     NotifyNode();
-    FillExerciseSides();
+    ParseExerciseProperties();
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +235,8 @@ Session::Session( const SessionDependencies& deps,
     , links_       ( deps.nodes.LinkExercise( *node_, tree.get_child( "links" ) ) )
     , port_        ( AcquirePort( Get< int >( tree, "port" ), deps.ports ) )
     , replay_      ( Get< Uuid >( tree, "replay.root" ) )
-    , process_     ( AcquireProcess( tree, deps_.runtime, port_->Get() ) )
+    , process_     ( AcquireProcess( tree, "process", deps_.runtime, port_->Get() ) )
+    , timeline_    ( AcquireProcess( tree, "timeline", deps_.runtime, port_->Get() ) )
     , running_     ( process_ ? node->StartSession( boost::posix_time::not_a_date_time, true ) : Node_ABC::T_Token() )
     , status_      ( AcquireStatus( ConvertStatus( Get< std::string >( tree, "status" ) ), process_, !replay_.is_nil() ) )
     , polling_     ( false )
@@ -276,14 +287,16 @@ Path Session::GetRoot() const
 // Name: Session::GetExerciseSides
 // Created: NPT 2013-04-05
 // -----------------------------------------------------------------------------
-void Session::FillExerciseSides()
+void Session::ParseExerciseProperties()
 {
-    Tree tree = node_->GetExerciseProperties( GetExercise().string() );
-    const auto opt = tree.get_child_optional( "sides" );
-    if( !opt )
-        return;
-    for( auto it = opt->begin(); it != opt->end(); ++it )
-        cfg_.sides.list[ it->first ] = Side( Get< std::string >( it->second, "" ), true );
+    const Tree tree = node_->GetExerciseProperties( GetExercise().string() );
+    if( const auto sides = tree.get_child_optional( "sides" ) )
+        for( auto it = sides->begin(); it != sides->end(); ++it )
+            cfg_.sides.list[ it->first ] = Side( Get< std::string >( it->second, "" ), true );
+    if( const auto profiles = tree.get_child_optional( "profiles" ) )
+        for( auto it = profiles->begin(); it != profiles->end(); ++it )
+            cfg_.profiles.insert( Profile( it->first,
+                Get< std::string >( it->second, ".password" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -301,7 +314,7 @@ Uuid Session::GetNode() const
 // -----------------------------------------------------------------------------
 Path Session::GetExercise() const
 {
-    return ::GetPath( links_, "exercise.name" );
+    return ::GetPathFrom( links_, "exercise.name" );
 }
 
 // -----------------------------------------------------------------------------
@@ -392,6 +405,17 @@ Tree Session::GetProperties() const
     return tree;
 }
 
+namespace
+{
+    void SaveProcess( Tree& dst, const std::string& key, const Session::T_Process& process )
+    {
+        if( !process )
+            return;
+        dst.put( key + ".pid", process->GetPid() );
+        dst.put( key + ".name", process->GetName() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Session::Save
 // Created: BAX 2012-04-19
@@ -401,10 +425,8 @@ Tree Session::Save() const
     boost::shared_lock< boost::shared_mutex > lock( access_ );
     Tree tree = GetProperties( true );
     tree.put( "size", size_ );
-    if( !process_ )
-        return tree;
-    tree.put( "process.pid", process_->GetPid() );
-    tree.put( "process.name", process_->GetName() );
+    SaveProcess( tree, "process", process_ );
+    SaveProcess( tree, "timeline", timeline_ );
     return tree;
 }
 
@@ -417,13 +439,13 @@ std::string XpathToXml( std::string xpath )
     return xpath;
 }
 
-std::string GetPartiesDataMessage( const Config::T_Sides& sides )
+std::string GetParties( const Config::T_Sides& sides )
 {
-    std::vector< std::string > sidesList;
+    std::vector< std::string > list;
     for( auto it = sides.begin(); it != sides.end(); ++it )
         if( it->second.created )
-            sidesList.push_back( it->first );
-    return boost::algorithm::join( sidesList, ";" );
+            list.push_back( it->first );
+    return boost::algorithm::join( list, ";" );
 }
 
 void WritePlugin( Tree& tree, const std::string& prefix, const web::session::PluginConfig& cfg )
@@ -491,7 +513,7 @@ void WriteSimulationConfiguration( Tree& tree, int base, const Config& cfg )
     tree.put( prefix + "random.<xmlattr>.seed", cfg.rng.seed );
     if( cfg.sides.no_side_objects )
             tree.put( prefix + "orbat.subset.<xmlattr>.no-party", cfg.sides.no_side_objects );
-    tree.put( prefix + "orbat.subset.<xmlattr>.parties", GetPartiesDataMessage( cfg.sides.list ) );
+    tree.put( prefix + "orbat.subset.<xmlattr>.parties", GetParties( cfg.sides.list ) );
     WriteRngConfiguration( tree, prefix + "random0.", cfg.rng.fire );
     WriteRngConfiguration( tree, prefix + "random1.", cfg.rng.wound );
     WriteRngConfiguration( tree, prefix + "random2.", cfg.rng.perception );
@@ -522,6 +544,9 @@ bool Session::StopProcess( boost::upgrade_lock< boost::shared_mutex >& lock )
         boost::upgrade_to_unique_lock< boost::shared_mutex> write( lock );
         status_ = GetIdleStatus( IsReplay() );
         copy.swap( process_ );
+        if( timeline_ )
+            timeline_->Kill();
+        timeline_.reset();
         token.swap( running_ );
         clients_.clear();
     }
@@ -633,31 +658,17 @@ std::string MakeOption( const std::string& option, const T& value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Session::Start
+// Name: Session::StartSimulation
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-bool Session::Start( const Path& app, const std::string& checkpoint )
+Session::T_Process Session::StartSimulation( boost::upgrade_lock< boost::shared_mutex >& lock,
+                                             Status next,
+                                             const std::string& checkpoint,
+                                             bool replay,
+                                             const Path& app )
 {
-    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
-
-    const bool replay = IsReplay();
-    const Status next = replay ? STATUS_REPLAYING : STATUS_PLAYING;
-    if( process_ )
-        return ModifyStatus( lock, next );
-
-    if( !replays_.empty() )
-        throw web::HttpException( web::FORBIDDEN );
-
-    Node_ABC::T_Token token;
-    if( !replay )
-    {
-        const boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
-        token = node_->StartSession( now, first_time_ || !checkpoint.empty() );
-        if( !token )
-            return false;
-    }
-
     boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
+    status_ = next;
     start_time_.clear();
     current_time_.clear();
     const Path output = GetOutput();
@@ -681,14 +692,151 @@ bool Session::Start( const Path& app, const std::string& checkpoint )
     deps_.fs.WriteFile( output / file, GetConfiguration( cfg_, port_->Get() ) );
     if( !checkpoint.empty() )
         options.push_back( MakeOption( "checkpoint", checkpoint ) );
-    T_Process ptr = deps_.runtime.Start( Utf8( app ),
+    return deps_.runtime.Start( Utf8( app ),
         options, Utf8( Path( app ).remove_filename() ), Utf8( GetRoot() / "session.log" ) );
+}
+
+namespace
+{
+void WriteTimelineConfig( const UuidFactory_ABC& uuids,
+                          const FileSystem_ABC& fs,
+                          const Path& filename,
+                          const web::session::Profile& profile,
+                          int port )
+{
+    const std::string uuid = boost::lexical_cast< std::string >( uuids.Create() );
+
+    std::string output;
+    output += "[";
+    Tree login;
+    login.put( "type", "USER_LOGIN" );
+    login.put( "user.login.username", "" );
+    login.put( "user.login.password", "" );
+    output += ToJson( login ) + ",";
+
+    Tree create;
+    create.put( "type", "SESSION_CREATE" );
+    create.put( "session.create.uuid", uuid );
+    create.put( "session.create.name", "session" );
+    output += ToJson( create ) + ",";
+
+    // manual serialization for invalid bool support from boost::property_tree
+    // todo use a real json library
+    const std::string attach = ( boost::format(
+    "{"
+    "    \"type\": \"SESSION_ATTACH\","
+    "    \"session\": {"
+    "        \"attach\": {"
+    "            \"uuid\": \"%1%\","
+    "            \"service\": {"
+    "                \"name\": \"simulation\","
+    "                \"clock\": true,"
+    "                \"sword\": {"
+    "                    \"address\": \"localhost:%2%\","
+    "                    \"username\": \"%3%\","
+    "                    \"password\": \"%4%\""
+    "                }"
+    "            }"
+    "        }"
+    "    }"
+    "}," ) % uuid % port % profile.username % profile.password ).str();
+    output += attach;
+
+    Tree start;
+    start.put( "type", "SESSION_START" );
+    start.put( "session.start.uuid", uuid );
+    output += ToJson( start ) + "]";
+
+    fs.WriteFile( filename, output );
+}
+
+Session::T_Process StartTimeline( const SessionDependencies& deps,
+                                  const Path& app,
+                                  const Path& root,
+                                  const web::session::Profile& profile,
+                                  int base )
+{
+    const Path config = root / "timeline.run";
+    WriteTimelineConfig( deps.uuids, deps.fs, config, profile, base + DISPATCHER_PORT );
+    std::vector< std::string > options = boost::assign::list_of
+        ( MakeOption( "port",  base + TIMELINE_PORT ) )
+        ( MakeOption( "serve", base + TIMELINE_WEB_PORT ) )
+        ( MakeOption( "run", Utf8( config ) ) );
+    return deps.runtime.Start( Utf8( app ), options,
+        Utf8( Path( app ).remove_filename() ), Utf8( root / "timeline.log" ) );
+}
+
+bool WaitConnected( boost::upgrade_lock< boost::shared_mutex >& lock, int port )
+{
+    aio::io_service service;
+    const tcp::endpoint endpoint( aio::ip::address::from_string( "127.0.0.1" ), static_cast< uint16_t >( port ) );
+    tcp::socket socket( service );
+    boost::system::error_code ec;
+    boost::condition_variable_any any;
+    const boost::posix_time::ptime deadline = boost::posix_time::microsec_clock::local_time()
+                                            + boost::posix_time::seconds( 4 );
+    while( boost::posix_time::microsec_clock::local_time() < deadline )
+    {
+        socket.connect( endpoint, ec );
+        if( !ec )
+            return true;
+        any.timed_wait( lock, boost::posix_time::milliseconds( 100 ) );
+    }
+    return false;
+}
+
+void Reset( boost::upgrade_lock< boost::shared_mutex >& lock,
+            Session::Status& status, Session::Status next )
+{
+    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
+    status = next;
+}
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::Start
+// Created: BAX 2012-04-19
+// -----------------------------------------------------------------------------
+bool Session::Start( const Path& app, const Path& timeline, const std::string& checkpoint )
+{
+    boost::upgrade_lock< boost::shared_mutex > lock( access_ );
+
+    const bool replay = IsReplay();
+    const Status next = replay ? STATUS_REPLAYING : STATUS_PLAYING;
+    if( process_ )
+        return ModifyStatus( lock, next );
+
+    if( !replays_.empty() )
+        throw web::HttpException( web::FORBIDDEN );
+
+    Node_ABC::T_Token token;
+    if( !replay )
+    {
+        const boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
+        token = node_->StartSession( now, first_time_ || !checkpoint.empty() );
+        if( !token )
+            return false;
+    }
+
+    runtime::Scoper scoper( boost::bind( &Reset, boost::ref( lock ), boost::ref( status_ ), status_ ) );
+    auto ptr = StartSimulation( lock, next, checkpoint, replay, app );
     if( !ptr )
         return false;
 
+    T_Process time;
+    if( !cfg_.profiles.empty() )
+    {
+        if( !WaitConnected( lock, port_->Get() + DISPATCHER_PORT ) )
+            return false;
+        if( !( time = StartTimeline( deps_, timeline, GetRoot(), *cfg_.profiles.begin(), port_->Get() + DISPATCHER_PORT ) ) )
+            return false;
+    }
+
+    boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
+    scoper.Reset();
     process_    = ptr;
+    timeline_   = time;
     running_    = token;
-    status_     = next;
     first_time_ = false;
     return true;
 }
@@ -700,11 +848,11 @@ bool Session::Start( const Path& app, const std::string& checkpoint )
 Path Session::GetPath( const std::string& type ) const
 {
     if( type == "exercise" )
-        return ::GetPath( links_, "exercise.root" ) / "exercises";
+        return ::GetPathFrom( links_, "exercise.root" ) / "exercises";
     if( type == "model" )
-        return ::GetPath( links_, "model.root" ) / "data" / "models";
+        return ::GetPathFrom( links_, "model.root" ) / "data" / "models";
     if( type == "terrain" )
-        return ::GetPath( links_, "terrain.root" ) / "data" / "terrains";
+        return ::GetPathFrom( links_, "terrain.root" ) / "data" / "terrains";
     return Path();
 }
 

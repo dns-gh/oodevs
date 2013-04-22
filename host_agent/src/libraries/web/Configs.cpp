@@ -69,6 +69,36 @@ session::Side::Side()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Profiles::Profiles
+// Created: BAX 2013-04-22
+// -----------------------------------------------------------------------------
+session::Profile::Profile( const std::string& username, const std::string& password )
+    : username( username )
+    , password( password )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profiles::operator<
+// Created: BAX 2013-04-22
+// -----------------------------------------------------------------------------
+bool session::Profile::operator<( const Profile& other ) const
+{
+    return username < other.username;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profiles::operator==
+// Created: BAX 2013-04-22
+// -----------------------------------------------------------------------------
+bool session::Profile::operator==( const Profile& other ) const
+{
+    return username == other.username
+        && password == other.password;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Config::Config
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
@@ -176,9 +206,9 @@ void WriteRngConfig( Tree& dst, const std::string& prefix, const session::RngCon
 
 // -----------------------------------------------------------------------------
 // Name: ReadSideConfig
-// Created: NPT 2013-08-04
+// Created: NPT 2013-04-08
 // -----------------------------------------------------------------------------
-bool ReadSideConfig( web::session::Config::T_Sides& dst, const Tree& src, const std::string& prefix )
+bool ReadSideConfig( session::Config::T_Sides& dst, const Tree& src, const std::string& prefix )
 {
     bool modified = false;
     const auto tree = src.get_child_optional( prefix );
@@ -197,9 +227,9 @@ bool ReadSideConfig( web::session::Config::T_Sides& dst, const Tree& src, const 
 
 // -----------------------------------------------------------------------------
 // Name: WriteSideConfig
-// Created: NPT 2013-08-04
+// Created: NPT 2013-04-08
 // -----------------------------------------------------------------------------
-void WriteSideConfig( Tree& dst, const std::string& prefix, const web::session::Config::T_Sides& src )
+void WriteSideConfig( Tree& dst, const std::string& prefix, const session::Config::T_Sides& src )
 {
     Tree tree;
     for( auto it = src.begin(); it != src.end(); ++it )
@@ -208,6 +238,22 @@ void WriteSideConfig( Tree& dst, const std::string& prefix, const web::session::
         tree.put( it->first + "." + "created", it->second.created );
     }
     dst.add_child( prefix, tree );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReadProfileConfig
+// Created: BAX 2013-04-19
+// -----------------------------------------------------------------------------
+bool ReadProfileConfig( session::Config::T_Profiles& dst, const Tree& src, const std::string& prefix )
+{
+    const auto tree = src.get_child_optional( prefix );
+    if( !tree )
+        return false;
+    session::Config::T_Profiles next;
+    for( auto it = tree->begin(); it != tree->end(); ++it )
+        next.insert( session::Profile( it->first, Get< std::string>( it->second, "password" ) ) );
+    std::swap( dst, next );
+    return dst != next;
 }
 
 // -----------------------------------------------------------------------------
@@ -276,10 +322,20 @@ void WritePluginConfig( Tree& dst, const std::string& prefix, const session::Plu
 }
 
 // -----------------------------------------------------------------------------
+// Name: WriteProfileConfig
+// Created: BAX 2013-04-19
+// -----------------------------------------------------------------------------
+void session::WriteProfileConfig( Tree& dst, const std::string& prefix, const session::Config::T_Profiles& src )
+{
+    for( auto it = src.begin(); it != src.end(); ++it )
+        dst.put( prefix + it->username + ".password", it->password );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ReadConfig
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-bool web::session::ReadConfig( session::Config& dst, const Plugins& plugins, const Tree& src )
+bool session::ReadConfig( session::Config& dst, const Plugins& plugins, const Tree& src )
 {
     bool modified = false;
     modified |= TryRead( dst.name, src, "name" );
@@ -296,6 +352,7 @@ bool web::session::ReadConfig( session::Config& dst, const Plugins& plugins, con
     modified |= TryRead( dst.reports.clean_frequency, src, "reports.clean_frequency" );
     modified |= TryRead( dst.sides.no_side_objects, src, "sides.no_side_objects" );
     modified |= ReadSideConfig( dst.sides.list, src, "sides.list" );
+    modified |= ReadProfileConfig( dst.profiles, src, "profiles" );
     modified |= ReadRngConfig( dst.rng.breakdown, src, "rng.breakdown." );
     modified |= ReadRngConfig( dst.rng.fire, src, "rng.fire." );
     modified |= ReadRngConfig( dst.rng.perception, src, "rng.perception." );
@@ -308,7 +365,7 @@ bool web::session::ReadConfig( session::Config& dst, const Plugins& plugins, con
 // Name: WriteConfig
 // Created: BAX 2012-08-02
 // -----------------------------------------------------------------------------
-void web::session::WriteConfig( Tree& dst, const session::Config& cfg )
+void session::WriteConfig( Tree& dst, const session::Config& cfg )
 {
     dst.put( "name", cfg.name );
     dst.put( "checkpoints.enabled", cfg.checkpoints.enabled );
@@ -324,6 +381,7 @@ void web::session::WriteConfig( Tree& dst, const session::Config& cfg )
     dst.put( "reports.clean_frequency", cfg.reports.clean_frequency );
     dst.put( "sides.no_side_objects", cfg.sides.no_side_objects );
     WriteSideConfig( dst, "sides.list", cfg.sides.list );
+    WriteProfileConfig( dst, "profiles.", cfg.profiles );
     WriteRngConfig( dst, "rng.breakdown.", cfg.rng.breakdown );
     WriteRngConfig( dst, "rng.fire.", cfg.rng.fire );
     WriteRngConfig( dst, "rng.perception.", cfg.rng.perception );
@@ -347,7 +405,7 @@ node::Config::Config()
 // Name: ReadConfig
 // Created: BAX 2012-08-09
 // -----------------------------------------------------------------------------
-bool web::node::ReadConfig( node::Config& dst, const Tree& src )
+bool node::ReadConfig( node::Config& dst, const Tree& src )
 {
     bool modified = false;
     modified |= TryRead( dst.name, src, "name" );
@@ -362,7 +420,7 @@ bool web::node::ReadConfig( node::Config& dst, const Tree& src )
 // Name: WriteConfig
 // Created: BAX 2012-08-09
 // -----------------------------------------------------------------------------
-void web::node::WriteConfig( Tree& dst, const node::Config& cfg )
+void node::WriteConfig( Tree& dst, const node::Config& cfg )
 {
     dst.put( "name", cfg.name );
     dst.put( "sessions.max_play", cfg.sessions.max_play );

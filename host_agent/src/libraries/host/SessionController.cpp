@@ -37,6 +37,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
                                       const Path& root,
                                       const Path& simulation,
                                       const Path& replayer,
+                                      const Path& timeline,
                                       Pool_ABC& pool )
     : log_       ( log )
     , runtime_   ( runtime )
@@ -47,6 +48,7 @@ SessionController::SessionController( cpplog::BaseLogger& log,
     , trash_     ( root_ / "_" )
     , simulation_( simulation )
     , replayer_  ( replayer )
+    , timeline_  ( timeline )
     , async_     ( pool )
 {
     fs_.MakePaths( trash_ );
@@ -54,6 +56,8 @@ SessionController::SessionController( cpplog::BaseLogger& log,
         throw std::runtime_error( "'" + runtime::Utf8( simulation_ ) + "' is not a file" );
     if( !fs_.IsFile( replayer_ ) )
         throw std::runtime_error( "'" + runtime::Utf8( replayer_ ) + "' is not a file" );
+    if( !fs_.IsFile( timeline_ ) )
+        throw std::runtime_error( "'" + runtime::Utf8( timeline_ ) + "' is not a file" );
     timer_ = MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &SessionController::Refresh, this ) );
     sizes_ = MakeTimer( pool, boost::posix_time::minutes( 1 ), boost::bind( &SessionController::RefreshSize, this ) );
 }
@@ -300,9 +304,9 @@ namespace
 {
     bool StartSession( const boost::shared_ptr< Session_ABC >& session,
                        const Path& simulation, const Path& replayer,
-                       const std::string& checkpoint )
+                       const Path& timeline, const std::string& checkpoint )
     {
-        return session->Start( session->IsReplay() ? replayer : simulation, checkpoint );
+        return session->Start( session->IsReplay() ? replayer : simulation, timeline, checkpoint );
     }
 }
 
@@ -313,7 +317,7 @@ namespace
 SessionController::T_Session SessionController::Start( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const
 {
     return Dispatch( node, id, boost::bind( &StartSession, _1, simulation_,
-                     replayer_, checkpoint ) );
+                     replayer_, timeline_, checkpoint ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -399,7 +403,7 @@ SessionController::T_Session SessionController::Replay( const Uuid& node, const 
         return next;
     sessions_.Attach( next );
     Create( *next );
-    Apply( next, boost::bind( &Session_ABC::Start, _1, boost::cref( replayer_ ), std::string() ) );
+    Apply( next, boost::bind( &Session_ABC::Start, _1, replayer_, timeline_, std::string() ) );
     return next;
 }
 
