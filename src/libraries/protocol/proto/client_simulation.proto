@@ -101,6 +101,11 @@ message UnitMagicAction {
         //! A partial recovery magic action
         partial_recovery                  = 11;
         //! A unit creation magic action
+        //! The tasker must be set to the parent automat.
+        //! parameters[0], Identifier: the unit type.
+        //! parameters[1], Point: the unit location in WGS84.
+        //! parameters[2], ACharStr, optional: the unit name.
+        //! parameters[3], BooleanValue, optional: ignored.
         unit_creation                     = 12;
         //! A create fire order magic action
         create_fire_order                 = 13;
