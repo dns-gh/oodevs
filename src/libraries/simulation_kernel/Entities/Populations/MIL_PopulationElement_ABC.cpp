@@ -230,7 +230,7 @@ void MIL_PopulationElement_ABC::ApplyBurn( const MIL_BurnEffectManipulator& /*bu
 void MIL_PopulationElement_ABC::UpdateCollisions()
 {
     TER_Agent_ABC::T_AgentPtrVector agents;
-    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocation(), agents, 100. ); //$$$ TEST
+    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocation(), agents, 10. );
     collidingAgents_.clear(); collidingAgents_.reserve( agents.size() );
     for( TER_Agent_ABC::CIT_AgentPtrVector it = agents.begin(); it != agents.end(); ++it )
     {
