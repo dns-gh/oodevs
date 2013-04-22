@@ -84,7 +84,7 @@ session::Config::Config()
     time.paused = false;
     time.step = 10;
     rng.seed = 0;
-    reports.clean_frequency = 0;
+    reports.clean_frequency = 100;
     sides.no_side_objects = true;
 }
 
