@@ -621,7 +621,8 @@
     </macrodef>
 
     <target name="package.binaries" description="create a zip with all binaries">
-        <safe-move file="${out.dir}/SWORD_binaries_${platform}_${version.project}.zip">
+        <safe-move file="${out.dir}/binaries_${platform}.zip"
+            todir="${dist.internal.dir}">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
                     <fileset dir="${out.dir}/release/applications" includes="**/*.exe"/>
@@ -631,6 +632,9 @@
             </zip>
             <check-depends file="@{file}"/>
         </safe-move>
+        <!-- temporary, until downstream projects are migrated -->
+        <copy file="${dist.internal.dir}/binaries_${platform}.zip"
+            tofile="${dist.dir}/SWORD_binaries_${platform}_${version.project}.zip"/>
     </target>
 
     <target name="package.doc" description="create a zip with all documentation">
