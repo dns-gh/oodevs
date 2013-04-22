@@ -174,11 +174,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\PopulationOrder.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Visitors.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\CompositeFactory.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\AgentKnowledgeSymbols.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\AgentSymbols.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\AutomatSymbols.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\FormationSymbols.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\SideSymbols.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\UrbanObject.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\ArchitectureAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\ColorAttribute.cpp" />
@@ -317,12 +312,6 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\CompositeFactory.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\ExtensionFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Factory_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\AgentKnowledgeSymbols.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\AgentSymbols.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\AutomatSymbols.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\EntitySymbols_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\FormationSymbols.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\SideSymbols.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\EntityPublisher.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\EntityPublisher_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\UrbanObject.h" />

@@ -46,9 +46,6 @@
     <Filter Include="Source Files\Model\Extensions">
       <UniqueIdentifier>{0883c82d-1af8-4285-b063-4bdadf9e67ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Model\Extensions\Symbols">
-      <UniqueIdentifier>{c77c5c86-42da-4397-b96a-de6b504b9c96}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Model\Extensions\Publishing">
       <UniqueIdentifier>{72e25477-c8f9-45e3-b918-182763344763}</UniqueIdentifier>
     </Filter>
@@ -296,21 +293,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\CompositeFactory.cpp">
       <Filter>Source Files\Model\Extensions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\AgentKnowledgeSymbols.cpp">
-      <Filter>Source Files\Model\Extensions\Symbols</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\AgentSymbols.cpp">
-      <Filter>Source Files\Model\Extensions\Symbols</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\AutomatSymbols.cpp">
-      <Filter>Source Files\Model\Extensions\Symbols</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\FormationSymbols.cpp">
-      <Filter>Source Files\Model\Extensions\Symbols</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\SideSymbols.cpp">
-      <Filter>Source Files\Model\Extensions\Symbols</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\UrbanObject.cpp">
       <Filter>Source Files\Model\Urban</Filter>
@@ -706,24 +688,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\Factory_ABC.h">
       <Filter>Source Files\Model\Extensions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\AgentKnowledgeSymbols.h">
-      <Filter>Source Files\Model\Extensions\Symbols</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\AgentSymbols.h">
-      <Filter>Source Files\Model\Extensions\Symbols</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\AutomatSymbols.h">
-      <Filter>Source Files\Model\Extensions\Symbols</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\EntitySymbols_ABC.h">
-      <Filter>Source Files\Model\Extensions\Symbols</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\FormationSymbols.h">
-      <Filter>Source Files\Model\Extensions\Symbols</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\SideSymbols.h">
-      <Filter>Source Files\Model\Extensions\Symbols</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\EntityPublisher.h">
       <Filter>Source Files\Model\Extensions\Publishing</Filter>
