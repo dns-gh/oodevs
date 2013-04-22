@@ -137,8 +137,8 @@ message UnitMagicAction {
         //! A log supply change quotas magic action
         log_supply_change_quotas          = 26;
         //! An automate creation magic action
-        //! parameters[0], Identifier: the parent identifier, either a
-        //!     formation or an automat.
+        //! The tasker must be set to the parent formation or automat.
+        //! parameters[0], Identifier: the automat type.
         //! parameters[1], Identifier: the automat knowledge group.
         //! result[0], AutomatId: created automat identifier.
         automat_creation                  = 27;
