@@ -12,6 +12,12 @@
     <property name="env.PONEY_HOME" value="//file1/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
+    <!-- Sword has a special dist.dir for its setup, plugins and documentation,
+         but more an more we want internal packages. Put these into
+         ${dist.internal.dir} which should usually reference some place in
+         delivery/internal/sword.
+    -->
+    <property name="dist.internal.dir" value="${dist.dir}"/>
     <property name="version.project" value="trunk"/>
     <property name="version.major" value="5.2.0"/>
     <property name="svn.revision" value="0"/>
@@ -546,7 +552,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.app,package.debug,package.ts,package.plugins,package.binaries,package.gaming_app,package.sdk,package.proto" description="package the installers and packs"/>
+    <target name="package" depends="package.app,package.debug,package.ts,package.plugins,package.binaries,package.gaming_app,package.sdk,package.proto,package.doc" description="package the installers and packs"/>
 
     <target name="package.plugins" depends="package.plugin.hla,package.plugin.dis,package.plugin.timeline" description="package plugin individual installers"/>
 
@@ -624,6 +630,14 @@
                 <fileset dir="${run.dir}" excludes="Debug/**"/>
             </zip>
             <check-depends file="@{file}"/>
+        </safe-move>
+    </target>
+
+    <target name="package.doc" description="create a zip with all documentation">
+        <safe-move file="${out.dir}/doc.zip" todir="${dist.internal.dir}">
+            <zip destfile="@{file}" duplicate="fail">
+                <fileset dir="${doc.dir}"/>
+            </zip>
         </safe-move>
     </target>
 
@@ -850,6 +864,7 @@
         <update name="xerces-c"/>
         <update name="xeumeuleu"/>
         <update name="zlib"/>
+        <mkdir dir="${dist.internal.dir}"/>
     </target>
 
     <target name="configure" depends="update,deploy-application-data,generate-license" description="update packages and decisional"/>
