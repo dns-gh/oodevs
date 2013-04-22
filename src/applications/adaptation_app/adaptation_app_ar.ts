@@ -5848,7 +5848,7 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Infrastructure</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">البنية التحتية</translation>
     </message>
 </context>
 <context>

@@ -46,7 +46,14 @@ public:
         }
     }
 
-    // $$$$ ABR 2012-11-06: TODO: Handle item renaming
+    virtual void Rename( void* data )
+    {
+        if( !data )
+            return;
+        const std::string& str = *static_cast< std::string* >( data );
+        item_.setData( str.c_str(), Qt::EditRole );
+        item_.setData( str.c_str(), gui::Roles::DataRole );
+    }
 
 private:
     ADN_StandardItem& item_;

@@ -61,6 +61,8 @@ public slots:
     void SwapItem( int i, int j );
     void Clear( bool bInConnection = false );
 
+    virtual void Rename( void* ) {}
+
 signals:
     void ItemAdded( void* pObj );
     void ItemRemoved( void* pObj );

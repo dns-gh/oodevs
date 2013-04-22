@@ -256,6 +256,10 @@ QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_TypeP
 
     // ADN Connection
     item->Connect( data );
+
+    if( data->GetData() )
+        connect( &data->GetData()->strName_, SIGNAL( DataChanged( void* ) ), item->GetConnector(), SLOT( Rename( void* ) ) );
+
     return item;
 }
 
