@@ -734,6 +734,49 @@
     </message>
 </context>
 <context>
+    <name>GroupDialog</name>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Edit groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished">Total</translation>
+    </message>
+    <message>
+        <source>Delete group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>InhabitantCreationPanel</name>
     <message>
         <source>Information</source>

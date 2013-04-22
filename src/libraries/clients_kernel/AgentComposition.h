@@ -12,6 +12,7 @@
 
 #include "tools/Resolver_ABC.h"
 #include <boost/noncopyable.hpp>
+#include <vector>
 
 namespace xml { class xistream; };
 
@@ -27,6 +28,8 @@ namespace kernel
 // =============================================================================
 class AgentComposition : private boost::noncopyable
 {
+    typedef std::vector< std::pair< std::string, unsigned int > > T_Groups;
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -39,14 +42,21 @@ public:
     const ComponentType& GetType() const;
     unsigned int GetCount() const;
     unsigned int GetCrew() const;
+    const T_Groups& GetGroups() const;
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void ReadGroup( xml::xistream& xis );
+    //@}
+
     //! @name Member data
     //@{
     const ComponentType& type_;
     const unsigned int count_;
     const unsigned int crew_;
+    T_Groups groups_;
     //@}
 };
 

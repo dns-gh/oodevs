@@ -33,6 +33,7 @@
 #include "SymbolEditor.h"
 #include "TerrainExportDialog.h"
 #include "UnitStateDialog.h"
+#include "GroupDialog.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -62,6 +63,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     new LogisticLinksEditor( parent, controllers );
     new LogisticStockEditor( parent, controllers, staticModel );
     new LongNameEditor( parent, controllers, staticModel );
+    new GroupDialog( parent, controllers );
 
     prefDialog_ = new gui::PreferencesDialog( parent, controllers, lighting, staticModel.coordinateSystems_, painter, selector );
     prefDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog_, controllers ) );

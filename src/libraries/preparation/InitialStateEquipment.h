@@ -10,6 +10,9 @@
 #ifndef __InitialStateEquipment_h_
 #define __InitialStateEquipment_h_
 
+#include <boost/optional.hpp>
+#include <vector>
+
 namespace xml
 {
     class xistream;
@@ -29,7 +32,7 @@ class InitialStateEquipment
 public:
     //! @name Constructors/Destructor
     //@{
-             InitialStateEquipment( const QString& name, E_EquipmentState state, const QStringList& breakdowns, unsigned int currentBreakdown = 0 );
+             InitialStateEquipment( const QString& name, E_EquipmentState state, const QStringList& breakdowns, const boost::optional< QString >& group = boost::none );
     explicit InitialStateEquipment( xml::xistream& xis );
     virtual ~InitialStateEquipment();
     //@}
@@ -48,6 +51,7 @@ public:
     E_EquipmentState state_;
     QStringList      breakdowns_;
     unsigned int     currentBreakdown_;
+    boost::optional< QString > group_;
     //@}
 };
 

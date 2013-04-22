@@ -22,7 +22,7 @@ AgentComposition::AgentComposition( xml::xistream& xis, const tools::Resolver_AB
     , count_( xis.attribute< unsigned int >( "count" ) )
     , crew_( xis.attribute< unsigned int >( "crew" ) )
 {
-    // NOTHING
+    xis >> xml::list( "group", *this, &AgentComposition::ReadGroup );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,6 +32,18 @@ AgentComposition::AgentComposition( xml::xistream& xis, const tools::Resolver_AB
 AgentComposition::~AgentComposition()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentComposition::ReadGroup
+// Created: MCO 2013-04-18
+// -----------------------------------------------------------------------------
+void AgentComposition::ReadGroup( xml::xistream& xis )
+{
+    groups_.push_back(
+        std::make_pair(
+            xis.attribute< std::string >( "name" ),
+            xis.attribute< unsigned int >( "count" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,4 +71,13 @@ unsigned int AgentComposition::GetCount() const
 unsigned int AgentComposition::GetCrew() const
 {
     return crew_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentComposition::GetGroups
+// Created: MCO 2013-04-18
+// -----------------------------------------------------------------------------
+const AgentComposition::T_Groups& AgentComposition::GetGroups() const
+{
+    return groups_;
 }

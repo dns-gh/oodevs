@@ -107,6 +107,9 @@
     <Filter Include="Source Files\Dialogs\Urban">
       <UniqueIdentifier>{989feade-54a7-4ddf-8489-1b2cbc8103e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dialogs\Groups">
+      <UniqueIdentifier>{f1b6f0e5-5630-4493-95d2-5a24bd6db688}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp">
@@ -528,6 +531,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\BypassPrototype.cpp">
       <Filter>Source Files\Panels\Creation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\GroupDialog.cpp">
+      <Filter>Source Files\Dialogs\Groups</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -981,6 +987,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\SymbolDialog.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\GroupDialog.h">
+      <Filter>Source Files\Dialogs\Groups</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

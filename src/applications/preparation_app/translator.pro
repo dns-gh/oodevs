@@ -26,6 +26,7 @@ FilterManager.cpp \
 FilterPartiesListView.cpp \
 FilterOrbatReIndexer.cpp \
 FilterXsl.cpp \
+GroupDialog.cpp \
 GhostsLayer.cpp \
 GhostsPanel.cpp \
 InhabitantCreationPanel.cpp \

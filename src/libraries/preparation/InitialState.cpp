@@ -219,6 +219,22 @@ void InitialState::Reset()
     resources_  = originalResources_;
 }
 
+namespace
+{
+    template< typename G >
+    boost::optional< QString > NextGroup( G& groups )
+    {
+        if( ! groups.empty() )
+        {
+            const QString group = groups.front().first.c_str();
+            if( --groups.front().second == 0 )
+                groups.erase( groups.begin() );
+            return group;
+        }
+        return boost::none;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: InitialState::Initialize
 // Created: ABR 2011-03-01
@@ -243,8 +259,9 @@ void InitialState::Initialize()
                 breakdowns << breakdown.GetName().c_str();
         }
         FillResources( equipmentType.CreateResourcesIterator(), agentComposition.GetCount() );
+        auto groups = agentComposition.GetGroups();
         for( unsigned int i = 0; i < agentComposition.GetCount(); ++i )
-            originalEquipments_.push_back( InitialStateEquipment( agentName.c_str(), eEquipmentState_Available, breakdowns ) );
+            originalEquipments_.push_back( InitialStateEquipment( agentName.c_str(), eEquipmentState_Available, breakdowns, NextGroup( groups ) ) );
         nbrTotalOfficers += agentComposition.GetCount() * agentComposition.GetCrew();
     }
     originalCrews_.push_back( InitialStateCrew( eHumanRank_Officier,    eHumanState_Healthy, eInjuriesSeriousness_U1, false, false, agent.GetNbrOfficers() ) );

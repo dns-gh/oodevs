@@ -16,11 +16,12 @@
 // Name: InitialStateEquipment::InitialStateEquipment
 // Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
-InitialStateEquipment::InitialStateEquipment( const QString& name, E_EquipmentState state, const QStringList& breakdowns, unsigned int currentBreakdown /*= 0*/ )
+InitialStateEquipment::InitialStateEquipment( const QString& name, E_EquipmentState state, const QStringList& breakdowns, const boost::optional< QString >& group )
     : name_            ( name )
     , state_           ( state )
     , breakdowns_      ( breakdowns )
-    , currentBreakdown_( currentBreakdown )
+    , currentBreakdown_( 0 )
+    , group_           ( group )
 {
     // NOTHING
 }
@@ -37,6 +38,8 @@ InitialStateEquipment::InitialStateEquipment( xml::xistream& xis )
     xis >> xml::attribute( "type", name )
         >> xml::attribute( "state", state );
     name_ = name.c_str();
+    if( xis.has_attribute( "group" ) )
+        group_ = xis.attribute< std::string >( "group" ).c_str();
     state_ = ENT_Tr::ConvertToEquipmentState( state );
 }
 
@@ -60,6 +63,8 @@ void InitialStateEquipment::Serialize( xml::xostream& xos ) const
         << xml::attribute( "state", ENT_Tr::ConvertFromEquipmentState( state_, ENT_Tr_ABC::eToSim ) );
     if( state_ == eEquipmentState_RepairableWithEvacuation && !breakdowns_.isEmpty() && static_cast< int >( currentBreakdown_ ) < breakdowns_.size() )
         xos << xml::attribute( "breakdown", breakdowns_[ currentBreakdown_ ] );
+    if( group_ )
+        xos << xml::attribute( "group", *group_ );
     xos << xml::end;
 }
 
@@ -69,7 +74,11 @@ void InitialStateEquipment::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 bool InitialStateEquipment::operator==( const InitialStateEquipment& object ) const
 {
-    return name_ == object.name_ && state_ == object.state_ && currentBreakdown_ == object.currentBreakdown_ && breakdowns_ == object.breakdowns_;
+    return name_ == object.name_
+        && state_ == object.state_
+        && currentBreakdown_ == object.currentBreakdown_
+        && breakdowns_ == object.breakdowns_
+        && group_ == object.group_;
 }
 
 // -----------------------------------------------------------------------------

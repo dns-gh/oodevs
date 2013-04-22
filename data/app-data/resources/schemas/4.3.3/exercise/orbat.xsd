@@ -916,6 +916,12 @@
 													<xs:documentation xml:lang="fr">Définit la panne de l'équipement dont on va redéfinir l'état initial. Renvoie vers "Pannes.xml".</xs:documentation>
 												</xs:annotation>
 											</xs:attribute>
+											<xs:attribute name="group" type="xs:string">
+												<xs:annotation>
+													<xs:documentation xml:lang="en">Defines the group the equipment pertains to.</xs:documentation>
+													<xs:documentation xml:lang="fr">Définit le groupe de l'équipement.</xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
 										</xs:complexType>
 									</xs:element>
 								</xs:sequence>
