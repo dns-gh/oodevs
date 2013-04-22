@@ -65,7 +65,6 @@ ADN_Units_Groups_GUI::ADN_Units_Groups_GUI( const Q3Table& model, QWidget* paren
     horizontalHeaders << tr( "Equipment" ) << tr( "Total" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
-    horizontalHeader()->setClickable( true );
     horizontalHeader()->setDefaultAlignment( Qt::AlignLeft );
     for( int row = 0; row < model.numRows(); ++row )
     {
@@ -145,7 +144,7 @@ int ADN_Units_Groups_GUI::AddGroup( const QString& name, int rows )
 void ADN_Units_Groups_GUI::contextMenuEvent( QContextMenuEvent* event )
 {
     Q3PopupMenu menu( this );
-    menu.insertItem( tr( "Add group" ), 0 );
+    menu.insertItem( tr( "Create group" ), 0 );
     QModelIndex index = indexAt( event->pos() );
     if( index.column() >= 2 )
     {

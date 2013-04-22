@@ -5512,11 +5512,19 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation type="unfinished">Total</translation>
     </message>
     <message>
-        <source>Add group</source>
+        <source>Delete group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete group</source>
+        <source>Rename group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create group</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

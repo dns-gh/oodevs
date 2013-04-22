@@ -5523,12 +5523,20 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Total</translation>
     </message>
     <message>
-        <source>Add group</source>
-        <translation>Ajouter groupe</translation>
-    </message>
-    <message>
         <source>Delete group</source>
         <translation>Supprimer groupe</translation>
+    </message>
+    <message>
+        <source>Rename group</source>
+        <translation>Renommer groupe</translation>
+    </message>
+    <message>
+        <source>Group name</source>
+        <translation>Nom du groupe</translation>
+    </message>
+    <message>
+        <source>Create group</source>
+        <translation>Créer groupe</translation>
     </message>
 </context>
 <context>
