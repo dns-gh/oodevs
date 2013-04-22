@@ -824,7 +824,7 @@ bool Session::Start( const Path& app, const Path& timeline, const std::string& c
         return false;
 
     T_Process time;
-    if( !cfg_.profiles.empty() )
+    if( cfg_.timeline.enabled && !cfg_.profiles.empty() )
     {
         if( !WaitConnected( lock, port_->Get() + DISPATCHER_PORT ) )
             return false;

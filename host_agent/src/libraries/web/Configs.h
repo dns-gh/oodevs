@@ -131,6 +131,10 @@ struct Config
         bool        no_side_objects;
         T_Sides     list;
     }               sides;
+    struct
+    {
+        bool        enabled;
+    }               timeline;
     T_Profiles      profiles;
 };
 

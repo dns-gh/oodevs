@@ -221,14 +221,14 @@ validate_settings = (ui) ->
         next = data.checkpoints = {}
         return unless validate_number next, "frequency", ui, "#checkpoints_frequency", 1, 100, "tab_checkpoints", "[1, 100] Only"
         return unless validate_number next, "keep", ui, "#checkpoints_keep", 1, 100, "tab_checkpoints", "[1, 100] Only"
-        next.enabled = ui.find("#checkpoints_enabled").is ":checked"
+        next.enabled = get_ui_option ui.find "#checkpoints_enabled"
 
     if has_element ui, "#tab_time"
         next = data.time = {}
         return unless validate_number next, "step", ui, "#time_step", 1, Number.MAX_VALUE, "tab_time", "Invalid"
         return unless validate_number next, "factor", ui, "#time_factor", 1, Number.MAX_VALUE, "tab_time", "Invalid"
         return unless validate_number next, "end_tick", ui, "#time_end_tick", 0, Number.MAX_VALUE, "tab_time", "Invalid"
-        next.paused = ui.find("#time_paused").is ":checked"
+        next.paused = get_ui_option ui.find "#time_paused"
 
     if has_element ui, "#tab_rng"
         next = data.rng = {}
@@ -244,6 +244,8 @@ validate_settings = (ui) ->
         return unless validate_number next, "frequency", ui, "#recorder_frequency", 1, Number.MAX_VALUE, "Invalid"
         next = data.reports = {}
         return unless validate_number next, "clean_frequency", ui, "#reports_clean_frequency", 0, Number.MAX_VALUE, "Invalid"
+        next = data.timeline = {}
+        next.enabled = get_ui_option ui.find "#timeline_enabled"
 
     if has_element ui, "#tab_orbat"
         next = data.sides = {}
@@ -252,7 +254,7 @@ validate_settings = (ui) ->
         for it in ui.find "div.sides input"
             sub = /^sides_(\d+)$/.exec it.id
             continue unless sub
-            next.list[sub[1]] = created: $(it).is ":checked"
+            next.list[sub[1]] = created: get_ui_option $ it
 
     if has_element ui, "#tab_plugins"
         validate_plugins ui, data
@@ -263,7 +265,7 @@ class SessionItem extends Backbone.Model
     view: SessionItemView
 
     sync: (method, model, options) =>
-        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports", "sides"]
+        cfg_attributes = ["name", "time", "rng", "checkpoints", "pathfind", "recorder", "plugins", "reports", "sides", "timeline"]
 
         if method == "create"
             data = select_attributes model.attributes, cfg_attributes
