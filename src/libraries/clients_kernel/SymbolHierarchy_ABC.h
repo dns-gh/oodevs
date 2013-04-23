@@ -36,6 +36,8 @@ public:
     //! @name Operations
     //@{
     virtual const std::string& GetValue() const = 0;
+    virtual std::string GetStaticValue() const = 0;
+    virtual std::string GetMoveValue() const = 0;
     virtual void OverrideValue( const std::string& value ) = 0;
     virtual bool IsOverriden() const = 0;
     virtual void MergeSymbol( const std::string& symbol, bool original = false ) = 0;

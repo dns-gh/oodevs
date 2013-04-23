@@ -14,7 +14,8 @@
 // Name: Symbol constructor
 // Created: JSR 2011-08-04
 // -----------------------------------------------------------------------------
-Symbol::Symbol( const std::string& symbol )
+Symbol::Symbol( const std::string& symbol, const kernel::SymbolFactory& factory )
+    : SymbolHierarchy( factory )
 {
     if( !symbol.empty() )
         OverrideValue( symbol );

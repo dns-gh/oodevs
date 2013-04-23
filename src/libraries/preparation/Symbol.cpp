@@ -15,7 +15,8 @@
 // Name: Symbol constructor
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
-Symbol::Symbol( const std::string& symbol )
+Symbol::Symbol( const std::string& symbol, const kernel::SymbolFactory& factory )
+    : SymbolHierarchy( factory )
 {
     MergeSymbol( symbol, true );
 }
@@ -24,7 +25,8 @@ Symbol::Symbol( const std::string& symbol )
 // Name: Symbol constructor
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
-Symbol::Symbol( xml::xistream& xis, const std::string& defaultSymbol )
+Symbol::Symbol( xml::xistream& xis, const std::string& defaultSymbol, const kernel::SymbolFactory& factory )
+    : SymbolHierarchy( factory )
 {
     if( xis.has_attribute( "symbol" ) )
     {

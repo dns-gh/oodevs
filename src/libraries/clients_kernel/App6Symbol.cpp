@@ -14,6 +14,10 @@
 using namespace kernel;
 
 App6Symbol::T_KarmaChars App6Symbol::karmaChars_;
+namespace
+{
+    std::map< char, Karma* > charKarmas_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: App6Symbol constructor
@@ -43,6 +47,10 @@ void App6Symbol::Initialize()
     karmaChars_[Karma::enemy_]   = 'h';
     karmaChars_[Karma::neutral_] = 'n';
     karmaChars_[Karma::unknown_] = 'u';
+    charKarmas_['f'] = &Karma::friend_;
+    charKarmas_['h'] = &Karma::enemy_;
+    charKarmas_['n'] = &Karma::neutral_;
+    charKarmas_['u'] = &Karma::unknown_;
 }
 
 // -----------------------------------------------------------------------------
@@ -61,6 +69,27 @@ void App6Symbol::SetKarma( std::string& symbol, const kernel::Karma& karma )
     }
     else if( symbol.size() > 2 )
         symbol[1] = karmaChars_[karma];
+}
+
+// -----------------------------------------------------------------------------
+// Name: App6Symbol::GetBase
+// Created: LDC 2013-04-22
+// -----------------------------------------------------------------------------
+std::string App6Symbol::GetBase( const std::string& symbol, Karma*& karma )
+{
+    std::string result( symbol );
+    karma = &Karma::unknown_;
+    std::string::size_type pos = symbol.find_last_of( '/' );
+    if( pos != std::string::npos )
+        result = symbol.substr( pos + 1 );
+    if( result.size() > 2 )
+    {
+        auto it = charKarmas_.find( result[1] );
+        if( it != charKarmas_.end() )
+            karma = it->second;
+        result[1] = '*';
+    }
+    return result;
 }
 
 namespace
@@ -86,22 +115,4 @@ void App6Symbol::FilterPerceptionLevel( std::string& symbol, E_PerceptionResult 
 {
     if( eIdentification != perception ) // keep all if identified
         symbol = symbol.substr( 0, symbol.find_last_of( '/' ) + ElementsToKeep( perception ) + 1 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: App6Symbol::Merge
-// Created: SBO 2007-02-26
-// -----------------------------------------------------------------------------
-void App6Symbol::Merge( const std::string& from, std::string& to )
-{
-    if( to.empty() )
-       to = from;
-    else
-    {
-        unsigned i = 0;
-        const std::size_t max = std::min( to.length(), from.length() );
-        while( i < max && ( to[ i ] == from[ i ] || i == 9 ) )  // $$$$ _RC_ LGY 2011-10-10: i == 9 : karma
-            ++i;
-        to = to.substr( 0, i );
-    }
 }

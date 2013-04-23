@@ -1,5 +1,6 @@
 #include "gaming_pch.h"
 #include "DrawableUnitContainer.h"
+#include "Attributes.h"
 #include "Agent.h"
 #include "ConvexHulls.h"
 #include "Diplomacies.h"
@@ -86,45 +87,41 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
     if( viewport.IsHotpointVisible() )
     {
         const kernel::TacticalHierarchies& hierarchies = entity.Get< kernel::TacticalHierarchies >();
+        InitializeSymbol( hierarchies );
         if( HasStaticChild( hierarchies ) )
         {
             float radians = ComputeDirection( hierarchies );
-            const ConvexHulls& hulls = entity.Get< ConvexHulls >();
-            float offset = 500.;
-            std::vector< geometry::Point2f > baseLine = hulls.GetPolylineFacing( radians, offset );
-            size_t size = baseLine.size();
-            float lineWidth = 4.;
-            if( size == 2 )
-                tools.DrawLine( baseLine[0], baseLine[1], lineWidth );
-            else if( size > 2 )
-            {
-                size_t size = baseLine.size() - 3;
-                size_t i = 1;
-                for( ; i < size; i+=3 )
-                {
-                    tools.DrawLine( baseLine[i-1], baseLine[i], lineWidth );
-                    geometry::Segment2f segment( baseLine[i], baseLine[i+2] );
-                    geometry::Point2f middle( (baseLine[i].X() + baseLine[i+2].X()) / 2, (baseLine[i].Y() + baseLine[i+2].Y()) / 2 );
-                    geometry::Vector2f normal = segment.Normal();
-                    normal.Normalize();
-                    geometry::Segment2f bisect( middle + offset * normal, middle - offset * normal );
-                    geometry::Point2f center = bisect.Project( baseLine[i+1] );
-                    tools.DrawArc( center, baseLine[i], baseLine[i+2], lineWidth );
-                }
-                tools.DrawLine( baseLine[i-1], baseLine[i], lineWidth );
-            }
+            int direction = static_cast< int >( radians * 180 / 3.14f );
+            if( direction < 0 )
+                direction = 360 + direction;
+            unsigned int udirection = static_cast< unsigned int >( direction );
             tools::Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
+            float width = 0;
+            float depth = 0;
+            bool isMoving = true;
+            bool hasLiveChildren = false;
             while( children.HasMoreElements() )
             {
                 const Entity_ABC* child = &children.NextElement();
-                const gui::Drawable_ABC* childDrawable = dynamic_cast< const gui::Drawable_ABC* >( child );
-                if( childDrawable )
-                    childDrawable->Draw( child->Get< kernel::Positions >().GetPosition( false ), viewport, tools );
+                if( child )
+                {
+                    const Attributes& attributes = child->Get< Attributes >();
+                    if( !attributes.bDead_ )
+                    {
+                        hasLiveChildren = true;
+                        if( attributes.nCurrentPosture_ > eUnitPosture_PostureArret )
+                            isMoving = false;
+                    }
+                }
             }
+            isMoving = isMoving && hasLiveChildren;
+            tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, isMoving, where, -1.f, udirection, isMoving ? 0 : width, depth );
         }
-        InitializeSymbol( hierarchies );
-        tools.DrawApp6SymbolFixedSize( symbol_, where, factor, 0 );
-        tools.DrawApp6SymbolFixedSize( level_, where, factor, 0 );
+        else
+        {
+            tools.DrawApp6SymbolFixedSize( symbol_, where, factor, 0 );
+            tools.DrawApp6SymbolFixedSize( level_, where, factor, 0 );
+        }
     }
 }
 
@@ -135,10 +132,14 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
 void DrawableUnitContainer::InitializeSymbol( const kernel::TacticalHierarchies& hierarchies ) const
 {
     const std::string symbol = hierarchies.GetSymbol();
+    const std::string staticSymbol = hierarchies.GetStaticSymbol();
+    const std::string moveSymbol = hierarchies.GetMoveSymbol();
     const std::string level = hierarchies.GetLevel();
-    if( symbol_ == symbol && level_ == level )
+    if( symbol == symbol_ && level == level_ && staticSymbol == staticSymbol_ && moveSymbol == moveSymbol_ )
         return;
     symbol_ = symbol;
+    staticSymbol_ = staticSymbol;
+    moveSymbol_ = moveSymbol;
     level_ = level;
     const Entity_ABC& team = hierarchies.GetTop();
     const Diplomacies_ABC* diplo = team.Retrieve< Diplomacies_ABC >();

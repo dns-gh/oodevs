@@ -52,6 +52,8 @@ private:
     //! @name Member data
     //@{
     mutable std::string symbol_; // $$$$ RC LDC: code duplication with preparation
+    mutable std::string staticSymbol_;
+    mutable std::string moveSymbol_;
     mutable std::string level_;
     //@}
 };

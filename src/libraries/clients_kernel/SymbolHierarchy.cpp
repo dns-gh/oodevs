@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "SymbolHierarchy.h"
 #include "App6Symbol.h"
+#include "SymbolFactory.h"
 
 using namespace kernel;
 
@@ -17,8 +18,9 @@ using namespace kernel;
 // Name: SymbolHierarchy constructor
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
-SymbolHierarchy::SymbolHierarchy()
+SymbolHierarchy::SymbolHierarchy( const kernel::SymbolFactory& factory )
     : overriden_( false )
+    , factory_( factory )
 {
     // NOTHING
 }
@@ -42,12 +44,30 @@ const std::string& SymbolHierarchy::GetValue() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: SymbolHierarchy::GetStaticValue
+// Created: LDC 2013-04-19
+// -----------------------------------------------------------------------------
+std::string SymbolHierarchy::GetStaticValue() const
+{
+    return factory_.GetAssociatedStatic( GetValue() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: SymbolHierarchy::GetMoveValue
+// Created: LDC 2013-04-19
+// -----------------------------------------------------------------------------
+std::string SymbolHierarchy::GetMoveValue() const
+{
+    return factory_.GetAssociatedMove( GetValue() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SymbolHierarchy::MergeSymbol
 // Created: JSR 2011-08-02
 // -----------------------------------------------------------------------------
 void SymbolHierarchy::MergeSymbol( const std::string& symbol, bool original /* = false */ )
 {
-    App6Symbol::Merge( symbol, computedSymbol_ );
+    factory_.Merge( symbol, computedSymbol_ );
     if( original )
         originalSymbol_ = computedSymbol_;
 }

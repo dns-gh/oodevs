@@ -18,7 +18,25 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 std::string TacticalHierarchies::GetSymbol() const
 {
-    return "";
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalHierarchies::GetStaticSymbol
+// Created: LDC 2013-04-22
+// -----------------------------------------------------------------------------
+std::string TacticalHierarchies::GetStaticSymbol() const
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalHierarchies::GetMoveSymbol
+// Created: LDC 2013-04-22
+// -----------------------------------------------------------------------------
+std::string TacticalHierarchies::GetMoveSymbol() const
+{
+    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -27,7 +45,7 @@ std::string TacticalHierarchies::GetSymbol() const
 // -----------------------------------------------------------------------------
 std::string TacticalHierarchies::GetLevel() const
 {
-    return "";
+    return std::string();
 }
 
 // -----------------------------------------------------------------------------

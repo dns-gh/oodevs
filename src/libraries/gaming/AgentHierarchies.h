@@ -54,6 +54,8 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetSymbol() const;
+    virtual std::string GetStaticSymbol() const;
+    virtual std::string GetMoveSymbol() const;
     virtual std::string GetLevel() const;
 
     virtual void DoUpdate( const sword::UnitCreation& message );
@@ -80,6 +82,8 @@ private:
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
     std::string symbol_;
+    std::string staticSymbol_;
+    std::string moveSymbol_;
     std::string level_;
     //@}
 };
@@ -93,6 +97,8 @@ AgentHierarchies< I >::AgentHierarchies( kernel::Controller& controller, kernel:
     : gui::EntityHierarchies< I  >( controller, holder, 0 )
     , controller_                 ( controller )
     , symbol_                     ( holder.GetType().GetSymbol() )
+    , staticSymbol_               ( holder.GetType().GetStaticSymbol() )
+    , moveSymbol_                 ( holder.GetType().GetMoveSymbol() )
     , level_                      ( holder.GetType().GetLevelSymbol() )
     , automatResolver_            ( automatResolver )
 {
@@ -155,6 +161,26 @@ template< typename I >
 std::string AgentHierarchies< I >::GetSymbol() const
 {
     return symbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchies::GetStaticSymbol
+// Created: LDC 2013-04-19
+// -----------------------------------------------------------------------------
+template< typename I >
+std::string AgentHierarchies< I >::GetStaticSymbol() const
+{
+    return staticSymbol_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchies::GetMoveSymbol
+// Created: LDC 2013-04-19
+// -----------------------------------------------------------------------------
+template< typename I >
+std::string AgentHierarchies< I >::GetMoveSymbol() const
+{
+    return moveSymbol_;
 }
 
 // -----------------------------------------------------------------------------

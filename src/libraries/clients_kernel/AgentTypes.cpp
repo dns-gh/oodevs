@@ -296,7 +296,7 @@ void AgentTypes::ReadAutomatType( xml::xistream& xis )
 {
     try
     {
-        AutomatType* type = new AutomatType( xis, *this, automatModels_ );
+        AutomatType* type = new AutomatType( xis, *this, automatModels_, *symbolFactory_ );
         tools::Resolver< AutomatType >         ::Register( type->GetId(), *type );
         tools::Resolver< AutomatType, std::string >::Register( type->GetName(), *type );
     }

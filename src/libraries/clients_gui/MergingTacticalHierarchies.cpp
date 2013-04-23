@@ -49,6 +49,24 @@ std::string MergingTacticalHierarchies::GetSymbol() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MergingTacticalHierarchies::GetStaticSymbol
+// Created: LDC 2013-04-19
+// -----------------------------------------------------------------------------
+std::string MergingTacticalHierarchies::GetStaticSymbol() const
+{
+    return entity_.Get< SymbolHierarchy_ABC >().GetStaticValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MergingTacticalHierarchies::GetMoveSymbol
+// Created: LDC 2013-04-19
+// -----------------------------------------------------------------------------
+std::string MergingTacticalHierarchies::GetMoveSymbol() const
+{
+    return entity_.Get< SymbolHierarchy_ABC >().GetMoveValue();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MergingTacticalHierarchies::UpdateSymbolUpward
 // Created: LDC 2012-04-12
 // -----------------------------------------------------------------------------

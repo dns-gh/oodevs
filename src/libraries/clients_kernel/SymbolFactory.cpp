@@ -62,6 +62,7 @@ void SymbolFactory::ReadSymbols( xml::xistream& xis )
 {
     xis >> xml::start( "app6" );
     symbolRule_.reset( ReadRule( xis, "symbols", symbolBase_ ) );
+    karmaPosition_ = symbolBase_.find_first_of( '*' );
     levelRule_ .reset( ReadRule( xis, "levels", levelBase_ ) );
     ReadRule( xis, "automats", automatSymbol_ );
     xis >> xml::end;
@@ -76,6 +77,7 @@ void SymbolFactory::Load( const tools::ExerciseConfig& config )
     currentChain_.clear();
     currentSymbol_.clear();
     availableSymbols_.clear();
+    symbolNatureMap_.clear();
     config.GetLoader().LoadPhysicalFile( "symbols", boost::bind( &SymbolFactory::ReadSymbols, this, _1 ) );
     ListSymbols();
     initialized_ = true;
@@ -90,6 +92,7 @@ void SymbolFactory::Unload()
     currentChain_.clear();
     currentSymbol_.clear();
     availableSymbols_.clear();
+    symbolNatureMap_.clear();
     initialized_ = false;
 }
 
@@ -121,7 +124,7 @@ void SymbolFactory::TraverseTree( xml::xostream& out, const SymbolRule& rule )
         *currentChain_.back() = it->first;
         *currentSymbol_.back() = it->second->GetValue();
         std::string current;
-        std::string symbol ( "s*gpuc" );
+        std::string symbol ( "s*gpu" );
 
         for( std::vector< std::string* >::iterator iter = currentChain_.begin(); iter != currentChain_.end(); ++iter )
         {
@@ -136,15 +139,14 @@ void SymbolFactory::TraverseTree( xml::xostream& out, const SymbolRule& rule )
 
         std::string tail ( "----------*****" );
         tail = tail.substr( symbol.size(), 15-symbol.size() );
+        symbolNatureMap_[ symbol ] = current;
         symbol += tail;
         availableSymbols_.push_back( current );
         out << xml::attribute( "value", current );
         out << xml::attribute( "symbol", symbol );
         out << xml::end;
         if( it->second && ( it->second)->GetRule() )
-        {
             TraverseTree( out, *( it->second)->GetRule() );
-        }
     }
     delete ( currentChain_.back() );
     delete ( currentSymbol_.back() );
@@ -274,21 +276,6 @@ std::string SymbolFactory::GetSymbolBase( const Karma& karma ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: SymbolFactory::IsThisChainAvailable
-// Created: RPD 2011-04-08
-// -----------------------------------------------------------------------------
-bool SymbolFactory::IsThisChainAvailable( const std::string& chain ) const
-{
-    if( !initialized_ )
-        return false;
-    std::vector< std::string >::const_iterator  it;
-    for( it = availableSymbols_.begin() ; it != availableSymbols_.end() ; ++it )
-        if( *it == chain )
-            break;
-    return it != availableSymbols_.end();
-}
-
-// -----------------------------------------------------------------------------
 // Name: SymbolFactory::GetSymbolRule
 // Created: ABR 2011-05-26
 // -----------------------------------------------------------------------------
@@ -326,4 +313,58 @@ void SymbolFactory::FillSymbols( const std::string& symbol, const std::string& k
             compare = compare.substr( 0, compare.length() - 1 );
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::Merge
+// Created: LDC 2013-04-22
+// -----------------------------------------------------------------------------
+void SymbolFactory::Merge( const std::string& from, std::string& to ) const
+{
+    if( to.empty() )
+       to = from;
+    else
+    {
+        unsigned i = 0;
+        const std::size_t max = std::min( to.length(), from.length() );
+        while( i < max && ( to[ i ] == from[ i ] || i == karmaPosition_ ) )
+            ++i;
+        to = to.substr( 0, i );
+    }
+}
+
+namespace
+{
+    std::string GetAssociatedSymbol( const std::string& symbol, const std::map< std::string, std::string >& symbolNatureMap, const SymbolFactory* factory, std::string( SymbolFactory::*func )( const std::string& ) const )
+    {
+        Karma* karma = &Karma::unknown_;
+        std::string base = App6Symbol::GetBase( symbol, karma );
+        auto it = symbolNatureMap.find( base );
+        if( it != symbolNatureMap.end() )
+        {
+            std::string category = it->second;
+            std::string staticSymbol = (factory->*func)( category );
+            App6Symbol::SetKarma( staticSymbol, *karma );
+            return staticSymbol;
+        }
+        return std::string();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::GetAssociatedStatic
+// Created: LDC 2013-04-22
+// -----------------------------------------------------------------------------
+std::string SymbolFactory::GetAssociatedStatic( const std::string& symbol ) const
+{
+    return GetAssociatedSymbol( symbol, symbolNatureMap_, this, &SymbolFactory::CreateStaticSymbol );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::GetAssociatedMove
+// Created: LDC 2013-04-22
+// -----------------------------------------------------------------------------
+std::string SymbolFactory::GetAssociatedMove( const std::string& symbol ) const
+{
+    return GetAssociatedSymbol( symbol, symbolNatureMap_, this, &SymbolFactory::CreateMoveSymbol );
 }

@@ -24,7 +24,7 @@ class Symbol : public kernel::SymbolHierarchy
 public:
     //! @name Constructors/Destructor
     //@{
-             Symbol( const std::string& symbol );
+             Symbol( const std::string& symbol, const kernel::SymbolFactory& factory );
     virtual ~Symbol();
     //@}
 };

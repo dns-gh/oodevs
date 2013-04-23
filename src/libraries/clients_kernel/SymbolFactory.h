@@ -11,6 +11,7 @@
 #define __SymbolFactory_h_
 
 #include <boost/noncopyable.hpp>
+#include <map>
 #include <set>
 
 namespace tools
@@ -58,11 +59,13 @@ public:
     std::string CreateAutomatSymbol() const;
     std::string GetSymbolBase( const Karma& karma ) const;
     SymbolRule* GetSymbolRule() const;
-    bool IsThisChainAvailable( const std::string& chain ) const;
     void Load( const tools::ExerciseConfig& config );
     void Unload();
     const std::vector< std::string >& GetAvailableSymbols() const;
     void FillSymbols( const std::string& symbol, const std::string& karma, std::set< std::string >& result ) const;
+    void Merge( const std::string& from, std::string& to ) const;
+    std::string GetAssociatedStatic( const std::string& symbol ) const;
+    std::string GetAssociatedMove( const std::string& symbol ) const;
     //@}
 
 private:
@@ -80,6 +83,7 @@ private:
     //@{
     bool initialized_;
     std::string symbolBase_;
+    size_t karmaPosition_;
     std::auto_ptr< SymbolRule > symbolRule_;
     std::string levelBase_;
     std::auto_ptr< SymbolRule > levelRule_;
@@ -87,6 +91,7 @@ private:
     std::vector< std::string* > currentChain_;
     std::vector< std::string* > currentSymbol_;
     std::vector< std::string > availableSymbols_;
+    std::map< std::string, std::string > symbolNatureMap_;
     //@}
 };
 

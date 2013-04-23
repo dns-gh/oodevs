@@ -33,6 +33,8 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetSymbol() const;
+    virtual std::string GetStaticSymbol() const;
+    virtual std::string GetMoveSymbol() const;
     virtual void UpdateSymbolUpward();
     virtual void UpdateSymbolDownward();
 

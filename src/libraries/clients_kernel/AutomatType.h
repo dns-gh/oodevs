@@ -24,6 +24,7 @@ namespace kernel
     class DecisionalModel;
     class AgentType;
     class AutomatComposition;
+    class SymbolFactory;
 
 // =============================================================================
 /** @class  AutomatType
@@ -36,8 +37,9 @@ class AutomatType
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatType( xml::xistream& xis, const  tools::Resolver_ABC< AgentType, std::string >& agentResolver
-                                            , const  tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver );
+             AutomatType( xml::xistream& xis, const tools::Resolver_ABC< AgentType, std::string >& agentResolver
+                                            , const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver
+                                            , const SymbolFactory& symbolFactory );
     virtual ~AutomatType();
     //@}
 
@@ -69,7 +71,7 @@ private:
     //! @name Helpers
     //@{
     void ReadAgent( xml::xistream& xis, const  tools::Resolver_ABC< AgentType, std::string >& agentResolver );
-    void UpdateSymbol();
+    void UpdateSymbol( const SymbolFactory& symbolFactory );
     //@}
 
     //! @name Types

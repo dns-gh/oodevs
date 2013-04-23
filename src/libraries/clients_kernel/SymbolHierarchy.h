@@ -14,6 +14,8 @@
 
 namespace kernel
 {
+    class SymbolFactory;
+
 // =============================================================================
 /** @class  SymbolHierarchy
     @brief  SymbolHierarchy
@@ -25,7 +27,7 @@ class SymbolHierarchy : public SymbolHierarchy_ABC
 protected:
     //! @name Constructors/Destructor
     //@{
-             SymbolHierarchy();
+    explicit SymbolHierarchy( const kernel::SymbolFactory& factory );
     virtual ~SymbolHierarchy();
     //@}
 
@@ -33,6 +35,8 @@ public:
     //! @name Operations
     //@{
     virtual const std::string& GetValue() const;
+    virtual std::string GetStaticValue() const;
+    virtual std::string GetMoveValue() const;
     virtual void OverrideValue( const std::string& value );
     virtual void MergeSymbol( const std::string& symbol, bool original = false );
     virtual void ResetSymbol( const std::string& symbol );
@@ -50,6 +54,7 @@ private:
     std::string computedSymbol_;
     std::string originalSymbol_;
     bool overriden_;
+    const kernel::SymbolFactory& factory_;
     //@}
 };
 

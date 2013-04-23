@@ -55,6 +55,8 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetSymbol() const;
+    virtual std::string GetStaticSymbol() const;
+    virtual std::string GetMoveSymbol() const;
     virtual std::string GetLevel() const;
     virtual void UpdateSymbolDownward();
     virtual void UpdateSymbolUpward();

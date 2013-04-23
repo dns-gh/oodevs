@@ -8,10 +8,10 @@
 
 #include "clients_kernel_pch.h"
 #include "AutomatType.h"
-#include "App6Symbol.h"
-#include "tools/Iterator.h"
-#include "AutomatComposition.h"
 #include "AgentType.h"
+#include "AutomatComposition.h"
+#include "SymbolFactory.h"
+#include "tools/Iterator.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -21,7 +21,8 @@ using namespace kernel;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 AutomatType::AutomatType( xml::xistream& xis, const tools::Resolver_ABC< AgentType, std::string >& agentResolver
-                                            , const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver )
+                                            , const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver
+                                            , const SymbolFactory& symbolFactory )
     : pcType_( 0 )
 {
     std::string modelName;
@@ -33,7 +34,7 @@ AutomatType::AutomatType( xml::xistream& xis, const tools::Resolver_ABC< AgentTy
     model_ = & modelResolver.Get( modelName );
     if( ! pcType_ )
         throw MASA_EXCEPTION( "Automat '" + name_ + "' has no command-post" );
-    UpdateSymbol();
+    UpdateSymbol( symbolFactory );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,10 +50,10 @@ AutomatType::~AutomatType()
 // Name: AutomatType::UpdateSymbol
 // Created: LDC 2011-03-11
 // -----------------------------------------------------------------------------
-void AutomatType::UpdateSymbol()
+void AutomatType::UpdateSymbol( const SymbolFactory& symbolFactory )
 {
     for( T_UnitConstitution::const_iterator it = units_.begin(); it != units_.end(); ++it )
-        App6Symbol::Merge( (*it)->GetType().GetSymbol(), symbol_ );
+        symbolFactory.Merge( (*it)->GetType().GetSymbol(), symbol_ );
 }
 
 // -----------------------------------------------------------------------------

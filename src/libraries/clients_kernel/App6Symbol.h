@@ -36,7 +36,7 @@ public:
     static void Initialize();
     static void SetKarma( std::string& symbol, const Karma& karma );
     static void FilterPerceptionLevel( std::string& symbol, E_PerceptionResult perception );
-    static void Merge( const std::string& from, std::string& to );
+    static std::string GetBase( const std::string& symbol, Karma*& karma );
     //@}
 
 private:

@@ -129,7 +129,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     std::string symbol = message.has_app6symbol() ? message.app6symbol() : std::string();
     const kernel::Karma& karma = superior->Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
     symbol = symbol.empty() ? model_.symbolsFactory_.GetSymbolBase( karma ) : symbol;
-    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbol ) );
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbol, model_.symbolsFactory_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach< Lives_ABC >( *new AutomatLives( *result ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dictionary, *result ) );
