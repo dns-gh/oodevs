@@ -1296,8 +1296,7 @@ void PHY_RolePion_Perceiver::SendFullState( client::UnitAttributes& msg ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendChangedState( client::UnitAttributes& msg ) const
 {
-    if( bRadarStateHasChanged_ )
-        SendFullState( msg );
+    SendFullState( msg );
 }
 
 // -----------------------------------------------------------------------------
