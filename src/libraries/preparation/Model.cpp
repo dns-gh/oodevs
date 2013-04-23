@@ -314,6 +314,7 @@ void Model::Load( const tools::ExerciseConfig& config )
     LoadOptional( config.GetLoader(), config.GetProfilesFile(), profiles_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetScoresFile(), scores_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
+    LoadOptional( config.GetLoader(), config.GetDrawingsFile(), drawings_, schemaWriter );
 
     performanceIndicator_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
     if( orbatFile.Exists() )
@@ -343,6 +344,7 @@ void Model::SaveExercise( const tools::ExerciseConfig& config )
     config.SerializeTerrainFiles( schemaWriter );
     if( urban_.Count() > 0 )
         urban_.Serialize( config.GetUrbanFile(), schemaWriter );
+    drawings_.Serialize( config.GetDrawingsFile(), schemaWriter );
     weather_.Serialize( config.GetWeatherFile(), schemaWriter );
     profiles_.Serialize( config.GetProfilesFile(), schemaWriter );
     scores_.Serialize( config.GetScoresFile(), schemaWriter );

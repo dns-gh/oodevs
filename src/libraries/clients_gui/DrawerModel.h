@@ -31,6 +31,7 @@ namespace kernel
 namespace tools
 {
     class SchemaWriter_ABC;
+    class Loader_ABC;
 }
 
 namespace gui
@@ -58,8 +59,8 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const tools::Path& filename );
-    void Save( const tools::Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void Load( const tools::Loader_ABC& fileLoader, const tools::Path& file );
+    void Serialize( const tools::Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
     kernel::Drawing_ABC* Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, E_Dash_style dashStyle ) const;

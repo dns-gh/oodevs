@@ -74,6 +74,8 @@ public:
     virtual Path GetKnowledgesFile() const;
     virtual Path GetKnowledgesFileName() const;
     virtual Path GetProfilesFile() const;
+    virtual Path GetDrawingsFile() const;
+    virtual Path GetDrawingsFileName() const;
     virtual Path GetPopulationFile() const;
     virtual Path GetScoresFile() const;
     virtual Path GetSettingsFile() const;
@@ -216,6 +218,7 @@ private:
     Path orbat_;
     Path knowledges_;
     Path profiles_;
+    Path drawings_;
     Path urban_;
     Path urbanState_;
     Path scores_;

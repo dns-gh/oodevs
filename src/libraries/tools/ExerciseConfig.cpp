@@ -115,6 +115,7 @@ void ExerciseConfig::ReadExercise( xml::xistream& xis )
     propagations_ = "propagations";
     scores_ = "scores.xml";
     successFactors_ = "success-factors.xml";
+    drawings_ = "drawings.xml";
     startupOrderFiles_.clear();
 
     xis >> xml::start( "exercise" )
@@ -142,6 +143,9 @@ void ExerciseConfig::ReadExercise( xml::xistream& xis )
             >> xml::end
             >> xml::start( "profiles" )
                 >> xml::attribute( "file", profiles_ )
+            >> xml::end
+            >> xml::optional >> xml::start( "drawings" )
+                >> xml::attribute( "file", drawings_ )
             >> xml::end
             >> xml::optional >> xml::start( "urbanstate" )
                 >> xml::attribute( "file", urbanState_ )
@@ -434,6 +438,24 @@ Path ExerciseConfig::GetKnowledgesFileName() const
 Path ExerciseConfig::GetProfilesFile() const
 {
     return BuildExerciseChildFile( profiles_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetDrawingsFile
+// Created: LGY 2013-04-22
+// -----------------------------------------------------------------------------
+Path ExerciseConfig::GetDrawingsFile() const
+{
+    return BuildExerciseChildFile( drawings_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetDrawingsFileName
+// Created: LGY 2013-04-23
+// -----------------------------------------------------------------------------
+Path ExerciseConfig::GetDrawingsFileName() const
+{
+    return drawings_;
 }
 
 // -----------------------------------------------------------------------------

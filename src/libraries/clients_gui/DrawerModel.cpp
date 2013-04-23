@@ -49,13 +49,13 @@ DrawerModel::~DrawerModel()
 // Name: DrawerModel::Load
 // Created: SBO 2007-03-21
 // -----------------------------------------------------------------------------
-void DrawerModel::Load( const tools::Path& filename )
+void DrawerModel::Load( const tools::Loader_ABC& /*fileLoader*/, const tools::Path& file ) // modif
 {
-    tools::Xifstream xis( filename );
+    tools::Xifstream xis( file );
     xis >> xml::start( "shapes" );
     const tools::Path schema = xis.attribute< tools::Path >( "xsi:noNamespaceSchemaLocation", "" );
     if( !schema.IsEmpty() )
-        tools::Xifstream( filename, xml::external_grammar( tools::GeneralConfig::BuildResourceChildFile( schema ).ToUTF8().c_str() ) );
+        tools::Xifstream( file, xml::external_grammar( tools::GeneralConfig::BuildResourceChildFile( schema ).ToUTF8().c_str() ) );
     ReadShapes( xis );
     xis >> xml::end;
 }
@@ -130,10 +130,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerModel::Save
+// Name: DrawerModel::Serialize
 // Created: SBO 2007-03-21
 // -----------------------------------------------------------------------------
-void DrawerModel::Save( const tools::Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
+void DrawerModel::Serialize( const tools::Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     T_DrawingsMap formationMap;
     T_DrawingsMap automatMap;

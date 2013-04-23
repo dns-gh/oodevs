@@ -312,7 +312,7 @@ void DrawerPanel::Open()
     filename.MakePreferred();
     try
     {
-        model_.Load( filename );
+        model_.Load( config_.GetLoader(), filename );
     }
     catch( const xml::exception& )
     {
@@ -335,7 +335,7 @@ void DrawerPanel::Save()
     try
     {
         tools::SchemaWriter schemaWriter; //$$ Probablement à remonter
-        model_.Save( filename, schemaWriter );
+        model_.Serialize( filename, schemaWriter );
     }
     catch( const xml::exception& )
     {

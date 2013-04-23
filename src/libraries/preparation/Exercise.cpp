@@ -157,6 +157,9 @@ void Exercise::Serialize( const tools::ExerciseConfig& config, const tools::Sche
         << xml::end
         << xml::start( "terrain" )
             << xml::attribute( "name", config.GetTerrainName() )
+        << xml::end
+        << xml::start( "drawings" )
+            << xml::attribute( "name", config.GetDrawingsFileName() )
         << xml::end;
     if( !actionPlanning_.IsEmpty() )
         xos << xml::start( "action-planning" ) << xml::attribute( "file", actionPlanning_ ) << xml::end;
