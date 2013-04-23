@@ -74,8 +74,6 @@ void SymbolFactory::ReadSymbols( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void SymbolFactory::Load( const tools::ExerciseConfig& config )
 {
-    currentChain_.clear();
-    currentSymbol_.clear();
     availableSymbols_.clear();
     symbolNatureMap_.clear();
     config.GetLoader().LoadPhysicalFile( "symbols", boost::bind( &SymbolFactory::ReadSymbols, this, _1 ) );
@@ -89,8 +87,6 @@ void SymbolFactory::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void SymbolFactory::Unload()
 {
-    currentChain_.clear();
-    currentSymbol_.clear();
     availableSymbols_.clear();
     symbolNatureMap_.clear();
     initialized_ = false;
@@ -104,54 +100,53 @@ void SymbolFactory::ListSymbols()
 {
     if( !symbolRule_.get() )
         return;
-    xml::xobufferstream out;
-    out << xml::start( "unit-symbols" );
-    TraverseTree( out, *symbolRule_ );
-    out << xml::end;
+    TraverseTree( *symbolRule_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolFactory::TraverseTree
 // Created: RPD 2011-01-26
 // -----------------------------------------------------------------------------
-void SymbolFactory::TraverseTree( xml::xostream& out, const SymbolRule& rule )
+void SymbolFactory::TraverseTree( const SymbolRule& rule )
 {
-    currentChain_.push_back( new std::string() );
-    currentSymbol_.push_back( new std::string() );
+    std::vector< std::string* > currentChain;
+    std::vector< std::string* > currentSymbol;
+    FillSymbols( rule, currentChain, currentSymbol );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::FillSymbols
+// Created: LDC 2013-04-23
+// -----------------------------------------------------------------------------
+void SymbolFactory::FillSymbols( const SymbolRule& rule, std::vector< std::string* >& currentChain, std::vector< std::string* >& currentSymbol )
+{
+    currentChain.push_back( new std::string() );
+    currentSymbol.push_back( new std::string() );
     for( SymbolRule::CIT_Cases it = rule.GetCases().begin(); it != rule.GetCases().end(); ++it )
     {
-        out << xml::start( "unit-symbol" );
-        *currentChain_.back() = it->first;
-        *currentSymbol_.back() = it->second->GetValue();
+        *currentChain.back() = it->first;
+        *currentSymbol.back() = it->second->GetValue();
         std::string current;
         std::string symbol ( "s*gpu" );
 
-        for( std::vector< std::string* >::iterator iter = currentChain_.begin(); iter != currentChain_.end(); ++iter )
+        for( auto iter = currentChain.begin(); iter != currentChain.end(); ++iter )
         {
-            if( iter != currentChain_.begin() )
+            if( iter != currentChain.begin() )
                 current +="/";
             current += **(iter);
         }
-        for( std::vector< std::string* >::iterator iter = currentSymbol_.begin(); iter != currentSymbol_.end(); ++iter )
-        {
+        for( auto iter = currentSymbol.begin(); iter != currentSymbol.end(); ++iter )
             symbol += **( iter );
-        }
 
-        std::string tail ( "----------*****" );
-        tail = tail.substr( symbol.size(), 15-symbol.size() );
         symbolNatureMap_[ symbol ] = current;
-        symbol += tail;
         availableSymbols_.push_back( current );
-        out << xml::attribute( "value", current );
-        out << xml::attribute( "symbol", symbol );
-        out << xml::end;
         if( it->second && ( it->second)->GetRule() )
-            TraverseTree( out, *( it->second)->GetRule() );
+            FillSymbols( *( it->second)->GetRule(), currentChain, currentSymbol );
     }
-    delete ( currentChain_.back() );
-    delete ( currentSymbol_.back() );
-    currentChain_.pop_back();
-    currentSymbol_.pop_back();
+    delete ( currentChain.back() );
+    delete ( currentSymbol.back() );
+    currentChain.pop_back();
+    currentSymbol.pop_back();
 }
 
 // -----------------------------------------------------------------------------

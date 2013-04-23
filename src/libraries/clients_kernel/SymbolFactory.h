@@ -73,7 +73,8 @@ private:
     //@{
     void ReadSymbols( xml::xistream& xis );
     void ListSymbols();
-    void TraverseTree( xml::xostream& xos, const SymbolRule& rule );
+    void TraverseTree( const SymbolRule& rule );
+    void FillSymbols( const SymbolRule& rule, std::vector< std::string* >& currentChain, std::vector< std::string* >& currentSymbol );
     SymbolRule* ReadRule( xml::xistream& xis, const std::string& ruleName, std::string& base ) const;
     void ReadRule( xml::xistream& xis, SymbolRule*& rule ) const;
     //@}
@@ -88,8 +89,6 @@ private:
     std::string levelBase_;
     std::auto_ptr< SymbolRule > levelRule_;
     std::string automatSymbol_;
-    std::vector< std::string* > currentChain_;
-    std::vector< std::string* > currentSymbol_;
     std::vector< std::string > availableSymbols_;
     std::map< std::string, std::string > symbolNatureMap_;
     //@}
