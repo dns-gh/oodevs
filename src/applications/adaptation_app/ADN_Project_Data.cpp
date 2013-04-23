@@ -600,7 +600,6 @@ void ADN_Project_Data::Save( const tools::Loader_ABC& fileLoader )
         CreateEmptyFile( stageFile, "stages", "Stages" );
 
     addedObjects_.clear();
-    ADN_ConsistencyChecker::ClearLoadingErrors();
 
     // Save XML Signature for files not loaded, bypassing "temp" folder
     ChangeSchema( workDir_.GetWorkingDirectory().GetData() / dataInfos_.szObjectNames_, "ObjectNames" );

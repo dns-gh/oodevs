@@ -285,6 +285,8 @@ void ADN_MainWindow::DoSaveProject()
     bool bNoReadOnlyFiles = true;
     try
     {
+        if( !ADN_ConsistencyChecker::GetLoadingErrors().empty() )
+            ADN_ConsistencyChecker::ClearLoadingErrors();
         consistencyDialog_->CheckConsistency();
         bNoReadOnlyFiles = workspace_.Save( *fileLoader_ );
     }
@@ -429,13 +431,6 @@ void ADN_MainWindow::OpenProject( const tools::Path& szFilename, bool isAdminMod
     mainTabWidget_->hide();
 
     QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
-    //if( QString( szFilename.c_str() ).startsWith( "//" ) )
-    //{
-    //    std::string res( szFilename );
-    //    std::replace( res.begin(), res.end(), '/', '\\' );
-    //    workspace_.Load( res, *fileLoader_ );
-    //}
-    //else
     workspace_.Load( szFilename, *fileLoader_ );
     QApplication::restoreOverrideCursor();    // restore original cursor
     QString title = tr( "Sword Adaptation Tool - %1" ).arg( szFilename.ToUTF8().c_str() );
@@ -445,7 +440,10 @@ void ADN_MainWindow::OpenProject( const tools::Path& szFilename, bool isAdminMod
     SetMenuEnabled( true );
     mainTabWidget_->show();
     pProjectLoadAction_->setVisible( false );
-    setWindowModified( false );
+    if( !ADN_ConsistencyChecker::GetLoadingErrors().empty() )
+        consistencyDialog_->CheckConsistency();
+    else
+        setWindowModified( false );
 }
 
 // -----------------------------------------------------------------------------
