@@ -5752,7 +5752,7 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>UnitSymbol</source>
+        <source>Unit Symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

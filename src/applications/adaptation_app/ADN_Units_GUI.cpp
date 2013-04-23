@@ -151,7 +151,7 @@ void ADN_Units_GUI::Build()
 
         // Symbol combo
         QWidget* pHolder = builder.AddFieldHolder( natureLayout );
-        ADN_UnitSymbolsComboBox* unitSymbolsCombo = builder.AddField< ADN_UnitSymbolsComboBox >( pHolder, "unit-symbol", tr( "UnitSymbol" ), vInfosConnectors[ eNatureSymbol ] );
+        ADN_UnitSymbolsComboBox* unitSymbolsCombo = builder.AddField< ADN_UnitSymbolsComboBox >( pHolder, "unit-symbol", tr( "Unit Symbol" ), vInfosConnectors[ eNatureSymbol ] );
         unitSymbolsCombo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
         connect( unitSymbolsCombo, SIGNAL( UnitSymbolChanged( const QString& ) ), pNatureGui_, SLOT( OnUnitSymbolChanged( const QString& ) ) );
         connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), unitSymbolsCombo, SLOT( OnNatureChanged( const QString& ) ) );
@@ -412,7 +412,7 @@ void ADN_Units_GUI::CreateUnitSymbolWidget( ADN_GuiBuilder& builder, const std::
 // -----------------------------------------------------------------------------
 void ADN_Units_GUI::SetOnlyApp6SymbolVisible( bool bVisible /*= true*/ )
 {
-    labelSymbol_->setVisible( bVisible );
+    labelSymbol_->setVisible( true );
     unitSymbolWidget_->setVisible( bVisible );
     labelMoveSymbol_->setVisible( !bVisible );
     unitSymbolMoveWidget_->setVisible( !bVisible );

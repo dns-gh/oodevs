@@ -5778,7 +5778,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Le modèle comportemental associé à l&apos;unité.</translation>
     </message>
     <message>
-        <source>UnitSymbol</source>
+        <source>Unit Symbol</source>
         <translation>Symbole du pion</translation>
     </message>
     <message>

@@ -5647,7 +5647,7 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">أطلس:</translation>
     </message>
     <message>
-        <source>UnitSymbol</source>
+        <source>Unit Symbol</source>
         <translation type="unfinished">أونيتسيمبول</translation>
     </message>
     <message>

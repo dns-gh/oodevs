@@ -5659,8 +5659,8 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>Atlas:</translation>
     </message>
     <message>
-        <source>UnitSymbol</source>
-        <translation>UnitSymbol</translation>
+        <source>Unit Symbol</source>
+        <translation>Unit Symbol</translation>
     </message>
     <message>
         <source>Command</source>
