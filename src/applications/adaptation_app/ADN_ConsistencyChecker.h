@@ -37,9 +37,10 @@ public:
     void AddError( ConsistencyError error );
     void AddError( E_ConsistencyCheck type, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
     static ADN_NavigationInfos::GoTo* CreateGotoInfo( const std::string& name, int tab, int subTab = -1 );
+    static void AddLoadingError( ConsistencyError error );
     static void AddLoadingError( E_ConsistencyCheck type, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
     static void ClearLoadingErrors();
-    const T_ConsistencyErrors& GetLoadingErrors() const;
+    static const T_ConsistencyErrors& GetLoadingErrors();
     //@}
 
 private:

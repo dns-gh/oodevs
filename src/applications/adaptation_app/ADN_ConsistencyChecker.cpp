@@ -68,6 +68,15 @@ void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const std::strin
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ConsistencyChecker::AddLoadingError
+// Created: ABR 2013-04-23
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyChecker::AddLoadingError( ConsistencyError error )
+{
+    loadingErrors_.push_back( error );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::AddLoadingError
 // Created: JSR 2013-04-12
 // -----------------------------------------------------------------------------
 void ADN_ConsistencyChecker::AddLoadingError( E_ConsistencyCheck type, const std::string& name, int tab, int subTab /*= -1*/, const std::string& optional /*= ""*/ )
@@ -119,7 +128,7 @@ bool ADN_ConsistencyChecker::IsAlreadyRegistered( const std::string& code, E_Con
 // Name: ADN_ConsistencyChecker::GetLoadingErrors
 // Created: JSR 2013-04-12
 // -----------------------------------------------------------------------------
-const ADN_ConsistencyChecker::T_Parent::T_ConsistencyErrors& ADN_ConsistencyChecker::GetLoadingErrors() const
+const ADN_ConsistencyChecker::T_Parent::T_ConsistencyErrors& ADN_ConsistencyChecker::GetLoadingErrors()
 {
     return loadingErrors_;
 }
