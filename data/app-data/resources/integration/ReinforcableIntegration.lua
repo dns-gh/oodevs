@@ -34,6 +34,13 @@ integration.beginReinforcementPlatoon = function( platoonAlly )
     return true
 end
 
+integration.beginReinforcementAgentKnowledge = function( agentKnowledge )
+    local agent = DEC_ConnaissanceAgent_EnAgent( agentKnowledge.source )
+    DEC_Renforce( agent )
+    meKnowledge:RC( eRC_ReussiteRenforcementPion, meKnowledge.source, agent )
+    return true
+end
+
 --- Cancel reinforcement action
 -- @return bool Indicate that reinforcement action is in progress
 -- @author MGD
