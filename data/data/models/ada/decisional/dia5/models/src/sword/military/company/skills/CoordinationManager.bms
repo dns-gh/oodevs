@@ -10,27 +10,26 @@ rootnode {
 
     done = function( self ) end,
 
-    create = function( self )
-        self.last = math.huge
-    end,
-
     activate = function( self )
-
         local current
-
+        self.last = math.huge
         -- self.last: the less value in advancement of all units (latest entity)
         for _, entity in pairs( self.params.enititesFromEchelon ) do
-            current = self.params.progressionInAOR[ entity ]
-            if current < self.last then
-               self.last = current
+            if entity:isOperational() then
+                current = self.params.progressionInAOR[ entity ]
+                if current < self.last then
+                    self.last = current
+                end
             end
         end
-        
+
         -- automate sends a wait activation to all units who are gone through the distance to last unit
         for _, entity in pairs( self.params.enititesFromEchelon ) do
-            current = self.params.progressionInAOR[ entity ]
-            if current - self.last  > self.params.distance then
-               Activate( skill.nodes.SlowDown, 1, { entity = entity } )
+            if entity:isOperational() then
+                current = self.params.progressionInAOR[ entity ]
+                if current - self.last  > self.params.distance then
+                    Activate( skill.nodes.SlowDown, 1, { entity = entity } )
+                end
             end
         end
     end

@@ -168,6 +168,7 @@ void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( directia::brain::Bra
     brain[ "DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion" ] = &DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau;
     brain[ "DEC_Automate_GetEfficacite" ] = &DEC_AutomateFunctions::GetPionEfficiency;
     brain[ "DEC_Tir_PorteeMaxPourTirer" ] = &DEC_FireFunctions::GetMaxRangeToFireDecision;
+    brain[ "DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition" ] = &DEC_FireFunctions::GetMaxRangeToIndirectFireDecision;
 
     // Objects
     brain[ "DEC_DetruireObjetSansDelais" ] = &DEC_ObjectFunctions::MagicDestroyObject;

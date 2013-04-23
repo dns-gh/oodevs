@@ -191,6 +191,7 @@ activate = function( self )
         -- tous les pions sont projeté sur un des deux fuseaux de l'automate
         -- self.progressionInAOR: contient les valeurs de progression sur l'axe de progression
         -- plus la valeur est grande, plus le pion est en avant dans le fuseau
+        -- Effet de bord indesirable : en cas d'aller retour dans le fuseau la coordination est completement inutilisable 
         local proj
         for _, entity in pairs( self.parameters.commandingEntities ) do
             proj = DEC_Geometrie_AdvanceAlongFuseau( entity.source ) 
@@ -200,7 +201,7 @@ activate = function( self )
         local pionHasSupport, supportDistance
         local maxsupportDistance = 1200
         for _, pion in pairs( pionsSE ) do
-              supportDistance = DEC_Tir_PorteeMaxPourTirer( pion.source, 0.5 )
+              supportDistance = integration.getSupportDistanceToCoordination( pion.source, 0.5 )
               if supportDistance > maxsupportDistance then
                   maxsupportDistance = supportDistance
               end
@@ -211,7 +212,6 @@ activate = function( self )
     
         local largeurFuseau = fuseau:getWidth()
         
-        
         if inCity then
           maxsupportDistance = maxsupportDistance/4
         else
@@ -220,7 +220,6 @@ activate = function( self )
        
         -- Gestion de l'élongation intra echelon   
         Activate( skill.links.coordinationManager , 1, { enititesFromEchelon = pionsPE, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
-        Activate( skill.links.coordinationManager , 1, { enititesFromEchelon = pionsSE, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
         Activate( skill.links.coordinationManager , 1, { enititesFromEchelon = pionsEE, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )
         
         -- Gestion de l'élongation inter echelon
