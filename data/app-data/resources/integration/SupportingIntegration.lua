@@ -55,3 +55,11 @@ integration.computeSupportFriendEfficiency = function( friendToSupport )
         end
     end
 end
+
+integration.getSupportDistanceToCoordination = function( agent, pH )
+    local rangeDistance = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition( agent )  -- indirect fire case
+    if rangeDistance <= 0 then -- direct fire case
+        rangeDistance = DEC_Tir_PorteeMaxPourTirer( agent, pH )
+    end
+    return rangeDistance
+end

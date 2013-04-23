@@ -168,6 +168,7 @@ void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( sword::Brain& brain 
     brain.RegisterFunction( "DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion", &DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau );
     brain.RegisterFunction( "DEC_Automate_GetEfficacite", &DEC_AutomateFunctions::GetPionEfficiency );
     brain.RegisterFunction( "DEC_Tir_PorteeMaxPourTirer", &DEC_FireFunctions::GetMaxRangeToFireDecision );
+    brain.RegisterFunction( "DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition", &DEC_FireFunctions::GetMaxRangeToIndirectFireDecision );
 
     // Objects
     brain.RegisterFunction( "DEC_DetruireObjetSansDelais", &DEC_ObjectFunctions::MagicDestroyObject );

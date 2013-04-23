@@ -152,6 +152,15 @@ float DEC_FireFunctions::GetMaxRangeToIndirectFire( const MIL_AgentPion& callerA
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::GetMaxRangeToIndirectFireDecision
+// Created: GGE 2013-04-22
+// -----------------------------------------------------------------------------
+float DEC_FireFunctions::GetMaxRangeToIndirectFireDecision( const DEC_Decision_ABC& callerAgent )
+{
+  return DEC_FireFunctions::GetMaxRangeToIndirectFire( callerAgent.GetPion());
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_FireFunctions::GetMinRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
