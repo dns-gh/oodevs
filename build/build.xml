@@ -603,11 +603,15 @@
     </target>
 
     <target name="package.proto" description="package protobuf for other projects">
-        <safe-move file="${out.dir}/protobuf-dev.zip">
+        <safe-move file="${out.dir}/protobuf.zip"
+            todir="${dist.internal.dir}">
             <zip destfile="@{file}" duplicate="fail">
-                <fileset dir="${src.dir}/libraries/protocol/proto" includes="*.proto"/>
+                <fileset dir="${src.dir}/libraries/protocol/proto"
+                    includes="*.proto"/>
             </zip>
         </safe-move>
+        <copy file="${dist.internal.dir}/protobuf.zip"
+            tofile="${dist.dir}/protobuf-dev.zip"/>
     </target>
 
     <macrodef name="check-depends">
