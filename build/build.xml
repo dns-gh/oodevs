@@ -16,14 +16,8 @@
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="terrains-dev" todir="${data.dir}/data/terrains"/>
         <update name="protobuf"/>
-        <update name="sword" 
-                version="Defense/releases/internal/${sword_branch}"
-                package="protobuf-dev"
-                todir="${src.dir}/sword"/>
-        <update name="sword"
-                version="Defense/releases/internal/${sword_branch}"
-                package="SWORD_binaries_${platform}_${sword_branch}"
-                todir="${run.dir}"/>
+        <update name="sword" package="protobuf" todir="${src.dir}/sword"/>
+        <update name="sword" package="binaries_${platform}" todir="${run.dir}"/>
     </target>
 
     <target name="proto">
