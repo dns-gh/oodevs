@@ -56,7 +56,7 @@ boost::shared_ptr< kernel::AgentType > StaticModel::MakeAgentType()
     return boost::shared_ptr< kernel::AgentType >( new kernel::AgentType( xis, componentResolver, modelResolver, symbolFactory ) );
 }
 
-boost::shared_ptr< kernel::AutomatType > StaticModel::MakeAutomatType()
+boost::shared_ptr< kernel::AutomatType > StaticModel::MakeAutomatType( const kernel::SymbolFactory& symbolFactory )
 {
     boost::shared_ptr< kernel::DecisionalModel > model( MakeDecisionalModel() ) ;
     decisionalModels_.push_back( model );
@@ -73,5 +73,5 @@ boost::shared_ptr< kernel::AutomatType > StaticModel::MakeAutomatType()
 
     boost::shared_ptr< kernel::AgentType > agent( MakeAgentType() );
     MOCK_EXPECT( agentResolver.Get ).once().with( "automat_pc" ).returns( boost::ref( *agent ) );
-    return boost::shared_ptr< kernel::AutomatType >( new kernel::AutomatType( xis, agentResolver, modelResolver ) );
+    return boost::shared_ptr< kernel::AutomatType >( new kernel::AutomatType( xis, agentResolver, modelResolver, symbolFactory ) );
 }

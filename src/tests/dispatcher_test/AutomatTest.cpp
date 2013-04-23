@@ -17,6 +17,7 @@
 #include "MockSide.h"
 #include "MockLogisticEntity.h"
 #include "dispatcher/Automat.h"
+#include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/AutomatType.h"
 #include "protocol/ClientSenders.h"
 
@@ -29,7 +30,7 @@ namespace
             , formation( 52 )
             , automat( 51 )
             , knowledgeGroup( 3 )
-            , type( staticModel.MakeAutomatType() )
+            , type( staticModel.MakeAutomatType( symbolFactory ) )
         {
             types.Register( type->GetId(), *type );
 
@@ -54,7 +55,9 @@ namespace
             MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
             MOCK_EXPECT( model.KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
         }
+
         dispatcher_test::StaticModel staticModel;
+        kernel::SymbolFactory symbolFactory;
 
         // automat types
         tools::Resolver< kernel::AutomatType > types;

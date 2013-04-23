@@ -16,9 +16,10 @@
 
 namespace kernel
 {
-    class DecisionalModel;
     class AgentType;
     class AutomatType;
+    class DecisionalModel;
+    class SymbolFactory;
 }
 
 // =============================================================================
@@ -43,7 +44,7 @@ namespace dispatcher_test
     public:
         boost::shared_ptr< kernel::DecisionalModel > MakeDecisionalModel();
         boost::shared_ptr< kernel::AgentType > MakeAgentType();
-        boost::shared_ptr< kernel::AutomatType > MakeAutomatType();
+        boost::shared_ptr< kernel::AutomatType > MakeAutomatType( const kernel::SymbolFactory& symbolFactory );
     private:
         std::vector< boost::shared_ptr< kernel::DecisionalModel > > decisionalModels_;
         std::vector< boost::shared_ptr< kernel::AgentType > > agents_;
