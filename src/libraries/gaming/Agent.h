@@ -66,6 +66,9 @@ public:
 
     bool ShouldDisplayStaticSymbol() const;
     unsigned int GetSensorsDirection() const;
+    unsigned int GetMoveDirection() const;
+    float GetSymbolWidth() const;
+    float GetSymbolDepth() const;
     //@}
 
 private:

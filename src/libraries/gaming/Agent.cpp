@@ -95,7 +95,7 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
 // -----------------------------------------------------------------------------
 bool Agent::ShouldDisplayStaticSymbol() const
 {
-    return ( speed_ == 0 ) && !staticSymbol_.empty();
+    return !staticSymbol_.empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -105,6 +105,35 @@ bool Agent::ShouldDisplayStaticSymbol() const
 unsigned int Agent::GetSensorsDirection() const
 {
     return sensorsDirection_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetMoveDirection
+// Created: LDC 2013-04-23
+// -----------------------------------------------------------------------------
+unsigned int Agent::GetMoveDirection() const
+{
+    return direction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetSymbolWidth
+// Created: LDC 2013-04-23
+// -----------------------------------------------------------------------------
+float Agent::GetSymbolWidth() const
+{
+    bool isMoving = ( Get< Attributes >().nCurrentPosture_ <= eUnitPosture_PostureArret );
+    return isMoving? 0.f : type_.GetWidth();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetSymbolDepth
+// Created: LDC 2013-04-23
+// -----------------------------------------------------------------------------
+float Agent::GetSymbolDepth() const
+{
+    bool isMoving = ( Get< Attributes >().nCurrentPosture_ <= eUnitPosture_PostureArret );
+    return isMoving? type_.GetLength( !Get< Attributes >().bAmbianceSafety_ ) : type_.GetDepth();
 }
 
 // -----------------------------------------------------------------------------
