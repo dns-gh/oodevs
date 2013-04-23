@@ -68,7 +68,7 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
     bool bDisplayRem = GetCurrentData() != 0;
 
     unsigned int n = 0;
-    ADN_Missions_Data::T_Mission_Vector& fragOrders = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders();
+    ADN_Missions_Data::T_Mission_Vector& fragOrders = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder );
     for( auto it = fragOrders.begin(); it != fragOrders.end(); ++it )
     {
         ADN_Missions_FragOrder* fragOrder = static_cast< ADN_Missions_FragOrder* >(*it);
@@ -135,7 +135,7 @@ void ADN_ListView_Orders::CreateNewItem( int n )
     if( cit != fragOrders_.end() )
     {
         OrderInfos* pNewInfo = new OrderInfos();
-        ADN_Missions_Data::T_Mission_Vector& fragOrders = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders();
+        ADN_Missions_Data::T_Mission_Vector& fragOrders = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder );
         for( auto it = fragOrders.begin(); it != fragOrders.end(); ++it )
         {
             ADN_Missions_FragOrder* fragOrder = static_cast< ADN_Missions_FragOrder* >(*it);

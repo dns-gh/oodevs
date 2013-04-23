@@ -27,13 +27,13 @@
 // Created: AGN 2004-05-18
 // -----------------------------------------------------------------------------
 ADN_Models_Data::OrderInfos::OrderInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), 0, true )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ), 0, true )
 {
     // NOTHING
 }
 
 ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_FragOrder* fragorder, const std::string& name )
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), fragorder, true )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ), fragorder, true )
 {
     strName_ = name;
 }
@@ -358,7 +358,7 @@ void ADN_Models_Data::FilesNeeded(tools::Path::T_Paths& files) const
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ReadUnit( xml::xistream& input )
 {
-    std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions() ) );
+    std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Pawn ) ) );
     spNew->ReadArchive( input );
     vUnitModels_.AddItem( spNew.release() );
 }
@@ -369,7 +369,7 @@ void ADN_Models_Data::ReadUnit( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ReadAutomat( xml::xistream& input )
 {
-    std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions() ) );
+    std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Automat ) ) );
     spNew->ReadArchive( input );
     vAutomataModels_.AddItem( spNew.release() );
 }
@@ -380,7 +380,7 @@ void ADN_Models_Data::ReadAutomat( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Models_Data::ReadPopulation( xml::xistream& input )
 {
-    std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions() ) );
+    std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Population ) ) );
     spNew->ReadArchive( input );
     vPopulationModels_.AddItem( spNew.release() );
 }

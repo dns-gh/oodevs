@@ -26,7 +26,7 @@ public:
     virtual ADN_Missions_Mission* CreateCopy();
 
     virtual void ReadArchive( xml::xistream& input, ADN_Drawings_Data& drawings, const tools::Path& missionDir );
-    virtual void WriteArchive( xml::xostream& output, const std::string& type );
+    virtual void WriteArchive( xml::xostream& output, E_MissionType type );
 
 public:
     ADN_Type_String diaBehavior_;

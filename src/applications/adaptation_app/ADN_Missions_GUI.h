@@ -79,7 +79,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildMissions( ADN_Missions_Data::T_Mission_Vector& missions, E_MissionType eMissionType );
+    QWidget* BuildMissions( E_MissionType eMissionType );
     //@}
 
 private:

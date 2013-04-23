@@ -79,13 +79,13 @@ namespace
     }
 }
 
-void ADN_Missions_FragOrder::WriteArchive( xml::xostream& output, const std::string& name )
+void ADN_Missions_FragOrder::WriteArchive( xml::xostream& output, E_MissionType type )
 {
     if( diaType_.GetData().empty() )
         diaType_ = BuildDiaFragOrderType( strName_.GetData().c_str() ).toStdString();
 
     output << xml::start( "fragorder" );
-    ADN_Missions_ABC::WriteArchive( output, name );
+    ADN_Missions_ABC::WriteArchive( output, type );
     output << xml::attribute( "available-without-mission", isAvailableWithoutMission_ );
 
     for( unsigned int i = 0; i < parameters_.size(); ++i )

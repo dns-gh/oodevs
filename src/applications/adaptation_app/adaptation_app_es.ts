@@ -2297,22 +2297,6 @@ PNG (*.png)
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Unit missions</source>
-        <translation type="unfinished">Misiones de unidad</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation type="unfinished">Misiones de autómata</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation type="unfinished">Ordenes parciales</translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Orders</name>
@@ -2657,23 +2641,7 @@ PNG (*.png)
 <context>
     <name>ADN_Missions_Data</name>
     <message>
-        <source>Unit missions</source>
-        <translation type="unfinished">Misiones de unidad</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation type="unfinished">Misiones de autómata</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation type="unfinished">Ordenes parciales</translation>
-    </message>
-    <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2865,25 +2833,6 @@ PNG (*.png)
     <message>
         <source>&apos;%1&apos; parameter should have at least one object.</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Missions_data</name>
-    <message>
-        <source>Unit missions</source>
-        <translation type="unfinished">Misiones de unidad</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation type="unfinished">Misiones de autómata</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation type="unfinished">Ordenes parciales</translation>
     </message>
 </context>
 <context>

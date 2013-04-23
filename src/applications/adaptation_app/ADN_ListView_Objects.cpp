@@ -353,14 +353,10 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                           ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
                                           ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), eObjects );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Unit missions" ),
-                                          ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissionsThatUse( *pCastData ), eMissions, 0 );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Automat missions" ),
-                                          ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissionsThatUse( *pCastData ), eMissions, 1 );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Crowd missions" ),
-                                          ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissionsThatUse( *pCastData ), eMissions, 2 );
-            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), tools::translate( "ADN_ListView_Objects", "Fragmentary orders" ),
-                                          ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrdersThatUse( *pCastData ), eMissions, 3 );
+
+            for( int type = 0; type < eNbrMissionTypes; ++type )
+                FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str(),
+                                              ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionsThatUse( static_cast< E_MissionType >( type ), *pCastData ), eMissions, type );
         }
         popupMenu.exec( pt );
     }
@@ -387,10 +383,10 @@ std::string ADN_ListView_Objects::GetToolTipFor( const QModelIndex& index )
                         ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), result );
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
                         ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), result );
-    FillMultiUsersList( tools::translate( "ADN_ListView_Objects", "Unit missions" ),      ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissionsThatUse( *pCastData ),         result );
-    FillMultiUsersList( tools::translate( "ADN_ListView_Objects", "Automat missions" ),   ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissionsThatUse( *pCastData ),      result );
-    FillMultiUsersList( tools::translate( "ADN_ListView_Objects", "Crowd missions" ),     ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissionsThatUse( *pCastData ),   result );
-    FillMultiUsersList( tools::translate( "ADN_ListView_Objects", "Fragmentary orders" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrdersThatUse( *pCastData ),           result );
+
+    for( int type = 0; type < eNbrMissionTypes; ++type )
+        FillMultiUsersList( ADN_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionsThatUse( static_cast< E_MissionType >( type ), *pCastData ), result );
 
     if( result.empty() )
         result = tr( "<b>Unused</b>" ).toStdString();

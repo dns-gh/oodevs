@@ -100,15 +100,8 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
 void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Missions_Data::T_Mission_Vector* pMissionList;
-    if( eMissionType_ == eMissionType_Automat )
-        pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions();
-    else if( eMissionType_ == eMissionType_Pawn )
-        pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
-    else
-        pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions();
 
-    ADN_Missions_Wizard wizard( ConvertMissionToEntityType( eMissionType_ ), ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str(), *pMissionList, this );
+    ADN_Missions_Wizard wizard( ConvertMissionToEntityType( eMissionType_ ), ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str(), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_ ), this );
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
         FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )

@@ -2294,22 +2294,6 @@ PNG (*.png)
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
         <translation>&lt;b&gt;Unused&lt;/b&gt;</translation>
     </message>
-    <message>
-        <source>Unit missions</source>
-        <translation>Unit missions</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation>Automaton missions</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation>Crowd missions</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation>Fragmentary orders</translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Orders</name>
@@ -2654,24 +2638,8 @@ PNG (*.png)
 <context>
     <name>ADN_Missions_Data</name>
     <message>
-        <source>Unit missions</source>
-        <translation>Unit missions</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation>Automaton missions</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation>Fragmentary orders</translation>
-    </message>
-    <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation>Crowd missions</translation>
     </message>
 </context>
 <context>
@@ -2862,25 +2830,6 @@ PNG (*.png)
     <message>
         <source>&apos;%1&apos; parameter should have at least one object.</source>
         <translation>&apos;%1&apos; parameter should have at least one object.</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Missions_data</name>
-    <message>
-        <source>Unit missions</source>
-        <translation>Unit missions</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation>Automaton missions</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation>Crowd missions</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation>Fragmentary orders</translation>
     </message>
 </context>
 <context>

@@ -57,21 +57,14 @@ public:
     virtual void Reset();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
-    T_Mission_Vector& GetFragOrders();
-    T_Mission_Vector& GetUnitMissions();
-    T_Mission_Vector& GetAutomatMissions();
-    T_Mission_Vector& GetPopulationMissions();
-    ADN_Missions_ABC* FindFragOrder( const std::string& strName );
-    ADN_Missions_ABC* FindMission( const T_Mission_Vector& missions, const std::string& strName );
-    ADN_Missions_ABC* FindMission( int missionType, const std::string& strName );
+    T_Mission_Vector& GetMissions( E_MissionType type );
+
+    ADN_Missions_ABC* FindMission( const T_Mission_Vector& missions, const std::string& strName ) const;
+    ADN_Missions_ABC* FindMission( int missionType, const std::string& strName ) const;
     virtual void Initialize();
 
     QStringList GetAllMissionsThatUse( ADN_Objects_Data_ObjectInfos& object ); // $$$$ ABR 2012-08-03: Warning, return not only the name, but concatenation of tab name and mission name
-
-    QStringList GetUnitMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
-    QStringList GetAutomatMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
-    QStringList GetPopulationMissionsThatUse( ADN_Objects_Data_ObjectInfos& object );
-    QStringList GetFragOrdersThatUse( ADN_Objects_Data_ObjectInfos& object );
+    QStringList GetMissionsThatUse( E_MissionType type, ADN_Objects_Data_ObjectInfos& object );
 
     void NotifyElementDeleted( std::string elementName, E_MissionType missionType );
     tools::Path GenerateMissionSheet( int index, const QString& text );
@@ -79,15 +72,12 @@ public:
 
 private:
     void ReadArchive( xml::xistream& input );
-    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, E_MissionType modelType );
+    void ReadMission( xml::xistream& input, E_MissionType modelType );
     void WriteArchive( xml::xostream& output );
     void MoveMissionSheetsToObsolete( const tools::Path& file ) const;
 
 public:
-    T_Mission_Vector unitMissions_;
-    T_Mission_Vector automatMissions_;
-    T_Mission_Vector populationMissions_;
-    T_Mission_Vector fragOrders_;
+    std::vector< std::pair< std::string, T_Mission_Vector > > missionsVector_;
     tools::Path::T_Paths toDeleteMissionSheets_;
 
 public:

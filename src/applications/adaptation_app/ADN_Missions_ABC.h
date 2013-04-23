@@ -55,7 +55,7 @@ public:
     void FillContextParameters( E_EntityType entityType );
 
     virtual void ReadArchive( xml::xistream& input, const tools::Path& missionDir );
-    virtual void WriteArchive( xml::xostream& output, const std::string& name );
+    virtual void WriteArchive( xml::xostream& output, E_MissionType type );
 
     void ReadParameter( xml::xistream& input );
     void CheckMissionDataConsistency( ADN_ConsistencyChecker& checker, E_MissionType type );

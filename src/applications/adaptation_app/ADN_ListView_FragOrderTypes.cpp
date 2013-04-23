@@ -144,7 +144,7 @@ void ADN_ListView_FragOrderTypes::OnContextMenu( const QPoint& pt )
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
         Q3PopupMenu popupMenu( this );
-        ADN_Wizard< ADN_Missions_ABC, ADN_FragOrder_WizardPage > wizard( tr( "Fragmentary orders" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), this );
+        ADN_Wizard< ADN_Missions_ABC, ADN_FragOrder_WizardPage > wizard( tr( "Fragmentary orders" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_FragOrder ), this );
         FillContextMenuWithDefault( popupMenu, wizard );
         if( pCurData_ != 0 )
         {

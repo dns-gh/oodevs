@@ -77,15 +77,7 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Normal )
         return;
 
-    ADN_Missions_Data::T_Mission_Vector* vector = 0;
-    if( eEntityType_ == eEntityType_Pawn )
-        vector = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
-    else if( eEntityType_ == eEntityType_Automat )
-        vector = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions();
-    else
-        vector = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions();
-
     ADN_Tools::GenerateStandardEditionDialog< ADN_Missions_ABC, ADN_Models_Data::MissionInfos >(
         *this, pt, std::string( ADN_Tr::ConvertFromEntityType( eEntityType_, ADN_Tr::eToSim ) + "-list" ).c_str(), tools::translate( "ADN_ListView_Missions", "Missions" ),
-        ADN_Tr::ConvertFromEntityType( eEntityType_ ).c_str(), *vector );
+        ADN_Tr::ConvertFromEntityType( eEntityType_ ).c_str(), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( static_cast< E_MissionType >( eEntityType_ ) ) );
 }

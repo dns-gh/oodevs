@@ -22,7 +22,7 @@ public:
     ADN_Missions_FragOrder* CreateCopy();
 
     void ReadArchive( xml::xistream& input, const tools::Path& missionDir );
-    void WriteArchive( xml::xostream& output, const std::string& name );
+    void WriteArchive( xml::xostream& output, E_MissionType type );
 
 public:
     ADN_Type_Bool isAvailableWithoutMission_;

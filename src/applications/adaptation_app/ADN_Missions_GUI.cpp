@@ -96,10 +96,10 @@ void ADN_Missions_GUI::Build()
 
     // Tab management
     pTabWidget_ = new QTabWidget( pMainWidget_ );
-    pTabWidget_->addTab( BuildMissions( data_.unitMissions_, eMissionType_Pawn ), tr( "Unit missions" ) );
-    pTabWidget_->addTab( BuildMissions( data_.automatMissions_, eMissionType_Automat ), tr( "Automat missions" ) );
-    pTabWidget_->addTab( BuildMissions( data_.populationMissions_, eMissionType_Population ), tr( "Crowd missions" ) );
-    pTabWidget_->addTab( BuildMissions( data_.fragOrders_, eMissionType_FragOrder ), tr( "Fragmentary orders" ) );
+    pTabWidget_->addTab( BuildMissions( eMissionType_Pawn ), tr( "Unit missions" ) );
+    pTabWidget_->addTab( BuildMissions( eMissionType_Automat ), tr( "Automat missions" ) );
+    pTabWidget_->addTab( BuildMissions( eMissionType_Population ), tr( "Crowd missions" ) );
+    pTabWidget_->addTab( BuildMissions( eMissionType_FragOrder ), tr( "Fragmentary orders" ) );
 
     // Main widget
     pMainWidget_ = new QWidget();
@@ -138,11 +138,12 @@ namespace
 // Name: ADN_Missions_GUI::BuildMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& missions, E_MissionType eMissionType )
+QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
 {
     // -------------------------------------------------------------------------
     // Creations
     // -------------------------------------------------------------------------
+    ADN_Missions_Data::T_Mission_Vector& missions = data_.GetMissions( eMissionType );
     ADN_GuiBuilder builder( strClassName_ );
     builder.PushSubName( std::string( ADN_Tr::ConvertFromMissionType( eMissionType, ADN_Tr::eToSim ) + "-tab" ).c_str() );
     builder.PushSubName( "definition-tab" );
@@ -340,7 +341,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( ADN_Missions_Data::T_Mission_Vector& m
     ADN_SearchListView* pSearchListView;
     if( eMissionType == eMissionType_FragOrder )
     {
-        pSearchListView = builder.AddSearchListView< ADN_ListView_FragOrderTypes >( this, data_.fragOrders_, data_.fragOrders_, vInfosConnectors, eMissionType_FragOrder );
+        pSearchListView = builder.AddSearchListView< ADN_ListView_FragOrderTypes >( this, missions, missions, vInfosConnectors, eMissionType_FragOrder );
         connect( availableState_, SIGNAL( toggled ( bool ) ), pSearchListView->GetListView(), SLOT( OnToogled( bool ) ) );
     }
     else

@@ -120,11 +120,11 @@ namespace
 // Name: ADN_Missions_Mission::WriteArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::WriteArchive( xml::xostream& output, const std::string& type )
+void ADN_Missions_Mission::WriteArchive( xml::xostream& output, E_MissionType type )
 {
     output << xml::start( "mission" );
-    bool isAutomat = type == "automats";
-    const QString typeName = type == "units" ? "Pion" : (isAutomat ? "Automate" : "Population");
+    bool isAutomat = type == eMissionType_Automat;
+    const QString typeName = type == eMissionType_Pawn ? "Pion" : ( isAutomat ? "Automate" : "Population" );
     const QString diaName  = BuildDiaMissionType( strName_.GetData().c_str() );
     if( diaType_.GetData().empty() )
         diaType_ = QString( "T_Mission_%1_%2" ).arg( typeName ).arg( diaName ).toStdString();

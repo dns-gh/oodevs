@@ -61,7 +61,7 @@ void ADN_Supply_Data::ConvoyInfo< T >::WriteArchive( const std::string& section,
 // -----------------------------------------------------------------------------
 ADN_Supply_Data::SupplyDataInfos::SupplyDataInfos()
     : ptrUnit_            ( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
-    , ptrSupplyMission_   ( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions(), 0 )
+    , ptrSupplyMission_   ( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Pawn ), 0 )
 {
     // NOTHING
 }
@@ -141,7 +141,7 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
         throw MASA_EXCEPTION( tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit '%1'" ).arg( strUnit.c_str() ).toStdString() );
     ptrUnit_ = pUnit;
 
-    ADN_Missions_Data::T_Mission_Vector& missions = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
+    ADN_Missions_Data::T_Mission_Vector& missions = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissions( eMissionType_Pawn );
     ADN_Missions_ABC* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( missions, supplyMission );
     if( !supplyMission.empty() && mission == 0 )
         throw MASA_EXCEPTION( tools::translate( "Supply_Data",  "Logistic supply system - Invalid mission '%1'" ).arg( supplyMission.c_str() ).toStdString() );

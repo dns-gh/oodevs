@@ -2306,22 +2306,6 @@ PNG (*.png)</translation>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
         <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
-    <message>
-        <source>Unit missions</source>
-        <translation>Missions pions</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation>Missions automates</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation>Missions foules</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation>Ordres de conduite</translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Orders</name>
@@ -2669,22 +2653,6 @@ PNG (*.png)</translation>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation>Données invalide dans l&apos;onglet &apos;%1&apos;, sous-onglet &apos;%2&apos;</translation>
     </message>
-    <message>
-        <source>Unit missions</source>
-        <translation>Missions pions</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation>Missions automates</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation>Ordres de conduite</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation>Missions foules</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Missions_GUI</name>
@@ -2874,25 +2842,6 @@ PNG (*.png)</translation>
     <message>
         <source>&apos;%1&apos; parameter should have at least one object.</source>
         <translation>Le paramètre &apos;%1&apos; doit avoir au moins un objet.</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Missions_data</name>
-    <message>
-        <source>Unit missions</source>
-        <translation>Missions pions</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation>Missions automates</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation>Missions foules</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation>Ordres de conduite</translation>
     </message>
 </context>
 <context>

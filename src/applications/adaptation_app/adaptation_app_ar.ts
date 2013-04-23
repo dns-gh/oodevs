@@ -2282,22 +2282,6 @@ PNG (*.png)
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
         <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
     </message>
-    <message>
-        <source>Unit missions</source>
-        <translation type="unfinished">وحدة البعثات</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation type="unfinished">بعثات [اوتومت]</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation type="unfinished">البعثات الحشد</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation type="unfinished">أوامر مجزأ</translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Orders</name>
@@ -2642,24 +2626,8 @@ PNG (*.png)
 <context>
     <name>ADN_Missions_Data</name>
     <message>
-        <source>Unit missions</source>
-        <translation type="unfinished">وحدة البعثات</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation type="unfinished">بعثات [اوتومت]</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation type="unfinished">أوامر مجزأ</translation>
-    </message>
-    <message>
         <source>Invalid data on tab &apos;%1&apos;, subtab &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation type="unfinished">البعثات الحشد</translation>
     </message>
 </context>
 <context>
@@ -2850,25 +2818,6 @@ PNG (*.png)
     <message>
         <source>&apos;%1&apos; parameter should have at least one object.</source>
         <translation type="unfinished">يجب أن تحتوي المعلمة &apos;%1&apos; كائن واحد على الأقل.</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Missions_data</name>
-    <message>
-        <source>Unit missions</source>
-        <translation type="unfinished">وحدة البعثات</translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation type="unfinished">بعثات [اوتومت]</translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation type="unfinished">البعثات الحشد</translation>
-    </message>
-    <message>
-        <source>Fragmentary orders</source>
-        <translation type="unfinished">أوامر مجزأ</translation>
     </message>
 </context>
 <context>

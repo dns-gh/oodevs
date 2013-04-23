@@ -374,7 +374,7 @@ void ADN_Missions_ABC::AddContextParameter( E_ContextParameters contextType, E_M
 // Name: ADN_Missions_ABC::ReadArchive
 // Created: NPT 2013-02-14
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::ReadArchive( xml::xistream& input, const tools::Path& /*missionDir*/ )
+void ADN_Missions_ABC::ReadArchive( xml::xistream& input, const tools::Path& )
 {
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "dia-type", diaType_ );
@@ -384,7 +384,7 @@ void ADN_Missions_ABC::ReadArchive( xml::xistream& input, const tools::Path& /*m
 // Name: ADN_Missions_ABC::WriteArchive
 // Created: NPT 2013-02-18
 // -----------------------------------------------------------------------------
-void ADN_Missions_ABC::WriteArchive( xml::xostream& output, const std::string& /*name*/ )
+void ADN_Missions_ABC::WriteArchive( xml::xostream& output, E_MissionType )
 {
     output << xml::attribute( "name", strName_ )
            << xml::attribute( "dia-type", diaType_ )
