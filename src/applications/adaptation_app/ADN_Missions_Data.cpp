@@ -221,6 +221,8 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
               >> xml::end;
     input >> xml::end;
 
+    CheckAndFixLoadingErrors();
+
     for( auto it = missionsVector_.begin(); it != missionsVector_.end(); ++it )
         it->second.CheckValidity();
     for( int type = 0; type < eNbrMissionTypes; ++type )
@@ -435,4 +437,57 @@ void ADN_Missions_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker )
             CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 0 );
             ( *it )->CheckMissionDataConsistency( checker, static_cast< E_MissionType >( type ) );
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::CheckAndFixLoadingErrors
+// Created: ABR 2013-04-23
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::CheckAndFixLoadingErrors() const
+{
+    std::vector< int > alreadyReportedIds;
+    std::vector< ADN_Missions_ABC* > missionThatNeedANewId;
+
+    // Check for duplicate id
+    for( int type = 0; type < eNbrMissionTypes; ++type )
+    {
+        const ADN_Missions_Data::T_Mission_Vector& vector = missionsVector_[ type ].second;
+        for( auto it = vector.begin(); it != vector.end(); ++it )
+        {
+            assert( *it != 0 );
+            int id = ( *it )->id_.GetData();
+
+            // If already reported, continue
+            if( std::find( alreadyReportedIds.begin(), alreadyReportedIds.end(), id ) != alreadyReportedIds.end() )
+                continue;
+
+            // look for others with same id in each vector
+            std::map< int, std::vector< ADN_Missions_ABC* > > missionsMap;
+            size_t count = 0;
+            for( int secondType = type; secondType < eNbrMissionTypes; ++secondType )
+            {
+                missionsMap[ secondType ] = missionsVector_[ secondType ].second.FindElements( boost::bind( &ADN_Tools::IdCompare< ADN_Missions_ABC >, _1, boost::cref( id ) ) );
+                count += missionsMap[ secondType ].size();
+            }
+
+            assert( count != 0 );
+            if( count > 1 ) // duplicate id, report it
+            {
+                alreadyReportedIds.push_back( id );
+                ADN_ConsistencyChecker::ConsistencyError error( eInvalidIdInVector );
+                for( auto itMap = missionsMap.begin(); itMap != missionsMap.end(); ++itMap )
+                    for( auto itVector = itMap->second.begin(); itVector != itMap->second.end(); ++itVector )
+                    {
+                        error.items_.push_back( ADN_ConsistencyChecker::CreateGotoInfo( ( *itVector )->strName_.GetData(), eMissions, itMap->first ) );
+                        if( error.items_.size() > 1 )
+                            missionThatNeedANewId.push_back( *itVector );
+                    }
+                ADN_ConsistencyChecker::AddLoadingError( error );
+            }
+        }
+    }
+
+    // Fix ids
+    for( auto it = missionThatNeedANewId.begin(); it != missionThatNeedANewId.end(); ++it )
+        ( *it )->id_ = ADN_Missions_Data::idManager_.GetNextId();
 }

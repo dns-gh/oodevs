@@ -704,6 +704,10 @@ Parked engine running</source>
         <source>&apos;%1&apos; has one unfound field of type &apos;%2&apos;, it will be deleted at next save.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&apos;%1&apos; has the same id. These id will be replaced at next save.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

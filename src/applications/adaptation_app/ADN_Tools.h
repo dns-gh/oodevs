@@ -14,6 +14,7 @@
 
 #include "ADN_Connector_ABC.h"
 #include "ADN_VectorEditionDialog.h"
+#include "ADN_Types.h"
 
 namespace xml
 {
@@ -35,12 +36,58 @@ class Q3PopupMenu;
 // =============================================================================
 namespace ADN_Tools
 {
+    // -----------------------------------------------------------------------------
+    template< typename T, typename FieldType >
+    bool FieldCompare( const T& element, boost::function< const ADN_Type_ABC< FieldType >& ( const T& ) > fieldExtractor, const FieldType& value )
+    {
+        return fieldExtractor( element ).GetData() == value;
+    }
+
+    // -----------------------------------------------------------------------------
     template< typename Data >
     ADN_Type_ABC< std::string >& NameExtractor( Data& data )
     {
         return data.strName_;
     }
 
+    template< typename Data >
+    const ADN_Type_ABC< std::string >& NameExtractor( const Data& data )
+    {
+        return data.strName_;
+    }
+
+    template< typename Data >
+    const ADN_Type_ABC< int >& IdExtractor( const Data& data )
+    {
+        return data.id_;
+    }
+
+    template< typename Data >
+    const ADN_Type_ABC< int >& NIdExtractor( const Data& data )
+    {
+        return data.nId_;
+    }
+
+    // -----------------------------------------------------------------------------
+    template< typename T >
+    bool NameCompare( const T& element, const std::string& name )
+    {
+        return FieldCompare< T, std::string >( element, boost::bind( &ADN_Tools::NameExtractor< T >, boost::cref( element ) ), boost::cref( name ) );
+    }
+
+    template< typename T >
+    bool IdCompare( const T& element, const int& id )
+    {
+        return FieldCompare< T, int >( element, boost::bind( &ADN_Tools::IdExtractor< T >, boost::cref( element ) ), boost::cref( id ) );
+    }
+
+    template< typename T >
+    bool NIdCompare( const T& element, const int& id )
+    {
+        return FieldCompare< T, int >( element, boost::bind( &ADN_Tools::NIdExtractor< T >, boost::cref( element ) ), boost::cref( id ) );
+    }
+
+    // -----------------------------------------------------------------------------
     template< typename T >
     class NameCmp : public std::unary_function< T* , bool >
     {
@@ -65,6 +112,7 @@ namespace ADN_Tools
         }
     };
 
+    // -----------------------------------------------------------------------------
     bool CaselessCompare( const std::string& str1, const std::string& str2 );
 
     std::string Scriptify( const std::string& strFieldName );
@@ -76,10 +124,12 @@ namespace ADN_Tools
 
     void SortMenu( Q3PopupMenu& menu );
 
+    // -----------------------------------------------------------------------------
     void AddSchema( xml::xostream& xos, const std::string& name );
 
     void AddVersion( xml::xostream& xos, const std::string& name );
 
+    // -----------------------------------------------------------------------------
     template< typename TargetType, typename ViewType >
     void GenerateStandardContextMenu( ViewType& view, const QPoint& pt )
     {
@@ -114,6 +164,7 @@ namespace ADN_Tools
             dialog->exec();
         }
     }
+
 }
 
 #endif // __ADN_Tools_h_

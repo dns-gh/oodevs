@@ -86,6 +86,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eNoCrew ]                 = tr( "Unit %1 has no crew in equipment '%2'" ) + error;
     errorDescriptions_[ eInvalidPtrInVector ]     = tr( "Field '%2' is invalid in '%1'" ) + error;
     errorDescriptions_[ eInvalidCrossedRef ]      = tr( "'%1' has one unfound field of type '%2', it will be deleted at next save." );
+    errorDescriptions_[ eInvalidIdInVector ]      = tr( "'%1' has the same id. These id will be replaced at next save." );
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );
@@ -138,7 +139,7 @@ void ADN_ConsistencyDialog::UpdateDataModel()
 {
     T_Parent::UpdateDataModel();
     DoUpdateDataModel( static_cast< ADN_ConsistencyChecker& >( checker_ ).GetConsistencyErrors() );
-    DoUpdateDataModel( static_cast< ADN_ConsistencyChecker& >( checker_ ).GetLoadingErrors() );
+    DoUpdateDataModel( ADN_ConsistencyChecker::GetLoadingErrors() );
 }
 
 // -----------------------------------------------------------------------------

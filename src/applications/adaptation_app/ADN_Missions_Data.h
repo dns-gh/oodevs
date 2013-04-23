@@ -75,6 +75,7 @@ private:
     void ReadMission( xml::xistream& input, E_MissionType modelType );
     void WriteArchive( xml::xostream& output );
     void MoveMissionSheetsToObsolete( const tools::Path& file ) const;
+    void CheckAndFixLoadingErrors() const;
 
 public:
     std::vector< std::pair< std::string, T_Mission_Vector > > missionsVector_;

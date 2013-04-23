@@ -720,6 +720,10 @@ Arrêt moteur allumé</translation>
         <source>&apos;%1&apos; has one unfound field of type &apos;%2&apos;, it will be deleted at next save.</source>
         <translation>&apos;%1&apos; possède un champ introuvable de type &apos;%2&apos;, il sera supprimé à la prochaine sauvegarde.</translation>
     </message>
+    <message>
+        <source>&apos;%1&apos; has the same id. These id will be replaced at next save.</source>
+        <translation>&apos;%1&apos; possèdent le même identifiant. Ces identifiants seront remplacés à la prochaine sauvegarde.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
