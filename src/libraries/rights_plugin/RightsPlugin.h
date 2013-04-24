@@ -23,7 +23,6 @@ namespace sword
     class ProfileDestructionRequest;
     class ProfileCreationRequest;
     class ConnectedProfilesRequest;
-    class AuthenticationToClient;
 }
 
 namespace tools
@@ -88,17 +87,13 @@ private:
     //@{
     void OnReceive( const std::string& link, const sword::ClientToAuthentication& message );
     void OnReceiveMsgAuthenticationRequest( const std::string& link, const sword::AuthenticationRequest& message, AuthenticationSender& sender );
-    void OnReceiveProfileCreationRequest(const sword::ProfileCreationRequest& message, AuthenticationSender& sender, const std::string& link );
-    void OnReceiveProfileUpdateRequest(const sword::ProfileUpdateRequest& message, AuthenticationSender& sender, const std::string& link );
-    void OnReceiveProfileDestructionRequest(const sword::ProfileDestructionRequest& message, AuthenticationSender& sender, const std::string& link );
-    void OnReceiveConnectedProfilesRequest(const sword::ConnectedProfilesRequest& message, AuthenticationSender& sender, const std::string& link );
+    void OnReceiveProfileCreationRequest(const sword::ProfileCreationRequest& message, AuthenticationSender& sender );
+    void OnReceiveProfileUpdateRequest(const sword::ProfileUpdateRequest& message, AuthenticationSender& sender );
+    void OnReceiveProfileDestructionRequest(const sword::ProfileDestructionRequest& message, AuthenticationSender& sender );
+    void OnReceiveConnectedProfilesRequest(const sword::ConnectedProfilesRequest& message, AuthenticationSender& sender );
 
     bool IsAuthenticated( const std::string& login ) const;
     void Logout( dispatcher::ClientPublisher_ABC& client );
-    void SendProfiles( AuthenticationSender& sender ) const;
-    void SendReponse( sword::AuthenticationToClient& reply, AuthenticationSender& sender, const std::string& link ) const;
-
-    unsigned int GetClientID( const std::string& link ) const;
     //@}
 
 private:
@@ -107,8 +102,12 @@ private:
     typedef std::map< std::string, boost::shared_ptr< dispatcher::Profile > > T_Profiles;
     typedef T_Profiles::iterator                         IT_Profiles;
     typedef T_Profiles::const_iterator                  CIT_Profiles;
+    //@}
 
-    typedef std::map< std::string, unsigned int > T_ClientsID;
+private:
+    //! @name Helpers
+    //@{
+    void SendProfiles( AuthenticationSender& sender ) const;
     //@}
 
 private:
@@ -122,8 +121,6 @@ private:
     T_Profiles                                  authenticated_;
     int                                         maxConnections_;
     int                                         currentConnections_;
-    T_ClientsID                                 clientsID_;
-    unsigned int                                countID_;
     //@}
 };
 

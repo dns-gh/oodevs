@@ -332,9 +332,6 @@ message AuthenticationToClient {
     optional int32   context = 1;
     //! A field containing one of the messages to be sent
     required Content message = 2;
-    //! client identifier, non-nul after a successful authentication, for
-    //! specific messages, mostly requests acknowledgements.
-    optional int32   client_id = 3;
 }
 
 /** @}*/
