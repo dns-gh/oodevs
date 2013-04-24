@@ -102,9 +102,9 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
             int direction = static_cast< int >( radians * 180 / 3.14f );
             if( direction < 0 )
                 direction = 360 + direction;
-            unsigned int udirection = static_cast< unsigned int >( direction );
+            unsigned int udirection = 360 - static_cast< unsigned int >( direction );
             tools::Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
-            bool isMoving = true;
+            bool isMoving = false;
             bool hasLiveChildren = false;
             geometry::Vector2f orthogonalDirection = directionVector.Normal();
             float minProjection = std::numeric_limits< float >::max();
@@ -129,8 +129,8 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
                         float orthogonalProjection = orthogonalDirection.DotProduct( geometry::Vector2f( position ) );
                         minOrthogonalProjection = std::min( minOrthogonalProjection, orthogonalProjection );
                         maxOrthogonalProjection = std::max( maxOrthogonalProjection, orthogonalProjection );
-                        if( !IsUnitMoving( attributes ) )
-                            isMoving = false;
+                        if( IsUnitMoving( attributes ) )
+                            isMoving = true;
                     }
                     const Agent* agent = dynamic_cast< const Agent* >( child );
                     if( agent )
