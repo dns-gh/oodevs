@@ -171,7 +171,7 @@ void Actions::StartScheduler( const std::string& filename )
 {
     try
     {
-        const auto file = config_.GetLoader().LoadFile( config_.BuildExerciseChildFile( tools::Path( "scripts/resources" ) / tools::Path( ( filename + ".ord" ).c_str() ) ) );
+        const auto file = config_.GetLoader().LoadFile( config_.BuildExerciseChildFile( tools::Path( "scripts/resources" ) / tools::Path::FromUTF8( filename + ".ord" ) ) );
         const kernel::XmlAdapter xml( *converter_, *entities_ );
         const auto ptr = boost::make_shared< ActionScheduler >( *file, xml, publisher_ );
         controller_.Register( *ptr );
