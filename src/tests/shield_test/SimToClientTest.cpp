@@ -667,6 +667,18 @@ BOOST_FIXTURE_TEST_CASE( stop_fire_effect_to_client_is_converted, ContextFixture
     converter.ReceiveSimToClient( msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( indirect_fire_perception_to_client_is_converted, ContextFixture< sword::SimToClient > )
+{
+    content.mutable_indirect_fire_perception()->add_perceivers()->set_id( 4 );
+    content.mutable_indirect_fire_perception()->add_perceivers()->set_id( 5 );
+    content.mutable_indirect_fire_perception()->add_perceivers()->set_id( 6 );
+    content.mutable_indirect_fire_perception()->mutable_ammunition()->set_id( 7 );
+    content.mutable_indirect_fire_perception()->add_fire_effects()->set_id( 8 );
+    content.mutable_indirect_fire_perception()->add_fire_effects()->set_id( 9 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { indirect_fire_perception { perceivers { id: 4 } perceivers { id: 5 } perceivers { id: 6 } ammunition { id: 7 } fire_effects: 8 fire_effects: 9 } }" ) );
+    converter.ReceiveSimToClient( msg );
+}
+
 namespace
 {
     template< typename W >

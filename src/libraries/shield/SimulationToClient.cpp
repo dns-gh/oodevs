@@ -1079,6 +1079,19 @@ void SimulationToClient::Convert( const sword::StartFireEffect& from, MsgsSimToC
 
 // -----------------------------------------------------------------------------
 // Name: SimulationToClient::Convert
+// Created: JSR 2013-04-24
+// -----------------------------------------------------------------------------
+void SimulationToClient::Convert( const sword::IndirectFirePerception& from, MsgsSimToClient::MsgIndirectFirePerception* to )
+{
+    for( int i = 0; i < from.perceivers().size(); ++i )
+        to->add_perceivers()->set_id( from.perceivers( i ).id() );
+    CONVERT_ID( ammunition );
+    for( int i = 0; i < from.fire_effects().size(); ++i )
+        to->add_fire_effects( from.fire_effects( i ).id() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationToClient::Convert
 // Created: MCO 2010-11-10
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::StopFireEffect& from, MsgsSimToClient::MsgStopFireEffect* to )

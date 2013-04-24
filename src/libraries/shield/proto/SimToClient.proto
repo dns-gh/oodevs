@@ -683,6 +683,12 @@ message MsgStopFireEffect  {
     required Common.FireEffectId fire_effect = 1; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
+message MsgIndirectFirePerception {
+    repeated Common.UnitId perceivers       = 1; // list can be empty
+    required Common.ResourceType ammunition = 2;
+    repeated int32 fire_effects             = 3; // list cannot be empty
+}
+
 enum EnumReportType {
   information            = 0;
   operational            = 1;
@@ -1461,7 +1467,7 @@ message MsgSimToClient {
         optional MsgLogFuneralHandlingDestruction               log_funeral_handling_destruction               = 142;
         optional Common.MsgControlExportRequest                 control_export                                 = 143; // FT 45354
         optional Common.MsgLogHistoryRequestForPlayAck          log_history_request_for_play_ack               = 144; // FT 45373
-
+        optional MsgIndirectFirePerception                      indirect_fire_perception                       = 145;
     }
     optional int32   context = 1;
     required Content message = 2;

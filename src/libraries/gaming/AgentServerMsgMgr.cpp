@@ -1284,6 +1284,15 @@ void AgentServerMsgMgr::OnReceiveStopFireEffect( const sword::StopFireEffect& me
     GetModel().weather_.DeleteAmmoEffect( message );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveIndirectFirePerception
+// Created: JSR 2013-04-24
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveIndirectFirePerception( const sword::IndirectFirePerception& message )
+{
+    GetModel().weather_.UpdateFireEffectPerception( message );
+}
+
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveExplosion
 // Created: NLD 2003-05-28
@@ -1840,6 +1849,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
         OnReceiveStartFireEffect           ( wrapper.message().start_fire_effect() );
     else if( wrapper.message().has_stop_fire_effect() )
         OnReceiveStopFireEffect            ( wrapper.message().stop_fire_effect() );
+    else if( wrapper.message().has_indirect_fire_perception() )
+        OnReceiveIndirectFirePerception    ( wrapper.message().indirect_fire_perception() );
     else if( wrapper.message().has_unit_order() )
         OnReceiveUnitOrder                 ( wrapper.message().unit_order() );
     else if( wrapper.message().has_automat_order() )

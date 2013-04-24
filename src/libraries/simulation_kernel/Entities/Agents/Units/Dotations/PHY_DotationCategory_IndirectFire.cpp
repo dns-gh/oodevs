@@ -199,8 +199,15 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         const MT_Ellipse neutralizationSurface( vTargetPosition, vTargetPosition + ( vFireDirection * rNeutralizationCoef_ ),  vTargetPosition + ( vRotatedFireDirection * rNeutralizationCoef_ ) );
 
         // Area effect messages
-        MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_Explosion( attritionSurface, category_, 20 , false ) );
-        MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_Explosion( neutralizationSurface, category_, 20, true ) );
+        MIL_Effect_Explosion* attritionEffect = new MIL_Effect_Explosion( attritionSurface, category_, 20 , false );
+        MIL_Effect_Explosion* neutralizationEffect = new MIL_Effect_Explosion( neutralizationSurface, category_, 20, true );
+        MIL_EffectManager::GetEffectManager().Register( *attritionEffect );
+        MIL_EffectManager::GetEffectManager().Register( *neutralizationEffect );
+
+        std::vector< unsigned int > fireEffectsIds;
+        fireEffectsIds.push_back( attritionEffect->GetFireEffectId() );
+        fireEffectsIds.push_back( neutralizationEffect->GetFireEffectId() );
+        ApplyDetectionRangeEffect( vTargetPosition, fireEffectsIds, 0 );
 
         TER_Agent_ABC::T_AgentPtrVector targets;
         TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( neutralizationSurface, targets );

@@ -59,6 +59,7 @@ public:
         eIntervention,
         eDispersionX,
         eDispersionY,
+        eDetectionRange,
         eNeutralizationRatio,
         eModifStances,
         eDeployTime,

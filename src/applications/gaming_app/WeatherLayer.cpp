@@ -21,10 +21,11 @@
 // Name: WeatherLayer constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-WeatherLayer::WeatherLayer( kernel::GlTools_ABC& tools, gui::ExclusiveEventStrategy& eventStrategy, kernel::Controllers& controllers, const MeteoModel& meteoModel, gui::TerrainPicker& picker )
+WeatherLayer::WeatherLayer( kernel::GlTools_ABC& tools, gui::ExclusiveEventStrategy& eventStrategy, kernel::Controllers& controllers, const MeteoModel& meteoModel, gui::TerrainPicker& picker, const kernel::Profile_ABC& profile )
     : gui::WeatherLayer( tools, eventStrategy )
     , controllers_ ( controllers )
     , meteoModel_  ( meteoModel )
+    , profile_( profile )
     , currentMeteo_( new weather::Meteo( 0 , &weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_, 0, 0 ) )
 {
     controllers_.Register( *this );
@@ -52,7 +53,7 @@ void WeatherLayer::Paint( const geometry::Rectangle2f& viewport )
     gui::WeatherLayer::Paint( viewport );
     glPushAttrib( GL_CURRENT_BIT );
         for( IT_Effects it = effects_.begin(); it != effects_.end(); ++it )
-            (*it)->Draw( tools_ );
+            (*it)->Draw( tools_, profile_ );
     glPopAttrib();
 }
 

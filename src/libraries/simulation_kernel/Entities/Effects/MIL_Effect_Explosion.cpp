@@ -13,12 +13,7 @@
 #include "MIL_Effect_Explosion.h"
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
-#include "Meteo/PHY_MeteoDataManager.h"
-#include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
-#include "Network/NET_ASN_Tools.h"
-#include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "tools/MIL_IDManager.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_Explosion constructor

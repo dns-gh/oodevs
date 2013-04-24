@@ -379,7 +379,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Layers
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, preferenceDialog_->GetPreferences(), *picker );
-    WeatherLayer* meteoLayer = new WeatherLayer( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker );
+    WeatherLayer* meteoLayer = new WeatherLayer( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker, profile );
 
     // object/unit creation window
     QDockWidget* pCreationWnd = new QDockWidget( "creation", this );

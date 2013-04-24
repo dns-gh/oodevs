@@ -137,6 +137,7 @@ public:
     static void Convert( const sword::SetAutomatModeAck& from, MsgsSimToClient::MsgSetAutomatModeAck* to );
     static void Convert( const sword::StartCrowdFire& from, MsgsSimToClient::MsgStartCrowdFire* to );
     static void Convert( const sword::StartFireEffect& from, MsgsSimToClient::MsgStartFireEffect* to );
+    static void Convert( const sword::IndirectFirePerception& from, MsgsSimToClient::MsgIndirectFirePerception* to );
     static void Convert( const sword::StartUnitFire& from, MsgsSimToClient::MsgStartUnitFire* to );
     static void Convert( const sword::StockResource& from, Common::StockResource* to );
     static void Convert( const sword::StopCrowdFire& from, MsgsSimToClient::MsgStopCrowdFire* to );

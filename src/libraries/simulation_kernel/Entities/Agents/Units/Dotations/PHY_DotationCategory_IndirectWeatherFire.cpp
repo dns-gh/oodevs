@@ -73,8 +73,13 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC*
     vRotatedFireDirection *= ( rInterventionTypeFired * rDispersionY_ );
 
     const MT_Ellipse effectSurface( vTargetPosition, vTargetPosition + vFireDirection, vTargetPosition + vRotatedFireDirection );
-    MIL_Effect_Weather* pEffect = new MIL_Effect_Weather( effectSurface, category_, MIL_Tools::ConvertSecondsToSim( rLifeDuration_ ), MIL_Tools::ConvertSecondsToSim( rDeploymentDuration_ ) );
+    const double deploymentDuration = MIL_Tools::ConvertSecondsToSim( rDeploymentDuration_ );
+    MIL_Effect_Weather* pEffect = new MIL_Effect_Weather( effectSurface, category_, MIL_Tools::ConvertSecondsToSim( rLifeDuration_ ), deploymentDuration );
     MIL_EffectManager::GetEffectManager().Register( *pEffect );
+
+    std::vector< unsigned int > fireEffectsIds;
+    fireEffectsIds.push_back( pEffect->GetFireEffectId() );
+    ApplyDetectionRangeEffect( vTargetPosition, fireEffectsIds, deploymentDuration );
 
     TER_Agent_ABC::T_AgentPtrVector targets;
     TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( effectSurface, targets );

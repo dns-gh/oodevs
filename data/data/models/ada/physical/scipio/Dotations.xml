@@ -298,7 +298,7 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -375,7 +375,7 @@
     </urban-modifiers>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1370 408 0020" codeLFRIL="" codeNNO="1370 14 237 0366" id="18" id-nature="3" name="ART FUM DREB" nature="Solide" package-mass="0.054" package-size="8" package-volume="0.071" type="Obus">
-    <indirect-fire intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
+    <indirect-fire detection-range="5000" intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315  310 0210" codeLFRIL="" codeNNO="1315 14 527 1536" d-type="true" id="19" id-nature="3" name="CPLT 81 EXPL MLE F2" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
     <attritions>
@@ -389,7 +389,7 @@
       <attrition destruction="0.1" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.3"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -420,7 +420,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -451,7 +451,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -482,7 +482,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="3.5" type="grenade" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="12" neutralization-ratio="3.5" type="grenade" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -513,7 +513,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="2" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="2" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.5"/>
       <ph target-posture="MouvementDiscret" value="0.5"/>
       <ph target-posture="Arret" value="0.8"/>
@@ -524,10 +524,10 @@
     </indirect-fire>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1320 323 0020" codeLFRIL="" codeNNO="1320 14 449 8615" d-type="true" id="24" id-nature="3" name="O ECL 155 F1" nature="Solide" package-mass="0.652" package-size="8" package-volume="0.82" type="Obus">
-    <indirect-fire intervention-type="4" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fire detection-range="5000" intervention-type="4" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1320 325 0010" codeLFRIL="" codeNNO="1320 14 449 8616" d-type="true" id="25" id-nature="3" name="CPLT FUM PH 155" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
-    <indirect-fire intervention-type="2" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fire detection-range="5000" intervention-type="2" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="00010001" codeLFRIL="" codeNNO="1111110020001" id="26" id-nature="3" name="Roquette M77" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
@@ -550,7 +550,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -581,7 +581,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="2" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="2" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -713,7 +713,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -779,7 +779,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="40" neutralization-ratio="5" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="40" neutralization-ratio="5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -854,7 +854,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="4" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="4" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.5"/>
       <ph target-posture="MouvementDiscret" value="0.5"/>
       <ph target-posture="Arret" value="0.8"/>
@@ -885,7 +885,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="2.5" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="24" neutralization-ratio="2.5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -916,7 +916,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="2" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="24" neutralization-ratio="2" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -1013,7 +1013,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="1" neutralization-ratio="20" type="explosif" x-dispersion="10" y-dispersion="10">
+    <indirect-fire detection-range="5000" intervention-type="1" neutralization-ratio="20" type="explosif" x-dispersion="10" y-dispersion="10">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1044,7 +1044,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="1" neutralization-ratio="20" type="explosif" x-dispersion="10" y-dispersion="10">
+    <indirect-fire detection-range="5000" intervention-type="1" neutralization-ratio="20" type="explosif" x-dispersion="10" y-dispersion="10">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1097,7 +1097,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -1128,7 +1128,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="2" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="24" neutralization-ratio="2" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -1159,7 +1159,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="4" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="4" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.5"/>
       <ph target-posture="MouvementDiscret" value="0.5"/>
       <ph target-posture="Arret" value="0.8"/>
@@ -1192,7 +1192,7 @@
     </urban-modifiers>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1330 581 0010" codeLFRIL="" codeNNO="1330 14 475 4728" id="52" id-nature="3" name="GR 51 FUM INC LGI" nature="Solide" package-mass="0.027" package-size="16" package-volume="0.04" type="Obus">
-    <indirect-fire intervention-type="1" life-time="300s" setup-time="10s" type="fumigene" x-dispersion="200" y-dispersion="200"/>
+    <indirect-fire detection-range="5000" intervention-type="1" life-time="300s" setup-time="10s" type="fumigene" x-dispersion="200" y-dispersion="200"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1330 582 0020" codeLFRIL="" codeNNO="1330 14 475 4729" id="53" id-nature="3" name="GR 47  ECL LGI" nature="Solide" package-mass="0.021" package-size="10" package-volume="0.04" type="Obus">
     <attritions>
@@ -1215,7 +1215,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="1" neutralization-ratio="20" type="explosif" x-dispersion="10" y-dispersion="10">
+    <indirect-fire detection-range="5000" intervention-type="1" neutralization-ratio="20" type="explosif" x-dispersion="10" y-dispersion="10">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1336,16 +1336,16 @@
     </urban-modifiers>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315 317 0010" codeLFRIL="" codeNNO="1315 14 266 3970" d-type="true" id="59" id-nature="3" name="CPLT 81 OFUM PH" nature="Solide" package-mass="0.038" package-size="6" package-volume="0.055" type="Obus">
-    <indirect-fire intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
+    <indirect-fire detection-range="5000" intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315 314 0030" codeLFRIL="" codeNNO="1315 14 348 7513" d-type="true" id="60" id-nature="3" name="CPLT 81 OECL F1" nature="Solide" package-mass="0.036" package-size="6" package-volume="0.055" type="Obus">
-    <indirect-fire intervention-type="3" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+    <indirect-fire detection-range="5000" intervention-type="3" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315  956 0010" codeLFRIL="" codeNNO="1315 14 417 3265" d-type="true" id="61" id-nature="3" name="CPLT 120 OFUM PH F1" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.06" type="Obus">
-    <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fire detection-range="5000" intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315 958 0001" codeLFRIL="" codeNNO="1315 14 402 5698" d-type="true" id="62" id-nature="3" name="CPLT 120 OECL PRY F1" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.06" type="Obus">
-    <indirect-fire intervention-type="4" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fire detection-range="5000" intervention-type="4" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1410 072 0001" codeLFRIL="" codeNNO="1410 14 463 8267" id="63" id-nature="3" name="MIS 150 F3 HOT" nature="Solide" package-mass="0.232" package-size="4" package-volume="0.486" type="MissileSol">
     <attritions>
@@ -1368,7 +1368,7 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1443,7 +1443,7 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1465,7 +1465,7 @@
       <attrition destruction="0.6" protection="VehiculeNonProtege" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.6" protection="Combattant" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
     </attritions>
-    <indirect-fire intervention-type="1" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="1" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -1496,7 +1496,7 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.5"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="1" neutralization-ratio="5" type="explosif" x-dispersion="30" y-dispersion="30">
+    <indirect-fire detection-range="5000" intervention-type="1" neutralization-ratio="5" type="explosif" x-dispersion="30" y-dispersion="30">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1694,7 +1694,7 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1716,7 +1716,7 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1769,7 +1769,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="12" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -1813,7 +1813,7 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1835,7 +1835,7 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1857,7 +1857,7 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1888,7 +1888,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="16" neutralization-ratio="5" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="16" neutralization-ratio="5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1919,7 +1919,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="5" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="12" neutralization-ratio="5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1963,7 +1963,7 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -1985,7 +1985,7 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -2060,7 +2060,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="12" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -2071,7 +2071,7 @@
     </indirect-fire>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="00010037" codeLFRIL="" codeNNO="1111110020037" d-type="true" id="93" id-nature="3" name="Obus 130  Fum" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
-    <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fire detection-range="5000" intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="00010038" codeLFRIL="" codeNNO="1111110020038" d-type="true" id="94" id-nature="3" name="Obus 130 OE" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -2094,7 +2094,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -2105,13 +2105,13 @@
     </indirect-fire>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="00010039" codeLFRIL="" codeNNO="1111110020039" id="95" id-nature="3" name="Obus 130 Ecl" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.06" type="Obus">
-    <indirect-fire intervention-type="4" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fire detection-range="5000" intervention-type="4" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="00010040" codeLFRIL="" codeNNO="1111110020040" d-type="true" id="96" id-nature="3" name="Obus 122 OFUM" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
-    <indirect-fire intervention-type="6" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fire detection-range="5000" intervention-type="6" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="00010041" codeLFRIL="" codeNNO="1111110020041" d-type="true" id="97" id-nature="3" name="Obus 152 FUM" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
-    <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fire detection-range="5000" intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="00010042" codeLFRIL="" codeNNO="1111110020042" d-type="true" id="98" id-nature="3" name="Obus 203" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <attritions>
@@ -2134,7 +2134,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -2165,7 +2165,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -2196,7 +2196,7 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -2271,7 +2271,7 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -2302,7 +2302,7 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -2346,7 +2346,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="1" neutralization-ratio="2" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="1" neutralization-ratio="2" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -2377,7 +2377,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -2408,7 +2408,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -2439,7 +2439,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -2470,7 +2470,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -2492,7 +2492,7 @@
       <attrition destruction="1" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="2" neutralization-ratio="1.25" type="aced" x-dispersion="300" y-dispersion="300">
+    <indirect-fire detection-range="5000" intervention-type="2" neutralization-ratio="1.25" type="aced" x-dispersion="300" y-dispersion="300">
       <ph target-posture="Mouvement" value="0.5"/>
       <ph target-posture="MouvementDiscret" value="0.5"/>
       <ph target-posture="Arret" value="0.8"/>
@@ -2503,7 +2503,7 @@
     </indirect-fire>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="00010052" codeLFRIL="" codeNNO="1111110020052" id="112" id-nature="3" name="GALIX FLB/AP" nature="Solide" package-mass="0.054" package-size="8" package-volume="0.071" type="Obus">
-    <indirect-fire intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
+    <indirect-fire detection-range="5000" intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1305145533452" id="113" id-nature="3" name="Obus 25mm HEI EXPLO." nature="Solide" package-mass="0.03" package-size="60" package-volume="0.026" type="Obus">
     <attritions>
@@ -2561,7 +2561,7 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
       <ph target-posture="Arret" value="0.6"/>
@@ -2592,7 +2592,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="1" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="1" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -2623,7 +2623,7 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -2654,7 +2654,7 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -2685,7 +2685,7 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+    <indirect-fire detection-range="5000" intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
       <ph target-posture="Arret" value="1"/>
@@ -2751,4 +2751,4 @@
   <resource category="funeraire" codeEMAT6="" codeEMAT8="00010075" codeLFRIL="" codeNNO="1111110020075" id="146" id-nature="3" name="Sac mortuaire" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
   <resource category="funeraire" codeEMAT6="" codeEMAT8="00010076" codeLFRIL="" codeNNO="1111110020076" id="147" id-nature="3" name="Conteneur mortuaire" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
 </resources>
-<!-- signature="3441153358" -->
+<!-- signature="1096278114" -->

@@ -2532,6 +2532,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_ABC.cpp">
       <Filter>Source Files\Entities\Effects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_DetectionRange.cpp">
+      <Filter>Source Files\Entities\Effects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
@@ -4972,6 +4975,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Automates\MIL_SupplyManager.h">
       <Filter>Source Files\Entities\Automates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_DetectionRange.h">
+      <Filter>Source Files\Entities\Effects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

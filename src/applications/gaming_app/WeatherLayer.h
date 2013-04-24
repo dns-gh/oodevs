@@ -17,6 +17,7 @@ namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -40,7 +41,7 @@ class WeatherLayer : public gui::WeatherLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherLayer( kernel::GlTools_ABC& tools, gui::ExclusiveEventStrategy& eventStrategy, kernel::Controllers& controllers, const MeteoModel& meteoModel, gui::TerrainPicker& picker );
+             WeatherLayer( kernel::GlTools_ABC& tools, gui::ExclusiveEventStrategy& eventStrategy, kernel::Controllers& controllers, const MeteoModel& meteoModel, gui::TerrainPicker& picker, const kernel::Profile_ABC& profile );
     virtual ~WeatherLayer();
     //@}
 
@@ -69,6 +70,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const MeteoModel&    meteoModel_;
+    const kernel::Profile_ABC& profile_;
     T_Effects            effects_;
     weather::Meteo*      currentMeteo_;
     //@}

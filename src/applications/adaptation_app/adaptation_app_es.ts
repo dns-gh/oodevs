@@ -1617,6 +1617,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
         <source>Code EMAT6</source>
         <translation type="unfinished">Código EMAT6</translation>
     </message>
+    <message>
+        <source>Sound detection range</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>

@@ -47,6 +47,7 @@ public:
     virtual void ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
     virtual bool HasHit( const MIL_Agent_ABC& target, double ) const;
     double GetRadius() const;
+    void ApplyDetectionRangeEffect( const MT_Vector2D& vTargetPosition, const std::vector< unsigned int >& fireEffectsIds, double deploymentDuration ) const;
     //@}
 
 protected:
@@ -57,6 +58,7 @@ protected:
     unsigned int nInterventionType_;
     double rDispersionX_;
     double rDispersionY_;
+    double detectionRange_;
     //@}
 };
 

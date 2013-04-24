@@ -15,6 +15,7 @@
 
 namespace sword
 {
+    class IndirectFirePerception;
     class StartFireEffect;
     class StopFireEffect;
 }
@@ -49,6 +50,7 @@ public:
 
     void CreateAmmoEffect( const sword::StartFireEffect& message );
     void DeleteAmmoEffect( const sword::StopFireEffect& message );
+    void UpdateFireEffectPerception( const sword::IndirectFirePerception& message );
     //@}
 
 private:

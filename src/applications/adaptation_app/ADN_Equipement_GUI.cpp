@@ -214,7 +214,8 @@ void ADN_Equipement_GUI::BuildAmmunition()
     builder.AddField< ADN_EditLine_Int >( pIndirectGroupHolder, tr( "Intervention" ), vConnectors[ eIntervention ], 0, eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pIndirectGroupHolder, tr( "X Dispersion" ), vConnectors[ eDispersionX ], tr( "m" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pIndirectGroupHolder, tr( "Y Dispersion" ), vConnectors[ eDispersionY ], tr( "m" ), eGreaterZero );
-    
+    builder.AddField< ADN_EditLine_Double >( pIndirectGroupHolder, tr( "Sound detection range" ), vConnectors[ eDetectionRange ], tr( "m" ), eGreaterZero );
+
     {
         // Explosive parameters
         pExplosiveParametersGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Explosive ammo parameters" ), pIndirectGroup );

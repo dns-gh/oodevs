@@ -122,6 +122,7 @@ public:
         ADN_Type_Int                                                          nIntervention_;
         ADN_Type_Double                                                       rDispersionX_;
         ADN_Type_Double                                                       rDispersionY_;
+        ADN_Type_Double                                                       rDetectionRange_;
 
         // For explosive ammo
         ADN_Type_Double                                                       rNeutralizationRatio_;

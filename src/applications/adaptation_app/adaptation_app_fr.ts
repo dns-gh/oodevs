@@ -1618,6 +1618,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>Code EMAT6</source>
         <translation>Code EMAT6</translation>
     </message>
+    <message>
+        <source>Sound detection range</source>
+        <translation>Distance de perception sonore</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>

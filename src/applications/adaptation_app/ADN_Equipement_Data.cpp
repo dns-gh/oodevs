@@ -257,6 +257,7 @@ ADN_Equipement_Data::IndirectAmmoInfos::IndirectAmmoInfos()
     , nIntervention_       ( 1 )
     , rDispersionX_        ( 1.0 )
     , rDispersionY_        ( 1.0 )
+    , rDetectionRange_     ( 5000 )
     , rNeutralizationRatio_( 1 )
     , vModifStance_        ()
     , deployTime_          ( "0s" )
@@ -283,6 +284,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::CopyFrom( ADN_Equipement_Data::Indi
     nIntervention_ = ammoInfos.nIntervention_.GetData();
     rDispersionX_ = ammoInfos.rDispersionX_.GetData();
     rDispersionY_ = ammoInfos.rDispersionY_.GetData();
+    rDetectionRange_ = ammoInfos.rDetectionRange_.GetData();
     rNeutralizationRatio_ = ammoInfos.rNeutralizationRatio_.GetData();
 
     for( uint i=0 ; i< eNbrUnitPosture ; ++i)
@@ -322,7 +324,8 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "type", type )
           >> xml::attribute( "intervention-type", nIntervention_ )
           >> xml::attribute( "x-dispersion", rDispersionX_ )
-          >> xml::attribute( "y-dispersion", rDispersionY_ );
+          >> xml::attribute( "y-dispersion", rDispersionY_ )
+          >> xml::optional >> xml::attribute( "detection-range", rDetectionRange_ );
     nIndirectType_ = ADN_Tr::ConvertToTypeMunitionTirIndirect( type );
     if( nIndirectType_ == (E_TypeMunitionTirIndirect)-1 )
         throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Equipment - Invalid indirect fire ammo type '%1'" ).arg( type.c_str() ).toAscii().constData() );
@@ -360,7 +363,8 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
             << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( nIndirectType_.GetData() ) )
             << xml::attribute( "intervention-type", nIntervention_ )
             << xml::attribute( "x-dispersion", rDispersionX_ )
-            << xml::attribute( "y-dispersion", rDispersionY_ );
+            << xml::attribute( "y-dispersion", rDispersionY_ )
+            << xml::attribute( "detection-range", rDetectionRange_ );
 
     switch( nIndirectType_.GetData() )
     {

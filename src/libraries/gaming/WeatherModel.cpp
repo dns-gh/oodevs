@@ -50,7 +50,7 @@ void WeatherModel::Purge()
 // -----------------------------------------------------------------------------
 void WeatherModel::CreateAmmoEffect( const sword::StartFireEffect& message )
 {
-    Register( message.fire_effect().id(), *new AmmoEffect( message, controller_, model_.static_.coordinateConverter_ ) );
+    Register( message.fire_effect().id(), *new AmmoEffect( message, controller_, model_.static_.coordinateConverter_, model_.GetAgentResolver() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,4 +62,18 @@ void WeatherModel::DeleteAmmoEffect( const sword::StopFireEffect& message )
     AmmoEffect* effect = Find( message.fire_effect().id() );
     Remove( message.fire_effect().id() );
     delete effect;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherModel::UpdateFireEffectPerception
+// Created: JSR 2013-04-24
+// -----------------------------------------------------------------------------
+void WeatherModel::UpdateFireEffectPerception( const sword::IndirectFirePerception& message )
+{
+    for( int i = 0; i < message.fire_effects_size(); ++i )
+    {
+        AmmoEffect* effect = Find( message.fire_effects( i ).id() );
+        if( effect )
+            effect->SetPerceivers( message.perceivers() );
+    }
 }
