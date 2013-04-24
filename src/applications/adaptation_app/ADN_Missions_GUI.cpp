@@ -65,7 +65,7 @@ void ADN_Missions_GUI::Build()
     pTabWidget_->addTab( BuildAutomatMissions(), tr( "Automat missions" ) );
     pTabWidget_->addTab( BuildPopulationMissions(), tr( "Crowd missions" ) );
     pTabWidget_->addTab( BuildFragOrders(), tr( "Fragmentary orders" ) );
-    pTabWidget_->addTab( BuildSICActibities(), tr( "SIC Activities" ) );
+    pTabWidget_->addTab( BuildSICActivities(), tr( "SIC Activities" ) );
 
     // Main widget
     pMainWidget_ = new QWidget();
@@ -281,7 +281,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
 // Name: ADN_Missions_GUI::BuildSICActibities
 // Created: NPT 2013-04-16
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildSICActibities()
+QWidget* ADN_Missions_GUI::BuildSICActivities()
 {
     ADN_GuiBuilder builder;
     T_ConnectorVector vInfosConnectors( eNbrActivityGuiElements, (ADN_Connector_ABC*)0 );
@@ -330,7 +330,7 @@ QWidget* ADN_Missions_GUI::BuildSICActibities()
     pContentLayout->addWidget( pPackagesGroup );
 
     // List view
-    ADN_SearchListView< ADN_Activities_ListView >* pSearchListView = new ADN_SearchListView< ADN_Activities_ListView >( this, data_.activitiesData_->GetActivities(), vInfosConnectors );
+    ADN_SearchListView< ADN_Activities_ListView >* pSearchListView = new ADN_SearchListView< ADN_Activities_ListView >( this, data_.activitiesData_->GetActivities(), vInfosConnectors, 4 );
     vListViews_.push_back( pSearchListView->GetListView() );
 
     // Main page

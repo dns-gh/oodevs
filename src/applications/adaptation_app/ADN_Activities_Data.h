@@ -88,6 +88,7 @@ public:
 
     virtual void FilesNeeded( T_StringList& vFiles ) const;
     PackageInfos* FindPackage( const std::string& strName );
+    QStringList GetActivitiesThatUse( ADN_Activities_Data::PackageInfos& package );
     //@}
 
 private:

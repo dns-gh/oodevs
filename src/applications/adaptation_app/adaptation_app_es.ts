@@ -3351,6 +3351,10 @@ Asegúrese que el archivo existe.</translation>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Activities</source>
+        <translation type="unfinished">Actividas</translation>
+    </message>
 </context>
 <context>
     <name>ADN_People_GUI</name>

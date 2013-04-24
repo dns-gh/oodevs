@@ -93,6 +93,8 @@ void ADN_Packages_ListView::OnContextMenu( const QPoint& pt )
             tools::translate( "ADN_Packages_ListView", "Unit missions" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissionsThatUse( *pCastData ), eMissions, 0 );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
             tools::translate( "ADN_Packages_ListView", "Automata missions" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomataMissionsThatUse( *pCastData ), eMissions, 1 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+            tools::translate( "ADN_Packages_ListView", "Activities" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().activitiesData_->GetActivitiesThatUse( *pCastData ), eMissions, 4 );
     }
     popupMenu.exec( pt );
 }
@@ -107,8 +109,9 @@ std::string ADN_Packages_ListView::GetToolTipFor( Q3ListViewItem& item )
     Package* pCastData = static_cast< Package* >( pData );
     assert( pCastData != 0 );
     std::string retValue;
-    FillMultiUsersList( tr( "Unit missions" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissionsThatUse( *pCastData ), retValue );
-    FillMultiUsersList( tr( "Automata missions" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomataMissionsThatUse( *pCastData ), retValue );
+    FillMultiUsersList( tools::translate( "ADN_Packages_ListView", "Unit missions" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissionsThatUse( *pCastData ), retValue );
+    FillMultiUsersList( tools::translate( "ADN_Packages_ListView", "Automata missions" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomataMissionsThatUse( *pCastData ), retValue );
+    FillMultiUsersList( tools::translate( "ADN_Packages_ListView", "Activities" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().activitiesData_->GetActivitiesThatUse( *pCastData ), retValue );
     if( retValue.empty() )
         retValue = tr( "<b>Unused</b>" ).toAscii().constData();
     return retValue;

@@ -306,3 +306,19 @@ ADN_Activities_Data::PackageInfos* ADN_Activities_Data::FindPackage( const std::
         return 0;
     return *it;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetUnitThatUse
+// Created: NPT 2013-04-19
+// -----------------------------------------------------------------------------
+QStringList ADN_Activities_Data::GetActivitiesThatUse( ADN_Activities_Data::PackageInfos& package )
+{
+    QStringList result;
+    for( auto it = activities_.begin(); it != activities_.end(); ++it )
+    {
+        ActivityInfos* activity = *it;
+        if( activity->package_.GetData()->strName_.GetData() == package.strName_.GetData() )
+            result << activity->strName_.GetData().c_str();
+    }
+    return result;
+}

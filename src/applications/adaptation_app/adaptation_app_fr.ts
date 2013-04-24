@@ -2073,7 +2073,7 @@ du tireur</translation>
     </message>
     <message>
         <source>&lt;nobr&gt;&lt;b&gt;Used by the following &apos;%1&apos;:&lt;/b&gt;&lt;/nobr&gt;</source>
-        <translation>&lt;nobr&gt;&lt;b&gt;Utilisé par les &apos;%1&apos; suivants :&lt;/b&gt;&lt;/nobr&gt;</translation>
+        <translation>&lt;nobr&gt;&lt;b&gt;Utilisé par les &apos;%1&apos; suivant(e)s :&lt;/b&gt;&lt;/nobr&gt;</translation>
     </message>
     <message>
         <source>Create as copy of</source>
@@ -3353,6 +3353,10 @@ Assurez vous que le fichier existe.</translation>
     <message>
         <source>&lt;b&gt;Unused&lt;/b&gt;</source>
         <translation>&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <source>Activities</source>
+        <translation>Activités</translation>
     </message>
 </context>
 <context>

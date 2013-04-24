@@ -80,7 +80,7 @@ private:
     QWidget* BuildAutomatMissions();
     QWidget* BuildPopulationMissions();
     QWidget* BuildFragOrders();
-    QWidget* BuildSICActibities();
+    QWidget* BuildSICActivities();
     //@}
 
 private:
