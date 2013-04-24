@@ -905,7 +905,8 @@ void GlWidget::DrawApp6SymbolScaledSize( const std::string& symbol, const geomet
     factor = fabs( factor ) * GetActualZoomFactor();
     const float svgDeltaX = -20; // Offset of 20 in our svg files...
     const float svgDeltaY = -80 + 120; // Offset of 80 in our svg files + half of 240 which is the defautl height...
-    DrawApp6Symbol( symbol, DefaultStyle(), where, baseWidth_ * factor, Rectangle2f( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) ), 4, 4, direction, width, depth, svgDeltaX, svgDeltaY );
+    Rectangle2f rectangle( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) );
+    DrawApp6Symbol( symbol, DefaultStyle(), where, baseWidth_ * factor, rectangle, 4, 4, direction, width, depth, svgDeltaX, svgDeltaY );
 }
 
 // -----------------------------------------------------------------------------
