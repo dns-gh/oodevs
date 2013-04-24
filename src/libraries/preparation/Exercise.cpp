@@ -120,7 +120,7 @@ namespace
 {
     void CopyNode( const std::string& name, xml::xistream& xis, xml::xostream& xos )
     {
-        if( name != "meta" && name != "action-planning" && name != "settings" && name != "terrain" && name != "urbanstate" && name != "urban" )
+        if( name != "meta" && name != "action-planning" && name != "settings" && name != "terrain" && name != "urbanstate" && name != "urban" && name != "drawings" )
             xos << xml::content( name, xis );
     }
     void CopyFromFile( const tools::Path& file, xml::xostream& xos )
