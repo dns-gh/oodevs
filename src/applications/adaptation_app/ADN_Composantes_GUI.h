@@ -57,6 +57,14 @@ public:
         eArmor,
         eSize,
         eWeight,
+        eEmptyMass,
+        eLoadedMass,
+        eHeight,
+        eLength,
+        eWidth,
+        eVehicleClass,
+        eLoadPerAxle,
+        eTurningRadius,
         eMaxSpeed,
         eNNOCode,
         eEMAT6Code,
@@ -192,6 +200,7 @@ private:
     ADN_Composantes_Data& data_;
 
     ADN_ComboBox* pCombo_;
+    Q3GroupBox* pVehiculeGroupBox_;
     Q3GroupBox* pBreakdownsGroup_;
     ADN_Composantes_Speeds_GUI* pSpeeds_;
     ADN_Composantes_Sensors_GUI* pSensors_;

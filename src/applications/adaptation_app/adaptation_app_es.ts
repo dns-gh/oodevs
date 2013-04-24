@@ -1091,6 +1091,38 @@ estacionado con motor encendido</translation>
         <source>Speed on non breached object</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Empty mass ( kg )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loaded mass ( kg )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vehicule Informations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height ( m )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>length ( m )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vehicule class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load per axle ( kg )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turning radius ( m )</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>

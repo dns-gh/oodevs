@@ -132,6 +132,17 @@ void ADN_Composantes_GUI::Build()
     builder.AddField< ADN_EditLine_String >( pInfoGroupBox, tr( "Information origin:" ), vInfosConnectors[eInformationOrigin] );
     builder.AddEnumField< E_EquipmentCategory >( pInfoGroupBox, tr( "Equipment category:" ), vInfosConnectors[eEquipmentCategory], &ADN_Tr::ConvertFromEquipmentCategory );
 
+    // Operational information groupbox
+    pVehiculeGroupBox_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Vehicule Informations" ) );
+    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Empty mass ( kg )" ), vInfosConnectors[eEmptyMass] );
+    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Loaded mass ( kg )" ), vInfosConnectors[eLoadedMass] );
+    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Height ( m )" ), vInfosConnectors[eHeight] );
+    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "length ( m )" ), vInfosConnectors[eLength] );
+    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "length ( m )" ), vInfosConnectors[eWidth] );
+    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Vehicule class" ), vInfosConnectors[eVehicleClass] );
+    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Load per axle ( kg )" ), vInfosConnectors[eLoadPerAxle] );
+    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Turning radius ( m )" ), vInfosConnectors[eTurningRadius] );
+
     // Breakdowns
     pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ) );
     ADN_Composantes_BreakdownsTable* pAttritionBreakdowns = new ADN_Composantes_BreakdownsTable( tr( "Attrition breakdowns" ).toAscii().constData(), pBreakdownsGroup_ );
@@ -236,6 +247,7 @@ void ADN_Composantes_GUI::Build()
     pDataPageLayout->addMultiCellWidget( pBreakdownsGroup_ , 4, 5, 0, 0 );
 
     pDataPageLayout->addMultiCellWidget( pTroopGroupBox         , 0, 3, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pVehiculeGroupBox_     , 2, 2, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pSensorsGroup          , 3, 3, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pRadarsGroup           , 4, 4, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pWeaponsGroup          , 5, 5, 1, 1 );
@@ -562,11 +574,16 @@ void ADN_Composantes_GUI::OnProtectionTypeChanged()
     for( int i = 0; i < pCombo_->count(); ++i )
         if( ADN_ComboBoxItem* item = pCombo_->GetItem( i ) )
             if( helpers::ArmorInfos* info = static_cast< helpers::ArmorInfos* >( item->GetData() ) )
+            {
                 if( info->GetType() == eProtectionType_Crowd )
                 {
                     index = i;
                     break;
                 }
+            }
+
+    if( helpers::ArmorInfos* info = static_cast< helpers::ArmorInfos* >( pCombo_->GetCurrentData() ) )
+        pVehiculeGroupBox_->setVisible( info->GetType() == eProtectionType_Material );
 
     if( index != -1 )
         pCombo_->removeItem( index );

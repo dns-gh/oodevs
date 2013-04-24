@@ -480,7 +480,7 @@ ADN_Composantes_Data::LogSupplyInfos::LogSupplyInfos()
 : ADN_DataTreeNode_ABC()
 , bIsCarrier_         ( false )
 , rWeight_            ( 0 )
-, rVolume_            ( 0 )
+
 , ptrResourceNature_  ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
 {
     ptrResourceNature_.SetParentNode( *this );
@@ -510,9 +510,9 @@ std::string ADN_Composantes_Data::LogSupplyInfos::GetItemName()
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::LogSupplyInfos::CopyFrom( LogSupplyInfos& src )
 {
-    bIsCarrier_  = src.bIsCarrier_.GetData();
-    rWeight_     = src.rWeight_.GetData();
-    rVolume_     = src.rVolume_.GetData();
+    bIsCarrier_        = src.bIsCarrier_.GetData();
+    rWeight_           = src.rWeight_.GetData();
+    rVolume_           = src.rVolume_.GetData();
     ptrResourceNature_ = src.ptrResourceNature_.GetData();
 }
 
@@ -1803,6 +1803,14 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
     , nPowerIndirectFire_            ( 0 )
     , nPowerCloseCombat_             ( 0 )
     , nPowerEngineering_             ( 0 )
+    , rEmptymass_                    ( 0 )
+    , rLoadedMass_                   ( 0 )
+    , rHeight_                       ( 0 )
+    , rLength_                       ( 0 )
+    , rWidth_                        ( 0 )
+    , rVehiculeClass_                ( 0 )
+    , rLoadPerAxle_                  ( 0 )
+    , rTurningRadius_                ( 0 )
 {
     Initialize();
 }
@@ -1839,6 +1847,14 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos( unsigned int id )
     , nPowerIndirectFire_            ( 0 )
     , nPowerCloseCombat_             ( 0 )
     , nPowerEngineering_             ( 0 )
+    , rEmptymass_                    ( 0 )
+    , rLoadedMass_                   ( 0 )
+    , rHeight_                       ( 0 )
+    , rLength_                       ( 0 )
+    , rWidth_                        ( 0 )
+    , rVehiculeClass_                ( 0 )
+    , rLoadPerAxle_                  ( 0 )
+    , rTurningRadius_                ( 0 )
 {
     Initialize();
     ADN_Composantes_Data::idManager_.Lock( id );
@@ -1938,6 +1954,14 @@ ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::ComposanteInfos::Cr
     pCopy->strStartingDate_ = strStartingDate_.GetData();
     pCopy->strInformationOrigin_ = strInformationOrigin_.GetData();
     pCopy->equipmentCategory_ = equipmentCategory_.GetData();
+    pCopy->rEmptymass_ = rEmptymass_.GetData();
+    pCopy->rLoadedMass_ = rLoadedMass_.GetData();
+    pCopy->rHeight_ = rHeight_.GetData();
+    pCopy->rLength_ = rLength_.GetData();
+    pCopy->rWidth_ = rWidth_.GetData();
+    pCopy->rVehiculeClass_ = rVehiculeClass_.GetData();
+    pCopy->rLoadPerAxle_ = rLoadPerAxle_.GetData();
+    pCopy->rTurningRadius_ = rTurningRadius_.GetData();
 
     for( int iTerrain = 0; iTerrain < eNbrLocation; ++iTerrain )
     {
@@ -2102,7 +2126,15 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     std::string strArmor, strSize, equipmentCategory;
     input >> xml::attribute( "protection", strArmor )
           >> xml::attribute( "size", strSize )
-          >> xml::attribute( "weight", rWeight_ );
+          >> xml::attribute( "weight", rWeight_ )
+          >> xml::optional >> xml::attribute( "empty-mass", rEmptymass_ )
+          >> xml::optional >> xml::attribute( "loaded-mass", rLoadedMass_ )
+          >> xml::optional >> xml::attribute( "height", rHeight_ )
+          >> xml::optional >> xml::attribute( "length", rLength_ )
+          >> xml::optional >> xml::attribute( "width", rWidth_ )
+          >> xml::optional >> xml::attribute( "vehicle-class", rVehiculeClass_ )
+          >> xml::optional >> xml::attribute( "load-per-axle", rLoadPerAxle_ )
+          >> xml::optional >> xml::attribute( "turning-radius", rTurningRadius_ );
     input >> xml::optional >> xml::content( "equipment-category", equipmentCategory );
     if( !equipmentCategory.empty() )
     {
@@ -2259,6 +2291,17 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
                << xml::attribute( "protection", ptrArmor_.GetData()->strName_ )
                << xml::attribute( "size", ptrSize_.GetData()->strName_ )
                << xml::attribute( "weight", rWeight_ );
+    if( ptrArmor_.GetData()->GetType() == eProtectionType_Material )
+    {
+        output << xml::attribute( "empty-mass", rEmptymass_ )
+               << xml::attribute( "loaded-mass", rLoadedMass_ )
+               << xml::attribute( "height", rHeight_ )
+               << xml::attribute( "length", rLength_ )
+               << xml::attribute( "width", rWidth_ )
+               << xml::attribute( "vehicle-class", rVehiculeClass_ )
+               << xml::attribute( "load-per-axle", rLoadPerAxle_ )
+               << xml::attribute( "turning-radius", rTurningRadius_ );
+    }
 
     output << xml::start( "speeds" )
             << xml::attribute( "max", rMaxSpeed_ );

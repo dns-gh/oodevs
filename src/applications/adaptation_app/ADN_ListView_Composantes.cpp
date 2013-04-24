@@ -62,6 +62,16 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eArmor]->Connect( &pInfos->ptrArmor_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eSize]->Connect( &pInfos->ptrSize_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eWeight]->Connect( &pInfos->rWeight_, bConnect );
+
+    vItemConnectors_[ADN_Composantes_GUI::eEmptyMass]->Connect( &pInfos->rEmptymass_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eLoadedMass]->Connect( &pInfos->rLoadedMass_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eHeight]->Connect( &pInfos->rHeight_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eLength]->Connect( &pInfos->rLength_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eWidth]->Connect( &pInfos->rWidth_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eVehicleClass]->Connect( &pInfos->rVehiculeClass_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eLoadPerAxle]->Connect( &pInfos->rLoadPerAxle_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eTurningRadius]->Connect( &pInfos->rTurningRadius_, bConnect );
+
     vItemConnectors_[ADN_Composantes_GUI::eMaxSpeed]->Connect( &pInfos->rMaxSpeed_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eNNOCode]->Connect( &pInfos->strCodeNNO_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eEMAT6Code]->Connect( &pInfos->strCodeEMAT6_, bConnect );
@@ -156,6 +166,8 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eIsLogSupply]->Connect( &pInfos->logInfos_.bHasSupplyInfos_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasHealthLog]->Connect( &pInfos->logInfos_.bHasHealthInfos_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasMaxSlope]->Connect( &pInfos->bMaxSlope_, bConnect );
+
+
 }
 
 //-----------------------------------------------------------------------------

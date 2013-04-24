@@ -1091,6 +1091,38 @@ Arrêt moteur allumé</translation>
         <source>Speed on non breached object</source>
         <translation>Vitesse sur objet non breché</translation>
     </message>
+    <message>
+        <source>Empty mass ( kg )</source>
+        <translation>Poids à vide (kg)</translation>
+    </message>
+    <message>
+        <source>Loaded mass ( kg )</source>
+        <translation>Poids en charge (kg)</translation>
+    </message>
+    <message>
+        <source>Vehicule Informations</source>
+        <translation>Informations vehicules</translation>
+    </message>
+    <message>
+        <source>Height ( m )</source>
+        <translation>Hauteur (m)</translation>
+    </message>
+    <message>
+        <source>length ( m )</source>
+        <translation>Longueur (m)</translation>
+    </message>
+    <message>
+        <source>Vehicule class</source>
+        <translation>Classe du véhicule</translation>
+    </message>
+    <message>
+        <source>Load per axle ( kg )</source>
+        <translation>Charge par essieu (kg)</translation>
+    </message>
+    <message>
+        <source>Turning radius ( m )</source>
+        <translation>Rayon de braquage (m)</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>
