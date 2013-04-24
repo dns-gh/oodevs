@@ -386,7 +386,8 @@ bool LocationOwnershipPolicy::IsInDivestureArea( double latitude, double longitu
 // -----------------------------------------------------------------------------
 void LocationOwnershipPolicy::Notify( const sword::ShapeCreation& message, int /*context*/ )
 {
-    if( message.shape().category() == "Tasks" && message.shape().pattern() == divestitureZoneName_ )
+    const std::string shapeName=message.shape().category()+"/"+message.shape().pattern();
+    if( shapeName == divestitureZoneName_ )
         area_[ message.id().id() ] = Convert( message.shape().points() );
     for( T_OwnershipStates::iterator it=states_.begin(); states_.end()!=it; ++it )
     {

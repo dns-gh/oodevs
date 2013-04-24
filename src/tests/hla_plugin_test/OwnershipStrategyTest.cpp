@@ -44,7 +44,7 @@ namespace
     {
     public:
         StrategyFixture()
-            : policy( messageController, ownershipController, remoteSubject, transferSender, "remote_zone" )
+            : policy( messageController, ownershipController, remoteSubject, transferSender, "Misc./remote zone" )
             , objectListener( 0 )
         {
             BOOST_REQUIRE( shapeCreationListener );
@@ -76,8 +76,8 @@ namespace
     {
         sword::MessengerToClient_Content message;
         sword::ShapeCreation* shape = message.mutable_shape_creation();
-        shape->mutable_shape()->set_category( "Tasks" );
-        shape->mutable_shape()->set_pattern( "remote_zone" );
+        shape->mutable_shape()->set_category( "Misc." );
+        shape->mutable_shape()->set_pattern( "remote zone" );
         AddPoint( *shape->mutable_shape()->mutable_points(), 10, 10 );
         AddPoint( *shape->mutable_shape()->mutable_points(), 10, 100 );
         AddPoint( *shape->mutable_shape()->mutable_points(), 100, 100 );
