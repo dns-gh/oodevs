@@ -252,7 +252,8 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const gui::Viewport_A
         float width = isMoving? 0.f : realAgent_.GetType().GetWidth();
         float depth = isMoving? realAgent_.GetType().GetLength() : realAgent_.GetType().GetDepth();
         tools.DrawUnitSymbol( currentSymbol_, moveSymbol_, staticSymbol_, isMoving, where, -1, direction, width, depth );
-        if( nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
+        bool app6 = isMoving ? moveSymbol_.empty() : staticSymbol_.empty();
+        if( app6 && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
         {
             tools.DrawApp6SymbolFixedSize( realAgent_.GetType().GetLevelSymbol(), where, -1, 0 );
             if( bIsPC_.IsSet() && bIsPC_ )
