@@ -41,7 +41,7 @@ public:
     //! @name Accessors
     //@{
           unsigned int   Length               () const;
-    const MT_Vector2D&   GetDirDanger         () const;
+    boost::shared_ptr< MT_Vector2D >          GetDirDanger() const;
     const MIL_Fuseau&    GetFuseau            () const;
     const T_LimaVector&  GetLimas             () const;
           MIL_LimaOrder* FindLima             ( unsigned int nID );
@@ -84,7 +84,7 @@ private:
     bool hasContext_;
     T_LimaVector limas_;
     MIL_Fuseau fuseau_;
-    MT_Vector2D dirDanger_;
+    boost::shared_ptr< MT_Vector2D > dirDanger_;
     //@}
 };
 

@@ -212,8 +212,7 @@ boost::shared_ptr< MT_Vector2D > DEC_MiscFunctions::GetDirectionEnnemi( boost::s
 {
     if( !pMission )
         throw MASA_EXCEPTION( "invalid parameter." );
-    boost::shared_ptr< MT_Vector2D > result( new MT_Vector2D( pMission->GetDirDanger() ) );
-    return result;
+    return pMission->GetDirDanger();
 }
 
 // -----------------------------------------------------------------------------

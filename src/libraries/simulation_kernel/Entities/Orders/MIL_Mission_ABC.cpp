@@ -266,7 +266,7 @@ const MIL_MissionType_ABC& MIL_Mission_ABC::GetType() const
 // Name: MIL_Mission_ABC::GetDirDanger
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-const MT_Vector2D& MIL_Mission_ABC::GetDirDanger() const
+boost::shared_ptr< MT_Vector2D > MIL_Mission_ABC::GetDirDanger() const
 {
     return context_.GetDirDanger();
 }

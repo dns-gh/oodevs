@@ -13,6 +13,7 @@
 #include "MIL_OrderContext.h"
 #include "MIL_LimaFunction.h"
 #include "MIL_AgentServer.h"
+#include "CheckPoints/SerializationTools.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
@@ -27,7 +28,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_OrderContext )
 // -----------------------------------------------------------------------------
 MIL_OrderContext::MIL_OrderContext( bool present /*= false */ )
     : hasContext_( present )
-    , dirDanger_ ( 0., 1. )
+    , dirDanger_ ( new MT_Vector2D( 0., 1. ) )
 {
     // NOTHING
 }
@@ -38,6 +39,7 @@ MIL_OrderContext::MIL_OrderContext( bool present /*= false */ )
 // -----------------------------------------------------------------------------
 MIL_OrderContext::MIL_OrderContext( const sword::MissionParameters& asn, const MT_Vector2D& orientationReference )
     : hasContext_( true )
+    , dirDanger_ ( new MT_Vector2D( 0., 1. ) )
 {
     if( unsigned int( asn.elem_size() ) < Length() )
         throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
@@ -139,7 +141,7 @@ void MIL_OrderContext::ReadDirection( const sword::MissionParameter& asn )
     {
         if( !asn.value_size() || !asn.value().Get( 0 ).has_heading() )
             throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_parameter );
-        dirDanger_ = weather::ReadDirection( asn.value().Get( 0 ).heading() );
+        *dirDanger_ = weather::ReadDirection( asn.value().Get( 0 ).heading() );
     }
 }
 
@@ -177,7 +179,7 @@ void MIL_OrderContext::WriteLimits( sword::MissionParameter& limit1, sword::Miss
 void MIL_OrderContext::WriteDirection( sword::MissionParameter& asn ) const
 {
     asn.set_null_value( false );
-    NET_ASN_Tools::WriteDirection( dirDanger_, *asn.mutable_value()->Add()->mutable_heading() );
+    NET_ASN_Tools::WriteDirection( *dirDanger_, *asn.mutable_value()->Add()->mutable_heading() );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +195,7 @@ unsigned int MIL_OrderContext::Length() const
 // Name: MIL_OrderContext::GetDirDanger
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-const MT_Vector2D& MIL_OrderContext::GetDirDanger() const
+boost::shared_ptr< MT_Vector2D > MIL_OrderContext::GetDirDanger() const
 {
     return dirDanger_;
 }
@@ -222,7 +224,7 @@ void MIL_OrderContext::AffectFuseau( const MIL_Fuseau& fuseau )
 // -----------------------------------------------------------------------------
 void MIL_OrderContext::AffectDirection( const MT_Vector2D& direction )
 {
-    dirDanger_ = direction;
+    *dirDanger_ = direction;
 }
 
 // -----------------------------------------------------------------------------

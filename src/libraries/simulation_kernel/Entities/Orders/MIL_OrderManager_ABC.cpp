@@ -127,9 +127,11 @@ const std::string& MIL_OrderManager_ABC::GetMissionName() const
 //-----------------------------------------------------------------------------
 const MT_Vector2D& MIL_OrderManager_ABC::GetDirDanger() const
 {
+    static MT_Vector2D vDefaultDirDanger;
     if( pMission_ )
-        return pMission_->GetDirDanger();
-    static const MT_Vector2D vDefaultDirDanger( 0, 1 );
+		vDefaultDirDanger = *pMission_->GetDirDanger();
+	else
+		vDefaultDirDanger = MT_Vector2D( 0, 1 );
     return vDefaultDirDanger;
 }
 

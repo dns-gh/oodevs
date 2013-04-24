@@ -1107,8 +1107,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetDirectionDanger( const b
 {
     if( !pMission.get() )
         return boost::shared_ptr< MT_Vector2D >();
-    boost::shared_ptr< MT_Vector2D > result( new MT_Vector2D( pMission->GetDirDanger() ) );
-    return result;
+    return pMission->GetDirDanger();
 }
 
 // -----------------------------------------------------------------------------

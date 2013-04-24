@@ -62,7 +62,7 @@ public:
     virtual void Send() const = 0;
 
     const   std::string&   GetName              () const;
-    const   MT_Vector2D&   GetDirDanger         () const;
+    boost::shared_ptr< MT_Vector2D > GetDirDanger() const;
     const   MIL_Fuseau&    GetFuseau            () const;
     const   T_LimaVector&  GetLimas             () const;
             MIL_LimaOrder* FindLima             ( unsigned int nID );
