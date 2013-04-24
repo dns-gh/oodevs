@@ -552,36 +552,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.app,package.debug,package.ts,package.plugins,package.binaries,package.gaming_app,package.sdk,package.proto,package.doc" description="package the installers and packs"/>
-
-    <target name="package.plugins" depends="package.plugin.hla,package.plugin.dis,package.plugin.timeline" description="package plugin individual installers"/>
-
-    <macrodef name="package-plugin">
-        <attribute name="name"/>
-        <sequential>
-            <safe-move file="${out.dir}/SWORD_plugin-@{name}_${platform}_${version.project}.exe">
-                <nsis name="sword-plugin" script="sword-plugin.nsi" license="true" todir="${out.dir}" makensis="${bin.dir}/nsis/makensis">
-                    <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
-                    <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
-                    <arg value="/DPLUGIN=plugin-@{name}"/>
-                    <arg value="/DPLUGIN_VERSION=1.0"/>
-                    <arg value="/DOUTFILE=@{file}"/>
-                </nsis>
-            </safe-move>
-        </sequential>
-    </macrodef>
-
-    <target name="package.plugin.hla" description="create hla plugin installer">
-        <package-plugin name="hla"/>
-    </target>
-
-    <target name="package.plugin.dis" description="create dis plugin installer">
-        <package-plugin name="dis"/>
-    </target>
-
-    <target name="package.plugin.timeline" description="create timeline plugin installer">
-        <package-plugin name="timeline"/>
-    </target>
+    <target name="package" depends="package.debug,package.ts,package.binaries,package.gaming_app,package.sdk,package.proto,package.doc" description="package the installers and packs"/>
 
     <!-- Package misc -->
     <target name="package.debug" description="create a zip with all PDB files">
@@ -709,50 +680,6 @@
             tofile="${dist.dir}/SWORD_ts_${version.project}.zip"/>
     </target>
 
-    <target name="package.app" description="package des applications runtime">
-        <safe-move file="${out.dir}/SWORD_${platform}_${version.project}.exe">
-            <nsis name="sword" script="sword.nsi" nsh="config.nsh" todir="${out.dir}" makensis="${bin.dir}/nsis/makensis">
-                <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
-                <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
-                <arg value="/DOUTFILE=${out.dir}/setup.exe"/>
-                <arg value="/X!include sword.nsh"/>
-            </nsis>
-            <check-depends file="${out.dir}/setup.exe">
-                <arg value="*.exe"/>
-                <arg value="*_module.dll"/>
-            </check-depends>
-            <exec taskname="7z" executable="${bin.dir}/7z/7z" dir="${out.dir}">
-                <arg value="a"/>
-                <arg value="setup.7z"/>
-                <arg value="setup.exe"/>
-            </exec>
-            <delete file="${out.dir}/setup.exe"/>
-            <copy file="${bin.dir}/7z/7zS.sfx" tofile="${out.dir}/setup.sfx"/>
-            <python>
-                <arg value="${root.dir}/bin/buildtools/editres.py"/>
-                <arg value="editversion"/>
-                <arg value="--version=${version.version}"/>
-                <arg value="--product-name=Sword"/>
-                <arg value="--original-filename=@{file}"/>
-                <arg value="${out.dir}/setup.sfx"/>
-            </python>
-            <python>
-                <arg value="${root.dir}/bin/buildtools/editres.py"/>
-                <arg value="copyicons"/>
-                <arg value="${out.dir}/release/applications/simulation_app/simulation_app.exe"/>
-                <arg value="${out.dir}/setup.sfx"/>
-            </python>
-            <concat destfile="@{file}" binary="true">
-                <filelist>
-                    <file name="${out.dir}/setup.sfx"/>
-                    <file name="config.txt"/>
-                    <file name="${out.dir}/setup.7z"/>
-                </filelist>
-            </concat>
-            <delete file="${out.dir}/setup.7z"/>
-        </safe-move>
-    </target>
-
     <target name="package.sdk" description="package sdk documentation">
         <local name="sdk.prefix"/>
         <property name="sdk.prefix" value="SWORD_API_${version.project}"/>
@@ -858,14 +785,12 @@
         <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
         <update name="iconv"/>
         <update name="log4cxx"/>
-        <update name="masalife/ide" package="net.masagroup.life.brain.ide-win32.win32.x86" todir="${out.dir}/masalife"/>
         <update name="masalife/brain"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="exercises-dev" todir="${data.dir}/exercises"/>
         <update name="models" package="propagations-dev" todir="${data.dir}/data/propagations"/>
         <update name="models" package="terrains-dev" todir="${data.dir}/data/terrains"/>
         <update name="mongoose"/>
-        <update name="nsis"/>
         <update name="openssl"/>
         <update name="proj4"/>
         <update name="protobuf"/>
@@ -878,7 +803,6 @@
         <update name="sword-proto" package="sword-protobuf" todir="${bin.dir}"/>
         <update name="sword/testdata" package="testdata" todir="${data.dir}/tests"/>
         <update name="terrain"/>
-        <update name="terrain" package="terraintools_${platform}" todir="${out.dir}/terraintools"/>
         <update name="timeline"/>
         <update name="tools"/>
         <update name="turtle"/>
