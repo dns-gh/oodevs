@@ -35,6 +35,7 @@
 #include "clients_gui/ValuedListItem.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/ValuedDragObject.h"
+#include "clients_gui/ValuedListItem.h"
 #include "preparation/StaticModel.h"
 #include "preparation/UrbanHierarchies.h"
 #include "preparation/UrbanMenuManager.h"
@@ -180,7 +181,14 @@ void UrbanListView::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos
             menu->popup( pos );
         }
         else
+        {
             gui::EntityListView::OnContextMenuRequested( i, pos, col );
+            if( GetCurrentMode() == ePreparationMode_Terrain )
+            {
+                controllers_.actions_.GetMenu()->addSeparator();
+                controllers_.actions_.GetMenu()->addAction( tr( "Create city" ), this, SLOT( OnCreateCity() ) );
+            }
+        }
     }
 }
 

@@ -127,6 +127,15 @@ const Selectionner_ABC* ActionController::GetSelectionner( const GraphicalEntity
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionController::GetMenu
+// Created: NPT 2013-04-23
+// -----------------------------------------------------------------------------
+kernel::ContextMenu* ActionController::GetMenu()
+{
+    return &menu_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionController::SetSelected
 // Created: JSR 2012-05-21
 // -----------------------------------------------------------------------------

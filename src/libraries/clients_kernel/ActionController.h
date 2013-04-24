@@ -70,6 +70,7 @@ public:
     bool IsSingleSelection( const GraphicalEntity_ABC* selectable ) const;
     bool HasMultipleSelection() const;
     const Selectionner_ABC* GetSelectionner( const GraphicalEntity_ABC* selectable ) const; // private ?
+    kernel::ContextMenu* GetMenu();
 
     // -----------------------------------------------------------------------------
     // Select
