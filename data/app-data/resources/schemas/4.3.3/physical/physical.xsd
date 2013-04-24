@@ -13,6 +13,7 @@
     <xs:complexType>
       <xs:all>
         <xs:element name="active-protections" type="FileReference"/>
+        <xs:element name="activities" type="FileReference"/>
         <xs:element name="automats" type="FileReference"/>
         <xs:element name="breakdowns" type="FileReference"/>
         <xs:element name="communications" type="FileReference"/>
