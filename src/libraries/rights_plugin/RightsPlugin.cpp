@@ -74,6 +74,7 @@ RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Co
     , base_              ( base )
     , maxConnections_    ( maxConnections )
     , currentConnections_( 0 )
+    , countID_           ( 1 ) // non-nul client identifier
 {
     clientCommands.RegisterMessage( *this, &RightsPlugin::OnReceive );
     registrables.Add( new dispatcher::RegistrableProxy( *profiles_ ) );
@@ -164,13 +165,13 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
     if( GetProfile( link ).CheckRights( wrapper ) )
     {
         if( wrapper.message().has_profile_creation_request() )
-            OnReceiveProfileCreationRequest( wrapper.message().profile_creation_request(), sender );
+            OnReceiveProfileCreationRequest( wrapper.message().profile_creation_request(), sender, link );
         if( wrapper.message().has_profile_update_request() )
-            OnReceiveProfileUpdateRequest( wrapper.message().profile_update_request(), sender );
+            OnReceiveProfileUpdateRequest( wrapper.message().profile_update_request(), sender, link );
         if( wrapper.message().has_profile_destruction_request() )
-            OnReceiveProfileDestructionRequest( wrapper.message().profile_destruction_request(), sender );
+            OnReceiveProfileDestructionRequest( wrapper.message().profile_destruction_request(), sender, link );
         if( wrapper.message().has_connected_profiles_request() )
-            OnReceiveConnectedProfilesRequest( wrapper.message().connected_profiles_request(), sender );
+            OnReceiveConnectedProfilesRequest( wrapper.message().connected_profiles_request(), sender, link );
     }
     else
     {
@@ -225,11 +226,14 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         ack->set_terrain_name( config_.GetTerrainName().ToUTF8() );
         ack->set_error_code( sword::AuthenticationResponse::success );
         profile->Send( *ack->mutable_profile() );
+        reply.set_client_id( countID_ );
         sender.Send( reply );
         authenticated_[ link ] = profile;
+        clientsID_[ link ] = countID_;
         ++currentConnections_;
         SendProfiles( sender );
         container_.NotifyClientAuthenticated( sender.GetClient(), link, *profile );
+        ++countID_;
         MT_LOG_INFO_MSG( currentConnections_ << " clients authentified" );
     }
 }
@@ -238,33 +242,33 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
 // Name: RightsPlugin::OnReceiveProfileCreationRequest
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceiveProfileCreationRequest( const sword::ProfileCreationRequest& message, AuthenticationSender& sender )
+void RightsPlugin::OnReceiveProfileCreationRequest( const sword::ProfileCreationRequest& message, AuthenticationSender& sender, const std::string& link )
 {
     sword::AuthenticationToClient reply;
     auto ack = reply.mutable_message()->mutable_profile_creation_request_ack();
     ack->set_error_code( profiles_->Create( message ) );
     ack->set_login( message.profile().login() );
-    sender.Send( reply );
+    SendReponse( reply, sender, link );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RightsPlugin::OnReceiveProfileUpdateRequest
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceiveProfileUpdateRequest( const sword::ProfileUpdateRequest& message, AuthenticationSender& sender )
+void RightsPlugin::OnReceiveProfileUpdateRequest( const sword::ProfileUpdateRequest& message, AuthenticationSender& sender, const std::string& link )
 {
     sword::AuthenticationToClient reply;
     auto ack = reply.mutable_message()->mutable_profile_update_request_ack();
     ack->set_error_code( profiles_->Update( message ) );
     ack->set_login( message.login() );
-    sender.Send( reply );
+    SendReponse( reply, sender, link );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RightsPlugin::OnReceiveProfileDestructionRequest
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceiveProfileDestructionRequest( const sword::ProfileDestructionRequest& message, AuthenticationSender& sender )
+void RightsPlugin::OnReceiveProfileDestructionRequest( const sword::ProfileDestructionRequest& message, AuthenticationSender& sender, const std::string& link )
 {
     sword::AuthenticationToClient reply;
     auto ack = reply.mutable_message()->mutable_profile_destruction_request_ack();
@@ -273,19 +277,30 @@ void RightsPlugin::OnReceiveProfileDestructionRequest( const sword::ProfileDestr
     else
         ack->set_error_code( profiles_->Destroy( message ) );
     ack->set_login( message.login() );
-    sender.Send( reply );
+    SendReponse( reply, sender, link );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RightsPlugin::OnReceiveConnecedProfilesRequest
 // Created: AHC 2011-05-20
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceiveConnectedProfilesRequest( const sword::ConnectedProfilesRequest& /*message*/, AuthenticationSender& sender )
+void RightsPlugin::OnReceiveConnectedProfilesRequest( const sword::ConnectedProfilesRequest& /*message*/, AuthenticationSender& sender, const std::string& link )
 {
     sword::AuthenticationToClient reply;
     auto response = reply.mutable_message()->mutable_connected_profile_list();
     for( T_Profiles::const_iterator it = authenticated_.begin(); it != authenticated_.end(); ++it )
         it->second->Send( *response->add_elem() );
+    SendReponse( reply, sender, link );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RightsPlugin::SendReponse
+// Created: LGY 2013-04-24
+// -----------------------------------------------------------------------------
+void RightsPlugin::SendReponse( sword::AuthenticationToClient& reply, AuthenticationSender& sender, const std::string& link ) const
+{
+    if( unsigned int id = GetClientID( link ) )
+        reply.set_client_id( id );
     sender.Send( reply );
 }
 
@@ -338,6 +353,18 @@ void RightsPlugin::SendProfiles( AuthenticationSender& sender ) const
     for( T_Profiles::const_iterator it = authenticated_.begin(); it != authenticated_.end(); ++it )
         it->second->Send( *response->add_elem() );
     sender.Broadcast( reply );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RightsPlugin::GetClientID
+// Created: LGY 2013-04-24
+// -----------------------------------------------------------------------------
+unsigned int RightsPlugin::GetClientID( const std::string& link ) const
+{
+    auto it = clientsID_.find( link );
+    if( it != clientsID_.end() )
+        return it->second;
+    return 0u;
 }
 
 }  // namespace rights
