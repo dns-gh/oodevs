@@ -609,6 +609,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< bool (unsigned int)> ( boost::bind( &DEC_OrdersFunctions::GetMissionLimaFlag < MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_SetMissionLimaFlagHoraire"     ,
         boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag, boost::ref( GetPion() ), _1, _2 ) ) );
+	RegisterFunction( "DEC_Fuseau"    , 
+		boost::function< const MIL_Fuseau& ()> ( boost::bind( &DEC_OrdersFunctions::GetFuseau< MIL_AgentPion>, boost::ref( GetPion() ) ) ) );
 
     // Etat décisionnel
     RegisterFunction( "DEC_Agent_ChangeEtatRapportDeForce",

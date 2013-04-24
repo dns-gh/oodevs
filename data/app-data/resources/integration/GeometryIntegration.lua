@@ -103,3 +103,8 @@ end
 integration.clipperLocalisation = function( area, fuseau )
     return DEC_Geometrie_ClipperLocalisation( area.source, fuseau.source )
 end
+
+-- NMI
+integration.convertAORtoLocalisation = function ( fuseau ) 
+    return DEC_Geometrie_ConvertirFuseauEnLocalisation( fuseau.source )
+end

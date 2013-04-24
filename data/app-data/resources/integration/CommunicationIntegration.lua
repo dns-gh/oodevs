@@ -309,6 +309,11 @@ integration.getAORFromCommander = function()
     return DEC_Fuseau()
 end
 
+--NMI
+integration.getAORFromPlatoon = function()
+    return DEC_Fuseau()
+end
+
 integration.getAORWidth = function( AOR )
     return DEC_Fuseau_Width( AOR )
 end

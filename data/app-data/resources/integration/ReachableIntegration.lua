@@ -442,7 +442,6 @@ integration.updateMoveToIt = function( objective, pathType )
     -- $$$ Add DEC_Agent_EstEmbarquable() ??? un pion à pied n'est pas "débarqué" si?
     -- --------------------------------------------------------------------------------
     elseif etat == eEtatActionDeplacement_EnCours then
-
         if objective.destination and DEC_Agent_TransporteursPret() then -- if unit has troop transporters
             -- If agent exit from a non traficable element toward a traficable destination, mount
             -- if no no order to stay dismountes has been isssued 
