@@ -11,6 +11,7 @@
 #include "wrapper/View.h"
 #include "wrapper/Event.h"
 #include "wrapper/Hook.h"
+#include "wrapper/Effect.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <boost/foreach.hpp>
 
@@ -53,19 +54,43 @@ void InteractWithTrafficabilityCommand::Execute( const wrapper::View& parameters
 {
     const std::size_t identifier = parameters[ "identifier" ];
     const wrapper::View& entity = model[ "entities" ][ identifier ];
-    if( !entity[ "movement/can-be-traffic-impacted" ] )
-        return;
-    const MT_Vector2D position( entity[ "movement/position/x" ], entity[ "movement/position/y" ] );
-    const float radius = entity[ "perceptions/max-agent-perception-distance" ];
-    std::vector< wrapper::View > agents;
-    GET_HOOK( GetAgentListWithinCircle )( model, position, radius, &AddAgent, &agents );
-    if( agents.empty() )
-        return;
-    wrapper::Event event( "trafficability interaction" );
-    event[ "entity" ] = identifier;
-    BOOST_FOREACH( const wrapper::View& agent, agents )
-        event[ "interactions" ].AddElement()[ "data" ] = agent[ "data" ];
-    event.Post();
+    double trafficModifer = 1.;
+    const wrapper::View& movement = entity[ "movement" ];
+    if( movement[ "can-be-traffic-impacted" ] )
+    {
+        const MT_Vector2D position( movement[ "position/x" ], movement[ "position/y" ] );
+        const float perceptionRadius = entity[ "perceptions/max-agent-perception-distance" ];
+        std::vector< wrapper::View > agents;
+        GET_HOOK( GetAgentListWithinCircle )( model, position, perceptionRadius, &AddAgent, &agents );
+        if( !agents.empty() )
+        {
+            const MT_Vector2D direction = MT_Vector2D( movement[ "direction/x" ], movement[ "direction/y" ] );
+            const unsigned int footPrintRadius = movement[ "foot-print-radius" ];
+            const double speedModifier = movement[ "speed-modifier" ];
+            BOOST_FOREACH( const wrapper::View& agent, agents )
+            {
+                const wrapper::View& agentMovement = agent[ "movement" ];
+                if( agent[ "identifier" ] != identifier && agentMovement[ "can-interact-with-traffic" ] )
+                {
+                    const MT_Vector2D positionAgent( agentMovement[ "position/x" ], agentMovement[ "position/y" ] );
+                    unsigned int distance = footPrintRadius + agentMovement[ "foot-print-radius" ];
+                    if( position.SquareDistance( positionAgent ) < ( distance * distance ) )
+                    {
+                        MT_Vector2D directionAgent = positionAgent - position;
+                        if( ( directionAgent * direction ) > 0 )
+                            trafficModifer *= speedModifier;
+                    }
+                }
+            }
+        }
+    }
+
+    if( movement[ "traffic-modifier" ] != trafficModifer )
+    {
+        wrapper::Effect effect( movement );
+        effect[ "traffic-modifier" ] = trafficModifer; 
+        effect.Post();
+    }
 }
 
 // -----------------------------------------------------------------------------

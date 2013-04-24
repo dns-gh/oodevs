@@ -43,7 +43,6 @@ RoleAction_Moving::RoleAction_Moving()
     , rSpeed_              ( 0.)
     , rSpeedModificator_   ( 1. )
     , rMaxSpeedModificator_( 1. )
-    , rTrafficModificator_ ( 1. )
     , bHasMove_            ( false )
     , bTheoricMaxSpeed_    ( false )
 {
@@ -60,7 +59,6 @@ RoleAction_Moving::RoleAction_Moving( MIL_AgentPion& pion, const core::Model& en
     , rSpeed_              ( 0.)
     , rSpeedModificator_   ( 1. )
     , rMaxSpeedModificator_( 1. )
-    , rTrafficModificator_ ( 1. )
     , bHasMove_            ( false )
     , bTheoricMaxSpeed_    ( false )
 {
@@ -95,7 +93,7 @@ void RoleAction_Moving::serialize( Archive& file, const unsigned int )
 void RoleAction_Moving::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
     if( !bTheoricMaxSpeed_ )
-        algorithm.AddModifier( rMaxSpeedModificator_, true );
+        algorithm.AddModifier( rMaxSpeedModificator_ * (*entity_)[ "movement/traffic-modifier" ], true );
     algorithm.AddModifier( rSpeedModificator_, false );
 }
 
@@ -346,5 +344,5 @@ bool RoleAction_Moving::HasKnowledgeObject( const MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void RoleAction_Moving::ApplyTrafficModifier()
 {
-    rTrafficModificator_ *= owner_->GetType().GetUnitType().GetSpeedModifier();
+    // NOTHING
 }

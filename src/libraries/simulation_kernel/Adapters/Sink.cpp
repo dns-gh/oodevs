@@ -39,7 +39,6 @@
 #include "MovementEventListener.h"
 #include "AlatMonitoringEventListener.h"
 #include "FlyingShellPerceptionEventListener.h"
-#include "TrafficabilityInteractionEventListener.h"
 #include "PopulationFactory_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
@@ -271,7 +270,6 @@ void Sink::Initialize()
     listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire pion callback" ) );
     listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire population callback" ) );
     listeners_.push_back( new FlyingShellPerceptionEventListener( *facade_ ) );
-    listeners_.push_back( new TrafficabilityInteractionEventListener( *model_, *facade_ ) );
     FireHooks::Initialize();
     PerceptionHooks::Initialize();
     MovementHooks::Initialize();
@@ -482,6 +480,7 @@ namespace
         movement[ "can-move" ] = pion.CallRole( &RoleAction_Moving::CanMove, false );
         movement[ "is-ready" ] = pion.CallRole( &RoleAction_Moving::IsReady, true );
         movement[ "can-be-traffic-impacted" ] = pion.CanBeImpactedByTraffic();
+        movement[ "can-interact-with-traffic" ] = pion.CanInteractWithTraffic();
         entity[ "knowledges" ] = pion.GetKnowledgeGroup()->GetId();
         UpdatePerceptions( entity[ "perceptions/notifications" ] );
         core::Model& components = entity[ "components" ];
