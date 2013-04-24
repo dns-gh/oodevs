@@ -13,6 +13,7 @@
 #include "CsvExport.h"
 #include "tools/ExerciseConfig.h"
 #include "clients_kernel/Tools.h"
+#include <boost/algorithm/string.hpp>
 #include <boost/filesystem/operations.hpp>
 
 namespace bfs = boost::filesystem;
@@ -27,6 +28,7 @@ FilterCsv::FilterCsv( QWidget* parent, const tools::ExerciseConfig& config, Mode
     , pExport_       ( new CsvExport( model, converter ) )
     , output_        ( 0 )
     , exerciseFile_  ( config.GetExerciseFile().c_str() )
+    , exerciseName_  ( config.GetExerciseName().c_str() )
 {
     progressDialog_->setAutoClose( true );
     progressDialog_->setCancelButton( 0 );
@@ -59,7 +61,7 @@ namespace
 void FilterCsv::Execute()
 {
     bfs::path ouput( output_->text().toAscii().constData() );
-    pExport_->Execute( ouput, *this );
+    pExport_->Execute( GetExerciseName(), ouput, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +92,17 @@ const std::string FilterCsv::GetName() const
 const std::string FilterCsv::GetDescription() const
 {
     return tools::translate( "FilterCsv", "Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files." ).toAscii().constData();;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterCsv::GetExerciseName
+// Created: NPT 2013-04-22
+// -----------------------------------------------------------------------------
+const std::string FilterCsv::GetExerciseName() const
+{
+    std::vector< std::string > extractedVector;
+    boost::split( extractedVector, exerciseName_, boost::algorithm::is_any_of( "/" ) );
+    return extractedVector.back() + "_";
 }
 
 // -----------------------------------------------------------------------------

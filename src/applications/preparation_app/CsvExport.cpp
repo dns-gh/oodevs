@@ -90,25 +90,25 @@ namespace
 // Name: CsvExport::Execute
 // Created: LGY 2011-10-18
 // -----------------------------------------------------------------------------
-void CsvExport::Execute( bfs::path& path, Progress_ABC& progress )
+void CsvExport::Execute( const std::string& exerciseName, bfs::path& path, Progress_ABC& progress )
 {
     const std::string separator = GetSeparator();
     progress.Update( 0 );
-    WriteEntity( path, separator );
+    WriteEntity( exerciseName, path, separator );
     progress.Update( 10 );
-    WriteResources( path, separator );
+    WriteResources( exerciseName, path, separator );
     progress.Update( 20 );
-    WriteStocks( path, separator );
+    WriteStocks( exerciseName, path, separator );
     progress.Update( 30 );
-    WriteWeather( path, separator );
+    WriteWeather( exerciseName, path, separator );
     progress.Update( 40 );
-    WriteDiplomaty( path, separator );
+    WriteDiplomaty( exerciseName, path, separator );
     progress.Update( 50 );
-    WriteProfiles( path, separator );
+    WriteProfiles( exerciseName, path, separator );
     progress.Update( 60 );
-    WriteDiffusion( path, separator );
+    WriteDiffusion( exerciseName, path, separator );
     progress.Update( 90 );
-    WriteLogistic( path, separator );
+    WriteLogistic( exerciseName, path, separator );
     progress.Update( 100 );
 }
 
@@ -153,9 +153,9 @@ namespace
 // Name: CsvExport::WriteEntity
 // Created: LGY 2011-10-18
 // -----------------------------------------------------------------------------
-void CsvExport::WriteEntity( bfs::path& path, const std::string& separator )
+void CsvExport::WriteEntity( const std::string& exerciseName, bfs::path& path, const std::string& separator )
 {
-    bfs::path odbPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "orbat" ) + ".csv" ).filename() ) );
+    bfs::path odbPath( bfs::path( path / bfs::path( exerciseName.c_str() + tools::translate( "CsvExport", "orbat" ) + ".csv" ).filename() ) );
     std::ofstream file( odbPath.string().c_str() );
     file    << tools::translate( "CsvExport", "SIDE" ) << separator << tools::translate( "CsvExport", "CATEGORY" )
             << separator << tools::translate( "CsvExport", "NAME" ) << separator << tools::translate( "CsvExport", "TYPE" )
@@ -221,9 +221,9 @@ void CsvExport::Write( std::ofstream& file, const std::string& separator, const 
 // Name: CsvExport::WriteResources
 // Created: LGY 2011-10-18
 // -----------------------------------------------------------------------------
-void CsvExport::WriteResources( boost::filesystem::path& path, const std::string& separator )
+void CsvExport::WriteResources( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator )
 {
-    bfs::path resourcesPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "resources" ) + ".csv" ).filename() ) );
+    bfs::path resourcesPath( bfs::path( path / bfs::path( exerciseName.c_str() + tools::translate( "CsvExport", "resources" ) + ".csv" ).filename() ) );
     std::ofstream file( resourcesPath.string().c_str() );
     file << tools::translate( "CsvExport", "ENTITY" ) << separator << tools::translate( "CsvExport", "TYPE" ) << separator
          << tools::translate( "CsvExport", "QUANTITY" ) << std::endl;
@@ -242,9 +242,9 @@ void CsvExport::WriteResources( boost::filesystem::path& path, const std::string
 // Name: CsvExport::WriteStocks
 // Created: LGY 2011-10-18
 // -----------------------------------------------------------------------------
-void CsvExport::WriteStocks( boost::filesystem::path& path, const std::string& separator )
+void CsvExport::WriteStocks( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator )
 {
-    bfs::path stocksPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "stocks" ) + ".csv" ).filename() ) );
+    bfs::path stocksPath( bfs::path( path / bfs::path( exerciseName.c_str() + tools::translate( "CsvExport", "stocks" ) + ".csv" ).filename() ) );
     std::ofstream file( stocksPath.string().c_str() );
     file << tools::translate( "CsvExport", "ENTITY" ) << separator << tools::translate( "CsvExport", "TYPE" ) << separator
          << tools::translate( "CsvExport", "QUANTITY" ) << std::endl;
@@ -270,9 +270,9 @@ void CsvExport::WriteStocks( boost::filesystem::path& path, const std::string& s
 // Name: CsvExport::WriteWeather
 // Created: LGY 2011-10-18
 // -----------------------------------------------------------------------------
-void CsvExport::WriteWeather( boost::filesystem::path& path, const std::string& separator )
+void CsvExport::WriteWeather( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator )
 {
-    bfs::path weatherPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "weather" ) + ".csv" ).filename() ) );
+    bfs::path weatherPath( bfs::path( path / bfs::path( exerciseName.c_str() + tools::translate( "CsvExport", "weather" ) + ".csv" ).filename() ) );
     std::ofstream file( weatherPath.string().c_str() );
     file << tools::translate( "CsvExport", "WIND SPEED" ) << separator << tools::translate( "CsvExport", "WIND DIRECTION" ) << separator
          << tools::translate( "CsvExport", "TEMPERATURE" ) << separator <<  tools::translate( "CsvExport", "CLOUDS FLOOR" ) << separator
@@ -302,9 +302,9 @@ void CsvExport::WriteWeather( boost::filesystem::path& path, const std::string& 
 // Name: CsvExport::WriteDiplomaty
 // Created: LGY 2011-10-18
 // -----------------------------------------------------------------------------
-void CsvExport::WriteDiplomaty( boost::filesystem::path& path, const std::string& separator )
+void CsvExport::WriteDiplomaty( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator )
 {
-    bfs::path diplomacyPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "diplomacy" ) + ".csv" ).filename() ) );
+    bfs::path diplomacyPath( bfs::path( path / bfs::path( exerciseName.c_str() + tools::translate( "CsvExport", "diplomacy" ) + ".csv" ).filename() ) );
     std::ofstream file( diplomacyPath.string().c_str() );
     tools::Iterator< const kernel::Team_ABC& > it = model_.teams_.CreateIterator();
     while( it.HasMoreElements() )
@@ -332,9 +332,9 @@ void CsvExport::WriteDiplomaty( boost::filesystem::path& path, const std::string
 // Name: CsvExport::WriteProfiles
 // Created: LGY 2011-10-19
 // -----------------------------------------------------------------------------
-void CsvExport::WriteProfiles( boost::filesystem::path& path, const std::string& separator )
+void CsvExport::WriteProfiles( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator )
 {
-    bfs::path profilesPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "profiles" ) + ".csv" ).filename() ) );
+    bfs::path profilesPath( bfs::path( path / bfs::path( exerciseName.c_str() + tools::translate( "CsvExport", "profiles" ) + ".csv" ).filename() ) );
     std::ofstream file( profilesPath.string().c_str() );
     ProfilesModel::T_Profiles profiles;
     model_.profiles_.Visit( profiles );
@@ -373,9 +373,9 @@ void CsvExport::WriteProfiles( std::ofstream& file, const std::string& separator
 // Name: CsvExport::WriteDiffusion
 // Created: LGY 2011-10-19
 // -----------------------------------------------------------------------------
-void CsvExport::WriteDiffusion( boost::filesystem::path& path, const std::string& separator )
+void CsvExport::WriteDiffusion( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator )
 {
-    bfs::path diffusionPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "diffusion" ) + ".csv" ).filename() ) );
+    bfs::path diffusionPath( bfs::path( path / bfs::path( exerciseName.c_str() + tools::translate( "CsvExport", "diffusion" ) + ".csv" ).filename() ) );
     std::ofstream file( diffusionPath.string().c_str() );
     tools::Iterator< const kernel::Team_ABC& > itReceiver = model_.teams_.CreateIterator();
     while( itReceiver.HasMoreElements() )
@@ -492,9 +492,9 @@ void CsvExport::WriteTransmitter( std::ofstream& file, const std::string& separa
 // Name: CsvExport::WriteLogistic
 // Created: LGY 2011-10-19
 // -----------------------------------------------------------------------------
-void CsvExport::WriteLogistic( boost::filesystem::path& path, const std::string& separator )
+void CsvExport::WriteLogistic( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator )
 {
-    bfs::path logisticPath( bfs::path( path / bfs::path( tools::translate( "CsvExport", "logistic" ) + ".csv" ).filename() ) );
+    bfs::path logisticPath( bfs::path( path / bfs::path( exerciseName.c_str() + tools::translate( "CsvExport", "logistic" ) + ".csv" ).filename() ) );
     std::ofstream file( logisticPath.string().c_str() );
     tools::Iterator< const kernel::Automat_ABC& > itTC2 = model_.GetAutomatResolver().CreateIterator();
     while( itTC2.HasMoreElements() )

@@ -13,6 +13,7 @@
 
 #include "clients_kernel/Tools.h"
 #include "tools/ExerciseConfig.h"
+#include <boost/algorithm/string.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
@@ -76,6 +77,7 @@ FilterXsl::FilterXsl( xml::xistream& xis, const tools::ExerciseConfig& config )
     , xslFile_        ( ResolveXslFile( xis.attribute< std::string >( "xsl" ), description_.GetCurrentLanguage(), config ) )
     , inputFile_      ( ResolveInputFile( xis.attribute< std::string >( "target" ), config ) )
     , exerciseFile_   ( config.GetExerciseFile().c_str() )
+    , exerciseName_   ( config.GetExerciseName().c_str() )
     , outputExtension_( xis.attribute< std::string >( "output" ) )
     , output_         ( 0 )
 {
@@ -134,6 +136,17 @@ bool FilterXsl::IsValid() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: FilterCsv::GetExerciseName
+// Created: NPT 2013-04-22
+// -----------------------------------------------------------------------------
+const std::string FilterXsl::GetExerciseName()
+{
+    std::vector< std::string > extractedVector;
+    boost::split( extractedVector, exerciseName_, boost::algorithm::is_any_of( "/" ) );
+    return extractedVector.back() + "_";
+}
+
+// -----------------------------------------------------------------------------
 // Name: FilterXsl::CreateParametersWidget
 // Created: ABR 2011-06-21
 // -----------------------------------------------------------------------------
@@ -155,6 +168,8 @@ QWidget* FilterXsl::CreateParametersWidget( QWidget* parent )
 void FilterXsl::Execute()
 {
     assert( output_ && output_->text().toAscii().constData() && !output_->text().isEmpty() && !inputFile_.empty() );
-    xsl::xftransform xft( xslFile_, MakeOutputFile( output_->text().toAscii().constData(), inputFile_, outputExtension_ ) );
+    std::string file = inputFile_;
+    file = file.insert( file.find_last_of( "\\" ) + 1, GetExerciseName() );
+    xsl::xftransform xft( xslFile_, MakeOutputFile( output_->text().toAscii().constData(), file, outputExtension_ ) );
     xft << xml::xifstream( inputFile_ );
 }

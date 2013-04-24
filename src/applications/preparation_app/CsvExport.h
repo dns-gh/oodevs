@@ -40,29 +40,29 @@ public:
 
     //! @name Operations
     //@{
-    void Execute( boost::filesystem::path& path, Progress_ABC& progress );
+    void Execute( const std::string& exerciseName, boost::filesystem::path& path, Progress_ABC& progress );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void WriteEntity( boost::filesystem::path& path, const std::string& separator );
+    void WriteEntity( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator );
     void WriteEntity( const kernel::Entity_ABC& entity, const std::string& side, std::ofstream& file, const std::string& separator );
     void Write( std::ofstream& file, const std::string& separator, const std::string& side, const std::string& category,
                 const std::string& name, const std::string& type, const std::string& position );
-    void WriteResources( boost::filesystem::path& path, const std::string& separator );
-    void WriteStocks( boost::filesystem::path& path, const std::string& separator );
-    void WriteWeather( boost::filesystem::path& path, const std::string& separator );
-    void WriteDiplomaty( boost::filesystem::path& path, const std::string& separator );
-    void WriteProfiles( boost::filesystem::path& path, const std::string& separator );
+    void WriteResources( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator );
+    void WriteStocks( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator );
+    void WriteWeather( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator );
+    void WriteDiplomaty( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator );
+    void WriteProfiles( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator );
     void WriteProfiles( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity,
                         const std::set< std::string >& profiles );
-    void WriteDiffusion( boost::filesystem::path& path, const std::string& separator );
+    void WriteDiffusion( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator );
     void WriteReceiver( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity );
     void WriteTransmitter( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity );
     void WriteTransmitter( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity,
                            const std::vector< std::string >& list );
-    void WriteLogistic( boost::filesystem::path& path, const std::string& separator );
+    void WriteLogistic( const std::string& exerciseName, boost::filesystem::path& path, const std::string& separator );
     void WriteLogistic( std::ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity );
     //@}
 
