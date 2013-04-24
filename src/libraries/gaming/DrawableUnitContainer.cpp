@@ -145,7 +145,7 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
             float depth = hasLiveChildren ? maxProjection - minProjection : 0;
             width = std::max( width, minWidth );
             depth = std::max( depth, minDepth );
-            tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, isMoving, where, -1.f, 360 - udirection, isMoving ? 0 : width, depth );
+            tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, isMoving, where, -1.f, 360 - udirection, isMoving ? 0 : minWidth * factor, isMoving ? depth : minDepth * factor );
         }
         else
         {
