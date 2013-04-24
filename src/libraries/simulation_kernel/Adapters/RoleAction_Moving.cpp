@@ -24,6 +24,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include <core/Model.h>
@@ -242,6 +243,15 @@ bool RoleAction_Moving::CanMove() const
     std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_->GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
     owner_->Execute( *moveComputer );
     return moveComputer->CanMoveOverride() || moveComputer->CanMove();
+}
+
+// -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::IsReady
+// Created: SLI 2013-04-19
+// -----------------------------------------------------------------------------
+bool RoleAction_Moving::IsReady() const
+{
+    return owner_->GetRole< PHY_RoleInterface_Posture >().IsMovingPosture();
 }
 
 // -----------------------------------------------------------------------------

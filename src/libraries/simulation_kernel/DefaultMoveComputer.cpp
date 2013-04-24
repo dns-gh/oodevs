@@ -70,21 +70,12 @@ void DefaultMoveComputer::NotifyCannotFly()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultMoveComputer::NotifyStoppedPosture
-// Created: SLI 2013-01-30
-// -----------------------------------------------------------------------------
-void DefaultMoveComputer::NotifyStoppedPosture()
-{
-    bCanMove_ = false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DefaultMoveComputer::CanMove
 // Created: AHC 2009-10-02
 // -----------------------------------------------------------------------------
 bool DefaultMoveComputer::CanMove() const
 {
-    return isSurrendered_|| bCanMove_;
+    return isSurrendered_ || bCanMove_;
 }
 
 // -----------------------------------------------------------------------------

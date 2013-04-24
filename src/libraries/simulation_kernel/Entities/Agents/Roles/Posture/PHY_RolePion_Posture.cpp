@@ -479,16 +479,6 @@ void PHY_RolePion_Posture::Execute( urbanLocation::UrbanLocationComputer_ABC& al
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::Execute
-// Created: SLI 2013-01-30
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::Execute( moving::MoveComputer_ABC& algorithm ) const
-{
-    if( !IsMovingPosture() )
-        algorithm.NotifyStoppedPosture();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::IsMovingPosture
 // Created: SLI 2013-01-25
 // -----------------------------------------------------------------------------

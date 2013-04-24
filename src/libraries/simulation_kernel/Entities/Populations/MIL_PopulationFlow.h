@@ -48,6 +48,7 @@ public:
     void Move( const MT_Vector2D& destination );
     void MoveAlong( const MT_Vector2D& destination );
     void CancelMove();
+    virtual bool IsReady() const;
     //@}
 
     //! @name Accessors

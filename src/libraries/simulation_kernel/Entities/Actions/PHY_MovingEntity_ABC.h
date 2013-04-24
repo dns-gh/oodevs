@@ -73,6 +73,7 @@ public:
     //! @name
     //@{
     virtual bool CanMove              () const = 0;
+    virtual bool IsReady              () const = 0;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const = 0;
     virtual bool HasKnowledgeObject   ( const MIL_Object_ABC& object ) const = 0;
     virtual double GetObjectCost      ( const MIL_ObjectType_ABC& objectType, const DEC_PathType& pathType ) const = 0;

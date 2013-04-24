@@ -70,15 +70,6 @@ void DefaultMagicMoveComputer::NotifyCannotFly()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultMagicMoveComputer::NotifyStoppedPosture
-// Created: SLI 2013-01-30
-// -----------------------------------------------------------------------------
-void DefaultMagicMoveComputer::NotifyStoppedPosture()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: DefaultMagicMoveComputer::CanMove
 // Created: AHC 2009-10-02
 // -----------------------------------------------------------------------------

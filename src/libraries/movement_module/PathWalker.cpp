@@ -525,6 +525,12 @@ PathWalker::E_ReturnCode PathWalker::Move( boost::shared_ptr< PathResult > path,
     vNewPos_ = MT_Vector2D( entity[ "movement/position/x" ], entity[ "movement/position/y" ] );
     vNewDir_ = MT_Vector2D( entity[ "movement/direction/x" ], entity[ "movement/direction/y" ] );
 
+    if( ! entity[ "movement/is-ready" ] )
+    {
+        speed_ = 0;
+        PostMovement( entity );
+        return eRunning;
+    }
     if( speed_ == 0 || ! entity[ "movement/can-move" ] )
     {
         speed_ = 0;

@@ -1005,3 +1005,11 @@ void MIL_PopulationFlow::CancelMove()
     pHeadPath_.reset();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::IsReady
+// Created: SLI 2013-04-23
+// -----------------------------------------------------------------------------
+bool MIL_PopulationFlow::IsReady() const
+{
+    return true;
+}

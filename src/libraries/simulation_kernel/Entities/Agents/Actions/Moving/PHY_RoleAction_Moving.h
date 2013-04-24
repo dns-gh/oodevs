@@ -89,6 +89,7 @@ public:
     virtual void ApplyTrafficModifier();
     virtual bool HasResources();
     virtual bool CanMove() const;
+    virtual bool IsReady() const;
 
     virtual const MT_Vector2D& GetPosition () const;
     virtual const MT_Vector2D& GetDirection() const;

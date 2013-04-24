@@ -39,11 +39,12 @@ namespace
             MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _1, boost::ref( pathfind ) ) );
             MOCK_EXPECT( CreateKnowledgeCache ).returns( reinterpret_cast< KnowledgeCache* >( 0xDCBA ) );
         }
-        void Step( double speed, bool hasResources, bool canMove )
+        void Step( double speed, bool hasResources, bool canMove, bool isReady )
         {
             const bool obstaclesChange = false;
             entity[ "movement/has-resources" ] = hasResources;
             entity[ "movement/can-move" ] = canMove;
+            entity[ "movement/is-ready" ] = isReady;
             MOCK_EXPECT( GetWorldWeldValue ).returns( 1000 );
             MOCK_EXPECT( GetLimas );
             MOCK_EXPECT( GetSpeedWithReinforcement ).returns( speed );
@@ -61,7 +62,7 @@ namespace
                                       ( "position", mock::any ) );
             ExpectCallbackEvent( code );
             ExpectMovementEvent( speed );
-            Step( speed, hasResources, true );
+            Step( speed, hasResources, true, true );
             UpdatePosition( geometry::Point2f( 0, entity[ "movement/position/y" ] + speed ) );
         }
         void ExpectCallbackEvent( int code )
@@ -154,7 +155,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_
     mock::verify();
     mock::reset();
     ExpectCallbackEvent( sword::movement::PathWalker::eNotAllowed );
-    Step( 1, true, true );
+    Step( 1, true, true, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_and_does_not_move, UnfinishedMovementFixture )
@@ -171,7 +172,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_an
     mock::verify();
     mock::reset();
     ExpectCallbackEvent( sword::movement::PathWalker::eNotAllowed );
-    Step( 1, true, true );
+    Step( 1, true, true, true );
 }
 
 namespace
@@ -212,7 +213,7 @@ BOOST_FIXTURE_TEST_CASE( first_movement_command_posts_path_effect_and_running_co
                                             [ sword::test::MakeModel( "x", 0 )( "y", 10 ) ] ) );
     ExpectCallbackEvent( sword::movement::PathWalker::eRunning );
     ExpectMovementEvent( speed );
-    Step( speed, true, true );
+    Step( speed, true, true, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( movement_command_posts_finished_code_event_if_arrived, StartedFixture )
@@ -270,7 +271,23 @@ BOOST_FIXTURE_TEST_CASE( movement_with_entity_that_cannot_move_sends_not_allowed
                                                               ( "speed", stopSpeed ) );
     ExpectCallbackEvent( sword::movement::PathWalker::eNotAllowed );
     ExpectMovementEvent( speed );
-    Step( speed, true, false );
+    Step( speed, true, false, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( movement_with_entity_that_is_not_ready_sends_running_callback_and_sets_speed_at_0, StartedFixture )
+{
+    ExpectEffect( entity[ "movement/path" ] );
+    Advance( 1, sword::movement::PathWalker::eRunning );
+    const double speed = 1;
+    const double stopSpeed = 0;
+    ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "direction/x", 0 )
+                                                              ( "direction/y", 0 )
+                                                              ( "position/x", 0 )
+                                                              ( "position/y", 1 )
+                                                              ( "speed", stopSpeed ) );
+    ExpectCallbackEvent( sword::movement::PathWalker::eRunning );
+    ExpectMovementEvent( speed );
+    Step( speed, true, true, false );
 }
 
 namespace
@@ -321,7 +338,7 @@ BOOST_FIXTURE_TEST_CASE( object_colliding_with_path_makes_command_send_blocked_b
     ExpectEffect( entity[ "movement" ] );
     ExpectCallbackEvent( sword::movement::PathWalker::eBlockedByObject );
     ExpectMovementEvent( weldValue + 1 );
-    Step( 2, true, true );
+    Step( 2, true, true, true );
 }
 
 namespace
@@ -377,5 +394,5 @@ BOOST_FIXTURE_TEST_CASE( movement_command_posts_updated_truncated_path_when_thre
     const double speed = 0.5;
     ExpectMovementEvent( speed );
     MOCK_EXPECT( NotifyMovingOnPathPoint ).once();
-    Step( speed, true, true );
+    Step( speed, true, true, true );
 }

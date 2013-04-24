@@ -80,6 +80,7 @@ public:
     //@{
     virtual bool IsStealth() const = 0;
     virtual void SetAmbianceSafety( bool safety ) = 0;
+    virtual bool IsMovingPosture() const = 0;
     //@}
 
 private:

@@ -480,6 +480,7 @@ namespace
         movement[ "max-slope" ] = pion.CallRole( &moving::PHY_RoleAction_InterfaceMoving::GetMaxSlope, 1.0 );
         movement[ "has-resources" ] = pion.CallRole( &RoleAction_Moving::HasResources, false );
         movement[ "can-move" ] = pion.CallRole( &RoleAction_Moving::CanMove, false );
+        movement[ "is-ready" ] = pion.CallRole( &RoleAction_Moving::IsReady, true );
         movement[ "can-be-traffic-impacted" ] = pion.CanBeImpactedByTraffic();
         entity[ "knowledges" ] = pion.GetKnowledgeGroup()->GetId();
         UpdatePerceptions( entity[ "perceptions/notifications" ] );

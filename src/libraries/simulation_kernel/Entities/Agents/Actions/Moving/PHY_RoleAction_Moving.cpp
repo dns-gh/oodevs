@@ -23,6 +23,7 @@
 #include "AlgorithmsFactories.h"
 #include "SpeedComputerStrategy.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -419,8 +420,16 @@ bool PHY_RoleAction_Moving::CanMove() const
 {
     std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_->GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
     owner_->Execute( *moveComputer );
-
     return moveComputer->CanMoveOverride() || moveComputer->CanMove();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::IsReady
+// Created: SLI 2013-04-22
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Moving::IsReady() const
+{
+    return owner_->GetRole< PHY_RoleInterface_Posture >().IsMovingPosture();
 }
 
 // -----------------------------------------------------------------------------

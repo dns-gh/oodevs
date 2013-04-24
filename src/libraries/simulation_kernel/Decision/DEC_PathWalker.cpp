@@ -468,6 +468,12 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
     vNewDir_ = movingEntity_.GetDirection();
     MIL_EffectManager::GetEffectManager().Register( effectMove_ );
 
+    if( !movingEntity_.IsReady() )
+    {
+        rCurrentSpeed_ = 0.;
+        return eRunning;
+    }
+
     if( rCurrentSpeed_ == 0. || !movingEntity_.CanMove() )
     {
         rCurrentSpeed_ = 0.;

@@ -34,7 +34,6 @@ public:
     virtual void NotifyTransported() = 0;
     virtual void NotifySurrendered() = 0;
     virtual void NotifyCannotFly() = 0;
-    virtual void NotifyStoppedPosture() = 0;
     virtual bool CanMove() const = 0;
     virtual bool CanMoveOverride() const = 0;
     //@}
