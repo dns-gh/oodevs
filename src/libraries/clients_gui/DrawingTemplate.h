@@ -97,9 +97,9 @@ private:
     //@{
     void DrawSegment     ( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& from, const geometry::Point2f& to ) const;
     void DrawStartMarker ( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& towards, float zoom ) const;
-    void DrawMiddleMarker( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, const geometry::Point2f& to, float zoom ) const;
+    void DrawMiddleMarker( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, const geometry::Point2f& to, float zoom, const svg::Node_ABC& marker, const Unit& unit ) const;
     void DrawEndMarker   ( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, float zoom ) const;
-    void DrawMarker      ( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, svg::Node_ABC& node, Unit unit, const geometry::Point2f& at, geometry::Vector2f direction, float zoom ) const;
+    void DrawMarker      ( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const svg::Node_ABC& node, Unit unit, const geometry::Point2f& at, geometry::Vector2f direction, float zoom ) const;
     void Align           ( geometry::Vector2f u ) const;
     void ReadMarker      ( xml::xistream& input, svg::Node_ABC*& node, Unit& unit );
     Unit ReadUnit        ( xml::xistream& input );
@@ -132,12 +132,14 @@ private:
     svg::Node_ABC* markerStart_;
     svg::Node_ABC* markerMiddle_;
     svg::Node_ABC* markerEnd_;
+    svg::Node_ABC* markerCorner_;
     svg::Node_ABC* marker_;
 
     Unit lineUnit;
     Unit startUnit;
     Unit middleUnit;
     Unit endUnit;
+    Unit cornerUnit;
     Unit markerUnit;
 
     QPixmap linePixmap_;

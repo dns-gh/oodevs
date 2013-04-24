@@ -38,11 +38,13 @@ DrawingTemplate::DrawingTemplate( xml::xistream& input, const QString& category,
     , markerStart_  ( 0 )
     , markerMiddle_ ( 0 )
     , markerEnd_    ( 0 )
+    , markerCorner_ ( 0 )
     , marker_       ( 0 )
     , lineUnit      ( eNone )
     , startUnit     ( eNone )
     , middleUnit    ( eNone )
     , endUnit       ( eNone )
+    , cornerUnit    ( eNone )
     , markerUnit    ( eNone )
     , linePixmap_   ( MAKE_PIXMAP( line ) )
     , pointPixmap_  ( MAKE_PIXMAP( point ) )
@@ -77,6 +79,7 @@ DrawingTemplate::DrawingTemplate( xml::xistream& input, const QString& category,
           >> xml::list( "marker-start", *this, &DrawingTemplate::ReadMarker, markerStart_, startUnit )
           >> xml::list( "marker-mid", *this, &DrawingTemplate::ReadMarker, markerMiddle_, middleUnit )
           >> xml::list( "marker-end", *this, &DrawingTemplate::ReadMarker, markerEnd_, endUnit )
+          >> xml::list( "marker-corner", *this, &DrawingTemplate::ReadMarker, markerCorner_, cornerUnit )
           >> xml::list( "marker", *this, &DrawingTemplate::ReadMarker, marker_, markerUnit );
 }
 
@@ -255,7 +258,15 @@ void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_A
             const geometry::Point2f& start = *it;
             const geometry::Point2f& end = *(it + 1);
             geometry::Point2f middle( (start.X() + end.X())/2, (start.Y() + end.Y())/2 );
-            DrawMiddleMarker( context, tools, middle, start, end, zoom );
+            DrawMiddleMarker( context, tools, middle, start, end, zoom, *markerMiddle_, middleUnit );
+        }
+    if( markerCorner_ )
+        for( auto it = points.begin(); it != points.end() - 2; ++it )
+        {
+            const geometry::Point2f& start = *it;
+            const geometry::Point2f& where = *(it + 1);
+            const geometry::Point2f& end = *(it + 2);
+            DrawMiddleMarker( context, tools, where, start, end, zoom, *markerCorner_, cornerUnit );
         }
     if( markerEnd_ )
         DrawEndMarker( context, tools, points.back(), points[ points.size() - 2 ], zoom );
@@ -332,13 +343,11 @@ void DrawingTemplate::DrawStartMarker( svg::RenderingContext_ABC& context, const
 // Name: DrawingTemplate::DrawMiddleMarker
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawMiddleMarker( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, const geometry::Point2f& to, float zoom ) const
+void DrawingTemplate::DrawMiddleMarker( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, const geometry::Point2f& to, float zoom, const svg::Node_ABC& marker, const Unit& unit ) const
 {
-    const geometry::Vector2f u( from, at );
-    const geometry::Vector2f v( at, to );
-    const geometry::Vector2f n = u + v;
+    const geometry::Vector2f n( from, to );
     const geometry::Vector2f t( n.Y(), -n.X() );
-    DrawMarker( context, tools, *markerMiddle_, middleUnit, at, t, zoom );
+    DrawMarker( context, tools, marker, unit, at, t, zoom );
 }
 
 // -----------------------------------------------------------------------------
@@ -354,7 +363,7 @@ void DrawingTemplate::DrawEndMarker( svg::RenderingContext_ABC& context, const G
 // Name: DrawingTemplate::DrawMarker
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawMarker( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, svg::Node_ABC& node, Unit unit, const geometry::Point2f& at, geometry::Vector2f direction, float zoom ) const
+void DrawingTemplate::DrawMarker( svg::RenderingContext_ABC& context, const GlTools_ABC& tools, const svg::Node_ABC& node, Unit unit, const geometry::Point2f& at, geometry::Vector2f direction, float zoom ) const
 {
     glPushMatrix();
     glTranslatef( at.X(), at.Y(), 0 );

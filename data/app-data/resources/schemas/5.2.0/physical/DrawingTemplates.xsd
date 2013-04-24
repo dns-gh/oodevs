@@ -16,6 +16,7 @@
 										<xs:element name="marker-mid" type="xs:anyType" minOccurs="0"/>
 										<xs:element name="marker-start" type="xs:anyType" minOccurs="0"/>
 										<xs:element name="marker-end" type="xs:anyType" minOccurs="0"/>
+										<xs:element name="marker-corner" type="xs:anyType" minOccurs="0"/>
 										<xs:element name="marker" type="xs:anyType" minOccurs="0"/>
 									</xs:choice>
 									<xs:attribute name="name" type="xs:string" use="required"/>
