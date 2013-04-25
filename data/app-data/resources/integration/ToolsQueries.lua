@@ -416,7 +416,7 @@ end
 -- @release 2011-08-29
 -- --------------------------------------------------------------------------------
 integration.query.getPositionsToFollow = function( elementToFollow, distanceMin, distanceMax )
-    return { CreateProxyKnowledge( world.ReachingArea, elementToFollow, 
+    return { CreateProxyKnowledge( military.world.ReachingArea, elementToFollow, 
                               { distanceMin = distanceMin, distanceMax = distanceMax } ) }
 end
 

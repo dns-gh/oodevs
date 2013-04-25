@@ -162,7 +162,7 @@ integration.readyForLoad = function( unit, distanceMin, area )
            integration.getAnyType( mission ) == "T_Task_Pion_SeFaireTransporter" 
         or integration.getAnyType( mission ) == "T_Mission_Pion_SeFaireTransporter" 
         or integration.getAnyType( mission ) == "platoon.tasks.SeFaireTransporter"
-        or integration.getAnyType( mission ) == "agent.tasks.GetTransported"
+        or integration.getAnyType( mission ) == "worldwide.agent.tasks.GetTransported"
         or integration.getAnyType( mission ) == "france.military.platoon.tasks.SeFaireTransporter" ) then
         if ( distanceMin == -1 and integration.isPointInLocalisation( unit , area ) ) or 
            ( DEC_Geometrie_Distance( meKnowledge:getPosition() , unit:getPosition() ) < distanceMin ) then
@@ -182,7 +182,7 @@ integration.knowledgeReadyForLoad = function( knowledge, distanceMin, area )
     if mission ~= nil and ( integration.getAnyType( mission ) == "T_Task_Pion_SeFaireTransporter" 
                          or integration.getAnyType( mission ) == "T_Mission_Pion_SeFaireTransporter" 
                          or integration.getAnyType( mission ) == "platoon.tasks.SeFaireTransporter"
-                         or integration.getAnyType( mission ) == "agent.tasks.GetTransported"
+                         or integration.getAnyType( mission ) == "worldwide.agent.tasks.GetTransported"
                          or integration.getAnyType( mission ) == "france.military.platoon.tasks.SeFaireTransporter" ) then
          if ( distanceMin == -1 and integration.isPointInLocalisation( knowledge , area ) ) or 
            ( DEC_Geometrie_Distance( meKnowledge:getPosition() , knowledge:getPosition() ) < distanceMin ) then
