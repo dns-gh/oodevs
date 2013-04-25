@@ -77,6 +77,14 @@ namespace {
 
 BOOST_FIXTURE_TEST_SUITE( LogisticHierarchyTestSuite, DotationsFixture )
 
+namespace
+{
+    bool HasSuperior( const logistic::LogisticLink_ABC& link, const MIL_AutomateLOG* superior )
+    {
+        return &link.GetSuperior() == superior;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TestLogisticHierarchy
 // Created: NLD 2011-01-19
@@ -112,10 +120,8 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchy )
         testLinks( logHierarchy.CreateSuperiorLinksIterator(), boost::assign::list_of( linkBrainLog1 ) );
 
         // Change links
-        std::vector< MIL_AutomateLOG* > newLinks;
-        newLinks.push_back( &brainLog1 );
-        newLinks.push_back( &brainLog2 );
-        logHierarchy.ChangeLinks( newLinks );
+        MOCK_EXPECT( owner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &brainLog2 ) );
+        logHierarchy.ChangeLinks( boost::assign::list_of( &brainLog1 )( &brainLog2 ) );
         BOOST_CHECK_EQUAL( &brainLog2, logHierarchy.GetPrimarySuperior() );
 
         linkBrainLog1 = logHierarchy.FindSuperiorLink( brainLog1 );
@@ -130,10 +136,8 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchy )
         testLinks( logHierarchy.CreateSuperiorLinksIterator(), boost::assign::list_of( linkBrainLog2 ) ( linkBrainLog1 ) );
 
         // Change links : nominal and current are the same
-        newLinks.clear();
-        newLinks.push_back( &brainLog2 );
-        newLinks.push_back( &brainLog2 );
-        logHierarchy.ChangeLinks( newLinks );
+        MOCK_EXPECT( owner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &brainLog1 ) );
+        logHierarchy.ChangeLinks( boost::assign::list_of( &brainLog2 )( &brainLog2 ) );
         BOOST_CHECK_EQUAL( &brainLog2, logHierarchy.GetPrimarySuperior() );
         linkBrainLog2 = logHierarchy.FindSuperiorLink( brainLog2 );
         BOOST_CHECK_NE( (LogisticLink_ABC*)0, linkBrainLog2.get() );
@@ -247,54 +251,78 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchySwitchHierarchy )
     MockMIL_AutomateLOG mainBrainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     MockMIL_AutomateLOG mainBrainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     LogisticHierarchy mainLogHierarchy( mainOwner, mainBrainLog1, true );
-    std::vector< MIL_AutomateLOG* > newLinks;
-    newLinks.push_back( &mainBrainLog1 );
-    newLinks.push_back( &mainBrainLog2 );
-    mainLogHierarchy.ChangeLinks( newLinks );
 
-    MockLogisticHierarchyOwner_ABC newOwner;
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog2 ) );
+    mainLogHierarchy.ChangeLinks( boost::assign::list_of( &mainBrainLog1 )( &mainBrainLog2 ) );
+    mock::verify();
+
     MockMIL_AutomateLOG newBrainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     MockMIL_AutomateLOG newBrainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     LogisticHierarchy newLogHierarchy( mainOwner, newBrainLog1, true );
 
-    newLinks.clear();
-    newLinks.push_back( &newBrainLog1 );
-    newLinks.push_back( &newBrainLog2 );
-    newLogHierarchy.ChangeLinks( newLinks );
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &newBrainLog2 ) );
+    newLogHierarchy.ChangeLinks( boost::assign::list_of( &newBrainLog1 )( &newBrainLog2 ) );
+    mock::verify();
 
     testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
     testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &mainBrainLog2 )( &mainBrainLog1 ) );
 
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &newBrainLog1 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &newBrainLog2 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog1 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog2 ) );
     mainLogHierarchy.SwitchToHierarchy( newLogHierarchy );
+    mock::verify();
 
     testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
     testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
 
+    MOCK_EXPECT( mainOwner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &newBrainLog1 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &newBrainLog2 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog1 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog2 ) );
     mainLogHierarchy.SwitchBackToNominalHierarchy();
+    mock::verify();
 
     testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
     testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &mainBrainLog2 )( &mainBrainLog1 ) );
 
+    MOCK_EXPECT( mainOwner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog1 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog2 ) );
     mainLogHierarchy.DisconnectFromHierarchy();
+    mock::verify();
 
     testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
     testSuperiors( mainLogHierarchy.CreateSuperiorsIterator() );
 
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog1 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog2 ) );
     mainLogHierarchy.SwitchBackToNominalHierarchy();
+    mock::verify();
 
     testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
     testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &mainBrainLog2 )( &mainBrainLog1 ) );
 
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &newBrainLog1 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &newBrainLog2 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog1 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog2 ) );
     mainLogHierarchy.SwitchToHierarchy( newLogHierarchy );
+    mock::verify();
 
     testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
     testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
 
+    MOCK_EXPECT( mainOwner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &newBrainLog1 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &newBrainLog2 ) );
     mainLogHierarchy.DisconnectFromHierarchy();
+    mock::verify();
 
     testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
     testSuperiors( mainLogHierarchy.CreateSuperiorsIterator() );
 
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog1 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog2 ) );
     mainLogHierarchy.SwitchBackToNominalHierarchy();
 
     testSuperiors( newLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &newBrainLog2 )( &newBrainLog1 ) );
@@ -315,16 +343,20 @@ BOOST_AUTO_TEST_CASE( TestObjectLogisticHierarchy )
     MockMIL_AutomateLOG mainBrainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     MockMIL_AutomateLOG mainBrainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     LogisticHierarchy mainLogHierarchy( mainOwner, mainBrainLog1, true );
-    std::vector< MIL_AutomateLOG* > newLinks;
-    newLinks.push_back( &mainBrainLog1 );
-    newLinks.push_back( &mainBrainLog2 );
-    mainLogHierarchy.ChangeLinks( newLinks );
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog2 ) );
+    mainLogHierarchy.ChangeLinks( boost::assign::list_of( &mainBrainLog1 )( &mainBrainLog2 ) );
 
     testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &mainBrainLog2 )( &mainBrainLog1 ) );
 
+    MOCK_EXPECT( mainOwner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog1 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog2 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &objectBrainLog1 ) );
     mainLogHierarchy.SwitchToHierarchy( objectLogHierarchy );
     testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &objectBrainLog1 ) );
 
+    MOCK_EXPECT( mainOwner.NotifyLinkRemoved ).once().with( boost::bind( &HasSuperior, _1, &objectBrainLog1 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog1 ) );
+    MOCK_EXPECT( mainOwner.NotifyLinkAdded ).once().with( boost::bind( &HasSuperior, _1, &mainBrainLog2 ) );
     mainLogHierarchy.SwitchBackToNominalHierarchy();
     testSuperiors( mainLogHierarchy.CreateSuperiorsIterator(), boost::assign::list_of( &mainBrainLog2 )( &mainBrainLog1 ) );
 }
