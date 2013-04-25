@@ -405,9 +405,9 @@ void GlProxy::DrawApp6SymbolFixedSize( const std::string& symbol, const geometry
 // Name: GlProxy::DrawUnitSymbol
 // Created: LDC 2013-04-09
 // -----------------------------------------------------------------------------
-void GlProxy::DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
+void GlProxy::DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, const std::string& level, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
 {
-    tools_->DrawUnitSymbol( symbol, moveSymbol, staticSymbol, isMoving, where, factor, direction, width, depth );
+    tools_->DrawUnitSymbol( symbol, moveSymbol, staticSymbol, level, isMoving, where, factor, direction, width, depth );
 }
 
 // -----------------------------------------------------------------------------

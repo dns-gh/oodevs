@@ -91,7 +91,7 @@ public:
     virtual void DrawApp6Symbol   ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f, unsigned int direction = 0 ) const;
     virtual void DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const;
     virtual void DrawApp6SymbolScaledSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const;
-    virtual void DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const;
+    virtual void DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, const std::string& level, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const;
     virtual void DrawIcon         ( const char** xpm, const geometry::Point2f& where, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawImage        ( const QImage& image, const geometry::Point2f& where ) const;
     virtual void DrawCell         ( const geometry::Point2f& center ) const;
@@ -123,6 +123,8 @@ private:
     float ComputeZoomFactor( float& factor, bool bVariableSize = true ) const;
     void DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where
         , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight, unsigned int angle, float xFactor, float yFactor, float svgDeltaX = -20, float svgDeltaY = -80 ) const;
+    void DrawTail( const geometry::Point2f& arrowTail, const geometry::Point2f& symbolTail, float width ) const;
+    void DrawLevel( const geometry::Point2f& levelPosition, const std::string& level, unsigned int direction, float factor ) const;
     //@}
 
 private:

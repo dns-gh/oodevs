@@ -913,14 +913,30 @@ void GlWidget::DrawApp6SymbolScaledSize( const std::string& symbol, const geomet
 // Name: GLWidget::DrawUnitSymbol
 // Created: LDC 2013-04-09
 // -----------------------------------------------------------------------------
-void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
+void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& moveSymbol, const std::string& staticSymbol, const std::string& level, bool isMoving, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
 {
     width = width ? width / 360 : 1;
-    depth = depth ? depth / 240 : 1;
+    float symbolDepth = 240;
+    float baseDepth = depth;
+    depth = depth ? depth / symbolDepth : 1;
     if( isMoving )
     {
         if( !moveSymbol.empty() )
-            DrawApp6SymbolScaledSize( moveSymbol, where, factor, direction, width, depth );
+        {
+            geometry::Vector2f directionVector( 0., 1. );
+            float radians = direction * 3.14f/180;
+            directionVector.Rotate( - radians );
+            geometry::Point2f arrowTail = where + directionVector * (-baseDepth/2);
+            geometry::Point2f arrowHead = where + directionVector * (baseDepth/2);
+            geometry::Point2f symbolTail = arrowHead + directionVector * (-symbolDepth);
+            geometry::Vector2f symbolVector( symbolTail, arrowHead );
+            geometry::Point2f levelPosition = symbolTail + symbolVector * 0.875f;
+            geometry::Point2f symbolPosition = symbolTail + symbolVector * 0.5f;
+            DrawApp6SymbolScaledSize( moveSymbol, symbolPosition, factor, direction, 1, 1 );
+            if( baseDepth )
+                DrawTail( arrowTail, symbolTail, factor );
+            DrawLevel( levelPosition, level, direction, factor );
+        }
         else
             DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
     }
@@ -931,6 +947,25 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
         else
             DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawTail
+// Created: LDC 2013-04-25
+// -----------------------------------------------------------------------------
+void GlWidget::DrawTail( const geometry::Point2f& arrowTail, const geometry::Point2f& symbolTail, float width ) const
+{
+    DrawLine( arrowTail, symbolTail, width );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawLevel
+// Created: LDC 2013-04-25
+// -----------------------------------------------------------------------------
+void GlWidget::DrawLevel( const geometry::Point2f& levelPosition, const std::string& level, unsigned int direction, float factor ) const
+{
+    Rectangle2f rectangle( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) );
+    DrawApp6Symbol( level, DefaultStyle(), levelPosition, baseWidth_ * factor, rectangle, 4, 4, direction, 1., 1. );
 }
 
 // -----------------------------------------------------------------------------

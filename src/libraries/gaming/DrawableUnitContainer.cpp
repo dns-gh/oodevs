@@ -106,11 +106,11 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
             tools::Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
             bool isMoving = false;
             bool hasLiveChildren = false;
-            geometry::Vector2f orthogonalDirection = directionVector.Normal();
             float minProjection = std::numeric_limits< float >::max();
             float maxProjection = - std::numeric_limits< float >::max();
-            float minOrthogonalProjection = std::numeric_limits< float >::max();
-            float maxOrthogonalProjection = - std::numeric_limits< float >::max();
+            //geometry::Vector2f orthogonalDirection = directionVector.Normal();
+            //float minOrthogonalProjection = std::numeric_limits< float >::max();
+            //float maxOrthogonalProjection = - std::numeric_limits< float >::max();
             float minWidth = 0.;
             float minDepth = 0.;
             while( children.HasMoreElements() )
@@ -126,9 +126,9 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
                         float projection = directionVector.DotProduct( geometry::Vector2f( position ) );
                         minProjection = std::min( minProjection, projection );
                         maxProjection = std::max( maxProjection, projection );
-                        float orthogonalProjection = orthogonalDirection.DotProduct( geometry::Vector2f( position ) );
-                        minOrthogonalProjection = std::min( minOrthogonalProjection, orthogonalProjection );
-                        maxOrthogonalProjection = std::max( maxOrthogonalProjection, orthogonalProjection );
+                        //float orthogonalProjection = orthogonalDirection.DotProduct( geometry::Vector2f( position ) );
+                        //minOrthogonalProjection = std::min( minOrthogonalProjection, orthogonalProjection );
+                        //maxOrthogonalProjection = std::max( maxOrthogonalProjection, orthogonalProjection );
                         if( IsUnitMoving( attributes ) )
                             isMoving = true;
                     }
@@ -141,11 +141,11 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
                 }
             }
             isMoving = isMoving && hasLiveChildren;
-            float width = hasLiveChildren ? maxOrthogonalProjection - minOrthogonalProjection : 0;
+            // float width = hasLiveChildren ? maxOrthogonalProjection - minOrthogonalProjection : 0;
             float depth = hasLiveChildren ? maxProjection - minProjection : 0;
-            width = std::max( width, minWidth );
+            // width = std::max( width, minWidth );
             depth = std::max( depth, minDepth );
-            tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, isMoving, where, -1.f, 360 - udirection, isMoving ? 0 : minWidth * factor, isMoving ? depth : minDepth * factor );
+            tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, level_, isMoving, where, -1.f, udirection, isMoving ? 0 : minWidth * factor, isMoving ? depth : minDepth * factor );
         }
         else
         {
