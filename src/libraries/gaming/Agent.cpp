@@ -88,7 +88,7 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
         bool app6 = isMoving ? moveSymbol_.empty() : staticSymbol_.empty();
         if( app6 )
             tools.DrawApp6SymbolFixedSize( level_, where, -1.f, 0 );
-        }
+    }
 }
 
 // -----------------------------------------------------------------------------
