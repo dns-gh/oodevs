@@ -94,6 +94,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    void EnsureActivityActivitesIdSingle();
     //@}
 
 private:

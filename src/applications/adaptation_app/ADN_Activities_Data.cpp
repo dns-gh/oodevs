@@ -140,7 +140,9 @@ std::string ADN_Activities_Data::ActivityInfos::GetItemName()
 // -----------------------------------------------------------------------------
 ADN_Activities_Data::ActivityInfos* ADN_Activities_Data::ActivityInfos::CreateCopy()
 {
-    return new ADN_Activities_Data::ActivityInfos( id_.GetData(), strName_.GetData(), description_.GetData(), meleeActivity_.GetData() );
+    ADN_Activities_Data::ActivityInfos* activity = new ADN_Activities_Data::ActivityInfos( id_.GetData(), strName_.GetData(), description_.GetData(), meleeActivity_.GetData() );
+    activity->package_ = package_.GetData();
+    return activity;
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +175,11 @@ void ADN_Activities_Data::ActivityInfos::ReadArchive( xml::xistream& input )
            >> xml::attribute( "doc", description_ )
            >> xml::attribute( "melee", meleeActivity_ )
            >> xml::attribute( "package", package );
-    ADN_Activities_Data::PackageInfos* pPackage = ADN_Workspace::GetWorkspace().GetMissions().GetData().activitiesData_->FindPackage( package );
+    ADN_Activities_Data::PackageInfos* pPackage;
+    if( package != "none" )
+        pPackage = ADN_Workspace::GetWorkspace().GetMissions().GetData().activitiesData_->FindPackage( package );
+    else
+        pPackage = new ADN_Activities_Data::PackageInfos( " - " );
     if( !pPackage )
         throw ADN_DataException( tools::translate( "Activities_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Activities_Data", "Activity '%1' - Invalid package type" ).arg( package.c_str() ).toAscii().constData() );
     package_ = pPackage;
@@ -218,6 +224,7 @@ void ADN_Activities_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_Activities_Data::WriteArchive( xml::xostream& output )
 {
+    EnsureActivityActivitesIdSingle();
     output  << xml::start( "package-activity" );
     ADN_Tools::AddSchema( output, "activity" );
     output      << xml::start( "activities" );
@@ -321,4 +328,19 @@ QStringList ADN_Activities_Data::GetActivitiesThatUse( ADN_Activities_Data::Pack
             result << activity->strName_.GetData().c_str();
     }
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Activities_Data::SetActivityActivitesIdsUnique
+// Created: NPT 2013-04-25
+// -----------------------------------------------------------------------------
+void ADN_Activities_Data::EnsureActivityActivitesIdSingle()
+{
+    std::vector< int > ids;
+    for( auto it = activities_.begin(); it != activities_.end(); ++it )
+    {
+        while( std::find( ids.begin(), ids.end(), ( *it )->id_.GetData() ) != ids.end() || ( *it )->id_.GetData() == 0 )
+            ( *it )->id_ = ( *it )->id_.GetData() + 1;
+        ids.push_back( ( *it )->id_.GetData() );
+    }
 }
