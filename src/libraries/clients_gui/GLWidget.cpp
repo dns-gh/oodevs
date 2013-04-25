@@ -902,7 +902,7 @@ void GlWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometr
 // -----------------------------------------------------------------------------
 void GlWidget::DrawApp6SymbolScaledSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
 {
-    factor = fabs( factor ) * GetActualZoomFactor();
+    factor = fabs( factor ) * GetActualZoomFactor() * SymbolSize_;
     const float svgDeltaX = -20; // Offset of 20 in our svg files...
     const float svgDeltaY = -80 + 120; // Offset of 80 in our svg files + half of 240 which is the defautl height...
     Rectangle2f rectangle( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) );
