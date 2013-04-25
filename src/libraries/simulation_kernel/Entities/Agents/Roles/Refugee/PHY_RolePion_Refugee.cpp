@@ -16,7 +16,6 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/LodgingAttribute.h"
-#include "Entities/Objects/LogisticAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
