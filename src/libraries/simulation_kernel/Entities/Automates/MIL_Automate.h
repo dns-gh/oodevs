@@ -213,6 +213,9 @@ public:
 
     //! @name Logistic : supply
     //@{
+    virtual void NotifyLinkAdded( const logistic::LogisticLink_ABC& link ) const;
+    virtual void NotifyLinkRemoved( const logistic::LogisticLink_ABC& link ) const;
+
     virtual void NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const;
     virtual void NotifyQuotaExceeded( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters ) const;
 

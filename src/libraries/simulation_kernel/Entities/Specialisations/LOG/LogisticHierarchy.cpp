@@ -17,6 +17,7 @@
 #include "CheckPoints/SerializationTools.h"
 #include "tools/iterator.h"
 #include <boost/serialization/deque.hpp>
+#include <boost/range/algorithm.hpp>
 #include <boost/foreach.hpp>
 
 using namespace logistic;
@@ -216,9 +217,39 @@ MIL_AutomateLOG* LogisticHierarchy::GetPrimarySuperior() const
     return &superiorLinks_.back()->GetSuperior();
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
+namespace
+{
+    bool HasSameSuperior( const boost::shared_ptr< LogisticLink_ABC >& lhs, const boost::shared_ptr< LogisticLink_ABC >& rhs )
+    {
+        return &lhs->GetSuperior() == &rhs->GetSuperior();
+    }
+
+    class LinkNotifier : boost::noncopyable
+    {
+    private:
+        typedef std::deque< boost::shared_ptr< LogisticLink_ABC > > T_SuperiorLinks;
+
+    public:
+        LinkNotifier( T_SuperiorLinks& links, const LogisticHierarchyOwner_ABC& owner )
+            : initial_( links )
+            , final_  ( links )
+            , owner_  ( owner )
+        {}
+        void Notify() const
+        {
+            BOOST_FOREACH( const auto& link, initial_ )
+                if( boost::find_if( final_, boost::bind( &HasSameSuperior, link, _1 ) ) == final_.end() )
+                    owner_.NotifyLinkRemoved( *link );
+            BOOST_FOREACH( const auto& link, final_ )
+                if( boost::find_if( initial_, boost::bind( &HasSameSuperior, link, _1 ) ) == initial_.end() )
+                    owner_.NotifyLinkAdded( *link );
+        }
+    private:
+        const T_SuperiorLinks initial_;
+        const T_SuperiorLinks& final_;
+        const LogisticHierarchyOwner_ABC& owner_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogisticHierarchy::SwitchToHierarchy
@@ -226,14 +257,14 @@ MIL_AutomateLOG* LogisticHierarchy::GetPrimarySuperior() const
 // -----------------------------------------------------------------------------
 void LogisticHierarchy::SwitchToHierarchy( const LogisticHierarchy_ABC& newHierarchy )
 {
-    //$$ Faire un proxy vers la nouvelle hiérarchie => shared_ptr + notification quand la hierarchie est détruite (Cf. camps prisonniers ...)
+    LinkNotifier notifier( superiorLinks_, *owner_ );
     backupSuperiorLinks_ = superiorLinks_;
-
     superiorLinks_.clear();
     tools::Iterator< MIL_AutomateLOG& > it = newHierarchy.CreateSuperiorsIterator();
     while( it.HasMoreElements() )
         superiorLinks_.push_front( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( *owner_, it.NextElement(), useQuotas_ ) ) );
     linksUpdated_ = true;
+    notifier.Notify();
 }
 
 // -----------------------------------------------------------------------------
@@ -242,11 +273,13 @@ void LogisticHierarchy::SwitchToHierarchy( const LogisticHierarchy_ABC& newHiera
 // -----------------------------------------------------------------------------
 void LogisticHierarchy::DisconnectFromHierarchy()
 {
+    LinkNotifier notifier( superiorLinks_, *owner_ );
     // Keep the oldest backup links
     if( backupSuperiorLinks_.empty() )
         backupSuperiorLinks_ = superiorLinks_;
     superiorLinks_.clear();
     linksUpdated_ = true;
+    notifier.Notify();
 }
 
 // -----------------------------------------------------------------------------
@@ -255,9 +288,11 @@ void LogisticHierarchy::DisconnectFromHierarchy()
 // -----------------------------------------------------------------------------
 void LogisticHierarchy::SwitchBackToNominalHierarchy()
 {
+    LinkNotifier notifier( superiorLinks_, *owner_ );
     superiorLinks_ = backupSuperiorLinks_;
     backupSuperiorLinks_.clear();
     linksUpdated_ = true;
+    notifier.Notify();
 }
 
 // -----------------------------------------------------------------------------
@@ -266,13 +301,13 @@ void LogisticHierarchy::SwitchBackToNominalHierarchy()
 // -----------------------------------------------------------------------------
 void LogisticHierarchy::ChangeLinks( const std::vector< MIL_AutomateLOG* >& superiors )
 {
+    LinkNotifier notifier( superiorLinks_, *owner_ );
     superiorLinks_.clear();
     BOOST_FOREACH( MIL_AutomateLOG* superior, superiors )
-    {
         if( superiorLinks_.empty() || &superiorLinks_.back()->GetSuperior() != superior )
             superiorLinks_.push_back( boost::shared_ptr< LogisticLink_ABC >( new LogisticLink( *owner_, *superior, useQuotas_ ) ) );
-    }
     linksUpdated_ = true;
+    notifier.Notify();
 }
 
 // -----------------------------------------------------------------------------

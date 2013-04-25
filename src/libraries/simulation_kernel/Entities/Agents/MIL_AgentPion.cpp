@@ -62,6 +62,8 @@
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Decision/DEC_Model_ABC.h"
@@ -850,6 +852,9 @@ void MIL_AgentPion::DeleteUnit( unsigned int nCtx )
     {
         pAutomate_->DeleteRequestsForRequester( *this );
         pAutomate_->UnregisterPion( *this );
+        const MIL_AutomateLOG* superior = GetLogisticHierarchy().GetPrimarySuperior();
+        if( superior && superior->GetPC() )
+            MIL_Report::PostEvent( *superior->GetPC(), report::eRC_LogSuperiorRemoved, *this );
     }
 
     markedForDestruction_ = true;
@@ -1298,9 +1303,18 @@ void MIL_AgentPion::ChangeSuperiorSilently( MIL_Automate& newAutomate )
 {
     assert( GetArmy() == newAutomate.GetArmy() );
     SetPionAsCommandPost( false );
+    const MIL_AutomateLOG* before = GetLogisticHierarchy().GetPrimarySuperior();
     pAutomate_->UnregisterPion( *this );
     pAutomate_ = &newAutomate;
     pAutomate_->RegisterPion( *this );
+    const MIL_AutomateLOG* after = GetLogisticHierarchy().GetPrimarySuperior();
+    if( before != after )
+    {
+        if( before && before->GetPC() )
+            MIL_Report::PostEvent( *before->GetPC(), report::eRC_LogSuperiorRemoved, *this );
+        if( after && after->GetPC() )
+            MIL_Report::PostEvent( *after->GetPC(), report::eRC_LogSuperiorAdded, *this );
+    }
 }
 
 // -----------------------------------------------------------------------------

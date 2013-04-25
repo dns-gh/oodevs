@@ -340,9 +340,27 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeHealingHandler
     return visitor.selected_;
 }
 
-// =============================================================================
-// QUOTAS
-// =============================================================================
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::NotifyLinkAdded
+// Created: MCO 2013-04-24
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::NotifyLinkAdded( const logistic::LogisticLink_ABC& link ) const
+{
+    if( pAssociatedAutomate_ && link.GetSuperior().GetPC() )
+        BOOST_FOREACH( const auto& pion, pAssociatedAutomate_->GetPions() )
+            MIL_Report::PostEvent( *link.GetSuperior().GetPC(), report::eRC_LogSuperiorAdded, *pion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::NotifyLinkRemoved
+// Created: MCO 2013-04-24
+// -----------------------------------------------------------------------------
+void MIL_AutomateLOG::NotifyLinkRemoved( const logistic::LogisticLink_ABC& link ) const
+{
+    if( pAssociatedAutomate_ && link.GetSuperior().GetPC() )
+        BOOST_FOREACH( const auto& pion, pAssociatedAutomate_->GetPions() )
+            MIL_Report::PostEvent( *link.GetSuperior().GetPC(), report::eRC_LogSuperiorRemoved, *pion );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::NotifyQuotaThresholdReached

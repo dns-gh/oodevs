@@ -159,6 +159,9 @@ public:
     virtual const logistic::FuneralPackagingResource* FuneralGetNextPackagingResource( const logistic::FuneralPackagingResource* currentPackaging );
     //@}
 
+    virtual void NotifyLinkAdded( const logistic::LogisticLink_ABC& link ) const;
+    virtual void NotifyLinkRemoved( const logistic::LogisticLink_ABC& link ) const;
+
     //! @name Quotas
     //@{
     virtual void NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const;

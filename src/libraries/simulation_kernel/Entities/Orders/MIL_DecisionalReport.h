@@ -146,6 +146,8 @@ namespace report
     const MIL_DecisionalReport eRC_LogNoStock( "eRC_LogNoStock" );
     const MIL_DecisionalReport eRC_CloseCrowdAttitudeChanged( "eRC_CloseCrowdAttitudeChanged" );
     const MIL_DecisionalReport eRC_CloseCrowdUrbanDestruction( "eRC_CloseCrowdUrbanDestruction" );
+    const MIL_DecisionalReport eRC_LogSuperiorAdded( "eRC_LogSuperiorAdded" );
+    const MIL_DecisionalReport eRC_LogSuperiorRemoved( "eRC_LogSuperiorRemoved" );
 }
 
 #endif // MIL_DecisionalReport

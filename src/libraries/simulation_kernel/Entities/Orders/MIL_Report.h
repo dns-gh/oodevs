@@ -74,6 +74,7 @@ public:
     //@{
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const PHY_ComposanteTypePion& parameter );
+    template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_AgentPion& pion );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const PHY_DotationCategory& parameter );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const PHY_DotationCategory& parameter, const MIL_AgentPion& pion );
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, double nParam1, double nParam2 );
@@ -164,6 +165,18 @@ void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nRepo
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::CreateEquipmentType( &parameter ) );
     parameters.push_back( pParameter );
+    PostEvent( receiver, nReport, parameters );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Report::PostEvent
+// Created: MCO 2013-04-24
+// -----------------------------------------------------------------------------
+template< typename T >
+void MIL_Report::PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, const MIL_AgentPion& pion )
+{
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
+    parameters.push_back( MIL_MissionParameterFactory::CreateAgent( pion ) );
     PostEvent( receiver, nReport, parameters );
 }
 

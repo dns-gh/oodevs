@@ -32,6 +32,7 @@
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy.h"
+#include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
@@ -979,6 +980,9 @@ unsigned int MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicA
             pion = &MIL_AgentServer::GetWorkspace().GetEntityManager()
                 .CreatePion( *pType, *this, position, nCtx );
         }
+        const MIL_AutomateLOG* superior = pLogisticHierarchy_->GetPrimarySuperior();
+        if( superior && superior->GetPC() )
+            MIL_Report::PostEvent( *superior->GetPC(), report::eRC_LogSuperiorAdded, *pion );
         return pion->GetID();
     }
     catch( const std::exception& e )
@@ -1491,6 +1495,28 @@ MIL_AutomateLOG* MIL_Automate::GetBrainLogistic () const
 void MIL_Automate::Serialize( sword::ParentEntity& message ) const
 {
     message.mutable_automat()->set_id( GetID() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::NotifyLinkAdded
+// Created: MCO 2013-04-24
+// -----------------------------------------------------------------------------
+void MIL_Automate::NotifyLinkAdded( const logistic::LogisticLink_ABC& link ) const
+{
+    if( link.GetSuperior().GetPC() )
+        BOOST_FOREACH( const auto& pion, pions_ )
+            MIL_Report::PostEvent( *link.GetSuperior().GetPC(), report::eRC_LogSuperiorAdded, *pion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::NotifyLinkRemoved
+// Created: MCO 2013-04-24
+// -----------------------------------------------------------------------------
+void MIL_Automate::NotifyLinkRemoved( const logistic::LogisticLink_ABC& link ) const
+{
+    if( link.GetSuperior().GetPC() )
+        BOOST_FOREACH( const auto& pion, pions_ )
+            MIL_Report::PostEvent( *link.GetSuperior().GetPC(), report::eRC_LogSuperiorRemoved, *pion );
 }
 
 // -----------------------------------------------------------------------------
