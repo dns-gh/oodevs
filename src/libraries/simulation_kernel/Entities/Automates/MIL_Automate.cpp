@@ -186,7 +186,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     if( type.IsLogisticBase() )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, PHY_LogisticLevel::logistic_base_ ) );
-        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_.get() ) );
+        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_ ) );
         RegisterAction( pLogisticAction_ );
         pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, *pBrainLogistic_, false /* no quotas*/ ) );
     }
@@ -266,7 +266,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
 
     if( pBrainLogistic_.get() )
     {
-        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_.get() ) );
+        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_ ) );
         RegisterAction( pLogisticAction_ );
     }
     pColor_.reset( pColor );
@@ -332,7 +332,7 @@ void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigne
     if( *pLogLevel != PHY_LogisticLevel::none_ )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *pLogLevel ) );
-        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_.get() ) );
+        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_ ) );
         RegisterAction( pLogisticAction_ );
 
         // Automat having logistic brain are always there own tc2
@@ -1250,7 +1250,7 @@ logistic::LogisticHierarchy_ABC& MIL_Automate::GetLogisticHierarchy() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetLogisticHierarchy
+// Name: MIL_Automate::GetStockSupplyManager
 // Created: NLD 2011-01-10
 // -----------------------------------------------------------------------------
 MIL_StockSupplyManager& MIL_Automate::GetStockSupplyManager() const
@@ -1483,10 +1483,6 @@ MIL_AutomateLOG* MIL_Automate::GetBrainLogistic () const
 {
     return pBrainLogistic_.get();
 }
-
-// =============================================================================
-// logistic::LogisticHierarchyOwner_ABC
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::Serialize

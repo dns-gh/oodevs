@@ -16,7 +16,8 @@
 
 class MIL_AutomateLOG;
 
-namespace logistic {
+namespace logistic
+{
     class LogisticLink;
     class LogisticHierarchyOwner_ABC;
 
@@ -77,7 +78,7 @@ private:
     void SendLinks( unsigned int context ) const;
     //@}
 
-public:
+private:
     //! @name Types
     //@{
     typedef std::deque< boost::shared_ptr< LogisticLink_ABC > > T_SuperiorLinks;

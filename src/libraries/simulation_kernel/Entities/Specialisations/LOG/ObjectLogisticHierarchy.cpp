@@ -96,12 +96,8 @@ ObjectLogisticHierarchy::~ObjectLogisticHierarchy()
     // NOTHING
 }
 
-// =============================================================================
-// ACCESSORS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
-// Name: tools::Iterator_ABC< LogisticLink_ABC > ObjectLogisticHierarchy::CreateSuperiorLinksIterator
+// Name: ObjectLogisticHierarchy::CreateSuperiorLinksIterator
 // Created: NLD 2011-01-12
 // -----------------------------------------------------------------------------
 tools::Iterator< boost::shared_ptr< LogisticLink_ABC > > ObjectLogisticHierarchy::CreateSuperiorLinksIterator() const
@@ -122,7 +118,7 @@ tools::Iterator< MIL_AutomateLOG& > ObjectLogisticHierarchy::CreateSuperiorsIter
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< LogisticLink_ABC > ObjectLogisticHierarchy::FindSuperiorLink
+// Name: ObjectLogisticHierarchy::FindSuperiorLink
 // Created: NLD 2011-01-11
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< LogisticLink_ABC > ObjectLogisticHierarchy::FindSuperiorLink( const MIL_AutomateLOG& superior ) const
@@ -152,10 +148,6 @@ MIL_AutomateLOG* ObjectLogisticHierarchy::GetPrimarySuperior() const
     return 0;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: ObjectLogisticHierarchy::ChangeLinks
 // Created: NLD 2011-01-12
@@ -169,7 +161,7 @@ void ObjectLogisticHierarchy::ChangeLinks( const std::vector< MIL_AutomateLOG* >
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectLogisticHierarchy::ChangeLinks
+// Name: ObjectLogisticHierarchy::SwitchToHierarchy
 // Created: NLD 2011-01-12
 // -----------------------------------------------------------------------------
 void ObjectLogisticHierarchy::SwitchToHierarchy( const LogisticHierarchy_ABC& )
@@ -179,7 +171,7 @@ void ObjectLogisticHierarchy::SwitchToHierarchy( const LogisticHierarchy_ABC& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectLogisticHierarchy::ChangeLinks
+// Name: ObjectLogisticHierarchy::SwitchBackToNominalHierarchy
 // Created: NLD 2011-01-12
 // -----------------------------------------------------------------------------
 void ObjectLogisticHierarchy::SwitchBackToNominalHierarchy()
@@ -187,10 +179,6 @@ void ObjectLogisticHierarchy::SwitchBackToNominalHierarchy()
     //$$$ TODO
     assert( false) ;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ObjectLogisticHierarchy::WriteODB

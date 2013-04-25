@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "LogisticHierarchy.h"
-
 #include "MIL_AutomateLOG.h"
 #include "LogisticLink.h"
 #include "LogisticHierarchyOwner_ABC.h"
@@ -119,10 +118,6 @@ private:
 
 }
 
-// =============================================================================
-//
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: LogisticHierarchy constructor
 // Created: NLD 2011-01-05
@@ -168,10 +163,6 @@ LogisticHierarchy::~LogisticHierarchy()
     // NOTHING
 }
 
-// =============================================================================
-// ACCESSORS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: LogisticHierarchy::CreateSuperiorLinksIterator
 // Created: NLD 2011-01-12
@@ -191,14 +182,14 @@ tools::Iterator< MIL_AutomateLOG& > LogisticHierarchy::CreateSuperiorsIterator()
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< LogisticLink_ABC > LogisticHierarchy::FindSuperiorLink
+// Name: LogisticHierarchy::FindSuperiorLink
 // Created: NLD 2011-01-11
 // -----------------------------------------------------------------------------
 const boost::shared_ptr< LogisticLink_ABC > LogisticHierarchy::FindSuperiorLink( const MIL_AutomateLOG& superior ) const
 {
-    for( T_SuperiorLinks::const_reverse_iterator it = superiorLinks_.rbegin(); it != superiorLinks_.rend(); ++it )
+    for( auto it = superiorLinks_.rbegin(); it != superiorLinks_.rend(); ++it )
     {
-        const boost::shared_ptr< LogisticLink_ABC >& link = *it;
+        const auto& link = *it;
         if( &link->GetSuperior() == &superior )
             return link;
     }
@@ -284,10 +275,6 @@ void LogisticHierarchy::ChangeLinks( const std::vector< MIL_AutomateLOG* >& supe
     linksUpdated_ = true;
 }
 
-// =============================================================================
-// SERIALIZATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: LogisticHierarchy::WriteODB
 // Created: NLD 2011-02-03
@@ -297,10 +284,6 @@ void LogisticHierarchy::WriteODB( xml::xostream& xos ) const
     if( !superiorLinks_.empty() )
         superiorLinks_.back()->WriteODB( xos );
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: LogisticHierarchy::SendFullState
@@ -355,4 +338,3 @@ void LogisticHierarchy::serialize( Archive& file, const unsigned int )
          & superiorLinks_;
          & backupSuperiorLinks_;
 }
-
