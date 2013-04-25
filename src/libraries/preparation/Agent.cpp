@@ -131,7 +131,7 @@ void Agent::Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewp
 
         float width = type_.GetWidth();
         float depth = type_.GetDepth();
-        tools.DrawUnitSymbol( symbolPath_, moveSymbol_, staticSymbol_, false, where, -1.f, 0, width, depth );
+        tools.DrawUnitSymbol( symbolPath_, moveSymbol_, staticSymbol_, levelPath_, false, where, -1.f, 0, width, depth );
         tools.DrawApp6SymbolFixedSize( levelPath_, where, -1.f, 0 );
     }
 }
