@@ -327,14 +327,7 @@ void SupplyRequest::load( MIL_CheckPointInArchive& archive, const unsigned int )
     archive >> dotationId;
     dotationCategory_ = PHY_DotationType::FindDotationCategory( dotationId );
     archive >> resources_;
-    size_t requestersSize;
-    archive >> requestersSize;
-    for( size_t i = 0; i < requestersSize; ++i )
-    {
-        MIL_AgentPion* pion;
-        archive >> pion;
-        requesters_.push_back( pion );
-    }
+    archive >> requesters_;
     archive >> supplier_;
     archive >> requestedQuantity_;
     archive >> grantedQuantity_;
@@ -355,10 +348,7 @@ void SupplyRequest::save( MIL_CheckPointOutArchive& archive, const unsigned int 
     int dotationId = dotationCategory_->GetMosID();
     archive << dotationId;
     archive << resources_;
-    size_t requestersSize = requesters_.size();
-    archive << requestersSize;
-    for( auto it = requesters_.begin(); it != requesters_.end(); ++it )
-        archive << *it;
+    archive << requesters_;
     archive << supplier_;
     archive << requestedQuantity_;
     archive << grantedQuantity_;
