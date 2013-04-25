@@ -239,6 +239,10 @@
         <source>Decisional state/Indirect fire availability</source>
         <translation>Etat décisionnel/Capacité de tir indirect</translation>
     </message>
+    <message>
+        <source>Stances/Safety attitude</source>
+        <translation>Postures/Ambiance sûreté</translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>

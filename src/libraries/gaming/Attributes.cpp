@@ -105,6 +105,7 @@ void Attributes::CreateDictionary( gui::PropertiesDictionary& dictionary ) const
     dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Info/Human transportation available" ),  bHumanTransportersReady_ );
     dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Stances/Current stance" ),               nCurrentPosture_ );
     dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Stances/Setup state" ),                  nInstallationState_ );
+    dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Stances/Safety attitude" ),              bAmbianceSafety_ );
     dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Communications/Jammed" ),                bCommJammed_ );
     dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Communications/Radio Emitter silence" ), bRadioEmitterSilence_ );
     dictionary.RegisterExtension( entity_, this, tools::translate( "Attributes", "Communications/Radio Receiver silence" ),bRadioReceiverSilence_ );
@@ -148,6 +149,7 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
 
     UPDATE_PROPERTY( message, nCurrentPosture_, new_posture, "Stances/Current stance", updated );
     UPDATE_PROPERTY( message, nInstallationState_, installation, "Stances/Setup state", updated );
+    UPDATE_PROPERTY( message, bAmbianceSafety_, ambiance_safety, "Stances/Safety attitude", updated );
 
     if( message.has_communications() && message.communications().has_jammed() )
     {
@@ -260,9 +262,6 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
 
     if( message.has_transported_crowd() )
         crowdTransported_ = message.transported_crowd();
-
-    if( message.has_ambiance_safety() )
-        bAmbianceSafety_ = message.ambiance_safety();
 
     BOOST_FOREACH( const std::string& content, updated )
         controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "Attributes", content.c_str() ) ) );

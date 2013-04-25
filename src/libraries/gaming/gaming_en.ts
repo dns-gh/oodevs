@@ -239,6 +239,10 @@
         <source>Crowd transported:</source>
         <translation>Crowd transported:</translation>
     </message>
+    <message>
+        <source>Stances/Safety attitude</source>
+        <translation>Postures/Safety attitude</translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>

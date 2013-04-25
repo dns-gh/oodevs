@@ -239,6 +239,10 @@
         <source>Decisional state/Indirect fire availability</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Stances/Safety attitude</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>

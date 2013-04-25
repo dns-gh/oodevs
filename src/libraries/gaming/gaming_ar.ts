@@ -239,6 +239,10 @@
         <source>Crowd transported:</source>
         <translation type="unfinished">تنقل الحشد:</translation>
     </message>
+    <message>
+        <source>Stances/Safety attitude</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>
