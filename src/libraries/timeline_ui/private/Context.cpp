@@ -11,6 +11,9 @@
 
 #include <tools/IpcDevice.h>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
+#include <boost/uuid/random_generator.hpp>
+#include <boost/uuid/uuid_io.hpp>
+#include <boost/lexical_cast.hpp>
 
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
@@ -46,10 +49,15 @@ namespace
     private:
         ipc::Device& device_;
     };
+
+    std::string MakeUuid()
+    {
+        return boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
+    }
 }
 
 Context::Context( const Configuration& cfg )
-    : device_( new ipc::Device( "random_uuid", true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
+    : device_( new ipc::Device( MakeUuid(), true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
 {
     auto layout = new QVBoxLayout( cfg.widget );
     auto widget = new Widget( *device_, cfg.widget );
