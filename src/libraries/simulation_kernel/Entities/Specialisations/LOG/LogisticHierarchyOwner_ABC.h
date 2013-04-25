@@ -21,7 +21,9 @@ namespace sword
 
 class PHY_DotationCategory;
 
-namespace logistic {
+namespace logistic
+{
+    class LogisticLink_ABC;
 
 // =============================================================================
 /** @class  LogisticHierarchyOwner_ABC
@@ -46,6 +48,9 @@ public:
 
     //! @name Events
     //@{
+    virtual void NotifyLinkAdded( const LogisticLink_ABC& link ) const = 0;
+    virtual void NotifyLinkRemoved( const LogisticLink_ABC& link ) const = 0;
+
     virtual void NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const = 0;
     virtual void NotifyQuotaExceeded( const PHY_DotationCategory& dotationCategory, const T_Requesters& requesters ) const = 0;
     //@}

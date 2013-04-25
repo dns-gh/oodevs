@@ -32,6 +32,7 @@
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy.h"
+#include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
@@ -962,21 +963,24 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
 
     MT_Vector2D position;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), position );
+    MIL_AgentPion* pion = 0;
     try
     {
         if ( msg.parameters().elem_size() >= 3 )
         {
             std::string name = msg.parameters().elem( 2 ).value().Get( 0 ).acharstr();
-            MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, name, nCtx ); // Auto-registration
-
+            pion = &MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, name, nCtx ); // Auto-registration
             if ( msg.parameters().elem_size() >= 4 )
             {
                 bool isPc =  msg.parameters().elem( 3 ).value().Get( 0 ).booleanvalue();
-                pion.SetPionAsCommandPost( isPc );
+                pion->SetPionAsCommandPost( isPc );
             }
         }
         else
-            MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, nCtx ); // Auto-registration
+            pion = &MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, nCtx ); // Auto-registration
+        const MIL_AutomateLOG* superior = pLogisticHierarchy_->GetPrimarySuperior();
+        if( superior && superior->GetPC() )
+            MIL_Report::PostEvent( *superior->GetPC(), MIL_Report::eRC_LogSuperiorAdded, *pion );
     }
     catch( std::runtime_error& e )
     {
@@ -1525,6 +1529,28 @@ MIL_AutomateLOG* MIL_Automate::GetBrainLogistic () const
 void MIL_Automate::Serialize( sword::ParentEntity& message ) const
 {
     message.mutable_automat()->set_id( GetID() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::NotifyLinkAdded
+// Created: MCO 2013-04-24
+// -----------------------------------------------------------------------------
+void MIL_Automate::NotifyLinkAdded( const logistic::LogisticLink_ABC& link ) const
+{
+    if( link.GetSuperior().GetPC() )
+        BOOST_FOREACH( const auto& pion, pions_ )
+            MIL_Report::PostEvent( *link.GetSuperior().GetPC(), MIL_Report::eRC_LogSuperiorAdded, *pion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::NotifyLinkRemoved
+// Created: MCO 2013-04-24
+// -----------------------------------------------------------------------------
+void MIL_Automate::NotifyLinkRemoved( const logistic::LogisticLink_ABC& link ) const
+{
+    if( link.GetSuperior().GetPC() )
+        BOOST_FOREACH( const auto& pion, pions_ )
+            MIL_Report::PostEvent( *link.GetSuperior().GetPC(), MIL_Report::eRC_LogSuperiorRemoved, *pion );
 }
 
 // -----------------------------------------------------------------------------

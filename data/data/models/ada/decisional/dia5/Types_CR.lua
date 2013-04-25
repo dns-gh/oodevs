@@ -476,4 +476,6 @@ eRC_ObjetNonDevalorisable = 509
 eRC_SurrenderedUnitRecognized= 510
 eRC_SurrenderedUnitIdentified= 511
 eRC_TransportRoundTrip = 512
-eNbr = 513
+eRC_LogSuperiorAdded = 513
+eRC_LogSuperiorRemoved = 514
+eNbr = 515

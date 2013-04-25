@@ -170,7 +170,9 @@ public:
         eRC_CloseCrowdUrbanDestruction = 507,
         eRC_SurrenderedUnitRecognized = 510,
         eRC_SurrenderedUnitIdentified = 511,
-        eRC_TransportRoundTrip = 512
+        eRC_TransportRoundTrip = 512,
+        eRC_LogSuperiorAdded = 513,
+        eRC_LogSuperiorRemoved = 514
     };
     //@}
 
@@ -189,6 +191,7 @@ public:
     //! @name $$ BOF
     //@{
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport );
+    template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, const MIL_AgentPion& pion );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, const PHY_ComposanteTypePion& parameter );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, const PHY_DotationCategory& parameter );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, const PHY_DotationCategory& parameter, const MIL_AgentPion& pion );

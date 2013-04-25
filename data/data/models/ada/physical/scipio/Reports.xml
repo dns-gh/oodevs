@@ -699,5 +699,11 @@
     <parameter type="Integer"/>
     <parameter type="Integer"/>
   </report>
+  <report category="operational" id="513" message="Ajout d'un lien logistique vers %1">
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="514" message="Suppression du lien logistique vers %1">
+    <parameter type="Agent"/>
+  </report>
 </reports>
-<!-- signature="3039521945" -->
+<!-- signature="1094039430" -->
