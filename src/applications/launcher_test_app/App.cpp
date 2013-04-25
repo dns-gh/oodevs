@@ -14,10 +14,7 @@
 
 #include <tools/Path.h>
 #include "protocol/LauncherSenders.h"
-#pragma warning( push )
-#pragma warning( disable: 4127 )
-#include "shield/proto/AdminToLauncher.pb.h"
-#pragma warning( pop )
+#include "protocol/Protocol.h"
 
 #include <iostream>
 // warning 4100: unreferenced formal parameter
@@ -177,8 +174,6 @@ void App::Send(google::protobuf::Message* msg)
 {
     if( dynamic_cast<sword::AdminToLauncher*>(msg) )
         Send<sword::AdminToLauncher>(*dynamic_cast<sword::AdminToLauncher*>(msg));
-    else if( dynamic_cast<MsgsAdminToLauncher::MsgAdminToLauncher*>(msg) )
-        Send<MsgsAdminToLauncher::MsgAdminToLauncher>(*dynamic_cast<MsgsAdminToLauncher::MsgAdminToLauncher*>(msg));
 }
 
 namespace
@@ -187,8 +182,6 @@ namespace
     {
         if( type == "AdminToLauncher" )
             return new sword::AdminToLauncher();
-        if( type == "MsgAdminToLauncher" )
-            return new MsgsAdminToLauncher::MsgAdminToLauncher();
         return 0;
     }
 }

@@ -216,16 +216,6 @@ target_link_libraries( reports clients_kernel )
 add_target( indicators common "libraries/indicators" OPTIONS qt )
 target_link_libraries( indicators clients_kernel )
 
-# shield
-add_target( shield common "libraries/shield" OPTIONS protobuf protocol )
-masa_add_target_compile_flag( shield "/bigobj" )
-target_link_libraries( shield sword_tools )
-
-# shield_app
-add_target( shield_app clients "applications/shield_app" OPTIONS executable )
-masa_add_target_include( shield_app "${CMAKE_CURRENT_BINARY_DIR}/shield.out" )
-target_link_libraries( shield_app shield )
-
 # geostore
 add_target( geostore common "libraries/geostore" )
 # spatialite is stupid and has spatialite.h and spatialite/spatialite.h
@@ -272,11 +262,6 @@ target_link_libraries( propagation_test
 # protocol_test
 add_target( protocol_test tests "tests/protocol_test" OPTIONS protobuf protocol test )
 target_link_libraries( protocol_test sword_tools )
-
-# shield_test
-add_target( shield_test tests "tests/shield_test" OPTIONS protobuf protocol test )
-masa_add_target_include( shield_test "${CMAKE_CURRENT_BINARY_DIR}/shield.out" )
-target_link_libraries( shield_test shield )
 
 # tools_test
 add_target( tools_test tests "tests/tools_test" OPTIONS test )
@@ -357,7 +342,6 @@ target_link_libraries( dispatcher
     saver_plugin
     score_plugin
     script_plugin
-    shield
     web_control_plugin
     ${DIRECTIA_LIBRARIES}
 )
@@ -615,7 +599,6 @@ masa_add_target_definition( launcher_dll LAUNCHER_DLL_EXPORTS )
 target_link_libraries( launcher_dll
     client_proxy
     frontend
-    shield
 )
 
 # launcher_test
@@ -628,7 +611,6 @@ target_link_libraries( launcher_app launcher_dll )
 
 # launcher_test_app
 add_target( launcher_test_app clients "applications/launcher_test_app" OPTIONS protocol executable )
-masa_add_target_include( launcher_test_app "${CMAKE_CURRENT_BINARY_DIR}/shield.out" )
 target_link_libraries( launcher_test_app
     launcher_dll
     ${TOOLS_LIBRARIES}

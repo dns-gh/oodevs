@@ -17,7 +17,6 @@
 #include "PluginFactory.h"
 #include "Services.h"
 #include "StaticModel.h"
-#include "Shield.h"
 #include "LogFactory.h"
 #include "MT_Tools/MT_Logger.h"
 #include <google/protobuf/message.h>
@@ -45,7 +44,6 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     , log_                ( factory, config.BuildSessionChildFile( "Protobuf.log" ), config.GetDispatcherProtobufLogFiles(), config.GetDispatcherProtobufLogSize(), config.IsDispatcherProtobufLogInBytes() )
     , clientsNetworker_   ( new ClientsNetworker( config, *handler_, *services_, *model_ ) )
     , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, *handler_, config, log_ ) )
-    , shield_             ( new Shield( config, *model_, *clientsNetworker_, *clientsNetworker_ ) )
     , factory_            ( new PluginFactory( config, *model_, *staticModel_, *simulationNetworker_, *clientsNetworker_, *handler_, *registrables_, *services_, log_, maxConnections ) )
 {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -78,7 +76,6 @@ void Dispatcher::Update()
     clientsNetworker_->Update();
     simulationNetworker_->Update();
     handler_->Update();
-    shield_->Update();
     memoryLogger_->Update();
 }
 

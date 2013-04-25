@@ -44,9 +44,7 @@ public:
     //@{
     const std::string& GetNetworkSimulationParameters() const;
     const std::string& GetNetworkClientsParameters() const;
-    const std::string& GetNetworkShieldParameters() const;
     unsigned long      GetNetworkTimeout() const;
-    bool               UseShieldUtf8Encoding() const;
     unsigned int       GetKeyFramesFrequency() const;
     unsigned int       GetReplayFragmentsFrequency() const;
     unsigned int       GetTickDuration() const;
@@ -58,13 +56,11 @@ private:
     //@{
     std::string networkSimulationParameters_;
     std::string networkClientsParameters_;
-    std::string networkShieldParameters_;
     unsigned long networkTimeout_;
     unsigned int keyFramesFrequency_;
     unsigned int replayFragmentsFrequency_;
     unsigned int timeStep_;
     unsigned int reportsClearFrequency_;
-    bool useShieldUtf8Encoding_;
     //@}
 };
 

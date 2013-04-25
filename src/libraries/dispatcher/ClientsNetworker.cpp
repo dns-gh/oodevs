@@ -123,36 +123,6 @@ void ClientsNetworker::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*clie
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker::Register
-// Created: MCO 2011-10-28
-// -----------------------------------------------------------------------------
-void ClientsNetworker::Register( const std::string& link, MessageSender_ABC& sender, ClientBroadcaster_ABC& broadcaster )
-{
-    MT_LOG_INFO_MSG( "Publisher registered for client '" << link << "'" );
-    boost::shared_ptr< Client >& pClient = clients_[ link ];
-    pClient.reset( new Client( sender, broadcaster, link ) );
-    services_.Send( *pClient );
-    broadcasters_.insert( &broadcaster );
-    MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientsNetworker::Unregister
-// Created: MCO 2011-10-28
-// -----------------------------------------------------------------------------
-void ClientsNetworker::Unregister( const std::string& link )
-{
-    MT_LOG_INFO_MSG( "Publisher unregistered for client '" << link << "'" );
-    auto it = clients_.find( link );
-    if( it != clients_.end() )
-    {
-        plugin_.NotifyClientLeft( *it->second, it->first );
-        clients_.erase( it );
-    }
-    MT_LOG_INFO_MSG( clients_.size() << " clients connected" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ClientsNetworker::ConnectionSucceeded
 // Created: NLD 2002-07-12
 // -----------------------------------------------------------------------------

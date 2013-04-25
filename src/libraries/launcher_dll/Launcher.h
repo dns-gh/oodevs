@@ -35,11 +35,6 @@ namespace tools
     class RealFileLoaderObserver_ABC;
 }
 
-namespace shield
-{
-    class Server;
-}
-
 namespace launcher
 {
     class Config;
@@ -92,7 +87,6 @@ private:
     std::auto_ptr< tools::Loader_ABC > fileLoader_;
     std::auto_ptr< LauncherService > server_;
     std::auto_ptr< ProcessService > processes_;
-    std::auto_ptr< shield::Server > proxy_;
     //@}
 };
 

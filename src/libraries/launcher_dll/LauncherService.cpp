@@ -74,21 +74,3 @@ LauncherPublisher& LauncherService::ResolveClient( const std::string& endpoint )
         return *it->second;
     throw MASA_EXCEPTION( "client " + endpoint + " does not exist." );
 }
-
-// -----------------------------------------------------------------------------
-// Name: LauncherService::Register
-// Created: MCO 2011-11-03
-// -----------------------------------------------------------------------------
-void LauncherService::Register( const std::string& endpoint, tools::MessageSender_ABC& sender, dispatcher::ClientBroadcaster_ABC& /*broadcaster*/ )
-{
-    clients_[ endpoint ].reset( new LauncherPublisher( sender, endpoint ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LauncherService::Unregister
-// Created: MCO 2011-11-03
-// -----------------------------------------------------------------------------
-void LauncherService::Unregister( const std::string& endpoint )
-{
-    clients_.erase( endpoint );
-}

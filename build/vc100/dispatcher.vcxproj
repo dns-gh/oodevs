@@ -218,7 +218,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\ReplaySynchronisations.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\CompositeRegistrable.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\DispatcherPlugin.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\Shield.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\FileLogger.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\MemoryLogger.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Position.cpp" />
@@ -376,7 +375,6 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\LinkResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Plugin_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Registrable_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\Shield.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\FileLogger.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Log.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Log_ABC.h" />

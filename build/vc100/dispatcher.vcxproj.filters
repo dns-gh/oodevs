@@ -426,9 +426,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\DispatcherPlugin.cpp">
       <Filter>Source Files\Plugins</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\Shield.cpp">
-      <Filter>Source Files\Plugins</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\FileLogger.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
@@ -879,9 +876,6 @@
       <Filter>Source Files\Plugins</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\Registrable_ABC.h">
-      <Filter>Source Files\Plugins</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\Shield.h">
       <Filter>Source Files\Plugins</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\FileLogger.h">

@@ -11,7 +11,6 @@
 #define __LauncherService_h_
 
 #include "tools/ServerNetworker.h"
-#include "shield/ClientHandler_ABC.h"
 #include <boost/shared_ptr.hpp>
 #include <string>
 #include <map>
@@ -31,7 +30,7 @@ namespace launcher
 */
 // Created: SBO 2010-09-29
 // =============================================================================
-class LauncherService : public tools::ServerNetworker, public shield::ClientHandler_ABC
+class LauncherService : public tools::ServerNetworker
 {
 public:
     //! @name Constructors/Destructor
@@ -43,12 +42,6 @@ public:
     //! @name Operations
     //@{
     LauncherPublisher& ResolveClient( const std::string& endpoint ) const;
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Register( const std::string& endpoint, tools::MessageSender_ABC& sender, dispatcher::ClientBroadcaster_ABC& broadcaster );
-    virtual void Unregister( const std::string& endpoint );
     //@}
 
 private:

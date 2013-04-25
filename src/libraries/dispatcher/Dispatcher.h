@@ -26,7 +26,6 @@ namespace dispatcher
     class PluginFactory_ABC;
     class PluginFactory;
     class Services;
-    class Shield;
     class SimulationNetworker;
 // =============================================================================
 /** @class  Dispatcher
@@ -60,7 +59,6 @@ private:
     RotatingLog                           log_;
     boost::shared_ptr< ClientsNetworker > clientsNetworker_;
     std::auto_ptr< SimulationNetworker >  simulationNetworker_;
-    std::auto_ptr< Shield >               shield_;
     std::auto_ptr< PluginFactory >        factory_;
 };
 

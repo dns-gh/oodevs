@@ -41,7 +41,6 @@ namespace dispatcher
     class SimulationDispatcher;
     class Loader;
     class Services;
-    class Shield;
     class MemoryLogger_ABC;
     class SimulationPublisher_ABC;
 
@@ -86,7 +85,6 @@ private:
     boost::shared_ptr< SimulationDispatcher >          simulation_;
     std::auto_ptr< Loader >                            loader_;
     boost::shared_ptr< plugins::replay::ReplayPlugin > plugin_;
-    std::auto_ptr< Shield >                            shield_;
     std::auto_ptr< SimulationPublisher_ABC >           publisher_;
     bool                                               started_;
     //@}

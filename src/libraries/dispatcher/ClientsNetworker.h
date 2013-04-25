@@ -14,7 +14,6 @@
 #include "LinkResolver_ABC.h"
 #include "Plugin_ABC.h"
 #include "tools/ServerNetworker.h"
-#include "shield/ClientHandler_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientBroadcaster_ABC.h"
 #include <boost/shared_ptr.hpp>
@@ -37,7 +36,6 @@ namespace dispatcher
 class ClientsNetworker : public tools::ServerNetworker
                        , public ClientPublisher_ABC
                        , public LinkResolver_ABC
-                       , public shield::ClientHandler_ABC
                        , public Plugin_ABC
                        , private ClientBroadcaster_ABC
 {
@@ -50,9 +48,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Register( const std::string& endpoint, MessageSender_ABC& sender, ClientBroadcaster_ABC& broadcaster );
-    virtual void Unregister( const std::string& endpoint );
-
     virtual void Send( const sword::SimToClient& msg );
     virtual void Send( const sword::AuthenticationToClient& msg );
     virtual void Send( const sword::ReplayToClient& );

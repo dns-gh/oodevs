@@ -120,8 +120,6 @@ public:
 
     virtual unsigned int GetDispatcherProtobufLogFiles() const;
     virtual int GetDispatcherProtobufLogSize() const;
-    virtual unsigned int GetShieldLogFiles() const;
-    virtual int GetShieldLogSize() const;
     virtual unsigned int GetDispatcherLogFiles() const;
     virtual int GetDispatcherLogLevel() const;
     virtual int GetDispatcherLogSize() const;
@@ -133,7 +131,6 @@ public:
     virtual int GetLoggerPluginLogSize() const;
 
     virtual bool IsSimLogInBytes() const;
-    virtual bool IsShieldLogInBytes() const;
     virtual bool IsDispatcherLogInBytes() const;
     virtual bool IsDispatcherProtobufLogInBytes() const;
     virtual bool IsLoggerPluginLogInBytes() const;
@@ -196,7 +193,6 @@ protected:
     //@{
     void SetDispatcherProtobufLogSettings( const LogSettingsData& settings );
     void SetDispatcherLogSettings( const LogSettingsData& settings );
-    void SetShieldLogSettings( const LogSettingsData& settings );
     void SetSimLogSettings( const LogSettingsData& settings );
     void SetLoggerPluginLogSettings( const LogSettingsData& settings );
     void SetExerciseName( const Path& file );
@@ -230,7 +226,6 @@ private:
     std::vector< Path > startupOrderFiles_;
 
     LogSettings dispatcherProtobufLogSettings_;
-    LogSettings shieldLogSettings_;
     LogSettings dispatcherLogSettings_;
     LogSettings simLogSettings_;
     LogSettings simLoggerPluginSettings_;

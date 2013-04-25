@@ -66,7 +66,6 @@ void ExerciseConfig::Parse( int argc, char** argv )
             {
                 xis >> xml::start( "debug" );
                 dispatcherProtobufLogSettings_.SetLogSettings( "dispatcher", xis );
-                shieldLogSettings_.SetLogSettings( "shield", xis );
                 dispatcherLogSettings_.SetLogSettings( "dispatcherlog", xis );
                 simLogSettings_.SetLogSettings( "sim", xis );
                 simLoggerPluginSettings_.SetLogSettings( "messages", xis );
@@ -597,16 +596,6 @@ void ExerciseConfig::SetDispatcherLogSettings( const LogSettingsData& settings )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::SetShieldLogSettings
-// Created: MMC 2012-02-21
-// -----------------------------------------------------------------------------
-void ExerciseConfig::SetShieldLogSettings( const LogSettingsData& settings )
-{
-    if( settings.isSet() && !shieldLogSettings_.IsSet() )
-        shieldLogSettings_.SetLogSettings( -1, settings.files_, settings.fileSize_, settings.sizeUnit_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::SetSimLogSettings
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
@@ -661,24 +650,6 @@ int ExerciseConfig::GetDispatcherProtobufLogSize() const
 int ExerciseConfig::GetDispatcherLogLevel() const
 {
     return MT_Logger_ABC::ConvertConfigLevel( dispatcherProtobufLogSettings_.GetLogLevel() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseConfig::GetShieldLogFiles
-// Created: MMC 2012-02-21
-// -----------------------------------------------------------------------------
-unsigned int ExerciseConfig::GetShieldLogFiles() const
-{
-    return shieldLogSettings_.GetMaxFiles();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseConfig::GetShieldLogSize
-// Created: MMC 2012-02-21
-// -----------------------------------------------------------------------------
-int ExerciseConfig::GetShieldLogSize() const
-{
-    return shieldLogSettings_.GetMaxSize();
 }
 
 // -----------------------------------------------------------------------------
@@ -760,15 +731,6 @@ int ExerciseConfig::GetLoggerPluginLogLevel() const
 bool ExerciseConfig::IsSimLogInBytes() const
 {
     return simLogSettings_.IsSizeInBytes();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseConfig::IsShieldLogInBytes
-// Created: MMC 2012-02-21
-// -----------------------------------------------------------------------------
-bool ExerciseConfig::IsShieldLogInBytes() const
-{
-    return shieldLogSettings_.IsSizeInBytes();
 }
 
 // -----------------------------------------------------------------------------

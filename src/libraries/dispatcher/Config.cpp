@@ -30,7 +30,6 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
     , replayFragmentsFrequency_( 150 )
     , timeStep_                ( 0 )
     , reportsClearFrequency_   ( 100 )
-    , useShieldUtf8Encoding_   ( true )
 {
     po::options_description desc( "Dispatcher/replayer options" );
     desc.add_options()
@@ -54,7 +53,7 @@ Config::~Config()
 // -----------------------------------------------------------------------------
 void Config::Parse( int argc, char** argv )
 {
-    LogSettingsData logShield, logDispatcherProtobuf, logDispatcher, logLoggerPlugin;
+    LogSettingsData logDispatcherProtobuf, logDispatcher, logLoggerPlugin;
     tools::SessionConfig::Parse( argc, argv );
     std::string simulationAddress;
     std::string dispatcherAddress;
@@ -103,13 +102,6 @@ void Config::Parse( int argc, char** argv )
                             >> xml::optional >> xml::attribute( "fragmentfreq", replayFragmentsFrequency_ )
                             >> xml::optional >> xml::attribute( "keyframesfreq", keyFramesFrequency_ )
                         >> xml::end
-                        >> xml::optional >>xml::start( "shield" )
-                            >> xml::attribute( "server", networkShieldParameters_ )
-                            >> xml::optional >> xml::attribute( "logfiles", logShield.files_ )
-                            >> xml::optional >> xml::attribute( "logsize", logShield.fileSize_ )
-                            >> xml::optional >> xml::attribute( "sizeunit", logShield.sizeUnit_ )
-                            >> xml::optional >> xml::attribute( "use-utf8-string-encoding", useShieldUtf8Encoding_ )
-                        >> xml::end
                     >> xml::end
                     >> xml::optional >> xml::start( "reports" )
                         >> xml::attribute( "frequency", reportsClearFrequency_ )
@@ -123,7 +115,6 @@ void Config::Parse( int argc, char** argv )
     SetDispatcherProtobufLogSettings( logDispatcherProtobuf );
     SetDispatcherLogSettings( logDispatcher );
     SetLoggerPluginLogSettings( logLoggerPlugin );
-    SetShieldLogSettings( logShield );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,30 +136,12 @@ const std::string& Config::GetNetworkClientsParameters() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::GetNetworkShieldParameters
-// Created: MCO 2011-11-29
-// -----------------------------------------------------------------------------
-const std::string& Config::GetNetworkShieldParameters() const
-{
-    return networkShieldParameters_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Config::GetNetworkTimeout
 // Created: JSR 2011-10-19
 // -----------------------------------------------------------------------------
 unsigned long Config::GetNetworkTimeout() const
 {
     return networkTimeout_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Config::UseShieldUtf8Encoding
-// Created: RPD 2011-09-05
-// -----------------------------------------------------------------------------
-bool Config::UseShieldUtf8Encoding() const
-{
-    return useShieldUtf8Encoding_;
 }
 
 // -----------------------------------------------------------------------------
