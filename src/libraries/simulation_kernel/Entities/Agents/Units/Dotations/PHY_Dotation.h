@@ -53,6 +53,7 @@ public:
     double AddConsumptionReservation    ( double rNbr );
     void   CancelConsumptionReservation ();
     void   ConsumeConsumptionReservation();
+    void   UpdateSupplyNeeded();
 
     double AddFireReservation    ( double rNbr );
     void   ConsumeFireReservation();
@@ -83,6 +84,7 @@ private:
     //! @name Tools
     //@{
     void SetValue( double rValue );
+    bool IsJammed() const;
     //@}
 
 private:

@@ -83,6 +83,7 @@ public:
     void ResetConsignsForConvoyPion( const MIL_AgentPion& pion );
     void ResetAutoConsignForProvider( const MIL_Agent_ABC& pion );
     void ResetAllConsigns();
+    bool HasStockSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const;
     //@}
 
 private:

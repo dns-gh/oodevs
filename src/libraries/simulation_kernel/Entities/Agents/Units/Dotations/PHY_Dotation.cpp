@@ -13,6 +13,9 @@
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationType.h"
 #include "PHY_DotationCategory.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
@@ -240,6 +243,25 @@ void PHY_Dotation::NotifyReleased()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Dotation::IsJammed
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+bool PHY_Dotation::IsJammed() const
+{
+    assert( pGroup_ );
+    const PHY_DotationGroupContainer* pContainer = pGroup_->GetDotationGroupContainer();
+    if( !pContainer )
+        return false;
+    const dotation::PHY_RoleInterface_Dotations* pRoleDotations = pContainer->GetRoleDotations();
+    if( !pRoleDotations )
+        return false;
+    const MIL_AgentPion* pPion = pRoleDotations->GetPion();
+    if( !pPion )
+        return false;
+    return ( pPion->IsJammed() || pPion->IsLogisticJammed() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Dotation::AddConsumptionReservation
 // Created: NLD 2004-09-30
 // -----------------------------------------------------------------------------
@@ -365,6 +387,18 @@ void PHY_Dotation::ConsumeConsumptionReservation()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Dotation::UpdateSupplyNeeded
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+void PHY_Dotation::UpdateSupplyNeeded()
+{
+    assert( pCategory_ );
+    assert( pGroup_ );
+    if( HasReachedSupplyThreshold() && !pGroup_->HasSupplyNeededNotified( *pCategory_ ) )
+        pGroup_->NotifySupplyNeeded( *pCategory_, true );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Dotation::ConsumeFireReservation
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
@@ -393,6 +427,8 @@ bool PHY_Dotation::HasReachedSupplyThreshold() const
     if( bDotationBlocked_ )
         return false;
     if( bInfiniteDotations_ )
+        return false;
+    if( IsJammed() )
         return false;
     return rValue_ < rSupplyThreshold_;
 }

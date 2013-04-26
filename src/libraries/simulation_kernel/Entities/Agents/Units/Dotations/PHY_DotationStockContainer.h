@@ -78,6 +78,7 @@ public:
     PHY_DotationStock* GetStock( const PHY_DotationCategory& category ) const;
     PHY_DotationStock* AddStock( const PHY_DotationCategory& category );
     PHY_DotationStock* AddEmptyStock( const PHY_DotationCategory& category, double capacity );
+    const PHY_RoleInterface_Supply* GetRoleInterfaceSupply() const;
     //@}
 
     //! @name Network
@@ -91,7 +92,9 @@ public:
     //! @name Supply
     //@{
     void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const;
+    bool HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const;
     void Apply             ( boost::function< void( PHY_DotationStock& ) > visitor ) const;
+    void UpdateSupplyNeeded();
     //@}
 
     //! @name Helpers

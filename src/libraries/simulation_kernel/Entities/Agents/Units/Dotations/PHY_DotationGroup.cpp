@@ -313,6 +313,16 @@ void PHY_DotationGroup::ConsumeConsumptionReservations()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::UpdateSupplyNeeded
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+void PHY_DotationGroup::UpdateSupplyNeeded()
+{
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
+        it->second->UpdateSupplyNeeded();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroup::AddFireReservation
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
@@ -429,10 +439,29 @@ void PHY_DotationGroup::NotifySupplyNeeded( const PHY_DotationCategory& dotation
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::HasSupplyNeededNotified
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+bool PHY_DotationGroup::HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const
+{
+    assert( pGroupContainer_ );
+    return pGroupContainer_->HasSupplyNeededNotified( dotationCategory );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroup::GetDotations
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 const PHY_DotationGroup::T_DotationMap& PHY_DotationGroup::GetDotations() const
 {
     return dotations_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::GetDotationGroupContainer
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+const PHY_DotationGroupContainer* PHY_DotationGroup::GetDotationGroupContainer() const
+{
+    return pGroupContainer_;
 }

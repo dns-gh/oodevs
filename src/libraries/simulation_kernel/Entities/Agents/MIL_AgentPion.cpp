@@ -66,6 +66,8 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h" 
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Workspace.h"
@@ -666,6 +668,27 @@ bool MIL_AgentPion::IsAutonomous() const
 {
     assert( pType_ );
     return pType_->GetUnitType().IsAutonomous();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::IsJammed
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::IsJammed() const
+{
+    if( const PHY_RolePion_Communications* pCommunications = RetrieveRole< PHY_RolePion_Communications >() )
+        return pCommunications->IsJammed();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::IsLogisticJammed
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::IsLogisticJammed() const
+{
+    MIL_AutomateLOG* pTC2 = GetLogisticHierarchy().GetPrimarySuperior();
+    return ( pTC2 && pTC2->GetPC() && pTC2->GetPC()->IsJammed() );
 }
 
 // -----------------------------------------------------------------------------

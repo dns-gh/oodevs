@@ -168,11 +168,20 @@ void MIL_DotationSupplyManager::ResetConsignsForConvoyPion( const MIL_AgentPion&
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory )
 {
-    if( bSupplyNeeded_ || IsSupplyInProgress( dotationCategory ) )
+    if( HasDotationSupplyNeededNotified( dotationCategory ) )
         return;
     bSupplyNeeded_ = true;
     if( SendSupplyNeededReport() )
         MIL_Report::PostEvent( *pAutomate_, report::eRC_DemandeRavitaillementDotations );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::HasDotationSupplyNeededNotified
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+bool MIL_DotationSupplyManager::HasDotationSupplyNeededNotified( const PHY_DotationCategory& dotationCategory )
+{
+    return ( bSupplyNeeded_ || IsSupplyInProgress( dotationCategory ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +214,7 @@ const MIL_AgentPion* MIL_DotationSupplyManager::GetPC() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_StockSupplyManager::OnSupplyScheduled
+// Name: MIL_DotationSupplyManager::OnSupplyScheduled
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::OnSupplyScheduled( boost::shared_ptr< logistic::SupplyConsign_ABC > supplyConsign )

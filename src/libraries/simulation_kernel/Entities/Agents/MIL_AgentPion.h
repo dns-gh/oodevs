@@ -109,8 +109,10 @@ public:
     virtual bool IsCivilian() const;
     virtual bool CanEmitReports() const;
 
-    bool IsImmobilized() const;
-    bool IsAutonomous() const; // Drones
+    virtual bool IsImmobilized() const;
+    virtual bool IsAutonomous() const; // Drones
+    virtual bool IsJammed() const;
+    virtual bool IsLogisticJammed() const;
     //@}
 
     //! @name logistic

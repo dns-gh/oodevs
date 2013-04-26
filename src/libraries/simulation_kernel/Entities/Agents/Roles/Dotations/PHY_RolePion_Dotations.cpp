@@ -360,6 +360,8 @@ void PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2( const PHY_DotationTyp
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {
+    if( owner_->IsJammed() || owner_->IsLogisticJammed() )
+        return;
     if( bNewNeed )
     {
         MIL_Report::PostEvent( *owner_, report::eRC_SeuilLogistiqueDotationDepasse, dotationCategory );
@@ -367,6 +369,15 @@ void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dot
             MIL_Report::PostEvent( *owner_, report::eRC_PrisonersUnsupplied );
     }
     owner_->GetAutomate().NotifyDotationSupplyNeeded( dotationCategory );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::HasSupplyNeededNotified
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Dotations::HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const
+{
+    return owner_->GetAutomate().HasDotationSupplyNeededNotified( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -384,6 +395,7 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
     SetConsumptionMode( consumptionComputer->Result() );
 
     pDotations_->ConsumeConsumptionReservations();
+    pDotations_->UpdateSupplyNeeded();
     pPreviousConsumptionMode_ = pCurrentConsumptionMode_;
     pCurrentConsumptionMode_ = 0;
 
@@ -422,6 +434,15 @@ void PHY_RolePion_Dotations::NotifyConsumeDotation( const PHY_DotationCategory& 
     assert( pDotations_ );
     double nConsumed = pDotations_->Consume( category, rNbr );
     rNbr -= nConsumed;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::GetPion
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+const MIL_AgentPion* PHY_RolePion_Dotations::GetPion() const
+{
+    return owner_;
 }
 
 // -----------------------------------------------------------------------------

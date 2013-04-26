@@ -128,6 +128,13 @@ private:
     void CancelMedicalLogisticRequest();
     //@}
 
+protected:
+
+    //! @name Tools
+    //@{
+    virtual bool IsJammed() const;
+    //@}
+
 private:
     const MIL_Time_ABC& time_;
     HumansComposante_ABC* pComposante_;

@@ -19,6 +19,15 @@
 
 namespace
 {
+    class PHY_HumanTest : public PHY_Human
+    {
+    public :
+        PHY_HumanTest( const MIL_Time_ABC& time, HumansComposante_ABC& composante ): PHY_Human( time, composante ) {}
+        virtual ~PHY_HumanTest() {}
+    protected :
+        virtual bool IsJammed() const { return false ; }
+    };
+
     class Configuration
     {
     public :
@@ -35,7 +44,7 @@ namespace
         Fixture()
             : human( time, composante )
         {}
-        PHY_Human human;
+        PHY_HumanTest human;
     };
 }
 

@@ -82,6 +82,11 @@ public:
     virtual void ChangeConsumptionMode(ConsumptionModeChangeRequest_ABC& request);
     //@}
 
+    //! @name Accessors
+     //@{
+    const MIL_AgentPion* GetPion() const;
+    //@}
+
     //! @name Dotations management
     //@{
     double SupplyDotation( const PHY_DotationCategory& category, double rNbr );
@@ -122,6 +127,7 @@ public:
     //@{
     virtual void Apply( boost::function< void( PHY_Dotation& ) > visitor ) const;
     void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const; // Logistic
+    bool HasSupplyNeededNotified     ( const PHY_DotationCategory& dotationCategory ) const;  // Logistic
     void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const;
     //@}
 

@@ -789,22 +789,26 @@ void PHY_ComposantePion::Update()
         pMaintenanceState_ = pRole_->NotifyComposanteWaitingForMaintenance( *this );
     }
 
-    if( !bRepairEvacuationNoMeansChecked_ && ( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ || !pState_->IsUsable() ) )
+    assert( pRole_ );
+    if( !pRole_->GetPion().IsJammed() && !pRole_->GetPion().IsLogisticJammed() )
     {
-        assert( pType_ );
-        bool bRepairEvacuationNoMeans = false;
-        if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pMaintenanceState_ )
-            bRepairEvacuationNoMeans = true;
-        else if( pMaintenanceState_ && pMaintenanceState_->GetConsign() )
+        if( !bRepairEvacuationNoMeansChecked_ && ( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ || !pState_->IsUsable() ) )
         {
-            const PHY_MaintenanceTransportConsign* pConsign = dynamic_cast< const PHY_MaintenanceTransportConsign* >( pMaintenanceState_->GetConsign() );
-            if( pConsign && pConsign->SearchForUpperLevelNotFound() )
+            assert( pType_ );
+            bool bRepairEvacuationNoMeans = false;
+            if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pMaintenanceState_ )
                 bRepairEvacuationNoMeans = true;
-        }
-        if( bRepairEvacuationNoMeans )
-        {
-            bRepairEvacuationNoMeansChecked_ = true;
-            MIL_Report::PostEvent( pRole_->GetPion(), report::eRC_RepairEvacuationNoMeans, *pType_ );
+            else if( pMaintenanceState_ && pMaintenanceState_->GetConsign() )
+            {
+                const PHY_MaintenanceTransportConsign* pConsign = dynamic_cast< const PHY_MaintenanceTransportConsign* >( pMaintenanceState_->GetConsign() );
+                if( pConsign && pConsign->SearchForUpperLevelNotFound() )
+                    bRepairEvacuationNoMeans = true;
+            }
+            if( bRepairEvacuationNoMeans )
+            {
+                bRepairEvacuationNoMeansChecked_ = true;
+                MIL_Report::PostEvent( pRole_->GetPion(), report::eRC_RepairEvacuationNoMeans, *pType_ );
+            }
         }
     }
 }

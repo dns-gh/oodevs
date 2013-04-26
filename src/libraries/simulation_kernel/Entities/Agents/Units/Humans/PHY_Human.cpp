@@ -179,6 +179,15 @@ void PHY_Human::CancelMedicalLogisticRequest()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Human::IsJammed
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+bool PHY_Human::IsJammed() const
+{
+    return GetPion().IsJammed() || GetPion().IsLogisticJammed();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Human::Evacuate
 // Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------
@@ -464,20 +473,24 @@ void PHY_Human::Update()
                 MIL_Report::PostEvent( GetPion(), report::eRC_DecesBlesse );
         }
     }
-    // Logistic requests - $$$ A refactorer...
-    if( NeedMedical() && !pMedicalState_ )
-        const_cast< MIL_Agent_ABC& >( GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanWaitingForMedical, *this );
 
-    // Funeral
-    if( IsDead() && !funeralConsign_ )
+    if( !IsJammed() )
     {
-        boost::shared_ptr< logistic::FuneralRequest_ABC > request( new logistic::FuneralRequest( *this ) );
-        funeralConsign_.reset( new logistic::FuneralConsign( request ) );
-    }
-    else if( funeralConsign_ && ( !IsDead() || funeralConsign_->IsFinished() ) )
-    {
-        funeralConsign_->Cancel();
-        funeralConsign_.reset();
+        // Logistic requests - $$$ A refactorer...
+        if( NeedMedical() && !pMedicalState_ )
+            const_cast< MIL_Agent_ABC& >( GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanWaitingForMedical, *this );
+
+        // Funeral
+        if( IsDead() && !funeralConsign_ )
+        {
+            boost::shared_ptr< logistic::FuneralRequest_ABC > request( new logistic::FuneralRequest( *this ) );
+            funeralConsign_.reset( new logistic::FuneralConsign( request ) );
+        }
+        else if( funeralConsign_ && ( !IsDead() || funeralConsign_->IsFinished() ) )
+        {
+            funeralConsign_->Cancel();
+            funeralConsign_.reset();
+        }
     }
 
     //$$$ A déplacer dans une action logistique (ou un truc mieux ...)

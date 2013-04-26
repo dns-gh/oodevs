@@ -129,7 +129,7 @@ void MIL_StockSupplyManager::Clean()
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory )
 {
-    if( bSupplyNeeded_ || IsSupplyInProgress( dotationCategory ) )
+    if( HasStockSupplyNeededNotified( dotationCategory ) )
         return;
     bSupplyNeeded_ = true;
     if( SendSupplyNeededReport() )
@@ -188,6 +188,15 @@ bool MIL_StockSupplyManager::IsSupplyInProgress( const PHY_DotationCategory& dot
     return boost::find_if( scheduledSupplies_,
             boost::bind( &logistic::SupplyConsign_ABC::IsSupplying, _1, boost::cref( dotationCategory ), boost::cref( *this ) ) )
         != scheduledSupplies_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::HasStockSupplyNeededNotified
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+bool MIL_StockSupplyManager::HasStockSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const
+{
+    return ( bSupplyNeeded_ || IsSupplyInProgress( dotationCategory ) );
 }
 
 // -----------------------------------------------------------------------------
