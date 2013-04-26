@@ -10,7 +10,6 @@
 #include "Context.h"
 
 #include <tools/IpcDevice.h>
-#include <boost/date_time/posix_time/posix_time_duration.hpp>
 #include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/lexical_cast.hpp>
@@ -45,7 +44,7 @@ namespace
         virtual void resizeEvent( QResizeEvent* event )
         {
             char token = 0;
-            device_.Write( &token, sizeof token, boost::posix_time::time_duration() );
+            device_.TryWrite( &token, sizeof token );
             QWidget::resizeEvent( event );
         }
 
