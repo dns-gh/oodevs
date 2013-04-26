@@ -143,6 +143,7 @@ private:
     bool bReconAttributesValid_;
     bool bDecStateUpdated_;
     bool bCriticalIntelligenceUpdated_;
+    bool bLastCriticalIntelligenceUpdated_;
     //@}
 };
 

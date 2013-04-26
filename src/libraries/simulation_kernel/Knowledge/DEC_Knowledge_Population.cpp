@@ -48,6 +48,7 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( boost::shared_ptr< MIL_Knowl
     , bReconAttributesValid_       ( false )
     , bDecStateUpdated_            ( false )
     , bCriticalIntelligenceUpdated_( false )
+    , bLastCriticalIntelligenceUpdated_( false )
 {
     SendMsgCreation();
 }
@@ -67,6 +68,7 @@ DEC_Knowledge_Population::DEC_Knowledge_Population()
     , bReconAttributesValid_       ( false )
     , bDecStateUpdated_            ( false )
     , bCriticalIntelligenceUpdated_( false )
+    , bLastCriticalIntelligenceUpdated_( false )
 {
     // NOTHING
 }
@@ -129,6 +131,7 @@ void DEC_Knowledge_Population::Prepare()
     for( auto it = flows_.begin(); it != flows_.end(); ++it )
         it->second->Prepare();
     bDecStateUpdated_ = false;
+    bLastCriticalIntelligenceUpdated_ = bCriticalIntelligenceUpdated_;
     bCriticalIntelligenceUpdated_ = false;
 }
 
@@ -397,14 +400,14 @@ void DEC_Knowledge_Population::SendMsgDestruction() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::UpdateOnNetwork() const
 {
-    if( bCriticalIntelligenceUpdated_ || bReconAttributesValid_ && bDecStateUpdated_ )
+    if( bLastCriticalIntelligenceUpdated_ || bReconAttributesValid_ && bDecStateUpdated_ )
     {
         client::CrowdKnowledgeUpdate asnMsg;
         asnMsg().mutable_knowledge()->set_id( nID_ );
         asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
         if( bDecStateUpdated_ )
             asnMsg().set_domination( static_cast< unsigned int >( rDominationState_ * 100. ) );
-        if( bCriticalIntelligenceUpdated_ )
+        if( bLastCriticalIntelligenceUpdated_ )
             asnMsg().set_critical_intelligence( criticalIntelligence_ );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }

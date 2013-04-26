@@ -30,17 +30,17 @@
 // -----------------------------------------------------------------------------
 PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
     : PHY_DecisionCallbackAction_ABC( caller )
-    , rBaseTime_   ( MIL_AgentServer::GetWorkspace().GetRealTime() )
-    , rTimeToWait_ ( 0 )
-    , pKnowledge_  ( pKnowledge )
-    , caller_      ( caller )
+    , rBaseTime_           ( MIL_AgentServer::GetWorkspace().GetRealTime() )
+    , rTimeToWait_         ( 0 )
+    , pAgentKnowledge_     ( pKnowledge )
+    , caller_              ( caller )
 {
     unsigned int callerTeamID = caller.GetArmy().GetID();
 
     float affinity = pKnowledge->GetAgentKnown().GetAffinity( callerTeamID );
     ComputeTimeToWait( affinity );
     E_ReturnCode result = eRunning;
-    if( affinity < 0 || ( pKnowledge_->IsAnEnemy( caller.GetArmy() ) == eTristate_True && caller_.GetKnowledge().GetRapForLocalValue() < 2.25 ) )
+    if( affinity < 0 || ( pAgentKnowledge_->IsAnEnemy( caller.GetArmy() ) == eTristate_True && caller_.GetKnowledge().GetRapForLocalValue() < 2.25 ) )
         result = eFailed;
     else
         MIL_Report::PostEvent( pKnowledge->GetAgentKnown(), MIL_Report::eRC_Questionning );
@@ -53,18 +53,18 @@ PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, boost::shar
 // -----------------------------------------------------------------------------
 PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, int knowledgeCrowdId )
     : PHY_DecisionCallbackAction_ABC( caller )
-    , rBaseTime_   ( MIL_AgentServer::GetWorkspace().GetRealTime() )
-    , rTimeToWait_ ( 0 )
-    , caller_      ( caller )
+    , rBaseTime_           ( MIL_AgentServer::GetWorkspace().GetRealTime() )
+    , rTimeToWait_         ( 0 )
+    , caller_              ( caller )
 {
     unsigned int callerTeamID = caller.GetArmy().GetID();
     auto bbKg = caller.GetKnowledgeGroup()->GetKnowledge();
     if( !bbKg )
         throw std::runtime_error( __FUNCTION__ " Unknown blackboard" );
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeCrowdId );
-    if( !pKnowledge )
+    pPopulationKnowledge_ = bbKg->GetKnowledgePopulationFromID( knowledgeCrowdId );
+    if( !pPopulationKnowledge_ )
         throw std::runtime_error( __FUNCTION__ " Unknown crowd knowledge" );
-    MIL_Population& crowd = pKnowledge->GetPopulationKnown();
+    MIL_Population& crowd = pPopulationKnowledge_->GetPopulationKnown();
     ComputeTimeToWait( crowd.GetAffinity( callerTeamID ) );
     Callback( static_cast< int >( eRunning ) );
 }
@@ -96,14 +96,18 @@ void PHY_ActionInterrogate::ComputeTimeToWait( float affinity )
 // -----------------------------------------------------------------------------
 void PHY_ActionInterrogate::Execute()
 {
-    if( pKnowledge_ && ( pKnowledge_->IsAnEnemy( caller_.GetArmy() ) == eTristate_True && caller_.GetKnowledge().GetRapForLocalValue() < 2.25 ) )
+    if( pAgentKnowledge_ && ( pAgentKnowledge_->IsAnEnemy( caller_.GetArmy() ) == eTristate_True && caller_.GetKnowledge().GetRapForLocalValue() < 2.25 ) )
          Callback( static_cast< int >( eFailed ) );
     else
     {
         if( MIL_AgentServer::GetWorkspace().GetRealTime() - rBaseTime_ < rTimeToWait_ )
              Callback( static_cast< int >( eRunning ) );
         else
+        {
+            if( pPopulationKnowledge_ )
+                pPopulationKnowledge_->SetCriticalIntelligenceFromPopulationKnown();
              Callback( static_cast< int >( eFinished ) );
+        }
     }
 }
 

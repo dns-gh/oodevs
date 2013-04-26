@@ -15,6 +15,7 @@
 
 class MIL_AgentPion;
 class DEC_Knowledge_Agent;
+class DEC_Knowledge_Population;
 
 // =============================================================================
 /** @class  PHY_ActionInterrogate
@@ -61,7 +62,8 @@ private:
     //@{
     unsigned int rBaseTime_;
     unsigned int rTimeToWait_;
-    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge_;
+    boost::shared_ptr< DEC_Knowledge_Agent > pAgentKnowledge_;
+    boost::shared_ptr< DEC_Knowledge_Population > pPopulationKnowledge_;
     MIL_AgentPion& caller_;
     //@}
 };
