@@ -27,7 +27,7 @@ namespace
         PHY_HumanTest( const MIL_Time_ABC& time, HumansComposante_ABC& composante ): PHY_Human( time, composante ) {}
         virtual ~PHY_HumanTest() {}
     protected :
-        virtual virtual bool IsJammed() const { return false ; }
+        virtual bool IsJammed() const { return false ; }
     };
 
     class Configuration
