@@ -13,6 +13,7 @@
 #include "AgentKnowledge.h"
 #include "Automat.h"
 #include "Config.h"
+#include "DetectionRangeEffect.h"
 #include "Fire.h"
 #include "FireEffect.h"
 #include "FolkModel.h"
@@ -96,6 +97,7 @@ void Model::Reset()
 {
     simulation_->Reset();
     urbanKnowledges_       .DeleteAll();
+    detectionRangeEffects_. DeleteAll();
     fireEffects_           .DeleteAll();
     populationFires_       .DeleteAll();
     fires_                 .DeleteAll();
@@ -285,7 +287,12 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( message.has_start_fire_effect() )
         CreateUpdate< FireEffect >( fireEffects_, message.start_fire_effect().fire_effect().id(), message.start_fire_effect() );
     else if( message.has_stop_fire_effect() )
+    {
         Destroy( fireEffects_, message.stop_fire_effect().fire_effect().id(), message.stop_fire_effect() );
+        Destroy( detectionRangeEffects_, message.stop_fire_effect().fire_effect().id(), message.stop_fire_effect() );
+    }
+    else if( message.has_indirect_fire_perception() )
+        CreateUpdate< DetectionRangeEffect >( detectionRangeEffects_, message.indirect_fire_perception().fire_effects( 0 ).id(), message.indirect_fire_perception() );
     else if( message.has_unit_order() )
         agents_.Get( message.unit_order().tasker().id() ).Update( message.unit_order() );
     else if( message.has_automat_order() )
@@ -560,6 +567,7 @@ void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
     fires_                 .Apply( boost::bind( &Fire::Accept, _1, boost::ref( visitor ) ) );
     populationFires_       .Apply( boost::bind( &PopulationFire::Accept, _1, boost::ref( visitor ) ) );
     fireEffects_           .Apply( boost::bind( &FireEffect::Accept, _1, boost::ref( visitor ) ) );
+    detectionRangeEffects_ .Apply( boost::bind( &DetectionRangeEffect::Accept, _1, boost::ref( visitor ) ) );
     reports_               .Apply( boost::bind( &Report::Accept, _1, boost::ref( visitor ) ) );
     urbanKnowledges_       .Apply( boost::bind( &dispatcher::UrbanKnowledge_ABC::Accept, _1, boost::ref( visitor ) ) );
     meteoModel_->Accept( visitor );

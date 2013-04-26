@@ -31,6 +31,7 @@ namespace kernel
 namespace dispatcher
 {
     class Config;
+    class DetectionRangeEffect;
     class FolkModel;
     class MeteoModel;
     class SimulationModel;
@@ -185,6 +186,7 @@ private:
     tools::Resolver< Fire >                  fires_;
     tools::Resolver< PopulationFire >        populationFires_;
     tools::Resolver< FireEffect >            fireEffects_;
+    tools::Resolver< DetectionRangeEffect >  detectionRangeEffects_;
     tools::Resolver< Report >                reports_;
     //@}
 };
