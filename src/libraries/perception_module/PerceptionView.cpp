@@ -139,7 +139,8 @@ void PerceptionView::ExecuteAgents( const wrapper::View& model, const wrapper::V
 
             if( GET_HOOK( IsAgentPerceptionDistanceHacked )( perceiver, agent ) )
             {
-                const PerceptionLevel& level = PerceptionLevel::FindPerceptionLevel( GET_HOOK( GetHackedPerceptionLevel )( perceiver, agent ) );
+                const PerceptionLevel& level = agent[ "marked-for-destruction" ] ? PerceptionLevel::notSeen_
+                    : PerceptionLevel::FindPerceptionLevel( GET_HOOK( GetHackedPerceptionLevel )( perceiver, agent ) );
                 observer_.NotifyAgentPerception( agent, level );
             }
             else if( GET_HOOK( CanBeSeen )( perceiver, agent ) )
@@ -199,7 +200,8 @@ void PerceptionView::ExecuteObjects( const wrapper::View& /*model*/, const wrapp
             const wrapper::View& object = *itObject;
             if ( GET_HOOK( IsObjectPerceptionDistanceHacked )( perceiver, object ) )
             {
-                const PerceptionLevel& level = PerceptionLevel::FindPerceptionLevel( GET_HOOK( GetObjectPerceptionLevel )( perceiver, object ) );
+                const PerceptionLevel& level = object[ "marked-for-destruction" ] ? PerceptionLevel::notSeen_
+                    : PerceptionLevel::FindPerceptionLevel( GET_HOOK( GetObjectPerceptionLevel )( perceiver, object ) );
                 observer_.NotifyObjectPerception( object, level );
             }
             else

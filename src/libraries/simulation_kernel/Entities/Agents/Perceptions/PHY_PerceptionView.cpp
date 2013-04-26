@@ -93,6 +93,9 @@ PHY_PerceptionView::T_PerceptionParameterPair PHY_PerceptionView::GetParameter( 
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& target )
 {
+    if( target.IsMarkedForDestruction() )
+        return PHY_PerceptionLevel::notSeen_;
+
     TransfertPerception();
     if( target.BelongsTo( *perceiver_.GetKnowledgeGroup() ) || perceiver_.IsIdentified( target ) )
         return PHY_PerceptionLevel::identified_;
@@ -132,7 +135,12 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
             perceiver_.GetPion().Execute( *detectionComputer );
             agent.Execute( *detectionComputer );
             if ( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( agent ) )
-                perceiver_.NotifyPerception( agent, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( agent ) );
+            {
+                if( agent.IsMarkedForDestruction() )
+                    perceiver_.NotifyPerception( agent, PHY_PerceptionLevel::notSeen_ );
+                else
+                    perceiver_.NotifyPerception( agent, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( agent ) );
+            }
             else if( detectionComputer->CanBeSeen() && perceiver_.NotifyPerception( agent, Compute( agent ) ) )
                 if( !civiliansEncountered && agent.IsCivilian() )
                 {
@@ -234,7 +242,12 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
             if( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( object ) )
-                perceiver_.NotifyPerception( object, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( object ) );
+            {
+                if( object.IsMarkedForDestruction() )
+                    perceiver_.NotifyPerception( object, PHY_PerceptionLevel::notSeen_ );
+                else
+                    perceiver_.NotifyPerception( object, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( object ) );
+            }
             else
                 perceiver_.NotifyPerception( object, ::Compute( perceiver_, object, perceiver_.GetSurfacesObject(),
                                                                 position, bIsEnabled_, boost::bind( &ComputeObject, _1, _3, _4 ) ) );

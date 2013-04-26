@@ -452,6 +452,7 @@ namespace
             object[ "type/identifier" ] = it.second->GetType().GetID();
             object[ "is-universal" ] = it.second->IsUniversal();
             object[ "can-be-perceived" ] = (*it.second)().CanBePerceived();
+            object[ "marked-for-destruction" ] = it.second->IsMarkedForDestruction();
         }
     }
     void UpdatePerceptions( core::Model& notifications )
@@ -474,6 +475,7 @@ namespace
         entity[ "can-emit" ] = pion.CallRole( &PHY_RoleInterface_Communications::CanEmit, true );
         entity[ "danger/x" ] = pion.GetOrderManager().GetDirDanger().rX_;
         entity[ "danger/y" ] = pion.GetOrderManager().GetDirDanger().rY_;
+        entity[ "marked-for-destruction" ] = pion.IsMarkedForDestruction();
         core::Model& movement = entity[ "movement" ];
         movement[ "max-slope" ] = pion.CallRole( &moving::PHY_RoleAction_InterfaceMoving::GetMaxSlope, 1.0 );
         movement[ "has-resources" ] = pion.CallRole( &RoleAction_Moving::HasResources, false );
