@@ -246,7 +246,7 @@ void ADN_Composantes_GUI::Build()
     pDataPageLayout->addMultiCellWidget( pConsumptionsGroup, 3, 3, 0, 0 );
     pDataPageLayout->addMultiCellWidget( pBreakdownsGroup_ , 4, 5, 0, 0 );
 
-    pDataPageLayout->addMultiCellWidget( pTroopGroupBox         , 0, 3, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pTroopGroupBox         , 0, 1, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pVehiculeGroupBox_     , 2, 2, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pSensorsGroup          , 3, 3, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pRadarsGroup           , 4, 4, 1, 1 );
