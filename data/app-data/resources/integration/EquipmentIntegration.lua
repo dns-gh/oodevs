@@ -708,14 +708,14 @@ integration.deactivateSensors = function( self )
     DEC_Perception_DesactiverSenseurs()
 end
 integration.increaseNodeProduction = function( resourceNode, quantity )
-    integration.increaseResourceNodeProduction( resourceNode.source, quantity )
+    integration.increaseResourceNodeProduction( resourceNode, quantity )
     return true
 end
 integration.increaseResourceNodeProduction = function( resourceNode, quantity )
     DEC_ReseauRessourceAugmenteProduction( resourceNode.source, quantity )
 end
 integration.decreaseNodeProduction = function( resourceNode, quantity )
-    integration.decreaseResourceNodeProduction( resourceNode.source, quantity )
+    integration.decreaseResourceNodeProduction( resourceNode, quantity )
     return true
 end
 integration.decreaseResourceNodeProduction = function( resourceNode, quantity )
