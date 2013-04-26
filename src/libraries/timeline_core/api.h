@@ -6,19 +6,16 @@
 // Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
-#ifndef TIMELINE_UI_API_H__
-#define TIMELINE_UI_API_H__
+#ifndef TIMELINE_CORE_API_H__
+#define TIMELINE_CORE_API_H__
 
 #include <string>
 #include <memory>
 #include <boost/noncopyable.hpp>
-#include <tools/Path.h>
-
-class QWidget;
 
 namespace timeline
 {
-namespace ui
+namespace core
 {
     struct Context_ABC : public boost::noncopyable
     {
@@ -28,14 +25,13 @@ namespace ui
 
     struct Configuration
     {
-        tools::Path rundir;
-        tools::Path binary;
-        QWidget*    widget;
-        std::string target;
+        int wid;
+        std::string uuid;
+        std::string url;
     };
 
     std::auto_ptr< Context_ABC > MakeContext( const Configuration& cfg );
 }
 }
 
-#endif//TIMELINE_UI_H__
+#endif//TIMELINE_CORE_API_H__

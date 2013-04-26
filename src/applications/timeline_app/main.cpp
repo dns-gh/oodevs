@@ -21,20 +21,26 @@ int main( int argc, char* argv[] )
 {
     QT_REQUIRE_VERSION( argc, argv, "4.7.0" );
     QApplication app( argc, argv );
+    QObject::connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
     try
     {
-        if( argc != 2 )
-            throw std::exception( "usage: timeline_app.exe <url>" );
+        if( argc != 3 )
+            throw std::exception( "usage: timeline_app.exe <exe> <url>" );
 
         QMainWindow main;
         main.resize( 800, 600 );
         auto central = new QWidget( &main );
         main.setCentralWidget( central );
 
-        timeline::Configuration cfg;
+        timeline::ui::Configuration cfg;
+        cfg.rundir = ".";
+        cfg.binary = argv[1];
+        if( !cfg.binary.IsRegularFile() )
+            throw std::runtime_error( QString( "invalid file %1" ).arg( argv[1] ).toStdString() );
+
         cfg.widget = central;
-        cfg.target = argv[1];
-        auto context = timeline::MakeContext( cfg );
+        cfg.target = argv[2];
+        auto context = timeline::ui::MakeContext( cfg );
 
         main.show();
         return app.exec();

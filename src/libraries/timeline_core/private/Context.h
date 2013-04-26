@@ -9,8 +9,10 @@
 #ifndef CONTEXT_H__
 #define CONTEXT_H__
 
-#include <timeline_ui/api.h>
-#include <QProcess>
+#include <timeline_core/api.h>
+#pragma warning( push, 0 )
+#include <cef_base.h>
+#pragma warning( pop )
 
 namespace tools
 {
@@ -22,28 +24,21 @@ namespace ipc
 
 namespace timeline
 {
-namespace ui
+namespace core
 {
-class Context : public QObject
-              , public Context_ABC
-{
-    Q_OBJECT
+class Context : public Context_ABC
 
+{
 public:
              Context( const Configuration& cfg );
     virtual ~Context();
 
-private:
-    void StartProcess();
-
-private slots:
-    void OnError( QProcess::ProcessError error );
+    struct Handler;
 
 private:
     const Configuration cfg_;
-    const std::string uuid_;
     std::auto_ptr< tools::ipc::Device > device_;
-    std::auto_ptr< QProcess > core_;
+    CefRefPtr< Handler > handler_;
 };
 }
 }
