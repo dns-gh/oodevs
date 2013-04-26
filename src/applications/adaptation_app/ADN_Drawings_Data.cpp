@@ -78,6 +78,7 @@ namespace
         virtual void DrawTacticalGraphics( const std::string&, const kernel::Location_ABC&, bool, bool ) const {}
         virtual void DrawApp6SymbolFixedSize( const std::string&, const geometry::Point2f&, float, unsigned int ) const {}
         virtual void DrawUnitSymbol( const std::string&, const std::string&, const std::string&, const std::string&, bool, const geometry::Point2f&, float, unsigned int, float, float ) const {}
+        virtual void DrawUnitSymbolAndTail( const std::string&, const std::string&, const T_PointVector& ) const {}
         virtual void FillSelection( const geometry::Point2f&, T_ObjectsPicking& ) {};
         virtual void FillSelection( const geometry::Point2f&, T_ObjectsPicking&, E_LayerTypes ) {};
         virtual void RenderPicking( const T_ObjectPicking& ) {};

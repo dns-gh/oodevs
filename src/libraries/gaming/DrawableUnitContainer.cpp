@@ -83,6 +83,23 @@ namespace
     }
 }
 
+namespace
+{
+    class PointComparator
+    {
+    public:
+        PointComparator( const geometry::Vector2f& vector ) : vector_( vector ) {}
+        PointComparator( const PointComparator& rhs ) : vector_( rhs.vector_ ) {}
+        bool operator() ( const geometry::Point2f& pt1, const geometry::Point2f& pt2 )
+        {
+            return ( vector_.DotProduct( geometry::Vector2f( pt1 ) ) <  vector_.DotProduct( geometry::Vector2f( pt2 ) ) );
+        }
+    private:
+        const geometry::Vector2f& vector_;
+        PointComparator& operator=( const PointComparator& );
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: DrawableUnitContainer::Draw
 // Created: AGE 2006-10-06
@@ -108,9 +125,10 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
             bool hasLiveChildren = false;
             float minProjection = std::numeric_limits< float >::max();
             float maxProjection = - std::numeric_limits< float >::max();
-            //geometry::Vector2f orthogonalDirection = directionVector.Normal();
-            //float minOrthogonalProjection = std::numeric_limits< float >::max();
-            //float maxOrthogonalProjection = - std::numeric_limits< float >::max();
+            geometry::Vector2f orthogonalDirection = directionVector.Normal();
+            float minOrthogonalProjection = std::numeric_limits< float >::max();
+            float maxOrthogonalProjection = - std::numeric_limits< float >::max();
+            std::vector < geometry::Point2f > orderedPositions;
             float minWidth = 0.;
             float minDepth = 0.;
             while( children.HasMoreElements() )
@@ -123,12 +141,13 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
                     {
                         hasLiveChildren = true;
                         geometry::Point2f position = child->Get< kernel::Positions >().GetPosition( false );
+                        orderedPositions.push_back( position );
                         float projection = directionVector.DotProduct( geometry::Vector2f( position ) );
                         minProjection = std::min( minProjection, projection );
                         maxProjection = std::max( maxProjection, projection );
-                        //float orthogonalProjection = orthogonalDirection.DotProduct( geometry::Vector2f( position ) );
-                        //minOrthogonalProjection = std::min( minOrthogonalProjection, orthogonalProjection );
-                        //maxOrthogonalProjection = std::max( maxOrthogonalProjection, orthogonalProjection );
+                        float orthogonalProjection = orthogonalDirection.DotProduct( geometry::Vector2f( position ) );
+                        minOrthogonalProjection = std::min( minOrthogonalProjection, orthogonalProjection );
+                        maxOrthogonalProjection = std::max( maxOrthogonalProjection, orthogonalProjection );
                         if( IsUnitMoving( attributes ) )
                             isMoving = true;
                     }
@@ -141,11 +160,18 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
                 }
             }
             isMoving = isMoving && hasLiveChildren;
-            // float width = hasLiveChildren ? maxOrthogonalProjection - minOrthogonalProjection : 0;
+            float width = hasLiveChildren ? maxOrthogonalProjection - minOrthogonalProjection : 0;
             float depth = hasLiveChildren ? maxProjection - minProjection : 0;
-            // width = std::max( width, minWidth );
+            width = std::max( width, minWidth );
             depth = std::max( depth, minDepth );
-            tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, level_, isMoving, where, -1.f, udirection, isMoving ? 0 : minWidth * std::abs( factor ), isMoving ? depth : minDepth * std::abs( factor ) );
+            if( isMoving && !moveSymbol_.empty() && orderedPositions.size() > 1 && width < depth )
+            {
+                PointComparator comparator( directionVector );
+                std::sort( orderedPositions.begin(), orderedPositions.end(), comparator );
+                tools.DrawUnitSymbolAndTail( moveSymbol_, level_, orderedPositions );
+            }
+            else
+                tools.DrawUnitSymbol( symbol_, moveSymbol_, staticSymbol_, level_, isMoving, where, -1.f, udirection, isMoving ? 0 : minWidth * std::abs( factor ), isMoving ? depth : minDepth * std::abs( factor ) );
         }
         else
         {

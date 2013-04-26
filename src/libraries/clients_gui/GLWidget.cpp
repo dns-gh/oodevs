@@ -937,7 +937,7 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
                 T_PointVector points;
                 points.push_back( arrowTail );
                 points.push_back( symbolTail );
-                DrawTail( points,  SymbolSize_ * factor );
+                DrawTail( points, 3.f );
             }
             DrawApp6SymbolScaledSize( level, symbolPosition, factor, direction, 1, 1 );
         }
@@ -951,6 +951,32 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
         else
             DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::DrawUnitSymbolAndTail
+// Created: LDC 2013-04-26
+// -----------------------------------------------------------------------------
+void GlWidget::DrawUnitSymbolAndTail( const std::string& symbol, const std::string& level, const T_PointVector& points ) const
+{
+    geometry::Point2f penultimatePoint = points.at( points.size() -2 );
+    geometry::Point2f lastPoint = points.back();
+    float symbolDepth = 240;
+    geometry::Vector2f directionVector( penultimatePoint, lastPoint );
+    directionVector.Normalize();
+    geometry::Vector2f vertical( 0.f, 1.f );
+    float radians = geometry::Angle( vertical, directionVector );
+    int direction = static_cast< int >( radians * 180 / 3.14f );
+    if( direction < 0 )
+        direction = 360 + direction;
+    unsigned int udirection = 360 - static_cast< unsigned int >( direction );
+    geometry::Point2f symbolTail = lastPoint + directionVector * (-symbolDepth/2);
+    DrawApp6SymbolScaledSize( symbol, lastPoint, -1.f, udirection, 1, 1 );
+    DrawApp6SymbolScaledSize( level, lastPoint, -1.f, udirection, 1, 1 );
+    T_PointVector arrowPoints( points );
+    arrowPoints.pop_back();
+    arrowPoints.push_back( symbolTail );
+    DrawTail( arrowPoints, 3.f );
 }
 
 // -----------------------------------------------------------------------------

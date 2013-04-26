@@ -524,6 +524,15 @@ void Gl3dWidget::DrawUnitSymbol( const std::string& symbol, const std::string& /
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawUnitSymbolAndTail
+// Created: LDC 2013-04-26
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawUnitSymbolAndTail( const std::string&, const std::string&, const T_PointVector& ) const
+{
+    // NOT implemented
+}
+
+// -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawApp6Symbol
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------

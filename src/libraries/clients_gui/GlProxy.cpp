@@ -411,6 +411,15 @@ void GlProxy::DrawUnitSymbol( const std::string& symbol, const std::string& move
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::DrawUnitSymbolAndTail
+// Created: LDC 2013-04-26
+// -----------------------------------------------------------------------------
+void GlProxy::DrawUnitSymbolAndTail( const std::string& symbol, const std::string& level, const T_PointVector& points ) const
+{
+    tools_->DrawUnitSymbolAndTail( symbol, level, points );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
