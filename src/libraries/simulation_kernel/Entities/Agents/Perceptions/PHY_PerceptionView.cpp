@@ -205,8 +205,13 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
 
-            if ( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( object ) )
-                perceiver_.NotifyPerception( object, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( object ) );
+            if( perceiver_.GetKnowledgeGroup()->IsPerceptionDistanceHacked( object ) )
+            {
+                if( object.IsMarkedForDestruction() )
+                    perceiver_.NotifyPerception( object, PHY_PerceptionLevel::notSeen_ );
+                else
+                    perceiver_.NotifyPerception( object, perceiver_.GetKnowledgeGroup()->GetPerceptionLevel( object ) );
+            }
             else
                 perceiver_.NotifyPerception( object, Compute( object ) );
         }
