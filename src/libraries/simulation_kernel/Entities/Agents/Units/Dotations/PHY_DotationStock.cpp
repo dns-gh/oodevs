@@ -16,6 +16,8 @@
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationType.h"
 #include "PHY_DotationCategory.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
+#include "Entities/Specialisations/log/MIL_AgentPionLOG_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationStock )
@@ -218,7 +220,11 @@ bool PHY_DotationStock::NeedSupply() const
 // -----------------------------------------------------------------------------
 bool PHY_DotationStock::HasReachedSupplyThreshold() const
 {
-    return bInfiniteDotations_ ? false : rValue_ < rSupplyThreshold_;
+    if( bInfiniteDotations_ )
+        return false;
+    if( IsJammed() )
+        return false;
+    return rValue_ < rSupplyThreshold_;
 }
 
 // -----------------------------------------------------------------------------
@@ -253,4 +259,30 @@ void PHY_DotationStock::Resupply( bool withLog )
     else
         if( rValue_ < rCapacity_ )
             SetValue( rCapacity_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStock::UpdateSupplyNeeded
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+void PHY_DotationStock::UpdateSupplyNeeded()
+{
+    assert( pCategory_ );
+    assert( pStockContainer_ );
+    if( HasReachedSupplyThreshold() && !pStockContainer_->HasSupplyNeededNotified( *pCategory_ ) )
+        pStockContainer_->NotifySupplyNeeded( *pCategory_, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStock::IsJammed
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+bool PHY_DotationStock::IsJammed() const
+{
+    assert( pStockContainer_ );
+    const PHY_RoleInterface_Supply* pSupply = pStockContainer_->GetRoleInterfaceSupply();
+    if( !pSupply )
+        return false;
+    const MIL_AgentPionLOG_ABC& pPion = pSupply->GetPion();
+    return ( pPion.IsJammed() || pPion.IsLogisticJammed() );
 }

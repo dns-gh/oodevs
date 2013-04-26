@@ -31,6 +31,7 @@ class PHY_DotationType;
 class PHY_Dotation;
 class PHY_ConsumptionType;
 class PHY_AmmoDotationClass;
+class MIL_AgentPion;
 
 namespace dotation
 {
@@ -63,6 +64,11 @@ public:
     virtual void Update( bool bIsDead ) = 0;
     virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual const MIL_AgentPion* GetPion() const = 0;
     //@}
 
     //! @name Dotations management
@@ -103,6 +109,7 @@ public:
     //! @name Logistic - Supply
     //@{
     virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const = 0; // Logistic
+    virtual bool HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const = 0;  // Logistic
     virtual void Apply( boost::function< void( PHY_Dotation& ) > visitor ) const = 0;
     virtual void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const = 0;
     //@}

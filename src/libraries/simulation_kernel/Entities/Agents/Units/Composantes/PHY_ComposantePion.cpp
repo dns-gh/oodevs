@@ -801,29 +801,32 @@ void PHY_ComposantePion::Update()
         pRandomBreakdownState_ = 0;
     }
     // Demande maintenance
-    if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pMaintenanceState_ )
+    assert( pRole_ );
+    if( !pRole_->GetPion().IsJammed() && !pRole_->GetPion().IsLogisticJammed() )
     {
-        assert( pBreakdown_ );
-        assert( pRole_ );
-        pMaintenanceState_ = pRole_->NotifyComposanteWaitingForMaintenance( *this );
-    }
-
-    if( !bRepairEvacuationNoMeansChecked_ && ( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ || !pState_->IsUsable() ) )
-    {
-        assert( pType_ );
-        bool bRepairEvacuationNoMeans = false;
         if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pMaintenanceState_ )
-            bRepairEvacuationNoMeans = true;
-        else if( pMaintenanceState_ && pMaintenanceState_->GetConsign() )
         {
-            const PHY_MaintenanceTransportConsign* pConsign = dynamic_cast< const PHY_MaintenanceTransportConsign* >( pMaintenanceState_->GetConsign() );
-            if( pConsign && pConsign->SearchForUpperLevelNotFound() )
-                bRepairEvacuationNoMeans = true;
+            assert( pBreakdown_ );
+            pMaintenanceState_ = pRole_->NotifyComposanteWaitingForMaintenance( *this );
         }
-        if( bRepairEvacuationNoMeans )
+
+        if( !bRepairEvacuationNoMeansChecked_ && ( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ || !pState_->IsUsable() ) )
         {
-            bRepairEvacuationNoMeansChecked_ = true;
-            MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eRC_RepairEvacuationNoMeans, *pType_ );
+            assert( pType_ );
+            bool bRepairEvacuationNoMeans = false;
+            if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pMaintenanceState_ )
+                bRepairEvacuationNoMeans = true;
+            else if( pMaintenanceState_ && pMaintenanceState_->GetConsign() )
+            {
+                const PHY_MaintenanceTransportConsign* pConsign = dynamic_cast< const PHY_MaintenanceTransportConsign* >( pMaintenanceState_->GetConsign() );
+                if( pConsign && pConsign->SearchForUpperLevelNotFound() )
+                    bRepairEvacuationNoMeans = true;
+            }
+            if( bRepairEvacuationNoMeans )
+            {
+                bRepairEvacuationNoMeansChecked_ = true;
+                MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eRC_RepairEvacuationNoMeans, *pType_ );
+            }
         }
     }
 }

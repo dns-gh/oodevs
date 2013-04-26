@@ -53,6 +53,7 @@ public:
     double AddReservation   ( double rNbr );
     void     RemoveReservation( double rNbr );
     void     Resupply        ( bool withLog );
+    void     UpdateSupplyNeeded();
     //@}
 
     //! @name Log Supply
@@ -72,6 +73,7 @@ private:
     //! @name Tools
     //@{
     void     SetValue  ( double rValue );
+    bool     IsJammed() const;
     //@}
 
 private:

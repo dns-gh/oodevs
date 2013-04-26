@@ -73,6 +73,7 @@ public:
     void   CancelConsumptionReservations ();
     double AddConsumptionReservation     ( const PHY_DotationCategory& category, double rNbr );
     void   ConsumeConsumptionReservations();
+    void   UpdateSupplyNeeded();
 
     double AddFireReservation     ( const PHY_DotationCategory& category, double rNbr );
     void   ConsumeFireReservations();
@@ -89,6 +90,11 @@ public:
     double GetFuelDotationNumber() const;
     //@}
 
+    //! @name Accessors
+    //@{
+    const dotation::PHY_RoleInterface_Dotations* GetRoleDotations() const;
+    //@}
+
     //! @name
     //@{
     void NotifyCaptured();
@@ -98,6 +104,7 @@ public:
     //! @name Logistic
     //@{
     void NotifySupplyNeeded          ( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const;
+    bool HasSupplyNeededNotified     ( const PHY_DotationCategory& dotationCategory ) const;
     void Apply                       ( boost::function< void( PHY_Dotation& ) > visitor ) const;
     void ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor, MIL_AutomateLOG& tc2 ) const;
     //@}

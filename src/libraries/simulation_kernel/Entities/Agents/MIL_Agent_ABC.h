@@ -61,6 +61,8 @@ public:
     virtual bool IsPC() const = 0;
     virtual bool IsCivilian() const = 0;
     virtual bool IsAutonomous() const = 0;
+    virtual bool IsJammed() const = 0;
+    virtual bool IsLogisticJammed() const = 0;
     virtual const std::string& GetCriticalIntelligence() const = 0;
     virtual float GetAffinity( unsigned long teamID ) const = 0;
 

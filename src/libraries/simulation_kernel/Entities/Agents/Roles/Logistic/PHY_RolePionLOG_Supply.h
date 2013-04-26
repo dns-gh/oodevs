@@ -88,6 +88,8 @@ public:
     virtual void Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const;
     virtual void ResupplyStocks    ( bool withLog );
     virtual void ResupplyStocks    ( const PHY_DotationCategory& category, double rNbr );
+    virtual bool HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const;
+    virtual void UpdateSupplyNeeded();
     //@}
 
     //! @name Network

@@ -81,6 +81,7 @@ public:
 
     //! @name Logistic
     void NotifyStockSupplyNeeded( const PHY_DotationCategory& dotationCategory );
+    bool HasStockSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const;
     //@}
 
 private:

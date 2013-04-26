@@ -37,11 +37,13 @@ MOCK_BASE_CLASS( MockRoleDotations, dotation::PHY_RoleInterface_Dotations )
     MOCK_METHOD( RemoveForbiddenDotation, 1 );
     MOCK_METHOD( AllowAllDotations, 0 );
     MOCK_METHOD( HasDotationForFiring, 2 );
+    MOCK_METHOD( HasSupplyNeededNotified, 1 );
 
     MOCK_METHOD( NotifySupplyNeeded, 2 );
     MOCK_METHOD( Apply, 1 );
     MOCK_METHOD( ChangeDotationsValueUsingTC2, 3 );
     MOCK_METHOD( GetIlluminatingRange, 0 );
+    MOCK_METHOD( GetPion, 0 );
 };
 
 #endif // __MockRoleDotation_h_

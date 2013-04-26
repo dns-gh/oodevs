@@ -369,6 +369,15 @@ float PHY_DotationGroupContainer::GetIlluminatingRange() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::GetRoleDotations
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+const dotation::PHY_RoleInterface_Dotations* PHY_DotationGroupContainer::GetRoleDotations() const
+{
+    return pRoleDotation_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::AddConsumptionReservation
 // Created: NLD 2004-09-30
 // -----------------------------------------------------------------------------
@@ -399,6 +408,16 @@ void PHY_DotationGroupContainer::ConsumeConsumptionReservations()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::UpdateSupplyNeeded
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+void PHY_DotationGroupContainer::UpdateSupplyNeeded()
+{
+    for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+        it->second->UpdateSupplyNeeded();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::AddFireReservation
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
@@ -426,6 +445,16 @@ void PHY_DotationGroupContainer::NotifySupplyNeeded( const PHY_DotationCategory&
 {
     assert( pRoleDotation_ );
     pRoleDotation_->NotifySupplyNeeded( dotationCategory, bNewNeed );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationGroupContainer::HasSupplyNeededNotified
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+bool PHY_DotationGroupContainer::HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const
+{
+    assert( pRoleDotation_ );
+    return pRoleDotation_->HasSupplyNeededNotified( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------

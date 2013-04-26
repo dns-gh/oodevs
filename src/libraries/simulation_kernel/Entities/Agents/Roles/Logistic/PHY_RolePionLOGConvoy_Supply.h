@@ -73,6 +73,8 @@ public:
     //@{
     virtual void NotifyComposanteChanged( PHY_ComposantePion& composante );
     virtual void NotifySupplyNeeded     ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bNewNeed*/ ) const {};
+    virtual bool HasSupplyNeededNotified( const PHY_DotationCategory& /*dotationCategory*/ ) const { return true; }
+    virtual void UpdateSupplyNeeded() {}
     //@}
 
 private:

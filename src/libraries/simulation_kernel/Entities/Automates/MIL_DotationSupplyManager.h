@@ -74,6 +74,7 @@ public:
     //! @name Notifications
     //@{
     void NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
+    bool HasDotationSupplyNeededNotified( const PHY_DotationCategory& dotationCategory );
     void RequestDotationSupply     ();
     //@}
 

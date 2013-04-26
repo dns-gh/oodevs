@@ -302,6 +302,15 @@ PHY_DotationStock* PHY_DotationStockContainer::AddEmptyStock( const PHY_Dotation
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::GetRoleInterfaceSupply
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+const PHY_RoleInterface_Supply* PHY_DotationStockContainer::GetRoleInterfaceSupply() const
+{
+    return pRoleSupply_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationStockContainer::Resupply
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
@@ -412,6 +421,16 @@ void PHY_DotationStockContainer::NotifySupplyNeeded( const PHY_DotationCategory&
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::HasSupplyNeededNotified
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+bool PHY_DotationStockContainer::HasSupplyNeededNotified( const PHY_DotationCategory& dotationCategory ) const
+{
+    assert( pRoleSupply_ );
+    return pRoleSupply_->HasSupplyNeededNotified( dotationCategory );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationStockContainer::Apply
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
@@ -498,6 +517,17 @@ void PHY_DotationStockContainer::Update()
 {
     if( bCheckStockCapacities_ )
         CheckStockCapacities();
+    UpdateSupplyNeeded();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::UpdateSupplyNeeded
+// Created: MMC 2013-04-24
+// -----------------------------------------------------------------------------
+void PHY_DotationStockContainer::UpdateSupplyNeeded()
+{
+    for( auto it = stocks_.begin(); it != stocks_.end(); ++it )
+        it->second->UpdateSupplyNeeded();
 }
 
 // -----------------------------------------------------------------------------
