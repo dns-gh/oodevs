@@ -189,6 +189,7 @@ end
 -- --------------------------------------------------------------------------------
 integration.switchOnSafetyMode = function( self )
     DEC_Perception_ActiverCoupsDeSonde()
+    DEC_Agent_ChangerAmbianceEnSurete( true )
     if integration.isFlying() and myself.altitude then
         DEC_Agent_HauteurDeVol( myself.altitude * 0.2 )
     end
@@ -227,6 +228,7 @@ end
 -- --------------------------------------------------------------------------------
 integration.switchOffSafetyMode = function( self )
     DEC_Perception_DesactiverCoupsDeSonde()
+    DEC_Agent_ChangerAmbianceEnSurete( false )
     if integration.isFlying() and myself.altitude then
         DEC_Agent_HauteurDeVol( myself.altitude )
     end
@@ -247,6 +249,7 @@ end
 -- --------------------------------------------------------------------------------
 integration.switchOffCoverMode = function( self )
     DEC_Perception_DesactiverCoupsDeSonde()
+    DEC_Agent_ChangerAmbianceEnSurete( false )
     integration.pionRC( eRC_CouvertureDesactive )
 	myself.speedModulation = myself.speedModulation or {}
 	myself.speedModulation.switchOnCoverMode = 1 --scipio
