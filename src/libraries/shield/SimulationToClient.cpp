@@ -942,6 +942,7 @@ void SimulationToClient::Convert( const sword::UnitKnowledgeUpdate& from, MsgsSi
     CONVERT_CB( position, ConvertCoordLatLong );
     CONVERT_CB( direction, ConvertHeading );
     CONVERT( speed );
+    CONVERT( critical_intelligence );
     CONVERT_ID( party );
     CONVERT_TO( command_post, nature_pc );
     CONVERT_LIST_TO( perceptions, perception_par_compagnie, elem, ConvertAutomatPerception );
