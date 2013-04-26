@@ -232,16 +232,16 @@ void ADN_Equipments_GUI::Build()
     pLogPage->layout()->setAlignment( Qt::AlignTop );
     pLogPage->setMargin( 10 );
     pLogPage->setSpacing( 10 );
-    BuildHealth( pLogPage, vInfosConnectors );
-    BuildSupply( pLogPage, vInfosConnectors );
-    BuildMaintenance( pLogPage, vInfosConnectors );
+    BuildHealth( pLogPage, vInfosConnectors, builder );
+    BuildSupply( pLogPage, vInfosConnectors, builder );
+    BuildMaintenance( pLogPage, vInfosConnectors, builder );
 
     // Power indicators page
     Q3VBox* pPowerIndicatorsPage = new Q3VBox();
     pPowerIndicatorsPage->layout()->setAlignment( Qt::AlignTop );
     pPowerIndicatorsPage->setMargin( 10 );
     pPowerIndicatorsPage->setSpacing( 10 );
-    BuildPowerIndicators( pPowerIndicatorsPage, vInfosConnectors );
+    BuildPowerIndicators( pPowerIndicatorsPage, vInfosConnectors, builder );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -291,17 +291,16 @@ void ADN_Equipments_GUI::Build()
 // Name: ADN_Equipments_GUI::BuildHealth
 // Created: APE 2005-03-15
 // -----------------------------------------------------------------------------
-QWidget* ADN_Equipments_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
+QWidget* ADN_Equipments_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& vInfosConnectors, ADN_GuiBuilder& builder )
 {
-    ADN_GuiBuilder builder( strClassName_ );
     builder.PushSubName( "log-tab" );
     builder.PushSubName( "health" );
 
     ADN_GroupBox* pHealthGroup = builder.AddGroupBox( pParent, "health", tr( "Medical system" ), vInfosConnectors[ eHasHealthLog ], 1 );
 
     Q3HBox* pAmbulanceHolder = new Q3HBox( pHealthGroup );
-    this->BuildAmbulance( pAmbulanceHolder, "ambulance-evacuation", tr( "Ambulance, evacuation" ), vInfosConnectors, eHasRAmbulance );
-    this->BuildAmbulance( pAmbulanceHolder, "ambulance-collection", tr( "Ambulance, collection" ), vInfosConnectors, eHasAmbulance );
+    this->BuildAmbulance( pAmbulanceHolder, "ambulance-evacuation", tr( "Ambulance, evacuation" ), vInfosConnectors, eHasRAmbulance, builder );
+    this->BuildAmbulance( pAmbulanceHolder, "ambulance-collection", tr( "Ambulance, collection" ), vInfosConnectors, eHasAmbulance, builder );
 
     ADN_GroupBox* pDoctorGroup = builder.AddGroupBox( pHealthGroup, "doctor", tr( "Doctor" ), vInfosConnectors[ eIsDoctor ], 3 );
     QWidget* pHolder = builder.AddFieldHolder( pDoctorGroup );
@@ -330,9 +329,8 @@ QWidget* ADN_Equipments_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& v
 // Name: ADN_Equipments_GUI::BuildAmbulance
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-QWidget* ADN_Equipments_GUI::BuildAmbulance( QWidget* pParent, const char* objectName, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex )
+QWidget* ADN_Equipments_GUI::BuildAmbulance( QWidget* pParent, const char* objectName, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex, ADN_GuiBuilder& builder )
 {
-    ADN_GuiBuilder builder( strClassName_ );
     builder.PushSubName( "log-tab" );
     builder.PushSubName( objectName );
 
@@ -369,9 +367,8 @@ QWidget* ADN_Equipments_GUI::BuildAmbulance( QWidget* pParent, const char* objec
 // Name: ADN_Equipments_GUI::BuildSupply
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-QWidget* ADN_Equipments_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
+QWidget* ADN_Equipments_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& vInfosConnectors, ADN_GuiBuilder& builder )
 {
-    ADN_GuiBuilder builder( strClassName_ );
     builder.PushSubName( "log-tab" );
     builder.PushSubName( "supply" );
 
@@ -393,10 +390,8 @@ QWidget* ADN_Equipments_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& v
 // Name: ADN_Equipments_GUI::BuildMaintenance
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-QWidget* ADN_Equipments_GUI::BuildMaintenance( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
+QWidget* ADN_Equipments_GUI::BuildMaintenance( QWidget* pParent, T_ConnectorVector& vInfosConnectors, ADN_GuiBuilder& builder )
 {
-    ADN_GuiBuilder builder( strClassName_ );
-
     builder.PushSubName( "log-tab" );
     builder.PushSubName( "maintenance" );
 
@@ -409,9 +404,9 @@ QWidget* ADN_Equipments_GUI::BuildMaintenance( QWidget* pParent, T_ConnectorVect
 
     Q3HBox* pNTIHolder = new Q3HBox( pMaintenanceGroup );
 
-    this->BuildNTI( pNTIHolder, "seriousness-level-1", tr( "Seriousness level 1" ), vInfosConnectors, eNTI1 );
-    this->BuildNTI( pNTIHolder, "seriousness-level-2", tr( "Seriousness level 2" ), vInfosConnectors, eNTI2 );
-    this->BuildNTI( pNTIHolder, "seriousness-level-3", tr( "Seriousness level 3" ), vInfosConnectors, eNTI3 );
+    this->BuildNTI( pNTIHolder, "seriousness-level-1", tr( "Seriousness level 1" ), vInfosConnectors, eNTI1, builder );
+    this->BuildNTI( pNTIHolder, "seriousness-level-2", tr( "Seriousness level 2" ), vInfosConnectors, eNTI2, builder );
+    this->BuildNTI( pNTIHolder, "seriousness-level-3", tr( "Seriousness level 3" ), vInfosConnectors, eNTI3, builder );
 
     builder.PopSubName(); //! maintenance
     builder.PopSubName(); //! log-tab
@@ -422,9 +417,8 @@ QWidget* ADN_Equipments_GUI::BuildMaintenance( QWidget* pParent, T_ConnectorVect
 // Name: ADN_Equipments_GUI::BuildNTI
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-QWidget* ADN_Equipments_GUI::BuildNTI( QWidget* pParent, const char* objectName, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex )
+QWidget* ADN_Equipments_GUI::BuildNTI( QWidget* pParent, const char* objectName, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex, ADN_GuiBuilder& builder )
 {
-    ADN_GuiBuilder builder( strClassName_ );
     builder.PushSubName( "log-tab" );
     builder.PushSubName( "maintenance" );
     builder.PushSubName( objectName );
@@ -445,9 +439,8 @@ QWidget* ADN_Equipments_GUI::BuildNTI( QWidget* pParent, const char* objectName,
 // Name: ADN_Equipments_GUI::BuildPowerIndicators
 // Created: FPO 2011-03-30
 // -----------------------------------------------------------------------------
-QWidget* ADN_Equipments_GUI::BuildPowerIndicators( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
+QWidget* ADN_Equipments_GUI::BuildPowerIndicators( QWidget* pParent, T_ConnectorVector& vInfosConnectors, ADN_GuiBuilder& builder )
 {
-    ADN_GuiBuilder builder( strClassName_ );
     builder.PushSubName( "power-indicator-tab" );
 
     Q3GroupBox* pPowerIndicatorsGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Power indicators" ), pParent );

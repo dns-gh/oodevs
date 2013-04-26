@@ -117,4 +117,5 @@ void ADN_Supply_GUI::Build()
 
     // Main widget
     pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
+    builder.PopSubName(); //  "supply-tab"
 }

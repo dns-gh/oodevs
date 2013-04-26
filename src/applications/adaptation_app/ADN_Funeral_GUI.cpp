@@ -97,6 +97,7 @@ void ADN_Funeral_GUI::Build()
 
     // Main widget
     pMainWidget_ = CreateScrollArea( builder.GetName(), *pContent );
+    builder.PopSubName(); // "funeral-tab"
 }
 
 // -----------------------------------------------------------------------------

@@ -13,6 +13,7 @@
 #include "ADN_GUI_ABC.h"
 #include "ADN_HumanFactors_Data.h"
 
+class ADN_GuiBuilder;
 // =============================================================================
 /** @class  ADN_HumanFactors_GUI
     @brief  ADN_HumanFactors_GUI
@@ -38,8 +39,8 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildModifiers( QWidget* pParent, ADN_HumanFactors_Data::ModifiersInfo& modifiers, const char* objectName, const QString& szName );
-    QWidget* BuildThresholds( QWidget* pParent, ADN_HumanFactors_Data::ThresholdsInfo& thresholds, const char* objectName, const QString& szName, const QString& firstThresholdName, const QString& secondThresholdName );
+    QWidget* BuildModifiers( QWidget* pParent, ADN_HumanFactors_Data::ModifiersInfo& modifiers, const char* objectName, const QString& szName, ADN_GuiBuilder& builder );
+    QWidget* BuildThresholds( QWidget* pParent, ADN_HumanFactors_Data::ThresholdsInfo& thresholds, const char* objectName, const QString& szName, const QString& firstThresholdName, const QString& secondThresholdName, ADN_GuiBuilder& builder );
     //@}
 
 private:

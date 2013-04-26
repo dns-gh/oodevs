@@ -24,6 +24,7 @@ class ADN_Equipments_RadarsListView;
 class ADN_Equipments_WeaponsListView;
 class ADN_Equipments_ActiveProtectionsListView;
 class ADN_Equipments_Resources_Tables;
+class ADN_GuiBuilder;
 
 // =============================================================================
 /** @class  ADN_Equipments_GUI
@@ -176,15 +177,15 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildHealth( QWidget* pParent, T_ConnectorVector& vInfosConnectors );
-    QWidget* BuildAmbulance( QWidget* pParent, const char* objectName, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex );
+    QWidget* BuildHealth( QWidget* pParent, T_ConnectorVector& vInfosConnectors, ADN_GuiBuilder& builder );
+    QWidget* BuildAmbulance( QWidget* pParent, const char* objectName, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex, ADN_GuiBuilder& builder );
 
-    QWidget* BuildSupply( QWidget* pParent, T_ConnectorVector& vInfosConnectors );
+    QWidget* BuildSupply( QWidget* pParent, T_ConnectorVector& vInfosConnectors, ADN_GuiBuilder& builder );
 
-    QWidget* BuildMaintenance( QWidget* pParent, T_ConnectorVector& vInfosConnectors );
-    QWidget* BuildNTI( QWidget* pParent, const char* objectName, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex );
+    QWidget* BuildMaintenance( QWidget* pParent, T_ConnectorVector& vInfosConnectors, ADN_GuiBuilder& builder );
+    QWidget* BuildNTI( QWidget* pParent, const char* objectName, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex, ADN_GuiBuilder& builder );
 
-    QWidget* BuildPowerIndicators( QWidget* pParent, T_ConnectorVector& vInfosConnectors );
+    QWidget* BuildPowerIndicators( QWidget* pParent, T_ConnectorVector& vInfosConnectors, ADN_GuiBuilder& builder );
 
     ADN_Table* CreateComposanteSpeedsTable();
     //@}
