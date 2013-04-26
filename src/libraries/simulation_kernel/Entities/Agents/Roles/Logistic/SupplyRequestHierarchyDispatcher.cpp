@@ -74,5 +74,5 @@ void SupplyRequestHierarchyDispatcher::Dispatch( SupplyRecipient_ABC& recipient,
 // -----------------------------------------------------------------------------
 bool SupplyRequestHierarchyDispatcher::AllowSupply()
 {
-    return nbMandatoryRequestsSatisfied_ > 0 || forceSupply_ && nbComplementaryRequests_ > 0;
+    return nbMandatoryRequestsSatisfied_ > 0 || ( forceSupply_ && nbComplementaryRequests_ > 0 );
 }

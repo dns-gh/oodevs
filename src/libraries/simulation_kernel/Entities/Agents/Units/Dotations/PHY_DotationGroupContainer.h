@@ -63,7 +63,7 @@ public:
 
     //! @name Init
     //@{
-    void ReadDotations( xml::xistream& xis, const PHY_UnitType* unitType = 0 );
+    void ReadDotations( xml::xistream& xis, const PHY_UnitType& unitType );
     void WriteODB     ( xml::xostream& xos ) const;
     //@}
 
@@ -136,7 +136,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadDotation ( xml::xistream& xis, const PHY_UnitType* unitType, T_DotationSet& overloadedDotations );
+    void ReadDotation ( xml::xistream& xis, const PHY_UnitType& unitType, T_DotationSet& overloadedDotations );
     //@}
 
 private:
