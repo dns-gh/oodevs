@@ -25,7 +25,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( Update, 1 );
     MOCK_METHOD( Clean, 0 );
     MOCK_METHOD( ChangeComposantesAvailability, 2 );
-    MOCK_METHOD( RepairAllComposantes, 0 );
+    MOCK_METHOD( RepairAllComposantes, 1 );
     MOCK_METHOD( DestroyRandomComposante, 0 );
     MOCK_METHOD( DestroyAllComposantes, 0 );
     MOCK_METHOD( LendComposante, 2 );
