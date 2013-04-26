@@ -134,16 +134,20 @@
                 <arg value="--savecheckpoint=@{checkpoint}"/>
             </run-one-simulation>
             <echo taskname="load-checkpoint" message='simulation_app --test --checkpoint=@{checkpoint} --legacy=@{legacy} --exercise="@{exercise}" --session=@{session} --root-dir="${data.dir}"'/>
+            <!-- This should be replaced by an equivalent test on ww-ML
             <run-one-simulation exercise="scipio/CheckpointTests" legacy="@{legacy}">
-                <arg value="--checkpoint=@{checkpoint}"/>
+                <arg value="- -checkpoint=@{checkpoint}"/>
             </run-one-simulation>
+            -->
             <delete dir="${data.dir}/exercises/@{exercise}/checkpoints/@{checkpoint}"/>
         </sequential>
     </macrodef>
 
     <target name="checkpoint_test" description="save and load a checkpoint">
+        <!-- These should be replaced by equivalent tests on ww-ML
         <save-load-checkpoint exercise="scipio/CheckpointTests" legacy="true"/>
         <save-load-checkpoint exercise="scipio/CheckpointTests"/>
+        -->
         <save-load-checkpoint exercise="tests/CheckpointTests"/>
     </target>
 
@@ -167,7 +171,9 @@
     </macrodef>
 
     <target name="scripts_test" description="run all script tests">
+        <!-- This should be replaced by an equivalent test on ww-ML
         <test-scripts dataset="ada" physical="scipio"/>
+        -->
         <test-scripts dataset="ada" physical="worldwide"/>
     </target>
 
@@ -284,7 +290,9 @@
 
     <target name="adaptation_test" description="load, save then diff physical data">
         <test-adaptation-newbase/>
+        <!-- This should be replaced by an equivalent test on ww-ML
         <test-adaptation input="${data.dir}/data/models/ada/physical/scipio"/>
+        -->
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
         <test-adaptation-unicode dir="${data.dir}/tests/test_data_unicode/physical base without unicode"/>
     </target>
@@ -307,7 +315,9 @@
 
     <target name="exercises_test" description="validates some significant exercises">
         <test-exercise exercise="worldwide/Egypt"/>
+        <!-- This should be replaced by an equivalent test on ww-ML
         <test-exercise exercise="scipio/Poseidon VA"/>
+        -->
     </target>
 
     <macrodef name="test-data-migration">
