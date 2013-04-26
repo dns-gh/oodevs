@@ -85,6 +85,7 @@ namespace sword
     class FragOrder;
     class FragOrderAck;
     class Indicator;
+    class IndirectFirePerception;
     class InvalidateReport;
     class KnowledgeGroupCreation;
     class KnowledgeGroupCreationAck;
@@ -429,11 +430,12 @@ private:
     void OnReceiveMsgDecisionalState ( const sword::DecisionalState&  message );
 
     // Tirs
-    void OnReceiveStartUnitFire         ( const sword::StartUnitFire&       message );
-    void OnReceiveStopUnitFire          ( const sword::StopUnitFire&        message );
-    void OnReceiveExplosion             ( const sword::Explosion&           message );
-    void OnReceiveStartFireEffect       ( const sword::StartFireEffect&     message );
-    void OnReceiveStopFireEffect        ( const sword::StopFireEffect&      message );
+    void OnReceiveStartUnitFire         ( const sword::StartUnitFire& message );
+    void OnReceiveStopUnitFire          ( const sword::StopUnitFire& message );
+    void OnReceiveExplosion             ( const sword::Explosion& message );
+    void OnReceiveStartFireEffect       ( const sword::StartFireEffect& message );
+    void OnReceiveStopFireEffect        ( const sword::StopFireEffect& message );
+    void OnReceiveIndirectFirePerception( const sword::IndirectFirePerception&  message );
     void OnReceiveStartCrowdFire   ( const sword::StartCrowdFire& message );
     void OnReceiveStopCrowdFire    ( const sword::StopCrowdFire&  message );
 

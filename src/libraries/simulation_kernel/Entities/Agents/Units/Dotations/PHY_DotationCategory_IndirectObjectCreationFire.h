@@ -24,14 +24,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_DotationCategory_IndirectObjectCreationFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
-                                                              unsigned int nInterventionType, double rDispersionX, double rDispersionY );
+                                                              unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange );
              PHY_DotationCategory_IndirectObjectCreationFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, const std::string& objectType,
-                                                              unsigned int nInterventionType, double rDispersionX, double rDispersionY );
+                                                              unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange );
     virtual ~PHY_DotationCategory_IndirectObjectCreationFire();
     //@}
 
     static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
-                                                          unsigned int nInterventionType, double rDispersionX, double rDispersionY );
+                                                          unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange );
 
     //! @name Operations
     //@{

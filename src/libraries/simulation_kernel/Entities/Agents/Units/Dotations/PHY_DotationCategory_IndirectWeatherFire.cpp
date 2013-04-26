@@ -28,9 +28,9 @@
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectWeatherFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
-                                                                                         unsigned int nInterventionType, double rDispersionX, double rDispersionY )
+                                                                                         unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange )
 {
-    return *new PHY_DotationCategory_IndirectWeatherFire( type, dotationCategory, xis, nInterventionType, rDispersionX, rDispersionY );
+    return *new PHY_DotationCategory_IndirectWeatherFire( type, dotationCategory, xis, nInterventionType, rDispersionX, rDispersionY, rDetectionRange );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,8 +38,8 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectWeatherFire:
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectWeatherFire::PHY_DotationCategory_IndirectWeatherFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
-                                                                                    unsigned int nInterventionType, double rDispersionX, double rDispersionY )
-    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, nInterventionType, rDispersionX, rDispersionY )
+                                                                                    unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange )
+    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, nInterventionType, rDispersionX, rDispersionY, rDetectionRange )
 {
     std::string setupTime, lifeTime;
     xis >> xml::attribute( "setup-time", setupTime )
@@ -76,8 +76,13 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC*
     vRotatedFireDirection *= ( rInterventionTypeFired * rDispersionY_ );
 
     const MT_Ellipse effectSurface( vTargetPosition, vTargetPosition + vFireDirection, vTargetPosition + vRotatedFireDirection );
-    MIL_Effect_Weather* pEffect = new MIL_Effect_Weather( effectSurface, category_, MIL_Tools::ConvertSecondsToSim( rLifeDuration_ ), MIL_Tools::ConvertSecondsToSim( rDeploymentDuration_ ) );
+    const double deploymentDuration = MIL_Tools::ConvertSecondsToSim( rDeploymentDuration_ );
+    MIL_Effect_Weather* pEffect = new MIL_Effect_Weather( effectSurface, category_, MIL_Tools::ConvertSecondsToSim( rLifeDuration_ ), deploymentDuration );
     MIL_EffectManager::GetEffectManager().Register( *pEffect );
+
+    std::vector< unsigned int > fireEffectsIds;
+    fireEffectsIds.push_back( pEffect->GetFireEffectId() );
+    ApplyDetectionRangeEffect( vTargetPosition, fireEffectsIds, deploymentDuration );
 
     TER_Agent_ABC::T_AgentPtrVector targets;
     TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( effectSurface, targets );

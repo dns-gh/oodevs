@@ -190,6 +190,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeDisaster.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Weapons\PHY_UrbanAttritionData.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Automates\MIL_SupplyManager.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_DetectionRange.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DisasterAttribute.cpp" />
@@ -961,6 +962,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Weapons\PHY_UrbanAttritionData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\WoundEffectsHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Automates\MIL_SupplyManager.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_DetectionRange.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DisasterAttribute.h" />

@@ -33,7 +33,7 @@ PHY_ActionIndirectFire_Position::PHY_ActionIndirectFire_Position( MIL_Agent_ABC&
     if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
     {
         const PHY_DotationCategory::T_IndirectFireEffects& effects = pDotationCategory->GetIndirectFireEffects();
-        for( PHY_DotationCategory::CIT_IndirectFireEffects it = effects.begin(); it != effects.end(); ++ it )
+        for( auto it = effects.begin(); it != effects.end(); ++ it )
         {
             MIL_Effect_IndirectFire* pEffect = new MIL_Effect_IndirectFire( pion, *pTargetPosition, **it, rNbInterventionType_ );
             pEffect->IncRef();

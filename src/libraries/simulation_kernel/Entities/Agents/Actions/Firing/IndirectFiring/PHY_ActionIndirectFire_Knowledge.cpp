@@ -30,7 +30,7 @@ PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPio
     if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
     {
         const PHY_DotationCategory::T_IndirectFireEffects& effects = pDotationCategory->GetIndirectFireEffects();
-        for( PHY_DotationCategory::CIT_IndirectFireEffects it = effects.begin(); it != effects.end(); ++ it )
+        for( auto it = effects.begin(); it != effects.end(); ++ it )
         {
             MIL_Effect_IndirectFire* pEffect = new MIL_Effect_IndirectFire( pion, nTargetKnowledgeID, **it, rNbInterventionType_ );
             pEffect->IncRef();
@@ -51,7 +51,7 @@ PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPio
     if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
     {
         const PHY_DotationCategory::T_IndirectFireEffects& effects = pDotationCategory->GetIndirectFireEffects();
-        for( PHY_DotationCategory::CIT_IndirectFireEffects it = effects.begin(); it != effects.end(); ++ it )
+        for( auto it = effects.begin(); it != effects.end(); ++ it )
         {
             MIL_Effect_IndirectFire* pEffect = new MIL_Effect_IndirectFire( pion, targetKnowledge->GetID(), **it, rNbInterventionType_ );
             pEffect->IncRef();

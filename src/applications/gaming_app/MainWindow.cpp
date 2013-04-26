@@ -207,7 +207,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     parameters_ = new gui::ParametersLayer( *glProxy_ );
     gui::LocationsLayer* locationsLayer      = new gui::LocationsLayer( *glProxy_ );
     gui::TerrainPicker* picker               = new gui::TerrainPicker( this );
-    WeatherLayer* meteoLayer                 = new WeatherLayer( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker );
+    WeatherLayer* meteoLayer                 = new WeatherLayer( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker, *pProfile_ );
     AutomatsLayer* automatsLayer             = new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, simulation, network_.GetMessageMgr(), model_.agents_ );
     FormationLayer* formationLayer           = new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_ );
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );

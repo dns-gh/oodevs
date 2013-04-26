@@ -26,7 +26,7 @@ class PHY_DotationCategory_IndirectFire_ABC : private boost::noncopyable
 {
 public:
              PHY_DotationCategory_IndirectFire_ABC( const PHY_IndirectFireDotationClass& category, const PHY_DotationCategory& dotationCategory,
-                                                    unsigned int nInterventionType, double rDispersionX, double rDispersionY );
+                                                    unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange );
     virtual ~PHY_DotationCategory_IndirectFire_ABC();
 
     //! @name Accessors
@@ -40,6 +40,7 @@ public:
     virtual void ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const = 0;
     virtual void ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
     virtual bool HasHit( const MIL_Agent_ABC& target, double ) const;
+    void ApplyDetectionRangeEffect( const MT_Vector2D& vTargetPosition, const std::vector< unsigned int >& fireEffectsIds, double deploymentDuration ) const;
     //@}
 
 protected:
@@ -50,6 +51,7 @@ protected:
     unsigned int nInterventionType_;
     double rDispersionX_;
     double rDispersionY_;
+    double rDetectionRange_;
     //@}
 };
 

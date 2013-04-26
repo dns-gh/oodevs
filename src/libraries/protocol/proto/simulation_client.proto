@@ -1737,6 +1737,18 @@ message StopFireEffect {
     required FireEffectId fire_effect = 1;
 }
 
+/** @struct IndirectFirePerception
+    @brief Notifies which units perceive an indirect fire
+*/
+message IndirectFirePerception {
+    //! The perceivers (list can be empty)
+    repeated UnitId perceivers         = 1;
+    //! The ammunition fired
+    required ResourceType ammunition   = 2;
+    //! The fire effects (list cannot be empty)
+    repeated FireEffectId fire_effects = 3;
+}
+
 /** @struct Report
     @brief Describes a report
 */
@@ -3785,6 +3797,8 @@ message SimToClient {
             log_funeral_handling_destruction = 145;
         //! @copybrief AutomatChangeSuperior
         optional FormationChangeSuperior formation_change_superior = 146;
+        //! < @copybrief IndirectFirePerception
+        optional IndirectFirePerception indirect_fire_perception = 147;
     }
     /** @property context
         @brief Identifies the request matching the response
@@ -3796,7 +3810,7 @@ message SimToClient {
         specific request emitted by the client.
     */
     optional int32   context = 1;
-    //! The content od the message
+    //! The content of the message
     required Content message = 2;
 }
 

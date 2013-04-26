@@ -27,13 +27,13 @@ class PHY_DotationCategory_IndirectWeatherFire : public PHY_DotationCategory_Ind
 {
 public:
              PHY_DotationCategory_IndirectWeatherFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
-                                                       unsigned int nInterventionType, double rDispersionX, double rDispersionY );
+                                                       unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange );
     virtual ~PHY_DotationCategory_IndirectWeatherFire();
 
     //! @name
     //@{
     static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
-                                                          unsigned int nInterventionType, double rDispersionX, double rDispersionY );
+                                                          unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange );
     //@}
 
     //! @name Operations

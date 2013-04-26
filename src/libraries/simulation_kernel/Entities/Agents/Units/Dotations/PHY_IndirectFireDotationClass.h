@@ -12,11 +12,6 @@
 #ifndef __PHY_IndirectFireDotationClass_h_
 #define __PHY_IndirectFireDotationClass_h_
 
-namespace xml
-{
-    class xistream;
-}
-
 class MIL_EntityManager_ABC;
 class PHY_DotationCategory;
 class PHY_DotationCategory_IndirectFire_ABC;
@@ -48,26 +43,24 @@ public:
 
     //! @name Accessors
     //@{
-          int          GetID  () const;
+    int GetID() const;
     const std::string& GetName() const;
-          bool         NeedPH () const;
+    bool NeedPH() const;
     //@}
 
     //! @name Operations
     //@{
     PHY_DotationCategory_IndirectFire_ABC& InstanciateDotationCategory( const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
-                                                                        unsigned int nInterventionType, double rDispersionX, double rDispersionY ) const;
-    bool                                    operator==                ( const PHY_IndirectFireDotationClass& rhs ) const;
-    bool                                    operator!=                ( const PHY_IndirectFireDotationClass& rhs ) const;
+                                                                        unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange ) const;
+    bool operator==( const PHY_IndirectFireDotationClass& rhs ) const;
+    bool operator!=( const PHY_IndirectFireDotationClass& rhs ) const;
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::map< int, const PHY_IndirectFireDotationClass* > T_TypeMap;
-    typedef T_TypeMap::const_iterator                             CIT_TypeMap;
-
-    typedef PHY_DotationCategory_IndirectFire_ABC& (*T_TypeInstancier)( const PHY_IndirectFireDotationClass&, const PHY_DotationCategory& dotationCategory, xml::xistream&, unsigned int, double, double );
+    typedef PHY_DotationCategory_IndirectFire_ABC& ( *T_TypeInstancier )( const PHY_IndirectFireDotationClass&, const PHY_DotationCategory& dotationCategory, xml::xistream&, unsigned int, double, double, double );
 
 public:
     enum E_Type
@@ -85,10 +78,10 @@ private:
     ~PHY_IndirectFireDotationClass();
 
 private:
-    const std::string       strName_;
-    const E_Type            nType_;
-    const T_TypeInstancier  typeInstancier_;
-    const bool              bNeedPH_;
+    const std::string strName_;
+    const E_Type nType_;
+    const T_TypeInstancier typeInstancier_;
+    const bool bNeedPH_;
 
 private:
     static T_TypeMap types_;

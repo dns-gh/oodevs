@@ -36,6 +36,12 @@ public:
     virtual ~MIL_Effect_Fire_ABC();
     //@}
 
+public:
+    //! @name Accessors
+    //@{
+    unsigned int GetFireEffectId() const;
+    //@}
+
 protected:
     //! @name Operations
     //@{

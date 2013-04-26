@@ -49,9 +49,9 @@
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
-                                                                                  unsigned int nInterventionType, double rDispersionX, double rDispersionY )
+                                                                                  unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange )
 {
-    return *new PHY_DotationCategory_IndirectFire( type, dotationCategory, xis, nInterventionType, rDispersionX, rDispersionY );
+    return *new PHY_DotationCategory_IndirectFire( type, dotationCategory, xis, nInterventionType, rDispersionX, rDispersionY, rDetectionRange );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +59,8 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectFire::Create
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
-                                                                      unsigned int nInterventionType, double rDispersionX, double rDispersionY )
-    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, nInterventionType, rDispersionX, rDispersionY )
+                                                                      unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange )
+    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, nInterventionType, rDispersionX, rDispersionY, rDetectionRange )
     , phs_            ( PHY_Posture::GetPostures().size(), 1. )
     , rDispersionCoef_( 0 )
 {
@@ -200,8 +200,15 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         const MT_Ellipse neutralizationSurface( vTargetPosition, vTargetPosition + ( vFireDirection * rNeutralizationCoef_ ),  vTargetPosition + ( vRotatedFireDirection * rNeutralizationCoef_ ) );
 
         // Area effect messages
-        MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_Explosion( attritionSurface, category_, 20 , false ) );
-        MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_Explosion( neutralizationSurface, category_, 20, true ) );
+        MIL_Effect_Explosion* attritionEffect = new MIL_Effect_Explosion( attritionSurface, category_, 20 , false );
+        MIL_Effect_Explosion* neutralizationEffect = new MIL_Effect_Explosion( neutralizationSurface, category_, 20, true );
+        MIL_EffectManager::GetEffectManager().Register( *attritionEffect );
+        MIL_EffectManager::GetEffectManager().Register( *neutralizationEffect );
+
+        std::vector< unsigned int > fireEffectsIds;
+        fireEffectsIds.push_back( attritionEffect->GetFireEffectId() );
+        fireEffectsIds.push_back( neutralizationEffect->GetFireEffectId() );
+        ApplyDetectionRangeEffect( vTargetPosition, fireEffectsIds, 0 );
 
         TER_Agent_ABC::T_AgentPtrVector targets;
         TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( neutralizationSurface, targets );

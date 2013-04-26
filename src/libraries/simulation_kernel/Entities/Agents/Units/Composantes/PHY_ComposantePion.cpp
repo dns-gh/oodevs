@@ -394,7 +394,7 @@ void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotation
 {
     assert( pType_ );
     const PHY_DotationCategory::T_IndirectFireEffects& effects = dotationCategory.GetIndirectFireEffects();
-    for( PHY_DotationCategory::CIT_IndirectFireEffects it = effects.begin(); it != effects.end(); ++it )
+    for( auto it = effects.begin(); it != effects.end(); ++it )
         if( (*it)->HasHit( pRole_->GetPion(), ratio ) )
         {
             double urbanProtection = pRole_->GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().ComputeUrbanProtection( dotationCategory );

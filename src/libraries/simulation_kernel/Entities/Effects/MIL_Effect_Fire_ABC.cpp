@@ -11,9 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Effect_Fire_ABC.h"
-#include "MIL_AgentServer.h"
-#include "Meteo/PHY_MeteoDataManager.h"
-#include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -42,6 +39,15 @@ MIL_Effect_Fire_ABC::~MIL_Effect_Fire_ABC()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Effect_Fire_ABC::GetFireEffectId
+// Created: JSR 2013-04-24
+// -----------------------------------------------------------------------------
+unsigned int MIL_Effect_Fire_ABC::GetFireEffectId() const
+{
+    return nID_;
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_Effect_Fire_ABC::SendMsgStartEffect
 // Created: JVT 04-03-25
@@ -55,7 +61,6 @@ void MIL_Effect_Fire_ABC::SendMsgStartEffect( sword::StartFireEffect::EnumFireEf
     NET_ASN_Tools::WriteEllipse( surface_, *asnMsg().mutable_location() );
 
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    asnMsg().clear_location();
 }
 
 //-----------------------------------------------------------------------------

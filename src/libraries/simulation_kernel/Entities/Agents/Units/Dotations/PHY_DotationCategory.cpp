@@ -36,12 +36,16 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , rWeight_              ( 0. )
     , rVolume_              ( 0. )
     , fRange_               ( 0.)
-    , ied_                  ( false )
     , bIlluminating_        ( false )
     , bMaintainIllumination_( false )
+    , ied_                  ( false )
     , bGuided_              ( false )
     , bMaintainGuidance_    ( false )
     , rGuidanceRange_       ( 0.f )
+    , nInterventionType_    ( 0 )
+    , rDispersionX_         ( 0 )
+    , rDispersionY_         ( 0 )
+    , rDetectionRange_      ( 0 )
 {
     std::string strNature;
     xis >> xml::attribute( "id", nMosID_ )
@@ -59,11 +63,9 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     InitializeGuidance        ( xis );
     if( !attritions_.empty() || !indirectFireEffects_.empty() )
     {
-        std::string strTmp; // $$$$ Check validity
-        xis >> xml::optional >> xml::attribute( "type", strTmp );
-        if( strTmp != "" )
+        if( xis.has_attribute( "type" ) )
         {
-            pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( strTmp );
+            pAmmoDotationClass_ = PHY_AmmoDotationClass::Find( xis.attribute< std::string >( "type" ) );
             if( !pAmmoDotationClass_ )
                 xis.error( "Invalid ammo dotation class" );
         }
@@ -170,14 +172,17 @@ void PHY_DotationCategory::InitializeIndirectFireData( xml::xistream& xis )
         xis >> xml::start( "indirect-fires" )
             >> xml::attribute( "intervention-type", nInterventionType_ )
             >> xml::attribute( "x-dispersion", rDispersionX_ )
-            >> xml::attribute( "y-dispersion", rDispersionY_ );
+            >> xml::attribute( "y-dispersion", rDispersionY_ )
+            >> xml::optional >> xml::attribute( "detection-range", rDetectionRange_ );
         if( nInterventionType_ <= 0. )
             xis.error( "intervention-type <= 0" );
         if( rDispersionX_ <= 0. )
             xis.error( "rDispersionX_ <= 0" );
         if( rDispersionY_ <= 0. )
             xis.error( "rDispersionY_ <= 0" );
-        xis >> xml::list( "indirect-fire", *this, &PHY_DotationCategory::ReadIndirectFire, nInterventionType_, rDispersionX_, rDispersionY_ )
+        if( rDetectionRange_ < 0. )
+            xis.error( "rDetectionRange_ < 0" );
+        xis >> xml::list( "indirect-fire", *this, &PHY_DotationCategory::ReadIndirectFire, nInterventionType_, rDispersionX_, rDispersionY_, rDetectionRange_ )
             >> xml::end;
     }
 }
@@ -186,12 +191,12 @@ void PHY_DotationCategory::InitializeIndirectFireData( xml::xistream& xis )
 // Name: PHY_DotationCategory::ReadIndirectFire
 // Created: ABL 2007-07-19
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::ReadIndirectFire( xml::xistream& xis, unsigned int nInterventionType, double rDispersionX, double rDispersionY )
+void PHY_DotationCategory::ReadIndirectFire( xml::xistream& xis, unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange )
 {
     const PHY_IndirectFireDotationClass* pType = PHY_IndirectFireDotationClass::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
         xis.error( "Unknown indirect fire data type" );
-    indirectFireEffects_.push_back(  &pType->InstanciateDotationCategory( *this, xis, nInterventionType, rDispersionX, rDispersionY ) ); // $$$$ MCO 2012-06-28: never deleted
+    indirectFireEffects_.push_back(  &pType->InstanciateDotationCategory( *this, xis, nInterventionType, rDispersionX, rDispersionY, rDetectionRange ) ); // $$$$ MCO 2012-06-28: never deleted
 }
 
 // -----------------------------------------------------------------------------

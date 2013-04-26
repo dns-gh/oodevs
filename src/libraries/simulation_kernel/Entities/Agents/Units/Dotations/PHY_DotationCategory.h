@@ -14,11 +14,6 @@
 
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
 
-namespace xml
-{
-    class xistream;
-}
-
 class MIL_Agent_ABC;
 class PHY_DotationType;
 class PHY_DotationNature;
@@ -45,7 +40,6 @@ public:
     //! @name Types
     //@{
     typedef std::vector< PHY_DotationCategory_IndirectFire_ABC* > T_IndirectFireEffects;
-    typedef T_IndirectFireEffects::const_iterator               CIT_IndirectFireEffects;
     //@}
 
     //! @name Accessors
@@ -131,7 +125,7 @@ private:
     void ReadAttrition             ( xml::xistream& xis );
     void ListUrbanAttrition        ( xml::xistream& xis );
     void ReadUrbanAttritionModifier( xml::xistream& xis );
-    void ReadIndirectFire          ( xml::xistream& xis, unsigned int nInterventionType, double rDispersionX, double rDispersionY );
+    void ReadIndirectFire          ( xml::xistream& xis, unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange );
     //@}
 
 private:
@@ -164,6 +158,7 @@ private:
     unsigned int nInterventionType_;
     double rDispersionX_;
     double rDispersionY_;
+    double rDetectionRange_;
 
 private:
     static unsigned int nbComposantes;

@@ -2679,6 +2679,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyDotationManualRequestBuilder.cpp">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_DetectionRange.cpp">
+      <Filter>Source Files\Entities\Effects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5476,6 +5479,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyDotationManualRequestBuilder.h">
       <Filter>Source Files\Entities\Agents\Roles\Logistic\Supply\Request builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_DetectionRange.h">
+      <Filter>Source Files\Entities\Effects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

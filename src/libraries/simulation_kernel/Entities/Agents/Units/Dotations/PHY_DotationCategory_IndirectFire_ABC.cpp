@@ -9,6 +9,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
+#include "MIL_AgentServer.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Effects/MIL_Effect_DetectionRange.h"
+#include "simulation_terrain/TER_AgentManager.h"
+#include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -16,15 +24,17 @@
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectFire_ABC::PHY_DotationCategory_IndirectFire_ABC( const PHY_IndirectFireDotationClass& category, const PHY_DotationCategory& dotationCategory,
-                                                                              unsigned int nInterventionType, double rDispersionX, double rDispersionY )
-    : category_         ( category )
-    , dotationCategory_ ( dotationCategory )
+                                                                              unsigned int nInterventionType, double rDispersionX, double rDispersionY, double rDetectionRange )
+    : category_( category )
+    , dotationCategory_( dotationCategory )
     , nInterventionType_( nInterventionType )
-    , rDispersionX_     ( rDispersionX )
-    , rDispersionY_     ( rDispersionY )
+    , rDispersionX_( rDispersionX )
+    , rDispersionY_( rDispersionY )
+    , rDetectionRange_( rDetectionRange )
 {
     rDispersionX_ = MIL_Tools::ConvertMeterToSim( rDispersionX_ );
     rDispersionY_ = MIL_Tools::ConvertMeterToSim( rDispersionY_ );
+    rDetectionRange_ = MIL_Tools::ConvertMeterToSim( rDetectionRange_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,4 +80,20 @@ bool PHY_DotationCategory_IndirectFire_ABC::HasHit( const MIL_Agent_ABC& /*targe
 void PHY_DotationCategory_IndirectFire_ABC::ApplyEffect( const MIL_Agent_ABC& /*firer*/, MIL_Agent_ABC& /*target*/, double /*rInterventionTypeFired*/, PHY_FireResults_ABC& /*fireResult*/ ) const
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectFire_ABC::ApplyDetectionRangeEffect
+// Created: JSR 2013-04-26
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory_IndirectFire_ABC::ApplyDetectionRangeEffect( const MT_Vector2D& vTargetPosition, const std::vector< unsigned int >& fireEffectsIds, double deploymentDuration ) const
+{
+    if( !MIL_AgentServer::IsInitialized() )
+        return;
+    TER_Agent_ABC::T_AgentPtrVector perceivers;
+    TER_World::GetWorld().GetAgentManager().GetListWithinCircle( vTargetPosition, rDetectionRange_, perceivers );
+    std::vector< unsigned int > unitsIds;
+    for( auto it = perceivers.begin(); it != perceivers.end(); ++it )
+        unitsIds.push_back( static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent().GetID() );
+    MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_DetectionRange( unitsIds, dotationCategory_.GetMosID(), fireEffectsIds, deploymentDuration ) );
 }
