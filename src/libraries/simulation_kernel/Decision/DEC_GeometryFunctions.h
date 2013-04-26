@@ -156,6 +156,7 @@ public:
 
     // Fuseau
     static double GetWidth( const MIL_Fuseau* pFuseau );
+	static bool IsNull( const MIL_Fuseau* pFuseau );
     static bool IsPointInFuseau_ParamFuseau( const MIL_Fuseau* pFuseau, const MT_Vector2D* pPoint );
 
     //@}

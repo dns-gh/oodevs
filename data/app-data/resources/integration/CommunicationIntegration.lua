@@ -314,6 +314,10 @@ integration.getAORFromPlatoon = function()
     return DEC_Fuseau()
 end
 
+integration.AORisNull = function( AOR )
+		return DEC_Fuseau_IsNull( AOR )
+end
+
 integration.getAORWidth = function( AOR )
     return DEC_Fuseau_Width( AOR )
 end

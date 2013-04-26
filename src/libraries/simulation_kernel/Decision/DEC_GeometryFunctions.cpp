@@ -2024,6 +2024,18 @@ double DEC_GeometryFunctions::GetWidth( const MIL_Fuseau* pFuseau )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::IsNull
+// Created: NMI 2013-04-24
+// -----------------------------------------------------------------------------
+
+bool DEC_GeometryFunctions::IsNull( const MIL_Fuseau* pFuseau )
+{
+	if( !pFuseau )
+        throw MASA_EXCEPTION( "Invalid fuseau" );
+	return pFuseau->IsNull();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::IsPointInFuseau_ParamFuseau
 // Created: EVH 2011-07-26
 // -----------------------------------------------------------------------------
