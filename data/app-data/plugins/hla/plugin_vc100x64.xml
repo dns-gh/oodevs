@@ -12,26 +12,26 @@
             <settings>
                 <setting attribute="@federation" type="string" default="MyFederation">
                     <descriptions>
-                        <description lang="en" name="Federation Name"/>
+                        <description lang="en" name="Federation name"/>
                         <description lang="fr" name="Nom de la fédération"/>
                     </descriptions>
                 </setting>
                 <setting attribute="@name" type="string" default="SWORD">
                     <descriptions>
-                        <description lang="en" name="Federate Name"/>
-                        <description lang="fr" name="Nom du fédéré"/>
+                        <description name="Federate name" lang="en"><![CDATA[]]></description>
+                        <description name="Nom du fédéré" lang="fr"><![CDATA[]]></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@dis-site" type="integer" default="1">
                     <descriptions>
-                        <description lang="en" name="DIS Site ID"/>
-                        <description lang="fr" name="DIS Site ID"/>
+                        <description name="SiteID DIS" lang="en"><![CDATA[]]></description>
+                        <description name="DIS site ID" lang="fr"><![CDATA[]]></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@dis-application" type="integer" default="1">
                     <descriptions>
-                        <description lang="en" name="DIS Application ID"/>
-                        <description lang="fr" name="DIS Application ID"/>
+                        <description name="ApplcationID DIS" lang="en"><![CDATA[]]></description>
+                        <description name="DIS application ID" lang="fr"><![CDATA[]]></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@lrcSettings" type="string" default="crcHost=localhost;crcPort=8989">
@@ -42,20 +42,20 @@
                 </setting>
                 <setting attribute="@creation" type="boolean" default="false">
                     <descriptions>
-                        <description lang="en" name="Creation"><![CDATA[Attempt to create the federation when joining]]></description>
-                        <description lang="fr" name="Création"><![CDATA[Tente de créer la fédération en rejoignant]]></description>
+                        <description name="Creation" lang="en"><![CDATA[Attempt to create the federation when joining.]]></description>
+                        <description name="Création" lang="fr"><![CDATA[Tente de créer la fédération en rejoignant.]]></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@destruction" type="boolean" default="false">
                     <descriptions>
-                        <description lang="en" name="Destruction"><![CDATA[Attempt to destroy the federation when leaving]]></description>
-                        <description lang="fr" name="Destruction"><![CDATA[Tente de détruire la fédération en quittant]]></description>
+                        <description name="Destruction" lang="en"><![CDATA[Attempt to destroy the federation when leaving.]]></description>
+                        <description name="Destruction" lang="fr"><![CDATA[Tente de détruire la fédération en quittant.]]></description>
                     </descriptions>
                 </setting>
-                <setting attribute="@fom" type="file_list" default="ASI_FOM_v2.0.8_2010.xml">
+                <setting attribute="@fom" type="string" default="ASI_FOM_v2.0.8_2010.xml">
                     <descriptions>
-                        <description lang="en" name="FOM"><![CDATA[Federation Object Model]]></description>
-                        <description lang="fr" name="FOM"><![CDATA[Federation Object Model]]></description>
+                        <description lang="en" name="FOM"><![CDATA[Federation Object Model.]]></description>
+                        <description lang="fr" name="FOM"><![CDATA[Federation Object Model.]]></description>
                     </descriptions>
                 </setting>
             </settings>
@@ -88,11 +88,11 @@
         </group>
         <group>
             <descriptions>
-                <description lang="en" name="Advanced settings"><![CDATA[]]></description>
-                <description lang="fr" name="Paramètres avancés"><![CDATA[]]></description>
+                <description lang="en" name="Advanced"/>
+                <description lang="fr" name="Avancé"/>
             </descriptions>
             <settings>
-                <setting attribute="@protocol" type="enumeration" default="hla-1516e;hla-1516;hla-1516-mak;hla-13">
+                <setting attribute="@protocol" type="enumeration" default="hla-1516e;hla-1516;hla-1516-mak">
                     <descriptions>
                         <description lang="en" name="Protocol"><![CDATA[Select HLA protocol]]></description>
                         <description lang="fr" name="Protocole"><![CDATA[Sélectionne le protocole HLA]]></description>
@@ -125,7 +125,7 @@
                 <setting attribute="@netn-subscribe-rpr" type="boolean" default="false">
                     <descriptions>
                         <description lang="en" name="Subscribe RPR in NETN "><![CDATA[Enable subscription to RPR classes in NETN mode]]></description>
-                        <description lang="fr" name="Souscrire au RPR en NETN"><![CDATA[Active la souscription aux classes RPR en mode NETN]]></description>
+                        <description lang="fr" name="Sousccrire au RPR en NETN"><![CDATA[Active la souscription aux classes RPR en mode NETN]]>.</description>
                     </descriptions>
                 </setting>
                 <setting attribute="@marking-with-identifier" type="boolean" default="true">
@@ -138,12 +138,6 @@
                     <descriptions>
                         <description lang="en" name="Use extent"><![CDATA[Use extent to avoid outside units creation]]></description>
                         <description lang="fr" name="Utiliser l'empreinte terrain"><![CDATA[Utiliser l'empreinte terrain pour éviter la création des unités en dehors]]></description>
-                    </descriptions>
-                </setting>
-                <setting attribute="@disaggregate" type="boolean" default="false">
-                    <descriptions>
-                        <description lang="en" name="Disaggregate units"><![CDATA[Send individual vehicles (demos only)]]></description>
-                        <description lang="fr" name="Désagreger les pions"><![CDATA[Emettre les vehicules (demos seulement)]]></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@transfer-sender" type="enumeration" default="rpr;null">
@@ -162,12 +156,6 @@
                     <descriptions>
                         <description lang="en" name="Use HLA ownership negotiation"><![CDATA[Specify whether RTI attribute negotiation should be used]]></description>
                         <description lang="fr" name="Negotiation ownership HLA"><![CDATA[Détermine s'il faut utiliser la négotiation de transfert HLA]]></description>
-                    </descriptions>
-                </setting>
-                <setting attribute="@handle-objects" type="boolean" default="false">
-                    <descriptions>
-                        <description lang="en" name="Publish tactical objects on HLA"><![CDATA[Specify whether tactical objects shall be published]]></description>
-                        <description lang="fr" name="Publier les objets tactiques"><![CDATA[Détermine s'il faut publier les objets tactiques]]></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@send-full-orbat" type="boolean" default="false">
