@@ -303,6 +303,7 @@ void ADN_Resources_GUI::BuildAmmunition()
     builder.AddField< ADN_EditLine_Int >( pIndirectGroupHolder, "intervention", tr( "Intervention" ), vConnectors[ eIntervention ], 0, eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pIndirectGroupHolder, "x-dispersion", tr( "X Dispersion" ), vConnectors[ eDispersionX ], tr( "m" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pIndirectGroupHolder, "y-dispersion", tr( "Y Dispersion" ), vConnectors[ eDispersionY ], tr( "m" ), eGreaterZero );
+    builder.AddField< ADN_EditLine_Double >( pIndirectGroupHolder, "detection-range", tr( "Sound detection range" ), vConnectors[ eDetectionRange ], tr( "m" ), eGreaterZero );
 
     Q3GroupBox* pEffects = new Q3GroupBox( 5, Qt::Horizontal, tr( "Effects" ), pIndirectGroup );
     {

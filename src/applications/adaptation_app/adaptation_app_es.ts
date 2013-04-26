@@ -4008,6 +4008,10 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
         <source>Proceed anyway ?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Sound detection range</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Resources_GenericListView</name>

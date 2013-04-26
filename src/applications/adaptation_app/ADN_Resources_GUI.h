@@ -58,6 +58,7 @@ public:
         eIntervention,
         eDispersionX,
         eDispersionY,
+        eDetectionRange,
         eExplosivePresent,
         eSmokePresent,
         eFlarePresent,

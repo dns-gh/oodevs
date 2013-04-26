@@ -213,6 +213,7 @@ ADN_Resources_Data::IndirectAmmoInfos::IndirectAmmoInfos()
     , nIntervention_       ( 1 )
     , rDispersionX_        ( 1.0 )
     , rDispersionY_        ( 1.0 )
+    , rDetectionRange_     ( 5000 )
     , rNeutralizationRatio_( 1 )
     , rDispersionFactor_   ( 0 )
     , vModifStance_        ()
@@ -246,6 +247,7 @@ void ADN_Resources_Data::IndirectAmmoInfos::CopyFrom( ADN_Resources_Data::Indire
     nIntervention_ = ammoInfos.nIntervention_.GetData();
     rDispersionX_ = ammoInfos.rDispersionX_.GetData();
     rDispersionY_ = ammoInfos.rDispersionY_.GetData();
+    rDetectionRange_ = ammoInfos.rDetectionRange_.GetData();
     rNeutralizationRatio_ = ammoInfos.rNeutralizationRatio_.GetData();
     rDispersionFactor_ = ammoInfos.rDispersionFactor_.GetData();
 
@@ -287,6 +289,7 @@ void ADN_Resources_Data::IndirectAmmoInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "intervention-type", nIntervention_ )
           >> xml::attribute( "x-dispersion", rDispersionX_ )
           >> xml::attribute( "y-dispersion", rDispersionY_ )
+          >> xml::optional >> xml::attribute( "detection-range", rDetectionRange_ )
           >> xml::list( "indirect-fire", *this, &ADN_Resources_Data::IndirectAmmoInfos::ReadIndirectFire );
 }
 
@@ -337,7 +340,8 @@ void ADN_Resources_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output 
     output << xml::start( "indirect-fires" )
                 << xml::attribute( "intervention-type", nIntervention_ )
                 << xml::attribute( "x-dispersion", rDispersionX_ )
-                << xml::attribute( "y-dispersion", rDispersionY_ );
+                << xml::attribute( "y-dispersion", rDispersionY_ )
+                << xml::attribute( "detection-range", rDetectionRange_ );
 
     if( bExplosive_.GetData() )
     {

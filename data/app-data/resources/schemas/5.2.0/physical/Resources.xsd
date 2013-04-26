@@ -173,6 +173,12 @@
 											<xs:documentation xml:lang="fr">Rayon r2 de l’ellipse d’effet du tir</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
+									<xs:attribute name="detection-range" type="T_NonNegativeDouble" use="optional">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Portée en mètres à laquelle le tir peut être detecté (entendu).</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>

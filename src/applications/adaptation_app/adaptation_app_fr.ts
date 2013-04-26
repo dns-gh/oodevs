@@ -4017,6 +4017,10 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
         <source>Proceed anyway ?</source>
         <translation>Voulez-vous continuer ?</translation>
     </message>
+    <message>
+        <source>Sound detection range</source>
+        <translation>Distance de perception sonore</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Resources_GenericListView</name>

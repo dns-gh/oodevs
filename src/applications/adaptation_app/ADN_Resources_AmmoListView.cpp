@@ -89,6 +89,7 @@ void ADN_Resources_AmmoListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Resources_GUI::eIntervention]->Connect( &pInfos->indirectAmmoInfos_.nIntervention_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eDispersionX]->Connect( &pInfos->indirectAmmoInfos_.rDispersionX_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eDispersionY]->Connect( &pInfos->indirectAmmoInfos_.rDispersionY_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::eDetectionRange]->Connect( &pInfos->indirectAmmoInfos_.rDetectionRange_, bConnect );
 
     vItemConnectors_[ADN_Resources_GUI::eModifStances]->Connect( &pInfos->indirectAmmoInfos_.vModifStance_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eNeutralizationRatio]->Connect( &pInfos->indirectAmmoInfos_.rNeutralizationRatio_, bConnect );

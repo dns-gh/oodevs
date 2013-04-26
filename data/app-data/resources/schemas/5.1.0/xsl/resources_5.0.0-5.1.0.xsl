@@ -22,6 +22,12 @@
           <xsl:attribute name="intervention-type"><xsl:value-of select="./@intervention-type"/></xsl:attribute>
           <xsl:attribute name="x-dispersion"><xsl:value-of select="./@x-dispersion"/></xsl:attribute>
           <xsl:attribute name="y-dispersion"><xsl:value-of select="./@y-dispersion"/></xsl:attribute>
+          <xsl:attribute name="detection-range">
+              <xsl:choose>
+                  <xsl:when test="@detection-range"><xsl:value-of select="./@detection-range"/></xsl:when>
+                  <xsl:otherwise>5000</xsl:otherwise>
+              </xsl:choose>
+          </xsl:attribute>
           <xsl:element name="indirect-fire">
             <xsl:if test="./@type = 'explosif' or ./@type = 'grenade' or ./@type = 'aced'">
               <xsl:attribute name="type">explosif</xsl:attribute>

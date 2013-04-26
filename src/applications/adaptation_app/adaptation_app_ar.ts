@@ -3993,6 +3993,10 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <source>Proceed anyway ?</source>
         <translation type="unfinished">هل تريد المتابعة على أية حال؟</translation>
     </message>
+    <message>
+        <source>Sound detection range</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Resources_GenericListView</name>
