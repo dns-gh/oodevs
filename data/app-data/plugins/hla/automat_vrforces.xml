@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<dis-mapping default-type="11 1 225 18 1 0 0" default-name="ARMOR.MBT squadron" threshold="0 0 9 1 1 9 9">
+    <!-- dis : Kind Domain Country Category Subcategory Specific Extra -->
+    <!-- aggregates -->
+    <entry name="ARMOR.MBT squadron" dis="11 1 225 18 2 0 0"/>
+</dis-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<dis-mapping default-type="11 1 225 1 1 0 0" default-name="ARMOR.MBT platoon" threshold="0 0 9 1 1 9 9">
+    <!-- dis : Kind Domain Country Category Subcategory Specific Extra -->
+    <!-- aggregates -->
+    <entry name="ARMOR.MBT platoon" dis="11 1 225 3 2 0 0"/>
+    <entry name="ARMOR.Light armored platoon" dis="11 1 225 3 2 0 1"/>
+    <entry name="ARMOR.Armored squadron CP" dis="11 1 225 5 20 0 0"/>
+    <entry name="ARMOR.Scout patrol" dis="11 1 225 2 30 0 0"/>
+    <entry name="ARMOR.Antitank patrol" dis="11 1 225 2 3 0 0"/>
+    <entry name="INF.Infantry platoon" dis="11 1 225 3 3 0 0"/>
+    <entry name="INF.Mortar troop" dis="11 1 225 2 11 1 0"/>
+    <entry name="ENG.Countermobility platoon" dis="11 1 225 3 5 0 0"/>
+    <entry name="ART.Artillery firing platoon" dis="11 1 225 4 2 1 0"/>
+    <entry name="ASY.Militia" dis="3 1 222 4 205 1 0"/>
+    <entry name="JOINT.Landing Crafts" dis="11 3 71 11 1 1 0"/>
+    <entry name="OOTW.Refugee" dis="3 1 225 3 1 0 0"/>
+    <entry name="JOINT.Aircraft Carrier" dis="11 3 71 1 1 1 0"/>
+</dis-mapping>

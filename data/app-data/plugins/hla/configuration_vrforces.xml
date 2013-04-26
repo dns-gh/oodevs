@@ -1,0 +1,38 @@
+<configuration>
+    <mappings>
+        <automat>automat_vrforces.xml</automat>
+        <aggregate>aggregate_vrforces.xml</aggregate>
+        <surface-vessel>vessel.xml</surface-vessel>
+        <component>component.xml</component>
+        <munition>munition.xml</munition>
+        <object>object.xml</object>
+    </mappings>
+    <types>
+        <automat>ARMOR.MBT squadron</automat>
+    </types>
+    <missions>
+        <fragOrders>
+            <pause>Pause maneuver</pause>
+            <resume>Resume maneuver</resume>
+            <cancel>Cancel maneuver</cancel>
+        </fragOrders>
+        <request>
+            <transport>COMMON - request transport</transport>
+            <embarkment>COMMON - request embark</embarkment>
+            <disembarkment>COMMON - request take off</disembarkment>
+            <embarkment>COMMON - request landing</embarkment>
+            <disembarkment>COMMON - request disembark</disembarkment>
+        </request>
+        <offer>
+            <transport>COMMON - offer transport</transport>
+            <embarkment>COMMON - offer embark</embarkment>
+            <disembarkment>COMMON - offer disembark</disembarkment>
+        </offer>
+    </missions>
+    <reports>
+        <mission-complete>12</mission-complete>
+    </reports>
+    <drawings>
+        <divesture-area>Misc./Disaggregation area</divesture-area>
+    </drawings>
+</configuration>
