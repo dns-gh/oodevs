@@ -10,7 +10,6 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Units_Data.h"
-
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
@@ -20,8 +19,6 @@
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
-
-#include <sstream>
 
 tools::IdManager ADN_Units_Data::idManager_;
 
@@ -34,12 +31,12 @@ tools::IdManager ADN_Units_Data::idManager_;
 // Created: JDY 03-07-25
 //-----------------------------------------------------------------------------
 ADN_Units_Data::ComposanteInfos::ComposanteInfos( const ADN_Equipments_Data::T_EquipmentInfos_Vector& equipments, ADN_Equipments_Data::EquipmentInfos* equipment /* = 0 */ )
-    : ADN_CrossedRef( equipments, equipment, true )
-    , bLoadable_    ( false )
-    , bMajor_       ( false )
-    , bConveyor_    ( false )
+    : ADN_CrossedRef( equipments, equipment, true, "type" )
+    , bLoadable_( false )
+    , bMajor_( false )
+    , bConveyor_( false )
     , nNbrHumanInCrew_( 0 )
-    , nNb_          ( 1 )
+    , nNb_( 1 )
 {
     // NOTHING
 }
@@ -65,28 +62,23 @@ ADN_Units_Data::ComposanteInfos* ADN_Units_Data::ComposanteInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 {
-    std::string strName;
-    input >> xml::attribute( "type", strName )
-          >> xml::attribute( "count", nNb_ )
+    ADN_CrossedRef::ReadArchive( input );
+    input >> xml::attribute( "count", nNb_ )
           >> xml::optional >> xml::attribute( "major", bMajor_ )
           >> xml::optional >> xml::attribute( "crew", nNbrHumanInCrew_ )
           >> xml::optional >> xml::attribute( "convoyer", bConveyor_ )
           >> xml::optional >> xml::attribute( "loadable", bLoadable_ );
-    ADN_Equipments_Data::EquipmentInfos* pComposante = ADN_Workspace::GetWorkspace().GetEquipments().GetData().FindEquipment( strName );
-    if( pComposante == 0 )
-        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid equipment '%1'" ).arg( strName.c_str() ).toStdString() );
-    SetCrossedElement( pComposante );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ComposanteInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output ) const
+void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output )
 {
-    output << xml::start( "equipment" )
-            << xml::attribute( "type", GetCrossedElement()->strName_ )
-            << xml::attribute( "count", nNb_ )
+    output << xml::start( "equipment" );
+    ADN_CrossedRef::WriteArchive( output );
+    output  << xml::attribute( "count", nNb_ )
             << xml::attribute( "crew", nNbrHumanInCrew_ );
 
     if( bMajor_.GetData() )
@@ -158,6 +150,7 @@ ADN_Units_Data::StockLogThresholdInfos* ADN_Units_Data::StockLogThresholdInfos::
 ADN_Units_Data::StockInfos::StockInfos()
     : vLogThresholds_()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -419,7 +412,7 @@ void ADN_Units_Data::UnitInfos::Initialize()
 
     // postures initialization
     for( int i = eUnitPosture_PosturePosteReflexe; i < eNbrUnitPosture; ++i )
-        vPostures_.AddItem( new PostureInfos( static_cast< E_UnitPosture >( i )) );
+        vPostures_.AddItem( new PostureInfos( static_cast< E_UnitPosture >( i ) ) );
 
     natureSymbol_.SetVector( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolsUnits() );
 }
@@ -437,7 +430,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->ptrModel_ = ptrModel_.GetData();
     pCopy->eNatureLevel_ = eNatureLevel_.GetData();
     pCopy->eNatureAtlas_ = eNatureAtlas_.GetData();
-    pCopy->strNature_     = strNature_.GetData();
+    pCopy->strNature_ = strNature_.GetData();
     pCopy->nNbOfficer_ = nNbOfficer_.GetData();
     pCopy->nNbNCOfficer_ = nNbNCOfficer_.GetData();
     pCopy->decontaminationDelay_ = decontaminationDelay_.GetData();
@@ -446,7 +439,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->bIsAutonomous_ = bIsAutonomous_.GetData();
     pCopy->footprint_ = footprint_.GetData();
 
-    for( T_ComposanteInfos_Vector::iterator itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
+    for( auto itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
         pCopy->vComposantes_.AddItem( (*itComposante)->CreateCopy() );
 
     for( uint i = 0; i < vPostures_.size(); ++i )
@@ -454,7 +447,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
         pCopy->vPostures_[ i ]->timeToActivate_ = vPostures_[ i ]->timeToActivate_.GetData();
         pCopy->vPostures_[ i ]->timeToDeactivate_ = vPostures_[ i ]->timeToDeactivate_.GetData();
     }
-    for( T_PointInfos_Vector::iterator itPoint = vPointInfos_.begin(); itPoint != vPointInfos_.end(); ++itPoint )
+    for( auto itPoint = vPointInfos_.begin(); itPoint != vPointInfos_.end(); ++itPoint )
         pCopy->vPointInfos_.AddItem( (*itPoint)->CreateCopy() );
 
     pCopy->bTC1_ = bTC1_.GetData();
@@ -512,8 +505,7 @@ void ADN_Units_Data::UnitInfos::ReadEquipment( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::UnitInfos::ReadCrew( xml::xistream& input )
 {
-    std::string type;
-    input >> xml::attribute( "type", type );
+    std::string type = input.attribute< std::string >( "type" );
     if( type == "Officier" )
         input >> xml::attribute( "count", nNbOfficer_ );
     else if( type == "SousOfficier" )
@@ -551,19 +543,14 @@ void ADN_Units_Data::UnitInfos::ReadPointDistance( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 {
-    std::string strType, strModel, nbcSuit;
+    std::string strType, nbcSuit;
     input >> xml::attribute( "name", strName_ )
         >> xml::attribute( "type", strType )
-        >> xml::attribute( "decisional-model", strModel );
+        >> xml::attribute( "decisional-model", ptrModel_ );
 
     eTypeId_ = ADN_Tr::ConvertToAgentTypePion( strType );
     if( eTypeId_ == (E_AgentTypePion)-1 )
         throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid unit type '%1'" ).arg( strType.c_str() ).toStdString() );
-
-    ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindUnitModel( strModel );
-    if( !pModel )
-        throw MASA_EXCEPTION( tools::translate( "Units_Data", "Unit types - Invalid doctrine model '%1'" ).arg( strModel.c_str() ).toStdString() );
-    ptrModel_ = pModel;
 
     std::string level, atlas;
     input >> xml::start( "nature" )
@@ -683,11 +670,10 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
 {
-    const std::string decisionalModel = ptrModel_.GetData() == 0 ? "" : ptrModel_.GetData()->strName_.GetData();
     output << xml::start( "unit" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "type", eTypeId_.Convert() )
-            << xml::attribute( "decisional-model", decisionalModel )
+            << xml::attribute( "decisional-model", ptrModel_ )
             << xml::attribute( "id", nId_ );
 
     output << xml::start( "nature" )

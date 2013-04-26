@@ -6575,10 +6575,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>Units_Data</name>
     <message>
-        <source>Unit types - Invalid equipment &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation type="unfinished">Unidades</translation>
     </message>
@@ -6588,10 +6584,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Unit types - Invalid unit type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid doctrine model &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

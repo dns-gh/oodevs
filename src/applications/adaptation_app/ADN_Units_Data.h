@@ -27,7 +27,6 @@
 //*****************************************************************************
 class ADN_Units_Data : public ADN_Data_ABC
 {
-
 public:
     //*****************************************************************************
     class ComposanteInfos : public ADN_CrossedRef< ADN_Equipments_Data::EquipmentInfos >
@@ -37,20 +36,20 @@ public:
 
         ComposanteInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output ) const;
+        void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_Bool                                                   bMajor_;
-        ADN_Type_Bool                                                   bLoadable_;
-        ADN_Type_Bool                                                   bConveyor_;
-        ADN_Type_Int                                                    nNbrHumanInCrew_;
-        ADN_Type_Int                                                    nNb_;
+        ADN_Type_Bool bMajor_;
+        ADN_Type_Bool bLoadable_;
+        ADN_Type_Bool bConveyor_;
+        ADN_Type_Int nNbrHumanInCrew_;
+        ADN_Type_Int nNb_;
 
     public:
         class Cmp : public std::unary_function< ComposanteInfos* , bool >
         {
         public:
-            Cmp(const std::string& val) : val_(val) {}
+            Cmp( const std::string& val ) : val_(val) {}
             ~Cmp() {}
 
             bool operator()( ComposanteInfos* tgtnfos ) const
@@ -108,21 +107,22 @@ public:
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        E_UnitPosture  nPosture_;
-        ADN_Type_Time  timeToActivate_;
-        ADN_Type_Time  timeToDeactivate_;
+        E_UnitPosture nPosture_;
+        ADN_Type_Time timeToActivate_;
+        ADN_Type_Time timeToDeactivate_;
 
     public:
-        class Cmp : public std::unary_function< PostureInfos* , bool >
+        class Cmp : public std::unary_function< PostureInfos*, bool >
         {
         public:
-             Cmp(const E_UnitPosture& val) : val_(val) {}
-             Cmp(const std::string& val) : val_( E_UnitPosture( -12 ) ), str_(val) {}
+             Cmp( const E_UnitPosture& val ) : val_( val ) {}
+             Cmp( const std::string& val ) : val_( E_UnitPosture( -12 ) ), str_( val ) {}
             ~Cmp() {}
 
             bool operator()( PostureInfos* tgtnfos ) const
-            { return tgtnfos->nPosture_==val_
-            || ADN_Tools::ComputePostureScriptName( tgtnfos->nPosture_ ) == str_; }
+            {
+                return tgtnfos->nPosture_==val_ || ADN_Tools::ComputePostureScriptName( tgtnfos->nPosture_ ) == str_;
+            }
 
         private:
             E_UnitPosture val_;
@@ -142,7 +142,7 @@ public:
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        E_KeyPoint   nTypeTerrain_;  //$$$$
+        E_KeyPoint nTypeTerrain_;  //$$$$
         ADN_Type_Int nDistance_;
     };
     typedef ADN_Type_Vector_ABC< PointInfos > T_PointInfos_Vector;
@@ -233,7 +233,7 @@ public:
     void Reset();
 
     T_UnitInfos_Vector& GetUnitsInfos();
-    UnitInfos*          FindUnit( const std::string& strName );
+    UnitInfos* FindUnit( const std::string& strName );
 
     QStringList GetUnitsThatUse( ADN_Equipments_Data::EquipmentInfos& composante );
     QStringList GetUnitsThatUse( ADN_Models_Data::ModelInfos& model );
@@ -270,7 +270,7 @@ ADN_Units_Data::T_UnitInfos_Vector& ADN_Units_Data::GetUnitsInfos()
 inline
 ADN_Units_Data::UnitInfos* ADN_Units_Data::FindUnit( const std::string& strName )
 {
-    auto it = std::find_if( vUnits_.begin(), vUnits_.end(), ADN_Tools::NameCmp<UnitInfos>( strName ) );
+    auto it = std::find_if( vUnits_.begin(), vUnits_.end(), ADN_Tools::NameCmp< UnitInfos >( strName ) );
     if( it == vUnits_.end() )
         return 0;
     return *it;

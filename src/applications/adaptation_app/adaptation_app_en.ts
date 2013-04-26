@@ -6570,10 +6570,6 @@ Click &quot;Ok&quot; to delete it.</translation>
 <context>
     <name>Units_Data</name>
     <message>
-        <source>Unit types - Invalid equipment &apos;%1&apos;</source>
-        <translation>Unit types - Invalid equipment &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Units</translation>
     </message>
@@ -6584,10 +6580,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Unit types - Invalid unit type &apos;%1&apos;</source>
         <translation>Unit types - Invalid unit type &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid doctrine model &apos;%1&apos;</source>
-        <translation>Unit types - Invalid doctrine model &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Unit types - Invalid hierarchical level &apos;%1&apos;</source>

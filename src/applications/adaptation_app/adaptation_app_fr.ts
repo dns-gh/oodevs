@@ -6593,20 +6593,12 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 <context>
     <name>Units_Data</name>
     <message>
-        <source>Unit types - Invalid equipment &apos;%1&apos;</source>
-        <translation>Type de pion - équipement &quot;%1&quot; invalide</translation>
-    </message>
-    <message>
         <source>Unit types - Invalid stance &apos;%1&apos;</source>
         <translation>Type de pion - Posture &quot;%1&quot; invalide</translation>
     </message>
     <message>
         <source>Unit types - Invalid unit type &apos;%1&apos;</source>
         <translation>Type de pion - Type d&apos;unité &quot;%1&quot; invalide</translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid doctrine model &apos;%1&apos;</source>
-        <translation>Type de pion - Modèle décisionnel &quot;%1&quot; invalide</translation>
     </message>
     <message>
         <source>Unit types - Invalid hierarchical level &apos;%1&apos;</source>

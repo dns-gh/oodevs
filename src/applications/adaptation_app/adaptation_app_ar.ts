@@ -6558,10 +6558,6 @@ Click &quot;Ok&quot; to delete it.</source>
 <context>
     <name>Units_Data</name>
     <message>
-        <source>Unit types - Invalid equipment &apos;%1&apos;</source>
-        <translation type="unfinished">أنواع وحدة-معدات غير صالحة &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation type="unfinished">وحدات</translation>
     </message>
@@ -6572,10 +6568,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Unit types - Invalid unit type &apos;%1&apos;</source>
         <translation type="unfinished">اكتب أنواع الوحدة-وحدة غير صالح &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid doctrine model &apos;%1&apos;</source>
-        <translation type="unfinished">أنواع وحدة-نموذج المذهب غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Unit types - Invalid hierarchical level &apos;%1&apos;</source>
