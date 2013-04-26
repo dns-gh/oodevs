@@ -389,6 +389,10 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "recover_troops", sword::recover_troops ) );
     RegisterActionType( *new MagicActionType( "recover_equipments", sword::recover_equipments ) );
     RegisterActionType( *new MagicActionType( "recover_resources", sword::recover_resources ) );
+    RegisterActionType( *new MagicActionType( "recover_all_except_log", sword::recover_all_except_log ) );
+    RegisterActionType( *new MagicActionType( "recover_troops_except_log", sword::recover_troops_except_log ) );
+    RegisterActionType( *new MagicActionType( "recover_equipments_except_log", sword::recover_equipments_except_log ) );
+    RegisterActionType( *new MagicActionType( "recover_resources_except_log", sword::recover_resources_except_log ) );
     RegisterActionType( *new MagicActionType( "destroy_all", sword::destroy_all ) );
     RegisterActionType( *new MagicActionType( "change_human_factors", sword::change_human_factors ) );
     RegisterActionType( *new MagicActionType( "partial_recovery", sword::partial_recovery ) );

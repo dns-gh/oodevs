@@ -225,6 +225,22 @@ namespace
                 strType = "recover_resources";
                 name = tools::translate( "MagicAction", "Recover - Resources" );
                 break;
+            case sword::recover_all_except_log:
+                strType = "recover_all_except_log";
+                name = tools::translate( "MagicAction", "Recover - All" );
+                break;
+            case sword::recover_troops_except_log:
+                strType = "recover_troops_except_log";
+                name = tools::translate( "MagicAction", "Recover - Troops" );
+                break;
+            case sword::recover_equipments_except_log:
+                strType = "recover_equipments_except_log";
+                name = tools::translate( "MagicAction", "Recover - Equipments" );
+                break;
+            case sword::recover_resources_except_log:
+                strType = "recover_resources_except_log";
+                name = tools::translate( "MagicAction", "Recover - Resources" );
+                break;
             case sword::destroy_all:
                 strType = "destroy_all";
                 name = tools::translate( "MagicAction", "Destroy - All" );
@@ -281,6 +297,25 @@ namespace
 // -----------------------------------------------------------------------------
 void UnitMagicOrdersInterface::Magic( int type )
 {
+    if( type == sword::recover_all || type == sword::recover_equipments || type == sword::recover_resources || type == sword::recover_troops )
+    {
+        QMessageBox msgBox( QMessageBox::NoIcon
+            , tools::translate( "UnitMagicOrdersInterface", "Recovery options" )
+            , tools::translate( "UnitMagicOrdersInterface", "Also recover the elements already managed by the logistic system?" )
+            , QMessageBox::Yes | QMessageBox::No );
+        if( msgBox.exec() == QMessageBox::No )
+        {
+            if( type == sword::recover_all )
+                type = sword::recover_all_except_log;
+            else if( type == sword::recover_equipments )
+                type = sword::recover_equipments_except_log;
+            else if( type == sword::recover_resources )
+                type = sword::recover_resources_except_log;
+            else if( type == sword::recover_troops )
+                type = sword::recover_troops_except_log;
+        }
+    }
+
     if( selectedEntity_ )
         ApplyOnHierarchy( *selectedEntity_, type );
     selectedEntity_ = 0;

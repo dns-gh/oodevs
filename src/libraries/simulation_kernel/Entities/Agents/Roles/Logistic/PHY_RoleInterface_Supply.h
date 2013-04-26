@@ -114,7 +114,7 @@ public:
     //@{
     virtual void NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const =0;
     virtual void Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const;
-    virtual void ResupplyStocks();
+    virtual void ResupplyStocks( bool withLog );
     virtual void ResupplyStocks( const PHY_DotationCategory& category, double rNbr );
     //@}
 

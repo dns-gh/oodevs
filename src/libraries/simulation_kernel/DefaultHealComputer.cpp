@@ -99,7 +99,7 @@ void DefaultHealComputer::Wound( const PHY_HumanRank& rank, unsigned int nNbrToC
 void DefaultHealComputer::HealAll() const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = components_.begin(); it != components_.end(); ++it )
-        (**it).HealAllHumans();
+        (**it).HealAllHumans( true );
 }
 
 // -----------------------------------------------------------------------------

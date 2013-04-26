@@ -996,6 +996,10 @@ enum UnitMagicActionType
     create_wounds                     = 40;
     log_finish_handlings              = 41;
     change_symbol                     = 42;
+    recover_all_except_log            = 43;
+    recover_troops_except_log         = 44;
+    recover_equipments_except_log     = 45;
+    recover_resources_except_log      = 46;
 }
 
 enum ObjectMagicActionType

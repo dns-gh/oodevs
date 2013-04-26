@@ -1469,6 +1469,10 @@ enum UnitMagicActionType {
     unload_unit                       = 50; //!< A unit unloading magic action
     inhabitant_change_alerted_state   = 51; //!< A change of alerted state on inhabitant magic action
     inhabitant_change_confined_state  = 52; //!< A change of confined state on inhabitant magic action
+    recover_all_except_log            = 53; //!< A recover all except log magic action
+    recover_troops_except_log         = 54; //!< A recover troops except log magic action
+    recover_equipments_except_log     = 55; //!< A recover equiments except log magic action
+    recover_resources_except_log      = 56; //!< A recover resources except log magic action
 }
 
 enum ObjectMagicActionType

@@ -83,7 +83,7 @@ public:
     virtual void Update( bool bIsDead );
     virtual void Clean();
 
-    virtual void HealAllHumans();
+    virtual void HealAllHumans( bool withLog );
     virtual void ChangeHumansAvailability( const PHY_HumanRank& rank, unsigned int nNbrAvailable );
     virtual unsigned int ReduceHumansAvailability( const PHY_HumanRank& rank, unsigned int reduce );
     //@}

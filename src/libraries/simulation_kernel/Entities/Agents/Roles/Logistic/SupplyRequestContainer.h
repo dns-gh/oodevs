@@ -104,8 +104,6 @@ private:
     boost::shared_ptr< SupplyRequestDispatcher_ABC > dispatcher_;
     T_RecipientRequests requests_;
     T_Consigns consigns_;
-
-    // Parameters
     SupplySupplier_ABC* transportersProvider_; // Default to supplier
     T_Transporters transporters_;
     T_RecipientPaths recipientPaths_;

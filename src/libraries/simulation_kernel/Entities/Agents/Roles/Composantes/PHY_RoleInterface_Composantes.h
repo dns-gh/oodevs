@@ -80,7 +80,7 @@ public:
     //! @name Composantes management
     //@{
     virtual void ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, unsigned int nNbrAvailable ) = 0;
-    virtual void RepairAllComposantes() = 0;
+    virtual void RepairAllComposantes( bool withLog ) = 0;
     virtual void DestroyRandomComposante() = 0;
     virtual void DestroyAllComposantes() = 0;
     //@}

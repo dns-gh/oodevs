@@ -305,10 +305,10 @@ PHY_DotationStock* PHY_DotationStockContainer::AddEmptyStock( const PHY_Dotation
 // Name: PHY_DotationStockContainer::Resupply
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::Resupply()
+void PHY_DotationStockContainer::Resupply( bool withLog )
 {
     for( auto it = stocks_.begin(); it != stocks_.end(); ++it )
-        it->second->Resupply();
+        it->second->Resupply( withLog );
 }
 
 // -----------------------------------------------------------------------------

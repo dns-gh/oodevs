@@ -29,6 +29,7 @@ PHY_Dotation::PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGr
     : pCategory_( &category )
     , pGroup_( &group )
     , rValue_( 0. )
+    , rRequestedValue_( 0. )
     , rLastValueSent_( 0. )
     , rCapacity_( 0. )
     , rConsumptionReservation_( 0. )
@@ -48,6 +49,7 @@ PHY_Dotation::PHY_Dotation()
     : pCategory_( 0 )
     , pGroup_( 0 )
     , rValue_( 0. )
+    , rRequestedValue_( 0. )
     , rLastValueSent_( 0. )
     , rCapacity_( 0. )
     , rConsumptionReservation_( 0. )
@@ -144,9 +146,13 @@ void PHY_Dotation::SetValue( double rValue )
     rValue_ = rValue;
     if( HasReachedSupplyThreshold() )
     {
+        if( rRequestedValue_ == 0 )
+            rRequestedValue_ = rCapacity_ - rValue_;
         assert( pGroup_ );
         pGroup_->NotifySupplyNeeded( *pCategory_, !bSupplyThresholdAlreadyReached );
     }
+    else
+        rRequestedValue_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -325,9 +331,9 @@ const PHY_DotationCategory& PHY_Dotation::GetCategory() const
 // Name: PHY_Dotation::Resupply
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_Dotation::Resupply( double rFactor /* = 1. */ )
+void PHY_Dotation::Resupply( double rFactor /* = 1. */, bool withLog /* = false */ )
 {
-    SetValue( rCapacity_ * rFactor );
+    SetValue( withLog? std::max( rCapacity_ * rFactor - rRequestedValue_, rValue_ ) : rCapacity_ * rFactor );
     rConsumptionReservation_ = 0.;
     rFireReservation_        = 0.;
 }

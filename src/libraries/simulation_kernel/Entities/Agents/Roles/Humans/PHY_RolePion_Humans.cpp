@@ -454,7 +454,7 @@ unsigned int PHY_RolePion_Humans::ReduceHumansAvailability( const PHY_HumanRank&
 // Name: PHY_RolePion_Humans::CureAllHumans
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::HealAllHumans()
+void PHY_RolePion_Humans::HealAllHumans( bool /*withLog*/ )
 {
     std::auto_ptr< HealComputer_ABC > healComputer( pion_->GetAlgorithms().healComputerFactory_->Create() );
     pion_->Execute< OnComponentComputer_ABC >( *healComputer );

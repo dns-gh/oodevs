@@ -883,44 +883,44 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
 // Name: MIL_AgentPion::OnReceiveResupplyHumans
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveResupplyHumans()
+void MIL_AgentPion::OnReceiveResupplyHumans( bool withLog )
 {
-    GetRole< human::PHY_RolePion_Humans >().HealAllHumans();
+    GetRole< human::PHY_RolePion_Humans >().HealAllHumans( withLog );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveResupplyResources
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveResupplyResources()
+void MIL_AgentPion::OnReceiveResupplyResources( bool withLog )
 {
-    GetRole< dotation::PHY_RolePion_Dotations >().ResupplyDotations();
+    GetRole< dotation::PHY_RolePion_Dotations >().ResupplyDotations( withLog );
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
-        role->ResupplyStocks();
+        role->ResupplyStocks( withLog );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveResupplyEquipement
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveResupplyEquipement()
+void MIL_AgentPion::OnReceiveResupplyEquipement( bool withLog )
 {
-    GetRole< PHY_RolePion_Composantes >().RepairAllComposantes();
+    GetRole< PHY_RolePion_Composantes >().RepairAllComposantes( withLog );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveResupplyAll
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveResupplyAll()
+void MIL_AgentPion::OnReceiveResupplyAll( bool withLog )
 {
-    GetRole< PHY_RolePion_Composantes >().RepairAllComposantes();
-    GetRole< dotation::PHY_RolePion_Dotations >().ResupplyDotations();
+    GetRole< PHY_RolePion_Composantes >().RepairAllComposantes( withLog );
+    GetRole< dotation::PHY_RolePion_Dotations >().ResupplyDotations( withLog );
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
-        role->ResupplyStocks();
-    GetRole< human::PHY_RolePion_Humans >().HealAllHumans();
+        role->ResupplyStocks( withLog );
+    GetRole< human::PHY_RolePion_Humans >().HealAllHumans( withLog );
     GetRole< nbc::PHY_RolePion_NBC >().Decontaminate();
 }
 
@@ -1089,16 +1089,28 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         OnReceiveDestroyComponent();
         break;
     case sword::recover_all:
-        OnReceiveResupplyAll();
+        OnReceiveResupplyAll( false );
         break;
     case sword::recover_troops:
-        OnReceiveResupplyHumans();
+        OnReceiveResupplyHumans( false );
         break;
     case sword::recover_equipments:
-        OnReceiveResupplyEquipement();
+        OnReceiveResupplyEquipement( false );
         break;
     case sword::recover_resources:
-        OnReceiveResupplyResources();
+        OnReceiveResupplyResources( false );
+        break;
+    case sword::recover_all_except_log:
+        OnReceiveResupplyAll( true );
+        break;
+    case sword::recover_troops_except_log:
+        OnReceiveResupplyHumans( true );
+        break;
+    case sword::recover_equipments_except_log:
+        OnReceiveResupplyEquipement( true );
+        break;
+    case sword::recover_resources_except_log:
+        OnReceiveResupplyResources( true );
         break;
     case sword::destroy_all:
         OnReceiveDestroyAll();

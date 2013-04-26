@@ -142,7 +142,7 @@ public:
     //@{
     unsigned int GetNbrUsableHumans() const;
     unsigned int GetNbrHealthyHumans( const PHY_HumanRank& rank ) const;
-    void HealAllHumans();
+    void HealAllHumans( bool withLog );
     void KillAllHumans();
     unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange );
     unsigned int OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound, bool psyop = false, bool contaminated = false );
@@ -269,7 +269,7 @@ public:
 
     double GetOperationalState() const;
     void ReinitializeState( const PHY_ComposanteState& state, const PHY_BreakdownType* breakdownType = 0 );
-    void Repair();
+    void Repair( bool withLog );
     //@}
 
 private:

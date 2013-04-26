@@ -188,7 +188,7 @@ void PHY_RoleInterface_Supply::StopUsingForLogistic( PHY_ComposantePion& /*compo
 // Name: PHY_RoleInterface_Supply::ResupplyStocks
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void PHY_RoleInterface_Supply::ResupplyStocks()
+void PHY_RoleInterface_Supply::ResupplyStocks( bool /*withLog*/ )
 {
     // NOTHING
 }

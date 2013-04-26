@@ -105,10 +105,14 @@ bool PHY_HumansComposante::ChangeHumanRank( const PHY_HumanRank& oldRank, const 
 // Name: PHY_HumansComposante::HealAllHumans
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-void PHY_HumansComposante::HealAllHumans()
+void PHY_HumansComposante::HealAllHumans( bool withLog )
 {
-    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
+    for( auto it = humans_.begin(); it != humans_.end(); ++it )
+    {
+        if( withLog && ( **it ).NeedMedical() )
+            continue;
         ( **it ).Heal();
+    }
 }
 
 // -----------------------------------------------------------------------------
