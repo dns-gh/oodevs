@@ -930,12 +930,11 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
             geometry::Point2f arrowHead = where + directionVector * (baseDepth/2);
             geometry::Point2f symbolTail = arrowHead + directionVector * (-symbolDepth);
             geometry::Vector2f symbolVector( symbolTail, arrowHead );
-            geometry::Point2f levelPosition = symbolTail + symbolVector * 0.875f;
             geometry::Point2f symbolPosition = symbolTail + symbolVector * 0.5f;
             DrawApp6SymbolScaledSize( moveSymbol, symbolPosition, factor, direction, 1, 1 );
             if( baseDepth )
                 DrawTail( arrowTail, symbolTail, factor );
-            DrawLevel( levelPosition, level, direction, factor );
+            DrawApp6SymbolScaledSize( level, symbolPosition, factor, direction, 1, 1 );
         }
         else
             DrawApp6SymbolFixedSize( symbol, where, factor, 0 );
@@ -956,16 +955,6 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
 void GlWidget::DrawTail( const geometry::Point2f& arrowTail, const geometry::Point2f& symbolTail, float width ) const
 {
     DrawLine( arrowTail, symbolTail, width );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlWidget::DrawLevel
-// Created: LDC 2013-04-25
-// -----------------------------------------------------------------------------
-void GlWidget::DrawLevel( const geometry::Point2f& levelPosition, const std::string& level, unsigned int direction, float factor ) const
-{
-    Rectangle2f rectangle( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) );
-    DrawApp6Symbol( level, DefaultStyle(), levelPosition, baseWidth_ * factor, rectangle, 4, 4, direction, 1., 1. );
 }
 
 // -----------------------------------------------------------------------------

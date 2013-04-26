@@ -32,6 +32,7 @@ public:
 
     virtual const Entity_ABC& GetEntity() const = 0;
     virtual std::string GetSymbol() const = 0;
+    virtual std::string GetStaticSymbol() const = 0;
     virtual std::string GetLevel() const = 0;
     virtual void UpdateSymbolUpward() = 0;
     virtual void UpdateSymbolDownward() = 0;

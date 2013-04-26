@@ -124,7 +124,6 @@ private:
     void DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where
         , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight, unsigned int angle, float xFactor, float yFactor, float svgDeltaX = -20, float svgDeltaY = -80 ) const;
     void DrawTail( const geometry::Point2f& arrowTail, const geometry::Point2f& symbolTail, float width ) const;
-    void DrawLevel( const geometry::Point2f& levelPosition, const std::string& level, unsigned int direction, float factor ) const;
     //@}
 
 private:
