@@ -933,7 +933,12 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
             geometry::Point2f symbolPosition = symbolTail + symbolVector * 0.5f;
             DrawApp6SymbolScaledSize( moveSymbol, symbolPosition, factor, direction, 1, 1 );
             if( baseDepth )
-                DrawTail( arrowTail, symbolTail, factor );
+            {
+                T_PointVector points;
+                points.push_back( arrowTail );
+                points.push_back( symbolTail );
+                DrawTail( points,  SymbolSize_ * factor );
+            }
             DrawApp6SymbolScaledSize( level, symbolPosition, factor, direction, 1, 1 );
         }
         else
@@ -952,9 +957,12 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
 // Name: GlWidget::DrawTail
 // Created: LDC 2013-04-25
 // -----------------------------------------------------------------------------
-void GlWidget::DrawTail( const geometry::Point2f& arrowTail, const geometry::Point2f& symbolTail, float width ) const
+void GlWidget::DrawTail( const T_PointVector& points, float width ) const
 {
-    DrawLine( arrowTail, symbolTail, width );
+    glPushAttrib( GL_LINE_BIT );
+    glLineWidth( std::abs( width ) );
+    DrawLines( points );
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
