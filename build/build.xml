@@ -22,6 +22,7 @@
     <property name="version.major" value="5.2.0"/>
     <property name="svn.revision" value="0"/>
     <property name="version.version" value="${version.major}.${svn.revision}"/>
+    <property name="unicode.extension" value=" ゑ"/>
 
     <!-- local extensions -->
     <import file="protobuf.xml" />
@@ -90,6 +91,122 @@
     tests
     ============================================================================
     -->
+
+
+    <macrodef name="exec-unicode">
+        <attribute name="name"/>
+        <attribute name="exe"/>
+        <attribute name="cwd" default="${run.dir}"/>
+        <element name="args" implicit="true" optional="true"/>
+        <sequential>
+            <python taskname="@{name}" failonerror="true" timeout="600000">
+                <!-- TODO: Add timeout -->
+                <arg value="checksim.py"/>
+                <arg value="--append-unicode-suffix"/>
+                <arg value="@{cwd}"/>
+                <arg value="@{exe}"/>
+                <args/>
+            </python>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="create-unicode-context">
+        <attribute name="root"/>
+        <attribute name="exercise"/>
+        <attribute name="exercise-path" default="@{root}/exercises/"/>
+        <attribute name="session"/>
+        <attribute name="terrain"/>
+        <attribute name="physical"/>
+        <attribute name="new-root-without-unicode"/>
+        <attribute name="new-exercise-file"/>
+        <attribute name="unicode-extension" default="${unicode.extension}"/>
+        <attribute name="new-root" default="@{new-root-without-unicode}@{unicode-extension}"/>
+        <attribute name="new-exercise" default="@{exercise}@{unicode-extension}"/>
+        <attribute name="new-session" default="@{session}@{unicode-extension}"/>
+        <attribute name="new-terrain" default="@{terrain}@{unicode-extension}"/>
+        <attribute name="new-physical" default="@{physical}@{unicode-extension}"/>
+        <sequential>
+            <echo message="Creating unicode context" />
+            <delete dir="@{new-root}"/>
+            <mkdir dir="@{new-root}/data/models/ada/physical/@{new-physical}"/>
+            <mkdir dir="@{new-root}/data/models/ada/decisional"/>
+            <mkdir dir="@{new-root}/data/terrains/@{new-terrain}"/>
+            <mkdir dir="@{new-root}/exercises/@{new-exercise}"/>
+            <!-- Copy physical base -->
+            <copy todir="@{new-root}/data/models/ada/physical/@{new-physical}">
+                <fileset dir="@{root}/data/models/ada/physical/@{physical}"/>
+            </copy>
+            <!-- Copy decisional base -->
+            <copy todir="@{new-root}/data/models/ada/decisional">
+                <fileset dir="@{root}/data/models/ada/decisional"/>
+            </copy>
+            <!-- Copy terrain and rename it with unicode -->
+            <copy todir="@{new-root}/data/terrains/@{new-terrain}">
+                <fileset dir="@{root}/data/terrains/@{terrain}"/>
+            </copy>
+            <!-- Copy exercise and rename it with unicode -->
+            <copy todir="@{new-root}/exercises/@{new-exercise}">
+                <fileset dir="@{exercise-path}/@{exercise}"/>
+            </copy>
+            <!-- Rename session dir with unicode -->
+            <move file="@{new-root}/exercises/@{new-exercise}/sessions/@{session}" tofile="@{new-root}/exercises/@{new-exercise}/sessions/@{new-session}"/>
+            <!-- Replace exercise.xml with the one referencing the new terrain and the new physical base -->
+            <delete file="@{new-root}/exercises/@{new-exercise}/exercise.xml"/>
+            <copy file="@{new-exercise-file}" tofile="@{new-root}/exercises/@{new-exercise}/exercise.xml"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="delete-unicode-context">
+        <attribute name="new-root-without-unicode"/>
+        <attribute name="unicode-extension" default="${unicode.extension}"/>
+        <attribute name="new-root" default="@{new-root-without-unicode}@{unicode-extension}"/>
+        <sequential>
+            <echo message="Deleting unicode context" />
+            <delete dir="@{new-root}"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="sim-unicode-test">
+        <attribute name="root"/>
+        <attribute name="exercise"/>
+        <attribute name="exercise-path" default="@{root}/exercises/"/>
+        <attribute name="session"/>
+        <attribute name="terrain"/>
+        <attribute name="physical"/>
+        <attribute name="new-exercise-file"/>
+        <attribute name="new-root-without-unicode" default="${out.dir}/Data"/>
+        <sequential>
+            <!-- Create context -->
+            <create-unicode-context root="@{root}" exercise-path="@{exercise-path}" exercise="@{exercise}" session="@{session}" terrain="@{terrain}" physical="@{physical}" new-root-without-unicode="@{new-root-without-unicode}" new-exercise-file="@{new-exercise-file}"/>
+            <!-- Launch simulation legacy -->
+            <exec-unicode name="sim-unicode-legacy" exe="${out.dir}/release/applications/simulation_app/simulation_app.exe">
+                <arg value="root-dir=@{new-root-without-unicode}"/>
+                <arg value="exercise=@{exercise}"/>
+                <arg value="session=@{session}"/>
+                <arg value="legacy=true"/>
+                <arg value="simulation-address=${test.portnumber}"/>
+                <arg value="dispatcher-address=${test.portnumber2}"/>
+                <arg value="test"/>
+            </exec-unicode>
+            <!-- Launch simulation non legacy -->
+            <exec-unicode name="sim-unicode-non-legacy" exe="${out.dir}/release/applications/simulation_app/simulation_app.exe">
+                <arg value="root-dir=@{new-root-without-unicode}"/>
+                <arg value="exercise=@{exercise}"/>
+                <arg value="session=@{session}"/>
+                <arg value="legacy=false"/>
+                <arg value="simulation-address=${test.portnumber}"/>
+                <arg value="dispatcher-address=${test.portnumber2}"/>
+                <arg value="test"/>
+            </exec-unicode>
+            <!-- Remove context -->
+            <delete-unicode-context new-root-without-unicode="@{new-root-without-unicode}"/>
+        </sequential>
+    </macrodef>
+
+    <target name="sim_unicode_test">
+        <sim-unicode-test root="${data.dir}" exercise-path="${data.dir}/tests/test_data_unicode/" exercise="test_sim_unicode" session="default" terrain="land-of-stripes" physical="worldwide-ML" new-exercise-file="${data.dir}/tests/test_data_unicode/test_sim_unicode exercise with unicode.xml"/>
+    </target>
+
     <macrodef name="run-one-simulation">
         <attribute name="exercise"/>
         <attribute name="legacy" default="false"/>
@@ -862,6 +979,7 @@
         ,adaptation_test
         ,app_test
         ,checkpoint_test
+        ,sim_unicode_test
         ,data_migrations_test
         ,exercises_test
         ,qt_name_test

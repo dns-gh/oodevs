@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="44505" start_time="20130410T100000" target="11" time="20130410T100000" type="mission">
+    <parameter type="heading" value="360"/>
+    <parameter/>
+    <parameter type="limit">
+      <location type="line">
+        <point coordinates="28RDS1034121994"/>
+        <point coordinates="28RDS3197844433"/>
+      </location>
+    </parameter>
+    <parameter type="limit">
+      <location type="line">
+        <point coordinates="28RDS0796824358"/>
+        <point coordinates="28RDS2822447021"/>
+      </location>
+    </parameter>
+    <parameter type="path">
+      <parameter type="pathpoint">
+        <location type="point">
+          <point coordinates="28RDS1183024185"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+</actions>

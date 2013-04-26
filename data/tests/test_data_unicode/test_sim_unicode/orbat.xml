@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp 1" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="3" level="xxxx" name="Formation [3]" symbol="symbols/sfgpucath">
+          <automat engaged="true" id="11" knowledge-group="2" name="ARMOR.MBT squadron" symbol="symbols/sfgpucath" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="12" name="ARMOR.Armored squadron CP" position="28RDS0906223006" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="13" name="ARMOR.MBT platoon" position="28RDS0906323106" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="14" name="ARMOR.MBT platoon" position="28RDS0916223006" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="15" name="ARMOR.MBT platoon" position="28RDS0906222907" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="16" name="ARMOR.MBT platoon" position="28RDS0896223007" type="ARMOR.MBT platoon"/>
+            <limit name="Limite 18">
+              <point>28RDS0796824358</point>
+              <point>28RDS2822447021</point>
+            </limit>
+            <limit name="Limite 19">
+              <point>28RDS1034121994</point>
+              <point>28RDS3197844433</point>
+            </limit>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Groupe de connaissance [2]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1"/>
+  </diplomacy>
+</orbat>
