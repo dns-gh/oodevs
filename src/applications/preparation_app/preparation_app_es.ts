@@ -2275,6 +2275,22 @@ This data can&apos;t be projected.</source>
         <source>Force ratio types</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inhabitant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inhabitant list</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScoreVariablesList</name>

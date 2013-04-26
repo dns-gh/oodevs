@@ -2276,6 +2276,22 @@ This data can&apos;t be projected.</source>
         <source>Variable value: </source>
         <translation type="unfinished">قيمة المتغير:</translation>
     </message>
+    <message>
+        <source>Crowd</source>
+        <translation type="unfinished">الحشد</translation>
+    </message>
+    <message>
+        <source>Crowd list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inhabitant</source>
+        <translation type="unfinished">ساكنة</translation>
+    </message>
+    <message>
+        <source>Inhabitant list</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScoreVariablesList</name>

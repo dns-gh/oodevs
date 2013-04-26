@@ -2279,6 +2279,22 @@ This data can&apos;t be projected.</translation>
         <source>Variable value: </source>
         <translation>Variable value: </translation>
     </message>
+    <message>
+        <source>Crowd</source>
+        <translation type="unfinished">Crowd</translation>
+    </message>
+    <message>
+        <source>Crowd list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inhabitant</source>
+        <translation type="unfinished">Inhabitant</translation>
+    </message>
+    <message>
+        <source>Inhabitant list</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScoreVariablesList</name>

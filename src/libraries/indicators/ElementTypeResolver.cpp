@@ -84,7 +84,8 @@ namespace
         std::string result( type );
         // $$$$ SBO 2009-05-12: Variable types
         boost::replace_all( result, "unit list", "list(key)" );
-        boost::replace_all( result, "unit", "key" );
+        boost::replace_all( result, "crowd list", "list(key)" );
+        boost::replace_all( result, "inhabitant list", "list(key)" );
         boost::replace_all( result, "force-ratio types", "list(force-ratio-type)" );
         boost::replace_all( result, "urban block list", "list(urban-block)" );
         boost::replace_all( result, "dotation list", "list(resource-type)" );
@@ -101,6 +102,9 @@ namespace
         boost::replace_all( result, "satisfaction types", "list(satisfaction-type)" );
         boost::replace_all( result, "perception levels", "list(perception-level)" );
         boost::replace_all( result, "operator", "string" ); // $$$$ SBO 2009-06-05:
+        boost::replace_all( result, "unit", "key" );
+        boost::replace_all( result, "crowd", "key" );
+        boost::replace_all( result, "inhabitant", "key" );
         return result;
     }
 

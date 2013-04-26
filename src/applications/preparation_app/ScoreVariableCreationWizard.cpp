@@ -74,6 +74,10 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Contr
         type_->AddItem( tr( "Unit list" ), "unit list" );
         type_->AddItem( tr( "Urban blocks" ), "urban block list" );
         type_->AddItem( tr( "Zone" ), "zone" );
+        type_->AddItem( tr( "Crowd" ), "crowd" );
+        type_->AddItem( tr( "Crowd list" ), "crowd list" );
+        type_->AddItem( tr( "Inhabitant" ), "inhabitant" );
+        type_->AddItem( tr( "Inhabitant list" ), "inhabitant list" );
         connect( type_, SIGNAL( activated( int ) ), SLOT( OnChangeType() ) );
         connect( type_, SIGNAL( activated( int ) ), SLOT( OnChangeType() ) );
 
@@ -341,11 +345,19 @@ boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::Create
         compatibleType = "agent";
     else if( type == "urban block list" )
         compatibleType = "urbanknowledge";
+    else if( type == "crowd list" )
+        compatibleType = "crowd";
+    else if( type == "inhabitant list" )
+        compatibleType = "inhabitant";
     else
     {
         nbOccur = 1;
         if( type == "unit" )
             compatibleType = "agent";
+        if( type == "crowd" )
+            compatibleType = "crowd";
+        if( type == "inhabitant" )
+            compatibleType = "inhabitant";
         if( type == "dotation list" )
             compatibleType = "allresourcetype";
         else if( type == "equipment list" )

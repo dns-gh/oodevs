@@ -2276,6 +2276,22 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Force ratio types</source>
         <translation>Types de rapport de force</translation>
     </message>
+    <message>
+        <source>Crowd</source>
+        <translation>Foule</translation>
+    </message>
+    <message>
+        <source>Crowd list</source>
+        <translation>Liste de foule</translation>
+    </message>
+    <message>
+        <source>Inhabitant</source>
+        <translation>Population</translation>
+    </message>
+    <message>
+        <source>Inhabitant list</source>
+        <translation>Liste de population</translation>
+    </message>
 </context>
 <context>
     <name>ScoreVariablesList</name>
