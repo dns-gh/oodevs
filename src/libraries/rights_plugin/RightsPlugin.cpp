@@ -183,7 +183,7 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
             m->set_error_code( sword::ProfileCreationRequestAck::forbidden );
             m->set_login( "unknown" );
         }
-        sender.Send( ack );
+        SendReponse( ack, sender, link );
     }
 }
 
