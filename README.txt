@@ -14,7 +14,7 @@ To run the tests from a cygwin shell, starting at project root:
 
   # Test "simtests" module
   $ go test simtests \
-      --applications d:/dev/gosword/run/vc100_x64/simulation_app.exe \
+      --application d:/dev/gosword/run/vc100_x64/simulation_app.exe \
       --root-dir d:/dev/gosword/data \
       # Run only test cases matching this pattern
       --test.run '.*Collision.*'
