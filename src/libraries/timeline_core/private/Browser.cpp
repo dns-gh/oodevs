@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "Browser.h"
+#include "Engine.h"
 
 using namespace timeline::core;
 
@@ -16,6 +17,7 @@ Browser::Browser( HWND hwnd, const std::string& url )
     , width_ ( 0 )
     , height_( 0 )
     , load_  ( url )
+    , engine_( new Engine() )
 {
     // NOTHING
 }
@@ -38,6 +40,11 @@ Browser::~Browser()
 }
 
 CefRefPtr< CefLifeSpanHandler > Browser::GetLifeSpanHandler()
+{
+    return this;
+}
+
+CefRefPtr< CefV8ContextHandler > Browser::GetV8ContextHandler()
 {
     return this;
 }
@@ -90,4 +97,11 @@ void Browser::Load( const std::string& url )
         return;
     cef_->GetMainFrame()->LoadURL( url_.c_str() );
     load_ = url_;
+}
+
+void Browser::OnContextCreated( CefRefPtr< CefBrowser >   browser,
+                                CefRefPtr< CefFrame >     frame,
+                                CefRefPtr< CefV8Context > context )
+{
+    engine_->Register( context );
 }

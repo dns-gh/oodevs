@@ -22,9 +22,18 @@ namespace timeline
 {
 namespace core
 {
+    class Engine;
+}
+}
+
+namespace timeline
+{
+namespace core
+{
 class Browser : public boost::noncopyable
               , public CefClient
               , public CefLifeSpanHandler
+              , public CefV8ContextHandler
 {
 public:
              Browser( HWND hwnd, const std::string& url );
@@ -32,11 +41,17 @@ public:
     static CefRefPtr< Browser > Factory( HWND hwnd, const std::string& url );
 
     /// CefClient methods
-    virtual CefRefPtr< CefLifeSpanHandler > GetLifeSpanHandler();
+    virtual CefRefPtr< CefLifeSpanHandler >  GetLifeSpanHandler();
+    virtual CefRefPtr< CefV8ContextHandler > GetV8ContextHandler();
 
     /// CefLifeSpanHandler methods
     virtual void OnAfterCreated( CefRefPtr< CefBrowser > browser );
     virtual void OnBeforeClose( CefRefPtr< CefBrowser > );
+
+    /// CefV8ContextHandler
+    virtual void OnContextCreated( CefRefPtr< CefBrowser >   browser,
+                                   CefRefPtr< CefFrame >     frame,
+                                   CefRefPtr< CefV8Context > context );
 
     /// Public methods
     void UpdateSize();
@@ -56,6 +71,7 @@ private:
     std::string url_;
     std::string load_;
     CefRefPtr< CefBrowser > cef_;
+    CefRefPtr< Engine > engine_;
 };
 }
 }
