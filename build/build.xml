@@ -12,12 +12,6 @@
     <property name="env.PONEY_HOME" value="//file1/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
-    <!-- Sword has a special dist.dir for its setup, plugins and documentation,
-         but more an more we want internal packages. Put these into
-         ${dist.internal.dir} which should usually reference some place in
-         delivery/internal/sword.
-    -->
-    <property name="dist.internal.dir" value="${dist.dir}"/>
     <property name="version.project" value="trunk"/>
     <property name="version.major" value="5.2.0"/>
     <property name="svn.revision" value="0"/>
@@ -679,7 +673,7 @@
 
     <!-- Package misc -->
     <target name="package.debug" description="create a zip with all PDB files">
-        <safe-move file="${out.dir}/debug_${platform}.zip" todir="${dist.internal.dir}">
+        <safe-move file="${out.dir}/debug_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
                     <fileset dir="${out.dir}/release/applications" includes="**/*.pdb"/>
@@ -694,8 +688,7 @@
     </target>
 
     <target name="package.proto" description="package protobuf for other projects">
-        <safe-move file="${out.dir}/protobuf.zip"
-            todir="${dist.internal.dir}">
+        <safe-move file="${out.dir}/protobuf.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <fileset dir="${src.dir}/libraries/protocol/proto"
                     includes="*.proto"/>
@@ -717,8 +710,7 @@
     </macrodef>
 
     <target name="package.binaries" description="create a zip with all binaries">
-        <safe-move file="${out.dir}/binaries_${platform}.zip"
-            todir="${dist.internal.dir}">
+        <safe-move file="${out.dir}/binaries_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <mappedresources>
                     <fileset dir="${out.dir}/release/applications" includes="**/*.exe"/>
@@ -731,7 +723,7 @@
     </target>
 
     <target name="package.doc" description="create a zip with all documentation">
-        <safe-move file="${out.dir}/doc.zip" todir="${dist.internal.dir}">
+        <safe-move file="${out.dir}/doc.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <fileset dir="${doc.dir}"/>
             </zip>
@@ -739,7 +731,7 @@
     </target>
 
     <target name="package.gaming_app" description="create a zip with a standalone gaming_app binary">
-        <safe-move file="${out.dir}/gaming_${platform}.zip" todir="${dist.internal.dir}">
+        <safe-move file="${out.dir}/gaming_${platform}.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <fileset dir="${out.dir}/release/applications/gaming_app" includes="gaming_app.exe"/>
                 <fileset dir="${run.dir}"
@@ -777,7 +769,7 @@
     </target>
 
     <target name="package.ts" description="create a zip with all ts files">
-        <safe-move file="${out.dir}/ts.zip" todir="${dist.internal.dir}">
+        <safe-move file="${out.dir}/ts.zip">
             <zip destfile="@{file}" duplicate="fail">
                <mappedresources>
                    <fileset dir="${src.dir}" includes="**/*.ts"/>
@@ -794,7 +786,7 @@
     <target name="package.sdk" description="package sdk documentation">
         <local name="sdk.prefix"/>
         <property name="sdk.prefix" value="SWORD_API_${version.project}"/>
-        <safe-move file="${out.dir}/sdk.zip" todir="${dist.internal.dir}">
+        <safe-move file="${out.dir}/sdk.zip">
             <zip destfile="@{file}" duplicate="fail">
                 <zipfileset dir="${out.dir}/sdk/doc"
                     includes="sdk.pdf"
@@ -920,7 +912,6 @@
         <update name="xerces-c"/>
         <update name="xeumeuleu"/>
         <update name="zlib"/>
-        <mkdir dir="${dist.internal.dir}"/>
     </target>
 
     <target name="configure" depends="update,deploy-application-data,generate-license" description="update packages and decisional"/>
