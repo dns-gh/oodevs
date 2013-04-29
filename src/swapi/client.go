@@ -59,8 +59,11 @@ type Client struct {
 	// events. Set if before running the client to have any effect.
 	EnableModel bool
 	PostTimeout time.Duration
+	ClientId    int32
 
+    // context and clientId are only read and set by the serve goroutine
 	context     int32
+	clientId    int32
 	link        net.Conn
 	handlers    map[int32]MessageHandler
 	timeouts    map[int32]time.Time
@@ -86,6 +89,8 @@ func NewClient(address string) (*Client, error) {
 		Model:       NewModel(),
 		EnableModel: true,
 		PostTimeout: ClientTimeout,
+		ClientId:    0,
+		clientId:    0,
 		link:        link,
 		handlers:    make(map[int32]MessageHandler),
 		timeouts:    make(map[int32]time.Time),

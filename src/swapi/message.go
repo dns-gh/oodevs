@@ -46,6 +46,7 @@ type header struct {
 type SwordMessage struct {
 	tag     uint32
 	Context int32
+	ClientId int32
 	// * -> client
 	AarToClient            *sword.AarToClient
 	AuthenticationToClient *sword.AuthenticationToClient
@@ -156,6 +157,7 @@ func decode(msg *SwordMessage, tag uint32, data []uint8) error {
 		// XXX: context field in AuthenticationToClient is invalid
 		msg.AuthenticationToClient = &sword.AuthenticationToClient{}
 		err = proto.Unmarshal(data, msg.AuthenticationToClient)
+		msg.ClientId = msg.AuthenticationToClient.GetClientId()
 		msg.Context = msg.AuthenticationToClient.GetContext()
 	case DispatcherToClientTag:
 		// XXX: missing context field in DispatcherToClient

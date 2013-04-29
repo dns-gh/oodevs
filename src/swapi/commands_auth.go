@@ -62,9 +62,9 @@ func nameof(names map[int32]string, code int32) error {
 	return errors.New(name)
 }
 
-type authHandler func(msg *sword.AuthenticationToClient_Content) error
+type authHandler func(msg *sword.AuthenticationToClient_Content, clientId int32) error
 
-func (c *Client) postAuthRequest(msg SwordMessage, handler authHandler) <-chan error {
+func (c *Client) postAuthRequestWithCheckingClientId(msg SwordMessage, handler authHandler, checkClientId bool) <-chan error {
 	quit := make(chan error, 1)
 	wrapper := func(msg *SwordMessage, context int32, err error) bool {
 		if err != nil {
@@ -73,14 +73,21 @@ func (c *Client) postAuthRequest(msg SwordMessage, handler authHandler) <-chan e
 		}
 		if msg.AuthenticationToClient == nil ||
 			msg.AuthenticationToClient.GetMessage() == nil ||
+			(checkClientId && msg.ClientId != c.ClientId) ||
 			msg.Context != context {
 			return false
 		}
-		quit <- handler(msg.AuthenticationToClient.GetMessage())
+
+		quit <- handler(msg.AuthenticationToClient.GetMessage(),
+						msg.AuthenticationToClient.GetClientId())
 		return true
 	}
 	c.Post(msg, wrapper)
 	return quit
+}
+
+func (c *Client) postAuthRequest(msg SwordMessage, handler authHandler) <-chan error {
+	return c.postAuthRequestWithCheckingClientId( msg, handler, true)
 }
 
 func (c *Client) LoginWithVersion(username, password, version string) error {
@@ -97,7 +104,8 @@ func (c *Client) LoginWithVersion(username, password, version string) error {
 			},
 		},
 	}
-	handler := func(msg *sword.AuthenticationToClient_Content) error {
+	id := int32(0)
+	handler := func(msg *sword.AuthenticationToClient_Content, clientId int32) error {
 		reply := msg.GetAuthenticationResponse()
 		if reply == nil {
 			return unexpected(msg)
@@ -107,9 +115,17 @@ func (c *Client) LoginWithVersion(username, password, version string) error {
 			return nameof(sword.AuthenticationResponse_ErrorCode_name,
 				int32(code))
 		}
+		id = clientId
+
+		if id == 0 {
+			return errors.New("invalid nul client identifier")
+		}
+		c.clientId = id
 		return nil
 	}
-	return <-c.postAuthRequest(msg, handler)
+	err := <-c.postAuthRequestWithCheckingClientId(msg, handler, false)
+	c.ClientId = id
+	return err
 }
 
 func (c *Client) Login(username, password string) error {
@@ -125,7 +141,7 @@ func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 		},
 	}
 	profiles := []*Profile{}
-	handler := func(msg *sword.AuthenticationToClient_Content) error {
+	handler := func(msg *sword.AuthenticationToClient_Content, clientId int32) error {
 		reply := msg.GetConnectedProfileList()
 		if reply == nil {
 			return unexpected(msg)
@@ -163,7 +179,7 @@ func (c *Client) CreateProfile(profile *Profile) (*Profile, error) {
 		},
 	}
 	var created *Profile
-	handler := func(msg *sword.AuthenticationToClient_Content) error {
+	handler := func(msg *sword.AuthenticationToClient_Content, clientId int32) error {
 		reply := msg.GetProfileCreationRequestAck()
 		if reply == nil {
 			return unexpected(msg)
@@ -200,7 +216,7 @@ func (c *Client) UpdateProfile(login string, profile *Profile) (*Profile, error)
 		},
 	}
 	var updated *Profile
-	handler := func(msg *sword.AuthenticationToClient_Content) error {
+	handler := func(msg *sword.AuthenticationToClient_Content, clientId int32) error {
 		reply := msg.GetProfileUpdateRequestAck()
 		if reply == nil {
 			return unexpected(msg)
@@ -227,7 +243,7 @@ func (c *Client) DeleteProfile(login string) error {
 			},
 		},
 	}
-	handler := func(msg *sword.AuthenticationToClient_Content) error {
+	handler := func(msg *sword.AuthenticationToClient_Content, clientId int32) error {
 		reply := msg.GetProfileDestructionRequestAck()
 		if reply == nil {
 			return unexpected(msg)
