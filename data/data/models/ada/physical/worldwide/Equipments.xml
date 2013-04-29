@@ -7715,7 +7715,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="76" loaded-mass="0" name="5m3 Gasoil Tank Trunk" protection="UnarmouredVehicle" size="Medium" weight="11">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="76" name="5m3 Gasoil Tank Trunk" protection="UnarmouredVehicle" size="Medium" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -15797,4 +15797,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2967938598" -->
+<!-- signature="1308718985" -->
