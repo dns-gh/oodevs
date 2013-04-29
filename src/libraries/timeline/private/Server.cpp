@@ -71,10 +71,6 @@ Server::Server( const Configuration& cfg )
     auto widget = new Widget( *device_, cfg.widget );
     layout->addWidget( widget );
     layout->setContentsMargins( 0, 0, 0, 0 );
-    QPalette palette;
-    palette.setColor( QPalette::Background, Qt::red );
-    widget->setAutoFillBackground( true );
-    widget->setPalette( palette );
     StartProcess();
 }
 

@@ -32,6 +32,11 @@ int main( int argc, char* argv[] )
         auto central = new QWidget( &main );
         main.setCentralWidget( central );
 
+        QPalette palette;
+        palette.setColor( QPalette::Background, Qt::red );
+        central->setAutoFillBackground( true );
+        central->setPalette( palette );
+
         timeline::Configuration cfg;
         cfg.rundir = ".";
         cfg.binary = argv[1];
