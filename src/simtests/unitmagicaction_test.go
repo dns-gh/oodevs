@@ -20,7 +20,7 @@ import (
 const (
 	// Random existing automat identifier, we should parse the physical
 	// database instead.
-	AutomatType = uint32(117)
+	AutomatType = uint32(123)
 )
 
 // For a given tasker type, send a unit magic action which is not
