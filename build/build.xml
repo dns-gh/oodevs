@@ -691,9 +691,6 @@
                 </mappedresources>
              </zip>
         </safe-move>
-        <!-- temporary, until downstream projects are migrated -->
-        <copy file="${dist.internal.dir}/debug_${platform}.zip"
-            tofile="${dist.dir}/SWORD_debug_${platform}_${version.project}.zip"/>
     </target>
 
     <target name="package.proto" description="package protobuf for other projects">
@@ -733,9 +730,6 @@
             </zip>
             <check-depends file="@{file}"/>
         </safe-move>
-        <!-- temporary, until downstream projects are migrated -->
-        <copy file="${dist.internal.dir}/binaries_${platform}.zip"
-            tofile="${dist.dir}/SWORD_binaries_${platform}_${version.project}.zip"/>
     </target>
 
     <target name="package.doc" description="create a zip with all documentation">
@@ -782,8 +776,6 @@
             </zip>
             <check-depends file="@{file}"/>
         </safe-move>
-        <copy file="${dist.internal.dir}/gaming_${platform}.zip"
-            tofile="${dist.dir}/SWORD_gaming_${platform}_${version.project}.zip"/>
     </target>
 
     <target name="package.ts" description="create a zip with all ts files">
@@ -799,8 +791,6 @@
                </mappedresources>
             </zip>
         </safe-move>
-        <copy file="${dist.internal.dir}/ts.zip"
-            tofile="${dist.dir}/SWORD_ts_${version.project}.zip"/>
     </target>
 
     <target name="package.sdk" description="package sdk documentation">
@@ -819,8 +809,6 @@
                     prefix="${sdk.prefix}/SWORD_API_Protocol"/>
             </zip>
         </safe-move>
-        <copy file="${dist.internal.dir}/sdk.zip"
-            tofile="${dist.dir}/SWORD_API_Documentation_${version.project}.zip"/>
     </target>
 
     <!--
