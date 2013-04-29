@@ -469,7 +469,7 @@
             <parameter name="element" type="key" attribute="key"/>
         </parameters>
     </primitive>
-    <primitive category="reduce" name="count" type="unsigned">
+    <primitive category="reduce" name="count" type="_1">
 		<comments>
         	<comment lang="en"><![CDATA[Returns number of elements in list.]]></comment>
 			<comment lang="fr"><![CDATA[Retourne le nombre d'éléments de la liste.]]></comment>
@@ -477,7 +477,7 @@
 			<comment lang="ar"></comment>
 		</comments>
         <parameters>
-            <parameter name="elements" type="list(key)"/>
+            <parameter name="elements" type="list(key,_1)"/>
         </parameters>
     </primitive>
     <primitive category="reduce" name="minimum" type="_1">
@@ -550,7 +550,7 @@
         </parameters>
     </primitive>
     <!-- results -->
-    <primitive category="result" name="indicator" type="_1">
+    <primitive category="result" name="indicator" type="float">
 		<comments>
         	<comment lang="en"><![CDATA[Use the formula as an indicator with given name.]]></comment>
 			<comment lang="fr"><![CDATA[Utilise la formule comme indicateur avec le nom donné.]]></comment>
@@ -562,7 +562,7 @@
             <parameter name="input" type="_1"/>
         </parameters>
     </primitive>
-    <primitive category="result" name="plot" type="_1">
+    <primitive category="result" name="plot" type="float">
 		<comments>
         	<comment lang="en"><![CDATA[Plots the formula value as a graph.]]></comment>
 			<comment lang="fr"><![CDATA[Affiche la représentation de la formule dans un graphe.]]></comment>
