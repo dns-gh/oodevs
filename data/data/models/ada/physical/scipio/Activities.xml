@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <package-activity model-version="4.11.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Activities.xsd">
-  <activities/>
+  <activities>
+    <activity doc="Assaut par air" id="1" melee="true" name="ASSAIR" package="attack"/>
+    <activity doc="Opération amphibie" id="2" melee="true" name="OPAMPH" package="attack"/>
+    <activity doc="Attaque" id="3" melee="false" name="ATT" package="attack"/>
+    <activity doc="Barrage" id="4" melee="true" name="BARR" package="defence"/>
+    <activity doc="Contre-attaque" id="5" melee="true" name="CATT" package="attack"/>
+    <activity doc="Déception" id="6" melee="true" name="DECEPT" package="defence"/>
+    <activity doc="Défense" id="7" melee="true" name="DEF" package="defence"/>
+    <activity doc="Freinage" id="8" melee="true" name="FRN" package="defence"/>
+    <activity doc="Diversion" id="9" melee="true" name="DIVERS" package="defence"/>
+    <activity doc="Déploiement" id="10" melee="true" name="DEPLOI" package="move"/>
+    <activity doc="Tenir" id="11" melee="true" name="TENIR" package="defence"/>
+    <activity doc="Nettoyer" id="12" melee="true" name="NETT" package="attack"/>
+    <activity doc="Reconnaissance" id="13" melee="true" name="RECO" package="intelligence"/>
+    <activity doc="Redéployer" id="14" melee="true" name="REDEPL" package="move"/>
+    <activity doc="Jalonner" id="15" melee="true" name="JAL" package="defence"/>
+    <activity doc="Avance, progression" id="16" melee="true" name="AVANCE" package="move"/>
+    <activity doc="Mouvement par air" id="17" melee="true" name="MVTAIR" package="move"/>
+    <activity doc="Mouvement" id="18" melee="true" name="MVT" package="move"/>
+    <activity doc="Poursuite" id="19" melee="true" name="POURSUI" package="attack"/>
+    <activity doc="Regrouper" id="20" melee="true" name="REGROU" package="move"/>
+    <activity doc="Relève" id="21" melee="true" name="RELEVE" package="move"/>
+    <activity doc="Réserve" id="22" melee="true" name="RESERVE" package="move"/>
+    <activity doc="Repos" id="23" melee="true" name="REPOS" package="none"/>
+    <activity doc="Statique" id="24" melee="true" name="STATIQ" package="none"/>
+    <activity doc="Repli" id="25" melee="true" name="REPLI" package="defence"/>
+    <activity doc="Sans activité" id="26" melee="true" name="NIL" package="none"/>
+    <activity doc="En activité" id="27" melee="true" name="ACTIF" package="none"/>
+    <activity doc="Autre" id="28" melee="true" name="OTHER" package="none"/>
+    <activity doc="Inconnu" id="29" melee="true" name="UNK" package="none"/>
+    <activity doc="Soutien" id="30" melee="true" name="SOUT" package="support"/>
+    <activity doc="Appui" id="31" melee="true" name="APP" package="support"/>
+    <activity doc="Résister" id="32" melee="true" name="RESIST" package="defence"/>
+    <activity doc="Eclairer" id="33" melee="true" name="ECL" package="intelligence"/>
+    <activity doc="Couvrir" id="34" melee="true" name="COUV" package="support"/>
+    <activity doc="Fixer" id="35" melee="true" name="FIX" package="defence"/>
+    <activity doc="Défense d'arrêt" id="36" melee="true" name="DARR" package="defence"/>
+    <activity doc="Interdire" id="37" melee="true" name="INTDR" package="defence"/>
+    <activity doc="Coup d'arrêt" id="38" melee="true" name="CARR" package="defence"/>
+    <activity doc="Mener un assaut" id="39" melee="true" name="ASS" package="attack"/>
+    <activity doc="Réduire" id="40" melee="true" name="RED" package="attack"/>
+    <activity doc="S'emparer" id="41" melee="true" name="EMP" package="attack"/>
+    <activity doc="Exploiter" id="42" melee="true" name="EXP" package="none"/>
+    <activity doc="Retarder" id="43" melee="true" name="RET" package="defence"/>
+    <activity doc="Combat d'usure" id="44" melee="true" name="CBTUSU" package="attack"/>
+    <activity doc="Harceler" id="45" melee="true" name="HAR" package="attack"/>
+    <activity doc="Infiltrer" id="46" melee="true" name="INFILT" package="attack"/>
+    <activity doc="Prendre contact" id="47" melee="true" name="CTC" package="move"/>
+    <activity doc="Surveiller" id="48" melee="true" name="SURV" package="intelligence"/>
+    <activity doc="Recueillir" id="49" melee="true" name="RCL" package="move"/>
+    <activity doc="Flanc garder sur la droite" id="50" melee="true" name="FGD" package="support"/>
+    <activity doc="Flanc garder sur la gauche" id="51" melee="true" name="FGG" package="support"/>
+    <activity doc="Franchissement" id="52" melee="true" name="FRANCH" package="move"/>
+    <activity doc="Contrôler" id="53" melee="true" name="CONT" package="control"/>
+    <activity doc="Prendre liaison" id="54" melee="true" name="LIAIS" package="none"/>
+    <activity doc="Contrôle de zone" id="55" melee="true" name="CTR_Z" package="control"/>
+  </activities>
   <packages>
     <package name="attack"/>
     <package name="move"/>
@@ -10,4 +66,4 @@
     <package name="support"/>
   </packages>
 </package-activity>
-<!-- signature="3055808241" -->
+<!-- signature="3781206780" -->
