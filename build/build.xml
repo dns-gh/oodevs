@@ -701,8 +701,6 @@
                     includes="*.proto"/>
             </zip>
         </safe-move>
-        <copy file="${dist.internal.dir}/protobuf.zip"
-            tofile="${dist.dir}/protobuf-dev.zip"/>
     </target>
 
     <macrodef name="check-depends">
