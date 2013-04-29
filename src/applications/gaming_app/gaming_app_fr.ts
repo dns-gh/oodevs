@@ -3136,6 +3136,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Delete &apos;%1&apos;?</source>
         <translation>Supprimer &apos;%1&apos;?</translation>
     </message>
+    <message>
+        <source>Recovery options</source>
+        <translation>Options de recomplétion</translation>
+    </message>
+    <message>
+        <source>Also recover the elements already managed by the logistic system?</source>
+        <translation>Recompléter aussi les éléments gérés par la logistique?</translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

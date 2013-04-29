@@ -95,10 +95,10 @@ void DefaultHealComputer::Wound( const PHY_HumanRank& rank, unsigned int nNbrToC
 // Name: DefaultHealableComputer::HealAll
 // Created: MGD 2009-09-24
 // -----------------------------------------------------------------------------
-void DefaultHealComputer::HealAll() const
+void DefaultHealComputer::HealAll( bool withLog ) const
 {
     for( auto it = components_.begin(); it != components_.end(); ++it )
-        (**it).HealAllHumans();
+        (**it).HealAllHumans( withLog );
 }
 
 // -----------------------------------------------------------------------------

@@ -459,10 +459,10 @@ double PHY_RolePion_Dotations::SupplyDotation( const PHY_DotationCategory& categ
 // Name: PHY_RolePion_Dotations::ResupplyDotations
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::ResupplyDotations()
+void PHY_RolePion_Dotations::ResupplyDotations( bool withLog )
 {
     assert( pDotations_ );
-    pDotations_->Resupply();
+    pDotations_->Resupply( withLog );
 }
 
 // -----------------------------------------------------------------------------

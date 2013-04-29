@@ -464,7 +464,7 @@ void PHY_RolePion_Composantes::ChangeComposantesAvailability( const PHY_Composan
             PHY_ComposantePion& composante = **it;
             if( composante.GetType() == composanteType && composante.GetState() != PHY_ComposanteState::undamaged_ )
             {
-                composante.Repair();
+                composante.Repair( true );
                 ++nNbrUndamagedComposantes;
             }
         }
@@ -1568,10 +1568,10 @@ bool PHY_RolePion_Composantes::IsImmobilized() const
 // Name: PHY_RolePion_Composantes::RepairAllComposantes
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::RepairAllComposantes()
+void PHY_RolePion_Composantes::RepairAllComposantes( bool withLog )
 {
     for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
-        (*it)->Repair();
+        ( **it ).Repair( withLog );
 }
 
 // -----------------------------------------------------------------------------

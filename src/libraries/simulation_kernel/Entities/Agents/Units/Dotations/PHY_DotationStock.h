@@ -51,7 +51,7 @@ public:
     //@{
     double AddReservation   ( double rNbr );
     void     RemoveReservation( double rNbr );
-    void     Resupply        ();
+    void     Resupply        ( bool withLog );
     void     UpdateSupplyNeeded();
     //@}
 
@@ -78,13 +78,14 @@ private:
 private:
     //! @name Member data
     //@{
-    static const double             maxCapacity_;
-          PHY_DotationStockContainer* pStockContainer_;
-    const PHY_DotationCategory*       pCategory_;
-          double                    rValue_;
-          double                    rCapacity_; // Les stocks peuvent dépasser leurs capacités (Stockage à terre)
-          double                    rSupplyThreshold_;
-          bool                        bInfiniteDotations_;
+    static const double maxCapacity_;
+    PHY_DotationStockContainer* pStockContainer_;
+    const PHY_DotationCategory* pCategory_;
+    double rValue_;
+    double rRequestedValue_;
+    double rCapacity_; // Les stocks peuvent dépasser leurs capacités (Stockage à terre)
+    double rSupplyThreshold_;
+    bool bInfiniteDotations_;
     //@}
 };
 

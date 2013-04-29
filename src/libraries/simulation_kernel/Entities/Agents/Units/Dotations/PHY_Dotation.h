@@ -62,7 +62,7 @@ public:
     double Consume ( double rValue );
 
     void   ReadValue( xml::xistream& xis );
-    void   Resupply ( double rFactor = 1. );
+    void   Resupply ( double rFactor = 1., bool withLog = false );
     void   ChangeDotation( unsigned int number, float threshold );
 
     bool   HasReachedSupplyThreshold() const;
@@ -94,6 +94,7 @@ private:
     const PHY_DotationCategory* pCategory_;
     PHY_DotationGroup* pGroup_;
     double rValue_;
+    double rRequestedValue_;
     double rLastValueSent_;
     double rCapacity_;
     double rConsumptionReservation_;

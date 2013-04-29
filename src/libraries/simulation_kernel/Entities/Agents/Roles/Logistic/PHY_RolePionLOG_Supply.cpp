@@ -442,10 +442,10 @@ void PHY_RolePionLOG_Supply::Apply( boost::function< void( PHY_DotationStock& ) 
 // Name: PHY_RolePionLOG_Supply::ResupplyStocks
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::ResupplyStocks()
+void PHY_RolePionLOG_Supply::ResupplyStocks( bool withLog )
 {
     assert( pStocks_ );
-    pStocks_->Resupply();
+    pStocks_->Resupply( withLog );
 }
 
 // -----------------------------------------------------------------------------

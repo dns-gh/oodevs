@@ -55,7 +55,7 @@ public:
     virtual void ApplyWounds( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages ) = 0;
     virtual void ApplyEffect( const WoundEffects_ABC& effects ) = 0;
     virtual void ApplyContamination() = 0;
-    virtual void HealAllHumans() = 0;
+    virtual void HealAllHumans( bool withLog ) = 0;
     virtual void KillAllHumans() = 0;
     virtual unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange ) = 0;
     virtual unsigned int OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound, bool psyop = false, bool contaminated = false ) = 0;

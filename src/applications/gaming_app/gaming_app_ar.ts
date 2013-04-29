@@ -3130,6 +3130,14 @@ This data can&apos;t be projected.</source>
         <source>Delete &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Recovery options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Also recover the elements already managed by the logistic system?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

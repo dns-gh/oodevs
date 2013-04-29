@@ -32,6 +32,7 @@ PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer
     : pStockContainer_   ( &stockContainer    )
     , pCategory_         ( &dotationCategory  )
     , rValue_            ( 0. )
+    , rRequestedValue_   ( 0. )
     , rCapacity_         ( bInfiniteDotations ? maxCapacity_ : rCapacity )
     , rSupplyThreshold_  ( rCapacity * rSupplyThresholdRatio )
     , bInfiniteDotations_( bInfiniteDotations )
@@ -48,6 +49,7 @@ PHY_DotationStock::PHY_DotationStock()
     : pStockContainer_  ( 0 )
     , pCategory_        ( 0 )
     , rValue_           ( 0. )
+    , rRequestedValue_  ( 0. )
     , rCapacity_        ( 0. )
     , rSupplyThreshold_ ( 0. )
     , bInfiniteDotations_( false)
@@ -119,9 +121,13 @@ void PHY_DotationStock::SetValue( double rValue )
 
     if( HasReachedSupplyThreshold() )
     {
+        if( rRequestedValue_ == 0 )
+            rRequestedValue_ = rCapacity_ - rValue_;
         assert( pCategory_ );
         pStockContainer_->NotifySupplyNeeded( *pCategory_, !bSupplyThresholdAlreadyReached );
     }
+    else
+        rRequestedValue_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -237,10 +243,13 @@ double PHY_DotationStock::SupplyUntilFull( double rSupply )
 // Name: PHY_DotationStock::Resupply
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void PHY_DotationStock::Resupply()
+void PHY_DotationStock::Resupply( bool withLog )
 {
-    if( rValue_ < rCapacity_ )
-        SetValue( rCapacity_ );
+    if( withLog )
+        SetValue( std::max( rCapacity_ - rRequestedValue_, rValue_ ) );
+    else
+        if( rValue_ < rCapacity_ )
+            SetValue( rCapacity_ );
 }
 
 // -----------------------------------------------------------------------------

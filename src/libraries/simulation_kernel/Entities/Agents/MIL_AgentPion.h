@@ -191,10 +191,10 @@ private:
     //! @name Magic actions
     //@{
     void OnReceiveChangeHumanFactors( const sword::MissionParameters& msg );
-    void OnReceiveResupplyHumans();
-    void OnReceiveResupplyResources();
-    void OnReceiveResupplyEquipement();
-    void OnReceiveResupplyAll();
+    void OnReceiveResupplyHumans( bool withLog );
+    void OnReceiveResupplyResources( bool withLog );
+    void OnReceiveResupplyEquipement( bool withLog );
+    void OnReceiveResupplyAll( bool withLog );
     void OnReceiveResupply( const sword::MissionParameters& msg );
     void OnReceiveDestroyAll();
     void OnReceiveDestroyComponent();

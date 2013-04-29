@@ -67,7 +67,7 @@ public:
     //@{
     double AddReservation   ( const PHY_DotationCategory& category, double rNbr ); // Return the quantity reserved
     double RemoveReservation( const PHY_DotationCategory& category, double rNbr ); // Return the quantity returned
-    void Resupply();
+    void Resupply( bool withLog );
     void Resupply( const PHY_DotationCategory& category, double rNbr );
     void ComputeStockWeightAndVolume( const PHY_DotationNature&, double& rWeight, double& rVolume ) const;
     //@}

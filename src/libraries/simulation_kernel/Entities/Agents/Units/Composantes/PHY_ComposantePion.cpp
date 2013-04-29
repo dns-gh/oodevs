@@ -750,13 +750,14 @@ bool PHY_ComposantePion::CanFireWhenUnloaded() const
 // Name: PHY_ComposantePion::Repair
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::Repair()
+void PHY_ComposantePion::Repair( bool withLog )
 {
     if( pRole_->GetPion().GetRole< surrender::PHY_RoleInterface_Surrender >().IsPrisoner() )
         ReinitializeState( PHY_ComposanteState::prisoner_ );
     else
-        ReinitializeState( PHY_ComposanteState::undamaged_ );
-    HealAllHumans();
+        if( !withLog || *pState_ != PHY_ComposanteState::maintenance_ )
+            ReinitializeState( PHY_ComposanteState::undamaged_ );
+    HealAllHumans( withLog );
 }
 
 // -----------------------------------------------------------------------------
@@ -1499,10 +1500,10 @@ double PHY_ComposantePion::GetBypassTime( const MIL_ObjectType_ABC& objectType, 
 // Name: PHY_ComposantePion::HealAllHumans
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::HealAllHumans()
+void PHY_ComposantePion::HealAllHumans( bool withLog )
 {
     assert( pHumans_ );
-    pHumans_->HealAllHumans();
+    pHumans_->HealAllHumans( withLog );
 }
 
 // -----------------------------------------------------------------------------

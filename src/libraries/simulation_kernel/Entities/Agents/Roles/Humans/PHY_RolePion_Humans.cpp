@@ -506,11 +506,11 @@ unsigned int PHY_RolePion_Humans::ReduceHumansAvailability( const PHY_HumanRank&
 // Name: PHY_RolePion_Humans::CureAllHumans
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::HealAllHumans()
+void PHY_RolePion_Humans::HealAllHumans( bool withLog )
 {
     std::auto_ptr< HealComputer_ABC > healComputer( owner_->GetAlgorithms().healComputerFactory_->Create() );
     owner_->Execute< OnComponentComputer_ABC >( *healComputer );
-    healComputer->HealAll();
+    healComputer->HealAll( withLog );
 }
 
 // -----------------------------------------------------------------------------

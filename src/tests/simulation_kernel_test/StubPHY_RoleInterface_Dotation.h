@@ -31,7 +31,7 @@ public:
     virtual void Clean() {}
     virtual bool HasChanged() const { return false; }
     virtual double SupplyDotation( const PHY_DotationCategory& /*category*/, double /*rNbr*/ ) { return 1.; }
-    virtual void ResupplyDotations() {}
+    virtual void ResupplyDotations( bool /*withLog*/ ) {}
     virtual void ResupplyDotations( const PHY_AmmoDotationClass& /*ammoDotationClass*/, double /*rFactor*/ ) {}
     virtual void ResupplyDotations( const PHY_DotationType& /*type*/, double /*rFactor*/ ) {}
     virtual bool SetConsumptionMode( const PHY_ConsumptionType& /*mode*/ ) { return false;}

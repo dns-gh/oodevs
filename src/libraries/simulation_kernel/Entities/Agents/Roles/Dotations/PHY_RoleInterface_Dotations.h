@@ -71,7 +71,7 @@ public:
     //! @name Dotations management
     //@{
     virtual double SupplyDotation( const PHY_DotationCategory& category, double rNbr ) = 0;
-    virtual void ResupplyDotations() = 0;
+    virtual void ResupplyDotations( bool withLog ) = 0;
     virtual void ResupplyDotations( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor ) = 0;
     virtual void ResupplyDotations( const PHY_DotationType& type, double rFactor ) = 0;
     //@}

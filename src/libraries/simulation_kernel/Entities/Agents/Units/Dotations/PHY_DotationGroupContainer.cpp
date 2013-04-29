@@ -245,10 +245,10 @@ double PHY_DotationGroupContainer::Supply( const PHY_DotationCategory& category,
 // Name: PHY_DotationGroupContainer::Resupply
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::Resupply()
+void PHY_DotationGroupContainer::Resupply( bool withLog )
 {
     for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
-        it->second->Resupply();
+        it->second->Resupply( 1, withLog );
 }
 
 // -----------------------------------------------------------------------------

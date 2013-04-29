@@ -124,7 +124,7 @@ public:
     //! @name Composantes management
     //@{
     virtual void ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, unsigned int nNbrAvailable );
-    virtual void RepairAllComposantes();
+    virtual void RepairAllComposantes( bool withLog );
     virtual void DestroyRandomComposante();
     virtual void DestroyAllComposantes();
     virtual void KillAllHumans();

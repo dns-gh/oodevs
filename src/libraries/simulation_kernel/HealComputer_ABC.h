@@ -38,7 +38,7 @@ public:
     virtual void ApplyOnComponent( PHY_ComposantePion& component ) = 0;
     virtual void Heal( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const = 0;
     virtual void Wound( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const = 0;
-    virtual void HealAll() const = 0;
+    virtual void HealAll( bool withLog ) const = 0;
     virtual void EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const = 0;
     virtual bool HasWoundedHumansToEvacuate() const = 0;
     //@}

@@ -223,6 +223,22 @@ namespace
                 strType = "recover_equipments";
                 name = tools::translate( "MagicAction", "Recover - Equipments" );
                 break;
+            case sword::UnitMagicAction_Type_recover_all_except_log:
+                strType = "recover_all_except_log";
+                name = tools::translate( "MagicAction", "Recover - All" );
+                break;
+            case sword::UnitMagicAction_Type_recover_troops_except_log:
+                strType = "recover_troops_except_log";
+                name = tools::translate( "MagicAction", "Recover - Troops" );
+                break;
+            case sword::UnitMagicAction_Type_recover_equipments_except_log:
+                strType = "recover_equipments_except_log";
+                name = tools::translate( "MagicAction", "Recover - Equipments" );
+                break;
+            case sword::UnitMagicAction_Type_recover_resources_except_log:
+                strType = "recover_resources_except_log";
+                name = tools::translate( "MagicAction", "Recover - Resources" );
+                break;
             case sword::UnitMagicAction_Type_recover_resources:
                 strType = "recover_resources";
                 name = tools::translate( "MagicAction", "Recover - Resources" );
@@ -283,6 +299,27 @@ namespace
 // -----------------------------------------------------------------------------
 void UnitMagicOrdersInterface::Magic( int type )
 {
+    if( type == sword::UnitMagicAction_Type_recover_all
+     || type == sword::UnitMagicAction_Type_recover_equipments
+     || type == sword::UnitMagicAction_Type_recover_resources
+     || type == sword::UnitMagicAction_Type_recover_troops )
+    {
+        QMessageBox msgBox( QMessageBox::NoIcon
+            , tr( "Recovery options" )
+            , tr( "Also recover the elements already managed by the logistic system?" )
+            , QMessageBox::Yes | QMessageBox::No );
+        if( msgBox.exec() == QMessageBox::No )
+        {
+            if( type == sword::UnitMagicAction_Type_recover_all )
+                type = sword::UnitMagicAction_Type_recover_all_except_log;
+            else if( type == sword::UnitMagicAction_Type_recover_equipments )
+                type = sword::UnitMagicAction_Type_recover_equipments_except_log;
+            else if( type == sword::UnitMagicAction_Type_recover_resources )
+                type = sword::UnitMagicAction_Type_recover_resources_except_log;
+            else if( type == sword::UnitMagicAction_Type_recover_troops )
+                type = sword::UnitMagicAction_Type_recover_troops_except_log;
+        }
+    }
     if( selectedEntity_ )
         ApplyOnHierarchy( *selectedEntity_, type );
     selectedEntity_ = 0;
