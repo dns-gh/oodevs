@@ -67,7 +67,7 @@
 		<xs:attribute name="height" type="T_NonNegativeDouble" use="optional"/>
 		<xs:attribute name="length" type="T_NonNegativeDouble" use="optional"/>
 		<xs:attribute name="width" type="T_NonNegativeDouble" use="optional"/>
-		<xs:attribute name="vehicle-class" type="T_NonNegativeDouble" use="optional"/>
+		<xs:attribute name="vehicle-class" type="xs:nonNegativeInteger" use="optional"/>
 		<xs:attribute name="load-per-axle" type="T_NonNegativeDouble" use="optional"/>
 		<xs:attribute name="turning-radius" type="T_NonNegativeDouble" use="optional"/>
 	</xs:complexType>

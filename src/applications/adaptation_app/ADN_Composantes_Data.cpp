@@ -2134,8 +2134,18 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
           >> xml::optional >> xml::attribute( "width", rWidth_ )
           >> xml::optional >> xml::attribute( "vehicle-class", rVehiculeClass_ )
           >> xml::optional >> xml::attribute( "load-per-axle", rLoadPerAxle_ )
-          >> xml::optional >> xml::attribute( "turning-radius", rTurningRadius_ );
-    input >> xml::optional >> xml::content( "equipment-category", equipmentCategory );
+          >> xml::optional >> xml::attribute( "turning-radius", rTurningRadius_ )
+          >> xml::optional >> xml::content( "equipment-category", equipmentCategory );
+
+    rHasEmptymass_ = rEmptymass_ != 0;
+    rHasLoadedMass_ = rLoadedMass_ != 0;
+    rHasHeight_ = rHeight_ != 0;
+    rHasLength_ = rLength_ != 0;
+    rHasWidth_ = rWidth_ != 0;
+    rHasVehiculeClass_ = rVehiculeClass_ != 0;
+    rHasLoadPerAxle_ = rLoadPerAxle_ != 0;
+    rHasTurningRadius_ = rTurningRadius_ != 0;
+
     if( !equipmentCategory.empty() )
     {
         equipmentCategory_ = ADN_Tr::ConvertToEquipmentCategory( equipmentCategory );
@@ -2293,14 +2303,22 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
                << xml::attribute( "weight", rWeight_ );
     if( ptrArmor_.GetData()->GetType() == eProtectionType_Material )
     {
-        output << xml::attribute( "empty-mass", rEmptymass_ )
-               << xml::attribute( "loaded-mass", rLoadedMass_ )
-               << xml::attribute( "height", rHeight_ )
-               << xml::attribute( "length", rLength_ )
-               << xml::attribute( "width", rWidth_ )
-               << xml::attribute( "vehicle-class", rVehiculeClass_ )
-               << xml::attribute( "load-per-axle", rLoadPerAxle_ )
-               << xml::attribute( "turning-radius", rTurningRadius_ );
+        if( rHasEmptymass_.GetData() )
+            output << xml::attribute( "empty-mass", rEmptymass_ );
+        if( rHasLoadedMass_.GetData() )
+            output << xml::attribute( "loaded-mass", rLoadedMass_ );
+        if( rHasHeight_.GetData() )
+            output << xml::attribute( "height", rHeight_ );
+        if( rHasLength_.GetData() )
+            output << xml::attribute( "length", rLength_ );
+        if( rHasWidth_.GetData() )
+            output << xml::attribute( "width", rWidth_ );
+        if( rHasVehiculeClass_.GetData() )
+            output << xml::attribute( "vehicle-class", rVehiculeClass_ );
+        if( rHasLoadPerAxle_.GetData() )
+            output << xml::attribute( "load-per-axle", rLoadPerAxle_ );
+        if( rHasTurningRadius_.GetData() )
+            output << xml::attribute( "turning-radius", rTurningRadius_ );
     }
 
     output << xml::start( "speeds" )

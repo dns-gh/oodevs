@@ -134,14 +134,15 @@ void ADN_Composantes_GUI::Build()
 
     // Operational information groupbox
     pVehiculeGroupBox_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Vehicule Informations" ) );
-    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Empty mass ( kg )" ), vInfosConnectors[eEmptyMass] );
-    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Loaded mass ( kg )" ), vInfosConnectors[eLoadedMass] );
-    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Height ( m )" ), vInfosConnectors[eHeight] );
-    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "length ( m )" ), vInfosConnectors[eLength] );
-    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "length ( m )" ), vInfosConnectors[eWidth] );
-    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Vehicule class" ), vInfosConnectors[eVehicleClass] );
-    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Load per axle ( kg )" ), vInfosConnectors[eLoadPerAxle] );
-    builder.AddField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Turning radius ( m )" ), vInfosConnectors[eTurningRadius] );
+    builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Empty mass ( kg )" ), vInfosConnectors[eHasEmptyMass], vInfosConnectors[eEmptyMass] );
+    builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Loaded mass ( kg )" ), vInfosConnectors[eHasLoadedMass], vInfosConnectors[eLoadedMass] );
+    builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Height ( m )" ), vInfosConnectors[eHasHeight], vInfosConnectors[eHeight] );
+    builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "length ( m )" ), vInfosConnectors[eHasLength], vInfosConnectors[eLength] );
+    builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "length ( m )" ), vInfosConnectors[eHasWidth], vInfosConnectors[eWidth] );
+    ADN_EditLine_Int* vehiculeField = builder.AddOptionnalField< ADN_EditLine_Int >( pVehiculeGroupBox_, tr( "Vehicule class" ), vInfosConnectors[eHasVehicleClass], vInfosConnectors[eVehicleClass] );
+    builder.SetValidator( new ADN_IntValidator( 0, 999, vehiculeField ) );
+    builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Load per axle ( kg )" ), vInfosConnectors[eHasLoadPerAxle], vInfosConnectors[eLoadPerAxle] );
+    builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Turning radius ( m )" ), vInfosConnectors[eHasTurningRadius], vInfosConnectors[eTurningRadius] );
 
     // Breakdowns
     pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ) );

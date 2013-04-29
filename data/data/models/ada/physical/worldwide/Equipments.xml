@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <equipments model-version="4.11.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Equipments.xsd">
-  <equipment codeEMAT6="Strategic Bomber" codeEMAT8="Strategic Bomber" codeLFRIL="Strategic Bomber" codeNNO="Strategic Bomber" comment="" empty-mass="0" height="0" id="1" length="0" load-per-axle="0" loaded-mass="0" name="Strategic Bomber" protection="Aircraft" size="Heavy" turning-radius="0" vehicle-class="0" weight="1000" width="0">
+  <equipment codeEMAT6="Strategic Bomber" codeEMAT8="Strategic Bomber" codeLFRIL="Strategic Bomber" codeNNO="Strategic Bomber" comment="" empty-mass="1" height="3" id="1" loaded-mass="2" name="Strategic Bomber" protection="Aircraft" size="Heavy" vehicle-class="99" weight="1000">
     <speeds max="700">
       <speed terrain="unknown" value="600"/>
       <speed terrain="forest" value="600"/>
@@ -73,7 +73,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Vedette" codeEMAT8="Vedette" codeLFRIL="Vedette" codeNNO="Vedette" comment="" empty-mass="0" height="0" id="2" length="0" load-per-axle="0" loaded-mass="0" name="Cruiser" protection="ArmouredCarrier" size="Heavy" turning-radius="0" vehicle-class="0" weight="1000" width="0">
+  <equipment codeEMAT6="Vedette" codeEMAT8="Vedette" codeLFRIL="Vedette" codeNNO="Vedette" comment="" id="2" name="Cruiser" protection="ArmouredCarrier" size="Heavy" weight="1000">
     <speeds max="90">
       <speed terrain="unknown" value="0"/>
       <speed terrain="forest" value="0"/>
@@ -398,7 +398,7 @@
     <objects/>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Piece MISTRAL" codeEMAT8="Piece MISTRAL" codeLFRIL="Piece MISTRAL" codeNNO="Piece MISTRAL" comment="Mistral" empty-mass="0" height="0" id="7" length="0" load-per-axle="0" loaded-mass="0" name="Very Short Range Surface To Air System" protection="UnarmouredVehicle" size="Small" turning-radius="0" vehicle-class="0" weight="2.1" width="0">
+  <equipment codeEMAT6="Piece MISTRAL" codeEMAT8="Piece MISTRAL" codeLFRIL="Piece MISTRAL" codeNNO="Piece MISTRAL" comment="Mistral" id="7" name="Very Short Range Surface To Air System" protection="UnarmouredVehicle" size="Small" weight="2.1">
     <speeds max="70">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -518,7 +518,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Gazelle HAC HOT" codeEMAT8="Gazelle HAC HOT" codeLFRIL="Gazelle HAC HOT" codeNNO="Gazelle HAC HOT" comment="" empty-mass="0" height="0" id="8" length="0" load-per-axle="0" loaded-mass="0" name="Antitank Helicopter" protection="Aircraft" size="Small" turning-radius="0" vehicle-class="0" weight="2.1" width="0">
+  <equipment codeEMAT6="Gazelle HAC HOT" codeEMAT8="Gazelle HAC HOT" codeLFRIL="Gazelle HAC HOT" codeNNO="Gazelle HAC HOT" comment="" id="8" name="Antitank Helicopter" protection="Aircraft" size="Small" weight="2.1">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -620,7 +620,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Tigre" codeEMAT8="Tigre" codeLFRIL="Tigre" codeNNO="Tigre" comment="Tigre" empty-mass="0" height="0" id="9" length="0" load-per-axle="0" loaded-mass="0" name="Tigre helicopter" protection="Aircraft" size="Small" turning-radius="0" vehicle-class="0" weight="2.1" width="0">
+  <equipment codeEMAT6="Tigre" codeEMAT8="Tigre" codeLFRIL="Tigre" codeNNO="Tigre" comment="Tigre" id="9" name="Tigre helicopter" protection="Aircraft" size="Small" weight="2.1">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -704,7 +704,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Gazelle HAC CN20" codeEMAT8="Gazelle HAC CN20" codeLFRIL="Gazelle HAC CN20" codeNNO="Gazelle HAC CN20" comment="" empty-mass="0" height="0" id="10" length="0" load-per-axle="0" loaded-mass="0" name="20-mm Chain Gun Helicopter" protection="Aircraft" size="Small" turning-radius="0" vehicle-class="0" weight="2" width="0">
+  <equipment codeEMAT6="Gazelle HAC CN20" codeEMAT8="Gazelle HAC CN20" codeLFRIL="Gazelle HAC CN20" codeNNO="Gazelle HAC CN20" comment="" id="10" name="20-mm Chain Gun Helicopter" protection="Aircraft" size="Small" weight="2">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -806,7 +806,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Leclerc" codeEMAT8="Leclerc" codeLFRIL="Leclerc" codeNNO="Leclerc" comment="" empty-mass="0" height="0" id="11" length="0" load-per-axle="0" loaded-mass="0" name="Main Battle Tank" protection="HeavyTank" size="Heavy" turning-radius="0" vehicle-class="0" weight="54" width="0">
+  <equipment codeEMAT6="Leclerc" codeEMAT8="Leclerc" codeLFRIL="Leclerc" codeNNO="Leclerc" comment="" id="11" name="Main Battle Tank" protection="HeavyTank" size="Heavy" weight="54">
     <speeds max="70">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="1"/>
@@ -950,7 +950,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Puma HM" codeEMAT8="Puma HM" codeLFRIL="Puma HM" codeNNO="Puma HM" comment="Helicoptere de transport" empty-mass="0" height="0" id="12" length="0" load-per-axle="0" loaded-mass="0" name="Transport helicopter" protection="Aircraft" size="Medium" turning-radius="0" vehicle-class="0" weight="5.5" width="0">
+  <equipment codeEMAT6="Puma HM" codeEMAT8="Puma HM" codeLFRIL="Puma HM" codeNNO="Puma HM" comment="Helicoptere de transport" id="12" name="Transport helicopter" protection="Aircraft" size="Medium" weight="5.5">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -1055,7 +1055,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB GEN" codeEMAT8="VAB GEN" codeLFRIL="VAB GEN" codeNNO="VAB GEN" comment="" empty-mass="0" height="0" id="13" length="0" load-per-axle="0" loaded-mass="0" name="Engineer VPC" protection="ArmouredCarrier" size="Medium" turning-radius="0" vehicle-class="0" weight="13" width="0">
+  <equipment codeEMAT6="VAB GEN" codeEMAT8="VAB GEN" codeLFRIL="VAB GEN" codeNNO="VAB GEN" comment="" id="13" name="Engineer VPC" protection="ArmouredCarrier" size="Medium" weight="13">
     <speeds max="80">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -1199,7 +1199,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="AMX 10 RC" codeEMAT8="AMX 10 RC" codeLFRIL="AMX 10 RC" codeNNO="AMX 10 RC" comment="" empty-mass="0" height="0" id="14" length="0" load-per-axle="0" loaded-mass="0" name="Medium Tank" protection="MediumTank" size="Heavy" turning-radius="0" vehicle-class="0" weight="17" width="0">
+  <equipment codeEMAT6="AMX 10 RC" codeEMAT8="AMX 10 RC" codeLFRIL="AMX 10 RC" codeNNO="AMX 10 RC" comment="" id="14" name="Medium Tank" protection="MediumTank" size="Heavy" weight="17">
     <speeds max="90">
       <speed terrain="unknown" value="10"/>
       <speed terrain="forest" value="0"/>
@@ -1344,7 +1344,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VBL 12,7" codeEMAT8="VBL 12,7" codeLFRIL="VBL 12,7" codeNNO="VBL 12,7" comment="" empty-mass="0" height="0" id="15" length="0" load-per-axle="0" loaded-mass="0" name="Light Armored Vehicle 12.7-mm" protection="LightTank" size="Small" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="VBL 12,7" codeEMAT8="VBL 12,7" codeLFRIL="VBL 12,7" codeNNO="VBL 12,7" comment="" id="15" name="Light Armored Vehicle 12.7-mm" protection="LightTank" size="Small" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="60"/>
       <speed terrain="forest" value="60"/>
@@ -1460,7 +1460,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VBL 7,62" codeEMAT8="VBL 7,62" codeLFRIL="VBL 7,62" codeNNO="VBL 7,62" comment="" empty-mass="0" height="0" id="16" length="0" load-per-axle="0" loaded-mass="0" name="Light Armored Vehicle 7.62-mm" protection="LightTank" size="Small" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="VBL 7,62" codeEMAT8="VBL 7,62" codeLFRIL="VBL 7,62" codeNNO="VBL 7,62" comment="" id="16" name="Light Armored Vehicle 7.62-mm" protection="LightTank" size="Small" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="50"/>
@@ -1573,7 +1573,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB CAN 20" codeEMAT8="VAB CAN 20" codeLFRIL="VAB CAN 20" codeNNO="VAB CAN 20" comment="" empty-mass="0" height="0" id="17" length="0" load-per-axle="0" loaded-mass="0" name="20-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" turning-radius="0" vehicle-class="0" weight="15" width="0">
+  <equipment codeEMAT6="VAB CAN 20" codeEMAT8="VAB CAN 20" codeLFRIL="VAB CAN 20" codeNNO="VAB CAN 20" comment="" id="17" name="20-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" weight="15">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -1707,7 +1707,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB HOT" codeEMAT8="VAB HOT" codeLFRIL="VAB HOT" codeNNO="VAB HOT" comment="" empty-mass="0" height="0" id="18" length="0" load-per-axle="0" loaded-mass="0" name="Armoured Personnel Carrier Antitank" protection="ArmouredCarrier" size="Medium" turning-radius="0" vehicle-class="0" weight="14" width="0">
+  <equipment codeEMAT6="VAB HOT" codeEMAT8="VAB HOT" codeLFRIL="VAB HOT" codeNNO="VAB HOT" comment="" id="18" name="Armoured Personnel Carrier Antitank" protection="ArmouredCarrier" size="Medium" weight="14">
     <speeds max="80">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -1852,7 +1852,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB PC" codeEMAT8="VAB PC" codeLFRIL="VAB PC" codeNNO="VAB PC" comment="" empty-mass="0" height="0" id="19" length="0" load-per-axle="0" loaded-mass="0" name="Armoured Personnel Carrier Command Post" protection="ArmouredCarrier" size="Medium" turning-radius="0" vehicle-class="0" weight="10" width="0">
+  <equipment codeEMAT6="VAB PC" codeEMAT8="VAB PC" codeLFRIL="VAB PC" codeNNO="VAB PC" comment="" id="19" name="Armoured Personnel Carrier Command Post" protection="ArmouredCarrier" size="Medium" weight="10">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -1975,7 +1975,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VSB" codeEMAT8="15151513" codeLFRIL="VSB" codeNNO="VSB" comment="Vehicule Blinde Sanitaire (VAB)" empty-mass="0" height="0" id="20" length="0" load-per-axle="0" loaded-mass="0" name="VSB" protection="ArmouredCarrier" size="Medium" turning-radius="0" vehicle-class="0" weight="14" width="0">
+  <equipment codeEMAT6="VSB" codeEMAT8="15151513" codeLFRIL="VSB" codeNNO="VSB" comment="Vehicule Blinde Sanitaire (VAB)" id="20" name="VSB" protection="ArmouredCarrier" size="Medium" weight="14">
     <speeds max="60">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="10"/>
@@ -2086,7 +2086,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Poste Secours" codeEMAT8="15151511" codeLFRIL="Poste Secours" codeNNO="Poste Secours" comment="" empty-mass="0" height="0" id="21" length="0" load-per-axle="0" loaded-mass="0" name="Regimental Aid Post" protection="UnarmouredVehicle" size="Small" turning-radius="0" vehicle-class="0" weight="5" width="0">
+  <equipment codeEMAT6="Poste Secours" codeEMAT8="15151511" codeLFRIL="Poste Secours" codeNNO="Poste Secours" comment="" id="21" name="Regimental Aid Post" protection="UnarmouredVehicle" size="Small" weight="5">
     <speeds max="90">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -2196,7 +2196,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="TRM 4000" codeEMAT8="TRM 4000" codeLFRIL="TRM 4000" codeNNO="TRM 4000" comment="" empty-mass="0" height="0" id="22" length="0" load-per-axle="0" loaded-mass="0" name="TUM 12.7" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="8" width="0">
+  <equipment codeEMAT6="TRM 4000" codeEMAT8="TRM 4000" codeLFRIL="TRM 4000" codeNNO="TRM 4000" comment="" id="22" name="TUM 12.7" protection="UnarmouredVehicle" size="Medium" weight="8">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -2308,7 +2308,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Lot 7" codeEMAT8="Lot 7" codeLFRIL="Lot 7" codeNNO="Lot 7" comment="" empty-mass="0" height="0" id="23" length="0" load-per-axle="0" loaded-mass="0" name="Light Recovery Vehicle" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="5" width="0">
+  <equipment codeEMAT6="Lot 7" codeEMAT8="Lot 7" codeLFRIL="Lot 7" codeNNO="Lot 7" comment="" id="23" name="Light Recovery Vehicle" protection="UnarmouredVehicle" size="Heavy" weight="5">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -2418,7 +2418,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="PEB" codeEMAT8="PEB" codeLFRIL="PEB" codeNNO="PEB" comment="" empty-mass="0" height="0" id="24" length="0" load-per-axle="0" loaded-mass="0" name="Heavy Equipment Transporter System" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="30" width="0">
+  <equipment codeEMAT6="PEB" codeEMAT8="PEB" codeLFRIL="PEB" codeNNO="PEB" comment="" id="24" name="Heavy Equipment Transporter System" protection="UnarmouredVehicle" size="Heavy" weight="30">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -2530,7 +2530,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="TRM 2000" codeEMAT8="TRM 2000" codeLFRIL="TRM 2000" codeNNO="TRM 2000" comment="" empty-mass="0" height="0" id="25" length="0" load-per-axle="0" loaded-mass="0" name="Light Medium Tactical 12.7-mm Armed Vehicle" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="6" width="0">
+  <equipment codeEMAT6="TRM 2000" codeEMAT8="TRM 2000" codeLFRIL="TRM 2000" codeNNO="TRM 2000" comment="" id="25" name="Light Medium Tactical 12.7-mm Armed Vehicle" protection="UnarmouredVehicle" size="Medium" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -2642,7 +2642,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="26" length="0" load-per-axle="0" loaded-mass="0" name="MTV12,7" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="21" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="26" name="MTV12,7" protection="UnarmouredVehicle" size="Heavy" weight="21">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -2756,7 +2756,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB Decontamination NBC" codeEMAT8="VAB Decontamination NBC" codeLFRIL="VAB Decontamination NBC" codeNNO="VAB Decontamination NBC" comment="" empty-mass="0" height="0" id="27" length="0" load-per-axle="0" loaded-mass="0" name="RSV decontamination NBC" protection="LightTank" size="Small" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="VAB Decontamination NBC" codeEMAT8="VAB Decontamination NBC" codeLFRIL="VAB Decontamination NBC" codeNNO="VAB Decontamination NBC" comment="" id="27" name="RSV decontamination NBC" protection="LightTank" size="Small" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -2865,7 +2865,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB VIT" codeEMAT8="VAB VIT" codeLFRIL="VAB VIT" codeNNO="VAB VIT" comment="" empty-mass="0" height="0" id="28" length="0" load-per-axle="0" loaded-mass="0" name="Artillery Recce Vehicle" protection="LightTank" size="Medium" turning-radius="0" vehicle-class="0" weight="14" width="0">
+  <equipment codeEMAT6="VAB VIT" codeEMAT8="VAB VIT" codeLFRIL="VAB VIT" codeNNO="VAB VIT" comment="" id="28" name="Artillery Recce Vehicle" protection="LightTank" size="Medium" weight="14">
     <speeds max="80">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="50"/>
@@ -2981,7 +2981,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="AUF1" codeEMAT8="AUF1" codeLFRIL="AUF1" codeNNO="AUF1" comment="" empty-mass="0" height="0" id="29" length="0" load-per-axle="0" loaded-mass="0" name="155-mm Artillery Tank" protection="HeavyTank" size="Heavy" turning-radius="0" vehicle-class="0" weight="44" width="0">
+  <equipment codeEMAT6="AUF1" codeEMAT8="AUF1" codeLFRIL="AUF1" codeNNO="AUF1" comment="" id="29" name="155-mm Artillery Tank" protection="HeavyTank" size="Heavy" weight="44">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -3118,7 +3118,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="LRM" codeEMAT8="LRM" codeLFRIL="LRM" codeNNO="LRM" comment="" empty-mass="0" height="0" id="30" length="0" load-per-axle="0" loaded-mass="0" name="Multiple Launch Rocket System" protection="HeavyTank" size="Heavy" turning-radius="0" vehicle-class="0" weight="45" width="0">
+  <equipment codeEMAT6="LRM" codeEMAT8="LRM" codeLFRIL="LRM" codeNNO="LRM" comment="" id="30" name="Multiple Launch Rocket System" protection="HeavyTank" size="Heavy" weight="45">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -3247,7 +3247,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Radar COBRA" codeEMAT8="99999992" codeLFRIL="Radar COBRA" codeNNO="Radar COBRA" comment="" empty-mass="0" height="0" id="31" length="0" load-per-axle="0" loaded-mass="0" name="Artillery Firefinder Radar" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="10" width="0">
+  <equipment codeEMAT6="Radar COBRA" codeEMAT8="99999992" codeLFRIL="Radar COBRA" codeNNO="Radar COBRA" comment="" id="31" name="Artillery Firefinder Radar" protection="UnarmouredVehicle" size="Medium" weight="10">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -3365,7 +3365,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Radar RATAC" codeEMAT8="Radar RATAC" codeLFRIL="Radar RATAC" codeNNO="Radar RATAC" comment="" empty-mass="0" height="0" id="32" length="0" load-per-axle="0" loaded-mass="0" name="VAB RATAC" protection="ArmouredCarrier" size="Medium" turning-radius="0" vehicle-class="0" weight="15" width="0">
+  <equipment codeEMAT6="Radar RATAC" codeEMAT8="Radar RATAC" codeLFRIL="Radar RATAC" codeNNO="Radar RATAC" comment="" id="32" name="VAB RATAC" protection="ArmouredCarrier" size="Medium" weight="15">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -3495,7 +3495,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VBL CDT" codeEMAT8="VBL CDT" codeLFRIL="VBL CDT" codeNNO="VBL CDT" comment="" empty-mass="0" height="0" id="33" length="0" load-per-axle="0" loaded-mass="0" name="Light Armored Vehicle" protection="LightTank" size="Small" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="VBL CDT" codeEMAT8="VBL CDT" codeLFRIL="VBL CDT" codeNNO="VBL CDT" comment="" id="33" name="Light Armored Vehicle" protection="LightTank" size="Small" weight="4">
     <speeds max="80">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="50"/>
@@ -3618,7 +3618,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Drone SDTI" codeEMAT8="Drone SDTI" codeLFRIL="Drone SDTI" codeNNO="Drone SDTI" comment="" empty-mass="0" height="0" id="34" length="0" load-per-axle="0" loaded-mass="0" name="Real Time Drone" protection="Aircraft" size="Stealth" turning-radius="0" vehicle-class="0" weight="0.2" width="0">
+  <equipment codeEMAT6="Drone SDTI" codeEMAT8="Drone SDTI" codeLFRIL="Drone SDTI" codeNNO="Drone SDTI" comment="" id="34" name="Real Time Drone" protection="Aircraft" size="Stealth" weight="0.2">
     <speeds max="500">
       <speed terrain="unknown" value="220"/>
       <speed terrain="forest" value="220"/>
@@ -3676,7 +3676,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Moto RBRR" codeEMAT8="Moto RBRR" codeLFRIL="Moto RBRR" codeNNO="Moto RBRR" comment="" empty-mass="0" height="0" id="35" length="0" load-per-axle="0" loaded-mass="0" name="Motocycle" protection="UnarmouredVehicle" size="Small" turning-radius="0" vehicle-class="0" weight="0.2" width="0">
+  <equipment codeEMAT6="Moto RBRR" codeEMAT8="Moto RBRR" codeLFRIL="Moto RBRR" codeNNO="Moto RBRR" comment="" id="35" name="Motocycle" protection="UnarmouredVehicle" size="Small" weight="0.2">
     <speeds max="60">
       <speed terrain="unknown" value="45"/>
       <speed terrain="forest" value="30"/>
@@ -3761,7 +3761,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB BROMURE" codeEMAT8="VAB BROMURE" codeLFRIL="VAB BROMURE" codeNNO="VAB BROMURE" comment="" empty-mass="0" height="0" id="36" length="0" load-per-axle="0" loaded-mass="0" name="Jammer" protection="ArmouredCarrier" size="Medium" turning-radius="0" vehicle-class="0" weight="14" width="0">
+  <equipment codeEMAT6="VAB BROMURE" codeEMAT8="VAB BROMURE" codeLFRIL="VAB BROMURE" codeNNO="VAB BROMURE" comment="" id="36" name="Jammer" protection="ArmouredCarrier" size="Medium" weight="14">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -3872,7 +3872,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Milice MIT 14.5" codeEMAT8="Milice MIT 14.5" codeLFRIL="Milice MIT 14.5" codeNNO="Milice MIT 14.5" comment="" empty-mass="0" height="0" id="37" length="0" load-per-axle="0" loaded-mass="0" name="Militia 14.5mm Armed Vehicle" protection="ArmouredCarrier" size="Medium" turning-radius="0" vehicle-class="0" weight="1" width="0">
+  <equipment codeEMAT6="Milice MIT 14.5" codeEMAT8="Milice MIT 14.5" codeLFRIL="Milice MIT 14.5" codeNNO="Milice MIT 14.5" comment="" id="37" name="Militia 14.5mm Armed Vehicle" protection="ArmouredCarrier" size="Medium" weight="1">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -3959,7 +3959,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB VOA" codeEMAT8="VAB VOA" codeLFRIL="VAB VOA" codeNNO="VAB VOA" comment="" empty-mass="0" height="0" id="38" length="0" load-per-axle="0" loaded-mass="0" name="Armoured Personnel Carrier Artillery" protection="LightTank" size="Medium" turning-radius="0" vehicle-class="0" weight="14" width="0">
+  <equipment codeEMAT6="VAB VOA" codeEMAT8="VAB VOA" codeLFRIL="VAB VOA" codeNNO="VAB VOA" comment="" id="38" name="Armoured Personnel Carrier Artillery" protection="LightTank" size="Medium" weight="14">
     <speeds max="80">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="50"/>
@@ -4071,7 +4071,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VBL MILAN" codeEMAT8="VBL MILAN" codeLFRIL="VBL MILAN" codeNNO="VBL MILAN" comment="" empty-mass="0" height="0" id="39" length="0" load-per-axle="0" loaded-mass="0" name="Light Armored Vehicle Antitiank" protection="LightTank" size="Small" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="VBL MILAN" codeEMAT8="VBL MILAN" codeLFRIL="VBL MILAN" codeNNO="VBL MILAN" comment="" id="39" name="Light Armored Vehicle Antitiank" protection="LightTank" size="Small" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="60"/>
@@ -4184,7 +4184,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="40" length="0" load-per-axle="0" loaded-mass="0" name="Radar Detection Vehicle" protection="LightTank" size="Medium" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="40" name="Radar Detection Vehicle" protection="LightTank" size="Medium" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -4299,7 +4299,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="41" length="0" load-per-axle="0" loaded-mass="0" name="Listening Vehicle" protection="LightTank" size="Medium" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="41" name="Listening Vehicle" protection="LightTank" size="Medium" weight="4">
     <speeds max="70">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -4628,7 +4628,7 @@
     </objects>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Equipe M120" codeEMAT8="Equipe M120" codeLFRIL="Equipe M120" codeNNO="Equipe M120" comment="" empty-mass="0" height="0" id="45" length="0" load-per-axle="0" loaded-mass="0" name="Mortar Launcher 120mm" protection="UnarmouredVehicle" size="Small" turning-radius="0" vehicle-class="0" weight="0.3" width="0">
+  <equipment codeEMAT6="Equipe M120" codeEMAT8="Equipe M120" codeLFRIL="Equipe M120" codeNNO="Equipe M120" comment="" id="45" name="Mortar Launcher 120mm" protection="UnarmouredVehicle" size="Small" weight="0.3">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -4742,7 +4742,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="46" length="0" load-per-axle="0" loaded-mass="0" name="Theater High Altitude Aera Defense Device" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="8" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="46" name="Theater High Altitude Aera Defense Device" protection="UnarmouredVehicle" size="Heavy" weight="8">
     <speeds max="100">
       <speed terrain="unknown" value="100"/>
       <speed terrain="forest" value="100"/>
@@ -4852,7 +4852,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="GBC CWAR" codeEMAT8="GBC CWAR" codeLFRIL="GBC CWAR" codeNNO="GBC CWAR" comment="" empty-mass="0" height="0" id="47" length="0" load-per-axle="0" loaded-mass="0" name="Theater Low Altitude Radar Vehicle" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="10" width="0">
+  <equipment codeEMAT6="GBC CWAR" codeEMAT8="GBC CWAR" codeLFRIL="GBC CWAR" codeNNO="GBC CWAR" comment="" id="47" name="Theater Low Altitude Radar Vehicle" protection="UnarmouredVehicle" size="Medium" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -5045,7 +5045,7 @@
     </objects>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VBL APILAS" codeEMAT8="VBL APILAS" codeLFRIL="VBL APILAS" codeNNO="VBL APILAS" comment="" empty-mass="0" height="0" id="49" length="0" load-per-axle="0" loaded-mass="0" name="Light Armored Vehicle Rocket" protection="LightTank" size="Small" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="VBL APILAS" codeEMAT8="VBL APILAS" codeLFRIL="VBL APILAS" codeNNO="VBL APILAS" comment="" id="49" name="Light Armored Vehicle Rocket" protection="LightTank" size="Small" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="50"/>
       <speed terrain="forest" value="50"/>
@@ -5156,7 +5156,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Roland" empty-mass="0" height="0" id="50" length="0" load-per-axle="0" loaded-mass="0" name="Short Range Surface To Air Tank" protection="MediumTank" size="Heavy" turning-radius="0" vehicle-class="0" weight="36" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Roland" id="50" name="Short Range Surface To Air Tank" protection="MediumTank" size="Heavy" weight="36">
     <speeds max="60">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="20"/>
@@ -5293,7 +5293,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="VAB PC ABC" codeEMAT8="VAB PC ABC" codeLFRIL="VAB PC ABC" codeNNO="VAB PC ABC" comment="" empty-mass="0" height="0" id="51" length="0" load-per-axle="0" loaded-mass="0" name="7.62-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" turning-radius="0" vehicle-class="0" weight="14" width="0">
+  <equipment codeEMAT6="VAB PC ABC" codeEMAT8="VAB PC ABC" codeLFRIL="VAB PC ABC" codeNNO="VAB PC ABC" comment="" id="51" name="7.62-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -5416,7 +5416,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="52" length="0" load-per-axle="0" loaded-mass="0" name="12.7-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" turning-radius="0" vehicle-class="0" weight="14" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="52" name="12.7-mm Armoured Personnel Carrier" protection="ArmouredCarrier" size="Medium" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -5548,7 +5548,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="53" length="0" load-per-axle="0" loaded-mass="0" name="Light Medium Tactical Vehicle (RASIT)" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="6" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="53" name="Light Medium Tactical Vehicle (RASIT)" protection="UnarmouredVehicle" size="Medium" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -5668,7 +5668,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="TRM 2000 CN20mm TR" codeEMAT8="TRM 2000 CN20mm TR" codeLFRIL="TRM 2000 CN20mm TR" codeNNO="TRM 2000 CN20mm TR" comment="" empty-mass="0" height="0" id="54" length="0" load-per-axle="0" loaded-mass="0" name="Light Medium Tactical 20-mm Armed Vehicle" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="6" width="0">
+  <equipment codeEMAT6="TRM 2000 CN20mm TR" codeEMAT8="TRM 2000 CN20mm TR" codeLFRIL="TRM 2000 CN20mm TR" codeNNO="TRM 2000 CN20mm TR" comment="" id="54" name="Light Medium Tactical 20-mm Armed Vehicle" protection="UnarmouredVehicle" size="Medium" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -5852,7 +5852,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="56" length="0" load-per-axle="0" loaded-mass="0" name="Medium tactical Vehicle" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="8" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="56" name="Medium tactical Vehicle" protection="UnarmouredVehicle" size="Medium" weight="8">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -5962,7 +5962,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="chaland transport marine" empty-mass="0" height="0" id="57" length="0" load-per-axle="0" loaded-mass="0" name="Landing Craft" protection="ArmouredCarrier" size="Heavy" turning-radius="0" vehicle-class="0" weight="1000" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="chaland transport marine" id="57" name="Landing Craft" protection="ArmouredCarrier" size="Heavy" weight="1000">
     <speeds max="60">
       <speed terrain="unknown" value="0"/>
       <speed terrain="forest" value="0"/>
@@ -6031,7 +6031,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Char LECLERC Depannage" codeEMAT8="Char LECLERC Depannage" codeLFRIL="Char LECLERC Depannage" codeNNO="Char LECLERC Depannage" comment="" empty-mass="0" height="0" id="58" length="0" load-per-axle="0" loaded-mass="0" name="Armoured Recovery Vehicule" protection="HeavyTank" size="Heavy" turning-radius="0" vehicle-class="0" weight="60" width="0">
+  <equipment codeEMAT6="Char LECLERC Depannage" codeEMAT8="Char LECLERC Depannage" codeLFRIL="Char LECLERC Depannage" codeNNO="Char LECLERC Depannage" comment="" id="58" name="Armoured Recovery Vehicule" protection="HeavyTank" size="Heavy" weight="60">
     <speeds max="65">
       <speed terrain="unknown" value="25"/>
       <speed terrain="forest" value="15"/>
@@ -6147,7 +6147,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="59" length="0" load-per-axle="0" loaded-mass="0" name="Command and Control Vehicle" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="11" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="59" name="Command and Control Vehicle" protection="UnarmouredVehicle" size="Medium" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -6261,7 +6261,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="60" length="0" load-per-axle="0" loaded-mass="0" name="MTV 3Pers" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="21" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="60" name="MTV 3Pers" protection="UnarmouredVehicle" size="Heavy" weight="21">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -6373,7 +6373,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="61" length="0" load-per-axle="0" loaded-mass="0" name="Light Medium Tactical 7.62-mm Armed Vehicle" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="6" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="61" name="Light Medium Tactical 7.62-mm Armed Vehicle" protection="UnarmouredVehicle" size="Medium" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -6557,7 +6557,7 @@
     </objects>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="63" length="0" load-per-axle="0" loaded-mass="0" name="Load Carrying Vehicle" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="11" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="63" name="Load Carrying Vehicle" protection="UnarmouredVehicle" size="Medium" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -6669,7 +6669,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="64" length="0" load-per-axle="0" loaded-mass="0" name="30m3 Semi-Trailer Gasoil Tank Trunk" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="15" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="64" name="30m3 Semi-Trailer Gasoil Tank Trunk" protection="UnarmouredVehicle" size="Heavy" weight="15">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -6779,7 +6779,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="65" length="0" load-per-axle="0" loaded-mass="0" name="10m3 Gasoil Tank Trunk" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="15" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="65" name="10m3 Gasoil Tank Trunk" protection="UnarmouredVehicle" size="Heavy" weight="15">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -6889,7 +6889,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="66" length="0" load-per-axle="0" loaded-mass="0" name="MTV Plt Depos" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="21" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="66" name="MTV Plt Depos" protection="UnarmouredVehicle" size="Heavy" weight="21">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -7001,7 +7001,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="67" length="0" load-per-axle="0" loaded-mass="0" name="VAB SAN" protection="ArmouredCarrier" size="Medium" turning-radius="0" vehicle-class="0" weight="14" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="67" name="VAB SAN" protection="ArmouredCarrier" size="Medium" weight="14">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -7111,7 +7111,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="68" length="0" load-per-axle="0" loaded-mass="0" name="Medical Evacuation Helicopter" protection="Aircraft" size="Medium" turning-radius="0" vehicle-class="0" weight="5.5" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="68" name="Medical Evacuation Helicopter" protection="Aircraft" size="Medium" weight="5.5">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -7209,7 +7209,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="69" length="0" load-per-axle="0" loaded-mass="0" name="TBU15 CLD" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="11" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="69" name="TBU15 CLD" protection="UnarmouredVehicle" size="Medium" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -7321,7 +7321,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="70" length="0" load-per-axle="0" loaded-mass="0" name="Medical Cell" protection="UnarmouredVehicle" size="Small" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="70" name="Medical Cell" protection="UnarmouredVehicle" size="Small" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="15"/>
@@ -7715,7 +7715,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="76" length="0" load-per-axle="0" loaded-mass="0" name="5m3 Gasoil Tank Trunk" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="11" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="76" loaded-mass="0" name="5m3 Gasoil Tank Trunk" protection="UnarmouredVehicle" size="Medium" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -7897,7 +7897,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="78" length="0" load-per-axle="0" loaded-mass="0" name="MTV CLD" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="21" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="78" name="MTV CLD" protection="UnarmouredVehicle" size="Heavy" weight="21">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -8011,7 +8011,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="79" length="0" load-per-axle="0" loaded-mass="0" name="MTV 1 Pers" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="21" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="79" name="MTV 1 Pers" protection="UnarmouredVehicle" size="Heavy" weight="21">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -8123,7 +8123,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="80" length="0" load-per-axle="0" loaded-mass="0" name="12.7-mm Armed Load Carrying Vehicle" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="11" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="80" name="12.7-mm Armed Load Carrying Vehicle" protection="UnarmouredVehicle" size="Medium" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -8237,7 +8237,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="81" length="0" load-per-axle="0" loaded-mass="0" name="5m3 Kerosene Tank Trunk" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="11" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="81" name="5m3 Kerosene Tank Trunk" protection="UnarmouredVehicle" size="Medium" weight="11">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -8349,7 +8349,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Reconnaissance and support vehicule" empty-mass="0" height="0" id="82" length="0" load-per-axle="0" loaded-mass="0" name="RSV" protection="LightTank" size="Medium" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Reconnaissance and support vehicule" id="82" name="RSV" protection="LightTank" size="Medium" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -8454,7 +8454,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="83" length="0" load-per-axle="0" loaded-mass="0" name="7.62-mm Armed Load Carrying Vehicle" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="10" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="83" name="7.62-mm Armed Load Carrying Vehicle" protection="UnarmouredVehicle" size="Medium" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -8568,7 +8568,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Porte engin blinde" empty-mass="0" height="0" id="84" length="0" load-per-axle="0" loaded-mass="0" name="MVT 700 100" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="30" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Porte engin blinde" id="84" name="MVT 700 100" protection="UnarmouredVehicle" size="Heavy" weight="30">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -8728,7 +8728,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="86" length="0" load-per-axle="0" loaded-mass="0" name="Ambulance" protection="UnarmouredVehicle" size="Small" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="86" name="Ambulance" protection="UnarmouredVehicle" size="Small" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="15"/>
@@ -9046,7 +9046,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="90" length="0" load-per-axle="0" loaded-mass="0" name="MTV 2Pers 12.7" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="21" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="90" name="MTV 2Pers 12.7" protection="UnarmouredVehicle" size="Heavy" weight="21">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -9160,7 +9160,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="91" length="0" load-per-axle="0" loaded-mass="0" name="MTV 2Pers" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="21" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="91" name="MTV 2Pers" protection="UnarmouredVehicle" size="Heavy" weight="21">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -9272,7 +9272,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="92" length="0" load-per-axle="0" loaded-mass="0" name="RSV reconnaissance NBC" protection="LightTank" size="Medium" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="92" name="RSV reconnaissance NBC" protection="LightTank" size="Medium" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="30"/>
@@ -9776,7 +9776,7 @@
     <objects/>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Pont automoteur d'accompagnement" empty-mass="0" height="0" id="99" length="0" load-per-axle="0" loaded-mass="0" name="Engineer Bridge Vehicule" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="34" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Pont automoteur d'accompagnement" id="99" name="Engineer Bridge Vehicule" protection="UnarmouredVehicle" size="Heavy" weight="34">
     <speeds max="60">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="10"/>
@@ -9888,7 +9888,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Gazelle HAM MISTRAL" codeEMAT8="Gazelle HAM MISTRAL" codeLFRIL="Gazelle HAM MISTRAL" codeNNO="Gazelle HAM MISTRAL" comment="" empty-mass="0" height="0" id="100" length="0" load-per-axle="0" loaded-mass="0" name="Air Defence Helicopter" protection="Aircraft" size="Small" turning-radius="0" vehicle-class="0" weight="2" width="0">
+  <equipment codeEMAT6="Gazelle HAM MISTRAL" codeEMAT8="Gazelle HAM MISTRAL" codeLFRIL="Gazelle HAM MISTRAL" codeNNO="Gazelle HAM MISTRAL" comment="" id="100" name="Air Defence Helicopter" protection="Aircraft" size="Small" weight="2">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -10099,7 +10099,7 @@
     <objects/>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="103" length="0" load-per-axle="0" loaded-mass="0" name="M1A1 Abrams" protection="HeavyTank" size="Heavy" turning-radius="0" vehicle-class="0" weight="61.3" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="103" name="M1A1 Abrams" protection="HeavyTank" size="Heavy" weight="61.3">
     <speeds max="70">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="0"/>
@@ -10245,7 +10245,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="104" length="0" load-per-axle="0" loaded-mass="0" name="M2A2 Bradley IFV" protection="LightTank" size="Medium" turning-radius="0" vehicle-class="0" weight="27.6" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="104" name="M2A2 Bradley IFV" protection="LightTank" size="Medium" weight="27.6">
     <speeds max="80">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -10396,7 +10396,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="105" length="0" load-per-axle="0" loaded-mass="0" name="M109A6 Paladin" protection="MediumTank" size="Heavy" turning-radius="0" vehicle-class="0" weight="44" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="105" name="M109A6 Paladin" protection="MediumTank" size="Heavy" weight="44">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -10535,7 +10535,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="106" length="0" load-per-axle="0" loaded-mass="0" name="M270 MLRS" protection="MediumTank" size="Heavy" turning-radius="0" vehicle-class="0" weight="25" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="106" name="M270 MLRS" protection="MediumTank" size="Heavy" weight="25">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -10662,7 +10662,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere de transport" empty-mass="0" height="0" id="107" length="0" load-per-axle="0" loaded-mass="0" name="UH-60M Blackhawk" protection="Aircraft" size="Medium" turning-radius="0" vehicle-class="0" weight="4.8" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere de transport" id="107" name="UH-60M Blackhawk" protection="Aircraft" size="Medium" weight="4.8">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -10767,7 +10767,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="108" length="0" load-per-axle="0" loaded-mass="0" name="AH-64D Apache" protection="Aircraft" size="Small" turning-radius="0" vehicle-class="0" weight="5.2" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="108" name="AH-64D Apache" protection="Aircraft" size="Small" weight="5.2">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -10848,7 +10848,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="109" length="0" load-per-axle="0" loaded-mass="0" name="A-10C Thunderbolt II" protection="Aircraft" size="Medium" turning-radius="0" vehicle-class="0" weight="13" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="109" name="A-10C Thunderbolt II" protection="Aircraft" size="Medium" weight="13">
     <speeds max="700">
       <speed terrain="unknown" value="600"/>
       <speed terrain="forest" value="600"/>
@@ -10916,7 +10916,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="110" length="0" load-per-axle="0" loaded-mass="0" name="M3 Bradley CFV" protection="LightTank" size="Medium" turning-radius="0" vehicle-class="0" weight="27.6" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="110" name="M3 Bradley CFV" protection="LightTank" size="Medium" weight="27.6">
     <speeds max="80">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -11064,7 +11064,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Heavy Cargo Helicopter" empty-mass="0" height="0" id="111" length="0" load-per-axle="0" loaded-mass="0" name="CH-47D Chinook" protection="Aircraft" size="Heavy" turning-radius="0" vehicle-class="0" weight="12" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Heavy Cargo Helicopter" id="111" name="CH-47D Chinook" protection="Aircraft" size="Heavy" weight="12">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -11169,7 +11169,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Avenger Air Defense System" empty-mass="0" height="0" id="112" length="0" load-per-axle="0" loaded-mass="0" name="AN/TWQ-1 Avenger" protection="UnarmouredVehicle" size="Small" turning-radius="0" vehicle-class="0" weight="4.3" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Avenger Air Defense System" id="112" name="AN/TWQ-1 Avenger" protection="UnarmouredVehicle" size="Small" weight="4.3">
     <speeds max="70">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -11286,7 +11286,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="113" length="0" load-per-axle="0" loaded-mass="0" name="M1114 HMMWV" protection="ArmouredCarrier" size="Medium" turning-radius="0" vehicle-class="0" weight="6" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="113" name="M1114 HMMWV" protection="ArmouredCarrier" size="Medium" weight="6">
     <speeds max="90">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="45"/>
@@ -11404,7 +11404,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Char T72 BM" codeEMAT8="Char T72 BM" codeLFRIL="Char T72 BM" codeNNO="Char T72 BM" comment="Char moyen" empty-mass="0" height="0" id="114" length="0" load-per-axle="0" loaded-mass="0" max-slope="0.6" name="Main Battle Tank (T-72BM)" protection="HeavyTank" size="Heavy" turning-radius="0" vehicle-class="0" weight="44" width="0">
+  <equipment codeEMAT6="Char T72 BM" codeEMAT8="Char T72 BM" codeLFRIL="Char T72 BM" codeNNO="Char T72 BM" comment="Char moyen" id="114" max-slope="0.6" name="Main Battle Tank (T-72BM)" protection="HeavyTank" size="Heavy" weight="44">
     <speeds max="80">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -11491,7 +11491,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="115" length="0" load-per-axle="0" loaded-mass="0" max-slope="0.6" name="152-mm Artillery Tank (SO-152)" protection="LightTank" size="Heavy" turning-radius="0" vehicle-class="0" weight="27" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="115" max-slope="0.6" name="152-mm Artillery Tank (SO-152)" protection="LightTank" size="Heavy" weight="27">
     <speeds max="62">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="25"/>
@@ -11575,7 +11575,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="BM21" codeEMAT8="BM21" codeLFRIL="BM21" codeNNO="BM21" comment="LRM 122 mm sur camion URAL 375 D" empty-mass="0" height="0" id="116" length="0" load-per-axle="0" loaded-mass="0" max-slope="0.6" name="122-mm Multiple rocket Launcher System (BM-21)" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="13" width="0">
+  <equipment codeEMAT6="BM21" codeEMAT8="BM21" codeLFRIL="BM21" codeNNO="BM21" comment="LRM 122 mm sur camion URAL 375 D" id="116" max-slope="0.6" name="122-mm Multiple rocket Launcher System (BM-21)" protection="UnarmouredVehicle" size="Heavy" weight="13">
     <speeds max="70">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -11649,7 +11649,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="Helicoptere MI 24 HIND F" codeEMAT8="Helicoptere MI 24 HIND F" codeLFRIL="Helicoptere MI 24 HIND F" codeNNO="Helicoptere MI 24 HIND F" comment="Helicoptere d'attaque et de transport d'assault" empty-mass="0" height="0" id="117" length="0" load-per-axle="0" loaded-mass="0" max-slope="1" name="Attack Helicopter (MI-24)" protection="Aircraft" size="Small" turning-radius="0" vehicle-class="0" weight="2.1" width="0">
+  <equipment codeEMAT6="Helicoptere MI 24 HIND F" codeEMAT8="Helicoptere MI 24 HIND F" codeLFRIL="Helicoptere MI 24 HIND F" codeNNO="Helicoptere MI 24 HIND F" comment="Helicoptere d'attaque et de transport d'assault" id="117" max-slope="1" name="Attack Helicopter (MI-24)" protection="Aircraft" size="Small" weight="2.1">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -11795,7 +11795,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="BMP2" codeEMAT8="BMP2" codeLFRIL="BMP2" codeNNO="BMP2" comment="Vehicule transport de troupes" empty-mass="0" height="0" id="119" length="0" load-per-axle="0" loaded-mass="0" name="Infantry Finghting Vehicle (BMP-2)" protection="ArmouredCarrier" size="Medium" turning-radius="0" vehicle-class="0" weight="14" width="0">
+  <equipment codeEMAT6="BMP2" codeEMAT8="BMP2" codeLFRIL="BMP2" codeNNO="BMP2" comment="Vehicule transport de troupes" id="119" name="Infantry Finghting Vehicle (BMP-2)" protection="ArmouredCarrier" size="Medium" weight="14">
     <speeds max="65">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -11948,7 +11948,7 @@
     </objects>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="121" length="0" load-per-axle="0" loaded-mass="0" name="MIM-104 Patriot" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="8" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="121" name="MIM-104 Patriot" protection="UnarmouredVehicle" size="Heavy" weight="8">
     <speeds max="100">
       <speed terrain="unknown" value="100"/>
       <speed terrain="forest" value="100"/>
@@ -12058,7 +12058,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="122" length="0" load-per-axle="0" loaded-mass="0" name="AN/MPQ-53 Radar Set (Patriot)" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="10" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="122" name="AN/MPQ-53 Radar Set (Patriot)" protection="UnarmouredVehicle" size="Medium" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -12179,7 +12179,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="123" length="0" load-per-axle="0" loaded-mass="0" name="F-16D Fighting Falcon" protection="Aircraft" size="Medium" turning-radius="0" vehicle-class="0" weight="13" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="123" name="F-16D Fighting Falcon" protection="Aircraft" size="Medium" weight="13">
     <speeds max="1470">
       <speed terrain="unknown" value="750"/>
       <speed terrain="forest" value="750"/>
@@ -12247,7 +12247,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere de transport" empty-mass="0" height="0" id="124" length="0" load-per-axle="0" loaded-mass="0" name="HH-60M" protection="Aircraft" size="Medium" turning-radius="0" vehicle-class="0" weight="4.8" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere de transport" id="124" name="HH-60M" protection="Aircraft" size="Medium" weight="4.8">
     <speeds max="240">
       <speed terrain="unknown" value="240"/>
       <speed terrain="forest" value="240"/>
@@ -12352,7 +12352,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="125" length="0" load-per-axle="0" loaded-mass="0" name="M777 155mm Towed Howitzer" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="3" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="125" name="M777 155mm Towed Howitzer" protection="UnarmouredVehicle" size="Medium" weight="3">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -12631,7 +12631,7 @@
     </objects>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="128" length="0" load-per-axle="0" loaded-mass="0" name="RQ-5 Hunter" protection="Aircraft" size="Small" turning-radius="0" vehicle-class="0" weight="0.727" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="128" name="RQ-5 Hunter" protection="Aircraft" size="Small" weight="0.727">
     <speeds max="198">
       <speed terrain="unknown" value="165"/>
       <speed terrain="forest" value="165"/>
@@ -12686,7 +12686,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="129" length="0" load-per-axle="0" loaded-mass="0" name="RQ-7 Shadow" protection="Aircraft" size="Medium" turning-radius="0" vehicle-class="0" weight="1" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="129" name="RQ-7 Shadow" protection="Aircraft" size="Medium" weight="1">
     <speeds max="166">
       <speed terrain="unknown" value="120"/>
       <speed terrain="forest" value="120"/>
@@ -12741,7 +12741,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="130" length="0" load-per-axle="0" loaded-mass="0" name="MQ-1 Predator" protection="Aircraft" size="Small" turning-radius="0" vehicle-class="0" weight="0.2" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="130" name="MQ-1 Predator" protection="Aircraft" size="Small" weight="0.2">
     <speeds max="500">
       <speed terrain="unknown" value="220"/>
       <speed terrain="forest" value="220"/>
@@ -12872,7 +12872,7 @@
     </objects>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="132" length="0" load-per-axle="0" loaded-mass="0" name="SA-8 Gecko TELAR" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="17.5" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="132" name="SA-8 Gecko TELAR" protection="UnarmouredVehicle" size="Medium" weight="17.5">
     <speeds max="65">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="35"/>
@@ -12949,7 +12949,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="133" length="0" load-per-axle="0" loaded-mass="0" name="Su-25 Frogfoot" protection="Aircraft" size="Medium" turning-radius="0" vehicle-class="0" weight="10.5" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="133" name="Su-25 Frogfoot" protection="Aircraft" size="Medium" weight="10.5">
     <speeds max="950">
       <speed terrain="unknown" value="600"/>
       <speed terrain="forest" value="600"/>
@@ -13079,7 +13079,7 @@
     </objects>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="135" length="0" load-per-axle="0" loaded-mass="0" name="Destroyer" protection="HeavyTank" size="Heavy" turning-radius="0" vehicle-class="0" weight="44" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="135" name="Destroyer" protection="HeavyTank" size="Heavy" weight="44">
     <speeds max="80">
       <speed terrain="unknown" value="0"/>
       <speed terrain="forest" value="0"/>
@@ -13218,7 +13218,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="aircraft carrier" empty-mass="0" height="0" id="136" length="0" load-per-axle="0" loaded-mass="0" name="Aircraft Carrier" protection="ArmouredCarrier" size="Heavy" turning-radius="0" vehicle-class="0" weight="100000" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="aircraft carrier" id="136" name="Aircraft Carrier" protection="ArmouredCarrier" size="Heavy" weight="100000">
     <speeds max="60">
       <speed terrain="unknown" value="0"/>
       <speed terrain="forest" value="0"/>
@@ -13287,7 +13287,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="137" length="0" load-per-axle="0" loaded-mass="0" name="Theater High Altitude Radar Vehicle" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="10" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="137" name="Theater High Altitude Radar Vehicle" protection="UnarmouredVehicle" size="Medium" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -13406,7 +13406,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="138" length="0" load-per-axle="0" loaded-mass="0" name="Fire Vehicle (Generic)" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="1" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="138" name="Fire Vehicle (Generic)" protection="UnarmouredVehicle" size="Medium" weight="1">
     <speeds max="130">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -13469,7 +13469,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Police Car" empty-mass="0" height="0" id="139" length="0" load-per-axle="0" loaded-mass="0" name="Police Car" protection="UnarmouredVehicle" size="Small" turning-radius="0" vehicle-class="0" weight="1" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Police Car" id="139" name="Police Car" protection="UnarmouredVehicle" size="Small" weight="1">
     <speeds max="90">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -13671,7 +13671,7 @@
     <objects/>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="143" length="0" load-per-axle="0" loaded-mass="0" name="Off-Road Fire-Fighting Vehicle" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="143" name="Off-Road Fire-Fighting Vehicle" protection="UnarmouredVehicle" size="Medium" weight="4">
     <speeds max="150">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -13735,7 +13735,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="144" length="0" load-per-axle="0" loaded-mass="0" name="Transport Truck 33T" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="33" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="144" name="Transport Truck 33T" protection="UnarmouredVehicle" size="Heavy" weight="33">
     <speeds max="110">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -13809,7 +13809,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="145" length="0" load-per-axle="0" loaded-mass="0" name="PPV Fan (Truck)" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="10" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="145" name="PPV Fan (Truck)" protection="UnarmouredVehicle" size="Heavy" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -13876,7 +13876,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="146" length="0" load-per-axle="0" loaded-mass="0" name="Rescue Helicopter (EC 145)" protection="Aircraft" size="Medium" turning-radius="0" vehicle-class="0" weight="5" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="146" name="Rescue Helicopter (EC 145)" protection="Aircraft" size="Medium" weight="5">
     <speeds max="200">
       <speed terrain="unknown" value="200"/>
       <speed terrain="forest" value="200"/>
@@ -13940,7 +13940,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="147" length="0" load-per-axle="0" loaded-mass="0" name="Emergency Rescue Vehicle - Ambulance" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="147" name="Emergency Rescue Vehicle - Ambulance" protection="UnarmouredVehicle" size="Medium" weight="4">
     <speeds max="150">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -14010,7 +14010,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="148" length="0" load-per-axle="0" loaded-mass="0" name="Water-Bomber Aircraft" protection="Aircraft" size="Medium" turning-radius="0" vehicle-class="0" weight="6" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="148" name="Water-Bomber Aircraft" protection="Aircraft" size="Medium" weight="6">
     <speeds max="150">
       <speed terrain="unknown" value="150"/>
       <speed terrain="forest" value="150"/>
@@ -14250,7 +14250,7 @@
     <objects/>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="153" length="0" load-per-axle="0" loaded-mass="0" name="Rescue Boat" protection="UnarmouredVehicle" size="Small" turning-radius="0" vehicle-class="0" weight="0.1" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="153" name="Rescue Boat" protection="UnarmouredVehicle" size="Small" weight="0.1">
     <speeds max="1">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -14297,7 +14297,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="154" length="0" load-per-axle="0" loaded-mass="0" name="Electric Generator Truck" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="1" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="154" name="Electric Generator Truck" protection="UnarmouredVehicle" size="Medium" weight="1">
     <speeds max="130">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -14364,7 +14364,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="155" length="0" load-per-axle="0" loaded-mass="0" name="Mobile Emergency Shelter" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="155" name="Mobile Emergency Shelter" protection="UnarmouredVehicle" size="Medium" weight="4">
     <speeds max="110">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -14430,7 +14430,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="156" length="0" load-per-axle="0" loaded-mass="0" name="Portable Engine-Driven Fire Pump" protection="UnarmouredVehicle" size="Small" turning-radius="0" vehicle-class="0" weight="0.5" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="156" name="Portable Engine-Driven Fire Pump" protection="UnarmouredVehicle" size="Small" weight="0.5">
     <speeds max="130">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -14475,7 +14475,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="157" length="0" load-per-axle="0" loaded-mass="0" name="Fire Ladder Truck" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="10" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="157" name="Fire Ladder Truck" protection="UnarmouredVehicle" size="Heavy" weight="10">
     <speeds max="130">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -14931,7 +14931,7 @@
     <objects/>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="166" length="0" load-per-axle="0" loaded-mass="0" name="Dog Handler Tansport Vehicle" protection="UnarmouredVehicle" size="Small" turning-radius="0" vehicle-class="0" weight="1" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="166" name="Dog Handler Tansport Vehicle" protection="UnarmouredVehicle" size="Small" weight="1">
     <speeds max="130">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -15083,7 +15083,7 @@
     <objects/>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="169" length="0" load-per-axle="0" loaded-mass="0" name="Police Motorcycle" protection="MediumTank" size="Heavy" turning-radius="0" vehicle-class="0" weight="1" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="169" name="Police Motorcycle" protection="MediumTank" size="Heavy" weight="1">
     <speeds max="150">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -15149,7 +15149,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Fire Truck" empty-mass="0" height="0" id="170" length="0" load-per-axle="0" loaded-mass="0" name="Fire Truck" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="10" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Fire Truck" id="170" name="Fire Truck" protection="UnarmouredVehicle" size="Medium" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -15220,7 +15220,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="171" length="0" load-per-axle="0" loaded-mass="0" name="Civil Protection Observer Aircraft" protection="Aircraft" size="Heavy" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="171" name="Civil Protection Observer Aircraft" protection="Aircraft" size="Heavy" weight="4">
     <speeds max="200">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="20"/>
@@ -15330,7 +15330,7 @@
     <objects/>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="173" length="0" load-per-axle="0" loaded-mass="0" name="Commercial Vehicle" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="2" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="173" name="Commercial Vehicle" protection="UnarmouredVehicle" size="Medium" weight="2">
     <speeds max="130">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -15399,7 +15399,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="174" length="0" load-per-axle="0" loaded-mass="0" name="Tow Truck" protection="UnarmouredVehicle" size="Heavy" turning-radius="0" vehicle-class="0" weight="33" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="174" name="Tow Truck" protection="UnarmouredVehicle" size="Heavy" weight="33">
     <speeds max="110">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -15474,7 +15474,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Police Car" empty-mass="0" height="0" id="175" length="0" load-per-axle="0" loaded-mass="0" name="Police Car Megaphone" protection="UnarmouredVehicle" size="Small" turning-radius="0" vehicle-class="0" weight="1" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Police Car" id="175" name="Police Car Megaphone" protection="UnarmouredVehicle" size="Small" weight="1">
     <speeds max="90">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -15543,7 +15543,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Fire Engine" empty-mass="0" height="0" id="176" length="0" load-per-axle="0" loaded-mass="0" name="Fire Engine" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="5" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Fire Engine" id="176" name="Fire Engine" protection="UnarmouredVehicle" size="Medium" weight="5">
     <speeds max="90">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -15614,7 +15614,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="177" length="0" load-per-axle="0" loaded-mass="0" name="Light Armored Vehicle 20-mm" protection="LightTank" size="Small" turning-radius="0" vehicle-class="0" weight="4" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="177" name="Light Armored Vehicle 20-mm" protection="LightTank" size="Small" weight="4">
     <speeds max="90">
       <speed terrain="unknown" value="60"/>
       <speed terrain="forest" value="60"/>
@@ -15727,7 +15727,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" empty-mass="0" height="0" id="178" length="0" load-per-axle="0" loaded-mass="0" name="Transporter Van Vehicle" protection="UnarmouredVehicle" size="Medium" turning-radius="0" vehicle-class="0" weight="2" width="0">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="178" name="Transporter Van Vehicle" protection="UnarmouredVehicle" size="Medium" weight="2">
     <speeds max="110">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="5"/>
@@ -15797,4 +15797,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="3864268670" -->
+<!-- signature="2967938598" -->

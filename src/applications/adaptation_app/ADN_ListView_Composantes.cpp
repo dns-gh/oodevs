@@ -63,6 +63,15 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eSize]->Connect( &pInfos->ptrSize_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eWeight]->Connect( &pInfos->rWeight_, bConnect );
 
+    vItemConnectors_[ADN_Composantes_GUI::eHasEmptyMass]->Connect( &pInfos->rHasEmptymass_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eHasLoadedMass]->Connect( &pInfos->rHasLoadedMass_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eHasHeight]->Connect( &pInfos->rHasHeight_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eHasLength]->Connect( &pInfos->rHasLength_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eHasWidth]->Connect( &pInfos->rHasWidth_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eHasVehicleClass]->Connect( &pInfos->rHasVehiculeClass_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eHasLoadPerAxle]->Connect( &pInfos->rHasLoadPerAxle_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eHasTurningRadius]->Connect( &pInfos->rHasTurningRadius_, bConnect );
+
     vItemConnectors_[ADN_Composantes_GUI::eEmptyMass]->Connect( &pInfos->rEmptymass_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eLoadedMass]->Connect( &pInfos->rLoadedMass_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHeight]->Connect( &pInfos->rHeight_, bConnect );

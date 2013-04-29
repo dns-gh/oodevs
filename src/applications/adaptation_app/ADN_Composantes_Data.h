@@ -662,14 +662,25 @@ public:
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos> ptrSize_;
         ADN_Type_Double rWeight_;
         ADN_Type_Double rMaxSpeed_;
+        //vehicule infos
         ADN_Type_Double rEmptymass_;
         ADN_Type_Double rLoadedMass_;
         ADN_Type_Double rHeight_;
         ADN_Type_Double rLength_;
         ADN_Type_Double rWidth_;
-        ADN_Type_Double rVehiculeClass_;
+        ADN_Type_Int rVehiculeClass_;
         ADN_Type_Double rLoadPerAxle_;
         ADN_Type_Double rTurningRadius_;
+
+        ADN_Type_Bool rHasEmptymass_;
+        ADN_Type_Bool rHasLoadedMass_;
+        ADN_Type_Bool rHasHeight_;
+        ADN_Type_Bool rHasLength_;
+        ADN_Type_Bool rHasWidth_;
+        ADN_Type_Bool rHasVehiculeClass_;
+        ADN_Type_Bool rHasLoadPerAxle_;
+        ADN_Type_Bool rHasTurningRadius_;
+        // end vehicule infos
         T_SpeedInfos_Vector vSpeeds_;
         T_WeaponInfos_Vector vWeapons_;
         T_SensorInfos_Vector vSensors_;
