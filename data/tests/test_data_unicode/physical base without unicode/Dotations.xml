@@ -9,7 +9,7 @@
     <urban-modifiers>
       <urban-modifier material-type="Test material unicode 共通語" value="1"/>
     </urban-modifiers>
-    <indirect-fires intervention-type="1" x-dispersion="1" y-dispersion="1"/>
+    <indirect-fires detection-range="5000" intervention-type="1" x-dispersion="1" y-dispersion="1"/>
   </resource>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="2" id-nature="1" logistic-supply-class="Test log cat unicode 共通語" name="Test fuel unicode 共通語" nature="Test nature unicode 共通" network-usable="false" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="explosif" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="3" id-nature="1" logistic-supply-class="Test log cat unicode 共通語" name="Test explo unicode 共通語" nature="Test nature unicode 共通" network-usable="false" package-mass="1" package-size="1" package-volume="1" type="Obus">
