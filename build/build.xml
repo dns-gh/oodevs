@@ -251,20 +251,16 @@
                 <arg value="--savecheckpoint=@{checkpoint}"/>
             </run-one-simulation>
             <echo taskname="load-checkpoint" message='simulation_app --test --checkpoint=@{checkpoint} --legacy=@{legacy} --exercise="@{exercise}" --session=@{session} --root-dir="${data.dir}"'/>
-            <!-- This should be replaced by an equivalent test on ww-ML
-            <run-one-simulation exercise="scipio/CheckpointTests" legacy="@{legacy}">
+            <run-one-simulation exercise="@{exercise}" legacy="@{legacy}">
                 <arg value="- -checkpoint=@{checkpoint}"/>
             </run-one-simulation>
-            -->
             <delete dir="${data.dir}/exercises/@{exercise}/checkpoints/@{checkpoint}"/>
         </sequential>
     </macrodef>
 
     <target name="checkpoint_test" description="save and load a checkpoint">
-        <!-- These should be replaced by equivalent tests on ww-ML
-        <save-load-checkpoint exercise="scipio/CheckpointTests" legacy="true"/>
-        <save-load-checkpoint exercise="scipio/CheckpointTests"/>
-        -->
+        <save-load-checkpoint exercise="worldwide/CheckpointTests" legacy="true"/>
+        <save-load-checkpoint exercise="worldwide/CheckpointTests"/>
         <save-load-checkpoint exercise="tests/CheckpointTests"/>
     </target>
 
