@@ -6,13 +6,11 @@
 // Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
-#ifndef CONTEXT_H__
-#define CONTEXT_H__
+#ifndef SERVER_H__
+#define SERVER_H__
 
-#include <timeline_core/api.h>
-#pragma warning( push, 0 )
-#include <cef_base.h>
-#pragma warning( pop )
+#include <timeline/api.h>
+#include <QProcess>
 
 namespace tools
 {
@@ -24,23 +22,27 @@ namespace ipc
 
 namespace timeline
 {
-namespace core
+class Server : public QObject
+             , public Server_ABC
 {
-class Context : public Context_ABC
+    Q_OBJECT
 
-{
 public:
-             Context( const Configuration& cfg );
-    virtual ~Context();
+             Server( const Configuration& cfg );
+    virtual ~Server();
 
-    struct Handler;
+private:
+    void StartProcess();
+
+private slots:
+    void OnError( QProcess::ProcessError error );
 
 private:
     const Configuration cfg_;
+    const std::string uuid_;
     std::auto_ptr< tools::ipc::Device > device_;
-    CefRefPtr< Handler > handler_;
+    std::auto_ptr< QProcess > core_;
 };
 }
-}
 
-#endif//CONTEXT_H__
+#endif//SERVER_H__

@@ -6,8 +6,8 @@
 // Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
-#ifndef TIMELINE_UI_API_H__
-#define TIMELINE_UI_API_H__
+#ifndef TIMELINE_API_H__
+#define TIMELINE_API_H__
 
 #include <string>
 #include <memory>
@@ -18,12 +18,10 @@ class QWidget;
 
 namespace timeline
 {
-namespace ui
-{
-    struct Context_ABC : public boost::noncopyable
+    struct Server_ABC : public boost::noncopyable
     {
-                 Context_ABC() {}
-        virtual ~Context_ABC() {}
+                 Server_ABC() {}
+        virtual ~Server_ABC() {}
     };
 
     struct Configuration
@@ -34,8 +32,7 @@ namespace ui
         std::string target;
     };
 
-    std::auto_ptr< Context_ABC > MakeContext( const Configuration& cfg );
-}
+    std::auto_ptr< Server_ABC > MakeServer( const Configuration& cfg );
 }
 
-#endif//TIMELINE_UI_H__
+#endif//TIMELINE_API_H__

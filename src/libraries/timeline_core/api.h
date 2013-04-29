@@ -17,10 +17,12 @@ namespace timeline
 {
 namespace core
 {
-    struct Context_ABC : public boost::noncopyable
+    struct Client_ABC : public boost::noncopyable
     {
-                 Context_ABC() {}
-        virtual ~Context_ABC() {}
+                 Client_ABC() {}
+        virtual ~Client_ABC() {}
+
+        virtual int Run() = 0;
     };
 
     struct Configuration
@@ -30,7 +32,7 @@ namespace core
         std::string url;
     };
 
-    std::auto_ptr< Context_ABC > MakeContext( const Configuration& cfg );
+    std::auto_ptr< Client_ABC > MakeClient( const Configuration& cfg );
 }
 }
 

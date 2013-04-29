@@ -7,7 +7,9 @@
 //
 // *****************************************************************************
 
-#include "Context.h"
+#include "Server.h"
+
+#include "controls/controls.h"
 
 #include <tools/IpcDevice.h>
 #include <boost/uuid/random_generator.hpp>
@@ -15,7 +17,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/thread/thread.hpp>
 
-#include "moc_Context.cpp"
+#include "moc_Server.cpp"
 
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
@@ -25,7 +27,7 @@
 #pragma warning( pop )
 #endif
 
-using namespace timeline::ui;
+using namespace timeline;
 namespace ipc = tools::ipc;
 
 namespace
@@ -36,20 +38,21 @@ namespace
         Widget( ipc::Device& device, QWidget* parent )
             : QWidget( parent )
             , device_( device )
+            , resize_( controls::ResizeClient( 0, 0 ) )
         {
-            // NOTHING
+            controls::ResizeClient( &resize_[0], resize_.size() );
         }
 
     protected:
         virtual void resizeEvent( QResizeEvent* event )
         {
-            char token = 0;
-            device_.TryWrite( &token, sizeof token );
+            device_.TryWrite( &resize_[0], resize_.size() );
             QWidget::resizeEvent( event );
         }
 
     private:
         ipc::Device& device_;
+        std::vector< uint8_t > resize_;
     };
 
     QString FromPath( const tools::Path& path )
@@ -58,7 +61,7 @@ namespace
     }
 }
 
-Context::Context( const Configuration& cfg )
+Server::Server( const Configuration& cfg )
     : cfg_   ( cfg )
     , uuid_  ( boost::lexical_cast< std::string >( boost::uuids::random_generator()() ) )
     , device_( new ipc::Device( uuid_, true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
@@ -75,22 +78,24 @@ Context::Context( const Configuration& cfg )
     StartProcess();
 }
 
-std::auto_ptr< Context_ABC > timeline::ui::MakeContext( const Configuration& cfg )
+std::auto_ptr< Server_ABC > timeline::MakeServer( const Configuration& cfg )
 {
-    return std::auto_ptr< Context_ABC >( new Context( cfg ) );
+    return std::auto_ptr< Server_ABC >( new Server( cfg ) );
 }
 
-Context::~Context()
+Server::~Server()
 {
     if( !core_.get() )
         return;
-    core_->terminate();
-    core_->waitForFinished( 4000 );
+    std::vector< uint8_t > quit_( controls::QuitClient( 0, 0 ) );
+    controls::QuitClient( &quit_[0], quit_.size() );
+    device_->TryWrite( &quit_[0], quit_.size() );
+    core_->waitForFinished( 4*1000 );
     core_->kill();
     core_.reset();
 }
 
-void Context::StartProcess()
+void Server::StartProcess()
 {
     connect( core_.get(), SIGNAL( error( QProcess::ProcessError ) ), SLOT( OnError( QProcess::ProcessError ) ) );
     core_->setWorkingDirectory( FromPath( cfg_.rundir ) );
@@ -98,7 +103,6 @@ void Context::StartProcess()
     args << QString::number( reinterpret_cast< int >( cfg_.widget->winId() ) )
          << QString::fromStdString( uuid_ )
          << QString::fromStdString( cfg_.target );
-    qDebug() << args;
     core_->start( FromPath( cfg_.binary ), args );
 }
 
@@ -108,7 +112,7 @@ namespace
     {
         switch( error )
         {
-            case QProcess::FailedToStart: return "QProcess:FailedToStart";
+            case QProcess::FailedToStart: return "QProcess::FailedToStart";
             case QProcess::Crashed:       return "QProcess::Crashed";
             case QProcess::Timedout:      return "QProcess::Timedout";
             case QProcess::WriteError:    return "QProcess::WriteError";
@@ -119,7 +123,7 @@ namespace
     }
 }
 
-void Context::OnError( QProcess::ProcessError error )
+void Server::OnError( QProcess::ProcessError error )
 {
     qDebug() << GetError( error );
 }

@@ -8,34 +8,19 @@
 // *****************************************************************************
 
 #include <timeline_core/api.h>
+#include <boost/lexical_cast.hpp>
 
-#ifdef _MSC_VER
-#pragma warning( push, 0 )
-#endif
-#include <QtCore>
-#include <cef_app.h>
-#ifdef _MSC_VER
-#pragma warning( pop )
-#endif
-
-namespace
+int main( int argc, char* argv[] )
 {
-int submain( int argc, char* argv[] )
-{
-    QCoreApplication app( argc, argv );
     try
     {
         if( argc != 4 )
             throw std::exception( "usage: timeline_view <wid> <uuid> <url>" );
         timeline::core::Configuration cfg;
-        bool valid;
-        cfg.wid = QString( argv[1] ).toInt( &valid, 10 );
-        if( !valid )
-            throw std::runtime_error( QString( "unable to convert %1 to integer" ).arg( argv[1] ).toStdString() );
+        cfg.wid = boost::lexical_cast< int >( argv[1] );
         cfg.uuid = argv[2];
         cfg.url = argv[3];
-        auto core = timeline::core::MakeContext( cfg );
-        return app.exec();
+        return timeline::core::MakeClient( cfg )->Run();
     }
     catch( const std::exception& err )
     {
@@ -47,14 +32,4 @@ int submain( int argc, char* argv[] )
         fprintf( stderr, "Critical failure: Unexpected exception\n" );
     }
     return -1;
-}
-}
-
-int main( int argc, char* argv[] )
-{
-    CefSettings settings;
-    settings.multi_threaded_message_loop = true;
-    CefInitialize( settings, 0 );
-    submain( argc, argv );
-    CefShutdown();
 }

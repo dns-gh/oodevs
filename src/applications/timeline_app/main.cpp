@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include <timeline_ui/api.h>
+#include <timeline/api.h>
 
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
@@ -32,7 +32,7 @@ int main( int argc, char* argv[] )
         auto central = new QWidget( &main );
         main.setCentralWidget( central );
 
-        timeline::ui::Configuration cfg;
+        timeline::Configuration cfg;
         cfg.rundir = ".";
         cfg.binary = argv[1];
         if( !cfg.binary.IsRegularFile() )
@@ -40,7 +40,7 @@ int main( int argc, char* argv[] )
 
         cfg.widget = central;
         cfg.target = argv[2];
-        auto context = timeline::ui::MakeContext( cfg );
+        auto context = timeline::MakeServer( cfg );
 
         main.show();
         return app.exec();
