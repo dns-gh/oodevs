@@ -39,24 +39,24 @@ public:
 
     //! @name Operations
     //@{
-    void Execute( const tools::Path& path, Progress_ABC& progress );
+    void Execute( const tools::Path& exerciseName, const tools::Path& path, Progress_ABC& progress );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void WriteEntity( const tools::Path& path, const std::string& separator );
+    void WriteEntity( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator );
     void WriteEntity( const kernel::Entity_ABC& entity, const std::string& side, tools::Ofstream& file, const std::string& separator );
     void Write( tools::Ofstream& file, const std::string& separator, const std::string& side, const std::string& category,
                 const std::string& name, const std::string& type, const std::string& position );
-    void WriteResources( const tools::Path& path, const std::string& separator );
-    void WriteStocks( const tools::Path& path, const std::string& separator );
-    void WriteWeather( const tools::Path& path, const std::string& separator );
-    void WriteDiplomaty( const tools::Path& path, const std::string& separator );
-    void WriteProfiles( const tools::Path& path, const std::string& separator );
+    void WriteResources( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator );
+    void WriteStocks( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator );
+    void WriteWeather( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator );
+    void WriteDiplomaty( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator );
+    void WriteProfiles( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator );
     void WriteProfiles( tools::Ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity,
                         const std::set< std::string >& profiles );
-    void WriteLogistic( const tools::Path& path, const std::string& separator );
+    void WriteLogistic( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator );
     void WriteLogistic( tools::Ofstream& file, const std::string& separator, const kernel::Entity_ABC& entity );
     //@}
 

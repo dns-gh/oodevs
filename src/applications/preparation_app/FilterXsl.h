@@ -49,6 +49,7 @@ public:
     virtual const std::string GetName() const;
     virtual QWidget* CreateParametersWidget( const QString& objectName, QWidget* parent );
     virtual bool IsValid() const;
+    const tools::Path GetExerciseName();
     //@}
 
 private slots:
@@ -65,6 +66,7 @@ private:
     const tools::Path xslFile_;
     const tools::Path inputFile_;
     const tools::Path exerciseFile_;
+    const tools::Path exerciseName_;
     const tools::Path outputExtension_;
     tools::Path outputFile_;
     gui::RichLineEdit* output_;

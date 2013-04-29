@@ -87,23 +87,23 @@ namespace
 // Name: CsvExport::Execute
 // Created: LGY 2011-10-18
 // -----------------------------------------------------------------------------
-void CsvExport::Execute( const tools::Path& path, Progress_ABC& progress )
+void CsvExport::Execute( const tools::Path& exerciseName, const tools::Path& path, Progress_ABC& progress )
 {
     const std::string separator = GetSeparator();
     progress.Update( 0 );
-    WriteEntity( path, separator );
+    WriteEntity( exerciseName, path, separator );
     progress.Update( 10 );
-    WriteResources( path, separator );
+    WriteResources( exerciseName, path, separator );
     progress.Update( 20 );
-    WriteStocks( path, separator );
+    WriteStocks( exerciseName, path, separator );
     progress.Update( 30 );
-    WriteWeather( path, separator );
+    WriteWeather( exerciseName, path, separator );
     progress.Update( 40 );
-    WriteDiplomaty( path, separator );
+    WriteDiplomaty( exerciseName, path, separator );
     progress.Update( 50 );
-    WriteProfiles( path, separator );
+    WriteProfiles( exerciseName, path, separator );
     progress.Update( 90 );
-    WriteLogistic( path, separator );
+    WriteLogistic( exerciseName, path, separator );
     progress.Update( 100 );
 }
 namespace
@@ -152,9 +152,9 @@ namespace
 // Name: CsvExport::WriteEntity
 // Created: LGY 2011-10-18
 // -----------------------------------------------------------------------------
-void CsvExport::WriteEntity( const tools::Path& path, const std::string& separator )
+void CsvExport::WriteEntity( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator )
 {
-    tools::Path odbPath = path / ( tools::Path::FromUnicode( tools::translate( "CsvExport", "orbat" ).toStdWString() ) + ".csv" ).FileName();
+    tools::Path odbPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "orbat" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( odbPath );
     file    << tools::translate( "CsvExport", "SIDE" ) << separator << tools::translate( "CsvExport", "CATEGORY" )
             << separator << tools::translate( "CsvExport", "NAME" ) << separator << tools::translate( "CsvExport", "TYPE" )
@@ -220,9 +220,9 @@ void CsvExport::Write( tools::Ofstream& file, const std::string& separator, cons
 // Name: CsvExport::WriteResources
 // Created: LGY 2011-10-18
 // -----------------------------------------------------------------------------
-void CsvExport::WriteResources( const tools::Path& path, const std::string& separator )
+void CsvExport::WriteResources( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator )
 {
-    tools::Path resourcesPath = path / ( tools::Path::FromUnicode( tools::translate( "CsvExport", "resources" ).toStdWString() ) + ".csv" ).FileName();
+    tools::Path resourcesPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "resources" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( resourcesPath );
     file << tools::translate( "CsvExport", "ENTITY" ) << separator << tools::translate( "CsvExport", "TYPE" ) << separator
          << tools::translate( "CsvExport", "QUANTITY" ) << std::endl;
@@ -241,9 +241,9 @@ void CsvExport::WriteResources( const tools::Path& path, const std::string& sepa
 // Name: CsvExport::WriteStocks
 // Created: LGY 2011-10-18
 // -----------------------------------------------------------------------------
-void CsvExport::WriteStocks( const tools::Path& path, const std::string& separator )
+void CsvExport::WriteStocks( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator )
 {
-    tools::Path stocksPath = path / ( tools::Path::FromUnicode( tools::translate( "CsvExport", "stocks" ).toStdWString() ) + ".csv" ).FileName();
+    tools::Path stocksPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "stocks" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( stocksPath );
     file << tools::translate( "CsvExport", "ENTITY" ) << separator << tools::translate( "CsvExport", "TYPE" ) << separator
          << tools::translate( "CsvExport", "QUANTITY" ) << std::endl;
@@ -269,9 +269,9 @@ void CsvExport::WriteStocks( const tools::Path& path, const std::string& separat
 // Name: CsvExport::WriteWeather
 // Created: LGY 2011-10-18
 // -----------------------------------------------------------------------------
-void CsvExport::WriteWeather( const tools::Path& path, const std::string& separator )
+void CsvExport::WriteWeather( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator )
 {
-    tools::Path weatherPath = path / ( tools::Path::FromUnicode( tools::translate( "CsvExport", "weather" ).toStdWString() ) + ".csv" ).FileName();
+    tools::Path weatherPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "weather" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( weatherPath );
     file << tools::translate( "CsvExport", "WIND SPEED" ) << separator << tools::translate( "CsvExport", "WIND DIRECTION" ) << separator
          << tools::translate( "CsvExport", "TEMPERATURE" ) << separator <<  tools::translate( "CsvExport", "CLOUDS FLOOR" ) << separator
@@ -301,9 +301,9 @@ void CsvExport::WriteWeather( const tools::Path& path, const std::string& separa
 // Name: CsvExport::WriteDiplomaty
 // Created: LGY 2011-10-18
 // -----------------------------------------------------------------------------
-void CsvExport::WriteDiplomaty( const tools::Path& path, const std::string& separator )
+void CsvExport::WriteDiplomaty( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator )
 {
-    tools::Path diplomacyPath = path / ( tools::Path::FromUnicode( tools::translate( "CsvExport", "diplomacy" ).toStdWString() ) + ".csv" ).FileName();
+    tools::Path diplomacyPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "diplomacy" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( diplomacyPath );
     tools::Iterator< const kernel::Team_ABC& > it = model_.teams_.CreateIterator();
     while( it.HasMoreElements() )
@@ -331,9 +331,9 @@ void CsvExport::WriteDiplomaty( const tools::Path& path, const std::string& sepa
 // Name: CsvExport::WriteProfiles
 // Created: LGY 2011-10-19
 // -----------------------------------------------------------------------------
-void CsvExport::WriteProfiles( const tools::Path& path, const std::string& separator )
+void CsvExport::WriteProfiles( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator )
 {
-    tools::Path profilesPath = path / ( tools::Path::FromUnicode( tools::translate( "CsvExport", "profiles" ).toStdWString() ) + ".csv" ).FileName();
+    tools::Path profilesPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "profiles" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( profilesPath );
     ProfilesModel::T_Profiles profiles;
     model_.profiles_.Visit( profiles );
@@ -372,9 +372,9 @@ void CsvExport::WriteProfiles( tools::Ofstream& file, const std::string& separat
 // Name: CsvExport::WriteLogistic
 // Created: LGY 2011-10-19
 // -----------------------------------------------------------------------------
-void CsvExport::WriteLogistic( const tools::Path& path, const std::string& separator )
+void CsvExport::WriteLogistic( const tools::Path& exerciseName, const tools::Path& path, const std::string& separator )
 {
-    tools::Path logisticPath = path / ( tools::Path::FromUnicode( tools::translate( "CsvExport", "logistic" ).toStdWString() ) + ".csv" ).FileName();
+    tools::Path logisticPath = path / ( exerciseName + tools::Path::FromUnicode( tools::translate( "CsvExport", "logistic" ).toStdWString() ) + ".csv" ).FileName();
     tools::Ofstream file( logisticPath );
     tools::Iterator< const kernel::Automat_ABC& > itTC2 = model_.GetAutomatResolver().CreateIterator();
     while( itTC2.HasMoreElements() )

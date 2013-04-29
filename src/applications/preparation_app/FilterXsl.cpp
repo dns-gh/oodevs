@@ -75,6 +75,7 @@ FilterXsl::FilterXsl( xml::xistream& xis, const tools::ExerciseConfig& config )
     , xslFile_        ( ResolveXslFile( xis.attribute< tools::Path >( "xsl" ), description_.GetCurrentLanguage(), config ) )
     , inputFile_      ( ResolveInputFile( xis.attribute< tools::Path >( "target" ), config ) )
     , exerciseFile_   ( config.GetExerciseFile() )
+    , exerciseName_   ( config.GetExerciseName() )
     , outputExtension_( xis.attribute< tools::Path >( "output" ) )
     , output_         ( 0 )
 {
@@ -128,6 +129,15 @@ void FilterXsl::OnTextChanged()
 bool FilterXsl::IsValid() const
 {
     return output_ && !output_->text().isEmpty() && tools::Path::FromUnicode( output_->text().toStdWString() ).Exists();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterXsl::GetExerciseName
+// Created: NPT 2013-04-29
+// -----------------------------------------------------------------------------
+const tools::Path FilterXsl::GetExerciseName()
+{
+    return exerciseName_.BaseName()+ "_";
 }
 
 // -----------------------------------------------------------------------------

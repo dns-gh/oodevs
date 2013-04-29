@@ -28,6 +28,7 @@ FilterCsv::FilterCsv( QWidget* parent, const tools::ExerciseConfig& config, Mode
     , pExport_       ( new CsvExport( model, converter ) )
     , output_        ( 0 )
     , exerciseFile_  ( config.GetExerciseFile() )
+    , exerciseName_  ( config.GetExerciseName() )
 {
     progressDialog_->setAutoClose( true );
     progressDialog_->setCancelButton( 0 );
@@ -59,7 +60,7 @@ namespace
 // -----------------------------------------------------------------------------
 void FilterCsv::Execute()
 {
-    pExport_->Execute( tools::Path::FromUnicode( output_->text().toStdWString() ), *this );
+    pExport_->Execute( GetExerciseName(), tools::Path::FromUnicode( output_->text().toStdWString() ), *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +91,15 @@ const std::string FilterCsv::GetName() const
 const std::string FilterCsv::GetDescription() const
 {
     return tools::translate( "FilterCsv", "Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files." ).toStdString();;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterCsv::GetExerciseName
+// Created: NPT 2013-04-29
+// -----------------------------------------------------------------------------
+const tools::Path FilterCsv::GetExerciseName() const
+{
+    return exerciseName_.BaseName() + "_";
 }
 
 // -----------------------------------------------------------------------------

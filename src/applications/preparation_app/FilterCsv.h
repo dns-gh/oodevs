@@ -55,6 +55,7 @@ public:
     virtual void Execute();
     virtual const std::string GetName() const;
     virtual const std::string GetDescription() const;
+    virtual const tools::Path GetExerciseName() const;
     virtual QWidget* CreateParametersWidget( const QString& objectName, QWidget* parent );
     virtual bool IsValid() const;
     virtual bool NeedToReloadExercise() const;
@@ -75,6 +76,7 @@ private:
     std::auto_ptr< CsvExport > pExport_;
     gui::RichLineEdit* output_;
     const tools::Path exerciseFile_;
+    const tools::Path exerciseName_;
     //@}
 };
 
