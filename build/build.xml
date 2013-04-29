@@ -659,7 +659,11 @@
                 <length file="${reports.dir}/doxygen_dec.log" when="greater" length="0"/>
             </condition>
         </fail>
-        <htmlhelp input="${out.dir}/sdk/dec" outdir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <python>
+            <arg value="${root.dir}/bin/htmlhelp/hhc.py"/>
+            <arg value="${out.dir}/sdk/dec/html/index.hhp"/>
+        </python>
     </target>
 
     <target name="documentation" depends="proto-api-documentation, prepare-dec-api-files, dec-api-documentation"/>
@@ -884,6 +888,7 @@
         <update name="hla" package="federation_app" todir="${bin.dir}"/>
         <update name="hla" package="include" todir="${include.dir}"/>
         <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
+        <update name="htmlhelp" version="4.74.8702"/>
         <update name="iconv"/>
         <update name="log4cxx"/>
         <update name="masalife/brain"/>
