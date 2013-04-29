@@ -19,15 +19,11 @@
 // -----------------------------------------------------------------------------
 PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category, xml::xistream& xis )
     : category_        ( category )
-    , rCapacity_       ( 0. )
+    , rCapacity_       ( xis.attribute< double >( "capacity" ) )
     , rSupplyThreshold_( 0. )
+    , rSupplyThresholdPercentage_( xis.attribute< double >( "logistic-threshold" ) )
 {
-    float rSupplyThresholdPercentage;
-
-    xis >> xml::attribute( "capacity", rCapacity_ )
-        >> xml::attribute( "logistic-threshold", rSupplyThresholdPercentage );
-
-    ComputeThreshold( rSupplyThresholdPercentage );
+    ComputeThreshold();
 }
 
 // -----------------------------------------------------------------------------
@@ -38,8 +34,9 @@ PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category
     : category_        ( category )
     , rCapacity_       ( capacity )
     , rSupplyThreshold_( 0. )
+    , rSupplyThresholdPercentage_( rSupplyThresholdPercentage )
 {
-    ComputeThreshold( rSupplyThresholdPercentage );
+    ComputeThreshold();
 }
 
 // -----------------------------------------------------------------------------
@@ -55,13 +52,13 @@ PHY_DotationCapacity::~PHY_DotationCapacity()
 // Name: PHY_DotationCapacity::ComputeThreshold
 // Created: ABR 2011-07-27
 // -----------------------------------------------------------------------------
-void PHY_DotationCapacity::ComputeThreshold( double rSupplyThresholdPercentage )
+void PHY_DotationCapacity::ComputeThreshold()
 {
     if( rCapacity_ < 0 )
         throw std::runtime_error( __FUNCTION__ " dotation capacity < 0" );
-    if( rSupplyThresholdPercentage < 0 || rSupplyThresholdPercentage > 100 )
+    if( rSupplyThresholdPercentage_ < 0 || rSupplyThresholdPercentage_ > 100 )
         throw std::runtime_error( __FUNCTION__ " dotation logistic-threshold not in [0..100]" );
-    rSupplyThreshold_ = static_cast< float >( rCapacity_ * rSupplyThresholdPercentage / 100. );
+    rSupplyThreshold_ = static_cast< float >( rCapacity_ * rSupplyThresholdPercentage_ / 100. );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,6 +77,15 @@ double PHY_DotationCapacity::GetCapacity() const
 double PHY_DotationCapacity::GetSupplyThreshold() const
 {
     return rSupplyThreshold_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacity::GetDefaultThreshold
+// Created: JSR 2013-04-29
+// -----------------------------------------------------------------------------
+double PHY_DotationCapacity::GetDefaultThreshold() const
+{
+    return rSupplyThresholdPercentage_;
 }
 
 // -----------------------------------------------------------------------------

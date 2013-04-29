@@ -346,6 +346,24 @@ double PHY_UnitType::GetStockLogisticThresholdRatio( const PHY_DotationLogisticT
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetDefaultLogisticThreshold
+// Created: JSR 2013-04-29
+// -----------------------------------------------------------------------------
+double PHY_UnitType::GetDefaultLogisticThreshold( const PHY_DotationCategory& category ) const
+{
+    double defaultThreshold = dotationCapacitiesTC1_.GetDefaultLogisticThreshold( category );
+    if( defaultThreshold != -1 )
+        return defaultThreshold;
+    for( auto it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
+    {
+        defaultThreshold = it->first->GetDotationCapacities().GetDefaultLogisticThreshold( category );
+        if( defaultThreshold != -1 )
+            return defaultThreshold;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_UnitType::InstanciateComposantes
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------

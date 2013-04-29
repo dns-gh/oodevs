@@ -14,6 +14,7 @@
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationCategory.h"
 #include "PHY_Dotation.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
@@ -146,13 +147,13 @@ void PHY_DotationGroupContainer::serialize( MIL_CheckPointInArchive& ar, unsigne
 // Name: PHY_DotationGroupContainer::ReadDotations
 // Created: ABL 2007-07-10
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::ReadDotations( xml::xistream& xis )
+void PHY_DotationGroupContainer::ReadDotations( xml::xistream& xis, const PHY_UnitType& unitType )
 {
     if( xis.has_child( "resources" ) )
     {
         T_DotationSet overloadedDotations;
         xis >> xml::start( "resources" )
-                >> xml::list( "resource", *this, &PHY_DotationGroupContainer::ReadDotation, boost::ref( overloadedDotations ) )
+                >> xml::list( "resource", *this, &PHY_DotationGroupContainer::ReadDotation, boost::cref( unitType ), boost::ref( overloadedDotations ) )
             >> xml::end;
         Apply( boost::bind( &PHY_DotationGroupContainer::PurgeDotationNotOverloaded, this, _1, boost::ref( overloadedDotations ) ) );
     }
@@ -173,7 +174,7 @@ void PHY_DotationGroupContainer::PurgeDotationNotOverloaded( PHY_Dotation& dotat
 // Name: PHY_DotationGroupContainer::ReadDotation
 // Created: ABR 2011-03-08
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis, T_DotationSet& overloadedDotations )
+void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis, const PHY_UnitType& unitType, T_DotationSet& overloadedDotations )
 {
     const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( xis.attribute< std::string >( "name" ) );
     if( !pDotationCategory )
@@ -182,7 +183,7 @@ void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis, T_DotationSet
     if( !pGroup )
     {
         pGroup = &CreateDotationGroup( pDotationCategory->GetType() );
-        pGroup->AddCapacity( PHY_DotationCapacity( *pDotationCategory, xis.attribute< double >( "quantity" ), xis.attribute( "logistic-threshold", 0. ) ), 0 );
+        pGroup->AddCapacity( PHY_DotationCapacity( *pDotationCategory, xis.attribute< double >( "quantity" ), unitType.GetDefaultLogisticThreshold( *pDotationCategory ) ), 0 );
     }
     PHY_Dotation& dotation = pGroup->ReadValues( xis, *pDotationCategory );
     overloadedDotations.insert( &dotation );

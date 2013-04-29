@@ -181,7 +181,7 @@ void PHY_RolePion_Dotations::WriteODB( xml::xostream& xos ) const
 void PHY_RolePion_Dotations::ReadOverloading( xml::xistream& xis )
 {
     assert( pDotations_ );
-    pDotations_->ReadDotations( xis );
+    pDotations_->ReadDotations( xis, pion_->GetType().GetUnitType() );
 }
 
 // -----------------------------------------------------------------------------
