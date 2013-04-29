@@ -647,7 +647,7 @@
             <property name="ALIASES" value='""rule=@par Rule:\n" "index=@par Index:\n" "default=@par Default value:\n""'/>
             <property name="WARN_LOGFILE" value="${reports.dir}/doxygen_dec.log"/>
             <property name="GENERATE_HTMLHELP" value="YES"/>
-            <property name="CHM_FILE" value="${dist.dir}/SWORD-DEC_API_Reference_${version.project}.chm"/>
+            <property name="CHM_FILE" value="${out.dir}/sdk/dec/SWORD_DEC_Reference_${version.project}.chm"/>
             <!--
             <property name="EXAMPLE_PATH" value="${data.dir}\app-data\resources\schemas\${version.major}"/>
             <property name="EXAMPLE_RECURSIVE" value="YES"/>
@@ -659,7 +659,6 @@
                 <length file="${reports.dir}/doxygen_dec.log" when="greater" length="0"/>
             </condition>
         </fail>
-        <mkdir dir="${dist.dir}"/>
         <python>
             <arg value="${root.dir}/bin/htmlhelp/hhc.py"/>
             <arg value="${out.dir}/sdk/dec/html/index.hhp"/>
@@ -795,6 +794,9 @@
                 <zipfileset dir="${out.dir}/sdk/doc"
                     includes="sdk.pdf"
                     fullpath="${sdk.prefix}/SWORD_API_Reference_${version.project}.pdf"/>
+                <zipfileset dir="${out.dir}/sdk/dec"
+                    includes="SWORD_DEC_Reference_${version.project}.chm"
+                    fullpath="${sdk.prefix}/SWORD_DEC_Reference_${version.project}.chm"/>
                 <zipfileset dir="${out.dir}/sdk/doc/html"
                     includes="**"
                     prefix="${sdk.prefix}/SWORD_API_Reference_${version.project}-html"/>
