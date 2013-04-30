@@ -76,6 +76,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
 {
     MIL_AgentServer& workspace = MIL_AgentServer::GetWorkspace();
     unsigned int nCtx = wrapper.context();
+    unsigned int clientId = wrapper.has_client_id() ? wrapper.client_id() : 0u;
 
     if( wrapper.message().has_control_stop() )
         simulation_.Stop( nCtx );
@@ -108,7 +109,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( wrapper.message().has_knowledge_magic_action() )
         workspace.GetEntityManager        ().OnReceiveKnowledgeMagicAction           ( wrapper.message().knowledge_magic_action()             , nCtx );
     else if( wrapper.message().has_unit_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx );
+        workspace.GetEntityManager        ().OnReceiveUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx, clientId );
     else if( wrapper.message().has_object_magic_action() )
         workspace.GetEntityManager        ().OnReceiveObjectMagicAction              ( wrapper.message().object_magic_action()                , nCtx );
     else if( wrapper.message().has_burning_cell_request() )

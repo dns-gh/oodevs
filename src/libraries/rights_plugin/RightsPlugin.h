@@ -75,6 +75,7 @@ public:
 
     virtual dispatcher::Profile_ABC& GetProfile( const std::string& link );
     virtual dispatcher::ClientPublisher_ABC& GetPublisher( const std::string& link );
+    virtual unsigned int GetClientID ( const std::string& link ) const;
     //@}
 
 private:
@@ -97,8 +98,6 @@ private:
     void Logout( dispatcher::ClientPublisher_ABC& client );
     void SendProfiles( AuthenticationSender& sender ) const;
     void SendReponse( sword::AuthenticationToClient& reply, AuthenticationSender& sender, const std::string& link ) const;
-
-    unsigned int GetClientID( const std::string& link ) const;
     //@}
 
 private:

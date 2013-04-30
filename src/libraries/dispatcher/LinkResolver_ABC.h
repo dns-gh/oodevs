@@ -36,6 +36,7 @@ public:
     //@{
     virtual Profile_ABC&         GetProfile  ( const std::string& link ) = 0;
     virtual ClientPublisher_ABC& GetPublisher( const std::string& link ) = 0;
+    virtual unsigned int         GetClientID ( const std::string& link ) const = 0;
     //@}
 };
 

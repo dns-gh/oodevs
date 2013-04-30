@@ -33,7 +33,7 @@ SimulationNetworker::SimulationNetworker( Model& model, ClientsNetworker& client
     , clients_( clients )
     , handler_( handler )
 {
-    RegisterMessage( MakeLogger( log, "Dispatcher sent : ", *this, &SimulationNetworker::OnReceiveSimToClient ) );
+    RegisterMessage( MakeConstLogger( log, "Dispatcher sent : ", *this, &SimulationNetworker::OnReceiveSimToClient ) );
 }
 
 // -----------------------------------------------------------------------------

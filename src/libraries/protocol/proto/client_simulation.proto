@@ -513,6 +513,8 @@ message ClientToSim {
     optional int32   context = 1;
     //! The content of the message
     required Content message = 2;
+    //! specific messages, mostly requests acknowledgements.
+    optional int32   client_id = 3;
 }
 
 /** @}*/
