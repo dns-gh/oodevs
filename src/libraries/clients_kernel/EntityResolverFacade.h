@@ -53,8 +53,6 @@ public:
     virtual Team_ABC& GetTeam( unsigned int id ) const;
     virtual UrbanObject_ABC* FindUrbanObject( unsigned int id ) const;
     virtual UrbanObject_ABC& GetUrbanObject( unsigned int id ) const;
-
-    virtual kernel::Entity_ABC* FindEntity( unsigned int id ) const;
     //@}
 
 private:

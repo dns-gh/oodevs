@@ -102,6 +102,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\CommandPostAttributes.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Drawing_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\EntityHelpers.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\EntityResolver_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Ghost_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Gradient.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Karma.cpp" />

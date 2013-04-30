@@ -34,8 +34,8 @@ class EntityResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityResolver_ABC() {}
-    virtual ~EntityResolver_ABC() {}
+             EntityResolver_ABC();
+    virtual ~EntityResolver_ABC();
     //@}
 
     //! @name Operations
@@ -59,7 +59,7 @@ public:
     virtual kernel::UrbanObject_ABC* FindUrbanObject( unsigned int id ) const = 0;
     virtual kernel::UrbanObject_ABC& GetUrbanObject( unsigned int id ) const = 0;
 
-    virtual kernel::Entity_ABC* FindEntity( unsigned int id ) const = 0;
+    kernel::Entity_ABC* FindEntity( unsigned int id ) const;
     //@}
 };
 
