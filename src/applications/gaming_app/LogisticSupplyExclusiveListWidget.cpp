@@ -128,5 +128,6 @@ void LogisticSupplyExclusiveListWidget::OnTriggeredAction( QAction* action )
         choosen_.append( selected );
         choosen_.sort();
         emit ItemAdded( selected );
+        setCurrentRow( count() - 1 );
     }
 }
