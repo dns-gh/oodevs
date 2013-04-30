@@ -58,6 +58,7 @@ class Units
 public:
     static const Unit seconds;
     static const Unit meters;
+    static const Unit shortMeters;
     static const Unit degrees;
     static const Unit percentage;
     static const Unit percentageGTzero;

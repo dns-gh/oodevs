@@ -27,7 +27,7 @@ AltitudeModifierPrototype_ABC::AltitudeModifierPrototype_ABC( QWidget* parent )
     QGridLayout* layout = new QGridLayout( this, 0, 2 );
     layout->setMargin( 5 );
     layout->addWidget( new QLabel( tools::translate( "gui::AltitudeModifierPrototype_ABC", "Height:" ) ) );
-    height_ = new LoadableSpinBox( "height", 0, std::numeric_limits< int >::max(), 1, 0 );
+    height_ = new LoadableSpinBox( "height", 0, std::numeric_limits< short >::max(), 1, 0 );
     height_->setSuffix( kernel::Units::meters.AsString() );
     layout->addWidget( height_ );
 }

@@ -68,7 +68,7 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( gui::PropertiesDictionary&
     : detection_  ( detection )
     , object_     ( object )
     , controllers_( controllers )
-    , height_     ( 0, Units::meters )
+    , height_     ( 0, Units::shortMeters )
 {
     CreateDictionary( dictionary, entity );
     controllers_.Register( *this );
@@ -83,7 +83,7 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( xml::xistream& xis, kernel
     : detection_  ( detection )
     , object_     ( object )
     , controllers_( controllers )
-    , height_     ( 0, Units::meters )
+    , height_     ( 0, Units::shortMeters )
 {
     CreateDictionary( dictionary, entity );
     SetHeight( xis.attribute< unsigned int >( "height" ) );
@@ -106,7 +106,7 @@ AltitudeModifierAttribute::~AltitudeModifierAttribute()
 void AltitudeModifierAttribute::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
-             .Display( tools::translate( "Object", "Altitude modifier:" ), height_ * Units::meters );
+             .Display( tools::translate( "Object", "Altitude modifier:" ), height_ * Units::shortMeters );
 }
 
 // -----------------------------------------------------------------------------
