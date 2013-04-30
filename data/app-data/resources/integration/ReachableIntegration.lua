@@ -480,6 +480,7 @@ integration.updateMoveToIt = function( objective, pathType )
             meKnowledge:RC( eRC_TerrainDifficile )
             objective[ myself ].rcDone = etat
             myself.canBeBlocked = true
+            DEC_Trace( " ** IMPOSSIBLE TO COMPUTE A PATH TO DESTINATION ** " )
         end
     elseif etat == eEtatActionDeplacement_CheminPartiel then
         myself.canBeBlocked = true
