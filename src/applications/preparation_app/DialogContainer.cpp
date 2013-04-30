@@ -15,7 +15,6 @@
 #include "ColorEditor.h"
 #include "ExerciseDialog.h"
 #include "FileLoaderObserver.h"
-#include "FilterDialog.h"
 #include "FilterDialogs.h"
 #include "SymbolDialog.h"
 #include "LogisticStockEditor.h"
@@ -74,7 +73,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     exerciseDialog_ = new ExerciseDialog( parent, controllers, model.exercise_, config );
     consistencyDialog_ = new ModelConsistencyDialog( parent, model, staticModel, controllers, const_cast< tools::RealFileLoaderObserver_ABC& >( static_cast< const tools::DefaultLoader& >( config.GetLoader() ).GetObserver() ) );
     performanceDialog_ = new PerformanceDialog( parent, model, staticModel );
-    filtersDialog_ = new FilterDialogs( parent, config, model, staticModel.coordinateConverter_ );
+    filtersDialog_ = new FilterDialogs( parent, config, model, staticModel.coordinateConverter_, *consistencyDialog_ );
     addRasterDialog_ = new gui::AddRasterDialog( parent );
     removeBlocksDialog_ = new RemoveBlocksDialog( parent, controllers, model.urban_ );
     terrainExportDialog_ = new TerrainExportDialog( parent, config, model.urban_ );

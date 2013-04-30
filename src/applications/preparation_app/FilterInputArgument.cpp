@@ -15,6 +15,14 @@
 #include "clients_kernel/XmlDescription.h"
 #include "tools/ExerciseConfig.h"
 
+bool FilterInputArgument::IsInputArgument( const std::string& argument )
+{
+    return argument == "$input$"
+        || argument == "$input_file$"
+        || argument == "$input_dir$"
+        || argument == "$log_file$"
+        || argument == "$input_team_list$";
+}
 
 // -----------------------------------------------------------------------------
 // Name: FilterInputArgument constructor
@@ -31,13 +39,15 @@ FilterInputArgument::FilterInputArgument( const tools::ExerciseConfig& config, c
     if( argumentValue == "$input$" )
         type_ = eInput;
     else if( argumentValue == "$input_file$" )
-        type_ = eFile;
+        type_ = eOpen;
     else if( argumentValue == "$input_dir$" )
         type_ = eDirectory;
     else if( argumentValue == "$input_team_list$" )
         type_ = eTeamList;
+    else if( argumentValue == "$log_file$" )
+        type_ = eSave;
     else
-        throw std::runtime_error( __FUNCTION__ "Error, invalide parameter given to FilterInputArgument constructor. Must be $input$, $input_file$, $input_dir$ or $input_team_list$.");
+        throw std::runtime_error( __FUNCTION__ "Error, invalide parameter given to FilterInputArgument constructor. Must be $input$, $input_file$, $input_dir$, $log_file$ or $input_team_list$.");
 }
 
 // -----------------------------------------------------------------------------
@@ -110,6 +120,8 @@ void FilterInputArgument::Update()
         listView_->ParseOrbatFile( config_.GetOrbatFile() );
         errorLabel_->setText( listView_->isEnabled() ? "" : "<font color=\"#FF0000\">" + tools::translate( "FilterInputArgument", "Invalid or missing orbat file." ) + "</font><br/>" );
     }
+    if( type_ == eSave )
+        line_->clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -118,9 +130,11 @@ void FilterInputArgument::Update()
 // -----------------------------------------------------------------------------
 void FilterInputArgument::OnBrowse()
 {
-    QString path = ( type_ == eFile )
+    QString path = ( type_ == eOpen )
         ? QFileDialog::getOpenFileName( exerciseDir_.c_str(), QString(), QApplication::activeModalWidget(), "FilterInputArgument_FileDialog", tools::translate( "FilterInputArgument", "Select a file" ) )
-        : QFileDialog::getExistingDirectory( exerciseDir_.c_str(), QApplication::activeModalWidget(), "FilterInputArgument_DirectoryDialog", tools::translate( "FilterInputArgument", "Select a directory" ) );
+        : ( type_ == eSave )
+            ? QFileDialog::getSaveFileName( line_->text(), QString(), QApplication::activeModalWidget(), "FilterInputArgument_FileDialog", tools::translate( "FilterInputArgument", "Select a file" ) )
+            : QFileDialog::getExistingDirectory( exerciseDir_.c_str(), QApplication::activeModalWidget(), "FilterInputArgument_DirectoryDialog", tools::translate( "FilterInputArgument", "Select a directory" ) );
     path.replace( "/", "\\" );
     line_->setText( path );
 }
@@ -129,9 +143,9 @@ void FilterInputArgument::OnBrowse()
 // Name: FilterInputArgument::OnTextChanged
 // Created: ABR 2011-09-28
 // -----------------------------------------------------------------------------
-void FilterInputArgument::OnTextChanged( const QString& /* text */ /* = "" */ )
+void FilterInputArgument::OnTextChanged( const QString& /*text*/ /* = "" */ )
 {
-    emit ValueChanged();
+    emit ValueChanged( GetText() );
 }
 
 // -----------------------------------------------------------------------------

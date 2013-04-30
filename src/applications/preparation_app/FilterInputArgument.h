@@ -42,6 +42,8 @@ public:
     virtual ~FilterInputArgument();
     //@}
 
+    static bool IsInputArgument( const std::string& argument );
+
     //! @name Operations
     //@{
     QWidget* CreateWidget( QWidget* parent );
@@ -53,13 +55,13 @@ public:
 private:
     //! @name Types
     //@{
-    enum E_ArgumentType { eInput = 0, eFile = 1, eDirectory = 2, eTeamList = 3 };
+    enum E_ArgumentType { eInput, eOpen, eSave, eDirectory, eTeamList };
     //@}
 
 signals:
     //! @name Signals
     //@{
-    void ValueChanged();
+    void ValueChanged( const QString& text );
     //@}
 
 private slots:

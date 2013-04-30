@@ -30,6 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit SafePointer( Controllers& controllers, const T* element = 0 );
+             SafePointer( const SafePointer& rhs );
     virtual ~SafePointer();
     //@}
 
@@ -41,6 +42,15 @@ public:
     SafePointer& operator=( const T* element ) { element_ = element; return *this; };
     T* ConstCast() const { return const_cast< T* >( element_ ); }
     //@}
+
+    SafePointer& operator=( const SafePointer& rhs )
+    {
+        controllers_->Unregister( *this );
+        controllers_ = rhs.controllers_;
+        element_ = rhs.element_;
+        controllers_->Register( *this );
+        return *this;
+    }
 
 private:
     //! @name Helpers
@@ -71,6 +81,18 @@ template< typename T >
 SafePointer< T >::SafePointer( kernel::Controllers& controllers, const T* element /* = 0*/ )
     : controllers_( &controllers )
     , element_( element )
+{
+    controllers_->Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SafePointer constructor
+// Created: MCO 2013-04-30
+// -----------------------------------------------------------------------------
+template< typename T >
+SafePointer< T >::SafePointer( const SafePointer& rhs )
+    : controllers_( rhs.controllers_ )
+    , element_( rhs.element_ )
 {
     controllers_->Register( *this );
 }

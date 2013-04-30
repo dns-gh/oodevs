@@ -44,9 +44,8 @@ ConsistencyDialog< EnumError, TargetItem >::~ConsistencyDialog()
 // Created: ABR 2012-06-06
 // -----------------------------------------------------------------------------
 template< typename EnumError, typename TargetItem >
-void ConsistencyDialog< EnumError, TargetItem >::AddIcon( const TargetItem& targetItem, EnumError type, QList< QStandardItem* >& items )
+void ConsistencyDialog< EnumError, TargetItem >::AddIcon( const TargetItem& targetItem, EnumError type, QList< QStandardItem* >& items, bool isError )
 {
-    bool isError = IsError( type );
     QStandardItem* item = new QStandardItem( qApp->style()->standardIcon( isError ? QStyle::SP_MessageBoxCritical : QStyle::SP_MessageBoxWarning ), "" );
     item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
     QVariant* variant = new QVariant();

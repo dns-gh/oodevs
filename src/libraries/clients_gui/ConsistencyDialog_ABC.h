@@ -116,6 +116,7 @@ protected:
     virtual void OnLevelChanged();
 
     void AddIcon( const TargetItem& targetItem, EnumError type, QList< QStandardItem* >& items );
+    void AddIcon( const TargetItem& targetItem, EnumError type, QList< QStandardItem* >& items, bool isError );
     void AddLabel( const TargetItem& targetItem, EnumError type, const QString& text, QList< QStandardItem* >& items );
     template< typename T >
     void AddItem( T data, QString text, const TargetItem& targetItem, EnumError type, QList< QStandardItem* >& items );

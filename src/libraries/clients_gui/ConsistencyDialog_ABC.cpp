@@ -125,6 +125,7 @@ void ConsistencyDialog_ABC::CheckConsistency()
 // -----------------------------------------------------------------------------
 void ConsistencyDialog_ABC::Display()
 {
+    emit( ClearLoadingErrors() );
     checker_.CheckConsistency();
     UpdateDataModel();
     show();

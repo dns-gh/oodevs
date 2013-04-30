@@ -23,12 +23,14 @@
 // Name: FilterDialogs constructor
 // Created: ABR 2011-06-21
 // -----------------------------------------------------------------------------
-FilterDialogs::FilterDialogs( QWidget* parent, const tools::ExerciseConfig& config, Model& model, const kernel::CoordinateConverter_ABC& converter )
+FilterDialogs::FilterDialogs( QWidget* parent, const tools::ExerciseConfig& config, Model& model,
+    const kernel::CoordinateConverter_ABC& converter, gui::ConsistencyDialog_ABC& consistency )
     : QObject( parent )
-    , parent_   ( parent )
-    , config_   ( config )
-    , model_    ( model )
-    , converter_( converter )
+    , parent_    ( parent )
+    , config_    ( config )
+    , model_     ( model )
+    , converter_ ( converter )
+    , consistency_( consistency )
 {
     // NOTHING
 }
@@ -99,7 +101,7 @@ void FilterDialogs::ReadSection( xml::xistream& xis )
     std::transform( name.begin(), name.end(), name.begin(), std::tolower );
     if( name != "export" && name != "import" )
         throw std::runtime_error( tools::translate( "FilterDialogs", "Unknown section: %1." ).arg( name.c_str() ).toAscii().constData() );
-    Register( name, *new FilterDialog( parent_, xis, config_, model_ ) );
+    Register( name, *new FilterDialog( parent_, xis, config_, model_, consistency_ ) );
 }
 
 // -----------------------------------------------------------------------------

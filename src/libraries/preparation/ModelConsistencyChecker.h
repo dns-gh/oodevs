@@ -13,6 +13,7 @@
 #include "clients_kernel/ConsistencyChecker_ABC.h"
 #include "ConsistencyErrorTypes.h"
 #include <boost/noncopyable.hpp>
+#include <boost/optional.hpp>
 
 namespace kernel
 {
@@ -34,10 +35,8 @@ class StaticModel;
 */
 // Created: ABR 2011-09-22
 // =============================================================================
-class ModelConsistencyChecker : public kernel::ConsistencyChecker< E_ConsistencyCheck, kernel::SafePointer< kernel::Entity_ABC > >
+class ModelConsistencyChecker : public kernel::ConsistencyChecker_ABC
 {
-    typedef kernel::ConsistencyChecker< E_ConsistencyCheck, kernel::SafePointer< kernel::Entity_ABC > > T_Parent;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -46,16 +45,56 @@ public:
     //@}
 
 public:
+    //! @name Types
+    //@{
+    typedef kernel::SafePointer< kernel::Entity_ABC > T_Pointer;
+    typedef std::vector< T_Pointer > T_Items;
+
+    struct ConsistencyError
+    {
+        ConsistencyError( E_ConsistencyCheck type )
+            : type_( type )
+        {}
+        bool IsError() const
+        {
+            if( isError_ )
+                return *isError_;
+            return type_ == eNoLogisticBase || type_ ==  eNoCommandPost || type_ ==  eSeveralCommandPost
+                || type_ ==  eNoKnowledgeGroup || type_ ==  eScoreError || type_ ==  eSuccessFactorError
+                || type_ == eProfileNoRole || type_ == eNoOrbat || type_ == eSignature
+                || type_ == eBadLogisticSubordinate || type_ == eUnknownInfrastructure || type_ == eUnknownResourceNetwork
+                || type_ == eDiffusionList || type_ == eMelmil || type_ == eDeletedUrbanBlocks || type_ == eDeletedPopulationUrbanBlocks
+                || type_ == eCityAreaLimitExceeded || type_ == eImpossibleObjectCreation;
+        }
+        E_ConsistencyCheck type_;
+        T_Items items_;
+        std::string optional_;
+        boost::optional< bool > isError_;
+    };
+    //@}
+
+    //! @name Typedef
+    //@{
+    typedef std::vector< ConsistencyError > T_ConsistencyErrors;
+    //@}
+
+    //! @name Operations
+    //@{
+    const T_ConsistencyErrors& GetConsistencyErrors() const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual bool CheckConsistency();
+    void AddError( E_ConsistencyCheck type, T_Pointer item, const std::string& optional = "" );
+    //@}
+
     //! @name Typedef
     //@{
     typedef std::vector< const kernel::Entity_ABC* > T_Entities;
     typedef T_Entities::iterator                    IT_Entities;
     typedef T_Entities::const_iterator             CIT_Entities;
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual bool CheckConsistency();
     //@}
 
 private:
@@ -76,6 +115,7 @@ private:
     void CheckKnowledgeGroups();
     void CheckLongNameSize();
     void CheckLoadingErrors();
+    void CheckExternalErrors();
     void CheckScores();
     void CheckSuccessFactors();
     void CheckLogisticBase();
@@ -95,6 +135,8 @@ private:
     kernel::Controllers& controllers_;
     T_Entities           entities_;
     tools::RealFileLoaderObserver_ABC& fileLoaderObserver_;
+    T_ConsistencyErrors errors_;
+    std::vector< ConsistencyError > externalErrors_;
     //@}
 };
 

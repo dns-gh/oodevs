@@ -95,10 +95,13 @@ public:
     void SaveExercise( const tools::ExerciseConfig& config );
     void SaveTerrain( const tools::ExerciseConfig& config, bool saveUrban = true );
     void AppendLoadingError( E_ConsistencyCheck type, const std::string& error, kernel::Entity_ABC* entity = 0 );
+    void AppendExternalError( E_ConsistencyCheck type, const std::string& error, bool isError, kernel::Entity_ABC* entity = 0 );
     const ModelConsistencyChecker::T_ConsistencyErrors& GetLoadingErrors() const;
+    const ModelConsistencyChecker::T_ConsistencyErrors& GetExternalErrors() const;
     bool HasConsistencyErrorsOnLoad() const;
     void SetConsistencyErrorsOnLoad();
     void ClearLoadingErrors();
+    void ClearExternalErrors();
     geometry::Point2f ReadPosition( xml::xistream& xis, kernel::Entity_ABC* entity );
     geometry::Point2f ClipPosition( const geometry::Point2f& position, kernel::Entity_ABC* entity );
     void Purge();
@@ -139,6 +142,7 @@ private:
     bool loaded_;
     bool consistencyErrorsOnLoad_;
     ModelConsistencyChecker::T_ConsistencyErrors loadingErrors_;
+    ModelConsistencyChecker::T_ConsistencyErrors externalErrors_;
     float width_;
     float height_;
     //@}

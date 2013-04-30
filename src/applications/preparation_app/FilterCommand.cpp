@@ -10,8 +10,10 @@
 #include "preparation_app_pch.h"
 #include "FilterCommand.h"
 #include "moc_FilterCommand.cpp"
+#include "ModelConsistencyDialog.h"
 #include "FilterInputArgument.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/ConsistencyDialog_ABC.h"
 #include "frontend/SpawnCommand.h"
 #include "frontend/ProcessWrapper.h"
 #include "preparation/Model.h"
@@ -21,6 +23,7 @@
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 #include <boost/filesystem/operations.hpp>
+#include <boost/assign.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
@@ -32,21 +35,17 @@ namespace
         QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() ).toAscii().constData();
     }
-
-    bool IsInputArgument( const std::string& argument )
-    {
-        return argument == "$input_file$" || argument == "$input_dir$" || argument == "$input$" || argument == "$input_team_list$";
-    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: FilterCommand constructor
 // Created: ABR 2011-06-17
 // -----------------------------------------------------------------------------
-FilterCommand::FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& config, Model& model )
+FilterCommand::FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& config, Model& model, gui::ConsistencyDialog_ABC& consistency )
     : Filter( xis )
     , config_        ( config )
     , model_         ( model )
+    , consistency_   ( consistency )
     , command_       ( xis.attribute< std::string >( "command" ) )
     , reloadExercise_( xis.attribute< bool >( "reload-exercise", false ) )
     , minimalDisplay_( xis.attribute< bool >( "minimal-display", false ) )
@@ -58,6 +57,7 @@ FilterCommand::FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& c
     ReadArguments( xis );
     ComputeArgument();
     ComputePath();
+    connect( this, SIGNAL( Finished() ), SLOT( OnFinished() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,6 +106,8 @@ bool FilterCommand::NeedToReloadExercise() const
 // -----------------------------------------------------------------------------
 std::string FilterCommand::ConvertArgumentVariable( const std::string& value ) const
 {
+     if( value.empty() )
+            return value;
     std::string result = value;
     if( value == "$rootdir$" )
         result = config_.GetRootDir();
@@ -117,8 +119,6 @@ std::string FilterCommand::ConvertArgumentVariable( const std::string& value ) c
         result = config_.GetOrbatFile();
     else if( value == "$language$" )
         result = description_.GetCurrentLanguage();
-    else if( value == "$input$" || value == "$input_file$" || value == "$input_dir$" || value == "$input_team_list$" || value.empty() ) // $$$$ ABR 2011-09-28: Cf FilterInputArgument
-        return value;
     return "\"" + result + "\"";
 }
 
@@ -144,15 +144,17 @@ void FilterCommand::ReadArgument( xml::xistream& xis )
     argument.name_ = xis.attribute< std::string >( "name" );
     argument.displayName_ = xis.attribute< std::string >( "display-name", "" );
     argument.value_ = xis.attribute< std::string >( "value", "" );
-    argument.value_ = ConvertArgumentVariable( argument.value_ );
-    if( ::IsInputArgument( argument.value_ ) )
+    if( FilterInputArgument::IsInputArgument( argument.value_ ) )
     {
         kernel::XmlDescription description( xis, ReadLang() );
         FilterInputArgument* inputArgument = new FilterInputArgument( config_, argument.value_, description, config_.GetExerciseDir( config_.GetExerciseName() ) );
         inputArguments_[ arguments_.size() ] = inputArgument;
-        connect( inputArgument, SIGNAL( ValueChanged() ), this, SLOT( OnValueChanged() ) );
+        connect( inputArgument, SIGNAL( ValueChanged( const QString& ) ), SLOT( OnValueChanged( const QString& ) ) );
+        if( argument.value_ == "$log_file$" )
+            connect( inputArgument, SIGNAL( ValueChanged( const QString& ) ), SLOT( OnLogFileChanged( const QString& ) ) );
         argument.value_ = "";
     }
+    argument.value_ = ConvertArgumentVariable( argument.value_ );
     arguments_.push_back( argument );
 }
 
@@ -335,7 +337,55 @@ void FilterCommand::Execute()
 // -----------------------------------------------------------------------------
 void FilterCommand::NotifyStopped()
 {
-     // NOTHING
+    emit Finished();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterCommand::OnFinished
+// Created: MCO 2013-04-30
+// -----------------------------------------------------------------------------
+void FilterCommand::OnFinished()
+{
+    if( logFile_.empty() )
+        return;
+    model_.ClearExternalErrors();
+    xml::xifstream xis( logFile_ );
+    xis >> xml::start( "errors" )
+            >> xml::list( "error", *this, &FilterCommand::ReadError );
+    if( xis.has_child( "error" ) )
+        consistency_.Display();
+}
+
+xml::xistream& operator>>( xml::xistream& xis, E_ConsistencyCheck& type )
+{
+    static const std::map< std::string, E_ConsistencyCheck > types =
+        boost::assign::map_list_of( "uniqueness", eUniquenessMask )
+                                  ( "logistic", eLogisticMask )
+                                  ( "profile", eProfileMask )
+                                  ( "ghost", eGhostMask )
+                                  ( "headquarters", eCommandPostMask )
+                                  ( "other", eOthersMask );
+    auto it = types.find( xis.value< std::string >() );
+    if( it == types.end() )
+        throw xml::exception( xis.context() + "invalid error type" );
+    type = it->second;
+    return xis;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterCommand::ReadError
+// Created: MCO 2013-04-30
+// -----------------------------------------------------------------------------
+void FilterCommand::ReadError( xml::xistream& xis )
+{
+    E_ConsistencyCheck type;
+    std::string description, criticity;
+    unsigned int unitId = 0;
+    xis >> xml::attribute( "type", type )
+        >> xml::attribute( "description", description )
+        >> xml::attribute( "criticity", criticity )
+        >> xml::optional >> xml::attribute( "unit-id", unitId );
+    model_.AppendExternalError( type, description, criticity == "error", model_.FindEntity( unitId ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -352,11 +402,20 @@ void FilterCommand::NotifyError( const std::string& error, std::string /*command
 // Name: FilterCommand::OnValueChanged
 // Created: ABR 2011-09-28
 // -----------------------------------------------------------------------------
-void FilterCommand::OnValueChanged()
+void FilterCommand::OnValueChanged( const QString& text )
 {
     for( auto it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
-        arguments_[ it->first ].value_ = it->second->GetText().toAscii().constData();
+        arguments_[ it->first ].value_ = text.toAscii().constData();
     ComputeArgument();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FilterCommand::OnLogFileChanged
+// Created: MCO 2013-04-30
+// -----------------------------------------------------------------------------
+void FilterCommand::OnLogFileChanged( const QString& text )
+{
+    logFile_ = text.toAscii().constData();
 }
 
 // -----------------------------------------------------------------------------

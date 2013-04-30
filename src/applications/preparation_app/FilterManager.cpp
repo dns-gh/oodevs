@@ -28,7 +28,8 @@ namespace
 // Name: FilterManager constructor
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
-FilterManager::FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, Q3ListBox& list, Q3WidgetStack& stack, QWidget& parent, Model& model )
+FilterManager::FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config,
+    Q3ListBox& list, Q3WidgetStack& stack, QWidget& parent, Model& model, gui::ConsistencyDialog_ABC& consistency )
     : description_( xis, ReadLang() )
     , config_     ( config )
     , id_         ( xis.attribute< std::string >( "id" ) )
@@ -37,7 +38,7 @@ FilterManager::FilterManager( xml::xistream& xis, const tools::ExerciseConfig& c
 {
     assert( !id_.empty() );
     xis >> xml::start( "filters" )
-            >> xml::list( "filter", *this, &FilterManager::ReadFilter, list, stack )
+            >> xml::list( "filter", *this, &FilterManager::ReadFilter, list, stack, consistency )
         >> xml::end;
 }
 
@@ -73,12 +74,12 @@ const std::string FilterManager::GetId() const
 // Name: FilterManager::ReadFilter
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
-void FilterManager::ReadFilter( xml::xistream& xis, Q3ListBox& list, Q3WidgetStack& stack )
+void FilterManager::ReadFilter( xml::xistream& xis, Q3ListBox& list, Q3WidgetStack& stack, gui::ConsistencyDialog_ABC& consistency )
 {
     Filter_ABC* filter;
     if( xis.has_attribute( "command" ) )
     {
-        filter = new FilterCommand( xis, config_, model_ );
+        filter = new FilterCommand( xis, config_, model_, consistency );
         filter->connect( filter, SIGNAL( ForceSaveAndAddActionPlanning( const std::string& ) ), &parent_, SLOT( OnForceSaveAndAddActionPlanning( const std::string& ) ) );
     }
     else

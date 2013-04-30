@@ -17,6 +17,11 @@ namespace tools
     class ExerciseConfig;
 }
 
+namespace gui
+{
+    class ConsistencyDialog_ABC;
+}
+
 namespace xml
 {
     class xistream;
@@ -42,7 +47,7 @@ class FilterDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterDialog( QWidget* parent, xml::xistream& xis, const tools::ExerciseConfig& config, Model& model );
+             FilterDialog( QWidget* parent, xml::xistream& xis, const tools::ExerciseConfig& config, Model& model, gui::ConsistencyDialog_ABC& consistency );
     virtual ~FilterDialog();
     //@}
 

@@ -234,12 +234,22 @@ void Model::ClearLoadingErrors()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Model::ClearExternalErrors
+// Created: MCO 2013-04-30
+// -----------------------------------------------------------------------------
+void Model::ClearExternalErrors()
+{
+    externalErrors_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::Purge
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 void Model::Purge()
 {
     ClearLoadingErrors();
+    ClearExternalErrors();
     UpdateName( "orbat" );
     profiles_.Purge();
     urban_.Purge();
@@ -412,13 +422,25 @@ void Model::SaveTerrain( const tools::ExerciseConfig& config, bool saveUrban /* 
 // Name: Model::AppendLoadingError
 // Created: JSR 2012-01-05
 // -----------------------------------------------------------------------------
-void Model::AppendLoadingError( E_ConsistencyCheck type, const std::string& errorMsg, kernel::Entity_ABC* entity /* = 0 */ )
+void Model::AppendLoadingError( E_ConsistencyCheck type, const std::string& message, kernel::Entity_ABC* entity /* = 0 */ )
 {
     ModelConsistencyChecker::ConsistencyError error( type );
-    kernel::SafePointer< kernel::Entity_ABC >* safePtr = new kernel::SafePointer< kernel::Entity_ABC >( controllers_, entity );
-    error.items_.push_back( safePtr );
-    error.optional_ = errorMsg;
+    error.items_.push_back( kernel::SafePointer< kernel::Entity_ABC >( controllers_, entity ) );
+    error.optional_ = message;
     loadingErrors_.push_back( error );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::AppendExternalError
+// Created: MCO 2013-04-30
+// -----------------------------------------------------------------------------
+void Model::AppendExternalError( E_ConsistencyCheck type, const std::string& message, bool isError, kernel::Entity_ABC* entity /*= 0*/ )
+{
+    ModelConsistencyChecker::ConsistencyError error( type );
+    error.items_.push_back( kernel::SafePointer< kernel::Entity_ABC >( controllers_, entity ) );
+    error.optional_ = message;
+    error.isError_ = isError;
+    externalErrors_.push_back( error );
 }
 
 // -----------------------------------------------------------------------------
@@ -428,6 +450,15 @@ void Model::AppendLoadingError( E_ConsistencyCheck type, const std::string& erro
 const ModelConsistencyChecker::T_ConsistencyErrors& Model::GetLoadingErrors() const
 {
     return loadingErrors_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetExternalErrors
+// Created: MCO 2013-04-30
+// -----------------------------------------------------------------------------
+const ModelConsistencyChecker::T_ConsistencyErrors& Model::GetExternalErrors() const
+{
+    return externalErrors_;
 }
 
 // -----------------------------------------------------------------------------

@@ -27,7 +27,6 @@ class FilterProxyModel : public QSortFilterProxyModel
 public:
     //! @name Types
     //@{
-    typedef bool( *T_ErrorValidator )( EnumError );
     typedef EnumError( *T_TypeToMaskConverter)( EnumError );
     typedef std::set< EnumError > T_Filters;
     //@}
@@ -35,7 +34,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterProxyModel( T_ErrorValidator validateError, T_TypeToMaskConverter convertTypeToMask );
+    explicit FilterProxyModel( T_TypeToMaskConverter convertTypeToMask );
     virtual ~FilterProxyModel();
     //@}
 
@@ -57,7 +56,6 @@ private:
     T_Filters             filters_;
     bool                  warning_;
     bool                  error_;
-    T_ErrorValidator      validateError_;
     T_TypeToMaskConverter convertTypeToMask_;
     //@}
 };
@@ -67,9 +65,8 @@ private:
 // Created: ABR 2012-06-06
 // -----------------------------------------------------------------------------
 template< typename EnumError >
-FilterProxyModel< EnumError >::FilterProxyModel( T_ErrorValidator validateError, T_TypeToMaskConverter convertTypeToMask )
+FilterProxyModel< EnumError >::FilterProxyModel( T_TypeToMaskConverter convertTypeToMask )
     : QSortFilterProxyModel()
-    , validateError_    ( validateError )
     , convertTypeToMask_( convertTypeToMask )
     , warning_          ( true )
     , error_            ( true )
@@ -124,7 +121,7 @@ bool FilterProxyModel< EnumError >::filterAcceptsRow( int row, const QModelIndex
     EnumError type = static_cast< EnumError >( index.data( Qt::UserRole + 1 ).toInt() );
     if( filters_.find( convertTypeToMask_( type ) ) == filters_.end() )
         return false;
-    bool isError = validateError_( type );
+    bool isError = index.data( Qt::UserRole + 2 ).toBool();
     return ( warning_ && !isError ) || ( error_ && isError );
 }
 

@@ -16,11 +16,6 @@
 
 namespace
 {
-    bool IsError( E_ConsistencyCheck /* type */ )
-    {
-        return false; // $$$$ ABR 2012-06-07: No error yet, only warning, to be continued
-    }
-
 #define CONVERT_TO_MASK( mask ) { if( type & mask ) return mask; }
 
     E_ConsistencyCheck Convert( E_ConsistencyCheck type )
@@ -36,7 +31,7 @@ namespace
 // Created: ABR 2012-06-06
 // -----------------------------------------------------------------------------
 ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
-    : T_Parent( parent, *new ADN_ConsistencyChecker(), *new gui::FilterProxyModel< E_ConsistencyCheck >( IsError, Convert ) )
+    : T_Parent( parent, *new ADN_ConsistencyChecker(), *new gui::FilterProxyModel< E_ConsistencyCheck >( Convert ) )
 {
     // Base size
     setMinimumSize( 600, 500 );
@@ -132,7 +127,7 @@ void ADN_ConsistencyDialog::UpdateDataModel()
                 text = text.arg( tr( "The resource '" ) + error.items_.front()->targetName_ + "'" );
             else
                 text = text.arg( error.items_.front()->targetName_ );
-            AddIcon( error.items_, error.type_, items );
+            AddIcon( error.items_, error.type_, items, false );
             AddItem( text, text, error.items_, error.type_, items );
         }
         else if( ( error.type_ & eUniquenessMask ) != 0 )
@@ -143,7 +138,7 @@ void ADN_ConsistencyDialog::UpdateDataModel()
             for( ADN_ConsistencyChecker::CIT_Items it = error.items_.begin(); it != error.items_.end(); ++it )
                 itemList += ( ( itemList.isEmpty() ) ? "'" : ( it + 1 == error.items_.end() ) ? tr( " and '" ) : ", '" ) + ( *it )->targetName_ + "'";
             text = text.arg( itemList );
-            AddIcon( error.items_, error.type_, items );
+            AddIcon( error.items_, error.type_, items, false );
             AddItem( text, text, error.items_, error.type_, items );
         }
         else

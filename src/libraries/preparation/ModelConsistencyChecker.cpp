@@ -96,8 +96,7 @@ ModelConsistencyChecker::ModelConsistencyChecker( const Model& model, const ::St
 // -----------------------------------------------------------------------------
 ModelConsistencyChecker::~ModelConsistencyChecker()
 {
-    ClearErrors();
-    entities_.clear();
+    // NOTHING
 }
 
 namespace
@@ -143,7 +142,7 @@ namespace
 // -----------------------------------------------------------------------------
 bool ModelConsistencyChecker::CheckConsistency()
 {
-    ClearErrors();
+    errors_.clear();
 
     CheckUniqueness( eLongNameUniqueness, &CompareLongName );
     CheckUniqueness( eTeamNameUniqueness, &CompareName );
@@ -176,6 +175,7 @@ bool ModelConsistencyChecker::CheckConsistency()
     CheckOrbat();
     CheckFiles();
     CheckDiffusionList();
+    CheckExternalErrors();
 
     return !errors_.empty();
 }
@@ -272,15 +272,15 @@ void ModelConsistencyChecker::CheckUniqueness( E_ConsistencyCheck type, bool ( *
             if( ( *comparator )( entity1, entity2 ) )
             {
                 bool bFound = false;
-                for( CIT_Items safeIt = error.items_.begin(); safeIt != error.items_.end(); ++safeIt )
-                    if( **safeIt == &entity1 )
+                for( auto safeIt = error.items_.begin(); safeIt != error.items_.end(); ++safeIt )
+                    if( *safeIt == &entity1 )
                     {
                         bFound = true;
                         break;
                     }
                 if( !bFound )
-                    error.items_.push_back( new SafePointer< Entity_ABC >( controllers_, &entity1 ) );
-                error.items_.push_back( new SafePointer< Entity_ABC >( controllers_, &entity2 ) );
+                    error.items_.push_back( T_Pointer( controllers_, &entity1 ) );
+                error.items_.push_back( T_Pointer( controllers_, &entity2 ) );
                 iter = entities_.erase( iter );
             }
             else
@@ -704,8 +704,17 @@ void ModelConsistencyChecker::CheckSuccessFactors()
 void ModelConsistencyChecker::CheckLoadingErrors()
 {
     T_ConsistencyErrors errors = model_.GetLoadingErrors();
-    for( auto it = errors.begin(); it != errors.end(); ++it )
-        T_Parent::AddError( it->type_, ( it->items_.size() > 0 ) ? it->items_[ 0 ] : 0, it->optional_ );
+    errors_.insert( errors_.end(), errors.begin(), errors.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckExternalErrors
+// Created: MCO 2013-04-30
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckExternalErrors()
+{
+    T_ConsistencyErrors errors = model_.GetExternalErrors();
+    errors_.insert( errors_.end(), errors.begin(), errors.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1064,6 +1073,26 @@ void ModelConsistencyChecker::CheckDiffusionList()
 // -----------------------------------------------------------------------------
 void ModelConsistencyChecker::AddError( E_ConsistencyCheck type, const kernel::Entity_ABC* entity, const std::string& optional /*= ""*/ )
 {
-    kernel::SafePointer< kernel::Entity_ABC >* safePtr = new kernel::SafePointer< kernel::Entity_ABC >( controllers_, entity );
-    T_Parent::AddError( type, safePtr, optional );
+    AddError( type, T_Pointer( controllers_, entity ), optional );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::AddError
+// Created: ABR 2012-06-06
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::AddError( E_ConsistencyCheck type, T_Pointer ptr, const std::string& optional /*= ""*/ )
+{
+    ConsistencyError error( type );
+    error.items_.push_back( ptr );
+    error.optional_ = optional;
+    errors_.push_back( error );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::GetConsistencyErrors
+// Created: MCO 2013-04-30
+// -----------------------------------------------------------------------------
+const ModelConsistencyChecker::T_ConsistencyErrors& ModelConsistencyChecker::GetConsistencyErrors() const
+{
+    return errors_;
 }

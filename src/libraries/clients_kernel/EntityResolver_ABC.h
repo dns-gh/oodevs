@@ -21,6 +21,7 @@ namespace kernel
     class Population_ABC;
     class Team_ABC;
     class UrbanObject_ABC;
+    class Entity_ABC;
 
 // =============================================================================
 /** @class  EntityResolver_ABC
@@ -57,6 +58,8 @@ public:
     virtual kernel::Team_ABC& GetTeam( unsigned int id ) const = 0;
     virtual kernel::UrbanObject_ABC* FindUrbanObject( unsigned int id ) const = 0;
     virtual kernel::UrbanObject_ABC& GetUrbanObject( unsigned int id ) const = 0;
+
+    virtual kernel::Entity_ABC* FindEntity( unsigned int id ) const = 0;
     //@}
 };
 

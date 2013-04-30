@@ -30,6 +30,7 @@
           <argument name="-exercise" value="$exercise$"/>
           <argument name="-root-dir" value="$rootdir$"/>
           <argument name="-id-camps" value="$input_team_list$" display-name="Camps"/>
+          <argument name="-error-log-file" value="$log_file$" display-name="Log"/>
         </arguments>
         <descriptions>
           <description name="Test DQP export" lang="en"><![CDATA[Simulate DQP export.]]></description>
@@ -42,6 +43,7 @@
           <argument name="-exercise" value="$exercise$"/>
           <argument name="-root-dir" value="$rootdir$"/>
           <argument name="-id-camps" value="$input_team_list$" display-name="Camps"/>
+          <argument name="-error-log-file" value="$log_file$" display-name="Log"/>
         </arguments>
         <descriptions>
           <description name="Export DQP" lang="en"><![CDATA[Launch DQP export application.]]></description>
@@ -78,6 +80,4 @@
       </filter>
     </filters>
   </section>
-</sections>
-<!-- signature="0670566367" -->
-<!-- signature="1539329805" -->
+</sections><!-- signature="3204097693" -->

@@ -28,6 +28,11 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
+namespace gui
+{
+    class ConsistencyDialog_ABC;
+}
+
 class FilterDialog;
 class Model;
 
@@ -46,7 +51,8 @@ class FilterDialogs : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterDialogs( QWidget* parent, const tools::ExerciseConfig& config, Model& model, const kernel::CoordinateConverter_ABC& converter );
+             FilterDialogs( QWidget* parent, const tools::ExerciseConfig& config, Model& model,
+                 const kernel::CoordinateConverter_ABC& converter, gui::ConsistencyDialog_ABC& consistency );
     virtual ~FilterDialogs();
     //@}
 
@@ -75,10 +81,11 @@ private:
 private:
     //! @name Data member
     //@{
+    QWidget*                               parent_;
     const tools::ExerciseConfig&           config_;
     Model&                                 model_;
     const kernel::CoordinateConverter_ABC& converter_;
-    QWidget*                               parent_;
+    gui::ConsistencyDialog_ABC&            consistency_;
     //@}
 };
 

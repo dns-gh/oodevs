@@ -22,7 +22,7 @@
 // Name: FilterDialog constructor
 // Created: ABR 2011-06-20
 // -----------------------------------------------------------------------------
-FilterDialog::FilterDialog( QWidget* parent, xml::xistream& xis, const tools::ExerciseConfig& config, Model& model )
+FilterDialog::FilterDialog( QWidget* parent, xml::xistream& xis, const tools::ExerciseConfig& config, Model& model, gui::ConsistencyDialog_ABC& consistency )
     : QDialog       ( parent, "FilterDialog" )
     , filterManager_( 0 )
 {
@@ -64,7 +64,7 @@ FilterDialog::FilterDialog( QWidget* parent, xml::xistream& xis, const tools::Ex
     }
     // Manager
     {
-        filterManager_.reset( new FilterManager( xis, config, *list_, *stack_, *parent, model ) );
+        filterManager_.reset( new FilterManager( xis, config, *list_, *stack_, *parent, model, consistency ) );
     }
     // Dialog setting
     {

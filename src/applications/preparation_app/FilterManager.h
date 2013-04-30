@@ -24,6 +24,11 @@ namespace xml
     class xistream;
 }
 
+namespace gui
+{
+    class ConsistencyDialog_ABC;
+}
+
 class Filter_ABC;
 class Model;
 class QListBox;
@@ -41,7 +46,8 @@ class FilterManager : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, Q3ListBox& list, Q3WidgetStack& stack, QWidget& parent, Model& model );
+             FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config,
+                 Q3ListBox& list, Q3WidgetStack& stack, QWidget& parent, Model& model, gui::ConsistencyDialog_ABC& consistency );
     virtual ~FilterManager();
     //@}
 
@@ -58,7 +64,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ReadFilter( xml::xistream& xis, Q3ListBox& list, Q3WidgetStack& stack );
+    void ReadFilter( xml::xistream& xis, Q3ListBox& list, Q3WidgetStack& stack, gui::ConsistencyDialog_ABC& consistency );
     //@}
 
 private:
@@ -72,12 +78,12 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::ExerciseConfig& config_;
-    const std::string            id_;
-    Model&                       model_;
-    QWidget&                     parent_;
-    kernel::XmlDescription       description_;
-    T_Filters                    filters_;
+    kernel::XmlDescription        description_;
+    const tools::ExerciseConfig&  config_;
+    const std::string             id_;
+    QWidget&                      parent_;
+    Model&                        model_;
+    T_Filters                     filters_;
     //@}
 };
 

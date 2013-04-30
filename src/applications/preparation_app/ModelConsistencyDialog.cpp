@@ -22,16 +22,6 @@
 
 namespace
 {
-    bool IsError( E_ConsistencyCheck type )
-    {
-        return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
-            || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
-            || type == eProfileNoRole || type == eNoOrbat || type == eSignature
-            || type == eBadLogisticSubordinate || type == eUnknownInfrastructure || type == eUnknownResourceNetwork
-            || type == eDiffusionList || type == eMelmil || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks
-            || type == eCityAreaLimitExceeded || type == eImpossibleObjectCreation;
-    }
-
 #define CONVERT_TO_MASK( mask ) { if( type < mask ) return mask; }
     E_ConsistencyCheck Convert( E_ConsistencyCheck type )
     {
@@ -54,7 +44,7 @@ namespace
 // Created: ABR 2011-09-23
 // -----------------------------------------------------------------------------
 ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, const StaticModel& staticModel, kernel::Controllers& controllers, tools::RealFileLoaderObserver_ABC& fileLoaderObserver )
-    : T_Parent( parent, *new ModelConsistencyChecker( model, staticModel, controllers, fileLoaderObserver ), *new gui::FilterProxyModel< E_ConsistencyCheck >( IsError, Convert ) )
+    : T_Parent( parent, *new ModelConsistencyChecker( model, staticModel, controllers, fileLoaderObserver ), *new gui::FilterProxyModel< E_ConsistencyCheck >( Convert ) )
     , actionController_( controllers.actions_ )
     , emptyEntity_( controllers )
 {
@@ -83,6 +73,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eObjectNameUniqueness ] = tools::translate( "ModelConsistencyDialog", "Duplicate name for objects %1." );
     errorDescriptions_[ eLimaNameUniqueness ] = tools::translate( "ModelConsistencyDialog", "Duplicate name for limas %1." );
     errorDescriptions_[ eLimitNameUniqueness ] = tools::translate( "ModelConsistencyDialog", "Duplicate name for limits %1." );
+    errorDescriptions_[ eUniquenessMask ] = "%1";
 
     // Logistic
     errorDescriptions_[ eStockInitialization ] = tools::translate( "ModelConsistencyDialog", "No stocks initialized." );
@@ -94,6 +85,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eLogisticBaseNotSameTeam ] = tools::translate( "ModelConsistencyDialog", "Logistic base's party differs from object's party." );
     errorDescriptions_[ eStockInvalidDotation ] = tools::translate( "ModelConsistencyDialog", "Invalid stock resource '%1' in orbat.xml. This resource will not be saved." );
     errorDescriptions_[ eBadLogisticSubordinate ] = tools::translate( "ModelConsistencyDialog", "Invalid logistic subordinate for '%1' in orbat.xml. The link will deleted at next save." );
+    errorDescriptions_[ eLogisticMask ] = "%1";
 
     // Profile
     errorDescriptions_[ eProfileUniqueness ] = tools::translate( "ModelConsistencyDialog", "Association with multiple profiles: %1." );
@@ -101,14 +93,17 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eProfileUnwritable ] = tools::translate( "ModelConsistencyDialog", "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
     errorDescriptions_[ eProfileNumberTooHigh ] = tools::translate( "ModelConsistencyDialog", "The profile \"%1\" contains more than 12 automats and/or crowds." );
     errorDescriptions_[ eProfileNoRole ] = tools::translate( "ModelConsistencyDialog", "No user role defined for profile \"%1\"." );
+    errorDescriptions_[ eProfileMask ] = "%1";
 
     // Ghost
     errorDescriptions_[ eGhostExistence ] = tools::translate( "ModelConsistencyDialog", "A ghost unit is present." );
     errorDescriptions_[ eGhostConverted ] = tools::translate( "ModelConsistencyDialog", "Unknown type '%1', a ghost unit has been created instead." );
+    errorDescriptions_[ eGhostMask ] = "%1";
 
     // Command Post
     errorDescriptions_[ eNoCommandPost ] = tools::translate( "ModelConsistencyDialog", "Automat has no command post." );
     errorDescriptions_[ eSeveralCommandPost ] = tools::translate( "ModelConsistencyDialog", "Automat has more than one command post." );
+    errorDescriptions_[ eCommandPostMask ] = "%1";
 
     // Others
     errorDescriptions_[ eLongNameSize ] = tools::translate( "ModelConsistencyDialog", "Long name size limit exceeded : %1." );
@@ -132,6 +127,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eCityAreaLimitExceeded ] = tools::translate( "ModelConsistencyDialog", "City area exceeds %1 km²" );
     errorDescriptions_[ eImpossibleObjectCreation ] = tools::translate( "ModelConsistencyDialog", "The following object is invalid and will be deleted at next save: %1" );
     errorDescriptions_[ eOthers ] = "%1";
+    errorDescriptions_[ eOthersMask ] = "%1";
 }
 
 // -----------------------------------------------------------------------------
@@ -166,23 +162,23 @@ void ModelConsistencyDialog::UpdateDataModel()
     T_Parent::UpdateDataModel();
     int currentRow = 0;
     const ModelConsistencyChecker::T_ConsistencyErrors& errors = static_cast< ModelConsistencyChecker& >( checker_ ).GetConsistencyErrors();
-    for( ModelConsistencyChecker::CIT_ConsistencyErrors it = errors.begin(); it != errors.end(); ++it )
+    for( auto it = errors.begin(); it != errors.end(); ++it )
     {
         const ModelConsistencyChecker::ConsistencyError& error = *it;
         QString idList;
-        for( ModelConsistencyChecker::CIT_Items entityIt = error.items_.begin(); entityIt != error.items_.end(); ++entityIt )
+        for( auto entityIt = error.items_.begin(); entityIt != error.items_.end(); ++entityIt )
         {
-            if( *entityIt && **entityIt )
-                idList += ( ( idList.isEmpty() ) ? "" : ( entityIt + 1 == error.items_.end() ) ? tools::translate( "ModelConsistencyDialog", " and " ) : ", " ) + locale().toString( static_cast< unsigned int >( ( **entityIt )->GetId() ) );
+            if( *entityIt )
+                idList += ( ( idList.isEmpty() ) ? "" : ( entityIt + 1 == error.items_.end() ) ? tools::translate( "ModelConsistencyDialog", " and " ) : ", " ) + locale().toString( static_cast< unsigned int >( ( *entityIt )->GetId() ) );
         }
 
-        for( ModelConsistencyChecker::CIT_Items entityIt = error.items_.begin(); entityIt != error.items_.end(); ++entityIt, ++currentRow )
+        for( auto entityIt = error.items_.begin(); entityIt != error.items_.end(); ++entityIt, ++currentRow )
         {
             QList< QStandardItem* > items;
-            if( *entityIt && **entityIt )
+            if( *entityIt )
             {
-                const kernel::SafePointer< kernel::Entity_ABC >& entity = **entityIt;
-                AddIcon( entity, error.type_, items );
+                const kernel::SafePointer< kernel::Entity_ABC >& entity = *entityIt;
+                AddIcon( entity, error.type_, items, error.IsError() );
                 AddItem( static_cast< unsigned int >( entity->GetId() ), locale().toString( static_cast< unsigned int >( entity->GetId() ) ), entity, error.type_, items );
                 AddItem( entity->GetName(), entity->GetName(), entity, error.type_, items );
                 const std::string longName = DiplayLongName( gui::LongNameHelper::GetEntityLongName( *entity ) );
@@ -190,7 +186,7 @@ void ModelConsistencyDialog::UpdateDataModel()
             }
             else
             {
-                AddIcon( emptyEntity_, error.type_, items );
+                AddIcon( emptyEntity_, error.type_, items, error.IsError() );
                 AddItem( 0, "---", emptyEntity_, error.type_, items );
                 AddItem( "---", "---", emptyEntity_, error.type_, items );
                 AddItem( "---", "---", emptyEntity_, error.type_, items );
@@ -198,7 +194,7 @@ void ModelConsistencyDialog::UpdateDataModel()
             QString text = errorDescriptions_[ error.type_ ];
             if( text.contains( "%1" ) )
                 text = text.arg( ( error.optional_.empty() ) ? idList : error.optional_.c_str() );
-            AddItem( text, text, ( *entityIt && **entityIt ) ? **entityIt : emptyEntity_, error.type_, items  );
+            AddItem( text, text, *entityIt ? *entityIt : emptyEntity_, error.type_, items  );
             dataModel_->appendRow( items );
         }
     }
