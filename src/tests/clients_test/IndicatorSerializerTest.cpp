@@ -312,7 +312,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNumberOfBreakdown )
             "<transform function='is-one-of' id='2' input='1' select='un,its' type='bool'/>"
             "<extract function='maintenance-handling-unit' id='3'/>"
             "<transform function='filter' id='4' input='2,3' type='unsigned long'/>"
-            "<reduce function='count' id='5' input='4' type='unsigned'/>"
+            "<reduce function='count' id='5' input='4' type='unsigned long'/>"
         "</indicator>";
     RegisterVariable( "Units", "unit list", "un,its" );
     ParseAndCheck( "Count( Filter( Is-One-Of( maintenance-handling-unit(), $Units ), maintenance-handling-unit() ) )", expected );
@@ -327,7 +327,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNumberOfDirectFire )
     const std::string expected =
         "<indicator>"
             "<extract function='direct-fire-unit' id='1'/>"
-            "<reduce function='count' id='2' input='1' type='unsigned'/>"
+            "<reduce function='count' id='2' input='1' type='unsigned long'/>"
         "</indicator>";
     ParseAndCheck( "Count( direct-fire-unit() )", expected );
 }
