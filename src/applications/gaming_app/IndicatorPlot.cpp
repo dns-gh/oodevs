@@ -194,7 +194,7 @@ void IndicatorPlot::UpdatePlot( gui::GQ_PlotData* plot, const IndicatorRequest& 
 // -----------------------------------------------------------------------------
 void IndicatorPlot::mouseReleaseEvent( QMouseEvent* e )
 {
-    if( interactive_ )
+    if( interactive_ && e->button() == Qt::LeftButton )
     {
         const int offset = YAxis().GetAxisSize().width() + YAxis().GetCaptionSize().width();
         double tick = XAxis().MapFromViewport( e->pos().x() - offset );
