@@ -59,18 +59,6 @@ public:
     }
 
     template< typename T >
-    void RegisterMessage( boost::function< void( const std::string&, T& ) > callback )
-    {
-        const unsigned int id = MessageIdentifierFactory::GetIdentifier< T >();
-        ObjectMessageCallback< T >* composite = static_cast< ObjectMessageCallback< T >* >( Retrieve( id ) );
-        if( ! composite )
-        {
-            composite = new ObjectMessageCallback< T >();
-            Register( id, std::auto_ptr< ObjectMessageCallback_ABC >( composite ) );
-        }
-        composite->AddCallback( callback );
-    }
-    template< typename T >
     void Receive( const std::string& link, const T& object )
     {
         const unsigned int id = tools::MessageIdentifierFactory::GetIdentifier< T >();

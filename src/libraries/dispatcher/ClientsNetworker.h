@@ -56,7 +56,6 @@ public:
     virtual void Send( const sword::DispatcherToClient& msg );
 
     virtual Profile_ABC&         GetProfile  ( const std::string& link );
-    virtual unsigned int         GetClientID( const std::string& link ) const;
     virtual ClientPublisher_ABC& GetPublisher( const std::string& link );
 
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, const std::string& link, dispatcher::Profile_ABC& profile );

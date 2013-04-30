@@ -27,11 +27,10 @@ namespace dispatcher
 template< typename T >
 class Logger
 {
-public:
+private:
     //! @name Types
     //@{
-    typedef boost::function< void( const std::string&, const T& ) > T_ConstCallback;
-    typedef boost::function< void( const std::string&, T& ) >       T_Callback;
+    typedef boost::function< void( const std::string&, const T& ) > T_Callback;
     //@}
 
 public:
@@ -42,11 +41,6 @@ public:
         , prefix_  ( prefix )
         , callback_( callback )
     {}
-    Logger( RotatingLog& log, const std::string& prefix, T_ConstCallback constCallback )
-        : log_          ( &log )
-        , prefix_       ( prefix )
-        , constCallback_( constCallback )
-    {}
     //@}
 
     //! @name Operators
@@ -54,14 +48,7 @@ public:
     void operator()( const std::string& link, const T& message ) const
     {
         log_->Write( MessageSerializer< T >( prefix_, message ) );
-        if( constCallback_ )
-            constCallback_( link, message );
-    }
-    void operator()( const std::string& link, T& message ) const
-    {
-        log_->Write( MessageSerializer< T >( prefix_, message ) );
-        if( callback_ )
-            callback_( link, message );
+        callback_( link, message );
     }
     //@}
 
@@ -92,24 +79,15 @@ private:
     RotatingLog* log_;
     std::string prefix_;
     T_Callback callback_;
-    T_ConstCallback constCallback_;
     //@}
 };
 
 template< typename C, typename T >
-boost::function< void( const std::string&, const T& ) > MakeConstLogger(
+boost::function< void( const std::string&, const T& ) > MakeLogger(
     RotatingLog& log, const std::string& prefix,
     C& instance, void (C::*callback)( const std::string&, const T& ) )
 {
-    return Logger< T >( log, prefix, Logger< T >::T_ConstCallback( boost::bind( callback, &instance, _1, _2 ) ) );
-}
-
-template< typename C, typename T >
-boost::function< void( const std::string&, T& ) > MakeLogger(
-    RotatingLog& log, const std::string& prefix,
-    C& instance, void (C::*callback)( const std::string&, T& ) )
-{
-    return Logger< T >( log, prefix, Logger< T >::T_Callback( boost::bind( callback, &instance, _1, _2 ) ) );
+    return Logger< T >( log, prefix, boost::bind( callback, &instance, _1, _2 ) );
 }
 
 }

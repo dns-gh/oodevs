@@ -1041,7 +1041,7 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
 // Name: MIL_EntityManager::OnReceiveUnitMagicAction
 // Created: JSR 2010-04-13
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message, unsigned int nCtx, unsigned int clientId )
+void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message, unsigned int nCtx )
 {
     client::UnitMagicActionAck ack;
     unsigned int id = 0;
@@ -1054,7 +1054,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
     {
         ack().mutable_unit()->set_id( 0 );
         ack().set_error_code( UnitActionAck::error_invalid_unit );
-        ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+        ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
         return;
     }
 
@@ -1165,7 +1165,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
         ack().set_error_code( UnitActionAck::error_invalid_parameter );
         ack().set_error_msg( tools::GetExceptionMsg( e ) );
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------

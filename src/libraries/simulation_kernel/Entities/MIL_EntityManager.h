@@ -173,7 +173,7 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveUnitMagicAction          ( const sword::UnitMagicAction&      message, unsigned int nCtx, unsigned int clientId );
+    void OnReceiveUnitMagicAction          ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void OnReceiveObjectMagicAction        ( const sword::ObjectMagicAction&    message, unsigned int nCtx );
     void OnReceiveUnitOrder                ( const sword::UnitOrder&            message, unsigned int nCtx );
     void OnReceiveAutomatOrder             ( const sword::AutomatOrder&         message, unsigned int nCtx );
