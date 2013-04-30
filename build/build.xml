@@ -198,7 +198,7 @@
     </macrodef>
 
     <target name="sim_unicode_test">
-        <sim-unicode-test root="${data.dir}" exercise-path="${data.dir}/tests/test_data_unicode/" exercise="test_sim_unicode" session="default" terrain="land-of-stripes" physical="worldwide-ML" new-exercise-file="${data.dir}/tests/test_data_unicode/test_sim_unicode exercise with unicode.xml"/>
+        <sim-unicode-test root="${data.dir}" exercise-path="${data.dir}/tests/test_data_unicode/" exercise="test_sim_unicode" session="default" terrain="land-of-stripes" physical="worldwide" new-exercise-file="${data.dir}/tests/test_data_unicode/test_sim_unicode exercise with unicode.xml"/>
     </target>
 
     <macrodef name="run-one-simulation">
