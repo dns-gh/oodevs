@@ -164,3 +164,7 @@ end
 integration.getWoundedInArea = function( area )
     return DEC_Connaissances_UnitesBlesseesDansZone( area.source )
 end
+
+integration.getFiringDistanceToEngageMe = function( platoon, ph )
+    return DEC_Tir_PorteeMaxPourEtreTireParUnite( platoon.source, ph)
+end
