@@ -16,10 +16,12 @@ namespace kernel
 {
     class Controllers;
 }
+
 namespace gui
 {
     class RichToolButton;
 }
+
 class StaticModel;
 
 // =============================================================================
@@ -65,11 +67,6 @@ private:
     gui::RichToolButton* increaseButton_;
     gui::RichToolButton* decreaseButton_;
     kernel::Controllers& controllers_;
-    const float min_;
-    const float max_;
-    const float default_;
-    const float increment_;
-    const std::string name_;
     //@}
 };
 

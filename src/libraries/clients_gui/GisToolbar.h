@@ -90,7 +90,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::DetectionMap& detection_;
-    RichDockWidget* terrainProfiler_;
     RichCheckBox* watershedEnabled_;
     RichComboBox* mode_;
     RichSpinBox* height_;

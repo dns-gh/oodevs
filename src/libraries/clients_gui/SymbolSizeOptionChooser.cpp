@@ -17,6 +17,18 @@
 #include "clients_gui/SubObjectName.h"
 #include "clients_gui/RichToolButton.h"
 
+namespace
+{
+    const float min_ = 1.0f;
+    const float max_ = 6.0f;
+    const float default_ = 3.0f;
+    const float increment_ = 1.0f;
+    const std::string name_( "SymbolSize" );
+    const float epsilon = increment_ / 100;
+    const float minEnabled_ = min_ + epsilon;
+    const float maxEnabled_ = max_ - epsilon;
+}
+
 // -----------------------------------------------------------------------------
 // Name: SymbolSizeOptionChooser constructor
 // Created: MMC 2013-02-01
@@ -28,11 +40,6 @@ SymbolSizeOptionChooser::SymbolSizeOptionChooser( QWidget* parent, QToolBar* too
     , increaseButton_( nullptr )
     , decreaseButton_( nullptr )
     , controllers_( controllers )
-    , min_( 1.0f )
-    , max_( 6.0f )
-    , default_( 3.0f )
-    , increment_( 1.0f )
-    , name_( "SymbolSize" )
 {
     gui::SubObjectName subObject( "SymbolSizeOptionChooser" );
     if( toolBar )
@@ -65,7 +72,7 @@ SymbolSizeOptionChooser::SymbolSizeOptionChooser( QWidget* parent, QToolBar* too
 // -----------------------------------------------------------------------------
 SymbolSizeOptionChooser::~SymbolSizeOptionChooser()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +103,7 @@ void SymbolSizeOptionChooser::OnDecreaseSymbolUnit()
 // -----------------------------------------------------------------------------
 void SymbolSizeOptionChooser::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( name == "SymbolSize" )
+    if( name == name_ )
         CheckButtonsEnable( value.To< float >() );
 }
 
@@ -106,7 +113,6 @@ void SymbolSizeOptionChooser::OptionChanged( const std::string& name, const kern
 // -----------------------------------------------------------------------------
 void SymbolSizeOptionChooser::CheckButtonsEnable( float value )
 {
-    const float epsilon = increment_ / 100;
-    increaseButton_->setEnabled( value < ( max_ - epsilon ) );
-    decreaseButton_->setEnabled( value > ( min_ + epsilon ) );
+    increaseButton_->setEnabled( value < ( maxEnabled_ ) );
+    decreaseButton_->setEnabled( value > ( minEnabled_ ) );
 }
