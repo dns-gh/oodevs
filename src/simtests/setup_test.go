@@ -67,6 +67,11 @@ func addClientLogger(client *swapi.Client) {
 	client.Register(handler)
 }
 
+func waitCondition(c *C, model *swapi.Model, cond func(data *swapi.ModelData) bool) {
+	ok := model.WaitCondition(cond)
+	c.Assert(ok, Equals, true)
+}
+
 func Test(t *testing.T) { TestingT(t) }
 
 type TestSuite struct{}

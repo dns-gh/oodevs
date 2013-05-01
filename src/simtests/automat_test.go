@@ -53,23 +53,42 @@ func (s *TestSuite) TestSetAutomatMode(c *C) {
 	automat := createAutomat(c, client)
 	c.Assert(automat.Engaged, Equals, true)
 
+	checkEngage := func(engagedId, waitId uint32, engage bool) {
+		err := client.SetAutomatMode(engagedId, engage)
+		c.Assert(err, IsNil)
+		waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+			return data.FindAutomat(waitId).Engaged == engage
+		})
+	}
+
 	// Invalid automat identifier
 	err := client.SetAutomatMode(12456, false)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// This one should work
-	err = client.SetAutomatMode(automat.Id, false)
-	c.Assert(err, IsNil)
-	ok := client.Model.WaitCondition(func(data *swapi.ModelData) bool {
-		return !data.FindAutomat(automat.Id).Engaged
-	})
-	c.Assert(ok, Equals, true)
+	checkEngage(automat.Id, automat.Id, false)
 
 	// Engage it again
-	err = client.SetAutomatMode(automat.Id, true)
+	checkEngage(automat.Id, automat.Id, true)
+
+	subAutomat, err := client.CreateAutomat(0, automat.Id, AutomatType,
+		automat.KnowledgeGroupId)
 	c.Assert(err, IsNil)
-	ok = client.Model.WaitCondition(func(data *swapi.ModelData) bool {
-		return data.FindAutomat(automat.Id).Engaged
-	})
-	c.Assert(ok, Equals, true)
+
+	// Changing the sub automat mode fails if parent is engaged (why?)
+	err = client.SetAutomatMode(subAutomat.Id, true)
+	c.Assert(err, ErrorMatches, "error_not_allowed")
+	err = client.SetAutomatMode(subAutomat.Id, false)
+	c.Assert(err, ErrorMatches, "error_not_allowed")
+
+	// Disengaging the parent, does not disengage the children
+	checkEngage(automat.Id, automat.Id, false)
+	subAutomat = client.Model.GetAutomat(subAutomat.Id)
+	c.Assert(subAutomat.Engaged, Equals, true)
+
+	// The sub automat can be disengaged alone
+	checkEngage(subAutomat.Id, subAutomat.Id, false)
+
+	// Reengaging the parent, reengage the child
+	checkEngage(automat.Id, subAutomat.Id, true)
 }
