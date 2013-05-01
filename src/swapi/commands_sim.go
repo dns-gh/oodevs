@@ -31,6 +31,14 @@ func invalid(name string, value interface{}) error {
 	return makeError("invalid %v: %v", name, value)
 }
 
+func makeUnitTasker(unitId uint32) *sword.Tasker {
+	return &sword.Tasker{
+		Unit: &sword.UnitId{
+			Id: proto.Uint32(unitId),
+		},
+	}
+}
+
 func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
 	// Wait for the final UnitMagicActionAck
 	code := msg.GetErrorCode()
@@ -210,18 +218,44 @@ func (c *Client) CreateUnitWithName(automatId, unitType uint32, location *Point,
 	return c.createUnit(automatId, unitType, location, &name, &pc)
 }
 
-func (c *Client) DeleteUnit(unitId uint32) error {
-	tasker := &sword.Tasker{
-		Unit: &sword.UnitId{
-			Id: proto.Uint32(unitId),
+func (c *Client) SendUnitOrder(unitId, missionType uint32,
+	params *sword.MissionParameters) error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				UnitOrder: &sword.UnitOrder{
+					Tasker: &sword.UnitId{
+						Id: proto.Uint32(unitId),
+					},
+					Type: &sword.MissionType{
+						Id: proto.Uint32(missionType),
+					},
+					Parameters: params,
+				},
+			},
 		},
 	}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetOrderAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.OrderAck_no_error {
+			return nameof(sword.OrderAck_ErrorCode_name, int32(code))
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) DeleteUnit(unitId uint32) error {
 	actionType := sword.UnitMagicAction_delete_unit
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     tasker,
+					Tasker:     makeUnitTasker(unitId),
 					Type:       &actionType,
 					Parameters: MakeParameters(),
 				},

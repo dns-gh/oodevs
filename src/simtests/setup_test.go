@@ -72,6 +72,42 @@ func waitCondition(c *C, model *swapi.Model, cond func(data *swapi.ModelData) bo
 	c.Assert(ok, Equals, true)
 }
 
+const (
+	// Random existing automat identifier, we should parse the physical
+	// database instead.
+	AutomatType = uint32(123)
+	// ARMOR.MBT platoon
+	UnitType = uint32(61)
+)
+
+func createAutomat(c *C, client *swapi.Client) *swapi.Automat {
+	data := client.Model.GetData()
+
+	party := data.FindPartyByName("party")
+	c.Assert(party, NotNil)
+
+	c.Assert(len(party.Formations), Greater, 0)
+	var formation *swapi.Formation
+	for _, f := range party.Formations {
+		formation = f
+		break
+	}
+	// Find a suitable knowledge group matching the formation, this should be
+	// simpler...
+	var kg *swapi.KnowledgeGroup
+	for _, g := range data.ListKnowledgeGroups() {
+		if g.PartyId == formation.PartyId {
+			kg = g
+			break
+		}
+	}
+	c.Assert(kg, NotNil)
+
+	automat, err := client.CreateAutomat(formation.Id, 0, AutomatType, kg.Id)
+	c.Assert(err, IsNil)
+	return automat
+}
+
 func Test(t *testing.T) { TestingT(t) }
 
 type TestSuite struct{}

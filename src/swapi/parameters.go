@@ -93,6 +93,21 @@ func MakePointParam(point *Point) *sword.MissionParameter {
 		})
 }
 
+func MakeHeading(heading int32) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Heading: &sword.Heading{
+				Heading: proto.Int32(heading),
+			},
+		})
+}
+
+func MakeNullValue() *sword.MissionParameter {
+	return &sword.MissionParameter{
+		NullValue: proto.Bool(true),
+	}
+}
+
 // Return the first value of the index-th parameter of params, or nil.
 func GetParameterValue(params *sword.MissionParameters,
 	index int) *sword.MissionParameter_Value {
