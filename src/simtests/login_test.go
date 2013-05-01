@@ -44,7 +44,7 @@ func (s *TestSuite) TestLogin(c *C) {
 	// Test invalid login
 	client := ConnectClient(c, sim)
 	c.Assert(client.ClientId, Equals, int32(0))
-    err := client.Login("foo", "bar")
+	err := client.Login("foo", "bar")
 	c.Assert(err, ErrorMatches, "invalid_login")
 	c.Assert(client.ClientId, Equals, int32(0))
 	client.Close()

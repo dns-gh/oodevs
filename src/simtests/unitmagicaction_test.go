@@ -17,12 +17,6 @@ import (
 	"sword"
 )
 
-const (
-	// Random existing automat identifier, we should parse the physical
-	// database instead.
-	AutomatType = uint32(123)
-)
-
 // For a given tasker type, send a unit magic action which is not
 // implemented by target type. It used to return nothing, not even an
 // error. This test should be adjusted if actions support more types.

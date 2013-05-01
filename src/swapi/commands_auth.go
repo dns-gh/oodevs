@@ -79,7 +79,7 @@ func (c *Client) postAuthRequestWithCheckingClientId(msg SwordMessage, handler a
 		}
 
 		quit <- handler(msg.AuthenticationToClient.GetMessage(),
-						msg.AuthenticationToClient.GetClientId())
+			msg.AuthenticationToClient.GetClientId())
 		return true
 	}
 	c.Post(msg, wrapper)
@@ -87,7 +87,7 @@ func (c *Client) postAuthRequestWithCheckingClientId(msg SwordMessage, handler a
 }
 
 func (c *Client) postAuthRequest(msg SwordMessage, handler authHandler) <-chan error {
-	return c.postAuthRequestWithCheckingClientId( msg, handler, true)
+	return c.postAuthRequestWithCheckingClientId(msg, handler, true)
 }
 
 func (c *Client) LoginWithVersion(username, password, version string) error {

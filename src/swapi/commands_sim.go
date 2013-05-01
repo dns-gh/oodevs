@@ -309,6 +309,39 @@ func (c *Client) CreateAutomat(formationId, automatId, automatType,
 	return created, err
 }
 
+func (c *Client) SetAutomatMode(automatId uint32, engaged bool) error {
+	mode := sword.EnumAutomatMode_engaged
+	if !engaged {
+		mode = sword.EnumAutomatMode_disengaged
+	}
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				SetAutomatMode: &sword.SetAutomatMode{
+					Automate: &sword.AutomatId{
+						Id: proto.Uint32(automatId),
+					},
+					Mode: &mode,
+				},
+			},
+		},
+	}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetSetAutomatModeAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		if reply.GetAutomate() == nil || reply.GetAutomate().GetId() != automatId {
+			return makeError("invalid automat identifier")
+		}
+		if code := reply.GetErrorCode(); code != sword.SetAutomatModeAck_no_error {
+			return nameof(sword.SetAutomatModeAck_ErrorCode_name, int32(code))
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
+
 func getControlAckError(code sword.ControlAck_ErrorCode) error {
 	if code == sword.ControlAck_no_error {
 		return nil

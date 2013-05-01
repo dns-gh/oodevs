@@ -44,8 +44,8 @@ type header struct {
 }
 
 type SwordMessage struct {
-	tag     uint32
-	Context int32
+	tag      uint32
+	Context  int32
 	ClientId int32
 	// * -> client
 	AarToClient            *sword.AarToClient

@@ -61,7 +61,7 @@ type Client struct {
 	PostTimeout time.Duration
 	ClientId    int32
 
-    // context and clientId are only read and set by the serve goroutine
+	// context and clientId are only read and set by the serve goroutine
 	context     int32
 	clientId    int32
 	link        net.Conn

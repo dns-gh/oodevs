@@ -152,7 +152,20 @@ func (model *Model) update(msg *SwordMessage) {
 				return
 			}
 			// XXX: report error here
-
+		} else if mm := m.GetAutomatAttributes(); mm != nil {
+			automat := d.FindAutomat(mm.GetAutomat().GetId())
+			if automat == nil {
+				// XXX report error here
+				return
+			}
+			if mm.Mode != nil {
+				mode := mm.GetMode()
+				if mode == sword.EnumAutomatMode_engaged {
+					automat.Engaged = true
+				} else if mode == sword.EnumAutomatMode_disengaged {
+					automat.Engaged = false
+				}
+			}
 		} else if mm := m.GetFormationCreation(); mm != nil {
 			level, ok := sword.EnumNatureLevel_name[int32(mm.GetLevel())]
 			if !ok {
@@ -354,10 +367,23 @@ func (model *Model) GetUnit(unitId uint32) *Unit {
 	return u
 }
 
+func (model *Model) GetTick() int32 {
+	tick := int32(0)
+	model.waitCommand(func(model *Model) {
+		tick = model.data.Tick
+	})
+	return tick
+}
+
 func (model *Model) WaitUntilTick(tick int32) bool {
 	return model.waitCond(model.WaitTimeout, func(model *Model) bool {
 		return tick <= model.data.Tick
 	})
+}
+
+func (model *Model) WaitTicks(ticks int32) bool {
+	endTick := model.GetTick() + ticks
+	return model.WaitUntilTick(endTick)
 }
 
 // Wait for condition to return true. Return false if the timeout kicks in

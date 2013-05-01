@@ -101,6 +101,7 @@ type Automat struct {
 	Name     string
 	Automats map[uint32]*Automat
 	Units    map[uint32]*Unit
+	Engaged  bool
 }
 
 func NewAutomat(id, partyId uint32, name string) *Automat {
@@ -110,11 +111,13 @@ func NewAutomat(id, partyId uint32, name string) *Automat {
 		Name:     name,
 		Automats: map[uint32]*Automat{},
 		Units:    map[uint32]*Unit{},
+		Engaged:  true,
 	}
 }
 
 func (a *Automat) Copy() *Automat {
 	other := NewAutomat(a.Id, a.PartyId, a.Name)
+	other.Engaged = a.Engaged
 	for k, v := range a.Automats {
 		other.Automats[k] = v.Copy()
 	}
