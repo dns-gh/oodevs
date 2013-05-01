@@ -229,8 +229,6 @@ public:
 
     //! @name Tools
     //@{
-    void Engage();
-    void Disengage();
     void SurrenderWithUnits( const MIL_Army_ABC& armySurrenderedTo );
     //@}
 
@@ -253,6 +251,8 @@ private:
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Automate* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Automate* role, const unsigned int /*version*/ );
+    void Engage();
+    void Disengage();
     //@}
 
     //! @name Helpers
