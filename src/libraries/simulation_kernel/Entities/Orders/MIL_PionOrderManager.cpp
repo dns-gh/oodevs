@@ -27,6 +27,9 @@
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
 
+#define MASA_ORDER_EXCEPTION( ErrorId ) \
+    MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::##ErrorId )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationOrderManager constructor
 // Created: NLD 2006-11-23
@@ -55,20 +58,20 @@ void MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message )
 {
     // Check if the agent can receive this order (automate must be debraye)
     if( pion_.GetAutomate().IsEngaged() || pion_.IsDead() )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_cannot_receive_order );
+        throw MASA_ORDER_EXCEPTION( error_unit_cannot_receive_order );
     if( pion_.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported() )
     {
         MIL_Report::PostEvent( pion_, report::eRC_TransportedUnitCannotReceiveOrder );
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_cannot_receive_order );
+        throw MASA_ORDER_EXCEPTION( error_unit_cannot_receive_order );
     }
     if( pion_.IsImmobilized() )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_cannot_receive_order );
+        throw MASA_ORDER_EXCEPTION( error_unit_cannot_receive_order );
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_surrendered );
+        throw MASA_ORDER_EXCEPTION( error_unit_surrendered );
     // Instanciate and check the new mission
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::Find( message.type().id() );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_mission );
+        throw MASA_ORDER_EXCEPTION( error_invalid_mission );
     boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_PionMission( *pMissionType, pion_, message ) );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
 }
@@ -90,14 +93,14 @@ void MIL_PionOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type )
 void MIL_PionOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
 {
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_surrendered );
+        throw MASA_ORDER_EXCEPTION( error_unit_surrendered );
     if( pion_.GetAutomate().IsEngaged() )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_unit_cannot_receive_order );
+        throw MASA_ORDER_EXCEPTION( error_unit_cannot_receive_order );
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.type().id() );
     if( !pType )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_frag_order );
+        throw MASA_ORDER_EXCEPTION( error_invalid_frag_order );
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
-        throw MASA_EXCEPTION_ASN( sword::OrderAck_ErrorCode, sword::OrderAck::error_invalid_frag_order );
+        throw MASA_ORDER_EXCEPTION( error_invalid_frag_order );
     DEC_Representations& representation = pion_.GetRole<DEC_Representations>();
     boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, pion_.GetKnowledge(), asn ) );
     representation.AddToOrdersCategory( pFragOrder );
