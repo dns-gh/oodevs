@@ -117,3 +117,21 @@ func (s *TestSuite) TestDelayedStartupFailure(c *C) {
 		c.Fatal("simulation should have exited on error")
 	}
 }
+
+// Test starting gaming process
+func (s *TestSuite) TestStartGamingFromSim(c *C) {
+	simOpts := MakeOpts()
+	exDir := simOpts.GetExerciseDir()
+	session := CreateDefaultSession()
+	session.EndTick = 3
+	sessionPath, err := WriteNewSessionFile(session, exDir)
+	c.Assert(err, IsNil)
+	simOpts.SessionName = filepath.Base(filepath.Dir(sessionPath))
+
+	gaming, err := StartGamingFromSim(simOpts)
+	c.Assert(err, IsNil)
+	defer gaming.Kill()
+	// Let it run a couple of seconds, it should timeout
+	ok := gaming.Wait(3 * time.Second)
+	c.Assert(ok, Equals, false)
+}

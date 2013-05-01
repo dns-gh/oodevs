@@ -24,6 +24,7 @@ func startSimOnExercise(c *C, exercise string, endTick int,
 
 	session := simu.CreateDefaultSession()
 	session.Paused = paused
+	session.GamingServer = opts.DispatcherAddr
 	WriteSession(c, opts, session)
 	sim, err := simu.StartSim(opts)
 	c.Assert(err, IsNil) // failed to start the simulation
