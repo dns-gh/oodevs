@@ -10,84 +10,45 @@
 #include "simulation_terrain_pch.h"
 #include "TER_Logger.h"
 #include "MT_Tools/MT_Logger.h"
-#include <log4cxx/logger.h>
-#include <log4cxx/appenderskeleton.h>
-#include <log4cxx/spi/loggingevent.h>
-#include <log4cxx/helpers/transcoder.h>
-#include <log4cxx/helpers/classregistration.h>
+#include "pathfind/PathfindLogger.h"
+#include "spatialcontainer/Logging.h"
+#include <boost/make_shared.hpp>
 
-using namespace log4cxx;
-using namespace log4cxx::helpers;
+using namespace spatialcontainer;
 
 namespace
 {
 
-MT_Logger_ABC::E_LogLevel GetLogLevel( LevelPtr level )
+MT_Logger_ABC::E_LogLevel GetLogLevel( Logger_ABC::eLevel level )
 {
-    int value = Level::OFF_INT;
-    if( level )
-        value = level->toInt();
-    switch( value )
+    switch( level )
     {
-        case Level::ALL_INT  : return MT_Logger_ABC::eLogLevel_All;
-        case Level::FATAL_INT: return MT_Logger_ABC::eLogLevel_FatalError;
-        case Level::ERROR_INT: return MT_Logger_ABC::eLogLevel_Error;
-        case Level::WARN_INT : return MT_Logger_ABC::eLogLevel_Warning;
-        case Level::INFO_INT : return MT_Logger_ABC::eLogLevel_Info;
-        case Level::DEBUG_INT:
-        case Level::TRACE_INT: return MT_Logger_ABC::eLogLevel_Debug;
+        case Logger_ABC::error: return MT_Logger_ABC::eLogLevel_Error;
+        case Logger_ABC::warning : return MT_Logger_ABC::eLogLevel_Warning;
+        default: return MT_Logger_ABC::eLogLevel_Info;
     }
-    return MT_Logger_ABC::eLogLevel_None;
 }
 
-}  // namespace
-
-class MTLoggerAppender : public AppenderSkeleton
+class MTTerrainLogger : public spatialcontainer::Logger_ABC
 {
 public:
-    DECLARE_LOG4CXX_OBJECT(MTLoggerAppender)
-    BEGIN_LOG4CXX_CAST_MAP()
-            LOG4CXX_CAST_ENTRY( MTLoggerAppender )
-            LOG4CXX_CAST_ENTRY_CHAIN( AppenderSkeleton )
-    END_LOG4CXX_CAST_MAP()
+             MTTerrainLogger( const std::string& name ) : name_( name + ": " ) {}
+    virtual ~MTTerrainLogger() {}
 
-    void append( const spi::LoggingEventPtr& event, log4cxx::helpers::Pool& )
+    virtual void Log( eLevel level, const char* msg )
     {
-        auto level = GetLogLevel( event->getLevel() );
-        std::string msg;
-        log4cxx::helpers::Transcoder::encodeUTF8( event->getMessage(), msg );
-        MT_LogManager::Instance().Log( level, msg.c_str() );
-    }
-
-    void close()
-    {
-        if( !closed )
-            closed = true;
-    }
-
-    bool isClosed() const
-    {
-        return closed;
-    }
-
-    bool requiresLayout() const
-    {
-        return false;
+        MT_LogManager::Instance().Log( GetLogLevel( level ), (name_ + msg).c_str() );
     }
 
 private:
-    bool closed_;
+    const std::string name_;
 };
 
-IMPLEMENT_LOG4CXX_OBJECT( MTLoggerAppender )
-
-typedef helpers::ObjectPtrT<MTLoggerAppender> MTLoggerAppenderPtr;
+}  // namespace
 
 void InitializeTerrainLogger()
 {
-    MTLoggerAppenderPtr appender = new MTLoggerAppender();
-    log4cxx::LoggerPtr rootLogger = log4cxx::Logger::getRootLogger();
-    rootLogger->setLevel( log4cxx::Level::getAll() );
-    rootLogger->addAppender( appender );
+    pathfind::SetLogger( boost::make_shared< MTTerrainLogger >( "pathfind" ));
+    spatialcontainer::SetLogger( boost::make_shared< MTTerrainLogger >( "spatialcontainer" ));
 }
 
