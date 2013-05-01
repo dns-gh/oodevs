@@ -141,6 +141,7 @@ func (model *Model) update(msg *SwordMessage) {
 			automat := NewAutomat(
 				mm.GetAutomat().GetId(),
 				mm.GetParty().GetId(),
+				mm.GetKnowledgeGroup().GetId(),
 				mm.GetName())
 			automatId, formationId := uint32(0), uint32(0)
 			if parent := mm.GetParent().GetAutomat(); parent != nil {

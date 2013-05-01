@@ -379,6 +379,7 @@ func (s *TestSuite) TestCreateAutomat(c *C) {
 	a, err := client.CreateAutomat(formation.Id, 0, automatType, kg0.Id)
 	c.Assert(err, IsNil)
 	c.Assert(a, NotNil)
+	c.Assert(a.KnowledgeGroupId, Equals, kg0.Id)
 
 	// Create automat in previous automat
 	aa, err := client.CreateAutomat(0, a.Id, automatType, kg0.Id)

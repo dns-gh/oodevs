@@ -96,27 +96,29 @@ func (u *Unit) Copy() *Unit {
 }
 
 type Automat struct {
-	Id       uint32
-	PartyId  uint32
-	Name     string
-	Automats map[uint32]*Automat
-	Units    map[uint32]*Unit
-	Engaged  bool
+	Id               uint32
+	PartyId          uint32
+	Name             string
+	Automats         map[uint32]*Automat
+	Units            map[uint32]*Unit
+	Engaged          bool
+	KnowledgeGroupId uint32
 }
 
-func NewAutomat(id, partyId uint32, name string) *Automat {
+func NewAutomat(id, partyId, knowledgeGroupId uint32, name string) *Automat {
 	return &Automat{
-		Id:       id,
-		PartyId:  partyId,
-		Name:     name,
-		Automats: map[uint32]*Automat{},
-		Units:    map[uint32]*Unit{},
-		Engaged:  true,
+		Id:               id,
+		PartyId:          partyId,
+		Name:             name,
+		Automats:         map[uint32]*Automat{},
+		Units:            map[uint32]*Unit{},
+		Engaged:          true,
+		KnowledgeGroupId: knowledgeGroupId,
 	}
 }
 
 func (a *Automat) Copy() *Automat {
-	other := NewAutomat(a.Id, a.PartyId, a.Name)
+	other := NewAutomat(a.Id, a.PartyId, a.KnowledgeGroupId, a.Name)
 	other.Engaged = a.Engaged
 	for k, v := range a.Automats {
 		other.Automats[k] = v.Copy()
