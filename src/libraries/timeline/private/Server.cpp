@@ -9,6 +9,7 @@
 
 #include "Server.h"
 
+#include "Embedded_ABC.h"
 #include "controls/controls.h"
 
 #include <tools/IpcDevice.h>
@@ -54,24 +55,19 @@ namespace
         ipc::Device& device_;
         std::vector< uint8_t > resize_;
     };
-
-    QString FromPath( const tools::Path& path )
-    {
-        return QString::fromStdWString( path.ToUnicode() );
-    }
 }
 
 Server::Server( const Configuration& cfg )
-    : cfg_   ( cfg )
-    , uuid_  ( boost::lexical_cast< std::string >( boost::uuids::random_generator()() ) )
-    , device_( new ipc::Device( uuid_, true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
-    , core_  ( new QProcess() )
+    : cfg_     ( cfg )
+    , uuid_    ( boost::lexical_cast< std::string >( boost::uuids::random_generator()() ) )
+    , device_  ( new ipc::Device( uuid_, true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
+    , embedded_( Embedded_ABC::Factory( *device_, cfg.external ) )
 {
     auto layout = new QVBoxLayout( cfg.widget );
     auto widget = new Widget( *device_, cfg.widget );
     layout->addWidget( widget );
     layout->setContentsMargins( 0, 0, 0, 0 );
-    StartProcess();
+    embedded_->Start( cfg_, uuid_ );
 }
 
 std::auto_ptr< Server_ABC > timeline::MakeServer( const Configuration& cfg )
@@ -81,25 +77,7 @@ std::auto_ptr< Server_ABC > timeline::MakeServer( const Configuration& cfg )
 
 Server::~Server()
 {
-    if( !core_.get() )
-        return;
-    std::vector< uint8_t > quit_( controls::QuitClient( 0, 0 ) );
-    controls::QuitClient( &quit_[0], quit_.size() );
-    device_->TryWrite( &quit_[0], quit_.size() );
-    core_->waitForFinished( 4*1000 );
-    core_->kill();
-    core_.reset();
-}
-
-void Server::StartProcess()
-{
-    connect( core_.get(), SIGNAL( error( QProcess::ProcessError ) ), SLOT( OnError( QProcess::ProcessError ) ) );
-    core_->setWorkingDirectory( FromPath( cfg_.rundir ) );
-    QStringList args;
-    args << QString::number( reinterpret_cast< int >( cfg_.widget->winId() ) )
-         << QString::fromStdString( uuid_ )
-         << QString::fromStdString( cfg_.target );
-    core_->start( FromPath( cfg_.binary ), args );
+    embedded_.reset();
 }
 
 namespace

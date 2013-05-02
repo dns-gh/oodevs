@@ -45,6 +45,10 @@ int main( int argc, char* argv[] )
 
         cfg.widget = central;
         cfg.target = argv[2];
+        cfg.external = true;
+#ifndef _WIN64
+        cfg.external = false;
+#endif
         auto context = timeline::MakeServer( cfg );
 
         main.show();

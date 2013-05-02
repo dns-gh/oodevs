@@ -18,21 +18,23 @@ class QWidget;
 
 namespace timeline
 {
-    struct Server_ABC : public boost::noncopyable
-    {
-                 Server_ABC() {}
-        virtual ~Server_ABC() {}
-    };
+class Server_ABC : public boost::noncopyable
+{
+public:
+             Server_ABC() {}
+    virtual ~Server_ABC() {}
+};
 
-    struct Configuration
-    {
-        tools::Path rundir;
-        tools::Path binary;
-        QWidget*    widget;
-        std::string target;
-    };
+struct Configuration
+{
+    tools::Path rundir;
+    tools::Path binary;
+    QWidget*    widget;
+    std::string target;
+    bool        external; ///< use external process
+};
 
-    std::auto_ptr< Server_ABC > MakeServer( const Configuration& cfg );
+std::auto_ptr< Server_ABC > MakeServer( const Configuration& cfg );
 }
 
 #endif//TIMELINE_API_H__

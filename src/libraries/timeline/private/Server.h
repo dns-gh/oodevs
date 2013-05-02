@@ -22,11 +22,15 @@ namespace ipc
 
 namespace timeline
 {
+    class Embedded_ABC;
+}
+
+namespace timeline
+{
 class Server : public QObject
              , public Server_ABC
 {
     Q_OBJECT
-
 public:
              Server( const Configuration& cfg );
     virtual ~Server();
@@ -41,7 +45,7 @@ private:
     const Configuration cfg_;
     const std::string uuid_;
     std::auto_ptr< tools::ipc::Device > device_;
-    std::auto_ptr< QProcess > core_;
+    std::auto_ptr< Embedded_ABC > embedded_;
 };
 }
 
