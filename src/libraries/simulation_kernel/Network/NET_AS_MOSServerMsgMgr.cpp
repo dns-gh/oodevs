@@ -79,11 +79,11 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     unsigned int clientId = wrapper.has_client_id() ? wrapper.client_id() : 0u;
 
     if( wrapper.message().has_control_stop() )
-        simulation_.Stop( nCtx );
+        simulation_.Stop( nCtx, clientId );
     else if( wrapper.message().has_control_pause() )
-        simulation_.Pause( nCtx );
+        simulation_.Pause( nCtx, clientId );
     else if( wrapper.message().has_control_resume() )
-        simulation_.Resume( wrapper.message().control_resume().has_tick() ? wrapper.message().control_resume().tick() : 0, nCtx );
+        simulation_.Resume( wrapper.message().control_resume().has_tick() ? wrapper.message().control_resume().tick() : 0, nCtx, clientId );
     else if( wrapper.message().has_control_change_time_factor() )
         simulation_.SetTimeFactor( wrapper.message().control_change_time_factor().time_factor() );
     else if( wrapper.message().has_control_date_time_change() )
@@ -95,7 +95,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( wrapper.message().has_control_toggle_vision_cones() )
         agentServer_                        .SetMustSendUnitVisionCones              ( wrapper.message().control_toggle_vision_cones().vision_cones());
     else if( wrapper.message().has_unit_order() )
-        workspace.GetEntityManager        ().OnReceiveUnitOrder                      ( wrapper.message().unit_order()                         , nCtx );
+        workspace.GetEntityManager        ().OnReceiveUnitOrder                      ( wrapper.message().unit_order()                         , nCtx, clientId );
     else if( wrapper.message().has_automat_order() )
         workspace.GetEntityManager        ().OnReceiveAutomatOrder                   ( wrapper.message().automat_order()                      , nCtx );
     else if( wrapper.message().has_crowd_order() )
@@ -103,7 +103,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( wrapper.message().has_frag_order() )
         workspace.GetEntityManager        ().OnReceiveFragOrder                      ( wrapper.message().frag_order()                         , nCtx );
     else if( wrapper.message().has_set_automat_mode() )
-        workspace.GetEntityManager        ().OnReceiveSetAutomateMode                ( wrapper.message().set_automat_mode()                   , nCtx );
+        workspace.GetEntityManager        ().OnReceiveSetAutomateMode                ( wrapper.message().set_automat_mode()                   , nCtx, clientId );
     else if( wrapper.message().has_unit_creation_request() )
         workspace.GetEntityManager        ().OnReceiveUnitCreationRequest            ( wrapper.message().unit_creation_request()              , nCtx );
     else if( wrapper.message().has_knowledge_magic_action() )

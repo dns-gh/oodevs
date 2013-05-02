@@ -28,10 +28,10 @@ public:
     //! @name Operations
     //@{
     virtual void Start() = 0;
-    virtual void Stop( unsigned int nCtx ) = 0;
-    virtual void Pause( unsigned int nCtx ) = 0;
+    virtual void Stop( unsigned int nCtx, unsigned int clientId ) = 0;
+    virtual void Pause( unsigned int nCtx, unsigned int clientId ) = 0;
     virtual void Continue() = 0;
-    virtual void Resume( unsigned int ticks, unsigned int nCtx ) = 0;
+    virtual void Resume( unsigned int ticks, unsigned int nCtx, unsigned int clientId ) = 0;
     virtual void SetTimeFactor( unsigned timeFactor ) = 0;
     virtual void SetRealTime( const std::string& realTime ) = 0;
     //@}

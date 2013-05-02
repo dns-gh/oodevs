@@ -75,10 +75,10 @@ public:
     //! @name Simulation management
     //@{
     virtual void Start();
-    virtual void Stop( unsigned int nCtx );
-    virtual void Pause( unsigned int nCtx );
+    virtual void Stop( unsigned int nCtx, unsigned int clientId );
+    virtual void Pause( unsigned int nCtx, unsigned int clientId );
     virtual void Continue();
-    virtual void Resume( unsigned int ticks, unsigned int nCtx );
+    virtual void Resume( unsigned int ticks, unsigned int nCtx, unsigned int clientId );
     virtual void SetTimeFactor( unsigned timeFactor );
     virtual void SetRealTime( const std::string& realTime );
     //@}

@@ -81,6 +81,8 @@ void DispatcherPlugin::OnReceive( const std::string& link, sword::ClientToSim& m
         error.set_context( message.context() );
         if( protocol::GetForbiddenError( message, error ))
         {
+            if( unsigned int clientID = links_.GetClientID( link ) )
+                error.set_client_id( clientID );
             clients_.Send( error );
         }
     }
