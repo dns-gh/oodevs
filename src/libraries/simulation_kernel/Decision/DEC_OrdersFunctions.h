@@ -34,6 +34,7 @@ public:
 
     // Limas
     template< typename T > static unsigned int GetLima                   ( const T& caller, unsigned int limaId );
+    template< typename T > static std::vector< unsigned int > GetLimasFromType ( const T& caller, unsigned int limaId );
     template< typename T > static MIL_LimaOrder* GetNextScheduledLima    ( const T& caller );
     template< typename T > static const MIL_Fuseau& GetFuseau            ( const T& caller );
     template< typename T > static bool GetMissionLimaFlag                ( const T& caller, unsigned int limaId );

@@ -53,6 +53,7 @@ public:
     const MIL_Fuseau& GetFuseau() const;
     virtual MIL_LimaOrder* FindLima( const MIL_LimaFunction& function ) const;
     virtual MIL_LimaOrder* FindLima( unsigned int nID ) const;
+    virtual std::vector< MIL_LimaOrder* > FindAllLimas( const MIL_LimaFunction& func ) const;
     virtual MIL_LimaOrder* FindNextScheduledLima() const;
     //@}
 

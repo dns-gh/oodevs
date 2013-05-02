@@ -8,6 +8,10 @@ integration.getLimaPoint = function( position )
     return DEC_GetLimaPoint( position )
 end
 
+integration.getLimasFromType = function( limaType )
+    return DEC_GetLimasFromType( limaType )
+end
+
 integration.getTypeLimaFromPoint = function( position )
     return DEC_GetTypeLimaPoint( position )
 end
@@ -26,6 +30,10 @@ end
 
 integration.setMissionLimaFlag = function( lima, booleen )
     DEC_SetMissionLimaFlag( lima, booleen )
+end
+
+integration.getMissionLimaFlag = function( lima )
+    return DEC_GetMissionLimaFlag( lima )
 end
 
 integration.setMissionLimaFlagSchedule = function( lima, booleen )

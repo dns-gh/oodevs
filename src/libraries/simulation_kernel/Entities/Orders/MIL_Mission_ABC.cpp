@@ -326,6 +326,15 @@ MIL_LimaOrder* MIL_Mission_ABC::FindLima( const MIL_LimaFunction& function )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC::FindAllLimas
+// Created: NMI 2013-04-30
+// -----------------------------------------------------------------------------
+std::vector< MIL_LimaOrder* > MIL_Mission_ABC::FindAllLimas( const MIL_LimaFunction& function )
+{
+    return context_.FindAllLimas( function );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC::FindNextScheduledLima
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------

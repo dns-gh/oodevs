@@ -1938,21 +1938,24 @@ std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunct
         const T_LimaVector& limas = callerAutomate.GetOrderManager().GetLimas();
         for( auto it = limas.begin(); it != limas.end(); ++it )
         {
-            for( auto fit = it->GetFunctions().begin(); fit != it->GetFunctions().end(); ++fit )
+            if( !(it->IsFlagged()) )
             {
-                if( !(*fit) )
-                    throw MASA_EXCEPTION( "invalid parameter." );
-                if( static_cast< int >( ( *fit )->GetID() ) == limaType )
+                for( auto fit = it->GetFunctions().begin(); fit != it->GetFunctions().end(); ++fit )
                 {
-                    std::vector< MT_Vector2D > nextPoints;
-                    // Divide lima inside fuseau in divider sections and pick one point per section.
-                    fuseau.ComputePointsBeforeLima( *it, 0., divider, nextPoints );
-                    std::vector< boost::shared_ptr< MT_Vector2D > > sharedVector;
-                    for( auto vit = nextPoints.begin(); vit != nextPoints.end(); ++vit )
-                        sharedVector.push_back( boost::make_shared< MT_Vector2D >( *vit ) );
-                    if( !sharedVector.empty() )
-                        result.push_back( sharedVector );
-                    break;
+                    if( !(*fit) )
+                        throw MASA_EXCEPTION( "invalid parameter." );
+                    if( static_cast< int >( ( *fit )->GetID() ) == limaType )
+                    {
+                        std::vector< MT_Vector2D > nextPoints;
+                        // Divide lima inside fuseau in divider sections and pick one point per section.
+                        fuseau.ComputePointsBeforeLima( *it, 0., divider, nextPoints );
+                        std::vector< boost::shared_ptr< MT_Vector2D > > sharedVector;
+                        for( auto vit = nextPoints.begin(); vit != nextPoints.end(); ++vit )
+                            sharedVector.push_back( boost::make_shared< MT_Vector2D >( *vit ) );
+                        if( !sharedVector.empty() )
+                            result.push_back( sharedVector );
+                        break;
+                    }
                 }
             }
         }

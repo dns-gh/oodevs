@@ -295,6 +295,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
                             boost::bind( &DEC_OrdersFunctions::FinishMission< MIL_Automate >, boost::ref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_GetLima",
         boost::function< unsigned int( unsigned int ) >( boost::bind( &DEC_OrdersFunctions::GetLima< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_GetLimasFromType",
+        boost::function< std::vector< unsigned int >( unsigned int ) >( boost::bind( &DEC_OrdersFunctions::GetLimasFromType< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ProchaineLimaHoraireNonFlagee",
             boost::function< MIL_LimaOrder* () >( boost::bind( &DEC_OrdersFunctions::GetNextScheduledLima< MIL_Automate >, boost::ref( GetAutomate() ) ) ) );
     brain.RegisterFunction( "DEC_Fuseau",

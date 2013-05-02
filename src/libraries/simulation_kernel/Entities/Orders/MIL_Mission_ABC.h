@@ -67,6 +67,7 @@ public:
     const   T_LimaVector&  GetLimas             () const;
             MIL_LimaOrder* FindLima             ( unsigned int nID );
             MIL_LimaOrder* FindLima             ( const MIL_LimaFunction& function );
+            std::vector< MIL_LimaOrder* > FindAllLimas ( const MIL_LimaFunction& function );
             MIL_LimaOrder* FindNextScheduledLima();
             void           AffectFuseau         ( const MIL_Fuseau& fuseau );
     virtual void           AffectDirection      ( const MT_Vector2D& direction );

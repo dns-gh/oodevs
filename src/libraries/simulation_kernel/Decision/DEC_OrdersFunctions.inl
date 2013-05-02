@@ -50,6 +50,23 @@ unsigned int DEC_OrdersFunctions::GetLima( const T& caller, unsigned int limaId 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GetLimasFromType
+// Created: NMI 2013-04-30
+// -----------------------------------------------------------------------------
+template< typename T >
+std::vector< unsigned int > DEC_OrdersFunctions::GetLimasFromType( const T& caller, unsigned int limaId )
+{
+    std::vector< unsigned int > vecIDs;
+    const MIL_LimaFunction* pFunction = MIL_LimaFunction::Find( limaId );
+    if( !pFunction )
+        return vecIDs;
+    std::vector< MIL_LimaOrder* > vecLimas = caller.GetOrderManager().FindAllLimas( *pFunction );
+    for( auto it = vecLimas.begin(); it != vecLimas.end(); ++it )
+        vecIDs.push_back( (*it)->GetID() );
+    return vecIDs;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::GetNextScheduledLima
 // Created: NLD 2007-04-30
 // -----------------------------------------------------------------------------

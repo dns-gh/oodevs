@@ -56,6 +56,7 @@ public:
     //@{
     virtual MIL_LimaOrder* FindLima( const MIL_LimaFunction& function ) const;
     virtual MIL_LimaOrder* FindLima( unsigned int nID ) const;
+    virtual std::vector< MIL_LimaOrder* > FindAllLimas( const MIL_LimaFunction& function ) const;
     virtual MIL_LimaOrder* FindNextScheduledLima() const;
     const T_LimaVector& GetLimas() const;
     const MT_Vector2D& GetDirDanger() const;

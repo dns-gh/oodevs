@@ -146,6 +146,18 @@ MIL_LimaOrder* MIL_PionOrderManager::FindLima( unsigned int nID ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PionOrderManager::FindAllLimas
+// Created: NMI 2013-04-30
+// -----------------------------------------------------------------------------
+std::vector< MIL_LimaOrder* > MIL_PionOrderManager::FindAllLimas( const MIL_LimaFunction& function ) const
+{
+    std::vector< MIL_LimaOrder* > limas = MIL_OrderManager_ABC::FindAllLimas( function );
+    if( limas.empty() )
+        limas = pion_.GetAutomate().GetOrderManager().FindAllLimas( function );
+    return limas;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PionOrderManager::FindNextScheduledLima
 // Created: LMT 2010-04-01
 // -----------------------------------------------------------------------------

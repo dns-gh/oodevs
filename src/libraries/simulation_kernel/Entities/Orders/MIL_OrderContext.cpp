@@ -261,6 +261,19 @@ MIL_LimaOrder* MIL_OrderContext::FindLima( const MIL_LimaFunction& func )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::FindAllLimas
+// Created: NMI 2013-04-30
+// -----------------------------------------------------------------------------
+std::vector< MIL_LimaOrder* > MIL_OrderContext::FindAllLimas( const MIL_LimaFunction& func )
+{
+    std::vector< MIL_LimaOrder* > vec;
+    for( auto it = limas_.begin(); it != limas_.end(); ++it )
+        if( it->HasFunction( func ) )
+            vec.push_back(&(*it));
+    return vec;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_OrderContext::FindNextScheduledLima
 // Created: NLD 2007-04-25
 // -----------------------------------------------------------------------------

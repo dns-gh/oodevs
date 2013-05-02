@@ -603,6 +603,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_FinMission", boost::bind( &DEC_OrdersFunctions::FinishMission< MIL_AgentPion >, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_GetLima",
         boost::function< unsigned int( unsigned int ) >( boost::bind( &DEC_OrdersFunctions::GetLima< MIL_Agent_ABC >, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_GetLimasFromType",
+        boost::function< std::vector< unsigned int >( unsigned int ) >( boost::bind( &DEC_OrdersFunctions::GetLimasFromType< MIL_Agent_ABC >, boost::ref( GetPion() ), _1 ) ) );
+    
     RegisterFunction( "DEC_SetMissionLimaFlag"            ,
         boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::PionSetMissionLimaFlag, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_GetMissionLimaFlag"            ,

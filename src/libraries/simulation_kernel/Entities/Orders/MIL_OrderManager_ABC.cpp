@@ -166,6 +166,17 @@ MIL_LimaOrder* MIL_OrderManager_ABC::FindLima( unsigned int nID ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_OrderManager_ABC::FindAllLimas
+// Created: NMI 2013-04-30
+// -----------------------------------------------------------------------------
+std::vector< MIL_LimaOrder* > MIL_OrderManager_ABC::FindAllLimas( const MIL_LimaFunction& function ) const
+{
+    if( !pMission_ )
+        return std::vector< MIL_LimaOrder* >();
+    return pMission_->FindAllLimas( function );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_OrderManager_ABC::FindNextScheduledLima
 // Created: NLD 2006-11-16
 // -----------------------------------------------------------------------------
