@@ -36,7 +36,8 @@ class ObjectMessageCallback : public ObjectMessageCallback_ABC
 public:
     //! @name Types
     //@{
-    typedef boost::function< void( const std::string&, const T& ) > T_Callback;
+    typedef boost::function< void( const std::string&, const T& ) > T_ConstCallback;
+    typedef boost::function< void( const std::string&, T& ) >       T_Callback;
     //@}
 
 public:
@@ -48,11 +49,31 @@ public:
 
     //! @name Operations
     //@{
+    void AddCallback( const T_ConstCallback& callback )
+    {
+        constCallbacks_.push_back( callback );
+    }
     void AddCallback( const T_Callback& callback )
     {
         callbacks_.push_back( callback );
     }
     void OnMessage( const std::string& link, const T& message ) const
+    {
+        try
+        {
+            for( auto it = constCallbacks_.begin(); it != constCallbacks_.end(); ++it )
+                (*it)( link, message );
+        }
+        catch( const ConnectionError& )
+        {
+            throw;
+        }
+        catch( const std::exception& e )
+        {
+            throw MASA_EXCEPTION( tools::GetExceptionMsg( e ) + (" " + message.ShortDebugString()) );
+        }
+    }
+    void OnMessage( const std::string& link, T& message ) const
     {
         try
         {
@@ -78,10 +99,12 @@ public:
             callback.OnWarning( link,
                 "Message size larger than " + boost::lexical_cast< std::string >( threshold ) + " detected" + " " + t.ShortDebugString() );
         OnMessage( link, t );
+        OnMessage( link, static_cast< const T& >( t ) );
     }
-    virtual void OnMessage( const std::string& link, const google::protobuf::Message& message ) const
+    virtual void OnMessage( const std::string& link, google::protobuf::Message& message ) const
     {
         OnMessage( link, static_cast< const T& >( message ) );
+        OnMessage( link, static_cast< T& >( message ) );
     }
     //@}
 
@@ -95,6 +118,9 @@ private:
 private:
     //! @name Types
     //@{
+    typedef std::vector< T_ConstCallback >              T_ConstCallbacks;
+    typedef typename T_ConstCallbacks::const_iterator CIT_ConstCallbacks;
+
     typedef std::vector< T_Callback >              T_Callbacks;
     typedef typename T_Callbacks::const_iterator CIT_Callbacks;
     //@}
@@ -102,6 +128,7 @@ private:
 private:
     //! @name Member data
     //@{
+    T_ConstCallbacks constCallbacks_;
     T_Callbacks callbacks_;
     //@}
 };

@@ -66,10 +66,12 @@ void DispatcherPlugin::Receive( const sword::SimToClient& /*message*/ )
 // Name: DispatcherPlugin::OnReceive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void DispatcherPlugin::OnReceive( const std::string& link, const sword::ClientToSim& message )
+void DispatcherPlugin::OnReceive( const std::string& link, sword::ClientToSim& message )
 {
     if( links_.GetProfile( link ).CheckRights( message ) )
     {
+        if( unsigned int clientID = links_.GetClientID( link ) )
+            message.set_client_id( clientID );
         order_.Resolve( message );
         simulation_.Send( message );
     }

@@ -145,7 +145,7 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitKnowledgeCreation                  , unit_knowledge_creation                   )
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitKnowledgeDestruction               , unit_knowledge_destruction                )
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitKnowledgeUpdate                    , unit_knowledge_update                     )
-    GENERATE_MESSAGE( sword::SimToClient, sword, UnitMagicActionAck                     , unit_magic_action_ack                     )
+    GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, UnitMagicActionAck       , unit_magic_action_ack                     )
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitOrder                              , unit_order                                )
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitPathFind                           , unit_pathfind                             )
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitVisionCones                        , unit_vision_cones                         )

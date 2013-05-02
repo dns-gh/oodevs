@@ -47,7 +47,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void OnReceive( const std::string& link, const sword::ClientToSim& asnMsg );
+    void OnReceive( const std::string& link, sword::ClientToSim& asnMsg );
     //@}
 
 private:
