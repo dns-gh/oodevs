@@ -854,7 +854,7 @@ void MIL_AgentPion::SpecializedDelete()
 // Name: MIL_AgentPion::DeleteUnit
 // Created: JSR 2013-02-19
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::DeleteUnit( unsigned int nCtx )
+void MIL_AgentPion::DeleteUnit( unsigned int nCtx, unsigned int clientId )
 {
     if( markedForDestruction_ )
         return;
@@ -886,16 +886,16 @@ void MIL_AgentPion::DeleteUnit( unsigned int nCtx )
 
     client::UnitDestruction msg;
     msg().mutable_unit()->set_id( GetID() );
-    msg.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    msg.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveDeleteUnit
 // Created: JSR 2013-01-29
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveDeleteUnit( unsigned int nCtx )
+void MIL_AgentPion::OnReceiveDeleteUnit( unsigned int nCtx, unsigned int clientId )
 {
-    DeleteUnit( nCtx );
+    DeleteUnit( nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
@@ -1177,7 +1177,8 @@ void MIL_AgentPion::OnReceiveCreateWound( const sword::MissionParameters& msg )
 // Name: MIL_AgentPion::OnReceiveUnitMagicAction
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies, unsigned int nCtx )
+void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies, unsigned int nCtx,
+                                              unsigned int clientId )
 {
     switch( msg.type() )
     {
@@ -1221,7 +1222,7 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         OnReceiveDestroyAll();
         break;
     case sword::UnitMagicAction::delete_unit:
-        OnReceiveDeleteUnit( nCtx );
+        OnReceiveDeleteUnit( nCtx, clientId );
         break;
     case sword::UnitMagicAction::change_human_factors:
         OnReceiveChangeHumanFactors( msg.parameters() );

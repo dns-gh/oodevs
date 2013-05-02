@@ -139,7 +139,7 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitCreationRequestAck                 , unit_creation_request_ack                 )
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitDamagedByCrowdFire                 , unit_damaged_by_crowd_fire                )
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitDamagedByUnitFire                  , unit_damaged_by_unit_fire                 )
-    GENERATE_MESSAGE( sword::SimToClient, sword, UnitDestruction                        , unit_destruction                          )
+    GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, UnitDestruction          , unit_destruction                          )
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitDetection                          , unit_detection                            )
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitEnvironmentType                    , unit_environment_type                     )
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitKnowledgeCreation                  , unit_knowledge_creation                   )
