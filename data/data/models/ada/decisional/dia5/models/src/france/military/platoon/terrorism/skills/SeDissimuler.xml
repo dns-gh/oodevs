@@ -2,7 +2,7 @@
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.terrorism.skills.SeDissimuler" source-version="1.0.0">
   <parameters>
     <parameter name="reachable">
-      <description>Element dans lequelle se dissimuler.</description>
+      <description>Element dans lequel se dissimuler.</description>
       <type>
         <class name="sword.military.world.LocalizedElement"/>
       </type>
