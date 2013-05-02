@@ -14,7 +14,7 @@
                 </h1>
             </head>
             <body>
-                <table border="1" align="center">
+                <table border="1" align="center" width="100%" cellpadding="5">
                     <tr>
                         <xsl:apply-templates select="context"/>
                     </tr>
@@ -73,20 +73,38 @@
         <img alt="{child::text/text()}" src="{$imageDirectory}{child::text/text()}"></img>
     </xsl:template>
     <xsl:template match="parameters">
-        <td>
+        <td width="200">
             <h2>Parameters</h2>
         </td>
         <td>
-            <xsl:for-each select="parameter">
-                <h3>
-                    <xsl:value-of select="@name"/>
-                </h3>
-                <xsl:apply-templates select="*"/>
-            </xsl:for-each>
+            <h2>Mandatory</h2>
+				<xsl:for-each select="parameter">
+						<xsl:choose>
+							<xsl:when test="@optional">
+								<xsl:if test="@optional = 'false'">
+									<h3><xsl:value-of select="@name"/></h3>
+									<xsl:apply-templates select="*"/>
+								</xsl:if>
+							</xsl:when>
+							<xsl:otherwise>
+								<h3><xsl:value-of select="@name"/></h3>
+								<xsl:apply-templates select="*"/>
+							</xsl:otherwise>
+						</xsl:choose>
+				</xsl:for-each>
+            <h2>Optional</h2>
+				<xsl:for-each select="parameter">
+						<xsl:if test="@optional">
+							<xsl:if test="@optional = 'true'">
+								<h3><xsl:value-of select="@name"/></h3>
+								<xsl:apply-templates select="*"/>
+							</xsl:if>
+						</xsl:if>
+				</xsl:for-each>
         </td>
     </xsl:template>
     <xsl:template match="context">
-        <td border="thin solid #6495ed" text-align="left" padding="2px 10px">
+        <td border="thin solid #6495ed" text-align="left" padding="2px 10px" width="100">
             <h2>Context</h2>
         </td>
         <td>
@@ -94,7 +112,7 @@
         </td>
     </xsl:template>
     <xsl:template match="behavior">
-        <td>
+        <td width="200">
             <h2>Behavior</h2>
         </td>
         <td>
@@ -102,7 +120,7 @@
         </td>
     </xsl:template>
     <xsl:template match="specific-cases">
-        <td>
+        <td width="200">
             <h2>Specific cases</h2>
         </td>
         <td>
@@ -110,7 +128,7 @@
         </td>
     </xsl:template>
     <xsl:template match="mission-end">
-        <td>
+        <td width="200">
             <h2>End of mission</h2>
         </td>
         <td>
@@ -118,7 +136,7 @@
         </td>
     </xsl:template>
     <xsl:template match="comments">
-        <td>
+        <td width="200">
             <h2>Comments</h2>
         </td>
         <td>
