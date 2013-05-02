@@ -8,9 +8,10 @@
 // *****************************************************************************
 #include "Embedded_ABC.h"
 #include "moc_embedded_abc.cpp"
-#include "controls/controls.h"
-#include <tools/IpcDevice.h>
 
+#include "controls/controls.h"
+
+#include <tools/IpcDevice.h>
 #include <QWidget>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
 #include <boost/thread.hpp>
@@ -63,7 +64,9 @@ namespace
             QStringList args;
             args << QString::number( reinterpret_cast< int >( cfg.widget->winId() ) )
                  << QString::fromStdString( uuid )
-                 << QString::fromStdString( cfg.target );
+                 << QString::fromStdString( cfg.url );
+            if( cfg.debug_port )
+                args << "--debug_port" << QString::number( cfg.debug_port );
             process_.start( FromPath( cfg.binary ), args );
         }
 
@@ -93,7 +96,9 @@ namespace
             core::Configuration next;
             next.wid = reinterpret_cast< int >( cfg.widget->winId() );
             next.uuid = uuid;
-            next.url = cfg.target;
+            next.url = cfg.url;
+            next.single_process = false;
+            next.debug_port = cfg.debug_port;
             client_ = core::MakeClient( next );
             thread_.reset( new boost::thread( &core::Client_ABC::Run, client_.get() ) );
         }

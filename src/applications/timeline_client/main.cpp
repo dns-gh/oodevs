@@ -9,27 +9,52 @@
 
 #include <timeline_core/api.h>
 #include <boost/lexical_cast.hpp>
+#ifdef _MSC_VER
+#pragma warning( push, 0 )
+#endif
+#include <boost/program_options.hpp>
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
+
+namespace bpo = boost::program_options;
 
 int main( int argc, char* argv[] )
 {
+    if( timeline::core::SpawnClient() )
+        return 0;
     try
     {
-        if( argc != 4 )
-            throw std::exception( "usage: timeline_view <wid> <uuid> <url>" );
         timeline::core::Configuration cfg;
-        cfg.wid = boost::lexical_cast< int >( argv[1] );
-        cfg.uuid = argv[2];
-        cfg.url = argv[3];
+        bpo::positional_options_description pos;
+        pos.add( "widget", 1 );
+        pos.add( "uuid", 1 );
+        pos.add( "url", 1 );
+        bpo::options_description opts( "options" );
+        opts.add_options()
+            ( "help",           "print this message" )
+            ( "widget",         bpo::value( &cfg.wid )->required(), "set parent widget id" )
+            ( "uuid",           bpo::value( &cfg.uuid )->required(), "set parent uuid" )
+            ( "url",            bpo::value( &cfg.url )->required(), "set url target" )
+            ( "single_process", bpo::value( &cfg.single_process )->default_value( false ), "use single process" )
+            ( "debug_port",     bpo::value( &cfg.debug_port )->default_value( 0 ), "set remote debug port" );
+        bpo::variables_map args;
+        bpo::store( bpo::command_line_parser( argc, argv ).options( opts ).positional( pos ).run(), args );
+        if( args.count( "help" ) )
+        {
+            std::cout << opts << std::endl;
+            return 0;
+        }
+        bpo::notify( args );
         return timeline::core::MakeClient( cfg )->Run();
     }
     catch( const std::exception& err )
     {
-        // FIXME use a logger
-        fprintf( stderr, "%s\n", err.what() );
+        std::cerr << err.what() << std::endl;
     }
     catch( ... )
     {
-        fprintf( stderr, "Critical failure: Unexpected exception\n" );
+        std::cerr << "Critical failure: Unexpected exception" << std::endl;
     }
     return -1;
 }

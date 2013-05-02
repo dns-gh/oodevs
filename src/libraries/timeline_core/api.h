@@ -22,6 +22,7 @@ namespace core
                  Client_ABC() {}
         virtual ~Client_ABC() {}
 
+        /// Public methods
         virtual int Run() = 0;
     };
 
@@ -30,8 +31,11 @@ namespace core
         int wid;
         std::string uuid;
         std::string url;
+        bool single_process;
+        int debug_port;
     };
 
+    bool SpawnClient();
     std::auto_ptr< Client_ABC > MakeClient( const Configuration& cfg );
 }
 }

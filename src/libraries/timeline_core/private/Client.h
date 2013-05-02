@@ -27,6 +27,7 @@ namespace timeline
 {
 namespace core
 {
+    class App;
     class Browser;
 }
 }
@@ -49,13 +50,10 @@ public:
     virtual void OnResizeClient();
     virtual void OnQuitClient();
 
-    /// private types
-    struct CefContext;
-
 private:
     const Configuration cfg_;
-    std::auto_ptr< CefContext > context_;
     std::auto_ptr< tools::ipc::Device > device_;
+    CefRefPtr< App > app_;
     CefRefPtr< Browser > browser_;
     bool quit_;
 };

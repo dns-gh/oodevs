@@ -70,11 +70,6 @@ Server::Server( const Configuration& cfg )
     embedded_->Start( cfg_, uuid_ );
 }
 
-std::auto_ptr< Server_ABC > timeline::MakeServer( const Configuration& cfg )
-{
-    return std::auto_ptr< Server_ABC >( new Server( cfg ) );
-}
-
 Server::~Server()
 {
     embedded_.reset();

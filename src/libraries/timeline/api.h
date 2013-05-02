@@ -30,10 +30,12 @@ struct Configuration
     tools::Path rundir;
     tools::Path binary;
     QWidget*    widget;
-    std::string target;
-    bool        external; ///< use external process
+    std::string url;
+    bool        external;   ///< use external process
+    int         debug_port; ///< optional remove debug port
 };
 
+bool SpawnServer();
 std::auto_ptr< Server_ABC > MakeServer( const Configuration& cfg );
 }
 

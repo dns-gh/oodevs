@@ -6,34 +6,21 @@
 // Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
-
 #include "Client.h"
 
+#include "App.h"
 #include "Browser.h"
 #include <tools/IpcDevice.h>
 
-#pragma warning( push, 0 )
-#include <cef_app.h>
-#pragma warning( pop )
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
 
 using namespace timeline::core;
 namespace ipc = tools::ipc;
 
-struct Client::CefContext
+bool timeline::core::SpawnClient()
 {
-    CefContext()
-    {
-        CefSettings settings;
-        settings.multi_threaded_message_loop = true;
-        CefInitialize( settings, 0 );
-    }
-
-    ~CefContext()
-    {
-        CefShutdown();
-    }
-};
+    return CefExecuteProcess( CefMainArgs( GetModuleHandle( 0 ) ), 0 ) >= 0;
+}
 
 namespace
 {
@@ -48,12 +35,12 @@ namespace
 
 Client::Client( const Configuration& cfg )
     : cfg_    ( cfg )
-    , context_( new CefContext() )
     , device_ ( new ipc::Device( cfg_.uuid, false, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
+    , app_    ( new App( cfg ) )
     , browser_( Browser::Factory( GetHwnd( cfg_.wid ), cfg_.url ) )
     , quit_   ( false )
 {
-    // NOTHING
+    browser_->Start();
 }
 
 std::auto_ptr< Client_ABC > timeline::core::MakeClient( const Configuration& cfg )
@@ -63,7 +50,7 @@ std::auto_ptr< Client_ABC > timeline::core::MakeClient( const Configuration& cfg
 
 Client::~Client()
 {
-    // NOTHING
+    CefShutdown();
 }
 
 int Client::Run()

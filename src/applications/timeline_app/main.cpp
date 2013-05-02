@@ -13,19 +13,46 @@
 #pragma warning( push, 0 )
 #endif
 #include <QtGui>
+#include <boost/program_options.hpp>
 #ifdef _MSC_VER
 #pragma warning( pop )
 #endif
 
+namespace bpo = boost::program_options;
+
 int main( int argc, char* argv[] )
 {
+    if( timeline::SpawnServer() )
+        return 0;
+
     QT_REQUIRE_VERSION( argc, argv, "4.7.0" );
     QApplication app( argc, argv );
     QObject::connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
     try
     {
-        if( argc != 3 )
-            throw std::exception( "usage: timeline_app.exe <exe> <url>" );
+        timeline::Configuration cfg;
+        bpo::positional_options_description pos;
+        pos.add( "binary", 1 );
+        pos.add( "url", 1 );
+        bpo::options_description opts( "options" );
+        opts.add_options()
+            ( "help",       "print this message" )
+            ( "binary",     bpo::value( &cfg.binary )->required(), "set client binary when using external process" )
+            ( "url",        bpo::value( &cfg.url )->required(), "set url target" )
+            ( "external",   bpo::value( &cfg.external )->default_value( true ), "use external process" )
+            ( "debug_port", bpo::value( &cfg.debug_port )->default_value( 0 ), "set remote debug port" );
+        bpo::variables_map args;
+        bpo::store( bpo::command_line_parser( argc, argv ).options( opts ).positional( pos ).run(), args );
+        if( args.count( "help" ) )
+        {
+            std::cout << opts << std::endl;
+            return 0;
+        }
+#ifdef _WIN64
+        if( !cfg.external )
+            throw std::exception( "Unable to disable external process in 64-bit mode" );
+#endif
+        bpo::notify( args );
 
         QMainWindow main;
         main.resize( 800, 600 );
@@ -37,20 +64,12 @@ int main( int argc, char* argv[] )
         central->setAutoFillBackground( true );
         central->setPalette( palette );
 
-        timeline::Configuration cfg;
         cfg.rundir = ".";
-        cfg.binary = argv[1];
         if( !cfg.binary.IsRegularFile() )
             throw std::runtime_error( QString( "invalid file %1" ).arg( argv[1] ).toStdString() );
 
         cfg.widget = central;
-        cfg.target = argv[2];
-        cfg.external = true;
-#ifndef _WIN64
-        cfg.external = false;
-#endif
         auto context = timeline::MakeServer( cfg );
-
         main.show();
         return app.exec();
     }

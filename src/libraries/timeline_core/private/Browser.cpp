@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "Browser.h"
-#include "Engine.h"
 
 using namespace timeline::core;
 
@@ -16,22 +15,23 @@ Browser::Browser( HWND hwnd, const std::string& url )
     : hwnd_  ( hwnd )
     , width_ ( 0 )
     , height_( 0 )
-    , load_  ( url )
-    , engine_( new Engine() )
+    , url_   ( url )
 {
     // NOTHING
 }
 
 CefRefPtr< Browser > Browser::Factory( HWND hwnd, const std::string& url )
 {
-    CefRefPtr< Browser > browser( new Browser( hwnd, url ) );
+    return new Browser( hwnd, url );
+}
+
+void Browser::Start()
+{
     CefWindowInfo info;
-    info.SetAsChild( hwnd, RECT() );
-    CefBrowser::CreateBrowser( info,
-        static_cast< CefRefPtr< CefClient > >( browser ),
-        url, CefBrowserSettings() );
-    browser->Load( url );
-    return browser;
+    info.SetAsChild( hwnd_, RECT() );
+    CefBrowserHost::CreateBrowser( info,
+        static_cast< CefRefPtr< CefClient > >( this ),
+        std::string(), CefBrowserSettings() );
 }
 
 Browser::~Browser()
@@ -44,18 +44,13 @@ CefRefPtr< CefLifeSpanHandler > Browser::GetLifeSpanHandler()
     return this;
 }
 
-CefRefPtr< CefV8ContextHandler > Browser::GetV8ContextHandler()
-{
-    return this;
-}
-
 void Browser::OnAfterCreated( CefRefPtr< CefBrowser > cef )
 {
     std::string url;
     {
         AutoLock lock( this );
         cef_ = cef;
-        url = load_;
+        url = url_;
     }
     UpdateSize();
     Load( url );
@@ -75,7 +70,7 @@ void Browser::Resize( int width, int height )
     if( !cef_ )
         return;
     HDWP hdwp = BeginDeferWindowPos( 1 );
-    hdwp = DeferWindowPos( hdwp, cef_->GetWindowHandle(), NULL, 0, 0, width_, height_, SWP_NOZORDER );
+    hdwp = DeferWindowPos( hdwp, cef_->GetHost()->GetWindowHandle(), NULL, 0, 0, width_, height_, SWP_NOZORDER );
     EndDeferWindowPos( hdwp );
 }
 
@@ -97,11 +92,4 @@ void Browser::Load( const std::string& url )
         return;
     cef_->GetMainFrame()->LoadURL( url_.c_str() );
     load_ = url_;
-}
-
-void Browser::OnContextCreated( CefRefPtr< CefBrowser >   browser,
-                                CefRefPtr< CefFrame >     frame,
-                                CefRefPtr< CefV8Context > context )
-{
-    engine_->Register( context );
 }
