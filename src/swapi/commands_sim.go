@@ -51,7 +51,7 @@ func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
 
 type simHandler func(msg *sword.SimToClient_Content) error
 
-func (c *Client) postSimRequest(msg SwordMessage, handler simHandler) <-chan error {
+func (c *Client) postSimRequestWithCheckingClientId(msg SwordMessage, handler simHandler, checkClientId bool) <-chan error {
 	quit := make(chan error, 1)
 	wrapper := func(msg *SwordMessage, context int32, err error) bool {
 		if err != nil {
@@ -60,6 +60,7 @@ func (c *Client) postSimRequest(msg SwordMessage, handler simHandler) <-chan err
 		}
 		if msg.SimulationToClient == nil ||
 			msg.SimulationToClient.GetMessage() == nil ||
+			(checkClientId && msg.ClientId != c.ClientId) ||
 			msg.Context != context {
 			return false
 		}
@@ -72,6 +73,10 @@ func (c *Client) postSimRequest(msg SwordMessage, handler simHandler) <-chan err
 	}
 	c.Post(msg, wrapper)
 	return quit
+}
+
+func (c *Client) postSimRequest(msg SwordMessage, handler simHandler) <-chan error {
+	return c.postSimRequestWithCheckingClientId(msg, handler, false)
 }
 
 func (c *Client) CreateFormation(partyId uint32, parentId uint32,
@@ -92,6 +97,7 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 	actionType := sword.UnitMagicAction_formation_creation
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
+			ClientId: &c.clientId,
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
 					Tasker: tasker,
@@ -133,7 +139,7 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 		created = c.Model.GetFormation(value.GetFormation().GetId())
 		return nil
 	}
-	err := <-c.postSimRequest(msg, handler)
+	err := <-c.postSimRequestWithCheckingClientId(msg, handler, true)
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +211,7 @@ func (c *Client) createUnit(automatId, unitType uint32, location *Point,
 		created = c.Model.GetUnit(value.GetAgent().GetId())
 		return nil
 	}
-	err := <-c.postSimRequest(msg, handler)
+	err := <-c.postSimRequestWithCheckingClientId(msg, handler, true)
 	return created, err
 }
 
@@ -339,7 +345,7 @@ func (c *Client) CreateAutomat(formationId, automatId, automatType,
 		created = c.Model.GetAutomat(value.GetAutomat().GetId())
 		return nil
 	}
-	err := <-c.postSimRequest(msg, handler)
+	err := <-c.postSimRequestWithCheckingClientId(msg, handler, true)
 	return created, err
 }
 

@@ -176,6 +176,7 @@ func decode(msg *SwordMessage, tag uint32, data []uint8) error {
 		msg.SimulationToClient = &sword.SimToClient{}
 		err = proto.Unmarshal(data, msg.SimulationToClient)
 		msg.Context = msg.SimulationToClient.GetContext()
+		msg.ClientId = msg.SimulationToClient.GetClientId()
 	default:
 		return errors.New(fmt.Sprintf("unknown tag: %d", tag))
 	}
