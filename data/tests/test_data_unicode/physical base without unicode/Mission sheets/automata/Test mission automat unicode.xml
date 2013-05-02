@@ -6,11 +6,11 @@
     </line>
   </context>
   <parameters>
-    <parameter name="Direction dangereuse"/>
-    <parameter name="Limas"/>
-    <parameter name="Limite 1"/>
-    <parameter name="Limite 2"/>
-    <parameter name="المكتبة"/>
+    <parameter name="Direction dangereuse" optional="false"/>
+    <parameter name="Limas" optional="true"/>
+    <parameter name="Limite 1" optional="false"/>
+    <parameter name="Limite 2" optional="false"/>
+    <parameter name="المكتبة" optional="false"/>
   </parameters>
   <behavior>
     <line>
