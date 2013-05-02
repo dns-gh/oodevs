@@ -11,6 +11,11 @@
 
 #include "Server.h"
 
+#ifndef _WIN64
+#define USE_EMBEDDED_CORE
+#endif
+
+#ifdef USE_EMBEDDED_CORE
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
 #endif
@@ -18,12 +23,17 @@
 #ifdef _MSC_VER
 #pragma warning( pop )
 #endif
+#endif
 
 using namespace timeline;
 
 bool timeline::SpawnServer()
 {
+#ifdef USE_EMBEDDED_CORE
     return CefExecuteProcess( CefMainArgs( GetModuleHandle( 0 ) ), 0 ) >= 0;
+#else
+    return false;
+#endif
 }
 
 std::auto_ptr< Server_ABC > timeline::MakeServer( const Configuration& cfg )
