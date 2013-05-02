@@ -125,6 +125,10 @@ Section $(^Name)
     ; modules
     File "${SWORD}\*_module.dll"
 
+    ; timeline
+    File /r "${RUNDIR}\timeline_server.exe"
+    File /r "${RUNDIR}\timeline.pak"
+
     ; gaming
     SetOutPath "$INSTDIR\client\bin32"
     !ifdef SUB_PLATFORM
