@@ -40,6 +40,7 @@ public:
     //@{
 public slots:
     void AddFile();
+    void CopyName();
     void RemoveFile();
     //@}
 

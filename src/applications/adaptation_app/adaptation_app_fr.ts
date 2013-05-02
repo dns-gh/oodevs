@@ -2244,6 +2244,10 @@ PNG (*.png)</translation>
         <source>The file you want to copy already exists in the base, your file will be renamed</source>
         <translation>LE fichier que vous voulez ajouter existe déja dans la base, il sera donc renommé</translation>
     </message>
+    <message>
+        <source>Copy name</source>
+        <translation>Copier nom</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_DescriptionParameter</name>

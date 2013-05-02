@@ -41,6 +41,7 @@ public:
     //@{
     public slots:
         virtual void Warn( ADN_ErrorStatus errorStatus, const QString& errorMessage = "" );
+        void OnContextMenu( const QPoint& pos );
     //@}
 
 private:

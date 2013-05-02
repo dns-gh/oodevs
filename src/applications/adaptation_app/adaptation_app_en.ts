@@ -2232,6 +2232,10 @@ PNG (*.png)
         <source>The file you want to copy already exists in the base, your file will be renamed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Copy name</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_DescriptionParameter</name>

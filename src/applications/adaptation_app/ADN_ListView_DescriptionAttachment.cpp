@@ -83,6 +83,15 @@ void ADN_ListView_DescriptionAttachment::AddFile()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_ListView_DescriptionAttachment::CopyName
+// Created: NPT 2013-04-30
+// -----------------------------------------------------------------------------
+void ADN_ListView_DescriptionAttachment::CopyName()
+{
+    QApplication::clipboard()->setText( GetModel().item( currentIndex().row() )->text() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_ListView_DescriptionAttachment::RemoveFile
 // Created: NPT 2013-01-16
 // -----------------------------------------------------------------------------
@@ -107,7 +116,10 @@ void ADN_ListView_DescriptionAttachment::contextMenuEvent( QContextMenuEvent* ev
     menu->addAction( tr( "Add File" ), this, SLOT( AddFile() ) );
     QModelIndex index = selectionModel()->currentIndex();
     if( index.isValid() )
-        menu->addAction( tr( "Remove File" ),  this, SLOT( RemoveFile() ) );
+    {
+        menu->addAction( tr( "Copy name" ), this, SLOT( CopyName() ) );
+        menu->addAction( tr( "Remove File" ), this, SLOT( RemoveFile() ) );
+    }
     menu->exec( event->globalPos() );
 }
 

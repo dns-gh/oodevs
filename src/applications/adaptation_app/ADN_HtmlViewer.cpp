@@ -21,6 +21,8 @@ ADN_HtmlViewer::ADN_HtmlViewer( QWidget* parent /* = 0 */ )
 {
     pConnector_ = new ADN_Connector_String< ADN_HtmlViewer >( this );
     assert(pConnector_);
+    setContextMenuPolicy( Qt::CustomContextMenu );
+    connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( OnContextMenu( const QPoint& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,4 +62,15 @@ void ADN_HtmlViewer::setText( const QString& text )
 void ADN_HtmlViewer::Warn( ADN_ErrorStatus, const QString& )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_HtmlViewer::OnContextMenu
+// Created: NPT 2013-04-30
+// -----------------------------------------------------------------------------
+void ADN_HtmlViewer::OnContextMenu( const QPoint& pos )
+{
+    QMenu menu;
+    menu.addAction( pageAction( QWebPage::Copy ) );
+    menu.exec( mapToGlobal( pos ) );
 }
