@@ -60,7 +60,7 @@ func (c *Client) postSimRequestWithCheckingClientId(msg SwordMessage, handler si
 		}
 		if msg.SimulationToClient == nil ||
 			msg.SimulationToClient.GetMessage() == nil ||
-			(checkClientId && msg.ClientId != c.ClientId) ||
+			(checkClientId && msg.ClientId != c.clientId) ||
 			msg.Context != context {
 			return false
 		}

@@ -44,10 +44,10 @@ func (s *TestSuite) TestLogin(c *C) {
 
 	// Test invalid login
 	client := ConnectClient(c, sim)
-	c.Assert(client.ClientId, Equals, int32(0))
+	c.Assert(client.GetClientId(), Equals, int32(0))
 	err := client.Login("foo", "bar")
 	c.Assert(err, ErrorMatches, "invalid_login")
-	c.Assert(client.ClientId, Equals, int32(0))
+	c.Assert(client.GetClientId(), Equals, int32(0))
 	client.Close()
 
 	// Test invalid version
@@ -60,7 +60,7 @@ func (s *TestSuite) TestLogin(c *C) {
 	client = ConnectClient(c, sim)
 	err = client.Login("admin", "")
 	c.Assert(err, IsNil) // login failed
-	c.Assert(client.ClientId, Not(Equals), int32(0))
+	c.Assert(client.GetClientId(), Not(Equals), int32(0))
 
 	// Test model readyness
 	ok := client.Model.WaitReady(10 * time.Second)

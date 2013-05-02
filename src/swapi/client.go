@@ -52,6 +52,12 @@ type HandlerError struct {
 	err     error
 }
 
+// A command to execute in the serving goroutine
+type commandRequest struct {
+	cmd  func(c *Client)
+	done chan int
+}
+
 type Client struct {
 	Address string
 	Model   *Model
@@ -59,7 +65,6 @@ type Client struct {
 	// events. Set if before running the client to have any effect.
 	EnableModel bool
 	PostTimeout time.Duration
-	ClientId    int32
 
 	// context and clientId are only read and set by the serve goroutine
 	context     int32
@@ -72,6 +77,7 @@ type Client struct {
 	registers   chan HandlerRegister
 	unregisters chan int32
 	events      chan SwordMessage
+	commands    chan commandRequest
 	errors      chan HandlerError
 	quit        chan bool
 	// This channel is signaled by the write() goroutine to notify termination
@@ -89,7 +95,6 @@ func NewClient(address string) (*Client, error) {
 		Model:       NewModel(),
 		EnableModel: true,
 		PostTimeout: ClientTimeout,
-		ClientId:    0,
 		clientId:    0,
 		link:        link,
 		handlers:    make(map[int32]MessageHandler),
@@ -99,6 +104,7 @@ func NewClient(address string) (*Client, error) {
 		registers:   make(chan HandlerRegister, MaxPostMessages),
 		unregisters: make(chan int32, MaxPostMessages),
 		events:      make(chan SwordMessage, MaxPostMessages),
+		commands:    make(chan commandRequest, MaxPostMessages),
 		errors:      make(chan HandlerError, MaxPostMessages),
 		quit:        make(chan bool),
 		writer:      make(chan bool),
@@ -131,6 +137,7 @@ func (c *Client) Close() {
 	// Close all serve() inputs then ask it to terminate
 	c.ticker.Stop()
 	close(c.registers)
+	close(c.commands)
 	c.quit <- true
 	// Close write() inputs and close the connection
 	close(c.posts)
@@ -213,6 +220,10 @@ func (c *Client) serve() {
 				// We can only flush the queue of pending handlers once the
 				// input channel is closed, which can only be done by the
 				// caller (and not by liste()).
+				for cmd := range c.commands {
+					cmd.cmd(c)
+					cmd.done <- 1
+				}
 				for data := range c.registers {
 					data.handler(nil, 0, ErrConnectionClosed)
 				}
@@ -237,6 +248,11 @@ func (c *Client) serve() {
 			c.apply(&event)
 		case data := <-c.errors:
 			c.abort(data.context, data.err)
+		case cmd, ok := <-c.commands:
+			if ok {
+				cmd.cmd(c)
+				cmd.done <- 1
+			}
 		case now := <-c.ticker.C:
 			c.timeout(now)
 		}
@@ -300,4 +316,22 @@ func (c *Client) PostWithTimeout(msg SwordMessage, handler MessageHandler, timeo
 
 func (c *Client) Post(msg SwordMessage, handler MessageHandler) int32 {
 	return c.PostWithTimeout(msg, handler, c.PostTimeout)
+}
+
+func (c *Client) runCommand(cmd func(c *Client)) {
+	rq := commandRequest{
+		cmd:  cmd,
+		done: make(chan int, 1),
+	}
+	c.commands <- rq
+	<-rq.done
+	return
+}
+
+func (c *Client) GetClientId() int32 {
+	clientId := int32(0)
+	c.runCommand(func(client *Client) {
+		clientId = c.clientId
+	})
+	return clientId
 }

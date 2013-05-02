@@ -73,7 +73,7 @@ func (c *Client) postAuthRequestWithCheckingClientId(msg SwordMessage, handler a
 		}
 		if msg.AuthenticationToClient == nil ||
 			msg.AuthenticationToClient.GetMessage() == nil ||
-			(checkClientId && msg.ClientId != c.ClientId) ||
+			(checkClientId && msg.ClientId != c.clientId) ||
 			msg.Context != context {
 			return false
 		}
@@ -124,7 +124,6 @@ func (c *Client) LoginWithVersion(username, password, version string) error {
 		return nil
 	}
 	err := <-c.postAuthRequestWithCheckingClientId(msg, handler, false)
-	c.ClientId = id
 	return err
 }
 
