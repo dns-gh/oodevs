@@ -574,9 +574,9 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_PopulationKnowledge, KnowledgeF
 BOOST_FIXTURE_TEST_CASE( ParametersSerialization_ObjectKnowledge, KnowledgeFixture )
 {
     const std::string input( "<parameter name='test' type='objectknowledge' value='42'/>" );
-    
+
     MockObject object;
-    MOCK_EXPECT( resolver.FindObject ).once().in( s ).with( 42u ).returns( &object );
+    MOCK_EXPECT( resolver.FindObject ).with( 42u ).returns( &object );
     MockTeam owner;
     MockObjectKnowledgeConverter converter;
     MockObjectKnowledge knowledge;
@@ -600,7 +600,7 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_AgentKnowledge, KnowledgeFixtur
     const std::string input( "<parameter name='test' type='agentknowledge' value='42'/>" );
 
     MockAgent agent;
-    MOCK_EXPECT( resolver.FindAgent ).once().in( s ).with( 42u ).returns( &agent );
+    MOCK_EXPECT( resolver.FindAgent ).with( 42u ).returns( &agent );
     MockAgent owner;
     MockAgentKnowledgeConverter converter;
     MockAgentKnowledge knowledge;
