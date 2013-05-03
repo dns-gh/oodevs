@@ -63,6 +63,7 @@ masa_set_internal_library( PATHFIND_LIBRARIES         libpathfind )
 masa_set_internal_library( SPATIALCONTAINER_LIBRARIES libspatialcontainer )
 masa_set_internal_library( SQLITE3_LIBRARIES          sqlite3 )
 masa_set_internal_library( TERRAIN_LIBRARIES          libterrain )
+masa_set_external_library( ICONV_LIBRARIES            libiconv_d libiconv )
 
 macro( grab_item output name items )
     list( LENGTH ${items} len )
@@ -221,7 +222,7 @@ add_target( geostore common "libraries/geostore" )
 # spatialite is stupid and has spatialite.h and spatialite/spatialite.h
 masa_add_target_include( geostore "${MASA_INCLUDE}/spatialite" )
 target_link_libraries( geostore
-    libiconv
+    ${ICONV_LIBRARIES}
     ${GEOCOORD_LIBRARIES}
     ${GEODATA_LIBRARIES}
     ${GEOS_I_LIBRARIES}

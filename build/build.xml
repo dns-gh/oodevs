@@ -750,7 +750,7 @@
                                    geos_c.dll,
                                    libeay32.dll,
                                    libexpat.dll,
-                                   libiconv-2.dll,
+                                   libiconv.dll,
                                    libpq.dll,
                                    phonon4.dll,
                                    proj.dll,
