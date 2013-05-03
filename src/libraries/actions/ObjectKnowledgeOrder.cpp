@@ -14,7 +14,6 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/Protocol.h"
 
-using namespace kernel;
 using namespace actions;
 using namespace parameters;
 
@@ -22,19 +21,16 @@ using namespace parameters;
 // Name: ObjectKnowledgeOrder constructor
 // Created: LGY 2011-07-07
 // -----------------------------------------------------------------------------
-ObjectKnowledgeOrder::ObjectKnowledgeOrder( const OrderParameter& parameter, xml::xistream& xis, const EntityResolver_ABC& resolver,
-                                            const ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
+ObjectKnowledgeOrder::ObjectKnowledgeOrder( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver,
+                                            const kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller )
     : ObjectKnowledge( parameter, controller )
+    , resolver_( resolver )
     , converter_( converter )
-    , owner_    ( owner )
-    , pObject_  ( 0 )
+    , owner_( owner )
+    , objectId_( xis.attribute< unsigned long >( "value", 0 ) )
 {
-    if( xis.has_attribute( "value" ) )
-    {
-        pObject_ = resolver.FindObject( xis.attribute< unsigned long >( "value", 0u ) );
-        if( !pObject_ )
-            throw MASA_EXCEPTION( "Unknown parameter : 'Invalid object id' " );
-    }
+    if( objectId_ != 0 && resolver.FindObject( objectId_ ) == 0 )
+        throw MASA_EXCEPTION( "Unknown parameter : 'Invalid object id' " );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,9 +48,10 @@ ObjectKnowledgeOrder::~ObjectKnowledgeOrder()
 // -----------------------------------------------------------------------------
 unsigned long ObjectKnowledgeOrder::RetrieveId() const
 {
-    if( pObject_ != 0 )
+    const kernel::Object_ABC* object = resolver_.FindObject( objectId_ );
+    if( object )
     {
-        const kernel::ObjectKnowledge_ABC* pKnowledge = converter_.Find( *pObject_, owner_ );
+        const kernel::ObjectKnowledge_ABC* pKnowledge = converter_.Find( *object, owner_ );
         if( pKnowledge )
             return pKnowledge->GetEntityId();
         else
@@ -62,7 +59,7 @@ unsigned long ObjectKnowledgeOrder::RetrieveId() const
             const kernel::Hierarchies* hierarchies = owner_.Retrieve< kernel::TacticalHierarchies >();
             if( hierarchies )
             {
-                pKnowledge = converter_.Find( *pObject_, hierarchies->GetTop() );
+                pKnowledge = converter_.Find( *object, hierarchies->GetTop() );
                 if( pKnowledge )
                     return pKnowledge->GetEntityId();
             }
@@ -112,7 +109,7 @@ void ObjectKnowledgeOrder::CommitTo( sword::MissionParameter_Value& message ) co
 // -----------------------------------------------------------------------------
 bool ObjectKnowledgeOrder::CheckKnowledgeValidity() const
 {
-    if( pObject_ == 0 )
+    if( !resolver_.FindObject( objectId_ ) )
         return true;
     return IsSet();
 }

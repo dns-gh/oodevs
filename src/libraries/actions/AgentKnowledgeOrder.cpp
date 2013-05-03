@@ -13,7 +13,6 @@
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "protocol/Protocol.h"
 
-using namespace kernel;
 using namespace actions;
 using namespace parameters;
 
@@ -21,19 +20,16 @@ using namespace parameters;
 // Name: AgentKnowledgeOrder constructor
 // Created: LGY 2011-07-07
 // -----------------------------------------------------------------------------
-AgentKnowledgeOrder::AgentKnowledgeOrder( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver,
-                                          const AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+AgentKnowledgeOrder::AgentKnowledgeOrder( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver,
+                                          const kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller )
     : AgentKnowledge( parameter, controller )
+    , resolver_( resolver )
     , converter_( converter )
-    , owner_    ( owner )
-    , pAgent_   ( 0 )
+    , owner_( owner )
+    , agentId_( xis.attribute< unsigned long >( "value", 0 ) )
 {
-    if( xis.has_attribute( "value" ) )
-    {
-        pAgent_ = resolver.FindAgent( xis.attribute< unsigned long >( "value" ) );
-        if( !pAgent_ )
-            throw MASA_EXCEPTION( "Unknown parameter : 'Invalid agent id' " );
-    }
+    if( agentId_ != 0 && resolver.FindAgent( agentId_ ) == 0 )
+        throw MASA_EXCEPTION( "Unknown parameter : 'Invalid agent id' " );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,9 +47,10 @@ AgentKnowledgeOrder::~AgentKnowledgeOrder()
 // -----------------------------------------------------------------------------
 unsigned long AgentKnowledgeOrder::RetrieveId() const
 {
-    if( pAgent_ != 0 )
+    const kernel::Agent_ABC* agent = resolver_.FindAgent( agentId_ );
+    if( agent )
     {
-        const kernel::AgentKnowledge_ABC* pKnowledge = converter_.Find( *pAgent_, owner_ );
+        const kernel::AgentKnowledge_ABC* pKnowledge = converter_.Find( *agent, owner_ );
         if( pKnowledge )
             return pKnowledge->GetEntity()->GetId();
     }
@@ -101,9 +98,10 @@ void AgentKnowledgeOrder::CommitTo( sword::MissionParameter_Value& message ) con
 // -----------------------------------------------------------------------------
 bool AgentKnowledgeOrder::CheckKnowledgeValidity() const
 {
-    if( pAgent_ == 0 )
-        return true;
-    return converter_.Find( *pAgent_, owner_ ) != 0;
+    const kernel::Agent_ABC* agent = resolver_.FindAgent( agentId_ );
+    if( agent )
+        return converter_.Find( *agent, owner_ ) != 0;
+    return true;
 }
 
 // -----------------------------------------------------------------------------

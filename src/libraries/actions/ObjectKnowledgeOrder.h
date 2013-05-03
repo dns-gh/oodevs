@@ -50,9 +50,10 @@ private:
 private:
     //! @name Member Data
     //@{
+    const kernel::EntityResolver_ABC& resolver_;
     const kernel::ObjectKnowledgeConverter_ABC& converter_;
     const kernel::Entity_ABC& owner_;
-    const kernel::Object_ABC* pObject_;
+    unsigned int objectId_;
     //@}
 };
 
