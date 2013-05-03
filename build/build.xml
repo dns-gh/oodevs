@@ -719,7 +719,10 @@
                     <fileset dir="${out.dir}/release/applications" includes="**/*.exe"/>
                     <flattenmapper/>
                 </mappedresources>
-                <fileset dir="${run.dir}" excludes="Debug/**"/>
+                <fileset dir="${run.dir}">
+                    <exclude name="Debug/**"/>
+                    <exclude name="resources/integration tests/**"/>
+                </fileset>
             </zip>
             <check-depends file="@{file}"/>
         </safe-move>
