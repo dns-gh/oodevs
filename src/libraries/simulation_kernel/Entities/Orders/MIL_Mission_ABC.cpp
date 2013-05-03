@@ -192,7 +192,7 @@ namespace
 {
     void EnsureParameters( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, unsigned int index )
     {
-        for( std::size_t i = parameters.size(); i < index; ++i )
+        for( std::size_t i = parameters.size(); i <= index; ++i )
             parameters.push_back( boost::make_shared< MIL_NullParameter >() );
     }
 }
