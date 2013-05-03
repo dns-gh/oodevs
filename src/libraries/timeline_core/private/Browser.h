@@ -49,6 +49,7 @@ public:
     /// Public methods
     void Start();
     void UpdateSize();
+    void Reload();
 
 private:
     void Resize( int width, int height );

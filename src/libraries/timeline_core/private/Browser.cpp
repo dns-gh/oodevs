@@ -8,6 +8,8 @@
 // *****************************************************************************
 
 #include "Browser.h"
+#include "Engine.h"
+#include <timeline/api.h>
 
 using namespace timeline::core;
 
@@ -69,8 +71,9 @@ void Browser::Resize( int width, int height )
     height_ = height;
     if( !cef_ )
         return;
+    auto host = cef_->GetHost();
     HDWP hdwp = BeginDeferWindowPos( 1 );
-    hdwp = DeferWindowPos( hdwp, cef_->GetHost()->GetWindowHandle(), NULL, 0, 0, width_, height_, SWP_NOZORDER );
+    hdwp = DeferWindowPos( hdwp, host->GetWindowHandle(), NULL, 0, 0, width_, height_, SWP_NOZORDER );
     EndDeferWindowPos( hdwp );
 }
 
@@ -92,4 +95,9 @@ void Browser::Load( const std::string& url )
         return;
     cef_->GetMainFrame()->LoadURL( url_.c_str() );
     load_ = url_;
+}
+
+void Browser::Reload()
+{
+    cef_->Reload();
 }

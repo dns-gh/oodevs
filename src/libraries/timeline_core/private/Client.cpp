@@ -10,7 +10,16 @@
 
 #include "App.h"
 #include "Browser.h"
+#include "Engine.h"
 #include <tools/IpcDevice.h>
+
+#ifdef _MSC_VER
+#pragma warning( push, 0 )
+#endif
+#include <cef_runnable.h>
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
 
@@ -36,7 +45,8 @@ namespace
 Client::Client( const Configuration& cfg )
     : cfg_    ( cfg )
     , device_ ( new ipc::Device( cfg_.uuid, false, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
-    , app_    ( new App( cfg ) )
+    , engine_ ( new Engine() )
+    , app_    ( new App( cfg, engine_ ) )
     , browser_( Browser::Factory( GetHwnd( cfg_.wid ), cfg_.url ) )
     , quit_   ( false )
 {
@@ -82,4 +92,24 @@ void Client::OnResizeClient()
 void Client::OnQuitClient()
 {
     quit_ = true;
+}
+
+void Client::OnReloadClient()
+{
+    browser_->Reload();
+}
+
+namespace
+{
+    void PostTask( const CefThreadId& id, CefRefPtr< CefTask > task )
+    {
+        if( CefCurrentlyOn( id ) )
+            return task->Execute();
+        CefPostTask( id, task );
+    }
+}
+
+void Client::OnCreateEvent( const timeline::Event& event )
+{
+    PostTask( TID_RENDERER, NewCefRunnableMethod( engine_.get(), &Engine::CreateEvent, event ) );
 }

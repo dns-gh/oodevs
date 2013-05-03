@@ -6,7 +6,7 @@
 // Copyright (c) 2013 MASA Group
 //
 // ****************************************************************************
-package timeline;
+package sdk;
 
 enum Type
 {
@@ -14,9 +14,31 @@ enum Type
     // client commands
     CLIENT_RESIZE   = 0x100;
     CLIENT_QUIT     = 0x101;
+    CLIENT_RELOAD   = 0x102;
+    // event commands
+    EVENT_CREATE    = 0x200;
+}
+
+message Action
+{
+    required string target  = 1;
+    optional bool   apply   = 2;
+    optional bytes  payload = 3;
+}
+
+message Event
+{
+    optional string uuid   = 1;
+    optional string name   = 2;
+    optional string info   = 3;
+    optional string begin  = 4;
+    optional string end    = 5;
+    optional Action action = 6;
+    optional bool   done   = 7;
 }
 
 message ClientCommand
 {
-    optional Type type = 1;
+    optional Type  type  = 1;
+    optional Event event = 2;
 }

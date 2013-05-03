@@ -20,6 +20,11 @@
 
 namespace timeline
 {
+    struct Event;
+}
+
+namespace timeline
+{
 namespace core
 {
 class Engine : public boost::noncopyable
@@ -37,10 +42,15 @@ public:
                   CefString&               exception );
 
     /// Public methods
-    void Register( CefRefPtr< CefV8Context > context );
+    void Register   ( CefRefPtr< CefV8Context > context );
+    void Unregister ();
+    void CreateEvent( const Event& event );
 
 protected:
     IMPLEMENT_REFCOUNTING( Engine );
+
+private:
+    CefRefPtr< CefV8Context > ctx_;
 };
 }
 }

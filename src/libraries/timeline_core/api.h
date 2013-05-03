@@ -31,7 +31,6 @@ namespace core
         int wid;
         std::string uuid;
         std::string url;
-        bool single_process;
         int debug_port;
     };
 

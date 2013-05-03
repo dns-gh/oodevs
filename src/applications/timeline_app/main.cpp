@@ -9,6 +9,8 @@
 
 #include <timeline/api.h>
 
+#include "Controller.h"
+
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
 #endif
@@ -55,23 +57,11 @@ int main( int argc, char* argv[] )
 #endif
         bpo::notify( args );
 
-        QMainWindow main;
-        main.resize( 800, 600 );
-        auto central = new QWidget( &main );
-        main.setCentralWidget( central );
-
-        QPalette palette;
-        palette.setColor( QPalette::Background, Qt::red );
-        central->setAutoFillBackground( true );
-        central->setPalette( palette );
-
         cfg.rundir = ".";
         if( !cfg.binary.IsRegularFile() )
             throw std::runtime_error( QString( "invalid file %1" ).arg( argv[1] ).toStdString() );
 
-        cfg.widget = central;
-        auto context = timeline::MakeServer( cfg );
-        main.show();
+        timeline::Controller controller( cfg );
         return app.exec();
     }
     catch( const std::exception& err )

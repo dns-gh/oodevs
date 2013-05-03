@@ -27,13 +27,16 @@ namespace timeline
 
 namespace timeline
 {
-class Server : public QObject
-             , public Server_ABC
+class Server : public Server_ABC
 {
     Q_OBJECT
 public:
              Server( const Configuration& cfg );
     virtual ~Server();
+
+    /// Server_ABC methods
+    virtual void Reload();
+    virtual bool CreateEvent( const Event& event );
 
 private:
     void StartProcess();

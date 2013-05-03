@@ -30,19 +30,23 @@ class App : public CefApp
           , public CefRenderProcessHandler
 {
 public:
-             App( const Configuration& cfg );
+    explicit App( const Configuration& cfg, CefRefPtr< Engine > engine );
     virtual ~App();
 
     /// CefApp methods
     virtual CefRefPtr< CefRenderProcessHandler > GetRenderProcessHandler();
 
     /// CefRenderProcessHandler methods
-    virtual void OnContextCreated( CefRefPtr< CefBrowser >   browser,
-                                   CefRefPtr< CefFrame >     frame,
-                                   CefRefPtr< CefV8Context > context );
+    virtual void OnContextCreated(  CefRefPtr< CefBrowser >   browser,
+                                    CefRefPtr< CefFrame >     frame,
+                                    CefRefPtr< CefV8Context > context );
+    virtual void OnContextReleased( CefRefPtr< CefBrowser >   browser,
+                                    CefRefPtr< CefFrame >     frame,
+                                    CefRefPtr< CefV8Context > context );
 
 protected:
     IMPLEMENT_REFCOUNTING( App );
+    IMPLEMENT_LOCKING( App );
 
 private:
     CefRefPtr< Engine > engine_;

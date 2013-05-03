@@ -13,16 +13,52 @@
 #include <memory>
 #include <boost/noncopyable.hpp>
 #include <tools/Path.h>
+#include <QObject>
 
 class QWidget;
 
 namespace timeline
 {
-class Server_ABC : public boost::noncopyable
+struct Action
 {
+    std::string target;
+    bool        apply;
+    std::string payload;
+};
+
+struct Event
+{
+    std::string uuid;
+    std::string name;
+    std::string info;
+    std::string begin;
+    std::string end;
+    bool        done;
+    Action      action;
+};
+
+struct Error
+{
+    int         code;
+    std::string text;
+};
+
+class Server_ABC : public QObject
+                 , public boost::noncopyable
+{
+    Q_OBJECT
 public:
              Server_ABC() {}
     virtual ~Server_ABC() {}
+
+    // Public slots
+public slots:
+    virtual void Reload() = 0;
+    virtual bool CreateEvent( const Event& event ) = 0;
+
+    // Public signals
+signals:
+    void CreatedEvent( const Event& event, const Error& error );
 };
 
 struct Configuration

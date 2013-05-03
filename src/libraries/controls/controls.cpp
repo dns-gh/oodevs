@@ -20,8 +20,10 @@
 #include <boost/interprocess/streams/bufferstream.hpp>
 #include <boost/interprocess/streams/vectorstream.hpp>
 
+using namespace timeline;
 namespace tic = timeline::controls;
 namespace bip = boost::interprocess;
+using sdk::ClientCommand;
 
 namespace
 {
@@ -48,25 +50,87 @@ namespace
 
 size_t tic::ResizeClient( void* data, size_t size )
 {
-    timeline::ClientCommand cmd;
-    cmd.set_type( timeline::CLIENT_RESIZE );
+    ClientCommand cmd;
+    cmd.set_type( sdk::CLIENT_RESIZE );
     return Marshall( data, size, cmd );
 }
 
 size_t tic::QuitClient( void* data, size_t size )
 {
-    timeline::ClientCommand cmd;
-    cmd.set_type( timeline::CLIENT_QUIT );
+    ClientCommand cmd;
+    cmd.set_type( sdk::CLIENT_QUIT );
+    return Marshall( data, size, cmd );
+}
+
+size_t tic::ReloadClient( void* data, size_t size )
+{
+    ClientCommand cmd;
+    cmd.set_type( sdk::CLIENT_RELOAD );
+    return Marshall( data, size, cmd );
+}
+
+namespace
+{
+    void SetAction( sdk::Action& dst, const Action& action )
+    {
+        dst.set_target( action.target );
+        dst.set_apply( action.apply );
+        dst.set_payload( &action.payload[0], action.payload.size() );
+    }
+
+    void SetEvent( sdk::Event& dst, const Event& event )
+    {
+        dst.set_uuid( event.uuid );
+        dst.set_name( event.name );
+        dst.set_info( event.info );
+        dst.set_begin( event.begin );
+        dst.set_end( event.end );
+        if( !event.action.target.empty() )
+            SetAction( *dst.mutable_action(), event.action );
+        dst.set_done( event.done );
+    }
+
+    Action GetAction( const sdk::Action& src )
+    {
+        Action dst;
+        dst.target = src.target();
+        dst.apply = src.apply();
+        std::copy( src.payload().begin(), src.payload().end(), std::back_inserter( dst.payload ) );
+        return dst;
+    }
+
+    Event GetEvent( const sdk::Event& src )
+    {
+        Event dst;
+        dst.uuid = src.uuid();
+        dst.name = src.name();
+        dst.info = src.info();
+        dst.begin = src.begin();
+        dst.end = src.end();
+        if( src.has_action() )
+            dst.action = GetAction( src.action() );
+        dst.done = src.done();
+        return dst;
+    }
+}
+
+size_t tic::CreateEvent( void* data, size_t size, const Event& event )
+{
+    ClientCommand cmd;
+    cmd.set_type( sdk::EVENT_CREATE );
+    SetEvent( *cmd.mutable_event(), event );
     return Marshall( data, size, cmd );
 }
 
 void tic::ParseClient( Handler_ABC& handler, const void* data, size_t size )
 {
-    timeline::ClientCommand cmd;
+    ClientCommand cmd;
     Unmarshall( cmd, data, size );
     switch( cmd.type() )
     {
-        case timeline::CLIENT_RESIZE: return handler.OnResizeClient();
-        case timeline::CLIENT_QUIT:   return handler.OnQuitClient();
+        case sdk::CLIENT_RESIZE: return handler.OnResizeClient();
+        case sdk::CLIENT_QUIT:   return handler.OnQuitClient();
+        case sdk::CLIENT_RELOAD: return handler.OnReloadClient();
+        case sdk::EVENT_CREATE:  return handler.OnCreateEvent( GetEvent( cmd.event() ) );
     }
 }

@@ -96,3 +96,17 @@ void Server::OnError( QProcess::ProcessError error )
 {
     qDebug() << GetError( error );
 }
+
+void Server::Reload()
+{
+    std::vector< uint8_t > buffer( controls::ReloadClient( 0, 0 ) );
+    controls::ReloadClient( &buffer[0], buffer.size() );
+    device_->Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+}
+
+bool Server::CreateEvent( const Event& event )
+{
+    std::vector< uint8_t > buffer( controls::CreateEvent( 0, 0, event ) );
+    controls::CreateEvent( &buffer[0], buffer.size(), event );
+    return device_->Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+}

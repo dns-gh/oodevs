@@ -97,7 +97,6 @@ namespace
             next.wid = reinterpret_cast< int >( cfg.widget->winId() );
             next.uuid = uuid;
             next.url = cfg.url;
-            next.single_process = false;
             next.debug_port = cfg.debug_port;
             client_ = core::MakeClient( next );
             thread_.reset( new boost::thread( &core::Client_ABC::Run, client_.get() ) );

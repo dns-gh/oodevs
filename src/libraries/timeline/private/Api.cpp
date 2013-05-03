@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "timeline/api.h"
-
+#include "moc_api.cpp"
 #include "Server.h"
 
 #ifndef _WIN64
