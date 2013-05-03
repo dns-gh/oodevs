@@ -203,18 +203,23 @@ void PopulationFlow::Draw( const Point2f& /*where*/, const gui::Viewport_ABC& , 
     glPushAttrib( GL_LINE_BIT );
         glLineWidth( 10.f );
         glPushAttrib( GL_CURRENT_BIT );
-            SelectColor( attitude_ );
+            if( !tools.IsPickingMode() )
+                SelectColor( attitude_ );
             tools.DrawLines( flow_ );
         glPopAttrib();
-        glLineWidth( 8.f );
-        tools.DrawLines( flow_ );
+        if( !tools.IsPickingMode() )
+        {
+            glLineWidth( 8.f );
+            tools.DrawLines( flow_ );
+        }
     glPopAttrib();
 
     const bool displayPath = /*viewport.IsVisible( plannedBox_ )  && */tools.ShouldDisplay( "Paths" );
     if( displayPath )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
-            glColor4f( COLOR_PATH );
+            if( !tools.IsPickingMode() )
+                glColor4f( COLOR_PATH );
             glLineWidth( 3 );
             glEnable( GL_LINE_STIPPLE );
             glLineStipple( 1, tools.StipplePattern() );

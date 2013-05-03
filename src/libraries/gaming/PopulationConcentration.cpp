@@ -184,12 +184,15 @@ namespace
 void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& , gui::GlTools_ABC& tools ) const
 {
     tools.DrawDisc( position_, radius_ );
-    glPushAttrib( GL_CURRENT_BIT );
-    glColor4f( COLOR_BLACK );
-    tools.DrawDisc( position_, deadRadius_ );
-    SelectColor( attitude_ );
-    tools.DrawCircle( position_, radius_ );
-    glPopAttrib();
+    if( !tools.IsPickingMode() )
+    {
+        glPushAttrib( GL_CURRENT_BIT );
+        glColor4f( COLOR_BLACK );
+        tools.DrawDisc( position_, deadRadius_ );
+        SelectColor( attitude_ );
+        tools.DrawCircle( position_, radius_ );
+        glPopAttrib();
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -243,3 +243,8 @@ void PopulationKnowledge::Draw( const geometry::Point2f& where, const gui::Viewp
         }
     }
 }
+
+void PopulationKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+{
+    Draw( where, viewport, tools );
+}

@@ -153,7 +153,10 @@ void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const gui
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::Pick( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
-    Draw( where, viewport, tools );
+    if( tools.IsPickingMode() )
+        tools.DrawDisc( position_, radius_ );
+    else
+        Draw( where, viewport, tools );
 }
 
 

@@ -158,12 +158,16 @@ void PopulationFlowKnowledge::Draw( const geometry::Point2f&, const gui::Viewpor
         for( unsigned int i = 0; i < flowParts_.size(); ++i )
         {
             const FlowPart& part = flowParts_[i];
-            SelectColor( eAttitude_ );
+            if( !tools.IsPickingMode() )
+                SelectColor( eAttitude_ );
             glLineWidth( 10.f );
             tools.DrawLines( part.flowPart_ );
-            glColor4f( color[0], color[1], color[2], 0.5f * ( 1.f + part.relevance_ * 0.01f ) );
-            glLineWidth( 8.f );
-            tools.DrawLines( part.flowPart_ );
+            if( !tools.IsPickingMode() )
+            {
+                glColor4f( color[0], color[1], color[2], 0.5f * ( 1.f + part.relevance_ * 0.01f ) );
+                glLineWidth( 8.f );
+                tools.DrawLines( part.flowPart_ );
+            }
         }
         glPopAttrib();
     }
