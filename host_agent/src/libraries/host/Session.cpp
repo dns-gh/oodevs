@@ -42,10 +42,6 @@
 #   pragma warning( pop )
 #endif
 
-#include <boost/thread/condition_variable.hpp>
-#include <boost/thread/thread.hpp>
-#include <boost/asio.hpp>
-
 using namespace host;
 using namespace property_tree;
 using namespace web::session;
@@ -54,8 +50,6 @@ using runtime::FileSystem_ABC;
 using runtime::Runtime_ABC;
 using runtime::Utf8;
 using web::Client_ABC;
-namespace aio = boost::asio;
-using boost::asio::ip::tcp;
 
 namespace
 {
@@ -766,25 +760,6 @@ Session::T_Process StartTimeline( const SessionDependencies& deps,
         Utf8( Path( app ).remove_filename() ), Utf8( root / "timeline.log" ) );
 }
 
-bool WaitConnected( boost::upgrade_lock< boost::shared_mutex >& lock, int port )
-{
-    aio::io_service service;
-    const tcp::endpoint endpoint( aio::ip::address::from_string( "127.0.0.1" ), static_cast< uint16_t >( port ) );
-    tcp::socket socket( service );
-    boost::system::error_code ec;
-    boost::condition_variable_any any;
-    const boost::posix_time::ptime deadline = boost::posix_time::microsec_clock::local_time()
-                                            + boost::posix_time::seconds( 4 );
-    while( boost::posix_time::microsec_clock::local_time() < deadline )
-    {
-        socket.connect( endpoint, ec );
-        if( !ec )
-            return true;
-        any.timed_wait( lock, boost::posix_time::milliseconds( 100 ) );
-    }
-    return false;
-}
-
 void Reset( boost::upgrade_lock< boost::shared_mutex >& lock,
             Session::Status& status, Session::Status next )
 {
@@ -818,22 +793,24 @@ bool Session::Start( const Path& app, const Path& timeline, const std::string& c
             return false;
     }
 
-    runtime::Scoper scoper( boost::bind( &Reset, boost::ref( lock ), boost::ref( status_ ), status_ ) );
+    runtime::Scoper reset_status( boost::bind( &Reset, boost::ref( lock ), boost::ref( status_ ), status_ ) );
     auto ptr = StartSimulation( lock, next, checkpoint, replay, app );
     if( !ptr )
         return false;
 
+    runtime::Scoper kill_orphaned_process( boost::bind( &runtime::Process_ABC::Kill, ptr ) );
     T_Process time;
     if( cfg_.timeline.enabled && !cfg_.profiles.empty() )
     {
-        if( !WaitConnected( lock, port_->Get() + DISPATCHER_PORT ) )
+        if( !deps_.ports.WaitConnected( lock, port_->Get() + DISPATCHER_PORT ) )
             return false;
         if( !( time = StartTimeline( deps_, timeline, GetRoot(), *cfg_.profiles.begin(), port_->Get() + DISPATCHER_PORT ) ) )
             return false;
     }
 
     boost::upgrade_to_unique_lock< boost::shared_mutex > write( lock );
-    scoper.Reset();
+    reset_status.Reset();
+    kill_orphaned_process.Reset();
     process_    = ptr;
     timeline_   = time;
     running_    = token;

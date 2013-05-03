@@ -107,15 +107,17 @@ namespace
         MockUuidFactory uuids;
         boost::shared_ptr< MockNode > node;
         const host::Path apps;
+        const host::Path timeline;
         const web::Plugins plugins;
         int any_idx;
         Fixture()
-            : node   ( boost::make_shared< MockNode >( defaultNode, FromJson( "{\"ident\":\"a\",\"name\":\"a\",\"port\":\"1\"}" ) ) )
-            , fs     ( sub.fs )
-            , nodes  ( false )
-            , apps   ( "apps" )
-            , plugins( fs, "" )
-            , any_idx( 0 )
+            : node    ( boost::make_shared< MockNode >( defaultNode, FromJson( "{\"ident\":\"a\",\"name\":\"a\",\"port\":\"1\"}" ) ) )
+            , fs      ( sub.fs )
+            , nodes   ( false )
+            , apps    ( "apps" )
+            , timeline( "timeline" )
+            , plugins ( fs, "" )
+            , any_idx ( 0 )
         {
             MOCK_EXPECT( fs.GetDirectorySize ).returns( 0 );
             MOCK_EXPECT( fs.IsDirectory ).returns( false) ;
@@ -127,13 +129,15 @@ namespace
             MOCK_EXPECT( node->FilterConfig );
         }
 
-        SessionPtr MakeSession()
+        SessionPtr MakeSession( bool timeline = false )
         {
             MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
             MOCK_EXPECT( ports.Create0 ).once().returns( new MockPort( defaultPort ) );
             MOCK_EXPECT( nodes.LinkExerciseName ).once().with( mock::same( *node ), defaultExercise ).returns( FromJson( links ) );
             web::session::Config cfg;
             cfg.name = defaultName;
+            cfg.timeline.enabled = timeline;
+            cfg.profiles.insert( web::session::Profile( "username", "password" ) );
             SessionPaths paths( "a", "b" );
             SessionDependencies deps( fs, runtime, plugins, nodes, uuids, client, pool, ports );
             return boost::make_shared< Session >( deps, node, paths, cfg, defaultExercise, boost::uuids::nil_uuid() );
@@ -153,13 +157,18 @@ namespace
             return boost::make_shared< Session >( deps, node, paths, tree );
         }
 
+        bool StartSessionWith( Session& session, ProcessPtr process, const std::string& checkpoint = std::string() )
+        {
+            MOCK_EXPECT( fs.WriteFile ).once().returns( true );
+            MOCK_EXPECT( node->StartSession ).once().returns( boost::make_shared< host::node::Token >() );
+            return session.Start( apps, timeline, checkpoint );
+        }
+
         ProcessPtr StartSession( Session& session, int pid, const std::string& name, const std::string& checkpoint = std::string() )
         {
             ProcessPtr process = boost::make_shared< MockProcess >( pid, name );
             MOCK_EXPECT( runtime.Start ).once().returns( process );
-            MOCK_EXPECT( fs.WriteFile ).once().returns( true );
-            MOCK_EXPECT( node->StartSession ).once().returns( boost::make_shared< host::node::Token >() );
-            BOOST_REQUIRE( session.Start( apps, apps, checkpoint ) );
+            BOOST_REQUIRE( StartSessionWith( session, process, checkpoint ) );
             return process;
         }
 
@@ -497,4 +506,23 @@ BOOST_FIXTURE_TEST_CASE( session_parses_checkpoints, Fixture )
     ProcessPtr process = StartSession( *next, processPid, processName, "uno" );
     StopSession( *next, process );
     CheckCheckpoints( *next );
+}
+
+BOOST_FIXTURE_TEST_CASE( session_kills_sim_when_timeline_fails, Fixture )
+{
+    auto session = MakeSession( true );
+    ProcessPtr process = boost::make_shared< MockProcess >( processPid, processName );
+    // unable to open target port
+    MOCK_EXPECT( runtime.Start ).once().returns( process );
+    MOCK_EXPECT( ports.WaitConnected ).once().returns( false );
+    MOCK_EXPECT( process->Kill ).once().returns( true );
+    BOOST_REQUIRE( !StartSessionWith( *session, process ) );
+    // unable to open timeline process
+    MOCK_EXPECT( ports.WaitConnected ).once().returns( true );
+    MOCK_EXPECT( runtime.Start ).once().returns( process );
+    MOCK_EXPECT( uuids.Create ).once().returns( defaultId );
+    MOCK_EXPECT( fs.WriteFile ).once().returns( true );
+    MOCK_EXPECT( runtime.Start ).once().returns( ProcessPtr() );
+    MOCK_EXPECT( process->Kill ).once().returns( true );
+    BOOST_REQUIRE( !StartSessionWith( *session, process ) );
 }

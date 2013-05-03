@@ -9,12 +9,17 @@
 
 #include "PortFactory.h"
 
+#include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/format.hpp>
 #include <boost/function.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/thread/condition_variable.hpp>
+#include <boost/thread/thread.hpp>
 
 using namespace host;
+namespace aio = boost::asio;
+using boost::asio::ip::tcp;
 
 namespace
 {
@@ -119,4 +124,23 @@ void PortFactory::Release( int port )
 {
     boost::lock_guard< boost::mutex > lock( access_ );
     ports_.erase( port );
+}
+
+bool PortFactory::WaitConnected( boost::upgrade_lock< boost::shared_mutex >& lock, int port )
+{
+    aio::io_service service;
+    const tcp::endpoint endpoint( aio::ip::address::from_string( "127.0.0.1" ), static_cast< uint16_t >( port ) );
+    tcp::socket socket( service );
+    boost::system::error_code ec;
+    boost::condition_variable_any any;
+    const boost::posix_time::ptime deadline = boost::posix_time::microsec_clock::local_time()
+                                            + boost::posix_time::seconds( 4 );
+    while( boost::posix_time::microsec_clock::local_time() < deadline )
+    {
+        socket.connect( endpoint, ec );
+        if( !ec )
+            return true;
+        any.timed_wait( lock, boost::posix_time::milliseconds( 100 ) );
+    }
+    return false;
 }
