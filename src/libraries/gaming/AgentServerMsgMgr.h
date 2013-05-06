@@ -269,8 +269,8 @@ private:
     void OnReceiveMsgDebugDrawPoints               ( const sword::DebugPoints& message );
 
     // Control
-    void OnReceiveControlPauseAck             ( const sword::ControlPauseAck& message );
-    void OnReceiveControlResumeAck            ( const sword::ControlResumeAck& message );
+    void OnReceiveControlPauseAck             ( const sword::ControlPauseAck& message, unsigned int messageClientId );
+    void OnReceiveControlResumeAck            ( const sword::ControlResumeAck& message, unsigned int messageClientId );
     void OnReceiveControlChangeTimeFactorAck  ( const sword::ControlChangeTimeFactorAck& message );
     void OnReceiveControlDateTimeChangeAck    ( const sword::ControlDateTimeChangeAck& message );
     void OnReceiveControlSkipToTickAck        ( const sword::ControlSkipToTickAck& message );
@@ -290,7 +290,7 @@ private:
     void OnReceiveUnitCreation                ( const sword::UnitCreation& message );
     void OnReceiveUnitDestruction             ( const sword::UnitDestruction& message );
     void OnReceiveChangeDiplomacy             ( const sword::ChangeDiplomacy& message );
-    void OnReceiveAuthenticationResponse      ( const sword::AuthenticationResponse& message );
+    void OnReceiveAuthenticationResponse      ( const sword::AuthenticationToClient& wrapper );
     void OnReceiveConnectedProfiles           ( const sword::ConnectedProfileList& message );
     void OnReceiveControlMeteoGlobal          ( const sword::ControlGlobalWeather& message );
     void OnReceiveControlMeteoLocalCreation   ( const sword::ControlLocalWeatherCreation& message );
@@ -324,7 +324,7 @@ private:
 
     // Attributes
     void OnReceiveUnitAttributes     ( const sword::UnitAttributes&         message );
-    void OnReceiveUnitMagicActionAck ( const sword::UnitMagicActionAck&     message, unsigned long nCtx );
+    void OnReceiveUnitMagicActionAck ( const sword::UnitMagicActionAck&     message, unsigned int clientId );
     void OnReceiveUnitPathFind       ( const sword::UnitPathFind&           message );
     void OnReceiveAutomatAttributes  ( const sword::AutomatAttributes&      message );
 
@@ -402,14 +402,14 @@ private:
     // Orders
     void OnReceiveAutomatOrder          ( const sword::AutomatOrder&    message );
     void OnReceiveUnitOrder             ( const sword::UnitOrder&       message );
-    void OnReceiveOrderAck              ( const sword::TaskCreationRequestAck& message, unsigned long nCtx );
+    void OnReceiveOrderAck              ( const sword::TaskCreationRequestAck& message, unsigned int clientId );
     void OnReceiveFragOrder             ( const sword::FragOrder&       message );
     void OnReceiveFragOrderAck          ( const sword::FragOrderAck&    message, unsigned long nCtx );
     void OnReceiveUnitCreationRequestAck( const sword::UnitCreationRequestAck& message );
     void OnReceiveCrowdOrder            ( const sword::CrowdOrder&             message );
 
     // Automate mode
-    void OnReceiveSetAutomatModeAck( const sword::SetAutomatModeAck& message, unsigned long nCtx );
+    void OnReceiveSetAutomatModeAck( const sword::SetAutomatModeAck& message, unsigned int clientId );
 
     // Hierachy changes
     void OnReceiveUnitChangeSuperiorAck          ( const sword::UnitChangeSuperiorAck&          message, unsigned long nCtx );

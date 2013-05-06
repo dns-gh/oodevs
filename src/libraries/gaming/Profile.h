@@ -53,7 +53,7 @@ public:
     //@{
     void Login() const;
     void Login( const std::string& login, const std::string& password ) const;
-    void Update( const sword::AuthenticationResponse& message );
+    void Update( const sword::AuthenticationToClient& wrapper );
     void Update( const Model& model, const sword::ProfileUpdate& message );
     void Update( const sword::ConnectedProfileList& message );
     //@}
@@ -62,6 +62,7 @@ public:
     //@{
     QString GetLogin() const;
     bool IsLoggedIn() const;
+    bool DisplayMessage( unsigned int messageClientId ) const;
     unsigned int GetProfileCount( const std::string& login ) const;
     virtual bool IsSupervision() const;
     //@}
@@ -106,6 +107,7 @@ private:
     bool supervision_;
     bool simulation_;
     T_Profiles profiles_;
+    unsigned int clientId_;
     //@}
 };
 

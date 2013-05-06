@@ -37,6 +37,7 @@ Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std:
     , loggedIn_   ( false )
     , supervision_( false )
     , simulation_ ( true )
+    , clientId_   ( 0 )
 {
     controller_.Register( *this );
     if( !isLoginSet )
@@ -81,13 +82,17 @@ void Profile::Login( const std::string& login, const std::string& password ) con
 // Name: Profile::Update
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void Profile::Update( const sword::AuthenticationResponse& message )
+void Profile::Update( const sword::AuthenticationToClient& wrapper )
 {
+    const sword::AuthenticationResponse& message = wrapper.message().authentication_response();
     if( message.error_code() == sword::AuthenticationResponse::too_many_connections )
         throw MASA_EXCEPTION( tools::translate( "Profile", "Too many connections" ).toStdString().c_str() );
     else
     {
         loggedIn_ = ( message.error_code() == sword::AuthenticationResponse::success );
+        // Register client id
+        if( loggedIn_ && wrapper.has_client_id() )
+            clientId_ = wrapper.client_id();
         if( message.has_profile() )
         {
             Update( message.profile() );
@@ -165,6 +170,15 @@ QString Profile::GetLogin() const
 bool Profile::IsLoggedIn() const
 {
     return loggedIn_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::DisplayMessage
+// Created: LGY 2013-05-06
+// -----------------------------------------------------------------------------
+bool Profile::DisplayMessage( unsigned int messageClientId ) const
+{
+    return loggedIn_ && clientId_ == messageClientId;
 }
 
 // -----------------------------------------------------------------------------

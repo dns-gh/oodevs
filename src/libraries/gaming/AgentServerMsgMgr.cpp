@@ -244,9 +244,9 @@ void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( const sword::DebugPoints& m
 // Name: AgentServerMsgMgr::OnReceiveControlPauseAck
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveControlPauseAck( const sword::ControlPauseAck& message )
+void AgentServerMsgMgr::OnReceiveControlPauseAck( const sword::ControlPauseAck& message, unsigned int messageClientId )
 {
-    if( CheckAcknowledge( logger_, message ) )
+    if( CheckAcknowledge( logger_, message, GetProfile().DisplayMessage( messageClientId ) ) )
         simulation_.Pause( true );
 }
 
@@ -254,9 +254,9 @@ void AgentServerMsgMgr::OnReceiveControlPauseAck( const sword::ControlPauseAck& 
 // Name: AgentServerMsgMgr::OnReceiveControlResumeAck
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveControlResumeAck( const sword::ControlResumeAck& message )
+void AgentServerMsgMgr::OnReceiveControlResumeAck( const sword::ControlResumeAck& message, unsigned int messageClientId )
 {
-    if( CheckAcknowledge( logger_, message ) )
+    if( CheckAcknowledge( logger_, message, GetProfile().DisplayMessage( messageClientId ) ) )
         simulation_.Pause( false );
 }
 
@@ -601,9 +601,9 @@ void AgentServerMsgMgr::OnReceiveUnitPathFind( const sword::UnitPathFind& messag
 // Name: AgentServerMsgMgr::OnReceiveUnitMagicActionAck
 // Created: NLD 2003-03-05
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveUnitMagicActionAck( const sword::UnitMagicActionAck& message, unsigned long /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveUnitMagicActionAck( const sword::UnitMagicActionAck& message, unsigned int clientId )
 {
-    CheckAcknowledge( logger_, message );
+    CheckAcknowledge( logger_, message, GetProfile().DisplayMessage( clientId ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -848,7 +848,7 @@ void AgentServerMsgMgr::OnReceiveAutomatOrder( const sword::AutomatOrder& messag
 // Name: AgentServerMsgMgr::OnReceiveOrderAck
 // Created: MGD 2010-12-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveOrderAck( const sword::TaskCreationRequestAck& message, unsigned long /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveOrderAck( const sword::TaskCreationRequestAck& message, unsigned int clientId )
 {
     if( message.tasker().has_automat() )
     {
@@ -859,7 +859,7 @@ void AgentServerMsgMgr::OnReceiveOrderAck( const sword::TaskCreationRequestAck& 
     else if( message.tasker().has_unit() )
     {
         Agent_ABC& agent = GetModel().agents_.GetAgent( message.tasker().unit().id() );
-        if( CheckAcknowledge( logger_, agent, message ) )
+        if( CheckAcknowledge( logger_, agent, message, GetProfile().DisplayMessage( clientId ) ) )
             agent.Update( message );
     }
     else if( message.tasker().has_crowd() )
@@ -965,9 +965,9 @@ void AgentServerMsgMgr::OnReceiveMsgDecisionalState( const sword::DecisionalStat
 // Name: AgentServerMsgMgr::OnReceiveSetAutomatModeAck
 // Created: NLD 2003-04-11
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveSetAutomatModeAck( const sword::SetAutomatModeAck& message, unsigned long /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveSetAutomatModeAck( const sword::SetAutomatModeAck& message, unsigned int clientId )
 {
-    CheckAcknowledge( logger_, message );
+    CheckAcknowledge( logger_, message, GetProfile().DisplayMessage( clientId ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1445,9 +1445,9 @@ void AgentServerMsgMgr::OnReceiveCrowdOrder( const sword::CrowdOrder& message )
 // Name: AgentServerMsgMgr::OnReceiveAuthenticationResponse
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveAuthenticationResponse( const sword::AuthenticationResponse& message )
+void AgentServerMsgMgr::OnReceiveAuthenticationResponse( const sword::AuthenticationToClient& wrapper )
 {
-    GetProfile().Update( message );
+    GetProfile().Update( wrapper );
 }
 
 // -----------------------------------------------------------------------------
@@ -1722,16 +1722,17 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
 {
     if( host_.empty() )
         return;
+    unsigned int clientId = wrapper.has_client_id() ? wrapper.client_id() : 0u;
     if( wrapper.message().has_order_ack() )
-        OnReceiveOrderAck( wrapper.message().order_ack() , wrapper.context() );
+        OnReceiveOrderAck( wrapper.message().order_ack(), clientId );
     else if( wrapper.message().has_frag_order_ack() )
         OnReceiveFragOrderAck( wrapper.message().frag_order_ack() , wrapper.context() );
     else if( wrapper.message().has_unit_magic_action_ack() )
-        OnReceiveUnitMagicActionAck( wrapper.message().unit_magic_action_ack() , wrapper.context() );
+        OnReceiveUnitMagicActionAck( wrapper.message().unit_magic_action_ack(), clientId );
     else if( wrapper.message().has_unit_creation_request_ack() )
         OnReceiveUnitCreationRequestAck(  wrapper.message().unit_creation_request_ack() );
     else if( wrapper.message().has_set_automat_mode_ack() )
-        OnReceiveSetAutomatModeAck( wrapper.message().set_automat_mode_ack() , wrapper.context() );
+        OnReceiveSetAutomatModeAck( wrapper.message().set_automat_mode_ack(), clientId );
     else if( wrapper.message().has_unit_change_superior_ack() )
         OnReceiveUnitChangeSuperiorAck( wrapper.message().unit_change_superior_ack() , wrapper.context() );
     else if( wrapper.message().has_change_diplomacy_ack() )
@@ -1767,9 +1768,9 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
     //if( wrapper.message().has_control_stop_ack() )
 
     else if( wrapper.message().has_control_pause_ack() )
-        OnReceiveControlPauseAck( wrapper.message().control_pause_ack() );
+        OnReceiveControlPauseAck( wrapper.message().control_pause_ack(), clientId );
     else if( wrapper.message().has_control_resume_ack() )
-        OnReceiveControlResumeAck( wrapper.message().control_resume_ack() );
+        OnReceiveControlResumeAck( wrapper.message().control_resume_ack(), clientId );
     else if( wrapper.message().has_control_change_time_factor_ack() )
         OnReceiveControlChangeTimeFactorAck( wrapper.message().control_change_time_factor_ack() );
     else if( wrapper.message().has_control_date_time_change_ack() )
@@ -2034,7 +2035,7 @@ void AgentServerMsgMgr::OnReceiveMsgAuthenticationToClient( const std::string& ,
     if( host_.empty() )
         return;
     if( wrapper.message().has_authentication_response() )
-        OnReceiveAuthenticationResponse      ( wrapper.message().authentication_response() );
+        OnReceiveAuthenticationResponse      ( wrapper );
     else if( wrapper.message().has_profile_creation() )
         OnReceiveProfileCreation             ( wrapper.message().profile_creation() );
     else if( wrapper.message().has_profile_creation_request_ack() )
@@ -2062,13 +2063,13 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const s
     if( host_.empty() )
         return;
     if( wrapper.message().has_control_replay_information() )
-        OnReceiveMsgCtrReplayInfo( wrapper.message().control_replay_information()     );
+        OnReceiveMsgCtrReplayInfo( wrapper.message().control_replay_information() );
     else if( wrapper.message().has_control_stop_ack() )
         {}
     else if( wrapper.message().has_control_pause_ack() )
-        OnReceiveControlPauseAck( wrapper.message().control_pause_ack() );
+        OnReceiveControlPauseAck( wrapper.message().control_pause_ack(), 0u );
     else if( wrapper.message().has_control_resume_ack() )
-        OnReceiveControlResumeAck( wrapper.message().control_resume_ack() );
+        OnReceiveControlResumeAck( wrapper.message().control_resume_ack(), 0u );
     else if( wrapper.message().has_control_skip_to_tick_ack() )
         OnReceiveControlSkipToTickAck( wrapper.message().control_skip_to_tick_ack() );
     else if( wrapper.message().has_control_change_time_factor_ack() )

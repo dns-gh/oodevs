@@ -39,37 +39,34 @@ void LogAcknowledge( kernel::Logger_ABC& logger, const char* messageName )
 // Name: CheckAcknowledge
 // Created: AGE 2006-07-06
 // -----------------------------------------------------------------------------
-bool CheckAcknowledge( kernel::Logger_ABC& logger, int errorCode, const std::string& errorMessage, const std::string& messageName )
+bool CheckAcknowledge( kernel::Logger_ABC& logger, int errorCode, const std::string& errorMessage, const std::string& messageName, bool display )
 {
-    if( errorCode )
+    if( display )
     {
-        logger.Warning( messageName + " acknowledge error: " + errorMessage );
-        return false;
+        if( errorCode )
+            logger.Warning( messageName + " acknowledge error: " + errorMessage );
+        else
+            logger.Info( messageName + " acknowledged ok" );
     }
-    else
-    {
-        logger.Info( messageName + " acknowledged ok" );
-        return true;
-    }
+    return !errorCode;
 }
 
 // -----------------------------------------------------------------------------
 // Name: CheckAcknowledge
 // Created: NLD 2011-05-25
 // -----------------------------------------------------------------------------
-bool CheckAcknowledge( kernel::Logger_ABC& logger, const kernel::Entity_ABC& entity, int errorCode, const std::string& errorMessage, const std::string& messageName )
+bool CheckAcknowledge( kernel::Logger_ABC& logger, const kernel::Entity_ABC& entity, int errorCode, const std::string& errorMessage,
+                      const std::string& messageName, bool display )
 {
-    const std::string str = messageName + " [" + entity.GetName().toStdString() + " " + boost::lexical_cast< std::string >( entity.GetId() ) + "] ";
-    if( errorCode )
+    if( display )
     {
-        logger.Warning( str + " acknowledge error: " + errorMessage );
-        return false;
+        const std::string str = messageName + " [" + entity.GetName().toStdString() + " " + boost::lexical_cast< std::string >( entity.GetId() ) + "] ";
+        if( errorCode )
+            logger.Warning( str + " acknowledge error: " + errorMessage );
+        else
+            logger.Info( str + " acknowledged ok" );
     }
-    else
-    {
-        logger.Info( str + " acknowledged ok" );
-        return true;
-    }
+    return !errorCode;
 }
 
 }
