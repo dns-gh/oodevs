@@ -94,7 +94,8 @@ DynamicDataPtr CreateAndRegisterDynamicData( const T_PointVector& points,
     TER_World* w = &TER_World::GetWorld();
     TER_PathFindManager* m = w ? &w->GetPathFindManager() : 0;
     auto p = boost::make_shared< DynamicData >( points, type );
-    if( m )
-        m->AddDynamicData( p );
+    if( !m )
+        return p;
+    m->AddDynamicData( p );
     return DynamicDataPtr( p.get(), DynamicDataDeleter( m, p ));
 }
