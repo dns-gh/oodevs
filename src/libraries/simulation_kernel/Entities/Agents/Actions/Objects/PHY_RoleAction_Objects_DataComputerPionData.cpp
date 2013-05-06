@@ -74,37 +74,8 @@ void PHY_RoleAction_Objects_DataComputerPionData::operator() ( const PHY_Composa
     double constructionSpeed = 1.;
     if( composante.HasConstructionSpeeds() )
     {
-        TerrainData data;
         const TER_Localisation& localisation = pObject_->GetLocalisation();
-        switch( localisation.GetType() )
-        {
-        case TER_Localisation::eCircle :
-            data = TER_AnalyzerManager::GetAnalyzerManager().FindTerrainDataWithinCircle( localisation.GetCircleCenter(), static_cast< float >( localisation.GetCircleRadius() ) );
-            break;
-        case TER_Localisation::eLine :
-            {
-                TER_Localisation tmp = localisation;
-                tmp.Scale( 100. );
-                TER_Polygon polygon;
-                polygon.Reset( tmp.GetPoints() );
-                data = TER_AnalyzerManager::GetAnalyzerManager().FindTerrainDataWithinPolygon( polygon );
-            }
-            break;
-        case TER_Localisation::ePolygon :
-            {
-                TER_Polygon polygon;
-                polygon.Reset( localisation.GetPoints() );
-                data = TER_AnalyzerManager::GetAnalyzerManager().FindTerrainDataWithinPolygon( polygon );
-            }
-            break;
-        case TER_Localisation::ePoint :
-            data = TER_AnalyzerManager::GetAnalyzerManager().Pick( localisation.ComputeBarycenter() );
-            break;
-        default:
-            assert( false );
-            break;
-        }
-
+        TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().GetTerrainData( localisation );
         constructionSpeed = composante.GetConstructionSpeed( data );
         if( constructionSpeed == 0 )
             return;

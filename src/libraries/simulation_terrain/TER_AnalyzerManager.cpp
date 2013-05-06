@@ -112,3 +112,12 @@ TerrainData TER_AnalyzerManager::Pick( const MT_Vector2D& pos )
 {
     return pAnalyzer_->Pick( pos );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_AnalyzerManager::GetTerrainData
+// Created: LDC 2013-05-06
+// -----------------------------------------------------------------------------
+TerrainData TER_AnalyzerManager::GetTerrainData( const TER_Localisation& localisation )
+{
+    return pAnalyzer_->GetTerrainData( localisation );
+}

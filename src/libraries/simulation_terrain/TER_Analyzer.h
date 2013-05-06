@@ -13,11 +13,12 @@
 #include "MT_Tools/MT_Vector2DTypes.h"
 
 class TerrainAnalyzer;
-class TerrainRetractationHandle;
-class TER_NodeFunctor_ABC;
-class TER_StaticData;
 class TerrainData;
+class TerrainRetractationHandle;
+class TER_Localisation;
+class TER_NodeFunctor_ABC;
 class TER_Polygon;
+class TER_StaticData;
 
 // =============================================================================
 /** @class  TER_Analyzer
@@ -46,6 +47,7 @@ public:
     TerrainData FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius );
     TerrainData FindTerrainDataWithinPolygon( const TER_Polygon& polygon );
     TerrainData Pick( const MT_Vector2D& pos );
+    TerrainData GetTerrainData( const TER_Localisation& localisation );
     //@}
 
 private:
