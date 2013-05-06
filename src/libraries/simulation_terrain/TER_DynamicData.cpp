@@ -22,14 +22,9 @@ TerrainData Convert( const std::string& type )
 {
     if( type.empty() )
         return TER_AnalyzerManager::DefaultTerrainData();
-    if( type == "highway" )
-        return TerrainData::Motorway();
-    if( type == "main road" )
-        return TerrainData::LargeRoad();
-    if( type == "secondary road" )
-        return TerrainData::MediumRoad();
-    if( type == "country road" )
-        return TerrainData::SmallRoad();
+    const TerrainData result( type );
+    if( result.IsRoad() )
+        return result;
     return TerrainData::Bridge();
 }
 
