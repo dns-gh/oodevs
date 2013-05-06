@@ -69,6 +69,28 @@ TER_PathFinderThread::~TER_PathFinderThread()
     Terminate();
 }
 
+namespace
+{
+
+geometry::Point2f MakePoint( const MT_Vector2D& v )
+{
+    return geometry::Point2f( static_cast< float >( v.rX_ ), static_cast< float >( v.rY_ ) );
+};
+
+TerrainRetractationHandle& CreateDynamicData( TerrainPathfinder& pathfinder,
+        const TER_DynamicData& data )
+{
+    const T_PointVector& points = data.GetPoints();
+    std::vector< geometry::Point2f > geometryPoints;
+    geometryPoints.reserve( points.size() );
+    for( auto it = points.begin(); it != points.end(); ++it )
+        geometryPoints.push_back( MakePoint( *it ) );
+    return pathfinder.CreateDynamicData( geometryPoints, data.GetData() );
+}
+
+} // namespace
+
+
 // -----------------------------------------------------------------------------
 // Name: TER_PathFinderThread::ProcessDynamicData
 // Created: NLD 2005-10-10
@@ -90,8 +112,8 @@ void TER_PathFinderThread::ProcessDynamicData()
         for( auto it = tmpDynamicDataToRegister.begin(); it != tmpDynamicDataToRegister.end(); ++it )
         {
             TER_DynamicData* pData = *it;
-            assert( pData );
-            pData->RegisterDynamicData( *this );
+            auto& handle = CreateDynamicData( *pPathfinder_, *pData );
+            pData->RegisterDynamicData( *this, handle );
         }
         MT_LOG_INFO_MSG( MT_FormatString( "Register %d dynamic data - %.2f ms", tmpDynamicDataToRegister.size(), profiler.Stop() ) );
         tmpDynamicDataToRegister.clear();
@@ -199,28 +221,6 @@ void TER_PathFinderThread::Process( const boost::shared_ptr< TER_PathFindRequest
         MT_LOG_ERROR_MSG( "Unknown exception caught in pathfinder thread" );
         assert( false );
     }
-}
-
-namespace
-{
-    inline
-    geometry::Point2f MakePoint( const MT_Vector2D& v )
-    {
-        return geometry::Point2f( static_cast< float >( v.rX_ ), static_cast< float >( v.rY_ ) );
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_PathFinderThread::CreateLineTree
-// Created: AGE 2005-10-07
-// -----------------------------------------------------------------------------
-TerrainRetractationHandle& TER_PathFinderThread::CreateLineTree( const T_PointVector& points, const TerrainData& terrainData )
-{
-    std::vector< geometry::Point2f > geometryPoints;
-    geometryPoints.reserve( points.size() );
-    for( auto it = points.begin(); it != points.end(); ++it )
-        geometryPoints.push_back( MakePoint( *it ) );
-    return pPathfinder_->CreateDynamicData( geometryPoints, terrainData );
 }
 
 // -----------------------------------------------------------------------------

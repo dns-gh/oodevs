@@ -20,12 +20,10 @@
 #include <set>
 
 class TerrainPathfinder;
-class TerrainRetractationHandle;
 class TER_NodeFunctor_ABC;
 class TER_PathFindRequest_ABC;
 class TER_DynamicData;
 class TER_StaticData;
-class TerrainData;
 
 // =============================================================================
 // Created: AGE 2005-02-23
@@ -47,8 +45,6 @@ public:
     //@{
     void AddDynamicDataToRegister  ( TER_DynamicData& data );
     void AddDynamicDataToUnregister( TER_DynamicData& data );
-
-    TerrainRetractationHandle& CreateLineTree( const T_PointVector& points, const TerrainData& terrainData );
     //@}
 
     //! @name Operations

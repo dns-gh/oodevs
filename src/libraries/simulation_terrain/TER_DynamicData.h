@@ -30,6 +30,7 @@ public:
              TER_DynamicData( const T_PointVector& points, const std::string& type );
 
     const T_PointVector& GetPoints() const;
+    const TerrainData& GetData() const;
 
     //! @name Notifications
     //@{
@@ -43,7 +44,7 @@ public:
     void AddForRegistration   ( TER_PathFinderThread& thread );
     void AddForUnregistration ( TER_PathFinderThread& thread );
 
-    void RegisterDynamicData  ( TER_PathFinderThread& thread );
+    void RegisterDynamicData  ( TER_PathFinderThread& thread, TerrainRetractationHandle& h );
     void UnregisterDynamicData( TER_PathFinderThread& thread );
     //@}
 

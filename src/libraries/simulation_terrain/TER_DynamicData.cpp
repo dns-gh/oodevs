@@ -85,11 +85,12 @@ void TER_DynamicData::AddForRegistration( TER_PathFinderThread& thread )
 // Name: TER_DynamicData::RegisterDynamicData
 // Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
-void TER_DynamicData::RegisterDynamicData( TER_PathFinderThread& thread )
+void TER_DynamicData::RegisterDynamicData( TER_PathFinderThread& thread,
+        TerrainRetractationHandle& handle )
 {
     boost::mutex::scoped_lock locker( mutex_ );
 
-    if( ! handles_.insert( std::make_pair( &thread, &thread.CreateLineTree( points_, terrainData_ ) ) ).second )
+    if( ! handles_.insert( std::make_pair( &thread, &handle ) ).second )
         MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     assert( nNbrRefs_ > 0 );
     -- nNbrRefs_;
@@ -134,6 +135,11 @@ void TER_DynamicData::UnregisterDynamicData( TER_PathFinderThread& thread )
 const T_PointVector& TER_DynamicData::GetPoints() const
 {
     return points_;
+}
+
+const TerrainData& TER_DynamicData::GetData() const
+{
+    return terrainData_;
 }
 
 namespace
