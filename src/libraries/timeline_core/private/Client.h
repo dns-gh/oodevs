@@ -38,7 +38,7 @@ namespace timeline
 namespace core
 {
 class Client : public Client_ABC
-             , public controls::Handler_ABC
+             , public controls::ClientHandler_ABC
 {
 public:
     explicit Client( const Configuration& cfg );
@@ -55,7 +55,8 @@ public:
 
 private:
     const Configuration cfg_;
-    std::auto_ptr< tools::ipc::Device > device_;
+    std::auto_ptr< tools::ipc::Device > read_;
+    std::auto_ptr< tools::ipc::Device > write_;
     CefRefPtr< Engine > engine_;
     CefRefPtr< App > app_;
     CefRefPtr< Browser > browser_;

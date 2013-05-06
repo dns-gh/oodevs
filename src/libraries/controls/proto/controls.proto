@@ -8,7 +8,7 @@
 // ****************************************************************************
 package sdk;
 
-enum Type
+enum ClientType
 {
     UNKNOWN         = 0x000;
     // client commands
@@ -17,6 +17,12 @@ enum Type
     CLIENT_RELOAD   = 0x102;
     // event commands
     EVENT_CREATE    = 0x200;
+}
+
+enum ServerType
+{
+    // event commands
+    EVENT_CREATED   = 0x100;
 }
 
 message Action
@@ -37,8 +43,21 @@ message Event
     optional bool   done   = 7;
 }
 
+message Error
+{
+    optional int32  code = 1;
+    optional string text = 2;
+}
+
 message ClientCommand
 {
-    optional Type  type  = 1;
-    optional Event event = 2;
+    optional ClientType type  = 1;
+    optional Event      event = 2;
+}
+
+message ServerCommand
+{
+    optional ServerType type  = 1;
+    optional Event      event = 2;
+    optional Error      error = 3;
 }

@@ -24,6 +24,7 @@ using namespace timeline;
 namespace tic = timeline::controls;
 namespace bip = boost::interprocess;
 using sdk::ClientCommand;
+using sdk::ServerCommand;
 
 namespace
 {
@@ -46,27 +47,28 @@ namespace
         bip::ibufferstream stream( reinterpret_cast< const char* >( src ), size );
         dst.ParseFromIstream( &stream );
     }
+
+    size_t MarshallCientType( void* data, size_t size, sdk::ClientType type )
+    {
+        ClientCommand cmd;
+        cmd.set_type( type );
+        return Marshall( data, size, cmd );
+    }
 }
 
 size_t tic::ResizeClient( void* data, size_t size )
 {
-    ClientCommand cmd;
-    cmd.set_type( sdk::CLIENT_RESIZE );
-    return Marshall( data, size, cmd );
+    return MarshallCientType( data, size, sdk::CLIENT_RESIZE );
 }
 
 size_t tic::QuitClient( void* data, size_t size )
 {
-    ClientCommand cmd;
-    cmd.set_type( sdk::CLIENT_QUIT );
-    return Marshall( data, size, cmd );
+    return MarshallCientType( data, size, sdk::CLIENT_QUIT );
 }
 
 size_t tic::ReloadClient( void* data, size_t size )
 {
-    ClientCommand cmd;
-    cmd.set_type( sdk::CLIENT_RELOAD );
-    return Marshall( data, size, cmd );
+    return MarshallCientType( data, size, sdk::CLIENT_RELOAD );
 }
 
 namespace
@@ -112,6 +114,17 @@ namespace
         dst.done = src.done();
         return dst;
     }
+
+    void SetError( sdk::Error& dst, const Error& error )
+    {
+        dst.set_code( error.code );
+        dst.set_text( error.text );
+    }
+
+    Error GetError( const sdk::Error& src )
+    {
+        return Error( src.code(), src.text() );
+    }
 }
 
 size_t tic::CreateEvent( void* data, size_t size, const Event& event )
@@ -122,7 +135,7 @@ size_t tic::CreateEvent( void* data, size_t size, const Event& event )
     return Marshall( data, size, cmd );
 }
 
-void tic::ParseClient( Handler_ABC& handler, const void* data, size_t size )
+void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size )
 {
     ClientCommand cmd;
     Unmarshall( cmd, data, size );
@@ -132,5 +145,24 @@ void tic::ParseClient( Handler_ABC& handler, const void* data, size_t size )
         case sdk::CLIENT_QUIT:   return handler.OnQuitClient();
         case sdk::CLIENT_RELOAD: return handler.OnReloadClient();
         case sdk::EVENT_CREATE:  return handler.OnCreateEvent( GetEvent( cmd.event() ) );
+    }
+}
+
+size_t tic::CreatedEvent( void* data, size_t size, const Event& event, const Error& error )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::EVENT_CREATED );
+    SetEvent( *cmd.mutable_event(), event );
+    SetError( *cmd.mutable_error(), error );
+    return Marshall( data, size, cmd );
+}
+
+void tic::ParseServer( ServerHandler_ABC& handler, const void* data, size_t size )
+{
+    ServerCommand cmd;
+    Unmarshall( cmd, data, size );
+    switch( cmd.type() )
+    {
+        case sdk::EVENT_CREATED: return handler.OnCreatedEvent( GetEvent( cmd.event() ), GetError( cmd.error() ) );
     }
 }

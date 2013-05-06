@@ -44,8 +44,9 @@ namespace
 
 Client::Client( const Configuration& cfg )
     : cfg_    ( cfg )
-    , device_ ( new ipc::Device( cfg_.uuid, false, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
-    , engine_ ( new Engine() )
+    , read_   ( new ipc::Device( cfg_.uuid + "_write", false, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
+    , write_  ( new ipc::Device( cfg_.uuid + "_read",  false, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
+    , engine_ ( new Engine( *write_ ) )
     , app_    ( new App( cfg, engine_ ) )
     , browser_( Browser::Factory( GetHwnd( cfg_.wid ), cfg_.url ) )
     , quit_   ( false )
@@ -69,7 +70,7 @@ int Client::Run()
     {
         std::vector< uint8_t > buffer( ipc::DEFAULT_MAX_PACKET_SIZE );
         while( !quit_ )
-            if( const size_t read = device_->Read( &buffer[0], buffer.size(), boost::posix_time::milliseconds( 50 ) ) )
+            if( const size_t read = read_->Read( &buffer[0], buffer.size(), boost::posix_time::milliseconds( 50 ) ) )
                 controls::ParseClient( *this, &buffer[0], read );
         return 0;
     }

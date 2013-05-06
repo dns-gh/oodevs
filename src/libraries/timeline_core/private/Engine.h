@@ -18,9 +18,18 @@
 #endif
 #include <boost/noncopyable.hpp>
 
+namespace tools
+{
+namespace ipc
+{
+    class Device;
+}
+}
+
 namespace timeline
 {
     struct Event;
+    struct Error;
 }
 
 namespace timeline
@@ -28,29 +37,28 @@ namespace timeline
 namespace core
 {
 class Engine : public boost::noncopyable
-             , public CefV8Handler
 {
 public:
-             Engine();
+             Engine( tools::ipc::Device& device );
     virtual ~Engine();
-
-    /// CefV8Handler methods
-    bool Execute( const CefString&         name,
-                  CefRefPtr< CefV8Value >  object,
-                  const CefV8ValueList&    args,
-                  CefRefPtr< CefV8Value >& retval,
-                  CefString&               exception );
 
     /// Public methods
     void Register   ( CefRefPtr< CefV8Context > context );
     void Unregister ();
     void CreateEvent( const Event& event );
 
+private:
+    void CreatedEvent( const Event& event, const Error& err );
+
+    // V8 handlers
+    CefRefPtr< CefV8Value > OnCreatedEvent( const CefV8ValueList& args );
+
 protected:
     IMPLEMENT_REFCOUNTING( Engine );
 
 private:
     CefRefPtr< CefV8Context > ctx_;
+    tools::ipc::Device& device_;
 };
 }
 }

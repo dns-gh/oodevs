@@ -9,13 +9,20 @@
 
 #include "Engine.h"
 
-#include <timeline/api.h>
+#include "controls/controls.h"
+#include "timeline/api.h"
+
+#include <tools/IpcDevice.h>
+
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
+#include <boost/bind.hpp>
+#include <boost/date_time/posix_time/posix_time_duration.hpp>
 
 using namespace timeline::core;
 
-Engine::Engine()
+Engine::Engine( tools::ipc::Device& device )
+    : device_( device )
 {
     // NOTHING
 }
@@ -25,17 +32,53 @@ Engine::~Engine()
     // NOTHING
 }
 
-bool Engine::Execute( const CefString&         /*name*/,
-                      CefRefPtr< CefV8Value >  /*object*/,
-                      const CefV8ValueList&    /*args*/,
-                      CefRefPtr< CefV8Value >& /*retval*/,
-                      CefString&               /*exception*/ )
-{
-    return false;
-}
-
 namespace
 {
+    struct Adapter : public CefV8Handler
+                   , public boost::noncopyable
+    {
+        typedef boost::function< CefRefPtr< CefV8Value >( const CefV8ValueList& args ) > T_Operand;
+
+        Adapter( const std::string& name, const T_Operand& operand )
+            : name_   ( name )
+            , operand_( operand )
+
+        {
+            // NOTHING
+        }
+
+        ~Adapter()
+        {
+            // NOTHING
+        }
+
+        bool Execute( const CefString&         name,
+                      CefRefPtr< CefV8Value >  /*object*/,
+                      const CefV8ValueList&    args,
+                      CefRefPtr< CefV8Value >& retval,
+                      CefString&               exception )
+        {
+            if( name != name_ )
+                return false;
+            try
+            {
+                retval = operand_( args );
+            }
+            catch( const std::exception& err )
+            {
+                exception = err.what();
+            }
+            return true;
+        }
+
+    protected:
+        IMPLEMENT_REFCOUNTING( Adapter );
+
+    private:
+        const std::string name_;
+        const T_Operand operand_;
+    };
+
     CefRefPtr< CefV8Value > SetValue( CefRefPtr< CefV8Value >& dst, const std::string& key, CefRefPtr< CefV8Value > src )
     {
         dst->SetValue( key, src, V8_PROPERTY_ATTRIBUTE_NONE );
@@ -56,6 +99,33 @@ namespace
     {
         return SetValue( dst, key, CefV8Value::CreateBool( value ) );
     }
+
+    CefRefPtr< CefV8Value > SetValue( CefRefPtr< CefV8Value >& dst, const std::string& key, const Adapter::T_Operand& operand )
+    {
+        CefRefPtr< CefV8Handler > handler( new Adapter( key, operand ) );
+        return SetValue( dst, key, CefV8Value::CreateFunction( key, handler ) );
+    }
+
+    std::string GetString( const CefRefPtr< CefV8Value > src, const std::string& key )
+    {
+        if( !src->HasValue( key ) )
+            return std::string();
+        return src->GetValue( key )->GetStringValue();
+    }
+
+    bool GetBool( const CefRefPtr< CefV8Value > src, const std::string& key )
+    {
+        if( !src->HasValue( key ) )
+            return false;
+        return src->GetValue( key )->GetBoolValue();
+    }
+
+    int GetInteger( const CefRefPtr< CefV8Value > src, const std::string& key )
+    {
+        if( !src->HasValue( key ) )
+            return 0;
+        return src->GetValue( key )->GetIntValue();
+    }
 }
 
 void Engine::Register( CefRefPtr< CefV8Context > context )
@@ -64,6 +134,7 @@ void Engine::Register( CefRefPtr< CefV8Context > context )
     auto window = context->GetGlobal();
     auto gaming = SetValue( window, "gaming" );
     SetValue( gaming, "enabled", true );
+    SetValue( gaming, "created_event", boost::bind( &Engine::OnCreatedEvent, this, _1 ) );
 }
 
 void Engine::Unregister()
@@ -94,17 +165,9 @@ namespace
             frame_ = context->GetFrame();
             url_ = frame_->GetURL();
             if( !context->Enter() )
-            {
-                Alert( "Unable to enter context" );
                 return false;
-            }
             ctx_ = context;
             return true;
-        }
-
-        void Alert( const std::string& msg )
-        {
-            frame_->ExecuteJavaScript( "alert('" + msg + "');", url_, 0 );
         }
 
         bool Execute( CefRefPtr< CefV8Value >& operand, const CefV8ValueList& args )
@@ -148,20 +211,61 @@ namespace
         SetValue( action, "apply", event.action.apply );
         SetValue( action, "payload", event.action.payload );
     }
+
+    timeline::Event GetEvent( const CefRefPtr< CefV8Value > src )
+    {
+        timeline::Event dst;
+        dst.uuid  = GetString( src, "uuid" );
+        dst.name  = GetString( src, "name" );
+        dst.info  = GetString( src, "info" );
+        dst.begin = GetString( src, "begin" );
+        dst.end   = GetString( src, "end" );
+        dst.done  = GetBool( src, "done" );
+        if( !src->HasValue( "action" ) )
+            return dst;
+        auto sub       = src->GetValue( "action" );
+        auto& action   = dst.action;
+        action.target  = GetString( sub, "action.target" );
+        action.apply   = GetBool( sub, "action.apply" );
+        action.payload = GetString( sub, "action.payload" );
+        return dst;
+    }
+
+    timeline::Error GetError( const CefRefPtr< CefV8Value > src )
+    {
+        timeline::Error dst;
+        dst.code = GetInteger( src, "code" );
+        dst.text = GetString( src, "text" );
+        return dst;
+    }
 }
 
 void Engine::CreateEvent( const timeline::Event& event )
 {
     Gate gate;
     if( !gate.Acquire( ctx_ ) )
-        return;
+        return CreatedEvent( event, Error( EC_INTERNAL_SERVER_ERROR, "unable to acquire v8 context" ) );
     auto create_event = GetValue( ctx_, "gaming.create_event" );
     if( !create_event )
-        return gate.Alert( "unable to find gaming.create_event" );
+        return CreatedEvent( event, Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.create_event" ) );
     auto data = CefV8Value::CreateObject( 0 );
     SetEvent( data, event );
     CefV8ValueList args;
     args.push_back( data );
     if( !gate.Execute( create_event, args ) )
-        return gate.Alert( "unable to execute create_event" );
+        return CreatedEvent( event, Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.create_event" ) );
+}
+
+void Engine::CreatedEvent( const timeline::Event& event, const timeline::Error& error )
+{
+    std::vector< uint8_t > buffer( controls::CreatedEvent( 0, 0, event, error ) );
+    controls::CreatedEvent( &buffer[0], buffer.size(), event, error );
+    device_.Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+}
+
+CefRefPtr< CefV8Value > Engine::OnCreatedEvent( const CefV8ValueList& args )
+{
+    if( args.size() == 2 )
+        CreatedEvent( GetEvent( args[0] ), GetError( args[1] ) );
+    return 0;
 }

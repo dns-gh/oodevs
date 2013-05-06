@@ -9,8 +9,14 @@
 #ifndef SERVER_H__
 #define SERVER_H__
 
-#include <timeline/api.h>
+#include "timeline/api.h"
+#include "controls/controls.h"
 #include <QProcess>
+
+namespace boost
+{
+    class thread;
+}
 
 namespace tools
 {
@@ -28,6 +34,7 @@ namespace timeline
 namespace timeline
 {
 class Server : public Server_ABC
+             , public controls::ServerHandler_ABC
 {
     Q_OBJECT
 public:
@@ -38,7 +45,11 @@ public:
     virtual void Reload();
     virtual bool CreateEvent( const Event& event );
 
+    /// controls::Server_ABC methods
+    virtual void OnCreatedEvent( const Event& event, const Error& error );
+
 private:
+    void Run();
     void StartProcess();
 
 private slots:
@@ -47,8 +58,10 @@ private slots:
 private:
     const Configuration cfg_;
     const std::string uuid_;
-    std::auto_ptr< tools::ipc::Device > device_;
+    std::auto_ptr< tools::ipc::Device > write_;
+    std::auto_ptr< tools::ipc::Device > read_;
     std::auto_ptr< Embedded_ABC > embedded_;
+    std::auto_ptr< boost::thread > thread_;
 };
 }
 

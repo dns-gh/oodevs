@@ -23,10 +23,10 @@ namespace controls
     size_t ReloadClient( void* dst, size_t size );
     size_t CreateEvent ( void* dst, size_t size, const Event& event );
 
-    struct Handler_ABC : public boost::noncopyable
+    struct ClientHandler_ABC : public boost::noncopyable
     {
-                 Handler_ABC() {}
-        virtual ~Handler_ABC() {}
+                 ClientHandler_ABC() {}
+        virtual ~ClientHandler_ABC() {}
 
         virtual void OnResizeClient() = 0;
         virtual void OnQuitClient()   = 0;
@@ -34,7 +34,20 @@ namespace controls
         virtual void OnCreateEvent( const Event& event ) = 0;
     };
 
-    void ParseClient( Handler_ABC& handler, const void* src, size_t size );
+    void ParseClient( ClientHandler_ABC& client, const void* src, size_t size );
+
+    size_t CreatedEvent( void* dst, size_t size, const Event& event, const Error& error );
+
+    struct ServerHandler_ABC : public boost::noncopyable
+    {
+                 ServerHandler_ABC() {}
+        virtual ~ServerHandler_ABC() {}
+
+        virtual void OnCreatedEvent( const Event& event, const Error& error ) = 0;
+    };
+
+    void ParseServer( ServerHandler_ABC& server, const void* src, size_t size );
+
 }
 }
 

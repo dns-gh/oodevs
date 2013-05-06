@@ -37,8 +37,16 @@ struct Event
     Action      action;
 };
 
+enum ErrorCode
+{
+    EC_OK                    = 200,
+    EC_INTERNAL_SERVER_ERROR = 505,
+};
+
 struct Error
 {
+    Error() : code( EC_OK ) {}
+    Error( int code, const std::string& text ) : code( code ), text( text ) {}
     int         code;
     std::string text;
 };

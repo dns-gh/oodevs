@@ -16,7 +16,7 @@
 #include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/thread/thread.hpp>
+#include <boost/thread.hpp>
 
 #include "moc_Server.cpp"
 
@@ -60,19 +60,23 @@ namespace
 Server::Server( const Configuration& cfg )
     : cfg_     ( cfg )
     , uuid_    ( boost::lexical_cast< std::string >( boost::uuids::random_generator()() ) )
-    , device_  ( new ipc::Device( uuid_, true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
-    , embedded_( Embedded_ABC::Factory( *device_, cfg.external ) )
+    , write_   ( new ipc::Device( uuid_ + "_write", true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
+    , read_    ( new ipc::Device( uuid_ + "_read",  true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
+    , embedded_( Embedded_ABC::Factory( *write_, cfg.external ) )
 {
     auto layout = new QVBoxLayout( cfg.widget );
-    auto widget = new Widget( *device_, cfg.widget );
+    auto widget = new Widget( *write_, cfg.widget );
     layout->addWidget( widget );
     layout->setContentsMargins( 0, 0, 0, 0 );
+    thread_.reset( new boost::thread( &Server::Run, this ) );
     embedded_->Start( cfg_, uuid_ );
 }
 
 Server::~Server()
 {
     embedded_.reset();
+    thread_->interrupt();
+    thread_->join();
 }
 
 namespace
@@ -101,12 +105,40 @@ void Server::Reload()
 {
     std::vector< uint8_t > buffer( controls::ReloadClient( 0, 0 ) );
     controls::ReloadClient( &buffer[0], buffer.size() );
-    device_->Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+    write_->Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
 }
 
 bool Server::CreateEvent( const Event& event )
 {
     std::vector< uint8_t > buffer( controls::CreateEvent( 0, 0, event ) );
     controls::CreateEvent( &buffer[0], buffer.size(), event );
-    return device_->Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+    return write_->Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+}
+
+void Server::Run()
+{
+    try
+    {
+        std::vector< uint8_t > buffer( ipc::DEFAULT_MAX_PACKET_SIZE );
+        while( !thread_->interruption_requested() )
+            if( const size_t read = read_->Read( &buffer[0], buffer.size(), boost::posix_time::milliseconds( 50 ) ) )
+                controls::ParseServer( *this, &buffer[0], read );
+    }
+    catch( const boost::thread_interrupted& )
+    {
+        // NOTHING
+    }
+    catch( const std::exception& err )
+    {
+        qDebug() << err.what();
+    }
+    catch( ... )
+    {
+        qDebug() << "unexpected exception";
+    }
+}
+
+void Server::OnCreatedEvent( const Event& event, const Error& error )
+{
+    emit CreatedEvent( event, error );
 }
