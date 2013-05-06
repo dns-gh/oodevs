@@ -84,6 +84,14 @@ func MakePointLocation(point *Point) *sword.Location {
 	}
 }
 
+func MakeLineLocation(from, to *Point) *sword.Location {
+	coordType := sword.Location_line
+	return &sword.Location{
+		Type:        &coordType,
+		Coordinates: MakeCoords(from, to),
+	}
+}
+
 func MakePointParam(point *Point) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
@@ -106,6 +114,15 @@ func MakeNullValue() *sword.MissionParameter {
 	return &sword.MissionParameter{
 		NullValue: proto.Bool(true),
 	}
+}
+
+func MakeLimit(from, to *Point) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Limit: &sword.Line{
+				Location: MakeLineLocation(from, to),
+			},
+		})
 }
 
 // Return the first value of the index-th parameter of params, or nil.

@@ -219,6 +219,18 @@ func (c *Client) CreateUnitWithName(automatId, unitType uint32, location *Point,
 	return c.createUnit(automatId, unitType, location, &name, &pc)
 }
 
+func orderAckHandler(msg *sword.SimToClient_Content) error {
+	reply := msg.GetOrderAck()
+	if reply == nil {
+		return unexpected(msg)
+	}
+	code := reply.GetErrorCode()
+	if code != sword.OrderAck_no_error {
+		return nameof(sword.OrderAck_ErrorCode_name, int32(code))
+	}
+	return nil
+}
+
 func (c *Client) SendUnitOrder(unitId, missionType uint32,
 	params *sword.MissionParameters) error {
 	msg := SwordMessage{
@@ -236,17 +248,28 @@ func (c *Client) SendUnitOrder(unitId, missionType uint32,
 			},
 		},
 	}
-	handler := func(msg *sword.SimToClient_Content) error {
-		reply := msg.GetOrderAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		code := reply.GetErrorCode()
-		if code != sword.OrderAck_no_error {
-			return nameof(sword.OrderAck_ErrorCode_name, int32(code))
-		}
-		return nil
+	handler := orderAckHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) SendAutomatOrder(unitId, missionType uint32,
+	params *sword.MissionParameters) error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				AutomatOrder: &sword.AutomatOrder{
+					Tasker: &sword.AutomatId{
+						Id: proto.Uint32(unitId),
+					},
+					Type: &sword.MissionType{
+						Id: proto.Uint32(missionType),
+					},
+					Parameters: params,
+				},
+			},
+		},
 	}
+	handler := orderAckHandler
 	return <-c.postSimRequest(msg, handler)
 }
 
