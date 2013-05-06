@@ -98,6 +98,10 @@ namespace
         const geometry::Vector2f& vector_;
         PointComparator& operator=( const PointComparator& );
     };
+    bool IsInColumn( float width, float depth )
+    {
+        return width < depth;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +168,7 @@ void DrawableUnitContainer::Draw( const Entity_ABC& entity, const geometry::Poin
             float depth = hasLiveChildren ? maxProjection - minProjection : 0;
             width = std::max( width, minWidth );
             depth = std::max( depth, minDepth );
-            if( isMoving && !moveSymbol_.empty() && orderedPositions.size() > 1 && width < depth )
+            if( isMoving && !moveSymbol_.empty() && orderedPositions.size() > 1 && IsInColumn( width, depth ) )
             {
                 PointComparator comparator( directionVector );
                 std::sort( orderedPositions.begin(), orderedPositions.end(), comparator );

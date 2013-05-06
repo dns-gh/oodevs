@@ -48,6 +48,7 @@ namespace
     {
         glEnd();
     }
+    float defaultSymbolSize = 3.f;
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +69,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, float width, flo
     , passes_      ( passLess( "" ) )
     , currentPass_ ()
     , bMulti_      ( false )
-    , SymbolSize_  ( 3.f )
+    , SymbolSize_  ( defaultSymbolSize )
     , tesselator_  ( 0 )
     , pPickingSelector_( new PickingSelector() )
     , selectionBuffer_( 1024 )
@@ -902,7 +903,7 @@ void GlWidget::DrawApp6SymbolFixedSize( const std::string& symbol, const geometr
 // -----------------------------------------------------------------------------
 void GlWidget::DrawApp6SymbolScaledSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction, float width, float depth ) const
 {
-    factor = fabs( factor ) * GetActualZoomFactor() * SymbolSize_;
+    factor = fabs( factor ) * GetActualZoomFactor() * SymbolSize_/defaultSymbolSize;
     const float svgDeltaX = -20; // Offset of 20 in our svg files...
     const float svgDeltaY = -80 + 120; // Offset of 80 in our svg files + half of 240 which is the defautl height...
     Rectangle2f rectangle( Point2f( 0.f, 0.f ), Point2f( 256, 256 ) );
@@ -926,13 +927,13 @@ void GlWidget::DrawUnitSymbol( const std::string& symbol, const std::string& mov
             geometry::Vector2f directionVector( 0., 1. );
             float radians = direction * 3.14f/180;
             directionVector.Rotate( - radians );
-            geometry::Point2f arrowTail = where + directionVector * (-baseDepth/2);
-            geometry::Point2f arrowHead = where + directionVector * (baseDepth/2);
-            geometry::Point2f symbolTail = arrowHead + directionVector * (-symbolDepth);
+            geometry::Point2f arrowTail = where + directionVector * (-baseDepth);
+            geometry::Point2f arrowHead = where;
+            geometry::Point2f symbolTail = arrowHead + directionVector * (-symbolDepth * SymbolSize_/defaultSymbolSize);
             geometry::Vector2f symbolVector( symbolTail, arrowHead );
             geometry::Point2f symbolPosition = symbolTail + symbolVector * 0.5f;
             DrawApp6SymbolScaledSize( moveSymbol, symbolPosition, factor, direction, 1, 1 );
-            if( baseDepth )
+            if( baseDepth && baseDepth > symbolDepth * SymbolSize_/defaultSymbolSize )
             {
                 T_PointVector points;
                 points.push_back( arrowTail );
