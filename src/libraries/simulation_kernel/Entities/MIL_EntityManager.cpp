@@ -1018,7 +1018,7 @@ void MIL_EntityManager::OnReceiveUnitOrder( const UnitOrder& message, unsigned i
 // Name: MIL_EntityManager::OnReceiveAutomatOrder
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsigned int nCtx, unsigned int clientId )
 {
     client::TaskCreationRequestAck ack;
     ack().mutable_tasker()->mutable_automat()->set_id( message.tasker().id() );
@@ -1034,7 +1034,7 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
     {
         ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------

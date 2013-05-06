@@ -853,7 +853,7 @@ void AgentServerMsgMgr::OnReceiveOrderAck( const sword::TaskCreationRequestAck& 
     if( message.tasker().has_automat() )
     {
         Automat_ABC& automat = GetModel().agents_.GetAutomat( message.tasker().automat().id() );
-        if( CheckAcknowledge( logger_, automat, message ) )
+        if( CheckAcknowledge( logger_, automat, message, GetProfile().DisplayMessage( clientId ) ) )
             automat.Update( message );
     }
     else if( message.tasker().has_unit() )
