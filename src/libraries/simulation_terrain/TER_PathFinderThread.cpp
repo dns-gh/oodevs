@@ -220,7 +220,7 @@ TerrainRetractationHandle& TER_PathFinderThread::CreateLineTree( const T_PointVe
     geometryPoints.reserve( points.size() );
     for( auto it = points.begin(); it != points.end(); ++it )
         geometryPoints.push_back( MakePoint( *it ) );
-    return pPathfinder_->CreateDynamicData( geometryPoints.begin(), geometryPoints.end(), terrainData );
+    return pPathfinder_->CreateDynamicData( geometryPoints, terrainData );
 }
 
 // -----------------------------------------------------------------------------
