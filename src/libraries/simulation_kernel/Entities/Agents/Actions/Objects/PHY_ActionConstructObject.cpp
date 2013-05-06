@@ -92,8 +92,8 @@ void PHY_ActionConstructObject::StopAction()
         if( pConstruction && pConstruction->IsConstructed() )
         {
             BridgingCapacity* pBridging = pObject_->Retrieve< BridgingCapacity >();
-            if( pBridging && pBridging->IsBridgeType() && !pBridging->IsPathData() )
-                pBridging->CreatePathData();
+            if( pBridging )
+                pBridging->CreateBridge();
         }
         pObject_->RetrieveAttribute< ConstructionAttribute >()->NotifyStopBuildByGen();
     }

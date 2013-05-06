@@ -55,14 +55,6 @@ BridgingCapacity::~BridgingCapacity()
     // NOTHING
 }
 
-namespace
-{
-    bool IsBridge( const std::string& type )
-    {
-        return type == "bridge";
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: BridgingCapacity::load
 // Created: JSR 2012-04-16
@@ -116,8 +108,7 @@ void BridgingCapacity::Instanciate( MIL_Object_ABC& object ) const
 void BridgingCapacity::Finalize( MIL_Object_ABC& object )
 {
     CreateBridgeGeometry( object.GetLocalisation().GetPoints() );
-    if( type_ != "" && !IsBridge( type_ ) )
-        CreatePathData();
+    CreateRoad();
 }
 
 // -----------------------------------------------------------------------------
@@ -130,12 +121,32 @@ void BridgingCapacity::CreatePathData()
 }
 
 // -----------------------------------------------------------------------------
-// Name: BridgingCapacity::IsBridgeType
+// Name: BridgingCapacity::CreateBridge
+// Created: SLI 2013-05-03
+// -----------------------------------------------------------------------------
+void BridgingCapacity::CreateBridge()
+{
+    if( IsBridge() && !IsPathData() )
+        CreatePathData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: BridgingCapacity::CreateRoad
+// Created: SLI 2013-05-03
+// -----------------------------------------------------------------------------
+void BridgingCapacity::CreateRoad()
+{
+    if( !IsBridge() && !type_.empty() )
+        CreatePathData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: BridgingCapacity::IsBridge
 // Created: MMC 2012-08-01
 // -----------------------------------------------------------------------------
-bool BridgingCapacity::IsBridgeType() const
+bool BridgingCapacity::IsBridge() const
 {
-    return IsBridge( type_ );
+    return type_ == "bridge";
 }
 
 // -----------------------------------------------------------------------------

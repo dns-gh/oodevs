@@ -318,7 +318,7 @@ bool MIL_ObjectManipulator::IsTrafficable( const MIL_Agent_ABC& agent ) const
     if( !agent.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() && object_.CanInteractWith( agent ) )
     {
         BridgingCapacity* bridgingCapacity = object_.Retrieve< BridgingCapacity >();
-        if( bridgingCapacity && bridgingCapacity->IsBridgeType() )
+        if( bridgingCapacity && bridgingCapacity->IsBridge() )
         {
             const ConstructionAttribute* pConstruction = object_.RetrieveAttribute< ConstructionAttribute >();
             if( pConstruction && !pConstruction->IsConstructed() )
