@@ -21,14 +21,18 @@
 #include <boost/noncopyable.hpp>
 #include <set>
 
+namespace spatialcontainer
+{
+    class RetractationHandle;
+}
+typedef boost::shared_ptr< spatialcontainer::RetractationHandle > RetractationPtr;
+
 class TerrainPathfinder;
 class TER_NodeFunctor_ABC;
 class TER_PathFindRequest_ABC;
 class TER_DynamicData;
 typedef boost::shared_ptr< TER_DynamicData > DynamicDataPtr;
 class TER_StaticData;
-class TerrainRetractationHandle;
-typedef boost::shared_ptr< TerrainRetractationHandle > RetractationPtr;
 
 // =============================================================================
 // Created: AGE 2005-02-23

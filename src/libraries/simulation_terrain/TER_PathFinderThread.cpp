@@ -17,12 +17,10 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <pathfind/TerrainPathfinder.h>
-#include <pathfind/TerrainRetractationHandle.h>
 #include <boost/interprocess/detail/atomic.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
 
-using namespace spatialcontainer;
 using namespace pathfind;
 namespace bii = boost::interprocess::ipcdetail;
 
@@ -66,6 +64,8 @@ TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData,
 // -----------------------------------------------------------------------------
 TER_PathFinderThread::~TER_PathFinderThread()
 {
+    // Ensure the retractation handlers are destroyed before the graph
+    handlers_.clear();
     Terminate();
 }
 
@@ -84,8 +84,7 @@ RetractationPtr CreateDynamicData( TerrainPathfinder& pathfinder, const TER_Dyna
     geometryPoints.reserve( points.size() );
     for( auto it = points.begin(); it != points.end(); ++it )
         geometryPoints.push_back( MakePoint( *it ) );
-    auto& handler = pathfinder.CreateDynamicData( geometryPoints, data.GetData() );
-    return RetractationPtr( &handler );
+    return pathfinder.CreateDynamicData( geometryPoints, data.GetData() );
 }
 
 } // namespace
