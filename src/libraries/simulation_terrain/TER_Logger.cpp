@@ -14,7 +14,7 @@
 #include "spatialcontainer/Logging.h"
 #include <boost/make_shared.hpp>
 
-using namespace spatialcontainer;
+using namespace tools;
 
 namespace
 {
@@ -29,7 +29,7 @@ MT_Logger_ABC::E_LogLevel GetLogLevel( Logger_ABC::eLevel level )
     }
 }
 
-class MTTerrainLogger : public spatialcontainer::Logger_ABC
+class MTTerrainLogger : public tools::Logger_ABC
 {
 public:
              MTTerrainLogger( const std::string& name ) : name_( name + ": " ) {}
