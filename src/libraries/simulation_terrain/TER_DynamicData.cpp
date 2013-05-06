@@ -12,68 +12,54 @@
 #include "TER_PathFindManager.h"
 #include "TER_World.h"
 #include "TER_AnalyzerManager.h"
+#include <spatialcontainer/TerrainData.h>
 #include <boost/make_shared.hpp>
 
 namespace
 {
-    TerrainData Convert( const std::string& type )
+
+TerrainData Convert( const std::string& type )
+{
+    if( type.empty() )
+        return TER_AnalyzerManager::DefaultTerrainData();
+    if( type == "highway" )
+        return TerrainData::Motorway();
+    if( type == "main road" )
+        return TerrainData::LargeRoad();
+    if( type == "secondary road" )
+        return TerrainData::MediumRoad();
+    if( type == "country road" )
+        return TerrainData::SmallRoad();
+    return TerrainData::Bridge();
+}
+
+class DynamicData : public TER_DynamicData
+{
+public:
+    DynamicData( const T_PointVector& points, const std::string& type )
+        : points_     ( points )
+        , terrainData_( Convert( type ))
     {
-        if( type.empty() )
-            return TER_AnalyzerManager::DefaultTerrainData();
-        if( type == "highway" )
-            return TerrainData::Motorway();
-        if( type == "main road" )
-            return TerrainData::LargeRoad();
-        if( type == "secondary road" )
-            return TerrainData::MediumRoad();
-        if( type == "country road" )
-            return TerrainData::SmallRoad();
-        return TerrainData::Bridge();
     }
-}
 
-// -----------------------------------------------------------------------------
-// Name: TER_DynamicData constructor
-// Created: NLD 2005-10-10
-// -----------------------------------------------------------------------------
-TER_DynamicData::TER_DynamicData( const T_PointVector& points )
-    : points_     ( points )
-    , terrainData_( Convert( "" ))
-{
-    // NOTHING
-}
+    virtual ~DynamicData()
+    {
+    }
 
-// -----------------------------------------------------------------------------
-// Name: TER_DynamicData constructor
-// Created: MCO 2012-11-29
-// -----------------------------------------------------------------------------
-TER_DynamicData::TER_DynamicData( const T_PointVector& points, const std::string& type )
-    : points_     ( points )
-    , terrainData_( Convert( type ) )
-{
-    // NOTHING
-}
+    virtual const T_PointVector& GetPoints() const
+    {
+        return points_;
+    }
 
-// -----------------------------------------------------------------------------
-// Name: TER_DynamicData destructor
-// Created: AGE 2005-02-02
-// -----------------------------------------------------------------------------
-TER_DynamicData::~TER_DynamicData()
-{
-}
+    virtual const TerrainData& GetData() const
+    {
+        return terrainData_;
+    }
 
-const T_PointVector& TER_DynamicData::GetPoints() const
-{
-    return points_;
-}
-
-const TerrainData& TER_DynamicData::GetData() const
-{
-    return terrainData_;
-}
-
-namespace
-{
+private:
+    const T_PointVector points_;
+    const TerrainData terrainData_;
+};
 
 struct DynamicDataDeleter
 {
@@ -107,7 +93,7 @@ DynamicDataPtr CreateAndRegisterDynamicData( const T_PointVector& points,
     // without having to instanciante all the TER_World machinery.
     TER_World* w = &TER_World::GetWorld();
     TER_PathFindManager* m = w ? &w->GetPathFindManager() : 0;
-    auto p = boost::make_shared< TER_DynamicData >( points, type );
+    auto p = boost::make_shared< DynamicData >( points, type );
     if( m )
         m->AddDynamicData( p );
     return DynamicDataPtr( p.get(), DynamicDataDeleter( m, p ));

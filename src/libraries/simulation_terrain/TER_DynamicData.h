@@ -20,16 +20,11 @@
 class TER_DynamicData : private boost::noncopyable
 {
 public:
-    explicit TER_DynamicData( const T_PointVector& points );
-             TER_DynamicData( const T_PointVector& points, const std::string& type );
-    virtual ~TER_DynamicData();
+             TER_DynamicData() {}
+    virtual ~TER_DynamicData() {}
 
-    const T_PointVector& GetPoints() const;
-    const TerrainData& GetData() const;
-
-private:
-    const T_PointVector points_;
-    const TerrainData terrainData_;
+    virtual const T_PointVector& GetPoints() const = 0;
+    virtual const TerrainData& GetData() const = 0;
 };
 
 typedef boost::shared_ptr< TER_DynamicData > DynamicDataPtr;
