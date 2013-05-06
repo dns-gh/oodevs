@@ -88,7 +88,7 @@ Section $(^Name)
     File "${SWORD}\functions.xml"
     File "${SWORD}\libeay32.dll"
     File "${SWORD}\libexpat.dll"
-    File "${SWORD}\libiconv-2.dll"
+    File "${SWORD}\libiconv.dll"
     File "${SWORD}\libpq.dll"
     File "${SWORD}\log4cxx.dll"
     File "${SWORD}\lua-${PLATFORM}-mt-5_1_4.dll"
