@@ -77,15 +77,15 @@ geometry::Point2f MakePoint( const MT_Vector2D& v )
     return geometry::Point2f( static_cast< float >( v.rX_ ), static_cast< float >( v.rY_ ) );
 };
 
-TerrainRetractationHandle& CreateDynamicData( TerrainPathfinder& pathfinder,
-        const TER_DynamicData& data )
+RetractationPtr CreateDynamicData( TerrainPathfinder& pathfinder, const TER_DynamicData& data )
 {
     const T_PointVector& points = data.GetPoints();
     std::vector< geometry::Point2f > geometryPoints;
     geometryPoints.reserve( points.size() );
     for( auto it = points.begin(); it != points.end(); ++it )
         geometryPoints.push_back( MakePoint( *it ) );
-    return pathfinder.CreateDynamicData( geometryPoints, data.GetData() );
+    auto& handler = pathfinder.CreateDynamicData( geometryPoints, data.GetData() );
+    return RetractationPtr( &handler );
 }
 
 } // namespace
@@ -97,40 +97,36 @@ TerrainRetractationHandle& CreateDynamicData( TerrainPathfinder& pathfinder,
 // -----------------------------------------------------------------------------
 void TER_PathFinderThread::ProcessDynamicData()
 {
-    T_DynamicDataVector tmpDynamicDataToRegister;
-    T_DynamicDataVector tmpDynamicDataToUnregister;
+    std::vector< DynamicDataPtr > toRegister, toUnregister;
     {
         boost::mutex::scoped_lock locker( dynamicDataMutex_ );
-        tmpDynamicDataToRegister  .swap( dynamicDataToRegister_   );
-        tmpDynamicDataToUnregister.swap( dynamicDataToUnregister_ );
+        toRegister  .swap( dynamicDataToRegister_   );
+        toUnregister.swap( dynamicDataToUnregister_ );
     }
-    if( !tmpDynamicDataToRegister.empty() )
+
+    if( !toRegister.empty() )
     {
         MT_Profiler profiler;
         profiler.Start();
 
-        for( auto it = tmpDynamicDataToRegister.begin(); it != tmpDynamicDataToRegister.end(); ++it )
+        for( auto it = toRegister.begin(); it != toRegister.end(); ++it )
         {
-            TER_DynamicData* pData = *it;
-            auto& handle = CreateDynamicData( *pPathfinder_, *pData );
-            pData->RegisterDynamicData( *this, handle );
+            RetractationPtr h = CreateDynamicData( *pPathfinder_, **it );
+            handlers_[*it] = h;
         }
-        MT_LOG_INFO_MSG( MT_FormatString( "Register %d dynamic data - %.2f ms", tmpDynamicDataToRegister.size(), profiler.Stop() ) );
-        tmpDynamicDataToRegister.clear();
+        MT_LOG_INFO_MSG( MT_FormatString( "Register %d dynamic data - %.2f ms",
+                    toRegister.size(), profiler.Stop() ) );
     }
-    if( !tmpDynamicDataToUnregister.empty() )
+
+    if( !toUnregister.empty() )
     {
         MT_Profiler profiler;
         profiler.Start();
 
-        for( auto it = tmpDynamicDataToUnregister.begin(); it != tmpDynamicDataToUnregister.end(); ++it )
-        {
-            TER_DynamicData* pData = *it;
-            assert( pData );
-            pData->UnregisterDynamicData( *this );
-        }
-        MT_LOG_INFO_MSG( MT_FormatString( "Unregister %d dynamic data - %.2f ms", tmpDynamicDataToUnregister.size(), profiler.Stop() ) );
-        tmpDynamicDataToUnregister.clear();
+        for( auto it = toUnregister.begin(); it != toUnregister.end(); ++it )
+            handlers_.erase( *it );
+        MT_LOG_INFO_MSG( MT_FormatString( "Unregister %d dynamic data - %.2f ms",
+                    toUnregister.size(), profiler.Stop() ) );
     }
 }
 
@@ -238,18 +234,18 @@ void TER_PathFinderThread::ProcessInSimulationThread( const boost::shared_ptr< T
 // Name: TER_PathFinderThread::AddDynamicDataToRegister
 // Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
-void TER_PathFinderThread::AddDynamicDataToRegister( TER_DynamicData& data )
+void TER_PathFinderThread::AddDynamicDataToRegister( const DynamicDataPtr& data )
 {
     boost::mutex::scoped_lock locker( dynamicDataMutex_ );
-    dynamicDataToRegister_.push_back( &data );
+    dynamicDataToRegister_.push_back( data );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TER_PathFinderThread::AddDynamicDataToUnregister
 // Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
-void TER_PathFinderThread::AddDynamicDataToUnregister( TER_DynamicData& data )
+void TER_PathFinderThread::AddDynamicDataToUnregister( const DynamicDataPtr& data )
 {
     boost::mutex::scoped_lock locker( dynamicDataMutex_ );
-    dynamicDataToUnregister_.push_back( &data );
+    dynamicDataToUnregister_.push_back( data );
 }

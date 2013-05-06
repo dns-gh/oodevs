@@ -20,6 +20,7 @@
 #define __TER_PathFindManager_h_
 
 #include "TER_PathFinderThread.h"
+#include <boost/noncopyable.hpp>
 
 class TER_DynamicData;
 class TER_StaticData;
@@ -36,7 +37,7 @@ namespace tools
 // =============================================================================
 // Created: AGE 2005-01-31
 // =============================================================================
-class TER_PathFindManager
+class TER_PathFindManager : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -52,28 +53,15 @@ public:
                                                   unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread,
                                                   const tools::Path& dump, const std::string& filter );
 
-    void AddDynamicData   ( TER_DynamicData& data );
-    void RemoveDynamicData( TER_DynamicData& data );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    TER_PathFindManager( const TER_PathFindManager& );            //!< Copy constructor
-    TER_PathFindManager& operator=( const TER_PathFindManager& ); //!< Assignment operator
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< TER_PathFinderThread* > T_Threads;
-    typedef T_Threads::const_iterator            CIT_Threads;
+    void AddDynamicData   ( const DynamicDataPtr& data );
+    void RemoveDynamicData( const DynamicDataPtr& data );
     //@}
 
 private:
     //! @name Member data
     //@{
     const TER_StaticData& staticData_;
-    T_Threads             threads_;
+    std::vector< TER_PathFinderThread* > threads_;
     //@}
 };
 

@@ -9,13 +9,10 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_DynamicData.h"
-#include "TER_PathFinderThread.h"
 #include "TER_PathFindManager.h"
 #include "TER_World.h"
 #include "TER_AnalyzerManager.h"
-#include "MT_Tools/MT_Logger.h"
-#include <pathfind/TerrainRetractationHandle.h>
-#include <memory>
+#include <boost/make_shared.hpp>
 
 namespace
 {
@@ -40,8 +37,7 @@ namespace
 // Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
 TER_DynamicData::TER_DynamicData( const T_PointVector& points )
-    : nNbrRefs_   ( 0 )
-    , points_     ( points )
+    : points_     ( points )
     , terrainData_( Convert( "" ))
 {
     // NOTHING
@@ -52,8 +48,7 @@ TER_DynamicData::TER_DynamicData( const T_PointVector& points )
 // Created: MCO 2012-11-29
 // -----------------------------------------------------------------------------
 TER_DynamicData::TER_DynamicData( const T_PointVector& points, const std::string& type )
-    : nNbrRefs_   ( 0 )
-    , points_     ( points )
+    : points_     ( points )
     , terrainData_( Convert( type ) )
 {
     // NOTHING
@@ -65,71 +60,6 @@ TER_DynamicData::TER_DynamicData( const T_PointVector& points, const std::string
 // -----------------------------------------------------------------------------
 TER_DynamicData::~TER_DynamicData()
 {
-    assert( handles_.empty() );
-    assert( nNbrRefs_ == 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_DynamicData::AddForRegistration
-// Created: NLD 2005-10-10
-// -----------------------------------------------------------------------------
-void TER_DynamicData::AddForRegistration( TER_PathFinderThread& thread )
-{
-    boost::mutex::scoped_lock locker( mutex_ );
-
-    ++ nNbrRefs_;
-    thread.AddDynamicDataToRegister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_DynamicData::RegisterDynamicData
-// Created: NLD 2005-10-10
-// -----------------------------------------------------------------------------
-void TER_DynamicData::RegisterDynamicData( TER_PathFinderThread& thread,
-        TerrainRetractationHandle& handle )
-{
-    boost::mutex::scoped_lock locker( mutex_ );
-
-    if( ! handles_.insert( std::make_pair( &thread, &handle ) ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
-    assert( nNbrRefs_ > 0 );
-    -- nNbrRefs_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_DynamicData::AddForUnregistration
-// Created: NLD 2005-10-10
-// -----------------------------------------------------------------------------
-void TER_DynamicData::AddForUnregistration( TER_PathFinderThread& thread )
-{
-    boost::mutex::scoped_lock locker( mutex_ );
-
-    ++ nNbrRefs_;
-    thread.AddDynamicDataToUnregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_DynamicData::UnregisterDynamicData
-// Created: NLD 2005-10-10
-// -----------------------------------------------------------------------------
-void TER_DynamicData::UnregisterDynamicData( TER_PathFinderThread& thread )
-{
-    bool bMustBeDeleted = false;
-    {
-        boost::mutex::scoped_lock locker( mutex_ );
-
-        IT_HandleMap it = handles_.find( &thread );
-        assert( it != handles_.end() );
-        delete it->second;
-        handles_.erase( it );
-
-        assert( nNbrRefs_ > 0 );
-        -- nNbrRefs_;
-
-        bMustBeDeleted = ( nNbrRefs_ == 0 && handles_.empty() );
-    }
-    if( bMustBeDeleted )
-        delete this;
 }
 
 const T_PointVector& TER_DynamicData::GetPoints() const
@@ -147,31 +77,38 @@ namespace
 
 struct DynamicDataDeleter
 {
-    DynamicDataDeleter( TER_PathFindManager* m ): manager_(m) {}
+    DynamicDataDeleter( TER_PathFindManager* m, const DynamicDataPtr& data )
+        : manager_( m )
+        , data_( data )
+    {}
 
     void operator()( TER_DynamicData* p )
     {
-        if( p && manager_ )
+        if( p && manager_ && data_ )
         {
-            manager_->RemoveDynamicData( *p );
+            if( p != data_.get() )
+                throw std::logic_error( "original and dynamic data to destroy mismatch" );
+            manager_->RemoveDynamicData( data_ );
+            data_.reset();
         }
     }
 
 private:
     TER_PathFindManager* manager_;
+    DynamicDataPtr data_;
 };
 
 }  // namespace
 
-boost::shared_ptr< TER_DynamicData > CreateAndRegisterDynamicData(
-        const T_PointVector& points, const std::string& type )
+DynamicDataPtr CreateAndRegisterDynamicData( const T_PointVector& points,
+        const std::string& type )
 {
     // This is ugly but let us run tests creating TER_LimitData
     // without having to instanciante all the TER_World machinery.
     TER_World* w = &TER_World::GetWorld();
     TER_PathFindManager* m = w ? &w->GetPathFindManager() : 0;
-    auto p = new TER_DynamicData( points, type );
+    auto p = boost::make_shared< TER_DynamicData >( points, type );
     if( m )
-        m->AddDynamicData( *p );
-    return boost::shared_ptr< TER_DynamicData >( p, DynamicDataDeleter( m ));
+        m->AddDynamicData( p );
+    return DynamicDataPtr( p.get(), DynamicDataDeleter( m, p ));
 }

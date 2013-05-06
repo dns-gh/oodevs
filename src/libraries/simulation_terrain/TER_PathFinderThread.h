@@ -17,18 +17,23 @@
 #pragma warning( disable : 4244 4275 )
 #include <boost/thread/mutex.hpp>
 #pragma warning( pop )
+#include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 #include <set>
 
 class TerrainPathfinder;
 class TER_NodeFunctor_ABC;
 class TER_PathFindRequest_ABC;
 class TER_DynamicData;
+typedef boost::shared_ptr< TER_DynamicData > DynamicDataPtr;
 class TER_StaticData;
+class TerrainRetractationHandle;
+typedef boost::shared_ptr< TerrainRetractationHandle > RetractationPtr;
 
 // =============================================================================
 // Created: AGE 2005-02-23
 // =============================================================================
-class TER_PathFinderThread : public tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >
+class TER_PathFinderThread : public tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >, private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -43,8 +48,8 @@ public:
 
     //! @name Dynamic data
     //@{
-    void AddDynamicDataToRegister  ( TER_DynamicData& data );
-    void AddDynamicDataToUnregister( TER_DynamicData& data );
+    void AddDynamicDataToRegister  ( const DynamicDataPtr& data );
+    void AddDynamicDataToUnregister( const DynamicDataPtr& data );
     //@}
 
     //! @name Operations
@@ -53,35 +58,24 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TER_PathFinderThread( const TER_PathFinderThread& );            //!< Copy constructor
-    TER_PathFinderThread& operator=( const TER_PathFinderThread& ); //!< Assignment operator
-    //@}
-
     //! @name Tools
     //@{
     virtual void Process           ( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest );
             void ProcessDynamicData();
     //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< TER_DynamicData* >     T_DynamicDataVector;
-    typedef T_DynamicDataVector::const_iterator CIT_DynamicDataVector;
-    //@}
-
+    //
 private:
     //! @name Member data
     //@{
     const tools::Path                  dump_; // empty if dump is disabled
     const std::set< size_t >           filter_; // empty if no id filters
     std::auto_ptr< TerrainPathfinder > pPathfinder_;
-    T_DynamicDataVector                dynamicDataToRegister_;
-    T_DynamicDataVector                dynamicDataToUnregister_;
-    boost::mutex                       dynamicDataMutex_;
     bool                               bUseSameThread_;
+    std::map< DynamicDataPtr, RetractationPtr > handlers_;
+
+    boost::mutex                       dynamicDataMutex_;
+    std::vector< DynamicDataPtr >      dynamicDataToRegister_;
+    std::vector< DynamicDataPtr >      dynamicDataToUnregister_;
     //@}
 };
 

@@ -20,7 +20,6 @@
 #include "TER_PathFindManager.h"
 #include "TER_PathFinderThread.h"
 #include "TER_World.h"
-#include "TER_DynamicData.h"
 #include "TER_StaticData.h"
 
 // -----------------------------------------------------------------------------
@@ -68,18 +67,18 @@ TER_PathFinderThread& TER_PathFindManager::CreatePathFinderThread( tools::thread
 // Name: TER_PathFindManager::AddDynamicData
 // Created: AGE 2005-10-07
 // -----------------------------------------------------------------------------
-void TER_PathFindManager::AddDynamicData( TER_DynamicData& data )
+void TER_PathFindManager::AddDynamicData( const DynamicDataPtr& data )
 {
     for( auto it = threads_.begin(); it != threads_.end(); ++it )
-        data.AddForRegistration( **it );
+        (*it)->AddDynamicDataToRegister( data );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TER_PathFindManager::RemoveDynamicData
 // Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
-void TER_PathFindManager::RemoveDynamicData( TER_DynamicData& data )
+void TER_PathFindManager::RemoveDynamicData( const DynamicDataPtr& data )
 {
     for( auto it = threads_.begin(); it != threads_.end(); ++it )
-        data.AddForUnregistration( **it );
+        (*it)->AddDynamicDataToUnregister( data );
 }
