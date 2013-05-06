@@ -16,6 +16,7 @@
 #pragma warning( disable : 4244 4275 )
 #include <boost/thread/mutex.hpp>
 #pragma warning( pop )
+#include <boost/noncopyable.hpp>
 
 class TER_PathFinderThread;
 class TerrainRetractationHandle;
@@ -23,7 +24,7 @@ class TerrainRetractationHandle;
 // =============================================================================
 // Created: AGE 2005-02-01
 // =============================================================================
-class TER_DynamicData
+class TER_DynamicData : private boost::noncopyable
 {
 public:
     explicit TER_DynamicData( const T_PointVector& points );
@@ -31,13 +32,6 @@ public:
 
     const T_PointVector& GetPoints() const;
     const TerrainData& GetData() const;
-
-    //! @name Notifications
-    //@{
-    void NotifyNotUsed        (); // MIL
-    void NotifyUsedByThread   ( TER_PathFinderThread& thread );
-    void NotifyNotUsedByThread( TER_PathFinderThread& thread );
-    //@}
 
     //! @name Operations
     //@{
@@ -49,8 +43,6 @@ public:
     //@}
 
 private:
-     TER_DynamicData( const TER_DynamicData& );            //!< Copy constructor
-     TER_DynamicData& operator=( const TER_DynamicData& ); //!< Assignment operator
     ~TER_DynamicData();
 
 private:
