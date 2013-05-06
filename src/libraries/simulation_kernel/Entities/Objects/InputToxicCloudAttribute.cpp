@@ -322,7 +322,7 @@ void InputToxicCloudAttribute::LoadShape( const tools::Path& name )
     Handler handler( field_, *quantities_, export_ );
     quantities_->Clear();
     export_.clear();
-    dir.Retrieve( handler, name, extent_ );
+    dir.Retrieve( handler, name, extent_, 0 );
 }
 
 // -----------------------------------------------------------------------------
