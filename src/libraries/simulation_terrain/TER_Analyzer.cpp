@@ -46,7 +46,7 @@ namespace
         {
             // NOTHING
         }
-        bool operator()( const spatialcontainer::Node< TerrainData >& node )
+        bool operator()( const spatialcontainer::Node& node )
         {
             const MT_Vector2D nodePos( node.X(), node.Y() );
             if( center_.SquareDistance( nodePos ) < rSquareRadius_ )
@@ -95,8 +95,8 @@ void TER_Analyzer::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter, double 
 std::vector< boost::shared_ptr< MT_Vector2D > > TER_Analyzer::FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
-    std::vector< spatialcontainer::Node< TerrainData >* > nodes = pAnalyzer_->FindCrossroadNodesWithinCircle( MakePoint( center ), radius );
-    for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator it = nodes.begin(); it != nodes.end(); ++it )
+    std::vector< spatialcontainer::Node* > nodes = pAnalyzer_->FindCrossroadNodesWithinCircle( MakePoint( center ), radius );
+    for( std::vector< spatialcontainer::Node* >::const_iterator it = nodes.begin(); it != nodes.end(); ++it )
         result.push_back( MakeVectorPointer( **it ) );
     return result;
 }
@@ -132,8 +132,8 @@ void TER_Analyzer::FindRoadsOnBorderOfPolygon( const TER_Polygon& polygon, std::
 std::vector< boost::shared_ptr< MT_Vector2D > > TER_Analyzer::FindAllPositions( const MT_Vector2D& center, float radius )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
-    std::vector< spatialcontainer::Node< TerrainData >* > nodes = pAnalyzer_->FindNodesWithinCircle( MakePoint( center ), radius );
-    for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator it = nodes.begin(); it != nodes.end(); ++it )
+    std::vector< spatialcontainer::Node* > nodes = pAnalyzer_->FindNodesWithinCircle( MakePoint( center ), radius );
+    for( std::vector< spatialcontainer::Node* >::const_iterator it = nodes.begin(); it != nodes.end(); ++it )
         result.push_back( MakeVectorPointer( **it ) );
     return result;
 }
@@ -145,8 +145,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_Analyzer::FindAllPositions( 
 TerrainData TER_Analyzer::FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius )
 {
     TerrainData result;
-    std::vector< spatialcontainer::Node< TerrainData >* > nodes = pAnalyzer_->FindNodesWithinCircle( MakePoint( center ), radius );
-    for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
+    std::vector< spatialcontainer::Node* > nodes = pAnalyzer_->FindNodesWithinCircle( MakePoint( center ), radius );
+    for( std::vector< spatialcontainer::Node* >::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
         result.Merge( TerrainData::BuildData( **iterator ) );
     return result;
 }
@@ -158,8 +158,8 @@ TerrainData TER_Analyzer::FindTerrainDataWithinCircle( const MT_Vector2D& center
 TerrainData TER_Analyzer::FindTerrainDataWithinPolygon( const TER_Polygon& polygon )
 {
     TerrainData result;
-    std::vector< spatialcontainer::Node< TerrainData >* > nodes = pAnalyzer_->FindNodesWithinPolygon( MakePolygon( polygon ) );
-    for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
+    std::vector< spatialcontainer::Node* > nodes = pAnalyzer_->FindNodesWithinPolygon( MakePolygon( polygon ) );
+    for( std::vector< spatialcontainer::Node* >::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
         result.Merge( TerrainData::BuildData( **iterator ) );
     return result;
 }
