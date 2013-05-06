@@ -52,6 +52,7 @@ public:
     TerrainData FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius );
     TerrainData FindTerrainDataWithinPolygon( const TER_Polygon& polygon );
     TerrainData Pick( const MT_Vector2D& pos );
+    TerrainData GetTerrainData( const TER_Localisation& localisation );
     //@}
 
 private:

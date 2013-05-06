@@ -9,6 +9,7 @@
 
 #include "simulation_terrain_pch.h"
 #include "TER_Analyzer.h"
+#include "TER_Localisation.h"
 #include "TER_NodeFunctor_ABC.h"
 #include "TER_StaticData.h"
 #include "TER_Polygon.h"
@@ -171,4 +172,42 @@ TerrainData TER_Analyzer::FindTerrainDataWithinPolygon( const TER_Polygon& polyg
 TerrainData TER_Analyzer::Pick( const MT_Vector2D& pos )
 {
     return pAnalyzer_->Pick( MakePoint( pos ), 100000.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Analyzer::GetTerrainData
+// Created: LDC 2013-05-06
+// -----------------------------------------------------------------------------
+TerrainData TER_Analyzer::GetTerrainData( const TER_Localisation& localisation )
+{
+    TerrainData data;
+    switch( localisation.GetType() )
+    {
+    case TER_Localisation::eCircle :
+        data = FindTerrainDataWithinCircle( localisation.GetCircleCenter(), static_cast< float >( localisation.GetCircleRadius() ) );
+        break;
+    case TER_Localisation::eLine :
+        {
+            TER_Localisation tmp = localisation;
+            tmp.Scale( 100. );
+            TER_Polygon polygon;
+            polygon.Reset( tmp.GetPoints() );
+            data = FindTerrainDataWithinPolygon( polygon );
+        }
+        break;
+    case TER_Localisation::ePolygon :
+        {
+            TER_Polygon polygon;
+            polygon.Reset( localisation.GetPoints() );
+            data = FindTerrainDataWithinPolygon( polygon );
+        }
+        break;
+    case TER_Localisation::ePoint :
+        data = Pick( localisation.ComputeBarycenter() );
+        break;
+    default:
+        assert( false );
+        break;
+    }
+    return data;
 }

@@ -85,36 +85,7 @@ void PHY_RoleAction_Objects_CapabilityComputer::operator() ( PHY_ComposantePion&
     }
     if( bHasCapability_ && localisation_ && localisation_->GetType() != TER_Localisation::eNone && composante.HasConstructionSpeeds() )
     {
-        TerrainData data;
-        switch( localisation_->GetType() )
-        {
-        case TER_Localisation::eCircle :
-            data = TER_AnalyzerManager::GetAnalyzerManager().FindTerrainDataWithinCircle( localisation_->GetCircleCenter(), static_cast< float >( localisation_->GetCircleRadius() ) );
-            break;
-        case TER_Localisation::eLine :
-            {
-                TER_Localisation tmp = *localisation_;
-                tmp.Scale( 100. );
-                TER_Polygon polygon;
-                polygon.Reset( tmp.GetPoints() );
-                data = TER_AnalyzerManager::GetAnalyzerManager().FindTerrainDataWithinPolygon( polygon );
-            }
-            break;
-        case TER_Localisation::ePolygon :
-            {
-                TER_Polygon polygon;
-                polygon.Reset( localisation_->GetPoints() );
-                data = TER_AnalyzerManager::GetAnalyzerManager().FindTerrainDataWithinPolygon( polygon );
-            }
-            break;
-        case TER_Localisation::ePoint :
-            data = TER_AnalyzerManager::GetAnalyzerManager().Pick( localisation_->ComputeBarycenter() );
-            break;
-        default:
-            assert( false );
-            break;
-        }
-
+        TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().GetTerrainData( *localisation_ );
         if( composante.GetConstructionSpeed( data ) == 0 )
             bHasCapability_ = false;
     }
