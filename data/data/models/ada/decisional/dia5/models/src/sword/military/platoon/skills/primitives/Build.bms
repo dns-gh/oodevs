@@ -67,6 +67,16 @@ node "BuildElement"
     done = function( self, params, additionalParams )
        self.arrived = true
     end,
+    elementFailed = function( self, params, additionalParams )
+        local scaledObject = DEC_Geometrie_AgrandirLocalisation(  self.params.entity:getLocalisation() , 100 )
+        if additionalParams.reason == "blocked" then
+          if DEC_Geometrie_EstPointDansLocalisation(meKnowledge:getPosition(), scaledObject) then 
+               self.arrived = true
+          end
+        else
+          Feedback( self.feedbacks.failed, { element = additionalParams.element, reason = additionalParams.reason } )
+        end
+    end,
     failed = function( self, params, additionalParams )
        Feedback( self.feedbacks.failed, { element = additionalParams.element, reason = additionalParams.reason } )
     end,
