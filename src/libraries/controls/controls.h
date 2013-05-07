@@ -36,14 +36,18 @@ namespace controls
 
     void ParseClient( ClientHandler_ABC& client, const void* src, size_t size );
 
-    size_t CreatedEvent( void* dst, size_t size, const Event& event, const Error& error );
+    size_t CreatedEvent   ( void* dst, size_t size, const Event& event, const Error& error );
+    size_t SelectedEvent  ( void* dst, size_t size, const Event& event );
+    size_t DeselectedEvent( void* dst, size_t size );
 
     struct ServerHandler_ABC : public boost::noncopyable
     {
                  ServerHandler_ABC() {}
         virtual ~ServerHandler_ABC() {}
 
-        virtual void OnCreatedEvent( const Event& event, const Error& error ) = 0;
+        virtual void OnCreatedEvent   ( const Event& event, const Error& error ) = 0;
+        virtual void OnSelectedEvent  ( const Event& event ) = 0;
+        virtual void OnDeselectedEvent() = 0;
     };
 
     void ParseServer( ServerHandler_ABC& server, const void* src, size_t size );

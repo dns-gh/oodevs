@@ -16,6 +16,7 @@
 #include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/thread.hpp>
 
 #include "moc_Server.cpp"
@@ -141,4 +142,14 @@ void Server::Run()
 void Server::OnCreatedEvent( const Event& event, const Error& error )
 {
     emit CreatedEvent( event, error );
+}
+
+void Server::OnSelectedEvent( const Event& event )
+{
+    emit SelectedEvent( boost::make_shared< Event >( event ) );
+}
+
+void Server::OnDeselectedEvent()
+{
+    emit SelectedEvent( boost::shared_ptr< Event >() );
 }

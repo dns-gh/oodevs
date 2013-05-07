@@ -18,12 +18,14 @@ using namespace timeline;
 Controller::Controller( const Configuration& cfg )
     : ui_ ( new Ui::Main() )
 {
+    qRegisterMetaType< boost::shared_ptr< Event > >( "boost::shared_ptr< Event >" );
     ui_->setupUi( &main_ );
     Configuration next = cfg;
     next.widget = ui_->centralwidget;
     ctx_ = timeline::MakeServer( next );
     QObject::connect( ui_->actionReload, SIGNAL( triggered() ), ctx_.get(), SLOT( Reload() ) );
     QObject::connect( ui_->actionCreate, SIGNAL( triggered() ), this, SLOT( OnCreateEvent() ) );
+    QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< Event > ) ) );
     main_.show();
 }
 
@@ -88,4 +90,9 @@ void Controller::OnCreateEvent()
     Event event;
     ReadEvent( event, ui );
     ctx_->CreateEvent( event );
+}
+
+void Controller::OnSelectedEvent( boost::shared_ptr< Event > event )
+{
+    qDebug() << event;
 }

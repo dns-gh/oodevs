@@ -39,8 +39,9 @@ namespace
     {
         typedef boost::function< CefRefPtr< CefV8Value >( const CefV8ValueList& args ) > T_Operand;
 
-        Adapter( const std::string& name, const T_Operand& operand )
+        Adapter( const std::string& name, size_t argc, const T_Operand& operand )
             : name_   ( name )
+            , argc_   ( argc )
             , operand_( operand )
 
         {
@@ -62,6 +63,8 @@ namespace
                 return false;
             try
             {
+                if( argc_ != args.size() )
+                    throw std::exception( "invalid number of arguments" );
                 retval = operand_( args );
             }
             catch( const std::exception& err )
@@ -76,6 +79,7 @@ namespace
 
     private:
         const std::string name_;
+        const size_t argc_;
         const T_Operand operand_;
     };
 
@@ -100,9 +104,9 @@ namespace
         return SetValue( dst, key, CefV8Value::CreateBool( value ) );
     }
 
-    CefRefPtr< CefV8Value > SetValue( CefRefPtr< CefV8Value >& dst, const std::string& key, const Adapter::T_Operand& operand )
+    CefRefPtr< CefV8Value > SetValue( CefRefPtr< CefV8Value >& dst, const std::string& key, size_t argc, const Adapter::T_Operand& operand )
     {
-        CefRefPtr< CefV8Handler > handler( new Adapter( key, operand ) );
+        CefRefPtr< CefV8Handler > handler( new Adapter( key, argc, operand ) );
         return SetValue( dst, key, CefV8Value::CreateFunction( key, handler ) );
     }
 
@@ -134,7 +138,9 @@ void Engine::Register( CefRefPtr< CefV8Context > context )
     auto window = context->GetGlobal();
     auto gaming = SetValue( window, "gaming" );
     SetValue( gaming, "enabled", true );
-    SetValue( gaming, "created_event", boost::bind( &Engine::OnCreatedEvent, this, _1 ) );
+    SetValue( gaming, "created_event",  2, boost::bind( &Engine::OnCreatedEvent,  this, _1 ) );
+    SetValue( gaming, "select_event",   1, boost::bind( &Engine::OnSelectEvent,   this, _1 ) );
+    SetValue( gaming, "deselect_event", 0, boost::bind( &Engine::OnDeselectEvent, this, _1 ) );
 }
 
 void Engine::Unregister()
@@ -265,7 +271,23 @@ void Engine::CreatedEvent( const timeline::Event& event, const timeline::Error& 
 
 CefRefPtr< CefV8Value > Engine::OnCreatedEvent( const CefV8ValueList& args )
 {
-    if( args.size() == 2 )
-        CreatedEvent( GetEvent( args[0] ), GetError( args[1] ) );
+    CreatedEvent( GetEvent( args[0] ), GetError( args[1] ) );
+    return 0;
+}
+
+CefRefPtr< CefV8Value > Engine::OnSelectEvent( const CefV8ValueList& args )
+{
+    const Event event = GetEvent( args[0] );
+    std::vector< uint8_t > buffer( controls::SelectedEvent( 0, 0, event ) );
+    controls::SelectedEvent( &buffer[0], buffer.size(), event );
+    device_.Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+    return 0;
+}
+
+CefRefPtr< CefV8Value > Engine::OnDeselectEvent( const CefV8ValueList& /*args*/ )
+{
+    std::vector< uint8_t > buffer( controls::DeselectedEvent( 0, 0 ) );
+    controls::DeselectedEvent( &buffer[0], buffer.size() );
+    device_.Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
     return 0;
 }

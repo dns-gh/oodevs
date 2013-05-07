@@ -14,6 +14,7 @@
 #include <boost/noncopyable.hpp>
 #include <tools/Path.h>
 #include <QObject>
+#include <boost/shared_ptr.hpp>
 
 class QWidget;
 
@@ -66,7 +67,8 @@ public slots:
 
     // Public signals
 signals:
-    void CreatedEvent( const Event& event, const Error& error );
+    void CreatedEvent ( const Event& event, const Error& error );
+    void SelectedEvent( boost::shared_ptr< Event > event );
 };
 
 struct Configuration

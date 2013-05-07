@@ -36,6 +36,7 @@ public:
 
 public slots:
     void OnCreateEvent();
+    void OnSelectedEvent( boost::shared_ptr< Event > event );
 
 private:
     QMainWindow main_;

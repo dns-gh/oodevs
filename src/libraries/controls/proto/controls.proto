@@ -22,7 +22,9 @@ enum ClientType
 enum ServerType
 {
     // event commands
-    EVENT_CREATED   = 0x100;
+    EVENT_CREATED    = 0x100;
+    EVENT_SELECTED   = 0x101;
+    EVENT_DESELECTED = 0x102;
 }
 
 message Action

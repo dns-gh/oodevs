@@ -48,9 +48,10 @@ namespace
         dst.ParseFromIstream( &stream );
     }
 
-    size_t MarshallCientType( void* data, size_t size, sdk::ClientType type )
+    template< typename CMD, typename TYPE >
+    size_t MarshallType( void* data, size_t size, TYPE type )
     {
-        ClientCommand cmd;
+        CMD cmd;
         cmd.set_type( type );
         return Marshall( data, size, cmd );
     }
@@ -58,17 +59,17 @@ namespace
 
 size_t tic::ResizeClient( void* data, size_t size )
 {
-    return MarshallCientType( data, size, sdk::CLIENT_RESIZE );
+    return MarshallType< ClientCommand >( data, size, sdk::CLIENT_RESIZE );
 }
 
 size_t tic::QuitClient( void* data, size_t size )
 {
-    return MarshallCientType( data, size, sdk::CLIENT_QUIT );
+    return MarshallType< ClientCommand >( data, size, sdk::CLIENT_QUIT );
 }
 
 size_t tic::ReloadClient( void* data, size_t size )
 {
-    return MarshallCientType( data, size, sdk::CLIENT_RELOAD );
+    return MarshallType< ClientCommand >( data, size, sdk::CLIENT_RELOAD );
 }
 
 namespace
@@ -157,12 +158,27 @@ size_t tic::CreatedEvent( void* data, size_t size, const Event& event, const Err
     return Marshall( data, size, cmd );
 }
 
+size_t tic::SelectedEvent( void* data, size_t size, const Event& event )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::EVENT_SELECTED );
+    SetEvent( *cmd.mutable_event(), event );
+    return Marshall( data, size, cmd );
+}
+
+size_t tic::DeselectedEvent( void* data, size_t size )
+{
+    return MarshallType< ServerCommand >( data, size, sdk::EVENT_DESELECTED );
+}
+
 void tic::ParseServer( ServerHandler_ABC& handler, const void* data, size_t size )
 {
     ServerCommand cmd;
     Unmarshall( cmd, data, size );
     switch( cmd.type() )
     {
-        case sdk::EVENT_CREATED: return handler.OnCreatedEvent( GetEvent( cmd.event() ), GetError( cmd.error() ) );
+        case sdk::EVENT_CREATED:    return handler.OnCreatedEvent ( GetEvent( cmd.event() ), GetError( cmd.error() ) );
+        case sdk::EVENT_SELECTED:   return handler.OnSelectedEvent( GetEvent( cmd.event() ) );
+        case sdk::EVENT_DESELECTED: return handler.OnDeselectedEvent();
     }
 }

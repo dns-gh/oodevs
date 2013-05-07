@@ -47,6 +47,8 @@ public:
 
     /// controls::Server_ABC methods
     virtual void OnCreatedEvent( const Event& event, const Error& error );
+    virtual void OnSelectedEvent( const Event& event );
+    virtual void OnDeselectedEvent();
 
 private:
     void Run();
