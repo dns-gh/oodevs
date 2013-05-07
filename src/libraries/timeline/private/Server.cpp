@@ -116,6 +116,13 @@ bool Server::CreateEvent( const Event& event )
     return write_->Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
 }
 
+bool Server::DeleteEvent( const std::string& uuid )
+{
+    std::vector< uint8_t > buffer( controls::DeleteEvent( 0, 0, uuid ) );
+    controls::DeleteEvent( &buffer[0], buffer.size(), uuid );
+    return write_->Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+}
+
 void Server::Run()
 {
     try
@@ -152,4 +159,9 @@ void Server::OnSelectedEvent( const Event& event )
 void Server::OnDeselectedEvent()
 {
     emit SelectedEvent( boost::shared_ptr< Event >() );
+}
+
+void Server::OnDeletedEvent( const std::string& uuid, const Error& error )
+{
+    emit DeletedEvent( uuid, error );
 }

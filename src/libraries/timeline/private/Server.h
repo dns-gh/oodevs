@@ -44,11 +44,13 @@ public:
     /// Server_ABC methods
     virtual void Reload();
     virtual bool CreateEvent( const Event& event );
+    virtual bool DeleteEvent( const std::string& uuid );
 
     /// controls::Server_ABC methods
     virtual void OnCreatedEvent( const Event& event, const Error& error );
     virtual void OnSelectedEvent( const Event& event );
     virtual void OnDeselectedEvent();
+    virtual void OnDeletedEvent( const std::string& uuid, const Error& error );
 
 private:
     void Run();

@@ -17,6 +17,7 @@ enum ClientType
     CLIENT_RELOAD   = 0x102;
     // event commands
     EVENT_CREATE    = 0x200;
+    EVENT_DELETE    = 0x201;
 }
 
 enum ServerType
@@ -25,6 +26,7 @@ enum ServerType
     EVENT_CREATED    = 0x100;
     EVENT_SELECTED   = 0x101;
     EVENT_DESELECTED = 0x102;
+    EVENT_DELETED    = 0x103;
 }
 
 message Action

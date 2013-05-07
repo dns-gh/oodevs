@@ -64,11 +64,13 @@ public:
 public slots:
     virtual void Reload() = 0;
     virtual bool CreateEvent( const Event& event ) = 0;
+    virtual bool DeleteEvent( const std::string& uuid ) = 0;
 
     // Public signals
 signals:
     void CreatedEvent ( const Event& event, const Error& error );
     void SelectedEvent( boost::shared_ptr< Event > event );
+    void DeletedEvent ( const std::string& uuid, const Error& error );
 };
 
 struct Configuration

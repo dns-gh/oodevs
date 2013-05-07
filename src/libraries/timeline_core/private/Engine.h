@@ -46,14 +46,17 @@ public:
     void Register   ( CefRefPtr< CefV8Context > context );
     void Unregister ();
     void CreateEvent( const Event& event );
+    void DeleteEvent( const std::string& uuid );
 
 private:
     void CreatedEvent( const Event& event, const Error& err );
+    void DeletedEvent( const std::string& uuid, const Error& err );
 
     // V8 handlers
     CefRefPtr< CefV8Value > OnCreatedEvent ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnSelectEvent  ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnDeselectEvent( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnDeletedEvent ( const CefV8ValueList& args );
 
 protected:
     IMPLEMENT_REFCOUNTING( Engine );

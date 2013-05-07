@@ -35,13 +35,18 @@ public:
     virtual ~Controller();
 
 public slots:
+    void OnReload();
     void OnCreateEvent();
+    void OnCreatedEvent( const Event& event, const Error& error );
     void OnSelectedEvent( boost::shared_ptr< Event > event );
+    void OnDeletedEvent( const std::string& uuid, const Error& error );
+    void OnDeleteEvent();
 
 private:
     QMainWindow main_;
     std::auto_ptr< Ui::Main > ui_;
     std::auto_ptr< Server_ABC > ctx_;
+    std::string uuid_;
 };
 }
 

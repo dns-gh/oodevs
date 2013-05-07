@@ -25,6 +25,9 @@
    </property>
   </widget>
   <widget class="QToolBar" name="toolBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
@@ -36,7 +39,9 @@
    </attribute>
    <addaction name="actionReload"/>
    <addaction name="actionCreate"/>
+   <addaction name="actionDelete"/>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionReload">
    <property name="text">
     <string>Reload</string>
@@ -45,6 +50,14 @@
   <action name="actionCreate">
    <property name="text">
     <string>Create</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Delete</string>
    </property>
   </action>
  </widget>

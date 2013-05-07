@@ -141,6 +141,7 @@ void Engine::Register( CefRefPtr< CefV8Context > context )
     SetValue( gaming, "created_event",  2, boost::bind( &Engine::OnCreatedEvent,  this, _1 ) );
     SetValue( gaming, "select_event",   1, boost::bind( &Engine::OnSelectEvent,   this, _1 ) );
     SetValue( gaming, "deselect_event", 0, boost::bind( &Engine::OnDeselectEvent, this, _1 ) );
+    SetValue( gaming, "deleted_event",  2, boost::bind( &Engine::OnDeletedEvent,  this, _1 ) );
 }
 
 void Engine::Unregister()
@@ -290,4 +291,31 @@ CefRefPtr< CefV8Value > Engine::OnDeselectEvent( const CefV8ValueList& /*args*/ 
     controls::DeselectedEvent( &buffer[0], buffer.size() );
     device_.Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
     return 0;
+}
+
+void Engine::DeleteEvent( const std::string& uuid )
+{
+    Gate gate;
+    if( !gate.Acquire( ctx_ ) )
+        return DeletedEvent( uuid, Error( EC_INTERNAL_SERVER_ERROR, "unable to acquire v8 context" ) );
+    auto delete_event = GetValue( ctx_, "gaming.delete_event" );
+    if( !delete_event )
+        return DeletedEvent( uuid, Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.delete_event" ) );
+    CefV8ValueList args;
+    args.push_back( CefV8Value::CreateString( uuid ) );
+    if( !gate.Execute( delete_event, args ) )
+        return DeletedEvent( uuid, Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.delete_event" ) );
+}
+
+CefRefPtr< CefV8Value > Engine::OnDeletedEvent( const CefV8ValueList& args )
+{
+    DeletedEvent( args[0]->GetStringValue(), GetError( args[1] ) );
+    return 0;
+}
+
+void Engine::DeletedEvent( const std::string& uuid, const timeline::Error& error )
+{
+    std::vector< uint8_t > buffer( controls::DeletedEvent( 0, 0, uuid, error ) );
+    controls::DeletedEvent( &buffer[0], buffer.size(), uuid, error );
+    device_.Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
 }

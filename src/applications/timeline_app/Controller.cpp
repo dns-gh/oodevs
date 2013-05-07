@@ -19,13 +19,18 @@ Controller::Controller( const Configuration& cfg )
     : ui_ ( new Ui::Main() )
 {
     qRegisterMetaType< boost::shared_ptr< Event > >( "boost::shared_ptr< Event >" );
+    qRegisterMetaType< std::string >( "std::string" );
+    qRegisterMetaType< Error >( "Error" );
     ui_->setupUi( &main_ );
     Configuration next = cfg;
     next.widget = ui_->centralwidget;
     ctx_ = timeline::MakeServer( next );
-    QObject::connect( ui_->actionReload, SIGNAL( triggered() ), ctx_.get(), SLOT( Reload() ) );
+    QObject::connect( ui_->actionReload, SIGNAL( triggered() ), this, SLOT( OnReload() ) );
     QObject::connect( ui_->actionCreate, SIGNAL( triggered() ), this, SLOT( OnCreateEvent() ) );
+    QObject::connect( ui_->actionDelete, SIGNAL( triggered() ), this, SLOT( OnDeleteEvent() ) );
+    QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const Event&, const Error& ) ), this, SLOT( OnCreatedEvent( const Event&, const Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< Event > ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const Error& ) ) );
     main_.show();
 }
 
@@ -76,6 +81,13 @@ namespace
     }
 }
 
+void Controller::OnReload()
+{
+    uuid_.clear();
+    ui_->actionDelete->setEnabled( false );
+    ctx_->Reload();
+}
+
 void Controller::OnCreateEvent()
 {
     Ui::CreateEvent ui;
@@ -92,7 +104,43 @@ void Controller::OnCreateEvent()
     ctx_->CreateEvent( event );
 }
 
+void Controller::OnCreatedEvent( const Event& event, const Error& error )
+{
+    if( error.code == EC_OK )
+        ui_->statusBar->showMessage( QString( "event %1 created" ).arg( QString::fromStdString( event.uuid ) ) );
+    else
+        ui_->statusBar->showMessage( QString( "unable to create event %1 (%2: %3)" )
+            .arg( QString::fromStdString( event.uuid ) )
+            .arg( error.code )
+            .arg( QString::fromStdString( error.text ) ) );
+}
+
 void Controller::OnSelectedEvent( boost::shared_ptr< Event > event )
 {
-    qDebug() << event;
+    if( event )
+        uuid_ = event->uuid;
+    if( event )
+        ui_->statusBar->showMessage( QString( "event %1 selected" ).arg( QString::fromStdString( uuid_ ) ) );
+    else
+        ui_->statusBar->showMessage( "event deselected" );
+    ui_->actionDelete->setEnabled( event );
+}
+
+void Controller::OnDeleteEvent()
+{
+    if( uuid_.empty() )
+        ui_->statusBar->showMessage( "unable to delete unknown event" );
+    else
+        ctx_->DeleteEvent( uuid_ );
+}
+
+void Controller::OnDeletedEvent( const std::string& uuid, const Error& error )
+{
+    if( error.code == EC_OK )
+        ui_->statusBar->showMessage( QString( "event %1 deleted" ).arg( QString::fromStdString( uuid ) ) );
+    else
+        ui_->statusBar->showMessage( QString( "unable to delete event %1 (%2: %3)" )
+            .arg( QString::fromStdString( uuid ) )
+            .arg( error.code )
+            .arg( QString::fromStdString( error.text ) ) );
 }

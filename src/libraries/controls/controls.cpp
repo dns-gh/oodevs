@@ -136,6 +136,14 @@ size_t tic::CreateEvent( void* data, size_t size, const Event& event )
     return Marshall( data, size, cmd );
 }
 
+size_t tic::DeleteEvent( void* data, size_t size, const std::string& uuid )
+{
+    ClientCommand cmd;
+    cmd.set_type( sdk::EVENT_DELETE );
+    cmd.mutable_event()->set_uuid( uuid );
+    return Marshall( data, size, cmd );
+}
+
 void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size )
 {
     ClientCommand cmd;
@@ -146,6 +154,7 @@ void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size
         case sdk::CLIENT_QUIT:   return handler.OnQuitClient();
         case sdk::CLIENT_RELOAD: return handler.OnReloadClient();
         case sdk::EVENT_CREATE:  return handler.OnCreateEvent( GetEvent( cmd.event() ) );
+        case sdk::EVENT_DELETE:  return handler.OnDeleteEvent( GetEvent( cmd.event() ).uuid );
     }
 }
 
@@ -171,6 +180,15 @@ size_t tic::DeselectedEvent( void* data, size_t size )
     return MarshallType< ServerCommand >( data, size, sdk::EVENT_DESELECTED );
 }
 
+size_t tic::DeletedEvent( void* data, size_t size, const std::string& uuid, const Error& error )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::EVENT_DELETED );
+    cmd.mutable_event()->set_uuid( uuid );
+    SetError( *cmd.mutable_error(), error );
+    return Marshall( data, size, cmd );
+}
+
 void tic::ParseServer( ServerHandler_ABC& handler, const void* data, size_t size )
 {
     ServerCommand cmd;
@@ -180,5 +198,6 @@ void tic::ParseServer( ServerHandler_ABC& handler, const void* data, size_t size
         case sdk::EVENT_CREATED:    return handler.OnCreatedEvent ( GetEvent( cmd.event() ), GetError( cmd.error() ) );
         case sdk::EVENT_SELECTED:   return handler.OnSelectedEvent( GetEvent( cmd.event() ) );
         case sdk::EVENT_DESELECTED: return handler.OnDeselectedEvent();
+        case sdk::EVENT_DELETED:    return handler.OnDeletedEvent( GetEvent( cmd.event() ).uuid, GetError( cmd.error() ) );
     }
 }

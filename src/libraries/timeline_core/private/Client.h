@@ -52,6 +52,7 @@ public:
     virtual void OnQuitClient();
     virtual void OnReloadClient();
     virtual void OnCreateEvent( const Event& event );
+    virtual void OnDeleteEvent( const std::string& uuid );
 
 private:
     const Configuration cfg_;
