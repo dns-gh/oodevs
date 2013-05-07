@@ -84,7 +84,9 @@ RetractationPtr CreateDynamicData( TerrainPathfinder& pathfinder, const TER_Dyna
     geometryPoints.reserve( points.size() );
     for( auto it = points.begin(); it != points.end(); ++it )
         geometryPoints.push_back( MakePoint( *it ) );
-    return pathfinder.CreateDynamicData( geometryPoints, data.GetData() );
+    auto handle = pathfinder.CreateRetractationHandle();
+    pathfinder.AddDynamicData( geometryPoints, data.GetData(), *handle );
+    return handle;
 }
 
 } // namespace
