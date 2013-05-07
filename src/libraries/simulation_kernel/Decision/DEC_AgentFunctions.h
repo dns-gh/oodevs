@@ -213,6 +213,9 @@ public:
     static bool IsInhabitantsAlerted( const TER_Localisation* location ); // $$$$ BCI 2011-02-01: je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...
     static void ConfineInhabitants( const TER_Localisation* location ); // $$$$ BCI 2011-02-01: je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...
 
+    static void EnableSharedPerception( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent );
+    static void DisabledSharedPerception( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent );
+
     // Perception
     static void IdentifyAllAgentsInZone( MIL_Agent_ABC& callerAgent, const TER_Localisation* location );
     //@}

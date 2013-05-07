@@ -1034,11 +1034,23 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPerception( int currentTimeStep )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::ApplyPopulationPerception
+// Created: LGY 2013-05-07
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::ApplyPopulationPerception( const MIL_Agent_ABC& pion, int currentTimeStep )
+{
+    boost::function< void( DEC_Knowledge_PopulationPerception& ) > functorPopulationPerception = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
+    pion.GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( functorPopulationPerception );
+    boost::function< void( DEC_Knowledge_PopulationCollision& ) > functorPopulationCollision = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
+    pion.GetKnowledge().GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( functorPopulationCollision );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception
 // Created: FDS 2010-04-08
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeStep )
-    {
+{
     if( ! IsJammed() )
     {
         const MIL_KnowledgeGroup::T_AutomateVector& automates = GetAutomates();
@@ -1048,28 +1060,27 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
             for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
             {
                 MIL_AgentPion& pion = **itPion;
-                if( pion.GetRole< PHY_RolePion_Communications >().CanReceive() )
-                {
-                    boost::function< void( DEC_Knowledge_PopulationPerception& ) > functorPopulationPerception = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep) );
-                    pion.GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( functorPopulationPerception );
-                    boost::function< void( DEC_Knowledge_PopulationCollision& ) > functorPopulationCollision = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep) );
-                    pion.GetKnowledge().GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( functorPopulationCollision );
-                }
+                if( pion.GetRole< PHY_RolePion_Communications >().CanEmit() )
+                    ApplyPopulationPerception( pion, currentTimeStep );
             }
         }
     }
-    else
-    {
-        if( jammedPion_ )
-        {
-            DEC_KnowledgeBlackBoard_AgentPion& knowledgeBlackboard = jammedPion_->GetKnowledge();
-            boost::function< void( DEC_Knowledge_PopulationPerception& ) > functorPopulationPerception = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep)  );
-            knowledgeBlackboard.GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( functorPopulationPerception );
-            boost::function< void( DEC_Knowledge_PopulationCollision& ) > functorPopulationCollision = boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep)  );
-            knowledgeBlackboard.GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( functorPopulationCollision  );
-        }
-    }
-   // knowledgeBlackBoard_->SendFullState();
+    else if( jammedPion_ )
+            ApplyPopulationPerception( *jammedPion_, currentTimeStep );
+
+    // Mise à jour des groupes de connaissance avec les pions partageant les mêmes perceptions
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
+        ApplyPopulationPerception( **it, currentTimeStep );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::ApplyAgentPerception
+// Created: LGY 2013-05-07
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::ApplyAgentPerception( const MIL_Agent_ABC& pion, int currentTimeStep )
+{
+    boost::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
+    pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functorAgent );
 }
 
 // -----------------------------------------------------------------------------
@@ -1078,6 +1089,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
 {
+    // Groupe de connaissance non restreint (émission ou reception)
     if( ! IsJammed() )
     {
         // Synthèse de la perception des subordonnés
@@ -1090,10 +1102,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
                 MIL_AgentPion& pion = **itPion;
                  // Les perceptions des subordonnées sont envoyées uniquement dans le cas ou celui ci peut communiquer.
                 if( pion.GetRole< PHY_RolePion_Communications >().CanEmit() )
-                {
-                    boost::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
-                    pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functorAgent );
-                }
+                    ApplyAgentPerception( pion, currentTimeStep );
             }
         }
         // LTO begin
@@ -1109,6 +1118,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
         }
         // LTO end
     }
+
     const PHY_RolePion_Communications* communications = jammedPion_ ? jammedPion_->RetrieveRole< PHY_RolePion_Communications >() : 0;
     if( !IsJammed() || ( communications && communications->CanReceive() ) )
     {
@@ -1126,11 +1136,14 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
         }
         // LTO end
     }
+
+    // Mise à jour pour groupe de connaissance non restreint (silence partiel ou brouillage)
     if( IsJammed() && jammedPion_ )
-    {
-        boost::function< void( DEC_Knowledge_AgentPerception& ) > functorAgent = boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
-        jammedPion_->GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functorAgent );
-    }
+        ApplyAgentPerception( *jammedPion_, currentTimeStep );
+
+    // Mise à jour des groupes de connaissance avec les pions partageant les mêmes perceptions
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
+        ApplyAgentPerception( **it, currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -1329,4 +1342,22 @@ void MIL_KnowledgeGroup::AppendAddedKnowledge( TER_Agent_ABC::T_AgentPtrVector& 
             }
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::RegisterPion
+// Created: LGY 2013-05-07
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::RegisterPion( const MIL_Agent_ABC& agent )
+{
+    pions_.push_back( &agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UnregisterPion
+// Created: LGY 2013-05-07
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UnregisterPion( const MIL_Agent_ABC& agent )
+{
+    pions_.erase( std::remove( pions_.begin(), pions_.end(), &agent ), pions_.end() );
 }

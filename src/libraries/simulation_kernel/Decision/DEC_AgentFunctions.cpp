@@ -57,7 +57,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_AgentManager.h"
-
+#include "Knowledge/MIL_KnowledgeGroup.h"
 //-----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsNeutralized
 // Created: JVT 03-10-01
@@ -1538,4 +1538,28 @@ bool DEC_AgentFunctions::AgentHasRadar( const DEC_Decision_ABC* agent, int typeR
 bool DEC_AgentFunctions::AgentHasFuseau(const MIL_Agent_ABC& callerAgent )
 { 
     return !callerAgent.GetOrderManager().GetFuseau().IsNull();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::EnableSharedPerception
+// Created: LGY 2013-05-07
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::EnableSharedPerception( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent )
+{
+    if( !pAgent )
+        throw std::runtime_error( "Invalid pion in EnableSharedPerception" );
+    callerAgent.GetKnowledgeGroup()->RegisterPion( pAgent->GetPion() );
+    pAgent->GetPion().GetKnowledgeGroup()->RegisterPion( callerAgent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::DisabledSharedPerception
+// Created: LGY 2013-05-07
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::DisabledSharedPerception( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgent )
+{
+    if( !pAgent )
+        throw std::runtime_error( "Invalid pion in DisabledSharedPerception" );
+    pAgent->GetPion().GetKnowledgeGroup()->UnregisterPion( callerAgent );
+    callerAgent.GetKnowledgeGroup()->UnregisterPion( pAgent->GetPion() );
 }

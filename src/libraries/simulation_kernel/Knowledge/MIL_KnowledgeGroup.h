@@ -104,6 +104,8 @@ public:
     void RefreshTimeToDiffuseToKnowledgeGroup();
     void RegisterAutomate  ( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );
+    void RegisterPion( const MIL_Agent_ABC& agent );
+    void UnregisterPion( const MIL_Agent_ABC& agent );
 
     void AppendAddedKnowledge( TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, TER_Object_ABC::T_ObjectVector& perceivableObjects, TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector& perceivablePopulationDensity, TER_PopulationFlow_ABC::T_ConstPopulationFlowVector& perceivablePopulationFlow ) const;
 
@@ -202,6 +204,8 @@ private:
     void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Population& population, unsigned int perception );
     boost::shared_ptr< DEC_Knowledge_Object > GetObjectKnowledgeToUpdate( MIL_Object_ABC& objectKnown );
     DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer() const;
+    void ApplyAgentPerception( const MIL_Agent_ABC& pion, int currentTimeStep );
+    void ApplyPopulationPerception( const MIL_Agent_ABC& pion, int currentTimeStep );
     //@}
 
 private:
@@ -223,6 +227,8 @@ private:
     bool createdByJamming_;
     const MIL_Agent_ABC* jammedPion_;
     static MIL_IDManager idManager_;
+
+    std::vector< const MIL_Agent_ABC* > pions_;
     //@}
 };
 
