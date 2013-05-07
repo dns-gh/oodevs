@@ -203,7 +203,37 @@ TerrainData TER_Analyzer::GetTerrainData( const TER_Localisation& localisation )
         }
         break;
     case TER_Localisation::ePoint :
-        data = Pick( localisation.ComputeBarycenter() );
+        {
+            // Instead of picking the sum of all types in the area, we look for the least possible types.
+            // Rationale: Picking a point precisely when giving a mission is not possible.
+            // So we look for the most permissive terrain instead of the most restrictive...
+            // If there's a road, then return data immediately.
+            TER_Localisation tmp = localisation;
+            tmp.Scale( 0. );
+            TER_Polygon polygon;
+            polygon.Reset( tmp.GetPoints() );
+            const geometry::Polygon2f geometryPolygon = MakePolygon( polygon );
+            std::vector< geometry::Point2f > roads;
+            pAnalyzer_->FindRoadsOnBorderOfPolygon( geometryPolygon, roads );
+            if( roads.empty() )
+            {
+                data = Pick( localisation.ComputeBarycenter() );
+                std::vector< spatialcontainer::Node* > nodes = pAnalyzer_->FindNodesWithinPolygon( geometryPolygon );
+                for( auto iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
+                {
+                    TerrainData next = TerrainData::BuildData( **iterator );
+                    if( next.IsRoad() )
+                    {
+                        data = TerrainData();
+                        break;
+                    }
+                    data.SetArea( data.Area() & next.Area() );
+                    data.SetLeft( data.Left() & next.Left() );
+                    data.SetRight( data.Right() & next.Right() );
+                    data.SetLinear( data.Linear() & next.Linear() );
+                }
+            }
+        }
         break;
     default:
         assert( false );
