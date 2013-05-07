@@ -20,6 +20,7 @@ Controller::Controller( const Configuration& cfg )
 {
     qRegisterMetaType< boost::shared_ptr< Event > >( "boost::shared_ptr< Event >" );
     qRegisterMetaType< std::string >( "std::string" );
+    qRegisterMetaType< Event >( "Event" );
     qRegisterMetaType< Error >( "Error" );
     ui_->setupUi( &main_ );
     Configuration next = cfg;
