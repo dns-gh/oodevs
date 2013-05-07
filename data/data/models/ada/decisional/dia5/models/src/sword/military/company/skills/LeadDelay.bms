@@ -111,6 +111,7 @@ connections = { skill.links.manageFragOrder, skill.links.coordinationManager, sk
     done = function( self ) end,
 
 create = function( self )
+        integration.initializeListenFrontElement()
         local Activate = Activate
         self.parameters = myself.taskParams
         self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", true )

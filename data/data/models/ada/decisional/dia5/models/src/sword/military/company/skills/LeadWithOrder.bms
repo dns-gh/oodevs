@@ -97,6 +97,7 @@ connections = { skill.links.synchronizeRC, skill.nodes.RC },
 done = function( self ) end,
 
 create = function( self )
+        integration.initializeListenFrontElement()
         myself.newTask = false
         self.parameters = myself.taskParams
         self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )

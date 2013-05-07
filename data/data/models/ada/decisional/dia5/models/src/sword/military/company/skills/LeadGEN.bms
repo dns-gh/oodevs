@@ -250,6 +250,7 @@ connections = { skill.links.supportManager, skill.links.coordinationManager, ski
 done = function( self ) end,
 
 create = function( self )
+        integration.initializeListenFrontElement()
         myself.newTask = false
         myself.leadData = {}
         myself.leadData.workMap = {}

@@ -196,6 +196,10 @@ integration.ListenFrontElement = function( entity )
     listenFrontElementCallbacks[entity.source] = true
 end
 
+integration.initializeListenFrontElement = function()
+    integration.listenFrontElementCallbacks[meKnowledge] = {}
+end
+
 integration.getAgentFromKnowledge = function( entity )
     local agent = DEC_ConnaissanceAgent_EnAgent(entity.source)
     return CreateKnowledge(sword.military.world.PlatoonAlly, agent)
