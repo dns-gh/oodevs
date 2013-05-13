@@ -394,3 +394,52 @@ func (s *TestSuite) TestCreateAutomat(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 	c.Assert(aa, IsNil)
 }
+
+func (s *TestSuite) TestCreateCrowd(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	data := client.Model.GetData()
+	pos := swapi.MakePoint(0, 0)
+	model := client.Model
+	crowdType := "Standard Crowd"
+	crowdName := "crowd"
+	invalidId := uint32(12345)
+	healthy, wounded, dead := int32(10), int32(11), int32(12)
+
+	party := data.FindPartyByName("party")
+	c.Assert(party, NotNil)
+
+	// Invalid tasker
+	_, err := client.CreateCrowd(0, 0, crowdType, pos, healthy, wounded, dead, crowdName)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// Invalid party identifier
+	_, err = client.CreateCrowd(invalidId, 0, crowdType, pos, healthy, wounded, dead, crowdName)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// Invalid party identifier
+	_, err = client.CreateCrowd(0, invalidId, crowdType, pos, healthy, wounded, dead, crowdName)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// We can't create a crowd with 0 humans
+	_, err = client.CreateCrowd(party.Id, 0, crowdType, pos, 0, 0, 0, crowdName)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Invalid crowd type
+	_, err = client.CreateCrowd(party.Id, 0, "invalidType", pos, healthy, wounded, dead, crowdName)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Create crowd in party
+	crowd, err := client.CreateCrowd(party.Id, 0, crowdType, pos, healthy, wounded, dead, crowdName)
+	c.Assert(err, IsNil)
+	c.Assert(crowd, NotNil)
+
+	formations := model.GetData().ListFormations()
+	c.Assert(len(formations), Greater, 0)
+	formation := formations[0]
+
+	// Create crowd in party with formation identifier
+	crowd, err = client.CreateCrowd(formation.Id, 0, crowdType, pos, healthy, wounded, dead, crowdName)
+	c.Assert(err, IsNil)
+	c.Assert(crowd, NotNil)
+}

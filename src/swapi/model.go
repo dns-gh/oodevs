@@ -368,6 +368,17 @@ func (model *Model) GetUnit(unitId uint32) *Unit {
 	return u
 }
 
+func (model *Model) GetCrowd(crowdId uint32) *Crowd {
+	var u *Crowd
+	model.waitCommand(func(model *Model) {
+		crowd := model.data.FindCrowd(crowdId)
+		if crowd != nil {
+			u = crowd.Copy()
+		}
+	})
+	return u
+}
+
 func (model *Model) GetTick() int32 {
 	tick := int32(0)
 	model.waitCommand(func(model *Model) {

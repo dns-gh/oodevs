@@ -361,6 +361,15 @@ func (model *ModelData) FindUnit(unitId uint32) *Unit {
 	return nil
 }
 
+func (model *ModelData) FindCrowd(crowdId uint32) *Crowd {
+	for _, u := range model.ListCrowds() {
+		if u.Id == crowdId {
+			return u
+		}
+	}
+	return nil
+}
+
 func (model *ModelData) addUnit(unit *Unit) bool {
 	f := model.FindAutomat(unit.AutomatId)
 	if f != nil {

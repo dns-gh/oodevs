@@ -63,6 +63,13 @@ func MakeIdentifier(value uint32) *sword.MissionParameter {
 		})
 }
 
+func MakeQuantity(value int32) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Quantity: proto.Int32(value),
+		})
+}
+
 func MakeCoords(points ...*Point) *sword.CoordLatLongList {
 	coords := []*sword.CoordLatLong{}
 	for _, p := range points {

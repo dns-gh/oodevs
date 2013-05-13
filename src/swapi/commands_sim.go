@@ -367,6 +367,67 @@ func (c *Client) CreateAutomat(formationId, automatId, automatType,
 	return created, err
 }
 
+func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
+	location *Point, healthy, wounded, dead int32, name string) (*Crowd, error) {
+	tasker := &sword.Tasker{}
+	if partyId != 0 {
+		tasker.Party = &sword.PartyId{
+			Id: proto.Uint32(partyId),
+		}
+	}
+	if formationId != 0 {
+		tasker.Formation = &sword.FormationId{
+			Id: proto.Uint32(formationId),
+		}
+	}
+
+	actionType := sword.UnitMagicAction_crowd_creation
+	params := []*sword.MissionParameter{
+		MakeString(crowdType),
+		MakePointParam(location),
+		MakeQuantity(healthy),
+		MakeQuantity(wounded),
+		MakeQuantity(dead),
+		MakeString(name),
+	}
+
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				UnitMagicAction: &sword.UnitMagicAction{
+					Tasker:     tasker,
+					Type:       &actionType,
+					Parameters: MakeParameters(params...),
+				},
+			},
+		},
+	}
+	fmt.Println(msg)
+	var created *Crowd
+	handler := func(msg *sword.SimToClient_Content) error {
+		if reply := msg.GetCrowdCreation(); reply != nil {
+			// Context should not be set on this
+			return ErrContinue
+		}
+		reply := msg.GetUnitMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		_, err := GetUnitMagicActionAck(reply)
+		if err != nil {
+			return err
+		}
+		value := GetParameterValue(reply.GetResult(), 0)
+		if value == nil {
+			return invalid("result", reply.GetResult())
+		}
+		created = c.Model.GetCrowd(value.GetCrowd().GetId())
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	return created, err
+}
+
 func (c *Client) SetAutomatMode(automatId uint32, engaged bool) error {
 	mode := sword.EnumAutomatMode_engaged
 	if !engaged {
