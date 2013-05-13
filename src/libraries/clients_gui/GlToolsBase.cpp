@@ -166,9 +166,9 @@ std::string GlToolsBase::DefaultStyle()
 // Name: GlToolsBase::PrintApp6
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void GlToolsBase::PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/  )
+void GlToolsBase::PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/, bool forceCreate /* = false */ )
 {
-    symbols_->PrintApp6( symbol, style, viewport, vWidth, vHeight, IsPickingMode() );
+    symbols_->PrintApp6( symbol, style, viewport, vWidth, vHeight, IsPickingMode(), forceCreate );
 }
 
 // -----------------------------------------------------------------------------

@@ -60,7 +60,7 @@ const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const
 // Created: LGY 2011-07-22
 // -----------------------------------------------------------------------------
 const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const std::string& symbolName, const std::string& levelName,
-                                         const QSize& size /*= QSize( 64, 64 )*/, ColorMode colorMode /* = eColorBase */ ) const
+    const QSize& size /*= QSize( 64, 64 )*/, ColorMode colorMode /* = eColorBase */ ) const
 {
     SymbolIcon icon( symbolName, levelName );
     QColor color;
