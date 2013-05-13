@@ -51,11 +51,11 @@ int main( int argc, char* argv[] )
             std::cout << opts << std::endl;
             return 0;
         }
+        bpo::notify( args );
 #ifdef _WIN64
         if( !cfg.external )
             throw std::exception( "Unable to disable external process in 64-bit mode" );
 #endif
-        bpo::notify( args );
 
         cfg.rundir = ".";
         if( !cfg.binary.IsRegularFile() )
