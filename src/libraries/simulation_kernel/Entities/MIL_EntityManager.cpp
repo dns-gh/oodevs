@@ -1294,7 +1294,8 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
         || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get( 0 ).has_point()
         || message.parameters().elem( 2 ).value_size() != 1 || !message.parameters().elem( 2 ).value().Get( 0 ).has_quantity()
         || message.parameters().elem( 3 ).value_size() != 1 || !message.parameters().elem( 3 ).value().Get( 0 ).has_quantity()
-        || message.parameters().elem( 4 ).value_size() != 1 || !message.parameters().elem( 4 ).value().Get( 0 ).has_quantity() )
+        || message.parameters().elem( 4 ).value_size() != 1 || !message.parameters().elem( 4 ).value().Get( 0 ).has_quantity()
+        || message.parameters().elem( 5 ).value_size() != 1 || !message.parameters().elem( 5 ).value().Get( 0 ).has_acharstr() )
     {
         throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
     }
@@ -1305,15 +1306,18 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
     if( !location.has_coordinates() )
         throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
 
+    const unsigned int healthy = parameters.elem( 2 ).value().Get( 0 ).quantity();
+    const unsigned int wounded = parameters.elem( 3 ).value().Get( 0 ).quantity();
+    const unsigned int dead = parameters.elem( 4 ).value().Get( 0 ).quantity();
     MT_Vector2D point;
     MIL_Tools::ConvertCoordMosToSim( location.coordinates().elem( 0 ), point );
-    int number = parameters.elem( 2 ).value().Get( 0 ).quantity() + parameters.elem( 3 ).value().Get( 0 ).quantity() + parameters.elem( 4 ).value().Get( 0 ).quantity();
+    int number = healthy + wounded + dead;
     if( number == 0 )
         throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
 
-    std::string name = ( parameters.elem( 3 ).value_size() == 1 && parameters.elem( 3 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 3 ).value().Get( 0 ).acharstr() : std::string();
+    std::string name = parameters.elem( 5 ).value().Get( 0 ).acharstr();
     MIL_Population& popu = populationFactory_->Create( type, point, number, name, army, 0, context );
-    popu.ChangeComposition( parameters.elem( 2 ).value().Get( 0 ).quantity(), parameters.elem( 3 ).value().Get( 0 ).quantity(), 0, parameters.elem( 4 ).value().Get( 0 ).quantity() );
+    popu.ChangeComposition( healthy, wounded, 0, dead );
 
     client::MagicActionAck oldAck;
     oldAck().set_error_code( MagicActionAck::no_error );
