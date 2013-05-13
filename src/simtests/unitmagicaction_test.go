@@ -244,11 +244,11 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	unitType := uint32(1)
 
 	// Invalid automat
-	_, err = client.CreateUnit(12345, unitType, pos)
+	_, err = client.CreateUnit(InvalidIdentifier, unitType, pos)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// Invalid unit type
-	_, err = client.CreateUnit(automat.Id, 12345, pos)
+	_, err = client.CreateUnit(automat.Id, InvalidIdentifier, pos)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// Add unit to automat, automatically becomes PC
@@ -356,19 +356,19 @@ func (s *TestSuite) TestCreateAutomat(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// Invalid formation
-	_, err = client.CreateAutomat(1234, 0, automatType, kg0.Id)
+	_, err = client.CreateAutomat(InvalidIdentifier, 0, automatType, kg0.Id)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// Invalid automat
-	_, err = client.CreateAutomat(formation.Id, 1234, automatType, kg0.Id)
+	_, err = client.CreateAutomat(formation.Id, InvalidIdentifier, automatType, kg0.Id)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// Invalid automat type
-	_, err = client.CreateAutomat(formation.Id, 0, 12345, kg0.Id)
+	_, err = client.CreateAutomat(formation.Id, 0, InvalidIdentifier, kg0.Id)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// Invalid knowledge group
-	_, err = client.CreateAutomat(formation.Id, 0, automatType, 12345)
+	_, err = client.CreateAutomat(formation.Id, 0, automatType, InvalidIdentifier)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Knowledge group not belonging to formation party
@@ -401,28 +401,26 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 	data := client.Model.GetData()
 	pos := swapi.MakePoint(0, 0)
 	model := client.Model
-	crowdType := "Standard Crowd"
 	crowdName := "crowd"
-	invalidId := uint32(12345)
 	healthy, wounded, dead := int32(10), int32(11), int32(12)
 
 	party := data.FindPartyByName("party")
 	c.Assert(party, NotNil)
 
 	// Invalid tasker
-	_, err := client.CreateCrowd(0, 0, crowdType, pos, healthy, wounded, dead, crowdName)
+	_, err := client.CreateCrowd(0, 0, CrowdType, pos, healthy, wounded, dead, crowdName)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// Invalid party identifier
-	_, err = client.CreateCrowd(invalidId, 0, crowdType, pos, healthy, wounded, dead, crowdName)
+	_, err = client.CreateCrowd(InvalidIdentifier, 0, CrowdType, pos, healthy, wounded, dead, crowdName)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// Invalid party identifier
-	_, err = client.CreateCrowd(0, invalidId, crowdType, pos, healthy, wounded, dead, crowdName)
+	_, err = client.CreateCrowd(0, InvalidIdentifier, CrowdType, pos, healthy, wounded, dead, crowdName)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// We can't create a crowd with 0 humans
-	_, err = client.CreateCrowd(party.Id, 0, crowdType, pos, 0, 0, 0, crowdName)
+	_, err = client.CreateCrowd(party.Id, 0, CrowdType, pos, 0, 0, 0, crowdName)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Invalid crowd type
@@ -430,7 +428,7 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Create crowd in party
-	crowd, err := client.CreateCrowd(party.Id, 0, crowdType, pos, healthy, wounded, dead, crowdName)
+	crowd, err := client.CreateCrowd(party.Id, 0, CrowdType, pos, healthy, wounded, dead, crowdName)
 	c.Assert(err, IsNil)
 	c.Assert(crowd, NotNil)
 
@@ -439,7 +437,7 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 	formation := formations[0]
 
 	// Create crowd in party with formation identifier
-	crowd, err = client.CreateCrowd(formation.Id, 0, crowdType, pos, healthy, wounded, dead, crowdName)
+	crowd, err = client.CreateCrowd(formation.Id, 0, CrowdType, pos, healthy, wounded, dead, crowdName)
 	c.Assert(err, IsNil)
 	c.Assert(crowd, NotNil)
 }

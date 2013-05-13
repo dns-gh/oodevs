@@ -78,6 +78,8 @@ const (
 	AutomatType = uint32(123)
 	// ARMOR.MBT platoon
 	UnitType = uint32(61)
+	// Standard Crowd
+	CrowdType = "Standard Crowd"
 )
 
 func createAutomat(c *C, client *swapi.Client) *swapi.Automat {
