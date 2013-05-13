@@ -402,7 +402,6 @@ func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 			},
 		},
 	}
-	fmt.Println(msg)
 	var created *Crowd
 	handler := func(msg *sword.SimToClient_Content) error {
 		if reply := msg.GetCrowdCreation(); reply != nil {
@@ -426,6 +425,27 @@ func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 	}
 	err := <-c.postSimRequest(msg, handler)
 	return created, err
+}
+
+func (c *Client) SendCrowdOrder(unitId, missionType uint32,
+	params *sword.MissionParameters) error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				CrowdOrder: &sword.CrowdOrder{
+					Tasker: &sword.CrowdId{
+						Id: proto.Uint32(unitId),
+					},
+					Type: &sword.MissionType{
+						Id: proto.Uint32(missionType),
+					},
+					Parameters: params,
+				},
+			},
+		},
+	}
+	handler := orderAckHandler
+	return <-c.postSimRequest(msg, handler)
 }
 
 func (c *Client) SetAutomatMode(automatId uint32, engaged bool) error {

@@ -17,6 +17,7 @@ const (
 	// This was "COMMON - Move" when the test was written
 	MissionMoveId          = uint32(44582)
 	MissionAutomatAttackId = uint32(44523)
+	MissionMoveCrowdId     = uint32(4490)
 	InvalidIdentifier      = uint32(129500)
 )
 
@@ -109,5 +110,35 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 	})
 
 	err = client.SendAutomatOrder(automat.Id, MissionAutomatAttackId, params)
+	c.Assert(err, IsNil)
+}
+
+// Test we can send a crowd mission and get a successful acknowledgement.
+func (s *TestSuite) TestCrowdMission(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	data := client.Model.GetData()
+	from := swapi.MakePoint(-15.9219, 28.3456)
+	to := swapi.MakePoint(-15.8193, 28.3456)
+
+	party := data.FindPartyByName("party")
+	c.Assert(party, NotNil)
+
+	crowd, err := client.CreateCrowd(party.Id, 0, CrowdType, from, 10, 10, 10, "crowd")
+	c.Assert(err, IsNil)
+	c.Assert(crowd, NotNil)
+
+	params := swapi.MakeParameters(
+		swapi.MakePointParam(to))
+
+	// Cannot send order with an invalid unit identifier
+	err = client.SendCrowdOrder(InvalidIdentifier, MissionMoveCrowdId, params)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
+	// Cannot order with an invalid mission identifier
+	err = client.SendCrowdOrder(crowd.Id, InvalidIdentifier, params)
+	c.Assert(err, ErrorMatches, "error_invalid_mission")
+
+	err = client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
 	c.Assert(err, IsNil)
 }
