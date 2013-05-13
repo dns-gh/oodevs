@@ -77,17 +77,15 @@ func MakeCoords(points ...*Point) *sword.CoordLatLongList {
 }
 
 func MakePointLocation(point *Point) *sword.Location {
-	coordType := sword.Location_point
 	return &sword.Location{
-		Type:        &coordType,
+		Type:        sword.Location_point.Enum(),
 		Coordinates: MakeCoords(point),
 	}
 }
 
 func MakeLineLocation(from, to *Point) *sword.Location {
-	coordType := sword.Location_line
 	return &sword.Location{
-		Type:        &coordType,
+		Type:        sword.Location_line.Enum(),
 		Coordinates: MakeCoords(from, to),
 	}
 }
