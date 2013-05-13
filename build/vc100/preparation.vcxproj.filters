@@ -1052,6 +1052,9 @@
     <None Include="..\..\src\libraries\preparation\preparation_en.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\preparation\preparation_pt.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\preparation\UrbanMenuManager.h">

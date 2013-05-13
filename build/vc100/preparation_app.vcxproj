@@ -1694,6 +1694,7 @@
     <None Include="..\..\src\applications\preparation_app\preparation_app_fr.ts">
       <SubType>Designer</SubType>
     </None>
+    <None Include="..\..\src\applications\preparation_app\preparation_app_pt.ts" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="actions.vcxproj">

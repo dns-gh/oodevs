@@ -3280,6 +3280,7 @@
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\adaptation_app_ar.ts" />
     <None Include="..\..\src\applications\adaptation_app\adaptation_app_en.ts" />
+    <None Include="..\..\src\applications\adaptation_app\adaptation_app_pt.ts" />
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Combo.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_TextEdit.inl" />

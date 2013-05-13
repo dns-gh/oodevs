@@ -585,6 +585,7 @@
   <ItemGroup>
     <None Include="..\..\src\libraries\gaming\gaming_ar.ts" />
     <None Include="..\..\src\libraries\gaming\gaming_en.ts" />
+    <None Include="..\..\src\libraries\gaming\gaming_pt.ts" />
     <None Include="..\..\src\libraries\gaming\Sector.inl" />
     <None Include="..\..\src\libraries\gaming\LogisticConsigns.inl" />
     <None Include="..\..\src\libraries\gaming\gaming_es.ts" />

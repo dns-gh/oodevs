@@ -448,6 +448,7 @@
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl" />
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_ar.ts" />
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_en.ts" />
+    <None Include="..\..\src\libraries\clients_kernel\clients_kernel_pt.ts" />
     <None Include="..\..\src\libraries\clients_kernel\Displayer_ABC.inl" />
     <None Include="..\..\src\libraries\clients_kernel\Creatable.inl" />
     <None Include="..\..\src\libraries\clients_kernel\Hierarchies.inl" />

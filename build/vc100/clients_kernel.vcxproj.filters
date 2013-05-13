@@ -1094,6 +1094,9 @@
     <None Include="..\..\src\libraries\clients_kernel\clients_kernel_en.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\clients_kernel\clients_kernel_pt.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuildStep Include="..\..\src\libraries\clients_kernel\ActionController.h">

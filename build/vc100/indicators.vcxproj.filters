@@ -200,5 +200,8 @@
     <None Include="..\..\src\libraries\indicators\indicators_en.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\indicators\indicators_pt.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -130,12 +130,15 @@
     <ClInclude Include="..\..\src\libraries\logistic_plugin\SupplyResolver.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\src\libraries\logistic_plugin\logistic_plugin_ar.ts" />
+    <None Include="..\..\src\libraries\logistic_plugin\logistic_plugin_en.ts" />
     <None Include="..\..\src\libraries\logistic_plugin\logistic_plugin_es.ts">
       <FileType>Document</FileType>
     </None>
     <None Include="..\..\src\libraries\logistic_plugin\logistic_plugin_fr.ts">
       <FileType>Document</FileType>
     </None>
+    <None Include="..\..\src\libraries\logistic_plugin\logistic_plugin_pt.ts" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

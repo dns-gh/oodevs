@@ -68,5 +68,14 @@
     <None Include="..\..\src\libraries\logistic_plugin\logistic_plugin_fr.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\logistic_plugin\logistic_plugin_ar.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\logistic_plugin\logistic_plugin_en.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\logistic_plugin\logistic_plugin_pt.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
 </Project>

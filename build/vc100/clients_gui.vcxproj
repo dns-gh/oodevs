@@ -2540,6 +2540,7 @@
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\clients_gui_ar.ts" />
     <None Include="..\..\src\libraries\clients_gui\clients_gui_en.ts" />
+    <None Include="..\..\src\libraries\clients_gui\clients_gui_pt.ts" />
     <None Include="..\..\src\libraries\clients_gui\CommonDelegate.inl" />
     <None Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.inl" />
     <None Include="..\..\src\libraries\clients_gui\EntityHierarchies.inl" />

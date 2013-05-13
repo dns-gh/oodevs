@@ -314,6 +314,9 @@
     <None Include="..\..\src\libraries\frontend\frontend_en.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\frontend\frontend_pt.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\frontend\SpawnCommand.h">

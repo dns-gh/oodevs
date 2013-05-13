@@ -1565,5 +1565,8 @@
     <None Include="..\..\src\libraries\gaming\gaming_en.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\gaming\gaming_pt.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
 </Project>

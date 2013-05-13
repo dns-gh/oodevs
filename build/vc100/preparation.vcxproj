@@ -440,6 +440,7 @@
     <None Include="..\..\src\libraries\preparation\preparation_fr.ts">
       <SubType>Designer</SubType>
     </None>
+    <None Include="..\..\src\libraries\preparation\preparation_pt.ts" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="protocol.vcxproj">

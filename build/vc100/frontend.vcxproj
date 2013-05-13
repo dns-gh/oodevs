@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="debug|win32">
@@ -322,6 +322,7 @@
     <None Include="..\..\src\libraries\frontend\frontend_en.ts" />
     <None Include="..\..\src\libraries\frontend\frontend_es.ts" />
     <None Include="..\..\src\libraries\frontend\frontend_fr.ts" />
+    <None Include="..\..\src\libraries\frontend\frontend_pt.ts" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="protocol.vcxproj">

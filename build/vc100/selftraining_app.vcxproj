@@ -712,6 +712,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="..\..\src\applications\selftraining_app\selftraining_app_fr.ts" />
+    <None Include="..\..\src\applications\selftraining_app\selftraining_app_pt.ts" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="clients_gui.vcxproj">

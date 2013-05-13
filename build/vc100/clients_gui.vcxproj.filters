@@ -1778,6 +1778,9 @@
     <None Include="..\..\src\libraries\clients_gui\EntityHierarchies.inl">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="..\..\src\libraries\clients_gui\clients_gui_pt.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\clients_gui\HelpSystem.h">

@@ -185,6 +185,9 @@
     <None Include="..\..\src\applications\selftraining_app\selftraining_app_en.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\applications\selftraining_app\selftraining_app_pt.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\applications\selftraining_app\Application.h">

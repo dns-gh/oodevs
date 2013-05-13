@@ -120,6 +120,7 @@
     <None Include="..\..\src\libraries\reports\reports_en.ts" />
     <None Include="..\..\src\libraries\reports\reports_fr.ts" />
     <None Include="..\..\src\libraries\reports\reports_es.ts" />
+    <None Include="..\..\src\libraries\reports\reports_pt.ts" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="protocol.vcxproj">

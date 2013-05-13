@@ -1181,6 +1181,9 @@
     <None Include="..\..\src\applications\gaming_app\LogisticConsignsWidget.inl">
       <Filter>Source Files\Panels\Logistic\consigns</Filter>
     </None>
+    <None Include="..\..\src\applications\gaming_app\gaming_app_pt.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\applications\gaming_app\Application.h">

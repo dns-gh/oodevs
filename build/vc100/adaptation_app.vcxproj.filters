@@ -1881,6 +1881,9 @@
     <None Include="..\..\src\applications\adaptation_app\ADN_VectorEditionDialog.inl">
       <Filter>Source Files\Dialogs</Filter>
     </None>
+    <None Include="..\..\src\applications\adaptation_app\adaptation_app_pt.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MainWindow.h">
