@@ -864,7 +864,7 @@ void AgentServerMsgMgr::OnReceiveOrderAck( const sword::TaskCreationRequestAck& 
     }
     else if( message.tasker().has_crowd() )
     {
-        CheckAcknowledge( logger_, GetModel().agents_.GetPopulation( message.tasker().crowd().id() ), message );
+        CheckAcknowledge( logger_, GetModel().agents_.GetPopulation( message.tasker().crowd().id() ), message, GetProfile().DisplayMessage( clientId ) );
     }
 }
 

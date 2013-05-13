@@ -1344,7 +1344,7 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicActio
 // Name: MIL_EntityManager::OnReceiveCrowdOrder
 // Created: NLD 2005-09-29
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveCrowdOrder( const CrowdOrder& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveCrowdOrder( const CrowdOrder& message, unsigned int nCtx, unsigned int clientId )
 {
     client::TaskCreationRequestAck ack;
     ack().mutable_tasker()->mutable_crowd()->set_id( message.tasker().id() );
@@ -1360,7 +1360,7 @@ void MIL_EntityManager::OnReceiveCrowdOrder( const CrowdOrder& message, unsigned
     {
         ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------

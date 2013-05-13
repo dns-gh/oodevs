@@ -99,7 +99,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( wrapper.message().has_automat_order() )
         workspace.GetEntityManager        ().OnReceiveAutomatOrder                   ( wrapper.message().automat_order()                      , nCtx, clientId );
     else if( wrapper.message().has_crowd_order() )
-        workspace.GetEntityManager        ().OnReceiveCrowdOrder                     ( wrapper.message().crowd_order()                   , nCtx );
+        workspace.GetEntityManager        ().OnReceiveCrowdOrder                     ( wrapper.message().crowd_order()                   , nCtx, clientId );
     else if( wrapper.message().has_frag_order() )
         workspace.GetEntityManager        ().OnReceiveFragOrder                      ( wrapper.message().frag_order()                         , nCtx );
     else if( wrapper.message().has_set_automat_mode() )
