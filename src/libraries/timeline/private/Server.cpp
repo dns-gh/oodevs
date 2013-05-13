@@ -106,21 +106,21 @@ void Server::Reload()
 {
     std::vector< uint8_t > buffer( controls::ReloadClient( 0, 0 ) );
     controls::ReloadClient( &buffer[0], buffer.size() );
-    write_->Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+    write_->Write( &buffer[0], buffer.size() );
 }
 
 bool Server::CreateEvent( const Event& event )
 {
     std::vector< uint8_t > buffer( controls::CreateEvent( 0, 0, event ) );
     controls::CreateEvent( &buffer[0], buffer.size(), event );
-    return write_->Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+    return write_->Write( &buffer[0], buffer.size() );
 }
 
 bool Server::DeleteEvent( const std::string& uuid )
 {
     std::vector< uint8_t > buffer( controls::DeleteEvent( 0, 0, uuid ) );
     controls::DeleteEvent( &buffer[0], buffer.size(), uuid );
-    return write_->Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+    return write_->Write( &buffer[0], buffer.size() );
 }
 
 void Server::Run()
@@ -129,7 +129,7 @@ void Server::Run()
     {
         std::vector< uint8_t > buffer( ipc::DEFAULT_MAX_PACKET_SIZE );
         while( !thread_->interruption_requested() )
-            if( const size_t read = read_->Read( &buffer[0], buffer.size(), boost::posix_time::milliseconds( 50 ) ) )
+            if( const size_t read = read_->TimedRead( &buffer[0], buffer.size(), boost::posix_time::milliseconds( 50 ) ) )
                 controls::ParseServer( *this, &buffer[0], read );
     }
     catch( const boost::thread_interrupted& )

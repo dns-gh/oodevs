@@ -17,7 +17,6 @@
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/bind.hpp>
-#include <boost/date_time/posix_time/posix_time_duration.hpp>
 
 using namespace timeline::core;
 
@@ -267,7 +266,7 @@ void Engine::CreatedEvent( const timeline::Event& event, const timeline::Error& 
 {
     std::vector< uint8_t > buffer( controls::CreatedEvent( 0, 0, event, error ) );
     controls::CreatedEvent( &buffer[0], buffer.size(), event, error );
-    device_.Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+    device_.Write( &buffer[0], buffer.size() );
 }
 
 CefRefPtr< CefV8Value > Engine::OnCreatedEvent( const CefV8ValueList& args )
@@ -281,7 +280,7 @@ CefRefPtr< CefV8Value > Engine::OnSelectEvent( const CefV8ValueList& args )
     const Event event = GetEvent( args[0] );
     std::vector< uint8_t > buffer( controls::SelectedEvent( 0, 0, event ) );
     controls::SelectedEvent( &buffer[0], buffer.size(), event );
-    device_.Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+    device_.Write( &buffer[0], buffer.size() );
     return 0;
 }
 
@@ -289,7 +288,7 @@ CefRefPtr< CefV8Value > Engine::OnDeselectEvent( const CefV8ValueList& /*args*/ 
 {
     std::vector< uint8_t > buffer( controls::DeselectedEvent( 0, 0 ) );
     controls::DeselectedEvent( &buffer[0], buffer.size() );
-    device_.Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+    device_.Write( &buffer[0], buffer.size() );
     return 0;
 }
 
@@ -317,5 +316,5 @@ void Engine::DeletedEvent( const std::string& uuid, const timeline::Error& error
 {
     std::vector< uint8_t > buffer( controls::DeletedEvent( 0, 0, uuid, error ) );
     controls::DeletedEvent( &buffer[0], buffer.size(), uuid, error );
-    device_.Write( &buffer[0], buffer.size(), boost::posix_time::seconds( 1 ) );
+    device_.Write( &buffer[0], buffer.size() );
 }

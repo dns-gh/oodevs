@@ -38,7 +38,7 @@ namespace
     {
         std::vector< uint8_t > quit( controls::QuitClient( 0, 0 ) );
         controls::QuitClient( &quit[0], quit.size() );
-        device.Write( &quit[0], quit.size(), boost::posix_time::seconds( 4 ) );
+        device.TimedWrite( &quit[0], quit.size(), boost::posix_time::seconds( 4 ) );
     }
 
     class External : public Embedded_ABC
