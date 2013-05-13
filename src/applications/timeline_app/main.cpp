@@ -48,7 +48,10 @@ int main( int argc, char* argv[] )
         bpo::store( bpo::command_line_parser( argc, argv ).options( opts ).positional( pos ).run(), args );
         if( args.count( "help" ) )
         {
-            std::cout << opts << std::endl;
+            std::stringstream stream;
+            stream << opts;
+            const auto usage = "<pre>" + stream.str() + "</pre>";
+            QMessageBox::information( NULL, "Help", usage.c_str() );
             return 0;
         }
         bpo::notify( args );
