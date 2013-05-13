@@ -1173,6 +1173,8 @@ message MissionParameter {
         optional PullFlowParameters       pull_flow_parameters     = 50;
         //! A stage
         optional string                   stage                    = 51;
+        //! A crowd identifier
+        optional CrowdId                  crowd                    = 52;
     }
     //! Whether the parameter is a null value or not
     optional bool  null_value = 1;

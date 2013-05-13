@@ -1037,6 +1037,24 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
+namespace
+{
+    void CreateCrowd( boost::function< void() > fun, unsigned int nCtx )
+    {
+        try
+        {
+            fun();
+        }
+        catch( const NET_AsnException< UnitActionAck::ErrorCode >& e )
+        {
+            client::MagicActionAck ack;
+            ack().set_error_code( MagicActionAck::error_invalid_parameter );
+            ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, e.GetErrorID() );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveUnitMagicAction
 // Created: JSR 2010-04-13
@@ -1123,9 +1141,11 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             break;
         case UnitMagicAction::crowd_creation:
             if( MIL_Formation* pFormation = FindFormation( id ) )
-                ProcessCrowdCreationRequest( message, pFormation->GetArmy(), nCtx );
+                ::CreateCrowd( boost::bind( &MIL_EntityManager::ProcessCrowdCreationRequest, this,
+                        boost::cref( message ), boost::ref( pFormation->GetArmy() ), nCtx,  boost::ref( ack() ) ), nCtx );
             else if( MIL_Army_ABC*  pArmy = armyFactory_->Find( id ) )
-                ProcessCrowdCreationRequest( message, *pArmy, nCtx );
+                ::CreateCrowd( boost::bind( &MIL_EntityManager::ProcessCrowdCreationRequest, this,
+                        boost::cref( message ), boost::ref( *pArmy ), nCtx,  boost::ref( ack() ) ), nCtx );
             else
                 throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
             break;
@@ -1267,10 +1287,8 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
 // Name: MIL_EntityManager::ProcessCrowdCreationRequest
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& message, MIL_Army_ABC& army, unsigned int context )
+void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& message, MIL_Army_ABC& army, unsigned int context, sword::UnitMagicActionAck& ack )
 {
-    client::MagicActionAck ack;
-    ack().set_error_code( MagicActionAck::no_error );
     if( !message.has_parameters() || message.parameters().elem_size() != 6
         || message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_acharstr()
         || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get( 0 ).has_point()
@@ -1278,34 +1296,30 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
         || message.parameters().elem( 3 ).value_size() != 1 || !message.parameters().elem( 3 ).value().Get( 0 ).has_quantity()
         || message.parameters().elem( 4 ).value_size() != 1 || !message.parameters().elem( 4 ).value().Get( 0 ).has_quantity() )
     {
-        ack().set_error_code( MagicActionAck::error_invalid_parameter );
-        ack.Send( NET_Publisher_ABC::Publisher(), context );
-        return;
+        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
     }
+
     const ::MissionParameters& parameters = message.parameters();
     std::string type = parameters.elem( 0 ).value().Get( 0 ).acharstr();
     ::Location location = parameters.elem( 1 ).value().Get( 0 ).point().location();
     if( !location.has_coordinates() )
-    {
-        ack().set_error_code( MagicActionAck::error_invalid_parameter );
-        ack.Send( NET_Publisher_ABC::Publisher(), context );
-        return;
-    }
+        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
+
     MT_Vector2D point;
     MIL_Tools::ConvertCoordMosToSim( location.coordinates().elem( 0 ), point );
     int number = parameters.elem( 2 ).value().Get( 0 ).quantity() + parameters.elem( 3 ).value().Get( 0 ).quantity() + parameters.elem( 4 ).value().Get( 0 ).quantity();
     if( number == 0 )
-    {
-        ack().set_error_code( MagicActionAck::error_invalid_parameter );
-        ack.Send( NET_Publisher_ABC::Publisher(), context );
-        return;
-    }
-    else
-        ack.Send( NET_Publisher_ABC::Publisher(), context );
+        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
 
     std::string name = ( parameters.elem( 3 ).value_size() == 1 && parameters.elem( 3 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 3 ).value().Get( 0 ).acharstr() : std::string();
     MIL_Population& popu = populationFactory_->Create( type, point, number, name, army, 0, context );
     popu.ChangeComposition( parameters.elem( 2 ).value().Get( 0 ).quantity(), parameters.elem( 3 ).value().Get( 0 ).quantity(), 0, parameters.elem( 4 ).value().Get( 0 ).quantity() );
+
+    client::MagicActionAck oldAck;
+    oldAck().set_error_code( MagicActionAck::no_error );
+    oldAck.Send( NET_Publisher_ABC::Publisher(), context );
+
+    ack.mutable_result()->add_elem()->add_value()->mutable_crowd()->set_id( popu.GetID() );
 }
 
 // -----------------------------------------------------------------------------
