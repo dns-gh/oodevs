@@ -131,6 +131,8 @@ Section $(^Name)
 
     ; gaming
     SetOutPath "$INSTDIR\client\bin32"
+    ; remove metadata.tag with cached crc
+    Delete "$INSTDIR\client\bin32\metadata.tag"
     !ifdef SUB_PLATFORM
         File /r "${OUTDIR}\..\${SUB_PLATFORM}\gaming\*"
     !else
