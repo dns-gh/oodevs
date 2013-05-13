@@ -158,13 +158,12 @@ func (c *Client) ListConnectedProfiles() ([]*Profile, error) {
 	return profiles, err
 }
 
-func profileToProto(profile *Profile) *sword.Profile {
-	p := &sword.Profile{
-		Login:      proto.String(profile.Login),
-		Password:   proto.String(profile.Password),
-		Supervisor: proto.Bool(profile.Supervisor),
+func (p *Profile) Proto() *sword.Profile {
+	return &sword.Profile{
+		Login:      proto.String(p.Login),
+		Password:   proto.String(p.Password),
+		Supervisor: proto.Bool(p.Supervisor),
 	}
-	return p
 }
 
 func (c *Client) CreateProfile(profile *Profile) (*Profile, error) {
@@ -172,7 +171,7 @@ func (c *Client) CreateProfile(profile *Profile) (*Profile, error) {
 		ClientToAuthentication: &sword.ClientToAuthentication{
 			Message: &sword.ClientToAuthentication_Content{
 				ProfileCreationRequest: &sword.ProfileCreationRequest{
-					Profile: profileToProto(profile),
+					Profile: profile.Proto(),
 				},
 			},
 		},
@@ -209,7 +208,7 @@ func (c *Client) UpdateProfile(login string, profile *Profile) (*Profile, error)
 			Message: &sword.ClientToAuthentication_Content{
 				ProfileUpdateRequest: &sword.ProfileUpdateRequest{
 					Login:   proto.String(login),
-					Profile: profileToProto(profile),
+					Profile: profile.Proto(),
 				},
 			},
 		},
