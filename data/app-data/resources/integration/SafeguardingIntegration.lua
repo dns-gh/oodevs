@@ -64,7 +64,9 @@ integration.getSimPositionAwayFromknowledgeAgents = function( knowledgeAgents, d
     -- Computing to average distance between the agent and the given agents
     local totalDistance = 0
     for _, kAgent in pairs ( knowledgeAgents ) do
-        totalDistance = totalDistance + DEC_Geometrie_Distance( kAgent:getPosition(), meKnowledge:getPosition() )
+        if kAgent:isValid() then 
+            totalDistance = totalDistance + DEC_Geometrie_Distance( kAgent:getPosition(), meKnowledge:getPosition() )
+        end
     end
     local averageDistance = totalDistance / #knowledgeAgents
 
@@ -76,6 +78,8 @@ integration.getSimPositionAwayFromknowledgeAgents = function( knowledgeAgents, d
        end
     end
 
+    if not next( simAgentsInCircle ) then return nil end
+ 
     -- Computing a position by getting the barycenter of units located into the circle.
     -- The position is returned if it is located away from the agent. Else it is not returned
     local simBaryPos = DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents( simAgentsInCircle )
