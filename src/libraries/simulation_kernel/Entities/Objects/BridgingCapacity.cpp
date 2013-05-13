@@ -11,6 +11,7 @@
 #include "BridgingCapacity.h"
 #include "Object.h"
 #include "TimeLimitedAttribute.h"
+#include "MIL_ObjectManipulator_ABC.h"
 #include "simulation_terrain/TER_DynamicData.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -108,7 +109,11 @@ void BridgingCapacity::Instanciate( MIL_Object_ABC& object ) const
 void BridgingCapacity::Finalize( MIL_Object_ABC& object )
 {
     CreateBridgeGeometry( object.GetLocalisation().GetPoints() );
-    CreateRoad();
+    if( object().IsBuilt() )
+    {
+        CreateRoad();
+        CreateBridge();
+    }
 }
 
 // -----------------------------------------------------------------------------
