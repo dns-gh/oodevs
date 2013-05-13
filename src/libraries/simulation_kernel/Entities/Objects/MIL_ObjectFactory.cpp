@@ -151,8 +151,9 @@ MIL_Object_ABC* MIL_ObjectFactory::CreateObject( sword::Sink_ABC& sink, xml::xis
     // $$$$ SBO 2009-06-08: Check geometry constraint
     std::auto_ptr< Object > object( new Object( xis, builder.GetType(), army, &location ) );
     builder.Build( *object, sink );
-    xis >> xml::optional >> xml::start( "attributes" )
-        >> xml::list( *this, &MIL_ObjectFactory::ReadAttributes, *object )
+    xis >> xml::optional
+        >> xml::start( "attributes" )
+            >> xml::list( *this, &MIL_ObjectFactory::ReadAttributes, *object )
         >> xml::end;
     object->Finalize();
     return object.release();

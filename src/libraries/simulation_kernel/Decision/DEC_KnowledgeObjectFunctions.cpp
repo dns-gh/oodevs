@@ -473,12 +473,8 @@ int DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel( const MIL_Agent_ABC
 float DEC_KnowledgeObjectFunctions::GetConstructionLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( MIL_Object_ABC* object = GetObjectKnown( pKnowledge ) )
-    {
-        const ConstructionAttribute* attr = object->RetrieveAttribute< ConstructionAttribute >();
-        if( attr )
+        if( const ConstructionAttribute* attr = object->RetrieveAttribute< ConstructionAttribute >() )
             return static_cast< float >( attr->GetState() );
-        return 0.f;
-    }
     return 0.f;
 }
 
