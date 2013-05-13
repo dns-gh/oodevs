@@ -378,7 +378,7 @@ bool MIL_ObjectManipulator::IsBuilt() const
     if( object_.IsMarkedForDestruction() )
         return false;
     if( const ConstructionAttribute* pAttribute = object_.RetrieveAttribute< ConstructionAttribute >() )
-        return pAttribute->GetState() >= 1.f;
+        return pAttribute->IsConstructed();
     return object_.Get< StructuralCapacity >().GetStructuralState() >= 1.f;
 }
 
