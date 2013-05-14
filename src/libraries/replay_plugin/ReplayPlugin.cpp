@@ -32,7 +32,7 @@ ReplayPlugin::ReplayPlugin( Model_ABC& model, ClientPublisher_ABC& clients, tool
     , clients_( clients )
     , linkResolver_( linkResolver )
     , loader_( loader )
-    , factor_( 1 )
+    , factor_( 10 )
     , tickNumber_( 0 )
     , running_( false )
     , playingMode_( false )
@@ -126,6 +126,9 @@ void ReplayPlugin::OnTimer()
     }
     if( running_ )
         loader_.Tick();
+    if( loader_.GetCurrentTick() >= loader_.GetTickNumber() )
+        Pause( true );
+
     if( running_ || tickNumber_ != loader_.GetTickNumber() )
         SendReplayInfo( clients_ );
     if( nextPause_ > 0 && --nextPause_ == 0 )
@@ -245,7 +248,10 @@ void ReplayPlugin::SkipToFrame( unsigned int frame )
         MT_LOG_INFO_MSG( "Skipping to frame " << frame );
     }
     else
+    {
+
         asn().set_error_code( sword::ControlAck::error_invalid_time_factor );
+    }
     asn.Send( clients_ );
     if( frame < loader_.GetTickNumber() )
         loader_.SkipToFrame( frame );
