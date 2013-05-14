@@ -811,6 +811,7 @@
             <arg value="--exclude=module_tester"/>
             <arg value="--toolchain=cmake"/>
             <arg value="--optional-target=*cmake.msvc"/>
+            <arg value="--optional-target=update-test-databases"/>
         </python>
     </target>
 
