@@ -53,6 +53,22 @@
         </generate>
     </target>
 
+    <macrodef name="adaptation-update-database">
+        <attribute name="zipped-database"/>
+        <attribute name="todir" default="${out.dir}/physical base with unicode"/>
+        <sequential>
+            <delete dir="@{todir}"/>
+            <unzip src="@{zipped-database}" dest="@{todir}"/>
+            <run-adaptation input="@{todir}" output="@{todir}"/>
+            <zip basedir="@{todir}" zipfile="@{zipped-database}" encoding="UTF-8"/>
+            <delete dir="@{todir}"/>
+        </sequential>
+    </macrodef>
+
+    <target name="update-test-databases" description="update databases use by tests">
+        <adaptation-update-database zipped-database="${data.dir}/tests/test_data_unicode/physical base with unicode.zip"/>
+    </target>
+
     <!--
     ============================================================================
     license
@@ -342,8 +358,8 @@
         <attribute name="zipped-database"/>
         <attribute name="todir" default="${out.dir}/physical base with unicode"/>
         <!--
-            Java loses unicode when calling exec or echo, so no unicode char in the physical base path for now
-            <attribute name="todir" value="${out.dir}/physical base with unicode ひらがな"/>
+            Java loses unicode when calling exec or echo, so no unicode char in the physical base path for now.
+            Use exec unicode to do that.
         -->
         <sequential>
             <delete dir="@{todir}"/>
