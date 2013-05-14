@@ -29,7 +29,7 @@ ReplayPlugin::ReplayPlugin( Model_ABC& model, ClientPublisher_ABC& clients, tool
     : model_      ( model )
     , clients_    ( clients )
     , loader_     ( loader )
-    , factor_     ( 1 )
+    , factor_     ( 10 )
     , tickNumber_ ( 0 )
     , running_    ( false )
     , skipToFrame_( -1 )
@@ -103,7 +103,7 @@ void ReplayPlugin::OnTimer()
         loader_.Tick();
     if( running_ || tickNumber_ != loader_.GetTickNumber() )
         tickNumber_ = loader_.GetTickNumber();
-    if( nextPause_ > 0 && --nextPause_ == 0 )
+    if( nextPause_ > 0 && --nextPause_ == 0 || loader_.GetCurrentTick() >= loader_.GetTickNumber() )
         Pause();
 }
 
