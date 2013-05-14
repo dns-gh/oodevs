@@ -47,7 +47,7 @@ func (s *TestSuite) TestPauseStopResume(c *C) {
 		c.Fatal("simulation failed to resume")
 	}
 
-	// Resuming again with a delay should fail too 
+	// Resuming again with a delay should fail too
 	err = client.Resume(1)
 	c.Assert(err, ErrorMatches, "error_not_paused")
 	// Test resuming with a delay
