@@ -248,10 +248,8 @@ void ReplayPlugin::SkipToFrame( unsigned int frame )
         MT_LOG_INFO_MSG( "Skipping to frame " << frame );
     }
     else
-    {
-
         asn().set_error_code( sword::ControlAck::error_invalid_time_factor );
-    }
+
     asn.Send( clients_ );
     if( frame < loader_.GetTickNumber() )
         loader_.SkipToFrame( frame );
