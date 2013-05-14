@@ -86,7 +86,7 @@ func (s *TestSuite) TestWriteSession(c *C) {
     <name>test</name>
   </meta>
 </session>`
-	c.Assert(string(data), Equals, expected)
+	c.Assert("\n"+string(data), Equals, expected)
 }
 
 func createTestSession() *Session {
