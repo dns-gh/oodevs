@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<resource-networks model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/ResourceNetworks.xsd">
-  <resource-network name="Test resource network المكتبة">
-    <resource id="6"/>
-    <color rgb="0xffffff"/>
-    <defaults production="0"/>
-  </resource-network>
-</resource-networks>

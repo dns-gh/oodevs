@@ -339,7 +339,7 @@
     </macrodef>
 
     <macrodef name="test-adaptation-unicode">
-        <attribute name="dir"/>
+        <attribute name="zipped-database"/>
         <attribute name="todir" default="${out.dir}/physical base with unicode"/>
         <!--
             Java loses unicode when calling exec or echo, so no unicode char in the physical base path for now
@@ -347,37 +347,7 @@
         -->
         <sequential>
             <delete dir="@{todir}"/>
-            <!-- SVN and HG work poorly together with versionned unicode paths, so let ant generate them -->
-            <copy todir="@{todir}">
-                <fileset dir="@{dir}">
-                    <depth max="0"/>
-                    <exclude name="**/physical.xml"/>
-                </fileset>
-                <firstmatchmapper>
-                    <globmapper from="templates.xml" to="templates.xml"/>
-                    <globmapper from="*.xml" to="*ひらがな.xml"/>
-                </firstmatchmapper>
-            </copy>
-            <copy todir="@{todir}">
-                <fileset dir="@{dir}">
-                    <depth min="1"/>
-                </fileset>
-                <firstmatchmapper>
-                    <globmapper from="*.png" to="* зи́лєлє, дънєѡ но́аѡ а́стъзй.png"/>
-                    <globmapper from="*.xml" to="* 平仮.xml"/>
-                    <globmapper from="*.html" to="* 平仮.html"/>
-                    <globmapper from="*.css" to="* 平仮.css"/>
-                    <identitymapper/>
-                </firstmatchmapper>
-            </copy>
-            <copy file="@{dir}/../physical with unicode.xml" tofile="@{todir}/physical.xml"/>
-            <copy file="@{dir}/../missionSheets with unicode.xslt" tofile="@{todir}/missionSheetsひらがな.xslt"/>
-            <move todir="@{todir}/Mission sheetsひらがな">
-                <fileset dir="@{todir}/Mission sheets"/>
-            </move>
-            <move todir="@{todir}/Symbolsひらがな">
-                <fileset dir="@{todir}/Symbols"/>
-            </move>
+            <unzip src="@{zipped-database}" dest="@{todir}"/>
             <test-adaptation input="@{todir}" mission-sheet-path="Mission sheetsひらがな"/>
             <delete dir="@{todir}"/>
         </sequential>
@@ -403,7 +373,7 @@
         <test-adaptation input="${data.dir}/data/models/ada/physical/scipio"/>
         -->
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
-        <test-adaptation-unicode dir="${data.dir}/tests/test_data_unicode/physical base without unicode"/>
+        <test-adaptation-unicode zipped-database="${data.dir}/tests/test_data_unicode/physical base with unicode.zip"/>
     </target>
 
     <macrodef name="test-exercise">

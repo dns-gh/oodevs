@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<automats model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.2.0/physical/Automats.xsd">
-  <automat decisional-model="Test model automat unicode المكتبة" id="1" name="Test automat unicode المكتبة" type="Automate SGTIA">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="Test pion unicode 沙发／沙發"/>
-  </automat>
-</automats>
