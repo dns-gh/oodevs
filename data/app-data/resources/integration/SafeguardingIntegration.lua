@@ -73,9 +73,11 @@ integration.getSimPositionAwayFromknowledgeAgents = function( knowledgeAgents, d
     -- Get the agents located into the circle with a radius defined by the average distance
     local simAgentsInCircle = {}
     for _, kAgent in pairs ( knowledgeAgents ) do
-        if DEC_Geometrie_Distance( kAgent:getPosition(), meKnowledge:getPosition() ) < averageDistance + 100 then -- + 100 meters to avoid precision errors
-            simAgentsInCircle[ #simAgentsInCircle + 1 ] = kAgent.source
-       end
+        if kAgent:isValid() then
+            if DEC_Geometrie_Distance( kAgent:getPosition(), meKnowledge:getPosition() ) < averageDistance + 100 then -- + 100 meters to avoid precision errors
+                simAgentsInCircle[ #simAgentsInCircle + 1 ] = kAgent.source
+            end
+        end
     end
 
     if not next( simAgentsInCircle ) then return nil end
