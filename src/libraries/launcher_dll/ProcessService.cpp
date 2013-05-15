@@ -135,7 +135,10 @@ void ProcessService::SendRunningExercices( const std::string& endpoint ) const
             SessionStatus message;
             message().set_exercise( key.first );
             message().set_session( key.second );
-            message().set_status( sword::SessionStatus::running );
+            if( IsRunning( key.first ) )
+                message().set_status( sword::SessionStatus::running );
+            else
+                message().set_status( sword::SessionStatus::paused );
             message.Send( *server_.ResolveClient( endpoint ) );
         }
     }
@@ -309,7 +312,10 @@ sword::SessionStopResponse::ErrorCode ProcessService::StopSession( const sword::
         // processes_ can be removed from processes_ by NotifyStopped from another thread...
         ProcessContainer::iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
         if( it != processes_.end() )
+        {
+            runningExercises_.erase( message.exercise() );
             processes_.erase( it );
+        }
         std::remove( GetSessionTmpFilename().c_str() );
         return sword::SessionStopResponse::success;
     }
@@ -336,7 +342,11 @@ void ProcessService::NotifyStopped()
     boost::recursive_mutex::scoped_lock locker( mutex_ );
     for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); )
         if( !it->second->IsRunning() )
+        {
+            const std::pair< std::string, std::string >& key = it->first;
+            runningExercises_.erase( key.first );
             it = processes_.erase( it );
+        }
         else
             ++it;
 }
@@ -348,7 +358,7 @@ void ProcessService::NotifyStopped()
 void ProcessService::NotifyError( const std::string& error, std::string commanderEndpoint /*= ""*/ )
 {
     if ( !commanderEndpoint.empty() )
-{
+    {
         LauncherPublisher& publisher = *server_.ResolveClient( commanderEndpoint );
         for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
         {
@@ -362,6 +372,7 @@ void ProcessService::NotifyError( const std::string& error, std::string commande
                 statusMessage().set_exercise( key.first );
                 statusMessage().set_session( key.second );
                 statusMessage.Send( publisher );
+                runningExercises_.erase( key.first );
                 processes_.erase( it );
                 break;
             }
@@ -693,7 +704,7 @@ void ProcessService::SendConnectedProfiles( const std::string& endpoint, const s
 // Created: RPD 2011-09-12
 // -----------------------------------------------------------------------------
 void ProcessService::SendSessionsStatuses( const std::string& endpoint )
-{    
+{
     if ( !endpoint.empty() )
     {
         LauncherPublisher& publisher = *server_.ResolveClient( endpoint );
@@ -706,7 +717,15 @@ void ProcessService::SendSessionsStatuses( const std::string& endpoint )
                 const std::pair< std::string, std::string >& key = it->first;
                 std::string exercise = key.first;
                 std::string session = key.second;
-                statusMessage().set_status( IsRunning( exercise, session )? sword::SessionStatus::running : sword::SessionStatus::not_running );
+                if( IsRunning( exercise, session ) )
+                {
+                    if( IsRunning( exercise ) )
+                        statusMessage().set_status( sword::SessionStatus::running );
+                    else
+                        statusMessage().set_status( sword::SessionStatus::paused );
+                }
+                else
+                    statusMessage().set_status( sword::SessionStatus::not_running );
                 statusMessage().set_exercise( exercise );
                 statusMessage().set_session( session );
                 statusMessage.Send( publisher );
