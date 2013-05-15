@@ -9,12 +9,16 @@
 
 #include "gaming_pch.h"
 #include "MissionParameters.h"
+#include "LogTools.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionFactory_ABC.h"
 #include "actions/ActionTiming.h"
+#include "actions/ActionError.h"
+#include "actions/ActionTasker.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/OrderType.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
@@ -25,11 +29,13 @@ using namespace actions;
 // Name: MissionParameters constructor
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------
-MissionParameters::MissionParameters( kernel::Controller& controller, const actions::ActionFactory_ABC& factory )
+MissionParameters::MissionParameters( kernel::Controller& controller, const actions::ActionFactory_ABC& factory, unsigned long entityId )
     : controller_( controller )
     , factory_( factory )
+    , entityId_( entityId )
+    , currentMission_( 0 )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +44,8 @@ MissionParameters::MissionParameters( kernel::Controller& controller, const acti
 // -----------------------------------------------------------------------------
 MissionParameters::~MissionParameters()
 {
-    // NOTHING
+    controller_.Unregister( *this );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -124,4 +131,39 @@ void MissionParameters::Draw( const geometry::Point2f& where, const gui::Viewpor
         if( action )
             action->Draw( where, viewport, tools );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameters::DoUpdate
+// Created: LGY 2013-05-14
+// -----------------------------------------------------------------------------
+void MissionParameters::DoUpdate( const sword::TaskCreationRequestAck& message )
+{
+    if( message.error_code() != sword::OrderAck_ErrorCode_no_error && currentMission_ )
+    {
+        Action_ABC* action = factory_.CreateInvalidAction( *currentMission_ );
+        action->Attach( *new ActionError( log_tools::Convert( message.error_code() ) ) );
+        Register( action->GetId(), *action );
+        controller_.Update( *this );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameters::NotifyCreated
+// Created: LGY 2013-05-14
+// -----------------------------------------------------------------------------
+void MissionParameters::NotifyCreated( const actions::Action_ABC& action )
+{
+    if( action.Retrieve< ActionTasker >()->GetTaskerId() == entityId_ )
+        currentMission_ = &action.GetType();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameters::NotifyDeleted
+// Created: LGY 2013-05-14
+// -----------------------------------------------------------------------------
+void MissionParameters::NotifyDeleted( const actions::Action_ABC& action )
+{
+    if( action.Retrieve< ActionTasker >()->GetTaskerId() == entityId_ )
+        currentMission_ = 0;
 }

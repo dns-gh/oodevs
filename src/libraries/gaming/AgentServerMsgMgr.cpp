@@ -853,13 +853,17 @@ void AgentServerMsgMgr::OnReceiveOrderAck( const sword::TaskCreationRequestAck& 
     if( message.tasker().has_automat() )
     {
         Automat_ABC& automat = GetModel().agents_.GetAutomat( message.tasker().automat().id() );
-        if( CheckAcknowledge( logger_, automat, message, GetProfile().DisplayMessage( clientId ) ) )
+        bool display = GetProfile().DisplayMessage( clientId );
+        CheckAcknowledge( logger_, automat, message, display );
+        if( display )
             automat.Update( message );
     }
     else if( message.tasker().has_unit() )
     {
         Agent_ABC& agent = GetModel().agents_.GetAgent( message.tasker().unit().id() );
-        if( CheckAcknowledge( logger_, agent, message, GetProfile().DisplayMessage( clientId ) ) )
+        bool display = GetProfile().DisplayMessage( clientId );
+        CheckAcknowledge( logger_, agent, message, display );
+        if( display )
             agent.Update( message );
     }
     else if( message.tasker().has_crowd() )

@@ -18,6 +18,7 @@
 namespace kernel
 {
     class Controller;
+    class OrderType;
 }
 
 namespace actions
@@ -32,6 +33,7 @@ namespace sword
     class AutomatOrder;
     class CrowdOrder;
     class FragOrder;
+    class TaskCreationRequestAck;
 }
 
 // =============================================================================
@@ -41,23 +43,28 @@ namespace sword
 // Created: SBO 2006-11-13
 // =============================================================================
 class MissionParameters : public kernel::Extension_ABC
+                        , public tools::Observer_ABC
                         , public kernel::Updatable_ABC< sword::UnitOrder >
                         , public kernel::Updatable_ABC< sword::AutomatOrder >
                         , public kernel::Updatable_ABC< sword::CrowdOrder >
                         , public kernel::Updatable_ABC< sword::FragOrder >
+                        , public kernel::Updatable_ABC< sword::TaskCreationRequestAck >
                         , public tools::Resolver< actions::Action_ABC >
+                        , public tools::ElementObserver_ABC< actions::Action_ABC >
                         , public gui::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameters( kernel::Controller& controller, const actions::ActionFactory_ABC& factory );
+             MissionParameters( kernel::Controller& controller, const actions::ActionFactory_ABC& factory, unsigned long entityId );
     virtual ~MissionParameters();
     //@}
 
     //! @name Operations
     //@{
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void NotifyCreated( const actions::Action_ABC& action );
+    virtual void NotifyDeleted( const actions::Action_ABC& action );
     void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
@@ -74,6 +81,7 @@ private:
     virtual void DoUpdate( const sword::AutomatOrder& message );
     virtual void DoUpdate( const sword::CrowdOrder& message );
     virtual void DoUpdate( const sword::FragOrder& message );
+    virtual void DoUpdate( const sword::TaskCreationRequestAck& message );
     template< typename T >
     void UpdateMessage( const T& message );
     //@}
@@ -83,6 +91,8 @@ private:
     //@{
     kernel::Controller& controller_;
     const actions::ActionFactory_ABC& factory_;
+    unsigned long entityId_;
+    const kernel::OrderType* currentMission_;
     //@}
 };
 

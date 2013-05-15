@@ -145,7 +145,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach( *new Equipments( *result,controllers_.controller_, static_.objectTypes_, dictionary, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new TroopsCompatibilityVersion( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
-    result->Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
+    result->Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_, result->GetId() ) );
     result->Attach( *new DebugPoints( static_.coordinateConverter_ ) );
     result->Attach( *new ConvexHulls( *result ) );
     result->Attach( *new DecisionalStates() );
@@ -259,7 +259,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& m
 void AgentFactory::AttachExtensions( kernel::Entity_ABC& agent )
 {
     agent.Attach( *new DebugPoints( static_.coordinateConverter_ ) );
-    agent.Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
+    agent.Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_, agent.GetId() ) );
     agent.Attach( *new Paths( static_.coordinateConverter_ ) );
     agent.Attach( *new Reports( agent, controllers_.controller_, static_.reportFactory_ ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );

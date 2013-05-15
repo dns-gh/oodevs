@@ -10,6 +10,8 @@
 #ifndef __LogTools_h_
 #define __LogTools_h_
 
+#include <protocol/Protocol.h>
+
 namespace kernel
 {
     class Logger_ABC;
@@ -58,6 +60,9 @@ namespace log_tools
         const std::string& messageName = message.descriptor()->name();
         return CheckAcknowledge( logger, entity, message.error_code(), errorMessage, messageName, display );
     }
+
+    std::string Convert( sword::OrderAck_ErrorCode code );
+
 } // namespace
 
 #endif // __LogTools_h_

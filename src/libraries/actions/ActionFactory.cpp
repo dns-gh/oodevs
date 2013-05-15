@@ -862,3 +862,31 @@ actions::Action_ABC* ActionFactory::CreateInhabitantChangeConfinedStateAction( b
     action->AddParameter( *new parameters::Bool( it.NextElement(), confined ) );
     return action;
 }
+
+namespace
+{
+    class InvalidAction : public Action_ABC
+    {
+    public:
+        InvalidAction( kernel::Controller& controller, const kernel::OrderType& type )
+            : Action_ABC( controller, type )
+        {
+            Invalidate();
+        }
+        virtual ~InvalidAction() {};
+    public:
+        virtual void Publish( Publisher_ABC&, int ) const {};
+        virtual void Polish() {};
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateInvalidAction
+// Created: LGY 2013-05-14
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateInvalidAction( const kernel::OrderType& mission ) const
+{
+    std::auto_ptr< actions::Action_ABC > action( new InvalidAction( controller_, mission ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    return action.release();
+}

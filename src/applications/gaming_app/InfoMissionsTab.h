@@ -80,6 +80,7 @@ private:
     QTabWidget* parent_;
     QStandardItemModel missionModel_;
     QSortFilterProxyModel* proxyFilter_;
+    QPixmap error_;
     //@}
 };
 

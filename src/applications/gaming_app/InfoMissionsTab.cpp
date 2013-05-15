@@ -13,6 +13,7 @@
 #include "icons.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionTiming.h"
+#include "actions/ActionError.h"
 #include "actions/Parameter_ABC.h"
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/LinkItemDelegate.h"
@@ -62,7 +63,8 @@ InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& contr
     , extractor_( extractor )
     , selected_( controllers )
     , parent_( parent )
-    , proxyFilter_ ( new CustomSortFilterProxyModel( parent ) )
+    , proxyFilter_( new CustomSortFilterProxyModel( parent ) )
+    , error_( QImage( "resources/images/gaming/mission_error.png" ) )
 {
     gui::LinkItemDelegate* delegate = new gui::LinkItemDelegate( this );
     setItemDelegateForColumn( 1, delegate );
@@ -83,11 +85,13 @@ InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& contr
     setPalette( p );
 
     //configure the model
-    missionModel_.setColumnCount( 4 );
+    missionModel_.setColumnCount( 5 );
     setHeaderHidden( true );
     header()->setResizeMode( 0, QHeaderView::ResizeToContents );
     header()->setResizeMode( 1, QHeaderView::ResizeToContents );
     header()->setResizeMode( 2, QHeaderView::ResizeToContents );
+    header()->setResizeMode( 3, QHeaderView::ResizeToContents );
+    header()->setResizeMode( 4, QHeaderView::ResizeToContents );
 
     connect( delegate, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) ), SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
 
@@ -130,6 +134,17 @@ void InfoMissionsTab::NotifySelected( const kernel::Entity_ABC* entity )
     }
 }
 
+namespace
+{
+    void ConfigureItem( QStandardItem* item, Qt::Alignment alignment, bool error, const QString& text )
+    {
+        item->setText( text );
+        item->setTextAlignment(alignment );
+        if( error )
+            item->setData( Qt::red, Qt::TextColorRole );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: InfoMissionsTab::NotifyUpdated
 // Created: SBO 2007-04-18
@@ -144,7 +159,8 @@ void InfoMissionsTab::NotifyUpdated( const MissionParameters& extension )
     while( missionModel_.rowCount() < count )
     {
         QList< QStandardItem* > items;
-        items << new QStandardItem() << new QStandardItem() << new QStandardItem();
+        items << new QStandardItem() << new QStandardItem()
+              << new QStandardItem() << new QStandardItem();
         missionModel_.appendRow( items );
     }
 
@@ -154,16 +170,15 @@ void InfoMissionsTab::NotifyUpdated( const MissionParameters& extension )
     {
         const actions::Action_ABC& action = iterator.NextElement();
         QStandardItem* nameItem = missionModel_.item( row );
-        nameItem->setText( action.GetName() );
-        nameItem->setIcon( MAKE_PIXMAP( mission ) );
-        nameItem->setTextAlignment( Qt::AlignLeft | Qt::AlignVCenter );
+        nameItem->setIcon( action.IsValid() ? MAKE_PIXMAP( mission ) : QPixmap::fromImage( error_ ) );
+        ConfigureItem( nameItem, Qt::AlignLeft | Qt::AlignVCenter, !action.IsValid(), action.GetName() );
 
         if( const actions::ActionTiming* timing = action.Retrieve< actions::ActionTiming >() )
-        {
-            QStandardItem* dateItem = missionModel_.item( row, 2 );
-            dateItem->setText( timing->GetTime().toString() );
-            dateItem->setTextAlignment( Qt::AlignRight );
-        }
+            ConfigureItem( missionModel_.item( row, 2 ), Qt::AlignCenter, !action.IsValid(), timing->GetTime().toString() );
+
+        if( const actions::ActionError* error = action.Retrieve< actions::ActionError >() )
+            ConfigureItem( missionModel_.item( row, 3 ), Qt::AlignRight| Qt::AlignVCenter, !action.IsValid(), error->GetError().c_str() );
+
         RecursiveDisplay( action, missionModel_.item( row++ ) );
     }
 }
@@ -181,7 +196,7 @@ void InfoMissionsTab::RecursiveDisplay( const T& element, QStandardItem* item )
     while( item->rowCount() < count )
     {
         QList< QStandardItem* > items;
-        items << new QStandardItem() << new QStandardItem() << new QStandardItem();
+        items << new QStandardItem() << new QStandardItem() << new QStandardItem() << new QStandardItem();
         item->appendRow( items );
     }
     tools::Iterator< const actions::Parameter_ABC& > it = element.CreateIterator();

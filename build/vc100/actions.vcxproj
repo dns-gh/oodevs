@@ -106,6 +106,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\actions\ActionError.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\Action_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\ActionFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\actions_pch.cpp">
@@ -181,6 +182,7 @@
     <ClCompile Include="..\..\src\libraries\actions\ActionTiming.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\actions\ActionError.h" />
     <ClInclude Include="..\..\src\libraries\actions\Action_ABC.h" />
     <ClInclude Include="..\..\src\libraries\actions\ActionFactory.h" />
     <ClInclude Include="..\..\src\libraries\actions\ActionFactory_ABC.h" />

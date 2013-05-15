@@ -617,6 +617,45 @@
     </message>
 </context>
 <context>
+    <name>LogTools</name>
+    <message>
+        <source>Invalid unit</source>
+        <translation>Unité invalide</translation>
+    </message>
+    <message>
+        <source>Invalid limit</source>
+        <translation>Limite invalide</translation>
+    </message>
+    <message>
+        <source>Invalid lima</source>
+        <translation>Lima invalide</translation>
+    </message>
+    <message>
+        <source>Invalid mission</source>
+        <translation>Mission invalide</translation>
+    </message>
+    <message>
+        <source>Invalid parameter</source>
+        <translation>Paramètre invalide</translation>
+    </message>
+    <message>
+        <source>Invalid frag order</source>
+        <translation>Ordre de conduite invalide</translation>
+    </message>
+    <message>
+        <source>Invalid order mission</source>
+        <translation>Mission invalide</translation>
+    </message>
+    <message>
+        <source>Unit surrendered</source>
+        <translation>Unité est rendue</translation>
+    </message>
+    <message>
+        <source>Invalid lima function</source>
+        <translation>Fonction de lima invalide</translation>
+    </message>
+</context>
+<context>
     <name>Logistic</name>
     <message>
         <source>Instruction:</source>

@@ -229,6 +229,9 @@
     <ClCompile Include="..\..\src\libraries\actions\ResourceNetworkType.cpp">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ActionError.cpp">
+      <Filter>Source Files\Action types\Extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\actions\Action_ABC.h">
@@ -461,6 +464,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions\ResourceNetworkType.h">
       <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ActionError.h">
+      <Filter>Source Files\Action types\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
