@@ -43,7 +43,8 @@ int main( int argc, char* argv[] )
             ( "binary",     bpo::value( &cfg.binary )->required(), "set client binary when using external process" )
             ( "url",        bpo::value( &cfg.url )->required(), "set url target" )
             ( "external",   bpo::value( &cfg.external )->default_value( true ), "use external process" )
-            ( "debug_port", bpo::value( &cfg.debug_port )->default_value( 0 ), "set remote debug port" );
+            ( "debug_port", bpo::value( &cfg.debug_port )->default_value( 0 ), "set remote debug port" )
+            ( "rundir",     bpo::value( &cfg.rundir )->default_value( "." ), "client working directory" );
         bpo::variables_map args;
         bpo::store( bpo::command_line_parser( argc, argv ).options( opts ).positional( pos ).run(), args );
         if( args.count( "help" ) )
@@ -60,7 +61,6 @@ int main( int argc, char* argv[] )
             throw std::exception( "Unable to disable external process in 64-bit mode" );
 #endif
 
-        cfg.rundir = ".";
         if( !cfg.binary.IsRegularFile() )
             throw std::runtime_error( QString( "invalid file %1" ).arg( argv[1] ).toStdString() );
 
