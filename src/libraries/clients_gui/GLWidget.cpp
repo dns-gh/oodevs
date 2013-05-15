@@ -739,10 +739,10 @@ void GlWidget::DrawCurvedArrow( const Point2f& from, const Point2f& to, float cu
     const Point2f middle = from + 0.5f * u;
     const Point2f center = middle + v * ( 1.f / curveRatio - 1.f );
 
-    DrawArc( center, from, to );
+    DrawArc( center, from, to, 3.f );
     Vector2f endSegment = Vector2f( center, to ).Normal();
     endSegment.Normalize();
-    DrawArrow( to - endSegment * 10.f * Pixels(), to, 10.f * Pixels() );
+    DrawArrow( to - endSegment * 10.f * Pixels(), to, 15.f * Pixels() );
 }
 
 // -----------------------------------------------------------------------------
