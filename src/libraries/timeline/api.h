@@ -13,7 +13,7 @@
 #include <memory>
 #include <boost/noncopyable.hpp>
 #include <tools/Path.h>
-#include <QObject>
+#include <QtCore/QObject>
 #include <boost/shared_ptr.hpp>
 
 class QWidget;
