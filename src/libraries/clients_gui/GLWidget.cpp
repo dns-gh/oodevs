@@ -884,7 +884,7 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
 {
     thickness *= ComputeZoomFactor( factor );
     DrawApp6Symbol( symbol, style, where, baseWidth_ * factor, viewport_
-                  , static_cast< unsigned int >( windowWidth_ * thickness ), static_cast< unsigned int >( windowHeight_ * thickness ), direction, 1., 1., 1 ,1, forceDraw );
+                  , static_cast< unsigned int >( windowWidth_ * thickness ), static_cast< unsigned int >( windowHeight_ * thickness ), direction, 1., 1., -20, -80, forceDraw );
 }
 
 // -----------------------------------------------------------------------------
