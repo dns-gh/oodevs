@@ -68,6 +68,7 @@ public slots:
 
     // Public signals
 signals:
+    void Ready();
     void CreatedEvent ( const Event& event, const Error& error );
     void SelectedEvent( boost::shared_ptr< Event > event );
     void DeletedEvent ( const std::string& uuid, const Error& error );

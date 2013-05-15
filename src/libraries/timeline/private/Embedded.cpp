@@ -16,10 +16,6 @@
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
 #include <boost/thread.hpp>
 
-#ifndef _WIN64
-#define USE_EMBEDDED_CORE
-#endif
-
 #ifdef USE_EMBEDDED_CORE
 #include <timeline_core/api.h>
 #endif

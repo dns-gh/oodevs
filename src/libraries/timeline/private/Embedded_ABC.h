@@ -12,6 +12,10 @@
 #include <timeline/api.h>
 #include <QProcess>
 
+/// enable this line to enable embedded core
+/// this mode is only available on 32-bit
+//#define USE_EMBEDDED_CORE
+
 namespace tools
 {
 namespace ipc

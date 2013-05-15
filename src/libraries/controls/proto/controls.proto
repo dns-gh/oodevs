@@ -10,23 +10,26 @@ package sdk;
 
 enum ClientType
 {
-    UNKNOWN         = 0x000;
-    // client commands
-    CLIENT_RESIZE   = 0x100;
-    CLIENT_QUIT     = 0x101;
-    CLIENT_RELOAD   = 0x102;
+    CLIENT_INVALID      = 0x000;
+    // commands
+    CLIENT_RESIZE       = 0x100;
+    CLIENT_QUIT         = 0x101;
+    CLIENT_RELOAD       = 0x102;
     // event commands
-    EVENT_CREATE    = 0x200;
-    EVENT_DELETE    = 0x201;
+    CLIENT_EVENT_CREATE = 0x200;
+    CLIENT_EVENT_DELETE = 0x201;
 }
 
 enum ServerType
 {
+    SERVER_INVALID          = 0x000;
+    // commands
+    SERVER_READY            = 0x100;
     // event commands
-    EVENT_CREATED    = 0x100;
-    EVENT_SELECTED   = 0x101;
-    EVENT_DESELECTED = 0x102;
-    EVENT_DELETED    = 0x103;
+    SERVER_EVENT_CREATED    = 0x200;
+    SERVER_EVENT_SELECTED   = 0x201;
+    SERVER_EVENT_DESELECTED = 0x202;
+    SERVER_EVENT_DELETED    = 0x203;
 }
 
 message Action

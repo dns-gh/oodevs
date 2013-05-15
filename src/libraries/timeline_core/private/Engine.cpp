@@ -141,6 +141,9 @@ void Engine::Register( CefRefPtr< CefV8Context > context )
     SetValue( gaming, "select_event",   1, boost::bind( &Engine::OnSelectEvent,   this, _1 ) );
     SetValue( gaming, "deselect_event", 0, boost::bind( &Engine::OnDeselectEvent, this, _1 ) );
     SetValue( gaming, "deleted_event",  2, boost::bind( &Engine::OnDeletedEvent,  this, _1 ) );
+    std::vector< uint8_t > buffer( controls::ReadyServer( 0, 0 ) );
+    controls::ReadyServer( &buffer[0], buffer.size() );
+    device_.Write( &buffer[0], buffer.size() );
 }
 
 void Engine::Unregister()

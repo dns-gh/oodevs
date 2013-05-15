@@ -34,6 +34,9 @@ public:
              Controller( const Configuration& cfg );
     virtual ~Controller();
 
+    int  Execute( const std::string& command );
+    void Show();
+
 public slots:
     void OnReload();
     void OnCreateEvent();
@@ -41,6 +44,9 @@ public slots:
     void OnSelectedEvent( boost::shared_ptr< Event > event );
     void OnDeletedEvent( const std::string& uuid, const Error& error );
     void OnDeleteEvent();
+
+private:
+    void WaitReady() const;
 
 private:
     QMainWindow main_;

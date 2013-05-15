@@ -9,11 +9,8 @@
 
 #include "timeline/api.h"
 #include "moc_api.cpp"
+#include "Embedded_ABC.h"
 #include "Server.h"
-
-#ifndef _WIN64
-#define USE_EMBEDDED_CORE
-#endif
 
 #ifdef USE_EMBEDDED_CORE
 #ifdef _MSC_VER

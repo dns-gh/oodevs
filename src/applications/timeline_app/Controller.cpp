@@ -32,12 +32,16 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const Event&, const Error& ) ), this, SLOT( OnCreatedEvent( const Event&, const Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< Event > ) ) );
     QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const Error& ) ) );
-    main_.show();
 }
 
 Controller::~Controller()
 {
     // NOTHING
+}
+
+void Controller::Show()
+{
+    main_.show();
 }
 
 namespace
@@ -144,4 +148,19 @@ void Controller::OnDeletedEvent( const std::string& uuid, const Error& error )
             .arg( QString::fromStdString( uuid ) )
             .arg( error.code )
             .arg( QString::fromStdString( error.text ) ) );
+}
+
+void Controller::WaitReady() const
+{
+    QEventLoop wait;
+    QObject::connect( ctx_.get(), SIGNAL( Ready() ), &wait, SLOT( quit() ) );
+    wait.exec();
+}
+
+int Controller::Execute( const std::string& command )
+{
+    WaitReady();
+    if( command == "ready" )
+        return 0;
+    throw std::runtime_error( "unexpected command " + command );
 }

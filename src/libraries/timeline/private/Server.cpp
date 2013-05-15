@@ -146,6 +146,11 @@ void Server::Run()
     }
 }
 
+void Server::OnReadyServer()
+{
+    emit Ready();
+}
+
 void Server::OnCreatedEvent( const Event& event, const Error& error )
 {
     emit CreatedEvent( event, error );

@@ -33,6 +33,7 @@ int main( int argc, char* argv[] )
     QObject::connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
     try
     {
+        std::string command;
         timeline::Configuration cfg;
         bpo::positional_options_description pos;
         pos.add( "binary", 1 );
@@ -41,13 +42,14 @@ int main( int argc, char* argv[] )
         opts.add_options()
             ( "help",       "print this message" )
             ( "binary",     bpo::value( &cfg.binary )->required(), "set client binary when using external process" )
+            ( "rundir",     bpo::value( &cfg.rundir )->default_value( "." ), "set client binary run directory" )
             ( "url",        bpo::value( &cfg.url )->required(), "set url target" )
             ( "external",   bpo::value( &cfg.external )->default_value( true ), "use external process" )
-            ( "debug_port", bpo::value( &cfg.debug_port )->default_value( 0 ), "set remote debug port" )
-            ( "rundir",     bpo::value( &cfg.rundir )->default_value( "." ), "client working directory" );
-        bpo::variables_map args;
-        bpo::store( bpo::command_line_parser( argc, argv ).options( opts ).positional( pos ).run(), args );
-        if( args.count( "help" ) )
+            ( "command",    bpo::value( &command )->default_value( std::string() ), "execute optional command and return" )
+            ( "debug_port", bpo::value( &cfg.debug_port )->default_value( 0 ), "set remote debug port" );
+        bpo::variables_map vmap;
+        bpo::store( bpo::command_line_parser( argc, argv ).options( opts ).positional( pos ).run(), vmap );
+        if( vmap.count( "help" ) )
         {
             std::stringstream stream;
             stream << opts;
@@ -55,16 +57,17 @@ int main( int argc, char* argv[] )
             QMessageBox::information( NULL, "Help", usage.c_str() );
             return 0;
         }
-        bpo::notify( args );
+        bpo::notify( vmap );
 #ifdef _WIN64
         if( !cfg.external )
             throw std::exception( "Unable to disable external process in 64-bit mode" );
 #endif
-
         if( !cfg.binary.IsRegularFile() )
             throw std::runtime_error( QString( "invalid file %1" ).arg( argv[1] ).toStdString() );
-
         timeline::Controller controller( cfg );
+        if( !command.empty() )
+            return controller.Execute( command );
+        controller.Show();
         return app.exec();
     }
     catch( const std::exception& err )

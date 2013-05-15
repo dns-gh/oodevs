@@ -131,7 +131,7 @@ namespace
 size_t tic::CreateEvent( void* data, size_t size, const Event& event )
 {
     ClientCommand cmd;
-    cmd.set_type( sdk::EVENT_CREATE );
+    cmd.set_type( sdk::CLIENT_EVENT_CREATE );
     SetEvent( *cmd.mutable_event(), event );
     return Marshall( data, size, cmd );
 }
@@ -139,7 +139,7 @@ size_t tic::CreateEvent( void* data, size_t size, const Event& event )
 size_t tic::DeleteEvent( void* data, size_t size, const std::string& uuid )
 {
     ClientCommand cmd;
-    cmd.set_type( sdk::EVENT_DELETE );
+    cmd.set_type( sdk::CLIENT_EVENT_DELETE );
     cmd.mutable_event()->set_uuid( uuid );
     return Marshall( data, size, cmd );
 }
@@ -150,18 +150,23 @@ void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size
     Unmarshall( cmd, data, size );
     switch( cmd.type() )
     {
-        case sdk::CLIENT_RESIZE: return handler.OnResizeClient();
-        case sdk::CLIENT_QUIT:   return handler.OnQuitClient();
-        case sdk::CLIENT_RELOAD: return handler.OnReloadClient();
-        case sdk::EVENT_CREATE:  return handler.OnCreateEvent( GetEvent( cmd.event() ) );
-        case sdk::EVENT_DELETE:  return handler.OnDeleteEvent( GetEvent( cmd.event() ).uuid );
+        case sdk::CLIENT_RESIZE:        return handler.OnResizeClient();
+        case sdk::CLIENT_QUIT:          return handler.OnQuitClient();
+        case sdk::CLIENT_RELOAD:        return handler.OnReloadClient();
+        case sdk::CLIENT_EVENT_CREATE:  return handler.OnCreateEvent( GetEvent( cmd.event() ) );
+        case sdk::CLIENT_EVENT_DELETE:  return handler.OnDeleteEvent( GetEvent( cmd.event() ).uuid );
     }
+}
+
+size_t tic::ReadyServer( void* data, size_t size )
+{
+    return MarshallType< ServerCommand >( data, size, sdk::SERVER_READY );
 }
 
 size_t tic::CreatedEvent( void* data, size_t size, const Event& event, const Error& error )
 {
     ServerCommand cmd;
-    cmd.set_type( sdk::EVENT_CREATED );
+    cmd.set_type( sdk::SERVER_EVENT_CREATED );
     SetEvent( *cmd.mutable_event(), event );
     SetError( *cmd.mutable_error(), error );
     return Marshall( data, size, cmd );
@@ -170,20 +175,20 @@ size_t tic::CreatedEvent( void* data, size_t size, const Event& event, const Err
 size_t tic::SelectedEvent( void* data, size_t size, const Event& event )
 {
     ServerCommand cmd;
-    cmd.set_type( sdk::EVENT_SELECTED );
+    cmd.set_type( sdk::SERVER_EVENT_SELECTED );
     SetEvent( *cmd.mutable_event(), event );
     return Marshall( data, size, cmd );
 }
 
 size_t tic::DeselectedEvent( void* data, size_t size )
 {
-    return MarshallType< ServerCommand >( data, size, sdk::EVENT_DESELECTED );
+    return MarshallType< ServerCommand >( data, size, sdk::SERVER_EVENT_DESELECTED );
 }
 
 size_t tic::DeletedEvent( void* data, size_t size, const std::string& uuid, const Error& error )
 {
     ServerCommand cmd;
-    cmd.set_type( sdk::EVENT_DELETED );
+    cmd.set_type( sdk::SERVER_EVENT_DELETED );
     cmd.mutable_event()->set_uuid( uuid );
     SetError( *cmd.mutable_error(), error );
     return Marshall( data, size, cmd );
@@ -195,9 +200,10 @@ void tic::ParseServer( ServerHandler_ABC& handler, const void* data, size_t size
     Unmarshall( cmd, data, size );
     switch( cmd.type() )
     {
-        case sdk::EVENT_CREATED:    return handler.OnCreatedEvent ( GetEvent( cmd.event() ), GetError( cmd.error() ) );
-        case sdk::EVENT_SELECTED:   return handler.OnSelectedEvent( GetEvent( cmd.event() ) );
-        case sdk::EVENT_DESELECTED: return handler.OnDeselectedEvent();
-        case sdk::EVENT_DELETED:    return handler.OnDeletedEvent( GetEvent( cmd.event() ).uuid, GetError( cmd.error() ) );
+        case sdk::SERVER_READY:            return handler.OnReadyServer();
+        case sdk::SERVER_EVENT_CREATED:    return handler.OnCreatedEvent ( GetEvent( cmd.event() ), GetError( cmd.error() ) );
+        case sdk::SERVER_EVENT_SELECTED:   return handler.OnSelectedEvent( GetEvent( cmd.event() ) );
+        case sdk::SERVER_EVENT_DESELECTED: return handler.OnDeselectedEvent();
+        case sdk::SERVER_EVENT_DELETED:    return handler.OnDeletedEvent( GetEvent( cmd.event() ).uuid, GetError( cmd.error() ) );
     }
 }
