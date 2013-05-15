@@ -479,7 +479,7 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
 
     if( simulation.IsInitialized() && firstPass )
     {
-        icons_->GenerateSymbols( model_.teams_ );
+        QTimer::singleShot( 500, this, SLOT( OnGenerateSymbols() ) );
         firstPass = false;
     }
 }
@@ -623,4 +623,13 @@ void MainWindow::OnRasterProcessExited( int exitCode, const tools::Path& output 
     }
     else
         QMessageBox::warning( this, tr( "Error loading image file" ), tr( "Error while loading Raster source." ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::OnGenerateSymbols
+// Created: NPT 2013-05-15
+// -----------------------------------------------------------------------------
+void MainWindow::OnGenerateSymbols()
+{
+    icons_->GenerateSymbols( model_.teams_ );
 }

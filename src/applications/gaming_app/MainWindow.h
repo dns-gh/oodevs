@@ -104,6 +104,7 @@ public slots:
     void ToggleDocks();
     void OnAddRaster();
     void OnRasterProcessExited( int exitCode, const tools::Path& output );
+    void OnGenerateSymbols();
     //@}
 
 signals:
