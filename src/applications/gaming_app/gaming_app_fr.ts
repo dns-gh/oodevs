@@ -1738,6 +1738,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source> - Planning mode on</source>
         <translation> - Mode Planification</translation>
     </message>
+    <message>
+        <source>Urban blocks</source>
+        <translation>Blocs urbains</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>

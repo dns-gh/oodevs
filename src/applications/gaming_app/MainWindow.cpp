@@ -318,7 +318,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( *glProxy_, *preferenceDialog_, raster, "main,composition,miniviews", tr( "Raster" ) );
     AddLayer( *glProxy_, *preferenceDialog_, terrainLayer, "main,composition,miniviews", tr( "Terrain" ) );
     AddLayer( *glProxy_, *preferenceDialog_, contour, "main,composition,miniviews", tr( "Contour Lines" ) );
-    AddLayer( *glProxy_, *preferenceDialog_, urbanLayer, "main,miniviews" );
+    AddLayer( *glProxy_, *preferenceDialog_, urbanLayer, "main,miniviews", tr( "Urban blocks" ) );
     AddLayer( *glProxy_, *preferenceDialog_, watershed, "main,composition,miniviews", tr( "Watershed" ) );
     glProxy_->Register( elevation3d );
     AddLayer( *glProxy_, *preferenceDialog_, grid, "main,miniviews" );

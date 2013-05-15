@@ -308,8 +308,8 @@ void ColorStrategy::SelectColor( const UrbanObject_ABC& object )
 {
     if( const kernel::UrbanColor_ABC* attribute = object.Retrieve< kernel::UrbanColor_ABC >() )
     {
-        SetAlpha( ApplyModifiers( object,attribute->Alpha() ) );
-        ApplyColor( QColor( attribute->Red(), attribute->Green(), attribute->Blue() ) );
+        float alpha = ApplyModifiers( object, attribute->Alpha() );
+        ApplyColor( QColor( attribute->Red(), attribute->Green(), attribute->Blue() ), alpha_ * alpha );
     }
 }
 

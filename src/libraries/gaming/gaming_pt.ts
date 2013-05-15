@@ -617,6 +617,45 @@
     </message>
 </context>
 <context>
+    <name>LogTools</name>
+    <message>
+        <source>Invalid unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid lima</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid mission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid frag order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid order mission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit surrendered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid lima function</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Logistic</name>
     <message>
         <source>Instruction:</source>

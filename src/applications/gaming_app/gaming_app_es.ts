@@ -1735,6 +1735,10 @@ This data can&apos;t be projected.</source>
         <source> - Planning mode on</source>
         <translation type="unfinished"> - Modo de planificación</translation>
     </message>
+    <message>
+        <source>Urban blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceHaulersListView</name>

@@ -1026,6 +1026,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Generate symbols</source>
         <translation>Génération des symbols</translation>
     </message>
+    <message>
+        <source>Urban blocks</source>
+        <translation>Blocs urbains</translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

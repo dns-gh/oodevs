@@ -1025,6 +1025,10 @@ This data can&apos;t be projected.</source>
         <source>Generate symbols</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Urban blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>
