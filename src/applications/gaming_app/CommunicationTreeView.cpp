@@ -335,6 +335,7 @@ void CommunicationTreeView::Drop( const kernel::KnowledgeGroup_ABC& item, const 
     }
     if( action )
     {
+        action->Attach( *new actions::ActionTasker( &item, false ) );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->RegisterAndPublish( actionsModel_ );
     }
