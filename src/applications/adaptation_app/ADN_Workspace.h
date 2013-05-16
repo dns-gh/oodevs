@@ -153,6 +153,7 @@ public:
 
     E_OpenMode GetOpenMode() const;
     void SetOpenMode( E_OpenMode nNewMode );
+    bool IsDevMode() const;
 
 signals:
     void ChangeTab( E_WorkspaceElements targetTab );
@@ -177,6 +178,7 @@ private:
     ADN_ProgressIndicator_ABC* pProgressIndicator_;
     E_OpenMode nOpenMode_;
     bool symbols_;
+    bool devMode_;
     static ADN_Workspace* pWorkspace_;
 };
 
@@ -502,6 +504,16 @@ inline
 void ADN_Workspace::SetOpenMode( E_OpenMode nNewMode )
 {
     nOpenMode_ = nNewMode;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::IsDevMode
+// Created: LGY 2013-05-16
+// -----------------------------------------------------------------------------
+inline
+bool ADN_Workspace::IsDevMode() const
+{
+    return devMode_;
 }
 
 #endif // __ADN_Workspace_h_

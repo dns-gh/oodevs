@@ -123,6 +123,7 @@ void ADN_Workspace::CleanWorkspace()
 ADN_Workspace::ADN_Workspace()
     : pProgressIndicator_( 0 )
     , nOpenMode_         ( eOpenMode_Normal )
+    , devMode_           ( false )
 {
     // NOTHING
 }
@@ -227,6 +228,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainwindow, bool devMode )
     pProgressIndicator_->SetVisible( true );
     pProgressIndicator_->Reset( tr( "Loading GUI..." ) );
     pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
+    devMode_ = devMode;
 
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
@@ -260,7 +262,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainwindow, bool devMode )
     AddPage( mainwindow, eKnowledgeGroups );
     AddPage( mainwindow, eHumanFactors );
     AddPage( mainwindow, eAiEngine );
-    if( devMode )
+    if( devMode_ )
         AddPage( mainwindow, eDisasters );
 
     //AddPage( mainwindow, eReports ); // $$$$ JSR 2012-01-04: TODO : reports à supprimer complètement?
