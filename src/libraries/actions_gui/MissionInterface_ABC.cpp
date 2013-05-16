@@ -93,7 +93,8 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
             {
                 fileName.MakePreferred();
                 QWebView* missionSheetText = new QWebView();
-                missionSheetText->load( QUrl( fileName.ToUTF8().c_str() ) );
+                missionSheetText->setContextMenuPolicy( Qt::NoContextMenu );
+                missionSheetText->load( QUrl( fileName.Normalize().ToUTF8().c_str() ) );
                 helpLayout->addWidget( missionSheetText );
             }
             else 
