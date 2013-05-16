@@ -84,10 +84,6 @@ private:
     QLabel*                     noClientLabel_;
     QCheckBox*                  noClientCheckBox_;
 
-	QGroupBox*                  legacyBox_;
-    QLabel*                     legacyLabel_;
-    QCheckBox*                  legacyCheckBox_;
-
     QLabel*                     reportsFrequencyLabel_;
     QSpinBox*                   reportsFrequencySpin_;
     //@}
