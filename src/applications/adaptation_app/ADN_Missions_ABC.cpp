@@ -278,7 +278,8 @@ bool ADN_Missions_ABC::WriteMissionSheet( const tools::Path& missionDir, const t
         //mission sheet html creation
         tools::Xifstream xisXML( filePath + ".xml" );
         xsl::xstringtransform xst( ( tools::Path::TemporaryPath() / ADN_Missions_Data::xslTemporaryFile_ ).ToUTF8() );
-        tools::Path namePath = ( fileName == ADN_Missions_Data::missionSheetTemporaryFile_ )? tools::Path::FromUTF8( strName_.GetData() ) : fileName;
+        QString directoryName = ( fileName == ADN_Missions_Data::missionSheetTemporaryFile_ )? strName_.GetData().c_str() : fileName.ToUTF8().c_str();
+        tools::Path namePath =  tools::Path::FromUTF8( directoryName.replace( "\'", " " ).toStdString() );
         if( fileName == ADN_Missions_Data::missionSheetTemporaryFile_ )
         {
             tools::Path parameterValue = ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( type ).c_str() ) / namePath + "/";

@@ -58,7 +58,7 @@ void ADN_ListView_DescriptionAttachment::AddFile()
         );
     if( fileName.IsEmpty() )
         return;
-    tools::Path namePath = tools::Path::FromUnicode( missionName_->text().toStdWString() );
+    tools::Path namePath = tools::Path::FromUnicode( missionName_->text().replace( "\'", " ").toStdWString() );
     tools::Path imageDir = ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( missionType_ ).c_str() ) / namePath;
     if( !imageDir.IsDirectory() )
         imageDir.CreateDirectories();
@@ -100,7 +100,7 @@ void ADN_ListView_DescriptionAttachment::CopyName()
 void ADN_ListView_DescriptionAttachment::RemoveFile()
 {
     ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    tools::Path namePath = tools::Path::FromUnicode( missionName_->text().toStdWString() );
+    tools::Path namePath = tools::Path::FromUnicode( missionName_->text().replace( "\'", " ").toStdWString() );
     tools::Path imageDir = ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( missionType_ ).c_str() ) / namePath;
     imageDir /= tools::Path::FromUnicode( GetModel().item( currentIndex().row() )->text().toStdWString() );
     if( imageDir.Exists() )
