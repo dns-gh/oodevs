@@ -47,8 +47,8 @@ void BorrowingsListView::NotifyUpdated( const Borrowings& a )
         ResizeModelOnNewContent( static_cast< int >( a.borrowings_.size() ) );
         for( unsigned int i = 0; i < a.borrowings_.size(); ++i )
         {
-            model_.item( i, 0 )->setText( QString( a.borrowings_[ i ].type_->GetName().c_str() ) );
-            model_.item( i, 1 )->setText( QString( a.borrowings_[ i ].agent_->GetName() ) );
+            model_.item( i, 0 )->setText( QString( a.borrowings_[ i ].agent_->GetName() ) );
+            model_.item( i, 1 )->setText( QString( a.borrowings_[ i ].type_->GetName().c_str() ) );
             model_.item( i, 2 )->setText( QString::number( a.borrowings_[ i ].quantity_ ) );
         }
     }
