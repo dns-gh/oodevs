@@ -196,9 +196,9 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     if( config.HasTimeline() )
     {
         // New Timeline
-        timeline_ = new TimelineDockWidget( parent, controllers, config );
+        timeline_.reset( new TimelineDockWidget( parent, controllers, config ) );
         timeline_->SetModes( eModes_Default );
-        parent->addDockWidget( Qt::TopDockWidgetArea, timeline_ );
+        parent->addDockWidget( Qt::TopDockWidgetArea, timeline_.get() );
     }
     else
     {
@@ -249,7 +249,7 @@ DockContainer::~DockContainer()
 void DockContainer::Purge()
 {
     orbatDockWidget_->Purge();
-    if( timeline_ )
+    if( timeline_.get() )
         timeline_->Disconnect();
 }
 
@@ -259,7 +259,7 @@ void DockContainer::Purge()
 // -----------------------------------------------------------------------------
 void DockContainer::Load()
 {
-    if( timeline_ )
+    if( timeline_.get() )
         timeline_->Connect();
 }
 
