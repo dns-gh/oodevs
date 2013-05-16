@@ -64,6 +64,7 @@ public:
     virtual bool     HasConvoy( const MIL_AgentPion& pion ) const = 0;
     virtual bool     IsConvoyDestroyed() const = 0;
     virtual bool     IsFinished() const = 0;
+    virtual bool     IsImpossible() const = 0;
     //@}
 
     //! @name Accessors

@@ -345,6 +345,8 @@ void SupplyConsign::DoConvoyReserveTransporters()
 {
     if( IsActionDone( convoy_->ReserveTransporters( resources_ ) ) )
         SetState( eConvoySetup );
+    if( convoy_->IsImpossible() )
+        ResetConsign();
 }
 
 // -----------------------------------------------------------------------------

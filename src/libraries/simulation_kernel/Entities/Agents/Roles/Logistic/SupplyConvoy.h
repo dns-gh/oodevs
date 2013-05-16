@@ -58,6 +58,7 @@ public:
     virtual bool     HasConvoy( const MIL_AgentPion& pion ) const;
     virtual bool     IsFinished() const;
     virtual bool     IsConvoyDestroyed() const;
+    virtual bool     IsImpossible() const;
     //@}
 
     //! @name Accessors
@@ -103,13 +104,14 @@ protected:
     SupplyRequestParameters_ABC* parameters_;
     SupplySupplier_ABC* supplier_;
     SupplySupplier_ABC* transportersProvider_;
-    bool autoAllocateNewTransporters_;
     T_Conveyors conveyors_;
     E_Action currentAction_;
     unsigned timeRemainingForCurrentAction_;
     SupplyRecipient_ABC* currentSupplyRecipient_;
     MIL_Agent_ABC* provider_;
+    bool autoAllocateNewTransporters_;
     bool finished_;
+	bool impossible_;
 };
 } // end namespace logistic
 

@@ -36,12 +36,13 @@ SupplyConvoy::SupplyConvoy( SupplyConvoyEventsObserver_ABC& eventsObserver, Supp
     , parameters_                   ( &parameters )
     , supplier_                     ( &supplier )
     , transportersProvider_         ( parameters.GetTransportersProvider() ? parameters.GetTransportersProvider() : &supplier )
-    , autoAllocateNewTransporters_  ( parameters.GetTransporters().empty() )
     , currentAction_                ( eNone )
     , timeRemainingForCurrentAction_( 0 )
     , currentSupplyRecipient_       ( 0 )
     , provider_                     ( 0 )
+    , autoAllocateNewTransporters_  ( parameters.GetTransporters().empty() )
     , finished_                     ( false )
+	, impossible_                   ( false )
 {
 }
 
@@ -54,12 +55,13 @@ SupplyConvoy::SupplyConvoy()
     , parameters_                   ( 0 )
     , supplier_                     ( 0 )
     , transportersProvider_         ( 0 )
-    , autoAllocateNewTransporters_  ( false )
     , currentAction_                ( eNone )
     , timeRemainingForCurrentAction_( 0 )
     , currentSupplyRecipient_       ( 0 )
     , provider_                     ( 0 )
+    , autoAllocateNewTransporters_  ( false )
     , finished_                     ( false )
+	, impossible_                   ( false )
 {
         // NOTHING
 }
@@ -111,6 +113,22 @@ void SupplyConvoy::ReserveTransporters( const PHY_DotationCategory& dotationCate
                 break;
         }
     }
+	else if( quantity > 0. )
+	{
+		// Conveyors selected manually are not enough to handle the request: Cancel the request and emit a warning.
+		impossible_ = true;
+	}
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoy::IsImpossible
+// Returns true if the convoy will never be able to be created for lack of transporters
+// (when specified transporters are not enough to carry the quantty requested for instance).
+// Created: LDC 2013-05-15
+// -----------------------------------------------------------------------------
+bool SupplyConvoy::IsImpossible() const
+{
+    return impossible_;
 }
 
 // -----------------------------------------------------------------------------
