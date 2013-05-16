@@ -177,6 +177,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
         connect( configPanel, SIGNAL( IntegrationPathSelected( const tools::Path& ) ), SLOT( OnIntegrationPathSelected( const tools::Path& ) ) );
         connect( configPanel, SIGNAL( DumpPathfindOptionsChanged( const QString&, const tools::Path& ) ), SLOT( OnDumpPathfindOptionsChanged( const QString&, const tools::Path& ) ) );
         connect( configPanel, SIGNAL( TimelineEnabled( bool ) ), SLOT( OnTimelineEnabled( bool ) ) );
+        connect( panel, SIGNAL( exerciseNumberChanged( int ) ), configPanel, SLOT( OnExerciseNumberChanged( int ) ) );
     }
 
     //general settings tab
@@ -284,7 +285,7 @@ void ScenarioLauncherPage::OnStart()
             config_, exerciseName, session, profile_.GetLogin(), true ) );
     if( hasTimeline_ )
         process->Add( boost::make_shared< frontend::StartTimeline >(
-            config_, exerciseName, session, exerciseNumber_, profile_ ) );
+        config_, exerciseName, session, exerciseNumber_, profile_ ) );
     progressPage_->Attach( process );
     process->Start();
     progressPage_->show();

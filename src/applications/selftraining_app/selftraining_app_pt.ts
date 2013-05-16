@@ -191,6 +191,10 @@
         <source>Debug</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Debug port</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>

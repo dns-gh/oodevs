@@ -51,6 +51,19 @@ signals:
     void DumpPathfindOptionsChanged( const QString& filter, const tools::Path& directory );
     //@}
 
+private slots:
+    //! @name Operations
+    //@{
+    void SwordVersionChecked( int state );
+    void OnTimelineChecked( bool checked );
+    void OnTimelineDebugPortChanged( int port );
+    void OnExerciseNumberChanged( int exerciseNumber );
+    void OnChangeIntegrationDirectory();
+    void OnEditIntegrationDirectory( const QString& );
+    void OnChangeDataDirectory();
+    void OnChangeDataFilter();
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -65,7 +78,10 @@ private:
     QCheckBox* legacyCheckBox_;
 
     // timeline
-    QCheckBox* timelineCheckBox_;
+    QGroupBox* timelineBox_;
+    QLabel* timelineDebugPortLabel_;
+    QSpinBox* timelineDebugPortSpinBox_;
+    int exerciseNumber_;
 
     //Integration Layer Configuration
     QLabel* integrationLabel_;
@@ -85,17 +101,6 @@ private:
     QPushButton* dataButton_;
     QLabel* filterLabel_;
     QLineEdit* filterEdit_;
-    //@}
-
-private slots:
-    //! @name Operations
-    //@{
-    void SwordVersionChecked( int state );
-    void OnTimelineChecked( int state );
-    void OnChangeIntegrationDirectory();
-    void OnEditIntegrationDirectory( const QString& );
-    void OnChangeDataDirectory();
-    void OnChangeDataFilter();
     //@}
 };
 

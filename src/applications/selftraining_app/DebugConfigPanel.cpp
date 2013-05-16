@@ -12,6 +12,7 @@
 #include "moc_DebugConfigPanel.cpp"
 #include "clients_gui/FileDialog.h"
 #include "clients_gui/tools.h"
+#include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
 
 namespace
@@ -28,6 +29,19 @@ namespace
     {
         QSettings settings( "MASA Group", "SWORD" );
         settings.setValue( "/sword/" + key, value );
+    }
+
+    int ReadIntSetting( const std::string& key, int defaultValue = 0 )
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        int val =  settings.value( ( "/sword/" + key ).c_str(), defaultValue ).toInt();
+        return val;
+    }
+
+    void WriteIntSetting( const std::string& key, int value )
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        settings.setValue( ( "/sword/" + key ).c_str(), value );
     }
 }
 
@@ -48,17 +62,13 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     , dumpLabel_( 0 )
     , dataDirectory_( 0 )
     , dataButton_( 0 )
+    , exerciseNumber_( 1 )
 {
     //legacy box
     legacyCheckBox_ = new QCheckBox();
     legacyCheckBox_->setCheckable( true );
     legacyCheckBox_->setChecked( legacy );
     connect( legacyCheckBox_, SIGNAL( stateChanged( int ) ), SLOT( SwordVersionChecked( int ) ) );
-
-    timelineCheckBox_ = new QCheckBox();
-    timelineCheckBox_->setCheckable( true );
-    timelineCheckBox_->setChecked( timeline );
-    connect( timelineCheckBox_, SIGNAL( stateChanged( int ) ), SLOT( OnTimelineChecked( int ) ) );
 
     //integration level label
     integrationLabel_ = new QLabel();
@@ -93,8 +103,27 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     QVBoxLayout* commentBoxLayout = new QVBoxLayout( topBox_ );
     commentBoxLayout->setMargin( 5 );
     commentBoxLayout->addWidget( legacyCheckBox_ );
-    commentBoxLayout->addWidget( timelineCheckBox_ );
     commentBoxLayout->addLayout( integrationBoxLayout );
+
+    //timeline box
+    timelineBox_ = new QGroupBox();
+    timelineBox_->setCheckable( true );
+    timelineBox_->setChecked( timeline );
+    timelineBox_->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+    connect( timelineBox_, SIGNAL( clicked( bool ) ), SLOT( OnTimelineChecked( bool ) ) );
+
+    timelineDebugPortLabel_ = new QLabel();
+    timelineDebugPortSpinBox_ = new QSpinBox();
+    timelineDebugPortSpinBox_->setRange( 0, 65535 );
+    timelineDebugPortSpinBox_->setValue( ReadIntSetting( "TimelineDebugPort" ) );
+    connect( timelineDebugPortSpinBox_, SIGNAL( valueChanged( int ) ), SLOT( OnTimelineDebugPortChanged( int ) ) );
+
+    QHBoxLayout* debugPortBox = new QHBoxLayout();
+    debugPortBox->addWidget( timelineDebugPortLabel_ );
+    debugPortBox->addWidget( timelineDebugPortSpinBox_ );
+
+    QVBoxLayout* timelineGroupLayout = new QVBoxLayout( timelineBox_ );
+    timelineGroupLayout->addLayout( debugPortBox );
 
     //profiling group box
     profilingBox_ = new QGroupBox();
@@ -136,6 +165,7 @@ DebugConfigPanel::DebugConfigPanel( QWidget* parent, const tools::GeneralConfig&
     //general Layout
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
     mainLayout->addWidget( topBox_ );
+    mainLayout->addWidget( timelineBox_ );
     mainLayout->addWidget( profilingBox_ );
     mainLayout->addWidget( pathfindsBox_ );
     mainLayout->setAlignment( Qt::AlignTop );
@@ -201,7 +231,8 @@ void DebugConfigPanel::OnEditIntegrationDirectory( const QString& directory )
 void DebugConfigPanel::OnLanguageChanged()
 {
     legacyCheckBox_->setText( tools::translate( "DebugConfigPanel", "Enable Legacy Mode" ) );
-    timelineCheckBox_->setText( tools::translate( "DebugConfigPanel", "Enable Web Timeline" ) );
+    timelineBox_->setTitle( tools::translate( "DebugConfigPanel", "Enable Web Timeline" ) );
+    timelineDebugPortLabel_->setText( tools::translate( "DebugConfigPanel", "Debug port" ) );
     integrationLabel_->setText( tools::translate( "DebugConfigPanel", "Integration layer directory" ) );
     profilingBox_->setTitle( tools::translate( "DebugConfigPanel", "Profiling settings" ) );
     decCallsBox_->setText( tools::translate( "DebugConfigPanel", "Decisional functions" ) );
@@ -228,15 +259,21 @@ QString DebugConfigPanel::GetName() const
 // -----------------------------------------------------------------------------
 void DebugConfigPanel::Commit( const tools::Path& exercise, const tools::Path& session )
 {
-    if( decCallsBox_->isChecked() || commandsBox_->isChecked() || hooksBox_->isChecked() )
+    if( decCallsBox_->isChecked() || commandsBox_->isChecked() || hooksBox_->isChecked() || timelineBox_->isChecked() )
     {
         frontend::CreateSession action( config_, exercise, session );
         if( decCallsBox_->isChecked() )
             action.SetOption( "session/config/simulation/profiling/@decisional", "true" );
         if( commandsBox_->isChecked() )
-            action.SetOption( "session/config/simulation/profiling/@command", "true" );
+           action.SetOption( "session/config/simulation/profiling/@command", "true" );
         if( hooksBox_->isChecked() )
             action.SetOption( "session/config/simulation/profiling/@hook", "true" );
+        if( timelineBox_->isChecked() )
+        {
+            action.SetOption( "session/config/timeline/@debug-port", timelineDebugPortSpinBox_->value() );
+            action.SetOption( "session/config/timeline/@url", "localhost:" +
+                              boost::lexical_cast< std::string >( frontend::GetPort( exerciseNumber_, frontend::TIMELINE_WEB_PORT ) ) );
+        }
         action.Commit();
     }
 }
@@ -267,7 +304,26 @@ void DebugConfigPanel::OnChangeDataFilter()
 // Name: DebugConfigPanel::OnTimelineChecked
 // Created: BAX 2013-04-16
 // -----------------------------------------------------------------------------
-void DebugConfigPanel::OnTimelineChecked( int state )
+void DebugConfigPanel::OnTimelineChecked( bool checked )
 {
-    emit TimelineEnabled( state == Qt::Checked );
+    emit TimelineEnabled( checked );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DebugConfigPanel::OnTimelineDebugPortChanged
+// Created: ABR 2013-05-16
+// -----------------------------------------------------------------------------
+void DebugConfigPanel::OnTimelineDebugPortChanged( int port )
+{
+    WriteIntSetting( "TimelineDebugPort", port );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugConfigPanel::OnExerciseNumberChanged
+// Created: ABR 2013-05-16
+// -----------------------------------------------------------------------------
+void DebugConfigPanel::OnExerciseNumberChanged( int exerciseNumber )
+{
+    exerciseNumber_ = exerciseNumber;
+}
+

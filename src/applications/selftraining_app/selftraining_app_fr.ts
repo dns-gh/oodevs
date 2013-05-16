@@ -193,6 +193,10 @@
         <source>Enable Web Timeline</source>
         <translation>Démarrer le serveur web de timeline</translation>
     </message>
+    <message>
+        <source>Debug port</source>
+        <translation>Port de debug</translation>
+    </message>
 </context>
 <context>
     <name>ExerciseList</name>
