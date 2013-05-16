@@ -164,7 +164,7 @@ bool TacticalTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, cons
     if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
         return dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0;
     if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
-        return ( dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0 ||
+        return ( ( dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0 && entity.GetId() != superior.GetId() ) ||
                 dynamic_cast< const kernel::Team_ABC* >( &superior ) != 0);
     return false;
 }
