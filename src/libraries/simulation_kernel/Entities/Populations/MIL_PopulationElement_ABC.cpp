@@ -29,7 +29,6 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Entities/MIL_Army.h"
 #include "MIL_Time_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Tools/MIL_Geometry.h"
@@ -118,13 +117,10 @@ void MIL_PopulationElement_ABC::FireOnPion( double rIntensity, MIL_Agent_ABC& ta
 void MIL_PopulationElement_ABC::FireOnPions( double rIntensity, PHY_FireResults_Population& fireResult )
 {
     assert( pAttitude_ );
+    if( pAttitude_->GetAsnID() == sword::peaceful )
+        return;
     for( auto it = collidingAgents_.begin(); it != collidingAgents_.end(); ++it )
-    {
-        MIL_Agent_ABC& target = **it;
-        if( target.GetArmy().IsAFriend( GetPopulation().GetArmy() ) == eTristate_True )
-            continue;
-        FireOnPion( rIntensity, target, fireResult );
-    }
+        FireOnPion( rIntensity, **it, fireResult );
 }
 
 // -----------------------------------------------------------------------------

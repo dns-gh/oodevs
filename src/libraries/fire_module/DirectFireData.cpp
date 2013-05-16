@@ -190,7 +190,6 @@ bool DirectFireData::GetUnusedFirerWeapon( const SWORD_Model*& firer, const Weap
         return false;
     auto it = weapons_.begin();
     weapon = it->second.GetUnusedWeapon();
-    assert( weapon );
     if( !weapon )
         return false;
     firer = it->first;
