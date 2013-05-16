@@ -43,6 +43,7 @@ rootnode
             if meKnowledge:isStealthy() then
                 meKnowledge:becomeStealthy( false )
             end
+            self.needToTakeCover = false
             return
         end
 
@@ -60,6 +61,7 @@ rootnode
 
         -- Self protection is disabled when needed
         if myself.desactiveSelfProtection then
+            self.needToTakeCover = false
             return
         end
 
@@ -73,6 +75,7 @@ rootnode
         if not next( self.entitiesToSafeguardFrom ) then -- PAS D'UNITE FACE AUXQUELLES SE PROTEGER
             self.detected = false
             self.noEntitiesToSafeguardFrom = true
+            self.needToTakeCover = false
             return -- evaluation of other conditions is useless
         end
         
@@ -85,6 +88,7 @@ rootnode
         -- Enemi présent mais ordre de conduite Ambiance vitesse: passer à POSTURE VITESSE
         if myself.safetyAttitude == eAmbianceMission_Speed then
             myself.speedModulation.switchOnCoverMode = 1
+            self.needToTakeCover = false
             return
         end
 
