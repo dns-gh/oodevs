@@ -11,11 +11,8 @@
 #include "UnitMissionInterface.h"
 #include "actions_gui/InterfaceBuilder_ABC.h"
 #include "actions/ActionsModel.h"
-#include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
 
 using namespace kernel;
 using namespace actions;
@@ -50,9 +47,5 @@ void UnitMissionInterface::Publish()
 {
     Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
     CommitTo( *action );
-    if( const Automat_ABC* automat = static_cast< const Automat_ABC* >( GetEntity().Get< kernel::TacticalHierarchies >().GetSuperior() ) )
-        if( const kernel::AutomatDecisions_ABC* decisions = automat->Retrieve< kernel::AutomatDecisions_ABC >() )
-            if( decisions->IsEmbraye() )
-                const_cast< kernel::AutomatDecisions_ABC* >( decisions )->Disengage();
     model_.Publish( *action, 0 );
 }

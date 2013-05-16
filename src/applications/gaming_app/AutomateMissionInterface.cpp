@@ -12,7 +12,6 @@
 #include "actions_gui/InterfaceBuilder_ABC.h"
 #include "actions/ActionsModel.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/MissionType.h"
 
 using namespace kernel;
@@ -48,8 +47,5 @@ void AutomateMissionInterface::Publish()
 {
     Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
     CommitTo( *action );
-    if( const kernel::AutomatDecisions_ABC* decisions = GetEntity().Retrieve< kernel::AutomatDecisions_ABC >() )
-        if( ! decisions->IsEmbraye() )
-            const_cast< kernel::AutomatDecisions_ABC* >( decisions )->Engage();
     model_.Publish( *action, 0 );
 }
