@@ -464,7 +464,7 @@ namespace
                         tools::Path file = tools::Path::FromUnicode( item->text().toStdWString() );
                         Serialize( base, file, zos, item->IsRecursive(), progress );
                         if( item->hasChildren() )
-                            BrowseChildren( base, item, zos, progress, item->IsRecursive() );
+                            BrowseChildren( base, item, zos, progress, true );
                     }
                     AddProgress( progress, 2 );
                 }
