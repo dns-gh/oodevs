@@ -10,10 +10,13 @@ package timeline
 
 import (
 	gouuid "code.google.com/p/go-uuid/uuid"
+	"encoding/json"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	. "launchpad.net/gocheck"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -195,10 +198,28 @@ func (s *TestSuite) TestServerConnects(c *C) {
 }
 
 func (s *TestSuite) TestServerDeletes(c *C) {
+	// start server
 	script, model := MakeServerConfig(c)
 	server := StartServer(c, script)
 	defer server.Process.Kill()
+	// start client and delete event
 	client := StartClient(c, "delete", model["delete"].(string))
 	defer client.Process.Kill()
 	WaitCommand(c, client)
+	// get list of events from server
+	url := fmt.Sprintf("http://localhost:%d/api/sessions/%s/events",
+		*Port+ServerWeb, model["uuid"].(string))
+	req, err := http.NewRequest("GET", url, nil)
+	c.Assert(err, IsNil)
+	req.Header.Set("Accept", "application/json")
+	httpclient := http.Client{}
+	rpy, err := httpclient.Do(req)
+	defer rpy.Body.Close()
+	data, err := ioutil.ReadAll(rpy.Body)
+	c.Assert(err, IsNil)
+	// check no events are left on server
+	events := []interface{}{}
+	err = json.Unmarshal(data, &events)
+	c.Assert(err, IsNil)
+	c.Assert(events, HasLen, 0)
 }
