@@ -34,6 +34,14 @@ masa_set_library( OPENSSL_LIBRARIES
     ssleay32
 )
 
+masa_set_library( TIMELINE_LIBRARIES
+   debug:timeline-${platform}-mt-gd
+   release:timeline-${platform}-mt
+   debug:timeline_controls-${platform}-mt-gd
+   release:timeline_controls-${platform}-mt
+)
+
+
 masa_set_external_library( CORE_LIBRARIES             core_d core )
 masa_set_external_library( DIRECTIA_LIBRARIES         directia-${platform}-mt-gd-4_6 directia-${platform}-mt-4_6 )
 masa_set_external_library( EXCEL_LIBRARIES            excel_d excel )
@@ -41,6 +49,8 @@ masa_set_external_library( GDAL_I_LIBRARIES           gdal_i_d gdal_i )
 masa_set_external_library( GEOCOORD_LIBRARIES         geocoord_d geocoord )
 masa_set_external_library( GEOS_I_LIBRARIES           geos_i_d geos_i )
 masa_set_external_library( HLA_LIBRARIES              hla_d hla )
+masa_set_external_library( ICONV_LIBRARIES            libiconv_d libiconv )
+masa_set_external_library( LICENSE_GUI_LIBRARIES      license_gui_d license_gui )
 masa_set_external_library( LOG4CXX_LIBRARIES          log4cxxd log4cxx )
 masa_set_external_library( MONGOOSE_LIBRARIES         mongoose_d mongoose )
 masa_set_external_library( PROJ_I_LIBRARIES           proj_i_d proj_i )
@@ -51,7 +61,6 @@ masa_set_external_library( TOOLS_LIBRARIES            tools_d tools )
 masa_set_external_library( XALAN_LIBRARIES            Xalan-C_1D Xalan-C_1 )
 masa_set_external_library( XERCES_LIBRARIES           xerces-c_3D xerces-c_3 )
 masa_set_external_library( ZIPSTREAM_LIBRARIES        zipstream_d zipstream )
-masa_set_external_library( LICENSE_GUI_LIBRARIES      license_gui_d license_gui )
 
 masa_set_internal_library( ANALYSYS_LIBRARIES         libanalysis )
 masa_set_internal_library( EXTRACTOR_LIBRARIES        libextractor )
@@ -63,7 +72,7 @@ masa_set_internal_library( PATHFIND_LIBRARIES         libpathfind )
 masa_set_internal_library( SPATIALCONTAINER_LIBRARIES libspatialcontainer )
 masa_set_internal_library( SQLITE3_LIBRARIES          sqlite3 )
 masa_set_internal_library( TERRAIN_LIBRARIES          libterrain )
-masa_set_external_library( ICONV_LIBRARIES            libiconv_d libiconv )
+
 
 macro( grab_item output name items )
     list( LENGTH ${items} len )
@@ -592,6 +601,7 @@ add_target( gaming_app clients "applications/gaming_app" OPTIONS qt3 qt protocol
 target_link_libraries( gaming_app
     actions_gui
     gaming
+    ${TIMELINE_LIBRARIES}
 )
 
 # launcher_dll

@@ -57,6 +57,7 @@ class ProfilingPanel;
 class ProfileFilter;
 class Simulation;
 class StaticModel;
+class TimelineDockWidget;
 class WeatherLayer;
 
 // =============================================================================
@@ -107,6 +108,7 @@ private:
     ProfilingPanel* profilingPanel_;
     gui::TerrainProfiler* terrainProfiler_;
     gui::MiniViews* miniView_;
+    TimelineDockWidget* timeline_;
     //@}
 
     //! @name Member data

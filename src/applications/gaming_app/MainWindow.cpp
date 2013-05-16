@@ -381,6 +381,7 @@ void MainWindow::Load()
     {
         controllers_.SaveOptions( eModes_Gaming );
         dockContainer_->Purge();
+        dockContainer_->Load();
         model_.Purge();
         selector_->Close();
         selector_->Load();

@@ -32,6 +32,7 @@
 #include "ProfilingPanel.h"
 #include "Properties.h"
 #include "TimelinePanel.h"
+#include "TimelineDockWidget.h"
 #include "ResourceLinksDialog.h"
 #include "ScorePanel.h"
 
@@ -190,8 +191,18 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         pPlanificationModePanel->SetModes( eModes_Gaming | eModes_Replay | eModes_Default, eModes_Planning );
         parent->addDockWidget( Qt::TopDockWidgetArea, pPlanificationModePanel );
     }
-    // Actions panel
+
+    // Timelines
+    if( config.HasTimeline() )
     {
+        // New Timeline
+        timeline_ = new TimelineDockWidget( parent, controllers, config );
+        timeline_->SetModes( eModes_Default );
+        parent->addDockWidget( Qt::TopDockWidgetArea, timeline_ );
+    }
+    else
+    {
+        // Old Timeline
         TimelinePanel* timelinePanel = new TimelinePanel( parent, controllers, model, *scheduler_, config, profile, *displayExtractor_ );
         timelinePanel->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timelinePanel );
@@ -238,6 +249,8 @@ DockContainer::~DockContainer()
 void DockContainer::Purge()
 {
     orbatDockWidget_->Purge();
+    if( timeline_ )
+        timeline_->Disconnect();
 }
 
 // -----------------------------------------------------------------------------
@@ -246,7 +259,8 @@ void DockContainer::Purge()
 // -----------------------------------------------------------------------------
 void DockContainer::Load()
 {
-    // NOTHING
+    if( timeline_ )
+        timeline_->Connect();
 }
 
 // -----------------------------------------------------------------------------

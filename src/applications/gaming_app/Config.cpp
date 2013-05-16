@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "Config.h"
 #include "gaming/Network.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
@@ -25,6 +26,9 @@ Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observ
     : SessionConfig( observer )
     , orderFile_     ( "" )
     , networkTimeOut_( 10000 )
+    , hasTimeline_( false )
+    , timelineUrl_( "" )
+    , timelineDebugPort_( 0 )
 {
     po::options_description desc( "Gaming options" );
     desc.add_options()
@@ -36,16 +40,7 @@ Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observ
     isLoginInCommandLine_ = IsSet( "login" );
     if( isLoginInCommandLine_ && login_ == "anonymous" )
         login_ = "";
-    const tools::Path session = GetSessionFile();
-    if( !session.IsEmpty() )
-    {
-        tools::Xifstream xis( session );
-        xis >> xml::start( "session" )
-                >> xml::start( "config" )
-                    >> xml::start( "gaming" )
-                        >> xml::start( "network" )
-                            >> xml::optional >> xml::attribute( "timeout", networkTimeOut_ );
-    }
+    ReadSession();
 }
 
 // -----------------------------------------------------------------------------
@@ -58,41 +53,48 @@ Config::~Config()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::Connect
-// Created: AGE 2007-10-05
+// Name: Config::ReadSession
+// Created: ABR 2013-05-15
 // -----------------------------------------------------------------------------
-void Config::Connect( Network& network ) const
-{
-    if( ! host_.empty() )
-        network.DoConnect( host_ );
-    else
-        LoadSession( network );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Config::LoadSession
-// Created: AGE 2008-01-07
-// -----------------------------------------------------------------------------
-void Config::LoadSession( Network& network ) const
+void Config::ReadSession()
 {
     const tools::Path session = GetSessionFile();
-    if( session.IsEmpty() )
-        return;
-    try
+    if( !session.IsEmpty() )
     {
-        std::string host;
         tools::Xifstream xis( session );
         xis >> xml::start( "session" )
                 >> xml::start( "config" )
                     >> xml::start( "gaming" )
                         >> xml::start( "network" )
-                            >> xml::attribute( "server", host );
-        network.DoConnect( host );
+                            >> xml::optional >> xml::attribute( "timeout", networkTimeOut_ );
+        if( host_.empty() )
+            xis >> xml::attribute( "server", host_ );
+        xis             >> xml::end // network
+                    >> xml::end; // gaming
+        if( xis.has_child( "timeline" ) )
+        {
+            hasTimeline_ = true;
+            xis     >> xml::start( "timeline" )
+                        >> xml::attribute( "url", timelineUrl_ )
+                        >> xml::attribute( "debug-port", timelineDebugPort_ )
+                    >> xml::end; // timeline
+        }
+        xis     >> xml::end // config
+            >> xml::end; // session
     }
-    catch( ... )
+    else
     {
-        // NOTHING
+        throw MASA_EXCEPTION( tools::translate( "Config", "Invalid session file '%1'" ).arg( QString::fromStdWString( session.ToUnicode() ) ).toStdString() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::Connect
+// Created: AGE 2007-10-05
+// -----------------------------------------------------------------------------
+void Config::Connect( Network& network ) const
+{
+    network.DoConnect( host_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,4 +131,31 @@ bool Config::IsLoginInCommandLine() const
 unsigned long Config::GetNetworkTimeOut() const
 {
     return networkTimeOut_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::HasTimeline
+// Created: ABR 2013-05-15
+// -----------------------------------------------------------------------------
+bool Config::HasTimeline() const
+{
+    return hasTimeline_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetTimelineUrl
+// Created: ABR 2013-05-15
+// -----------------------------------------------------------------------------
+std::string Config::GetTimelineUrl() const
+{
+    return timelineUrl_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetTimelineDebugPort
+// Created: ABR 2013-05-15
+// -----------------------------------------------------------------------------
+int Config::GetTimelineDebugPort() const
+{
+    return timelineDebugPort_;
 }

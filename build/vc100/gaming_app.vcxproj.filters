@@ -814,6 +814,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\DockContainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TimelineDockWidget.cpp">
+      <Filter>Source Files\Panels\Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1160,6 +1163,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\DockContainer.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\TimelineDockWidget.h">
+      <Filter>Source Files\Panels\Actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

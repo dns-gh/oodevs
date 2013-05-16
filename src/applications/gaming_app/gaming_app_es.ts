@@ -438,6 +438,13 @@
     </message>
 </context>
 <context>
+    <name>Config</name>
+    <message>
+        <source>Invalid session file &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConnectDialog</name>
     <message>
         <source>Port</source>
@@ -3020,6 +3027,21 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Enable</source>
         <translation>Habilitar</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineDockWidget</name>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Alerta</translation>
+    </message>
+    <message>
+        <source>Actions timeline</source>
+        <translation type="unfinished">Cronología de acciones</translation>
+    </message>
+    <message>
+        <source>Invalid timeline binary &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

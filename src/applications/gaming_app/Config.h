@@ -41,12 +41,16 @@ public:
     tools::Path GetOrderFile() const;
     bool IsLoginInCommandLine() const;
     unsigned long GetNetworkTimeOut() const;
+
+    virtual bool HasTimeline() const;
+    virtual std::string GetTimelineUrl() const;
+    virtual int GetTimelineDebugPort() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void LoadSession( Network& network ) const;
+    void ReadSession();
     //@}
 
 private:
@@ -57,6 +61,9 @@ private:
     tools::Path orderFile_;
     bool isLoginInCommandLine_;
     unsigned long networkTimeOut_;
+    bool hasTimeline_;
+    std::string timelineUrl_;
+    int timelineDebugPort_;
     //@}
 };
 

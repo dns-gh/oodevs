@@ -25,11 +25,13 @@
     <libTerrain>libterrain-$(CurrentPlatform)-mt.lib</libTerrain>
     <libAnalysis>libanalysis-$(CurrentPlatform)-mt.lib</libAnalysis>
     <libSvgl>svgl.lib</libSvgl>
-	<libLicenseGui>license_gui.lib</libLicenseGui>
+    <libLicenseGui>license_gui.lib</libLicenseGui>
     <SrcDir>..\..\src\applications\$(ProjectName)</SrcDir>
     <Suffix />
     <libExtractor>libextractor-$(CurrentPlatform)-mt.lib</libExtractor>
     <libSqlite>sqlite3-$(CurrentPlatform)-mt.lib</libSqlite>
+    <libTimeline_win32>timeline-$(CurrentPlatform)-mt.lib;timeline_controls-$(CurrentPlatform)-mt.lib</libTimeline_win32>
+    <libTimeline_x64>timeline-$(CurrentPlatform)-mt.lib;timeline_controls-$(CurrentPlatform)-mt.lib</libTimeline_x64>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>..\..\out\$(CurrentPlatform)\$(Configuration)\applications\$(ProjectName)\</OutDir>
@@ -152,6 +154,12 @@
     </BuildMacro>
     <BuildMacro Include="libSqlite">
       <Value>$(libSqlite)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libTimeline_win32">
+      <Value>$(libTimeline_win32)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libTimeline_x64">
+      <Value>$(libTimeline_x64)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>
