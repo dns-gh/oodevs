@@ -326,7 +326,7 @@ bool MIL_ObjectManipulator::IsTrafficable( const MIL_Agent_ABC& agent ) const
         }
         if( const TrafficabilityAttribute* pTrafficability = object_.RetrieveAttribute< TrafficabilityAttribute >() )
         {
-                double weight = agent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+                double weight = agent.GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight();
                 return ( pTrafficability->GetMaxValue() > weight );
             }
         }

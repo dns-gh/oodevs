@@ -214,7 +214,7 @@ public:
     virtual T_ComposanteVolumes GetVisibleVolumes() const;
     virtual void BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const;
     virtual const PHY_ComposantePion* GetMajorComposante() const;
-    virtual double GetMajorComponentWeight( bool ) const;
+    virtual double GetMaxWeight( bool ) const;
     virtual double GetAttritionIndexComposante( const PHY_MaterialCompositionType& material ) const;
     virtual bool CanPerceive( const MIL_ObjectType_ABC& objectType ) const;
     //@}

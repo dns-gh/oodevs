@@ -271,7 +271,7 @@ bool PHY_RolePion_UrbanLocation::CanMount() const
 {
     if( urbanObject_ )
         if( const UrbanPhysicalCapacity* physical = urbanObject_->Retrieve< UrbanPhysicalCapacity >() )
-            return physical->GetTrafficability() >= owner_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true );
+            return physical->GetTrafficability() >= owner_.GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight( true );
     return true;
 }
 

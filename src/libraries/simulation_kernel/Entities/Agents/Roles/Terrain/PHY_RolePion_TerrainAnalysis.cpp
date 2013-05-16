@@ -211,7 +211,7 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock( const std::vector< MT_Ve
     if( owner_.GetType().GetUnitType().CanFly() || points.empty() )
         return true;
 
-    double weight = owner_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+    double weight = owner_.GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight();
     for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
         if( DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
             return true;

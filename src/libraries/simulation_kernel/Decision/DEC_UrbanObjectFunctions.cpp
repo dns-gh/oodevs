@@ -134,7 +134,7 @@ double DEC_UrbanObjectFunctions::GetPathfindCost( const MIL_AgentPion& callerAge
     {
         if( const UrbanPhysicalCapacity* pPhysical = pUrbanObject->Retrieve< UrbanPhysicalCapacity >() )
         {
-            if( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() > pPhysical->GetTrafficability() )
+            if( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight() > pPhysical->GetTrafficability() )
                 return -1.;
             return pPhysical->GetOccupation();
         }

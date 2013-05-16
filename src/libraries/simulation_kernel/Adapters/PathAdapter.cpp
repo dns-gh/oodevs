@@ -194,7 +194,7 @@ namespace
 void PathAdapter::Initialize( const core::Model& entity )
 {
     entity_ = entity[ "identifier" ];
-    weight_ = entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight(); // $$$$ MCO 2012-05-23: read from model
+    weight_ = entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight(); // $$$$ MCO 2012-05-23: read from model
     squareSlope_ = Square( entity[ "movement/max-slope" ] );
     height_ = entity[ "data" ].GetUserData< MIL_AgentPion >().GetType().GetUnitType().GetCrossingHeight(); // $$$$ MCO 2012-05-23: read from model
     MIL_AgentPion& pion = entity[ "data" ].GetUserData< MIL_AgentPion >();
@@ -202,7 +202,7 @@ void PathAdapter::Initialize( const core::Model& entity )
     automateFuseau_ = pion.GetAutomate().GetOrderManager().GetFuseau();
     const auto& reinforcements = entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
     for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
-        weight_ = std::max( weight_, ( *it )->GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
+        weight_ = std::max( weight_, ( *it )->GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight() );
     InitializePathKnowledges( entity, pion );
 }
 

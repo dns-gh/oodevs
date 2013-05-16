@@ -1057,7 +1057,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
         const MIL_UrbanObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( *pBarycenter );
         if( object )
         {
-            const double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+            const double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight();
             if( const UrbanPhysicalCapacity* pPhysical = object->Retrieve< UrbanPhysicalCapacity >() )
             {
                 if( pPhysical->GetTrafficability() <= myWeight )
@@ -1137,7 +1137,7 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlock( const MT_Vector2D& point, const
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point )
 {
-    return DEC_GeometryFunctions::IsUrbanBlockTrafficable( point, pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true ) );
+    return DEC_GeometryFunctions::IsUrbanBlockTrafficable( point, pion.GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight( true ) );
 }
 
 // -----------------------------------------------------------------------------

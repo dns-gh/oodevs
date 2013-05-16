@@ -1515,16 +1515,17 @@ const PHY_ComposantePion* PHY_RolePion_Composantes::GetMajorComposante() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::GetMajorComponentWeight
+// Name: PHY_RolePion_Composantes::GetMaxWeight
 // @param loaded is true if we want to now the weight loaded
 // Created: RPD 2009-11-23
 // -----------------------------------------------------------------------------
-double PHY_RolePion_Composantes::GetMajorComponentWeight( bool loadedWeight ) const
+double PHY_RolePion_Composantes::GetMaxWeight( bool loadedWeight ) const
 {
+    double weight = 0;
     if( loadedWeight || bIsLoaded_ ) // LMT : when a unit is unloaded, it can go in every urban block
-        if( const PHY_ComposantePion* majorComponent = GetMajorComposante() )
-            return majorComponent->GetWeight();
-    return 0.;
+        for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
+            weight = std::max( weight, (*it)->GetWeight() );
+    return weight;
 }
 
 // -----------------------------------------------------------------------------
