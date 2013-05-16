@@ -44,7 +44,7 @@ KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, unsigne
 KnowledgeGroup::KnowledgeGroup( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Entity< KnowledgeGroup_ABC >( parameter, controller )
 {
-    if( xis.has_attribute( "value " ) )
+    if( xis.has_attribute( "value" ) )
         SetValue( &resolver.GetKnowledgeGroup( xis.attribute< unsigned long >( "value" ) ) );
 }
 
