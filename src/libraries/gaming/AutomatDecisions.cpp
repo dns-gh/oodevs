@@ -145,10 +145,7 @@ bool AutomatDecisions::IsEmbraye() const
 // -----------------------------------------------------------------------------
 void AutomatDecisions::Engage()
 {
-    simulation::SetAutomatMode message;
-    message().mutable_automate()->set_id( agent_.GetId() );
-    message().set_mode( sword::engaged );
-    message.Send( publisher_, 0 );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -157,10 +154,7 @@ void AutomatDecisions::Engage()
 // -----------------------------------------------------------------------------
 void AutomatDecisions::Disengage()
 {
-    simulation::SetAutomatMode message;
-    message().mutable_automate()->set_id( agent_.GetId() );
-    message().set_mode( sword::disengaged );
-    message.Send( publisher_, 0 );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

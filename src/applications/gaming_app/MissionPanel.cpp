@@ -389,8 +389,6 @@ void MissionPanel::Engage()
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selectedEntity_, false ) );
     action->RegisterAndPublish( actionsModel_ );
-
-    decisions->Engage();
 }
 
 // -----------------------------------------------------------------------------
@@ -410,8 +408,6 @@ void MissionPanel::Disengage()
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selectedEntity_, false ) );
     action->RegisterAndPublish( actionsModel_ );
-
-    decisions->Disengage();
 }
 
 // -----------------------------------------------------------------------------
