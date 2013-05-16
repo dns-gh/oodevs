@@ -198,6 +198,7 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DateEdit.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GeneralConfig.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GoToButton.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GUI_Container.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_HtmlViewer.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipments_Resources_Tables.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_HtmlViewer.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionAttachment.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GeneralConfig.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_DescriptionParameter.h" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Infos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Table.cpp" />

@@ -105,7 +105,7 @@ public:
     typedef std::map< E_WorkspaceElements, QStringList >  T_UsingElements;
 
 public:
-    void Build( ADN_MainWindow& mainWindow );
+    void Build( ADN_MainWindow& mainWindow, bool devMode );
     void Reset( const tools::Path& filename, bool bVisible = true );
     void Load( const tools::Path& filename, const tools::Loader_ABC& fileLoader );
     bool Save( const tools::Loader_ABC& fileLoader );

@@ -32,6 +32,7 @@ class ADN_ListView;
 class ADN_MainTabWidget;
 class ADN_Table;
 class ADN_Workspace;
+class ADN_GeneralConfig;
 
 class QWidget;
 class Q3PopupMenu;
@@ -100,7 +101,7 @@ private:
     typedef std::map< int, T_ListViewRegistrationItem > T_ListViewRegistrationMap;
 
 private:
-    std::auto_ptr< tools::GeneralConfig >       generalConfig_;
+    std::auto_ptr< ADN_GeneralConfig >          generalConfig_;
     std::auto_ptr< ADN_FileLoaderObserver >     fileLoaderObserver_;
     std::auto_ptr< tools::Loader_ABC >          fileLoader_;
     std::auto_ptr< ADN_MainTabWidget >          mainTabWidget_;

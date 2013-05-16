@@ -16,6 +16,7 @@
 #include "ADN_Tools.h"
 #include "ADN_Table.h"
 #include "ADN_TableDialog.h"
+#include "ADN_GeneralConfig.h"
 #include "ADN_ListView.h"
 #include "ADN_ListViewDialog.h"
 #include "ADN_MainTabWidget.h"
@@ -31,7 +32,6 @@
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/resources.h"
 #include "tools/DefaultLoader.h"
-#include "tools/GeneralConfig.h"
 #include "tools/Version.h"
 #include <shlobj.h>
 #include <xeumeuleu/xml.hpp>
@@ -80,7 +80,7 @@ namespace
 //-----------------------------------------------------------------------------
 ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
     : QMainWindow ()
-    , generalConfig_( new tools::GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).toStdString() ) ) )
+    , generalConfig_( new ADN_GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).toStdString() ) ) )
     , fileLoaderObserver_( new ADN_FileLoaderObserver() )
     , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , strAdminPassword_( ReadPassword() )
@@ -209,7 +209,7 @@ void ADN_MainWindow::Build()
     }
 
     // Build all children interfaces
-    workspace_.Build( *this );
+    workspace_.Build( *this, generalConfig_->IsDevMode() );
 
     connect( pCoheranceTablesMenu_, SIGNAL( activated( int ) ), this, SLOT( ShowCoheranceTable( int ) ) );
 }

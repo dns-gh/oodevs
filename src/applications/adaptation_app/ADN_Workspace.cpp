@@ -221,7 +221,7 @@ ADN_Workspace::~ADN_Workspace()
 // Name: ADN_Workspace::Build
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
+void ADN_Workspace::Build( ADN_MainWindow& mainwindow, bool devMode )
 {
     assert( pProgressIndicator_ != 0 );
     pProgressIndicator_->SetVisible( true );
@@ -260,7 +260,8 @@ void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
     AddPage( mainwindow, eKnowledgeGroups );
     AddPage( mainwindow, eHumanFactors );
     AddPage( mainwindow, eAiEngine );
-    AddPage( mainwindow, eDisasters );
+    if( devMode )
+        AddPage( mainwindow, eDisasters );
 
     //AddPage( mainwindow, eReports ); // $$$$ JSR 2012-01-04: TODO : reports à supprimer complètement?
 
