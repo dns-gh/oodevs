@@ -100,7 +100,7 @@ namespace
     };
     bool IsInColumn( float width, float depth )
     {
-        return width < depth;
+        return width < depth * 3/4;
     }
 }
 
