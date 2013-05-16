@@ -48,7 +48,14 @@ namespace
     protected:
         virtual void resizeEvent( QResizeEvent* event )
         {
-            device_.TryWrite( &resize_[0], resize_.size() );
+            try
+            {
+                device_.TryWrite( &resize_[0], resize_.size() );
+            }
+            catch( ... )
+            {
+                // NOTHING
+            }
             QWidget::resizeEvent( event );
         }
 
