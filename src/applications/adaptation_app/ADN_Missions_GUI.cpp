@@ -267,7 +267,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
         parameterLayout->setStretch( 0, 1 );
         parameterLayout->setStretch( 1, 4 );
 
-        ADN_ListView* attachmentListView = builder.AddWidget< ADN_ListView_DescriptionAttachment >( "attachments-list", eMissionType );
+        ADN_ListView* attachmentListView = builder.AddWidget< ADN_ListView_DescriptionAttachment >( "attachments-list", eMissionType, nameFields_[ eMissionType ] );
         vInfosConnectors[ eDescriptionAttachments ] = &attachmentListView->GetConnector();
 
         QGroupBox* attachmentGroupBox = new QGroupBox( tr( "Attachments" ) );

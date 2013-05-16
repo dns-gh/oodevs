@@ -23,9 +23,10 @@
 // Name: ADN_ListView_DescriptionAttachment constructor
 // Created: NPT 2013-01-16
 // -----------------------------------------------------------------------------
-ADN_ListView_DescriptionAttachment::ADN_ListView_DescriptionAttachment( E_MissionType missionType )
+ADN_ListView_DescriptionAttachment::ADN_ListView_DescriptionAttachment( E_MissionType missionType, ADN_EditLine_ABC* missionName )
     : ADN_ListView( 0, "ADN_ListView_DescriptionAttachment", tr( "Attachments" ) )
     , missionType_( missionType )
+    , missionName_( missionName )
 {
     pConnector_ = new ADN_Connector_ListView< ADN_Missions_ABC::ADN_Missions_Attachment >( *this );
     setHeaderHidden( true );
@@ -57,7 +58,8 @@ void ADN_ListView_DescriptionAttachment::AddFile()
         );
     if( fileName.IsEmpty() )
         return;
-    tools::Path imageDir = tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( missionType_ ).c_str();
+    tools::Path namePath = tools::Path::FromUnicode( missionName_->text().toStdWString() );
+    tools::Path imageDir = ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( missionType_ ).c_str() ) / namePath;
     if( !imageDir.IsDirectory() )
         imageDir.CreateDirectories();
     tools::Path newFileName = imageDir / fileName.FileName();
@@ -98,7 +100,8 @@ void ADN_ListView_DescriptionAttachment::CopyName()
 void ADN_ListView_DescriptionAttachment::RemoveFile()
 {
     ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    tools::Path imageDir = tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ / boost::lexical_cast< std::string >( missionType_ ).c_str();
+    tools::Path namePath = tools::Path::FromUnicode( missionName_->text().toStdWString() );
+    tools::Path imageDir = ( tools::Path::TemporaryPath() / ADN_Missions_Data::imageTemporaryPath_ + boost::lexical_cast< std::string >( missionType_ ).c_str() ) / namePath;
     imageDir /= tools::Path::FromUnicode( GetModel().item( currentIndex().row() )->text().toStdWString() );
     if( imageDir.Exists() )
         imageDir.Remove();

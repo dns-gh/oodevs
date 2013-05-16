@@ -11,6 +11,7 @@
 #define __ADN_ListView_DescriptionAttachment_h_
 
 #include <boost/noncopyable.hpp>
+#include "ADN_EditLine_ABC.h"
 #include "ADN_ListView.h"
 
 // =============================================================================
@@ -26,7 +27,7 @@ class ADN_ListView_DescriptionAttachment : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_DescriptionAttachment( E_MissionType missionType );
+             ADN_ListView_DescriptionAttachment( E_MissionType missionType, ADN_EditLine_ABC* missionName );
     virtual ~ADN_ListView_DescriptionAttachment();
     //@}
 
@@ -48,6 +49,7 @@ private:
     //! @name members
     //@{
     E_MissionType missionType_;
+    ADN_EditLine_ABC* missionName_;
     //@}
 };
 
