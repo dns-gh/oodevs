@@ -78,6 +78,20 @@ const (
         }
     },
     {
+        "type": "EVENT_CREATE",
+        "event": {
+            "create": {
+                "session": "{{ .uuid }}",
+                "event": {
+                    "uuid": "{{ .delete }}",
+                    "name": "to be deleted event",
+                    "info": "this event is meant to be deleted",
+                    "begin": "2013-01-01T12:00:04+01:00"
+                }
+            }
+        }
+    },
+    {
         "type": "SESSION_START",
         "session": {
             "start": {
@@ -109,7 +123,7 @@ func (s *TestSuite) TearDownSuite(c *C) {
 	}
 }
 
-func MakeServerConfig(c *C) string {
+func MakeServerConfig(c *C) (string, map[string]interface{}) {
 	fh, err := ioutil.TempFile(TempDir, "timeline.run.")
 	c.Assert(err, IsNil)
 	defer fh.Close()
@@ -117,11 +131,12 @@ func MakeServerConfig(c *C) string {
 	model := make(map[string]interface{})
 	model["uuid"] = uuid
 	model["now"] = time.Now().Format(time.RFC3339Nano)
+	model["delete"] = gouuid.New()
 	tmpl, err := template.New("test").Parse(serverConfig)
 	c.Assert(err, IsNil)
 	err = tmpl.Execute(fh, model)
 	c.Assert(err, IsNil)
-	return fh.Name()
+	return fh.Name(), model
 }
 
 func StartServer(c *C, cfg string) *exec.Cmd {
@@ -140,35 +155,50 @@ func StartServer(c *C, cfg string) *exec.Cmd {
 	return cmd
 }
 
-func StartClient(c *C) *exec.Cmd {
+func StartClient(c *C, command string, args ...string) *exec.Cmd {
 	client := filepath.Join(*OutDir, "build", "timeline_app.exe")
 	_, err := os.Stat(client)
 	c.Assert(err, IsNil)
-	cmd := exec.Command(client,
-		"--binary", *ClientBinary,
-		"--url", "http://localhost:"+strconv.Itoa(*Port+ServerWeb),
-		"--rundir", filepath.Join(*RunDir, "cef"),
-		"--command", "ready",
-	)
+	cmd := exec.Command(client, append(
+		[]string{
+			"--binary", *ClientBinary,
+			"--url", "http://localhost:" + strconv.Itoa(*Port+ServerWeb),
+			"--rundir", filepath.Join(*RunDir, "cef"),
+			"--command", command,
+		}, args...)...)
 	cmd.Dir = *RunDir
 	err = cmd.Start()
 	c.Assert(err, IsNil)
 	return cmd
 }
 
-func (s *TestSuite) TestServerConnects(c *C) {
-	server := StartServer(c, MakeServerConfig(c))
-	defer server.Process.Kill()
-	client := StartClient(c)
-	defer client.Process.Kill()
+func WaitCommand(c *C, client *exec.Cmd) {
 	errors := make(chan error, 1)
 	go func() {
 		errors <- client.Wait()
 	}()
 	select {
-	case <-time.After(15 * time.Second):
+	case <-time.After(1 * time.Minute):
 		c.Fatal("client timeout")
 	case err := <-errors:
 		c.Assert(err, IsNil)
 	}
+}
+
+func (s *TestSuite) TestServerConnects(c *C) {
+	script, _ := MakeServerConfig(c)
+	server := StartServer(c, script)
+	defer server.Process.Kill()
+	client := StartClient(c, "ready")
+	defer client.Process.Kill()
+	WaitCommand(c, client)
+}
+
+func (s *TestSuite) TestServerDeletes(c *C) {
+	script, model := MakeServerConfig(c)
+	server := StartServer(c, script)
+	defer server.Process.Kill()
+	client := StartClient(c, "delete", model["delete"].(string))
+	defer client.Process.Kill()
+	WaitCommand(c, client)
 }

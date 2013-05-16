@@ -34,10 +34,10 @@ int main( int argc, char* argv[] )
     try
     {
         std::string command;
+        std::vector< std::string > cmdargs;
         timeline::Configuration cfg;
         bpo::positional_options_description pos;
-        pos.add( "binary", 1 );
-        pos.add( "url", 1 );
+        pos.add( "cmdargs", -1 );
         bpo::options_description opts( "options" );
         opts.add_options()
             ( "help",       "print this message" )
@@ -46,6 +46,7 @@ int main( int argc, char* argv[] )
             ( "url",        bpo::value( &cfg.url )->required(), "set url target" )
             ( "external",   bpo::value( &cfg.external )->default_value( true ), "use external process" )
             ( "command",    bpo::value( &command )->default_value( std::string() ), "execute optional command and return" )
+            ( "cmdargs",    bpo::value( &cmdargs ), "optional command arguments" )
             ( "debug_port", bpo::value( &cfg.debug_port )->default_value( 0 ), "set remote debug port" );
         bpo::variables_map vmap;
         bpo::store( bpo::command_line_parser( argc, argv ).options( opts ).positional( pos ).run(), vmap );
@@ -66,7 +67,7 @@ int main( int argc, char* argv[] )
             throw std::runtime_error( QString( "invalid file %1" ).arg( argv[1] ).toStdString() );
         timeline::Controller controller( cfg );
         if( !command.empty() )
-            return controller.Execute( command );
+            return controller.Execute( command, cmdargs );
         controller.Show();
         return app.exec();
     }

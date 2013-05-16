@@ -157,10 +157,52 @@ void Controller::WaitReady() const
     wait.exec();
 }
 
-int Controller::Execute( const std::string& command )
+namespace
+{
+    struct DeleteEvent : public OnDelete_ABC
+    {
+        DeleteEvent( QEventLoop& loop )
+            : OnDelete_ABC()
+            , loop_       ( loop )
+        {
+            // NOTHING
+        }
+        void OnDeletedEvent( const std::string& uuid, const Error& error )
+        {
+            uuid_  = uuid;
+            error_ = error;
+            QTimer::singleShot( 0, &loop_, SLOT( quit() ) );
+        }
+        QEventLoop& loop_;
+        std::string uuid_;
+        Error error_;
+    };
+}
+
+int Controller::Delete( const std::vector< std::string >& args )
+{
+    if( args.size() != 1 )
+        throw std::runtime_error( "usage: delete <uuid>" );
+    QEventLoop wait;
+    DeleteEvent deleter( wait );
+    QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const Error& ) ), &deleter, SLOT( OnDeletedEvent( const std::string&, const Error& ) ) );
+    ctx_->DeleteEvent( args[0] );
+    wait.exec();
+    if( deleter.uuid_ != args[0] )
+        throw std::runtime_error( "invalid uuid" );
+    if( deleter.error_.code != EC_OK || !deleter.error_.text.empty() )
+        throw std::runtime_error( QString( "invalid error %1:%2" ).
+            arg( deleter.error_.code ).
+            arg( QString::fromStdString( deleter.error_.text ) ).toStdString() );
+    return 0;
+}
+
+int Controller::Execute( const std::string& command, const std::vector< std::string >& args )
 {
     WaitReady();
     if( command == "ready" )
         return 0;
+    if( command == "delete" )
+        return Delete( args );
     throw std::runtime_error( "unexpected command " + command );
 }

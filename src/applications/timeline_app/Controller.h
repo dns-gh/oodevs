@@ -34,7 +34,7 @@ public:
              Controller( const Configuration& cfg );
     virtual ~Controller();
 
-    int  Execute( const std::string& command );
+    int  Execute( const std::string& command, const std::vector< std::string >& args );
     void Show();
 
 public slots:
@@ -47,12 +47,23 @@ public slots:
 
 private:
     void WaitReady() const;
+    int  Delete( const std::vector< std::string >& args );
 
 private:
     QMainWindow main_;
     std::auto_ptr< Ui::Main > ui_;
     std::auto_ptr< Server_ABC > ctx_;
     std::string uuid_;
+};
+
+class OnDelete_ABC : public QObject
+{
+    Q_OBJECT
+public:
+             OnDelete_ABC() {}
+    virtual ~OnDelete_ABC() {}
+public slots:
+    virtual void OnDeletedEvent( const std::string& uuid, const Error& error ) = 0;
 };
 }
 

@@ -137,13 +137,11 @@ void Engine::Register( CefRefPtr< CefV8Context > context )
     auto window = context->GetGlobal();
     auto gaming = SetValue( window, "gaming" );
     SetValue( gaming, "enabled", true );
+    SetValue( gaming, "ready",          0, boost::bind( &Engine::OnReady, this, _1 ) );
     SetValue( gaming, "created_event",  2, boost::bind( &Engine::OnCreatedEvent,  this, _1 ) );
     SetValue( gaming, "select_event",   1, boost::bind( &Engine::OnSelectEvent,   this, _1 ) );
     SetValue( gaming, "deselect_event", 0, boost::bind( &Engine::OnDeselectEvent, this, _1 ) );
     SetValue( gaming, "deleted_event",  2, boost::bind( &Engine::OnDeletedEvent,  this, _1 ) );
-    std::vector< uint8_t > buffer( controls::ReadyServer( 0, 0 ) );
-    controls::ReadyServer( &buffer[0], buffer.size() );
-    device_.Write( &buffer[0], buffer.size() );
 }
 
 void Engine::Unregister()
@@ -270,6 +268,14 @@ void Engine::CreatedEvent( const timeline::Event& event, const timeline::Error& 
     std::vector< uint8_t > buffer( controls::CreatedEvent( 0, 0, event, error ) );
     controls::CreatedEvent( &buffer[0], buffer.size(), event, error );
     device_.Write( &buffer[0], buffer.size() );
+}
+
+CefRefPtr< CefV8Value > Engine::OnReady( const CefV8ValueList& /*args*/ )
+{
+    std::vector< uint8_t > buffer( controls::ReadyServer( 0, 0 ) );
+    controls::ReadyServer( &buffer[0], buffer.size() );
+    device_.Write( &buffer[0], buffer.size() );
+    return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnCreatedEvent( const CefV8ValueList& args )
