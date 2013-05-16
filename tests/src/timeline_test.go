@@ -181,7 +181,7 @@ func WaitCommand(c *C, client *exec.Cmd) {
 		errors <- client.Wait()
 	}()
 	select {
-	case <-time.After(1 * time.Minute):
+	case <-time.After(4 * time.Minute):
 		c.Fatal("client timeout")
 	case err := <-errors:
 		c.Assert(err, IsNil)
