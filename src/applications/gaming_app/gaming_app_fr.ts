@@ -1431,7 +1431,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Processing consigns</source>
-        <translation type="unfinished"></translation>
+        <translation>Consignes en traitement</translation>
     </message>
 </context>
 <context>
