@@ -105,7 +105,7 @@ namespace boost
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void DEC_KnowledgeBlackBoard_AgentPion::serialize
+// Name: DEC_KnowledgeBlackBoard_AgentPion::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 template< typename Archive >
