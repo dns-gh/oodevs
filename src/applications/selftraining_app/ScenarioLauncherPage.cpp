@@ -99,10 +99,10 @@ namespace
         return result;
     }
 
-    bool ReadBoolSetting( const QString& key )
+    bool ReadBoolSetting( const QString& key, bool defaultValue = false )
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.value( "/sword/" + key ).toBool();
+        return settings.value( "/sword/" + key, defaultValue ).toBool();
     }
 
     void WriteBoolSetting( const QString& key, bool value )
@@ -125,7 +125,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, QStackedWidget* pa
     , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
     , hasClient_        ( !ReadBoolSetting( "NoClientSelected" ) )
-    , isLegacy_         ( ReadBoolSetting( "IsLegacy" ) )
+    , isLegacy_         ( ReadBoolSetting( "IsLegacy", true ) )
     , hasTimeline_      ( ReadBoolSetting( "HasTimeline" ) )
     , integrationDir_   ( "" )
     , exerciseNumber_   ( 1 )
