@@ -1392,12 +1392,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_Data.h">
       <Filter>Source Files\Workspace\Logistic\Supply\Supply data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksDoubleTable.h">
-      <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksTimeTable.h">
-      <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_Data.h">
       <Filter>Source Files\Workspace\Radars\Radars data</Filter>
     </ClInclude>
@@ -2211,6 +2205,12 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_SymbolWidget_ABC.h">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksDoubleTable.h">
+      <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksTimeTable.h">
+      <Filter>Source Files\Workspace\Logistic\Supply\Supply GUI</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

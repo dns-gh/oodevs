@@ -18,6 +18,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Supply_TrucksTimeTable.h"
+#include "moc_ADN_Supply_TrucksTimeTable.cpp"
 #include "ADN_Supply_Data.h"
 
 typedef ADN_Supply_Data::ConvoyInfo< ADN_Type_Time > ConvoyInfo;

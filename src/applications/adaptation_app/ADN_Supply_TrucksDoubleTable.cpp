@@ -18,6 +18,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Supply_TrucksDoubleTable.h"
+#include "moc_ADN_Supply_TrucksDoubleTable.cpp"
 #include "ADN_Supply_Data.h"
 
 typedef ADN_Supply_Data::ConvoyInfo< ADN_Type_Double > ConvoyInfo;

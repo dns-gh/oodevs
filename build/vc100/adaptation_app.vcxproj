@@ -2686,8 +2686,8 @@
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Health_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_Data.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Supply_GUI.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksDoubleTable.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksTimeTable.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksDoubleTable.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Supply_TrucksTimeTable.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_Data.h" />
     <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_Radars_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_ListView.h" />

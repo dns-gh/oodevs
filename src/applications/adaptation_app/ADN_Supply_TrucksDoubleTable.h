@@ -22,7 +22,7 @@
 class ADN_Supply_TrucksDoubleTable : public ADN_Table
                                    , private boost::noncopyable
 {
-
+	Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
