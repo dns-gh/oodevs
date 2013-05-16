@@ -104,7 +104,7 @@ QString ResourceNetworkAttribute::GetLinkName( const std::string& resource, unsi
 // Name: ResourceNetworkAttribute::Draw
 // Created: LGY 2013-03-07
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void ResourceNetworkAttribute::Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools, float alpha ) const
 {
     int filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< int >();
     if( filter == 1 )// off
@@ -118,7 +118,7 @@ void ResourceNetworkAttribute::Draw( const geometry::Point2f& /*where*/, const g
 
     for( auto node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
-        SetColor( node->second.resource_ );
+        SetColor( node->second.resource_, alpha );
         if( node->second.links_.size() > 0 )
             for( auto link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
             {
@@ -345,9 +345,9 @@ void ResourceNetworkAttribute::ReadLink( xml::xistream& xis, ResourceNode& node 
 // Name: ResourceNetworkAttribute::SetColor
 // Created: JSR 2010-08-20
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::SetColor( const std::string& resource ) const
+void ResourceNetworkAttribute::SetColor( const std::string& resource, float alpha ) const
 {
     float red, green, blue;
     resources_.Get( resource ).GetColor( red, green, blue );
-    glColor4f( red, green, blue, 0.5f );
+    glColor4f( red, green, blue, alpha );
 }

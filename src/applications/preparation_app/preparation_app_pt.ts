@@ -1029,6 +1029,10 @@ This data can&apos;t be projected.</source>
         <source>Urban blocks</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Resource networks</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

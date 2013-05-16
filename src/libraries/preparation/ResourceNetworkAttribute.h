@@ -62,7 +62,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const;
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools, float alpha ) const;
     void Update( xml::xistream& xis );
     void Update( const gui::ResourceNetwork_ABC::T_ResourceNodes& nodes );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
@@ -83,7 +83,7 @@ private:
     //@{
     void ReadNode( xml::xistream& xis );
     void ReadLink( xml::xistream& xis, ResourceNode& node );
-    void SetColor( const std::string& resource ) const;
+    void SetColor( const std::string& resource, float alpha ) const;
     //@}
 
 private:

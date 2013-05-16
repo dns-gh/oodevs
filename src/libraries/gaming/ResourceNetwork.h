@@ -57,7 +57,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
+    virtual void Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools, float alpha ) const;
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const;
     //@}
 
@@ -68,7 +68,7 @@ private:
     virtual void DoUpdate( const sword::UrbanUpdate& message );
     const kernel::Entity_ABC* FindEntity( unsigned int id ) const;
     void UpdateNetwork( kernel::Entity_ABC* entity, const sword::ResourceNetwork& msg );
-    void SetColor( const std::string& resource ) const;
+    void SetColor( const std::string& resource, float alpha ) const;
     void UpdateStipple( int value ) const;
     void CreateDictionary( gui::PropertiesDictionary& dico ) const;
     geometry::Point2f GetPosition( const kernel::Entity_ABC& entity ) const;

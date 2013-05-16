@@ -11,7 +11,7 @@
 #define CLIENTS_GUI_RESOURCE_NETWORK_H__
 
 #include "clients_kernel/Extension_ABC.h"
-#include "Drawable_ABC.h"
+//#include "Drawable_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace gui
@@ -29,7 +29,7 @@ namespace gui
 // Created: JSR 2010-08-19
 // =============================================================================
 class ResourceNetwork_ABC : public kernel::Extension_ABC
-                          , public Drawable_ABC
+//                          , public Drawable_ABC
                           , public boost::noncopyable
 {
 public:
@@ -99,6 +99,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const = 0;
+    virtual void Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools, float alpha ) const = 0;
     virtual ResourceNode& FindOrCreateResourceNode( const std::string& resource, unsigned int defaultProduction = 0 )
     {
         auto it = resourceNodes_.find( resource );

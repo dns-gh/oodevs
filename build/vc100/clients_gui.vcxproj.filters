@@ -1024,6 +1024,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RasterProcess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ResourceNetworksLayer.cpp">
+      <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1727,6 +1730,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\DashStyle.h">
       <Filter>Source Files\Creation\Drawings\Model\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\ResourceNetworksLayer.h">
+      <Filter>Source Files\gl\Layers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

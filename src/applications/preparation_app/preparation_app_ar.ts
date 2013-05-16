@@ -1030,6 +1030,10 @@ This data can&apos;t be projected.</source>
         <source>Urban blocks</source>
         <translation type="unfinished">كتل الحضرية</translation>
     </message>
+    <message>
+        <source>Resource networks</source>
+        <translation type="unfinished">شبكات للموارد</translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

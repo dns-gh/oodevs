@@ -42,11 +42,6 @@ public:
     virtual ~UrbanLayer();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Reset2d();
-    //@}
-
 protected:
     //! @name Helpers
     //@{

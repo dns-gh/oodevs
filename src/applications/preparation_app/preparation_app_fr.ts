@@ -1030,6 +1030,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Urban blocks</source>
         <translation>Blocs urbains</translation>
     </message>
+    <message>
+        <source>Resource networks</source>
+        <translation>Réseaux de ressource</translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

@@ -104,7 +104,7 @@ const Entity_ABC* ResourceNetwork::FindEntity( unsigned int id ) const
 // Name: ResourceNetwork::Draw
 // Created: LGY 2013-03-07
 // -----------------------------------------------------------------------------
-void ResourceNetwork::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
+void ResourceNetwork::Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools, float alpha ) const
 {
     int filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< int >();
     if( filter == 1 )// off
@@ -116,7 +116,7 @@ void ResourceNetwork::Draw( const geometry::Point2f& /*where*/, const gui::Viewp
     glLineWidth( 1.f );
     for( auto node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
-        SetColor( node->second.resource_ );
+        SetColor( node->second.resource_, alpha );
         if( node->second.links_.size() > 0 )
         {
             glEnable( GL_LINE_STIPPLE );
@@ -233,11 +233,11 @@ void ResourceNetwork::UpdateNetwork( Entity_ABC* entity, const sword::ResourceNe
 // Name: ResourceNetwork::SetColor
 // Created: JSR 2010-08-20
 // -----------------------------------------------------------------------------
-void ResourceNetwork::SetColor( const std::string& resource ) const
+void ResourceNetwork::SetColor( const std::string& resource, float alpha ) const
 {
     float red, green, blue;
     resourceNetworkResolver_.Get( resource ).GetColor( red, green, blue );
-    glColor4f( red, green, blue, 0.5f );
+    glColor4f( red, green, blue, alpha );
 }
 
 // -----------------------------------------------------------------------------

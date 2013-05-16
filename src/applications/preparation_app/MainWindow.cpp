@@ -34,6 +34,7 @@
 #include "LocationEditorToolbar.h"
 #include "LivingAreaPanel.h"
 #include "OrbatPanel.h"
+#include "clients_gui/ResourceNetworksLayer.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
@@ -292,6 +293,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     gui::Layer& raster                  = *new gui::RasterLayer( controllers_.controller_ );
     gui::Layer& watershed               = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d             = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    gui::Layer& resourceNetworksLayer   = *new gui::ResourceNetworksLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     gui::Layer& urbanLayer              = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_.urban_, profile );
     gui::Layer& grid                    = *new gui::GridLayer( controllers_, *glProxy_ );
     gui::Layer& metrics                 = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
@@ -311,6 +313,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     AddLayer( *glProxy_, preferences, raster,                   "main",                         tr( "Raster" ) );
     AddLayer( *glProxy_, preferences, terrain,                  "main",                         tr( "Terrain" ) );
     AddLayer( *glProxy_, preferences, contour,                  "main,composition,miniviews",   tr( "Contour Lines" ) );
+    AddLayer( *glProxy_, preferences, resourceNetworksLayer,    "main",                         tr( "Resource networks" ) );
     AddLayer( *glProxy_, preferences, urbanLayer,               "main",                         tr( "Urban blocks" ) );
     AddLayer( *glProxy_, preferences, watershed,                "main",                         tr( "Watershed" ) );
     AddLayer( *glProxy_, preferences, elevation3d );

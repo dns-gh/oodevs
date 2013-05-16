@@ -73,6 +73,7 @@
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/InhabitantLayer.h"
+#include "clients_gui/ResourceNetworksLayer.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/GlProxy.h"
@@ -294,6 +295,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& raster               = *new gui::RasterLayer( controllers_.controller_ );
     gui::Layer& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    gui::Layer& resourceNetworksLayer = *new gui::ResourceNetworksLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
     gui::Layer& urbanLayer           = *new gui::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_ );
     gui::Layer& grid                 = *new gui::GridLayer( controllers_, *glProxy_ );
     gui::Layer& metrics              = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
@@ -318,6 +320,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( *glProxy_, *preferenceDialog_, raster, "main,composition,miniviews", tr( "Raster" ) );
     AddLayer( *glProxy_, *preferenceDialog_, terrainLayer, "main,composition,miniviews", tr( "Terrain" ) );
     AddLayer( *glProxy_, *preferenceDialog_, contour, "main,composition,miniviews", tr( "Contour Lines" ) );
+    AddLayer( *glProxy_, *preferenceDialog_, resourceNetworksLayer,"main", tr( "Resource networks" ) );
     AddLayer( *glProxy_, *preferenceDialog_, urbanLayer, "main,miniviews", tr( "Urban blocks" ) );
     AddLayer( *glProxy_, *preferenceDialog_, watershed, "main,composition,miniviews", tr( "Watershed" ) );
     glProxy_->Register( elevation3d );

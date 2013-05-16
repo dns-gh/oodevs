@@ -18,6 +18,7 @@ enum E_LayerTypes
     eLayerTypes_Formations,
     eLayerTypes_Populations,
     eLayerTypes_UrbanObjects,
+    eLayerTypes_ResourceNetworks,
     eLayerTypes_TacticalLines,
     eLayerTypes_Ghosts,
     eLayerTypes_Fog,

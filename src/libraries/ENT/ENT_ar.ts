@@ -911,5 +911,9 @@
         <source>Parties</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Resource networks</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

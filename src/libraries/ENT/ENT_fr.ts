@@ -911,5 +911,9 @@
         <source>Parties</source>
         <translation>Camp</translation>
     </message>
+    <message>
+        <source>Resource networks</source>
+        <translation>Réseaux de ressource</translation>
+    </message>
 </context>
 </TS>
