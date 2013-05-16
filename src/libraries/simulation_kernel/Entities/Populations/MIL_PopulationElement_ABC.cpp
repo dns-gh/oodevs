@@ -119,13 +119,10 @@ void MIL_PopulationElement_ABC::FireOnPion( double rIntensity, MIL_Agent_ABC& ta
 void MIL_PopulationElement_ABC::FireOnPions( double rIntensity, PHY_FireResults_Population& fireResult )
 {
     assert( pAttitude_ );
+    if( pAttitude_->GetAsnID() == sword::peaceful )
+        return;
     for( auto it = collidingAgents_.begin(); it != collidingAgents_.end(); ++it )
-    {
-        MIL_Agent_ABC& target = **it;
-        if( target.GetArmy().IsAFriend( GetPopulation().GetArmy() ) == eTristate_True )
-            continue;
-        FireOnPion( rIntensity, target, fireResult );
-    }
+        FireOnPion( rIntensity, **it, fireResult );
 }
 
 // -----------------------------------------------------------------------------
