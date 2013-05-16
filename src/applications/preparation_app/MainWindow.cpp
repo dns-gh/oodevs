@@ -313,8 +313,8 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     AddLayer( *glProxy_, preferences, raster,                   "main",                         tr( "Raster" ) );
     AddLayer( *glProxy_, preferences, terrain,                  "main",                         tr( "Terrain" ) );
     AddLayer( *glProxy_, preferences, contour,                  "main,composition,miniviews",   tr( "Contour Lines" ) );
-    AddLayer( *glProxy_, preferences, resourceNetworksLayer,    "main",                         tr( "Resource networks" ) );
     AddLayer( *glProxy_, preferences, urbanLayer,               "main",                         tr( "Urban blocks" ) );
+    AddLayer( *glProxy_, preferences, resourceNetworksLayer,    "main",                         tr( "Resource networks" ) );
     AddLayer( *glProxy_, preferences, watershed,                "main",                         tr( "Watershed" ) );
     AddLayer( *glProxy_, preferences, elevation3d );
     AddLayer( *glProxy_, preferences, grid,                     "main" );
