@@ -85,13 +85,14 @@ InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& contr
     setPalette( p );
 
     //configure the model
-    missionModel_.setColumnCount( 5 );
+    missionModel_.setColumnCount( 6 );
     setHeaderHidden( true );
     header()->setResizeMode( 0, QHeaderView::ResizeToContents );
     header()->setResizeMode( 1, QHeaderView::ResizeToContents );
     header()->setResizeMode( 2, QHeaderView::ResizeToContents );
     header()->setResizeMode( 3, QHeaderView::ResizeToContents );
     header()->setResizeMode( 4, QHeaderView::ResizeToContents );
+    header()->setResizeMode( 5, QHeaderView::ResizeToContents );
 
     connect( delegate, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) ), SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
 
@@ -160,7 +161,8 @@ void InfoMissionsTab::NotifyUpdated( const MissionParameters& extension )
     {
         QList< QStandardItem* > items;
         items << new QStandardItem() << new QStandardItem()
-              << new QStandardItem() << new QStandardItem();
+              << new QStandardItem() << new QStandardItem()
+              << new QStandardItem();
         missionModel_.appendRow( items );
     }
 
@@ -177,7 +179,7 @@ void InfoMissionsTab::NotifyUpdated( const MissionParameters& extension )
             ConfigureItem( missionModel_.item( row, 2 ), Qt::AlignCenter, !action.IsValid(), timing->GetTime().toString() );
 
         if( const actions::ActionError* error = action.Retrieve< actions::ActionError >() )
-            ConfigureItem( missionModel_.item( row, 3 ), Qt::AlignRight| Qt::AlignVCenter, !action.IsValid(), error->GetError().c_str() );
+            ConfigureItem( missionModel_.item( row, 4 ), Qt::AlignRight| Qt::AlignVCenter, !action.IsValid(), error->GetError().c_str() );
 
         RecursiveDisplay( action, missionModel_.item( row++ ) );
     }
@@ -196,7 +198,8 @@ void InfoMissionsTab::RecursiveDisplay( const T& element, QStandardItem* item )
     while( item->rowCount() < count )
     {
         QList< QStandardItem* > items;
-        items << new QStandardItem() << new QStandardItem() << new QStandardItem() << new QStandardItem();
+        items << new QStandardItem() << new QStandardItem()
+              << new QStandardItem() << new QStandardItem() << new QStandardItem();
         item->appendRow( items );
     }
     tools::Iterator< const actions::Parameter_ABC& > it = element.CreateIterator();
