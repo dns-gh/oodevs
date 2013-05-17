@@ -72,6 +72,10 @@ Server::Server( const Configuration& cfg )
     , read_    ( new ipc::Device( uuid_ + "_read",  true, ipc::DEFAULT_MAX_PACKETS, ipc::DEFAULT_MAX_PACKET_SIZE ) )
     , embedded_( Embedded_ABC::Factory( *write_, cfg.external ) )
 {
+    qRegisterMetaType< boost::shared_ptr< Event > >( "boost::shared_ptr< timeline::Event >" );
+    qRegisterMetaType< std::string >( "std::string" );
+    qRegisterMetaType< Event >( "timeline::Event" );
+    qRegisterMetaType< Error >( "timeline::Error" );
     auto layout = new QVBoxLayout( cfg.widget );
     auto widget = new Widget( *write_, cfg.widget );
     layout->addWidget( widget );
