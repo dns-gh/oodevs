@@ -356,7 +356,7 @@ void UserProfileControls_ABC::CheckErrors( const kernel::Entity_ABC& entity, T_E
 void UserProfileControls_ABC::UpdateColor( gui::ValuedListItem* item )
 {
     if( const Entity_ABC* entity = item->GetValue< const Entity_ABC >() )
-        if( entity->Retrieve< ProfileHierarchies_ABC >() )
+        if( entity && entity->Retrieve< ProfileHierarchies_ABC >() )
             if( !supervisor_ && profile_ && checker_.IsControlledByLowLevel( profile_->GetLogin().toAscii().constData(), *entity ) )
                 item->SetFontColor( QColor( 255, 10, 10 ) );
 }
