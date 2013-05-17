@@ -363,6 +363,7 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     forward_->Register( populationKnowledges );
     forward_->Register( objectKnowledges );
     forward_->Register( limits );
+    forward_->Register( resourceNetworksLayer );
     forward_->Register( urbanLayer );
     forward_->Register( drawerLayer );
     forward_->Register( metrics );

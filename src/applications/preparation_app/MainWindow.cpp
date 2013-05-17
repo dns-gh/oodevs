@@ -362,6 +362,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer& loc
     forward_->Register( inhabitantLayer );
     forward_->Register( ghosts );
     forward_->Register( limits );
+    forward_->Register( resourceNetworksLayer );
     forward_->Register( urbanLayer );
     forward_->Register( drawerLayer );
     forward_->Register( metrics );
