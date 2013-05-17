@@ -96,6 +96,16 @@ void PeopleAffinities::Clear()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PeopleAffinities::Add
+// Created: MCO 2013-05-17
+// -----------------------------------------------------------------------------
+void PeopleAffinities::Add( unsigned long team, float value )
+{
+    Affinities::Add( team, value );
+    controllers_.controller_.Update( gui::DictionaryUpdated( entity_, tools::translate( "Affinities", "Affinities/%1" ).arg( teams_[ team ].c_str() ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PeopleAffinities::InitializeAffinities
 // Created: LGY 2011-04-27
 // -----------------------------------------------------------------------------

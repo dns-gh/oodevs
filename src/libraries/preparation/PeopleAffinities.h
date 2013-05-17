@@ -57,6 +57,7 @@ public:
     virtual void NotifyUpdated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     virtual void Clear();
+    virtual void Add( unsigned long team, float value );
     //@}
 
 private:
