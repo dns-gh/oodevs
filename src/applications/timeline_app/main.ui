@@ -40,6 +40,7 @@
    <addaction name="actionReload"/>
    <addaction name="actionCreate"/>
    <addaction name="actionDelete"/>
+   <addaction name="actionTestCreate"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionReload">
@@ -58,6 +59,11 @@
    </property>
    <property name="text">
     <string>Delete</string>
+   </property>
+  </action>
+  <action name="actionTestCreate">
+   <property name="text">
+    <string>Test Create</string>
    </property>
   </action>
  </widget>

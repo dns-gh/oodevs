@@ -44,9 +44,11 @@ public slots:
     void OnSelectedEvent( boost::shared_ptr< Event > event );
     void OnDeletedEvent( const std::string& uuid, const Error& error );
     void OnDeleteEvent();
+    void OnTestCreate();
 
 private:
     void WaitReady() const;
+    int  Create( const std::vector< std::string >& args );
     int  Delete( const std::vector< std::string >& args );
 
 private:
@@ -56,14 +58,15 @@ private:
     std::string uuid_;
 };
 
-class OnDelete_ABC : public QObject
+class OnSignal_ABC : public QObject
 {
     Q_OBJECT
 public:
-             OnDelete_ABC() {}
-    virtual ~OnDelete_ABC() {}
+             OnSignal_ABC() {}
+    virtual ~OnSignal_ABC() {}
 public slots:
-    virtual void OnDeletedEvent( const std::string& uuid, const Error& error ) = 0;
+    virtual void OnCreatedEvent( const Event& /*event*/, const Error& /*error*/ ) {}
+    virtual void OnDeletedEvent( const std::string& /*uuid*/, const Error& /*error*/ ) {}
 };
 }
 

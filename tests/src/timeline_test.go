@@ -188,6 +188,23 @@ func WaitCommand(c *C, client *exec.Cmd) {
 	}
 }
 
+func GetEvents(c *C, uuid string) []interface{} {
+	url := fmt.Sprintf("http://localhost:%d/api/sessions/%s/events",
+		*Port+ServerWeb, uuid)
+	req, err := http.NewRequest("GET", url, nil)
+	c.Assert(err, IsNil)
+	req.Header.Set("Accept", "application/json")
+	client := http.Client{}
+	rpy, err := client.Do(req)
+	defer rpy.Body.Close()
+	data, err := ioutil.ReadAll(rpy.Body)
+	c.Assert(err, IsNil)
+	events := []interface{}{}
+	err = json.Unmarshal(data, &events)
+	c.Assert(err, IsNil)
+	return events
+}
+
 func (s *TestSuite) TestServerConnects(c *C) {
 	script, _ := MakeServerConfig(c)
 	server := StartServer(c, script)
@@ -196,30 +213,29 @@ func (s *TestSuite) TestServerConnects(c *C) {
 	defer client.Process.Kill()
 	WaitCommand(c, client)
 }
-
 func (s *TestSuite) TestServerDeletes(c *C) {
-	// start server
 	script, model := MakeServerConfig(c)
 	server := StartServer(c, script)
 	defer server.Process.Kill()
-	// start client and delete event
 	client := StartClient(c, "delete", model["delete"].(string))
 	defer client.Process.Kill()
 	WaitCommand(c, client)
-	// get list of events from server
-	url := fmt.Sprintf("http://localhost:%d/api/sessions/%s/events",
-		*Port+ServerWeb, model["uuid"].(string))
-	req, err := http.NewRequest("GET", url, nil)
-	c.Assert(err, IsNil)
-	req.Header.Set("Accept", "application/json")
-	httpclient := http.Client{}
-	rpy, err := httpclient.Do(req)
-	defer rpy.Body.Close()
-	data, err := ioutil.ReadAll(rpy.Body)
-	c.Assert(err, IsNil)
-	// check no events are left on server
-	events := []interface{}{}
-	err = json.Unmarshal(data, &events)
-	c.Assert(err, IsNil)
+	events := GetEvents(c, model["uuid"].(string))
 	c.Assert(events, HasLen, 0)
+}
+
+func CreateEvent(c *C, uuid string) {
+	script, model := MakeServerConfig(c)
+	server := StartServer(c, script)
+	defer server.Process.Kill()
+	client := StartClient(c, "create", uuid)
+	defer client.Process.Kill()
+	WaitCommand(c, client)
+	events := GetEvents(c, model["uuid"].(string))
+	c.Assert(events, HasLen, 2)
+}
+
+func (s *TestSuite) TestServerCreates(c *C) {
+	CreateEvent(c, gouuid.New())
+	CreateEvent(c, "")
 }

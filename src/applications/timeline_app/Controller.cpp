@@ -13,6 +13,11 @@
 #include "ui_create_event.h"
 #include "moc_Controller.cpp"
 
+#include <boost/assign/list_of.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/random_generator.hpp>
+#include <boost/uuid/uuid_io.hpp>
+
 using namespace timeline;
 
 Controller::Controller( const Configuration& cfg )
@@ -29,6 +34,7 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ui_->actionReload, SIGNAL( triggered() ), this, SLOT( OnReload() ) );
     QObject::connect( ui_->actionCreate, SIGNAL( triggered() ), this, SLOT( OnCreateEvent() ) );
     QObject::connect( ui_->actionDelete, SIGNAL( triggered() ), this, SLOT( OnDeleteEvent() ) );
+    QObject::connect( ui_->actionTestCreate, SIGNAL( triggered() ), this, SLOT( OnTestCreate() ) );
     QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const Event&, const Error& ) ), this, SLOT( OnCreatedEvent( const Event&, const Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< Event > ) ) );
     QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const Error& ) ) );
@@ -150,6 +156,19 @@ void Controller::OnDeletedEvent( const std::string& uuid, const Error& error )
             .arg( QString::fromStdString( error.text ) ) );
 }
 
+void Controller::OnTestCreate()
+{
+    const std::string uuid = boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
+    try
+    {
+        Create( boost::assign::list_of( uuid ) );
+    }
+    catch( const std::exception& err )
+    {
+        ui_->statusBar->showMessage( err.what() );
+    }
+}
+
 void Controller::WaitReady() const
 {
     QEventLoop wait;
@@ -159,10 +178,10 @@ void Controller::WaitReady() const
 
 namespace
 {
-    struct DeleteEvent : public OnDelete_ABC
+    struct DeleteEvent : public OnSignal_ABC
     {
         DeleteEvent( QEventLoop& loop )
-            : OnDelete_ABC()
+            : OnSignal_ABC()
             , loop_       ( loop )
         {
             // NOTHING
@@ -177,6 +196,70 @@ namespace
         std::string uuid_;
         Error error_;
     };
+
+    bool Equals( const Action& lhs, const Action& rhs )
+    {
+        return lhs.target  == rhs.target
+            && lhs.apply   == rhs.apply
+            && lhs.payload == rhs.payload;
+    }
+
+    bool Equals( const Event& lhs, const Event& rhs )
+    {
+        return lhs.uuid    == rhs.uuid
+            && lhs.name    == rhs.name
+            && lhs.info    == rhs.info
+            && lhs.begin   == rhs.begin
+            && lhs.end     == rhs.end
+            && lhs.done    == rhs.done
+            && Equals( lhs.action, rhs.action );
+    }
+
+    bool Equals( const Error& lhs, const Error& rhs )
+    {
+        return lhs.code == rhs.code
+            && lhs.text == rhs.text;
+    }
+
+    QString Dump( const Action& action )
+    {
+        return QString( "Action{"
+            "target:%1"
+            ",apply:%2"
+            ",payload:%3"
+            "}" )
+            .arg( QString::fromStdString( action.target ) )
+            .arg( action.apply )
+            .arg( QString::fromStdString( action.payload ) );
+    }
+
+    QString Dump( const Event& event )
+    {
+        return QString( "Event{"
+            "uuid:%1"
+            ",name:%2"
+            ",info:%3"
+            ",begin:%4"
+            ",end:%5"
+            ",done:%6"
+            ",action:%7"
+            "}" )
+            .arg( QString::fromStdString( event.uuid ) )
+            .arg( QString::fromStdString( event.name ) )
+            .arg( QString::fromStdString( event.info ) )
+            .arg( QString::fromStdString( event.begin ) )
+            .arg( QString::fromStdString( event.end ) )
+            .arg( event.done )
+            .arg( Dump( event.action ) );
+    }
+
+    QString Dump( const Error& error )
+    {
+        return QString( "Error{"
+            "code:%1,text:%2}" )
+            .arg( error.code )
+            .arg( QString::fromStdString( error.text ) );
+    }
 }
 
 int Controller::Delete( const std::vector< std::string >& args )
@@ -188,12 +271,57 @@ int Controller::Delete( const std::vector< std::string >& args )
     QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const Error& ) ), &deleter, SLOT( OnDeletedEvent( const std::string&, const Error& ) ) );
     ctx_->DeleteEvent( args[0] );
     wait.exec();
+    if( !Equals( deleter.error_, Error() ) )
+        throw std::runtime_error( QString( "invalid error %1" ).
+            arg( Dump( deleter.error_ ) ).toStdString() );
     if( deleter.uuid_ != args[0] )
         throw std::runtime_error( "invalid uuid" );
-    if( deleter.error_.code != EC_OK || !deleter.error_.text.empty() )
-        throw std::runtime_error( QString( "invalid error %1:%2" ).
-            arg( deleter.error_.code ).
-            arg( QString::fromStdString( deleter.error_.text ) ).toStdString() );
+    return 0;
+}
+
+namespace
+{
+    struct CreateEvent : public OnSignal_ABC
+    {
+        CreateEvent( QEventLoop& loop )
+            : OnSignal_ABC()
+            , loop_       ( loop )
+        {
+            // NOTHING
+        }
+        void OnCreatedEvent( const Event& event, const Error& error )
+        {
+            event_  = event;
+            error_ = error;
+            QTimer::singleShot( 0, &loop_, SLOT( quit() ) );
+        }
+        QEventLoop& loop_;
+        Event event_;
+        Error error_;
+    };
+}
+
+int Controller::Create( const std::vector< std::string >& args )
+{
+    if( args.size() != 1 )
+        throw std::runtime_error( "usage: create <uuid>" );
+    QEventLoop wait;
+    CreateEvent creator( wait );
+    QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const Event&, const Error& ) ), &creator, SLOT( OnCreatedEvent( const Event&, const Error& ) ) );
+    Event event( args[0], "some_name", "some_info", "2013-01-01T11:00:04Z", std::string(), false, Action() );
+    ctx_->CreateEvent( event );
+    wait.exec();
+    if( !Equals( creator.error_, Error() ) )
+        throw std::runtime_error( QString( "invalid error %1" ).
+            arg( Dump( creator.error_ ) ).toStdString() );
+    // if input uuid is empty, use the server generated uuid
+    if( event.uuid.empty() )
+        event.uuid = creator.event_.uuid;
+    if( !Equals( creator.event_, event ) )
+        throw std::runtime_error( QString( "invalid event %1:%2" ).
+            arg( Dump( creator.event_ ) ).
+            arg( Dump( event ) ).
+            toStdString() );
     return 0;
 }
 
@@ -204,5 +332,7 @@ int Controller::Execute( const std::string& command, const std::vector< std::str
         return 0;
     if( command == "delete" )
         return Delete( args );
+    if( command == "create" )
+        return Create( args );
     throw std::runtime_error( "unexpected command " + command );
 }
