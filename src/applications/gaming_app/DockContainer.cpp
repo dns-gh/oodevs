@@ -62,6 +62,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
                               gui::GlProxy& proxy, gui::RichItemFactory& factory, LinkInterpreter& interpreter,
                               gui::ColorStrategy_ABC& colorStrategy, gui::SymbolIcons& symbolIcons, gui::EntitySymbols& entitySymbols, 
                               IndicatorExportDialog& indicatorExportDialog )
+    : timeline_( 0 )
 {
     // Tools
     interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers, paramLayer, staticModel, &model.agentKnowledgeConverter_, &model.objectKnowledgeConverter_, &simulation ) );
@@ -196,9 +197,9 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     if( config.HasTimeline() )
     {
         // New Timeline
-        timeline_.reset( new TimelineDockWidget( parent, controllers, config ) );
+        timeline_ = new TimelineDockWidget( parent, controllers, config );
         timeline_->SetModes( eModes_Default );
-        parent->addDockWidget( Qt::TopDockWidgetArea, timeline_.get() );
+        parent->addDockWidget( Qt::TopDockWidgetArea, timeline_ );
     }
     else
     {
@@ -249,7 +250,7 @@ DockContainer::~DockContainer()
 void DockContainer::Purge()
 {
     orbatDockWidget_->Purge();
-    if( timeline_.get() )
+    if( timeline_ )
         timeline_->Disconnect();
 }
 
@@ -259,7 +260,7 @@ void DockContainer::Purge()
 // -----------------------------------------------------------------------------
 void DockContainer::Load()
 {
-    if( timeline_.get() )
+    if( timeline_ )
         timeline_->Connect();
 }
 

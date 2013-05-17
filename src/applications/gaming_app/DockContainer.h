@@ -108,7 +108,7 @@ private:
     ProfilingPanel* profilingPanel_;
     gui::TerrainProfiler* terrainProfiler_;
     gui::MiniViews* miniView_;
-    std::auto_ptr< TimelineDockWidget > timeline_;
+    TimelineDockWidget* timeline_;
     //@}
 
     //! @name Member data
