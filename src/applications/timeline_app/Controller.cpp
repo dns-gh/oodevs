@@ -24,6 +24,7 @@ Controller::Controller( const Configuration& cfg )
     : ui_ ( new Ui::Main() )
 {
     qRegisterMetaType< boost::shared_ptr< Event > >( "boost::shared_ptr< timeline::Event >" );
+    qRegisterMetaType< std::string >( "std::string" );
     qRegisterMetaType< Event >( "timeline::Event" );
     qRegisterMetaType< Error >( "timeline::Error" );
     ui_->setupUi( &main_ );
