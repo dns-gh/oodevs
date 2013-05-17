@@ -98,6 +98,24 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PropertiesPanel::NotifyUpdated
+// Created: MCO 2013-05-17
+// -----------------------------------------------------------------------------
+void PropertiesPanel::NotifyUpdated( const kernel::Entity_ABC& element )
+{
+    if( selected_ == &element )
+    {
+        view_->SaveState();
+        model_->clear();
+        if( gui::PropertiesDictionary* dictionary = const_cast< kernel::Entity_ABC& >( element ).Retrieve< gui::PropertiesDictionary >() )
+        {
+            dictionary->Display( *model_ );
+            view_->Display();
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PropertiesPanel::NotifySelectionChanged
 // Created: LGY 2013-01-03
 // -----------------------------------------------------------------------------
