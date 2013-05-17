@@ -46,7 +46,7 @@ integration.startSearchUrbanBlock = function( urbanBlock )
         DEC_Perception_ActivateLocationProgressiveRecce( urbanBlock.area, buSearchSpeed )
     urbanBlock.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( urbanBlock.area, urbanBlock:getPosition(), buSearchSpeed )
     urbanBlock.bActionSearchFinished = false
-    urbanBlock.recoFinished = true
+    urbanBlock.recoFinished = false
     perceptionReconnaissanceCallbacks[ urbanBlock.actionSearch ] = function( arg )
         urbanBlock.recoFinished = true
     end
