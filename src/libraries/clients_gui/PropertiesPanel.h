@@ -62,7 +62,6 @@ private:
     //@{
     virtual void showEvent( QShowEvent* );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
-    virtual void NotifyUpdated( const kernel::Entity_ABC& element );
     virtual void NotifySelectionChanged( const std::vector< const kernel::UrbanObject_ABC* >& elements );
     virtual void NotifyDeleted( const kernel::Entity_ABC& element );
     virtual void NotifyUpdated( const DictionaryUpdated& message );
