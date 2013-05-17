@@ -22,6 +22,20 @@ namespace timeline
 {
 struct Action
 {
+    Action()
+        : apply( true )
+    {
+        // NOTHING
+    }
+    Action( const std::string& target,
+            bool apply,
+            const std::string& payload )
+        : target ( target )
+        , apply  ( apply )
+        , payload( payload )
+    {
+        // NOTHING
+    }
     std::string target;
     bool        apply;
     std::string payload;
@@ -29,6 +43,34 @@ struct Action
 
 struct Event
 {
+    Event()
+        : sizeof_( sizeof( Event ) )
+        , done   ( false )
+    {
+        // NOTHING
+    }
+    Event( const std::string& uuid,
+           const std::string& name,
+           const std::string& info,
+           const std::string& begin,
+           const std::string& end,
+           bool done,
+           const Action& action )
+        : sizeof_( sizeof( Event ) )
+        , uuid   ( uuid )
+        , name   ( name )
+        , info   ( info )
+        , begin  ( begin )
+        , end    ( end )
+        , done   ( done )
+        , action ( action )
+    {
+        // NOTHING
+    }
+    bool IsValid() const
+    {
+        return sizeof_ == sizeof *this;
+    }
     std::string uuid;
     std::string name;
     std::string info;
@@ -36,6 +78,8 @@ struct Event
     std::string end;
     bool        done;
     Action      action;
+private:
+    size_t      sizeof_;
 };
 
 enum ErrorCode
@@ -46,8 +90,18 @@ enum ErrorCode
 
 struct Error
 {
-    Error() : code( EC_OK ) {}
-    Error( int code, const std::string& text ) : code( code ), text( text ) {}
+    Error()
+        : code( EC_OK )
+    {
+        // NOTHING
+    }
+    Error( int code,
+           const std::string& text )
+        : code( code )
+        , text( text )
+    {
+        // NOTHING
+    }
     int         code;
     std::string text;
 };
@@ -76,12 +130,26 @@ signals:
 
 struct Configuration
 {
+    Configuration()
+        : sizeof_   ( sizeof( Configuration ) )
+        , widget    ( 0 )
+        , external  ( true )
+        , debug_port( 0 )
+    {
+        // NOTHING
+    }
+    bool IsValid() const
+    {
+        return sizeof_ == sizeof *this;
+    }
     tools::Path rundir;
     tools::Path binary;
     QWidget*    widget;
     std::string url;
     bool        external;   ///< use external process
     int         debug_port; ///< optional remove debug port
+private:
+    size_t      sizeof_;
 };
 
 bool SpawnServer();

@@ -118,6 +118,8 @@ void Server::Reload()
 
 bool Server::CreateEvent( const Event& event )
 {
+    if( !event.IsValid() )
+        return false;
     std::vector< uint8_t > buffer( controls::CreateEvent( 0, 0, event ) );
     controls::CreateEvent( &buffer[0], buffer.size(), event );
     return write_->Write( &buffer[0], buffer.size() );

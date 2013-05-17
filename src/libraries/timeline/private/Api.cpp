@@ -35,5 +35,7 @@ bool timeline::SpawnServer()
 
 std::auto_ptr< Server_ABC > timeline::MakeServer( const Configuration& cfg )
 {
+    if( !cfg.IsValid() )
+        return std::auto_ptr< Server_ABC >();
     return std::auto_ptr< Server_ABC >( new Server( cfg ) );
 }
