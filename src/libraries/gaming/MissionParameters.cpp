@@ -154,7 +154,8 @@ void MissionParameters::DoUpdate( const sword::TaskCreationRequestAck& message )
 // -----------------------------------------------------------------------------
 void MissionParameters::NotifyCreated( const actions::Action_ABC& action )
 {
-    if( action.Retrieve< ActionTasker >()->GetTaskerId() == entityId_ )
+    const ActionTasker* tacker = action.Retrieve< ActionTasker >();
+    if( tacker && tacker->GetTaskerId() == entityId_ )
         currentMission_ = &action.GetType();
 }
 
