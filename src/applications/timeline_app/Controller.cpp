@@ -23,10 +23,10 @@ using namespace timeline;
 Controller::Controller( const Configuration& cfg )
     : ui_ ( new Ui::Main() )
 {
-    qRegisterMetaType< boost::shared_ptr< Event > >( "boost::shared_ptr< Event >" );
+    qRegisterMetaType< boost::shared_ptr< timeline::Event > >( "boost::shared_ptr< timeline::Event >" );
     qRegisterMetaType< std::string >( "std::string" );
-    qRegisterMetaType< Event >( "Event" );
-    qRegisterMetaType< Error >( "Error" );
+    qRegisterMetaType< timeline::Event >( "timeline::Event" );
+    qRegisterMetaType< timeline::Error >( "timeline::Error" );
     ui_->setupUi( &main_ );
     Configuration next = cfg;
     next.widget = ui_->centralwidget;
@@ -35,9 +35,9 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ui_->actionCreate, SIGNAL( triggered() ), this, SLOT( OnCreateEvent() ) );
     QObject::connect( ui_->actionDelete, SIGNAL( triggered() ), this, SLOT( OnDeleteEvent() ) );
     QObject::connect( ui_->actionTestCreate, SIGNAL( triggered() ), this, SLOT( OnTestCreate() ) );
-    QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const Event&, const Error& ) ), this, SLOT( OnCreatedEvent( const Event&, const Error& ) ) );
-    QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< Event > ) ) );
-    QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const Error& ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
 }
 
 Controller::~Controller()
@@ -268,7 +268,7 @@ int Controller::Delete( const std::vector< std::string >& args )
         throw std::runtime_error( "usage: delete <uuid>" );
     QEventLoop wait;
     DeleteEvent deleter( wait );
-    QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const Error& ) ), &deleter, SLOT( OnDeletedEvent( const std::string&, const Error& ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), &deleter, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
     ctx_->DeleteEvent( args[0] );
     wait.exec();
     if( !Equals( deleter.error_, Error() ) )
@@ -307,7 +307,7 @@ int Controller::Create( const std::vector< std::string >& args )
         throw std::runtime_error( "usage: create <uuid>" );
     QEventLoop wait;
     CreateEvent creator( wait );
-    QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const Event&, const Error& ) ), &creator, SLOT( OnCreatedEvent( const Event&, const Error& ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), &creator, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
     Event event( args[0], "some_name", "some_info", "2013-01-01T11:00:04Z", std::string(), false, Action() );
     ctx_->CreateEvent( event );
     wait.exec();

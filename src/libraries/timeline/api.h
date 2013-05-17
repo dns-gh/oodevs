@@ -117,15 +117,15 @@ public:
     // Public slots
 public slots:
     virtual void Reload() = 0;
-    virtual bool CreateEvent( const Event& event ) = 0;
+    virtual bool CreateEvent( const timeline::Event& event ) = 0;
     virtual bool DeleteEvent( const std::string& uuid ) = 0;
 
     // Public signals
 signals:
     void Ready();
-    void CreatedEvent ( const Event& event, const Error& error );
-    void SelectedEvent( boost::shared_ptr< Event > event );
-    void DeletedEvent ( const std::string& uuid, const Error& error );
+    void CreatedEvent ( const timeline::Event& event, const timeline::Error& error );
+    void SelectedEvent( boost::shared_ptr< timeline::Event > event );
+    void DeletedEvent ( const std::string& uuid, const timeline::Error& error );
 };
 
 struct Configuration

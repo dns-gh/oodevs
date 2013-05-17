@@ -25,13 +25,11 @@ namespace Ui
     class Main;
 }
 
-namespace timeline
-{
 class Controller : public QObject
 {
     Q_OBJECT
 public:
-             Controller( const Configuration& cfg );
+             Controller( const timeline::Configuration& cfg );
     virtual ~Controller();
 
     int  Execute( const std::string& command, const std::vector< std::string >& args );
@@ -40,9 +38,9 @@ public:
 public slots:
     void OnReload();
     void OnCreateEvent();
-    void OnCreatedEvent( const Event& event, const Error& error );
-    void OnSelectedEvent( boost::shared_ptr< Event > event );
-    void OnDeletedEvent( const std::string& uuid, const Error& error );
+    void OnCreatedEvent( const timeline::Event& event, const timeline::Error& error );
+    void OnSelectedEvent( boost::shared_ptr< timeline::Event > event );
+    void OnDeletedEvent( const std::string& uuid, const timeline::Error& error );
     void OnDeleteEvent();
     void OnTestCreate();
 
@@ -54,7 +52,7 @@ private:
 private:
     QMainWindow main_;
     std::auto_ptr< Ui::Main > ui_;
-    std::auto_ptr< Server_ABC > ctx_;
+    std::auto_ptr< timeline::Server_ABC > ctx_;
     std::string uuid_;
 };
 
@@ -65,9 +63,8 @@ public:
              OnSignal_ABC() {}
     virtual ~OnSignal_ABC() {}
 public slots:
-    virtual void OnCreatedEvent( const Event& /*event*/, const Error& /*error*/ ) {}
-    virtual void OnDeletedEvent( const std::string& /*uuid*/, const Error& /*error*/ ) {}
+    virtual void OnCreatedEvent( const timeline::Event& /*event*/, const timeline::Error& /*error*/ ) {}
+    virtual void OnDeletedEvent( const std::string& /*uuid*/, const timeline::Error& /*error*/ ) {}
 };
-}
 
 #endif//CONTROLLER_H__

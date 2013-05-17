@@ -65,7 +65,7 @@ int main( int argc, char* argv[] )
 #endif
         if( !cfg.binary.IsRegularFile() )
             throw std::runtime_error( QString( "invalid file %1" ).arg( argv[1] ).toStdString() );
-        timeline::Controller controller( cfg );
+        Controller controller( cfg );
         if( !command.empty() )
             return controller.Execute( command, cmdargs );
         controller.Show();
