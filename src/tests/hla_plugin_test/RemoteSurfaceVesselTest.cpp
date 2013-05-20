@@ -62,7 +62,7 @@ BOOST_FIXTURE_TEST_CASE( remote_vessel_deserializes_spatial_attribute_and_notifi
 {
     Spatial spatial( true, 1., 2., 3., 4., 5. );
     spatial.Serialize( static_cast< ::hla::Serializer_ABC& >( serializer ) );
-    MOCK_EXPECT( listener.Moved ).once().with( "identifier", mock::close( 1., 0.001 ), mock::close( 2., 0.001 ) );
+    MOCK_EXPECT( listener.Moved ).once().with( "identifier", mock::near( 1., 0.001 ), mock::near( 2., 0.001 ) );
     ::hla::Deserializer deserializer( Deserialize() );
     vessel.Deserialize( "Spatial", deserializer );
 }
