@@ -33,7 +33,7 @@ namespace
     public:
         Fixture()
             : fomSerialization( 1 )
-			, aggregate( "identifier", entityIdResolver, fomSerialization )
+            , aggregate( "identifier", entityIdResolver, fomSerialization )
         {
             aggregate.Register( listener );
         }
@@ -44,8 +44,8 @@ namespace
             return ::hla::Deserializer( &buffer[0], buffer.size() );
         }
         MockObjectListener listener;
-		MockEntityIdentifierResolver entityIdResolver;
-		FOM_Serializer fomSerialization;
+        MockEntityIdentifierResolver entityIdResolver;
+        FOM_Serializer fomSerialization;
         AggregateEntity aggregate;
         ::hla::Serializer serializer;
         T_Buffer buffer;

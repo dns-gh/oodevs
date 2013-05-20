@@ -46,8 +46,8 @@ namespace
         EventListener_ABC* listener;
         hla::MockUpdateFunctor functor;
         rpr::EntityType entityType;
-		MockFOM_Serialization fomSerialization;
-		rpr::EntityIdentifier entityId;
+        MockFOM_Serialization fomSerialization;
+        rpr::EntityIdentifier entityId;
     };
     class RegisteredFixture : public Fixture
     {

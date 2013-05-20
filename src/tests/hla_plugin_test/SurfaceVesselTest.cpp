@@ -45,7 +45,7 @@ namespace
         hla::MockUpdateFunctor functor;
         rpr::EntityType entityType;
         MockEntityIdentifierResolver entityIdResolver;
-		MockFOM_Serialization fomSerialization;
+        MockFOM_Serialization fomSerialization;
         rpr::EntityIdentifier entityId;
     };
     class RegisteredFixture : public Fixture

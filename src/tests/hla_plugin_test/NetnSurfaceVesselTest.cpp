@@ -29,13 +29,13 @@ namespace
         Fixture()
             : listener ( 0 )
             , fomSerialization( 1 )
-			, aggregate( new MockHlaObject() )
+            , aggregate( new MockHlaObject() )
         {}
         MockHlaObject* aggregate;
         MockAgent agent;
         EventListener_ABC* listener;
         hla::MockUpdateFunctor functor;
-		FOM_Serializer fomSerialization;
+        FOM_Serializer fomSerialization;
     };
     class RegisteredFixture : public Fixture
     {

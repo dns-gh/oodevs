@@ -30,18 +30,18 @@ namespace
         Fixture()
             : listener ( 0 )
             , aggregate( new MockHlaObject() )
-			, uniqueIdSerializer( 1 )
+            , uniqueIdSerializer( 1 )
         {
             MOCK_EXPECT( agent.Register ).once().with( mock::retrieve( listener ) );
-			MOCK_EXPECT( fomSerialization.GetUniqueIdSerializer ).returns( uniqueIdSerializer );
+            MOCK_EXPECT( fomSerialization.GetUniqueIdSerializer ).returns( uniqueIdSerializer );
             MOCK_EXPECT( agent.Unregister ).once();
         }
         MockAgent agent;
         MockHlaObject* aggregate;
         EventListener_ABC* listener;
         hla::MockUpdateFunctor functor;
-		UniqueIdSerializer uniqueIdSerializer;
-		MockFOM_Serialization fomSerialization;
+        UniqueIdSerializer uniqueIdSerializer;
+        MockFOM_Serialization fomSerialization;
     };
     class RegisteredFixture : public Fixture
     {

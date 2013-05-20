@@ -29,7 +29,7 @@ namespace
         Fixture()
             : rprRemote ( new MockHlaObject() )
             , pRemote   ( static_cast< HlaObject_ABC* >( rprRemote ) )
-			, fomSerialization( 1 )
+            , fomSerialization( 1 )
             , netnRemote( pRemote, "identifier", fomSerialization )
         {
             MOCK_EXPECT( rprRemote->Register );
@@ -44,7 +44,7 @@ namespace
         MockHlaObject* rprRemote;
         std::auto_ptr< HlaObject_ABC > pRemote;
         MockObjectListener listener;
-		FOM_Serializer fomSerialization;
+        FOM_Serializer fomSerialization;
         NetnSurfaceVessel netnRemote;
         ::hla::Serializer serializer;
         T_Buffer buffer;

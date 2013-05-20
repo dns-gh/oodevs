@@ -32,7 +32,7 @@ namespace
     public:
         Fixture()
             : fomSerialization( 1 )
-			, vessel( "identifier", entityIdResolver, fomSerialization )
+            , vessel( "identifier", entityIdResolver, fomSerialization )
         {
             vessel.Register( listener );
         }
@@ -44,7 +44,7 @@ namespace
         }
         MockObjectListener listener;
         MockEntityIdentifierResolver entityIdResolver;
-		FOM_Serializer fomSerialization;
+        FOM_Serializer fomSerialization;
         SurfaceVessel vessel;
         ::hla::Serializer serializer;
         T_Buffer buffer;
