@@ -9,7 +9,6 @@
 
 #include "dispatcher_pch.h"
 #include "Loan.h"
-#include "Model_ABC.h"
 #include "Agent_ABC.h"
 #include "protocol/SimulationSenders.h"
 
@@ -23,7 +22,7 @@ namespace
 // Name: Loan constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Loan::Loan( const Model_ABC& model, const sword::BorrowedEquipments_BorrowedEquipment& message )
+Loan::Loan( const Model_ABC&, const sword::BorrowedEquipments_BorrowedEquipment& message )
     : idAgent_      ( message.owner().id() )
     , equipmentType_( message.type().id() )
     , quantity_     ( message.quantity() )
@@ -36,7 +35,7 @@ Loan::Loan( const Model_ABC& model, const sword::BorrowedEquipments_BorrowedEqui
 // Name: Loan constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Loan::Loan( const Model_ABC& model, const sword::LentEquipments_LentEquipment& message )
+Loan::Loan( const Model_ABC&, const sword::LentEquipments_LentEquipment& message )
     : idAgent_      ( message.borrower().id() )
     , equipmentType_( message.type().id() )
     , quantity_     ( message.quantity() )
