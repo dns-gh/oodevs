@@ -35,7 +35,7 @@ public:
 
     public:
         OrderInfos();
-        OrderInfos( ADN_Missions_Data::FragOrder* fragorder, const std::string& name );
+        OrderInfos( ADN_Missions_Data::ADN_Missions_ABC* fragorder, const std::string& name );
 
         std::string GetItemName();
 
@@ -44,7 +44,7 @@ public:
         OrderInfos* CreateCopy();
 
     public:
-        ADN_TypePtr_InVector_ABC< ADN_Missions_Data::FragOrder > fragOrder_;
+        ADN_TypePtr_InVector_ABC< ADN_Missions_Data::ADN_Missions_ABC > fragOrder_;
         ADN_Type_String                                          strName_; // do not use directly !!!
     };
 
@@ -59,7 +59,7 @@ public:
     {
 
     public:
-        explicit MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions );
+        explicit MissionInfos( ADN_Missions_Data::T_Mission_ABC_Vector& missions );
         virtual ~MissionInfos();
 
         std::string GetItemName();
@@ -72,7 +72,7 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC< ADN_Missions_Data::Mission > mission_;
+        ADN_TypePtr_InVector_ABC< ADN_Missions_Data::ADN_Missions_ABC > mission_;
         ADN_Type_String                          strName_; // do not use directly !!!
         T_OrderInfos_Vector                      vOrders_;
     };
@@ -98,7 +98,7 @@ public:
 
     public:
                  ModelInfos();
-        explicit ModelInfos( ADN_Missions_Data::T_Mission_Vector& missions );
+        explicit ModelInfos( ADN_Missions_Data::T_Mission_ABC_Vector& missions );
         virtual ~ModelInfos();
 
         virtual std::string GetNodeName();
@@ -110,11 +110,11 @@ public:
         void ReadMission( xml::xistream& input );
         void ReadOrder( xml::xistream& input );
         void WriteArchive( const std::string& type, xml::xostream& output );
-        void AddFragOrder( ADN_Missions_Data::FragOrder* fragorder, const std::string& order );
+        void AddFragOrder( ADN_Missions_Data::ADN_Missions_ABC* fragorder, const std::string& order );
         void RemoveFragOder( const std::string& order );
 
     public:
-        ADN_Missions_Data::T_Mission_Vector& missions_;
+        ADN_Missions_Data::T_Mission_ABC_Vector& missions_;
         ADN_Type_String                     strName_;
         ADN_Type_String                     strDiaType_;
         ADN_Type_String                     strFile_;
@@ -134,7 +134,7 @@ public:
 
     void            FilesNeeded(T_StringList& l) const;
     void            Reset();
-    QStringList     GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::Mission& model );
+    QStringList     GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::ADN_Missions_ABC& mission );
     QStringList     GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::FragOrder& fragOrder );
 
     T_ModelInfos_Vector&    GetUnitModelsInfos();

@@ -14,6 +14,8 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_Breakdowns_Data.h"
 
+ADN_ConsistencyChecker::T_Parent::T_ConsistencyErrors ADN_ConsistencyChecker::loadingErrors_;
+
 // -----------------------------------------------------------------------------
 // Name: ADN_ConsistencyChecker constructor
 // Created: ABR 2012-06-06
@@ -191,10 +193,10 @@ void ADN_ConsistencyChecker::CheckMissionsTypes()
 // Name: ADN_ConsistencyChecker::CheckMissionTypes
 // Created: LGY 2012-10-22
 // -----------------------------------------------------------------------------
-void ADN_ConsistencyChecker::CheckMissionTypes( const ADN_Missions_Data::T_Mission_Vector& missions, int subTab )
+void ADN_ConsistencyChecker::CheckMissionTypes( const ADN_Missions_Data::T_Mission_ABC_Vector& missions, int subTab )
 {
-    for( ADN_Missions_Data::CIT_Mission_Vector rhs = missions.begin(); rhs != missions.end() - 1; ++rhs )
-        for( ADN_Missions_Data::CIT_Mission_Vector lhs = rhs + 1; lhs != missions.end(); ++lhs )
+    for( auto rhs = missions.begin(); rhs != missions.end() - 1; ++rhs )
+        for( auto lhs = rhs + 1; lhs != missions.end(); ++lhs )
             if( (*lhs)->strName_.GetData() != (*rhs)->strName_.GetData() &&
                 (*lhs)->diaType_.GetData() == (*rhs)->diaType_.GetData() )
                     AddError( eMissionTypeUniqueness, **rhs, **lhs, subTab );
@@ -204,7 +206,7 @@ void ADN_ConsistencyChecker::CheckMissionTypes( const ADN_Missions_Data::T_Missi
 // Name: ADN_ConsistencyChecker::AddError
 // Created: LGY 2012-10-22
 // -----------------------------------------------------------------------------
-void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const ADN_Missions_Data::Mission& rhs, const ADN_Missions_Data::Mission& lhs, int subTab )
+void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const ADN_Missions_Data::ADN_Missions_ABC& rhs, const ADN_Missions_Data::ADN_Missions_ABC& lhs, int subTab )
 {
     ConsistencyError error( type );
     error.items_.push_back( CreateGotoInfo( rhs.strName_.GetData(), eMissions, subTab ) );
@@ -236,14 +238,9 @@ void ADN_ConsistencyChecker::CheckMissionParameters()
 {
     ADN_Missions_Data& data = ADN_Workspace::GetWorkspace().GetMissions().GetData();
 
-    for( ADN_Missions_Data::CIT_Mission_Vector it = data.unitMissions_.begin(); it != data.unitMissions_.end(); ++it )
-        CheckParameters( ( *it )->parameters_, ( *it )->strName_.GetData(), 0 );
-    for( ADN_Missions_Data::CIT_Mission_Vector it = data.automatMissions_.begin(); it != data.automatMissions_.end(); ++it )
-        CheckParameters( ( *it )->parameters_, ( *it )->strName_.GetData(), 1 );
-    for( ADN_Missions_Data::CIT_Mission_Vector it = data.populationMissions_.begin(); it != data.populationMissions_.end(); ++it )
-        CheckParameters( ( *it )->parameters_, ( *it )->strName_.GetData(), 2 );
-    for( ADN_Missions_Data::IT_FragOrder_Vector it = data.fragOrders_.begin(); it != data.fragOrders_.end(); ++it )
-        CheckParameters( ( *it )->parameters_, ( *it )->strName_.GetData(), 3 );
+    for( int i = 0; i < eNbrMissionTypes; ++i )
+        for( auto it = data.missionsVector_[ i ].begin(); it != data.missionsVector_[ i ].end(); ++it )
+            CheckParameters( ( *it )->parameters_, ( *it )->strName_.GetData(), i );
 }
 
 // -----------------------------------------------------------------------------
@@ -267,3 +264,42 @@ void ADN_ConsistencyChecker::CheckParameters( const ADN_Missions_Data::T_Mission
         }
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::AddLoadingError
+// Created: ABR 2013-05-21
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyChecker::AddLoadingError( ConsistencyError error )
+{
+    loadingErrors_.push_back( error );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::AddLoadingError
+// Created: ABR 2013-05-21
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyChecker::AddLoadingError( E_ConsistencyCheck type, const std::string& name, int tab, int subTab /*= -1*/, const std::string& optional /*= ""*/ )
+{
+    ConsistencyError error( type );
+    error.items_.push_back( CreateGotoInfo( name, tab, subTab ) );
+    if( !optional.empty() )
+        error.optional_ = optional;
+    loadingErrors_.push_back( error );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::ClearLoadingErrors
+// Created: ABR 2013-05-21
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyChecker::ClearLoadingErrors()
+{
+    loadingErrors_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::GetLoadingErrors
+// Created: ABR 2013-05-21
+// -----------------------------------------------------------------------------
+const ADN_ConsistencyChecker::T_ConsistencyErrors& ADN_ConsistencyChecker::GetLoadingErrors()
+{
+    return loadingErrors_;
+}

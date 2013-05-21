@@ -114,34 +114,56 @@ public:
     typedef T_MissionParameter_Vector::const_iterator  CIT_MissionParameter_Vector;
 
 // =============================================================================
+// ADN_Missions_ABC
+// =============================================================================
+public:
+    class ADN_Missions_ABC : public ADN_Ref_ABC
+                      , public ADN_DataTreeNode_ABC
+    {
+    public:
+        ADN_Missions_ABC();
+        ADN_Missions_ABC( unsigned int id );
+        ~ADN_Missions_ABC();
+
+        std::string GetItemName();
+        virtual void ReadArchive ( xml::xistream&, std::size_t ) { assert( 0 ); };
+        virtual void WriteArchive( xml::xostream&, E_MissionType, const T_MissionParameter_Vector* ) { assert( 0 ); };
+        virtual ADN_Missions_ABC* CreateCopy() { return 0; };
+        // $$$$ ABR 2013-05-21: TODO: Fill theses methods with common Mission and FragOrder implementation
+
+    public:
+        ADN_Type_Int              id_;
+        ADN_Type_String           strName_;
+        T_MissionParameter_Vector parameters_;
+        ADN_Type_String           diaType_;
+        ADN_Type_String           doctrineDescription_;
+        ADN_Type_String           usageDescription_;
+    };
+    typedef ADN_Type_Vector_ABC<ADN_Missions_ABC>    T_Mission_ABC_Vector;
+    typedef T_Mission_ABC_Vector::iterator          IT_Mission_ABC_Vector;
+    typedef T_Mission_ABC_Vector::const_iterator   CIT_Mission_ABC_Vector;
+
+// =============================================================================
 // Missions
 // =============================================================================
 public:
-    class Mission : public ADN_Ref_ABC
-                  , public ADN_DataTreeNode_ABC
+    class Mission : public ADN_Missions_ABC
     {
     public:
                  Mission();
         explicit Mission( unsigned int id );
         virtual ~Mission();
 
-        std::string GetItemName();
-        Mission* CreateCopy();
+        virtual ADN_Missions_ABC* CreateCopy();
 
-        void ReadArchive ( xml::xistream& input, std::size_t contextLength );
         void ReadParameter( xml::xistream& input, std::size_t& index, std::size_t contextLength );
-        void WriteArchive( xml::xostream& output, const std::string& type, const T_MissionParameter_Vector& context );
+        virtual void ReadArchive ( xml::xistream& input, std::size_t contextLength );
+        virtual void WriteArchive( xml::xostream& output, E_MissionType type, const T_MissionParameter_Vector* context );
 
     public:
-        ADN_Type_Int id_;
-        ADN_Type_String strName_;
-        T_MissionParameter_Vector parameters_;
-        ADN_Type_String diaType_;
         ADN_Type_String diaBehavior_;
         ADN_Type_String cdtDiaBehavior_;
         ADN_Type_String mrtDiaBehavior_;
-        ADN_Type_String doctrineDescription_;
-        ADN_Type_String usageDescription_;
         ADN_TypePtr_InVector_ABC< ADN_Activities_Data::PackageInfos > strPackage_;
         ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbol_;
     };
@@ -154,29 +176,21 @@ public:
 // Frag orders
 // =============================================================================
 public:
-    class FragOrder : public ADN_Ref_ABC
-                    , public ADN_DataTreeNode_ABC
+    class FragOrder : public ADN_Missions_ABC
     {
     public:
                  FragOrder();
         explicit FragOrder( unsigned int id );
         virtual ~FragOrder();
 
-        std::string GetItemName();
-        FragOrder* CreateCopy();
+        virtual ADN_Missions_ABC* CreateCopy();
 
-        void ReadArchive ( xml::xistream& input );
         void ReadParameter( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        virtual void ReadArchive ( xml::xistream& input, std::size_t contextLength );
+        virtual void WriteArchive( xml::xostream& output, E_MissionType type, const T_MissionParameter_Vector* context );
 
     public:
-        ADN_Type_Int              id_;
-        ADN_Type_String           strName_;
-        T_MissionParameter_Vector parameters_;
-        ADN_Type_String           diaType_;
         ADN_Type_Bool             isAvailableWithoutMission_;
-        ADN_Type_String           doctrineDescription_;
-        ADN_Type_String           usageDescription_;
     };
 
     typedef ADN_Type_Vector_ABC<FragOrder>  T_FragOrder_Vector;
@@ -197,12 +211,12 @@ public:
     virtual void FilesNeeded( T_StringList& vFiles ) const;
     virtual void Reset();
 
-    T_FragOrder_Vector& GetFragOrders();
-    T_Mission_Vector&   GetUnitMissions();
-    T_Mission_Vector&   GetAutomatMissions();
-    T_Mission_Vector&   GetPopulationMissions();
+    T_Mission_ABC_Vector& GetFragOrders();
+    T_Mission_ABC_Vector& GetUnitMissions();
+    T_Mission_ABC_Vector& GetAutomatMissions();
+    T_Mission_ABC_Vector& GetPopulationMissions();
     FragOrder*          FindFragOrder( const std::string& strName );
-    Mission*            FindMission( T_Mission_Vector& missions, const std::string& strName );
+    Mission*            FindMission( T_Mission_ABC_Vector& missions, const std::string& strName );
     virtual void Load( const tools::Loader_ABC& fileLoader );
     QStringList GetUnitMissionsThatUse( ADN_Activities_Data::PackageInfos& package );
     QStringList GetAutomataMissionsThatUse( ADN_Activities_Data::PackageInfos& package );
@@ -212,20 +226,18 @@ private:
     void ReadArchive( xml::xistream& input );
     void ReadActivity( xml::xistream& input );
     void ReadFragOrder( xml::xistream& input );
-    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, std::size_t contextLength );
+    void ReadMission( xml::xistream& input, T_Mission_ABC_Vector& missions, std::size_t contextLength );
     void ReadContext( xml::xistream& input, T_MissionParameter_Vector& context );
     void ReadContextParameter( xml::xistream& input, T_MissionParameter_Vector& context );
     void WriteArchive( xml::xostream& output );
     void WriteActivityArchive();
+    void CheckAndFixLoadingErrors() const;
 
 public:
-    T_MissionParameter_Vector   unitContext_;
-    T_Mission_Vector            unitMissions_;
-    T_MissionParameter_Vector   automatContext_;
-    T_Mission_Vector            automatMissions_;
-    T_MissionParameter_Vector   populationContext_;
-    T_Mission_Vector            populationMissions_;
-    T_FragOrder_Vector          fragOrders_;
+    std::vector< T_Mission_ABC_Vector > missionsVector_;
+    T_MissionParameter_Vector           unitContext_;
+    T_MissionParameter_Vector           automatContext_;
+    T_MissionParameter_Vector           populationContext_;
     std::auto_ptr< ADN_Activities_Data > activitiesData_;
 
 private:

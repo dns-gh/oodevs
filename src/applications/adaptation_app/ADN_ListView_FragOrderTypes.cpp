@@ -25,9 +25,8 @@ typedef ADN_Missions_Data::FragOrder FragOrder;
 // Name: ADN_ListView_FragOrderTypes constructor
 // Created: SBO 2006-12-06
 // -----------------------------------------------------------------------------
-ADN_ListView_FragOrderTypes::ADN_ListView_FragOrderTypes( ADN_Missions_Data::T_FragOrder_Vector& orders, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
+ADN_ListView_FragOrderTypes::ADN_ListView_FragOrderTypes( ADN_Missions_Data::T_Mission_ABC_Vector& /* orders */, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
     : ADN_ListView( parent, szName )
-    , orders_( orders )
 {
     addColumn( tr( "Fragmentary orders" ) );
     setResizeMode( Q3ListView::AllColumns );
@@ -63,11 +62,11 @@ void ADN_ListView_FragOrderTypes::ConnectItem( bool bConnect )
 
 namespace
 {
-    class ADN_FragOrder_WizardPage : public ADN_WizardPage< FragOrder >
+    class ADN_FragOrder_WizardPage : public ADN_WizardPage< ADN_Missions_Data::ADN_Missions_ABC >
     {
     public:
         ADN_FragOrder_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0 )
-            : ADN_WizardPage< FragOrder >( existingItems, pageTitle, pParent )
+            : ADN_WizardPage< ADN_Missions_Data::ADN_Missions_ABC >( existingItems, pageTitle, pParent )
             , addForAllUnits_( 0 )
             , addForAllAutomata_( 0 )
             , addForAllPops_( 0 )
@@ -112,7 +111,13 @@ namespace
                 for( ADN_Models_Data::IT_ModelInfos_Vector it1 = pops.begin(); it1 != pops.end(); ++it1 )
                     (*it1)->AddFragOrder( element_, name );
             }
-             element_->isAvailableWithoutMission_ = true;
+            static_cast< FragOrder* >( element_ )->isAvailableWithoutMission_ = true;
+        }
+
+    public:
+        virtual ADN_Missions_Data::ADN_Missions_ABC* NewT()
+        {
+            return new ADN_Missions_Data::FragOrder();
         }
 
     private:
@@ -131,7 +136,7 @@ void ADN_ListView_FragOrderTypes::OnContextMenu( const QPoint& pt )
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
         Q3PopupMenu popupMenu( this );
-        ADN_Wizard< FragOrder, ADN_FragOrder_WizardPage > wizard( tr( "Fragmentary orders" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), this );
+        ADN_Wizard< ADN_Missions_Data::ADN_Missions_ABC, ADN_FragOrder_WizardPage > wizard( tr( "Fragmentary orders" ), ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), this );
         FillContextMenuWithDefault( popupMenu, wizard );
         if( pCurData_ != 0 )
         {

@@ -36,6 +36,15 @@ public:
     virtual bool CheckConsistency();
     //@}
 
+    //! @name Static operations
+    //@{
+    static ADN_NavigationInfos::GoTo* CreateGotoInfo( const std::string& name, int tab, int subTab = -1 );
+    static void AddLoadingError( ConsistencyError error );
+    static void AddLoadingError( E_ConsistencyCheck type, const std::string& name, int tab, int subTab = -1, const std::string& optional = "" );
+    static void ClearLoadingErrors();
+    static const T_ConsistencyErrors& GetLoadingErrors();
+    //@}
+
 private: // NNO Consistency
 
     //! @name Types
@@ -61,14 +70,19 @@ private: // NNO Consistency
     void CheckNNOConsistency();
     void CheckMissionsTypes();
     void CheckBreakdownsBackup();
-    void CheckMissionTypes( const ADN_Missions_Data::T_Mission_Vector& missions, int subTab );
+    void CheckMissionTypes( const ADN_Missions_Data::T_Mission_ABC_Vector& missions, int subTab );
     void CheckParameters( const ADN_Missions_Data::T_MissionParameter_Vector& parameters, const std::string& missionName, int subTab );
     void CheckMissionParameters();
-    ADN_NavigationInfos::GoTo* CreateGotoInfo( const std::string& name, int tab, int subTab = -1 );
     bool IsAlreadyRegistered( const std::string& code, E_ConsistencyCheck type ) const;
     void AddError( E_ConsistencyCheck type, const NNOElement& element );
     void AddError( E_ConsistencyCheck type, const T_NNOElements& elements );
-    void AddError( E_ConsistencyCheck type, const ADN_Missions_Data::Mission& rhs, const ADN_Missions_Data::Mission& lhs, int subTab );
+    void AddError( E_ConsistencyCheck type, const ADN_Missions_Data::ADN_Missions_ABC& rhs, const ADN_Missions_Data::ADN_Missions_ABC& lhs, int subTab );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    static T_ConsistencyErrors loadingErrors_;
     //@}
 };
 

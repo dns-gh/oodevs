@@ -75,7 +75,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildMissions( QWidget*& pContent, ADN_Missions_Data::T_Mission_Vector& missions, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType );
+    QWidget* BuildMissions( QWidget*& pContent, ADN_Missions_Data::T_Mission_ABC_Vector& missions, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType );
     QWidget* BuildUnitMissions();
     QWidget* BuildAutomatMissions();
     QWidget* BuildPopulationMissions();

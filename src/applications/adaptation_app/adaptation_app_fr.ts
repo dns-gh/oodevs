@@ -1301,6 +1301,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>%1 has no repair type defined in maintenance system in a &apos;gravity&apos; category.</source>
         <translation>%1 n&apos;a pas de type de réparation défini dans la chaîne de maintenance dans une catégorie &apos;gravité&apos;</translation>
     </message>
+    <message>
+        <source>&apos;%1&apos; has the same id. These id will be replaced at next save.</source>
+        <translation>&apos;%1&apos; possèdent le même identifiant. Ces identifiants seront remplacés à la prochaine sauvegarde.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -5286,6 +5290,22 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Log</source>
         <translation>Log</translation>
+    </message>
+    <message>
+        <source>Unit missions</source>
+        <translation>Missions pions</translation>
+    </message>
+    <message>
+        <source>Automat missions</source>
+        <translation>Missions automates</translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation>Missions foules</translation>
+    </message>
+    <message>
+        <source>Fragmentary Orders</source>
+        <translation>Ordres de conduite</translation>
     </message>
 </context>
 <context>

@@ -36,7 +36,7 @@ ADN_Models_Data::OrderInfos::OrderInfos()
     this->BindExistenceTo( &fragOrder_ );
 }
 
-ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_Data::FragOrder* fragorder, const std::string& name )
+ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_Data::ADN_Missions_ABC* fragorder, const std::string& name )
 : ADN_Ref_ABC()
 , ADN_DataTreeNode_ABC()
 , fragOrder_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), fragorder )
@@ -99,7 +99,7 @@ ADN_Models_Data::OrderInfos* ADN_Models_Data::OrderInfos::CreateCopy()
 // Name: MissionInfos::~MissionInfos
 // Created: AGN 2003-12-03
 // -----------------------------------------------------------------------------
-ADN_Models_Data::MissionInfos::MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions )
+ADN_Models_Data::MissionInfos::MissionInfos( ADN_Missions_Data::T_Mission_ABC_Vector& missions )
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
     , mission_( missions, 0 )
@@ -177,7 +177,7 @@ void ADN_Models_Data::MissionInfos::ReadFragOrder( xml::xistream& input )
 void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ );
-    ADN_Missions_Data::Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( mission_.GetVector(), strName_.GetData() );
+    ADN_Missions_Data::ADN_Missions_ABC* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( mission_.GetVector(), strName_.GetData() );
     if( !mission )
         throw ADN_DataException( tools::translate( "Models_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Models_Data", "Doctrine models - Invalid mission '%1'" ).arg( strName_.GetData().c_str() ).toAscii().constData() );
     mission_ = mission;
@@ -204,7 +204,7 @@ void ADN_Models_Data::MissionInfos::WriteArchive( xml::xostream& output )
 
 namespace
 {
-    ADN_Missions_Data::T_Mission_Vector dummy;
+    ADN_Missions_Data::T_Mission_ABC_Vector dummy;
 }
 
 // -----------------------------------------------------------------------------
@@ -223,7 +223,7 @@ ADN_Models_Data::ModelInfos::ModelInfos()
 // Name: ModelInfos::ModelInfos
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
-ADN_Models_Data::ModelInfos::ModelInfos( ADN_Missions_Data::T_Mission_Vector& missions )
+ADN_Models_Data::ModelInfos::ModelInfos( ADN_Missions_Data::T_Mission_ABC_Vector& missions )
     : ADN_Ref_ABC()
     , missions_( missions )
     , strDiaType_( "T_Pion" )
@@ -266,7 +266,7 @@ std::string ADN_Models_Data::ModelInfos::GetNodeName()
 // Name: ADN_Models_Data::AddFragOrder
 // Created: HBD 2010-09-01
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::ModelInfos::AddFragOrder( ADN_Missions_Data::FragOrder* fragorder, const std::string& name )
+void ADN_Models_Data::ModelInfos::AddFragOrder( ADN_Missions_Data::ADN_Missions_ABC* fragorder, const std::string& name )
 {
     std::auto_ptr<OrderInfos> spNew( new OrderInfos( fragorder, name ) );
     vFragOrders_.AddItem( spNew.release() );
@@ -506,7 +506,7 @@ void ADN_Models_Data::WriteArchive( xml::xostream& output )
 // Name: ADN_Models_Data::GetModelsThatUse
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
-QStringList ADN_Models_Data::GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::Mission& mission )
+QStringList ADN_Models_Data::GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::ADN_Missions_ABC& mission )
 {
     QStringList result;
     T_ModelInfos_Vector* currentVector = 0;

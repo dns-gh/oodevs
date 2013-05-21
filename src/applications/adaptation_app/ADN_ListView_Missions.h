@@ -33,13 +33,13 @@ private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
 
-    void FillList( Q3CheckListItem* pParent, ADN_Missions_Data::T_Mission_Vector& missions );
+    void FillList( Q3CheckListItem* pParent, ADN_Missions_Data::T_Mission_ABC_Vector& missions );
     ADN_ListViewItem* FindItem( const std::string& strMissionName );
     void ApplyModifications( Q3CheckListItem* pStart );
 
 private:
     ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType_;
-    ADN_Missions_Data::T_Mission_Vector* currentMissions_;
+    ADN_Missions_Data::T_Mission_ABC_Vector* currentMissions_;
 };
 
 #endif // __ADN_ListView_Missions_h_

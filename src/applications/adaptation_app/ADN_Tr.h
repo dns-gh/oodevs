@@ -50,6 +50,7 @@ public:
     static const std::string& ConvertFromPropagationModel( E_PropagationModel, E_Conversion = eToSim );
     static const std::string& ConvertFromEquipmentCategory( E_EquipmentCategory, E_Conversion = eToSim );
     static const std::string& ConvertFromWorkspaceElement( E_WorkspaceElements, E_Conversion = eToTr );
+    static const std::string& ConvertFromMissionType( E_MissionType, E_Conversion = eToTr );
     //@}
 
     //! @name Convert To functions
@@ -78,6 +79,7 @@ public:
     static E_PropagationModel        ConvertToPropagationModel( const std::string& );
     static E_EquipmentCategory       ConvertToEquipmentCategory( const std::string& );
     static E_WorkspaceElements       ConvertToWorkspaceElements( const std::string& );
+    static E_MissionType             ConvertToMissionType( const std::string& );
     //@}
 
     static void InitTranslations();
@@ -109,6 +111,7 @@ public:
     typedef converter< E_PropagationModel >        T_ConverterPropagationModel;
     typedef converter< E_EquipmentCategory>        T_ConverterEquipmentCategory;
     typedef converter< E_WorkspaceElements >       T_ConverterWorkspaceElements;
+    typedef converter< E_MissionType >              T_ConverterMissionType;
     //@}
 
     //! @name Convertors
@@ -136,6 +139,7 @@ public:
     static T_ConverterPropagationModel        propagationModelConverter_[];
     static T_ConverterEquipmentCategory       equipmentCategoryConverter_[];
     static T_ConverterWorkspaceElements       workspaceElementsConverter_[];
+    static T_ConverterMissionType             missionTypeConverter_[];
     //@}
 };
 

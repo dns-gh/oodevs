@@ -25,7 +25,7 @@ class ADN_ListView_MissionTypes : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_MissionTypes( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions, QWidget* pParent = 0, const char* szName = 0 );
+             ADN_ListView_MissionTypes( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Missions_Data::T_Mission_ABC_Vector& missions, QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_ListView_MissionTypes();
     //@}
 
@@ -38,16 +38,8 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_ListView_MissionTypes( const ADN_ListView_MissionTypes& );            //!< Copy constructor
-    ADN_ListView_MissionTypes& operator=( const ADN_ListView_MissionTypes& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
-    ADN_Missions_Data::T_Mission_Vector& missions_;
     ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType_;
     //@}
 };

@@ -13,6 +13,7 @@
 #define __ADN_Tools_h_
 
 #include "ADN_Connector_ABC.h"
+#include <boost/function.hpp>
 
 namespace xml
 {
@@ -30,9 +31,9 @@ class Q3PopupMenu;
 */
 // Created: APE 2005-03-09
 // =============================================================================
-class ADN_Tools
+namespace ADN_Tools
 {
-public:
+
     template< typename T >
     class NameCmp : public std::unary_function< T* , bool >
     {
@@ -59,23 +60,75 @@ public:
     };
 
 
-public:
-    static bool CaselessCompare( const std::string& str1, const std::string& str2 );
+    // -----------------------------------------------------------------------------
+    template< typename T, typename FieldType >
+    bool FieldCompare( const T& element, boost::function< const ADN_Type_ABC< FieldType >& ( const T& ) > fieldExtractor, const FieldType& value )
+    {
+        return fieldExtractor( element ).GetData() == value;
+    }
 
-    static void CreatePathToFile( const std::string& strFilePath );
-    static bool CopyFileToFile( const std::string& strSrc, const std::string& strDest );
+    // -----------------------------------------------------------------------------
+    template< typename Data >
+    ADN_Type_ABC< std::string >& NameExtractor( Data& data )
+    {
+        return data.strName_;
+    }
 
-    static std::string Scriptify( const std::string& strFieldName );
-    static std::string ComputePostureScriptName( E_UnitPosture nPosture );
+    template< typename Data >
+    const ADN_Type_ABC< std::string >& NameExtractor( const Data& data )
+    {
+        return data.strName_;
+    }
 
-    static void CheckConnectorVector( const T_ConnectorVector& vConnectors, uint nExpectedSize );
+    template< typename Data >
+    const ADN_Type_ABC< int >& IdExtractor( const Data& data )
+    {
+        return data.id_;
+    }
 
-    static std::string SecondToString( double rSecond );
+    template< typename Data >
+    const ADN_Type_ABC< int >& NIdExtractor( const Data& data )
+    {
+        return data.nId_;
+    }
 
-    static void SortMenu( Q3PopupMenu& menu );
+    // -----------------------------------------------------------------------------
+    template< typename T >
+    bool NameCompare( const T& element, const std::string& name )
+    {
+        return FieldCompare< T, std::string >( element, boost::bind( &ADN_Tools::NameExtractor< T >, boost::cref( element ) ), boost::cref( name ) );
+    }
 
-    static void AddSchema( xml::xostream& xos, const std::string& name );
+    template< typename T >
+    bool IdCompare( const T& element, const int& id )
+    {
+        return FieldCompare< T, int >( element, boost::bind( &ADN_Tools::IdExtractor< T >, boost::cref( element ) ), boost::cref( id ) );
+    }
 
-    static void AddVersion( xml::xostream& xos, const std::string& name );
+    template< typename T >
+    bool NIdCompare( const T& element, const int& id )
+    {
+        return FieldCompare< T, int >( element, boost::bind( &ADN_Tools::NIdExtractor< T >, boost::cref( element ) ), boost::cref( id ) );
+    }
+
+    // -----------------------------------------------------------------------------
+
+    bool CaselessCompare( const std::string& str1, const std::string& str2 );
+
+    void CreatePathToFile( const std::string& strFilePath );
+    bool CopyFileToFile( const std::string& strSrc, const std::string& strDest );
+
+    std::string Scriptify( const std::string& strFieldName );
+    std::string ComputePostureScriptName( E_UnitPosture nPosture );
+
+    void CheckConnectorVector( const T_ConnectorVector& vConnectors, uint nExpectedSize );
+
+    std::string SecondToString( double rSecond );
+
+    void SortMenu( Q3PopupMenu& menu );
+
+    void AddSchema( xml::xostream& xos, const std::string& name );
+
+    void AddVersion( xml::xostream& xos, const std::string& name );
 };
 #endif // __ADN_Tools_h_

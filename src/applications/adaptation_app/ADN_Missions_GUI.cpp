@@ -79,7 +79,7 @@ void ADN_Missions_GUI::Build()
 // Name: ADN_Missions_GUI::BuildMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data::T_Mission_Vector& missions, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType )
+QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data::T_Mission_ABC_Vector& missions, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType )
 {
     // -------------------------------------------------------------------------
     // Creations
@@ -176,7 +176,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildUnitMissions()
 {
-    return BuildMissions( pUnitMissionsWidget_, data_.unitMissions_, ADN_Models_Data::ModelInfos::ePawn );
+    return BuildMissions( pUnitMissionsWidget_, data_.missionsVector_[ eMissionType_Pawn ], ADN_Models_Data::ModelInfos::ePawn );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ QWidget* ADN_Missions_GUI::BuildUnitMissions()
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildAutomatMissions()
 {
-    return BuildMissions( pAutomatMissionsWidget_, data_.automatMissions_, ADN_Models_Data::ModelInfos::eAutomat );
+    return BuildMissions( pAutomatMissionsWidget_, data_.missionsVector_[ eMissionType_Automat ], ADN_Models_Data::ModelInfos::eAutomat );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +194,7 @@ QWidget* ADN_Missions_GUI::BuildAutomatMissions()
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildPopulationMissions()
 {
-    return BuildMissions( pPopulationMissionsWidget_, data_.populationMissions_, ADN_Models_Data::ModelInfos::ePopulation );
+    return BuildMissions( pPopulationMissionsWidget_, data_.missionsVector_[ eMissionType_Population ], ADN_Models_Data::ModelInfos::ePopulation );
 }
 
 // -----------------------------------------------------------------------------
@@ -269,7 +269,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     pContentLayout->addWidget( pParametersGroup );
 
     // List view
-    ADN_SearchListView< ADN_ListView_FragOrderTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_FragOrderTypes >( this, data_.fragOrders_, data_.fragOrders_, vInfosConnectors, 3 );
+    ADN_SearchListView< ADN_ListView_FragOrderTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_FragOrderTypes >( this, data_.missionsVector_[ eMissionType_FragOrder ], data_.missionsVector_[ eMissionType_FragOrder ], vInfosConnectors, 3 );
     connect( available, SIGNAL( toggled ( bool ) ), pSearchListView->GetListView(), SLOT( OnToogled( bool ) ) );
     vListViews_.push_back( pSearchListView->GetListView() );
 

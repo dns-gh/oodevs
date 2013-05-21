@@ -25,7 +25,7 @@ class ADN_ListView_FragOrderTypes : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_FragOrderTypes( ADN_Missions_Data::T_FragOrder_Vector& orders, QWidget* pParent = 0, const char* szName = 0 );
+             ADN_ListView_FragOrderTypes( ADN_Missions_Data::T_Mission_ABC_Vector& orders, QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_ListView_FragOrderTypes();
     //@}
 
@@ -37,23 +37,10 @@ private:
     std::string GetToolTipFor( Q3ListViewItem& item );
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_ListView_FragOrderTypes( const ADN_ListView_FragOrderTypes& );            //!< Copy constructor
-    ADN_ListView_FragOrderTypes& operator=( const ADN_ListView_FragOrderTypes& ); //!< Assignment operator
-    //@}
-
 public slots:
     //! @name slots
     //@{
     void OnToogled( bool );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    ADN_Missions_Data::T_FragOrder_Vector& orders_;
     //@}
 };
 

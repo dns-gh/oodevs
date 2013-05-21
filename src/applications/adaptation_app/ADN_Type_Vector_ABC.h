@@ -12,6 +12,7 @@
 
 #include "ADN_Connector_Vector_ABC.h"
 #include "ADN_DataTreeNode_ABC.h"
+#include <boost/function.hpp>
 
 //*****************************************************************************
 // Created: JDY 03-06-26
@@ -42,6 +43,8 @@ public:
 
     const std::string& GetItemTypeName() const;
     void SetItemTypeName( const std::string& strItemTypeName );
+
+    std::vector< T* > ADN_Type_Vector_ABC< T >::FindElements( boost::function< bool( const T& ) > func ) const;
 
 protected:
     virtual void SetDataPrivate( void* pData );

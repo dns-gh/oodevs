@@ -145,12 +145,12 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Missions::FillList
 // Created: AGN 2004-04-28
 // -----------------------------------------------------------------------------
-void ADN_ListView_Missions::FillList( Q3CheckListItem* pParent, ADN_Missions_Data::T_Mission_Vector& missions )
+void ADN_ListView_Missions::FillList( Q3CheckListItem* pParent, ADN_Missions_Data::T_Mission_ABC_Vector& missions )
 {
     currentMissions_ = &missions;
     pParent->setOpen( true );
     unsigned int n = 0;
-    for( ADN_Missions_Data::IT_Mission_Vector it = missions.begin(); it != missions.end(); ++it, ++n )
+    for( auto it = missions.begin(); it != missions.end(); ++it, ++n )
         if( ADN_ListViewItem* pMission = FindItem( (*it)->strName_.GetData().c_str() ) )
             new ADN_Mission_CheckItem( pParent, **it, static_cast< MissionInfos* >( pMission->GetData() ) );
         else

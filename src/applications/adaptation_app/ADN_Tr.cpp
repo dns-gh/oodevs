@@ -380,6 +380,16 @@ ADN_Tr::T_ConverterWorkspaceElements ADN_Tr::workspaceElementsConverter_[] =
     T_ConverterWorkspaceElements( "", "", (E_WorkspaceElements)-1 )
 };
 
+ADN_Tr::T_ConverterMissionType ADN_Tr::missionTypeConverter_[] =
+{
+    T_ConverterMissionType( "unit",       QT_TRANSLATE_NOOP( "ADN_Tr", "Unit missions" ),      eMissionType_Pawn ),
+    T_ConverterMissionType( "automat",    QT_TRANSLATE_NOOP( "ADN_Tr", "Automat missions" ),   eMissionType_Automat ),
+    T_ConverterMissionType( "crowd",      QT_TRANSLATE_NOOP( "ADN_Tr", "Crowd missions" ),     eMissionType_Population ),
+    T_ConverterMissionType( "fragOrder", QT_TRANSLATE_NOOP( "ADN_Tr", "Fragmentary Orders" ), eMissionType_FragOrder ),
+
+    T_ConverterMissionType( "", "", (E_MissionType)-1 )
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromLocation
 // Created: APE 2005-02-18
@@ -607,6 +617,15 @@ const std::string& ADN_Tr::ConvertFromWorkspaceElement( E_WorkspaceElements nVal
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromMissionType
+// Created: NPT 2013-02-15
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromMissionType( E_MissionType nValue, E_Conversion nConverterType )
+{
+    return ADN_Tr::InverseFindInConverter( missionTypeConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToLocation
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -829,6 +848,15 @@ E_WorkspaceElements ADN_Tr::ConvertToWorkspaceElements( const std::string& strNa
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToMissionType
+// Created: NPT 2013-02-15
+// -----------------------------------------------------------------------------
+E_MissionType ADN_Tr::ConvertToMissionType( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( missionTypeConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -857,4 +885,5 @@ void ADN_Tr::InitTranslations()
     InitTr( propagationModelConverter_, "ADN_Tr" );
     InitTr( equipmentCategoryConverter_, "ADN_Tr" );
     InitTr( workspaceElementsConverter_, "ADN_Tr" );
+    InitTr( missionTypeConverter_, "ADN_Tr" );
 }

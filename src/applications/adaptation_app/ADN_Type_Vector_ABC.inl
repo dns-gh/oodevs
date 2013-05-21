@@ -315,3 +315,17 @@ void ADN_Type_Vector_ABC< T >::push_back(  T* const & x )
 {
     std::vector<T*>::push_back( x );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Type_Vector_ABC::FindElements
+// Created: ABR 2013-04-23
+// -----------------------------------------------------------------------------
+template< typename T >
+std::vector< T* > ADN_Type_Vector_ABC< T >::FindElements( boost::function< bool( const T& ) > func ) const
+{
+    std::vector< T* > result;
+    for( auto it = begin(); it != end(); ++it )
+        if( *it && func( **it ) )
+            result.push_back( *it );
+    return result;
+}

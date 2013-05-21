@@ -43,6 +43,7 @@ private:
     //! @name Helpers
     //@{
     virtual void UpdateDataModel();
+    void DoUpdateDataModel( const ADN_ConsistencyChecker::T_ConsistencyErrors& errors );
     //@}
 
 signals:

@@ -101,12 +101,13 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
     bool bDisplayRem = GetCurrentData() != 0;
 
     unsigned int n = 0;
-    ADN_Missions_Data::T_FragOrder_Vector& fragOrders = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders();
-    for( ADN_Missions_Data::IT_FragOrder_Vector it = fragOrders.begin(); it != fragOrders.end(); ++it )
+    ADN_Missions_Data::T_Mission_ABC_Vector& fragOrders = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders();
+    for( auto it = fragOrders.begin(); it != fragOrders.end(); ++it )
     {
-        if ( usedWithMission_ || (*it)->isAvailableWithoutMission_.GetData() )
+        ADN_Missions_Data::FragOrder* fragOrder = static_cast< ADN_Missions_Data::FragOrder* >( *it );
+        if ( usedWithMission_ || fragOrder->isAvailableWithoutMission_.GetData() )
         {
-            std::string strOrderName = (*it)->strName_.GetData();
+            std::string strOrderName = fragOrder->strName_.GetData();
             const int id = pTargetMenu->insertItem( strOrderName.c_str(), 2 + n );
             const bool added = Contains( strOrderName );
             pTargetMenu->setItemEnabled( id, !added );
@@ -169,8 +170,8 @@ void ADN_ListView_Orders::CreateNewItem( int n )
     if( cit != fragOrders_.end() )
     {
         OrderInfos* pNewInfo = new OrderInfos();
-        ADN_Missions_Data::T_FragOrder_Vector& fragOrders = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders();
-        for( ADN_Missions_Data::IT_FragOrder_Vector it = fragOrders.begin(); it != fragOrders.end(); ++it )
+        ADN_Missions_Data::T_Mission_ABC_Vector& fragOrders = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders();
+        for( auto it = fragOrders.begin(); it != fragOrders.end(); ++it )
             if( cit->second == (*it)->strName_.GetData() )
             {
                 pNewInfo->strName_   = (*it)->strName_.GetData();

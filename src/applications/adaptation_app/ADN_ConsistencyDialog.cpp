@@ -58,6 +58,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1." );
     errorDescriptions_[ eMissingPart ]            = tr( "The breakdown '%1' has no replacement part." );
     errorDescriptions_[ eMissingChoiceComposite ] = tr( "The mission '%1' has no type defined for a localisation composite parameter." );
+    errorDescriptions_[ eInvalidIdInVector ]      = tr( "'%1' has the same id. These id will be replaced at next save." );
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );
@@ -109,8 +110,18 @@ void ADN_ConsistencyDialog::OnSelectionChanged( const QModelIndex& index )
 void ADN_ConsistencyDialog::UpdateDataModel()
 {
     T_Parent::UpdateDataModel();
+    DoUpdateDataModel( static_cast< ADN_ConsistencyChecker& >( checker_ ).GetConsistencyErrors() );
+    DoUpdateDataModel( ADN_ConsistencyChecker::GetLoadingErrors() );
+}
 
-    const ADN_ConsistencyChecker::T_ConsistencyErrors& errors = static_cast< ADN_ConsistencyChecker& >( checker_ ).GetConsistencyErrors();
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyDialog::DoUpdateDataModel
+// Created: JSR 2013-04-12
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyDialog::DoUpdateDataModel( const ADN_ConsistencyChecker::T_ConsistencyErrors& errors )
+{
+    T_Parent::UpdateDataModel();
+
     for( ADN_ConsistencyChecker::CIT_ConsistencyErrors it = errors.begin(); it != errors.end(); ++it )
     {
         const ADN_ConsistencyChecker::ConsistencyError& error = *it;
@@ -130,7 +141,7 @@ void ADN_ConsistencyDialog::UpdateDataModel()
             AddIcon( error.items_, error.type_, items, false );
             AddItem( text, text, error.items_, error.type_, items );
         }
-        else if( ( error.type_ & eUniquenessMask ) != 0 )
+        else if( ( error.type_ & eUniquenessMask ) != 0 || ( error.type_ & eOthersMask ) != 0 )
         {
             QString text = errorDescriptions_[ error.type_ ];
             assert( text.contains( "%1" ) );

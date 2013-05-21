@@ -339,6 +339,48 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
 }
 
 // =============================================================================
+// Mission_ABC
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::Mission_ABC
+// Created: ABR 2013-05-21
+// -----------------------------------------------------------------------------
+ADN_Missions_Data::ADN_Missions_ABC::ADN_Missions_ABC()
+    : id_( ADN_Missions_Data::idManager_.GetNextId() )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::ADN_Missions_ABC
+// Created: ABR 2013-05-21
+// -----------------------------------------------------------------------------
+ADN_Missions_Data::ADN_Missions_ABC::ADN_Missions_ABC( unsigned int id )
+    : id_( id )
+{
+    ADN_Missions_Data::idManager_.Lock( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::~ADN_Missions_ABC
+// Created: ABR 2013-05-21
+// -----------------------------------------------------------------------------
+ADN_Missions_Data::ADN_Missions_ABC::~ADN_Missions_ABC()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::GetItemName
+// Created: ABR 2013-05-21
+// -----------------------------------------------------------------------------
+std::string ADN_Missions_Data::ADN_Missions_ABC::GetItemName()
+{
+    return strName_.GetData();
+}
+
+// =============================================================================
 // Missions
 // =============================================================================
 
@@ -347,7 +389,7 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
 // Created: SBO 2009-11-16
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::Mission::Mission()
-    : id_( ADN_Missions_Data::idManager_.GetNextId() )
+    : ADN_Missions_ABC()
     , strPackage_( ADN_Workspace::GetWorkspace().GetMissions().GetData().activitiesData_->GetPackages(), 0 )
 {
     symbol_.SetParentNode( *this );
@@ -358,10 +400,9 @@ ADN_Missions_Data::Mission::Mission()
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::Mission::Mission( unsigned int id )
-    : id_( id )
+    : ADN_Missions_ABC( id )
     , strPackage_( ADN_Workspace::GetWorkspace().GetMissions().GetData().activitiesData_->GetPackages(), 0 )
 {
-    ADN_Missions_Data::idManager_.Lock( id );
     symbol_.SetParentNode( *this );
 }
 
@@ -375,19 +416,10 @@ ADN_Missions_Data::Mission::~Mission()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::Mission::GetItemName
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-std::string ADN_Missions_Data::Mission::GetItemName()
-{
-    return strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::Mission::CreateCopy
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
+ADN_Missions_Data::ADN_Missions_ABC* ADN_Missions_Data::Mission::CreateCopy()
 {
     Mission* newMission              = new Mission();
     newMission->strName_             = strName_.GetData();
@@ -474,11 +506,12 @@ namespace
 // Name: ADN_Missions_Data::Mission::WriteArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std::string& type, const T_MissionParameter_Vector& context )
+void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, E_MissionType type, const T_MissionParameter_Vector* context )
 {
     output << xml::start( "mission" );
-    bool isAutomat = type == "automats";
-    const QString typeName = type == "units" ? "Pion" : (isAutomat ? "Automate" : "Population");
+    bool isAutomat = type == eMissionType_Automat;
+    const QString typeName = type == eMissionType_Pawn ? "Pion" : (isAutomat ? "Automate" : "Population");
+
     const QString diaName  = BuildDiaMissionType( strName_.GetData().c_str() );
     if( diaType_.GetData().empty() )
         diaType_ = QString( "T_Mission_%1_%2" ).arg( typeName ).arg( diaName ).toAscii().constData();
@@ -524,10 +557,10 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
             output << xml::start( "usage" ) << xml::cdata( usageDescription_.GetData() ) << xml::end;
         output << xml::end;
     }
-    if( ! context.empty() )
+    if( context && !context->empty() )
     {
-        for( unsigned i = 0; i < context.size(); ++i )
-            context[i]->WriteArchive( output );
+        for( unsigned i = 0; i < context->size(); ++i )
+            ( *context )[i]->WriteArchive( output );
     }
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
@@ -544,7 +577,7 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::FragOrder::FragOrder()
-    : id_( ADN_Missions_Data::idManager_.GetNextId() )
+    : ADN_Missions_ABC()
     , isAvailableWithoutMission_( false )
 {
     // NOTHING
@@ -555,10 +588,10 @@ ADN_Missions_Data::FragOrder::FragOrder()
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::FragOrder::FragOrder( unsigned int id )
-    : id_                       ( id )
+    : ADN_Missions_ABC( id )
     , isAvailableWithoutMission_( false )
 {
-    ADN_Missions_Data::idManager_.Lock( id );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -571,19 +604,10 @@ ADN_Missions_Data::FragOrder::~FragOrder()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::FragOrder::GetItemName
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-std::string ADN_Missions_Data::FragOrder::GetItemName()
-{
-    return strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::FragOrder::CreateCopy
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_Data::FragOrder* ADN_Missions_Data::FragOrder::CreateCopy()
+ADN_Missions_Data::ADN_Missions_ABC* ADN_Missions_Data::FragOrder::CreateCopy()
 {
     FragOrder* newFragOrder = new FragOrder();
     newFragOrder->strName_ = strName_.GetData();
@@ -602,7 +626,7 @@ ADN_Missions_Data::FragOrder* ADN_Missions_Data::FragOrder::CreateCopy()
 // Name: ADN_Missions_Data::FragOrder::ReadArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::FragOrder::ReadArchive( xml::xistream& input )
+void ADN_Missions_Data::FragOrder::ReadArchive( xml::xistream& input, std::size_t /* contextLength */ )
 {
     std::string doctrineDesc, usageDesc;
     input >> xml::attribute( "name", strName_ )
@@ -646,7 +670,7 @@ namespace
 // Name: ADN_Missions_Data::FragOrder::WriteArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::FragOrder::WriteArchive( xml::xostream& output )
+void ADN_Missions_Data::FragOrder::WriteArchive( xml::xostream& output, E_MissionType /*type*/, const T_MissionParameter_Vector* /* context */ )
 {
     if( diaType_.GetData().empty() )
         diaType_ = BuildDiaFragOrderType( strName_.GetData().c_str() ).toAscii().constData();
@@ -681,7 +705,10 @@ void ADN_Missions_Data::FragOrder::WriteArchive( xml::xostream& output )
 ADN_Missions_Data::ADN_Missions_Data()
     : activitiesData_( new ADN_Activities_Data() )
 {
-    // NOTHING
+    missionsVector_.push_back( T_Mission_ABC_Vector() );
+    missionsVector_.push_back( T_Mission_ABC_Vector() );
+    missionsVector_.push_back( T_Mission_ABC_Vector() );
+    missionsVector_.push_back( T_Mission_ABC_Vector() );
 }
 
 // -----------------------------------------------------------------------------
@@ -711,10 +738,8 @@ void ADN_Missions_Data::FilesNeeded( T_StringList& files ) const
 void ADN_Missions_Data::Reset()
 {
     idManager_.Reset();
-    unitMissions_.Reset();
-    automatMissions_.Reset();
-    populationMissions_.Reset();
-    fragOrders_.Reset();
+    for( int i = 0; i < eNbrMissionTypes; ++i )
+        missionsVector_[ i ].Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -744,9 +769,9 @@ void ADN_Missions_Data::Load( const tools::Loader_ABC& fileLoader )
 QStringList ADN_Missions_Data::GetUnitMissionsThatUse( ADN_Activities_Data::PackageInfos& package )
 {
     QStringList result;
-    for( auto it = unitMissions_.begin(); it != unitMissions_.end(); ++it )
+    for( auto it = missionsVector_[ eMissionType_Pawn ].begin(); it != missionsVector_[ eMissionType_Pawn ].end(); ++it )
     {
-        Mission* mission = *it;
+        Mission* mission = static_cast< Mission* >( *it );
         if( mission->strPackage_.GetData()->strName_.GetData() == package.strName_.GetData() )
             result << mission->strName_.GetData().c_str();
     }
@@ -760,9 +785,9 @@ QStringList ADN_Missions_Data::GetUnitMissionsThatUse( ADN_Activities_Data::Pack
 QStringList ADN_Missions_Data::GetAutomataMissionsThatUse( ADN_Activities_Data::PackageInfos& package )
 {
     QStringList result;
-    for( auto it = automatMissions_.begin(); it != automatMissions_.end(); ++it )
+    for( auto it = missionsVector_[ eMissionType_Automat ].begin(); it != missionsVector_[ eMissionType_Automat ].end(); ++it )
     {
-        Mission* mission = *it;
+        Mission* mission = static_cast< Mission* >( *it );
         if( mission->strPackage_.GetData()->strName_.GetData() == package.strName_.GetData() )
             result << mission->strName_.GetData().c_str();
     }
@@ -797,18 +822,20 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 
     input >> xml::start( "missions" )
             >> xml::start( "units" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( unitMissions_ ), unitContext_.size() ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( missionsVector_[ eMissionType_Pawn ] ), unitContext_.size() ) )
             >> xml::end
             >> xml::start( "automats" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( automatMissions_ ), automatContext_.size() ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( missionsVector_[ eMissionType_Automat ] ), automatContext_.size() ) )
             >> xml::end
             >> xml::start( "populations" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( populationMissions_ ), populationContext_.size() ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( missionsVector_[ eMissionType_Population ] ), populationContext_.size() ) )
             >> xml::end
             >> xml::start( "fragorders" )
                 >> xml::list( "fragorder", *this, &ADN_Missions_Data::ReadFragOrder )
             >> xml::end
           >> xml::end;
+
+    CheckAndFixLoadingErrors();
 }
 
 // -----------------------------------------------------------------------------
@@ -827,15 +854,15 @@ void ADN_Missions_Data::ReadActivity( xml::xistream& input )
 void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 {
     std::auto_ptr< FragOrder > spNew( new FragOrder( xis.attribute< unsigned int >( "id" ) ) );
-    spNew->ReadArchive( xis );
-    fragOrders_.AddItem( spNew.release() );
+    spNew->ReadArchive( xis, 0 );
+    missionsVector_[ eMissionType_FragOrder ].AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::ReadMission
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, std::size_t contextLength )
+void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_ABC_Vector& missions, std::size_t contextLength )
 {
     std::auto_ptr< ADN_Missions_Data::Mission > spNew( new Mission( xis.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( xis, contextLength );
@@ -866,11 +893,11 @@ void ADN_Missions_Data::ReadContextParameter( xml::xistream& input, T_MissionPar
 
 namespace
 {
-    void WriteMissions( xml::xostream& output, const std::string& name, const ADN_Missions_Data::T_MissionParameter_Vector& context, const ADN_Missions_Data::T_Mission_Vector& missions )
+    void WriteMissions( xml::xostream& output, const std::string& name, E_MissionType type, const ADN_Missions_Data::T_MissionParameter_Vector* context, const ADN_Missions_Data::T_Mission_ABC_Vector& missions )
     {
         output << xml::start( name );
         for( unsigned int i = 0; i < missions.size(); ++i )
-            missions[i]->WriteArchive( output, name, context );
+            missions[i]->WriteArchive( output, type, context );
         output << xml::end;
     }
 }
@@ -883,15 +910,11 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "missions" );
     ADN_Tools::AddSchema( output, "Missions" );
-    WriteMissions( output, "units"      , unitContext_,       unitMissions_ );
-    WriteMissions( output, "automats"   , automatContext_,    automatMissions_ );
-    WriteMissions( output, "populations", populationContext_, populationMissions_ );
-
-    output << xml::start( "fragorders" );
-    for( unsigned int i = 0; i < fragOrders_.size(); ++i )
-        fragOrders_[i]->WriteArchive( output );
-    output << xml::end
-        << xml::end;
+    WriteMissions( output, "units"      , eMissionType_Pawn,        &unitContext_,       missionsVector_[ eMissionType_Pawn ] );
+    WriteMissions( output, "automats"   , eMissionType_Automat,     &automatContext_,    missionsVector_[ eMissionType_Automat ] );
+    WriteMissions( output, "populations", eMissionType_Population,  &populationContext_, missionsVector_[ eMissionType_Population ] );
+    WriteMissions( output, "fragorders" , eMissionType_FragOrder,   0,                   missionsVector_[ eMissionType_FragOrder ] );
+    output << xml::end;
     WriteActivityArchive();
 }
 
@@ -919,36 +942,36 @@ void ADN_Missions_Data::WriteActivityArchive()
 // Name: ADN_Missions_Data::GetFragOrders
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_Data::T_FragOrder_Vector& ADN_Missions_Data::GetFragOrders()
+ADN_Missions_Data::T_Mission_ABC_Vector& ADN_Missions_Data::GetFragOrders()
 {
-    return fragOrders_;
+    return missionsVector_[ eMissionType_FragOrder ];
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::GetUnitMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_Data::T_Mission_Vector& ADN_Missions_Data::GetUnitMissions()
+ADN_Missions_Data::T_Mission_ABC_Vector& ADN_Missions_Data::GetUnitMissions()
 {
-    return unitMissions_;
+    return missionsVector_[ eMissionType_Pawn ];
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::GetAutomatMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_Data::T_Mission_Vector& ADN_Missions_Data::GetAutomatMissions()
+ADN_Missions_Data::T_Mission_ABC_Vector& ADN_Missions_Data::GetAutomatMissions()
 {
-    return automatMissions_;
+    return missionsVector_[ eMissionType_Automat ];
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::GetPopulationMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_Data::T_Mission_Vector& ADN_Missions_Data::GetPopulationMissions()
+ADN_Missions_Data::T_Mission_ABC_Vector& ADN_Missions_Data::GetPopulationMissions()
 {
-    return populationMissions_;
+    return missionsVector_[ eMissionType_Population ];
 }
 
 // -----------------------------------------------------------------------------
@@ -957,22 +980,22 @@ ADN_Missions_Data::T_Mission_Vector& ADN_Missions_Data::GetPopulationMissions()
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::FragOrder* ADN_Missions_Data::FindFragOrder( const std::string& strName )
 {
-    IT_FragOrder_Vector it = std::find_if( fragOrders_.begin(), fragOrders_.end(), ADN_Tools::NameCmp< FragOrder >( strName ) );
-    if( it == fragOrders_.end() )
+    CIT_Mission_ABC_Vector it = std::find_if( missionsVector_[ eMissionType_FragOrder ].begin(), missionsVector_[ eMissionType_FragOrder ].end(), ADN_Tools::NameCmp< ADN_Missions_ABC >( strName ) );
+    if( it == missionsVector_[ eMissionType_FragOrder ].end() )
         return 0;
-    return *it;
+    return static_cast< FragOrder* >( *it );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::FindMission
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_Data::Mission* ADN_Missions_Data::FindMission( ADN_Missions_Data::T_Mission_Vector& missions, const std::string& strName )
+ADN_Missions_Data::Mission* ADN_Missions_Data::FindMission( ADN_Missions_Data::T_Mission_ABC_Vector& missions, const std::string& strName )
 {
-    IT_Mission_Vector it = std::find_if( missions.begin(), missions.end(), ADN_Tools::NameCmp< Mission >( strName ) );
+    CIT_Mission_ABC_Vector it = std::find_if( missions.begin(), missions.end(), ADN_Tools::NameCmp< ADN_Missions_ABC >( strName ) );
     if( it == missions.end() )
         return 0;
-    return *it;
+    return static_cast< Mission* >( *it );
 }
 
 // -----------------------------------------------------------------------------
@@ -1039,4 +1062,59 @@ void ADN_Missions_Data::MissionType::WriteArchive( xml::xostream& output )
                  << xml::attribute( "type", name_ )
                << xml::end;
     }
+}
+
+#include "ADN_ConsistencyChecker.h"
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::CheckAndFixLoadingErrors
+// Created: ABR 2013-04-23
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::CheckAndFixLoadingErrors() const
+{
+    std::vector< int > alreadyReportedIds;
+    std::vector< ADN_Missions_ABC* > missionThatNeedANewId;
+
+    // Check for duplicate id
+    for( int type = 0; type < eNbrMissionTypes; ++type )
+    {
+        const ADN_Missions_Data::T_Mission_ABC_Vector& vector = missionsVector_[ type ];
+        for( auto it = vector.begin(); it != vector.end(); ++it )
+        {
+            assert( *it != 0 );
+            int id = ( *it )->id_.GetData();
+
+            // If already reported, continue
+            if( std::find( alreadyReportedIds.begin(), alreadyReportedIds.end(), id ) != alreadyReportedIds.end() )
+                continue;
+
+            // look for others with same id in each vector
+            std::map< int, std::vector< ADN_Missions_ABC* > > missionsMap;
+            size_t count = 0;
+            for( int secondType = type; secondType < eNbrMissionTypes; ++secondType )
+            {
+                missionsMap[ secondType ] = missionsVector_[ secondType ].FindElements( boost::bind( &ADN_Tools::IdCompare< ADN_Missions_ABC >, _1, boost::cref( id ) ) );
+                count += missionsMap[ secondType ].size();
+            }
+
+            assert( count != 0 );
+            if( count > 1 ) // duplicate id, report it
+            {
+                alreadyReportedIds.push_back( id );
+                ADN_ConsistencyChecker::ConsistencyError error( eInvalidIdInVector );
+                for( auto itMap = missionsMap.begin(); itMap != missionsMap.end(); ++itMap )
+                    for( auto itVector = itMap->second.begin(); itVector != itMap->second.end(); ++itVector )
+                    {
+                        error.items_.push_back( ADN_ConsistencyChecker::CreateGotoInfo( ( *itVector )->strName_.GetData(), eMissions, itMap->first ) );
+                        if( error.items_.size() > 1 )
+                            missionThatNeedANewId.push_back( *itVector );
+                    }
+                    ADN_ConsistencyChecker::AddLoadingError( error );
+            }
+        }
+    }
+
+    // Fix ids
+    for( auto it = missionThatNeedANewId.begin(); it != missionThatNeedANewId.end(); ++it )
+        ( *it )->id_ = ADN_Missions_Data::idManager_.GetNextId();
 }

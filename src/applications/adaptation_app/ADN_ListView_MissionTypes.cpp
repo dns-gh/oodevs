@@ -22,9 +22,8 @@ typedef ADN_Missions_Data::Mission Mission;
 // Name: ADN_ListView_MissionTypes constructor
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Missions_Data::T_Mission_Vector& missions, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
+ADN_ListView_MissionTypes::ADN_ListView_MissionTypes( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Missions_Data::T_Mission_ABC_Vector& /* missions */, QWidget* parent /* = 0*/, const char* szName /* = 0*/ )
     : ADN_ListView( parent, szName )
-    , missions_   ( missions )
     , eEntityType_( eEntityType )
 {
     addColumn( ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str() );
@@ -70,6 +69,35 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
         vItemConnectors_[ ADN_Missions_GUI::eAssociatedPackage ]->Connect( &pInfos->strPackage_, bConnect );
 }
 
+namespace
+{
+    class ADN_Missions_WizardPage : public ADN_WizardPage< ADN_Missions_Data::ADN_Missions_ABC >
+    {
+
+    public:
+        //! @name Constructors/Destructor
+        //@{
+        ADN_Missions_WizardPage( const T_ItemVector& existingItems, const QString& pageTitle, QWidget* pParent = 0 )
+            : ADN_WizardPage< ADN_Missions_Data::ADN_Missions_ABC >( existingItems, pageTitle, pParent )
+        {
+            // NOTHING
+        }
+        virtual ~ADN_Missions_WizardPage()
+        {
+            // NOTHING
+        }
+        //@}
+
+        //! @name Operations
+        //@{
+        virtual ADN_Missions_Data::ADN_Missions_ABC* NewT()
+        {
+            return new Mission();
+        }
+        //@}
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_MissionTypes::OnContextMenu
 // Created: SBO 2006-12-04
@@ -77,7 +105,7 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
 void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Missions_Data::T_Mission_Vector* pMissionList;
+    ADN_Missions_Data::T_Mission_ABC_Vector* pMissionList;
     if( eEntityType_ == ADN_Models_Data::ModelInfos::eAutomat )
         pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions();
     else if( eEntityType_ == ADN_Models_Data::ModelInfos::ePawn )
@@ -85,7 +113,7 @@ void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
     else
         pMissionList = &ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions();
 
-    ADN_Wizard< Mission > wizard( ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str(), *pMissionList, this );
+    ADN_Wizard< ADN_Missions_Data::ADN_Missions_ABC, ADN_Missions_WizardPage > wizard( ADN_Tr::ConvertFromWorkspaceElement( eMissions ).c_str(), *pMissionList, this );
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
         FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )

@@ -291,6 +291,8 @@ void ADN_MainWindow::SaveProject()
     bool bNoReadOnlyFiles = true;
     try
     {
+        if( !ADN_ConsistencyChecker::GetLoadingErrors().empty() )
+            ADN_ConsistencyChecker::ClearLoadingErrors();
         consistencyDialog_->CheckConsistency();
         bNoReadOnlyFiles = workspace_.Save();
     }
@@ -435,6 +437,8 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
                     , tr( "The signatures for the following files do not exist or are invalid : " ) + "\n" + fileLoaderObserver_->GetInvalidSignedFiles().c_str() );
     }
     pProjectLoadAction_->setVisible( false );
+    if( !ADN_ConsistencyChecker::GetLoadingErrors().empty() )
+        consistencyDialog_->CheckConsistency();
 }
 
 // -----------------------------------------------------------------------------

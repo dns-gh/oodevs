@@ -1300,6 +1300,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
         <source>%1 has no repair type defined in maintenance system in a &apos;gravity&apos; category.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&apos;%1&apos; has the same id. These id will be replaced at next save.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -5282,6 +5286,22 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Log</source>
         <translation type="unfinished">Logística</translation>
+    </message>
+    <message>
+        <source>Unit missions</source>
+        <translation type="unfinished">Misiones de unidad</translation>
+    </message>
+    <message>
+        <source>Automat missions</source>
+        <translation type="unfinished">Misiones de autómata</translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fragmentary Orders</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

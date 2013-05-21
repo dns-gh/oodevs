@@ -19,11 +19,14 @@
 #include <sys/stat.h>
 #include <xeumeuleu/xml.hpp>
 
+namespace ADN_Tools
+{
+
 //-----------------------------------------------------------------------------
-// Name: ADN_Tools::CreatePathToFile
+// Name: CreatePathToFile
 // Created: AGN 03-07-30
 //-----------------------------------------------------------------------------
-void ADN_Tools::CreatePathToFile( const std::string& strFilePath )
+void CreatePathToFile( const std::string& strFilePath )
 {
     size_t nPos = 0;
     size_t nFind = 0;
@@ -36,20 +39,20 @@ void ADN_Tools::CreatePathToFile( const std::string& strFilePath )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Tools::CopyFileToFile
+// Name: CopyFileToFile
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
-bool ADN_Tools::CopyFileToFile( const std::string& strSrc, const std::string& strDest )
+bool CopyFileToFile( const std::string& strSrc, const std::string& strDest )
 {
     CreatePathToFile( strDest );
     return ::CopyFile( strSrc.c_str(), strDest.c_str(), false ) != 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tools::CaselessCompare
+// Name: CaselessCompare
 // Created: APE 2005-01-20
 // -----------------------------------------------------------------------------
-bool ADN_Tools::CaselessCompare( const std::string& str1, const std::string& str2 )
+bool CaselessCompare( const std::string& str1, const std::string& str2 )
 {
     std::string str1Lower = str1;
     std::transform( str1Lower.begin(), str1Lower.end(), str1Lower.begin(), std::tolower );
@@ -61,10 +64,10 @@ bool ADN_Tools::CaselessCompare( const std::string& str1, const std::string& str
 
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tools::Scriptify
+// Name: Scriptify
 // Created: APE 2005-02-21
 // -----------------------------------------------------------------------------
-std::string ADN_Tools::Scriptify( const std::string& strFieldName )
+std::string Scriptify( const std::string& strFieldName )
 {
     std::string strResult;
     assert( strFieldName.size() >= 1 );
@@ -83,23 +86,23 @@ std::string ADN_Tools::Scriptify( const std::string& strFieldName )
 
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tools::ComputePostureScriptName
+// Name: ComputePostureScriptName
 // Created: APE 2005-02-21
 // -----------------------------------------------------------------------------
-std::string ADN_Tools::ComputePostureScriptName( E_UnitPosture nPosture )
+std::string ComputePostureScriptName( E_UnitPosture nPosture )
 {
     std::string strName = ENT_Tr::ConvertFromUnitPosture( nPosture );
     assert( strName.length() > 8 );
     strName = strName.substr( 8 );
 
-    return ADN_Tools::Scriptify( strName );
+    return Scriptify( strName );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tools::CheckConnectorVector
+// Name: CheckConnectorVector
 // Created: APE 2005-03-01
 // -----------------------------------------------------------------------------
-void ADN_Tools::CheckConnectorVector( const T_ConnectorVector& vConnectors, uint nExpectedSize )
+void CheckConnectorVector( const T_ConnectorVector& vConnectors, uint nExpectedSize )
 {
 #ifdef _DEBUG
     assert( vConnectors.size() == nExpectedSize );
@@ -114,10 +117,10 @@ void ADN_Tools::CheckConnectorVector( const T_ConnectorVector& vConnectors, uint
 
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tools::SecondToString
+// Name: SecondToString
 // Created: APE 2005-03-08
 // -----------------------------------------------------------------------------
-std::string ADN_Tools::SecondToString( double rSecond )
+std::string SecondToString( double rSecond )
 {
     std::stringstream strText;
     strText << rSecond << "s";
@@ -143,10 +146,10 @@ struct ItemSort
 
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tools::SortMenu
+// Name: SortMenu
 // Created: APE 2005-04-05
 // -----------------------------------------------------------------------------
-void ADN_Tools::SortMenu( Q3PopupMenu& menu )
+void SortMenu( Q3PopupMenu& menu )
 {
     T_MenuItemVector vItems;
     while( menu.count() > 0 )
@@ -165,10 +168,10 @@ void ADN_Tools::SortMenu( Q3PopupMenu& menu )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tools::AddSchema
+// Name: AddSchema
 // Created: SBO 2009-08-25
 // -----------------------------------------------------------------------------
-void ADN_Tools::AddSchema( xml::xostream& xos, const std::string& name )
+void AddSchema( xml::xostream& xos, const std::string& name )
 {
     xos << xml::prefix( "http://www.w3.org/2001/XMLSchema-instance", "xsi" )
             << xml::attribute( "model-version", tools::AppModelVersion() )
@@ -177,10 +180,12 @@ void ADN_Tools::AddSchema( xml::xostream& xos, const std::string& name )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tools::AddVersion
+// Name: AddVersion
 // Created: RPD 2010-09-22
 // -----------------------------------------------------------------------------
-void ADN_Tools::AddVersion( xml::xostream& xos, const std::string& version )
+void AddVersion( xml::xostream& xos, const std::string& version )
 {
     xos << xml::attribute( "model-version", version );
 }
+
+} //! namespace ADN_Tools
