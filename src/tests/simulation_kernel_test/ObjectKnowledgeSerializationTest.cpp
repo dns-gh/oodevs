@@ -18,6 +18,7 @@
 #include "MockObjectTypeResolver.h"
 #include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
 #include "simulation_kernel/Entities/Objects/Object.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
