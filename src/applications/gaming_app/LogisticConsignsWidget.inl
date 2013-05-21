@@ -9,6 +9,7 @@ LogisticConsignsWidget< Consign, Extension >::LogisticConsignsWidget( QWidget* p
     , controllers_( controllers )
     , selected_( controllers )
     , currentItem_( 0 )
+    , needUpdating_( true )
 {
     controllers_.Register( *this );
 }
@@ -84,7 +85,21 @@ void LogisticConsignsWidget< Consign, Extension >::NotifyUpdated( const Extensio
     if( !selected_ )
         return;
     if( logistic_helpers::HasRetrieveEntityAndSubordinatesUpToBaseLog< Extension >( *selected_, &consigns ) )
+        needUpdating_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticConsignsWidget::NotifyUpdated
+// Created: LDC 2013-05-21
+// -----------------------------------------------------------------------------
+template< typename Consign, typename Extension >
+void LogisticConsignsWidget< Consign, Extension >::NotifyUpdated( const Simulation::sEndTick& )
+{
+    if( needUpdating_ )
+    {
         UpdateConsigns();
+        needUpdating_ = false;
+    }
 }
 
 // -----------------------------------------------------------------------------

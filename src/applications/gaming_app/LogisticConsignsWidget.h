@@ -18,6 +18,7 @@
 #include "gaming/LogisticConsigns.h"
 #include "gaming/LogConsignDisplayer_ABC.h"
 #include "gaming/LogisticHelpers.h"
+#include "gaming/Simulation.h"
 #include <boost/bind.hpp>
 
 
@@ -32,6 +33,7 @@ class LogisticConsignsWidget : public LogisticConsignsWidget_ABC
                                  , public tools::ElementObserver_ABC< Extension >
                                  , public tools::ElementObserver_ABC< Consign >
                                  , public LogConsignDisplayer_ABC
+                                 , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
 public:
     //! @name Constructors/Destructor
@@ -62,6 +64,7 @@ private:
     virtual void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const Extension& consigns );
     virtual void NotifyUpdated( const Consign& consigns );
+    virtual void NotifyUpdated( const Simulation::sEndTick& consigns );
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void DisplayConsigns( const std::set< const Consign* >& consigns, QTreeWidgetItem& rootItem );
     QTreeWidgetItem* FindTreeWidgetItem( const Consign& consign, QTreeWidgetItem* rootItem );
@@ -74,6 +77,7 @@ private:
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QTreeWidgetItem* currentItem_;
+    bool needUpdating_;
     //@}
 };
 
