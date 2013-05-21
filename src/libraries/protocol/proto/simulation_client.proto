@@ -150,6 +150,7 @@ message ObjectMagicActionAck {
     }
     required ErrorCode error_code = 1; //!< Reason for the failure of the object magic action execution operation @see ErrorCode
     required ObjectMagicActionType type = 2; //!< The magic action type acknowledged
+    optional PartyId party =3;
 }
 
 /** @struct CrowdMagicActionAck
@@ -1185,6 +1186,7 @@ message StartFireEffect {
     required FireEffectId       fire_effect = 1; //!< The fire effect identifier
     required Location           location    = 2; //!< The fire location
     required EnumFireEffectType type        = 3; //!< The fire type
+    optional ResourceType       dotation    = 4; // FT 370321
 }
 
 /** @struct StopFireEffect

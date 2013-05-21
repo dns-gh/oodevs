@@ -24,6 +24,7 @@ FireEffect::FireEffect( Model& , const sword::StartFireEffect& message )
     , id_            ( message.fire_effect().id() )
     , localisation_  ( message.location() )
     , type_          ( message.type() )
+    , dotation_      ( message.has_dotation() ? message.dotation().id() : 0 )
 {
     // NOTHING
 }
@@ -56,6 +57,7 @@ void FireEffect::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_fire_effect()->set_id( id_ );
     localisation_.Send( *asn().mutable_location() );
     asn().set_type ( type_ );
+    asn().mutable_dotation()->set_id( dotation_ );
     asn.Send( publisher );
 }
 

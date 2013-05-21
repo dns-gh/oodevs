@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="4.9.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="4.11.1">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:element name="exercise">
 		<xs:complexType>
@@ -13,14 +13,6 @@
 					<xs:annotation>
 						<xs:documentation xml:lang="en">Defines the file to be used for orbat definition.</xs:documentation>
 					</xs:annotation>
-				</xs:element>
-				<xs:element name="sic" minOccurs="0">
-					<xs:complexType>
-						<xs:attribute name="atlas" type="xs:string" use="required"/>
-						<xs:attribute name="dqp_manager" type="xs:string" use="required"/>
-						<xs:attribute name="sicf" type="xs:string" use="required"/>
-						<xs:attribute name="sir" type="xs:string" use="required"/>
-					</xs:complexType>
 				</xs:element>
 				<xs:element name="profiles" type="T_FileReference">
 					<xs:annotation>
@@ -52,6 +44,7 @@
 						<xs:documentation xml:lang="en">Defines the file to be used for action planning.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
+				<xs:element ref="sic"/>
 			</xs:all>
 			<xs:attribute name="model-version" type="T_Version" use="optional">
 				<xs:annotation>
@@ -135,6 +128,33 @@
 			<xs:attribute name="name" type="xs:string" use="required">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Defines the terrain name.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sic">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the SIC versions used for the exercise.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="atlas" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the ATLAS version selected in Preparation for interface with DQP manager</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="dqp_manager" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the DQP manager version selected in Preparation for interface with DQP manager</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="sicf" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the SICF version selected in Preparation for interface with DQP manager</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="sir" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the SIR version selected in Preparation for interface with DQP manager</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>

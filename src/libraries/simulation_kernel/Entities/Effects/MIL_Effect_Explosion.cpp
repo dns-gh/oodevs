@@ -19,11 +19,12 @@
 // Name: MIL_Effect_Explosion constructor
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-MIL_Effect_Explosion::MIL_Effect_Explosion( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory, double rLifeDuration, bool neutralization )
+MIL_Effect_Explosion::MIL_Effect_Explosion( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory, double rLifeDuration, bool neutralization, unsigned int dotation )
     : MIL_Effect_Fire_ABC( surface, ammoCategory )
-    , nLifeLastTimeStep_ ( MIL_Singletons::GetTime().GetCurrentTick() + (unsigned int)rLifeDuration )
     , neutralization_    ( neutralization )
     , started_           ( false )
+    , nLifeLastTimeStep_ ( MIL_Singletons::GetTime().GetCurrentTick() + (unsigned int)rLifeDuration )
+    , dotation_          ( dotation )
 {
     // NOTHING
 }
@@ -45,7 +46,7 @@ bool MIL_Effect_Explosion::Execute()
 {
     if( !started_ )
     {
-        SendMsgStartEffect( neutralization_ ? sword::StartFireEffect::neutralization : sword::StartFireEffect::explosion );
+        SendMsgStartEffect( neutralization_ ? sword::StartFireEffect::neutralization : sword::StartFireEffect::explosion, dotation_ );
         started_ = true;
     }
     if( nLifeLastTimeStep_ <= MIL_Singletons::GetTime().GetCurrentTick() )

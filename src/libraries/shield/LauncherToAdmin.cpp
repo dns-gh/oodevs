@@ -290,6 +290,7 @@ void LauncherToAdmin::Convert( const sword::TickInformation& from, MsgsLauncherT
     CONVERT( time_factor );
     CONVERT( pathfind_request_number );
     CONVERT( last_checkpoint_build_duration );
+    CONVERT_DATE( date_time );
 }
 
 namespace

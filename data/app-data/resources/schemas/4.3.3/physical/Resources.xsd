@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.9.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.11.1">
 	<xs:include schemaLocation="tools.xsd"/>
 	<xs:element name="resources">
 		<xs:annotation>
@@ -93,7 +93,7 @@
 													</xs:annotation>
 												</xs:attribute>
 											</xs:complexType>
-										</xs:element>
+							</xs:element>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
@@ -123,7 +123,7 @@
 													</xs:annotation>
 												</xs:attribute>
 											</xs:complexType>
-										</xs:element>
+							</xs:element>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
@@ -265,16 +265,16 @@
 								<xs:documentation>Id de la nature de la dotation</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
+						<xs:attribute name="d-type" type="xs:boolean" use="optional">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">D-type : sensitive artillery ammunitions</xs:documentation>
+								<xs:documentation xml:lang="fr">Tranche D: munitions d'artillerie sensibles</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
 						<xs:attribute name="ied" type="xs:boolean" use="optional">
 							<xs:annotation>
 								<xs:documentation xml:lang="en">Used for explosions (terrorist attack, etc.)</xs:documentation>
 								<xs:documentation xml:lang="fr">Utilisé pour les explosions (attaques terroristes, etc.)</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="d-type" type="xs:boolean" use="optional">
-							<xs:annotation>
-								<xs:documentation xml:lang="en">TODO</xs:documentation>
-								<xs:documentation xml:lang="fr">TODO</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
 						<xs:attribute name="codeEMAT6" type="xs:string" use="optional">

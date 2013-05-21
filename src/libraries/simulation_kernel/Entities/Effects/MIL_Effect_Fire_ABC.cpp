@@ -52,13 +52,14 @@ unsigned int MIL_Effect_Fire_ABC::GetFireEffectId() const
 // Name: MIL_Effect_Fire_ABC::SendMsgStartEffect
 // Created: JVT 04-03-25
 //-----------------------------------------------------------------------------
-void MIL_Effect_Fire_ABC::SendMsgStartEffect( sword::StartFireEffect::EnumFireEffectType fireEffectType ) const
+void MIL_Effect_Fire_ABC::SendMsgStartEffect( sword::StartFireEffect::EnumFireEffectType fireEffectType, int dotation ) const
 {
     client::StartFireEffect asnMsg;
 
     asnMsg().mutable_fire_effect()->set_id( nID_ );
     asnMsg().set_type( fireEffectType );
     NET_ASN_Tools::WriteEllipse( surface_, *asnMsg().mutable_location() );
+    asnMsg().mutable_dotation()->set_id( dotation );
 
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }

@@ -7,6 +7,9 @@
 //
 // *****************************************************************************
 
+// 21/11/2012 - revision 4.9.1 : FT 45373
+// 14/01/2013 - revision 4.9.2 : FT 380239
+
 package MsgsSimToClient;
 
 import "Common.proto";
@@ -110,6 +113,7 @@ message MsgObjectMagicActionAck {
     }
     required ErrorCode error_code = 1;
     required Common.ObjectMagicActionType type = 2;
+    required Common.PartyId               party =3; // FT 380220 - Valeur zéro autorisée en cas d'erreur
 }
 
 message MsgCrowdMagicActionAck {
@@ -367,7 +371,7 @@ message MsgUnitCreation {
     optional Common.RgbColor         color       = 6;
     optional Common.HumanRepartition repartition = 7;
     optional Common.EnumNatureLevel  level       = 8; // FT 45350
-    optional string                  app6symbol  = 9; // FT 45350
+    optional string                  app6symbol  = 9; // FT 45350            
 }
 
 message EquipmentUpdate {  // A supprimer de l'ICD car pas dans SCIPIO [29/11/2011]
@@ -528,6 +532,8 @@ message MsgUnitAttributes {
     optional EquipmentUpdate                    equipment_update              = 50; // A supprimer de SCIPIO
     optional Common.Extension                   extension                     = 51;
     optional bool                               headquarters                  = 52;
+    optional Common.CrowdIdList                 transported_crowds            = 53; // FT 310111
+    optional int32                              transported_humans_number     = 54; // FT 310111
 }
 
 message MsgUnitPathFind {
@@ -677,16 +683,18 @@ message MsgStartFireEffect {
     required Common.FireEffectId       fire_effect  = 1; // Valeur 0 non possible [06/12/2011 FT45246]
     required Common.MsgLocation        location     = 2;
     required Common.EnumFireEffectType type         = 3;
+    required Common.ResourceType       dotation      =4; // FT 370321
 }
 
 message MsgStopFireEffect  {
     required Common.FireEffectId fire_effect = 1; // Valeur 0 non possible [06/12/2011 FT45246]
 }
 
-message MsgIndirectFirePerception {
-    repeated Common.UnitId perceivers       = 1; // list can be empty
+message MsgIndirectFirePerception // FT 310112 
+{
+    repeated Common.UnitId perceivers = 1; // list can be empty [15/05/2013 FT 45385]
     required Common.ResourceType ammunition = 2;
-    repeated int32 fire_effects             = 3; // list cannot be empty
+    repeated int32 fire_effects = 3; // list cannot be empty
 }
 
 enum EnumReportType {
@@ -1012,6 +1020,7 @@ message MsgCrowdUpdate {
    optional int32                 contaminated          = 8;
    optional int32                 dead                  = 9;
    optional Common.Extension      extension             = 10;
+   optional Common.UnitIdList     transporting_units    = 11; // FT 310111 
 }
 
 message MsgCrowdDestruction {
@@ -1269,6 +1278,7 @@ message MsgControlLocalWeatherCreation {
    optional Common.MsgCoordLatLong      top_left_coordinate     = 2;
    optional Common.MsgCoordLatLong      bottom_right_coordinate = 3;
    optional Common.MsgWeatherAttributes attributes              = 4;
+   optional Common.MsgDateTime          start_date              = 5; // FT 380464
 
 }
 
@@ -1328,7 +1338,6 @@ message MsgUnitKnowledgeCreationRequestAck {
     }
     required ErrorCode  error_code = 2;
 }
-
 
 // Message container
 message MsgSimToClient {
@@ -1467,7 +1476,8 @@ message MsgSimToClient {
         optional MsgLogFuneralHandlingDestruction               log_funeral_handling_destruction               = 142;
         optional Common.MsgControlExportRequest                 control_export                                 = 143; // FT 45354
         optional Common.MsgLogHistoryRequestForPlayAck          log_history_request_for_play_ack               = 144; // FT 45373
-        optional MsgIndirectFirePerception                      indirect_fire_perception                       = 145;
+		optional MsgIndirectFirePerception						indirect_fire_perception					   = 145; // FT 310112
+
     }
     optional int32   context = 1;
     required Content message = 2;

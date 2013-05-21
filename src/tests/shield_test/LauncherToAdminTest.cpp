@@ -186,6 +186,7 @@ BOOST_FIXTURE_TEST_CASE( tick_information_from_launcher_is_converted, ContextFix
     content.mutable_tick_information()->set_time_factor( 12 );
     content.mutable_tick_information()->set_pathfind_request_number( 13 );
     content.mutable_tick_information()->set_last_checkpoint_build_duration( 14 );
-    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { control_information { current_tick: 42 tick_duration: 2 time_factor: 12 pathfind_request_number: 13 last_checkpoint_build_duration: 14 } }" ) );
+    content.mutable_tick_information()->mutable_date_time()->set_data( "date" );
+    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { control_information { current_tick: 42 tick_duration: 2 time_factor: 12 pathfind_request_number: 13 last_checkpoint_build_duration: 14 date_time { data: \"date\" } } }" ) );
     converter.ReceiveLauncherToAdmin( msg );
 }

@@ -21,7 +21,7 @@
 class MIL_Effect_Explosion : public MIL_Effect_Fire_ABC
 {
 public:
-             MIL_Effect_Explosion( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory, double rLifeDuration, bool neutralization );
+             MIL_Effect_Explosion( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory, double rLifeDuration, bool neutralization, unsigned int dotation );
     virtual ~MIL_Effect_Explosion();
 
     //! @name Operations
@@ -34,6 +34,7 @@ private:
     bool started_;
 
     const unsigned int nLifeLastTimeStep_;
+    const unsigned int dotation_;
 };
 
 #endif // __MIL_Effect_Explosion_h_

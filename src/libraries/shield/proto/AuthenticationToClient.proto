@@ -89,6 +89,7 @@ message MsgProfile {
     optional Common.PopulationIdList write_population        = 11; // Valeur 0 non possible [06/12/2011 FT45246]
     required bool                    supervisor              = 12;
     optional RoleType                role                    = 13;
+    optional bool                    time_control            = 14; // [11/04/2013 FT45312] si supervision = true, indique si le profil peut contrôler le temps (pause,resume,time factor)
 }
 
 message MsgProfileDescriptionList {

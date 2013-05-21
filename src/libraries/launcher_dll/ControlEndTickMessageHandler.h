@@ -43,6 +43,7 @@ private:
     unsigned int timeFactor_;
     unsigned int checkpoint_;
     unsigned int tick_;
+    std::string date_;
     //@}
 };
 

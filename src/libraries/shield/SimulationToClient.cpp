@@ -158,7 +158,7 @@ void SimulationToClient::Convert( const sword::UnitMagicActionAck& from, MsgsSim
                         ( sword::recover_resources, Common::recover_resources )
                         ( sword::recover_all_except_log, Common::recover_all_except_log )
                         ( sword::recover_troops_except_log, Common::recover_troops_except_log )
-                        ( sword::recover_equipments_except_log, Common::recover_equipments_except_log )
+                        ( sword::recover_equipments_except_log, Common::recover_equipment_except_log )
                         ( sword::recover_resources_except_log, Common::recover_resources_except_log )
                         ( sword::destroy_all, Common::destroy_all )
                         ( sword::change_human_factors, Common::change_human_factors )
@@ -207,6 +207,7 @@ void SimulationToClient::Convert( const sword::ObjectMagicActionAck& from, MsgsS
     CONVERT_NON_INJECTIVE_ENUM( type, type, ( sword::create, Common::create )
                         ( sword::update, Common::update )
                         ( sword::destroy, Common::destroy ) );
+    CONVERT_ID( party );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,7 +231,7 @@ void SimulationToClient::Convert( const sword::CrowdMagicActionAck& from, MsgsSi
                         ( sword::recover_resources, Common::recover_resources )
                         ( sword::recover_all_except_log, Common::recover_all_except_log )
                         ( sword::recover_troops_except_log, Common::recover_troops_except_log )
-                        ( sword::recover_equipments_except_log, Common::recover_equipments_except_log )
+                        ( sword::recover_equipments_except_log, Common::recover_equipment_except_log )
                         ( sword::recover_resources_except_log, Common::recover_resources_except_log )
                         ( sword::destroy_all, Common::destroy_all )
                         ( sword::change_human_factors, Common::change_human_factors )
@@ -1084,6 +1085,7 @@ void SimulationToClient::Convert( const sword::StartFireEffect& from, MsgsSimToC
                         ( sword::StartFireEffect::light, Common::light )
                         ( sword::StartFireEffect::explosion, Common::explosion )
                         ( sword::StartFireEffect::neutralization, Common::neutralization ) );
+    CONVERT_ID( dotation );
 }
 
 // -----------------------------------------------------------------------------

@@ -409,9 +409,21 @@ void MIL_ObjectManager::SendFullState()
 void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicAction& msg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies )
 {
     sword::ObjectMagicActionAck_ErrorCode nErrorCode = sword::ObjectMagicActionAck::no_error;
+    int partyId = 0;
 
     if( msg.type() == sword::create )
-        nErrorCode = CreateObject( msg.parameters(), armies );
+    {
+        const sword::MissionParameters& message = msg.parameters();
+        nErrorCode = CreateObject( message, armies );
+        if( message.elem_size() >= 4 )
+        {
+            const sword::MissionParameter_Value& value = message.elem( 3 ).value( 0 );
+            if( value.has_identifier() )
+                partyId = value.identifier();
+            else if( value.has_party() )
+                partyId = value.party().id();
+        }
+    }
     else if( msg.type() == sword::destroy )
     {
         MIL_Object_ABC* pObject = Find( msg.object().id() );
@@ -421,7 +433,10 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
         {
             MIL_Army_ABC* army = pObject->GetArmy();
             if( army )
+            {
                 army->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pObject );
+                partyId = army->GetID();
+            }
             ( *pObject )().Destroy();
         }
     }
@@ -432,6 +447,9 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
             nErrorCode = sword::ObjectMagicActionAck::error_invalid_object;
         else
         {
+            MIL_Army_ABC* army = pObject->GetArmy();
+            if( army )
+                partyId = army->GetID();
             const sword::MissionParameters& params = msg.parameters();
             if( params.elem_size() && params.elem( 0 ).value_size() && params.elem( 0 ).value().Get( 0 ).list_size() )
                 nErrorCode = pObject->OnUpdate( params.elem( 0 ).value() );
@@ -442,6 +460,7 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
     client::ObjectMagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );
     asnReplyMsg().set_type( msg.type() );
+    asnReplyMsg().mutable_party()->set_id( partyId );
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 

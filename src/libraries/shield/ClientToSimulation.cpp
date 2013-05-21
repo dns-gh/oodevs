@@ -151,7 +151,7 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitMagicAction& fro
                         ( Common::recover_resources, sword::recover_resources )
                         ( Common::recover_all_except_log, sword::recover_all_except_log )
                         ( Common::recover_troops_except_log, sword::recover_troops_except_log )
-                        ( Common::recover_equipments_except_log, sword::recover_equipments_except_log )
+                        ( Common::recover_equipment_except_log, sword::recover_equipments_except_log )
                         ( Common::recover_resources_except_log, sword::recover_resources_except_log )
                         ( Common::destroy_all, sword::destroy_all )
                         ( Common::change_human_factors, sword::change_human_factors )

@@ -273,6 +273,7 @@ message TickInformation
    required int32 time_factor                    = 3;
    required int32 pathfind_request_number        = 4;
    optional int32 last_checkpoint_build_duration = 5;
+   optional DateTime date_time                   = 6;
 }
 
 /** @struct LauncherToAdmin

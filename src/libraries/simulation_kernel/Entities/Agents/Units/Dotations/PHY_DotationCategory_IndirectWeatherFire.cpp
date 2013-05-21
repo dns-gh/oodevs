@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectWeatherFire.h"
+#include "PHY_DotationCategory.h"
 #include "PHY_IndirectFireDotationClass.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Effects/MIL_Effect_Weather.h"
@@ -74,7 +75,7 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC*
 
     const MT_Ellipse effectSurface( vTargetPosition, vTargetPosition + vFireDirection, vTargetPosition + vRotatedFireDirection );
     const double deploymentDuration = MIL_Tools::ConvertSecondsToSim( rDeploymentDuration_ );
-    MIL_Effect_Weather* pEffect = new MIL_Effect_Weather( effectSurface, category_, MIL_Tools::ConvertSecondsToSim( rLifeDuration_ ), deploymentDuration );
+    MIL_Effect_Weather* pEffect = new MIL_Effect_Weather( effectSurface, category_, MIL_Tools::ConvertSecondsToSim( rLifeDuration_ ), deploymentDuration, dotationCategory_.GetMosID() );
     MIL_EffectManager::GetEffectManager().Register( *pEffect );
 
     std::vector< unsigned int > fireEffectsIds;

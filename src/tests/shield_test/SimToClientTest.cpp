@@ -89,7 +89,8 @@ BOOST_FIXTURE_TEST_CASE( object_magic_action_ack_to_client_is_converted, Context
 {
     content.mutable_object_magic_action_ack()->set_error_code( sword::ObjectMagicActionAck::error_invalid_object );
     content.mutable_object_magic_action_ack()->set_type( sword::create );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { object_magic_action_ack { error_code: error_invalid_object type: create } }" ) );
+    content.mutable_object_magic_action_ack()->mutable_party()->set_id( 1 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { object_magic_action_ack { error_code: error_invalid_object type: create party { id: 1 } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 
@@ -657,7 +658,8 @@ BOOST_FIXTURE_TEST_CASE( start_fire_effect_to_client_is_converted, ContextFixtur
     content.mutable_start_fire_effect()->mutable_fire_effect()->set_id( 7 );
     FillLocation( content.mutable_start_fire_effect()->mutable_location() );
     content.mutable_start_fire_effect()->set_type( sword::StartFireEffect::light );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { start_fire_effect { fire_effect { id: 7 } location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } type: light } }" ) );
+    content.mutable_start_fire_effect()->mutable_dotation()->set_id( 11 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { start_fire_effect { fire_effect { id: 7 } location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } type: light dotation { id: 11 } } }" ) );
     converter.ReceiveSimToClient( msg );
 }
 

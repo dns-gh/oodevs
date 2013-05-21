@@ -42,7 +42,10 @@ ControlEndTickMessageHandler::~ControlEndTickMessageHandler()
 bool ControlEndTickMessageHandler::OnReceiveMessage( const sword::SimToClient& message )
 {
     if( message.message().has_control_information() )
+    {
         timeFactor_ = message.message().control_information().time_factor();
+        date_ = message.message().control_information().date_time().data();
+    }
     if( message.message().has_control_change_time_factor_ack() )
         timeFactor_ = message.message().control_change_time_factor_ack().time_factor();
     if( message.message().has_control_checkpoint_save_end() )
@@ -57,6 +60,7 @@ bool ControlEndTickMessageHandler::OnReceiveMessage( const sword::SimToClient& m
         response().set_tick_duration( control.tick_duration() );
         response().set_time_factor( timeFactor_ );
         response().set_pathfind_request_number( pathfinds );
+        response().mutable_date_time()->set_data( date_.c_str() );
         if( checkpoint_ != 0 )
             response().set_last_checkpoint_build_duration( checkpoint_ );
         SendSimply( response );

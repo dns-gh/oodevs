@@ -20,6 +20,10 @@ message MsgShapeUpdateRequest {
     required Common.DrawingId           shape     = 1;
     optional Common.RgbColor            color     = 2;
     optional Common.MsgLocation         location  = 3;
+    optional string                     name      = 4; // [11/04/2013 FT310108]
+    optional string                     font      = 5; // [11/04/2013 FT310108]
+    optional uint32                     font_size = 6; // [11/04/2013 FT310108]
+    optional Common.Diffusion           diffusion = 7; // [11/04/2013 FT310108]
 }
 
 message MsgShapeDestructionRequest {

@@ -62,9 +62,10 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned id_;
+    unsigned int id_;
     Localisation localisation_;
     sword::StartFireEffect_EnumFireEffectType type_;
+    unsigned int dotation_;
     //@}
 };
 

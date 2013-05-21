@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.9.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.11.1">
 	<xs:include schemaLocation="tools.xsd"/>
 	<xs:simpleType name="T_Geometry">
 		<xs:restriction base="xs:string">
@@ -363,7 +363,7 @@
 					<xs:attribute name="night-doctors-rate" type="xs:nonNegativeInteger"/>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="occupable" minOccurs="0"/>
+			<xs:element name="occupable" type="xs:anyType" minOccurs="0"/>
 			<xs:element name="structural" minOccurs="0">
 				<xs:complexType>
 					<xs:attribute name="value" type="xs:nonNegativeInteger"/>

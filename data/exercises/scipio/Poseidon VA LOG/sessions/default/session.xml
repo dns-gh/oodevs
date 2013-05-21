@@ -5,6 +5,7 @@
       <network client="localhost:10000" server="10001"/>
       <plugins>
         <recorder fragmentfreq="150" keyframesfreq="100"/>
+        <shield server="30001"/>
       </plugins>
     </dispatcher>
     <gaming>

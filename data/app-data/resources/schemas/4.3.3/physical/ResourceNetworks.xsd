@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.9.1">
-	<xs:include schemaLocation="./tools.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.11.1">
+	<xs:include schemaLocation="./tools.XSD"/>
 	<xs:element name="resource-networks">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Defines resource networks types.</xs:documentation>

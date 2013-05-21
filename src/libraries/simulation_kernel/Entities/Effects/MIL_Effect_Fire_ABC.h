@@ -45,7 +45,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    void SendMsgStartEffect( sword::StartFireEffect_EnumFireEffectType fireEffectType ) const;
+    void SendMsgStartEffect( sword::StartFireEffect_EnumFireEffectType fireEffectType, int dotation ) const;
     void SendMsgStopEffect() const;
     //@}
 

@@ -199,8 +199,8 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         const MT_Ellipse neutralizationSurface( vTargetPosition, vTargetPosition + ( vFireDirection * rNeutralizationCoef_ ),  vTargetPosition + ( vRotatedFireDirection * rNeutralizationCoef_ ) );
 
         // Area effect messages
-        MIL_Effect_Explosion* attritionEffect = new MIL_Effect_Explosion( attritionSurface, category_, 20 , false );
-        MIL_Effect_Explosion* neutralizationEffect = new MIL_Effect_Explosion( neutralizationSurface, category_, 20, true );
+        MIL_Effect_Explosion* attritionEffect = new MIL_Effect_Explosion( attritionSurface, category_, 20 , false, dotationCategory_.GetMosID() );
+        MIL_Effect_Explosion* neutralizationEffect = new MIL_Effect_Explosion( neutralizationSurface, category_, 20, true, dotationCategory_.GetMosID() );
         MIL_EffectManager::GetEffectManager().Register( *attritionEffect );
         MIL_EffectManager::GetEffectManager().Register( *neutralizationEffect );
 

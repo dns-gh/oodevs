@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="4.9.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="4.11.1">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:simpleType name="roleType">
 		<xs:annotation>
@@ -23,7 +23,7 @@
 			<xs:sequence>
 				<xs:element ref="profile" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
-			<xs:attribute name="model-version" type="T_Version"/>
+			<xs:attribute name="model-version" type="T_Version" use="required"/>
 		</xs:complexType>
 		<!-- Constraints -->
 		<xs:unique name="profileNameUnicity">
@@ -116,6 +116,11 @@
 			<xs:attribute name="supervision" type="xs:boolean" use="required">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Grants access to supervision operations for this profile.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="time-control" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">If supervision=true, specify if can also control time (pause,resume,time factor)</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 			<xs:attribute name="role" type="roleType" use="optional">
