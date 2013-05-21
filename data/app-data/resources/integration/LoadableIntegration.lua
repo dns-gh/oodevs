@@ -151,10 +151,26 @@ integration.addKnowledgeInQueue = function( knowledge, onlyLoadable )
     DEC_TransportConnaissance_AjouterPion( myself, knowledge.source, onlyLoadable )
 end
 
+integration.friendHasTransportationMission = function( unit, missionName )
+    local mission = DEC_GetRawMission( unit.source )
+    if mission ~= nil and ( integration.getAnyType( mission ) == missionName ) then
+       return true 
+    end
+    return false
+end
+
+integration.unitHasTransportationMission = function( unit, missionName )
+    local mission = DEC_Connaissance_GetRawMission( unit.source )
+    if mission ~= nil and ( integration.getAnyType( mission ) == missionName ) then
+        return true
+    end
+    return false
+end
+
 -- distanceMin is equal to -1 if the unit is ready to load when it is into an area.
 integration.readyForLoad = function( unit, distanceMin, area )
     if not distanceMin then
-        distanceMin = 300
+        distanceMin = 100
     end
     local unitSrc = unit.source
     local mission = DEC_GetRawMission( unitSrc )
@@ -175,7 +191,7 @@ end
 -- distanceMin is equal to -1 if the knowledge is ready to load when it is into an area.
 integration.knowledgeReadyForLoad = function( knowledge, distanceMin, area )
     if not distanceMin then
-        distanceMin = 300
+        distanceMin = 100
     end
     local knowledgeSrc = knowledge.source
     local mission = DEC_Connaissance_GetRawMission( knowledgeSrc )
