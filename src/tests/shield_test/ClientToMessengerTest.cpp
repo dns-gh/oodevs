@@ -46,7 +46,11 @@ BOOST_FIXTURE_TEST_CASE( shape_update_request_from_client_is_converted, ContextF
     content.mutable_shape_update_request()->mutable_location()->set_type( Common::MsgLocation::line );
     FillCoordLatLong( content.mutable_shape_update_request()->mutable_location()->mutable_coordinates()->add_elem() );
     FillCoordLatLong( content.mutable_shape_update_request()->mutable_location()->mutable_coordinates()->add_elem() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { shape_update_request { shape { id: 12 } color { red: 4 green: 5 blue: 6 } points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } geometry: line } }" ) );
+    content.mutable_shape_update_request()->set_name( "Name" );
+    content.mutable_shape_update_request()->set_font( "Font" );
+    content.mutable_shape_update_request()->set_font_size( 12 );
+    content.mutable_shape_update_request()->mutable_diffusion()->mutable_formation()->set_id( 18 );
+    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { shape_update_request { shape { id: 12 } color { red: 4 green: 5 blue: 6 } points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } geometry: line name: \"Name\" font: \"Font\" font_size: 12 diffusion { formation { id: 18 } } } }" ) );
     converter.ReceiveClientToMessenger( msg );
 }
 

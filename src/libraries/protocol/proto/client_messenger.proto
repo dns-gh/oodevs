@@ -100,12 +100,16 @@ message ShapeCreationRequest {
     @todo rename into Drawing/Graphics
 */
 message ShapeUpdateRequest {
-    required DrawingId        shape    = 1; //!< The identifier of the shape to update @see DrawingId @todo should be named "id" instead of "shape" (coherence)
-    optional string           category = 2; //!< The new category of the shape
-    optional RgbColor         color    = 3; //!< The new color of the shape
-    optional string           pattern  = 4; //!< The new template of the shape
-    optional CoordLatLongList points   = 5; //!< The new points of the shape @see CoordLatLongList
-    optional Location.Geometry geometry = 6; //!< The geometry
+    required DrawingId         shape     = 1; //!< The identifier of the shape to update @see DrawingId @todo should be named "id" instead of "shape" (coherence)
+    optional string            category  = 2; //!< The new category of the shape
+    optional RgbColor          color     = 3; //!< The new color of the shape
+    optional string            pattern   = 4; //!< The new template of the shape
+    optional CoordLatLongList  points    = 5; //!< The new points of the shape @see CoordLatLongList
+    optional Location.Geometry geometry  = 6; //!< The geometry
+    optional string            name      = 7; //!< The drawing name
+    optional string            font      = 8; //!< The font
+    optional uint32            font_size = 9; //!< The font size
+    optional Diffusion         diffusion = 10; //!< The diffusion list
 }
 
 /** @struct ShapeDestructionRequest

@@ -39,6 +39,10 @@ void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgShapeUpdateRequ
                     ( sword::Location::point, Common::MsgLocation::point )
                     ( sword::Location::sector, Common::MsgLocation::sector )
                     ( sword::Location::none, Common::MsgLocation::none ) ) );
+    CONVERT( name );
+    CONVERT( font );
+    CONVERT( font_size );
+    ConvertDiffusion( from.diffusion(), to->mutable_diffusion() );
 }
 
 // -----------------------------------------------------------------------------

@@ -163,6 +163,14 @@ void Drawing::Update( const sword::ShapeUpdateRequest& asn )
     }
     if( asn.has_geometry() )
         geometry_ = asn.geometry();
+    if( asn.has_name() )
+        text_ = asn.name();
+    if( asn.has_font() )
+        font_ = asn.font();
+    if( asn.has_font_size() )
+        fontSize_ = asn.font_size();
+    if( asn.has_diffusion() )
+        diffusion_ = asn.diffusion();
 }
 
 // -----------------------------------------------------------------------------
