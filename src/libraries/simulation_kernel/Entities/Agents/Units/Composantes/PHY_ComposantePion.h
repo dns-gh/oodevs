@@ -221,7 +221,7 @@ public:
     bool CanConstruct( const MIL_ObjectType_ABC& objectType, bool bWithLoaded ) const;
     bool CanDestroy( const MIL_ObjectType_ABC& objectType ) const;
     bool CanMine( const MIL_ObjectType_ABC& objectType ) const;
-    bool CanDemine( const MIL_ObjectType_ABC& objectType ) const;
+    bool CanDemine( const MIL_ObjectType_ABC& objectType, bool bWithLoaded ) const;
     bool CanBypass( const MIL_ObjectType_ABC& objectType, bool bObjectIsMined ) const;
     bool CanExtinguish( const MIL_ObjectType_ABC& objectType ) const;
     bool CanRemoveFromPath( const MIL_ObjectType_ABC& objectType, bool isObjectMined ) const;

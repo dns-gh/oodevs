@@ -1435,6 +1435,20 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToDemineWi
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::RetrieveUnitsAbleToDemineWithOutLoadedWithLocalisation
+// Created: GGE 2013-05-21
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToDemineWithOutLoadedWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation )
+{
+    std::vector< DEC_Decision_ABC* > unitsAbleToMine;
+    std::vector< DEC_Decision_ABC* >::const_iterator it;
+    for( it = units.begin(); it != units.end(); ++it )
+        if( AgentCanDemineObjecttWithOutLoaded( *it, type, localisation ) )
+            unitsAbleToMine.push_back( *it );
+    return unitsAbleToMine;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::RetrieveUnitsAbleToByPass
 // Created: LMT 2012-02-01
 // -----------------------------------------------------------------------------
@@ -1574,7 +1588,18 @@ bool DEC_AgentFunctions::AgentCanDemineObject( const DEC_Decision_ABC* agent, co
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanDemineObject" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDemineTypeWithReinforcement( type, localisation );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDemineTypeWithReinforcement( type, localisation, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanDemineObjecttWithOutLoaded
+// Created: GGE 2013-05-21
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanDemineObjecttWithOutLoaded( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation )
+{
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in AgentCanDemineObjecttWithOutLoaded" );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDemineTypeWithReinforcement( type, localisation, false );
 }
 
 // -----------------------------------------------------------------------------
