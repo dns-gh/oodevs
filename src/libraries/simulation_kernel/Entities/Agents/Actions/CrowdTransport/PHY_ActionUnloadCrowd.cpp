@@ -21,7 +21,7 @@ using namespace crowdtransport;
 // Name: PHY_ActionUnloadCrowd constructor
 // Created: JSR 2011-08-09
 // -----------------------------------------------------------------------------
-PHY_ActionUnloadCrowd::PHY_ActionUnloadCrowd( MIL_AgentPion& pion, int knowledgeId, MT_Vector2D* position )
+PHY_ActionUnloadCrowd::PHY_ActionUnloadCrowd( MIL_AgentPion& pion, int /*knowledgeId*/, MT_Vector2D* position )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_    ( pion.GetRole< PHY_RoleAction_CrowdTransport >() )
     , position_( position )
@@ -31,10 +31,6 @@ PHY_ActionUnloadCrowd::PHY_ActionUnloadCrowd( MIL_AgentPion& pion, int knowledge
     auto bbKg = pion.GetKnowledgeGroup()->GetKnowledge();
     if( !bbKg )
         throw std::runtime_error( __FUNCTION__ " Unknown blackboard" );
-    boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
-    if( !pKnowledge )
-        throw std::runtime_error( __FUNCTION__ " Unknown crowd knowledge" );
-    crowd_ = &pKnowledge->GetPopulationKnown();
     Callback( role_.GetInitialReturnCode() );
 }
 
@@ -53,7 +49,7 @@ PHY_ActionUnloadCrowd::~PHY_ActionUnloadCrowd()
 // -----------------------------------------------------------------------------
 void PHY_ActionUnloadCrowd::Execute()
 {
-    int nResult = role_.UnloadCrowd( *crowd_, *position_ );
+    int nResult = role_.UnloadCrowd( *position_ );
     Callback( nResult );
 }
 

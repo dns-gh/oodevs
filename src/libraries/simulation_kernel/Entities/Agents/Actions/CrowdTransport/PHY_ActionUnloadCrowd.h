@@ -50,7 +50,6 @@ private:
     //! @name Member data
     //@{
     PHY_RoleAction_CrowdTransport& role_;
-    MIL_Population* crowd_;
     MT_Vector2D* position_;
     //@}
 };

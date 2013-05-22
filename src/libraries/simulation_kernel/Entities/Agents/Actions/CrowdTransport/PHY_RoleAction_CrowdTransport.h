@@ -74,7 +74,7 @@ public:
     //@{
     int  LoadCrowd( MIL_Population& crowd, unsigned int concentrationId );
     void LoadSuspended();
-    int  UnloadCrowd( MIL_Population& crowd, const MT_Vector2D& position );
+    int  UnloadCrowd( const MT_Vector2D& position );
     void UnloadSuspended();
     //@}
 
