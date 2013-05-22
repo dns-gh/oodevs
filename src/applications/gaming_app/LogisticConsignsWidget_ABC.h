@@ -17,6 +17,7 @@
 #include "clients_gui/ListDisplayer.h"
 #include "clients_gui/SubItemDisplayer.h"
 #include "gaming/LogisticConsigns.h"
+#include "gaming/Simulation.h"
 #include "gaming/Tools.h"
 
 namespace gui
@@ -36,6 +37,7 @@ class LogisticConsignsWidget_ABC : public Q3VBox
                                  , public tools::ElementObserver_ABC< Extension >
                                  , public tools::ElementObserver_ABC< Consign >
                                  , public tools::SelectionObserver< kernel::Entity_ABC >
+                                 , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
 public:
     //! @name Constructors/Destructor
@@ -67,6 +69,7 @@ private:
     virtual void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const Extension& consigns );
     virtual void NotifyUpdated( const Consign& consigns );
+    virtual void NotifyUpdated( const Simulation::sEndTick& consigns );
     virtual void NotifySelected( const kernel::Entity_ABC* agent );
 
     virtual void DisplayRequested( const Extension& consigns, gui::ListDisplayer< ConcreteDisplayer >* list );
@@ -81,6 +84,7 @@ private:
     gui::ListDisplayer< ConcreteDisplayer >* pConsignListView_;
     gui::ListDisplayer< ConcreteDisplayer >* pConsignHandledListView_;
     gui::SubItemDisplayer* logDisplay_;
+    bool needUpdating_;
     //@}
 };
 
@@ -93,6 +97,7 @@ LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::LogisticCon
     : Q3VBox( parent )
     , controllers_( controllers )
     , selected_( controllers )
+    , needUpdating_( true )
 {
     pConsignListView_ = new gui::ListDisplayer< ConcreteDisplayer >( this, (ConcreteDisplayer&)*this, factory );
     pConsignListView_->AddColumn( tools::translate( "LogisticConsignsWidget_ABC", "Logistic requests" ) );
@@ -165,10 +170,26 @@ template< typename ConcreteDisplayer, typename Consign, typename Extension >
 void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::NotifyUpdated( const Extension& consigns )
 {
     if( selected_ && selected_->Retrieve< Extension >() == &consigns )
+        needUpdating_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticConsignsWidget_ABC::NotifyUpdated
+// Created: LDC 2013-05-21
+// -----------------------------------------------------------------------------
+template< typename ConcreteDisplayer, typename Consign, typename Extension >
+void LogisticConsignsWidget_ABC< ConcreteDisplayer, Consign, Extension >::NotifyUpdated( const Simulation::sEndTick& )
+{
+    if( needUpdating_ && selected_ )
     {
-        DisplayRequested( consigns, pConsignListView_ );
-        DisplayHandled( consigns, pConsignHandledListView_ );
+        const Extension* consigns = selected_->Retrieve< Extension >();
+        if( consigns )
+        {
+            DisplayRequested( *consigns, pConsignListView_ );
+            DisplayHandled( *consigns, pConsignHandledListView_ );
+        }
     }
+    needUpdating_ = false;
 }
 
 // -----------------------------------------------------------------------------
