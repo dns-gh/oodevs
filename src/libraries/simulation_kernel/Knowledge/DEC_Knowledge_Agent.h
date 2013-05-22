@@ -208,7 +208,7 @@ private:
     T_PerceptionAgentSourceMap perceptionLevelPerAgentMap_;
     double rRelevance_;
     int nTimeExtrapolationEnd_;
-    bool bLocked_;
+    int locked_;
     bool bValid_;
     // Network
     bool bCreatedOnNetwork_;

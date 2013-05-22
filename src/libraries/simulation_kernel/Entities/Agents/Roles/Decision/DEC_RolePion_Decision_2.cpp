@@ -490,10 +490,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< float (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAffinity , boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_GetAttitudePopulation",
         boost::function< int (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAttitude , boost::cref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_GetConcentrationLaPlusProche", &DEC_KnowledgePopulationFunctions::GetClosestConcentration );
-    RegisterFunction( "DEC_GetPositionConcentration", &DEC_KnowledgePopulationFunctions::GetConcentrationPosition );
-    RegisterFunction( "DEC_GetNombrePersonnesDansConcentration", &DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration );
-    RegisterFunction( "DEC_GetNombrePersonnesDansFoule", &DEC_KnowledgePopulationFunctions::GetAllHumans );
     RegisterFunction( "DEC_AssignMissionCrowdParameter",
         boost::function< void( boost::shared_ptr< MIL_Mission_ABC >, const std::string&, int ) >( boost::bind( &MIL_MissionParameterFactory::SetCrowdKnowledgeParameter, this, _1, _2, _3 ) ) );
     RegisterFunction( "DEC_AssignMissionCrowdListParameter",
@@ -506,8 +502,15 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HealWoundedHumans, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Crowd_GetNbreOfWoundedHumans",
         boost::function< int( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::GetNbreOfWoundedHumans, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_ConnaissancePopulation_Verrouiller", 
+        boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::Lock, boost::cref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_ConnaissancePopulation_Deverrouiller", 
+        boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::Unlock, boost::cref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_GetConcentrationLaPlusProche", &DEC_KnowledgePopulationFunctions::GetClosestConcentration );
+    RegisterFunction( "DEC_GetPositionConcentration", &DEC_KnowledgePopulationFunctions::GetConcentrationPosition );
+    RegisterFunction( "DEC_GetNombrePersonnesDansConcentration", &DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration );
+    RegisterFunction( "DEC_GetNombrePersonnesDansFoule", &DEC_KnowledgePopulationFunctions::GetAllHumans );
     RegisterFunction( "DEC_CrowdKnowledge_CanLoadCrowdConcentration", &DEC_KnowledgePopulationFunctions::CanLoadCrowdConcentration );
-
 
     // Urban knowledges accessors
     RegisterFunction( "DEC_Connaissances_BlocUrbain",

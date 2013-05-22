@@ -166,8 +166,6 @@ void RegisterAgentKnowledgeFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Deverrouiller", &DEC_KnowledgeAgentFunctions::Unlock );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_TuerOfficiers", &DEC_KnowledgeAgentFunctions::KillOfficers );
     brain.RegisterFunction( "DEC_Connaissances_UnitesPrenantAPartieSurAmi" , &DEC_KnowledgeFunctions::GetAgentsAttackingAlly );
-    brain.RegisterFunction( "DEC_ConnaissanceAgent_Verrouiller", &DEC_KnowledgeAgentFunctions::Lock );
-    brain.RegisterFunction( "DEC_ConnaissanceAgent_Deverrouiller", &DEC_KnowledgeAgentFunctions::Unlock );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_GetMilPionType", &DEC_KnowledgeAgentFunctions::GetMilPionType );
     brain.RegisterFunction( "DEC_HasMission", &DEC_AgentFunctions::HasMission );
 }
