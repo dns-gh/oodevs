@@ -94,7 +94,7 @@ void ActionsLogger::SaveTo( const tools::Path& filename, const T_Filter& filter 
             continue;
         xml::xosubstream sub( xos );
         sub << xml::start( "action" )
-            << xml::attribute( "time", boost::posix_time::to_iso_string( it->first ) );
+            << xml::attribute( "time", boost::posix_time::to_iso_extended_string( it->first ) );
         protocol::Write( sub, adapter, it->second.message() );
     }
 }
