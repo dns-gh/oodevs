@@ -1425,10 +1425,10 @@ bool PHY_ComposantePion::CanExtinguish( const MIL_ObjectType_ABC& objectType ) c
 // Name: PHY_ComposantePion::CanDemine
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanDemine( const MIL_ObjectType_ABC& objectType ) const
+bool PHY_ComposantePion::CanDemine( const MIL_ObjectType_ABC& objectType, bool bWithLoaded ) const
 {
     assert( pType_ );
-    return pType_->CanDemine( objectType ) && CanBeUsed() && pState_->IsUsable();
+    return pType_->CanDemine( objectType ) && CanBeUsed( bWithLoaded ) && pState_->IsUsable();
 }
 
 // -----------------------------------------------------------------------------

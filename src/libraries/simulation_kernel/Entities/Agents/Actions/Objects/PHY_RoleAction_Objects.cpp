@@ -668,10 +668,10 @@ bool PHY_RoleAction_Objects::CanDemineWithReinforcement( const MIL_ObjectType_AB
 // Name: PHY_RoleAction_Objects::CanDemineTypeWithReinforcement
 // Created: LMT 2013-03-27
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanDemineTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const
+bool PHY_RoleAction_Objects::CanDemineTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation, bool bWithLoaded ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *pion_, eDemine, type, localisation, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( *pion_, eDemine, type, localisation, bWithLoaded );
     return capabilityComputer.HasCapability();
 }
 
