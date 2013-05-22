@@ -20,9 +20,10 @@
 #include "protocol/Simulation.h"
 #include "protocol/XmlWriters.h"
 #include "tools/Exception.h"
-#include "tools/FileWrapper.h"
+#include "tools/SchemaWriter.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SessionConfig.h"
+#include "tools/FileWrapper.h"
 
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -86,7 +87,10 @@ namespace
 void ActionsLogger::SaveTo( const tools::Path& filename, const T_Filter& filter ) const
 {
     tools::Xofstream xos( filename );
+    tools::SchemaWriter schemaWriter;
     xos << xml::start( "actions" );
+    schemaWriter.WriteExerciseSchema( xos, "actions" );
+
     const Adapter adapter( *converter_ );
     for( auto it = actions_.begin(); it != actions_.end(); ++it )
     {

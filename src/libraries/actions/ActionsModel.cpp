@@ -17,6 +17,7 @@
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/Loader_ABC.h"
 #include "tools/FileWrapper.h"
+#include "tools/SchemaWriter.h"
 #include <tools/Path.h>
 #include <boost/bind.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
@@ -286,7 +287,9 @@ void ActionsModel::ReadAction( xml::xistream& xis, bool readonly, std::string& e
 void ActionsModel::Save( const tools::Path& filename, const ActionsFilter_ABC* filter /* = 0*/ ) const
 {
     tools::Xofstream xos( filename );
+    tools::SchemaWriter schemaWriter;
     xos << xml::start( "actions" );
+    schemaWriter.WriteExerciseSchema( xos, "actions" );
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
         if( !filter || filter->Allows( *it->second ) )
         {
