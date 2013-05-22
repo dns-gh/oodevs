@@ -7,6 +7,7 @@ return
         myself.leadData.pionsLima2 = {} 
         myself.leadData.fuseaux = {}
         myself.leadData.lcar = true
+        myself.leadData.fuseauxIndex = 0
                
         self.numberEchelons = myself.taskParams.echelonNumber or 0
         if self.numberEchelons == NIL or self.numberEchelons == 0 then
@@ -78,20 +79,17 @@ return
             objectives[ #objectives + 1 ] = points[ myself.leadData.currentMoveToPosition ]
         end
         
+        myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex or 0
+        myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex % #myself.leadData.fuseaux + 1
+        local fuseau = myself.leadData.fuseaux[ myself.leadData.fuseauxIndex ]
         -- 1ere position : alignement sur l'unité la plus éloignée du début du fuseau si on n'a pas de LCAR
         if not myself.leadData.lcar then
-            myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex or 0
-            myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex % #myself.leadData.fuseaux + 1
-            local fuseau = myself.leadData.fuseaux[ myself.leadData.fuseauxIndex ]
             local pos = DEC_Geometrie_CalculerPointSurFuseau( fuseau, myself.leadData.advanceMax )
             objectives[ #objectives + 1 ] = CreateKnowledge( sword.military.world.Point, pos )
         end
         
         --Add final destination
-        myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex or 0
-        myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex % #myself.leadData.fuseaux + 1
-        local fuseau = myself.leadData.fuseaux[ myself.leadData.fuseauxIndex ]
-        objectives[ #objectives + 1 ] = CreateKnowledge( integration.ontology.types.point, integration.computeArrivedPointForAOR( fuseau ) )
+        objectives[ #objectives + 1 ] = CreateKnowledge( sword.military.world.Point, integration.computeArrivedPointForAOR( fuseau ) )
 
         -- Update echelons (careful if more than 2 echelons : bad management)
         if myself.leadData.currentMoveToPosition <= ( meKnowledge.nbPionsMain + meKnowledge.nbPionsMain%2)/self.numberEchelons  then
