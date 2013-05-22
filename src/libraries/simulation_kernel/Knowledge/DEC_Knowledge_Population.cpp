@@ -49,6 +49,7 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( boost::shared_ptr< MIL_Knowl
     , bDecStateUpdated_            ( false )
     , bCriticalIntelligenceUpdated_( false )
     , bLastCriticalIntelligenceUpdated_( false )
+    , locked_                      ( 0 )
 {
     SendMsgCreation();
 }
@@ -69,6 +70,7 @@ DEC_Knowledge_Population::DEC_Knowledge_Population()
     , bDecStateUpdated_            ( false )
     , bCriticalIntelligenceUpdated_( false )
     , bLastCriticalIntelligenceUpdated_( false )
+    , locked_                      ( 0 )
 {
     // NOTHING
 }
@@ -248,7 +250,7 @@ bool DEC_Knowledge_Population::Clean()
         else
             ++ it;
     }
-    return concentrations_.empty() && flows_.empty();
+    return concentrations_.empty() && flows_.empty() && !locked_;
 }
 
 
@@ -575,4 +577,22 @@ bool DEC_Knowledge_Population::IsPerceptionDistanceHacked() const
 const PHY_PerceptionLevel* DEC_Knowledge_Population::GetHackedPerceptionLevel() const
 {
     return pHackedPerceptionLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::Lock
+// Created: LDC 2013-05-22
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::Lock()
+{
+    ++locked_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::Unlock
+// Created: LDC 2013-05-22
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::Unlock()
+{
+    --locked_;
 }

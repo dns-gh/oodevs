@@ -75,6 +75,8 @@ public:
     void HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel );
     const PHY_PerceptionLevel* GetHackedPerceptionLevel() const;
     bool IsPerceptionDistanceHacked() const;
+    void Lock();
+    void Unlock();
     //@}
 
     //! @name Accessors
@@ -139,6 +141,7 @@ private:
     T_ConcentrationMap concentrations_;
     T_FlowMap flows_;
     double rDominationState_;
+    int locked_;
     bool bIsRecon_;
     bool bReconAttributesValid_;
     bool bDecStateUpdated_;
