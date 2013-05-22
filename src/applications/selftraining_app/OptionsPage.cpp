@@ -82,6 +82,7 @@ void OptionsPage::SetSettingsLayout()
     languages_[ "fr" ] = tools::translate( "OptionsPage", "French" );
     languages_[ "es" ] = tools::translate( "OptionsPage", "Spanish" );
     languages_[ "ar" ] = tools::translate( "OptionsPage", "Arabic" );
+    languages_[ "pt" ] = tools::translate( "OptionsPage", "Portuguese" );
     BOOST_FOREACH( const T_Languages::value_type& lang, languages_ )
     {
         languageCombo_->addItem( lang.second );

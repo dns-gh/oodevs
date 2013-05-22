@@ -68,6 +68,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         lang_->AddItem( tr( "French" ), "fr" );
         lang_->AddItem( tr( "Spanish" ), "es" );
         lang_->AddItem( tr( "Arabic" ), "ar" );
+        lang_->AddItem( tr( "Portuguese" ), "pt" );
 
         connect( lang_, SIGNAL( activated( int ) ), this, SLOT( OnChangeLang() ) );
         gui::RichPushButton* textFormat = new gui::RichPushButton( "source", tr( "source" ) );

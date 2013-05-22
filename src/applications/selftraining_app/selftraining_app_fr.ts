@@ -461,6 +461,10 @@ Voulez-vous vraiment le remplacer ?</translation>
         <translation>العربية</translation>
     </message>
     <message>
+        <source>Portuguese</source>
+        <translation>Português</translation>
+    </message>
+    <message>
         <source>Administration</source>
         <translation>Administration</translation>
     </message>

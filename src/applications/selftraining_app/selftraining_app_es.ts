@@ -459,6 +459,10 @@ Do really you want to replace it ?</source>
         <translation>العربية</translation>
     </message>
     <message>
+        <source>Portuguese</source>
+        <translation>Português</translation>
+    </message>
+    <message>
         <source>Administration</source>
         <translation type="unfinished"></translation>
     </message>

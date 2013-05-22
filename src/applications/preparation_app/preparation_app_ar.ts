@@ -471,6 +471,10 @@
         <source>Arabic</source>
         <translation>العربية</translation>
     </message>
+    <message>
+        <source>Portuguese</source>
+        <translation>Português</translation>
+    </message>
 </context>
 <context>
     <name>FileToolbar</name>

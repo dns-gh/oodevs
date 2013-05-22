@@ -402,19 +402,23 @@ Do really you want to replace it ?</source>
     <name>OptionsPage</name>
     <message>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>English</translation>
     </message>
     <message>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Français</translation>
     </message>
     <message>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Español</translation>
     </message>
     <message>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>???????</translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation>Português</translation>
     </message>
     <message>
         <source>Administration</source>
