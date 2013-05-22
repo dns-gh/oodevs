@@ -834,4 +834,5 @@ void ADN_Tr::InitTranslations()
     InitTr( daysConverter_, "ADN_Tr" );
     InitTr( contextParametersConverter_, "ADN_Tr" );
     InitTr( entityTypeConverter_, "ADN_Tr" );
+    InitTr( missionTypeConverter_, "ADN_Tr" );
 }

@@ -119,7 +119,7 @@ namespace
                 for( auto it1 = pops.begin(); it1 != pops.end(); ++it1 )
                     (*it1)->AddFragOrder( static_cast< FragOrder* >( element_ ), name );
             }
-             static_cast< FragOrder* >( element_ )->isAvailableWithoutMission_ = true;
+            static_cast< FragOrder* >( element_ )->isAvailableWithoutMission_ = true;
         }
 public:
         virtual ADN_Missions_ABC* NewT()
