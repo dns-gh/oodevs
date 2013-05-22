@@ -635,7 +635,7 @@ end
 
 -- **************************************************************************** 
 -- CROWD AGENT MOVEMENT
--- integration.startMoveToItItinerary
+-- integration.startMoveToItCrowd
 -- ****************************************************************************
 integration.startMoveToItCrowd = function( objective )
     -- Leave tactical object
@@ -708,7 +708,6 @@ integration.updateMoveToItCrowd = function( objective, pathType, inertness )
     end
 end
 
-
 integration.stopMoveToItCrowd = function( objective )
     objective[myself] = objective[myself] or {}
     if objective[myself].moveAction then
@@ -717,6 +716,38 @@ integration.stopMoveToItCrowd = function( objective )
         objective.destination = nil
         return false
     end
+end
+
+-- **************************************************************************** 
+-- CROWD AGENT MOVEMENT
+-- integration.startMoveToListPointCrowd
+-- ****************************************************************************
+integration.startMoveToListPointCrowd = function( objective, pathType, wayPoints )
+    -- Leave tactical object
+    if myself.actionOccupy then
+      myself.actionOccupy = DEC__StopAction( myself.actionOccupy )
+    end
+    objective[ myself ] = objective[myself] or {}
+    if objective[ myself ].moveAction then
+        DEC_ReprendAction( objective[ myself ].moveAction )
+        return false
+    end
+
+    myself.location = nil
+    local itinerary = {}
+    for i=1,#wayPoints do
+        itinerary[ i ] = wayPoints[ i ]:getPosition()
+    end
+    itinerary[ #itinerary + 1 ] = objective:getPosition()
+    objective[ myself ].moveAction = DEC_StartDeplacementItineraire( itinerary )
+    return false
+end
+
+-- **************************************************************************** 
+-- CROWD AGENT MOVEMENT
+-- integration.updateMoveToListPointCrowd
+-- ****************************************************************************
+integration.updateMoveToListPointCrowd = function( objective, pathType, wayPoints )
 end
 
 integration.isUrbanBlockTrafficable = function( self, loaded )
