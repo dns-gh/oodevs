@@ -90,7 +90,6 @@ return
         --Add final destination
         myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex or 0
         myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex % #myself.leadData.fuseaux + 1
-        DEC_Trace("#myself.leadData.fuseaux : "..tostring(#myself.leadData.fuseaux))
         local fuseau = myself.leadData.fuseaux[ myself.leadData.fuseauxIndex ]
         objectives[ #objectives + 1 ] = CreateKnowledge( integration.ontology.types.point, integration.computeArrivedPointForAOR( fuseau ) )
 
