@@ -200,6 +200,20 @@ namespace
         const std::string found = xis.attribute< std::string >( "type" );
         throw MASA_EXCEPTION( tools::translate( "ActionParameterFactory", "Expecting '%1' found '%2'" ).arg( expected.GetType().c_str() ).arg( found.c_str() ).toStdString() );
     }
+
+    class NullParameter : public actions::Parameter_ABC
+    {
+    public:
+        NullParameter( const kernel::OrderParameter& parameter )
+            : actions::Parameter_ABC( parameter.GetName().c_str() )
+        {
+            Set( false );
+        }
+        virtual ~NullParameter()
+        {
+            // NOTHING
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -208,10 +222,12 @@ namespace
 // -----------------------------------------------------------------------------
 Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const
 {
-    std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) );
+    std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type", "" ) );
     type = parameter.CompatibleType( type );
+
     if( type == "" )
-        ThrowUnexpected( parameter, xis );
+        return new NullParameter( parameter );
+
     std::auto_ptr< Parameter_ABC > param;
     bool found = DoCreateParameter( parameter, xis, entity, type, param );
     if( found == false || !param.get() )
@@ -361,7 +377,7 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new parameters::AgentKnowledgeOrder( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "crowdknowledge" )
         param.reset( new parameters::PopulationKnowledgeOrder( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "objectknowledge" )
+    else if( type == "objectknowledge" ) 
         param.reset( new parameters::ObjectKnowledgeOrder( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
     else if( type == "urbanknowledge" )
         param.reset( new parameters::UrbanBlock( parameter, xis, entities_, controller_ ) );
