@@ -1,42 +1,61 @@
 return
 {
     init = function( self, params )
-        myself.leadData.fuseaux = {}
-        myself.leadData.scoutPoints = {}
+        self.mainPoints = {}
+        self.list = {}
         myself.leadData.pionsLima1 = {}
-        myself.leadData.pionsLima2 = {}
-        meKnowledge.nbPionsMain = meKnowledge.nbPionsMain or 0
-
+        myself.leadData.pionsLima2 = {} 
+        myself.leadData.fuseaux = {}
+        myself.leadData.lcar = true
+               
         self.numberEchelons = myself.taskParams.echelonNumber or 0
         if self.numberEchelons == NIL or self.numberEchelons == 0 then
-            self.numberEchelons = 1 -- par défaut les pions décrochent sur 1 échelon
+            self.numberEchelons = 1 -- By default units disengage in one echelon
         end
+        meKnowledge.nbPionsMain = meKnowledge.nbPionsMain or 0
+        
+        -- Division of the main area of responsability into sub-zone for each unit
 
-        -- découpage du fuseau principal en sous-fuseaus pour chaque unité
-        local fuseaux = DEC_DecouperFuseau( meKnowledge.nbPionsMain )
+        local fuseaux = integration.query.getFuseaux( meKnowledge.nbPionsMain )
         for _, fuseau in pairs( fuseaux ) do
             myself.leadData.fuseaux[ #myself.leadData.fuseaux + 1 ] = fuseau
         end
-
-        -- Organisation du dsipositif initial à 300 metres devant la LCAR (moins en zurb ?) si elle est présente
-        local LimaId = DEC_GetLima( eTypeLima_LCAR )
-        if LimaId > 0 and meKnowledge.nbPionsMain > 0 then
-            pointsBeforeLimas = DEC_Geometrie_CalculerPositionsParRapportALima( LimaId, 300, meKnowledge.nbPionsMain)
-            for _, point in pairs( pointsBeforeLimas ) do
-                myself.leadData.scoutPoints[ #myself.leadData.scoutPoints + 1 ]= CreateKnowledge( sword.military.world.Point, point )
+        -- Points on blocking lines
+        self.pointsOnLimas = integration.getPointsLimas( eTypeLima_LCAR, ( meKnowledge.nbPionsMain + meKnowledge.nbPionsMain % 2 ) /self.numberEchelons )
+        local compt = 0
+        for _, points in pairs( self.pointsOnLimas ) do
+            for _, point in pairs( points ) do
+                if meKnowledge.nbPionsMain % 2 == 0 or compt % ( meKnowledge.nbPionsMain + 1 ) ~= meKnowledge.nbPionsMain then
+                    self.mainPoints[ #self.mainPoints + 1 ] = CreateKnowledge( sword.military.world.Point, point )
+                end
+                compt = compt + 1  
             end
         end
-        -- Si pas de lima on va s'aligner au niveau de l'unité la plus éloignée du début du fuseau
-        local advance
-        myself.leadData.advanceMax = 0
-        local units = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", false )
-        for i=1, #units do
-           local unit = units[i]
-           local coord = unit:getPosition()
-           advance = DEC_Geometrie_PositionAdvanceAlongFuseauAutomat( coord )
-           if advance > myself.leadData.advanceMax then
-               myself.leadData.advanceMax = advance
-           end
+      
+        local nb = 1
+        for pos = 1, ((#self.pointsOnLimas + #self.pointsOnLimas%2 )/self.numberEchelons + 1 ) do
+            self.list[ pos ] = {}
+            for i = 1, meKnowledge.nbPionsMain do  
+                table.insert(self.list[ pos ], self.mainPoints[ nb ])
+                nb = nb + 1
+            end
+        end
+        
+        if not self.pointsOnLimas or #self.pointsOnLimas == 0 then
+            -- Si pas de lima on va s'aligner au niveau de l'unité la plus éloignée du début du fuseau
+            meKnowledge:RC( eRC_LimaParameterNotPresent, eTypeLima_LCAR ) 
+            local advance
+            myself.leadData.advanceMax = 0
+            local units = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", false )
+            for i=1, #units do
+                local unit = units[i]
+                local coord = unit:getPosition()
+                advance = DEC_Geometrie_PositionAdvanceAlongFuseauAutomat( coord )
+                if advance > myself.leadData.advanceMax then
+                    myself.leadData.advanceMax = advance
+                end
+             end
+             myself.leadData.lcar = false
         end
     end,
 
@@ -48,34 +67,34 @@ return
     end,
  
     getScreenPositions = function( self, params, entity )
-        local positions = {} -- découpage en fuseau
-        local lcar = false
-        myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex or 0
-        myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex % #myself.leadData.fuseaux + 1
-        local fuseau = myself.leadData.fuseaux[ myself.leadData.fuseauxIndex ]
-        for i=1, #myself.leadData.scoutPoints do
-            local point = myself.leadData.scoutPoints[i]
-            if DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau( fuseau, point.source ) then
-                positions[ #positions + 1 ] = point
-                lcar = true
-            end
-        end
-        
-        -- 1ere position : alignement sur l'unité la plus éloignée du début du fuseau si on n'a pas de LCAR
-        if not lcar then
-            local pos = DEC_Geometrie_CalculerPointSurFuseau( fuseau, myself.leadData.advanceMax )
-            positions[ #positions + 1 ] = CreateKnowledge( sword.military.world.Point, pos )
-        end
-        
-        --Ajout de la destination finale
-        positions[ #positions + 1 ] = CreateKnowledge( sword.military.world.Point, DEC_Geometrie_CalculerPointArriveePourFuseau( fuseau ) )
-        
+        local objectives = {}
+
         if not myself.leadData.currentMoveToPosition then
             myself.leadData.currentMoveToPosition = 0
         end
         myself.leadData.currentMoveToPosition = myself.leadData.currentMoveToPosition + 1
+        --Add blocking lines points
+        for _, points in pairs( self.list ) do
+            objectives[ #objectives + 1 ] = points[ myself.leadData.currentMoveToPosition ]
+        end
+        
+        -- 1ere position : alignement sur l'unité la plus éloignée du début du fuseau si on n'a pas de LCAR
+        if not myself.leadData.lcar then
+            myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex or 0
+            myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex % #myself.leadData.fuseaux + 1
+            local fuseau = myself.leadData.fuseaux[ myself.leadData.fuseauxIndex ]
+            local pos = DEC_Geometrie_CalculerPointSurFuseau( fuseau, myself.leadData.advanceMax )
+            objectives[ #objectives + 1 ] = CreateKnowledge( sword.military.world.Point, pos )
+        end
+        
+        --Add final destination
+        myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex or 0
+        myself.leadData.fuseauxIndex = myself.leadData.fuseauxIndex % #myself.leadData.fuseaux + 1
+        DEC_Trace("#myself.leadData.fuseaux : "..tostring(#myself.leadData.fuseaux))
+        local fuseau = myself.leadData.fuseaux[ myself.leadData.fuseauxIndex ]
+        objectives[ #objectives + 1 ] = CreateKnowledge( integration.ontology.types.point, integration.computeArrivedPointForAOR( fuseau ) )
 
-        -- Mise à jour des echelons: A revoir pour un nombre d'échelons > 2
+        -- Update echelons (careful if more than 2 echelons : bad management)
         if myself.leadData.currentMoveToPosition <= ( meKnowledge.nbPionsMain + meKnowledge.nbPionsMain%2)/self.numberEchelons  then
             myself.leadData.pionsLima1[entity] = entity
             F_Pion_SeteEtatEchelon( entity.source, eEtatEchelon_First )
@@ -84,7 +103,7 @@ return
             F_Pion_SeteEtatEchelon( entity.source, eEtatEchelon_Second )
         end
       
-        return positions
+        return objectives
     end,
 
     getObstacles = function( self, params )
