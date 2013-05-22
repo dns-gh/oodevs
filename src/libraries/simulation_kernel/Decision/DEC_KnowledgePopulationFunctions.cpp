@@ -317,3 +317,33 @@ int DEC_KnowledgePopulationFunctions::GetClosestConcentration( const DEC_Decisio
     }
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::Lock
+// Created: LDC 2013-05-22
+// -----------------------------------------------------------------------------
+void DEC_KnowledgePopulationFunctions::Lock( const MIL_AgentPion& callerAgent, int knowledgeId )
+{
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            pKnowledge->Lock();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::Unlock
+// Created: LDC 2013-05-22
+// -----------------------------------------------------------------------------
+void DEC_KnowledgePopulationFunctions::Unlock( const MIL_AgentPion& callerAgent, int knowledgeId )
+{
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            pKnowledge->Unlock();
+    }
+}

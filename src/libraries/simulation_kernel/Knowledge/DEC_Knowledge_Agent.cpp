@@ -64,7 +64,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( boost::shared_ptr< MIL_KnowledgeGroup 
     , nTimeLastUpdate_               ( 0 )
     , rRelevance_                    ( rRelevance )
     , nTimeExtrapolationEnd_         ( -1 )
-    , bLocked_                       ( false )
+    , locked_                        ( 0 )
     , bValid_                        ( true )
     , bCreatedOnNetwork_             ( !pAgentKnown_->BelongsTo( *knowledgeGroup ) )
     , bRelevanceUpdated_             ( false )
@@ -98,7 +98,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent()
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
     , rRelevance_                    ()
     , nTimeExtrapolationEnd_         ( -1 )
-    , bLocked_                       ( false )
+    , locked_                        ( 0 )
     , bValid_                        ( true )
     , bCreatedOnNetwork_             ( true )
     , bRelevanceUpdated_             ( true )
@@ -194,7 +194,7 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
          >> bMaxPerceptionLevelUpdated_
          >> nTimeExtrapolationEnd_
          >> criticalIntelligence_
-         >> bLocked_
+         >> locked_
          >> bValid_
          >> bCriticalIntelligenceUpdated_
          >> bPerceptionDistanceHacked_;
@@ -232,7 +232,7 @@ void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const unsigned i
          << bMaxPerceptionLevelUpdated_
          << nTimeExtrapolationEnd_
          << criticalIntelligence_
-         << bLocked_
+         << locked_
          << bValid_
          << bCriticalIntelligenceUpdated_
          << bPerceptionDistanceHacked_;
@@ -267,7 +267,7 @@ void DEC_Knowledge_Agent::Prepare()
 void DEC_Knowledge_Agent::Extrapolate()
 {
     assert( pAgentKnown_ );
-    if( nTimeExtrapolationEnd_ > 0 || bLocked_ )
+    if( nTimeExtrapolationEnd_ > 0 || locked_ )
     {
         ChangeRelevance( 1. );
         dataDetection_.Extrapolate( *pAgentKnown_ );
@@ -733,7 +733,7 @@ double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( UrbanObjectWra
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Agent::Lock()
 {
-    bLocked_ = true;
+    ++locked_;
 }
 
 // -----------------------------------------------------------------------------
@@ -742,7 +742,7 @@ void DEC_Knowledge_Agent::Lock()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Agent::Unlock()
 {
-    bLocked_ = false;
+    --locked_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1140,7 +1140,7 @@ void DEC_Knowledge_Agent::CopyFrom( const DEC_Knowledge_Agent& agent )
     pMaxPerceptionLevel_ = agent.pMaxPerceptionLevel_;
     rRelevance_ = agent.rRelevance_;
     nTimeExtrapolationEnd_ = agent.nTimeExtrapolationEnd_;
-    bLocked_ = agent.bLocked_;
+    locked_ = agent.locked_;
     bValid_ = agent.bValid_;
     criticalIntelligence_ = agent.criticalIntelligence_;
     bRelevanceUpdated_ = true;
