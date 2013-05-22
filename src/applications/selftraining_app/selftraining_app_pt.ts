@@ -406,19 +406,19 @@ Do really you want to replace it ?</source>
     </message>
     <message>
         <source>French</source>
-        <translation>Fran�ais</translation>
+        <translation>Français</translation>
     </message>
     <message>
         <source>Spanish</source>
-        <translation>Espa�ol</translation>
+        <translation>Español</translation>
     </message>
     <message>
         <source>Arabic</source>
-        <translation>???????</translation>
+        <translation>العربية</translation>
     </message>
     <message>
         <source>Portuguese</source>
-        <translation>Portugu�s</translation>
+        <translation>Português</translation>
     </message>
     <message>
         <source>Administration</source>
