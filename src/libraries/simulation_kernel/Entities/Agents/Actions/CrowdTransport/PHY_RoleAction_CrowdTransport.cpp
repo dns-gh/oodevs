@@ -209,7 +209,7 @@ void PHY_RoleAction_CrowdTransport::LoadSuspended()
 // Name: PHY_RoleAction_CrowdTransport::UnloadCrowd
 // Created: JSR 2011-08-10
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_CrowdTransport::UnloadCrowd( MIL_Population& crowd, const MT_Vector2D& position )
+int PHY_RoleAction_CrowdTransport::UnloadCrowd( const MT_Vector2D& position )
 {
     bUpdated_ = true;
     if( nState_ == eNothing )
@@ -220,14 +220,19 @@ int PHY_RoleAction_CrowdTransport::UnloadCrowd( MIL_Population& crowd, const MT_
     }
     if( nState_ == eUnloading )
     {
+        if( !currentCrowd_ )
+        {
+            nState_ = eNothing;
+            return eImpossible;
+        }
         currentProgress_ += owner_->GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterUnloadedPerTimeStep();
         if( currentProgress_ >= loadedHumans_.GetAllHumans() )
         {
             // TODO envoyer un CR ?
             bHasChanged_ = true;
-            currentCrowd_ = 0;
             currentProgress_ = 0;
-            crowd.GetConcentration( position ).PushHumans( loadedHumans_ );
+            currentCrowd_->GetConcentration( position ).PushHumans( loadedHumans_ );
+            currentCrowd_ = 0;
             loadedHumans_.Empty();
             nState_ = eNothing;
             return eFinished;
