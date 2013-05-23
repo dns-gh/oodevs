@@ -71,6 +71,11 @@ MOCK_BASE_CLASS( MockAgent, MIL_Agent_ABC )
     MOCK_METHOD( CanBeImpactedByTraffic, 0 );
     MOCK_METHOD( InteractWithTraffic, 1, void( const std::vector< TER_Agent_ABC* >& agents ), InteractWithTrafficAgents );
     MOCK_METHOD( InteractWithTraffic, 1, void( const MIL_Agent_ABC& agent ), InteractWithTrafficAgent );
+
+    MOCK_METHOD( CanBeDeleted, 0 )
+    MOCK_METHOD( RegisterPath, 1 )
+    MOCK_METHOD( UnregisterPath, 1 )
+    MOCK_METHOD( HasPath, 0 )
 };
 
 #endif // __MockAgent_h_
