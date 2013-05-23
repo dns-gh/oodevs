@@ -129,6 +129,7 @@ integration.startShootingOnCrowd = function( crowd )
     crowd[myself].actionTir = DEC__StartTirSurPopulation( crowd.source, ammoClass[ integration.getCrowdROEForAgent() ] )
     actionCallbacks[ crowd[myself].actionTir ] = function( arg ) crowd[myself].eTir = arg end
 end
+
 integration.stopShootingOnCrowd = function( crowd )
      crowd[myself] = crowd[myself] or {}
      if  crowd[myself].actionTir then
@@ -343,4 +344,12 @@ end
 
 integration.changeAttitude = function( attitude )
     DEC_Population_ChangerAttitude( attitude )
+end
+
+integration.lockCrowdKnowledge = function( crowd )
+    DEC_ConnaissancePopulation_Verrouiller( crowd.source )
+end
+
+integration.unlockCrowdKnowledge = function( crowd )
+    DEC_ConnaissancePopulation_Deverrouiller( crowd.source )
 end
