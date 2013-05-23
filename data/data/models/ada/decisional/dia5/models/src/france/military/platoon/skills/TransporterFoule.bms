@@ -40,9 +40,10 @@ rootnode
     create = function( self )
         meKnowledge.isStoppingTransport = false
         -- init crowd's concentration information
+        integration.lockCrowdKnowledge( self.params.crowd )
         meKnowledge.crowdTransporting = self.params.crowd
-        self.concentration = integration.getNearbyConcentration(  meKnowledge.crowdTransporting, self.params.loadingPoint )
-        self.position = integration.getPositionConcentration(  meKnowledge.crowdTransporting, self.concentration )
+        self.concentration = integration.getNearbyConcentration( meKnowledge.crowdTransporting, self.params.loadingPoint )
+        self.position = integration.getPositionConcentration( meKnowledge.crowdTransporting, self.concentration )
         self.positionInit = self.position
         
         self.arrivedLoadPoint = false
@@ -92,6 +93,7 @@ rootnode
     end,
     
     destroy = function( self )
+        integration.unlockCrowdKnowledge( self.params.crowd )
         meKnowledge.isStoppingTransport = true
     end,
 
