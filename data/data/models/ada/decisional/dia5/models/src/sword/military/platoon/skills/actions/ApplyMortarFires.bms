@@ -65,7 +65,7 @@ rootnode
             if self.order then  --Apply fire when received frago
                 if meKnowledge:isDismounted() then
                     integration.sendfireAvailable(true)
-                    Activate( skill.nodes.CR_ReceiveFireOrder, 1 )
+                    Activate( skill.nodes.CR, 1, {RC = eRC_ReceptionOrdreDeFeu } )
                     Activate( skill.links.indirectFire, 1, self.order )
                 end
             end
