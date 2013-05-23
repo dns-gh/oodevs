@@ -860,7 +860,6 @@ void MIL_AgentPion::DeleteUnit( unsigned int nCtx, unsigned int clientId )
         return;
     CancelCurrentMission();
     pOrderManager_->StopAllMissions();
-
     MIL_AgentServer::GetWorkspace().GetPathFindManager().CancelJobForUnit( this );
 
     SpecializedDelete();
@@ -1678,6 +1677,33 @@ void MIL_AgentPion::Register( MissionController_ABC& pController )
     pOrderManager_->Register( pController );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::RegisterPath
+// Created: MMC 2013-05-22
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::RegisterPath( const DEC_Agent_Path& agentPath )
+{
+    agentPaths_.insert( &agentPath );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::UnregisterPath
+// Created: MMC 2013-05-22
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::UnregisterPath( const DEC_Agent_Path& agentPath )
+{
+    agentPaths_.erase( &agentPath );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::HasPath
+// Created: MMC 2013-05-22
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::HasPath() const
+{
+    return !agentPaths_.empty();
+}
+
 // =============================================================================
 // Logistic
 // =============================================================================
@@ -1953,6 +1979,15 @@ bool MIL_AgentPion::IsCivilian() const
 bool MIL_AgentPion::CanEmitReports() const
 {
     return !IsDead();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::CanBeDeleted
+// Created: MMC 2013-05-22
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::CanBeDeleted() const
+{
+    return IsMarkedForDestruction() && !CallRole( &DEC_RolePion_Decision::IsUsedByDIA, false ) && !HasPath();
 }
 
 // -----------------------------------------------------------------------------

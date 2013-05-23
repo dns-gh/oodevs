@@ -127,15 +127,25 @@ void DEC_PathFind_Manager::CancelJobForUnit( MIL_Agent_ABC* pion )
     std::vector< boost::shared_ptr< DEC_Path_ABC > > paths;
     {
         boost::mutex::scoped_lock locker( mutex_ );
-        for( auto it = longRequests_.begin(); it != longRequests_.end(); ++it )
+        for( auto it = longRequests_.begin(); it != longRequests_.end(); )
             if( ( *it )->IsPathForUnit( pion ) )
+            {
                 paths.push_back( ( *it )->GetPath() );
+                ( *it )->GetPath()->Destroy();
+                it = longRequests_.erase( it );
+            }
+            else
+                ++it;
         for( auto it = shortRequests_.begin(); it != shortRequests_.end(); ++it )
             if( ( *it )->IsPathForUnit( pion ) )
+            {
                 paths.push_back(  ( *it )->GetPath() );
+                ( *it )->GetPath()->Destroy();
+                it = shortRequests_.erase( it );
+            }
+            else
+                ++it;
     }
-    for( auto it = paths.begin(); it != paths.end(); ++it )
-        CancelJob( ( *it ).get() );
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
     for( auto it = paths.begin(); it != paths.end(); ++it )
         for( auto itReq = requestsToCleanAfterComputation_.begin(); itReq != requestsToCleanAfterComputation_.end(); )

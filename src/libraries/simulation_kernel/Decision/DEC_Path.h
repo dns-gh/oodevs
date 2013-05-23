@@ -39,6 +39,8 @@ public:
     virtual bool UseStrictClosest() const = 0;
 
     virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint ) = 0;
+
+    virtual void Destroy() {}
     //@}
 
     //! @name Accessors

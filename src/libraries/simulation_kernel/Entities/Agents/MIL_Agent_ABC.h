@@ -19,6 +19,7 @@ class AlgorithmsFactories;
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_KnowledgeBlackBoard_AgentPion;
+class DEC_Agent_Path;
 class MIL_AgentPion;
 class MIL_AgentType_ABC;
 class MIL_Army_ABC;
@@ -93,8 +94,12 @@ public:
     virtual double Distance( const MIL_Agent_ABC& pion ) const = 0;
     virtual bool CanInteractWithTraffic() const = 0;
     virtual bool CanBeImpactedByTraffic() const = 0;
+    virtual bool CanBeDeleted() const = 0;
     virtual void InteractWithTraffic( const MIL_Agent_ABC& agent ) = 0;
     virtual void InteractWithTraffic( const std::vector< TER_Agent_ABC* >& agents ) = 0;
+    virtual void RegisterPath( const DEC_Agent_Path& agentPath ) = 0;
+    virtual void UnregisterPath( const DEC_Agent_Path& agentPath ) = 0;
+    virtual bool HasPath() const = 0;
     //@}
 
     //! @name Knowledge

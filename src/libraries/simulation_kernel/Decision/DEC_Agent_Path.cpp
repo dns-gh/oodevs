@@ -54,7 +54,7 @@
 // Name: DEC_Agent_Path constructor
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
+DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
     : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
@@ -64,7 +64,9 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVe
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
+    , destroyed_( false )
 {
+    queryMaker_.RegisterPath( *this );
     fuseau_= queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     initialWaypoints_.reserve( 1 + points.size() );
@@ -79,7 +81,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVe
 // Name: DEC_Agent_Path constructor
 // Created: LDC 2009-06-18
 // -----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points, const DEC_PathType& pathType )
+DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points, const DEC_PathType& pathType )
     : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
@@ -89,7 +91,9 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< bo
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
+    , destroyed_( false )
 {
+    queryMaker_.RegisterPath( *this );
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     initialWaypoints_.reserve( 1 + points.size() );
@@ -107,7 +111,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< bo
 // Name: DEC_Agent_Path constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType )
+DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType )
     : DEC_PathResult            ( pathType )
     , queryMaker_               ( queryMaker )
     , bRefine_                  ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
@@ -117,7 +121,9 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
     , rCostOutsideOfAllObjects_ ( 0. )
     , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_       ( false )
+    , destroyed_( false )
 {
+    queryMaker_.RegisterPath( *this );
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     initialWaypoints_.reserve( 2 );
@@ -132,7 +138,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
 // Name: DEC_Agent_Path::DEC_Agent_Path
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType, bool loaded )
+DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType, bool loaded )
     : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
@@ -143,7 +149,9 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
+    , destroyed_( false )
 {
+    queryMaker_.RegisterPath( *this );
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     initialWaypoints_.reserve( 2 );
@@ -155,43 +163,33 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Agent_Path constructor
-// Created: NLD 2005-06-30
-// -----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
-    : DEC_PathResult           ( rhs.GetPathType() )
-    , queryMaker_              ( rhs.queryMaker_ )
-    , bRefine_                 ( rhs.bRefine_ )
-    , vDirDanger_              ( rhs.vDirDanger_ )
- //   , unitSpeeds_               ( rhs.unitSpeeds_ ) $$$ TODO
-    , unitSpeeds_              ( queryMaker_.GetRole< moving::PHY_RoleAction_Moving >() )
-    , rMaxSlope_               ( rhs.rMaxSlope_ )
-    , rCostOutsideOfAllObjects_( 0. )
-    , pathClass_               ( rhs.pathClass_ )
-    , bDecPointsInserted_      ( false )
-    , initialWaypoints_        ( rhs.initialWaypoints_ )
-    , nextWaypoints_           ( rhs.nextWaypoints_ )
-{
-    fuseau_ = rhs.fuseau_;
-    automateFuseau_ = rhs.automateFuseau_;
-    Initialize( initialWaypoints_ );
-}
-
-//-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path destructor
 // Created: DFT 02-03-04
 // Last modified: JVT 02-09-17
 //-----------------------------------------------------------------------------
 DEC_Agent_Path::~DEC_Agent_Path()
 {
+    Destroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::Destroy
+// Created: MMC 2013-05-21
+// -----------------------------------------------------------------------------
+void DEC_Agent_Path::Destroy()
+{
+    if( destroyed_ )
+        return;
     for( IT_PathPointList it = resultList_.begin(); it!= resultList_.end(); it++ )
         if( ( *it )->GetType() != DEC_PathPoint::eTypePointPath )
             ( *it )->RemoveFromDIA( *it );
     fuseau_.Reset();
     automateFuseau_.Reset();
+    destroyed_ = true;
+    queryMaker_.UnregisterPath( *this );
 }
 
- // -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::Initialize
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------

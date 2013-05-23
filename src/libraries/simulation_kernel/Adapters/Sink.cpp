@@ -703,7 +703,7 @@ void Sink::Clean()
         MIL_AgentPion* pion = it->second;
         assert( pion );
         pion->Clean();
-        if( pion->IsMarkedForDestruction() && !pion->CallRole( &DEC_RolePion_Decision::IsUsedByDIA, false ) )
+        if( pion->CanBeDeleted() )
         {
             StopContinuousCommands( *pion );
             it = elements_.erase( it );

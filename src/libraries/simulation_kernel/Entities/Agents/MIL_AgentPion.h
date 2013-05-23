@@ -38,6 +38,7 @@ namespace xml
 
 class DEC_Decision_ABC;
 class DEC_KnowledgeBlackBoard_AgentPion;
+class DEC_Agent_Path;
 class MIL_AffinitiesMap;
 class MIL_Army;
 class MIL_Automate;
@@ -108,6 +109,7 @@ public:
     virtual const MIL_HumanRepartition& GetHumanRepartition() const;
     virtual bool IsCivilian() const;
     virtual bool CanEmitReports() const;
+    virtual bool CanBeDeleted() const;
 
     virtual bool IsImmobilized() const;
     virtual bool IsAutonomous() const; // Drones
@@ -133,6 +135,9 @@ public:
     void UpdateNetwork();
     void Clean();
     void Register( MissionController_ABC& pController );
+    virtual void RegisterPath( const DEC_Agent_Path& agentPath );
+    virtual void UnregisterPath( const DEC_Agent_Path& agentPath );
+    virtual bool HasPath() const;
     void DeleteUnit( unsigned int nCtx, unsigned int clientId );
     //@}
 
@@ -254,6 +259,7 @@ private:
     std::auto_ptr< MIL_AffinitiesMap >        pAffinities_;
     std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
     std::auto_ptr< MIL_Color >                pColor_;
+    std::set< const DEC_Agent_Path* >         agentPaths_;
     //@}
 };
 

@@ -73,6 +73,8 @@ public:
     double GetPopulationsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rPopulationMaximumCost ) const;
 
     void Initialize( const core::Model& entity );
+
+    virtual void Destroy() {}
     //@}
 
 private:

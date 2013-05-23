@@ -42,12 +42,16 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType );
-             DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType, bool loaded  );
-             DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const DEC_PathType& pathType );
-             DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );
-             DEC_Agent_Path( const DEC_Agent_Path& rhs ); // Copy only query parameters, not the result !
+             DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType );
+             DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType, bool loaded  );
+             DEC_Agent_Path( MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const DEC_PathType& pathType );
+             DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );
     virtual ~DEC_Agent_Path();
+    //@}
+
+    //! @name Destroy
+    //@{
+    virtual void Destroy();
     //@}
 
     //! @name Path calculation
@@ -84,6 +88,7 @@ public:
     //@}
 
 private:
+
     //! @name Init
     //@{
     void Initialize( const T_PointVector& pathPoints );
@@ -117,7 +122,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const MIL_Agent_ABC& queryMaker_;
+    MIL_Agent_ABC& queryMaker_;
     // Path calculation parameters
     const DEC_Agent_PathClass& pathClass_;
     bool bRefine_;
@@ -134,6 +139,7 @@ private:
     T_PathKnowledgePopulationVector pathKnowledgePopulations_;
     MT_Profiler profiler_;
     bool bDecPointsInserted_;
+    bool destroyed_;
     //@}
 };
 

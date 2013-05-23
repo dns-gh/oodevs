@@ -46,6 +46,7 @@ public:
     virtual double GetLength() const = 0;
     void AddRef();
     void DecRef();
+    virtual void Destroy() = 0;
     //@}
 
     //! @name Accessors

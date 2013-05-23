@@ -74,7 +74,8 @@ void DEC_Representations::AddToPointsCategory( boost::shared_ptr< DEC_PathPoint 
 // -----------------------------------------------------------------------------
 void DEC_Representations::RemoveFromOrdersCategory( boost::shared_ptr< MIL_FragOrder > pObject )
 {
-    orderRepresentations_.erase( std::remove( orderRepresentations_.begin(), orderRepresentations_.end(), pObject ), orderRepresentations_.end() );
+    if( !orderRepresentations_.empty() )
+        orderRepresentations_.erase( std::remove( orderRepresentations_.begin(), orderRepresentations_.end(), pObject ), orderRepresentations_.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +84,8 @@ void DEC_Representations::RemoveFromOrdersCategory( boost::shared_ptr< MIL_FragO
 // -----------------------------------------------------------------------------
 void DEC_Representations::RemoveFromPointsCategory( boost::shared_ptr< DEC_PathPoint > pObject )
 {
-    pointRepresentations_.erase( std::remove( pointRepresentations_.begin(), pointRepresentations_.end(), pObject ), pointRepresentations_.end() );
+    if( !pointRepresentations_.empty() )
+        pointRepresentations_.erase( std::remove( pointRepresentations_.begin(), pointRepresentations_.end(), pObject ), pointRepresentations_.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,5 +94,6 @@ void DEC_Representations::RemoveFromPointsCategory( boost::shared_ptr< DEC_PathP
 // -----------------------------------------------------------------------------
 void DEC_Representations::DeleteOrderRepresentation( boost::shared_ptr< MIL_FragOrder > pObject )
 {
-    orderRepresentations_.erase( std::remove( orderRepresentations_.begin(), orderRepresentations_.end(), pObject ), orderRepresentations_.end() );
+    if( !orderRepresentations_.empty() )
+        orderRepresentations_.erase( std::remove( orderRepresentations_.begin(), orderRepresentations_.end(), pObject ), orderRepresentations_.end() );
 }
