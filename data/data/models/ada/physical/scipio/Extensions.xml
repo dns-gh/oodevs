@@ -5082,7 +5082,7 @@
         <label language="fr" text="Indicatif radio"/>
       </labels>
     </attribute>
-    <attribute extends="unit;formation" name="IdCDB" type="string">
+    <attribute dictionary="T_SIC_IdCDB" dictionary-kind="short" extends="unit;formation" name="IdCDB" type="loosy-dictionary">
       <labels>
         <label language="fr" text="Identifiant Champ de Bataille"/>
       </labels>
@@ -5130,6 +5130,11 @@
         <label language="fr" text="Liste de diffusion"/>
       </labels>
     </attribute>
+    <attribute extends="unit;automat;formation" name="OriginalSuperior" type="numeric">
+      <labels>
+        <label language="fr" text="Pour les pions, identifiant de l'automate supérieur originel, Pour les automates et les formations, identifiant de la formation supérieure originelle. 0 ou non présent si pas de supérieur originel"/>
+      </labels>
+    </attribute>
   </orbat-attributes>
   <profile-attributes>
     <attribute dictionary="T_User_Role" name="UserRole" type="dictionary">
@@ -5139,4 +5144,4 @@
     </attribute>
   </profile-attributes>
 </extensions>
-<!-- signature="2134463697" -->
+<!-- signature="1174143976" -->
