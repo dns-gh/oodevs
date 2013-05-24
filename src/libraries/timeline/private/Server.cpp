@@ -188,3 +188,13 @@ void Server::OnActivatedEvent( const Event& event )
 {
     emit ActivatedEvent( event );
 }
+
+void Server::OnContextMenuEvent( const Event& event )
+{
+    emit ContextMenuEvent( boost::make_shared< Event >( event ) );
+}
+
+void Server::OnContextMenuBackground()
+{
+    emit ContextMenuEvent( boost::shared_ptr< Event >() );
+}

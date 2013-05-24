@@ -31,6 +31,8 @@ enum ServerType
     SERVER_EVENT_DESELECTED            = 0x202;
     SERVER_EVENT_DELETED               = 0x203;
     SERVER_EVENT_ACTIVATED             = 0x204;
+    SERVER_EVENT_CONTEXTMENU           = 0x205;
+    SERVER_EVENT_CONTEXTMENUBACKGROUND = 0x206;
 }
 
 message Action

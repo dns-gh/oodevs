@@ -44,6 +44,8 @@ namespace controls
     size_t DeselectedEvent      ( void* data, size_t size );
     size_t DeletedEvent         ( void* data, size_t size, const std::string& uuid, const Error& error );
     size_t ActivatedEvent       ( void* data, size_t size, const Event& event );
+    size_t ContextMenuEvent     ( void* data, size_t size, const Event& event );
+    size_t ContextMenuBackground( void* data, size_t size );
 
     struct ServerHandler_ABC : public boost::noncopyable
     {
@@ -56,6 +58,8 @@ namespace controls
         virtual void OnDeselectedEvent      () = 0;
         virtual void OnDeletedEvent         ( const std::string& uuid, const Error& error ) = 0;
         virtual void OnActivatedEvent       ( const Event& event ) = 0;
+        virtual void OnContextMenuEvent     ( const Event& event ) = 0;
+        virtual void OnContextMenuBackground() = 0;
     };
 
     void ParseServer( ServerHandler_ABC& server, const void* src, size_t size );

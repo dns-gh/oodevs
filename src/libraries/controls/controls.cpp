@@ -202,6 +202,19 @@ size_t tic::ActivatedEvent( void* data, size_t size, const Event& event )
     return Marshall( data, size, cmd );
 }
 
+size_t tic::ContextMenuEvent( void* data, size_t size, const Event& event )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::SERVER_EVENT_CONTEXTMENU );
+    SetEvent( *cmd.mutable_event(), event );
+    return Marshall( data, size, cmd );
+}
+
+size_t tic::ContextMenuBackground( void* data, size_t size )
+{
+    return MarshallType< ServerCommand >( data, size, sdk::SERVER_EVENT_CONTEXTMENUBACKGROUND );
+}
+
 void tic::ParseServer( ServerHandler_ABC& handler, const void* data, size_t size )
 {
     ServerCommand cmd;
@@ -214,5 +227,7 @@ void tic::ParseServer( ServerHandler_ABC& handler, const void* data, size_t size
         case sdk::SERVER_EVENT_DESELECTED:            return handler.OnDeselectedEvent();
         case sdk::SERVER_EVENT_DELETED:               return handler.OnDeletedEvent( GetEvent( cmd.event() ).uuid, GetError( cmd.error() ) );
         case sdk::SERVER_EVENT_ACTIVATED:             return handler.OnActivatedEvent( GetEvent( cmd.event() ) );
+        case sdk::SERVER_EVENT_CONTEXTMENU:           return handler.OnContextMenuEvent( GetEvent( cmd.event() ) );
+        case sdk::SERVER_EVENT_CONTEXTMENUBACKGROUND: return handler.OnContextMenuBackground();
     }
 }

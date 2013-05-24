@@ -127,6 +127,7 @@ signals:
     void SelectedEvent( boost::shared_ptr< timeline::Event > event );
     void DeletedEvent ( const std::string& uuid, const timeline::Error& error );
     void ActivatedEvent( const timeline::Event& event );
+    void ContextMenuEvent( boost::shared_ptr< timeline::Event > event );
 };
 
 struct Configuration

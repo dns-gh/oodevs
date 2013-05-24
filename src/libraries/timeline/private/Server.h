@@ -53,6 +53,8 @@ public:
     virtual void OnDeselectedEvent();
     virtual void OnDeletedEvent( const std::string& uuid, const Error& error );
     virtual void OnActivatedEvent( const Event& event );
+    virtual void OnContextMenuEvent( const Event& event );
+    virtual void OnContextMenuBackground();
 
 private:
     void Run();
