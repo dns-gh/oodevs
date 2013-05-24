@@ -27,7 +27,9 @@ local function issueMission ( self, tasks, nbrFront, echelon, entities )
     local nBestUnits = #bestUnits
     for i = 1, nBestUnits do
         local elem = bestUnits[i]
-        meKnowledge:sendTaskToPion( elem.entity, elem.taskName, elem.params, echelon ) -- Send the task to the unit
+        if not integration.isLogisticConvoy( elem.entity.source ) then
+            meKnowledge:sendTaskToPion( elem.entity, elem.taskName, elem.params, echelon ) -- Send the task to the unit
+        end
     end
     return bestUnits
 end
@@ -61,7 +63,7 @@ local function manageAddedAndDeletedUnits( self )
 
     -- Si un pion a été supprimé de l'automate, on redistribue les missions
     for i, entity in pairs( oldEntities ) do
-        if not exists( newEntities, entity ) then
+        if ( not exists( newEntities, entity ) ) and ( not integration.isLogisticConvoy( entity.source ) ) then
              self:create()
              redone = true
              break
