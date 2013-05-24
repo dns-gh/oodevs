@@ -198,3 +198,18 @@ void Server::OnContextMenuBackground()
 {
     emit ContextMenuEvent( boost::shared_ptr< Event >() );
 }
+
+void Server::OnKeyDown( int key )
+{
+    emit KeyDown( key );
+}
+
+void Server::OnKeyPress( int key )
+{
+    emit KeyPress( key );
+}
+
+void Server::OnKeyUp( int key )
+{
+    emit KeyUp( key );
+}

@@ -55,6 +55,9 @@ public:
     virtual void OnActivatedEvent( const Event& event );
     virtual void OnContextMenuEvent( const Event& event );
     virtual void OnContextMenuBackground();
+    virtual void OnKeyDown( int key );
+    virtual void OnKeyPress( int key );
+    virtual void OnKeyUp( int key );
 
 private:
     void Run();

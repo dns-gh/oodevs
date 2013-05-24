@@ -128,6 +128,9 @@ signals:
     void DeletedEvent ( const std::string& uuid, const timeline::Error& error );
     void ActivatedEvent( const timeline::Event& event );
     void ContextMenuEvent( boost::shared_ptr< timeline::Event > event );
+    void KeyDown( int key );
+    void KeyPress( int key );
+    void KeyUp( int key );
 };
 
 struct Configuration

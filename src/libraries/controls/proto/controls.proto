@@ -33,6 +33,10 @@ enum ServerType
     SERVER_EVENT_ACTIVATED             = 0x204;
     SERVER_EVENT_CONTEXTMENU           = 0x205;
     SERVER_EVENT_CONTEXTMENUBACKGROUND = 0x206;
+    // keyboard event
+    SERVER_KEYBOARD_KEYDOWN            = 0x300;
+    SERVER_KEYBOARD_KEYPRESS           = 0x301;
+    SERVER_KEYBOARD_KEYUP              = 0x302;
 }
 
 message Action
@@ -59,6 +63,13 @@ message Error
     optional string text = 2;
 }
 
+message KeyBoardEvent
+{
+    optional int32 keydown  = 1;
+    optional int32 keypress = 2;
+    optional int32 keyup    = 3;
+}
+
 message ClientCommand
 {
     optional ClientType type  = 1;
@@ -67,7 +78,8 @@ message ClientCommand
 
 message ServerCommand
 {
-    optional ServerType type  = 1;
-    optional Event      event = 2;
-    optional Error      error = 3;
+    optional ServerType    type          = 1;
+    optional Event         event         = 2;
+    optional Error         error         = 3;
+    optional KeyBoardEvent keyboardevent = 4;
 }
