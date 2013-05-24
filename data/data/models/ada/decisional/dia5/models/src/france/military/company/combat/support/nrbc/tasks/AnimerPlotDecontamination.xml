@@ -1,45 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.nrbc.tasks.AnimerPlotDecontamination" source-version="1.0.0" knowledge-class="france.military.company.combat.support.nrbc.tasks.knowledges.AnimerPlotDecontaminationEffect">
-	<parameters>
-		<parameter name="positions">
-			<type>
-				<list>
-					<class name="sword.military.knowledge.decisional.Reachable"/>
-				</list>
-			</type>
-		</parameter>
-	</parameters>
-	<stages>
-		<stage label="Animation" disable-when-done="true">
-			<skills>
-				<skill name="sword.military.company.skills.Lead" main="true">
-					<parameter name="companyTask">
-						<value>
-							<string>france.military.company.combat.support.nrbc.tasks.AnimerPlotDecontamination</string>
-						</value>
-					</parameter>
-					<parameter name="mainTasks">
-						<value>
-							<string>france.military.platoon.combat.support.nrbc.tasks.AnimerPlotDecontamination</string>
-						</value>
-					</parameter>
-					<parameter name="supportTasks">
-						<value>
-							<string>france.military.platoon.tasks.Renforcer</string>
-						</value>
-					</parameter>
-					<parameter name="defaultTask">
-						<value>
-							<string>france.military.platoon.tasks.Suivre</string>
-						</value>
-					</parameter>
-					<parameter name="taskForSupporting">
-						<value>
-							<string>france.military.platoon.tasks.Renforcer</string>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <parameters>
+        <parameter name="positions">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Animation" disable-when-done="true">
+            <skills>
+                <skill name="sword.military.company.skills.Lead" main="true">
+                    <parameter name="companyTask">
+                        <value>
+                            <string>france.military.company.combat.support.nrbc.tasks.AnimerPlotDecontamination</string>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>france.military.platoon.combat.support.nrbc.tasks.AnimerPlotDecontamination</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>france.military.platoon.tasks.Renforcer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>france.military.platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>france.military.platoon.tasks.Renforcer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="disableWhenDone">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>
