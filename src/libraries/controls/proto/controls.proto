@@ -22,14 +22,15 @@ enum ClientType
 
 enum ServerType
 {
-    SERVER_INVALID          = 0x000;
+    SERVER_INVALID                     = 0x000;
     // commands
-    SERVER_READY            = 0x100;
+    SERVER_READY                       = 0x100;
     // event commands
-    SERVER_EVENT_CREATED    = 0x200;
-    SERVER_EVENT_SELECTED   = 0x201;
-    SERVER_EVENT_DESELECTED = 0x202;
-    SERVER_EVENT_DELETED    = 0x203;
+    SERVER_EVENT_CREATED               = 0x200;
+    SERVER_EVENT_SELECTED              = 0x201;
+    SERVER_EVENT_DESELECTED            = 0x202;
+    SERVER_EVENT_DELETED               = 0x203;
+    SERVER_EVENT_ACTIVATED             = 0x204;
 }
 
 message Action

@@ -38,22 +38,24 @@ namespace controls
 
     void ParseClient( ClientHandler_ABC& client, const void* src, size_t size );
 
-    size_t ReadyServer    ( void* dst, size_t size );
-    size_t CreatedEvent   ( void* dst, size_t size, const Event& event, const Error& error );
-    size_t SelectedEvent  ( void* dst, size_t size, const Event& event );
-    size_t DeselectedEvent( void* dst, size_t size );
-    size_t DeletedEvent   ( void* dst, size_t size, const std::string& uuid, const Error& error );
+    size_t ReadyServer          ( void* data, size_t size );
+    size_t CreatedEvent         ( void* data, size_t size, const Event& event, const Error& error );
+    size_t SelectedEvent        ( void* data, size_t size, const Event& event );
+    size_t DeselectedEvent      ( void* data, size_t size );
+    size_t DeletedEvent         ( void* data, size_t size, const std::string& uuid, const Error& error );
+    size_t ActivatedEvent       ( void* data, size_t size, const Event& event );
 
     struct ServerHandler_ABC : public boost::noncopyable
     {
                  ServerHandler_ABC() {}
         virtual ~ServerHandler_ABC() {}
 
-        virtual void OnReadyServer    () = 0;
-        virtual void OnCreatedEvent   ( const Event& event, const Error& error ) = 0;
-        virtual void OnSelectedEvent  ( const Event& event ) = 0;
-        virtual void OnDeselectedEvent() = 0;
-        virtual void OnDeletedEvent   ( const std::string& uuid, const Error& error ) = 0;
+        virtual void OnReadyServer          () = 0;
+        virtual void OnCreatedEvent         ( const Event& event, const Error& error ) = 0;
+        virtual void OnSelectedEvent        ( const Event& event ) = 0;
+        virtual void OnDeselectedEvent      () = 0;
+        virtual void OnDeletedEvent         ( const std::string& uuid, const Error& error ) = 0;
+        virtual void OnActivatedEvent       ( const Event& event ) = 0;
     };
 
     void ParseServer( ServerHandler_ABC& server, const void* src, size_t size );

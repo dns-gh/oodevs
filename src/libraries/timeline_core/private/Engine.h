@@ -53,11 +53,12 @@ private:
     void DeletedEvent( const std::string& uuid, const Error& err );
 
     // V8 handlers
-    CefRefPtr< CefV8Value > OnReady        ( const CefV8ValueList& args );
-    CefRefPtr< CefV8Value > OnCreatedEvent ( const CefV8ValueList& args );
-    CefRefPtr< CefV8Value > OnSelectEvent  ( const CefV8ValueList& args );
-    CefRefPtr< CefV8Value > OnDeselectEvent( const CefV8ValueList& args );
-    CefRefPtr< CefV8Value > OnDeletedEvent ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnReady                ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnCreatedEvent         ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnSelectEvent          ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnDeselectEvent        ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnDeletedEvent         ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnActivateEvent        ( const CefV8ValueList& args );
 
 protected:
     IMPLEMENT_REFCOUNTING( Engine );

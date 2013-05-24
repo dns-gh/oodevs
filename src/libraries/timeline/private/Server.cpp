@@ -183,3 +183,8 @@ void Server::OnDeletedEvent( const std::string& uuid, const Error& error )
 {
     emit DeletedEvent( uuid, error );
 }
+
+void Server::OnActivatedEvent( const Event& event )
+{
+    emit ActivatedEvent( event );
+}

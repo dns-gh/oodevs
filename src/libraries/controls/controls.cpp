@@ -194,16 +194,25 @@ size_t tic::DeletedEvent( void* data, size_t size, const std::string& uuid, cons
     return Marshall( data, size, cmd );
 }
 
+size_t tic::ActivatedEvent( void* data, size_t size, const Event& event )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::SERVER_EVENT_ACTIVATED );
+    SetEvent( *cmd.mutable_event(), event );
+    return Marshall( data, size, cmd );
+}
+
 void tic::ParseServer( ServerHandler_ABC& handler, const void* data, size_t size )
 {
     ServerCommand cmd;
     Unmarshall( cmd, data, size );
     switch( cmd.type() )
     {
-        case sdk::SERVER_READY:            return handler.OnReadyServer();
-        case sdk::SERVER_EVENT_CREATED:    return handler.OnCreatedEvent ( GetEvent( cmd.event() ), GetError( cmd.error() ) );
-        case sdk::SERVER_EVENT_SELECTED:   return handler.OnSelectedEvent( GetEvent( cmd.event() ) );
-        case sdk::SERVER_EVENT_DESELECTED: return handler.OnDeselectedEvent();
-        case sdk::SERVER_EVENT_DELETED:    return handler.OnDeletedEvent( GetEvent( cmd.event() ).uuid, GetError( cmd.error() ) );
+        case sdk::SERVER_READY:                       return handler.OnReadyServer();
+        case sdk::SERVER_EVENT_CREATED:               return handler.OnCreatedEvent ( GetEvent( cmd.event() ), GetError( cmd.error() ) );
+        case sdk::SERVER_EVENT_SELECTED:              return handler.OnSelectedEvent( GetEvent( cmd.event() ) );
+        case sdk::SERVER_EVENT_DESELECTED:            return handler.OnDeselectedEvent();
+        case sdk::SERVER_EVENT_DELETED:               return handler.OnDeletedEvent( GetEvent( cmd.event() ).uuid, GetError( cmd.error() ) );
+        case sdk::SERVER_EVENT_ACTIVATED:             return handler.OnActivatedEvent( GetEvent( cmd.event() ) );
     }
 }

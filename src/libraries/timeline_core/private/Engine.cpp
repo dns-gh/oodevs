@@ -137,11 +137,12 @@ void Engine::Register( CefRefPtr< CefV8Context > context )
     auto window = context->GetGlobal();
     auto gaming = SetValue( window, "gaming" );
     SetValue( gaming, "enabled", true );
-    SetValue( gaming, "ready",          0, boost::bind( &Engine::OnReady, this, _1 ) );
-    SetValue( gaming, "created_event",  2, boost::bind( &Engine::OnCreatedEvent,  this, _1 ) );
-    SetValue( gaming, "select_event",   1, boost::bind( &Engine::OnSelectEvent,   this, _1 ) );
-    SetValue( gaming, "deselect_event", 0, boost::bind( &Engine::OnDeselectEvent, this, _1 ) );
-    SetValue( gaming, "deleted_event",  2, boost::bind( &Engine::OnDeletedEvent,  this, _1 ) );
+    SetValue( gaming, "ready",                  0, boost::bind( &Engine::OnReady, this, _1 ) );
+    SetValue( gaming, "created_event",          2, boost::bind( &Engine::OnCreatedEvent,          this, _1 ) );
+    SetValue( gaming, "select_event",           1, boost::bind( &Engine::OnSelectEvent,           this, _1 ) );
+    SetValue( gaming, "deselect_event",         0, boost::bind( &Engine::OnDeselectEvent,         this, _1 ) );
+    SetValue( gaming, "deleted_event",          2, boost::bind( &Engine::OnDeletedEvent,          this, _1 ) );
+    SetValue( gaming, "activate_event",         1, boost::bind( &Engine::OnActivateEvent,         this, _1 ) );
 }
 
 void Engine::Unregister()
@@ -297,6 +298,15 @@ CefRefPtr< CefV8Value > Engine::OnDeselectEvent( const CefV8ValueList& /*args*/ 
 {
     std::vector< uint8_t > buffer( controls::DeselectedEvent( 0, 0 ) );
     controls::DeselectedEvent( &buffer[0], buffer.size() );
+    device_.Write( &buffer[0], buffer.size() );
+    return 0;
+}
+
+CefRefPtr< CefV8Value > Engine::OnActivateEvent( const CefV8ValueList& args )
+{
+    const Event event = GetEvent( args[0] );
+    std::vector< uint8_t > buffer( controls::ActivatedEvent( 0, 0, event ) );
+    controls::ActivatedEvent( &buffer[0], buffer.size(), event );
     device_.Write( &buffer[0], buffer.size() );
     return 0;
 }
