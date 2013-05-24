@@ -18,6 +18,7 @@
 #include "tools/IdManager.h"
 #include "tools/FileWrapper.h"
 #include "tools/XmlStreamOperators.h"
+#include "tools/SchemaWriter.h"
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
@@ -182,10 +183,10 @@ void DrawingsModel::Save( const tools::Path& directory ) const
     }
 
     {
+        const tools::SchemaWriter schemaWriter;
         tools::Xofstream xos( directory / "drawings.xml" );
-        xos << xml::start( "shapes" )
-            << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
-            << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/drawings.xsd" );
+        xos << xml::start( "shapes" );
+        schemaWriter.WriteExerciseSchema( xos, "drawings" );
         SerializeDrawingsMap( xos, formationMap, "formation" );
         SerializeDrawingsMap( xos, automatMap, "automat" );
         SerializeDrawings( xos, notDiffused );
