@@ -85,3 +85,12 @@ bool ResourceNetworksLayer::IsPickable() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworksLayer::ActivateEntity
+// Created: LGY 2013-05-24
+// -----------------------------------------------------------------------------
+void ResourceNetworksLayer::ActivateEntity( const kernel::Entity_ABC& /*entity*/ )
+{
+    // NOTHING
+}
