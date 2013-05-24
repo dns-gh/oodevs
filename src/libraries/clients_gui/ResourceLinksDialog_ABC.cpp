@@ -483,7 +483,10 @@ void ResourceLinksDialog_ABC::Show()
     resourceNodes_ = selected_.front()->Get< ResourceNetwork_ABC >().GetResourceNodes();
     if( static_cast< int >( resourceNodes_.size() ) != dotationList_->count() )
     {
+        dotationList_->blockSignals( true );
         dotationList_->clear();
+        selectedItem_ = 0;
+        dotationList_->blockSignals( false );
         for( auto it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
             if( it == resourceNodes_.begin() )
             {
