@@ -421,6 +421,30 @@ copyTable =  function ( tableFrom )
     return tableTo
 end
 
+--- Returns the size of the table given in parameter
+-- @param table: the table
+-- @return the size of the table
+-- @author NMI
+-- @release 2013-05-23
+function tableSize ( table )
+    local cpt = 0
+    for _,k in pairs( table ) do
+      cpt = cpt + 1
+    end
+    return cpt
+end
+
+
+--- Clears the table given in parameter
+-- @param table: the table
+-- @author NMI
+-- @release 2013-05-24
+function clearTable ( table )
+    for k in pairs ( table ) do
+        table[ k ] = nil
+    end
+end
+
 --- Compare two elements with their efficiency
 -- @param w1 First element
 -- @param w2 Second element
