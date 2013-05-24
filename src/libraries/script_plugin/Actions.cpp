@@ -123,11 +123,12 @@ void Actions::IssueOrder( const std::string& name )
 // Name: Actions::IssueXmlOrder
 // Created: AGE 2008-07-17
 // -----------------------------------------------------------------------------
-void Actions::IssueXmlOrder( const std::string& name )
+void Actions::IssueXmlOrder( const std::string& content )
 {
     try
     {
-        config_.GetLoader().LoadFile( name.c_str(), boost::bind( &Actions::Read, this, _1 ) );
+        xml::xistringstream xis( content );
+        xis >> xml::list( "action", boost::bind( &Actions::Send, this, _1 ) );
     }
     catch( const std::exception& e )
     {

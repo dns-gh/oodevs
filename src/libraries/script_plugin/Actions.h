@@ -71,7 +71,7 @@ private:
     //@{
     void IssueOrder( const std::string& name );
     void IssueOrderFromFile( const std::string& name, const std::string& filename );
-    void IssueXmlOrder( const std::string& name );
+    void IssueXmlOrder( const std::string& content );
     void StartScheduler( const std::string& filename );
     void StopScheduler();
     void Send( xml::xistream& xis );
