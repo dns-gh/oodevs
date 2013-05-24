@@ -138,7 +138,9 @@
         <transform function='domain' type='int' select='${Units}' input='consumptions' id='domained'/>
         <reduce type='int' function='sum' input='domained' id='sum'/>
         <transform function='integrate' id='total' input='sum' type='int'/>
-        <result function='plot' input='total' type='int'/>
+        <constant type='int' value='-1' id='minus'/>
+        <reduce type='int' function='product' input='minus,total' id='final'/>
+        <result function='plot' input='final' type='int'/>
     </indicator>
   </function>
 
