@@ -546,12 +546,15 @@ integration.startMoveToItCrowd = function( objective )
     return false
 end
 
+integration.updateMoveToItCrowd = function( objective, pathType, inertness )
 
-integration.updateMoveToItCrowd = function( objective, pathType )
+    local epsilon = 0
+    if not inertness then
+        epsilon = 10
+    end
     local reachableDestination = objective.destination
     if reachableDestination then
         local currentPosition = objective:getPosition()
-        local epsilon = 10
         local distance = DEC_Geometrie_DistanceBetweenPoints( reachableDestination, currentPosition )
         if distance > epsilon then
             integration.stopMoveToItCrowd( objective )
@@ -566,8 +569,9 @@ integration.updateMoveToItCrowd = function( objective, pathType )
         end
     end
     if DEC_Population_HasReachedDestinationCompletely( objective:getPosition() ) then
-        return true
+        return true -- the all crowd has reached the objective
     end
+    
     return false
 end
 
