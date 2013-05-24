@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Escorter" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.EscortingEffect">
-	<parameters>
-		<parameter name="objective">
-			<type>
-				<class name="sword.military.world.Company"/>
-			</type>
-		</parameter>
-	</parameters>
-	<stages>
-		<stage label="Escorter">
-			<skills>
-				<skill name="france.military.company.skills.Escort" main="true">
-					<parameter name="companyTask">
-						<value>
-							<string>france.military.company.tasks.Escorter</string>
-						</value>
-					</parameter>
-					<parameter name="objective">
-						<value>
-							<parameter>objective</parameter>
-						</value>
-					</parameter>
-					<parameter name="automateParameters">
-						<value>
-							<call method="sword.military.company.queries.getTaskParameters"/>
-						</value>
-					</parameter>
-					<parameter name="escortTask">
-						<value>
-							<string>france.military.platoon.tasks.Escorter</string>
-						</value>
-					</parameter>
-					<parameter name="followTask">
-						<value>
-							<string>france.military.platoon.tasks.Suivre</string>
-						</value>
-					</parameter>
-					<parameter name="supportTask">
-						<value>
-							<string>france.military.platoon.tasks.Suivre</string>
-						</value>
-					</parameter>
-					<parameter name="defaultTask">
-						<value>
-							<string>france.military.platoon.tasks.Suivre</string>
-						</value>
-					</parameter>
-					<parameter name="taskForSupporting">
-						<value>
-							<string>france.military.platoon.tasks.Appuyer</string>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <parameters>
+        <parameter name="objective">
+            <type>
+                <class name="sword.military.world.Company"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Escorter">
+            <skills>
+                <skill name="france.military.company.skills.Escort" main="true">
+                    <parameter name="companyTask">
+                        <value>
+                            <string>france.military.company.tasks.Escorter</string>
+                        </value>
+                    </parameter>
+                    <parameter name="objective">
+                        <value>
+                            <parameter>objective</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="automateParameters">
+                        <value>
+                            <call method="sword.military.company.queries.getTaskParameters"/>
+                        </value>
+                    </parameter>
+                    <parameter name="escortTask">
+                        <value>
+                            <string>france.military.platoon.tasks.Escorter</string>
+                        </value>
+                    </parameter>
+                    <parameter name="followTask">
+                        <value>
+                            <string>france.military.platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTask">
+                        <value>
+                            <string>france.military.platoon.combat.support.engineer.tasks.AppuiMobilite;france.military.platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>france.military.platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>france.military.platoon.tasks.Appuyer</string>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

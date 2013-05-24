@@ -25,7 +25,7 @@
                     </parameter>
                     <parameter name="supportTasks">
                         <value>
-                            <string>france.military.platoon.tasks.Suivre</string>
+                            <string>france.military.platoon.combat.support.engineer.tasks.AppuiMobilite;france.military.platoon.tasks.Suivre</string>
                         </value>
                     </parameter>
                     <parameter name="taskForSupporting">

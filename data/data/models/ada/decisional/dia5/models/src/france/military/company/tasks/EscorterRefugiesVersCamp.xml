@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.EscorterRefugiesVersCamp" source-version="1.0.0" knowledge-class="france.military.company.tasks.knowledges.EscorterRefugiesVersCampEffect">
-	<parameters>
-		<parameter name="camp">
-			<description>Camp de Réfugiés</description>
-			<type>
-				<class name="sword.military.knowledge.decisional.Loading"/>
-			</type>
-		</parameter>
-		<parameter name="peoples">
-			<description>Groupe de réfugiés à guider</description>
-			<type>
-				<list>
-					<class name="sword.military.knowledge.decisional.Loadable"/>
-				</list>
-			</type>
-		</parameter>
-	</parameters>
-	<stages>
-		<stage label="Escorter des réfugiés vers un camp" disable-when-done="true">
-			<skills>
-				<skill name="sword.military.company.skills.Lead" main="true">
-					<parameter name="companyTask">
-						<value>
-							<string>france.military.company.tasks.EscorterRefugiesVersCamp</string>
-						</value>
-					</parameter>
-					<parameter name="mainTasks">
-						<value>
-							<string>france.military.platoon.tasks.EscorterRefugiesVersCamp</string>
-						</value>
-					</parameter>
-					<parameter name="supportTasks">
-						<value>
-							<string>france.military.platoon.tasks.Suivre</string>
-						</value>
-					</parameter>
-					<parameter name="defaultTask">
-						<value>
-							<string>france.military.platoon.tasks.Suivre</string>
-						</value>
-					</parameter>
-					<parameter name="taskForSupporting">
-						<value>
-							<string>france.military.platoon.tasks.Appuyer</string>
-						</value>
-					</parameter>
-					<parameter name="disableWhenDone">
-						<value>
-							<boolean>true</boolean>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <parameters>
+        <parameter name="camp">
+            <description>Camp de Réfugiés</description>
+            <type>
+                <class name="sword.military.knowledge.decisional.Loading"/>
+            </type>
+        </parameter>
+        <parameter name="peoples">
+            <description>Groupe de réfugiés à guider</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Loadable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Escorter des réfugiés vers un camp" disable-when-done="true">
+            <skills>
+                <skill name="sword.military.company.skills.Lead" main="true">
+                    <parameter name="companyTask">
+                        <value>
+                            <string>france.military.company.tasks.EscorterRefugiesVersCamp</string>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>france.military.platoon.tasks.EscorterRefugiesVersCamp</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>france.military.platoon.combat.support.engineer.tasks.AppuiMobilite;france.military.platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>france.military.platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>france.military.platoon.tasks.Appuyer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="disableWhenDone">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

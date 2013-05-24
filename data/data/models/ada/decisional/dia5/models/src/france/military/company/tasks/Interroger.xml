@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Interroger" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.InterrogateEffect">
-	<parameters>
-		<parameter name="entity">
-			<description>L'entité que l'on souhaite interroger.</description>
-			<type>
-				<class name="sword.military.knowledge.decisional.Reachable"/>
-				<class name="sword.military.knowledge.Askable"/>
-			</type>
-		</parameter>
-	</parameters>
-	<next-task name="sword.military.company.tasks.Interrogate">
-		<parameter name="companyTask">
-			<value>
-				<string>france.military.company.tasks.Interroger</string>
-			</value>
-		</parameter>
-		<parameter name="mainTasks">
-			<value>
-				<string>france.military.platoon.tasks.Interroger</string>
-			</value>
-		</parameter>
-		<parameter name="supportTasks">
-			<value>
-				<string>france.military.platoon.tasks.Suivre</string>
-			</value>
-		</parameter>
-		<parameter name="defaultTask">
-			<value>
-				<string>france.military.platoon.tasks.Suivre</string>
-			</value>
-		</parameter>
-		<parameter name="taskForSupporting">
-			<value>
-				<string>france.military.platoon.tasks.Appuyer</string>
-			</value>
-		</parameter>
-		<parameter name="entity">
-			<value>
-				<parameter>entity</parameter>
-			</value>
-		</parameter>
-	</next-task>
+    <parameters>
+        <parameter name="entity">
+            <description>L'entité que l'on souhaite interroger.</description>
+            <type>
+                <class name="sword.military.knowledge.decisional.Reachable"/>
+                <class name="sword.military.knowledge.Askable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <next-task name="sword.military.company.tasks.Interrogate">
+        <parameter name="companyTask">
+            <value>
+                <string>france.military.company.tasks.Interroger</string>
+            </value>
+        </parameter>
+        <parameter name="mainTasks">
+            <value>
+                <string>france.military.platoon.tasks.Interroger</string>
+            </value>
+        </parameter>
+        <parameter name="supportTasks">
+            <value>
+                <string>france.military.platoon.combat.support.engineer.tasks.AppuiMobilite;france.military.platoon.tasks.Suivre</string>
+            </value>
+        </parameter>
+        <parameter name="defaultTask">
+            <value>
+                <string>france.military.platoon.tasks.Suivre</string>
+            </value>
+        </parameter>
+        <parameter name="taskForSupporting">
+            <value>
+                <string>france.military.platoon.tasks.Appuyer</string>
+            </value>
+        </parameter>
+        <parameter name="entity">
+            <value>
+                <parameter>entity</parameter>
+            </value>
+        </parameter>
+    </next-task>
 </task>
