@@ -9,6 +9,7 @@
 
 #include "actions_test_pch.h"
 #include "MockEntityResolver.h"
+#include "Tools.h"
 #include "actions/Agent.h"
 #include "actions/AgentKnowledgeOrder.h"
 #include "actions/Automat.h"
@@ -27,7 +28,6 @@
 #include "actions/Path.h"
 #include "actions/Polygon.h"
 #include "actions/PopulationKnowledgeOrder.h"
-#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/AtlasNatures.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -77,13 +77,6 @@ namespace
         MOCK_METHOD( GetId, 0 );
     };
 
-    MOCK_BASE_CLASS( MockAgent, kernel::Agent_ABC )
-    {
-        MOCK_METHOD( GetName, 0 );
-        MOCK_METHOD( GetId, 0 );
-        MOCK_METHOD( GetType, 0 );
-    };
-
     MOCK_BASE_CLASS( MockAutomat, kernel::Automat_ABC )
     {
         MOCK_METHOD( GetName, 0 );
@@ -125,16 +118,6 @@ namespace
         MOCK_METHOD( Display, 1 );
     };
 
-    MOCK_BASE_CLASS( MockAgentKnowledgeConverter, kernel::AgentKnowledgeConverter_ABC )
-    {
-        MOCK_METHOD( FindAgent, 2 );
-        MOCK_METHOD( FindPopulation, 2 );
-        MOCK_METHOD( Find, 2, const kernel::AgentKnowledge_ABC*( const kernel::AgentKnowledge_ABC&, const kernel::Entity_ABC& ), FindAgentKnowledgeFromKnowledge );
-        MOCK_METHOD( Find, 2, const kernel::AgentKnowledge_ABC*( const kernel::Agent_ABC&, const kernel::Entity_ABC& ), FindAgentKnowledgeFromAgent );
-        MOCK_METHOD( Find, 2, const kernel::PopulationKnowledge_ABC*( const kernel::PopulationKnowledge_ABC&, const kernel::Entity_ABC& ), FindPopulationKnowledgeFromKnowledge );
-        MOCK_METHOD( Find, 2, const kernel::PopulationKnowledge_ABC*( const kernel::Population_ABC&, const kernel::Entity_ABC& ), FindPopulationKnowledgeFromPopulation );
-    };
-
     MOCK_BASE_CLASS( MockObject, kernel::Object_ABC )
     {
         MOCK_METHOD( GetName, 0 );
@@ -154,15 +137,6 @@ namespace
         MOCK_METHOD( GetEntityId, 0 );
         MOCK_METHOD( Display, 1 );
         MOCK_METHOD( DisplayInList, 1 );
-    };
-
-    MOCK_BASE_CLASS( MockObjectKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC )
-    {
-        MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( unsigned long, const kernel::Team_ABC& ), FindObjectKnowledgeFromId );
-        MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( unsigned long, const kernel::Entity_ABC& ), FindObjectKnowledgeFromIdWithEntity );
-        MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::ObjectKnowledge_ABC&, const kernel::Team_ABC& ), FindObjectKnowledgeFromKnowledge );
-        MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::Object_ABC&, const kernel::Team_ABC& ), FindObjectKnowledgeFromObject );
-        MOCK_METHOD( Find, 2, const kernel::ObjectKnowledge_ABC*( const kernel::Object_ABC&, const kernel::Entity_ABC& ), FindObjectKnowledgeFromObjectWithEntity );
     };
 
     MOCK_BASE_CLASS( MockCommunicationHierarchies, kernel::CommunicationHierarchies )

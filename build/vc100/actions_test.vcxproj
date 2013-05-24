@@ -119,7 +119,13 @@
     <PostBuildEvent />
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions>/bigobj
+ %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
@@ -138,6 +144,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\tests\actions_test\ActionsTest.cpp" />
     <ClCompile Include="..\..\src\tests\actions_test\actions_test_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -150,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\actions_test\actions_test_pch.h" />
     <ClInclude Include="..\..\src\tests\actions_test\MockEntityResolver.h" />
+    <ClInclude Include="..\..\src\tests\actions_test\Tools.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="actions.vcxproj">

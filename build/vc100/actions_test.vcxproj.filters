@@ -19,6 +19,9 @@
     <ClCompile Include="..\..\src\tests\actions_test\ParametersSerializationTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\actions_test\ActionsTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\actions_test\actions_test_pch.h">
@@ -26,6 +29,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\tests\actions_test\MockEntityResolver.h">
       <Filter>Source Files\Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\actions_test\Tools.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
