@@ -43,6 +43,11 @@ public slots:
     void OnDeletedEvent( const std::string& uuid, const timeline::Error& error );
     void OnDeleteEvent();
     void OnTestCreate();
+    void OnActivatedEvent( const timeline::Event& event );
+    void OnContextMenuEvent( boost::shared_ptr< timeline::Event > event );
+    void OnKeyDown( int key );
+    void OnKeyPress( int key );
+    void OnKeyUp( int key );
 
 private:
     void WaitReady() const;

@@ -34,6 +34,11 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
     QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event > ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( KeyDown( int ) ), this, SLOT( OnKeyDown( int ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( KeyPress( int ) ), this, SLOT( OnKeyPress( int ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
 }
 
 Controller::~Controller()
@@ -125,9 +130,10 @@ void Controller::OnCreatedEvent( const Event& event, const Error& error )
 void Controller::OnSelectedEvent( boost::shared_ptr< Event > event )
 {
     if( event )
+    {
         uuid_ = event->uuid;
-    if( event )
         ui_->statusBar->showMessage( QString( "event %1 selected" ).arg( QString::fromStdString( uuid_ ) ) );
+    }
     else
         ui_->statusBar->showMessage( "event deselected" );
     ui_->actionDelete->setEnabled( event );
@@ -163,6 +169,46 @@ void Controller::OnTestCreate()
     {
         ui_->statusBar->showMessage( err.what() );
     }
+}
+
+void Controller::OnActivatedEvent( const timeline::Event& event )
+{
+    ui_->statusBar->showMessage( QString( "event %1 activated" ).arg( QString::fromStdString( event.uuid ) ) );
+}
+
+void Controller::OnContextMenuEvent( boost::shared_ptr< timeline::Event > event )
+{
+    if( event )
+    {
+        ui_->statusBar->showMessage( QString( "context menu is requested on event %1" ).arg( QString::fromStdString( event->uuid ) ) );
+        QMenu menu;
+        menu.addAction( "Event context menu" );
+        menu.addSeparator();
+        menu.addAction( QString( "Event id: %1" ).arg( QString::fromStdString( event->uuid ) ) );
+        menu.exec( QCursor::pos() );
+    }
+    else
+    {
+        ui_->statusBar->showMessage( "context menu is requested on the background" );
+        QMenu menu;
+        menu.addAction( "Background context menu" );
+        menu.exec( QCursor::pos() );
+    }
+}
+
+void Controller::OnKeyDown( int key )
+{
+    ui_->statusBar->showMessage( QString( "key 0x%1 down" ).arg( key, 0, 16 ) );
+}
+
+void Controller::OnKeyPress( int key )
+{
+    ui_->statusBar->showMessage( QString( "key 0x%1 press" ).arg( key, 0, 16 ) );
+}
+
+void Controller::OnKeyUp( int key )
+{
+    ui_->statusBar->showMessage( QString( "key 0x%1 up" ).arg( key, 0, 16 ) );
 }
 
 void Controller::WaitReady() const
