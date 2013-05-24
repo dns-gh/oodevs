@@ -519,3 +519,11 @@ end
 integration.isKnowledgeCrowdInsideArea = function( crowd, area )
     return DEC_ConnaissancePopulation_EstDansZone( crowd, area )
 end
+
+integration.lockCrowdKnowledge = function( crowd )
+    DEC_ConnaissancePopulation_Verrouiller( crowd.source )
+end
+
+integration.unlockCrowdKnowledge = function( crowd )
+    DEC_ConnaissancePopulation_Deverrouiller( crowd.source )
+end
