@@ -474,3 +474,19 @@ bool DEC_KnowledgePopulationFunctions::CanLoadCrowdConcentration( const DEC_Deci
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::IsValid
+// Created: MIA 2013-05-17
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgePopulationFunctions::IsValid( const DEC_Decision_ABC& callerAgent, int knowledgeId )
+{
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return true;
+    }
+    return false;
+}

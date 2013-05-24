@@ -56,6 +56,7 @@ public:
                            static bool HealWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
                            static int GetNbreOfWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
                            static bool CanLoadCrowdConcentration( const DEC_Decision_ABC& callerAgent, int knowledgeId, unsigned int concentrationId );
+                           static bool IsValid( const DEC_Decision_ABC& callerAgent, int knowledgeId );
     //@}
 };
 
