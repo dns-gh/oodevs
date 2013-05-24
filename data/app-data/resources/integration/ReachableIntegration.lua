@@ -662,51 +662,34 @@ end
 -- ****************************************************************************
 integration.updateMoveToItCrowd = function( objective, pathType, inertness )
 
-    -- ------------------------Worldwide Crowds------------------------------------------------
-    if inertness == true then
-        local distance = DEC_Geometrie_DistanceBetweenPoints( objective.destination, objective:getPosition() )
-        if DEC_Population_HasReachedDestination( objective.destination ) then
-            -- if the initial objective has moved (the crowd is moving to an agent for instance) re-compute the path and update movement.
-            if distance > 0 then
-                integration.stopMoveToItCrowd( objective )
-                return integration.startMoveToItCrowd( objective, pathType )
-            end
-        end
-        -- While the all crowd has reached the objective, if it moves 
-        if DEC_Population_HasReachedDestinationCompletely( objective:getPosition() ) then
-            if distance > 0 then -- the objective can moves even if the crowd has reached it. In that case, update
-                integration.stopMoveToItCrowd( objective )
-                return integration.startMoveToItCrowd( objective, pathType )
-            end
-            return true -- the all crowd has reached the objective
-        end
-        return false
-
-    else --  inertness is nil or false
-         -- --------------------------------Scipio Crowds----------------------------------------
-        local reachableDestination = objective.destination
-        if reachableDestination then
-            local currentPosition = objective:getPosition()
-            local epsilon = 10
-            local distance = DEC_Geometrie_DistanceBetweenPoints( reachableDestination, currentPosition )
-            if distance > epsilon then
-                integration.stopMoveToItCrowd( objective )
-                return integration.startMoveToItCrowd( objective, pathType )
-            end
-            objective.lastPosition = objective.lastPosition or DEC_Geometrie_CopiePoint( currentPosition )
-            local currentDistance = DEC_Geometrie_DistanceBetweenPoints( objective.lastPosition, currentPosition )
-            if( currentDistance > 3 * epsilon ) then
-                objective.lastPosition = currentPosition
-                integration.stopMoveToItCrowd( objective )
-                return integration.startMoveToItCrowd( objective, pathType)
-            end
-        end
-        if DEC_Population_HasReachedDestinationCompletely( objective:getPosition() ) then
-            return true
-        end
-        return false
+    local epsilon = 0
+    if not inertness then
+        -- Scipio Crowds
+        epsilon = 10
     end
+    local reachableDestination = objective.destination
+    if reachableDestination then
+        local currentPosition = objective:getPosition()
+        local distance = DEC_Geometrie_DistanceBetweenPoints( reachableDestination, currentPosition )
+        if distance > epsilon then
+            integration.stopMoveToItCrowd( objective )
+            return integration.startMoveToItCrowd( objective, pathType )
+        end
+        objective.lastPosition = objective.lastPosition or DEC_Geometrie_CopiePoint( currentPosition )
+        local currentDistance = DEC_Geometrie_DistanceBetweenPoints( objective.lastPosition, currentPosition )
+        if( currentDistance > 3 * epsilon ) then
+            objective.lastPosition = currentPosition
+            integration.stopMoveToItCrowd( objective )
+            return integration.startMoveToItCrowd( objective, pathType)
+        end
+    end
+    if DEC_Population_HasReachedDestinationCompletely( objective:getPosition() ) then
+        return true -- the all crowd has reached the objective
+    end
+    
+    return false
 end
+
 
 integration.stopMoveToItCrowd = function( objective )
     objective[myself] = objective[myself] or {}
