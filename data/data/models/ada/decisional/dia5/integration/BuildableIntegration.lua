@@ -214,7 +214,7 @@ integration.destroyInstantlyCheckpointOn = function( position )
             DEC_ConnaissanceObjet_ResetDensitePopulationSortante( position.constructedObject )
             DEC_DetruireObjetSansDelais( position.constructedObject ) -- destroy it
             position.constructedObject = nil
-    myself.changeDensity = false
+            myself.changeDensity = false
         end
     end
 end
@@ -249,14 +249,13 @@ end
 -- Decontaminate plot posture integration.
 -- --------------------------------------------------------------------------------
 integration.buildInstantlyDecontaminatePlotOn = function( position )  -- A appeler une seule fois.
-    if not position.constructedObject then
-        local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
-        local DecontaminatePlot = integration.obtenirObjetProcheDe( localisation, 
+    local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
+    local DecontaminatePlot = integration.obtenirObjetProcheDe( localisation, 
                             eTypeObjectSiteDecontamination, 10 )
-        if DecontaminatePlot == nil then -- need to create a decontamination site object
-           DEC_MagicGetOrCreateObject( 
-                    eTypeObjectSiteDecontamination, localisation )
-        end
+    if DecontaminatePlot == nil then -- need to create a decontamination site object
+        DEC_MagicGetOrCreateObject( 
+                          eTypeObjectSiteDecontamination, localisation )
+        myself.decontaminationPlotBuilt = true
     end
 end
 
@@ -270,6 +269,9 @@ integration.animateDecontaminatePlot = function( position ) -- Appeler à chaque 
             position.constructedObject = DecontaminatePlot
             position.constructedObject.actionAnimation = DEC__StartAnimerObjet( position.constructedObject )
             meKnowledge:RC( eRC_SiteDecontaminationAnime )
+            if myself.decontaminationPlotBuilt then
+                position.constructedObject.DecontaminationPlotBuiltDuringTask = true
+            end
         end
     end
 end
@@ -279,13 +281,15 @@ integration.destroyInstantlyDecontaminatePlotOn = function( position )
         if DEC_ConnaissanceObjet_NiveauAnimation( position.constructedObject  ) > 0 then
             DEC__StopAction( position.constructedObject.actionAnimation )
             meKnowledge:RC( eRC_FinAnimationObjet, position.constructedObject )
-    end
-        if DEC_ConnaissanceObjet_NiveauAnimation( position.constructedObject  ) == 0 then
+        end
+
+        if position.constructedObject.DecontaminationPlotBuiltDuringTask then -- Destroy only object constructed during task (keep preparation object !)
             DEC_ConnaissanceObjet_ResetDensitePopulationSortante( position.constructedObject )
             DEC_DetruireObjetSansDelais( position.constructedObject ) -- destroy it
             meKnowledge:RC( eRC_SiteDecontaminationDesactive )
             position.constructedObject = nil
         end
+        myself.decontaminationPlotBuilt = false
     end
 end
 
