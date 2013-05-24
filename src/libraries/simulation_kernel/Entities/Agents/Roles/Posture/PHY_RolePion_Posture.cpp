@@ -487,3 +487,32 @@ bool PHY_RolePion_Posture::IsMovingPosture() const
     return pCurrentPosture_ == &PHY_Posture::mouvement_
         || pCurrentPosture_ == &PHY_Posture::mouvementDiscret_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::Hide
+// Created: LDC 2013-05-24
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::Hide()
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::Show
+// Created: LDC 2013-05-24
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::Show( const MT_Vector2D& )
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::Follow
+// Created: LDC 2013-05-24
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::Follow( const MIL_Agent_ABC& agent )
+{
+    const PHY_RoleInterface_Posture& otherPosture = agent.GetRole< PHY_RoleInterface_Posture >();
+    ChangePosture( otherPosture.GetCurrentPosture() );
+    ChangePostureCompletionPercentage( otherPosture.GetPostureCompletionPercentage() );
+}

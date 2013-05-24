@@ -14,6 +14,7 @@
 #include "PHY_RoleInterface_Posture.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "NetworkUnitAttributesMessageSender_ABC.h"
+#include "LocationActionNotificationHandler_ABC.h"
 
 class MIL_Agent_ABC;
 
@@ -53,6 +54,7 @@ class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
                            , public tools::AlgorithmModifier_ABC< detection::PerceptionDistanceComputer_ABC >
                            , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
                            , public network::NetworkUnitAttributesMessageSender_ABC
+                           , public location::LocationActionNotificationHandler_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -117,6 +119,13 @@ public:
     //@{
     virtual void SendChangedState( client::UnitAttributes& asnMsg ) const;
     virtual void SendFullState( client::UnitAttributes& asnMsg ) const;
+    //@}
+    
+    //! @name Follow
+    //@{
+    virtual void Hide();
+    virtual void Show( const MT_Vector2D& vNewPosition );
+    virtual void Follow( const MIL_Agent_ABC& agent );
     //@}
 
 private:
