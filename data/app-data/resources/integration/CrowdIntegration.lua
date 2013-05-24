@@ -527,3 +527,7 @@ end
 integration.unlockCrowdKnowledge = function( crowd )
     DEC_ConnaissancePopulation_Deverrouiller( crowd.source )
 end
+
+integration.isKnowledgeCrowdValid = function( crowd )
+    return DEC_CrowdKnowledge_IsValid( myself, crowd )
+end
