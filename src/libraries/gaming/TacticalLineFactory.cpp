@@ -52,7 +52,7 @@ TacticalLineFactory::~TacticalLineFactory()
 ::TacticalLine_ABC* TacticalLineFactory::Create( const sword::PhaseLineCreation& message )
 {
     ::TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, converter_, message );
-    line->Attach< kernel::Positions >( *new TacticalLinePositions( message.tactical_line().geometry(), converter_, *line ) );
+    line->Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, message.tactical_line().geometry(), converter_, *line ) );
     line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, message.tactical_line().diffusion(), model_.GetAutomatResolver(), model_.GetFormationResolver() ) );
     return line;
 }
@@ -64,7 +64,7 @@ TacticalLineFactory::~TacticalLineFactory()
 ::TacticalLine_ABC* TacticalLineFactory::Create( const sword::LimitCreation& message )
 {
     ::TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, converter_, message );
-    line->Attach< kernel::Positions >( *new TacticalLinePositions( message.tactical_line().geometry(), converter_, *line ) );
+    line->Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, message.tactical_line().geometry(), converter_, *line ) );
     line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, message.tactical_line().diffusion(), model_.GetAutomatResolver(), model_.GetFormationResolver() ) );
     return line;
 }
@@ -76,7 +76,7 @@ TacticalLineFactory::~TacticalLineFactory()
 void TacticalLineFactory::CreateLimit( const T_PointVector& points, const kernel::Entity_ABC& superior )
 {
     Limit line( controllers_.controller_, publisher_, converter_ );
-    line.Attach< kernel::Positions >( *new TacticalLinePositions( points, converter_, line ) );
+    line.Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, points, converter_, line ) );
     line.Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, line, superior, model_.GetAutomatResolver(), model_.GetFormationResolver() ) );
     line.Create();
 }
@@ -88,7 +88,7 @@ void TacticalLineFactory::CreateLimit( const T_PointVector& points, const kernel
 void TacticalLineFactory::CreateLima( const T_PointVector& points, const kernel::Entity_ABC& superior )
 {
     Lima line( controllers_.controller_, publisher_, converter_ );
-    line.Attach< kernel::Positions >( *new TacticalLinePositions( points, converter_, line ) );
+    line.Attach< kernel::Positions >( *new TacticalLinePositions( controllers_.controller_, points, converter_, line ) );
     line.Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, line, superior, model_.GetAutomatResolver(), model_.GetFormationResolver() ) );
     line.Create();
 }

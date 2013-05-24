@@ -19,6 +19,7 @@ namespace kernel
     class CoordinateConverter_ABC;
     class Location_ABC;
     class TacticalLine_ABC;
+    class Controller;
 }
 
 namespace gui
@@ -36,9 +37,9 @@ class TacticalLinePositions_ABC : public kernel::Positions
 protected:
     //! @name Constructors/Destructor
     //@{
-             TacticalLinePositions_ABC( const kernel::CoordinateConverter_ABC& converter,
+             TacticalLinePositions_ABC( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                                         const kernel::TacticalLine_ABC& owner );
-             TacticalLinePositions_ABC( const T_PointVector& pointList,
+             TacticalLinePositions_ABC( kernel::Controller& controller, const T_PointVector& pointList,
                                         const kernel::CoordinateConverter_ABC& converter,
                                         const kernel::TacticalLine_ABC& owner );
     virtual ~TacticalLinePositions_ABC();
@@ -78,6 +79,7 @@ protected:
 
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     T_PointVector pointList_;
     std::auto_ptr< kernel::Location_ABC > location_;

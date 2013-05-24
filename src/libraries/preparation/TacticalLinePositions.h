@@ -43,8 +43,10 @@ class TacticalLinePositions : public gui::TacticalLinePositions_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLinePositions( const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter, const kernel::TacticalLine_ABC& owner );
-             TacticalLinePositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::TacticalLine_ABC& owner );
+             TacticalLinePositions( kernel::Controller& controller, const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter,
+                                    const kernel::TacticalLine_ABC& owner );
+             TacticalLinePositions( kernel::Controller& controller, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter,
+                                    const kernel::TacticalLine_ABC& owner );
     virtual ~TacticalLinePositions();
     //@}
 

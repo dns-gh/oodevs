@@ -19,8 +19,9 @@
 // Name: TacticalLinePositions constructor
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-TacticalLinePositions::TacticalLinePositions( const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter, const kernel::TacticalLine_ABC& owner )
-    : TacticalLinePositions_ABC( pointList, converter, owner )
+TacticalLinePositions::TacticalLinePositions( kernel::Controller& controller, const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter,
+                                              const kernel::TacticalLine_ABC& owner )
+    : TacticalLinePositions_ABC( controller, pointList, converter, owner )
     , isEditing_( false )
 {
     // NOTHING
@@ -30,8 +31,9 @@ TacticalLinePositions::TacticalLinePositions( const T_PointVector& pointList, co
 // Name: TacticalLinePositions constructor
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-TacticalLinePositions::TacticalLinePositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::TacticalLine_ABC& owner )
-    : TacticalLinePositions_ABC( converter, owner )
+TacticalLinePositions::TacticalLinePositions( kernel::Controller& controller, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter,
+                                              const kernel::TacticalLine_ABC& owner )
+    : TacticalLinePositions_ABC( controller, converter, owner )
     , isEditing_( false )
 {
     xis >> xml::list( "point", *this, &TacticalLinePositions::ReadPoint );

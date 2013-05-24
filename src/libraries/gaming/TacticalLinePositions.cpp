@@ -18,8 +18,9 @@
 // Name: TacticalLinePositions constructor
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-TacticalLinePositions::TacticalLinePositions( const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter, const kernel::TacticalLine_ABC& owner )
-    : TacticalLinePositions_ABC( pointList, converter, owner )
+TacticalLinePositions::TacticalLinePositions( kernel::Controller& controller, const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter,
+                                              const kernel::TacticalLine_ABC& owner )
+    : TacticalLinePositions_ABC( controller, pointList, converter, owner )
 {
      // NOTHING
 }
@@ -28,8 +29,9 @@ TacticalLinePositions::TacticalLinePositions( const T_PointVector& pointList, co
 // Name: TacticalLinePositions constructor
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-TacticalLinePositions::TacticalLinePositions( const sword::Location& message, const kernel::CoordinateConverter_ABC& converter, const kernel::TacticalLine_ABC& owner )
-    : TacticalLinePositions_ABC( converter, owner )
+TacticalLinePositions::TacticalLinePositions( kernel::Controller& controller, const sword::Location& message, const kernel::CoordinateConverter_ABC& converter,
+                                              const kernel::TacticalLine_ABC& owner )
+    : TacticalLinePositions_ABC( controller, converter, owner )
 {
     Update( message.coordinates() );
 }

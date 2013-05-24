@@ -18,6 +18,7 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/TacticalLine_ABC.h"
+#include "clients_kernel/Controller.h"
 
 using namespace kernel;
 using namespace gui;
@@ -26,8 +27,9 @@ using namespace gui;
 // Name: TacticalLinePositions_ABC constructor
 // Created: MMC 2012-05-14
 // -----------------------------------------------------------------------------
-TacticalLinePositions_ABC::TacticalLinePositions_ABC( const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
-    : converter_( converter )
+TacticalLinePositions_ABC::TacticalLinePositions_ABC( Controller& controller, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
+    : controller_( controller )
+    , converter_( converter )
     , owner_    ( owner )
     , location_( new kernel::Lines() )
 {
@@ -38,8 +40,9 @@ TacticalLinePositions_ABC::TacticalLinePositions_ABC( const kernel::CoordinateCo
 // Name: TacticalLinePositions_ABC constructor
 // Created: MMC 2012-05-14
 // -----------------------------------------------------------------------------
-TacticalLinePositions_ABC::TacticalLinePositions_ABC( const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
-    : converter_( converter )
+TacticalLinePositions_ABC::TacticalLinePositions_ABC( Controller& controller, const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
+    : controller_( controller )
+    , converter_( converter )
     , owner_    ( owner )
     , pointList_( pointList )
     , location_( new kernel::Lines() )
@@ -130,6 +133,7 @@ void TacticalLinePositions_ABC::ComputeBoundingBox()
     boundingBox_ = geometry::Rectangle2f();
     for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
         boundingBox_.Incorporate( *it );
+    controller_.Update( owner_ );
 }
 
 // -----------------------------------------------------------------------------
