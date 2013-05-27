@@ -75,6 +75,24 @@ const PerceptionLevel& PerceptionView::ComputePoint( const wrapper::View& percei
     return computer.GetLevel();
 }
 
+
+PerceptionView::T_PerceptionParameterPair PerceptionView::GetParameter( std::size_t target ) const
+{
+    unsigned int tick = 0;
+    double roll = 0;
+    auto it = perceptionsUnderway_.find( target );
+    if( it != perceptionsUnderway_.end() )
+    {
+        tick = it->second.first;
+        if( it->second.second == -1 )
+            it->second.second = static_cast< double >( GET_HOOK( GetPerceptionRandom )() );
+        roll = it->second.second;
+    }
+    else
+        roll = static_cast< double >( GET_HOOK( GetPerceptionRandom )() );
+    return T_PerceptionParameterPair( tick, roll );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PerceptionView::ComputeAgent
 // Created: NLD 2004-08-20
@@ -94,18 +112,9 @@ const PerceptionLevel& PerceptionView::ComputeAgent( const wrapper::View& model,
         return result;
     else
     {
-        CIT_PerceptionTickMap it = perceptionsUnderway_.find( target[ "identifier" ] );
-        unsigned int tick = 0;
-        double roll = 0.f;
-        if( it != perceptionsUnderway_.end() )
-        {
-            tick = it->second.first;
-            roll = it->second.second;
-        }
-        else
-            roll = static_cast< double >( GET_HOOK( GetPerceptionRandom )() );
-        perceptionsBuffer_[ target[ "identifier" ] ] = std::make_pair( tick + 1, roll );
-        const ZURBPerceptionComputer computer( roll, tick );
+        const T_PerceptionParameterPair p = GetParameter( target[ "identifier" ] );
+        perceptionsBuffer_[ target[ "identifier" ] ] = std::make_pair( p.first + 1, p.second );
+        const ZURBPerceptionComputer computer( p.second, p.first );
         const PerceptionLevel& urbanResult = computer.ComputePerception( model, perceiver, target );
         return result < urbanResult ? result : urbanResult;
     }
@@ -363,7 +372,7 @@ void PerceptionView::TransferPerception( const wrapper::View& perceiver, const S
             {
                 unsigned int& tick = perceptionsBuffer_[ targetIdentifier ].first;
                 tick = std::max( tick, delay );
-                perceptionsBuffer_[ targetIdentifier ].second = GET_HOOK( GetPerceptionRandom )();
+                perceptionsBuffer_[ targetIdentifier ].second = -1;
             }
             T_PerceptionTickMap& perceptionsBuffer_;
         } visitor( perceptionsBuffer_ );

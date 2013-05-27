@@ -54,14 +54,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void FinalizeSurfaceAgents();
-    void TransferPerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces ) const;
-    bool IsEnabled( const wrapper::View& perceiver ) const;
-    virtual const PerceptionLevel& ComputeFlow( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& flow, T_PointVector& shape ) const;
-    //@}
-
     //! @name Types
     //@{
     typedef std::pair< unsigned int, double > T_PerceptionParameterPair;
@@ -69,6 +61,15 @@ private:
     typedef std::map< std::size_t, T_PerceptionParameterPair > T_PerceptionTickMap;
     typedef T_PerceptionTickMap::const_iterator               CIT_PerceptionTickMap;
     typedef T_PerceptionTickMap::iterator                      IT_PerceptionTickMap;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void FinalizeSurfaceAgents();
+    void TransferPerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces ) const;
+    bool IsEnabled( const wrapper::View& perceiver ) const;
+    T_PerceptionParameterPair PerceptionView::GetParameter( std::size_t target ) const;
+    virtual const PerceptionLevel& ComputeFlow( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& flow, T_PointVector& shape ) const;
     //@}
 
 private:
