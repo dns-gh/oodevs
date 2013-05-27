@@ -51,11 +51,11 @@ public:
     virtual void BeginTick()
     {
         next_.BeginTick();
-    };
+    }
     virtual void SetKey( const K& key )
     {
         next_.SetKey( key );
-    };
+    }
     virtual void Apply( const T& lhs, const T& rhs )
     {
         next_.Apply( operator_( lhs, rhs ) );
@@ -63,7 +63,7 @@ public:
     virtual void EndTick()
     {
         next_.EndTick();
-    };
+    }
     //@}
 
 private:
@@ -74,7 +74,10 @@ private:
 
     //! @name Operations
     //@{
-    virtual std::string GetName() const { return "Compare"; }
+    virtual std::string GetName() const
+    {
+        return "Compare";
+    }
     static T_Operator MakeOperator( xml::xistream& xis )
     {
         const std::string op = xis.attribute< std::string >( "operator" );
@@ -85,7 +88,7 @@ private:
         if( op == "greater_equal" ) return bl::_1 >= bl::_2;
         if( op == "equal" )         return bl::_1 == bl::_2;
         if( op == "not_equal" )     return bl::_1 != bl::_2;
-        throw xis.context() + "Invalid operator '" + op + "'";
+        throw MASA_EXCEPTION( xis.context() + "Invalid operator '" + op + "'" );
     }
     //@}
 
