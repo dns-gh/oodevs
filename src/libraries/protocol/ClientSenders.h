@@ -82,7 +82,7 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, FormationDestruction                   , formation_destruction                     )
     GENERATE_MESSAGE( sword::SimToClient, sword, FormationUpdate                        , formation_update                          )
     GENERATE_MESSAGE( sword::SimToClient, sword, FragOrder                              , frag_order                                )
-    GENERATE_MESSAGE( sword::SimToClient, sword, FragOrderAck                           , frag_order_ack                            )
+    GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, FragOrderAck             , frag_order_ack                            )
     GENERATE_MESSAGE( sword::SimToClient, sword, IndirectFirePerception                 , indirect_fire_perception                  )
     GENERATE_MESSAGE( sword::SimToClient, sword, InvalidateReport                       , invalidate_report                         )
     GENERATE_MESSAGE( sword::SimToClient, sword, KnowledgeGroupCreation                 , knowledge_group_creation                  )

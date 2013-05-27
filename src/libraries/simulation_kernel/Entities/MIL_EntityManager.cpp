@@ -1385,7 +1385,7 @@ void MIL_EntityManager::OnReceiveCrowdOrder( const CrowdOrder& message, unsigned
 // Name: MIL_EntityManager::OnReceiveFragOrder
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned int nCtx, unsigned int clientId )
 {
     client::FragOrderAck ack;
     unsigned int taskerId = TaskerToId( message.tasker() );
@@ -1417,7 +1417,7 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
     {
         ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------

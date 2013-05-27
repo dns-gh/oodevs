@@ -178,7 +178,7 @@ public:
     void OnReceiveUnitOrder                ( const sword::UnitOrder&            message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveAutomatOrder             ( const sword::AutomatOrder&         message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveCrowdOrder               ( const sword::CrowdOrder&           message, unsigned int nCtx, unsigned int clientId );
-    void OnReceiveFragOrder                ( const sword::FragOrder&            message, unsigned int nCtx );
+    void OnReceiveFragOrder                ( const sword::FragOrder&            message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveSetAutomateMode          ( const sword::SetAutomatMode&       message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveUnitCreationRequest      ( const sword::UnitCreationRequest&  message, unsigned int nCtx );
     void OnReceiveKnowledgeMagicAction     ( const sword::KnowledgeMagicAction& message, unsigned int nCtx );
