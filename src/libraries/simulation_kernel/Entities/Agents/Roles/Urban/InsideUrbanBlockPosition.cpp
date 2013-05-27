@@ -69,7 +69,7 @@ MT_Vector2D InsideUrbanBlockPosition::GetFirerPosition( MIL_Agent_ABC& target, U
 // Name: InsideUrbanBlockPosition::GetTargetPosition
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-MT_Vector2D InsideUrbanBlockPosition::GetTargetPosition(MIL_Agent_ABC& firer, UrbanLocationComputer_ABC::Results& targetResult ) const
+MT_Vector2D InsideUrbanBlockPosition::GetTargetPosition( MIL_Agent_ABC& firer, UrbanLocationComputer_ABC::Results& targetResult ) const
 {
     std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > firerComputer( firer.GetAlgorithms().urbanLocationComputerFactory_->Create() );
     firer.Execute( *firerComputer );
@@ -81,8 +81,8 @@ MT_Vector2D InsideUrbanBlockPosition::GetTargetPosition(MIL_Agent_ABC& firer, Ur
         return targetResult.position_;  // $$$$ _RC_ SBO 2010-07-07: devrait etre throw MASA_EXCEPTION( " error in urbanBlock intersection for target" );
     MT_Vector2D vector( *collisions.rbegin() - *collisions.begin() );
     vector *= ( 1 - targetResult.urbanDeployment_ );
-    MT_Vector2D pM = *collisions.begin() + vector;
-    return pM + MIL_Random::rand_ii() * ( *collisions.rbegin() - pM );
+    const MT_Vector2D pM = *collisions.begin() + vector;
+    return pM + ( *collisions.rbegin() - pM );
 }
 
 // -----------------------------------------------------------------------------
