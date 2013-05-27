@@ -80,6 +80,17 @@ bool InfoMedicalDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 // -----------------------------------------------------------------------------
 void InfoMedicalDialog::NotifySelected( const kernel::Entity_ABC* entity )
 {
+    selected_ = entity;
     if( entity )
         InfoDialog< MedicalStates >::NotifySelected( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoMedicalDialog::NotifyUpdated
+// Created: NPT 2013-05-17
+// -----------------------------------------------------------------------------
+void InfoMedicalDialog::NotifyUpdated( const Troops& /*troops*/ )
+{
+    if( selected_ )
+        InfoDialog< MedicalStates >::NotifyUpdated( selected_ );
 }

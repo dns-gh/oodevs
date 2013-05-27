@@ -12,7 +12,9 @@
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/SafePointer.h"
 #include "tools/SelectionObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 // =============================================================================
 /** @class  InfoDialog_Base
@@ -94,6 +96,7 @@ protected:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifyUpdated( const kernel::Entity_ABC* element );
     //@}
 
 private:
@@ -112,6 +115,9 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+
+protected:
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 
@@ -123,6 +129,7 @@ template< typename Extension >
 InfoDialog< Extension >::InfoDialog( QWidget* parent, kernel::Controllers& controllers, const QString& title )
     : InfoDialog_Base( parent, title )
     , controllers_( controllers )
+    , selected_( controllers )
 {
     controllers_.Register( *this );
 }
@@ -153,6 +160,16 @@ bool InfoDialog< Extension >::ShouldDisplay( const kernel::Entity_ABC& element )
 // -----------------------------------------------------------------------------
 template< typename Extension >
 void InfoDialog< Extension >::NotifySelected( const kernel::Entity_ABC* element )
+{
+    SetEnabled( element && ShouldDisplay( *element ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoDialog::NotifyUpdated
+// Created: NPT 2013-05-16
+// -----------------------------------------------------------------------------
+template< typename Extension >
+void InfoDialog< Extension >::NotifyUpdated( const kernel::Entity_ABC* element )
 {
     SetEnabled( element && ShouldDisplay( *element ) );
 }

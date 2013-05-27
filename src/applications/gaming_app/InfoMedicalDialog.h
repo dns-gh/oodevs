@@ -12,6 +12,7 @@
 
 #include "InfoDialog.h"
 #include "gaming/MedicalStates.h"
+#include "gaming/Troops.h"
 
 namespace kernel
 {
@@ -31,6 +32,7 @@ namespace gui
 // Created: SBO 2007-02-20
 // =============================================================================
 class InfoMedicalDialog : public InfoDialog< MedicalStates >
+                        , public tools::ElementObserver_ABC< Troops >
 {
 public:
     //! @name Constructors/Destructor
@@ -44,6 +46,7 @@ private:
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
+    virtual void NotifyUpdated( const Troops& troops );
     //@}
 };
 

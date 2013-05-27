@@ -20,6 +20,7 @@
 InfoFuneralDialog::InfoFuneralDialog( QWidget* parent, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor )
     : InfoDialog_Base( parent, tools::translate( "InfoFuneralDialog", "Funeral system" ) )
     , controllers_( controllers )
+    , selected_( controllers )
 {
     controllers_.Register( *this );
     QTabWidget* tabs = new QTabWidget( RootWidget() );
@@ -65,6 +66,17 @@ bool InfoFuneralDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 // -----------------------------------------------------------------------------
 void InfoFuneralDialog::NotifySelected( const kernel::Entity_ABC* element )
 {
+    selected_ = element;
     if( element )
         SetEnabled( element && ShouldDisplay( *element ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoFuneralDialog::NotifyUpdated
+// Created: NPT 2013-05-17
+// -----------------------------------------------------------------------------
+void InfoFuneralDialog::NotifyUpdated( const Troops& /*troops*/ )
+{
+    if( selected_ )
+        SetEnabled( selected_ && ShouldDisplay( *selected_ ) );
 }

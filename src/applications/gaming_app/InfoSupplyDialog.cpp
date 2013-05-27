@@ -85,6 +85,7 @@ bool InfoSupplyDialog::ShouldDisplay( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 void InfoSupplyDialog::NotifySelected( const kernel::Entity_ABC* entity )
 {
+    selected_ = entity;
     if( entity )
     {
         if( kernel::EntityHelpers::IsLogisticBase( *entity ) )
@@ -96,4 +97,14 @@ void InfoSupplyDialog::NotifySelected( const kernel::Entity_ABC* entity )
             tabs_->removeTab( 2 );
         InfoDialog< SupplyStates >::NotifySelected( entity );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoSupplyDialog::NotifyUpdated
+// Created: NPT 2013-05-17
+// -----------------------------------------------------------------------------
+void InfoSupplyDialog::NotifyUpdated( const SupplyStates& /*supplyStates*/ )
+{
+    if( selected_ )
+        InfoDialog< SupplyStates >::NotifySelected( selected_ );
 }

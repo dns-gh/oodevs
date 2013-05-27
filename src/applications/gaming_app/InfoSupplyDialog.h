@@ -34,6 +34,7 @@ class SupplyQuotasWidget;
 // Created: SBO 2007-02-20
 // =============================================================================
 class InfoSupplyDialog : public InfoDialog< SupplyStates >
+                       , public tools::ElementObserver_ABC< SupplyStates >
 {
 public:
     //! @name Constructors/Destructor
@@ -47,6 +48,7 @@ private:
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& entity ) const;
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
+    virtual void NotifyUpdated( const SupplyStates& dotations );
     //@}
 
 private:

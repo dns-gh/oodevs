@@ -11,6 +11,8 @@
 #define __InfoFuneralDialog_h_
 
 #include "InfoDialog.h"
+#include "clients_kernel/SafePointer.h"
+#include "gaming/Troops.h"
 
 namespace kernel
 {
@@ -27,6 +29,7 @@ namespace kernel
 class InfoFuneralDialog : public InfoDialog_Base
                         , public tools::Observer_ABC
                         , public tools::SelectionObserver< kernel::Entity_ABC >
+                        , public tools::ElementObserver_ABC< Troops >
 {
 public:
     //! @name Constructors/Destructor
@@ -40,10 +43,12 @@ private:
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
     virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifyUpdated( const Troops& troops );
     //@}
 
 private:
     kernel::Controllers& controllers_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
 };
 
 #endif // __InfoFuneralDialog_h_
