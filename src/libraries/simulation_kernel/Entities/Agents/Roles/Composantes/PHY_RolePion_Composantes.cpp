@@ -1352,7 +1352,6 @@ void PHY_RolePion_Composantes::NotifyComposanteBackFromMaintenance( PHY_Maintena
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyLentComposanteReceived( MIL_Agent_ABC& lender, PHY_ComposantePion& composante )
 {
-    assert( std::find( borrowedComposantes_[ &lender ].begin(), borrowedComposantes_[ &lender ].end(), &composante ) == borrowedComposantes_[ &lender ].end() );
     borrowedComposantes_[ &lender ].push_back( &composante );
     bLoansChanged_ = true;
 }
@@ -1391,7 +1390,7 @@ void PHY_RolePion_Composantes::LendComposante( MIL_Agent_ABC& borrower, PHY_Comp
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::RetrieveLentComposante( MIL_Agent_ABC& borrower, PHY_ComposantePion& composante )
 {
-    PHY_ComposantePion::T_ComposantePionVector& lentComps = lentComposantes_[ &borrower ];
+    auto& lentComps = lentComposantes_[ &borrower ];
     auto it = std::find( lentComps.begin(), lentComps.end(), &composante );
     if( it == lentComps.end() )
         return;
