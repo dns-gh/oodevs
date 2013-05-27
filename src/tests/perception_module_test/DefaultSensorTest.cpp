@@ -19,6 +19,7 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_identified_with_default_sensor, Perc
     model[ "entities" ][ target ] = core::MakeModel( "data", 43 )
                                                    ( "movement/position/x", 5 )
                                                    ( "movement/position/y", 5 )
+                                                   ( "movement/height", 0 )
                                                    ( "is-dead", false )
                                                    ( "is-surrendered", false )
                                                    ( "identifier", 1337u )

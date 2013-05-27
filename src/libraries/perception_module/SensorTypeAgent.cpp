@@ -492,8 +492,8 @@ const PerceptionLevel& SensorTypeAgent::ComputeAgentPerception( const wrapper::V
            rDistanceMaxModificator *= GetTargetFactor( target );
            rDistanceMaxModificator *= GetSourceFactor( source );
 
-    const double     rSourceAltitude = static_cast< double >( source[ "movement/height" ] ) + rSensorHeight + GET_HOOK( GetAltitude )( vSourcePos.rX_, vSourcePos.rY_ );
-    const double     rTargetAltitude = GET_HOOK( GetAltitude )( vTargetPos.rX_, vTargetPos.rY_ ) + 2;
+    const double rSourceAltitude = static_cast< double >( source[ "movement/height" ] ) + rSensorHeight + GET_HOOK( GetAltitude )( vSourcePos.rX_, vSourcePos.rY_ );
+    const double rTargetAltitude = static_cast< double >( target[ "movement/height" ] ) + 2             + GET_HOOK( GetAltitude )( vTargetPos.rX_, vTargetPos.rY_ );
 
     return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
 }
