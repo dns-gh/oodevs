@@ -62,6 +62,7 @@ DECLARE_HOOK( AppendAddedKnowledge, void, ( const SWORD_Model* root, const SWORD
                                             void (*flowCallback)( const SWORD_Model* flow, void* userData ),
                                             void* userData ) )
 DECLARE_HOOK( GetUrbanObjectOccupation, double, ( const SWORD_Model* urbanObject ) )
+DECLARE_HOOK( GetUrbanObjectLength, double, ( const SWORD_Model* urbanObject ) )
 DECLARE_HOOK( GetTransporter, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* agent ) )
 
 namespace
@@ -259,6 +260,7 @@ namespace
             : perceiver_            ( perceiver )
             , maxPerceptionDistance_( maxPerceptionDistance )
             , occupation_           ( 0 )
+            , maxBlockLength_       ( 0 )
             , count_                ( 0 )
         {}
         static void NotifyUrbanObject( const SWORD_Model* urbanObjectWrapper, void* userData )
@@ -270,17 +272,19 @@ namespace
             count_++;
             perceiver_.NotifyUrbanPerception( urbanObjectWrapper, sword::perception::PerceptionLevel::identified_ );
             occupation_ += GET_HOOK( GetUrbanObjectOccupation )( urbanObjectWrapper );
+            maxBlockLength_ = std::max( maxBlockLength_, GET_HOOK( GetUrbanObjectLength )( urbanObjectWrapper ) );
         }
         double ComputeMaxPerceptionDistance() const
         {
             if( !count_ )
                 return maxPerceptionDistance_;
             const double occupation = occupation_ / count_;
-            return maxPerceptionDistance_ * ( 1 - 0.9 * occupation );
+            return maxPerceptionDistance_ * ( 1 - 0.9 * occupation ) + maxBlockLength_;
         }
         PerceptionObserver_ABC& perceiver_;
         double maxPerceptionDistance_;
         double occupation_;
+        double maxBlockLength_;
         unsigned int count_;
     };
     struct AddedKnowledgesVisitor : private boost::noncopyable

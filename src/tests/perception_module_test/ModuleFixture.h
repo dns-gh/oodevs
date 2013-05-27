@@ -92,6 +92,7 @@ class PHY_Volume;
     APPLY( GetUrbanObjectStructuralHeight, 1, double, ( const SWORD_Model* urbanObject ) ) \
     APPLY( GetUrbanObjectOccupation, 1, double, ( const SWORD_Model* urbanObject ) ) \
     APPLY( GetUrbanObjectStructuralState, 1, double, ( const SWORD_Model* urbanObject ) ) \
+    APPLY( GetUrbanObjectLength, 1, double, ( const SWORD_Model* urbanObject ) ) \
     APPLY( HasUrbanObjectArchitecture, 1, bool, ( const SWORD_Model* urbanObject ) ) \
     APPLY( CanUrbanBlockBeSeen, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* urbanBlock ) ) \
     APPLY( IsPostureStationed, 1, bool, ( const SWORD_Model* entity ) ) \
@@ -104,7 +105,8 @@ class PHY_Volume;
     APPLY( IsObjectIntersectingLocalization, 2, bool, ( const SWORD_Model* localization, const SWORD_Model* object ) ) \
     APPLY( IsKnowledgeObjectIntersectingWithCircle, 3, bool, ( const MT_Vector2D* center, double radius, const SWORD_Model* knowledgeObject ) ) \
     APPLY( GetLocalizationRadius, 1, double, ( const SWORD_Model* localization ) ) \
-    APPLY( CanFlyingShellBePerceived, 4, bool, ( const SWORD_Model* flyingShell, const SWORD_Model* zone, const MT_Vector2D* source, double radius ) )
+    APPLY( CanFlyingShellBePerceived, 4, bool, ( const SWORD_Model* flyingShell, const SWORD_Model* zone, const MT_Vector2D* source, double radius ) ) \
+    APPLY( ComputePerceptionPosition, 3, void, ( const SWORD_Model* source, const MT_Vector2D* targetPosition, MT_Vector2D* result ) )
 
 #define REGISTERED_AND_USED_HOOKS( APPLY ) \
     APPLY( IsUsingActiveRadar, 1, bool, ( const SWORD_Model* entity ) ) \

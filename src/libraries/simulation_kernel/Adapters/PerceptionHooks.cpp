@@ -382,6 +382,10 @@ namespace
             return physical->GetOccupation();
         return 0;
     }
+    DEFINE_HOOK( GetUrbanObjectLength, 1, double, ( const SWORD_Model* urbanObject ) )
+    {
+        return GET_DATA( urbanObject, MIL_UrbanObject_ABC ).GetLocalisation().GetLength();
+    }
     DEFINE_HOOK( GetUrbanObjectStructuralState, 1, double, ( const SWORD_Model* urbanObject ) )
     {
         const StructuralCapacity* structuralCapacity = GET_DATA( urbanObject, MIL_UrbanObject_ABC ).Retrieve< StructuralCapacity >();
@@ -556,6 +560,10 @@ namespace
     {
         const TER_Localisation& localisation = *GET_DATA( zone, boost::shared_ptr< TER_Localisation > );
         return localisation.Intersect2DWithCircle( *source, radius ) && GET_DATA( flyingShell, MIL_Effect_IndirectFire ).IsFlyingThroughLocalisation( localisation );
+    }
+    DEFINE_HOOK( ComputePerceptionPosition, 3, void, ( const SWORD_Model* source, const MT_Vector2D* targetPosition, MT_Vector2D* result ) )
+    {
+        *result = GET_ROLE( source, PHY_RoleInterface_UrbanLocation ).GetFirerPosition( *targetPosition );
     }
 }
 

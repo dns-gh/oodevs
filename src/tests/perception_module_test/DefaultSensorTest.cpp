@@ -28,6 +28,7 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_identified_with_default_sensor, Perc
     const PHY_Volume* significantVolume = reinterpret_cast< const PHY_Volume* >( 1337 );
     MOCK_RESET( GetAgentListWithinCircle );
     MOCK_EXPECT( GetAgentListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _4, other, _5 ) );
+    MOCK_EXPECT( ComputePerceptionPosition ).with( mock::any, mock::any, mock::assign( position ) );
     MOCK_EXPECT( BelongsToKnowledgeGroup ).with( perceiver, other ).returns( false );
     MOCK_EXPECT( IsAgentPerceptionDistanceHacked ).once().with( perceiver, other ).returns( false );
     MOCK_EXPECT( CanBeSeen ).once().with( perceiver, other ).returns( true );
