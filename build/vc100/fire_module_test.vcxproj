@@ -94,7 +94,7 @@
     <PostBuildEvent />
     <ClCompile>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm500 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm500 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
