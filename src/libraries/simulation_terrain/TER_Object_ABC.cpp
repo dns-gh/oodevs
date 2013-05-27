@@ -135,7 +135,6 @@ void TER_Object_ABC::UpdateLocalisation( const TER_Localisation& newLocalisation
     RemoveFromWorld();
     location_.Reset( newLocalisation );
     InsertInWorld();
-
 }
 
 // -----------------------------------------------------------------------------

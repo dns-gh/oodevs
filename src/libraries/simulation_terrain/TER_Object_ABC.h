@@ -71,7 +71,7 @@ public:
 
     //! @name Modifiers
     //@{
-    void UpdateLocalisation( const TER_Localisation& newLocalisation );
+    virtual void UpdateLocalisation( const TER_Localisation& newLocalisation );
     //@}
 
 private:
