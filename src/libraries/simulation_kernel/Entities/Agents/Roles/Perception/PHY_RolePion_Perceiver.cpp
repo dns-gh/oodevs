@@ -943,7 +943,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
                     occupation += physical->GetOccupation();
             }
             occupation /= perceivableUrbanBlock.size();
-            maxPerceptionDistance *= ( 1 - 9*occupation/10 );
+            maxPerceptionDistance *= ( 1 - 0.9 * occupation );
         }
 
         TER_Agent_ABC::T_AgentPtrVector perceivableAgents;

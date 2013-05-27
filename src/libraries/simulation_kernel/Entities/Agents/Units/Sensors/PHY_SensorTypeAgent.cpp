@@ -575,8 +575,8 @@ const double PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSource , const M
     if( vSource.Distance( vTarget ) > GetMaxDistance() )
         return 0.;
 
-    const MT_Vector3D vSource3D( vSource.rX_, vSource.rY_, sensorHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( vSource.rX_, vSource.rY_ ) );
-    const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( vTarget.rX_, vTarget.rY_ ) );
+    const MT_Vector3D vSource3D( vSource.rX_, vSource.rY_, sensorHeight + MIL_Tools::GetAltitude( vSource ) );
+    const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, MIL_Tools::GetAltitude( vTarget ) );
 
     double rVisionNRJ = rDetectionDist_;
     bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ );
@@ -624,7 +624,7 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
 {
     const double rDistanceMaxModificator = GetSourceFactor( source );
 
-    const MT_Vector2D& vSourcePos      = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    const MT_Vector2D& vSourcePos    = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const double     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
     const double     rTargetAltitude = MIL_Tools::GetAltitude( vTargetPos ) + 2;
 
@@ -648,8 +648,8 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
         return PHY_PerceptionLevel::notSeen_;
 
     double rDistanceMaxModificator  = GetFactor      ( *pSignificantVolume );
-             rDistanceMaxModificator *= GetTargetFactor( target );
-             rDistanceMaxModificator *= GetSourceFactor( source );
+           rDistanceMaxModificator *= GetTargetFactor( target );
+           rDistanceMaxModificator *= GetSourceFactor( source );
 
     const MT_Vector2D& vSourcePos      = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const double     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
@@ -829,7 +829,7 @@ unsigned int PHY_SensorTypeAgent::ConvertEnvironmentToObjectIdx( PHY_RawVisionDa
 //-----------------------------------------------------------------------------
 PHY_RawVisionData::E_VisionObject PHY_SensorTypeAgent::ConvertObjectIdxToEnvironnement( unsigned int val )
 {
-    return (PHY_RawVisionData::E_VisionObject)( val ? 1 << ( val - 1 ) : 0 );
+    return static_cast< PHY_RawVisionData::E_VisionObject >( val ? 1 << ( val - 1 ) : 0 );
 }
 
 // -----------------------------------------------------------------------------

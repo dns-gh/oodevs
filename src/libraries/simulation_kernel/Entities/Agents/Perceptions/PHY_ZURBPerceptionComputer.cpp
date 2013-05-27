@@ -184,7 +184,7 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
             if( const StructuralCapacity* structuralCapacity = perceiverUrbanBlock->Retrieve< StructuralCapacity >() )
                 perceiverUrbanBlockHeight += structuralCapacity->GetStructuralState() * physical->GetHeight();
     }
-    if( perceiverUrbanBlockHeight < sensorHeight)
+    if( perceiverUrbanBlockHeight < sensorHeight )
         perceiverUrbanBlockHeight = sensorHeight;
     assert( perceiverUrbanBlockHeight );
 

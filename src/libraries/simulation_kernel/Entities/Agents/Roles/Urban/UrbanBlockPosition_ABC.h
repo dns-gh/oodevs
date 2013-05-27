@@ -28,8 +28,8 @@ class UrbanBlockPosition_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanBlockPosition_ABC(){}
-    virtual ~UrbanBlockPosition_ABC(){}
+             UrbanBlockPosition_ABC() {}
+    virtual ~UrbanBlockPosition_ABC() {}
     //@}
 
     //! @name Operations

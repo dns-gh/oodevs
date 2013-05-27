@@ -32,8 +32,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RoleInterface_UrbanLocation(){}
-    virtual ~PHY_RoleInterface_UrbanLocation(){}
+             PHY_RoleInterface_UrbanLocation() {}
+    virtual ~PHY_RoleInterface_UrbanLocation() {}
     //@}
 
     //! @name Operations
