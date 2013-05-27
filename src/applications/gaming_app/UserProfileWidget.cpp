@@ -12,6 +12,7 @@
 #include "moc_UserProfileWidget.cpp"
 #include "UserProfileUnitRights.h"
 #include "UserProfilePopulationRights.h"
+#include "clients_kernel/Controller.h"
 #include "gaming/UserProfile.h"
 
 // -----------------------------------------------------------------------------
@@ -20,7 +21,8 @@
 // -----------------------------------------------------------------------------
 UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& itemFactory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : QTabWidget( parent, "UserProfileWidget" )
-    , selectedProfile_( controllers )
+    , controller_( controllers.controller_ )
+    , editedProfile_( 0 )
 {
     Q3VBox* box = new Q3VBox( this );
     box->setSpacing( 5 );
@@ -28,8 +30,10 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     group->setMargin( 5 );
     new QLabel( tr( "Login:" ), group );
     login_ = new QLineEdit( group );
+    connect( login_, SIGNAL( editingFinished() ), this, SLOT( OnLoginChanged() ) );
     new QLabel( tr( "Password:" ), group );
     password_ = new QLineEdit( group );
+    connect( password_, SIGNAL( editingFinished() ), this, SLOT( OnPasswordChanged() ) );
     addTab( box, tr( "General" ) );
 
     box = new Q3VBox( this );
@@ -38,6 +42,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     Q3HBox* holder = new Q3HBox( group );
     new QLabel( tr( "Supervisor actions:" ), holder );
     supervisor_ = new QCheckBox( holder );
+    connect( supervisor_, SIGNAL( stateChanged( int ) ), SLOT( OnSupervisionChanged( int ) ) );
     QTabWidget* tabs = new QTabWidget( group );
     UserProfileUnitRights* unitRights = new UserProfileUnitRights( tabs, controllers, itemFactory, profile, icons );
     tabs->addTab( unitRights, tr( "Units" ) );
@@ -63,39 +68,17 @@ UserProfileWidget::~UserProfileWidget()
 // Name: UserProfileWidget::Display
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-void UserProfileWidget::Display( const UserProfile& profile )
+void UserProfileWidget::Display( UserProfile& profile )
 {
-    // $$$$ AGE 2007-08-27: pas de QMessageBox statique :
-    if( selectedProfile_ && selectedProfile_ != &profile && NeedsSaving() )
-        if( QMessageBox::question( this, tr( "Profile edition" ), tr( "Profile has changed, commit modifications?" )
-                                 , QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
-            Commit();
+    unitRights_->Commit( true );
+    populationRights_->Commit( true );
+    editedProfile_ = &profile;
+    login_->setText( profile.GetLogin() );
+    password_->setText( profile.GetPassword() );
+    supervisor_->setChecked( profile.IsSupervisor() );
+    unitRights_->Display( profile );
+    populationRights_->Display( profile );
     setEnabled( true );
-    editedProfile_.reset( new UserProfile( profile ) );
-    login_->setText( editedProfile_->GetLogin() );
-    password_->setText( editedProfile_->GetPassword() );
-    supervisor_->setChecked( editedProfile_->IsSupervisor() );
-    unitRights_->Display( *editedProfile_ );
-    populationRights_->Display( *editedProfile_ );
-    selectedProfile_ = &profile;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileWidget::Commit
-// Created: SBO 2007-01-16
-// -----------------------------------------------------------------------------
-void UserProfileWidget::Commit()
-{
-    if( selectedProfile_ )
-    {
-        editedProfile_->SetPassword  ( password_->text() );
-        editedProfile_->SetSupervisor( supervisor_->isChecked() );
-        if( unitRights_->NeedsSaving() )
-            unitRights_->Commit( true );
-        if( populationRights_->NeedsSaving() )
-            populationRights_->Commit( true );
-        editedProfile_->RequestUpdate( login_->text() );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +87,7 @@ void UserProfileWidget::Commit()
 // -----------------------------------------------------------------------------
 void UserProfileWidget::Clean()
 {
-    selectedProfile_ = 0;
+    editedProfile_ = 0;
     setDisabled( true );
 }
 
@@ -114,8 +97,38 @@ void UserProfileWidget::Clean()
 // -----------------------------------------------------------------------------
 void UserProfileWidget::Reset()
 {
-    if( selectedProfile_ )
-        Display( *selectedProfile_ );
+    if( editedProfile_ )
+        Display( *editedProfile_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::OnLoginChanged
+// Created: LGY 2011-09-26
+// -----------------------------------------------------------------------------
+void UserProfileWidget::OnLoginChanged()
+{
+    if( editedProfile_ )
+        editedProfile_->SetLogin( login_->text() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::OnPasswordChanged
+// Created: SBO 2007-11-08
+// -----------------------------------------------------------------------------
+void UserProfileWidget::OnPasswordChanged()
+{
+    if( editedProfile_ )
+        editedProfile_->SetPassword( password_->text() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::OnSupervisionChanged
+// Created: NPT 2013-05-23
+// -----------------------------------------------------------------------------
+void UserProfileWidget::OnSupervisionChanged( int change )
+{
+    if( editedProfile_ )
+        editedProfile_->SetSupervisor( change == Qt::Checked );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,9 +137,9 @@ void UserProfileWidget::Reset()
 // -----------------------------------------------------------------------------
 bool UserProfileWidget::NeedsSaving() const
 {
-    if( !isVisible() || !selectedProfile_ )
+    if( !isVisible() || !editedProfile_ )
         return false;
-    return selectedProfile_->GetLogin() != login_->text() || selectedProfile_->GetPassword() != password_->text()
-        || selectedProfile_->IsSupervisor() != supervisor_->isChecked()
+    return editedProfile_->GetLogin() != login_->text() || editedProfile_->GetPassword() != password_->text()
+        || editedProfile_->IsSupervisor() != supervisor_->isChecked()
         || unitRights_->NeedsSaving() || populationRights_->NeedsSaving();
 }

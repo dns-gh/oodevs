@@ -74,6 +74,7 @@ public:
     QString GetLogin() const;
     bool IsLoggedIn() const;
     virtual bool IsSupervision() const;
+    bool CanControlTime() const;
     //@}
 
     //! @name Operations
@@ -137,6 +138,7 @@ private:
     mutable std::string password_;
     bool loggedIn_;
     bool supervision_;
+    bool canControlTime_;
     bool simulation_;
     T_Entities readEntities_;
     T_Entities readWriteEntities_;

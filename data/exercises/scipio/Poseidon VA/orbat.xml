@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+<orbat model-version="4.11.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
   <parties>
     <party color="0x647dff" id="1" name="Camp Bleu" type="friend">
       <objects>
@@ -73,8 +73,8 @@
             <unit color="0x647dff" command-post="false" id="427" name="Section de Tir . AUF1 CDS OFF" position="29TNF3079263072" type="ASS . Section de Tir AUF1 CDS OFF Pour SIC"/>
           </automat>
         </formation>
-        <formation color="0x647dff" id="158" level="xxxx" logistic-level="logistic-base" name="BL [158]" nature=""/>
-        <formation color="0x647dff" id="210" level="xxxx" name="GTIA [210]" nature=""/>
+        <formation color="0x647dff" id="158" level="xxxx" logistic-level="logistic-base" name="BL [158]" nature="sfgpu"/>
+        <formation color="0x647dff" id="210" level="xxxx" name="GTIA [210]" nature="sfgpu"/>
         <formation color="0x647dff" id="310" level="xxxx" name="Circulation [310]" nature="sfgpusz">
           <automat color="0x647dff" engaged="true" id="311" knowledge-group="95" name="CIRCU . Peloton Circulation sur VAB [311]" nature="sfgpusz" type="CIRCU . Peloton Circulation sur VAB">
             <unit color="0x647dff" command-post="true" id="312" name="CIRCU PC sur VAB [312]" position="29TNF3579263072" type="CIRCU . PC sur VAB"/>
@@ -1138,35 +1138,6 @@
           </shape>
           <attributes/>
         </object>
-        <object id="423" name="rota [423]" type="rota area">
-          <shape type="point">
-            <points>
-              <point>29TNF3227161664</point>
-            </points>
-          </shape>
-          <attributes>
-            <construction completion="1"/>
-            <nbc-agents danger="0" state="gaseous">
-              <nbc-agent type="gaz sarin"/>
-            </nbc-agents>
-          </attributes>
-        </object>
-        <object id="424" name="zone nbc [424]" type="nbc zone">
-          <shape type="polygone">
-            <points>
-              <point>29TNF3360562457</point>
-              <point>29TNF3326861754</point>
-              <point>29TNF3377961586</point>
-              <point>29TNF3408062205</point>
-            </points>
-          </shape>
-          <attributes>
-            <construction completion="1"/>
-            <nbc-agents danger="0" state="gaseous">
-              <nbc-agent type="gaz sarin"/>
-            </nbc-agents>
-          </attributes>
-        </object>
       </objects>
       <tactical>
         <formation color="0xff3232" id="33" level="ii" name="ENI [33]" nature="shgpucath">
@@ -1952,7 +1923,7 @@
     <party color="0x00aa00" id="3" name="Camp Vert" type="neutral">
       <objects/>
       <tactical>
-        <formation color="0x00aa00" id="120" level="xxxx" name="Formation [120]" nature=""/>
+        <formation color="0x00aa00" id="120" level="xxxx" name="Formation [120]" nature="sngpu"/>
       </tactical>
       <communication>
         <knowledge-group id="4" name="Vert" type="Standard"/>
@@ -1987,4 +1958,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0932010539" -->
+<!-- signature="3766849212" -->

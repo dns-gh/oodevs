@@ -124,6 +124,7 @@ private:
     std::string strLogin_;
     std::string strPassword_;
     int roleId_;
+    bool canControlTime_;
 
     // Read only
     T_AutomatSet readOnlyAutomats_;

@@ -279,7 +279,6 @@ void UserProfileWidget::OnUserRole( const QString& role )
         pUnits_->Initialize();
         Update();
     }
-    controllers_.controller_.Update( profile_ );
 }
 
 // -----------------------------------------------------------------------------

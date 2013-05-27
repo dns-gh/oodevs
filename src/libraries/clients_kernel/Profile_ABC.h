@@ -38,6 +38,7 @@ public:
     virtual bool CanBeOrdered ( const kernel::Entity_ABC& entity ) const = 0;
     virtual bool CanDoMagic( const kernel::Entity_ABC& entity ) const = 0;
     virtual bool IsSupervision() const = 0;
+    virtual bool CanControlTime() const = 0;
     //@}
 };
 

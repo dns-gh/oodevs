@@ -40,6 +40,15 @@ public:
     virtual ~UserProfileList();
     //@}
 
+    //! @name Operations
+    //@{
+    void Save( const UserProfile* timeControlProfile );
+    void Cancel();
+    //@}
+
+signals:
+    void ProfileChanged( const UserProfile*, const UserProfile* );
+
 private slots:
     //! @name Slots
     //@{
@@ -66,6 +75,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< const UserProfile* > T_UserProfiles;
+    typedef std::map< const UserProfile*, UserProfile* > T_UserProfileEditors;
     //@}
 
 private:
@@ -75,6 +85,7 @@ private:
     UserProfileWidget&      pages_;
     UserProfileFactory_ABC& factory_;
     T_UserProfiles          userProfiles_;
+    T_UserProfileEditors    editors_;
     QListView*              list_;
     QSortFilterProxyModel*  proxyModel_;
     QStandardItemModel*     dataModel_;

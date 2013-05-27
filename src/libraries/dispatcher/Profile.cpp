@@ -38,11 +38,13 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
     , strLogin_    ( strLogin )
     , bSupervision_( false )
     , roleId_      ( -1 )
+    , canControlTime_( true )
 {
     std::string role;
     xis >> xml::attribute( "password", strPassword_ )
         >> xml::attribute( "supervision", bSupervision_ )
         >> xml::optional >> xml::attribute( "role", role )
+        >> xml::optional >> xml::attribute( "time-control", canControlTime_ )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readOnlyAutomats_    )
@@ -71,6 +73,7 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const sword:
     , strPassword_  ( message.profile().has_password() ? message.profile().password() : "" )
     , bSupervision_ ( message.profile().supervisor() )
     , roleId_       ( message.profile().has_role() ? message.profile().role().id() : -1 )
+    , canControlTime_( message.profile().has_time_control() ? message.profile().time_control() : false )
 {
     ReadRights( message.profile() );
     SendCreation( clients_ );
@@ -311,6 +314,7 @@ void Profile::Send( sword::Profile& message ) const
     message.set_supervisor( bSupervision_ );
     if( roleId_ != -1 )
         message.mutable_role()->set_id( roleId_ );
+    message.set_time_control( canControlTime_ );
     Serialize( *message.mutable_read_only_automates(), readOnlyAutomats_ );
     Serialize( *message.mutable_read_write_automates(), readWriteAutomats_ );
     Serialize( *message.mutable_read_only_parties(), readOnlySides_ );
@@ -353,17 +357,17 @@ void Profile::SendCreation( ClientPublisher_ABC& publisher ) const
 void Profile::Update( const sword::ProfileUpdateRequest& message )
 {
     strLogin_ = message.profile().login();
-    if( message.profile().has_password()  )
+    if( message.profile().has_password() )
         strPassword_ = message.profile().password();
     bSupervision_ = message.profile().supervisor() != 0;
+    if( message.profile().has_time_control() )
+        canControlTime_ = message.profile().time_control();
     ReadRights( message.profile() );
 
     authentication::ProfileUpdate updatemessage;
     updatemessage().set_login( message.login() );
-    if( updatemessage().profile().has_password()  )
+    if( !strPassword_.empty() )
         updatemessage().mutable_profile()->set_password( strPassword_ );
-    if( updatemessage().profile().has_role()  )
-        updatemessage().mutable_profile()->mutable_role()->set_id( roleId_ );
     Send( *updatemessage().mutable_profile() );
     updatemessage.Send( clients_ );
 }
@@ -410,6 +414,7 @@ void Profile::SerializeProfile( xml::xostream& xos ) const
     xos     << xml::attribute( "name", strLogin_ )
             << xml::attribute( "password", strPassword_ )
             << xml::attribute( "supervision", bSupervision_ )
+            << xml::attribute( "time-control", canControlTime_ )
             << xml::start( "rights" )
                 << xml::start( "readonly" );
     SerializeRights( xos, "side", readOnlySides_ );

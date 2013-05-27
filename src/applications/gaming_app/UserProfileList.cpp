@@ -10,10 +10,13 @@
 #include "gaming_app_pch.h"
 #include "UserProfileList.h"
 #include "moc_UserProfileList.cpp"
+#include "UserProfileEditor.h"
 #include "UserProfileWidget.h"
 #include "gaming/UserProfile.h"
 #include "gaming/UserProfileFactory_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Controller.h"
+
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileList constructor
@@ -69,10 +72,15 @@ UserProfileList::~UserProfileList()
 void UserProfileList::OnSelectionChanged()
 {
     QModelIndexList indexes = list_->selectionModel()->selectedIndexes();
-    if( !indexes.empty() )
+    if( isVisible() && !indexes.empty() )
     {
         if( const UserProfile* profile = userProfiles_.at( proxyModel_->mapToSource( indexes.front() ).row() ) )
-            pages_.Display( *profile );
+        {
+            UserProfile*& editor = editors_[ profile ];
+            if( !editor )
+                editor = new UserProfileEditor( *profile, controllers_.controller_ );
+            pages_.Display( *editor );
+        }
     }
     else
         pages_.Clean();
@@ -116,8 +124,15 @@ namespace
 void UserProfileList::NotifyCreated( const UserProfile& profile )
 {
     userProfiles_.push_back( &profile );
-    dataModel_->setItem( dataModel_->rowCount(), 0, CreateItem( profile.GetLogin() ) );
+    int count = dataModel_->rowCount();
+    dataModel_->setItem( count, 0, CreateItem( profile.GetLogin() ) );
     proxyModel_->sort( 0 );
+
+    if( isShown() )
+    {
+        list_->selectionModel()->clear();
+        list_->selectionModel()->select( proxyModel_->mapFromSource( dataModel_->index( count, 0 ) ), QItemSelectionModel::Select );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -126,13 +141,21 @@ void UserProfileList::NotifyCreated( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void UserProfileList::NotifyUpdated( const UserProfile& profile )
 {
+    const UserProfile* updated = &profile;
+    auto editorIt = editors_.find( &profile );
+    if( editorIt != editors_.end() )
+        updated = editorIt->second;
+
     T_UserProfiles::iterator it = std::find( userProfiles_.begin(), userProfiles_.end(), &profile );
     if( it != userProfiles_.end() )
     {
         const int index = static_cast< int >( std::distance( userProfiles_.begin(), it ) );
         QStandardItem* item = dataModel_->item( index );
-        if( item && item->text() != profile.GetLogin() )
-            item->setText( profile.GetLogin() );
+        if( item )
+        {
+            item->setText( updated->GetLogin() );
+            emit ProfileChanged( &profile, updated );
+        }
     }
     proxyModel_->sort( 0 );
 }
@@ -143,12 +166,18 @@ void UserProfileList::NotifyUpdated( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void UserProfileList::NotifyDeleted( const UserProfile& profile )
 {
-    T_UserProfiles::iterator it = std::find( userProfiles_.begin(), userProfiles_.end(), &profile );
+    auto it = std::find( userProfiles_.begin(), userProfiles_.end(), &profile );
     if( it != userProfiles_.end() )
     {
         const int index = static_cast< int >( std::distance( userProfiles_.begin(), it ) );
         dataModel_->takeRow( index );
         userProfiles_.erase( it );
+        auto editorIt = editors_.find( &profile );
+        if( editorIt != editors_.end() )
+        {
+            delete editorIt->second;
+            editors_.erase( editorIt );
+        }
         OnSelectionChanged();
     }
 }
@@ -161,4 +190,30 @@ void UserProfileList::showEvent( QShowEvent* event )
 {
     QWidget::showEvent( event );
     list_->selectionModel()->select( proxyModel_->index( 0, 0 ), QItemSelectionModel::Select );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileList::Save
+// Created: SBO 2007-11-08
+// -----------------------------------------------------------------------------
+void UserProfileList::Save( const UserProfile* timeControlProfile )
+{
+    for( auto it = editors_.begin(); it != editors_.end(); ++it )
+    {
+        if( !it->second )
+            it->second = new UserProfileEditor( *it->first, controllers_.controller_ );
+        it->second->SetTimeControl( it->first == timeControlProfile );
+        QString name = it->second->GetLogin();
+        it->second->SetLogin( it->first->GetLogin() );
+        it->second->RequestUpdate( name );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileList::Cancel
+// Created: SBO 2007-11-08
+// -----------------------------------------------------------------------------
+void UserProfileList::Cancel()
+{
+    editors_.clear();
 }

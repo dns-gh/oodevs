@@ -122,6 +122,15 @@ bool ProfileFilter::IsSupervision() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfileFilter::CanControlTime
+// Created: NPT 2013-05-23
+// -----------------------------------------------------------------------------
+bool ProfileFilter::CanControlTime() const
+{
+    return forward_.CanControlTime();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfileFilter::SetFilter
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------

@@ -65,17 +65,21 @@ public:
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     void SetPassword( const QString& password );
-    void SetSupervisor( bool supervisor );
+    virtual void SetLogin( const QString& login );
+    virtual void SetSupervisor( bool supervisor );
     void SetReadable( const kernel::Entity_ABC& entity, bool readable );
     void SetWriteable( const kernel::Entity_ABC& entity, bool writeable );
+    void SetTimeControl( bool control );
+    bool CanControlTime() const;
+    //@}
+
+    //! @name Copy/Assignment
+    UserProfile& operator=( const UserProfile& ); //!< Assignment operator
+    bool operator!=( const UserProfile& ); //!< comparison operator
+    //@{
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UserProfile& operator=( const UserProfile& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< unsigned long > T_Ids;
@@ -104,6 +108,7 @@ private:
     T_Ids writeFormations_;
     T_Ids writeAutomats_;
     T_Ids writePopulations_;
+    bool controlTime_;
     //@}
 };
 

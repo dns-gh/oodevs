@@ -22,6 +22,7 @@ namespace shield
     void ConvertProfile( const From& from, To* to )
     {
         ConvertProfileDescription( from, to );
+        CONVERT( time_control );
         CONVERT_LIST( read_only_formations, elem, ConvertIdentifier );
         CONVERT_LIST( read_write_formations, elem, ConvertIdentifier );
         CONVERT_LIST( read_only_automates, elem, ConvertIdentifier );

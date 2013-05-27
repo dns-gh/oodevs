@@ -73,3 +73,13 @@ bool PreparationProfile::IsSupervision() const
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PreparationProfile::CanControlTime
+// Created: NPT 2013-05-23
+// -----------------------------------------------------------------------------
+bool PreparationProfile::CanControlTime() const
+{
+    return true;
+}
+

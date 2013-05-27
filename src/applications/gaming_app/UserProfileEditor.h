@@ -3,41 +3,46 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ProfileEditor_h_
-#define __ProfileEditor_h_
+#ifndef __UserProfileEditor_h_
+#define __UserProfileEditor_h_
 
-#include "preparation/UserProfile.h"
+#include <boost/noncopyable.hpp>
+#include "gaming/UserProfile.h"
 
 // =============================================================================
-/** @class  ProfileEditor
-    @brief  Profile edition proxy
+/** @class  UserProfileEditor
+    @brief  UserProfileEditor
 */
-// Created: SBO 2007-11-07
+// Created: NPT 2013-05-24
 // =============================================================================
-class ProfileEditor : public UserProfile
+class UserProfileEditor : public UserProfile
+                        , private boost::noncopyable
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileEditor( const UserProfile& profile, kernel::Controller& controller );
-    virtual ~ProfileEditor();
+             UserProfileEditor( const UserProfile& profile, kernel::Controller& controller );
+    virtual ~UserProfileEditor();
+    //@}
+
+    //! @name Operations
+    //@{
     //@}
 
     //! @name Setters
     //@{
     virtual void SetLogin( const QString& value );
-    virtual void SetUserRole( const std::string& role );
+    virtual void SetSupervisor( bool supervisor );
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    ProfileEditor( const ProfileEditor& );            //!< Copy constructor
-    ProfileEditor& operator=( const ProfileEditor& ); //!< Assignment operator
     //@}
 
 private:
@@ -48,4 +53,4 @@ private:
     //@}
 };
 
-#endif // __ProfileEditor_h_
+#endif // __UserProfileEditor_h_

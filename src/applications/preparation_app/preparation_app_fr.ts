@@ -1875,6 +1875,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>Time Control Profile</source>
+        <translation>Profil de controle du temps</translation>
+    </message>
 </context>
 <context>
     <name>ProfileWizardDialog</name>

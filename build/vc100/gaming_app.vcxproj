@@ -204,6 +204,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\UnitStateTableEquipment.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\UnitStateTableResource.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\UserProfileDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\UserProfileEditor.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\UserProfileList.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\UserProfilePopulationRights.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\UserProfileRights_ABC.cpp" />
@@ -983,6 +984,7 @@
     <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableCrew.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableEquipment.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableResource.h" />
+    <ClInclude Include="..\..\src\applications\gaming_app\UserProfileEditor.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\UserProfileRights_ABC.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\UserProfileUnitRights.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>

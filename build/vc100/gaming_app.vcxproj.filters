@@ -784,6 +784,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\BypassPrototype.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\UserProfileEditor.cpp">
+      <Filter>Source Files\Dialogs\Profile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1130,6 +1133,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\SupplyConsignsWidget.h">
       <Filter>Source Files\Panels\Logistic\consigns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\UserProfileEditor.h">
+      <Filter>Source Files\Dialogs\Profile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<profiles model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
-  <profile name="Admin" password="" role="supervisor" supervision="true">
+<profiles model-version="4.11.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
+  <profile name="Admin" password="" role="supervisor" supervision="true" time-control="true">
     <rights>
       <readonly/>
       <readwrite>
@@ -10,7 +10,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Bleu" password="" role="anibas" supervision="false">
+  <profile name="Bleu" password="" role="anibas" supervision="false" time-control="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -20,7 +20,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Rouge" password="" role="anibas" supervision="false">
+  <profile name="Rouge" password="" role="anibas" supervision="false" time-control="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -30,7 +30,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="White Cell" password="" role="environment" supervision="true">
+  <profile name="White Cell" password="" role="environment" supervision="true" time-control="false">
     <rights>
       <readonly>
         <side id="1"/>
@@ -40,7 +40,7 @@
       <readwrite/>
     </rights>
   </profile>
-  <profile name="Bleu_ABC" password="" role="anibas" supervision="false">
+  <profile name="Bleu_ABC" password="" role="anibas" supervision="false" time-control="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -48,7 +48,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Bleu_INF" password="" role="anibas" supervision="false">
+  <profile name="Bleu_INF" password="" role="anibas" supervision="false" time-control="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -56,7 +56,7 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Bleu_SGTIA_INF" password="" role="anibas" supervision="false">
+  <profile name="Bleu_SGTIA_INF" password="" role="anibas" supervision="false" time-control="false">
     <rights>
       <readonly/>
       <readwrite>
@@ -64,19 +64,19 @@
       </readwrite>
     </rights>
   </profile>
-  <profile name="Bleu_INF_NonSuper" password="" role="anibas" supervision="false">
+  <profile name="Bleu_INF_NonSuper" password="" role="anibas" supervision="false" time-control="false">
     <rights>
       <readonly/>
       <readwrite/>
     </rights>
   </profile>
-  <profile name="Bleu_ABC_NonSuper" password="" role="anibas" supervision="false">
+  <profile name="Bleu_ABC_NonSuper" password="" role="anibas" supervision="false" time-control="false">
     <rights>
       <readonly/>
       <readwrite/>
     </rights>
   </profile>
-  <profile name="Superviseur scipio" password="" role="supervisor" supervision="true">
+  <profile name="Superviseur scipio" password="" role="supervisor" supervision="true" time-control="false">
     <rights>
       <readonly>
         <side id="1"/>
@@ -87,4 +87,4 @@
     </rights>
   </profile>
 </profiles>
-<!-- signature="2062112090" -->
+<!-- signature="2116668359" -->

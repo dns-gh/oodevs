@@ -44,6 +44,7 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
     , login_      ( login )
     , supervision_( false )
     , role_       ( -1 )
+    , controlTime_( false )
 {
     // NOTHING
 }
@@ -68,6 +69,7 @@ UserProfile::UserProfile( const UserProfile& p )
     , writeFormations_  ( p.writeFormations_ )
     , writeAutomats_    ( p.writeAutomats_ )
     , writePopulations_ ( p.writePopulations_ )
+    , controlTime_      ( p.controlTime_ )
 {
     // NOTHING
 }
@@ -127,6 +129,7 @@ void UserProfile::RequestUpdate( const QString& newLogin )
     profile.set_login( newLogin.toAscii().constData() );
     profile.set_password( password_.toAscii().constData() );
     profile.set_supervisor( supervision_ );
+    profile.set_time_control( controlTime_ );
     if( role_ != -1 )
         profile.mutable_role()->set_id( role_ );
     CopyList( readSides_, *profile.mutable_read_only_parties() );
@@ -173,6 +176,7 @@ void UserProfile::SetProfile( const sword::Profile& profile )
     if( profile.has_password()  )
         password_ = profile.password().c_str();
     supervision_ = profile.supervisor();
+    controlTime_ = profile.time_control();
     if( profile.has_role() )
         role_ = profile.role().id();
     if( profile.has_read_only_parties()  )
@@ -276,6 +280,15 @@ void UserProfile::SetPassword( const QString& password )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::SetLogin
+// Created: NPT 2013-05-23
+// -----------------------------------------------------------------------------
+void UserProfile::SetLogin( const QString& login )
+{
+    login_ = login;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::SetSupervisor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
@@ -328,4 +341,63 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
         SetRight( id, writeAutomats_, writeable );
     else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
         SetRight( id, writePopulations_, writeable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::SetTimeControl
+// Created: NPT 2013-05-23
+// -----------------------------------------------------------------------------
+void UserProfile::SetTimeControl( bool control )
+{
+    controlTime_ = control;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::CanControlTime
+// Created: NPT 2013-05-23
+// -----------------------------------------------------------------------------
+bool UserProfile::CanControlTime() const
+{
+    return controlTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::operator=
+// Created: SBO 2007-03-29
+// -----------------------------------------------------------------------------
+UserProfile& UserProfile::operator=( const UserProfile& p )
+{
+    login_            = p.login_;
+    password_         = p.password_;
+    readSides_        = p.readSides_;
+    readFormations_   = p.readFormations_;
+    readAutomats_     = p.readAutomats_;
+    readPopulations_  = p.readPopulations_;
+    writeSides_       = p.writeSides_;
+    writeFormations_  = p.writeFormations_;
+    writeAutomats_    = p.writeAutomats_;
+    writePopulations_ = p.writePopulations_;
+    role_             = p.role_;
+    supervision_      = p.supervision_;
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::operator!=
+// Created: NPT 2013-05-24
+// -----------------------------------------------------------------------------
+bool UserProfile::operator!=( const UserProfile& p )
+{
+    return login_ != p.login_ 
+    || password_ != p.password_
+    || readSides_ != p.readSides_
+    || role_ != p.role_
+    || controlTime_ != p.controlTime_
+    || readFormations_   != p.readFormations_
+    || readAutomats_     != p.readAutomats_
+    || readPopulations_  != p.readPopulations_
+    || writeSides_       != p.writeSides_
+    || writeFormations_  != p.writeFormations_
+    || writeAutomats_    != p.writeAutomats_
+    || writePopulations_ != p.writePopulations_;
 }

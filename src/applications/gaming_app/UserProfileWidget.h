@@ -46,19 +46,20 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const UserProfile& profile );
-    void Commit();
+    void Display( UserProfile& profile );
     void Clean();
     void Reset();
     //@}
 
-private:
-    //! @name Copy/Assignment
+private slots:
+    //! @name Slots
     //@{
-    UserProfileWidget( const UserProfileWidget& );            //!< Copy constructor
-    UserProfileWidget& operator=( const UserProfileWidget& ); //!< Assignment operator
+    void OnLoginChanged();
+    void OnPasswordChanged();
+    void OnSupervisionChanged( int state );
     //@}
 
+private:
     //! @name Helpers
     //@{
     bool NeedsSaving() const;
@@ -67,8 +68,8 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::SafePointer< UserProfile > selectedProfile_;
-    std::auto_ptr< UserProfile > editedProfile_;
+    kernel::Controller& controller_;
+    UserProfile* editedProfile_;
     UserProfileRights_ABC* unitRights_;
     UserProfileRights_ABC* populationRights_;
     QLineEdit* login_;

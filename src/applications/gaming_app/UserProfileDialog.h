@@ -10,6 +10,8 @@
 #ifndef __UserProfileDialog_h_
 #define __UserProfileDialog_h_
 
+#include "tools/ElementObserver_ABC.h"
+
 namespace kernel
 {
     class Controllers;
@@ -22,6 +24,7 @@ namespace gui
     class EntitySymbols;
 }
 
+class UserProfile;
 class UserProfileList;
 class UserProfileWidget;
 class UserProfileFactory_ABC;
@@ -34,6 +37,8 @@ class Profile;
 // Created: SBO 2007-01-16
 // =============================================================================
 class UserProfileDialog : public QDialog
+                        , public tools::Observer_ABC
+                        , public tools::ElementObserver_ABC< UserProfile >
 {
     Q_OBJECT;
 
@@ -48,6 +53,9 @@ public:
     //@{
     virtual QSize sizeHint () const;
     bool CanBeShown( const Profile& profile ) const;
+    virtual void NotifyCreated( const UserProfile& profile );
+    virtual void NotifyDeleted( const UserProfile& profile );
+
     //@}
 
 private slots:
@@ -55,6 +63,8 @@ private slots:
     //@{
     void OnAccept();
     void OnReject();
+    void OnProfileChanged( const UserProfile* profile, const UserProfile* editor );
+    void OnTimeControlChanged( const QString& text );
     //@}
 
 private:
@@ -67,8 +77,11 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     UserProfileList* list_;
     UserProfileWidget* pages_;
+    QComboBox* timeControlCombo_;
+    const UserProfile* controlTimeProfile_;
     //@}
 };
 

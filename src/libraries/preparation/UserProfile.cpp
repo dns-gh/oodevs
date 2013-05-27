@@ -40,6 +40,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     , extensions_( extensions )
     , isClone_   ( false )
     , isLowLevel_( false )
+    , controlTime_( false )
 {
     const ExistenceChecker< tools::Resolver_ABC< kernel::Team_ABC > >       teamChecker( model_.GetTeamResolver() );
     const ExistenceChecker< tools::Resolver_ABC< kernel::Formation_ABC > >  formationChecker( model_.GetFormationResolver() );
@@ -51,6 +52,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     xis >> xml::attribute( "name", login )
         >> xml::attribute( "password", pass )
         >> xml::optional >> xml::attribute( "role", userRole_ )
+        >> xml::optional >> xml::attribute( "time-control", controlTime_ )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "side"      , *this, &UserProfile::ReadRights, readSides_, teamChecker )
@@ -84,6 +86,7 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
     , password_  ( "" )
     , isClone_   ( false )
     , isLowLevel_( false )
+    , controlTime_( false )
 {
     controller_.Create( *this );
 }
@@ -102,6 +105,7 @@ UserProfile::UserProfile( const QString& login, const std::string& role, kernel:
     , isClone_    ( false )
     , isLowLevel_ ( false )
     , userRole_   ( role )
+    , controlTime_( false )
 {
     ComputeLowLevel();
     controller_.Create( *this );
@@ -130,6 +134,7 @@ UserProfile::UserProfile( const UserProfile& p )
     , isClone_         ( true )
     , isLowLevel_      ( p.isLowLevel_ )
     , userRole_        ( p.userRole_ )
+    , controlTime_     ( false )
 {
     // NOTHING
 }
@@ -213,6 +218,7 @@ void UserProfile::Serialize( xml::xostream& xos ) const
             << xml::attribute( "role", userRole_ )
             << xml::attribute( "name", login_.toAscii().constData() )
             << xml::attribute( "password", password_.toAscii().constData() )
+            << xml::attribute( "time-control", controlTime_ )
             << xml::attribute( "supervision", HasProperty( "magicActions" ) || userRole_.empty() )
             << xml::start( "rights" )
                 << xml::start( "readonly" );
@@ -314,6 +320,24 @@ QString UserProfile::GetLogin() const
 QString UserProfile::GetPassword() const
 {
     return password_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::GetRole
+// Created: NPT 2013-05-21
+// -----------------------------------------------------------------------------
+QString UserProfile::GetRole() const
+{
+    return userRole_.c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::CanControlTime
+// Created: NPT 2013-05-21
+// -----------------------------------------------------------------------------
+bool UserProfile::CanControlTime() const
+{
+    return controlTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -449,6 +473,15 @@ void UserProfile::SetUserRole( const std::string& role )
 {
     userRole_ = role;
     ComputeLowLevel();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::SetTimeControl
+// Created: NPT 2013-05-22
+// -----------------------------------------------------------------------------
+void UserProfile::SetTimeControl( bool control )
+{
+    controlTime_ = control;
 }
 
 // -----------------------------------------------------------------------------

@@ -73,13 +73,17 @@ UserProfileList::~UserProfileList()
 // Name: UserProfileList::Save
 // Created: SBO 2007-11-08
 // -----------------------------------------------------------------------------
-void UserProfileList::Save()
+void UserProfileList::Save( const UserProfile* timeControlProfile )
 {
     for( auto it = editors_.begin(); it != editors_.end(); ++it )
     {
         *const_cast< UserProfile* >( it->first ) = *it->second;
         controllers_.controller_.Update( it->first );
     }
+
+    for( auto it = profiles_.begin(); it != profiles_.end(); ++it )
+        const_cast< UserProfile* >( *it )->SetTimeControl( ( *it ) == timeControlProfile );
+
     emit( DoConsistencyCheck() );
     checker_.Clean();
 }
@@ -180,8 +184,11 @@ void UserProfileList::NotifyUpdated( const UserProfile& profile )
     {
         const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
         QStandardItem* item = dataModel_->item( index );
-        if( item && item->text() != updated->GetLogin() )
+        if( item )
+        {
             item->setText( updated->GetLogin() );
+            emit ProfileChanged( &profile, updated );
+        }
     }
     proxyModel_->sort( 0 );
 }

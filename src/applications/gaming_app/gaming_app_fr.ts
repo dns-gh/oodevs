@@ -3396,6 +3396,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>Time Control Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UserProfileList</name>
@@ -3452,14 +3456,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Permissions</source>
         <translation>Droits</translation>
-    </message>
-    <message>
-        <source>Profile edition</source>
-        <translation>Edition du profil</translation>
-    </message>
-    <message>
-        <source>Profile has changed, commit modifications?</source>
-        <translation>Le profil a changé, sauvegarder les modifications ?</translation>
     </message>
     <message>
         <source>&apos;Read&apos; permission allows you to see a unit.

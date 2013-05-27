@@ -11,6 +11,7 @@
 #define __ProfileDialog_h_
 
 #include "clients_gui/ModalDialog.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -24,6 +25,7 @@ namespace gui
     class EntitySymbols;
 }
 
+class UserProfile;
 class UserProfileList;
 class UserProfileWidget;
 class Model;
@@ -36,6 +38,8 @@ class ControlsChecker_ABC;
 // Created: SBO 2007-01-16
 // =============================================================================
 class ProfileDialog : public ModalDialog
+                    , public tools::Observer_ABC
+                    , public tools::ElementObserver_ABC< UserProfile >
 {
     Q_OBJECT;
 
@@ -52,6 +56,8 @@ public:
     virtual QSize sizeHint() const;
     virtual void showEvent( QShowEvent* pEvent );
     virtual void hideEvent( QHideEvent* pEvent );
+    virtual void NotifyCreated( const UserProfile& profile );
+    virtual void NotifyDeleted( const UserProfile& profile );
     //@}
 
 private slots:
@@ -59,6 +65,7 @@ private slots:
     //@{
     void OnAccept();
     void OnReject();
+    void OnProfileChanged( const UserProfile* profile, const UserProfile* editor );
     //@}
 
 private:
@@ -71,9 +78,11 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     std::auto_ptr< ControlsChecker_ABC > pChecher_;
     UserProfileList* list_;
     UserProfileWidget* pages_;
+    QComboBox* timeControlCombo_;
     //@}
 };
 

@@ -1870,6 +1870,10 @@ This data can&apos;t be projected.</source>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
+    <message>
+        <source>Time Control Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileWizardDialog</name>

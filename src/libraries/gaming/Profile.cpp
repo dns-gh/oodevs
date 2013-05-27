@@ -46,6 +46,7 @@ Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std:
     , loggedIn_   ( false )
     , supervision_( false )
     , simulation_ ( true )
+    , canControlTime_( true )
 {
     controller_.Register( *this );
     if( !isLoginSet )
@@ -150,6 +151,8 @@ void Profile::Update( const sword::Profile& profile )
     else
         password_ = "";
     supervision_ = profile.supervisor();
+    if( profile.has_time_control() )
+        canControlTime_ = profile.time_control();
 
     if( profile.has_read_only_parties()  )
         ReadList( profile.read_only_parties(), readTeams_ );
@@ -224,6 +227,15 @@ bool Profile::IsLoggedIn() const
 bool Profile::IsSupervision() const
 {
     return supervision_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::CanControlTime
+// Created: NPT 2013-05-22
+// -----------------------------------------------------------------------------
+bool Profile::CanControlTime() const
+{
+    return supervision_ && canControlTime_;
 }
 
 // -----------------------------------------------------------------------------

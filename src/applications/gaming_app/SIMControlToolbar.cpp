@@ -389,12 +389,13 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
-    const bool super = profile.IsSupervision();
+    const bool super = profile.IsSupervision() && profile.CanControlTime();
     pPlayButton_->setEnabled( super );
     pSpeedSpinBox_->setEnabled( super );
     pSpeedButton_->setEnabled( super );
     pCheckpointButton_->setEnabled( super );
     pCheckpointAction_->setVisible( super );
+    pStepButton_->setEnabled( super );
 }
 
 // -----------------------------------------------------------------------------

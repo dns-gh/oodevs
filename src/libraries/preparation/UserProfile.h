@@ -50,6 +50,8 @@ public:
     //@{
     QString GetLogin() const;
     QString GetPassword() const;
+    QString GetRole() const;
+    bool CanControlTime() const;
     bool IsLowLevel() const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
@@ -64,10 +66,11 @@ public:
     //! @name Setters
     //@{
     virtual void SetLogin( const QString& value );
+    virtual void SetUserRole( const std::string& role );
     void SetPassword( const QString& value );
     void SetReadable( const kernel::Entity_ABC& entity, bool readable );
     void SetWriteable( const kernel::Entity_ABC& entity, bool writeable );
-    void SetUserRole( const std::string& role );
+    void SetTimeControl( bool control );
     void Clear();
     //@}
 
@@ -135,6 +138,7 @@ private:
     bool isClone_;
     bool isLowLevel_;
     std::string userRole_;
+    bool controlTime_;
     //@}
 };
 

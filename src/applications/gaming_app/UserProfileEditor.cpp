@@ -3,20 +3,20 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
-#include "ProfileEditor.h"
-#include "preparation/UserProfile.h"
+#include "gaming_app_pch.h"
+#include "UserProfileEditor.h"
+#include "gaming/UserProfile.h"
 #include "clients_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
-// Name: ProfileEditor constructor
+// Name: UserProfileEditor constructor
 // Created: SBO 2007-11-08
 // -----------------------------------------------------------------------------
-ProfileEditor::ProfileEditor( const UserProfile& profile, kernel::Controller& controller )
+UserProfileEditor::UserProfileEditor( const UserProfile& profile, kernel::Controller& controller )
     : UserProfile( profile )
     , controller_( controller )
     , profile_   ( profile )
@@ -25,30 +25,30 @@ ProfileEditor::ProfileEditor( const UserProfile& profile, kernel::Controller& co
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileEditor destructor
+// Name: UserProfileEditor destructor
 // Created: SBO 2007-11-08
 // -----------------------------------------------------------------------------
-ProfileEditor::~ProfileEditor()
+UserProfileEditor::~UserProfileEditor()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileEditor::SetLogin
+// Name: UserProfileEditor::SetLogin
 // Created: SBO 2007-11-08
 // -----------------------------------------------------------------------------
-void ProfileEditor::SetLogin( const QString& value )
+void UserProfileEditor::SetLogin( const QString& value )
 {
     UserProfile::SetLogin( value );
     controller_.Update( profile_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProfileEditor::SetUserRole
-// Created: NPT 2013-05-22
+// Name: UserProfileEditor::SetSupervisor
+// Created: NPT 2013-05-24
 // -----------------------------------------------------------------------------
-void ProfileEditor::SetUserRole( const std::string& role )
+void UserProfileEditor::SetSupervisor( bool supervisor )
 {
-    UserProfile::SetUserRole( role );
+    UserProfile::SetSupervisor( supervisor );
     controller_.Update( profile_ );
 }

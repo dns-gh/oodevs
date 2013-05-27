@@ -50,12 +50,13 @@ public:
 
     //! @name Operations
     //@{
-    void Save();
+    void Save( const UserProfile* timeControlProfile );
     void Cancel();
     //@}
 
 signals:
     void DoConsistencyCheck();
+    void ProfileChanged( const UserProfile*, const UserProfile* );
 
 private slots:
     //! @name Slots
