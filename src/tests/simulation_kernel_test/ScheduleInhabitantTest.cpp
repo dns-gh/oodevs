@@ -63,7 +63,7 @@ namespace
     }
 }
 
-BOOST_FIXTURE_TEST_CASE( population_initialize_his_motivation, InitFixture )
+BOOST_FIXTURE_TEST_CASE( population_initializes_its_motivation, InitFixture )
 {
     {
         MIL_Schedule schedule( livingArea );
