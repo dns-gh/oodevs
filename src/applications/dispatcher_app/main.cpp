@@ -34,10 +34,10 @@ void CrashHandler( EXCEPTION_POINTERS* exception )
 // Name: main constructor
 // Created: FBD 02-11-22
 //-----------------------------------------------------------------------------
-int WINAPI wWinMain( HINSTANCE /*hinstance*/, HINSTANCE /*hPrevInstance*/, LPWSTR lpCmdLine, int /*nCmdShow*/ )
+int main( int /*argc*/, char* /*argv*/[] )
 {
     // Init logger
-    tools::WinArguments winArgs( lpCmdLine );
+    tools::WinArguments winArgs( GetCommandLineW() );
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
     boost::scoped_ptr< MT_FileLogger > fileLogger;
