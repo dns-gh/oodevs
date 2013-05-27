@@ -203,10 +203,6 @@
         <translation>SWORD</translation>
     </message>
     <message>
-        <source>Gaming</source>
-        <translation>Gaming</translation>
-    </message>
-    <message>
         <source>Unhandled error</source>
         <translation>Unhandled error</translation>
     </message>

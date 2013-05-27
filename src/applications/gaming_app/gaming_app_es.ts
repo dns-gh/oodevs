@@ -207,10 +207,6 @@
         <translation>Error irrecuperable</translation>
     </message>
     <message>
-        <source>Gaming</source>
-        <translation>Juego</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>

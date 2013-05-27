@@ -38,10 +38,6 @@
         <translation type="unfinished">لا تطابق الملفات التالية على xsd:</translation>
     </message>
     <message>
-        <source>Preparation</source>
-        <translation type="unfinished">إعداد</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation type="unfinished">خطأ</translation>
     </message>

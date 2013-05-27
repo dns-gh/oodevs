@@ -158,7 +158,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     // Symbols
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
     icons_.reset( new gui::EntitySymbols( *symbols, *strategy_ ) );
-    gui::RichItemFactory* factory = new gui::RichItemFactory( this );
 
     // Event strategy
     forward_.reset( new gui::CircularEventStrategy( controllers, *icons_, *strategy_, staticModel_.drawings_, *glProxy_ ) );
@@ -204,7 +203,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     connect( this, SIGNAL( ShowHelp() ), help, SLOT( ShowHelp() ) );
 
     // Menu (must be created after DockWidgets and ToolBars for 'Windows' menu)
-    menu_.reset( new Menu( "mainMenu", this, controllers, *dialogContainer_, *factory, expiration ) );
+    menu_.reset( new Menu( "mainMenu", this, controllers, *dialogContainer_, expiration ) );
     toolbarContainer_->GetFileToolbar().Fill( *menu_ );
     setMenuBar( menu_.get() );
 

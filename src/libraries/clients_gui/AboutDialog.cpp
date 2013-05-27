@@ -24,7 +24,7 @@ using namespace gui;
 // Name: AboutDialog constructor
 // Created: SBO 2006-05-04
 // -----------------------------------------------------------------------------
-AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QString& line, const QString& license )
+AboutDialog::AboutDialog( QWidget* parent, const QString& line, const QString& license )
     : QDialog( parent, 0, true, Qt::WStyle_Splash )
 {
     SubObjectName subObject( "AboutDialog" );
@@ -52,9 +52,9 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QStri
             .arg( tools::translate( "Application", "www.masagroup.net" ) )
             .arg( tools::translate( "Application", "www.masagroup.net" ) );
 
-    if( ! license.isNull() )
+    if( !license.isEmpty() )
         message += tr( "<br>License will expire on " ) + license;
-    RichLabel* label = factory.CreateLabel( message, hbox );
+    RichLabel* label = new RichLabel( "aboutLabel", message, hbox );
     label->setAlignment( Qt::TextSingleLine | Qt::AlignCenter );
     RichPushButton* button = new RichPushButton( "close", tr( "Close" ), hbox );
     connect( button, SIGNAL( clicked() ), this, SLOT( accept() ) );

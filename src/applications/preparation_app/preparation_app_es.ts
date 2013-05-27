@@ -34,10 +34,6 @@
         <translation>SWORD</translation>
     </message>
     <message>
-        <source>Preparation</source>
-        <translation>Preparación</translation>
-    </message>
-    <message>
         <source>The following files do not match their xsd : </source>
         <translation type="unfinished"></translation>
     </message>

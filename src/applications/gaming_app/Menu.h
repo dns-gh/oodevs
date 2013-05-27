@@ -46,7 +46,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog,
-                   UserProfileDialog& profileDialog, gui::ItemFactory_ABC& factory, const QString& license,
+                   UserProfileDialog& profileDialog, const QString& license,
                    Network& network, kernel::Logger_ABC& logger );
     virtual ~Menu();
     //@}

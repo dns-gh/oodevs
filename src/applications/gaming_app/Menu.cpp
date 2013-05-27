@@ -141,7 +141,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog, UserProfileDialog& profileDialog, ItemFactory_ABC& factory, const QString& license, Network& network, kernel::Logger_ABC& logger )
+Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog, UserProfileDialog& profileDialog, const QString& license, Network& network, kernel::Logger_ABC& logger )
     : QMenuBar( pParent )
     , controllers_( controllers )
     , profileDialog_( profileDialog )
@@ -285,7 +285,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     menu->SetModes( eModes_None, eModes_All, true );
     menu->insertItem( tools::translate( "Menu", "Help" ), pParent, SIGNAL( ShowHelp() ) );
     menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, factory, tools::translate( "Application", "Gaming" ) + " " + QString( tools::AppProjectVersion() ), license ), SLOT( exec() ) );
+    menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, QString( tools::AppProjectVersion() ), license ), SLOT( exec() ) );
     addMenu( menu );
 
     controllers_.Register( *this );

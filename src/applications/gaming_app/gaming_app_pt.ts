@@ -210,10 +210,6 @@
         <source>Unhandled error</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Gaming</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>BorrowingsListView</name>

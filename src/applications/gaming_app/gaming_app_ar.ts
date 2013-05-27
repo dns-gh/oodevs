@@ -203,10 +203,6 @@
         <translation type="unfinished">السيف</translation>
     </message>
     <message>
-        <source>Gaming</source>
-        <translation type="unfinished">الألعاب</translation>
-    </message>
-    <message>
         <source>Unhandled error</source>
         <translation type="unfinished">خطأ لم تتم معالجته</translation>
     </message>

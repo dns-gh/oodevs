@@ -38,10 +38,6 @@
         <translation>The following files do not match their xsd : </translation>
     </message>
     <message>
-        <source>Preparation</source>
-        <translation>Preparation</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>Error</translation>
     </message>

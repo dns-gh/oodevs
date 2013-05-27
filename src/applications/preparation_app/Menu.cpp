@@ -77,7 +77,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs, gui::ItemFactory_ABC& factory, const QString& license )
+Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs, const QString& license )
     : RichMenuBar ( objectName, pParent )
     , controllers_( controllers )
 {
@@ -191,7 +191,7 @@ Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers
         gui::RichMenu* menu = new gui::RichMenu( "aide", this, controllers_, tools::translate( "Menu", "&?" ) );
         menu->SetModes( eModes_None, eModes_All, true );
         menu->InsertItem( "1", tools::translate( "Menu", "Help" ), pParent, SIGNAL( ShowHelp() ) );
-        gui::AboutDialog* about = new gui::AboutDialog( this, factory, tools::translate( "Application", "Preparation" ) + " " + QString( tools::AppProjectVersion() ), license );
+        gui::AboutDialog* about = new gui::AboutDialog( this, QString( tools::AppProjectVersion() ), license );
         menu->InsertItem( "2", tools::translate( "Menu", "About" ), about, SLOT( open() ) );
         addMenu( menu->FillMenu() );
     }
