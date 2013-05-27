@@ -256,10 +256,8 @@ void Drawing::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Drawing::SerializePoint( const sword::CoordLatLong& asn, xml::xostream& xos ) const
 {
-    // $$$$ AGE 2008-07-09: serializer en mgrs ?
-    const geometry::Point2f point( converter_.ConvertToXY( asn ) );
     xos << xml::start( "point" )
-            << xml::attribute( "x", point.X() )
-            << xml::attribute( "y", point.Y() )
+            << xml::attribute( "longitude", asn.longitude() )
+            << xml::attribute( "latitude", asn.latitude() )
         << xml::end;
 }
