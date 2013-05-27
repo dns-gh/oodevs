@@ -12,11 +12,7 @@
 #define __ADN_FileChooser_h_
 
 #include "ADN_Connector_ABC.h"
-#include <QtGui/qwidget.h>
 #include <tools/Path.h>
-
-class QLineEdit;
-class QPushButton;
 
 //*****************************************************************************
 // Created: JDY 03-07-01
@@ -28,8 +24,8 @@ class ADN_FileChooser : public QWidget
 public:
     enum E_Mode
     {
-        eFile       = 0,
-        eDirectory  = 1
+        eFile      = 0,
+        eDirectory = 1
     };
 
 public:
@@ -40,6 +36,7 @@ public:
     const tools::Path&  GetDirectory() const;
     E_Mode GetMode() const;
     void SetFilter( const QString& filter );
+    void SetRestrictions( const std::vector< std::wstring >& restrictions );
     ADN_Connector_ABC&  GetConnector( E_Mode type );
 
 public slots:
@@ -58,6 +55,7 @@ private:
     T_ConnectorVector vConnectors_;
     QString szFilter_;
     tools::Path szDirectory_;
+    std::vector< std::wstring > restrictions_;
     static QString szDefaultFilter_;
 };
 

@@ -14,6 +14,7 @@
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_Models_Data.h"
+#include "ADN_FileChooser.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_ListView_Models.h"
 #include "ADN_ListView_Missions.h"
@@ -62,7 +63,8 @@ void ADN_Models_GUI::Build()
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
     pMainLayout->setSpacing( 10 );
     pMainLayout->setMargin( 10 );
-    pMainLayout->addWidget( pTabWidget_ );}
+    pMainLayout->addWidget( pTabWidget_ );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Models_GUI::BuildPage
@@ -82,7 +84,7 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
     ADN_EditLine_ABC* nameField = builder.AddField< ADN_EditLine_String >( pInfoHolder, "name", tr( "Name" ), vInfosConnectors[ eName ] );
     nameField->ConnectWithRefValidity( model );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, "dia-type", tr( "DIA type" ), vInfosConnectors[ eDiaType ] );
-    builder.AddFileField( pInfoHolder, "file", tr( "File" ), vInfosConnectors[ eFile ] );
+    DIAFileChooser_[ eEntityType ] = builder.AddFileField( pInfoHolder, "file", tr( "File" ), vInfosConnectors[ eFile ] );
     builder.AddField< ADN_CheckBox >( pInfoHolder, "masalife", tr( "Masalife" ), vInfosConnectors[ eMasalife ] );
 
     // Missions
@@ -134,4 +136,14 @@ void ADN_Models_GUI::Enable( bool enable )
 {
     for( int i = 0; i < eNbrEntityTypes; ++i )
         pWidgets_[ i ]->setEnabled( enable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_GUI::SetDecisionalFilters
+// Created: JSR 2013-05-22
+// -----------------------------------------------------------------------------
+void ADN_Models_GUI::SetDecisionalFilters( const std::vector< std::wstring >& decisionalFilters )
+{
+    for( int i = 0; i < eNbrEntityTypes; ++i )
+        DIAFileChooser_[ i ]->SetRestrictions( decisionalFilters );
 }

@@ -17,6 +17,8 @@
 
 #include "ADN_enums.h"
 
+class ADN_FileChooser;
+
 // =============================================================================
 /** @class  ADN_Models_GUI
     @brief  ADN_Models_GUI
@@ -56,6 +58,7 @@ public:
     //@{
     void Build();
     void Enable( bool enable );
+    void SetDecisionalFilters( const std::vector< std::wstring >& decisionalFilters );
     //@}
 
 private:
@@ -68,7 +71,8 @@ private:
     //! @name Member data
     //@{
     ADN_Models_Data& data_;
-    QWidget*         pWidgets_[ eNbrEntityTypes ];
+    ADN_FileChooser* DIAFileChooser_[ eNbrEntityTypes ];
+    QWidget* pWidgets_[ eNbrEntityTypes ];
     //@}
 };
 

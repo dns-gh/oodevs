@@ -1647,6 +1647,25 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
+    <name>ADN_FileChooser</name>
+    <message>
+        <source>Choose a directory</source>
+        <translation>Choisissez un répertoire</translation>
+    </message>
+    <message>
+        <source>Choose a file to open</source>
+        <translation>Choisissez un fichier à ouvrir</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Attention</translation>
+    </message>
+    <message>
+        <source>This file is not in the correct file hierarchy and cannot be selected.</source>
+        <translation>Ce fichier ne fait pas partie de la bonne arborescence et ne peut être sélectionné.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_FireClass_Data</name>
     <message>
         <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>

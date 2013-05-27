@@ -13,6 +13,7 @@
 #include "moc_ADN_FileChooser.cpp"
 #include "ADN_Tools.h"
 #include "clients_gui/FileDialog.h"
+#include <boost/algorithm/string.hpp>
 
 QString ADN_FileChooser::szDefaultFilter_="All Files (*.*)";
 
@@ -100,12 +101,30 @@ ADN_FileChooser::~ADN_FileChooser()
 //-----------------------------------------------------------------------------
 void ADN_FileChooser::ChooseFile()
 {
-    tools::Path filename = eMode_ == eDirectory ? gui::FileDialog::getExistingDirectory( this, "Choose a directory", szDirectory_ )
-                                                : gui::FileDialog::getOpenFileName( this, "Choose a file to open", szDirectory_, szFilter_ );
+    tools::Path filename = eMode_ == eDirectory ? gui::FileDialog::getExistingDirectory( this, tools::translate( "ADN_FileChooser", "Choose a directory" ), szDirectory_ )
+                                                : gui::FileDialog::getOpenFileName( this, tools::translate( "ADN_FileChooser", "Choose a file to open" ), szDirectory_, szFilter_ );
 
     if( filename.IsEmpty() )
         return;
-    pLineEdit_->setText( QString::fromStdWString( filename.FileName().ToUnicode() ) );
+    if( restrictions_.empty() )
+        pLineEdit_->setText( QString::fromStdWString( filename.FileName().ToUnicode() ) );
+    else
+    {
+        tools::Path file = filename;
+        std::wstring filePath = file.Normalize().ToLower().ToUnicode();
+        for( auto it = restrictions_.begin(); it != restrictions_.end(); ++it )
+        {
+            std::wstring lowerRestriction = *it;
+            boost::algorithm::to_lower( lowerRestriction );
+            std::size_t idx = filePath.find( lowerRestriction );
+            if( idx != std::wstring::npos )
+            {
+                pLineEdit_->setText( QString::fromStdWString( filename.ToUnicode().substr( idx + lowerRestriction.size() +1 ) ) );
+                return;
+            }
+        }
+        QMessageBox::warning( this, tools::translate( "ADN_FileChooser", "Warning" ), tools::translate( "ADN_FileChooser", "This file is not in the correct file hierarchy and cannot be selected." ) );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -153,5 +172,14 @@ void ADN_FileChooser::SetDirectory( const tools::Path& szDir )
 //-----------------------------------------------------------------------------
 void ADN_FileChooser::SetMode( ADN_FileChooser::E_Mode m )
 {
-    eMode_=m;
+    eMode_ = m;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_FileChooser::SetRestrictions
+// Created: JSR 2013-05-23
+// -----------------------------------------------------------------------------
+void ADN_FileChooser::SetRestrictions( const std::vector< std::wstring >& restrictions )
+{
+    restrictions_ = restrictions;
 }

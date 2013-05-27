@@ -94,8 +94,9 @@ public:
     explicit ADN_Models_Data();
     virtual ~ADN_Models_Data();
 
-    void FilesNeeded( tools::Path::T_Paths& l ) const;
-    void Reset();
+    virtual void FilesNeeded( tools::Path::T_Paths& l ) const;
+    virtual void Reset();
+    virtual void Initialize();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     
     QStringList GetModelsThatUse( E_EntityType type, ADN_Missions_Mission& model );

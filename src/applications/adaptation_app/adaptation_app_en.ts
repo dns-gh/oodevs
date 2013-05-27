@@ -1639,6 +1639,25 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_FileChooser</name>
+    <message>
+        <source>Choose a directory</source>
+        <translation>Choose a directory</translation>
+    </message>
+    <message>
+        <source>Choose a file to open</source>
+        <translation>Choose a file to open</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Warning</translation>
+    </message>
+    <message>
+        <source>This file is not in the correct file hierarchy and cannot be selected.</source>
+        <translation>This file is not in the correct file hierarchy and cannot be selected.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_FireClass_Data</name>
     <message>
         <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>

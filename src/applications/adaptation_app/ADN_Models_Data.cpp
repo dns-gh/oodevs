@@ -12,6 +12,7 @@
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_AiEngine_Data.h"
+#include "ADN_Models_Gui.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
@@ -341,6 +342,48 @@ void ADN_Models_Data::Reset()
     vUnitModels_.Reset();
     vAutomataModels_.Reset();
     vPopulationModels_.Reset();
+}
+
+namespace
+{
+    class SourcePaths : boost::noncopyable
+    {
+    public:
+         SourcePaths() {}
+        ~SourcePaths() {}
+
+        void AddSource( xml::xistream& xis )
+        {
+            static const tools::Path basePath( "decisional" );
+            sourcePaths_.push_back( ( basePath / xis.attribute< tools::Path >( "directory" ) ).Normalize().ToUnicode() );
+        }
+        const std::vector< std::wstring >& GetSourcePaths() const { return sourcePaths_; }
+
+    private:
+        std::vector< std::wstring > sourcePaths_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::Initialize
+// Created: JSR 2013-05-22
+// -----------------------------------------------------------------------------
+void ADN_Models_Data::Initialize()
+{
+    tools::Path p = ADN_Workspace::GetWorkspace().GetProject().GetWorkDirInfos().GetWorkingDirectory().GetData();
+    const tools::Path root = p.Root();
+    while( p != root && p.FileName().ToLower().ToUTF8() != "physical" )
+        p = p.Parent();
+    tools::Path decisionalFile = p.Parent() / "decisional/decisional.xml";
+    if( decisionalFile.Exists() )
+    {
+        SourcePaths sourcePaths;
+        tools::Xifstream xis( decisionalFile );
+        xis >> xml::start( "decisional" )
+                >> xml::start( "RepertoiresSources" )
+                    >> xml::list( "RepertoireSources" , sourcePaths, &SourcePaths::AddSource );
+        ADN_Workspace::GetWorkspace().GetModels().GetGui().SetDecisionalFilters( sourcePaths.GetSourcePaths() );
+    }
 }
 
 //-----------------------------------------------------------------------------
