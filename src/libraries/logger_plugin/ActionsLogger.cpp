@@ -130,7 +130,7 @@ namespace
             sword::ClientToSim msg;
             msg.set_context( 0 );
             protocol::Read( adapter, *msg.mutable_message(), xis );
-            dst.insert( std::make_pair( MakeTime( time ), msg ) );
+            dst.push_back( std::make_pair( MakeTime( time ), msg ) );
         }
         catch( const std::exception& err )
         {
@@ -172,7 +172,7 @@ void ActionsLogger::LogAction( const T& message, const U& mutator )
     LoadOrdersIfCheckpoint();
     sword::ClientToSim msg;
     *( msg.mutable_message()->*mutator )() = message;
-    actions_.insert( std::make_pair( tools::QTimeToBoostTime( timer_.GetDateTime() ), msg ) );
+    actions_.push_back( std::make_pair( tools::QTimeToBoostTime( timer_.GetDateTime() ), msg ) );
 }
 
 // -----------------------------------------------------------------------------

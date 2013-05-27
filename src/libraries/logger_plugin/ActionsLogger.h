@@ -10,7 +10,7 @@
 #ifndef __ActionsLogger_h_
 #define __ActionsLogger_h_
 
-#include <map>
+#include <vector>
 #include <memory>
 #include <string>
 
@@ -89,7 +89,8 @@ public:
 
     //! @name Typedef helpers
     //@{
-    typedef std::map< boost::posix_time::ptime, sword::ClientToSim > T_Actions;
+    typedef std::pair< boost::posix_time::ptime, sword::ClientToSim > T_Action;
+    typedef std::vector< T_Action >                                   T_Actions;
     typedef boost::function< bool( const sword::ClientToSim& ) > T_Filter;
     //@}
 
