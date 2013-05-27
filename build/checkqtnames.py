@@ -86,6 +86,7 @@ ignoredescendants = set([
     "QLabel",
     "gui::GQ_Plot",
     "gui::CheckComboBox",
+    "gui::RichLabel",
     "gui::RichGroupBox",
     "QTabBar",
     "gui::RichLineEdit",
