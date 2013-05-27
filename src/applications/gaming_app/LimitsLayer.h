@@ -24,6 +24,7 @@ class TacticalLineFactory;
 // =============================================================================
 class LimitsLayer : public gui::TacticalLinesLayer
                   , public tools::SelectionObserver_ABC
+                  , public tools::SelectionObserver_Base< kernel::Agent_ABC >
                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
                   , public tools::SelectionObserver_Base< kernel::Formation_ABC >
 {
@@ -46,6 +47,7 @@ private:
     virtual void CreateLima( const T_PointVector& points );
 
     virtual void tools::SelectionObserver_ABC::BeforeSelection();
+    virtual void Select( const kernel::Agent_ABC& element );
     virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
     virtual void tools::SelectionObserver_ABC::AfterSelection();

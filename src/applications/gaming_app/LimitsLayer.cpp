@@ -11,6 +11,7 @@
 #include "LimitsLayer.h"
 #include "gaming/TacticalLine_ABC.h"
 #include "gaming/TacticalLineFactory.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
@@ -104,6 +105,16 @@ void LimitsLayer::CreateLima( const T_PointVector& points )
 void LimitsLayer::BeforeSelection()
 {
     selectedEntity_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::Select
+// Created: JSR 2013-05-23
+// -----------------------------------------------------------------------------
+void LimitsLayer::Select( const kernel::Agent_ABC& element )
+{
+    if( const kernel::TacticalHierarchies* hierarchies = element.Retrieve< kernel::TacticalHierarchies >() )
+        selectedEntity_ = hierarchies->GetSuperior();
 }
 
 // -----------------------------------------------------------------------------

@@ -28,10 +28,10 @@
 #include "preparation/Ghost.h"
 #include "preparation/Object.h"
 #include "clients_gui/UrbanObject.h"
-#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_gui/DictionaryUpdated.h"
 #include "tools/GeneralConfig.h"
 #include <boost/bind.hpp>
@@ -132,7 +132,7 @@ void ModelBuilder::OnCreateCommunication()
 // -----------------------------------------------------------------------------
 bool ModelBuilder::CanCreateLine() const
 {
-    return selectedFormation_ || selectedAutomat_;
+    return selectedFormation_ || selectedAutomat_ || selectedAgent_;
 }
 
 // -----------------------------------------------------------------------------
@@ -141,7 +141,16 @@ bool ModelBuilder::CanCreateLine() const
 // -----------------------------------------------------------------------------
 void ModelBuilder::CreateLimit( const T_PointVector& points )
 {
-    const kernel::Entity_ABC* element = selectedFormation_ ? (const kernel::Entity_ABC*)selectedFormation_ : (const kernel::Entity_ABC*)selectedAutomat_;
+    const kernel::Entity_ABC* element = 0;
+    if( selectedFormation_ )
+        element = selectedFormation_;
+    else if( selectedAutomat_ )
+        element = selectedAutomat_;
+    else if( selectedAgent_ )
+    {
+        if( const kernel::TacticalHierarchies* hierarchies = selectedAgent_->Retrieve< kernel::TacticalHierarchies >() )
+            element = hierarchies->GetSuperior();
+    }
     if( element )
         model_.limits_.CreateLimit( points, *const_cast< kernel::Entity_ABC* >( element ) );
 }
@@ -152,7 +161,16 @@ void ModelBuilder::CreateLimit( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void ModelBuilder::CreateLima( const T_PointVector& points )
 {
-    const kernel::Entity_ABC* element = selectedFormation_ ? (const kernel::Entity_ABC*)selectedFormation_ : (const kernel::Entity_ABC*)selectedAutomat_;
+    const kernel::Entity_ABC* element = 0;
+    if( selectedFormation_ )
+        element = selectedFormation_;
+    else if( selectedAutomat_ )
+        element = selectedAutomat_;
+    else if( selectedAgent_ )
+    {
+        if( const kernel::TacticalHierarchies* hierarchies = selectedAgent_->Retrieve< kernel::TacticalHierarchies >() )
+            element = hierarchies->GetSuperior();
+    }
     if( element )
         model_.limits_.CreateLima( points, *const_cast< kernel::Entity_ABC* >( element ) );
 }
