@@ -12,7 +12,7 @@
 
 // =============================================================================
 /** @class  MIL_EntityVisitor_ABC
-    @brief  Population visitor base class
+    @brief  Entity visitor base class
 */
 // Created: SBO 2006-02-24
 // =============================================================================
