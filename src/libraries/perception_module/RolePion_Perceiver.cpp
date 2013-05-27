@@ -276,7 +276,7 @@ namespace
             if( !count_ )
                 return maxPerceptionDistance_;
             const double occupation = occupation_ / count_;
-            return maxPerceptionDistance_ * ( 1 - 9 * occupation / 10 );
+            return maxPerceptionDistance_ * ( 1 - 0.9 * occupation );
         }
         PerceptionObserver_ABC& perceiver_;
         double maxPerceptionDistance_;

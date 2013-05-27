@@ -55,7 +55,6 @@ public:
           double       GetFactor                 ( size_t identifier ) const;
           double       GetUrbanBlockFactor       ( const wrapper::View& target ) const;
           bool         CanScan                   () const;
-          bool         CanDetectFirer            ( double distance ) const;
     const SensorType&  GetType                   () const;
           unsigned int GetDelay                  () const;
     //@}
@@ -67,8 +66,6 @@ public:
     const PerceptionLevel& ComputeConcentrationPerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const;
     const PerceptionLevel& ComputeFlowPerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight, std::vector< MT_Vector2D >& shape ) const;
     double ComputePerceptionAccuracy( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const;
-    const double IdentificationDistance   () const;
-    const double ReconnoissanceDistance   () const;
     void ComputeDistances( const wrapper::View& perceiver, const wrapper::View& target, double& identification, double& recognition, double& detection ) const;
     const double RayTrace                 ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double sensorHeight ) const;
     //@}

@@ -421,24 +421,6 @@ const PerceptionLevel& SensorTypeAgent::InterpretExtinction( double rExtinction 
     return PerceptionLevel::notSeen_;
 }
 
-//-----------------------------------------------------------------------------
-// Name: SensorTypeAgent::IdentificationDistance
-// Created: DDA 10-03-24
-//-----------------------------------------------------------------------------
-const double SensorTypeAgent::IdentificationDistance() const
-{
-    return rIdentificationDist_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: SensorTypeAgent::ReconnoissanceDistance
-// Created: GGE & PSN 10-04-20
-//-----------------------------------------------------------------------------
-const double SensorTypeAgent::ReconnoissanceDistance() const
-{
-    return rRecognitionDist_;
-}
-
 namespace
 {
      double FindEnvironmentFactor( unsigned int environment, const void* userData )
@@ -657,15 +639,6 @@ double SensorTypeAgent::GetUrbanBlockFactor( const wrapper::View& block ) const
 bool SensorTypeAgent::CanScan() const
 {
     return bScanningAllowed_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: SensorTypeAgent::CanDetectFirer
-// Created: SLG 2010-05-20
-// -----------------------------------------------------------------------------
-bool SensorTypeAgent::CanDetectFirer( double distance ) const
-{
-    return distance < rRecognitionFirerDist_;
 }
 
 // -----------------------------------------------------------------------------
