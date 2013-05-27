@@ -13,7 +13,6 @@
 #include "InsideUrbanBlockPosition.h"
 #include "LocationComputer_ABC.h"
 #include "OutsideUrbanBlockPosition.h"
-#include "PostureComputer_ABC.h"
 #include "SpeedComputer_ABC.h"
 #include "UrbanLocationComputer_ABC.h"
 #include "UrbanLocationComputerFactory_ABC.h"
@@ -236,20 +235,6 @@ double PHY_RolePion_UrbanLocation::ComputeDistanceInsideSameUrbanBlock( MIL_Agen
     UrbanLocationComputer_ABC::Results& targetResult = targetComputer->Result();
     double distance = firerResult.position_.Distance( targetResult.position_ );
     return urbanObject_ ? distance * ( 1 - firerResult.urbanDeployment_ ) * ( 1 - targetResult.urbanDeployment_ ) : distance;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::Execute
-// Created: SLG 2010-04-12
-// -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::Execute( posture::PostureComputer_ABC& /*algorithm*/ ) const
-{
-    // $$$$ LDC FIXME The value of ComputeXomplexity is just stupid (1 million...). It also doesn't make any sense for an isolated individual.
-//    if( urbanObject_ )
-//    {
-//        double timeModifier = urbanObject_->GetObject().ComputeComplexity();
-//        algorithm.AddUrbanCoefficientModifier( timeModifier );
-//    }
 }
 
 // -----------------------------------------------------------------------------
