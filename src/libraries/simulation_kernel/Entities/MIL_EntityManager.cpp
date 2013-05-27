@@ -1539,7 +1539,7 @@ void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicA
     for( int i = 0; i < message.parameters().elem( 1 ).value_size(); ++i )
     {
         const ::sword::MissionParameter_Value& value = message.parameters().elem( 1 ).value().Get( i );
-        if( !value.list( 0 ).has_identifier() || !value.list( 1 ).has_quantity() )
+        if( value.list_size() != 2 || !value.list( 0 ).has_identifier() || !value.list( 1 ).has_quantity() )
             throw MASA_EXCEPTION_ASN( UnitActionAck::ErrorCode, UnitActionAck::error_invalid_parameter );
         composantesMap[ value.list( 0 ).identifier() ] = value.list( 1 ).quantity();
     }
