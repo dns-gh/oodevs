@@ -31,14 +31,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              RolePion_Composantes();
-             RolePion_Composantes( MIL_Agent_ABC& pion, core::Model& entity );
+             RolePion_Composantes( MIL_Agent_ABC& pion, core::Model& model );
     virtual ~RolePion_Composantes();
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifyComposanteAdded   ( PHY_ComposantePion& composante, T_Dotations* dotations );
-    virtual T_Dotations NotifyComposanteRemoved ( PHY_ComposantePion& composante );
+    virtual void NotifyComposanteAdded( PHY_ComposantePion& composante, T_Dotations* dotations );
+    virtual T_Dotations NotifyComposanteRemoved( PHY_ComposantePion& composante );
 
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
@@ -46,8 +46,9 @@ public:
 private:
     //! @name Member data
     //@{
-    core::Model* entity_;
-    std::map< PHY_ComposantePion*, core::Model* > components_;
+    core::Model* entity_; // $$$$ MCO 2013-05-27: rename to components_
+    core::Model* equipments_;
+    std::map< PHY_ComposantePion*, core::Model* > components_; // $$$$ MCO 2013-05-27: rename to composantes_
     //@}
 };
 

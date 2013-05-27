@@ -25,6 +25,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Weapons/PHY_LauncherType.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
+#include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
@@ -202,7 +203,13 @@ namespace
             MT_LOG_ERROR_MSG( "Unknown dotation category in ModifyDangerosity hook implementation : " << dotation );
             return 0;
         }
-        return category->GetAttritionScore( GET_DATA( compTarget, PHY_ComposantePion ).GetType().GetProtection() );
+        const PHY_Protection* protection = PHY_Protection::Find( (*core::Convert( compTarget ))[ "protection" ] );
+        if( ! protection )
+        {
+            MT_LOG_ERROR_MSG( "Unknown protection in ModifyDangerosity hook implementation : " << protection );
+            return 0;
+        }
+        return category->GetAttritionScore( *protection );
     }
     DEFINE_HOOK( EvaluateDangerosity, 2, double, ( const SWORD_Model* agent, const SWORD_Model* target ) )
     {

@@ -78,6 +78,7 @@
 #include "tools/Loader_ABC.h"
 #include <core/Facade.h>
 #include <core/Model.h>
+#include <core/Convert.h>
 #include <core/UserData.h>
 #include <core/EventListener_ABC.h>
 #include <boost/foreach.hpp>
@@ -133,6 +134,7 @@ namespace
 {
     DECLARE_HOOK( InitializePathClass, void, ( const char* xml, const unsigned int* first, size_t size ) )
     DECLARE_HOOK( InitializePerceptionTypes, void, ( const char* xml ) )
+    DECLARE_HOOK( InitializeEquipments, void, ( const char* xml, SWORD_Model* model ) )
     DECLARE_HOOK( InitializeLaunchers, void, ( const char* xml ) )
     DECLARE_HOOK( InitializeDotations, void, ( const char* xml ) )
     DECLARE_HOOK( InitializeWeaponSystems, void, ( const char* xml, double tickDuration ) )
@@ -143,6 +145,12 @@ namespace
         xml::xostringstream xos;
         xos << xis;
         GET_HOOK( InitializePathClass )( xos.str().c_str(), dangerousObjects.empty() ? 0 : &dangerousObjects[0], dangerousObjects.size() );
+    }
+    void InitializeEquipments( xml::xistream& xis, core::Model& model )
+    {
+        xml::xostringstream xos;
+        xos << xis;
+        GET_HOOK( InitializeEquipments )( xos.str().c_str(), core::Convert( &model ) ) ;
     }
     void InitializeLaunchers( xml::xistream& xis )
     {
@@ -277,6 +285,7 @@ void Sink::Initialize()
     facade_->Resolve();
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "pathfinder", boost::bind( &::InitializePathfinder, _1, boost::cref( dangerousObjects_ ) ) );
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "sensors", boost::bind( &::InitializePerception, _1 ) );
+    MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "components", boost::bind( &::InitializeEquipments, _1, boost::ref( *model_ ) ) );
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "launchers", boost::bind( &::InitializeLaunchers, _1 ) );
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "resources", boost::bind( &::InitializeDotations, _1 ) );
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "weapon-systems", boost::bind( &::InitializeWeaponSystems, _1 ) );
@@ -328,20 +337,18 @@ SWORD_USER_DATA_EXPORT( MIL_Object_ABC* )
 
 namespace
 {
-    void UpdateAgentKnowledge( core::Model& entity, core::Model& knowledge, boost::shared_ptr< DEC_Knowledge_Agent > agent )
+    void UpdateAgentKnowledge( const core::Model& model, core::Model& knowledge, boost::shared_ptr< DEC_Knowledge_Agent > agent )
     {
         knowledge[ "data" ].SetUserData( agent );
         knowledge[ "posture/data" ].SetUserData( &agent->GetAgentKnown().GetRole< PHY_RoleInterface_Posture >() );
         knowledge[ "identifier" ] = agent->GetAgentKnown().GetID();
         knowledge[ "is-dead" ] = agent->IsDead();
         core::Model& components = knowledge[ "components" ];
-        const core::Model& components2 = entity[ "components" ];
         const T_KnowledgeComposanteVector& composantes = agent->GetComposantes();
         unsigned int score = 0;
         knowledge[ "major" ] = -1;
         for( std::size_t i = 0; i < composantes.size(); ++i )
         {
-            assert( components2.GetSize() == composantes.size() );
             core::Model& component = components.AddElement();
             const DEC_Knowledge_AgentComposante& composante = composantes[ i ];
             component[ "volume" ] = composante.GetType().GetVolume().GetID();
@@ -351,9 +358,9 @@ namespace
                 knowledge[ "major" ] = i;
             }
             component[ "major" ] = composante.IsMajor();
-            const core::Model& component2 = components2.GetElement( i );
-            component[ "data" ] = component2[ "data" ];
-            component[ "weapons" ] = component2[ "weapons" ]; // $$$$ MCO 2012-07-02: could be a link because that info is 'static'
+            const core::Model& equipment = model[ "equipments" ][ composante.GetType().GetMosID().id() ]; // $$$$ MCO 2012-07-02: could be a link because that info is 'static'
+            component[ "weapons" ] = equipment[ "weapons" ];
+            component[ "protection" ] = equipment[ "protection" ];
         }
     }
     void UpdateObjectKnowledge( core::Model& knowledge, boost::shared_ptr< DEC_Knowledge_Object > object )
@@ -374,8 +381,8 @@ namespace
                 friends.AddElement() = knowledge->GetID();
         }
     }
-    void UpdateAgentKnowledgeGroupBlackBoard(
-        core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
+    void UpdateAgentKnowledgeGroupBlackBoard( const core::Model& model,
+        core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
     {
         auto bbKg = group.GetKnowledge();
         if( !bbKg )
@@ -383,7 +390,7 @@ namespace
         BOOST_FOREACH( const auto& agent, bbKg->GetKnowledgeAgentContainer().GetKnowledgeAgents() )
         {
             boost::shared_ptr< DEC_Knowledge_Agent > knowledge = agent.second;
-            UpdateAgentKnowledge( entities[ knowledge->GetAgentKnown().GetID() ], knowledges[ "agents" ][ knowledge->GetID() ], knowledge );
+            UpdateAgentKnowledge( model, knowledges[ "agents" ][ knowledge->GetID() ], knowledge );
             UpdateKnowledgeRelations( enemies, friends, group, knowledge );
         }
     }
@@ -392,17 +399,17 @@ namespace
         BOOST_FOREACH( const auto& object, group.GetKnowledgeObjectContainer().GetKnowledgeObjects() )
             UpdateObjectKnowledge( knowledges[ "objects" ][ object.second->GetID() ], object.second );
     }
-    void UpdateKnowledgeGroup(
-        core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends, boost::shared_ptr< MIL_KnowledgeGroup > group )
+    void UpdateKnowledgeGroup( const core::Model& model,
+        core::Model& knowledges, core::Model& enemies, core::Model& friends, boost::shared_ptr< MIL_KnowledgeGroup > group )
     {
         const unsigned int id = group->GetId();
-        UpdateAgentKnowledgeGroupBlackBoard( entities, knowledges[ id ], enemies[ id ], friends[ id ], *group );
+        UpdateAgentKnowledgeGroupBlackBoard( model, knowledges[ id ], enemies[ id ], friends[ id ], *group );
         UpdateObjectKnowledgeGroupBlackBoard( knowledges[ id ], *group );
         MIL_KnowledgeGroup::T_KnowledgeGroupVector groups = group->GetKnowledgeGroups();
         for( MIL_KnowledgeGroup::T_KnowledgeGroupVector::const_iterator it = groups.begin(); it != groups.end(); ++it )
-            UpdateKnowledgeGroup( entities, knowledges, enemies, friends, *it );
+            UpdateKnowledgeGroup( model, knowledges, enemies, friends, *it );
     }
-    void UpdateKnowledges( core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends )
+    void UpdateKnowledges( const core::Model& model, core::Model& knowledges, core::Model& enemies, core::Model& friends )
     {
         knowledges.Clear();
         enemies.Clear();
@@ -413,7 +420,7 @@ namespace
             typedef std::map< unsigned int, boost::shared_ptr< MIL_KnowledgeGroup > > T_Groups;
             const T_Groups& groups = it.NextElement().GetKnowledgeGroups();
             for( T_Groups::const_iterator it = groups.begin(); it != groups.end(); ++it )
-                UpdateKnowledgeGroup( entities, knowledges, enemies, friends, it->second );
+                UpdateKnowledgeGroup( model, knowledges, enemies, friends, it->second );
         }
     }
     struct PopulationElementVisitor : public MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >
@@ -546,7 +553,7 @@ void Sink::UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager
 // -----------------------------------------------------------------------------
 void Sink::UpdateKnowledges()
 {
-    ::UpdateKnowledges( (*model_)[ "entities" ], (*model_)[ "knowledges" ], (*model_)[ "enemies" ], (*model_)[ "friends" ] );
+    ::UpdateKnowledges( *model_, (*model_)[ "knowledges" ], (*model_)[ "enemies" ], (*model_)[ "friends" ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -665,7 +672,7 @@ void Sink::CreateRoles( SinkRoleExtender& ext, const MT_Vector2D& position )
     ext.AddFactory< sword::RolePion_Perceiver >(
             boost::bind( boost::factory< sword::RolePion_Perceiver* >(), boost::ref( *this ), boost::ref( *model_ ), _1, boost::bind( &GetEntity, _1, boost::ref( *model_ ) ) ) );
     ext.AddFactory< sword::RolePion_Composantes >(
-            boost::bind( boost::factory< sword::RolePion_Composantes* >(), _1, boost::bind( &GetEntity, _1, boost::ref( *model_) ) ) );
+            boost::bind( boost::factory< sword::RolePion_Composantes* >(), _1, boost::ref( *model_) ) );
     ext.AddFactory< transport::PHY_RoleAction_Loading >(
             boost::bind( boost::factory< transport::PHY_RoleAction_Loading* >(), _1 ) ); // $$$$ _RC_ SLI 2012-11-09: must be created after RolePion_Composantes
     ext.AddFactory< sword::RoleAdapter >(

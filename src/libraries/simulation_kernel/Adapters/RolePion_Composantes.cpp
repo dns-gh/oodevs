@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "RolePion_Composantes.h"
+#include "Hook.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
@@ -18,6 +19,7 @@
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
+#include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
 #include <core/Model.h>
 #include <core/Facade.h>
@@ -28,12 +30,49 @@ BOOST_CLASS_EXPORT_IMPLEMENT( sword::RolePion_Composantes )
 
 using namespace sword;
 
+namespace
+{
+    void ReadWeaponSystem( xml::xistream& xis, core::Model& weapons )
+    {
+        std::string launcher, ammunition;
+        xis >> xml::attribute( "launcher", launcher )
+            >> xml::attribute( "munition", ammunition );
+        const PHY_WeaponType* type = PHY_WeaponType::FindWeaponType( launcher, ammunition );
+        if( ! type )
+            throw MASA_EXCEPTION( xis.context() + "Unknown weapon type (" + launcher + ", " + ammunition + ")" );
+        weapons.AddElement()[ "type" ] = type->GetID();
+    }
+    void ReadEquipment( xml::xistream& xis, core::Model& equipments )
+    {
+        int id;
+        std::string protection;
+        xis >> xml::attribute( "id", id )
+            >> xml::attribute( "protection", protection );
+        core::Model& equipement = equipments[ id ];
+        equipement[ "protection" ] = protection;
+        core::Model& weapons = equipement[ "weapons" ];
+        xis >> xml::start( "weapon-systems" )
+                >> xml::list( "weapon-system", boost::bind( &ReadWeaponSystem, _1, boost::ref( weapons ) ) );
+    }
+    DEFINE_HOOK( InitializeEquipments, 2, void, ( const char* xml, SWORD_Model* model ) )
+    {
+        core::Model& equipments = (*core::Convert( model ))[ "equipments" ];
+        // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+        xml::xistringstream xis( xml );
+        xis >> xml::start( "equipments" )
+                >> xml::list( "equipment", boost::bind( &ReadEquipment, _1, boost::ref( equipments ) ) );
+        if( GET_PREVIOUS_HOOK( InitializeEquipments ) )
+            GET_PREVIOUS_HOOK( InitializeEquipments )( xml, model );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: RolePion_Composantes constructor
 // Created: MCO 2012-09-06
 // -----------------------------------------------------------------------------
 RolePion_Composantes::RolePion_Composantes()
-    : entity_( 0 )
+    : entity_    ( 0 )
+    , equipments_( 0 )
 {
     // NOTHING
 }
@@ -42,9 +81,10 @@ RolePion_Composantes::RolePion_Composantes()
 // Name: RolePion_Composantes constructor
 // Created: SLI 2012-03-22
 // -----------------------------------------------------------------------------
-RolePion_Composantes::RolePion_Composantes( MIL_Agent_ABC& pion, core::Model& entity )
+RolePion_Composantes::RolePion_Composantes( MIL_Agent_ABC& pion, core::Model& model )
     : PHY_RolePion_Composantes( pion, false )
-    , entity_( &entity[ "components" ] )
+    , entity_    ( &model[ "entities" ][ pion.GetID() ][ "components" ] )
+    , equipments_( &model[ "equipments" ] )
 {
     pion.GetType().GetUnitType().InstanciateComposantes( *this );
     DistributeCommanders();
@@ -85,11 +125,6 @@ namespace
         r[ "type" ] = radar.GetName();
         r[ "height" ] = height;
     }
-    void AddWeapon( core::Model& weapons, const PHY_Weapon& weapon )
-    {
-        core::Model& w = weapons.AddElement();
-        w[ "type" ] = weapon.GetType().GetID();
-    }
 }
 
 SWORD_USER_DATA_EXPORT( PHY_ComposantePion* )
@@ -108,7 +143,9 @@ void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante
     components_[ &composante ] = &component;
     composante.ApplyOnSensors( boost::bind( &AddSensor, boost::ref( component[ "sensors" ] ), _1 ) );
     composante.ApplyOnRadars( boost::bind( &AddRadar, boost::ref( component[ "radars" ] ), _1, _2 ) );
-    composante.ApplyOnWeapons( boost::bind( &AddWeapon, boost::ref( component[ "weapons" ] ), _2 ) );
+    const core::Model& equipment = (*equipments_)[ composante.GetType().GetMosID().id() ]; // $$$$ MCO 2013-05-27: could be a link because that info is 'static'
+    component[ "weapons" ] = equipment[ "weapons" ];
+    component[ "protection" ] = equipment[ "protection" ];
     PHY_RolePion_Composantes::NotifyComposanteAdded( composante, dotations );
 }
 
