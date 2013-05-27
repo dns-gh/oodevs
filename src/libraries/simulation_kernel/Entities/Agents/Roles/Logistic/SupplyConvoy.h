@@ -53,7 +53,7 @@ public:
     virtual unsigned Unload                   ();
     virtual void     SetCurrentSupplyRecipient( SupplyRecipient_ABC* supplyRecipient );
     virtual void     Supply                   ( SupplyRecipient_ABC& supplyRecipient, const PHY_DotationCategory& dotationCategory, double quantity );
-    virtual void     Finish                   ();
+    virtual void     Finish                   ( bool finished = true );
     virtual void     ResetConveyors( SupplyConvoyEventsObserver_ABC& observer );
     virtual bool     HasConvoy( const MIL_AgentPion& pion ) const;
     virtual bool     IsFinished() const;

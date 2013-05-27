@@ -249,9 +249,9 @@ void SupplyConvoy::ResetConveyors( SupplyConvoyEventsObserver_ABC& observer )
 // Name: SupplyConvoy::Finish
 // Created: NLD 2011-08-01
 // -----------------------------------------------------------------------------
-void SupplyConvoy::Finish()
+void SupplyConvoy::Finish(  bool finished /*= true*/ )
 {
-    finished_ = true;
+    finished_ = finished;
     conveyors_.clear();
 }
 

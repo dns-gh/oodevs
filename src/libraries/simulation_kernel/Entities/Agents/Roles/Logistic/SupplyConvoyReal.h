@@ -41,7 +41,7 @@ public:
     virtual unsigned MoveToSupplier            ();
     virtual unsigned MoveToSupplyRecipient     ();
     virtual unsigned MoveToTransportersProvider();
-    virtual void     Finish                    ();
+    virtual void     Finish                    ( bool finished = true );
     //@}
 
     //! @name Events

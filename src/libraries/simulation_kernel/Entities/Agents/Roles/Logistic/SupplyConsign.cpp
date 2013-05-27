@@ -240,8 +240,8 @@ bool SupplyConsign::ResetConsignsForConvoyPion( const MIL_AgentPion& pion )
     if( convoy_ && convoy_->HasConvoy( pion ) )
     {
         convoy_->ResetConveyors( *this );
-        convoy_->Finish();
-        SetState( eConvoyWaitingForTransporters );
+        convoy_->Finish( convoy_->IsFinished() );
+        SetState( state_ == eConvoyGoingBackToFormingPoint ? eFinished : eConvoyWaitingForTransporters );
         SendChangedState();
         return true;
     }
@@ -489,7 +489,6 @@ void SupplyConsign::OnResourceAssignedToConvoy( const PHY_DotationCategory& dota
         if( it != requests.end() )
             quantity -= it->second->Convoy( quantity );
     }
-    assert( quantity == 0 );
     requestsNeedNetworkUpdate_ = true;
 }
 

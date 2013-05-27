@@ -253,11 +253,11 @@ const MIL_Agent_ABC* SupplyConvoyReal::GetProvider() const
 // Name: SupplyConvoyReal::Finish
 // Created: NLD 2011-08-01
 // -----------------------------------------------------------------------------
-void SupplyConvoyReal::Finish()
+void SupplyConvoyReal::Finish( bool finished /*= true*/ )
 {
     if( IsFinished() )
         return;
-    SupplyConvoy::Finish();
+    SupplyConvoy::Finish( finished );
     if( convoyPion_ )
     {
         transportersProvider_->SupplyDestroyConvoyPion( *convoyPion_ );
