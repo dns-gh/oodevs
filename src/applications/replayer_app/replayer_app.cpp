@@ -7,22 +7,25 @@
 //
 // *****************************************************************************
 
-#include "App.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/Codec.h"
+#include "tools/IpcWatch.h"
+#include "tools/NullFileLoaderObserver.h"
 #include "tools/WinArguments.h"
 #include <license_gui/LicenseDialog.h>
 #include <tools/Exception.h>
-#include <tools/Path.h>
 #include <tools/win32/CrashHandler.h>
+#include "dispatcher/Config.h"
+#include "dispatcher/Replayer.h"
 
 #ifdef _MSC_VER
 #pragma warning( push, 0 )
 #endif
 #include <boost/program_options.hpp>
+#include <boost/scoped_ptr.hpp>
 #ifdef _MSC_VER
 #pragma warning( pop )
 #endif
@@ -39,9 +42,9 @@ void CrashHandler( EXCEPTION_POINTERS* exception )
 
 } // namespace
 
-int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
+int main( int /*argc*/, char* /*argv*/[] )
 {
-    tools::WinArguments winArgs( lpCmdLine );
+    tools::WinArguments winArgs( GetCommandLineW() );
     tools::InitPureCallHandler();
     boost::scoped_ptr< MT_FileLogger > fileLogger;
     tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "" ));
@@ -77,8 +80,39 @@ int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
         license_gui::LicenseDialog::CheckLicense( "sword-replayer", !winArgs.HasOption( "verbose" ) );
 #endif
         tools::SetCodec();
-        App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow, !winArgs.HasOption( "--no-log" ) );
-        app.Execute();
+
+        //initialising replayer_app
+        MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
+        MT_LOG_STARTUP_MESSAGE( "Sword(tm) Replayer" );
+        MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
+
+        tools::RealFileLoaderObserver_ABC* observer = new tools::NullFileLoaderObserver();
+        dispatcher::Config* config = new dispatcher::Config( *observer );
+        tools::WaitEvent* quit = new tools::WaitEvent();
+
+        // win32 argument parsing
+        bool test = winArgs.HasOption( "--test" );
+        config->Parse( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
+        if( !winArgs.HasOption( "--no-log" ) )
+            MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config->BuildSessionChildFile( "Replayer.log" ), 1, -1, MT_Logger_ABC::eLogLevel_All, true ) );
+
+        MT_LOG_INFO_MSG( "Loading record " << config->GetSessionFile() );
+
+        std::auto_ptr< dispatcher::Replayer > replayer;
+        replayer.reset( new dispatcher::Replayer( *config ) );
+
+        //execute replayer_app
+        try
+        {
+            tools::ipc::Watch watch( *quit );
+            do
+            replayer->Update();
+            while( !test && !quit->Wait( boost::posix_time::milliseconds( 10 ) ) );
+        }
+        catch( const std::exception& e )
+        {
+            MT_LOG_ERROR_MSG( "Replayer error : " << tools::GetExceptionMsg( e ) );
+        }
     }
     catch( const std::exception& e )
     {
