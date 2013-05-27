@@ -8,6 +8,7 @@ local buSearchSpeed     = 0.5
 local areaRecceSpeed    = 2
 local areaSearchSpeed   = 1
 local objectRecceSpeed  = 5
+local objectSearchSpeed   = 1
 local pointNBCSpeed  = 2
 local urbanBlockNBCSpeed  = 2
 local areaNBCSpeed  = 2
@@ -329,6 +330,33 @@ integration.AddReconnoiteredPointBy = function( point )
 end
 integration.pointIsReconnoitedByMeOrNoOne = function( point )
     return DEC_Perception_EstPointReconnuParPionOuPersonne( meKnowledge.source, point.source )
+end
+
+-- --------------------------------------------------------------------------------
+-- Search Object
+-- --------------------------------------------------------------------------------
+integration.getObjectSearchState = function( object )
+    return ( object.bActionSearchFinished and 100 ) or 0
+end
+integration.startSearchObject = function( object )
+    area = CreateKnowledge( military.world.Area, object:getLocalisation() )
+    object.actionSearch = 
+        DEC_Perception_ActivateLocationProgressiveRecce( area.source, objectSearchSpeed )
+    object.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( area.source, area:getPosition(), objectSearchSpeed )
+    object.bActionSearchFinished = false
+    perceptionReconnaissanceCallbacks[ object.actionSearch ] = function( arg )
+        object.bActionSearchFinished = true
+        DEC_Connaissances_IdentifierToutesUnitesDansZone( area.source )
+    end
+    meKnowledge:RC( eRC_DebutFouilleObjet )
+    return true
+end
+integration.stopSearchObject = function( object )
+    DEC_Perception_DesactiverReconnaissanceLocalisation( object.actionSearch )
+    DEC_Perception_DesactiverDetectionObjetLocalisation( object.recceObj )
+    meKnowledge:RC( eRC_FinFouilleObjet )
+    perceptionReconnaissanceCallbacks[ object.actionSearch ] = nil
+    return true
 end
 
 -- --------------------------------------------------------------------------------
