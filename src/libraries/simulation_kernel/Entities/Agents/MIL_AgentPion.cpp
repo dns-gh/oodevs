@@ -1607,10 +1607,11 @@ double MIL_AgentPion::Distance( const MIL_Agent_ABC& target ) const
         return firerUrbanRole.ComputeDistanceInsideSameUrbanBlock( const_cast< MIL_Agent_ABC& >( target ) );
     else
     {
-        MT_Vector2D realFirerPosition = firerUrbanRole.GetFirerPosition( const_cast< MIL_Agent_ABC& >( target ) );
-        MT_Vector2D realTargetPosition = targetUrbanRole.GetTargetPosition( const_cast< MIL_AgentPion& >( *this ) );
-        MT_Vector3D vFirerPosition( realFirerPosition.rX_, realFirerPosition.rY_, GetRole< PHY_RoleInterface_Location >().GetAltitude() );
-        MT_Vector3D vTargetPosition(  realTargetPosition.rX_, realTargetPosition.rY_, target.GetRole< PHY_RoleInterface_Location >().GetAltitude() );
+        const PHY_RoleInterface_Location& targetLocationRole = target.GetRole< PHY_RoleInterface_Location >();
+        const MT_Vector2D realFirerPosition = firerUrbanRole.GetFirerPosition( targetLocationRole.GetPosition() );
+        const MT_Vector2D realTargetPosition = targetUrbanRole.GetTargetPosition( const_cast< MIL_AgentPion& >( *this ) );
+        const MT_Vector3D vFirerPosition( realFirerPosition.rX_, realFirerPosition.rY_, GetRole< PHY_RoleInterface_Location >().GetAltitude() );
+        const MT_Vector3D vTargetPosition(  realTargetPosition.rX_, realTargetPosition.rY_, targetLocationRole.GetAltitude() );
         return vFirerPosition.Distance( vTargetPosition );
     }
 }

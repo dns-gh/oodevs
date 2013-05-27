@@ -22,6 +22,7 @@
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h" // LTO
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h" // LTO
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h" // LTO
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
@@ -638,7 +639,8 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& source, const MIL_Agent_ABC& target, double rSensorHeight ) const
 {
-    const MT_Vector2D& vTargetPos = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    const PHY_RoleInterface_Location& targetRole = target.GetRole< PHY_RoleInterface_Location >();
+    const MT_Vector2D& vTargetPos = targetRole.GetPosition();
 
     if( target.IsDead() )
         return ComputePerception( source, vTargetPos, rSensorHeight );
@@ -651,9 +653,9 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
            rDistanceMaxModificator *= GetTargetFactor( target );
            rDistanceMaxModificator *= GetSourceFactor( source );
 
-    const MT_Vector2D& vSourcePos      = source.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const double     rSourceAltitude = source.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
-    const double     rTargetAltitude = target.GetRole< PHY_RoleInterface_Location >().GetAltitude() + 2;
+    const MT_Vector2D vSourcePos      = source.GetRole< PHY_RoleInterface_UrbanLocation >().GetFirerPosition( vTargetPos );
+    const double      rSourceAltitude = MIL_Tools::GetAltitude( vSourcePos ) + source.GetRole< PHY_RoleInterface_Location >().GetHeight() + rSensorHeight;
+    const double      rTargetAltitude = targetRole.GetAltitude() + 2;
 
     return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
 }

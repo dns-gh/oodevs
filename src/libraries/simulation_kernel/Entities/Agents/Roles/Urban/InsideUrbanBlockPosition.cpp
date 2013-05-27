@@ -53,15 +53,12 @@ InsideUrbanBlockPosition::~InsideUrbanBlockPosition()
 // Name: InsideUrbanBlockPosition::GetFirerPosition
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-MT_Vector2D InsideUrbanBlockPosition::GetFirerPosition( MIL_Agent_ABC& target, UrbanLocationComputer_ABC::Results& firerResult ) const
+MT_Vector2D InsideUrbanBlockPosition::GetFirerPosition( const MT_Vector2D& target, const MT_Vector2D& shooter ) const
 {
-    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > targetComputer( target.GetAlgorithms().urbanLocationComputerFactory_->Create() );
-    target.Execute( *targetComputer );
-    UrbanLocationComputer_ABC::Results& targetResult = targetComputer->Result();
-    TER_DistanceLess cmp ( targetResult.position_ );
+    TER_DistanceLess cmp ( target );
     T_PointSet collisions( cmp );
-    if( !urbanObject_.GetLocalisation().Intersect2D( MT_Line( targetResult.position_, firerResult.position_ ), collisions, 0 ) )
-        return firerResult.position_; //// $$$$ _RC_ SBO 2010-07-07: devrait etre throw MASA_EXCEPTION( "error in urbanBlock intersection for firer" );
+    if( !urbanObject_.GetLocalisation().Intersect2D( MT_Line( target, shooter ), collisions, 0 ) )
+        return shooter; //// $$$$ _RC_ SBO 2010-07-07: devrait etre throw MASA_EXCEPTION( "error in urbanBlock intersection for firer" );
     return *collisions.begin(); // Nearest point from targetResult
 }
 

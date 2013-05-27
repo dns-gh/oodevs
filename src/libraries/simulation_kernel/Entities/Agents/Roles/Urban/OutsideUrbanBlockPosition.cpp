@@ -37,9 +37,9 @@ OutsideUrbanBlockPosition::~OutsideUrbanBlockPosition()
 // Name: OutsideUrbanBlockPosition::GetFirerPosition
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-MT_Vector2D OutsideUrbanBlockPosition::GetFirerPosition( MIL_Agent_ABC& /*target*/, UrbanLocationComputer_ABC::Results& firerResult ) const
+MT_Vector2D OutsideUrbanBlockPosition::GetFirerPosition( const MT_Vector2D& /*target*/, const MT_Vector2D& shooter ) const
 {
-    return firerResult.position_;
+    return shooter;
 }
 
 // -----------------------------------------------------------------------------

@@ -21,6 +21,7 @@
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/UrbanPhysicalCapacity.h"
 #include "simulation_terrain/TER_ObjectManager.h"
@@ -201,12 +202,9 @@ double PHY_RolePion_UrbanLocation::ComputeUrbanProtection( const PHY_DotationCat
 // Name: PHY_RolePion_UrbanLocation::GetFirerPosition
 // Created: SLG 2010-04-13
 // -----------------------------------------------------------------------------
-MT_Vector2D PHY_RolePion_UrbanLocation::GetFirerPosition( MIL_Agent_ABC& target ) const
+MT_Vector2D PHY_RolePion_UrbanLocation::GetFirerPosition( const MT_Vector2D& target ) const
 {
-    std::auto_ptr< UrbanLocationComputer_ABC > firerComputer( const_cast< MIL_Agent_ABC& >( owner_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
-    const_cast< MIL_Agent_ABC& >( owner_ ).Execute( *firerComputer );
-    UrbanLocationComputer_ABC::Results& firerResult = firerComputer->Result();
-    return delegate_->GetFirerPosition( target, firerResult );
+    return delegate_->GetFirerPosition( target, owner_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
 }
 
 // -----------------------------------------------------------------------------

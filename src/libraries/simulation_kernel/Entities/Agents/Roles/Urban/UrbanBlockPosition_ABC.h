@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual MT_Vector2D GetFirerPosition( MIL_Agent_ABC& target, urbanLocation::UrbanLocationComputer_ABC::Results& firerResult ) const = 0;
+    virtual MT_Vector2D GetFirerPosition( const MT_Vector2D& target, const MT_Vector2D& shooter ) const = 0;
     virtual MT_Vector2D GetTargetPosition( MIL_Agent_ABC& firer, urbanLocation::UrbanLocationComputer_ABC::Results& targetResult ) const = 0;
     virtual double ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const = 0;
     virtual double ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const TER_Polygon& polygon, double modificator ) const = 0;

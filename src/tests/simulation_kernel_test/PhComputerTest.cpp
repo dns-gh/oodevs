@@ -101,13 +101,10 @@ BOOST_FIXTURE_TEST_CASE( PhComputerFirerPositionTest, Fixture )
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* firerlocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *firerlocationRole );
-    PHY_RolePion_Location* targetLocationRole = new PHY_RolePion_Location( *targetFixture.pPion_ );
-    targetFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *targetLocationRole );
     urbanRole->NotifyMovingInsideObject( *urbanBlock);
     firerlocationRole->MagicMove( MT_Vector2D( 1, 1 ) );
-    targetLocationRole->MagicMove( MT_Vector2D( 3, 2 ) );
-    MT_Vector2D result( 2, 1.5 );
-    BOOST_CHECK_EQUAL( result, urbanRole->GetFirerPosition( *targetFixture.pPion_ ) );
+    const MT_Vector2D result( 2, 1.5 );
+    BOOST_CHECK_EQUAL( result, urbanRole->GetFirerPosition( MT_Vector2D( 3, 2 ) ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( PhComputerTargetPositionTest, Fixture )
