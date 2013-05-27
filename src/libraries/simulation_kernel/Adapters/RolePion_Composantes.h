@@ -46,9 +46,9 @@ public:
 private:
     //! @name Member data
     //@{
-    core::Model* entity_; // $$$$ MCO 2013-05-27: rename to components_
+    core::Model* components_;
     core::Model* equipments_;
-    std::map< PHY_ComposantePion*, core::Model* > components_; // $$$$ MCO 2013-05-27: rename to composantes_
+    std::map< PHY_ComposantePion*, core::Model* > composantes_;
     //@}
 };
 

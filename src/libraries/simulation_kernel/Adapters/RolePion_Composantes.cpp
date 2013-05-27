@@ -71,7 +71,7 @@ namespace
 // Created: MCO 2012-09-06
 // -----------------------------------------------------------------------------
 RolePion_Composantes::RolePion_Composantes()
-    : entity_    ( 0 )
+    : components_( 0 )
     , equipments_( 0 )
 {
     // NOTHING
@@ -83,7 +83,7 @@ RolePion_Composantes::RolePion_Composantes()
 // -----------------------------------------------------------------------------
 RolePion_Composantes::RolePion_Composantes( MIL_Agent_ABC& pion, core::Model& model )
     : PHY_RolePion_Composantes( pion, false )
-    , entity_    ( &model[ "entities" ][ pion.GetID() ][ "components" ] )
+    , components_( &model[ "entities" ][ pion.GetID() ][ "components" ] )
     , equipments_( &model[ "equipments" ] )
 {
     pion.GetType().GetUnitType().InstanciateComposantes( *this );
@@ -107,8 +107,8 @@ template< typename Archive >
 void RolePion_Composantes::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RolePion_Composantes >( *this )
-        & entity_
-        & components_;
+        & components_
+        & composantes_;
 }
 
 namespace
@@ -135,12 +135,12 @@ SWORD_USER_DATA_EXPORT( PHY_ComposantePion* )
 // -----------------------------------------------------------------------------
 void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante, T_Dotations* dotations )
 {
-    core::Model& component = entity_->AddElement();
+    core::Model& component = components_->AddElement();
     component[ "data" ].SetUserData( &composante );
     component[ "major" ] = composante.IsMajor();
     component[ "volume" ] = composante.GetType().GetVolume().GetID();
     component[ "type/sensor-rotation-angle" ] = composante.GetType().GetSensorRotationAngle(); // $$$$ MCO 2012-07-09: type/ ?!
-    components_[ &composante ] = &component;
+    composantes_[ &composante ] = &component;
     composante.ApplyOnSensors( boost::bind( &AddSensor, boost::ref( component[ "sensors" ] ), _1 ) );
     composante.ApplyOnRadars( boost::bind( &AddRadar, boost::ref( component[ "radars" ] ), _1, _2 ) );
     const core::Model& equipment = (*equipments_)[ composante.GetType().GetMosID().id() ]; // $$$$ MCO 2013-05-27: could be a link because that info is 'static'
@@ -155,8 +155,8 @@ void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante
 // -----------------------------------------------------------------------------
 RolePion_Composantes::T_Dotations RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& composante )
 {
-    auto it = components_.find( &composante );
+    auto it = composantes_.find( &composante );
     it->second->Remove(); // $$$$ MCO 2013-03-05: won't trigger listeners, post removal event instead ?
-    components_.erase( it );
+    composantes_.erase( it );
     return PHY_RolePion_Composantes::NotifyComposanteRemoved( composante );
 }
