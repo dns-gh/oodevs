@@ -61,9 +61,9 @@ void SetLowFragmentationHeapAlgorithm()
 // Name: Run()
 // Created: NLD 2004-02-04
 //-----------------------------------------------------------------------------
-int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
+int main( int /*argc*/, char* /*argv*/[] )
 {
-    tools::WinArguments winArgs( lpCmdLine );
+    tools::WinArguments winArgs( GetCommandLineW() );
     tools::InitPureCallHandler();
 
     // Init logger & crash handler
@@ -123,7 +123,7 @@ int WINAPI wWinMain( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
         // Execute simulation
         GOOGLE_PROTOBUF_VERIFY_VERSION;
-        app.reset( new SIM_App( hinstance, hPrevInstance, lpCmdLine, nCmdShow, maxConnections, verbose ) );
+        app.reset( new SIM_App( GetCommandLineW(), maxConnections, verbose ) );
         MT_LOG_UNREGISTER_LOGGER( *fileLogger );
         nResult = app->Execute();
     }
