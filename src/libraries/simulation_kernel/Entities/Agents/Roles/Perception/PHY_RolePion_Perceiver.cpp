@@ -936,14 +936,16 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         if( !perceivableUrbanBlock.empty() )
         {
             double occupation = 0.;
-            for( std::size_t i = 0; i < perceivableUrbanBlock.size(); ++i )
+            double maxBlockLength = 0.;
+            for( auto it = perceivableUrbanBlock.cbegin(); it != perceivableUrbanBlock.end(); ++it )
             {
-                NotifyPerceptionUrban( *perceivableUrbanBlock[ i ], PHY_PerceptionLevel::identified_ );
-                if( const UrbanPhysicalCapacity* physical = perceivableUrbanBlock[ i ]->Retrieve< UrbanPhysicalCapacity >() )
+                NotifyPerceptionUrban( **it, PHY_PerceptionLevel::identified_ );
+                if( const UrbanPhysicalCapacity* physical = (*it)->Retrieve< UrbanPhysicalCapacity >() )
                     occupation += physical->GetOccupation();
+                maxBlockLength = std::max( maxBlockLength, (*it)->GetLocalisation().GetLength() );
             }
             occupation /= perceivableUrbanBlock.size();
-            maxPerceptionDistance *= ( 1 - 0.9 * occupation );
+            maxPerceptionDistance = maxPerceptionDistance * ( 1 - 0.9 * occupation ) + maxBlockLength;
         }
 
         TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
@@ -1675,4 +1677,3 @@ double PHY_RolePion_Perceiver::GetPerception( const MT_Vector2D& from, const MT_
     const_cast< MIL_Agent_ABC& >( *owner_ ).Execute( *dataComputer );
     return dataFunctor.GetEnergy();
 }
-
