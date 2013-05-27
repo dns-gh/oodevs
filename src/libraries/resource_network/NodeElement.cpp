@@ -34,6 +34,7 @@ NodeElement::NodeElement()
     , modifier_           ( 1. )
     , functionalState_    ( 0 )
     , oldFunctionalState_ ( 0 )
+    , sentStockCapacity_  ( 0 )
     , consumptionState_   ( 0 )
     , isActivated_        ( true )
     , consumptionCritical_( false )
@@ -62,6 +63,7 @@ NodeElement::NodeElement( unsigned long resourceId, const std::string& resourceN
     , modifier_           ( 1. )
     , functionalState_    ( 0 )
     , oldFunctionalState_ ( 0 )
+    , sentStockCapacity_  ( 0 )
     , consumptionState_   ( 0 )
     , isActivated_        ( true )
     , consumptionCritical_( false )
@@ -90,6 +92,7 @@ NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const st
     , modifier_           ( 1. )
     , functionalState_    ( 0 )
     , oldFunctionalState_ ( 0 )
+    , sentStockCapacity_  ( 0 )
     , consumptionState_   ( 0 )
     , isActivated_        ( true )
     , consumptionCritical_( false )
@@ -118,6 +121,7 @@ NodeElement::NodeElement( const NodeElement& from )
     , modifier_           ( from.modifier_ )
     , functionalState_    ( 0 )
     , oldFunctionalState_ ( 0 )
+    , sentStockCapacity_  ( 0 )
     , consumptionState_   ( 0 )
     , isActivated_        ( from.isActivated_ )
     , consumptionCritical_( from.consumptionCritical_ )
@@ -134,7 +138,7 @@ NodeElement::NodeElement( const NodeElement& from )
 // -----------------------------------------------------------------------------
 NodeElement::~NodeElement()
 {
-    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+    for( auto it = links_.begin(); it != links_.end(); ++it )
         delete *it;
 }
 
@@ -159,10 +163,9 @@ void NodeElement::Update( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void NodeElement::Finalize( const ResourceTools_ABC& tools )
 {
-    IT_ResourceLinks it;
-    for( it = links_.begin(); it != links_.end(); ++it )
+    for( auto it = links_.begin(); it != links_.end(); ++it )
         ( *it )->Finalize( tools );
-    for( it = links_.begin(); it != links_.end(); )
+    for( auto it = links_.begin(); it != links_.end(); )
     {
         if( ( *it )->GetTarget() == 0 )
         {
@@ -191,7 +194,7 @@ void NodeElement::UpdateImmediateStock( float functionalState )
 {
     needUpdate_ = magicChanged_;
     magicChanged_ = false;
-    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+    for( auto it = links_.begin(); it != links_.end(); ++it )
         ( *it )->Prepare();
     if( !isActivated_ )
         return;
@@ -267,11 +270,11 @@ void NodeElement::DistributeResource( float functionalState, const ResourceNetwo
 {
     if( immediateStock_ == 0 || !isActivated_ || std::abs( functionalState ) < 0.01f )
     {
-        for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+        for( auto it = links_.begin(); it != links_.end(); ++it )
             ( *it )->SetFlow( 0 );
         return;
     }
-    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+    for( auto it = links_.begin(); it != links_.end(); ++it )
         ( *it )->ResetFlow();
     if( !links_.empty() )
     {
@@ -281,7 +284,7 @@ void NodeElement::DistributeResource( float functionalState, const ResourceNetwo
     // finally update stock
     int oldStockCapacity = stockCapacity_;
     stockCapacity_ = std::min( immediateStock_, static_cast< unsigned int >( modifier_ * stockMaxCapacity_ ) );
-    if( ( stockMaxCapacity_ == 0 && oldStockCapacity != 0 ) || std::abs( static_cast< float >( oldStockCapacity - stockCapacity_ ) ) / stockMaxCapacity_ > 0.05f )
+    if( ( stockMaxCapacity_ == 0 && oldStockCapacity != 0 ) || std::abs( static_cast< float >( sentStockCapacity_ - stockCapacity_ ) ) / stockMaxCapacity_ >= 0.05f )
         needUpdate_ = true;
 }
 
@@ -294,7 +297,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links, const ResourceNe
     int distributionMean = static_cast< int >( static_cast< float >( immediateStock_ ) / links.size() );
     T_ResourceLinks updatedLinks;
 
-    for( IT_ResourceLinks it = links.begin(); it != links.end(); )
+    for( auto it = links.begin(); it != links.end(); )
     {
         if( !model.IsValidNode( ( *it )->GetTarget() ) ) // clean invalid links
             it = links.erase( it );
@@ -416,7 +419,7 @@ void NodeElement::DecreaseProduction( unsigned int production )
 // -----------------------------------------------------------------------------
 void NodeElement::CreateLink( unsigned long targetId )
 {
-    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+    for( auto it = links_.begin(); it != links_.end(); ++it )
         if( ( *it )->GetTarget() == targetId )
             return;
     links_.push_back( new ResourceLink( targetId, ResourceLink::eTargetKindObject, -1 ) );
@@ -438,7 +441,7 @@ void NodeElement::SetModifier( float modifier )
 // -----------------------------------------------------------------------------
 bool NodeElement::RemoveLink( unsigned int nodeId )
 {
-    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+    for( auto it = links_.begin(); it != links_.end(); ++it )
         if( ( *it )->GetTarget() == nodeId )
         {
             delete *it;
@@ -474,6 +477,7 @@ void NodeElement::Serialize( sword::ResourceNetwork& msg ) const
     {
         msg.set_max_stock( stockMaxCapacity_ );
         msg.set_stock( stockCapacity_ );
+        sentStockCapacity_ = stockCapacity_;
     }
     if( productionCapacity_ > 0 )
         msg.set_production( productionCapacity_ );
@@ -511,7 +515,7 @@ void NodeElement::Update( const sword::MissionParameter_Value& msg )
         stockMaxCapacity_ = msg.list( 5 ).quantity();
     if( msg.list_size() > 6 )
     {
-        for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+        for( auto it = links_.begin(); it != links_.end(); ++it )
             delete *it;
         links_.clear();
         for( int i = 0; i < msg.list( 6 ).list_size(); ++ i )
@@ -536,7 +540,7 @@ void NodeElement::ReadLink( xml::xistream& xis )
     ResourceLink::ETargetKind kind = ResourceLink::eTargetKindUrban;
     if( xis.has_attribute( "kind" ) )
         kind = ResourceLink::FindTargetKind( xis.attribute< std::string >( "kind" ) );
-    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+    for( auto it = links_.begin(); it != links_.end(); ++it )
         if( ( *it )->GetTarget() == target && ( *it )->GetTargetKind() == kind )
         {
             ( *it )->SetCapacity( capacity );

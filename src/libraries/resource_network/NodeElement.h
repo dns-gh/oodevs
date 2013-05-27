@@ -99,9 +99,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< ResourceLink* >      T_ResourceLinks;
-    typedef T_ResourceLinks::iterator        IT_ResourceLinks;
-    typedef T_ResourceLinks::const_iterator CIT_ResourceLinks;
+    typedef std::vector< ResourceLink* > T_ResourceLinks;
     //@}
 
 private:
@@ -129,6 +127,7 @@ private:
     float modifier_;
     float functionalState_;
     mutable float oldFunctionalState_;
+    mutable unsigned int sentStockCapacity_;
     float consumptionState_;
     bool isActivated_;
     bool consumptionCritical_;
