@@ -148,7 +148,7 @@ void NodeProperties::save( Archive& file, const unsigned int ) const
     std::size_t size = tools::Resolver< NodeElement >::elements_.size();
     file << functionalState_
          << size;
-    for( std::map< unsigned long, NodeElement* >::const_iterator it = tools::Resolver< NodeElement >::elements_.begin(); it != tools::Resolver< NodeElement >::elements_.end(); ++it )
+    for( auto it = tools::Resolver< NodeElement >::elements_.begin(); it != tools::Resolver< NodeElement >::elements_.end(); ++it )
         file << it->first
              << it->second;
 }

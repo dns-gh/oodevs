@@ -480,7 +480,7 @@ void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& 
     MIL_Object_ABC* object = Find( id );
     if( object == 0 )
         nErrorCode = sword::MagicActionAck::error_invalid_parameter;
-    else if( params.elem( 1 ).value_size() > 0 )
+    else 
         nErrorCode = object->OnUpdateResourceLinks( params.elem( 1 ).value() );
     client::MagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );

@@ -50,7 +50,7 @@ void PropertiesGroupDictionary::Fill( const std::vector< const kernel::UrbanObje
         if( const PropertiesDictionary* dictionary = block->Retrieve< PropertiesDictionary >() )
             BOOST_FOREACH( const T_Properties::value_type& property, dictionary->GetProperties() )
             {
-                IT_Properties propertyGroup = properties_.find( property.first );
+                auto propertyGroup = properties_.find( property.first );
                 if( propertyGroup == properties_.end() )
                     properties_[ property.first ] = new PropertiesGroup( comparator_ , *block );
                  properties_[ property.first ]->AddSubProperty( property.second );
@@ -63,7 +63,7 @@ void PropertiesGroupDictionary::Fill( const std::vector< const kernel::UrbanObje
 // -----------------------------------------------------------------------------
 void PropertiesGroupDictionary::Clear()
 {
-    for( IT_Properties it = properties_.begin(); it != properties_.end(); ++it )
+    for( auto it = properties_.begin(); it != properties_.end(); ++it )
         delete it->second;
     properties_.clear();
 }

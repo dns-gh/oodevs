@@ -30,7 +30,7 @@ PropertiesDictionary::PropertiesDictionary( Controller& controller )
 // -----------------------------------------------------------------------------
 PropertiesDictionary::~PropertiesDictionary()
 {
-    for( IT_Properties it = properties_.begin(); it != properties_.end(); ++it )
+    for( auto it = properties_.begin(); it != properties_.end(); ++it )
         delete it->second;
 }
 
@@ -40,9 +40,9 @@ PropertiesDictionary::~PropertiesDictionary()
 // -----------------------------------------------------------------------------
 void PropertiesDictionary::Remove( const QString& name )
 {
-    for( IT_Properties it = properties_.begin(); it != properties_.end(); )
+    for( auto it = properties_.begin(); it != properties_.end(); )
     {
-        IT_Properties curIt = it++;
+        auto curIt = it++;
         if( curIt->first.startsWith( name, Qt::CaseInsensitive ) )
         {
             controller_.Delete( DictionaryUpdated( curIt->second->GetOwner(), curIt->first ) );
@@ -76,7 +76,7 @@ void PropertiesDictionary::Display( Displayer_ABC& displayer )
 // -----------------------------------------------------------------------------
 void PropertiesDictionary::Display( const QString& name, Displayer_ABC& displayer )
 {
-    CIT_Properties it = properties_.find( name );
+    auto it = properties_.find( name );
     if( it != properties_.end() )
         displayer.Display( it->second );
 }

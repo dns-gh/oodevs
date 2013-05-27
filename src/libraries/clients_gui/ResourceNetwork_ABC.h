@@ -11,7 +11,6 @@
 #define CLIENTS_GUI_RESOURCE_NETWORK_H__
 
 #include "clients_kernel/Extension_ABC.h"
-//#include "Drawable_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace gui
@@ -29,7 +28,6 @@ namespace gui
 // Created: JSR 2010-08-19
 // =============================================================================
 class ResourceNetwork_ABC : public kernel::Extension_ABC
-//                          , public Drawable_ABC
                           , public boost::noncopyable
 {
 public:

@@ -11,6 +11,7 @@
 #include "ResourceNetworkModel.h"
 #include "ResourceTools_ABC.h"
 #include "protocol/Protocol.h"
+#include <set>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -314,7 +315,11 @@ void NodeProperties::Serialize( sword::ObjectAttributeResourceNetwork& msg ) con
 // -----------------------------------------------------------------------------
 void NodeProperties::Update( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list )
 {
-    for( int i = 0; i< list.size(); ++i )
+    std::set< unsigned int > notUpdated;
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
+        notUpdated.insert( it->first );
+
+    for( int i = 0; i < list.size(); ++i )
     {
         sword::MissionParameter_Value node = list.Get( i );
         std::string resourceName = node.list( 0 ).acharstr();
@@ -326,6 +331,13 @@ void NodeProperties::Update( const google::protobuf::RepeatedPtrField< sword::Mi
             Register( resourceId, *element );
         }
         element->Update( node );
+        notUpdated.erase( resourceId );
+    }
+    if( notUpdated.size() > 0 )
+    {
+        needUpdate_ = true;
+        for( auto it = notUpdated.begin(); it != notUpdated.end(); ++it )
+            Delete( *it );
     }
 }
 

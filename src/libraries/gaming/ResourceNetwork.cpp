@@ -35,14 +35,14 @@ double ResourceNetwork::stippleFactor_ = 1;
 // Created: JSR 2011-03-04
 // -----------------------------------------------------------------------------
 ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, gui::PropertiesDictionary* dico )
-    : controllers_            ( controllers )
-    , entity_                 ( entity )
-    , urbanResolver_          ( urbanResolver )
-    , objectResolver_         ( objectResolver )
+    : controllers_( controllers )
+    , entity_( entity )
+    , urbanResolver_( urbanResolver )
+    , objectResolver_( objectResolver )
     , resourceNetworkResolver_( resourceNetworkResolver )
+    , dico_( dico )
 {
-    if( dico )
-        CreateDictionary( *dico );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,16 +50,16 @@ ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& 
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
 ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, gui::PropertiesDictionary* dico )
-    : controllers_            ( controllers )
-    , entity_                 ( entity )
-    , urbanResolver_          ( urbanResolver )
-    , objectResolver_         ( objectResolver )
+    : controllers_( controllers )
+    , entity_( entity )
+    , urbanResolver_( urbanResolver )
+    , objectResolver_( objectResolver )
     , resourceNetworkResolver_( resourceNetworkResolver )
+    , dico_( dico )
 {
+    UpdateDictionary( msg.resource_network() );
     for( int i = 0; i < msg.resource_network_size(); ++i )
         UpdateNetwork( 0, msg.resource_network( i ) );
-    if( dico )
-        CreateDictionary( *dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,16 +67,16 @@ ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& 
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
 ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< UrbanObject_ABC >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, gui::PropertiesDictionary* dico )
-    : controllers_            ( controllers )
-    , entity_                 ( entity )
-    , urbanResolver_          ( urbanResolver )
-    , objectResolver_         ( objectResolver )
+    : controllers_( controllers )
+    , entity_( entity )
+    , urbanResolver_( urbanResolver )
+    , objectResolver_( objectResolver )
     , resourceNetworkResolver_( resourceNetworkResolver )
+    , dico_( dico )
 {
+    UpdateDictionary( msg.network() );
     for( int i = 0; i < msg.network_size(); ++i )
         UpdateNetwork( 0, msg.network( i ) );
-    if( dico )
-        CreateDictionary( *dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,6 +172,7 @@ void ResourceNetwork::DoUpdate( const sword::ObjectUpdate& message )
 {
     if( message.attributes().has_resource_networks() )
     {
+        UpdateDictionary( message.attributes().resource_networks().network() );
         for( int i = 0; i < message.attributes().resource_networks().network_size(); ++i )
             UpdateNetwork( &entity_, message.attributes().resource_networks().network( i ) );
     }
@@ -186,6 +187,7 @@ void ResourceNetwork::DoUpdate( const sword::UrbanUpdate& message )
 {
     if( message.attributes().has_infrastructures() )
     {
+        UpdateDictionary( message.attributes().infrastructures().resource_network() );
         for( int i = 0; i < message.attributes().infrastructures().resource_network_size(); ++i )
             UpdateNetwork( &entity_, message.attributes().infrastructures().resource_network( i ) );
     }
@@ -259,24 +261,42 @@ void ResourceNetwork::UpdateStipple( int value ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork::CreateDictionary
-// Created: JSR 2010-08-23
+// Name: ResourceNetwork::UpdateDictionary
+// Created: JSR 2013-05-24
 // -----------------------------------------------------------------------------
-void ResourceNetwork::CreateDictionary( gui::PropertiesDictionary& dico ) const
+void ResourceNetwork::UpdateDictionary( const google::protobuf::RepeatedPtrField< sword::ResourceNetwork >& networks )
 {
-    for( auto node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
+    if( !dico_ )
+        return;
+    std::vector< std::string > dicoResources;
+    std::swap( dicoResources, dicoResources_ );
+    for( auto it = networks.begin(); it != networks.end(); ++it )
     {
-        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + node->second.resource_.c_str() + "/";
-        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Enabled" ), node->second.isEnabled_ );
-        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Total flow" ), node->second.totalFlow_ );
-        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Maximal stock" ), node->second.maxStock_ );
-        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Stock" ), node->second.stock_ );
-        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Production" ), node->second.production_ );
-        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Consumption" ), node->second.consumption_ );
-        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ), node->second.critical_ );
-        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Needs" ), node->second.needs_ );
-        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Satisfaction" ), node->second.satisfaction_ );
+        const std::string resource = it->resource().name();
+        auto findIt = std::find( dicoResources.begin(), dicoResources.end(), resource );
+        if( findIt != dicoResources.end() )
+        {
+            dicoResources_.push_back( resource );
+            dicoResources.erase( findIt );
+        }
+        else
+        {
+            const ResourceNetwork_ABC::ResourceNode& node = resourceNodes_[ resource ];
+            const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + resource.c_str() + "/";
+            dico_->Register( entity_, baseName + tools::translate( "ResourceNetwork", "Enabled" ), node.isEnabled_ );
+            dico_->Register( entity_, baseName + tools::translate( "ResourceNetwork", "Total flow" ), node.totalFlow_ );
+            dico_->Register( entity_, baseName + tools::translate( "ResourceNetwork", "Maximal stock" ), node.maxStock_ );
+            dico_->Register( entity_, baseName + tools::translate( "ResourceNetwork", "Stock" ), node.stock_ );
+            dico_->Register( entity_, baseName + tools::translate( "ResourceNetwork", "Production" ), node.production_ );
+            dico_->Register( entity_, baseName + tools::translate( "ResourceNetwork", "Consumption" ), node.consumption_ );
+            dico_->Register( entity_, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ), node.critical_ );
+            dico_->Register( entity_, baseName + tools::translate( "ResourceNetwork", "Needs" ), node.needs_ );
+            dico_->Register( entity_, baseName + tools::translate( "ResourceNetwork", "Satisfaction" ), node.satisfaction_ );
+            dicoResources_.push_back( resource );
+        }
     }
+    for( auto it = dicoResources.begin(); it != dicoResources.end(); ++it )
+        dico_->Remove( tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + it->c_str() + "/" );
 }
 
 // -----------------------------------------------------------------------------

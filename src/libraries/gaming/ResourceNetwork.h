@@ -14,6 +14,14 @@
 #include "clients_gui/ResourceNetwork_ABC.h"
 #include "tools/Resolver.h"
 
+namespace google
+{
+    namespace protobuf
+    {
+        template< typename T > class RepeatedPtrField;
+    }
+}
+
 namespace sword
 {
     class ObjectAttributeResourceNetwork;
@@ -70,7 +78,7 @@ private:
     void UpdateNetwork( kernel::Entity_ABC* entity, const sword::ResourceNetwork& msg );
     void SetColor( const std::string& resource, float alpha ) const;
     void UpdateStipple( int value ) const;
-    void CreateDictionary( gui::PropertiesDictionary& dico ) const;
+    void UpdateDictionary( const google::protobuf::RepeatedPtrField< sword::ResourceNetwork >& networks );
     geometry::Point2f GetPosition( const kernel::Entity_ABC& entity ) const;
     //@}
 
@@ -82,6 +90,8 @@ private:
     const tools::Resolver_ABC< kernel::UrbanObject_ABC >& urbanResolver_;
     const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver_;
     const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver_;
+    gui::PropertiesDictionary* dico_;
+    std::vector< std::string > dicoResources_;
     static int maxFlow_;
     static double stippleFactor_;
     //@}

@@ -49,8 +49,6 @@ public:
     //! @name Types
     //@{
     typedef std::map< QString, Property_ABC* > T_Properties;
-    typedef T_Properties::iterator            IT_Properties;
-    typedef T_Properties::const_iterator     CIT_Properties;
     //@}
 
     //! @name Operations
