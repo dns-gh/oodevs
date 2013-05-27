@@ -1,6 +1,7 @@
 #include "simulation_app_pch.h"
 #include "SIM_App.h"
 #include "SIM_NetworkLogger.h"
+#include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_FileLogger.h"
@@ -69,6 +70,7 @@ int main( int /*argc*/, char* /*argv*/[] )
     // Init logger & crash handler
     boost::scoped_ptr< MT_FileLogger > fileLogger;
     boost::scoped_ptr< MT_FileLogger > crashFileLogger;
+    MT_ConsoleLogger consoleLogger;
     try
     {
         tools::Path debugDir = tools::Path::FromUTF8( winArgs.GetOption( "--debug-dir", "./Debug" ) );
@@ -82,6 +84,7 @@ int main( int /*argc*/, char* /*argv*/[] )
         crashFileLogger.reset( new MT_FileLogger( filename, 1, -1,  MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError ) );
         MT_LOG_REGISTER_LOGGER( *fileLogger );
         MT_LOG_REGISTER_LOGGER( *crashFileLogger );
+        MT_LOG_REGISTER_LOGGER( consoleLogger );
         InitializeTerrainLogger();
     }
     catch( std::exception& )

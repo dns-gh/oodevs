@@ -357,7 +357,7 @@ target_link_libraries( dispatcher
 )
 
 # dispatcher_app
-add_target( dispatcher_app server "applications/dispatcher_app" OPTIONS win32 executable )
+add_target( dispatcher_app server "applications/dispatcher_app" OPTIONS executable )
 target_link_libraries( dispatcher_app
     dispatcher
     ${LICENSE_GUI_LIBRARIES}
@@ -466,7 +466,7 @@ target_link_libraries( simulation_kernel_test
 )
 
 # replayer_app
-add_target( replayer_app server "applications/replayer_app" OPTIONS win32 executable )
+add_target( replayer_app server "applications/replayer_app" OPTIONS executable )
 target_link_libraries( replayer_app
     dispatcher
     ${LICENSE_GUI_LIBRARIES}
@@ -525,7 +525,7 @@ target_link_libraries( module_tester_test
 )
 
 # simulation_app
-add_target( simulation_app server "applications/simulation_app" OPTIONS win32 executable )
+add_target( simulation_app server "applications/simulation_app" OPTIONS executable )
 masa_add_target_include( simulation_app "${root_dir}/src/libraries/simulation_kernel" )
 set_property( TARGET simulation_app APPEND PROPERTY LINK_FLAGS "/LARGEADDRESSAWARE" )
 target_link_libraries( simulation_app
