@@ -68,33 +68,53 @@ BOOST_FIXTURE_TEST_CASE( population_initialize_his_motivation, InitFixture )
     {
         MIL_Schedule schedule( livingArea );
         schedule.Configure( xis );
-        MOCK_EXPECT( livingArea.StartMotivation ).once().with( "leisure" );
-        MOCK_EXPECT( livingArea.FinishMoving ).once();
-        schedule.Update( Convert( 2011, 3, 22, 11, 15, 0 ), 1u );
-        mock::verify();
-    }
-    {
-        MIL_Schedule schedule( livingArea );
-        schedule.Configure( xis );
-        MOCK_EXPECT( livingArea.StartMotivation ).once().with( "leisure" );
-        MOCK_EXPECT( livingArea.FinishMoving ).once();
-        schedule.Update( Convert( 2011, 3, 24, 11, 15, 0 ), 1u );
+        MOCK_EXPECT( livingArea.StartMotivation ).once().with( "office" );
+        MOCK_EXPECT( livingArea.FinishMoving ).once().with( "office" );
+        schedule.Update( Convert( 2011, 3, 28, 11, 15, 0 ), 1u ); // Monday 11:15
         mock::verify();
     }
     {
         MIL_Schedule schedule( livingArea );
         schedule.Configure( xis );
         MOCK_EXPECT( livingArea.StartMotivation ).once().with( "office" );
-        MOCK_EXPECT( livingArea.FinishMoving ).once();
-        schedule.Update( Convert( 2011, 3, 26, 11, 15, 0 ), 1u );
+        MOCK_EXPECT( livingArea.FinishMoving ).once().with( "office" );
+        MOCK_EXPECT( livingArea.StartMotivation ).once().with( "leisure" );
+        MOCK_EXPECT( livingArea.MovePeople ).once().with( "leisure", 3 );
+        schedule.Update( Convert( 2011, 3, 21, 22, 15, 0 ), 1u ); // Monday 22:15
+        mock::verify();
+    }
+    {
+        MIL_Schedule schedule( livingArea );
+        schedule.Configure( xis );
+        MOCK_EXPECT( livingArea.StartMotivation ).once().with( "leisure" );
+        MOCK_EXPECT( livingArea.FinishMoving ).once().with( "leisure" );
+        schedule.Update( Convert( 2011, 3, 22, 11, 15, 0 ), 1u ); // Tuesday 11:15
+        mock::verify();
+    }
+    {
+        MIL_Schedule schedule( livingArea );
+        schedule.Configure( xis );
+        MOCK_EXPECT( livingArea.StartMotivation ).once().with( "leisure" );
+        MOCK_EXPECT( livingArea.FinishMoving ).once().with( "leisure" );
+        schedule.Update( Convert( 2011, 3, 24, 11, 15, 0 ), 1u ); // Thursday 11:15
+        mock::verify();
+    }
+    {
+        MIL_Schedule schedule( livingArea );
+        schedule.Configure( xis );
+        MOCK_EXPECT( livingArea.StartMotivation ).once().with( "leisure" );
+        MOCK_EXPECT( livingArea.FinishMoving ).once().with( "leisure" );
+        MOCK_EXPECT( livingArea.StartMotivation ).once().with( "office" );
+        MOCK_EXPECT( livingArea.MovePeople ).once().with( "office", 3 );
+        schedule.Update( Convert( 2011, 3, 25, 9, 15, 0 ), 1u ); // Friday 09:15
         mock::verify();
     }
     {
         MIL_Schedule schedule( livingArea );
         schedule.Configure( xis );
         MOCK_EXPECT( livingArea.StartMotivation ).once().with( "office" );
-        MOCK_EXPECT( livingArea.FinishMoving ).once();
-        schedule.Update( Convert( 2011, 3, 28, 11, 15, 0 ), 1u );
+        MOCK_EXPECT( livingArea.FinishMoving ).once().with( "office" );
+        schedule.Update( Convert( 2011, 3, 26, 11, 15, 0 ), 1u ); // Saturday 11:15
         mock::verify();
     }
 }
@@ -110,7 +130,7 @@ namespace
             schedule.Configure( xis );
             MOCK_EXPECT( livingArea.StartMotivation ).once().with( "office" );
             MOCK_EXPECT( livingArea.FinishMoving ).once();
-            schedule.Update( Convert( 2011, 1, 3, 10, 10, 0 ), 1u );
+            schedule.Update( Convert( 2011, 1, 3, 10, 10, 0 ), 1u ); // Monday 10:10
             mock::verify();
         }
         MIL_Schedule schedule;
@@ -119,36 +139,36 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( wrong_time_does_nothing, Fixture )
 {
-    schedule.Update( Convert( 2011, 1, 3, 11, 15, 0 ), 1u );
+    schedule.Update( Convert( 2011, 1, 3, 11, 15, 0 ), 1u ); // Monday 11:15
 }
 
 BOOST_FIXTURE_TEST_CASE( wrong_day_does_nothing, Fixture )
 {
-    schedule.Update( Convert( 2011, 1, 4, 22, 0, 0 ), 1u );
+    schedule.Update( Convert( 2011, 1, 4, 22, 0, 0 ), 1u ); // Tuesday 22:00
 }
 
 BOOST_FIXTURE_TEST_CASE( wrong_duration_does_nothing, Fixture )
 {
-    schedule.Update( Convert( 2011, 1, 17, 22, 0, 8 ), 5u );
+    schedule.Update( Convert( 2011, 1, 17, 22, 0, 8 ), 5u ); // Monday 22:00
 }
 
 BOOST_FIXTURE_TEST_CASE( schedule_notifies_living_area, Fixture )
 {
     {
         MOCK_EXPECT( livingArea.StartMotivation ).once().with( "leisure" );
-        schedule.Update( Convert( 2011, 1, 17, 22, 0, 0 ), 1u );
+        schedule.Update( Convert( 2011, 1, 17, 22, 0, 0 ), 1u ); // Monday 22:00
     }
     {
         MOCK_EXPECT( livingArea.MovePeople ).once().with( "leisure", 3 );
-        schedule.Update( Convert( 2011, 1, 17, 22, 15, 0 ), 1u );
+        schedule.Update( Convert( 2011, 1, 17, 22, 15, 0 ), 1u ); // Monday 22:15
     }
     {
         MOCK_EXPECT( livingArea.MovePeople ).once().with( "leisure", 3 );
-        schedule.Update( Convert( 2011, 1, 17, 22, 30, 0 ), 1u );
+        schedule.Update( Convert( 2011, 1, 17, 22, 30, 0 ), 1u ); // Monday 22:30
     }
     {
         MOCK_EXPECT( livingArea.FinishMoving ).once().with( "leisure" );
-        schedule.Update( Convert( 2011, 1, 17, 22, 40, 0 ), 1u );
+        schedule.Update( Convert( 2011, 1, 17, 22, 40, 0 ), 1u ); // Monday 22:40
     }
 }
 
@@ -156,28 +176,28 @@ BOOST_FIXTURE_TEST_CASE( schedule_time_magic_action_notifies_living_area, Fixtur
 {
     {
         MOCK_EXPECT( livingArea.StartMotivation ).once().with( "leisure" );
-        schedule.Update( Convert( 2011, 1, 17, 22, 0, 0 ), 1u );
+        schedule.Update( Convert( 2011, 1, 17, 22, 0, 0 ), 1u ); // Monday 22:00
     }
     MOCK_EXPECT( livingArea.StartMotivation ).once().with( "office" );
-    schedule.Update( Convert( 2011, 1, 21, 9, 0, 0 ), 1u );
+    schedule.Update( Convert( 2011, 1, 21, 9, 0, 0 ), 1u ); // Friday 09:00
 }
 
 BOOST_FIXTURE_TEST_CASE( every_week_schedule_notifies_living_area, Fixture )
 {
     {
         MOCK_EXPECT( livingArea.StartMotivation ).once().with( "leisure" );
-        schedule.Update( Convert( 2011, 1, 3, 22, 0, 0 ), 1u );
+        schedule.Update( Convert( 2011, 1, 3, 22, 0, 0 ), 1u ); // Monday 22:00
     }
     {
         MOCK_EXPECT( livingArea.FinishMoving ).with( "leisure" );
-        schedule.Update( Convert( 2011, 1, 3, 22, 40, 0 ), 1u );
+        schedule.Update( Convert( 2011, 1, 3, 22, 40, 0 ), 1u ); // Monday 22:40
     }
     MOCK_EXPECT( livingArea.StartMotivation ).once().with( "leisure" );
-    schedule.Update( Convert( 2011, 1, 17, 22, 0, 0 ), 1u );
+    schedule.Update( Convert( 2011, 1, 17, 22, 0, 0 ), 1u ); // Monday 22:00
 }
 
 BOOST_FIXTURE_TEST_CASE( tick_duration_schedule_notifies_living_area, Fixture )
 {
     MOCK_EXPECT( livingArea.StartMotivation ).once().with( "leisure" );
-    schedule.Update( Convert( 2011, 1, 17, 22, 0, 8 ), 10u );
+    schedule.Update( Convert( 2011, 1, 17, 22, 0, 8 ), 10u ); // Monday 22:00
 }

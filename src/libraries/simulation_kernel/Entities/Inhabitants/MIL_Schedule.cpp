@@ -52,6 +52,8 @@ void MIL_Schedule::Configure( xml::xistream& xis )
 
 namespace
 {
+    const int occurenceDuration = 900;
+
     bpt::time_duration ConvertTime( const std::string& time )
     {
         return bpt::duration_from_string( time + ":00.000" );
@@ -166,7 +168,10 @@ void MIL_Schedule::SetMovingAfterCheckpoint()
 void MIL_Schedule::Update( unsigned int date, unsigned int duration )
 {
     if( !initialized_ )
+    {
         Initialize( date );
+        return;
+    }
 
     bool hasAlreadyMoveSomebody = false;
     bpt::ptime pdate( bpt::from_time_t( date ) );
@@ -207,10 +212,10 @@ bool MIL_Schedule::Check( Event& event, const bpt::ptime& pdate, unsigned int du
         result = true;
     }
     if( goodDay &&
-        pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, 900 * event.occurence_ ) &&
-        pdate.time_of_day() < event.from_ + bpt::time_duration( 0, 0, 900 * event.occurence_ ) + bpt::time_duration( 0, 0, duration ) )
+        pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, occurenceDuration * event.occurence_ ) &&
+        pdate.time_of_day() < event.from_ + bpt::time_duration( 0, 0, occurenceDuration * event.occurence_ ) + bpt::time_duration( 0, 0, duration ) )
     {
-        livingArea_.MovePeople( event.motivation_, 1 + static_cast< unsigned int >( event.transfertTime_ / 900 ) );
+        livingArea_.MovePeople( event.motivation_, 1 + static_cast< unsigned int >( event.transfertTime_ / occurenceDuration ) );
         event.occurence_++;
         result = true;
     }
@@ -253,17 +258,44 @@ void MIL_Schedule::Initialize( unsigned int date )
     if( !events_.empty() )
     {
         std::sort( events_.begin(), events_.end(), boost::bind( &Compare< Event >, _1, _2 ) );
-        boost::optional< std::string > motivation;
-        BOOST_FOREACH( const Event& event, events_ )
+ 
+        bpt::ptime pdate( bpt::from_time_t( date ) );
+        int lastest = static_cast< int >( events_.size() ) - 1;
+        int current = lastest;
+        for( std::size_t i = 0; i < events_.size(); ++i )
         {
-            bpt::ptime pdate( bpt::from_time_t( date ) );
+            const Event& event = events_[ i ];
             if( event.day_ < pdate.date().day_of_week() || ( event.day_ == pdate.date().day_of_week() && pdate.time_of_day() >= event.from_ ) )
-                motivation = event.motivation_;
+                current = static_cast< int >( i );
         }
-        if( !motivation )
-            motivation = events_.back().motivation_;
-        livingArea_.StartMotivation( *motivation );
-        livingArea_.FinishMoving( *motivation );
+
+        int previous = ( current > 0 ) ? ( current - 1 ) : lastest;
+        std::string previousMotivation  = events_[ previous ].motivation_;
+        Event& curEvent = events_[ current ];
+        currentMotivation_ = curEvent.motivation_;
+        boost::posix_time::time_duration timeSpent = pdate.time_of_day() - curEvent.from_;
+        if( previousMotivation == curEvent.motivation_ || curEvent.transfertTime_ == 0
+          || pdate.date().day_of_week() != curEvent.day_ || timeSpent.total_seconds() >= curEvent.transfertTime_ )
+        {
+            livingArea_.StartMotivation( curEvent.motivation_ );
+            livingArea_.FinishMoving( curEvent.motivation_ );
+            curEvent.occurence_ = 0;
+            isMoving_ = false;
+        }
+        else
+        {
+            livingArea_.StartMotivation( previousMotivation );
+            livingArea_.FinishMoving( previousMotivation );
+            livingArea_.StartMotivation( curEvent.motivation_ );
+            curEvent.occurence_ = 1;
+            isMoving_ = true;
+            const int occurencesMax = 1 + static_cast< unsigned int >( curEvent.transfertTime_ / occurenceDuration );
+            int timeSpent = ( pdate.time_of_day() - curEvent.from_ ).total_seconds();
+            int occurencesSpent = timeSpent / occurenceDuration;
+            curEvent.occurence_ += occurencesSpent;
+            for( int i = 0; i < occurencesSpent; ++i )
+                livingArea_.MovePeople( curEvent.motivation_, occurencesMax );
+        }
     }
     initialized_ = true;
 }
