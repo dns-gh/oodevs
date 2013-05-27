@@ -36,7 +36,7 @@
     data
     ============================================================================
     -->
-    <target name="deploy-application-data" description="deploy applications data to run directory">
+    <target name="deploy-application-data" description="deploy application data to run directory">
         <copy todir="${run.dir}">
             <fileset dir="${data.dir}/app-data"/>
         </copy>
@@ -65,7 +65,7 @@
         </sequential>
     </macrodef>
 
-    <target name="update-test-databases" description="update databases use by tests">
+    <target name="update-test-databases" description="update databases used in tests">
         <adaptation-update-database zipped-database="${data.dir}/tests/test_data_unicode/physical base with unicode.zip"/>
     </target>
 
@@ -408,7 +408,7 @@
         </sequential>
     </macrodef>
 
-    <target name="exercises_test" description="validates some significant exercises">
+    <target name="exercises_test" description="validate some significant exercises">
         <test-exercise exercise="worldwide/Egypt"/>
         <!-- This should be replaced by an equivalent test on ww-ML
         <test-exercise exercise="scipio/Poseidon VA"/>
@@ -579,7 +579,7 @@
         </python>
     </target>
 
-    <target name="prepare-dec-api-files" description="Prepare resources to generate the documentation">
+    <target name="prepare-dec-api-files" description="prepare resources to generate the documentation">
         <mkdir dir="${reports.dir}"/>
         <pathconvert targetos="unix" property="src.dir.unix">
             <path location="${src.dir}"/>
@@ -824,7 +824,7 @@
         </python>
     </target>
 
-    <target name="checkdec" description="check models knows about our DEC functions">
+    <target name="checkdec" description="check models are in sync with DEC functions">
         <python>
             <arg value="${root.dir}/build/listdec.py"/>
             <arg value="check"/>
