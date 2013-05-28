@@ -532,9 +532,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\PhysicalAttribute.cpp">
       <Filter>Source Files\Model\Urban\Extensions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\UrbanObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\UrbanMenuManager.cpp">
       <Filter>Source Files\Model\Urban</Filter>
     </ClCompile>
@@ -555,6 +552,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\LogisticLevelAttribute.cpp">
       <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\UrbanObject.cpp">
+      <Filter>Source Files\Model\Urban</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1017,9 +1017,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\PhysicalAttribute.h">
       <Filter>Source Files\Model\Urban\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\UrbanObject.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\UrbanFileExporter.h">
       <Filter>Source Files\Model\Urban\Export</Filter>
     </ClInclude>
@@ -1037,6 +1034,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\LogisticLevelAttribute.h">
       <Filter>Source Files\Model\Automat\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\UrbanObject.h">
+      <Filter>Source Files\Model\Urban</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

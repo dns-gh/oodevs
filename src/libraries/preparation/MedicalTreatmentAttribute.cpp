@@ -89,7 +89,8 @@ void MedicalTreatmentAttribute::Update( xml::xistream& xis )
     xis >> xml::attribute( "doctors", doctors_ )
         >> xml::optional >> xml::attribute( "reference", referenceID_ );
     xis >> xml::start( "bed-capacities" )
-        >> list( "bed-capacity", *this, &MedicalTreatmentAttribute::ReadBedCapacity );
+        >> list( "bed-capacity", *this, &MedicalTreatmentAttribute::ReadBedCapacity )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
