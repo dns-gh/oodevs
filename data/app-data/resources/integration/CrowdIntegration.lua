@@ -541,5 +541,10 @@ integration.stopHidingInCrowd = function( crowd )
 end
 
 integration.getAgentsHiddenInCrowd = function( crowd )
-    return DEC_GetAgentsHiddenInCrowd( crowd.source )
+    local hiddenAgents = {}
+    local simAgents = DEC_GetAgentsHiddenInCrowd( crowd.source ) 
+    for _, simAgent in pairs( simAgents ) do
+        hiddenAgents[ #hiddenAgents + 1 ] = CreateKnowledge( military.world.PlatoonAlly, simAgent )
+    end
+    return hiddenAgents
 end
