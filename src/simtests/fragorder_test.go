@@ -95,3 +95,32 @@ func (s *TestSuite) TestCrowdFragOrder(c *C) {
 	err = client.SendCrowdFragOrder(crowd.Id, FragOrderCrowdPauseMovement, params)
 	c.Assert(err, IsNil)
 }
+
+func (s *TestSuite) TestUnitFragOrder(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	automat := createAutomat(c, client)
+	from := swapi.MakePoint(-15.9219, 28.3456)
+	unit, err := client.CreateUnit(automat.Id, UnitType, from)
+	c.Assert(err, IsNil)
+
+	params := swapi.MakeParameters()
+
+	// Cannot send frag order to an engaged unit
+	err = client.SendUnitFragOrder(unit.Id, MissionMoveId, params)
+	c.Assert(err, ErrorMatches, "error_unit_cannot_receive_order")
+
+	// Disengage automat
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return !data.FindAutomat(automat.Id).Engaged
+	})
+
+	// Cannot send frag order with an invalid frag order identifier
+	err = client.SendUnitFragOrder(unit.Id, InvalidIdentifier, params)
+	c.Assert(err, ErrorMatches, "error_invalid_frag_order")
+
+	err = client.SendUnitFragOrder(unit.Id, FragOrderNbcSuitOn, params)
+	c.Assert(err, IsNil)
+}
