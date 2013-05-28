@@ -357,7 +357,8 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         }
         pConnectButton_->setShortcut( QKeySequence( Qt::ALT + Qt::Key_C ) ); // Bug Qt : setText() function overwrites the already defined shortcut
     }
-
+    if( hasReplay_ && simulation.GetCurrentTick() >= simulation.GetTickCount() )
+        gamingPaused_ = true;
     if( paused_ != simulation.IsPaused() )
     {
         paused_ = simulation.IsPaused();
