@@ -543,3 +543,36 @@ func (c *Client) Stop() error {
 	}
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) SendFragOrder(unitId, fragOrderType uint32,
+	params *sword.MissionParameters) error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				FragOrder: &sword.FragOrder{
+					Tasker: &sword.Tasker{
+						Automat: &sword.AutomatId{
+							Id: proto.Uint32(unitId),
+						},
+					},
+					Type: &sword.FragOrderType{
+						Id: proto.Uint32(fragOrderType),
+					},
+					Parameters: params,
+				},
+			},
+		},
+	}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetFragOrderAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.OrderAck_no_error {
+			return nameof(sword.OrderAck_ErrorCode_name, int32(code))
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
