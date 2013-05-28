@@ -491,11 +491,17 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
     RegisterFunction( "DEC_ConnaissancePopulation_Exterminer",
         boost::function< int (int, float, const PHY_DotationCategory*) >(boost::bind( &DEC_KnowledgePopulationFunctions::Exterminate, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     RegisterFunction( "DEC_ConnaissancePopulation_HasFlow",
-        boost::function< bool (int) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasFlow, boost::ref( GetPion() ), _1 ) ) );
+        boost::function< bool (int) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasFlow, boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_GetAdhesionPopulation",
         boost::function< float (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAffinity , boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_GetAttitudePopulation",
         boost::function< int (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAttitude , boost::cref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_StartHidingInCrowd",
+        boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::StartHidingInCrowd, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_StopHidingInCrowd",
+        boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::StopHidingInCrowd, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_GetAgentsHiddenInCrowd",
+        boost::function< std::vector< DEC_Decision_ABC* > (int) >( boost::bind( &DEC_KnowledgePopulationFunctions::GetAgentsHiddenInCrowd, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_GetConcentrationLaPlusProche", &DEC_KnowledgePopulationFunctions::GetClosestConcentration );
     RegisterFunction( "DEC_GetPositionConcentration", &DEC_KnowledgePopulationFunctions::GetConcentrationPosition );
     RegisterFunction( "DEC_GetNombrePersonnesDansConcentration", &DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration );
@@ -516,8 +522,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::Lock, boost::cref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_ConnaissancePopulation_Deverrouiller", 
         boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::Unlock, boost::cref( GetPion() ), _1 ) ) );
-
-    // Urban knowledges accessors
     RegisterFunction( "DEC_Connaissances_BlocUrbain",
         boost::function< void( const directia::tools::binders::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlock, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );
     RegisterFunction( "DEC_Connaissances_BlocUrbainPourPosition",

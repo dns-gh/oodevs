@@ -531,3 +531,15 @@ end
 integration.isKnowledgeCrowdValid = function( crowd )
     return DEC_CrowdKnowledge_IsValid( myself, crowd )
 end
+
+integration.startHidingInCrowd = function( crowd )
+    DEC_StartHidingInCrowd( crowd.source )
+end
+
+integration.stopHidingInCrowd = function( crowd )
+    DEC_StopHidingInCrowd( crowd.source )
+end
+
+integration.getAgentsHiddenInCrowd = function( crowd )
+    return DEC_GetAgentsHiddenInCrowd( crowd.source )
+end

@@ -373,6 +373,10 @@ integration.boardElementsWithoutDelay = function( units, transportOnlyLoadable )
     DEC_Transport_EmbarquerPionsSansDelais( units, transportOnlyLoadable )
 end
 
+integration.unboardElementsWithoutDelay = function( units )
+    DEC_Transport_DebarquerPionsSansDelais( units )
+end
+
 -- -------------------------------------------------------------------------------- 
 -- Board one element without delay
 -- @author GGE
@@ -380,6 +384,10 @@ end
 -- --------------------------------------------------------------------------------
 integration.boardElementWithoutDelay = function( unit, transportOnlyLoadable )
     DEC_Transport_EmbarquerPionSansDelais( unit, transportOnlyLoadable )
+end
+
+integration.unboardElementWithoutDelay = function( unit )
+    DEC_Transport_DebarquerPionSansDelais( unit )
 end
 
 -- -------------------------------------------------------------------------------- 

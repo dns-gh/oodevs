@@ -215,13 +215,8 @@ void DEC_ActionFunctions::Transport_AddPion( MIL_AgentPion& callerAgent, DEC_Dec
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Transport_AddPions( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable )
 {
-    for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        if( !*itPion )
-            throw MASA_EXCEPTION( "Invalid pion in DEC_ActionFunctions::Transport_AddPions" );
-        MIL_AgentPion& pion = ( *itPion )->GetPion();
-        callerAgent.GetRole< transport::PHY_RoleAction_Transport >().AddPion( pion, bTransportOnlyLoadable );
-    }
+    for( auto it = pions.begin(); it != pions.end(); ++it )
+        Transport_AddPion( callerAgent, *it, bTransportOnlyLoadable );
 }
 
 // -----------------------------------------------------------------------------
@@ -274,7 +269,7 @@ DEC_Decision_ABC* DEC_ActionFunctions::Transport_GetCarrier( const MIL_AgentPion
 // Name: DEC_ActionFunctions::Transport_MagicLoadPion
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Transport_MagicLoadPion( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable  )
+void DEC_ActionFunctions::Transport_MagicLoadPion( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable )
 {
     if( !pPion )
         throw MASA_EXCEPTION( "Null pion passed to DEC_ActionFunctions::Transport_MagicLoadPion" );
@@ -287,28 +282,8 @@ void DEC_ActionFunctions::Transport_MagicLoadPion( MIL_AgentPion& callerAgent, c
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Transport_MagicLoadPions( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable )
 {
-    for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        if( !*itPion )
-            throw MASA_EXCEPTION( "Invalid pion in DEC_ActionFunctions::Transport_MagicLoadPions" );
-        MIL_AgentPion& pion = ( *itPion )->GetPion();
-        callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pion, bTransportOnlyLoadable );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::Transport_MagicUnloadPions
-// Created: NLD 2005-04-19
-// -----------------------------------------------------------------------------
-void DEC_ActionFunctions::Transport_MagicUnloadPions( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions )
-{
-    for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        if( !*itPion )
-            throw MASA_EXCEPTION( "Invalid pion in DEC_ActionFunctions::Transport_MagicUnloadPions" );
-        MIL_AgentPion& pion = ( *itPion )->GetPion();
-        callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pion );
-    }
+    for( auto it = pions.begin(); it != pions.end(); ++it )
+        Transport_MagicLoadPion( callerAgent, *it, bTransportOnlyLoadable );
 }
 
 // -----------------------------------------------------------------------------
@@ -320,6 +295,16 @@ void DEC_ActionFunctions::Transport_MagicUnloadPion( MIL_AgentPion& callerAgent,
     if( !pPion )
         throw MASA_EXCEPTION( "Null pion passed to DEC_ActionFunctions::Transport_MagicUnloadPion" );
     callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pPion->GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::Transport_MagicUnloadPions
+// Created: NLD 2005-04-19
+// -----------------------------------------------------------------------------
+void DEC_ActionFunctions::Transport_MagicUnloadPions( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions )
+{
+    for( auto it = pions.begin(); it != pions.end(); ++it )
+        Transport_MagicUnloadPion( callerAgent, *it );
 }
 
 // -----------------------------------------------------------------------------

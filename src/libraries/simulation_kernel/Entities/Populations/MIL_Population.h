@@ -14,7 +14,7 @@
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
-#include <map>
+#include <tools/Set.h>
 
 namespace sword
 {
@@ -94,6 +94,7 @@ public:
     bool HasFlow() const;
     const std::string& GetCriticalIntelligence() const;
     float GetAffinity( unsigned long teamID ) const;
+    const tools::Set< MIL_Agent_ABC* >& GetHidden() const;
     virtual bool CanEmitReports() const;
 
     bool HasReachedBlockBorder          ( const MIL_UrbanObject_ABC* pUrbanKnowledge ) const;
@@ -139,6 +140,9 @@ public:
     void UpdateState();
     void Clean();
     void Register( MissionController_ABC& pController );
+
+    void AddHidden( MIL_Agent_ABC& agent );
+    void RemoveHidden( MIL_Agent_ABC& agent );
     //@}
 
     //! @name Actions
@@ -267,6 +271,7 @@ private:
     std::auto_ptr< MIL_AffinitiesMap >          pAffinities_;
     std::auto_ptr< MIL_DictionaryExtensions >   pExtensions_;
     double                                      urbanBlockAngriness_;
+    tools::Set< MIL_Agent_ABC* >                hidden_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ );
