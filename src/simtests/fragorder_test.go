@@ -14,7 +14,8 @@ import (
 )
 
 const (
-	FragOrderNbcSuitOn = uint32(345)
+	FragOrderNbcSuitOn          = uint32(345)
+	FragOrderCrowdPauseMovement = uint32(44571)
 )
 
 func (s *TestSuite) TestAutomatFragOrder(c *C) {
@@ -28,11 +29,11 @@ func (s *TestSuite) TestAutomatFragOrder(c *C) {
 	params := swapi.MakeParameters()
 
 	// Cannot send frag order with an invalid automat identifier
-	err = client.SendFragOrder(InvalidIdentifier, FragOrderNbcSuitOn, params)
+	err = client.SendAutomatFragOrder(InvalidIdentifier, FragOrderNbcSuitOn, params)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// Cannot send frag order with an invalid frag order identifier
-	err = client.SendFragOrder(automat.Id, InvalidIdentifier, params)
+	err = client.SendAutomatFragOrder(automat.Id, InvalidIdentifier, params)
 	c.Assert(err, ErrorMatches, "error_invalid_frag_order")
 
 	// Disengage automat
@@ -43,7 +44,7 @@ func (s *TestSuite) TestAutomatFragOrder(c *C) {
 	})
 
 	// Cannot send frag order to an disengaged automat
-	err = client.SendFragOrder(automat.Id, FragOrderNbcSuitOn, params)
+	err = client.SendAutomatFragOrder(automat.Id, FragOrderNbcSuitOn, params)
 	c.Assert(err, ErrorMatches, "error_unit_cannot_receive_order")
 
 	// Engage automat
@@ -53,6 +54,44 @@ func (s *TestSuite) TestAutomatFragOrder(c *C) {
 		return !data.FindAutomat(automat.Id).Engaged
 	})
 
-	err = client.SendFragOrder(automat.Id, FragOrderNbcSuitOn, params)
+	err = client.SendAutomatFragOrder(automat.Id, FragOrderNbcSuitOn, params)
+	c.Assert(err, IsNil)
+}
+
+func (s *TestSuite) TestCrowdFragOrder(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	data := client.Model.GetData()
+	from := swapi.MakePoint(-15.9219, 28.3456)
+	to := swapi.MakePoint(-15.8193, 28.3456)
+
+	party := data.FindPartyByName("party")
+	c.Assert(party, NotNil)
+
+	crowd, err := client.CreateCrowd(party.Id, 0, CrowdType, from, 10, 10, 10, "crowd")
+	c.Assert(err, IsNil)
+	c.Assert(crowd, NotNil)
+
+	params := swapi.MakeParameters()
+
+	// Cannot send frag order with an invalid frag order identifier
+	err = client.SendCrowdFragOrder(crowd.Id, InvalidIdentifier, params)
+	c.Assert(err, ErrorMatches, "error_invalid_frag_order")
+
+	// Crowd frag order is unavailable without a mission
+	err = client.SendCrowdFragOrder(crowd.Id, FragOrderCrowdPauseMovement, params)
+	c.Assert(err, ErrorMatches, "error_invalid_frag_order")
+
+	missionParams := swapi.MakeParameters(
+		swapi.MakePointParam(to))
+
+	// Send moveTo mission for activate frag order
+	err = client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, missionParams)
+	c.Assert(err, IsNil)
+
+	// Wait one tick for the mission to be applied
+	client.Model.WaitTicks(1)
+
+	err = client.SendCrowdFragOrder(crowd.Id, FragOrderCrowdPauseMovement, params)
 	c.Assert(err, IsNil)
 }

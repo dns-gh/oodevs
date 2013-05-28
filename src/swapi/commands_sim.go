@@ -544,17 +544,23 @@ func (c *Client) Stop() error {
 	return <-c.postSimRequest(msg, handler)
 }
 
-func (c *Client) SendFragOrder(unitId, fragOrderType uint32,
+func (c *Client) SendFragOrder(automatId, crowdId, fragOrderType uint32,
 	params *sword.MissionParameters) error {
+	tasker := &sword.Tasker{}
+	if automatId != 0 {
+		tasker.Automat = &sword.AutomatId{
+			Id: proto.Uint32(automatId),
+		}
+	} else if crowdId != 0 {
+		tasker.Crowd = &sword.CrowdId{
+			Id: proto.Uint32(crowdId),
+		}
+	}
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				FragOrder: &sword.FragOrder{
-					Tasker: &sword.Tasker{
-						Automat: &sword.AutomatId{
-							Id: proto.Uint32(unitId),
-						},
-					},
+					Tasker: tasker,
 					Type: &sword.FragOrderType{
 						Id: proto.Uint32(fragOrderType),
 					},
@@ -575,4 +581,14 @@ func (c *Client) SendFragOrder(unitId, fragOrderType uint32,
 		return nil
 	}
 	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) SendAutomatFragOrder(unitId, fragOrderType uint32,
+	params *sword.MissionParameters) error {
+	return c.SendFragOrder(unitId, 0, fragOrderType, params)
+}
+
+func (c *Client) SendCrowdFragOrder(unitId, fragOrderType uint32,
+	params *sword.MissionParameters) error {
+	return c.SendFragOrder(0, unitId, fragOrderType, params)
 }
