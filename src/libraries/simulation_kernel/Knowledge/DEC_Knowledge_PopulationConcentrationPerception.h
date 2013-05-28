@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 class DEC_Knowledge_PopulationPerception;
+class MIL_Agent_ABC;
 class MIL_PopulationConcentration;
 class MIL_PopulationAttitude;
 class PHY_PerceptionLevel;
@@ -57,6 +58,7 @@ public:
     unsigned int GetNbrAliveHumans() const;
     unsigned int GetNbrDeadHumans() const;
     const MIL_PopulationAttitude& GetAttitude() const;
+    const MIL_Agent_ABC& GetAgentPerceiving() const;
     //@}
 
     //! @name Network operations

@@ -107,6 +107,7 @@ public:
         eRC_PriseAPartieParPopulation = 225,
         eRC_DebutInterventionFaceAPopulation = 239,
         eRC_PopulationVictimeAffrontements = 240,
+        eRC_AttitudePopulation = 241,
         eRC_Bloquee = 252,
         eRC_Filtree = 253,
         eRC_AttentatTerroristeDansPopulation = 254,

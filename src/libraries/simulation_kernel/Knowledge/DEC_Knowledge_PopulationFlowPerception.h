@@ -16,6 +16,7 @@
 #include "MT_Tools/MT_Vector2DTypes.h"
 
 class DEC_Knowledge_PopulationPerception;
+class MIL_Agent_ABC;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
 class PHY_PerceptionLevel;
@@ -61,6 +62,7 @@ public:
     const T_PointVector& GetShape() const;
     const MT_Vector2D& GetDirection() const;
     double GetSpeed() const;
+    const MIL_Agent_ABC& GetAgentPerceiving() const;
     //@}
 
     //! @name Network operations

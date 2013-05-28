@@ -18,6 +18,7 @@
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
@@ -200,6 +201,14 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPer
         rSpeed_ = perception.GetSpeed();
         bSpeedUpdated_ = true;
     }
+    if( ( pPopulationKnowledge_->IsRecon() || *pCurrentPerceptionLevel_ > PHY_PerceptionLevel::detected_ ) && ( !pAttitude_ || *pAttitude_ != perception.GetAttitude() ) )
+    {
+        bool postEvent = pAttitude_ == 0;
+        pAttitude_ = &perception.GetAttitude();
+        bAttitudeUpdated_ = true;
+        if( postEvent )
+            MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_AttitudePopulation, pAttitude_->GetID() );
+    }
     assert( pPopulationKnowledge_ );
     if( pPopulationKnowledge_->IsRecon() )
     {
@@ -213,11 +222,6 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPer
         {
             nNbrDeadHumans_ = perception.GetNbrDeadHumans();
             bHumansUpdated_ = true;
-        }
-        if( !pAttitude_ || *pAttitude_ != perception.GetAttitude() )
-        {
-            pAttitude_ = &perception.GetAttitude();
-            bAttitudeUpdated_ = true;
         }
     }
 }
@@ -282,12 +286,12 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     asnMsg().set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     flowParts_.Serialize( *asnMsg().mutable_parts()->add_elem() );
+    if( pAttitude_ )
+        asnMsg().set_attitude( pAttitude_->GetAsnID() );
     if( bReconAttributesValid_ )
     {
-        assert( pAttitude_ );
         asnMsg().set_dead( nNbrDeadHumans_ );
         asnMsg().set_alive( nNbrAliveHumans_ );
-        asnMsg().set_attitude( pAttitude_->GetAsnID() );
     }
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -316,16 +320,15 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
         asnMsg().set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     if( bFlowPartsUpdated_ )
         flowParts_.Serialize( *asnMsg().mutable_parts()->add_elem() );
+    if( bAttitudeUpdated_ && pAttitude_ )
+        asnMsg().set_attitude( pAttitude_->GetAsnID() );
     if( bReconAttributesValid_ )
     {
-        assert( pAttitude_ );
         if( bHumansUpdated_ )
         {
             asnMsg().set_dead( nNbrDeadHumans_  );
             asnMsg().set_alive( nNbrAliveHumans_ );
         }
-        if( bAttitudeUpdated_ )
-            asnMsg().set_attitude( pAttitude_->GetAsnID() );
     }
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
     if( asnMsg().has_parts() )
