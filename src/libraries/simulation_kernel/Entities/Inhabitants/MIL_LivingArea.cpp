@@ -261,7 +261,7 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
 {
     Clean();
     // calcul du nombre de gens à déplacer et de la liste de départ
-    unsigned int movingNumber = ComputeStartingBlocks();
+    unsigned int movingNumber = ComputeStartingBlocks( motivation );
     if( movingNumber == 0 )
         return;
 
@@ -587,7 +587,7 @@ const MIL_LivingArea::T_Blocks MIL_LivingArea::GetNonConfinedBlocks() const
 // Name: MIL_LivingArea::ComputeStartingBlocks
 // Created: JSR 2012-04-26
 // -----------------------------------------------------------------------------
-unsigned int MIL_LivingArea::ComputeStartingBlocks()
+unsigned int MIL_LivingArea::ComputeStartingBlocks( const std::string& motivation )
 {
     unsigned int movingNumber = 0;
     BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
@@ -596,6 +596,8 @@ unsigned int MIL_LivingArea::ComputeStartingBlocks()
             continue;
         for( PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().begin(); it != PHY_AccomodationType::GetAccomodations().end(); ++it )
         {
+            if( motivation == it->first )
+                continue;
             unsigned int nbrForAccommodation = block->GetPersonsForAccomodation( it->first );
             if( nbrForAccommodation == 0 )
                 continue;

@@ -110,7 +110,7 @@ private:
     void ReadUrbanBlock( xml::xistream& xis );
     const T_Blocks GetNonConfinedBlocks() const;
     void Clean();
-    unsigned int ComputeStartingBlocks();
+    unsigned int ComputeStartingBlocks( const std::string& motivation );
     unsigned int ComputeEvacuatedPeople();
     void ForceEvacuation( const std::string& motivation );
     //@}
