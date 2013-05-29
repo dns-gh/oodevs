@@ -117,7 +117,7 @@ void SpawnCommand::Start()
                          0,                                     // lpProcessAttributes
                          0,                                     // lpThreadAttributes
                          TRUE,                                  // bInheritHandles
-                         CREATE_NEW_CONSOLE,                    // dwCreationFlags
+                         CREATE_NO_WINDOW,                      // dwCreationFlags
                          0,                                     // lpEnvironment
                          !workingDirectory_.IsEmpty()           // lpCurrentDirectory
                             ? workingDirectory_.ToUnicode().c_str()
