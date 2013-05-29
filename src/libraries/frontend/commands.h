@@ -33,7 +33,7 @@ namespace frontend
     {
         tools::Path::T_Paths ListTerrains        ( const tools::GeneralConfig& config );
         tools::Path::T_Paths ListExercises       ( const tools::GeneralConfig& config, const tools::Path& subDirs = "" );
-        tools::Path::T_Paths ListSessions        ( const tools::GeneralConfig& config, const tools::Path& exercise );
+        tools::Path::T_Paths ListSessions        ( const tools::GeneralConfig& config, const tools::Path& exercise, bool useValidator );
         tools::Path::T_Paths ListSessionsWithCheckpoint( const tools::GeneralConfig& config, const tools::Path& exercise );
         std::map< unsigned int, QString > ListSides( const tools::GeneralConfig& config, const tools::Path& exercise );
         tools::Path::T_Paths ListCheckpoints     ( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session );

@@ -77,7 +77,7 @@ void SessionList::Update( const tools::Path& exercise )
         exercise_ = exercise;
         comments_->clear();
         list_->clear();
-        list_->addItems( fc::PathListToQStringList( fc::ListSessions( config_, exercise ) ) );
+        list_->addItems( fc::PathListToQStringList( fc::ListSessions( config_, exercise, true ) ) );
         list_->setCurrentRow( 0 );
     }
 }

@@ -75,9 +75,11 @@ namespace frontend
             return false;
         }
 
-        tools::Path::T_Paths ListSessions( const tools::GeneralConfig& config, const tools::Path& exercise )
+        tools::Path::T_Paths ListSessions( const tools::GeneralConfig& config, const tools::Path& exercise, bool useValidator )
         {
-            return config.GetSessionsDir( exercise ).ListElements( boost::bind( &IsValidReplay, _1 ) );
+            if( useValidator )
+                return config.GetSessionsDir( exercise ).ListElements( boost::bind( &IsValidReplay, _1 ) );
+            return config.GetSessionsDir( exercise ).ListElements( 0, false );
         }
 
         bool HasCheckpoints( const tools::Path& session )
@@ -216,7 +218,7 @@ namespace frontend
 
         bool SessionExists( const tools::GeneralConfig& config, const tools::Path& exercise, const tools::Path& session )
         {
-            const tools::Path::T_Paths sessions = ListSessions( config, exercise );
+            const tools::Path::T_Paths sessions = ListSessions( config, exercise, true );
             return std::find( sessions.begin(), sessions.end(), session ) != sessions.end();
         }
 

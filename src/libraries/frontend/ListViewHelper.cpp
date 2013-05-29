@@ -71,7 +71,7 @@ namespace frontend
         exerciseItem->setEnabled( false );
         exerciseItem->setCheckState( Qt::Checked );
 
-        const tools::Path::T_Paths sessions = frontend::commands::ListSessions( config, exercise );
+        const tools::Path::T_Paths sessions = frontend::commands::ListSessions( config, exercise, false );
         for( auto it = sessions.begin(); it != sessions.end(); ++it )
             exerciseItem->setChild( exerciseItem->rowCount(), new CheckListItem( ( base / "sessions" / *it ).ToUTF8().c_str(), true ) );
 
