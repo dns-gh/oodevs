@@ -167,6 +167,15 @@ const MIL_PopulationAttitude& DEC_Knowledge_PopulationConcentrationPerception::G
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentrationPerception::GetAgentPerceiving
+// Created: JSR 2013-05-28
+// -----------------------------------------------------------------------------
+const MIL_Agent_ABC& DEC_Knowledge_PopulationConcentrationPerception::GetAgentPerceiving() const
+{
+    return pPopulationKnowledge_->GetAgentPerceiving();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentrationPerception::UpdateOnNetwork
 // Created: NLD 2004-03-17
 // -----------------------------------------------------------------------------

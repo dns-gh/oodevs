@@ -95,6 +95,7 @@ namespace report
     const MIL_DecisionalReport eRC_PriseAPartieParPopulation( "eRC_PriseAPartieParPopulation" );
     const MIL_DecisionalReport eRC_DebutInterventionFaceAPopulation( "eRC_DebutInterventionFaceAPopulation" );
     const MIL_DecisionalReport eRC_PopulationVictimeAffrontements( "eRC_PopulationVictimeAffrontements" );
+    const MIL_DecisionalReport eRC_AttitudePopulation( "eRC_AttitudePopulation" );
     const MIL_DecisionalReport eRC_Bloquee( "eRC_Bloquee" );
     const MIL_DecisionalReport eRC_Filtree( "eRC_Filtree" );
     const MIL_DecisionalReport eRC_AttentatTerroristeDansPopulation( "eRC_AttentatTerroristeDansPopulation" );

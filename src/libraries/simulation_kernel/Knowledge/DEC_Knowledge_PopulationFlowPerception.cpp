@@ -250,3 +250,12 @@ const DEC_Knowledge_PopulationPerception& DEC_Knowledge_PopulationFlowPerception
     assert( pPopulationKnowledge_ );
     return *pPopulationKnowledge_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPerception::GetAgentPerceiving
+// Created: JSR 2013-05-28
+// -----------------------------------------------------------------------------
+const MIL_Agent_ABC& DEC_Knowledge_PopulationFlowPerception::GetAgentPerceiving() const
+{
+    return pPopulationKnowledge_->GetAgentPerceiving();
+}

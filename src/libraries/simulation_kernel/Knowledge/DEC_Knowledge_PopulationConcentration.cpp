@@ -15,6 +15,7 @@
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
 #include "MIL_Time_ABC.h"
 #include "MIL_KnowledgeGroup.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
@@ -216,6 +217,14 @@ void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_Populati
     nTimeLastUpdate_ = MIL_Time_ABC::GetTime().GetCurrentTimeStep();
     pCurrentPerceptionLevel_ = &perception.GetCurrentPerceptionLevel();
     assert( pPopulationKnowledge_ );
+    if( ( pPopulationKnowledge_->IsRecon() || *pCurrentPerceptionLevel_ > PHY_PerceptionLevel::detected_ ) && ( !pAttitude_ || *pAttitude_ != perception.GetAttitude() ) )
+    {
+        bool postEvent = pAttitude_ == 0;
+        pAttitude_ = &perception.GetAttitude();
+        bAttitudeUpdated_ = true;
+        if( postEvent )
+            MIL_Report::PostEvent( perception.GetAgentPerceiving(), report::eRC_AttitudePopulation, pAttitude_->GetID() );
+    }
     if( pPopulationKnowledge_->IsRecon() )
     {
         bReconAttributesValid_ = true;
@@ -228,11 +237,6 @@ void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_Populati
         {
             nNbrDeadHumans_ = perception.GetNbrDeadHumans();
             bHumansUpdated_ = true;
-        }
-        if( !pAttitude_ || *pAttitude_ != perception.GetAttitude() )
-        {
-            pAttitude_ = &perception.GetAttitude();
-            bAttitudeUpdated_ = true;
         }
     }
 }
@@ -321,12 +325,12 @@ void DEC_Knowledge_PopulationConcentration::SendFullState()
     asnMsg().mutable_concentration()->set_id( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
     asnMsg().set_pertinence( static_cast< unsigned int >( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
+    if( pAttitude_ )
+        asnMsg().set_attitude( pAttitude_->GetAsnID() );
     if( bReconAttributesValid_ )
     {
-        assert( pAttitude_ );
         asnMsg().set_dead( nNbrDeadHumans_ );
         asnMsg().set_alive( nNbrAliveHumans_ );
-        asnMsg().set_attitude( pAttitude_->GetAsnID() );
     }
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -355,16 +359,15 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
         asnMsg().set_pertinence( static_cast< unsigned int >( rRelevance_ * 100. ) );
         rLastRelevanceSent_ = rRelevance_;
     }
+    if( bAttitudeUpdated_ && pAttitude_ )
+        asnMsg().set_attitude( pAttitude_->GetAsnID() );
     if( bReconAttributesValid_ )
     {
-        assert( pAttitude_ );
         if( bHumansUpdated_ )
         {
             asnMsg().set_dead( nNbrDeadHumans_ );
             asnMsg().set_alive( nNbrAliveHumans_ );
         }
-        if( bAttitudeUpdated_ )
-            asnMsg().set_attitude( pAttitude_->GetAsnID() );
     }
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
