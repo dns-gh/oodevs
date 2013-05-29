@@ -263,6 +263,7 @@ integration.startedLoadCrowd = function( crowd, concentration )
     elseif myself.eEtatTransportCrowd == eActionTransport_Impossible then
         DEC_Trace( "transportation impossible" )
         meKnowledge:RC( eRC_TransportImpossiblePasDeMoyens )
+        return true  -- loading is impossible, so let us stop here
     end
     return false
 end
@@ -285,6 +286,7 @@ integration.startedUnloadCrowd = function( crowd )
         return true
     elseif myself.eEtatTransportUnloadCrowd == eActionTransport_Impossible then
         meKnowledge:RC( eRC_TransportImpossiblePasDeMoyens )
+        return true  -- unloading is impossible, so let us stop here
     end
     return false
 end
