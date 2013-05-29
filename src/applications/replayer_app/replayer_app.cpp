@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 
+#include "App.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_FileLogger.h"
@@ -80,39 +81,10 @@ int main( int /*argc*/, char* /*argv*/[] )
         license_gui::LicenseDialog::CheckLicense( "sword-replayer", !winArgs.HasOption( "verbose" ) );
 #endif
         tools::SetCodec();
-
-        //initialising replayer_app
-        MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-        MT_LOG_STARTUP_MESSAGE( "Sword(tm) Replayer" );
-        MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-
-        tools::RealFileLoaderObserver_ABC* observer = new tools::NullFileLoaderObserver();
-        dispatcher::Config* config = new dispatcher::Config( *observer );
-        tools::WaitEvent* quit = new tools::WaitEvent();
-
-        // win32 argument parsing
-        bool test = winArgs.HasOption( "--test" );
-        config->Parse( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
-        if( !winArgs.HasOption( "--no-log" ) )
-            MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config->BuildSessionChildFile( "Replayer.log" ), 1, -1, MT_Logger_ABC::eLogLevel_All, true ) );
-
-        MT_LOG_INFO_MSG( "Loading record " << config->GetSessionFile() );
-
-        std::auto_ptr< dispatcher::Replayer > replayer;
-        replayer.reset( new dispatcher::Replayer( *config ) );
-
-        //execute replayer_app
-        try
-        {
-            tools::ipc::Watch watch( *quit );
-            do
-            replayer->Update();
-            while( !test && !quit->Wait( boost::posix_time::milliseconds( 10 ) ) );
-        }
-        catch( const std::exception& e )
-        {
-            MT_LOG_ERROR_MSG( "Replayer error : " << tools::GetExceptionMsg( e ) );
-        }
+        HINSTANCE hInstance = GetModuleHandle( NULL );
+        HINSTANCE prevInstance = GetModuleHandle( NULL );
+        App app( hInstance, prevInstance, GetCommandLineW(), 0, !winArgs.HasOption( "--no-log" ) );
+        app.Execute();
     }
     catch( const std::exception& e )
     {

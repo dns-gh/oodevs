@@ -151,9 +151,11 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\applications\replayer_app\App.cpp" />
     <ClCompile Include="..\..\src\applications\replayer_app\replayer_app.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\applications\replayer_app\App.h" />
     <ClInclude Include="..\..\src\applications\replayer_app\resource.h" />
   </ItemGroup>
   <ItemGroup>
