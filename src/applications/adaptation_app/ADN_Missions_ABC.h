@@ -72,6 +72,7 @@ public:
     bool IsEmptyParameterList();
     bool NeedsSaving();
     void SetNeedsSaving( bool saving );
+    void ParseImagesInImageDirectory( const tools::Path& imageDir );
 
 private:
     void AddContextParameter( E_ContextParameters contextType, E_MissionParameterType parameterType, bool optional, int minOccurs = 1, int maxOccurs = 1 );

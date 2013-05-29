@@ -213,6 +213,8 @@ void ADN_Missions_ABC::ReadMissionSheet( const tools::Path& missionDir )
         descriptionSpecific_ = descriptionSpecific;
         descriptionComment_ = descriptionComment;
         descriptionMissionEnd_ = descriptionMissionEnd;
+        tools::Path namePath = missionDir / "Images" / tools::Path::FromUTF8( QString( strName_.GetData().c_str() ).replace( "\'", " " ).toStdString() );
+        ParseImagesInImageDirectory( namePath );
     }
     missionSheetPath_ = fileName.ToUTF8() + ".html";
 }
@@ -354,6 +356,35 @@ bool ADN_Missions_ABC::NeedsSaving()
 void ADN_Missions_ABC::SetNeedsSaving( bool saving )
 {
     needSheetSaving_ = saving;
+}
+
+namespace
+{
+    bool IsAnImageExtension( const tools::Path& extension )
+    {
+        return extension == ".bmp"
+            || extension == ".jpg"
+            || extension == ".jpeg"
+            || extension == ".gif"
+            || extension == ".png";
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_ABC::ParseImagesInImageDirectory
+// Created: NPT 2013-05-29
+// -----------------------------------------------------------------------------
+void ADN_Missions_ABC::ParseImagesInImageDirectory( const tools::Path& imageDir )
+{
+    if( !imageDir.Exists() )
+        return;
+
+    for( auto it = imageDir.begin(); it != imageDir.end(); ++it )
+    {
+        const tools::Path& child = *it;
+        if( child.IsRegularFile() && IsAnImageExtension( child.Extension() ) && !IsFileInAttachmentList( child.FileName().ToUTF8() ) )
+            attachments_.AddItem( new ADN_Missions_Attachment( child.FileName() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
