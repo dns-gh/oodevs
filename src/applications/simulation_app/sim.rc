@@ -56,8 +56,6 @@ LEMENU MENU
 BEGIN
     POPUP "TrayMenu"
     BEGIN
-        MENUITEM "Console",                     ID_TRAYMENU_CONSOLE
-        MENUITEM SEPARATOR
         MENUITEM "Quitter",                     IDM_QUIT
     END
 END

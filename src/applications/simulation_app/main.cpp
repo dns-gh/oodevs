@@ -126,7 +126,9 @@ int main( int /*argc*/, char* /*argv*/[] )
 
         // Execute simulation
         GOOGLE_PROTOBUF_VERIFY_VERSION;
-        app.reset( new SIM_App( GetCommandLineW(), maxConnections, verbose ) );
+        HINSTANCE hInstance = GetModuleHandle( NULL );
+        HINSTANCE prevInstance = GetModuleHandle( NULL );
+        app.reset( new SIM_App( hInstance, prevInstance, GetCommandLineW(), 0, maxConnections, verbose ) );
         MT_LOG_UNREGISTER_LOGGER( *fileLogger );
         nResult = app->Execute();
     }

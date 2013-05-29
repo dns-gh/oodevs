@@ -38,7 +38,8 @@ class SIM_App : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     SIM_App( const std::wstring& cmdLine, int maxConnections, bool verbose );
+     SIM_App( HINSTANCE hinstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine,
+         int nCmdShow, int maxConnections, bool verbose );
     ~SIM_App();
     //@}
 
@@ -52,6 +53,13 @@ private:
     //@{
     void Initialize();
     void Run();
+
+    void RunGUI();
+    void AnimateIcon();
+    void StartIconAnimation();
+    void StopIconAnimation();
+
+    static LRESULT CALLBACK MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
     //@}
 
 private:
@@ -65,10 +73,14 @@ private:
     std::auto_ptr< tools::WinArguments > winArguments_;
     std::auto_ptr< SIM_NetworkLogger > pNetworkLogger_;
     std::auto_ptr< MT_FileLogger > logger_;
-    std::auto_ptr< MT_ConsoleLogger > console_;
     std::auto_ptr< tools::WaitEvent > quit_;
+    std::auto_ptr< boost::thread > gui_;
     std::auto_ptr< boost::thread > dispatcher_;
     int result_;
+    HWND hWnd_;
+    HINSTANCE hInstance_;
+    NOTIFYICONDATA TrayIcon_;
+    unsigned int nIconIndex_;
     //@}
 };
 
