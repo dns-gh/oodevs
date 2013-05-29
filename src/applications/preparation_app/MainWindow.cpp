@@ -11,6 +11,7 @@
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
 #include "AgentsLayer.h"
+#include "AutomatsLayer.h"
 #include "UrbanLayer.h"
 #include "Config.h"
 #include "InhabitantLayer.h"
@@ -19,6 +20,7 @@
 #include "DockContainer.h"
 #include "FileToolbar.h"
 #include "FilterOrbatReIndexer.h"
+#include "FormationLayer.h"
 #include "GhostsLayer.h"
 #include "LimitsLayer.h"
 #include "Menu.h"
@@ -36,7 +38,6 @@
 #include "OrbatPanel.h"
 #include "clients_gui/ResourceNetworksLayer.h"
 #include "clients_gui/AddRasterDialog.h"
-#include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/ColorStrategy.h"
 #include "clients_gui/DefaultLayer.h"
@@ -77,7 +78,6 @@
 #include "clients_gui/TerrainProfilerLayer.h"
 #include "clients_gui/TooltipsLayer.h"
 #include "clients_gui/UrbanLayer.h"
-#include "clients_gui/FormationLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/WatershedLayer.h"
 #include "clients_gui/WeatherLayer.h"
@@ -177,8 +177,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     // Layer 1
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
     gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_ );
-    gui::AutomatsLayer& automats = *new gui::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
-    gui::FormationLayer& formation = *new gui::FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
+    gui::AutomatsLayer& automats = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
+    gui::FormationLayer& formation = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile() );
     gui::WeatherLayer* weatherLayer = new gui::WeatherLayer( *glProxy_, *eventStrategy_ );
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );

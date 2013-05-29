@@ -532,6 +532,12 @@
     <ClCompile Include="..\..\src\applications\preparation_app\PropertiesComparator.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\AutomatsLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FormationLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -743,6 +749,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\PropertiesComparator.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\AutomatsLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\FormationLayer.h">
+      <Filter>Source Files\Layers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -199,6 +199,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\AutomatsLayer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\BypassPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ChangeAutomatTypeDialog.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\CommunicationTreeView.cpp" />
@@ -211,6 +212,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\FilterCsv.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FilterInputArgument.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FilterPartiesListView.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\FormationLayer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\GhostsLayer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\GhostsPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\InhabitantLayer.cpp" />
@@ -361,6 +363,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\AutomatsLayer.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\BypassPrototype.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\CommunicationTreeView.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -525,6 +528,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\FormationLayer.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\GhostsLayer.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\InhabitantLayer.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\LivingAreaPanel.h">
