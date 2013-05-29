@@ -194,6 +194,7 @@ void ProfileDialog::NotifyCreated( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void ProfileDialog::NotifyDeleted( const UserProfile& profile )
 {
-    if( int index = timeControlCombo_->findText( profile.GetLogin() ) != -1 )
+    int index = timeControlCombo_->findText( profile.GetLogin() );
+    if( index != -1 )
         timeControlCombo_->removeItem( index );
 }

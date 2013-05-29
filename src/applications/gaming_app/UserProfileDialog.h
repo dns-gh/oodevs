@@ -54,6 +54,7 @@ public:
     virtual QSize sizeHint () const;
     bool CanBeShown( const Profile& profile ) const;
     virtual void NotifyCreated( const UserProfile& profile );
+    virtual void NotifyUpdated( const UserProfile& profile );
     virtual void NotifyDeleted( const UserProfile& profile );
 
     //@}

@@ -144,10 +144,10 @@ void ProfilesModel::CreateProfile( const QString& name, const std::string& userR
 // Name: ProfilesModel::CreateProfile
 // Created: SBO 2007-11-07
 // -----------------------------------------------------------------------------
-void ProfilesModel::CreateProfile( const QString& name, const std::string& userRole, const std::vector< const kernel::Entity_ABC* >& entities, bool readonly )
+void ProfilesModel::CreateProfile( const QString& name, const std::string& userRole, const std::vector< const kernel::Entity_ABC* >& entities, bool readonly, bool timeControl /* = false */ )
 {
-    std::auto_ptr< UserProfile > profile( factory_.Create( name ) );
-    profile->SetUserRole( userRole );
+    std::auto_ptr< UserProfile > profile( factory_.Create( name, userRole ) );
+    profile->SetTimeControl( timeControl );
     if( readonly )
         for( std::vector< const kernel::Entity_ABC* >::const_iterator it = entities.begin(); it != entities.end(); ++it )
             profile->SetReadable( **it, true );

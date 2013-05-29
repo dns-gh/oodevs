@@ -198,14 +198,18 @@ void UserProfileList::showEvent( QShowEvent* event )
 // -----------------------------------------------------------------------------
 void UserProfileList::Save( const UserProfile* timeControlProfile )
 {
-    for( auto it = editors_.begin(); it != editors_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
     {
-        if( !it->second )
-            it->second = new UserProfileEditor( *it->first, controllers_.controller_ );
-        it->second->SetTimeControl( it->first == timeControlProfile );
-        QString name = it->second->GetLogin();
-        it->second->SetLogin( it->first->GetLogin() );
-        it->second->RequestUpdate( name );
+        UserProfile*& editor = editors_[ *it ];
+        if( editor || ( ( *it ) == timeControlProfile && !( *it )->CanControlTime() ) || ( ( *it ) != timeControlProfile && ( *it )->CanControlTime() ) )
+        {
+            if( !editor )
+                editor = new UserProfileEditor( ( **it ), controllers_.controller_ );
+            editor->SetTimeControl( ( *it ) == timeControlProfile );
+            QString name = editor->GetLogin();
+            editor->SetLogin( ( *it )->GetLogin() );
+            editor->RequestUpdate( name );
+        }
     }
 }
 

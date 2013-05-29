@@ -185,6 +185,18 @@ void UserProfileDialog::NotifyCreated( const UserProfile& profile )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfileDialog::NotifyUpdated
+// Created: NPT 2013-05-29
+// -----------------------------------------------------------------------------
+void UserProfileDialog::NotifyUpdated( const UserProfile& profile )
+{
+    if( profile.IsSupervisor() && timeControlCombo_->findText( profile.GetLogin() ) == -1 )
+        timeControlCombo_->addItem( profile.GetLogin(), QVariant::fromValue( &profile ) );
+    if( profile.CanControlTime() )
+        timeControlCombo_->setCurrentIndex( timeControlCombo_->findText( profile.GetLogin() ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfileDialog::NotifyDeleted
 // Created: NPT 2013-05-23
 // -----------------------------------------------------------------------------
