@@ -525,6 +525,9 @@ findBests = function( entities, tasks, companyTask , params, nbrFront, context, 
         end
     end
     table.sort( bestList, comp ) -- Sort the list in order to have the couple entity/task with the best efficiency in first
+    if isMain then
+        myself.leadData.nbrWithMainTask = #bestList
+    end
     return fillParameters( bestList, companyTask, params, nbrFront, context, isMain, objectif )
 end
 
