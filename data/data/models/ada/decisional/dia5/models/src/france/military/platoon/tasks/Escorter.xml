@@ -11,10 +11,23 @@
     <stages>
         <stage label="Escorter une unité." permanent="true">
             <skills>
-                <skill name="france.military.platoon.skills.Escort">
+                <skill name="france.military.platoon.skills.Escort" priority="0.9">
                     <parameter name="objective">
                         <value>
                             <parameter>objective</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="sword.military.platoon.coercition.skills.Engage" priority="0.1">
+                    <parameter name="entities">
+                        <value>
+                            <call method="sword.military.queries.enemies.getEnemiesInRange">
+                                <parameter name="probabilityToHit">
+                                    <value>
+                                        <number>0.2</number>
+                                    </value>
+                                </parameter>
+                            </call>
                         </value>
                     </parameter>
                 </skill>
