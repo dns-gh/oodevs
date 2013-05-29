@@ -204,8 +204,8 @@ namespace
     class NullParameter : public actions::Parameter_ABC
     {
     public:
-        NullParameter( const kernel::OrderParameter& parameter )
-            : actions::Parameter_ABC( parameter.GetName().c_str() )
+        NullParameter( const std::string& name )
+            : actions::Parameter_ABC( name.c_str() )
         {
             Set( false );
         }
@@ -225,8 +225,8 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type", "" ) );
     type = parameter.CompatibleType( type );
 
-    if( type == "" )
-        return new NullParameter( parameter );
+    if( type.empty() )
+        return new NullParameter( parameter.GetName() );
 
     std::auto_ptr< Parameter_ABC > param;
     bool found = DoCreateParameter( parameter, xis, entity, type, param );
@@ -243,10 +243,10 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
 // -----------------------------------------------------------------------------
 Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis ) const
 {
-    std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) );
+    std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type", "" ) );
     type = parameter.CompatibleType( type );
-    if( type == "" )
-        ThrowUnexpected( parameter, xis );
+    if( type.empty() )
+        return new NullParameter( parameter.GetName() );
     std::auto_ptr< Parameter_ABC > param;
     if( DoCreateParameter( parameter, xis, type, param ) == false )
         throw MASA_EXCEPTION( "Unknown parameter type '" + type + "'" );
@@ -257,10 +257,14 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
 // Name: ActionParameterFactory::CreateListParameter
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void ActionParameterFactory::CreateListParameter( xml::xistream& xis, parameters::ParameterList& list ) const
+void ActionParameterFactory::CreateListParameter( xml::xistream& xis, parameters::ParameterList& list, const std::string& parent ) const
 {
-    const std::string name = xis.attribute< std::string >( "name" );
-    const std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) );
+    std::string name = xis.attribute< std::string >( "name", "" );
+    if( name.empty() )
+        name = parent;
+    const std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type", "" ) );
+    if( type.empty() )
+        return list.AddParameter( *new NullParameter( parent ) );
     list.AddParameter( *CreateParameter( kernel::OrderParameter( name, type, false ), xis ) );
 }
 
@@ -268,10 +272,14 @@ void ActionParameterFactory::CreateListParameter( xml::xistream& xis, parameters
 // Name: ActionParameterFactory::CreateListParameter
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void ActionParameterFactory::CreateListParameter( xml::xistream& xis, parameters::ParameterList& list, const kernel::Entity_ABC& entity ) const
+void ActionParameterFactory::CreateListParameter( xml::xistream& xis, parameters::ParameterList& list, const kernel::Entity_ABC& entity, const std::string& parent ) const
 {
-    const std::string name = xis.attribute< std::string >( "name" );
-    const std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type" ) );
+    std::string name = xis.attribute< std::string >( "name", "" );
+    if( name.empty() )
+        name = parent;
+    const std::string type = boost::algorithm::to_lower_copy( xis.attribute< std::string >( "type", "" ) );
+    if( type.empty() )
+        return list.AddParameter( *new NullParameter( parent ) );
     list.AddParameter( *CreateParameter( kernel::OrderParameter( name, type, false ), xis, entity ) );
 }
 
@@ -285,7 +293,7 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     {
         parameters::ParameterList* parameterList = new parameters::ParameterList( parameter );
         param.reset( parameterList );
-        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList );
+        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList, boost::cref( parameter.GetName() ) );
     }
     else if( type == "bool" || type == "boolean" )
         param.reset( new parameters::Bool( parameter, xis ) );
@@ -345,7 +353,7 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     {
         parameters::ParameterList* extensionList = new parameters::ExtensionList( parameter );
         param.reset( extensionList );
-        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *extensionList );
+        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *extensionList, parameter.GetName() );
     }
     else if( type == "pushflowparameters" )
         param.reset( new parameters::PushFlowParameters( parameter, converter_, entities_, staticModel_.objectTypes_, staticModel_.objectTypes_, xis ) );
@@ -371,7 +379,7 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     {
         parameters::ParameterList* parameterList = new parameters::ParameterList( parameter );
         param.reset( parameterList );
-        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList, entity );
+        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList, entity, parameter.GetName() );
     }
     else if( type == "agentknowledge" )
         param.reset( new parameters::AgentKnowledgeOrder( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
