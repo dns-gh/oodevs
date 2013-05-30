@@ -147,3 +147,18 @@ integration.isCompanyMoving = function( company )
     end
     return false
 end
+
+integration.isCompanyFlying = function( company )
+    local subordinates = company.source:DEC_Automate_PionsAvecPC()
+    local flyingUnits = {}
+    for _, subordinate in pairs( subordinates or emptyTable ) do
+        if subordinate:DEC_Agent_IsFlying() then
+            flyingUnits[ #flyingUnits + 1 ] = subordinate
+        end
+    end
+    if #flyingUnits == #subordinates then
+        return true
+    else
+        return false
+    end
+end

@@ -128,6 +128,10 @@ integration.isMoving = function ( target )
     return DEC_ConnaissanceAgent_EstEnMouvement( target.source )
 end
 
+integration.isFlying = function ( target )
+    return DEC_ConnaissanceAgent_EstEnVol( target.source )
+end
+
 integration.porteeMaxPourTirerSurUnitePosturesReelles = function( eni, ph )
     return DEC_Tir_PorteeMaxPourTirerSurUnitePosturesReelles( eni.source, ph )
 end
