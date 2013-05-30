@@ -12,6 +12,7 @@
     <property name="env.PONEY_HOME" value="//file1/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
+    <property name="svn.revision" value="0"/>
     <property name="version.project.major" value="1.5"/>
     <property name="version.project" value="${version.project.major}.1"/>
     <property name="version.company" value="MASA Group"/>
