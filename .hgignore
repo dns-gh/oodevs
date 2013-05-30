@@ -1,5 +1,5 @@
 ^(bin|dist|include|out|run|lib)/
-\.(bmo|bmk|bmq|bmt|bmsk|bmr)$
+\.(bmo|bmk|bmq|bmt|bmsk|bmr|bmsc|luac)$
 ^data/data/models/ada/decisional/dia5/TaskKnowledge.lua$
 ^data/data/models/ada/decisional/dia5/models/directia.core/directia.core.bml$
 ^data/exercises/.*/sessions/
@@ -13,3 +13,4 @@ syntax: glob
 *.suo
 *.user
 *.vcxproj.user
+*.local.properties
