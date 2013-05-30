@@ -1757,7 +1757,7 @@ void MIL_Population::RemoveHidden( MIL_Agent_ABC& agent )
 // Name: MIL_Population::GetHidden
 // Created: MCO 2013-05-07
 // -----------------------------------------------------------------------------
-const tools::Set< MIL_Agent_ABC* >& MIL_Population::GetHidden() const
+const std::set< MIL_Agent_ABC* >& MIL_Population::GetHidden() const
 {
     return hidden_;
 }
