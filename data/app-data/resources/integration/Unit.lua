@@ -168,3 +168,8 @@ end
 integration.getFiringDistanceToEngageMe = function( platoon, ph )
     return DEC_Tir_PorteeMaxPourEtreTireParUnite( platoon.source, ph)
 end
+
+-- Friend is flying?
+integration.agentIsFlying = function( teammate )
+    return teammate.source:DEC_Agent_EstEnVol()
+end
