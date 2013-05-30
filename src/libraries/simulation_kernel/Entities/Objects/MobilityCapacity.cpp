@@ -45,9 +45,9 @@ void MobilityCapacity::InitializeSpeed( xml::xistream& xis )
 {
     xis >> xml::attribute( "default-speed", rDefaultSpeed_ );
     if( rDefaultSpeed_ >= 0. )
-        rDefaultSpeed_ = static_cast< float >( MIL_Tools::ConvertSpeedMosToSim( rDefaultSpeed_ ) );
+        rDefaultSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rDefaultSpeed_ );
     else
-        rDefaultSpeed_ = std::numeric_limits< float >::max();
+        rDefaultSpeed_ = std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
