@@ -16,8 +16,8 @@ using namespace kernel;
 // Name: TacticalLineHierarchies_ABC constructor
 // Created: MMC 2012-05-14
 // -----------------------------------------------------------------------------
-TacticalLineHierarchies_ABC::TacticalLineHierarchies_ABC( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : kernel::SimpleHierarchies< kernel::TacticalHierarchies >( holder, superior )
+TacticalLineHierarchies_ABC::TacticalLineHierarchies_ABC( Entity_ABC& holder, Entity_ABC* superior )
+    : SimpleHierarchies< TacticalHierarchies >( holder, superior )
 {
     // NOTHING
 }

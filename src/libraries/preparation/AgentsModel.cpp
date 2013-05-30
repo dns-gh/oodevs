@@ -303,7 +303,11 @@ void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent, Model& m
     {
         Agent_ABC* agent = agentFactory_.Create( xis, parent );
         if( agent )
+        {
             tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
+            xis >> xml::list( "lima"   , model.limits_, &LimitsModel::CreateLima   , *agent )
+                >> xml::list( "limit"  , model.limits_, &LimitsModel::CreateLimit  , *agent );
+        }
         else
             model.ghosts_.Create( xis, parent, eGhostType_Agent );
     }

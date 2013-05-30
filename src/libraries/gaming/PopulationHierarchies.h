@@ -27,13 +27,6 @@ public:
              PopulationHierarchies( const kernel::Entity_ABC& holder, const kernel::Entity_ABC& superior );
     virtual ~PopulationHierarchies();
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationHierarchies( const PopulationHierarchies& );            //!< Copy constructor
-    PopulationHierarchies& operator=( const PopulationHierarchies& ); //!< Assignment operator
-    //@}
 };
 
 #endif // __PopulationHierarchies_h_

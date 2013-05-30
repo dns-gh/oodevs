@@ -11,6 +11,7 @@
 #define __SimpleHierarchies_h_
 
 #include "Hierarchies.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -24,6 +25,7 @@ namespace kernel
 // =============================================================================
 template< typename I >
 class SimpleHierarchies : public I
+                        , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -53,13 +55,6 @@ protected:
     //@{
     virtual const Hierarchies* RetrieveHierarchies( const Entity_ABC& entity ) const;
     void SetSuperior( const Entity_ABC* superior );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    SimpleHierarchies( const SimpleHierarchies& );            //!< Copy constructor
-    SimpleHierarchies& operator=( const SimpleHierarchies& ); //!< Assignment operator
     //@}
 
 private:

@@ -37,13 +37,6 @@ public:
     virtual std::string GetSymbol() const;
     virtual std::string GetLevel() const;
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    TacticalLineHierarchies_ABC( const TacticalLineHierarchies_ABC& );            //!< Copy constructor
-    TacticalLineHierarchies_ABC& operator=( const TacticalLineHierarchies_ABC& ); //!< Assignment operator
-    //@}
 };
 
 }

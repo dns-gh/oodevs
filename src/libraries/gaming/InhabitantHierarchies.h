@@ -27,13 +27,6 @@ public:
              InhabitantHierarchies( const kernel::Entity_ABC& holder, const kernel::Entity_ABC& superior );
     virtual ~InhabitantHierarchies();
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    InhabitantHierarchies( const InhabitantHierarchies& );            //!< Copy constructor
-    InhabitantHierarchies& operator=( const InhabitantHierarchies& ); //!< Assignment operator
-    //@}
 };
 
 #endif // __InhabitantHierarchies_h_

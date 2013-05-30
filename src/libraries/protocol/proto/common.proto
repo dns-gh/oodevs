@@ -1299,6 +1299,8 @@ message Diffusion {
     repeated PartyId          party           = 3;
     //! The knowledge group identifier
     optional KnowledgeGroupId knowledge_group = 4;
+    //! The unit identifier
+    optional UnitId           unit            = 5;
 }
 
 /** @struct TacticalLine

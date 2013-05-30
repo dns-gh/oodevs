@@ -12,7 +12,6 @@
 
 #include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  PopulationHierarchies
@@ -21,7 +20,6 @@
 // Created: SBO 2006-11-08
 // =============================================================================
 class PopulationHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
-                            , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

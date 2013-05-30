@@ -17,7 +17,6 @@
 #include "TacticalLineHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TacticalLine_ABC.h"
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: LimitsModel constructor

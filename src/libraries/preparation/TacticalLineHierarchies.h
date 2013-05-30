@@ -12,6 +12,7 @@
 
 #include "clients_kernel/TacticalLineHierarchies_ABC.h"
 
+
 // =============================================================================
 /** @class  TacticalLineHierarchies
     @brief  TacticalLineHierarchies
@@ -25,13 +26,6 @@ public:
     //@{
              TacticalLineHierarchies( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
     virtual ~TacticalLineHierarchies();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    TacticalLineHierarchies( const TacticalLineHierarchies& );            //!< Copy constructor
-    TacticalLineHierarchies& operator=( const TacticalLineHierarchies& ); //!< Assignment operator
     //@}
 
 private:

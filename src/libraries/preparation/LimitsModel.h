@@ -12,6 +12,7 @@
 
 #include "tools/Resolver.h"
 #include "tools/ElementObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -19,11 +20,6 @@ namespace kernel
     class CoordinateConverter_ABC;
     class Entity_ABC;
     class TacticalLine_ABC;
-}
-
-namespace xml
-{
-    class xistream;
 }
 
 namespace tools
@@ -42,6 +38,7 @@ class TacticalLine_ABC;
 class LimitsModel : public tools::Resolver< ::TacticalLine_ABC >
                   , public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< kernel::TacticalLine_ABC >
+                  , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -60,12 +57,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LimitsModel( const LimitsModel& );            //!< Copy constructor
-    LimitsModel& operator=( const LimitsModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyDeleted( const kernel::TacticalLine_ABC& line );

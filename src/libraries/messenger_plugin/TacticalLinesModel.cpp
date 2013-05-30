@@ -260,3 +260,28 @@ void TacticalLinesModel::CollectAutomats( T_AutomatMap& automats )
         }
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinesModel::CollectUnits
+// Created: JSR 2013-05-30
+// -----------------------------------------------------------------------------
+void TacticalLinesModel::CollectUnits( T_UnitMap& units )
+{
+    {
+        tools::Iterator< const Limit& > it( limits_.CreateIterator() );
+        while( it.HasMoreElements() )
+        {
+            const Limit& limit = it.NextElement();
+            if( limit.GetDiffusion().has_unit() )
+                units[ limit.GetDiffusion().unit().id() ].insert( &limit );
+        }
+    }
+    {
+        tools::Iterator< const Lima& > it( limas_.CreateIterator() );
+        while( it.HasMoreElements() )
+        {
+            const Lima& lima = it.NextElement();
+            if( lima.GetDiffusion().has_unit() )
+                units[ lima.GetDiffusion().unit().id() ].insert( &lima );
+        }
+    }}

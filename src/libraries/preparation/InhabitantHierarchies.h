@@ -29,13 +29,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InhabitantHierarchies( const InhabitantHierarchies& );            //!< Copy constructor
-    InhabitantHierarchies& operator=( const InhabitantHierarchies& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Entity_ABC* superior_;

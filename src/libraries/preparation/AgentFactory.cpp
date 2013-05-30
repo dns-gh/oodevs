@@ -109,6 +109,7 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Automat_ABC& parent, const kern
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, type, dictionary, commandPost ) );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
+    result->Attach( *new TacticalLines() );
     result->Polish();
     return result;
 }
@@ -239,6 +240,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
         result->Attach( *new Stocks( xis, controllers_.controller_, *result, static_.objectTypes_, dictionary ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
+    result->Attach( *new TacticalLines() );
     result->Polish();
     return result;
 }
@@ -340,6 +342,7 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, type, dictionary, ghost.Get< kernel::CommandPostAttributes_ABC >().IsCommandPost() ) );
     result->Attach< kernel::Color_ABC >( *new Color( ghost ) );
+    result->Attach( *new TacticalLines() );
     result->Polish();
     return result;
 }

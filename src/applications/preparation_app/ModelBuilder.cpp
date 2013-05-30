@@ -79,7 +79,7 @@ ModelBuilder::ModelBuilder( kernel::Controllers& controllers, Model& model )
     , selectedUrbanObject_( controllers )
     , toDelete_( controllers )
     , confirmation_( new ConfirmationBox( tr( "Confirmation" ), boost::bind( &ModelBuilder::OnConfirmDeletion, this, _1 ) ) )
-    , property_    ( tr( "Info/Name" ) )
+    , property_( tr( "Info/Name" ) )
 {
     controllers_.Register( *this );
 }
@@ -141,18 +141,15 @@ bool ModelBuilder::CanCreateLine() const
 // -----------------------------------------------------------------------------
 void ModelBuilder::CreateLimit( const T_PointVector& points )
 {
-    const kernel::Entity_ABC* element = 0;
+    kernel::Entity_ABC* element = 0;
     if( selectedFormation_ )
-        element = selectedFormation_;
+        element = selectedFormation_.ConstCast();
     else if( selectedAutomat_ )
-        element = selectedAutomat_;
+        element = selectedAutomat_.ConstCast();
     else if( selectedAgent_ )
-    {
-        if( const kernel::TacticalHierarchies* hierarchies = selectedAgent_->Retrieve< kernel::TacticalHierarchies >() )
-            element = hierarchies->GetSuperior();
-    }
+        element = selectedAgent_.ConstCast();
     if( element )
-        model_.limits_.CreateLimit( points, *const_cast< kernel::Entity_ABC* >( element ) );
+        model_.limits_.CreateLimit( points, *element );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,18 +158,15 @@ void ModelBuilder::CreateLimit( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void ModelBuilder::CreateLima( const T_PointVector& points )
 {
-    const kernel::Entity_ABC* element = 0;
+    kernel::Entity_ABC* element = 0;
     if( selectedFormation_ )
-        element = selectedFormation_;
+        element = selectedFormation_.ConstCast();
     else if( selectedAutomat_ )
-        element = selectedAutomat_;
+        element = selectedAutomat_.ConstCast();
     else if( selectedAgent_ )
-    {
-        if( const kernel::TacticalHierarchies* hierarchies = selectedAgent_->Retrieve< kernel::TacticalHierarchies >() )
-            element = hierarchies->GetSuperior();
-    }
+        element = selectedAgent_.ConstCast();
     if( element )
-        model_.limits_.CreateLima( points, *const_cast< kernel::Entity_ABC* >( element ) );
+        model_.limits_.CreateLima( points, *element );
 }
 
 // -----------------------------------------------------------------------------

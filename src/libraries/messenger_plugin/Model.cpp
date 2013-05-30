@@ -90,24 +90,34 @@ void Model::Save( const std::string& name ) const
         tools::Xofstream xos( GetCheckPointFileName( directory ) );
         TacticalLinesModel::T_FormationMap formations;
         TacticalLinesModel::T_AutomatMap automats;
+        TacticalLinesModel::T_UnitMap units;
 
         tacticalLines_.CollectAutomats( automats );
         tacticalLines_.CollectFormations( formations );
+        tacticalLines_.CollectUnits( units );
 
         xos << xml::start( "messenger" );
-        for( TacticalLinesModel::T_FormationMap::iterator it = formations.begin(); it != formations.end(); ++it )
+        for( auto it = formations.begin(); it != formations.end(); ++it )
         {
             xos << xml::start( "formation" )
                     << xml::attribute( "id", it->first );
-            for( std::set< const Entity_ABC*>::iterator eit = it->second.begin(); eit != it->second.end(); ++eit)
+            for( auto eit = it->second.begin(); eit != it->second.end(); ++eit)
                 ( *eit )->Write( xos, *converter_ );
             xos << xml::end;
         }
-        for( TacticalLinesModel::T_AutomatMap::iterator it = automats.begin(); it != automats.end(); ++it )
+        for( auto it = automats.begin(); it != automats.end(); ++it )
         {
             xos << xml::start( "automat" )
                     << xml::attribute( "id", it->first );
-            for( std::set< const Entity_ABC* >::iterator eit = it->second.begin(); eit != it->second.end(); ++eit )
+            for( auto eit = it->second.begin(); eit != it->second.end(); ++eit )
+                ( *eit )->Write( xos, *converter_ );
+            xos << xml::end;
+        }
+        for( auto it = units.begin(); it != units.end(); ++it )
+        {
+            xos << xml::start( "unit" )
+                << xml::attribute( "id", it->first );
+            for( auto eit = it->second.begin(); eit != it->second.end(); ++eit )
                 ( *eit )->Write( xos, *converter_ );
             xos << xml::end;
         }
@@ -142,6 +152,7 @@ void Model::ReadMessenger( xml::xistream& xis )
             >> xml::end
             >> xml::list( "automat"  , *this, &Model::ReadAutomat )
             >> xml::list( "formation", *this, &Model::ReadFormation )
+            >> xml::list( "unit"     , *this, &Model::ReadUnit )
         >> xml::end;
 }
 
@@ -199,6 +210,20 @@ void Model::ReadAutomat( xml::xistream& xis )
 {
     sword::Diffusion diffusion;
     diffusion.mutable_automat()->set_id( xis.attribute< unsigned int >( "id" ) );
+    xis >> xml::list( "lima" , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion )
+        >> xml::list( "limit", tacticalLines_, &TacticalLinesModel::ReadLimit, diffusion )
+        >> xml::list( "automat", *this, &Model::ReadAutomat )
+        >> xml::list( "unit", *this, &Model::ReadUnit );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::ReadUnit
+// Created: JSR 2013-05-30
+// -----------------------------------------------------------------------------
+void Model::ReadUnit( xml::xistream& xis )
+{
+    sword::Diffusion diffusion;
+    diffusion.mutable_unit()->set_id( xis.attribute< unsigned int >( "id" ) );
     xis >> xml::list( "lima" , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion )
         >> xml::list( "limit", tacticalLines_, &TacticalLinesModel::ReadLimit, diffusion );
 }

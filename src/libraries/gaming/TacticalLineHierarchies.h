@@ -24,6 +24,7 @@ namespace sword
 namespace kernel
 {
     class Controller;
+    class Agent_ABC;
     class Automat_ABC;
     class Formation_ABC;
 }
@@ -42,9 +43,11 @@ public:
     //! @name Constructors/Destructor
     //@{
              TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const sword::Diffusion& message
-                                    , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations );
+                                    , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations
+                                    , const tools::Resolver_ABC< kernel::Agent_ABC >& agents );
              TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Entity_ABC& superior
-                                    , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations );
+                                    , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations
+                                    , const tools::Resolver_ABC< kernel::Agent_ABC >& agents );
     virtual ~TacticalLineHierarchies();
     //@}
 
@@ -62,12 +65,23 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    enum EDiffusion
+    {
+        eUnit,
+        eAutomat,
+        eFormation
+    };
+    //@}
+
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    const tools::Resolver_ABC< kernel::Agent_ABC >& agents_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& automats_;
     const tools::Resolver_ABC< kernel::Formation_ABC >& formations_;
-    bool superiorIsAutomat_;
+    EDiffusion diffusion_;
     //@}
 };
 

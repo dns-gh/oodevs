@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "TacticalLineHierarchies.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -22,11 +23,14 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity_ABC& holder, const sword::Diffusion& message,
                                                   const tools::Resolver_ABC< Automat_ABC >& automats,
-                                                  const tools::Resolver_ABC< Formation_ABC >& formations )
+                                                  const tools::Resolver_ABC< Formation_ABC >& formations,
+                                                  const tools::Resolver_ABC< kernel::Agent_ABC >& agents )
     : kernel::TacticalLineHierarchies_ABC( holder, 0 )
     , controller_( controller )
     , automats_  ( automats )
     , formations_( formations )
+    , agents_( agents )
+    , diffusion_( eFormation )
 {
     Update( message );
 }
@@ -37,13 +41,19 @@ TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity
 // -----------------------------------------------------------------------------
 TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity_ABC& holder, const Entity_ABC& superior
                                                 , const tools::Resolver_ABC< Automat_ABC >& automats
-                                                , const tools::Resolver_ABC< Formation_ABC >& formations )
+                                                , const tools::Resolver_ABC< Formation_ABC >& formations
+                                                , const tools::Resolver_ABC< kernel::Agent_ABC >& agents )
     : kernel::TacticalLineHierarchies_ABC( holder, 0 )
     , controller_( controller )
     , automats_  ( automats )
     , formations_( formations )
+    , agents_( agents )
+    , diffusion_( eFormation )
 {
-    superiorIsAutomat_ = dynamic_cast< const Automat_ABC* >( &superior ) != 0;
+    if( dynamic_cast< const Automat_ABC* >( &superior ) != 0 )
+        diffusion_ = eAutomat;
+    else if( dynamic_cast< const Agent_ABC* >( &superior ) != 0 )
+        diffusion_ = eUnit;
     SetSuperior( &superior );
 }
 
@@ -62,10 +72,17 @@ TacticalLineHierarchies::~TacticalLineHierarchies()
 // -----------------------------------------------------------------------------
 void TacticalLineHierarchies::Update( const sword::Diffusion& message )
 {
-    superiorIsAutomat_ = message.has_automat();
-    if( superiorIsAutomat_ )
+    if( message.has_unit() )
+        diffusion_ = eUnit;
+    else if( message.has_automat() )
+        diffusion_ = eAutomat;
+    else if( message.has_formation() )
+        diffusion_ = eFormation;
+    if( diffusion_ == eUnit )
+        SetSuperior( &agents_.Get( message.unit().id() ) );
+    else if( diffusion_ == eAutomat )
         SetSuperior( &automats_.Get( message.automat().id() ) );
-    else
+    else if( diffusion_ == eFormation )
         SetSuperior( &formations_.Get( message.formation().id() ) );
 }
 
@@ -96,8 +113,10 @@ void TacticalLineHierarchies::WriteTo( sword::Diffusion& message ) const
     if( !GetSuperior() )
         throw MASA_EXCEPTION( "Invalid superior." );
 
-    if( superiorIsAutomat_ )
+    if( diffusion_ == eUnit )
+        message.mutable_unit()->set_id( GetSuperior()->GetId() );
+    else if( diffusion_ == eAutomat )
         message.mutable_automat()->set_id( GetSuperior()->GetId() );
-    else
+    else if( diffusion_ == eFormation )
         message.mutable_formation()->set_id( GetSuperior()->GetId() );
 }

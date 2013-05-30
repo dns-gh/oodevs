@@ -113,8 +113,7 @@ void LimitsLayer::BeforeSelection()
 // -----------------------------------------------------------------------------
 void LimitsLayer::Select( const kernel::Agent_ABC& element )
 {
-    if( const kernel::TacticalHierarchies* hierarchies = element.Retrieve< kernel::TacticalHierarchies >() )
-        selectedEntity_ = hierarchies->GetSuperior();
+    selectedEntity_ = &element;
 }
 
 // -----------------------------------------------------------------------------

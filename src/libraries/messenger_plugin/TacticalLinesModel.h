@@ -91,12 +91,14 @@ public:
     typedef std::map< unsigned int , std::set< const Entity_ABC* > > T_TacticalLineCollectorMap ;
     typedef T_TacticalLineCollectorMap T_FormationMap ;
     typedef T_TacticalLineCollectorMap T_AutomatMap ;
+    typedef T_TacticalLineCollectorMap T_UnitMap ;
     //@}
 
     //! @name Operations
     //@{
     void CollectFormations( T_FormationMap& );
     void CollectAutomats( T_AutomatMap& );
+    void CollectUnits( T_UnitMap& );
     //@}
 
 private:

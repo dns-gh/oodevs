@@ -30,13 +30,6 @@ public:
              ObjectHierarchies( kernel::Entity_ABC& holder, const kernel::Entity_ABC* superior );
     virtual ~ObjectHierarchies();
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectHierarchies( const ObjectHierarchies& );            //!< Copy constructor
-    ObjectHierarchies& operator=( const ObjectHierarchies& ); //!< Assignment operator
-    //@}
 };
 
 }
