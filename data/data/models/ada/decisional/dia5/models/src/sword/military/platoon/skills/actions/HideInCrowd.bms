@@ -1,0 +1,14 @@
+-- **************************************************************************** 
+-- Hide into the given crowd
+-- self.params.crowd: the crowd to hide into
+-- ****************************************************************************
+rootnode
+{
+    feedbacks = { "hidden" },
+
+    select = function( self )
+        if self.params.crowd:hideInto() then
+            Feedback( self.feedbacks.hidden )
+        end
+    end
+}

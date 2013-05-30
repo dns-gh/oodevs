@@ -29,12 +29,23 @@ rootnode
             Feedback( self.feedbacks.done )
         end
         self.roundTrip = self.roundTrip + 1
+        -- take care of agents hidden in crowd
+        local hiddenUnits = self.params.crowd:getHiddenUnits()
+        for _, agent in pairs( hiddenUnits ) do
+            if not exists( self.alreadyTransportedAgents, agent ) then
+                self.loadedAgents[ #self.loadedAgents + 1 ] = agent
+            end
+        end
+        meKnowledge:loadElements( self.loadedAgents )
     end,
 
     unloaded = function( self )
         -- après le déchargement, se diriger vers la position d'embarquement
         self.unloadFinished = true
         self.position = self.positionInit
+        meKnowledge:unloadElements( self.loadedAgents )
+        self.alreadyTransportedAgents = fusionList( self.alreadyTransportedAgents, self.loadedAgents )
+        self.loadedAgents = {}
     end,
 
     -- init
@@ -44,9 +55,9 @@ rootnode
         meKnowledge.isStoppingTransport = false
         -- init crowd's concentration information
         integration.lockCrowdKnowledge( self.params.crowd )
-        meKnowledge.crowdTransporting = self.params.crowd
-        self.concentration = integration.getNearbyConcentration( meKnowledge.crowdTransporting, self.params.loadingPoint )
-        self.position = integration.getPositionConcentration( meKnowledge.crowdTransporting, self.concentration )
+        meKnowledge.transportedCrowd = self.params.crowd
+        self.concentration = integration.getNearbyConcentration( meKnowledge.transportedCrowd, self.params.loadingPoint )
+        self.position = integration.getPositionConcentration( meKnowledge.transportedCrowd, self.concentration )
         self.positionInit = self.position
         
         self.arrivedLoadPoint = false
@@ -54,7 +65,9 @@ rootnode
         self.loadFinished = false
         self.unloadFinished = false
         --compute and display the number of round trip
-        self.numberOfRoundTrip = math.ceil( meKnowledge:transportCrowdRoundTrip( meKnowledge.crowdTransporting ) )
+        self.numberOfRoundTrip = math.ceil( meKnowledge:transportCrowdRoundTrip( meKnowledge.transportedCrowd ) )
+        self.alreadyTransportedAgents = {} -- for hidden units transportation
+        self.loadedAgents = {} -- for hidden units transportation
     end,
 
     activate = function( self )
@@ -70,21 +83,29 @@ rootnode
             Feedback( self.feedbacks.done )
         end
 
+        -- Detect agents no more hidden in crowd
+        local hiddenUnits = self.params.crowd:getHiddenUnits()
+        for i, agent in pairs( self.alreadyTransportedAgents ) do
+            if not exists( hiddenUnits, agent ) then
+                self.alreadyTransportedAgents[ i ] = nil
+            end
+        end
+
         -- deplacement
         Activate( skill.links.moveToward, 1, { entities = { self.position } } )
 
         if self.arrivedDestination and not self.unloadFinished then
             -- Unload Crowd
-            Activate( skill.nodes.UnloadCrowd, 1, { crowd = meKnowledge.crowdTransporting, position = self.position } )
+            Activate( skill.nodes.UnloadCrowd, 1, { crowd = meKnowledge.transportedCrowd, position = self.position } )
         end
  
         if self.arrivedLoadPoint and not self.loadFinished then
             -- Load Crowd
-            Activate( skill.nodes.LoadCrowd, 1, { crowd = meKnowledge.crowdTransporting, concentration = self.concentration, roundTrip = self.numberOfRoundTrip, currentRoundTrip = self.roundTrip } )
+            Activate( skill.nodes.LoadCrowd, 1, { crowd = meKnowledge.transportedCrowd, concentration = self.concentration, roundTrip = self.numberOfRoundTrip, currentRoundTrip = self.roundTrip } )
         end
 
         if self.unloadFinished then
-            local concentration = integration.getNearbyConcentration( meKnowledge.crowdTransporting, self.params.loadingPoint )
+            local concentration = integration.getNearbyConcentration( meKnowledge.transportedCrowd, self.params.loadingPoint )
             if concentration == 0 or concentration ~= self.concentration then
                 Feedback( self.feedbacks.done )
             end

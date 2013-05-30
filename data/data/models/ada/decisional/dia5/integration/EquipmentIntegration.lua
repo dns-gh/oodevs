@@ -294,6 +294,32 @@ integration.isDismounted = function( self )
 end
 
 -- -------------------------------------------------------------------------------- 
+-- Board list of elements without delay
+-- @author GGE
+-- @release 2012-10-22
+-- --------------------------------------------------------------------------------
+integration.boardElementsWithoutDelay = function( units, transportOnlyLoadable )
+    DEC_Transport_EmbarquerPionsSansDelais( units, transportOnlyLoadable )
+end
+
+integration.unboardElementsWithoutDelay = function( units )
+    DEC_Transport_DebarquerPionsSansDelais( units )
+end
+
+-- -------------------------------------------------------------------------------- 
+-- Board one element without delay
+-- @author GGE
+-- @release 2012-10-22
+-- --------------------------------------------------------------------------------
+integration.boardElementWithoutDelay = function( unit, transportOnlyLoadable )
+    DEC_Transport_EmbarquerPionSansDelais( unit, transportOnlyLoadable )
+end
+
+integration.unboardElementWithoutDelay = function( unit )
+    DEC_Transport_DebarquerPionSansDelais( unit )
+end
+
+-- -------------------------------------------------------------------------------- 
 -- Deploy the unit
 -- @author PSN
 -- @release 2011-12-20

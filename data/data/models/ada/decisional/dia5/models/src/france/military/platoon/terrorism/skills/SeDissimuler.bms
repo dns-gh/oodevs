@@ -4,14 +4,32 @@
 -- ****************************************************************************
 rootnode 
 {
-    connections = { skill.links.moveToward },
+    connections = { skill.links.moveToward, skill.links.hideIntoCrowd },
+    feedbacks   = { "hidden" },
 
     done = function( self ) end,
 
+    hidden = function( self )
+        Feedback( self.feedbacks.hidden ) -- end of skill, target has been lost...
+    end,
+
     activate = function( self )
         local Activate = Activate
-        -- if dissimulate in a crowd, go to the head
         if masalife.brain.core.class.isOfType( self.params.reachable, sword.military.world.Crowd )then
+            -- Check if the crowd is valid...
+            if not self.params.reachable:isValid() then
+                meKnowledge:RC( eRC_InvalidTarget )
+                Feedback( self.feedbacks.failed ) -- end of skill, target has been lost...
+                return
+            end
+            -- Once the crowd has been reached, consideration is made that the agent can hide into it.
+             if meKnowledge:isInCrowd( self.params.reachable ) then
+                self.crowdReached = true
+            end
+            if self.crowdReached then
+                Activate( skill.links.hideIntoCrowd, 1, { crowd = self.params.reachable } ) -- The agent is hidden in the crowd until the action is called.
+            end
+            -- if dissimulate in a crowd, go to the head
             self.destination = self.params.reachable:getHeadPosition()
         else
             self.destination = self.destination or self.params.reachable:getMyPosition()

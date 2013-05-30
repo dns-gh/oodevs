@@ -977,5 +977,19 @@ return
     end,
     transportUnitRoundTrip = function( self, onlyLoadable )
         return integration.transportUnitRoundTrip( self, onlyLoadable )
+    end,
+    loadElements = function( self, elements ) -- loadable elements
+        local simElements = {}
+        for _, element in pairs( elements ) do
+           simElements[ #simElements + 1 ] = element.source
+        end
+        integration.boardElementsWithoutDelay( simElements, false )
+    end, 
+    unloadElements = function( self, elements )-- loadable elements
+        local simElements = {}
+        for _, element in pairs( elements ) do
+           simElements[ #simElements + 1 ] = element.source
+        end
+        integration.unboardElementsWithoutDelay( simElements )
     end
 }

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <role xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.terrorism.roles.Terroriste" source-version="1.0.0" extends="sword.military.platoon.individual.roles.Terrorist">
-    <skills>
-        <skill name="france.military.platoon.skills.EntrerDansReseauSouterrain"/>
-        <skill name="france.military.platoon.skills.FaireMouvementDansReseauSouterrain"/>
-        <skill name="france.military.platoon.skills.SortirDuReseauSouterrain"/>
-        <skill name="france.military.platoon.skills.DetruireReseau"/>
-        <skill name="france.military.platoon.skills.GarderOtage"/>
-        <skill name="france.military.platoon.skills.SeFaireTransporter"/>
-        <skill name="france.military.platoon.terrorism.skills.SeDissimuler"/>
-        <skill name="france.military.platoon.skills.MoveAlong"/>
-        <skill name="france.military.platoon.terrorism.skills.Renseigner"/>
-        <skill name="france.military.platoon.skills.LibererEmbarques"/>
-    </skills>
+	<skills>
+		<skill name="france.military.platoon.skills.EntrerDansReseauSouterrain"/>
+		<skill name="france.military.platoon.skills.FaireMouvementDansReseauSouterrain"/>
+		<skill name="france.military.platoon.skills.SortirDuReseauSouterrain"/>
+		<skill name="france.military.platoon.skills.DetruireReseau"/>
+		<skill name="france.military.platoon.skills.GarderOtage"/>
+		<skill name="france.military.platoon.skills.SeFaireTransporter"/>
+		<skill name="france.military.platoon.terrorism.skills.SeDissimuler"/>
+		<skill name="sword.military.platoon.skills.actions.HideInCrowd"/>
+		<skill name="france.military.platoon.skills.MoveAlong"/>
+		<skill name="france.military.platoon.terrorism.skills.Renseigner"/>
+		<skill name="france.military.platoon.skills.LibererEmbarques"/>
+	</skills>
 </role>

@@ -140,6 +140,28 @@ return
     getName = function( self )
         return integration.getName( self )
     end,
+    hideInto = masalife.brain.integration.startStopAction( 
+    { 
+        start = function( self )
+            meKnowledge:RC( eRC_startHiddingInTheCrowd )
+            integration.lockCrowdKnowledge( self )
+            integration.startHidingInCrowd( self )
+        end,
+        started = function( self )
+            return true -- this action cannot fail...
+        end,
+        stop = function( self )
+            meKnowledge:RC( eRC_stopHiddingInTheCrowd )
+            integration.stopHidingInCrowd( self )
+            integration.unlockCrowdKnowledge( self )
+        end
+    } ),
+    isValid = function( self )
+        return integration.isKnowledgeCrowdValid( self.source )
+    end,
+    getHiddenUnits = function( self )
+        return integration.getAgentsHiddenInCrowd( meKnowledge.transportedCrowd )
+    end,
     -- -------------------------------------------------------------------------------- 
     -- Attributes
     -- --------------------------------------------------------------------------------

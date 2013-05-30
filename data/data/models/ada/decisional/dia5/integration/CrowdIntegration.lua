@@ -353,3 +353,24 @@ end
 integration.unlockCrowdKnowledge = function( crowd )
     DEC_ConnaissancePopulation_Deverrouiller( crowd.source )
 end
+
+integration.isKnowledgeCrowdValid = function( crowd )
+    return DEC_CrowdKnowledge_IsValid( myself, crowd )
+end
+
+integration.startHidingInCrowd = function( crowd )
+    DEC_StartHidingInCrowd( crowd.source )
+end
+
+integration.stopHidingInCrowd = function( crowd )
+    DEC_StopHidingInCrowd( crowd.source )
+end
+
+integration.getAgentsHiddenInCrowd = function( crowd )
+    local hiddenAgents = {}
+    local simAgents = DEC_GetAgentsHiddenInCrowd( crowd.source ) 
+    for _, simAgent in pairs( simAgents ) do
+        hiddenAgents[ #hiddenAgents + 1 ] = CreateKnowledge( sword.military.world.PlatoonAlly, simAgent )
+    end
+    return hiddenAgents
+end

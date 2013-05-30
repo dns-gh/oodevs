@@ -705,5 +705,7 @@
   <report category="operational" id="514" message="Removed logistic link to %1">
     <parameter type="Agent"/>
   </report>
+  <report category="operational" id="515" message="Agent is hiding in the crowd"/>
+  <report category="operational" id="516" message="Agent is no more hidden in the crowd"/>
 </reports>
-<!-- signature="2411137259" -->
+<!-- signature="3420171278" -->

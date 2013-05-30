@@ -215,10 +215,24 @@
             </return>
         </method>
         <method name="loadIt" abstract="false">
-            <description>Action du chargement d'une concentration appartentant à la foule.</description>
+          <description>
+            To load this crowd into vehicules. Only concentration of crowds can be loaded. To load an entire crowd, the agent needs to have suffficient capacity regarding its equipement (see authoring tool). To transport a all crowd, the agent may perform many round trip.&#xD;
+            &#xD;
+            This implementation manage hidden terrorists. If hidden units stay into the crowd (they hide using the &quot;hideInCrowd&quot; skill) this action will automatically load them (but the agent won't know them).
+          </description>
         </method>
         <method name="unloadIt" abstract="false">
-            <description>Action de déchargement d'une concentration appartentant à la foule.</description>
+          <description>
+            To unload this crowd onto the given position. Only concentration of crowds can be unloaded. To transport a all crowd, the agent may perform many round trips.&#xD;
+            &#xD;
+            This implementation manage hidden terrorists. If hidden units stay into the crowd (they hide using the &quot;hideInCrowd&quot; skill) this action will automatically unload them (but the agent won't know them).
+          </description>
+          <argument name="position">
+            <description>The position to unload the crowd onto.</description>
+            <type>
+              <class name="sword.military.knowledge.decisional.Positionable"/>
+            </type>
+          </argument>
         </method>
         <method name="isMoving" abstract="false">
             <description>Returns 'true' if this element is moving, 'false' otherwise.</description>
@@ -233,6 +247,32 @@
                     <simple name="string"/>
                 </type>
             </return>
+        </method>
+        <method name="hideInto">
+          <description>Action of hinding within the crowd. Hining in a crowd allow the agent not to be detected by other agent. It also allows the agent to be transported with the crowd.</description>
+          <return>
+            <type>
+              <simple name="boolean"/>
+            </type>
+          </return>
+        </method>
+        <method name="isValid" abstract="false">
+          <description>Return 'true' if the knowledge is valid.</description>
+          <return>
+            <type>
+              <simple name="boolean"/>
+            </type>
+          </return>
+        </method>
+        <method name="getHiddenUnits">
+          <description>Returns the list of agents hidding into this crowd.</description>
+          <return>
+            <type>
+              <list>
+                <class name="sword.military.knowledge.decisional.Loadable"/>
+              </list>
+            </type>
+          </return>
         </method>
     </methods>
     <predicates>

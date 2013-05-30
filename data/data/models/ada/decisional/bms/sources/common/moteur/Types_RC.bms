@@ -483,7 +483,9 @@ eRC_SurrenderedUnitIdentified = 511
 eRC_TransportRoundTrip = 512
 eRC_LogSuperiorAdded = 513
 eRC_LogSuperiorRemoved = 514
-eNbr = 515
+eRC_startHiddingInTheCrowd = 515
+eRC_stopHiddingInTheCrowd = 516
+eNbr = 517
 
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),

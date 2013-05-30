@@ -296,7 +296,58 @@ int DEC_KnowledgePopulationFunctions::GetCrowdAttitude( const MIL_AgentPion& cal
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::GetFlowHead
+// Name: DEC_KnowledgePopulationFunctions::StartHidingInCrowd
+// Created: MCO 2013-05-07
+// -----------------------------------------------------------------------------
+void DEC_KnowledgePopulationFunctions::StartHidingInCrowd( MIL_AgentPion& callerAgent, int knowledgeId )
+{
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            pKnowledge->GetPopulationKnown().AddHidden( callerAgent );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::StopHidingInCrowd
+// Created: MCO 2013-05-07
+// -----------------------------------------------------------------------------
+void DEC_KnowledgePopulationFunctions::StopHidingInCrowd( MIL_AgentPion& callerAgent, int knowledgeId )
+{
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            pKnowledge->GetPopulationKnown().RemoveHidden( callerAgent );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::GetAgentsHiddenInCrowd
+// Created: MCO 2013-05-23
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_KnowledgePopulationFunctions::GetAgentsHiddenInCrowd( MIL_AgentPion& callerAgent, int knowledgeId )
+{
+    std::vector< DEC_Decision_ABC* > result;
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+        {
+            const auto& hidden = pKnowledge->GetPopulationKnown().GetHidden();
+            for( auto it = hidden.begin(); it != hidden.end(); ++it )
+                result.push_back( &(*it)->GetRole< DEC_Decision_ABC >() );
+        }
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::GetFlowHead
 // Created: EVH 2011-05-10
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::GetFlowHead( const DEC_Decision_ABC& callerAgent, int knowledgeId )
@@ -362,4 +413,20 @@ void DEC_KnowledgePopulationFunctions::Unlock( const MIL_AgentPion& callerAgent,
         if( pKnowledge )
             pKnowledge->Unlock();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::IsValid
+// Created: MIA 2013-05-17
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgePopulationFunctions::IsValid( const DEC_Decision_ABC& callerAgent, int knowledgeId )
+{
+    auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
+    if( bbKg )
+    {
+        boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( knowledgeId );
+        if( pKnowledge )
+            return true;
+    }
+    return false;
 }

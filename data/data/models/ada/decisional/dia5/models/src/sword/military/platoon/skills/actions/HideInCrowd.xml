@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.actions.HideInCrowd" source-version="1.0.0">
+	<description>For the agent, to act to hide within the given crowd.</description>
+	<parameters>
+		<parameter name="crowd">
+			<description>The crowd to hide into.</description>
+			<type>
+				<class name="sword.military.world.Crowd"/>
+			</type>
+		</parameter>
+	</parameters>
+	<feedbacks>
+		<feedback name="hidden">
+			<description>Sent when the agent is hidden into the given crowd.</description>
+		</feedback>
+	</feedbacks>
+</skill>

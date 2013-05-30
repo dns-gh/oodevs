@@ -489,11 +489,18 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< float (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAffinity , boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_GetAttitudePopulation" ] =
         boost::function< int (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAttitude , boost::cref( GetPion() ), _1 ) );
+    brain[ "DEC_StartHidingInCrowd" ] =
+        boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::StartHidingInCrowd, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_StopHidingInCrowd" ] =
+        boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::StopHidingInCrowd, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_GetAgentsHiddenInCrowd" ] =
+        boost::function< std::vector< DEC_Decision_ABC* > (int) >( boost::bind( &DEC_KnowledgePopulationFunctions::GetAgentsHiddenInCrowd, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissancePopulation_Verrouiller" ] = 
         boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::Lock, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissancePopulation_Deverrouiller" ] = 
         boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::Unlock, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_GetConcentrationLaPlusProche" ] = &DEC_KnowledgePopulationFunctions::GetClosestConcentration;
+    brain[ "DEC_CrowdKnowledge_IsValid" ] = &DEC_KnowledgePopulationFunctions::IsValid;
     brain[ "DEC_GetPositionConcentration" ] = &DEC_KnowledgePopulationFunctions::GetConcentrationPosition;
     brain[ "DEC_GetNombrePersonnesDansConcentration" ] = &DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration;
     brain[ "DEC_GetNombrePersonnesDansFoule" ] = &DEC_KnowledgePopulationFunctions::GetAllHumans;

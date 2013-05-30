@@ -1734,3 +1734,30 @@ void MIL_Population::Register( MissionController_ABC& pController )
 {
     orderManager_.Register( pController );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::AddHidden
+// Created: MCO 2013-05-07
+// -----------------------------------------------------------------------------
+void MIL_Population::AddHidden( MIL_Agent_ABC& agent )
+{
+    hidden_.insert( &agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::RemoveHidden
+// Created: MCO 2013-05-07
+// -----------------------------------------------------------------------------
+void MIL_Population::RemoveHidden( MIL_Agent_ABC& agent )
+{
+    hidden_.erase( &agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetHidden
+// Created: MCO 2013-05-07
+// -----------------------------------------------------------------------------
+const tools::Set< MIL_Agent_ABC* >& MIL_Population::GetHidden() const
+{
+    return hidden_;
+}

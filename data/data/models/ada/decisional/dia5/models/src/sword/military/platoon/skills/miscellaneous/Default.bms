@@ -99,9 +99,9 @@ rootnode
             Activate( skill.links.moveTo, 1, {entities = { pos } } )
             if DEC_Transport_EnCoursDeTransport() then
                 Activate( skill.nodes.UnloadQueue, 1, emptyTable )
-            elseif meKnowledge.crowdTransporting and DEC_Agent_TransporteFoule( meKnowledge.source ) then
+            elseif meKnowledge.transportedCrowd and DEC_Agent_TransporteFoule( meKnowledge.source ) then
                 local pos = CreateKnowledge( sword.military.world.Point, meKnowledge:getPosition() )
-                Activate( skill.nodes.UnloadCrowd, 1, { crowd = meKnowledge.crowdTransporting, position = pos } )
+                Activate( skill.nodes.UnloadCrowd, 1, { crowd = meKnowledge.transportedCrowd, position = pos } )
             end
         end
     end

@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.terrorism.skills.SeDissimuler" source-version="1.0.0">
-  <parameters>
-    <parameter name="reachable">
-      <description>Element dans lequel se dissimuler.</description>
-      <type>
-        <class name="sword.military.world.LocalizedElement"/>
-      </type>
-    </parameter>
-  </parameters>
-  <links>
-    <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
-  </links>
+	<parameters>
+		<parameter name="reachable">
+			<description>Element dans lequel se dissimuler.</description>
+			<type>
+				<class name="sword.military.world.LocalizedElement"/>
+			</type>
+		</parameter>
+	</parameters>
+	<links>
+		<link name="moveToward" skill="sword.military.platoon.skills.MoveToward">
+			<description>To reach the given crowd, before hidding withing it.</description>
+		</link>
+		<link name="hideIntoCrowd" skill="sword.military.platoon.skills.actions.HideInCrowd">
+			<description>To hide into the crowd once it is reached.</description>
+		</link>
+	</links>
+	<feedbacks>
+		<feedback name="hidden">
+			<description>Sent whent the agent is hidden into the given crowd.</description>
+		</feedback>
+	</feedbacks>
 </skill>
