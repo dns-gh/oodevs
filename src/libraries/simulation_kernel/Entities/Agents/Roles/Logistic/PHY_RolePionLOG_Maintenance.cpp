@@ -574,6 +574,8 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_Com
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( owner_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
     owner_.Execute( *componentComputer );
     GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
+    if( composanteUse.size() == 0 )
+        return std::numeric_limits< int >::min();
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( owner_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
     owner_.Execute( *lendedComputer );
     unsigned int nNbrHaulersAvailable = 0;

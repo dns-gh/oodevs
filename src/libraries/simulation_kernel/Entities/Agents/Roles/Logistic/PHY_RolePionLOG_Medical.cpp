@@ -521,6 +521,8 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation( const Human_ABC&
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanEvacuateCasualty, &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
+    if( composanteUse.size() == 0 )
+        return std::numeric_limits< int >::min();
     unsigned int nNbrAvailableAllowedToWork = 0;
     for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
@@ -552,6 +554,8 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection( const PHY_Medica
     PHY_ComposanteUsePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanCollectCasualty, &PHY_ComposanteTypePion::CanCollectCasualty, humanState.GetHuman() );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
     unsigned int nNbrAvailableAllowedToWork = 0;
+    if( composanteUse.size() == 0 )
+        return std::numeric_limits< int >::min();
     for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrAvailableAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
     return nNbrAvailableAllowedToWork;
@@ -578,6 +582,8 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForSorting() const
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanSortHumans, &PHY_ComposanteTypePion::CanSortHumans );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
+    if( composanteUse.size() == 0 )
+        return std::numeric_limits< int >::min();
     unsigned int nNbrDoctorsAvailable = 0;
     for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrDoctorsAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
@@ -611,6 +617,8 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHu
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanHealHuman, &PHY_ComposanteTypePion::CanHealHuman, humanState.GetHuman() );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
+    if( composanteUse.size() == 0 )
+        return std::numeric_limits< int >::min();
     unsigned int nNbrAllowedToWork = 0;
     for( auto it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrAllowedToWork += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
