@@ -16752,7 +16752,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="10m" speed-modifier="0.7" uninstallation-time="10m"/>
+    <setup footprint-radius="10" installation-time="15m" speed-modifier="0.7" uninstallation-time="15m"/>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -16780,7 +16780,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="500s"/>
     </postures>
-    <setup footprint-radius="10" installation-time="10m" speed-modifier="0.7" uninstallation-time="10m"/>
+    <setup footprint-radius="10" installation-time="15m" speed-modifier="0.7" uninstallation-time="15m"/>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
       <distance-before-point type="forest" value="500"/>
@@ -19222,4 +19222,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0589498121" -->
+<!-- signature="0156006010" -->
