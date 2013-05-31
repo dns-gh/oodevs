@@ -10,5 +10,6 @@
 		<skill name="france.military.platoon.terrorism.skills.Renseigner"/>
 		<skill name="sword.military.platoon.coercition.skills.SwitchToSafety"/>
 		<skill name="sword.military.platoon.coercition.skills.SwitchToSpeed"/>
+		<skill name="sword.military.platoon.skills.actions.HideInCrowd"/>
 	</skills>
 </role>
