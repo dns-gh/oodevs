@@ -473,6 +473,21 @@ void ResourceLinksDialog_ABC::SetReadOnly( bool readOnly ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::RefreshListNeeded
+// Created: JSR 2013-05-31
+// -----------------------------------------------------------------------------
+bool ResourceLinksDialog_ABC::RefreshListNeeded() const
+{
+    if( static_cast< int >( resourceNodes_.size() ) != dotationList_->count() )
+        return true;
+    unsigned int row  = 0;
+    for( auto it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it, ++row )
+        if( dotationList_->item( row )->text().toStdString() != it->first )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog_ABC::Show
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
@@ -481,7 +496,7 @@ void ResourceLinksDialog_ABC::Show()
     if( selected_.size() != 1 )
         return;
     resourceNodes_ = selected_.front()->Get< ResourceNetwork_ABC >().GetResourceNodes();
-    if( static_cast< int >( resourceNodes_.size() ) != dotationList_->count() )
+    if( RefreshListNeeded() )
     {
         dotationList_->blockSignals( true );
         dotationList_->clear();

@@ -102,6 +102,7 @@ private:
     template< class T >
     void DoMultipleSelect( const std::vector< const T* >& elements );
     bool IsDataUpdateEnabled();
+    bool RefreshListNeeded() const;
     //@}
 
 protected:
