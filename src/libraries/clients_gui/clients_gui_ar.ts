@@ -64,8 +64,8 @@
         <translation type="unfinished">تحذير</translation>
     </message>
     <message>
-        <source>© %1 MASA Group</source>
-        <translation type="unfinished"></translation>
+        <source>%1 MASA Group</source>
+        <translation>© %1 MASA Group</translation>
     </message>
 </context>
 <context>

@@ -48,7 +48,7 @@ AboutDialog::AboutDialog( QWidget* parent, const QString& line, const QString& l
     message = QString( "%1 - %2<br>%3 <a href=\"http://%4\">%5</a>" )
             .arg( tools::translate( "Application", "SWORD" ) )
             .arg( line )
-            .arg( tools::translate( "Application", "© %1 MASA Group" ).arg( QDateTime::currentDateTime().date().year() ) )
+            .arg( tools::translate( "Application", "%1 MASA Group" ).arg( QDateTime::currentDateTime().date().year() ) )
             .arg( tools::translate( "Application", "www.masagroup.net" ) )
             .arg( tools::translate( "Application", "www.masagroup.net" ) );
 

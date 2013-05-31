@@ -64,7 +64,7 @@
         <translation>Attention</translation>
     </message>
     <message>
-        <source>© %1 MASA Group</source>
+        <source>%1 MASA Group</source>
         <translation>© %1 MASA Group</translation>
     </message>
 </context>

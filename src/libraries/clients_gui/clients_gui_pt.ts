@@ -47,10 +47,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>© %1 MASA Group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>www.masagroup.net</source>
         <translation type="unfinished"></translation>
     </message>
@@ -65,6 +61,10 @@
     <message>
         <source>QT_LAYOUT_DIRECTION</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 MASA Group</source>
+        <translation>© %1 MASA Group</translation>
     </message>
 </context>
 <context>
