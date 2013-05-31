@@ -904,9 +904,10 @@ void MIL_Population::Move( const MT_Vector2D& destination )
 {
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
         ( **itConcentration ).Move( destination );
+    bool blockedByObjectRCSent = false;
     for( size_t i = 0; i < flows_.size(); ++i ) // $$$$ LDC Do NOT optimize the flow.size() away, flows_ is modified during iteration!!
     // for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow ) $$$$ LDC NO!!! flows_ can be lengthened during computation.
-        flows_[i]->Move( destination );
+        flows_[i]->Move( destination, blockedByObjectRCSent );
     UpdateBarycenter();
 }
 

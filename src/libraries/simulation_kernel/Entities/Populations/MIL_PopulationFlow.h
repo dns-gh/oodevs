@@ -45,7 +45,7 @@ public:
     //! @name Actions
     //@{
     void MagicMove( const MT_Vector2D& destination );
-    void Move( const MT_Vector2D& destination );
+    void Move( const MT_Vector2D& destination, bool& blockedByObjectRCSent );
     //@}
 
     //! @name Accessors

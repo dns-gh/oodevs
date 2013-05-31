@@ -220,7 +220,7 @@ void MIL_PopulationFlow::MoveToAlternateDestination( const MT_Vector2D& destinat
 // Name: MIL_PopulationFlow::Move
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
+void MIL_PopulationFlow::Move( const MT_Vector2D& destination, bool& blockedByObjectRCSent )
 {
     if( !pHeadPath_ || destination != primaryDestination_ || GetPopulation().GetKnowledge().HasChannelingChanged() )
     {
@@ -240,7 +240,7 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
         bHeadMoveFinished_ = true;
     if( nOut == DEC_PathWalker::eBlockedByObject )
     {
-        if( !bBlocked_ )
+        if( !bBlocked_ && !blockedByObjectRCSent )
         {
             if( pBlockingObject_ )
             {
@@ -248,6 +248,7 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
                 SendRC( MIL_Report::eRC_DifficultMovementProgression, name );
             }
         }
+        blockedByObjectRCSent = true;
         bBlocked_ = true;
         pBlockingObject_ = 0;
     }
