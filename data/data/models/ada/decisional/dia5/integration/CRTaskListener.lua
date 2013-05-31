@@ -133,13 +133,17 @@ function RegisterDoneTaskListener()
         -- NOTHING
     end
     function doneTaskListener:TaskFinished( taskName )
-        -- NOTHING
+        integration.notifyTaskEnded()
     end
     function doneTaskListener:TaskDone()
-        local automat = integration.GetSuperiorKnowledge( meKnowledge )
-        if automat then
-            integration.SendMessage( "TaskDone", automat, { element = myself }, { type = "dynamic" } )
-        end
+        integration.notifyTaskEnded()
     end
     masalife.brain.core.registerTaskListener( doneTaskListener )
+end
+
+integration.notifyTaskEnded = function( )
+    local automat = integration.GetSuperiorKnowledge( meKnowledge )
+    if automat then
+        integration.SendMessage( "TaskDone", automat, { element = myself }, { type = "dynamic" } )
+    end
 end
