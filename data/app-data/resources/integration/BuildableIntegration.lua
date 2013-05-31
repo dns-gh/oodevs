@@ -60,6 +60,7 @@ integration.startBuildIt = function( object, objectType )
             object.knowledge = CreateKnowledge( objectType, arg )
         end
     end
+    myself.hasStartedBuilding = true
     integration.pionRC( eRC_DebutTravaux )
 end
 
@@ -94,7 +95,9 @@ integration.startBuildItKnowledge = function( objectKnowledge )
     actionCallbacks[ objectKnowledge[ myself ].actionBuild ] = function( arg ) 
         objectKnowledge[myself].actionBuildState = arg 
     end
-    integration.pionRC( eRC_DebutTravaux )
+    if not myself.hasStartedBuilding then
+        integration.pionRC( eRC_DebutTravaux )
+    end
 end
 
 -- -----------------------------------------------------------------------------
@@ -106,7 +109,9 @@ integration.startBuildItUrbanBlock = function( urbanBlock )
     actionCallbacks[ urbanBlock[ myself ].actionBuild ] = function( arg ) 
         urbanBlock[ myself ].actionBuildState = arg
     end
-    integration.pionRC( eRC_DebutTravaux )
+    if not myself.hasStartedBuilding then
+        integration.pionRC( eRC_DebutTravaux )
+    end
 end
 
 -- -----------------------------------------------------------------------------
@@ -150,6 +155,7 @@ integration.stopBuildIt = function( object )
         object[myself].actionBuildState = nil
     end
     object[myself].actionBuildState = nil
+    myself.hasStartedBuilding = nil
 end
 
 -- -----------------------------------------------------------------------------
@@ -164,6 +170,7 @@ integration.stopBuildItUrbanBlock = function( urbanBlock )
     end
     urbanBlock[myself].actionBuild = DEC__StopAction( urbanBlock[myself].actionBuild )
     urbanBlock[myself].actionBuildState = nil
+    myself.hasStartedBuilding = nil
 end
 
 -- -----------------------------------------------------------------------------
@@ -199,7 +206,9 @@ integration.startBuildItSecu = function( object, objectType )
             object.knowledge = CreateKnowledge( objectType, arg )
         end
     end
-    integration.pionRC( eRC_DebutTravaux )
+    if not myself.hasStartedBuilding then
+        integration.pionRC( eRC_DebutTravaux )
+    end
 end
 
 -- -----------------------------------------------------------------------------
@@ -241,6 +250,7 @@ integration.stopBuildItSecu = function( object )
     if( object.knowledge ~= nil ) then
         integration.pionRC( eRC_FinTravauxObjet, object.knowledge.source )
     end
+    myself.hasStartedBuilding = nil
     return result
 end
 
