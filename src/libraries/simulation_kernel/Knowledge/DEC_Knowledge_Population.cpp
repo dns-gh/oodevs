@@ -42,7 +42,7 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const boost::shared_ptr< MIL
     , pKnowledgeGroup_             ( knowledgeGroup )
     , pHackedPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , criticalIntelligence_        ( "" )
-    , nID_                         ( idManager_.GetFreeId() )
+    , nID_                         ( idManager_.GetId() )
     , rDominationState_            ( 0. )
     , bIsRecon_                    ( false )
     , bReconAttributesValid_       ( false )
@@ -59,7 +59,7 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const boost::shared_ptr< MIL
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population( const DEC_Knowledge_Population& knowledge, const boost::shared_ptr< MIL_KnowledgeGroup > pKnowledgeGroup )
     : DEC_Knowledge_ABC()
-    , nID_                         ( knowledge.idManager_.GetFreeId() )
+    , nID_                         ( knowledge.idManager_.GetId() )
     , pKnowledgeGroup_             ( pKnowledgeGroup )
     , pPopulationKnown_            ( knowledge.pPopulationKnown_ )
     , pHackedPerceptionLevel_      ( knowledge.pHackedPerceptionLevel_ )
@@ -118,7 +118,7 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const unsign
          >> bReconAttributesValid_
          >> rDominationState_
          >> criticalIntelligence_;
-    idManager_.Lock( nID_ );
+    idManager_.GetId( nID_, true );
     assert( pPopulationKnown_ );
 }
 

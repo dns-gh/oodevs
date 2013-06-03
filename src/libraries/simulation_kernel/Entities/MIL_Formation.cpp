@@ -43,7 +43,7 @@ namespace
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory )
     : MIL_Entity_ABC( xis )
-    , nID_        ( xis.attribute< unsigned int >( "id" ) )
+    , nID_        ( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
     , pArmy_      ( &army )
     , pParent_    ( pParent )
     , pLevel_     ( 0 )
@@ -71,7 +71,6 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
         pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
         RegisterAction( pLogisticAction_ );
     }
-    idManager_.Lock( nID_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +79,7 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( int level, const std::string& name, std::string logLevelStr, MIL_Army_ABC& army, MIL_Formation* parent )
     : MIL_Entity_ABC( name )
-    , nID_        ( idManager_.GetFreeId() )
+    , nID_        ( idManager_.GetId() )
     , pArmy_      ( &army )
     , pParent_    ( parent )
     , pLevel_     ( 0 )
@@ -192,7 +191,7 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> const_cast< unsigned int& >( nID_ )
          >> pArmy_
          >> pParent_;
-    idManager_.Lock( nID_ );
+    idManager_.GetId( nID_, true );
     unsigned int nLevel;
     file >> nLevel;
     pLevel_ = PHY_NatureLevel::Find( nLevel );

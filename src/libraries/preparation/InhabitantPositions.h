@@ -54,8 +54,15 @@ class InhabitantPositions : public InhabitantPositions_ABC
 public:
     //! @name Types
     //@{
-    typedef boost::tuple< unsigned long, std::string, const kernel::UrbanObject_ABC* > T_UrbanObject;
-    typedef std::vector< T_UrbanObject >                                               T_UrbanObjectVector;
+    struct T_UrbanObject
+    {
+        T_UrbanObject( unsigned long id, const std::string name, const kernel::UrbanObject_ABC& urban ) 
+            : id_( id ), name_( name ), pUrban_( &urban ) {}
+        unsigned long id_;
+        std::string name_;
+        const kernel::UrbanObject_ABC* pUrban_;
+    };
+    typedef std::vector< T_UrbanObject > T_UrbanObjectVector;
     //@}
 
 public:
@@ -88,6 +95,7 @@ public:
     void Reject();
 
     virtual void NotifyDeleted( const kernel::UrbanObject_ABC& block );
+    virtual void NotifyUpdated( const kernel::UrbanObject_ABC& block );
     //@}
 
 private:

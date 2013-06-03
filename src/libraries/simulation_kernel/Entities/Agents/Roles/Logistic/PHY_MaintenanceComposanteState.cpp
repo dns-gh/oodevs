@@ -29,7 +29,7 @@ MIL_IDManager PHY_MaintenanceComposanteState::idManager_;
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_MaintenanceComposanteState::PHY_MaintenanceComposanteState( MIL_Agent_ABC& pion, PHY_ComposantePion& composante )
-    : nID_                ( idManager_.GetFreeId() )
+    : nID_                ( idManager_.GetId() )
     , nCreationTick_      ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
     , pPion_              ( &pion )
     , pComposante_        ( &composante )
@@ -80,7 +80,7 @@ void PHY_MaintenanceComposanteState::load( MIL_CheckPointInArchive& file, const 
          >> pConsign_
          >> vComposantePosition_
          >> bDiagnosed_;
-    idManager_.Lock( nID_ );
+    idManager_.GetId( nID_, true );
 }
 
 // -----------------------------------------------------------------------------

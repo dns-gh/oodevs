@@ -351,3 +351,13 @@ void ResourceNetworkAttribute::SetColor( const std::string& resource, float alph
     resources_.Get( resource ).GetColor( red, green, blue );
     glColor4f( red, green, blue, alpha );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::ReplaceLinksUrbanId
+// Created: MMC 2013-05-29
+// -----------------------------------------------------------------------------
+void ResourceNetworkAttribute::ReplaceLinksUrbanId( unsigned long oldId, unsigned long newId )
+{
+    for( auto node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
+        node->second.ReplaceLinkId( oldId, newId );
+}

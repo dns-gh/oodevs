@@ -346,6 +346,10 @@
         <source>Terrain&apos;s physical base does not match the one selected for the exercise. All urban materials, roofshapes, usages and infrastructures will be lost at next save.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Urban blocks ids have been changed on loading because they were in conflict with other entities ids.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NBC</name>

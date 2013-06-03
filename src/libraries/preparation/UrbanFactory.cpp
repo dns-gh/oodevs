@@ -23,7 +23,6 @@
 
 #include "clients_gui/Infrastructure_ABC.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
-#include "clients_gui/UrbanObject.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"

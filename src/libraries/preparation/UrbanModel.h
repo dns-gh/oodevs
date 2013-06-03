@@ -82,6 +82,7 @@ public:
     void DeleteBlock( const kernel::UrbanObject_ABC& urbanObject );
     bool TakeLinkErrors();
     void CreateGeostoreManager( const tools::ExerciseConfig& config );
+    bool ManageIdConflicts();
     //@}
 
     //! @name Accessors
@@ -103,6 +104,20 @@ private:
     void CreateQuadTree( float width, float height );
     void InsertIntoQuadTree( const kernel::UrbanObject_ABC& urbanObject );
     void CleanLinks();
+    void CheckIdConflict( kernel::UrbanObject_ABC& urban );
+    void ReplaceLinkId( kernel::UrbanObject_ABC& urban );
+    void ChangeUrbanObjectId( kernel::UrbanObject_ABC& urban, unsigned long newId );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    struct UrbanIdReplacement
+    {
+        UrbanIdReplacement(): pUrban_( 0 ), newId_( 0 ) {}
+        kernel::UrbanObject_ABC* pUrban_;
+        unsigned long newId_;
+    };
     //@}
 
 private:
@@ -110,6 +125,7 @@ private:
     //@{
     kernel::Controllers&                         controllers_;
     const StaticModel&                           staticModel_;
+    tools::IdManager&                            idManager_;
     const tools::Resolver< kernel::Object_ABC >& objects_;
     std::auto_ptr< gui::UrbanDisplayOptions >    urbanDisplayOptions_;
     std::auto_ptr< UrbanFactory_ABC >            factory_;
@@ -119,6 +135,7 @@ private:
     float                                        precision_;
     float                                        maxElementSize_;
     bool                                         cleanedLinks_;
+    std::map< unsigned long, UrbanIdReplacement > urbanConflictIds_;
     //@}
 };
 

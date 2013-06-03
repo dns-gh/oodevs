@@ -25,6 +25,7 @@
 #include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
 #include "Urban/MIL_UrbanCache.h"
+#include "Tools/MIL_IDManager.h"
 #include <tools/thread/Thread.h>
 #include <tools/win32/ProcessMonitor.h>
 #include <xeumeuleu/xml.hpp>
@@ -100,6 +101,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     pTheAgentServer_ = this;
     AgentServerInit initGuard( pTheAgentServer_ );
 
+    MIL_IDManager::SetKeepIdsMode( true );
     config_.AddFileToCRC( config_.GetExerciseFile() );
     config_.GetLoader().LoadFile( config_.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, settings_, _1 ) );
     ReadStaticData();
@@ -119,6 +121,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pEntityManager_->LoadUrbanModel( config_ );
         pEntityManager_->Finalize();
     }
+    MIL_IDManager::SetKeepIdsMode( false );
     Resume( nextPause_, 0, 0 );
     timerManager_.Register( *this );
     MT_LOG_INFO_MSG( "Tick duration : " << nTimeStepDuration_ << " seconds" );

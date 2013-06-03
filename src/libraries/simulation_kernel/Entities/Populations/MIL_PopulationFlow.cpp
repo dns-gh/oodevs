@@ -60,7 +60,7 @@ void load_construct_data( Archive& archive, MIL_PopulationFlow* flow, const unsi
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_PopulationConcentration& sourceConcentration )
-    : MIL_PopulationElement_ABC( population, idManager_.GetFreeId() )
+    : MIL_PopulationElement_ABC( population, idManager_.GetId() )
     , pSourceConcentration_       ( &sourceConcentration )
     , pDestConcentration_         ( 0 )
     , flowShape_                  ( 2, sourceConcentration.GetPosition() )
@@ -88,7 +88,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
 // Created: NLD 2007-03-01
 // -----------------------------------------------------------------------------
 MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint )
-    : MIL_PopulationElement_ABC( population, idManager_.GetFreeId() )
+    : MIL_PopulationElement_ABC( population, idManager_.GetId() )
     , pSourceConcentration_       ( 0 )
     , pDestConcentration_         ( 0 )
     , primaryDestination_         ( source.primaryDestination_ )
@@ -718,7 +718,7 @@ void MIL_PopulationFlow::load( MIL_CheckPointInArchive& file, const unsigned int
          >> flowShape_
          >> direction_
          >> rSpeed_;
-    idManager_.Lock( MIL_PopulationElement_ABC::GetID() );
+    idManager_.GetId( MIL_PopulationElement_ABC::GetID(), true );
     UpdateLocation();
 }
 

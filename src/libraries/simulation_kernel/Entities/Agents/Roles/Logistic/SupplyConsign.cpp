@@ -36,7 +36,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( logistic::SupplyConsign )
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
 SupplyConsign::SupplyConsign( SupplySupplier_ABC& supplier, SupplyRequestParameters_ABC& parameters )
-    : id_                       ( idManager_.GetFreeId() )
+    : id_                       ( idManager_.GetId() )
     , creationTick_             ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) //$$$ Huge shit
     , supplier_                 ( &supplier )
     , provider_                 ( 0 )

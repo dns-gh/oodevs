@@ -28,7 +28,7 @@ class MIL_UrbanObject_ABC : public MIL_Object
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_UrbanObject_ABC( const MIL_ObjectType_ABC& type ) : MIL_Object( 0, type, false ) {}
+             MIL_UrbanObject_ABC( const MIL_ObjectType_ABC& type, unsigned long forcedId = 0 ) : MIL_Object( 0, type, forcedId ) {}
              MIL_UrbanObject_ABC() {}
     virtual ~MIL_UrbanObject_ABC() {}
     //@}

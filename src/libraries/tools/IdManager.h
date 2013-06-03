@@ -11,6 +11,7 @@
 #define __kernel_IdManager_h_
 
 #include <boost/noncopyable.hpp>
+#include <set>
 
 namespace tools
 {
@@ -26,21 +27,25 @@ class IdManager : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             IdManager();
+             IdManager( bool bKeepIds = false );
     virtual ~IdManager();
     //@}
 
     //! @name Operations
     //@{
-    unsigned long GetNextId();
+    unsigned long GetNextId( bool bSkipKeepId = false );
     void Reset();
-    void Lock( unsigned long id );
+    void Lock( unsigned long id, bool bSkipKeepId = false );
+    void SetKeepIds( bool bKeepIds );
+    bool HasBeenKept( unsigned long id ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     unsigned long max_;
+    bool bKeepIds_;
+    std::set< unsigned long > ids_;
     //@}
 };
 

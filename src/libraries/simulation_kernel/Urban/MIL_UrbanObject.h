@@ -12,6 +12,7 @@
 
 #include "MIL_UrbanObject_ABC.h"
 #include <tools/Map.h>
+#include "Tools/MIL_IDManager.h"
 
 namespace sword
 {
@@ -171,6 +172,7 @@ private:
     mutable float livingSpace_;
     mutable std::vector< boost::shared_ptr< MT_Vector2D > > stretchedArea_;
     static const float stretchOffset_;
+    static MIL_IDManager idManager_;
     //@}
 };
 

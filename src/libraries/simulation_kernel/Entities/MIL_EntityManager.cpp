@@ -2165,7 +2165,8 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> rEffectsTime_
          >> rStatesTime_
          >> nRandomBreakdownsNextTimeStep_
-         >> cities_;
+         >> cities_
+         >> MIL_Report::nextMessageId_;
 
     MIL_AgentServer::GetWorkspace().GetUrbanCache().CreateQuadTree(
         cities_,
@@ -2229,7 +2230,8 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
          << rEffectsTime_
          << rStatesTime_
          << nRandomBreakdownsNextTimeStep_
-         << cities_;
+         << cities_
+         << MIL_Report::nextMessageId_;
 }
 
 // -----------------------------------------------------------------------------

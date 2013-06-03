@@ -64,7 +64,7 @@ class MIL_Object_ABC : public TER_Object_ABC
 {
 public:
              MIL_Object_ABC();
-             MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int forcedId );
+             MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned long forcedId );
     virtual ~MIL_Object_ABC();
 
     //! @name Init

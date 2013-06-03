@@ -36,11 +36,18 @@ public:
     //@{
     EUrbanLevel GetLevel() const;
     void ChangeSuperior( kernel::Entity_ABC& superior );
+    void ForceEntityNewId( unsigned long newId );
     //@}
 
     //! @name Serializable_ABC
     //@{
     virtual void SerializeAttributes( xml::xostream& ) const;
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    void RemoveSubordinateByRef( const kernel::Entity_ABC& entity );
     //@}
 
 private:

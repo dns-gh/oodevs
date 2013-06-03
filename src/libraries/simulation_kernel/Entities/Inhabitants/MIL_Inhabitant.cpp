@@ -61,7 +61,7 @@ void load_construct_data( Archive& archive, MIL_Inhabitant* population, const un
 MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& type, MIL_Army_ABC& army )
     : MIL_Entity_ABC( xis )
     , type_                   ( type )
-    , nID_                    ( xis.attribute< unsigned int >( "id" ) )
+    , nID_                    ( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
     , pArmy_                  ( &army )
     , movingObjectId_         ( 0 )
     , nNbrHealthyHumans_      ( 0 )
@@ -72,7 +72,6 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     , pAffinities_            ( new MIL_AffinitiesMap( xis ) )
     , pExtensions_            ( new MIL_DictionaryExtensions( xis ) )
 {
-    idManager_.Lock( nID_ );
     xis >> xml::start( "composition" )
             >> xml::attribute( "healthy", nNbrHealthyHumans_ )
             >> xml::attribute( "wounded", nNbrWoundedHumans_ )
@@ -143,7 +142,7 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> const_cast< unsigned int& >( nID_ )
          >> const_cast< MIL_Army_ABC*& >( pArmy_ );
-    idManager_.Lock( nID_ );
+    idManager_.GetId( nID_, true );
     file >> text_
          >> nNbrHealthyHumans_
          >> nNbrDeadHumans_

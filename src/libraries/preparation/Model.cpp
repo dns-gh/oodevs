@@ -65,7 +65,7 @@ Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
     : EntityResolverFacade( static_cast< Model_ABC& >( *this ) )
     , controllers_          ( controllers )
     , staticModel_          ( staticModel )
-    , idManager_            ( *new tools::IdManager() )
+    , idManager_            ( *new tools::IdManager( true ) )
     , teamFactory_          ( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
     , knowledgeGroupFactory_( *new KnowledgeGroupFactory( controllers, staticModel, idManager_ ) )
     , formationFactory_     ( *new FormationFactory( controllers, staticModel, idManager_, symbolsFactory_ ) )
@@ -98,7 +98,6 @@ Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
     , performanceIndicator_ ( *new PerformanceIndicator( *this ) )
     , width_                ( 0.f )
     , height_               ( 0.f )
-
 {
     // NOTHING
 }
@@ -319,6 +318,10 @@ void Model::Load( const tools::ExerciseConfig& config )
     performanceIndicator_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
     if( orbatFile.Exists() )
         ghosts_.Finalize( staticModel_ ); // $$$$ ABR 2012-06-25: Resolve logistic link and profiles for ghost ... frozen ICD
+    
+    if( urban_.ManageIdConflicts() )
+        AppendLoadingError( eOthers, tools::translate( "Model", "Urban blocks ids have been changed on loading because they were in conflict with other entities ids." ).toAscii().constData() );
+    idManager_.SetKeepIds( false );
 
     SetLoaded( true );
 }

@@ -38,7 +38,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Object )
 // Name: MIL_Object constructor
 // Created: JSR 2011-01-19
 // -----------------------------------------------------------------------------
-MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int forcedId )
+MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned long forcedId )
     : MIL_Object_ABC( army, type, forcedId )
     , manipulator_  ( new MIL_ObjectManipulator( *this ) )
     , xAttrToUpdate_( 0 )

@@ -39,7 +39,7 @@ MIL_IDManager DEC_Knowledge_PopulationFlow::idManager_;
 DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Population& populationKnowledge, const MIL_PopulationFlow& flowKnown )
     : pPopulationKnowledge_    ( &populationKnowledge )
     , pFlowKnown_              ( &flowKnown )
-    , nID_                     ( idManager_.GetFreeId() )
+    , nID_                     ( idManager_.GetId() )
     , direction_               ( 1., 0. )
     , rSpeed_                  ( 0. )
     , nNbrAliveHumans_         ( 0 )
@@ -65,7 +65,7 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
 DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Population& populationKnowledge, const DEC_Knowledge_PopulationFlow& knowledge )
     : pPopulationKnowledge_    ( &populationKnowledge )
     , pFlowKnown_              ( knowledge.pFlowKnown_ )
-    , nID_                     ( idManager_.GetFreeId() )
+    , nID_                     ( idManager_.GetId() )
     , direction_               ( knowledge.direction_ )
     , rSpeed_                  ( knowledge.rSpeed_ )
     , flowParts_               ( knowledge.flowParts_ )
@@ -135,7 +135,7 @@ void DEC_Knowledge_PopulationFlow::load( MIL_CheckPointInArchive& file, const un
          >> nNbrAliveHumans_
          >> nNbrDeadHumans_
          >> bReconAttributesValid_;
-    idManager_.Lock( nID_ );
+    idManager_.GetId( nID_, true );
     unsigned int nTmpID;
     file >> nTmpID;
     pAttitude_ = MIL_PopulationAttitude::Find( nTmpID );

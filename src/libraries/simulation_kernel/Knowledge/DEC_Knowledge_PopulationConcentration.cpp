@@ -35,7 +35,7 @@ MIL_IDManager DEC_Knowledge_PopulationConcentration::idManager_;
 DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DEC_Knowledge_Population& populationKnowledge, const MIL_PopulationConcentration& concentrationKnown )
     : pPopulationKnowledge_     ( &populationKnowledge )
     , pConcentrationKnown_      ( &concentrationKnown )
-    , nID_                      ( idManager_.GetFreeId() )
+    , nID_                      ( idManager_.GetId() )
     , nTimeLastUpdate_          ( 0 )
     , position_                 ( concentrationKnown.GetPosition() )
     , nNbrAliveHumans_          ( 0 )
@@ -86,7 +86,7 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration()
 DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DEC_Knowledge_Population& populationKnowledge, const DEC_Knowledge_PopulationConcentration& concentration )
     : pPopulationKnowledge_     ( &populationKnowledge )
     , pConcentrationKnown_      ( concentration.pConcentrationKnown_ )
-    , nID_                      ( idManager_.GetFreeId() )
+    , nID_                      ( idManager_.GetId() )
     , nTimeLastUpdate_          ( concentration.nTimeLastUpdate_ )
     , position_                 ( concentration.position_ )
     , nNbrAliveHumans_          ( concentration.nNbrAliveHumans_ )
@@ -127,7 +127,7 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
          >> nNbrAliveHumans_
          >> nNbrDeadHumans_
          >> bReconAttributesValid_;
-    idManager_.Lock( nID_ );
+    idManager_.GetId( nID_, true );
     unsigned int nTmpID;
     bool bAttitudeValid;
     file >> bAttitudeValid;

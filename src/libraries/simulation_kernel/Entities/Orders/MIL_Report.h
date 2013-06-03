@@ -14,7 +14,6 @@
 #include <vector>
 #include <map>
 #include "MIL_MissionParameterFactory.h"
-#include "Tools/MIL_IDManager.h"
 #include "MIL_DecisionalReport.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
@@ -88,6 +87,12 @@ public:
     template< typename T > static void PostEvent( const T& receiver, const MIL_DecisionalReport& nReport, int nParam1, const std::string& nParam2, int nParam3, int nParam4, int nParam5 );
     //@}
 
+public:
+    //! @name Member data
+    //@{
+    static unsigned int nextMessageId_;
+    //@}
+
 private:
     //! @name Constructors/Destructor
     //@{
@@ -126,7 +131,6 @@ private:
     T_ParameterVector parameters_;
     static T_ReportMap reports_;
     static T_KeyMap keys_;
-    static MIL_IDManager ids_;
     //@}
 };
 

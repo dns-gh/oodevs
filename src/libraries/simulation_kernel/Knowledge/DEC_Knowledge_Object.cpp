@@ -65,7 +65,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
     , pObjectKnown_            ( &objectKnown )
     , objectId_                ( objectKnown.GetID() )
     , pObjectType_             ( &objectKnown.GetType() )
-    , nID_                     ( idManager_.GetFreeId() )
+    , nID_                     ( idManager_.GetId() )
     , name_                    ( objectKnown.GetName() )
     , nAttributesUpdated_      ( eAttr_AllAttributes )
     , pOwnerArmy_              ( objectKnown.GetArmy() )
@@ -92,7 +92,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const boost::shared_ptr< MIL_Knowled
     , pObjectKnown_            ( &objectKnown )
     , objectId_                ( objectKnown.GetID() )
     , pObjectType_             ( &objectKnown.GetType() )
-    , nID_                     ( idManager_.GetFreeId() )
+    , nID_                     ( idManager_.GetId() )
     , pKnowledgeGroup_         ( groupKnowing )
     , name_                    ( objectKnown.GetName() )
     , nAttributesUpdated_      ( eAttr_AllAttributes )
@@ -145,7 +145,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, co
     , pObjectKnown_                    ( copy.pObjectKnown_ )
     , objectId_                        ( copy.objectId_ )
     , pObjectType_                     ( copy.pObjectType_ )
-    , nID_                             ( copy.idManager_.GetFreeId() )
+    , nID_                             ( copy.idManager_.GetId() )
     , pKnowledgeGroup_                 ( pGroupKnowing )
     , name_                            ( copy.name_ )
     , nAttributesUpdated_              ( copy.nAttributesUpdated_ )
@@ -176,7 +176,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, co
     , pObjectKnown_                    ( copy.pObjectKnown_ )
     , objectId_                        ( copy.objectId_ )
     , pObjectType_                     ( copy.pObjectType_ )
-    , nID_                             ( copy.idManager_.GetFreeId() )
+    , nID_                             ( copy.idManager_.GetId() )
     , name_                            ( copy.name_ )
     , nAttributesUpdated_              ( eAttr_AllAttributes )
     , pOwnerArmy_                      ( copy.pOwnerArmy_ )
@@ -226,7 +226,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
          >> const_cast< MIL_Army_ABC*& >( pOwnerArmy_ )
          >> localisation_
          >> avoidanceLocalisation_;
-    idManager_.Lock( nID_ );
+    idManager_.GetId( nID_, true );
     unsigned int nPerceptionID;
     file >> nPerceptionID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nPerceptionID );

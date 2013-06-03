@@ -77,7 +77,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
                                 unsigned int gcMult, sword::DEC_Logger* logger )
     : MIL_Entity_ABC( xis )
     , pType_                      ( &type )
-    , nID_                        ( xis.attribute< unsigned int >( "id" ) )
+    , nID_                        ( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
     , pArmy_                      ( &army )
     , pDefaultAttitude_           ( 0 )
     , rArmedIndividuals_          ( type.GetArmedIndividuals() )
@@ -96,7 +96,6 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     , pAffinities_                ( new MIL_AffinitiesMap( xis ) )
     , pExtensions_                ( new MIL_DictionaryExtensions( xis ) )
 {
-    idManager_.Lock( nID_ );
     std::string strAttitude;
     xis >> xml::attribute( "attitude", strAttitude );
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( strAttitude );
@@ -161,7 +160,7 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
 MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger, unsigned int context )
     : MIL_Entity_ABC( name )
     , pType_                      ( &type )
-    , nID_                        ( idManager_.GetFreeId() )
+    , nID_                        ( idManager_.GetId() )
     , pArmy_                      ( &army )
     , pDefaultAttitude_           ( 0 )
     , rArmedIndividuals_          ( type.GetArmedIndividuals() )
@@ -230,7 +229,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> const_cast< unsigned int& >( nID_ )
          >> const_cast< MIL_Army_ABC*& >( pArmy_ );
-    idManager_.Lock( nID_ );
+    idManager_.GetId( nID_, true );
     MIL_AffinitiesMap* pAffinities;
     MIL_DictionaryExtensions* pExtensions;
     unsigned int nAttitudeID;

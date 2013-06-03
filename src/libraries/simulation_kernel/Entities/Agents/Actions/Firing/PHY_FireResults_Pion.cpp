@@ -30,7 +30,7 @@
 // -----------------------------------------------------------------------------
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target )
     : firer_ ( firer )
-    , nID_   ( idManager_.GetFreeId() )
+    , nID_   ( idManager_.GetId() )
     , direct_( true )
 {
     client::StartUnitFire asnMsg;
@@ -47,7 +47,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
 // -----------------------------------------------------------------------------
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_PopulationElement_ABC& target )
     : firer_ ( firer )
-    , nID_   ( idManager_.GetFreeId() )
+    , nID_   ( idManager_.GetId() )
     , direct_( true )
 {
     client::StartUnitFire asnMsg;
@@ -65,7 +65,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
 // -----------------------------------------------------------------------------
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT_Vector2D& targetPosition, const PHY_DotationCategory& dotationCategory )
     : firer_ ( firer )
-    , nID_   ( idManager_.GetFreeId() )
+    , nID_   ( idManager_.GetId() )
     , direct_( false )
 {
     client::StartUnitFire asnMsg;

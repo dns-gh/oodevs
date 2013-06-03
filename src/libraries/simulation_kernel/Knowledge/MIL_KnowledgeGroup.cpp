@@ -60,7 +60,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_KnowledgeGroup )
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army )
     : type_               ( &type )
-    , id_                 ( id )
+    , id_                 ( idManager_.GetId( id, true ) )
     , army_               ( &army )
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( this ) )
     , timeToDiffuse_      ( 0 ) // LTO
@@ -70,7 +70,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
     , createdByJamming_   ( false )
     , jammedPion_         ( 0 )
 {
-    idManager_.Lock( id_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
 // LTO
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, const boost::shared_ptr< MIL_KnowledgeGroup >& parent )
-    : id_                 ( xis.attribute< unsigned int >( "id" ) )
+    : id_                 ( idManager_.GetId( xis.attribute< unsigned int >( "id" ), true ) )
     , type_               ( MIL_KnowledgeGroupType::FindType( xis.attribute< std::string >( "type" ) ) )
     , name_               ( xis.attribute< std::string >( "name" ) )
     , army_               ( &army )
@@ -95,7 +95,6 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     if( ! type_ )
         throw MASA_EXCEPTION( "Knowledge group '" + boost::lexical_cast< std::string >( id_ )
             + "' cannot be created because its type does not exist: " + xis.attribute< std::string >( "type" ) );
-    idManager_.Lock( id_ );
     if( parent_.get() )
         timeToDiffuse_ = parent_->GetType().GetKnowledgeCommunicationDelay();
 }
@@ -125,7 +124,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, const boost::shared_ptr< MIL_KnowledgeGroup >& parent )
     : type_               ( source.type_ )
-    , id_                 ( idManager_.GetFreeId() )
+    , id_                 ( idManager_.GetId() )
     , name_               ( source.name_ + " (" + pion.GetName() + ")" )
     , army_               ( source.army_ )
     , parent_             ( parent ) // LTO
@@ -249,7 +248,7 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
          >> timeToDiffuse_ // LTO
          >> isActivated_ // LTO
          >> isJammed_;
-    idManager_.Lock( id_ );
+    idManager_.GetId( id_, true );
 //    ids_.insert( id_ );
     hasBeenUpdated_ = true;
     knowledgeBlackBoard_->SetKnowledgeGroup( this );
@@ -877,8 +876,8 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::Mis
     boost::shared_ptr< MIL_KnowledgeGroup > pNewParent;
     if( hasParent )
     {
-		if( message.elem_size() > 1 )
-			pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().Get( 0 ).knowledgegroup().id() );
+        if( message.elem_size() > 1 )
+            pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().Get( 0 ).knowledgegroup().id() );
         if( !pNewParent || pNewParent->IsJammed() )
             throw MASA_EXCEPTION_ASN( sword::KnowledgeGroupAck::ErrorCode, sword::KnowledgeGroupAck::error_invalid_superior );
     }

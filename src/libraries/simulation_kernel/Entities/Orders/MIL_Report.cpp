@@ -27,7 +27,7 @@
 
 MIL_Report::T_ReportMap MIL_Report::reports_;
 MIL_Report::T_KeyMap    MIL_Report::keys_;
-MIL_IDManager           MIL_Report::ids_;
+unsigned int            MIL_Report::nextMessageId_ = std::numeric_limits< unsigned int >::max();
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Report::Initialize
@@ -83,7 +83,6 @@ MIL_Report::MIL_Report( unsigned int id, xml::xistream& xis )
 {
     category_ = ConvertCategory( xis.attribute< std::string >( "category" ) );
     xis >> xml::list( "parameter", *this, &MIL_Report::ReadParameter );
-    ids_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +119,8 @@ bool MIL_Report::DoSend( client::Report& message, E_Type nType, std::vector< boo
         MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' send failed (invalid DIA parameters)" );
         return false;
     }
-    message().mutable_report()->set_id( std::numeric_limits< unsigned int >::max() - ids_.GetFreeId() ); // descending order
+
+    message().mutable_report()->set_id( nextMessageId_-- ); // descending order
     message().mutable_type()->set_id( nID_ );
     message().set_category( sword::Report::EnumReportType( nType ) );
     NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *message().mutable_time() );
@@ -227,4 +227,3 @@ const MIL_Report* MIL_Report::Find( const std::string& key )
         return 0;
     return Find( it->second );
 }
-

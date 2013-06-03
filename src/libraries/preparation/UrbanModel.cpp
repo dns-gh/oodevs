@@ -23,11 +23,13 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
 #include "geometry/Types.h"
 #include "geostore/Geostore.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/SchemaWriter_ABC.h"
+#include "tools/IdManager.h"
 
 #include <boost/ref.hpp>
 #include <boost/smart_ptr/make_shared.hpp>
@@ -131,6 +133,7 @@ struct UrbanModel::QuadTreeTraits
 UrbanModel::UrbanModel( kernel::Controllers& controllers, const ::StaticModel& staticModel, const tools::Resolver< kernel::Object_ABC >& objects, tools::IdManager& idManager )
     : controllers_        ( controllers )
     , staticModel_        ( staticModel )
+    , idManager_          ( idManager )
     , objects_            ( objects )
     , urbanDisplayOptions_( new gui::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
     , factory_            ( new UrbanFactory( controllers_, *this, staticModel, idManager, objects_, *urbanDisplayOptions_ ) )
@@ -598,4 +601,63 @@ bool UrbanModel::TakeLinkErrors()
     bool result = cleanedLinks_;
     cleanedLinks_ = false;
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::CheckIdsConflict
+// Created: MMC 2013-05-29
+// -----------------------------------------------------------------------------
+void UrbanModel::CheckIdConflict( kernel::UrbanObject_ABC& urban )
+{
+    if( idManager_.HasBeenKept( urban.GetId() ) )
+    {
+        UrbanIdReplacement& urbanNewId = urbanConflictIds_[ urban.GetId() ];
+        urbanNewId.pUrban_ = &urban;
+        urbanNewId.newId_ = idManager_.GetNextId( true );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::ReplaceLinkId
+// Created: MMC 2013-05-29
+// -----------------------------------------------------------------------------
+void UrbanModel::ReplaceLinkId( kernel::UrbanObject_ABC& urban )
+{
+    for( auto it = urbanConflictIds_.begin();  it != urbanConflictIds_.end(); ++it )
+    {
+        auto pResource = dynamic_cast< ResourceNetworkAttribute* >( urban.Retrieve< gui::ResourceNetwork_ABC >() );
+        if( pResource )
+            pResource->ReplaceLinksUrbanId( it->first, it->second.newId_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::ChangeUrbanObjectId
+// Created: MMC 2013-05-29
+// -----------------------------------------------------------------------------
+void UrbanModel::ChangeUrbanObjectId( kernel::UrbanObject_ABC& urban, unsigned long newId )
+{
+    Remove( urban.GetId() );
+    static_cast< UrbanHierarchies* >( urban.Retrieve< kernel::Hierarchies >() )->ForceEntityNewId( newId );
+    Register( urban.GetId(), urban );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::ManageIdConflicts
+// Created: MMC 2013-05-29
+// -----------------------------------------------------------------------------
+bool UrbanModel::ManageIdConflicts()
+{
+    bool bConflicts = false;
+    urbanConflictIds_.clear();
+    Apply( boost::bind( &UrbanModel::CheckIdConflict, this, _1 ) );
+    if( !urbanConflictIds_.empty() )
+    {
+        bConflicts = true;
+        Apply( boost::bind( &UrbanModel::ReplaceLinkId, this, _1 ) );
+    }
+    for( auto it = urbanConflictIds_.begin();  it != urbanConflictIds_.end(); ++it )
+        ChangeUrbanObjectId( *it->second.pUrban_, it->second.newId_ );
+    urbanConflictIds_.clear();
+    return bConflicts;
 }

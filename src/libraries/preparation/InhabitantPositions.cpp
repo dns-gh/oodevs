@@ -137,7 +137,7 @@ void InhabitantPositions::ReadLivingUrbanBlock( xml::xistream& xis )
 {
     kernel::UrbanObject_ABC* pObject = urbanModel_.tools::Resolver< kernel::UrbanObject_ABC >::Find( xis.attribute< unsigned long >( "id" ) );
     if( pObject )
-        livingUrbanObject_.push_back( boost::make_tuple( pObject->GetId(), pObject->GetName(), pObject ) );
+        livingUrbanObject_.push_back( T_UrbanObject( pObject->GetId(), pObject->GetName().toStdString(), *pObject ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ void InhabitantPositions::ComputePosition()
 {
     geometry::Polygon2f poly;
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        if( const kernel::UrbanPositions_ABC* positions = ( *it ).get< 2 >()->Retrieve< kernel::UrbanPositions_ABC >() )
+        if( const kernel::UrbanPositions_ABC* positions = ( *it ).pUrban_->Retrieve< kernel::UrbanPositions_ABC >() )
             poly.Add( positions->Barycenter() );
     if( !poly.IsEmpty() )
         position_ = poly.Barycenter();
@@ -163,7 +163,7 @@ void InhabitantPositions::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::start( "living-area" );
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         xos << xml::start( "urban-block" )
-                << xml::attribute( "id", ( *it ).get< 0 >() )
+                << xml::attribute( "id", ( *it ).id_ )
             << xml::end;
     xos << xml::end;
 }
@@ -238,7 +238,7 @@ bool InhabitantPositions::IsAggregated() const
 void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& /*viewport*/, gui::GlTools_ABC& tools ) const
 {
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        if( const kernel::UrbanPositions_ABC* positions = ( *it ).get< 2 >()->Retrieve< kernel::UrbanPositions_ABC >() )
+        if( const kernel::UrbanPositions_ABC* positions = ( *it ).pUrban_->Retrieve< kernel::UrbanPositions_ABC >() )
             tools.DrawPolygon( positions->Vertices() );
 }
 
@@ -252,7 +252,7 @@ void InhabitantPositions::UpdateDictionary()
     infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0;
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
-        auto pProxy = static_cast< const gui::UrbanObject* >( it->get< 2 >() );
+        auto pProxy = static_cast< const gui::UrbanObject* >( it->pUrban_ );
         nominalCapacity_ += static_cast< unsigned int >( pProxy->GetNominalCapacity() );
         if( auto infra = pProxy->Retrieve< gui::Infrastructure_ABC >() )
         {
@@ -278,7 +278,7 @@ void InhabitantPositions::UpdateDictionary()
     for( QMap< QString, unsigned int >::const_iterator it = accomodationCapacties_.constBegin(); it != accomodationCapacties_.constEnd(); ++it )
         dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Capacities/%1" ).arg( it.key() ), it.value(), true );
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).get< 0 >() ), ( *it ).get< 1 >(), true );
+        dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).id_ ), ( *it ).name_, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -314,7 +314,7 @@ void InhabitantPositions::Add( const kernel::UrbanObject_ABC& object, const geom
     {
         if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
             if( polygon.IsInside( positions->Barycenter() ) && !Exists( object.GetId() ) )
-                livingUrbanObject_.push_back( boost::make_tuple( object.GetId(), object.GetName(), &object ) );
+                livingUrbanObject_.push_back( T_UrbanObject( object.GetId(), object.GetName().toStdString(), object ) );
     }
 }
 
@@ -322,7 +322,7 @@ namespace
 {
     bool Check( InhabitantPositions::T_UrbanObject& urbanObject, const kernel::UrbanObject_ABC& object )
     {
-        return urbanObject.get< 2 >()->GetId() == object.GetId();
+        return urbanObject.pUrban_->GetId() == object.GetId();
     }
 }
 
@@ -345,7 +345,7 @@ void InhabitantPositions::Remove( const kernel::UrbanObject_ABC& object, const g
 bool InhabitantPositions::Exists( unsigned long id ) const
 {
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        if( (*it).get< 2 >()->GetId() == id )
+        if( (*it).pUrban_->GetId() == id )
             return true;
     return false;
 }
@@ -367,7 +367,7 @@ void InhabitantPositions::StartEdition()
 void InhabitantPositions::Accept()
 {
     for( auto it = edition_.begin(); it != edition_.end(); ++it )
-        dictionary_.Remove( tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).get< 0 >() ) );
+        dictionary_.Remove( tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).id_ ) );
     UpdateDictionary();
     controller_.Update( inhabitant_ );
 }
@@ -379,7 +379,7 @@ void InhabitantPositions::Accept()
 void InhabitantPositions::Reject()
 {
     for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        dictionary_.Remove( tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).get< 0 >() ) );
+        dictionary_.Remove( tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).id_ ) );
     livingUrbanObject_ = edition_;
     UpdateDictionary();
     controller_.Update( inhabitant_ );
@@ -396,9 +396,9 @@ void InhabitantPositions::NotifyDeleted( const kernel::UrbanObject_ABC& block )
     auto it = livingUrbanObject_.begin();
     while( it != livingUrbanObject_.end() )
     {
-        if( it->get< 2 >() == &block )
+        if( it->pUrban_ == &block )
         {
-            dictionary_.Remove( tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( it->get< 0 >() ) );
+            dictionary_.Remove( tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( it->id_ ) );
             it = livingUrbanObject_.erase( it );
         }
         else
@@ -428,9 +428,20 @@ void InhabitantPositions::Update( const geometry::Point2f& point )
                         livingUrbanObject_.erase( std::remove_if( livingUrbanObject_.begin(), livingUrbanObject_.end(),
                         boost::bind( &Check, _1, boost::cref( object ) ) ), livingUrbanObject_.end() );
                     else
-                        livingUrbanObject_.push_back( boost::make_tuple( object.GetId(), object.GetName(), &object ) );
+                        livingUrbanObject_.push_back( T_UrbanObject( object.GetId(), object.GetName().toStdString(), object ) );
                     return;
                 }
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::NotifyUpdated
+// Created: MMC 2013-05-29
+// -----------------------------------------------------------------------------
+void InhabitantPositions::NotifyUpdated( const kernel::UrbanObject_ABC& block )
+{
+    for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+        if( ( *it ).pUrban_ == &block  && ( *it ).id_ != block.GetId() )
+           ( *it ).id_ = block.GetId();
 }

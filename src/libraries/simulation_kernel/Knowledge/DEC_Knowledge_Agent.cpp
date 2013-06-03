@@ -56,7 +56,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const boost::shared_ptr< MIL_Knowledge
     : pArmyKnowing_                  ( &knowledgeGroup->GetArmy() )
     , pKnowledgeGroup_               ( knowledgeGroup )
     , pAgentKnown_                   ( &agentKnown )
-    , nID_                           ( idManager_.GetFreeId() )
+    , nID_                           ( idManager_.GetId() )
     , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
@@ -87,7 +87,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const DEC_Knowledge_Agent& knowledge, 
     : pArmyKnowing_                  ( &knowledgeGroup->GetArmy() )
     , pKnowledgeGroup_               ( knowledgeGroup )
     , pAgentKnown_                   ( knowledge.pAgentKnown_ )
-    , nID_                           ( idManager_.GetFreeId() )
+    , nID_                           ( idManager_.GetId() )
     , pCurrentPerceptionLevel_       ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_           ( &PHY_PerceptionLevel::notSeen_ )
@@ -205,7 +205,7 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
          >> dataRecognition_
          >> dataIdentification_
          >> nTimeLastUpdate_;
-    idManager_.Lock( nID_ );
+    idManager_.GetId( nID_, true );
     unsigned int nID;
     file >> nID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );

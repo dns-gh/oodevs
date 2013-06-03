@@ -23,7 +23,7 @@ MIL_IDManager MIL_Effect_Fire_ABC::idManager_;
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
 MIL_Effect_Fire_ABC::MIL_Effect_Fire_ABC( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory )
-    : nID_         ( idManager_.GetFreeId() )
+    : nID_         ( idManager_.GetId() )
     , surface_     ( surface )
     , ammoCategory_( ammoCategory )
 {

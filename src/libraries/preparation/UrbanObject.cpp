@@ -35,7 +35,7 @@ UrbanObject::UrbanObject( xml::xistream& xis, kernel::Controllers& controllers, 
     : gui::UrbanObject( xis, controllers, type, accommodations, options )
 {
     controllers_.Update( *this );
-    idManager.Lock( id_ );
+    idManager.Lock( id_, true );
 }
 
 // -----------------------------------------------------------------------------

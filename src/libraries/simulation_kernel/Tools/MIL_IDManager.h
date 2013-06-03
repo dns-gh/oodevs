@@ -25,19 +25,21 @@ public:
     virtual ~MIL_IDManager();
     //@}
 
+public:
     //! @name Operations
     //@{
-    unsigned long GetFreeId();
-    void Lock( unsigned long id );
-
+    static void SetKeepIdsMode( bool bKeepIds );
+    unsigned long GetId( unsigned long wishedId = 0, bool bForceId = false );
     template< typename Archive >
     void serialize( Archive& archive, unsigned int version );
     //@}
 
 private:
     //! @name Member data
-    //@{
+    //@{    
     static unsigned long last_;
+    static bool bKeepIds_;
+    static std::set< unsigned long > ids_;
     //@}
 };
 

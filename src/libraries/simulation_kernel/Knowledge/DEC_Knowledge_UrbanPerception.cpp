@@ -49,7 +49,7 @@ MIL_IDManager DEC_Knowledge_UrbanPerception::idManager_;
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
 DEC_Knowledge_UrbanPerception::DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, unsigned int nUrbanObjectId )
-    : nID_                     ( idManager_.GetFreeId() )
+    : nID_                     ( idManager_.GetId() )
     , perceiver_               ( agentPerceiving )
     , nUrbanObjectId_          ( nUrbanObjectId )
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )

@@ -75,6 +75,15 @@ public:
         unsigned int totalFlow_;
         std::string resource_;
         T_ResourceLinks links_;
+
+        void ReplaceLinkId( unsigned long oldId, unsigned long newId )
+        {
+            if( links_.empty() )
+                return;
+            for( auto it = links_.begin(); it != links_.end(); ++it )
+                if( it->id_ == oldId )
+                    it->id_ = newId;
+        }
     };
 
     typedef std::map< std::string, ResourceNode > T_ResourceNodes;

@@ -31,7 +31,7 @@ MIL_IDManager PHY_MedicalHumanState::idManager_;
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, Human_ABC& human, bool bEvacuatedByThirdParty )
-    : nID_                   ( idManager_.GetFreeId() )
+    : nID_                   ( idManager_.GetId() )
     , nCreationTick_         ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() )
     , pPion_                 ( &pion )
     , pHuman_                ( &human )
@@ -96,7 +96,7 @@ void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const unsigned 
          >> bShouldGoBackToWar_
          >> bHandledByMedical_
          >> bEvacuatedByThirdParty_;
-    idManager_.Lock( nID_ );
+    idManager_.GetId( nID_, true );
 }
 
 // -----------------------------------------------------------------------------

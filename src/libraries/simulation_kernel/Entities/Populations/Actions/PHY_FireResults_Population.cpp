@@ -21,7 +21,7 @@
 // -----------------------------------------------------------------------------
 PHY_FireResults_Population::PHY_FireResults_Population( const MIL_Population& firer )
     : firer_( firer )
-    , nID_  ( idManager_.GetFreeId() )
+    , nID_  ( idManager_.GetId() )
 {
     client::StartCrowdFire msg;
     msg().mutable_fire()->set_id( nID_ );

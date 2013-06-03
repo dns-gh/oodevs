@@ -51,6 +51,7 @@ public:
     virtual void Rename( const QString& name );
 
     void Polish();
+    void ForceNewId( unsigned long id );
     //@}
 
 protected:
@@ -87,9 +88,9 @@ private:
 protected:
     //! @name Member data
     //@{
-    const unsigned long id_;
+    unsigned long id_;
     QString name_;
-    const std::string displayId_;
+    std::string displayId_;
     //@}
 };
 

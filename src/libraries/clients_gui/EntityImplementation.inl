@@ -111,4 +111,16 @@ void EntityImplementation< I >::SerializeAttributes( xml::xostream& xos ) const
         << xml::attribute( "name", name_.toStdString() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: EntityImplementation ForceNewId
+// Created: MMC 2013-05-29
+// -----------------------------------------------------------------------------
+template< typename I >
+void EntityImplementation< I >::ForceNewId( unsigned long id )
+{
+    id_ = id;
+    displayId_ = GetDisplayId();
+    Touch();
+}
+
 }

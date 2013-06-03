@@ -45,16 +45,15 @@ MIL_IDManager MIL_Object_ABC::idManager_;
 // Name: MIL_Object_ABC constructor
 // Created: JSR 2011-01-19
 // -----------------------------------------------------------------------------
-MIL_Object_ABC::MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int id )
-    : id_                   ( id != 0 ? id : idManager_.GetFreeId() )
+MIL_Object_ABC::MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned long forcedId )
+    : id_                   ( idManager_.GetId( forcedId, true ) )
     , pArmy_                ( army )
     , pType_                ( &type )
     , bMarkedForDestruction_( false )
     , bReadyForDeletion_    ( false )
 {
-    idManager_.Lock( id_ );
     if( GetType().GetCapacity< SpawnCapacity >() )
-        idManager_.GetFreeId(); // we need to skip one ID for dynamic created object.
+        idManager_.GetId(); // we need to skip one ID for dynamic created object.
 }
 
 // -----------------------------------------------------------------------------
@@ -161,7 +160,7 @@ void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< TER_Object_ABC >( *this )
          >> id_;
-    idManager_.Lock( id_ );
+    idManager_.GetId( id_, true );
     std::string type;
     file >> type;
     pType_ = &file.GetObjectTypeResolver().FindType( type );

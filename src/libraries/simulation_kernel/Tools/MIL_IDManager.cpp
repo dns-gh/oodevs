@@ -11,6 +11,8 @@
 #include "MIL_IDManager.h"
 
 unsigned long MIL_IDManager::last_ = 1;
+bool MIL_IDManager::bKeepIds_ = false;
+std::set< unsigned long > MIL_IDManager::ids_;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_IDManager constructor
@@ -31,20 +33,37 @@ MIL_IDManager::~MIL_IDManager()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_IDManager::GetFreeId
-// Created: SBO 2009-05-26
+// Name: MIL_IDManager::SetKeepIdsMode
+// Created: MMC 2013-05-27
 // -----------------------------------------------------------------------------
-unsigned long MIL_IDManager::GetFreeId()
+void MIL_IDManager::SetKeepIdsMode( bool bKeepIds )
 {
-    return last_++;
+    if( !bKeepIds )
+        ids_.clear();
+    bKeepIds_ = bKeepIds;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_IDManager::Lock
-// Created: SBO 2009-12-14
+// Name: MIL_IDManager::GetId
+// Created: MMC 2013-05-27
 // -----------------------------------------------------------------------------
-void MIL_IDManager::Lock( unsigned long id )
+unsigned long MIL_IDManager::GetId( unsigned long wishedId /*= 0*/, bool bForceId /*= false*/ )
 {
-    if( id >= last_ )
-        last_ = id + 1;
+    if( bForceId && wishedId != 0 )
+    {
+        if( bKeepIds_ )
+            ids_.insert( wishedId );
+        if( wishedId >= last_ )
+            last_ = wishedId + 1;
+        return wishedId;
+    }
+    if( wishedId == 0 || ( !bKeepIds_ && wishedId < last_ ) || ( bKeepIds_ && !ids_.insert( wishedId ).second ) )
+    {
+        if( bKeepIds_ )
+            ids_.insert( last_ );
+        return last_++;
+    }
+    if( wishedId >= last_ )
+        last_ = wishedId + 1;
+    return wishedId;
 }

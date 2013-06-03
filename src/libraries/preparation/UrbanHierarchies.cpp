@@ -9,6 +9,8 @@
 
 #include "preparation_pch.h"
 #include "UrbanHierarchies.h"
+#include "clients_gui/EntityImplementation.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 
 using namespace kernel;
 
@@ -74,4 +76,42 @@ void UrbanHierarchies::SerializeAttributes( xml::xostream& xos ) const
         }
         xos << xml::end; // urban-objects
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanHierarchies::RemoveSubordinateByRef
+// Created: MMC 2013-05-30
+// -----------------------------------------------------------------------------
+void UrbanHierarchies::RemoveSubordinateByRef( const kernel::Entity_ABC& entity )
+{
+    for( auto element = elements_.begin(); element != elements_.end(); ++element )
+    {
+        if( element->second == &entity )
+        {
+            elements_.erase( element );
+            return;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanHierarchies::ForceEntityNewId
+// Created: MMC 2013-05-30
+// -----------------------------------------------------------------------------
+void UrbanHierarchies::ForceEntityNewId( unsigned long newId )
+{
+    kernel::Entity_ABC* pSuperior = const_cast< kernel::Entity_ABC* >( GetSuperior() );
+    SetSuperiorInternal( 0 );
+    auto childs = elements_;
+    elements_.clear();
+    if( pSuperior )
+        static_cast< UrbanHierarchies* >( pSuperior->Retrieve< kernel::Hierarchies >() )->RemoveSubordinateByRef( entity_ );
+    for( auto child = childs.begin(); child != childs.end(); ++child )
+        static_cast< UrbanHierarchies* >( child->second->Retrieve< kernel::Hierarchies >() )->SetSuperiorInternal( 0 );
+
+    static_cast< gui::EntityImplementation< kernel::UrbanObject_ABC >* >( &entity_ )->ForceNewId( newId );
+    if( pSuperior )
+        SetSuperior( pSuperior );
+    for( auto child = childs.begin(); child !=  childs.end(); ++child )
+        static_cast< UrbanHierarchies* >( child->second->Retrieve< kernel::Hierarchies >() )->SetSuperior( &entity_ );
 }

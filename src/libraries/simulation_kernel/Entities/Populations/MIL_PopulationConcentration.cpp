@@ -72,7 +72,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis )
-    : MIL_PopulationElement_ABC( population, idManager_.GetFreeId() )
+    : MIL_PopulationElement_ABC( population, idManager_.GetId() )
     , pPullingFlow_        ( 0 )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pSplittingObject_    ( 0 )
@@ -91,7 +91,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, unsigned int nHumans )
-    : MIL_PopulationElement_ABC( population, idManager_.GetFreeId() )
+    : MIL_PopulationElement_ABC( population, idManager_.GetId() )
     , position_            ( position )
     , pPullingFlow_        ( 0 )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
@@ -108,7 +108,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 // Created: BCI 2011-03-21
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, const MIL_PopulationHumans& humans )
-    : MIL_PopulationElement_ABC( population, idManager_.GetFreeId() )
+    : MIL_PopulationElement_ABC( population, idManager_.GetId() )
     , position_            ( position )
     , pPullingFlow_        ( 0 )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
@@ -354,7 +354,7 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uns
          >> pushingFlows_
          >> rPullingFlowsDensity_
          >> const_cast< MIL_Object_ABC*& >( pSplittingObject_ );
-    idManager_.Lock( MIL_PopulationElement_ABC::GetID() );
+    idManager_.GetId( MIL_PopulationElement_ABC::GetID(), true );
     UpdateLocation();
 }
 

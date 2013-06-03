@@ -23,9 +23,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Agent_ABC )
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC::MIL_Agent_ABC( xml::xistream& xis )
     : MIL_Entity_ABC( xis )
-    , nID_          ( xis.attribute< unsigned long >( "id" ) )
+    , nID_          ( idManager_.GetId( xis.attribute< unsigned long >( "id" ), true ) )
 {
-    idManager_.Lock( nID_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ MIL_Agent_ABC::MIL_Agent_ABC( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC::MIL_Agent_ABC( const std::string& name )
     : MIL_Entity_ABC ( name )
-    , nID_           ( idManager_.GetFreeId() )
+    , nID_           ( idManager_.GetId() )
 {
     // NOTHING
 }

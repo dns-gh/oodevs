@@ -350,6 +350,10 @@
         <source>Terrain&apos;s physical base does not match the one selected for the exercise. All urban materials, roofshapes, usages and infrastructures will be lost at next save.</source>
         <translation>La base physique du terrain ne correspond pas à celle de l&apos;exercice. Tous les materiaux, formes de toit, usages et infrastructures des blocs urbains seront perdus à la prochaine sauvegarde.</translation>
     </message>
+    <message>
+        <source>Urban blocks ids have been changed on loading because they were in conflict with other entities ids.</source>
+        <translation>Des id de blocs urbains ont été changés au chargement car ils étaient en conflit avec d&apos;autres id d&apos;entités.</translation>
+    </message>
 </context>
 <context>
     <name>NBC</name>

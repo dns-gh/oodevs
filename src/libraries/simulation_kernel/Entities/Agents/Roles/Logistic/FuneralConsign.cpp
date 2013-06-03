@@ -63,7 +63,7 @@ MIL_IDManager FuneralConsign::idManager_;
 // Created: NLD 2011-08-24
 // -----------------------------------------------------------------------------
 FuneralConsign::FuneralConsign( boost::shared_ptr< FuneralRequest_ABC > request )
-    : id_                     ( idManager_.GetFreeId() )
+    : id_                     ( idManager_.GetId() )
     , creationTick_           ( MIL_Time_ABC::GetTime().GetCurrentTimeStep() ) //$$$ Huge shit
     , request_                ( request )
     , handler_                ( 0 )

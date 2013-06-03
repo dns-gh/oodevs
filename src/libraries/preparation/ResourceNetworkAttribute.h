@@ -70,6 +70,7 @@ public:
     virtual void NotifyUpdated( const gui::ResourceNetwork_ABC::Deletion& deletion );
     const std::set< std::string >& GetInvalidResources() const;
     bool CleanLinksToDeletedUrbanBlocks();
+    void ReplaceLinksUrbanId( unsigned long oldId, unsigned long newId );
     //@}
 
     //! @name Serializable_ABC

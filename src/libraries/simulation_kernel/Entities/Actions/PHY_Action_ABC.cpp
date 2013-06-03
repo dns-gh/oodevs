@@ -19,7 +19,7 @@ MIL_IDManager PHY_Action_ABC::idManager_;
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 PHY_Action_ABC::PHY_Action_ABC()
-    : id_        ( idManager_.GetFreeId() )
+    : id_        ( idManager_.GetId() )
     , bSuspended_( false )
 {
     // NOTHING
