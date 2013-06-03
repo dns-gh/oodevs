@@ -11,15 +11,16 @@
 #define __FilterCommand_h_
 
 #include "Filter.h"
+#include "FilterArgument.h"
 #include "preparation/ConsistencyErrorTypes.h"
 #include "frontend/ProcessObserver_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 namespace gui
 {
     class ConsistencyDialog_ABC;
 }
 
-class FilterInputArgument;
 class Model;
 
 // =============================================================================
@@ -64,14 +65,13 @@ private:
     void ComputeArgument();
     void ComputePath();
     std::string ConvertArgumentVariable( const std::string& value ) const;
-    bool IsInputArgument( int index ) const;
     void ReadError( xml::xistream& xis );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnValueChanged( const QString& );
+    void OnValueChanged();
     void OnLogFileChanged( const QString& );
     void OnFinished();
     //@}
@@ -86,16 +86,7 @@ signals:
 private:
     //! @name Type
     //@{
-    struct FilterArgument
-    {
-        std::string name_;
-        std::string displayName_;
-        std::string value_;
-    };
-
-    typedef std::vector< FilterArgument > T_Arguments;
-
-    typedef std::map< size_t, FilterInputArgument* > T_InputArguments;
+    typedef std::vector< boost::shared_ptr< FilterArgument > > T_Arguments;
     //@}
 
 private:
@@ -107,7 +98,6 @@ private:
     const std::string            command_;
     std::string                  argumentsLine_;
     T_Arguments                  arguments_;
-    T_InputArguments             inputArguments_;
     std::string                  path_;
     bool                         reloadExercise_;
     bool                         minimalDisplay_;

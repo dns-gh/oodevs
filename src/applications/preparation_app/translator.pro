@@ -18,6 +18,7 @@ ExtensionsPanel.cpp \
 FileLoaderObserver.cpp \
 FileToolbar.cpp \
 FilterCommand.cpp \
+FilterArgument.cpp \
 FilterCsv.cpp \
 FilterDialog.cpp \
 FilterDialogs.cpp \

@@ -11,7 +11,6 @@
 #include "FilterCommand.h"
 #include "moc_FilterCommand.cpp"
 #include "ModelConsistencyDialog.h"
-#include "FilterInputArgument.h"
 #include "clients_kernel/Tools.h"
 #include "clients_gui/ConsistencyDialog_ABC.h"
 #include "frontend/SpawnCommand.h"
@@ -23,19 +22,11 @@
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 #include <boost/filesystem/operations.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/assign.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
-
-namespace
-{
-    std::string ReadLang()
-    {
-        QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/Common/Language", QTextCodec::locale() ).toAscii().constData();
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: FilterCommand constructor
@@ -49,7 +40,7 @@ FilterCommand::FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& c
     , command_       ( xis.attribute< std::string >( "command" ) )
     , reloadExercise_( xis.attribute< bool >( "reload-exercise", false ) )
     , minimalDisplay_( xis.attribute< bool >( "minimal-display", false ) )
-    , nonBlocking_    ( xis.attribute< bool >( "non-blocking", false) )
+    , nonBlocking_   ( xis.attribute< bool >( "non-blocking", false) )
     , path_          ( xis.attribute< std::string >( "directory", "." ) )
     , commandLabel_  ( 0 )
 {
@@ -76,7 +67,7 @@ FilterCommand::~FilterCommand()
 const std::string FilterCommand::GetName() const
 {
     const std::string result = Filter::GetName();
-    return ( result.empty() ) ? command_ : result;
+    return result.empty() ? command_ : result;
 }
 
 // -----------------------------------------------------------------------------
@@ -85,10 +76,10 @@ const std::string FilterCommand::GetName() const
 // -----------------------------------------------------------------------------
 bool FilterCommand::IsValid() const
 {
-    bool valid = true;
-    for( auto it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
-        valid = valid && it->second->IsValid();
-    return !command_.empty() && !path_.empty() && valid;
+    for( auto it = arguments_.begin(); it != arguments_.end(); ++it )
+        if( ! (*it)->IsValid() )
+            return false;
+    return !command_.empty() && !path_.empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +98,7 @@ bool FilterCommand::NeedToReloadExercise() const
 std::string FilterCommand::ConvertArgumentVariable( const std::string& value ) const
 {
      if( value.empty() )
-            return value;
+        return value;
     std::string result = value;
     if( value == "$rootdir$" )
         result = config_.GetRootDir();
@@ -130,7 +121,7 @@ void FilterCommand::ReadArguments( xml::xistream& xis )
 {
     xis >> xml::start( "arguments" )
             >> xml::list( "argument", *this, &FilterCommand::ReadArgument )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -139,35 +130,13 @@ void FilterCommand::ReadArguments( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void FilterCommand::ReadArgument( xml::xistream& xis )
 {
-    assert( xis.has_attribute( "name" ) );
-    FilterArgument argument;
-    argument.name_ = xis.attribute< std::string >( "name" );
-    argument.displayName_ = xis.attribute< std::string >( "display-name", "" );
-    argument.value_ = xis.attribute< std::string >( "value", "" );
-    if( FilterInputArgument::IsInputArgument( argument.value_ ) )
-    {
-        kernel::XmlDescription description( xis, ReadLang() );
-        FilterInputArgument* inputArgument = new FilterInputArgument( config_, argument.value_, description, config_.GetExerciseDir( config_.GetExerciseName() ) );
-        inputArguments_[ arguments_.size() ] = inputArgument;
-        connect( inputArgument, SIGNAL( ValueChanged( const QString& ) ), SLOT( OnValueChanged( const QString& ) ) );
-        if( argument.value_ == "$log_file$" )
-            connect( inputArgument, SIGNAL( ValueChanged( const QString& ) ), SLOT( OnLogFileChanged( const QString& ) ) );
-        argument.value_ = "";
-    }
-    argument.value_ = ConvertArgumentVariable( argument.value_ );
-    arguments_.push_back( argument );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FilterCommand::IsInputArgument
-// Created: ABR 2012-05-29
-// -----------------------------------------------------------------------------
-bool FilterCommand::IsInputArgument( int index ) const
-{
-    for( auto it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
-        if( it->first == index )
-            return true;
-    return false;
+    const std::string value = xis.attribute< std::string >( "value", "" );
+    arguments_.push_back(
+        boost::make_shared< FilterArgument >(
+            boost::ref( xis ), config_, ConvertArgumentVariable( value ) ) );
+    connect( arguments_.back().get(), SIGNAL( ValueChanged( const QString& ) ), SLOT( OnValueChanged() ) );
+    if( value == "$log_file$" )
+        connect( arguments_.back().get(), SIGNAL( ValueChanged( const QString& ) ), SLOT( OnLogFileChanged( const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,16 +146,8 @@ bool FilterCommand::IsInputArgument( int index ) const
 void FilterCommand::ComputeArgument()
 {
     argumentsLine_.clear();
-    for( int i = 0; i < arguments_.size(); ++i )
-    {
-        if( IsInputArgument( i ) )
-        {
-            if( !arguments_[ i ].value_.empty() )
-                argumentsLine_ += " " + arguments_[ i ].name_ + "=\"" + arguments_[ i ].value_ + "\"";
-        }
-        else 
-            argumentsLine_ += ( arguments_[ i ].value_.empty() ) ? " " + arguments_[ i ].name_ : " " + arguments_[ i ].name_+ "=" + arguments_[ i ].value_;
-    }
+    for( auto it = arguments_.begin(); it != arguments_.end(); ++it )
+        argumentsLine_ += (*it)->ToCommandLine();
     if( commandLabel_ )
         commandLabel_->setText( ( command_ + argumentsLine_ ).c_str() );
 }
@@ -257,7 +218,11 @@ QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
     QWidget* widget = new QWidget( parametersWidget, "FilterCommand_BaseWidget" );
 
     int row = ( !minimalDisplay_ ) ? 3 : ( path_.empty() ) ? 2 : 1;
-    QGridLayout* grid = new QGridLayout( widget, ( inputArguments_.empty() ) ? row : row + static_cast< int >( inputArguments_.size() ), 2, 0, 5, "FilterCommand_GridLayout" );
+    int rows = 0;
+    for( auto it = arguments_.begin(); it != arguments_.end(); ++it )
+        if( (*it)->IsInputArgument() )
+            ++rows;
+    QGridLayout* grid = new QGridLayout( widget, row + rows, 2, 0, 5, "FilterCommand_GridLayout" );
     grid->setColStretch( 1, 1 );
 
     // Command
@@ -295,14 +260,8 @@ QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
         grid->addWidget( checkBox, row++, 1 );
     }
     // Input arguments
-    for( auto it = inputArguments_.begin(); it != inputArguments_.end(); ++it, ++row )
-    {
-        if( arguments_[ it->first ].displayName_.empty() )
-            grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Argument '%1':" ).arg( arguments_[ it->first ].name_.c_str() ), widget, "FilterCommand_CommandTitle" ), row, 0 );
-        else
-            grid->addWidget( new QLabel( QString( "%1:" ).arg( arguments_[ it->first ].displayName_.c_str() ), widget, "FilterCommand_CommandTitle" ), row, 0 );
-        grid->addWidget( it->second->CreateWidget( widget ), row, 1 );
-    }
+    for( auto it = arguments_.begin(); it != arguments_.end(); ++it, ++row )
+        (*it)->AddWidget( widget, grid, row );
     return parametersWidget;
 }
 
@@ -402,10 +361,8 @@ void FilterCommand::NotifyError( const std::string& error, std::string /*command
 // Name: FilterCommand::OnValueChanged
 // Created: ABR 2011-09-28
 // -----------------------------------------------------------------------------
-void FilterCommand::OnValueChanged( const QString& text )
+void FilterCommand::OnValueChanged()
 {
-    for( auto it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
-        arguments_[ it->first ].value_ = text.toAscii().constData();
     ComputeArgument();
 }
 
@@ -424,10 +381,7 @@ void FilterCommand::OnLogFileChanged( const QString& text )
 // -----------------------------------------------------------------------------
 void FilterCommand::Update()
 {
-    for( auto it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
-        it->second->Update();
-    for( int i = 0; i < arguments_.size(); ++i )
-        if( IsInputArgument( i ) )
-            arguments_[ i ].value_.clear();
+    for( auto it = arguments_.begin(); it != arguments_.end(); ++it )
+        (*it)->Update();
     ComputeArgument();
 }

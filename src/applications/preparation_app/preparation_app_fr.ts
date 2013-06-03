@@ -502,12 +502,12 @@
         <translation>Recharger l&apos;exercise:</translation>
     </message>
     <message>
-        <source>Argument &apos;%1&apos;:</source>
-        <translation>Argument &apos;%1&apos;:</translation>
-    </message>
-    <message>
         <source>Is blocking:</source>
         <translation>Bloquant:</translation>
+    </message>
+    <message>
+        <source>Argument &apos;%1&apos;:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

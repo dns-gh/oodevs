@@ -535,6 +535,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\GroupDialog.cpp">
       <Filter>Source Files\Dialogs\Groups</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\FilterArgument.cpp">
+      <Filter>Source Files\Dialogs\Filter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -990,6 +993,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\GroupDialog.h">
       <Filter>Source Files\Dialogs\Groups</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\FilterArgument.h">
+      <Filter>Source Files\Dialogs\Filter</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

@@ -502,11 +502,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Argument &apos;%1&apos;:</source>
+        <source>Is blocking:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Is blocking:</source>
+        <source>Argument &apos;%1&apos;:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
