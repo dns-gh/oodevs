@@ -164,6 +164,8 @@ void UserProfile::Serialize( xml::xostream& xos ) const
     T_Ids writeAutomats;
     T_Ids writePopulations;
 
+    bool testProfile = userRole_.empty();
+
     if( HasProperty( "readAll" ) )
     {
         tools::Iterator< const kernel::Team_ABC& > itReceiver = model_.teams_.CreateIterator();
@@ -193,7 +195,7 @@ void UserProfile::Serialize( xml::xostream& xos ) const
             while( itReceiver.HasMoreElements() )
                 readSides.push_back( itReceiver.NextElement().GetId() );
     }
-    else if( HasProperty( "writeAll" ) )
+    else if( testProfile || HasProperty( "writeAll" ) )
     {
         tools::Iterator< const kernel::Team_ABC& > itReceiver = model_.teams_.CreateIterator();
         while( itReceiver.HasMoreElements() )
@@ -218,8 +220,8 @@ void UserProfile::Serialize( xml::xostream& xos ) const
             << xml::attribute( "role", userRole_ )
             << xml::attribute( "name", login_.toAscii().constData() )
             << xml::attribute( "password", password_.toAscii().constData() )
-            << xml::attribute( "time-control", controlTime_ )
-            << xml::attribute( "supervision", HasProperty( "magicActions" ) || userRole_.empty() )
+            << xml::attribute( "time-control", controlTime_ || testProfile )
+            << xml::attribute( "supervision", HasProperty( "magicActions" ) || testProfile )
             << xml::start( "rights" )
                 << xml::start( "readonly" );
     SerializeRights( xos, "side", readSides );
