@@ -175,7 +175,10 @@ kernel::UrbanObject_ABC* UrbanModel::Create( const geometry::Polygon2f& location
 {
     kernel::UrbanObject_ABC* ptr = factory_->Create( location, parent );
     if( ptr )
+    {
         Register( ptr->GetId(), *ptr );
+        InsertIntoQuadTree( *ptr );
+    }
     return ptr;
 }
 
@@ -340,7 +343,7 @@ void UrbanModel::SerializeTerrain( const std::string& filename, const tools::Sch
             bfs::create_directories( directory );
         }
     }
-    catch( bfs::filesystem_error& e )
+    catch( bfs::filesystem_error& /*e*/ )
     {
         bfs::create_directories( directory );
     }
@@ -527,20 +530,23 @@ void UrbanModel::CreateQuadTree( float width, float height )
     {
         const kernel::UrbanObject_ABC& urbanObject = it.NextElement();
         if( const UrbanHierarchies* urbanHierarchies = static_cast< const UrbanHierarchies* >( urbanObject.Retrieve< kernel::Hierarchies >() ) )
-        {
             if( urbanHierarchies->GetLevel() != eUrbanLevelBlock )
-                continue;
+                if( urbanHierarchies->GetLevel() == eUrbanLevelBlock )
+                    InsertIntoQuadTree( urbanObject );
+    }
+}
 
-            const kernel::UrbanPositions_ABC* pAttribute = urbanObject.Retrieve< kernel::UrbanPositions_ABC >();
-            if( pAttribute )
-            {
-                quadTree_->Insert( &urbanObject );
-                geometry::Rectangle2f boundingBox = pAttribute->Polygon().BoundingBox();
-                float size = 1.1f * std::max( boundingBox.Width(), boundingBox.Height() );
-                if( maxElementSize_ < size )
-                    maxElementSize_ = size;
-            }
-        }
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::InsertIntoQuadTree
+// Created: JSR 2013-01-10
+// -----------------------------------------------------------------------------
+void UrbanModel::InsertIntoQuadTree( const kernel::UrbanObject_ABC& urbanObject )
+{
+    if( const kernel::UrbanPositions_ABC* pAttribute = urbanObject.Retrieve< kernel::UrbanPositions_ABC >() )
+    {
+        quadTree_->Insert( &urbanObject );
+        geometry::Rectangle2f boundingBox = pAttribute->Polygon().BoundingBox();
+        maxElementSize_ = std::max( maxElementSize_, 1.1f * std::max( boundingBox.Width(), boundingBox.Height() ) );
     }
 }
 

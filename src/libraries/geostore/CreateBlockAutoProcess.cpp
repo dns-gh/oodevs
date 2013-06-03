@@ -230,7 +230,7 @@ gaiaGeomCollPtr CreateBlockAutoProcess::GetUrbanBlockInArea( const UrbanModel& m
 {
     gaiaMbrGeometry( blocks_ );
     const geometry::Rectangle2f bbox = footprint.BoundingBox();
-    float radius = sqrt( ( pow( bbox.Width(), 2 ) + pow( bbox.Height(), 2 ) ) );
+    float radius = 0.5f * sqrt( bbox.Width() * bbox.Width() + bbox.Height() * bbox.Height() );
     geometry::Point2d centerProjected = projector.Project( ( blocks_->MaxY + blocks_->MinY ) / 2 , ( blocks_->MaxX + blocks_->MinX ) / 2  );
     geometry::Point2f center( static_cast< float >( centerProjected.X() ), static_cast< float >( centerProjected.Y() ) );
     gaiaGeomCollPtr getBlocksFromFiles = 0;
