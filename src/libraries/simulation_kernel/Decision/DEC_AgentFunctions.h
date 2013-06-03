@@ -151,6 +151,7 @@ public:
     static bool IsInEmissionBlackout( DEC_Decision_ABC* pAgent );
     static bool IsInReceptionBlackout( DEC_Decision_ABC* pAgent );
     static void SetToAmbianceSafety( MIL_Agent_ABC& callerAgent, bool safety );
+    static bool IsInSmoke( DEC_Decision_ABC* pAgent );
     
     // Etat d'un agent
     static double GetRapForLocalAgent( const DEC_Decision_ABC* agent );

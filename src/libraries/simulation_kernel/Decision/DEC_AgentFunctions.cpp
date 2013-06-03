@@ -52,6 +52,8 @@
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/BypassAttribute.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "meteo/PHY_MeteoDataManager.h"
+#include "meteo/PHY_Precipitation.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Specialisations/NBC/MIL_AgentTypePionNBC.h"
@@ -1293,6 +1295,18 @@ bool DEC_AgentFunctions::IsInReceptionBlackout( DEC_Decision_ABC* pAgent )
 void DEC_AgentFunctions::SetToAmbianceSafety( MIL_Agent_ABC& callerAgent, bool safety )
 {
     callerAgent.GetRole< PHY_RolePion_Posture >().SetAmbianceSafety( safety );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsInSmoke
+// Created: JSR 2013-06-03
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsInSmoke( DEC_Decision_ABC* pAgent )
+{
+    if( !pAgent )
+        return false;
+    const MT_Vector2D position = pAgent->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
+    return MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData()( position ).GetPrecipitation().GetID() == weather::PHY_Precipitation::smoke_.GetID();
 }
 
 // -----------------------------------------------------------------------------

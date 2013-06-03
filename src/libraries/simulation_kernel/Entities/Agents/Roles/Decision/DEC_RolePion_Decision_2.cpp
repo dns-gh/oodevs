@@ -381,6 +381,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< bool( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::SurrenderAutomat, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Agent_ChangerAmbianceEnSurete",
         boost::function< void ( bool ) >( boost::bind( &DEC_AgentFunctions::SetToAmbianceSafety, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_Agent_IsInSmoke", &DEC_AgentFunctions::IsInSmoke );
 
     // NBC
     RegisterFunction( "DEC_Agent_EstAgentNBC", boost::bind( &DEC_AgentFunctions::IsAgentNBC , boost::cref( GetPion() ) ) );
