@@ -12,6 +12,7 @@
 #include "controls/controls.h"
 #include "timeline/api.h"
 
+#include <tools/Base64Converters.h>
 #include <tools/IpcDevice.h>
 
 #include <boost/algorithm/string/split.hpp>
@@ -222,7 +223,7 @@ namespace
         auto action = SetValue( data, "action" );
         SetValue( action, "target", event.action.target );
         SetValue( action, "apply", event.action.apply );
-        SetValue( action, "payload", event.action.payload );
+        SetValue( action, "payload", tools::BinaryToBase64( event.action.payload ) );
     }
 
     timeline::Event GetEvent( const CefRefPtr< CefV8Value > src )
@@ -239,7 +240,7 @@ namespace
             return dst;
         dst.action.target  = GetString( action, "target" );
         dst.action.apply   = GetBool( action, "apply" );
-        dst.action.payload = GetString( action, "payload" );
+        dst.action.payload = tools::Base64ToBinary( GetString( action, "payload" ) );
         return dst;
     }
 
