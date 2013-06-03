@@ -895,6 +895,5 @@ void Gl3dWidget::resizeGL( int w, int h )
 // -----------------------------------------------------------------------------
 void Gl3dWidget::paintGL()
 {
-    Widget3D::resizeGL( windowHeight_, windowWidth_ );
     Widget3D::paintGL();
 }
