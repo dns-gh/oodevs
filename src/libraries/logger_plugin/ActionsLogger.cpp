@@ -89,7 +89,7 @@ void ActionsLogger::SaveTo( const tools::Path& filename, const T_Filter& filter 
     tools::Xofstream xos( filename );
     tools::SchemaWriter schemaWriter;
     xos << xml::start( "actions" );
-    schemaWriter.WriteExerciseSchema( xos, "actions" );
+    schemaWriter.WriteExerciseSchema( xos, "orders" );
 
     const Adapter adapter( *converter_ );
     for( auto it = actions_.begin(); it != actions_.end(); ++it )

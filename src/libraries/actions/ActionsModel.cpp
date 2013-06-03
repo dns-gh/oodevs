@@ -241,19 +241,16 @@ void ActionsModel::Load( const tools::Path& filename, const tools::Loader_ABC& f
 // -----------------------------------------------------------------------------
 void ActionsModel::ReadActions( xml::xistream& xis, bool readonly )
 {
-    std::string errors;
     xis >> xml::start( "actions" )
-            >> xml::list( "action", *this, &ActionsModel::ReadAction, readonly, errors )
+            >> xml::list( "action", *this, &ActionsModel::ReadAction, readonly )
         >> xml::end;
-//    if( !errors.empty() )
-//        throw MASA_EXCEPTION( tools::translate( "ActionsModel", "The order file contains error(s), some actions could not be loaded:\n%1" ).arg( errors.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::ReadAction
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-void ActionsModel::ReadAction( xml::xistream& xis, bool readonly, std::string& errors )
+void ActionsModel::ReadAction( xml::xistream& xis, bool readonly )
 {
     try
     {
@@ -261,9 +258,8 @@ void ActionsModel::ReadAction( xml::xistream& xis, bool readonly, std::string& e
         Register( action->GetId(), *action );
         action.release();
     }
-    catch( const std::exception& e )
+    catch( const std::exception& /*e*/ )
     {
-        errors += tools::GetExceptionMsg( e ) + "\n";
         try
         {
             std::auto_ptr< Action_ABC > action( factory_.CreateStubAction( xis ) );
@@ -289,7 +285,7 @@ void ActionsModel::Save( const tools::Path& filename, const ActionsFilter_ABC* f
     tools::Xofstream xos( filename );
     tools::SchemaWriter schemaWriter;
     xos << xml::start( "actions" );
-    schemaWriter.WriteExerciseSchema( xos, "actions" );
+    schemaWriter.WriteExerciseSchema( xos, "orders" );
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
         if( !filter || filter->Allows( *it->second ) )
         {

@@ -103,7 +103,7 @@ private:
     //! @name Helpers
     //@{
     void ReadActions( xml::xistream& xis, bool readonly );
-    void ReadAction ( xml::xistream& xis, bool readonly, std::string& errors );
+    void ReadAction ( xml::xistream& xis, bool readonly );
     //@}
 
 private:
