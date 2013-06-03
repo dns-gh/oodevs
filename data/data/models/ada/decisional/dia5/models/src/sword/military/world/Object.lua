@@ -413,7 +413,7 @@ return
         integration.unAffectMobility( self )
     end,
     canEquipIt = function( self, typePont )
-        return self:isReached() and DEC_Agent_PeutConstruireObjetAvecLocalisation( typePont, self:getLocalisation() )
+        return DEC_Agent_PeutConstruireObjetAvecLocalisation( typePont, self:getLocalisation() )
     end,
     equipIt = masalife.brain.integration.startStopAction(
     { 
