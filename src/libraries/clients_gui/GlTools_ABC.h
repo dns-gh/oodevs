@@ -118,8 +118,8 @@ public:
     virtual void DrawLife         ( const geometry::Point2f& center, float height, float factor = 1.f, bool fixedSize = true ) const = 0;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where ) const = 0;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where, const QFont& font ) const = 0;
-    virtual void DrawApp6Symbol   ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f, unsigned int direction = 0, bool forceDraw = false ) const = 0;
-    virtual void DrawApp6Symbol   ( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f, unsigned int direction = 0, bool forceDraw = false ) const = 0;
+    virtual void DrawApp6Symbol   ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f, unsigned int direction = 0 ) const = 0;
+    virtual void DrawApp6Symbol   ( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f, unsigned int direction = 0 ) const = 0;
     virtual void DrawIcon         ( const char** xpm, const geometry::Point2f& where, float size = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawImage        ( const QImage& image, const geometry::Point2f& where ) const = 0;
     virtual void DrawCell         ( const geometry::Point2f& center ) const = 0;

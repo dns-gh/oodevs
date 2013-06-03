@@ -69,8 +69,8 @@ namespace
         virtual void DrawLife         ( const geometry::Point2f&, float, float, bool ) const {}
         virtual void Print            ( const std::string&, const geometry::Point2f& ) const {}
         virtual void Print            ( const std::string&, const geometry::Point2f&, const QFont& ) const {}
-        virtual void DrawApp6Symbol   ( const std::string&, const geometry::Point2f&, float, float, unsigned int, bool ) const {}
-        virtual void DrawApp6Symbol   ( const std::string&, const std::string&, const geometry::Point2f&, float, float, unsigned int, bool ) const {}
+        virtual void DrawApp6Symbol   ( const std::string&, const geometry::Point2f&, float, float, unsigned int ) const {}
+        virtual void DrawApp6Symbol   ( const std::string&, const std::string&, const geometry::Point2f&, float, float, unsigned int ) const {}
         virtual void DrawIcon         ( const char**, const geometry::Point2f&, float, E_Unit ) const {}
         virtual void DrawImage        ( const QImage&, const geometry::Point2f& ) const {}
         virtual void DrawCell         ( const geometry::Point2f& ) const {}

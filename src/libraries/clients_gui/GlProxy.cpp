@@ -378,18 +378,18 @@ void GlProxy::Print( const std::string& message, const geometry::Point2f& where,
 // Name: GlProxy::DrawApp6Symbol
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/, bool forceDraw /* = false */ ) const
+void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/ ) const
 {
-    tools_->DrawApp6Symbol( symbol, where, factor, thickness, direction, forceDraw );
+    tools_->DrawApp6Symbol( symbol, where, factor, thickness, direction );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlProxy::DrawApp6Symbol
 // Created: AGE 2008-05-07
 // -----------------------------------------------------------------------------
-void GlProxy::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/, bool forceDraw /* = false */ ) const
+void GlProxy::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/ ) const
 {
-    tools_->DrawApp6Symbol( symbol, style, where, factor, thickness, direction, forceDraw );
+    tools_->DrawApp6Symbol( symbol, style, where, factor, thickness, direction );
 }
 
 // -----------------------------------------------------------------------------

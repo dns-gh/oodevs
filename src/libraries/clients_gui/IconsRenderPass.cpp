@@ -87,7 +87,7 @@ void IconsRenderPass::RenderIcon( const T_IconTask& task )
     if( ! symbol.symbol_.empty() )
     {
         if( symbol.symbol_.find( "infrastructures" ) == std::string::npos )
-            tools_.DrawApp6Symbol( symbol.symbol_, center, 1.f, thickness, 0, true );
+            tools_.DrawApp6Symbol( symbol.symbol_, center, 1.f, thickness, 0 );
         else
             tools_.DrawApp6Symbol( symbol.symbol_, infraSymbolCenter, 0.5f, thickness );
     }

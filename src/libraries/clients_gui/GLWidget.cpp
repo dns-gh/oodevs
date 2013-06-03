@@ -871,20 +871,20 @@ float GlWidget::ComputeZoomFactor( float& factor, bool bVariableSize /*= true*/ 
 // Name: GlWidget::DrawApp6Symbolc
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/, bool forceDraw /* = false */ ) const
+void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/ ) const
 {
-    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, thickness, direction, forceDraw );
+    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, thickness, direction );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::DrawApp6Symbol
 // Created: AGE 2008-05-07
 // -----------------------------------------------------------------------------
-void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/, bool forceDraw /* = false */ ) const
+void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /*= 0*/ ) const
 {
     thickness *= ComputeZoomFactor( factor );
     DrawApp6Symbol( symbol, style, where, baseWidth_ * factor, viewport_
-                  , static_cast< unsigned int >( windowWidth_ * thickness ), static_cast< unsigned int >( windowHeight_ * thickness ), direction, 1., 1., -20, -80, forceDraw );
+                  , static_cast< unsigned int >( windowWidth_ * thickness ), static_cast< unsigned int >( windowHeight_ * thickness ), direction, 1., 1., -20, -80 );
 }
 
 // -----------------------------------------------------------------------------
@@ -999,7 +999,7 @@ void GlWidget::DrawTail( const T_PointVector& points, float width ) const
 void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where
                               , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth
                               , unsigned int printHeight, unsigned int direction, float xFactor, float yFactor
-                              , const float svgDeltaX, const float svgDeltaY, bool forceDraw /* = false */ ) const
+                              , const float svgDeltaX, const float svgDeltaY ) const
 {
     const float svgWidth = 360;
     const float expectedHeight = expectedWidth * 0.660f;
@@ -1017,7 +1017,7 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
             glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0.0f );
             glScalef( scaleRatio, -scaleRatio, 1 );
             glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-            Base().PrintApp6( symbol, style, viewport, printWidth, printHeight, forceDraw );
+            Base().PrintApp6( symbol, style, viewport, printWidth, printHeight );
         glPopMatrix();
     glPopAttrib();
 }

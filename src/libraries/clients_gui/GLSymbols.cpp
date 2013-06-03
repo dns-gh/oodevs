@@ -51,10 +51,10 @@ GLSymbols::~GLSymbols()
 // Created: SBO 2006-12-15
 // -----------------------------------------------------------------------------
 void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport,
-                           unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/, bool pickingMode /* = false*/, bool forceCreate /* = false */ )
+                           unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/, bool pickingMode /* = false*/ )
 {
     const T_SymbolKey key( symbol, style );
-    const bool create = ! symbol.empty() && ( symbols_.find( key ) == symbols_.end() || forceCreate );
+    const bool create = ! symbol.empty() && ( symbols_.find( key ) == symbols_.end()  );
     T_LodSymbol& node = symbols_[ key ];
     if( create )
     {

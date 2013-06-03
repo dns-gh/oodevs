@@ -59,7 +59,7 @@ public:
     GlToolsBase& Base() const;
     void BindIcon( const char** xpm );
     static std::string DefaultStyle();
-    void PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480, bool forceCreate = false );
+    void PrintApp6( const std::string& symbol, const std::string& style, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
     void DrawSvg  ( const std::string& filename, const geometry::Rectangle2f& viewport, unsigned vWidth = 640, unsigned vHeight = 480 );
     void DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, bool overlined, float zoom );
     void DrawBillboardRect();

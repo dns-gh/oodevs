@@ -546,7 +546,8 @@ void MainWindow::LoadExercise()
             return;
         }
         SetProgression( 90, tr( "Generate symbols" ) );
-        QTimer::singleShot( 500, this, SLOT( OnGenerateSymbols() ) );
+        icons_->GenerateSymbols( model_.teams_ );
+
         loading_ = false;
         controllers_.ChangeMode( eModes_Prepare );
         emit CheckConsistency();
@@ -877,13 +878,4 @@ void MainWindow::OnRasterProcessExited( int exitCode, const tools::Path& output 
     }
     else
         QMessageBox::warning( this, tr( "Error loading image file" ), tr( "Error while loading Raster source." ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::OnGenerateSymbols
-// Created: NPT 2013-05-13
-// -----------------------------------------------------------------------------
-void MainWindow::OnGenerateSymbols()
-{
-    icons_->GenerateSymbols( model_.teams_ );
 }

@@ -477,7 +477,7 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where, const 
 // Name: Gl3dWidget::DrawApp6Symbol
 // Created: AGE 2008-05-07
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float /*thickness = 1.f*/, unsigned int direction /*= 0*/, bool forceDraw /* = false */ ) const
+void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /* = 1.f*/, float /*thickness = 1.f*/, unsigned int direction /*= 0*/ ) const
 {
     if( factor < 0 )
         factor = GetAdaptiveZoomFactor( false );
@@ -499,7 +499,7 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& s
             glScalef( scaleRatio, - scaleRatio, scaleRatio );
             glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
             const Rectangle2f bbox( -10000, -10000, 10000, 10000 ); // $$$$ AGE 2006-09-11:
-            Base().PrintApp6( symbol, style, bbox, 640, 480, forceDraw );
+            Base().PrintApp6( symbol, style, bbox, 640, 480 );
         glPopAttrib();
     glPopMatrix();
 }
@@ -536,9 +536,9 @@ void Gl3dWidget::DrawUnitSymbolAndTail( const std::string&, const std::string&, 
 // Name: Gl3dWidget::DrawApp6Symbol
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /* = 0 */, bool forceDraw /* = false */ ) const
+void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /* = 1.f*/, float thickness /* = 1.f*/, unsigned int direction /* = 0 */ ) const
 {
-    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, thickness, direction, forceDraw );
+    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, thickness, direction );
 }
 
 // -----------------------------------------------------------------------------
