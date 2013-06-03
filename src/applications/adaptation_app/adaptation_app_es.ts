@@ -1108,10 +1108,6 @@ estacionado con motor encendido</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>length ( m )</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Vehicule class</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1121,6 +1117,14 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Turning radius ( m )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length ( m )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width ( m )</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1108,10 +1108,6 @@ Arrêt moteur allumé</translation>
         <translation>Hauteur (m)</translation>
     </message>
     <message>
-        <source>length ( m )</source>
-        <translation>Longueur (m)</translation>
-    </message>
-    <message>
         <source>Vehicule class</source>
         <translation>Classe du véhicule</translation>
     </message>
@@ -1122,6 +1118,14 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Turning radius ( m )</source>
         <translation>Rayon de braquage (m)</translation>
+    </message>
+    <message>
+        <source>Length ( m )</source>
+        <translation>Longueur (m)</translation>
+    </message>
+    <message>
+        <source>Width ( m )</source>
+        <translation>Largeur (m)</translation>
     </message>
 </context>
 <context>

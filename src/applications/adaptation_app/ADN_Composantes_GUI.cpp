@@ -137,8 +137,8 @@ void ADN_Composantes_GUI::Build()
     builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Empty mass ( kg )" ), vInfosConnectors[eHasEmptyMass], vInfosConnectors[eEmptyMass] );
     builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Loaded mass ( kg )" ), vInfosConnectors[eHasLoadedMass], vInfosConnectors[eLoadedMass] );
     builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Height ( m )" ), vInfosConnectors[eHasHeight], vInfosConnectors[eHeight] );
-    builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "length ( m )" ), vInfosConnectors[eHasLength], vInfosConnectors[eLength] );
-    builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "length ( m )" ), vInfosConnectors[eHasWidth], vInfosConnectors[eWidth] );
+    builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Length ( m )" ), vInfosConnectors[eHasLength], vInfosConnectors[eLength] );
+    builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Width ( m )" ), vInfosConnectors[eHasWidth], vInfosConnectors[eWidth] );
     ADN_EditLine_Int* vehiculeField = builder.AddOptionnalField< ADN_EditLine_Int >( pVehiculeGroupBox_, tr( "Vehicule class" ), vInfosConnectors[eHasVehicleClass], vInfosConnectors[eVehicleClass] );
     builder.SetValidator( new ADN_IntValidator( 0, 999, vehiculeField ) );
     builder.AddOptionnalField< ADN_EditLine_Double >( pVehiculeGroupBox_, tr( "Load per axle ( kg )" ), vInfosConnectors[eHasLoadPerAxle], vInfosConnectors[eLoadPerAxle] );
