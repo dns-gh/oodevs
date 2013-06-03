@@ -80,8 +80,8 @@ Server::Server( const Configuration& cfg )
     auto widget = new Widget( *write_, cfg.widget );
     layout->addWidget( widget );
     layout->setContentsMargins( 0, 0, 0, 0 );
-    thread_.reset( new boost::thread( &Server::Run, this ) );
     embedded_->Start( cfg_, uuid_ );
+    thread_.reset( new boost::thread( &Server::Run, this ) );
 }
 
 Server::~Server()

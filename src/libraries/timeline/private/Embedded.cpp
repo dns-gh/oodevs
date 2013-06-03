@@ -14,11 +14,14 @@
 #include <tools/IpcDevice.h>
 #include <QWidget>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/thread.hpp>
 
 #ifdef USE_EMBEDDED_CORE
 #include <timeline_core/api.h>
 #endif
+
+#include <windows.h>
 
 using namespace timeline;
 namespace ipc = tools::ipc;
@@ -37,6 +40,29 @@ namespace
         device.TimedWrite( &quit[0], quit.size(), boost::posix_time::seconds( 4 ) );
     }
 
+    std::runtime_error Win32Exception( const std::string& err )
+    {
+        return std::runtime_error( err + " winapi error #" + boost::lexical_cast< std::string >( GetLastError() ) );
+    }
+
+    boost::shared_ptr< void > MakeAutoKill( HANDLE process )
+    {
+        HANDLE job = CreateJobObject( NULL, NULL );
+        if( !job )
+            throw Win32Exception( "unable to create job object" );
+        boost::shared_ptr< void > rpy( job, CloseHandle );
+        JOBOBJECT_EXTENDED_LIMIT_INFORMATION jeli;
+        memset( &jeli, 0, sizeof jeli );
+        jeli.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
+        bool valid = SetInformationJobObject( job, JobObjectExtendedLimitInformation, &jeli, sizeof jeli );
+        if( !valid )
+            throw Win32Exception( "unable to set information job object" );
+        valid = AssignProcessToJobObject( job, process );
+        if( !valid )
+            throw Win32Exception( "unable to assign process to job object" );
+        return rpy;
+    }
+
     class External : public Embedded_ABC
     {
     public:
@@ -49,26 +75,57 @@ namespace
         virtual ~External()
         {
             StopClient( device_ );
-            process_.waitForFinished( 4*1000 );
-            process_.kill();
+            WaitForSingleObjectEx( process_.get(), 4*1000, false );
+            TerminateProcess( process_.get(), static_cast< unsigned >( -1 ) );
+        }
+
+        std::vector< wchar_t > GetArguments( const Configuration& cfg, const std::string& uuid )
+        {
+            QStringList list;
+            list << QString::number( reinterpret_cast< int >( cfg.widget->winId() ) )
+                 << QString::fromStdString( uuid )
+                 << QString::fromStdString( cfg.url );
+            if( cfg.debug_port )
+                list << "--debug_port" << QString::number( cfg.debug_port );
+            const auto join = list.join( " " ).toStdWString();
+            std::vector< wchar_t > args;
+            args.push_back( L' ' );
+            std::copy( join.begin(), join.end(), std::back_inserter( args ) );
+            args.push_back( 0 );
+            return args;
         }
 
         virtual void Start( const Configuration& cfg, const std::string& uuid )
         {
-            connect( &process_, SIGNAL( error( QProcess::ProcessError ) ), SIGNAL( Error( QProcess::ProcessError ) ) );
-            process_.setWorkingDirectory( FromPath( cfg.rundir ) );
-            QStringList args;
-            args << QString::number( reinterpret_cast< int >( cfg.widget->winId() ) )
-                 << QString::fromStdString( uuid )
-                 << QString::fromStdString( cfg.url );
-            if( cfg.debug_port )
-                args << "--debug_port" << QString::number( cfg.debug_port );
-            process_.start( FromPath( cfg.binary ), args );
+            PROCESS_INFORMATION pi;
+            STARTUPINFOW si;
+            memset( &pi, 0, sizeof pi );
+            memset( &si, 0, sizeof si );
+            si.cb = sizeof si;
+            si.dwFlags = STARTF_USESHOWWINDOW;
+            si.wShowWindow = false;
+            auto args = GetArguments( cfg, uuid );
+            bool valid = CreateProcessW( cfg.binary.ToUnicode().c_str(),
+                &args[0], NULL, NULL, false,
+                CREATE_SUSPENDED | CREATE_BREAKAWAY_FROM_JOB,
+                NULL, cfg.rundir.ToUnicode().c_str(), &si, &pi );
+            if( !valid )
+                throw Win32Exception( "unable to create process" );
+            if( pi.hProcess )
+                process_.reset( pi.hProcess, CloseHandle );
+            boost::shared_ptr< void > thread;
+            if( pi.hThread )
+                thread.reset( pi.hThread, CloseHandle );
+            job_ = MakeAutoKill( pi.hProcess );
+            const int err = ResumeThread( pi.hThread );
+            if( err == -1 )
+                throw Win32Exception( "unable to resume thread" );
         }
 
     private:
-        ipc::Device& device_;
-        QProcess     process_;
+        ipc::Device&              device_;
+        boost::shared_ptr< void > process_;
+        boost::shared_ptr< void > job_;
     };
 
 #ifdef USE_EMBEDDED_CORE
