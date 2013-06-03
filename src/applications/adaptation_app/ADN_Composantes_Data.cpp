@@ -1815,7 +1815,7 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
     if( ptrArmor_.GetData() && ptrArmor_.GetData()->nType_ == eProtectionType_Crowd )
     {
         helpers::T_ArmorInfos_Vector& v = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos();
-        for( auto it = v.begin(); it != v.end(); ++it )
+        for( auto it = v.rbegin(); it != v.rend(); ++it )
             if( ( *it )->nType_ != eProtectionType_Crowd )
             {
                 ptrArmor_.SetData( *it, false );
