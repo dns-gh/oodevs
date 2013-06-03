@@ -58,6 +58,16 @@ masalife.brain.communication.setMessageTreatment( "obstacleByPassed",
         myself.blocked = nil
     end )
 
+masalife.brain.communication.setMessageTreatment( "beginPerceptionShared",
+    function( content, sender )
+        meKnowledge:enabledSharedPerception( content.friend )
+    end )
+    
+masalife.brain.communication.setMessageTreatment( "stopPerceptionShared",
+    function( content, sender )
+        meKnowledge:disabledSharedPerception( content.friend )
+    end )
+
 --The unit is caught
 masalife.brain.communication.setMessageTreatment( "capture",
     function( content, sender )
@@ -430,6 +440,12 @@ return
     sendDisponibleDrone = function( self, receiver, value )
        integration.SendMessage( "disponibleDrone", receiver, value, { type = "dynamic" } )
     end,
+    sendBeginPerceptionShared = function( self, receiver, friend )
+        integration.SendMessage( "beginPerceptionShared", receiver, { friend = friend }, { type = "dynamic" } )
+    end,
+    sendStopPerceptionShared = function( self, receiver, friend )
+        integration.SendMessage( "stopPerceptionShared", receiver, { friend = friend }, { type = "dynamic" } )
+    end,
     getObstaclesOnAllyPath = function( self )
         return myself.engineerObjectsOnPath
     end,
@@ -594,6 +610,12 @@ return
     {
         start = integration.equipNBCOutfit
     } ),
+    switchOnRadio = function( self )
+        integration.switchOnRadio( self )
+    end,
+    switchEmitOnlyOffRadio = function( self )
+        integration.switchEmitOnlyOffRadio( self )
+    end,
     equipProtectionNBC = function ( self )
         integration.equipNBCOutfit()
     end,
@@ -991,5 +1013,14 @@ return
            simElements[ #simElements + 1 ] = element.source
         end
         integration.unboardElementsWithoutDelay( simElements )
+    end,
+    enabledSharedPerception = function( self )
+        integration.enabledSharedPerception( self )
+    end,
+    disabledSharedPerception = function( self )
+        integration.disabledSharedPerception( self )
+    end,
+    isPartialRadioState = function( self )
+        return integration.isPartialRadioState( self )
     end
 }

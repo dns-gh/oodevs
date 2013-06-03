@@ -1,0 +1,45 @@
+-- **************************************************************************** 
+-- Share perceptions for support tasks'.
+-- self.params.unitsToSupport: units to support
+-- ****************************************************************************
+rootnode
+{
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        if not meKnowledge:isPartialRadioState() then
+            meKnowledge:switchEmitOnlyOffRadio()
+        end
+        for _, supportUnit in pairs( self.params.unitsToSupport ) do
+            supportUnit:enabledSharedPerception( )
+            if masalife.brain.core.class.isOfType( supportUnit, sword.military.world.Platoon) then
+                supportUnit:agentKnowledgeSharedPerception( ) 
+            else
+                meKnowledge:sendBeginPerceptionShared( supportUnit, meKnowledge )
+            end
+        end
+    end,
+    
+    activate = function( self )
+
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- End of behavior
+    -- --------------------------------------------------------------------------------
+    destroy = function( self )
+        integration.sendfireAvailable(false)
+        if meKnowledge:isPartialRadioState() then -- fragorder could be change radio state if given during mission
+            meKnowledge:switchOnRadio()
+        end
+        for _, supportUnit in pairs( self.params.unitsToSupport ) do
+            supportUnit:disabledSharedPerception()
+            if masalife.brain.core.class.isOfType( supportUnit, sword.military.world.Platoon) then
+                supportUnit:agentKnowledgeStopSharedPerception( ) 
+            else
+                meKnowledge:sendStopPerceptionShared( supportUnit, meKnowledge )
+            end
+        end
+    end,
+}

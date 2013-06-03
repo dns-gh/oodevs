@@ -65,6 +65,13 @@
                         </value>
                     </parameter>
                 </skill>
+                <skill name="sword.military.platoon.skills.actions.SharePerceptions">
+                    <parameter name="unitsToSupport">
+                        <value>
+                            <parameter>objectives</parameter>
+                        </value>
+                    </parameter>
+                </skill>
             </skills>
         </stage>
     </stages>

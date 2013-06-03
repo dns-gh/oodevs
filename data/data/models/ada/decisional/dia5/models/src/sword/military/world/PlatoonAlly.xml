@@ -1523,6 +1523,41 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
 				</type>
 			</argument>
 		</method>
+	    <method name="enabledSharedPerception">
+            <description>Begins sharing perceptions with friend.</description>
+        </method>
+        <method name="disabledSharedPerception">
+            <description>Stops sharing knowledges to friend</description>
+        </method>
+        <method name="sendBeginPerceptionShared">
+            <description>Notifies to ally that the agent support, escort him, so to share knowledges</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+        </method>
+        <method name="sendStopPerceptionShared">
+            <argument name="receicer">
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </argument>
+        </method>
+	    <method name="switchOnRadio">
+		    <description>Switch on radio</description>
+		</method>
+		<method name="switchEmitOnlyOffRadio">
+		    <description>Switch emit only off radio</description>
+		</method>
+	    <method name="isPartialRadioState">
+		    <description>Returns 'true' if agent is in partial silent radio state</description>
+		    <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+		</method>
 	</methods>
 	<predicates>
 		<predicate name="isCommandingFor">

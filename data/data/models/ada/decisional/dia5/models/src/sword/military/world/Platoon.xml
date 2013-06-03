@@ -738,6 +738,18 @@
                 </type>
             </return>
         </method>
+        <method name="enabledSharedPerception">
+            <description>Begins sharing perceptions with friend.</description>
+        </method>
+        <method name="disabledSharedPerception">
+            <description>Stops sharing knowledges to friend</description>
+        </method>
+        <method name="agentKnowledgeSharedPerception">
+            <description>Begins sharing perceptions between a knowledge to an other one.</description>
+        </method>
+        <method name="agentKnowledgeStopSharedPerception">
+            <description>Stops sharing knowledges to friend</description>
+        </method>
     </methods>
     <predicates>
         <predicate name="isDestroyed">

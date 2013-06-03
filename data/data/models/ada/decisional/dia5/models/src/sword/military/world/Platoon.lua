@@ -399,5 +399,17 @@ return
     end,
     transportUnitRoundTrip = function( self, onlyLoadable )
         return integration.transportKnowledgeRoundTrip( self, onlyLoadable )
-    end
+    end,
+    enabledSharedPerception = function( self )
+        integration.enabledSharedPerceptionWithKnowledge( self )
+    end,
+    disabledSharedPerception = function( self )
+        integration.disableSharedPerceptionWithKnowledge( self )
+    end,
+    agentKnowledgeSharedPerception = function( self )
+        integration.agentKnowledgeSharedPerception( self )
+    end,
+    agentKnowledgeStopSharedPerception = function( self )
+        integration.agentKnowledgeStopSharedPerceptionWithKnowledge( self )
+    end,
 }

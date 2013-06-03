@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.actions.SharePerceptions" source-version="1.0.0">
+    <description>Share perceptions of support units and units that are supported. In addition, the supported unit sharing perceptions acquired by unit supports to his knowledges group. The unit which supports doesn't share the perceptions acquired from the unit it supports to its own knowledges group.</description>
+    <parameters>
+        <parameter name="unitsToSupport">
+            <description>Units to support</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Share units perceptions for support tasks</description>
+    </goal>
+    <links/>
+</skill>

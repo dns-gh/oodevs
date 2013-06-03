@@ -57,6 +57,13 @@
                         </value>
                     </parameter>
                 </skill>
+                <skill name="sword.military.platoon.skills.actions.SharePerceptions">
+                    <parameter name="unitsToSupport">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                </skill>
             </skills>
         </stage>
         <stage label="Protection" permanent="true">
@@ -91,6 +98,13 @@
                 </skill>
                 <skill name="sword.military.platoon.skills.actions.ApplyMortarFires" priority="0.3">
                     <parameter name="alliedUnits">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="sword.military.platoon.skills.actions.SharePerceptions">
+                    <parameter name="unitsToSupport">
                         <value>
                             <parameter>entities</parameter>
                         </value>

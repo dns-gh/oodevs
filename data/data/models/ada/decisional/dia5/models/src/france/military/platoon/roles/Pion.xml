@@ -60,6 +60,7 @@
         <skill name="france.military.platoon.combat.support.rens.skills.Appuyer"/>
         <skill name="sword.military.platoon.coercition.skills.ReconnoiterSite"/>
         <skill name="sword.military.platoon.skills.GetThrough"/>
+        <skill name="sword.military.platoon.skills.actions.SharePerceptions"/>
     </skills>
     <resources>
         <resource name="france.military.platoon.resources.CapaciteEmbarquement"/>
