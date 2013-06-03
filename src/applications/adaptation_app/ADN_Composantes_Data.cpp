@@ -1812,6 +1812,15 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
     , rLoadPerAxle_                  ( 0 )
     , rTurningRadius_                ( 0 )
 {
+    if( ptrArmor_.GetData() && ptrArmor_.GetData()->nType_ == eProtectionType_Crowd )
+    {
+        helpers::T_ArmorInfos_Vector& v = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos();
+        for( auto it = v.begin(); it != v.end(); ++it )
+            if( ( *it )->nType_ != eProtectionType_Crowd )
+            {
+                ptrArmor_.SetData( *it, false );
+            }
+    }
     Initialize();
 }
 
