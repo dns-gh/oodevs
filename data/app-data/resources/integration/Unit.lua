@@ -45,6 +45,10 @@ integration.isKnowledgesAgentsInArea = function( area )
     return DEC_Connaissances_UnitesEnnemiesVivantesDansZone( area )
 end
 
+integration.getFriendsInArea = function( area )
+    return DEC_Connaissances_UnitesAmiesDansZone( area )
+end
+
 integration.getKnowledgesLivingAgentsInCircle = function( position, distance )
     return DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( position, distance )
 end
