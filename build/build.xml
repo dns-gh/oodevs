@@ -925,8 +925,7 @@
     </target>
 
     <target name="cmake.msvc" description="generate visual studio project files">
-        <cmake_msvc input="${root.dir}/build"
-            version="${version.version}"/>
+        <cmake_msvc input="${root.dir}/build" version="${version.version}"/>
         <python taskname="fixmsvc" failonerror="true">
             <arg value="${bin.dir}/buildtools/fixmsvc.py"/>
             <arg value="${out.dir}/msvc"/>
@@ -939,9 +938,7 @@
     </target>
 
     <target name="cmake.configure" description="generate cmake build files">
-        <cmake_configure input="${root.dir}/build"
-            configuration="release"
-            version="${version.version}"/>
+        <cmake_configure input="${root.dir}/build" configuration="release" version="${version.version}"/>
     </target>
 
     <target name="build" description="build everything">
