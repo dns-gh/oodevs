@@ -234,13 +234,12 @@ namespace
         dst.begin = GetString( src, "begin" );
         dst.end   = GetString( src, "end" );
         dst.done  = GetBool( src, "done" );
-        if( !src->HasValue( "action" ) )
+        auto action = src->GetValue( "action" );
+        if( !action )
             return dst;
-        auto sub       = src->GetValue( "action" );
-        auto& action   = dst.action;
-        action.target  = GetString( sub, "action.target" );
-        action.apply   = GetBool( sub, "action.apply" );
-        action.payload = GetString( sub, "action.payload" );
+        dst.action.target  = GetString( action, "target" );
+        dst.action.apply   = GetBool( action, "apply" );
+        dst.action.payload = GetString( action, "payload" );
         return dst;
     }
 

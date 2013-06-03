@@ -350,7 +350,8 @@ int Controller::Create( const std::vector< std::string >& args )
     QEventLoop wait;
     CreateEvent creator( wait );
     QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), &creator, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
-    Event event( args[0], "some_name", "some_info", "2013-01-01T11:00:04Z", std::string(), false, Action() );
+    Action action( "zomgjohndoe", true, "c29tZV91bmtub3duX3BheWxvYWQ=" );
+    Event event( args[0], "some_name", "some_info", "2013-01-01T11:00:04Z", std::string(), false, action );
     ctx_->CreateEvent( event );
     wait.exec();
     if( !Equals( creator.error_, Error() ) )
