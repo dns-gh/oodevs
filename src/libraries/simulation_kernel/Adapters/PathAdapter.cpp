@@ -405,8 +405,8 @@ namespace
     bool IsSlopeTooSteep( const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeFrom, double rAltitudeTo, double squareSlope )
     {
         const double rSquareDelta = Square( rAltitudeTo - rAltitudeFrom );
-        const double rSquareGroundDistance = rSquareDelta + from.SquareDistance( to );
-        return rSquareDelta > squareSlope * rSquareGroundDistance;
+        const double rSquareDistance = from.SquareDistance( to );
+        return rSquareDelta > squareSlope * rSquareDistance;
     }
 }
 
