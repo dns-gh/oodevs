@@ -133,7 +133,7 @@ void FilterInputArgument::OnBrowse()
     QString path = ( type_ == eOpen )
         ? QFileDialog::getOpenFileName( exerciseDir_.c_str(), QString(), QApplication::activeModalWidget(), "FilterInputArgument_FileDialog", tools::translate( "FilterInputArgument", "Select a file" ) )
         : ( type_ == eSave )
-            ? QFileDialog::getSaveFileName( line_->text(), QString(), QApplication::activeModalWidget(), "FilterInputArgument_FileDialog", tools::translate( "FilterInputArgument", "Select a file" ) )
+            ? QFileDialog::getSaveFileName( line_->text().isEmpty() ? ( exerciseDir_ + "/errorDQP.xml" ).c_str() : line_->text(), QString(), QApplication::activeModalWidget(), "FilterInputArgument_FileDialog", tools::translate( "FilterInputArgument", "Select a file" ) )
             : QFileDialog::getExistingDirectory( exerciseDir_.c_str(), QApplication::activeModalWidget(), "FilterInputArgument_DirectoryDialog", tools::translate( "FilterInputArgument", "Select a directory" ) );
     path.replace( "/", "\\" );
     line_->setText( path );
