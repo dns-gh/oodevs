@@ -75,7 +75,7 @@ local function manageAddedAndDeletedUnits( self )
         for i, entity in pairs( newOperationnalEntities ) do
             if not exists( self.operationnalEntities, entity ) then
                 -- Si le pion n'a pas de mission ou si c'est de la LOG on donne Se deployer; si c'est un pion Convoi, il ne faut pas le prendre en compte
-                if ( not DEC_HasMission( entity.source ) or DEC_Automate_isLogistic() ) and not integration.isLogisticConvoy( entity.source ) then 
+                if not DEC_Automate_isLogistic() and not integration.isLogisticConvoy( entity.source ) then 
                     local tasksForNewEntity = ""
                     if myself.taskParams.echelonNumber == 1 then
                           tasksForNewEntity = self.params.mainTasks..";"..self.params.supportTasks..";"..self.params.defaultTask
