@@ -416,6 +416,7 @@ class SessionItemView extends Backbone.View
             duration = current.getTime() - start.getTime()
             data.start_time = start.toUTCString()
             data.duration = ms_to_duration duration
+        data.can_link = data.status != "playing" || data.start_time
         $(@el).html session_template data
         $(@el).find(".link").click (evt) =>
             return if is_disabled evt
