@@ -203,6 +203,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SubordinatesTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransferSenderTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationFacadeTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationOffererTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationRequesterTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationTypesTest.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMessageController.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMissionResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockModel.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockNETNInteractionBuilder.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectIdentifierFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectListener.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockObjectRegistration.h" />
