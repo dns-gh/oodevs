@@ -6,11 +6,12 @@ connections = { skill.links.issueTaskGeneral },
 
 create = function( self )
   self.supportList = copyTable( self.params.SE )
-  self.supportedList = {}
   self.linkSupportSupported = {}
   self.inSupport = {}
   self.pionsToHelp = {}
   self.bestSupportDotationCumule = 0
+  self.supportedListForMineOrDemine = {}
+  self.supportedListForBuildOrDestroy = {}
 end,
 
 activate = function( self )
@@ -28,7 +29,8 @@ activate = function( self )
           if support then
               support.source.reinforceGivenByUser = false
               self.supportList[#self.supportList + 1 ] = support
-              self.supportedList = removeFromList( pion, self.supportedList )
+              self.supportedListForMineOrDemine = removeFromList( pion, self.supportedListForMineOrDemine )
+              self.supportedListForBuildOrDestroy = removeFromList( pion, self.supportedListForBuildOrDestroy )
               self.linkSupportSupported[pion] = nil
               self.inSupport = removeFromList( support, self.inSupport )
           end
@@ -36,7 +38,7 @@ activate = function( self )
       end
       local position = pion:getMyPosition()
       -- Trouver un bon pion pour appuyer le pion en difficulté
-      if not exists( self.supportedList, pion ) then
+      if ( not exists( self.supportedListForMineOrDemine, pion ) ) or ( not exists( self.supportedListForBuildOrDestroy, pion ) ) then
           repeat
               stopBoucle = true
               if pion.source.needReinforcementForCapacity ~= nil then
@@ -69,7 +71,11 @@ activate = function( self )
               if bestSupport ~= nil then
                   bestSupport.params = bestTask:fillParameters( self.params.companyTask, self.params.parameters, bestSupport, 0, pion )
                   self.supportList = removeFromList( bestSupport, self.supportList )
-                  self.supportedList [#self.supportedList + 1] = pion
+                  if pion.source.needReinforcementForAction == "mine" or pion.source.needReinforcementForAction == "demine" then
+                      self.supportedListForMineOrDemine [#self.supportedListForMineOrDemine + 1] = pion
+                  else
+                      self.supportedListForBuildOrDestroy [#self.supportedListForBuildOrDestroy + 1] = pion
+                  end
                   self.linkSupportSupported[pion] = bestSupport
                   self.inSupport[#self.inSupport + 1] = bestSupport
                   self.bestSupportDotationCumule = self.bestSupportDotationCumule + self.bestSupportDotation
