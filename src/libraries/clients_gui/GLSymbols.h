@@ -53,6 +53,7 @@ public:
     void Load( const tools::ExerciseConfig& config );
     void SetSymbolsPath( const tools::Path& symbolPath );
     const std::vector< std::string >& GetNotFoundSymbol() const;
+    void SetCurrentColor( float r, float g, float b, float a );
     //@}
 
 private:
@@ -66,7 +67,7 @@ private:
     typedef std::pair< std::string, std::string >       T_SymbolKey;
     typedef std::pair< svg::Node_ABC*, svg::Node_ABC* > T_LodSymbol;
     typedef std::map< T_SymbolKey, T_LodSymbol >        T_Symbols;
-    typedef T_Symbols::const_iterator                 CIT_Symbols;
+    typedef std::map< T_SymbolKey, float >              T_AlphaSymbols;
     //@}
 
 private:
@@ -76,7 +77,9 @@ private:
     tools::Path symbolsPath_;
     std::auto_ptr< zip::izipfile > zipFile_;
     T_Symbols                      symbols_;
+    T_AlphaSymbols                 alphaSymbols_;
     std::vector< std::string >     notFoundSymbols_;
+    float                          alpha_;
     //@}
 };
 

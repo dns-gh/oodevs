@@ -54,7 +54,9 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
                            unsigned vWidth /* = 640*/, unsigned vHeight /* = 480*/, bool pickingMode /* = false*/ )
 {
     const T_SymbolKey key( symbol, style );
-    const bool create = ! symbol.empty() && ( symbols_.find( key ) == symbols_.end()  );
+    auto it = alphaSymbols_.find( key );
+    const bool create = ( !symbol.empty() && ( symbols_.find( key ) == symbols_.end() ) ) ||
+                        ( !pickingMode && it != alphaSymbols_.end() && it->second != alpha_ );
     T_LodSymbol& node = symbols_[ key ];
     if( create )
     {
@@ -62,6 +64,7 @@ void GLSymbols::PrintApp6( const std::string& symbol, const std::string& style, 
         {
             node.first  = Compile( symbol, 10, true );
             node.second = Compile( symbol, 100, false );
+            alphaSymbols_[ key ] = alpha_;
         }
         catch( ... )
         {
@@ -136,4 +139,13 @@ void GLSymbols::Load( const tools::ExerciseConfig& config )
 const std::vector< std::string >& GLSymbols::GetNotFoundSymbol() const
 {
     return notFoundSymbols_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLSymbols::SetCurrentColor
+// Created: LGY 2013-06-03
+// -----------------------------------------------------------------------------
+void GLSymbols::SetCurrentColor( float /*r*/, float /*g*/, float /*b*/, float a )
+{
+    alpha_ = a;
 }
