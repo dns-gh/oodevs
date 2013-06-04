@@ -291,6 +291,7 @@ private:
     T_AutomateVector                                           automates_;
     bool                                                       bEngaged_;
     bool                                                       bAutomateModeChanged_;
+    bool                                                       bSymbolChanged_;
     // Knowledge
     DEC_KnowledgeBlackBoard_Automate*                          pKnowledgeBlackBoard_;
     // Surrendered / prisoner
