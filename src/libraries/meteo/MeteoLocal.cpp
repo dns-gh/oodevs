@@ -77,11 +77,13 @@ MeteoLocal::MeteoLocal( xml::xistream& xis, const kernel::CoordinateConverter_AB
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( const sword::ControlLocalWeatherCreation& msg, const kernel::CoordinateConverter_ABC& converter, unsigned int timeStep, const std::string& name /*= ""*/ )
     : Meteo( msg.weather().id(), msg.attributes(), timeStep, name + boost::lexical_cast< std::string >( msg.weather().id() ) )
-    , converter_( &converter )
-    , created_  ( false )
+    , converter_  ( &converter )
+    , topLeft_    ( converter_->ConvertFromGeo( geometry::Point2d( msg.top_left().longitude(), msg.top_left().latitude() ) ) )
+    , bottomRight_( converter_->ConvertFromGeo( geometry::Point2d( msg.bottom_right().longitude(), msg.bottom_right().latitude() ) ) )
+    , startTime_  ( boost::posix_time::from_iso_string( msg.start_date().data() ) )
+    , endTime_    ( boost::posix_time::from_iso_string( msg.end_date().data() ) )
+    , created_    ( false )
 {
-    topLeft_     = converter_->ConvertFromGeo( geometry::Point2d( msg.top_left().longitude(), msg.top_left().latitude() ) );
-    bottomRight_ = converter_->ConvertFromGeo( geometry::Point2d( msg.bottom_right().longitude(), msg.bottom_right().latitude() ) );
     if( msg.weather().id() >= localCounter_ )
         localCounter_ = msg.weather().id() + 1;
 }
@@ -92,9 +94,12 @@ MeteoLocal::MeteoLocal( const sword::ControlLocalWeatherCreation& msg, const ker
 // -----------------------------------------------------------------------------
 MeteoLocal::MeteoLocal( const sword::ControlLocalWeatherCreation& msg, unsigned int timeStep, const std::string& name /*= ""*/  )
     : Meteo( msg.weather().id(), msg.attributes(), timeStep, name )
+    , converter_  ( 0 )
     , topLeft_    ( static_cast< float >( msg.top_left().longitude() ), static_cast< float >( msg.top_left().latitude() ) ) // $$$$ ABR 2011-06-08: Warning, no coordinate converter for dispatcher
     , bottomRight_( static_cast< float >( msg.bottom_right().longitude() ), static_cast< float >( msg.bottom_right().latitude() ) )
-    , converter_  ( 0 )
+    , startTime_  ( boost::posix_time::from_iso_string( msg.start_date().data() ) )
+    , endTime_    ( boost::posix_time::from_iso_string( msg.end_date().data() ) )
+    , created_    ( false )
 {
     // NOTHING
 }
@@ -238,6 +243,8 @@ void MeteoLocal::Update( const sword::ControlLocalWeatherCreation& msg )
     assert( converter_ );
     topLeft_     = converter_->ConvertFromGeo( geometry::Point2d( msg.top_left().longitude(), msg.top_left().latitude() ) );
     bottomRight_ = converter_->ConvertFromGeo( geometry::Point2d( msg.bottom_right().longitude(), msg.bottom_right().latitude() ) );
+    startTime_   = boost::posix_time::from_iso_string( msg.start_date().data() );
+    endTime_     = boost::posix_time::from_iso_string( msg.end_date().data() );
 }
 
 // -----------------------------------------------------------------------------
@@ -261,6 +268,8 @@ void MeteoLocal::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) cons
     msg().mutable_top_left()->set_latitude( topLeft_.Y() );
     msg().mutable_bottom_right()->set_longitude( bottomRight_.X() );
     msg().mutable_bottom_right()->set_latitude( bottomRight_.Y() );
+    msg().mutable_start_date()->set_data( boost::posix_time::to_iso_string( startTime_ ) );
+    msg().mutable_end_date()->set_data( boost::posix_time::to_iso_string( endTime_ ) );
     msg.Send( publisher );
 }
 

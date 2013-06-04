@@ -3374,6 +3374,10 @@ message ControlLocalWeatherCreation {
     optional CoordLatLong      bottom_right = 3;
     //! The weather attributes
     optional WeatherAttributes attributes   = 4;
+    //! The weather start date
+    optional DateTime          start_date   = 5;
+    //! The weather end date
+    optional DateTime          end_date     = 6;
 }
 
 /** @struct ControlLocalWeatherDestruction
