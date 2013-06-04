@@ -232,6 +232,8 @@ void PHY_LocalMeteo::SendCreation() const
     MIL_Tools::ConvertCoordSimToMos( upLeft_, longlat );
     msg().mutable_top_left()->set_latitude( longlat.latitude()  );
     msg().mutable_top_left()->set_longitude( longlat.longitude()  );
+    msg().mutable_start_date()->set_data( bpt::to_iso_string( bpt::from_time_t( startTime_ ) ) );
+    msg().mutable_end_date()->set_data( bpt::to_iso_string( bpt::from_time_t( endTime_ ) ) );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 

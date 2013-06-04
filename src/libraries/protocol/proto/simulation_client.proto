@@ -2386,6 +2386,8 @@ message ControlLocalWeatherCreation {
     optional CoordLatLong      top_left     = 2; //!< The top-left corner of the zone
     optional CoordLatLong      bottom_right = 3; //!< The bottom-left corner of the zone
     optional WeatherAttributes attributes   = 4; //!< The weather attributes
+    optional DateTime          start_date   = 5; //!< The weather start date
+    optional DateTime          end_date     = 6; //!< The weather end date
 }
 
 /** @struct ControlLocalWeatherDestruction
