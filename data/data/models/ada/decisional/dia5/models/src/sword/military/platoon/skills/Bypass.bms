@@ -26,8 +26,13 @@ rootnode
     end,
 
     elementFailed = function( self, params, additionalParams )
-        integration.setNeedReinforcement( meKnowledge, additionalParams.needReinforcement, additionalParams.element, false )
+      if additionalParams.reason == "demine" then
+        integration.setNeedReinforcement( meKnowledge, "demine", additionalParams.element, false )
+        self.report = eRC_ObjetNonDevalorisable
+      else
+        integration.setNeedReinforcement( meKnowledge, "destroy", additionalParams.element, false )
         self.report = eRC_ObjetNonSupprimable
+      end
     end,
 
     elementNotBypassable = function( self, params, additionalParams )
