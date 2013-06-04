@@ -221,6 +221,10 @@ void WatershedLayer::MakeGlTexture()
     gradientSize_ = 1024;
     while( maxElevation > gradientSize_ )
         gradientSize_ *= 2;
+    int maxGlTextureSize = 0;
+    glGetIntegerv( GL_MAX_TEXTURE_SIZE, &maxGlTextureSize );
+    if( maxGlTextureSize !=  0 && gradientSize_ > maxGlTextureSize )
+        gradientSize_ = static_cast< unsigned short >( maxGlTextureSize );
     height_ = std::min( height_, maxElevation );
     std::vector< Color > colors;
     colors.resize( gradientSize_ );
