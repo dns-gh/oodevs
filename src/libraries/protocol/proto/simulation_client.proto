@@ -598,7 +598,8 @@ message AutomatAttributes {
    optional EnumMeetingEngagementStatus meeting_engagement    = 4; //!< The meeting engagement status
    optional EnumOperationalStatus       operational_state     = 5; //!< The automat operational state
    optional RulesOfEngagement.Value     roe                   = 6; //!< The automat rules of engagement
-   optional Extension                   extension             = 9;  //!< The extension fields
+   optional Extension                   extension             = 9; //!< The extension fields
+   optional string                      app6symbol            = 10; //!< The automat APP-6 symbol
 }
 
 /** @struct AutomatDestruction

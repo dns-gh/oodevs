@@ -106,6 +106,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , automates_()
     , bEngaged_( true )
     , bAutomateModeChanged_( true )
+    , bSymbolChanged_( false )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
     , pArmySurrenderedTo_( 0 )
     , pLogisticHierarchy_( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
@@ -136,6 +137,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
     , pOrderManager_         ( new MIL_AutomateOrderManager( *this ) )
     , pPionPC_               ( 0 )
     , bAutomateModeChanged_  ( true )
+    , bSymbolChanged_        ( false )
     , pKnowledgeBlackBoard_  ( 0 )
     , pArmySurrenderedTo_    ( 0 )
     , pLogisticHierarchy_    ( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
@@ -163,6 +165,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pOrderManager_                 ( new MIL_AutomateOrderManager( *this ) )
     , pPionPC_                       ( 0 )
     , bAutomateModeChanged_          ( true )
+    , bSymbolChanged_                ( false )
     , pLogisticHierarchy_            ( new logistic::LogisticHierarchy( *this, false /* no quotas*/ ) )
     , pBrainLogistic_                ( 0 )
     , pKnowledgeBlackBoard_          ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
@@ -534,7 +537,7 @@ void MIL_Automate::UpdateNetwork() const
 {
     try
     {
-        if( bAutomateModeChanged_ || GetRole< DEC_AutomateDecision >().HasStateChanged() || pExtensions_->HasChanged() )
+        if( bAutomateModeChanged_ || bSymbolChanged_ || GetRole< DEC_AutomateDecision >().HasStateChanged() || pExtensions_->HasChanged() )
         {
             client::AutomatAttributes msg;
             msg().mutable_automat()->set_id( nID_ );
@@ -542,6 +545,8 @@ void MIL_Automate::UpdateNetwork() const
                 msg().set_mode( bEngaged_ ? sword::engaged : sword::disengaged );
             GetRole< DEC_AutomateDecision >().SendChangedState( msg );
             pExtensions_->UpdateNetwork( msg );
+            if( bSymbolChanged_ )
+                msg().set_app6symbol( symbol_ );
             msg.Send( NET_Publisher_ABC::Publisher() );
         }
         if( pBrainLogistic_.get() )
@@ -583,6 +588,7 @@ void MIL_Automate::Clean()
     if( pBrainLogistic_.get() )
         pBrainLogistic_->Clean();
     bAutomateModeChanged_ = false;
+    bSymbolChanged_ = false;
     pDotationSupplyManager_->Clean();
     pStockSupplyManager_->Clean();
     DEC_AutomateDecision* roleDec = RetrieveRole< DEC_AutomateDecision >();
@@ -1079,6 +1085,10 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
     case sword::unit_change_affinities:
         for( IT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
             (*it)->OnReceiveMsgChangeAffinities( msg );
+        break;
+    case sword::change_symbol:
+        symbol_ = msg.parameters().elem( 0 ).value( 0 ).acharstr();
+        bSymbolChanged_ = true;
         break;
     default:
         {

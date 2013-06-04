@@ -1458,7 +1458,7 @@ enum UnitMagicActionType {
     create_breakdowns                 = 39; //!< A create breakdowns magic action
     create_wounds                     = 40; //!< A create wounds magic action
     log_finish_handlings              = 41; //!< No parameters, magically finish the current logistic actions
-    // change_symbol                  = 42; //!< Not used (kept for ids consistency with Shield)
+    change_symbol                     = 42; //!< A change symbol magic action
     create_wound                      = 43; //!< A create wound magic action
     reload_brain                      = 44; //!< A magic action forcing to reload the brain of the entity
     change_equipment_state            = 45; //!< A change equipment state magic action

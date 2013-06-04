@@ -190,7 +190,8 @@ void SimulationToClient::Convert( const sword::UnitMagicActionAck& from, MsgsSim
                         ( sword::transfer_equipment, Common::transfer_equipment )
                         ( sword::change_equipment_human_size, Common::change_equipment_human_size )
                         ( sword::create_breakdowns, Common::create_breakdowns )
-                        ( sword::create_wounds, Common::create_wounds ) );
+                        ( sword::create_wounds, Common::create_wounds )
+                        ( sword::change_symbol, Common::change_symbol ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -616,6 +617,7 @@ void SimulationToClient::Convert( const sword::AutomatAttributes& from, MsgsSimT
     ConvertOperationalStatus( from, to );
     ConvertRulesOfEngagement( from, to );
     CONVERT_CB( extension, ConvertExtension );
+    CONVERT( app6symbol );
 }
 
 // -----------------------------------------------------------------------------

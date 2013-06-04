@@ -183,7 +183,8 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitMagicAction& fro
                         ( Common::transfer_equipment, sword::transfer_equipment )
                         ( Common::change_equipment_human_size, sword::change_equipment_human_size )
                         ( Common::create_breakdowns, sword::create_breakdowns )
-                        ( Common::create_wounds, sword::create_wounds ) );
+                        ( Common::create_wounds, sword::create_wounds )
+                        ( Common::change_symbol, sword::change_symbol ) );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 
