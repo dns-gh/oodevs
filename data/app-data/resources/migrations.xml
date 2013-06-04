@@ -76,7 +76,7 @@
     <added-file filename="UrbanTemplates.xml" assign-file="schemas/4.3.3/added-files/UrbanTemplates.xml"/>
     <added-file filename="Funeral.xml" assign-file="schemas/4.3.3/added-files/Funeral.xml"/>
     <added-file filename="settings.xml" assign-file="schemas/4.3.3/added-files/settings.xml"/>
-    <added-file filename="activities.xml" assign-file="schemas/4.3.3/added-files/activity.xml"/>
+    <added-file filename="activity.xml" assign-file="schemas/4.3.3/added-files/activity.xml"/>
   </added-files>
 
   <migration from="3.0" to="4.2.0">
