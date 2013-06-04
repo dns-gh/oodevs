@@ -284,7 +284,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
             pDetonationFacade_.reset( new DetonationFacade( simulationPublisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_, *pSubject_ ) );
             pSideChecker_.reset( new SideChecker( *pSubject_, *pFederate_, *pRemoteAgentResolver_ ) );
-            pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pInteractionBuilder_, *pContextFactory_, simulationPublisher_, clientsPublisher_ ) : 0 );
+            pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( logger_, *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pInteractionBuilder_, *pContextFactory_, simulationPublisher_, clientsPublisher_ ) : 0 );
             pStepper_.reset( new Stepper( *pXis_, *pMessageController_, simulationPublisher_ ) );
             pOwnershipController_.reset( new OwnershipController( federateID, *pFederate_, logger_ ) );
             transferSender_.reset( CreateTransferSender( *pXis_, federateID, pXis_->attribute< std::string >( "name", "SWORD" ), pFederate_->GetFederateHandle(),

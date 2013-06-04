@@ -32,6 +32,7 @@ namespace dispatcher
 {
     class SimulationPublisher_ABC;
     class ClientPublisher_ABC;
+    class Logger_ABC;
 }
 
 namespace hla
@@ -92,7 +93,7 @@ class TransportationFacade : private ::hla::InteractionNotification_ABC< interac
 public:
     //! @name Constructors/Destructor
     //@{
-             TransportationFacade( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
+             TransportationFacade( dispatcher::Logger_ABC& logger, xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
                                    tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                    const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
                                    const InteractionBuilder& builder, const ContextFactory_ABC& contextFactory,

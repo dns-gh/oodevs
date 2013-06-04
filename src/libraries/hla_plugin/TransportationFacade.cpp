@@ -13,6 +13,7 @@
 #include "TransportationRequester.h"
 #include "TransportationOfferer.h"
 #include "InteractionSender.h"
+#include "dispatcher/Logger_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <hla/Interaction.h>
 
@@ -22,7 +23,7 @@ using namespace plugins::hla;
 // Name: TransportationFacade constructor
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
+TransportationFacade::TransportationFacade( dispatcher::Logger_ABC& logger, xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
                                             tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                             const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
                                             const InteractionBuilder& builder, const ContextFactory_ABC& contextFactory,
@@ -39,14 +40,22 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
     , pNetnConvoyDestroyedEntities_  ( new InteractionSender< interactions::NetnConvoyDestroyedEntities >( *this, builder ) )
     , pNetnServiceComplete_          ( new InteractionSender< interactions::NetnServiceComplete >( *this, builder ) )
     , pNetnServiceReceived_          ( new InteractionSender< interactions::NetnServiceReceived >( *this, builder ) )
-    , pTransportationRequester_      ( new TransportationRequester( xis, missionResolver, controller, callsignResolver, subordinates,
-                                                                    contextFactory, simulationPublisher, *pNetnRequestConvoy_,
-                                                                    *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_,
-                                                                    *pNetnReadyToReceiveService_, *pNetnServiceReceived_, *pNetnCancelConvoy_ ) )
-    , pTransportationOfferer_        ( new TransportationOfferer( xis, missionResolver, *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_, *pNetnConvoyDisembarkmentStatus_, *pNetnConvoyDestroyedEntities_, *pNetnServiceComplete_, *pNetnCancelConvoy_,
-                                                                  controller, contextFactory, callsignResolver, clientsPublisher, simulationPublisher ) )
 {
-    // NOTHING
+    try
+    {
+        pTransportationRequester_.reset( new TransportationRequester( xis, missionResolver, controller, callsignResolver, subordinates,
+                                                                            contextFactory, simulationPublisher, *pNetnRequestConvoy_,
+                                                                            *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_,
+                                                                            *pNetnReadyToReceiveService_, *pNetnServiceReceived_, *pNetnCancelConvoy_ ) );
+        pTransportationOfferer_.reset( new TransportationOfferer( xis, missionResolver, *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_, *pNetnConvoyDisembarkmentStatus_, *pNetnConvoyDestroyedEntities_, *pNetnServiceComplete_, *pNetnCancelConvoy_,
+                                                                          controller, contextFactory, callsignResolver, clientsPublisher, simulationPublisher ) );
+    }
+    catch( const std::exception& e)
+    {
+        logger.LogError( std::string( "Invalid configuration, transportation services not available : ") + e.what() );
+        pTransportationRequester_.reset( 0 );
+        pTransportationOfferer_.reset( 0 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +73,8 @@ TransportationFacade::~TransportationFacade()
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnRequestConvoy& request )
 {
-    pTransportationOfferer_->Receive( request );
+    if( pTransportationOfferer_.get() )
+        pTransportationOfferer_->Receive( request );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +83,8 @@ void TransportationFacade::Receive( interactions::NetnRequestConvoy& request )
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnOfferConvoy& interaction )
 {
-    pTransportationRequester_->Receive( interaction );
+    if( pTransportationRequester_.get() )
+        pTransportationRequester_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +93,8 @@ void TransportationFacade::Receive( interactions::NetnOfferConvoy& interaction )
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnAcceptOffer& interaction )
 {
-    pTransportationOfferer_->Receive( interaction );
+    if( pTransportationOfferer_.get() )
+        pTransportationOfferer_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,8 +112,10 @@ void TransportationFacade::Receive( interactions::NetnRejectOfferConvoy& /*inter
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnCancelConvoy& interaction )
 {
-    pTransportationRequester_->Receive( interaction );
-    pTransportationOfferer_->Receive( interaction );
+    if( pTransportationRequester_.get() )
+        pTransportationRequester_->Receive( interaction );
+    if( pTransportationOfferer_.get() )
+        pTransportationOfferer_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +124,8 @@ void TransportationFacade::Receive( interactions::NetnCancelConvoy& interaction 
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnReadyToReceiveService& interaction )
 {
-    pTransportationOfferer_->Receive( interaction );
+    if( pTransportationOfferer_.get() )
+        pTransportationOfferer_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +134,8 @@ void TransportationFacade::Receive( interactions::NetnReadyToReceiveService& int
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnServiceStarted& interaction )
 {
-    pTransportationRequester_->Receive( interaction );
+    if( pTransportationRequester_.get() )
+        pTransportationRequester_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +144,8 @@ void TransportationFacade::Receive( interactions::NetnServiceStarted& interactio
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnConvoyEmbarkmentStatus& interaction )
 {
-    pTransportationRequester_->Receive( interaction );
+    if( pTransportationRequester_.get() )
+        pTransportationRequester_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +154,8 @@ void TransportationFacade::Receive( interactions::NetnConvoyEmbarkmentStatus& in
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnConvoyDisembarkmentStatus& interaction )
 {
-    pTransportationRequester_->Receive( interaction );
+    if( pTransportationRequester_.get() )
+        pTransportationRequester_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +164,8 @@ void TransportationFacade::Receive( interactions::NetnConvoyDisembarkmentStatus&
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnConvoyDestroyedEntities& interaction )
 {
-    pTransportationRequester_->Receive( interaction );
+    if( pTransportationRequester_.get() )
+        pTransportationRequester_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +174,8 @@ void TransportationFacade::Receive( interactions::NetnConvoyDestroyedEntities& i
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnServiceComplete& interaction )
 {
-    pTransportationRequester_->Receive( interaction );
+    if( pTransportationRequester_.get() )
+        pTransportationRequester_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,5 +184,6 @@ void TransportationFacade::Receive( interactions::NetnServiceComplete& interacti
 // -----------------------------------------------------------------------------
 void TransportationFacade::Receive( interactions::NetnServiceReceived& interaction )
 {
-    pTransportationOfferer_->Receive( interaction );
+    if( pTransportationOfferer_.get() )
+        pTransportationOfferer_->Receive( interaction );
 }
