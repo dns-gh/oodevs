@@ -50,7 +50,12 @@ void TextureRenderPass::Render( MapWidget_ABC& widget )
         CreateTexture();
     LayersRenderPass::Render( widget );
     glBindTexture( GL_TEXTURE_2D, texture_ );
-    glCopyTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, Width(), Height(), 0 );
+    int maxGlTextureSize = 0;
+    int width = Width();
+    glGetIntegerv( GL_MAX_TEXTURE_SIZE, &maxGlTextureSize );
+    if( maxGlTextureSize !=  0 && width > maxGlTextureSize )
+        width = static_cast< unsigned short >( maxGlTextureSize );
+    glCopyTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, width, Height(), 0 );
 }
 
 // -----------------------------------------------------------------------------

@@ -26,7 +26,7 @@
 #include "tools/Codec.h"
 #include "tools/Loader_ABC.h"
 #include "Tools/MIL_AffinitiesMap.h"
-#include "tools/Version.h"
+#include "tools/VersionHelper.h"
 #include "tools/XmlStreamOperators.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/algorithm/string.hpp>

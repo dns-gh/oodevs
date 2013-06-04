@@ -9,7 +9,7 @@
 
 #include "tools_pch.h"
 #include "CommandLineConfig_ABC.h"
-#include "Version.h"
+#include "VersionHelper.h"
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )

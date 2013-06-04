@@ -29,7 +29,7 @@
 #include "clients_gui/SymbolSizeOptionChooser.h"
 #include "gaming/StaticModel.h"
 #include "tools/GeneralConfig.h"
-#include "tools/Version.h"
+#include <tools/VersionHelper.h>
 
 using namespace gui;
 

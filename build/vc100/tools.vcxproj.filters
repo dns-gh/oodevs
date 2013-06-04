@@ -39,9 +39,6 @@
     <ClCompile Include="..\..\src\libraries\tools\tools_pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\tools\Version.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\tools\CommandLineConfig_ABC.cpp">
       <Filter>Source Files\Command line</Filter>
     </ClCompile>
@@ -151,15 +148,15 @@
     <ClCompile Include="..\..\src\libraries\tools\EnvHelpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\VersionHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\tools_pch.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\tools\Version.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\Visitor_ABC.h">
@@ -353,6 +350,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\XmlStreamOperators.h" />
     <ClInclude Include="..\..\src\libraries\tools\EnvHelpers.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\VersionHelper.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

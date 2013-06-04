@@ -114,7 +114,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\tools\Version.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\VersionHelper.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\CommandLineConfig_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\ExerciseConfig.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\GeneralConfig.cpp" />
@@ -160,7 +160,7 @@
     <ClInclude Include="..\..\src\libraries\tools\ObjectMessageCallback_ABC.h" />
     <ClInclude Include="..\..\src\libraries\tools\ThreadPool.h" />
     <ClInclude Include="..\..\src\libraries\tools\tools_pch.h" />
-    <ClInclude Include="..\..\src\libraries\tools\Version.h" />
+    <ClInclude Include="..\..\src\libraries\tools\VersionHelper.h" />
     <ClInclude Include="..\..\src\libraries\tools\Visitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\tools\CommandLineConfig_ABC.h" />
     <ClInclude Include="..\..\src\libraries\tools\ExerciseConfig.h" />

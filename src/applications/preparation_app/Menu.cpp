@@ -36,7 +36,7 @@
 #include "clients_gui/RichAction.h"
 #include "clients_gui/RichMenu.h"
 #include "tools/GeneralConfig.h"
-#include "tools/Version.h"
+#include <tools/VersionHelper.h>
 
 int Menu::filtersIndex_ = 7;
 

@@ -32,7 +32,7 @@
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/resources.h"
 #include "tools/DefaultLoader.h"
-#include "tools/Version.h"
+#include "tools/VersionHelper.h"
 #include <shlobj.h>
 #include <xeumeuleu/xml.hpp>
 

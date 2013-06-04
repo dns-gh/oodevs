@@ -12,7 +12,7 @@
 #include "ADN_App.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_Version.h"
-#include "tools/Version.h"
+#include "tools/VersionHelper.h"
 #include "tools/WinArguments.h"
 
 static const std::string szADN_Version   = "ADN - " + std::string( tools::AppProjectVersion() ) + " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;

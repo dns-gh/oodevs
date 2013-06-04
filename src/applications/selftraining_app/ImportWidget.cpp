@@ -16,7 +16,7 @@
 #include "frontend/CreateExercise.h"
 #include "tools/FileWrapper.h"
 #include "tools/GeneralConfig.h"
-#include "tools/Version.h"
+#include "tools/VersionHelper.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <zipstream/izipstream.h>

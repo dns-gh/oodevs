@@ -12,7 +12,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Tools.h"
 #include "ENT/ENT_Tr.h"
-#include "tools/Version.h"
+#include "tools/VersionHelper.h"
 #include <windows.h>
 #include <direct.h>
 #include <sys/types.h>

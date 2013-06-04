@@ -13,7 +13,7 @@
 #include "VerticalHeaderTableView.h"
 #include "clients_kernel/Tools.h"
 #include "tools/Codec.h"
-#include "tools/Version.h"
+#include "tools/VersionHelper.h"
 #include "tools/Win32/BugTrap.h"
 #include "moc_Application_ABC.cpp"
 #include <license_gui/LicenseDialog.h>

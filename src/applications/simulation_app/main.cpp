@@ -6,7 +6,7 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
-#include "tools/Version.h"
+#include "tools/VersionHelper.h"
 #include "tools/WinArguments.h"
 #include "simulation_terrain/TER_Logger.h"
 #include <license_gui/LicenseDialog.h>

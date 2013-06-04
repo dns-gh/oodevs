@@ -26,7 +26,7 @@
 #include "simulation_kernel/Tools/MIL_Config.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/IpcWatch.h"
-#include "tools/Version.h"
+#include "tools/VersionHelper.h"
 #include "tools/WaitEvent.h"
 #include "tools/WinArguments.h"
 

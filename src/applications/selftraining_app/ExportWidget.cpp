@@ -19,7 +19,7 @@
 #include "tools/EncodingConverter.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
-#include "tools/Version.h"
+#include "tools/VersionHelper.h"
 #include "tools/FileWrapper.h"
 #include <xeumeuleu/xml.h>
 #pragma warning( push )

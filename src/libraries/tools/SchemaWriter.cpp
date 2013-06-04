@@ -9,7 +9,7 @@
 
 #include "tools_pch.h"
 #include "SchemaWriter.h"
-#include "version.h"
+#include "VersionHelper.h"
 #include "XmlStreamOperators.h"
 #include <tools/Path.h>
 #include <xeumeuleu/xml.hpp>

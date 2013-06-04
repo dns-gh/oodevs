@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Version_h_
-#define __Version_h_
+#ifndef __VersionHelper_h_
+#define __VersionHelper_h_
 
 namespace tools
 {
@@ -27,4 +27,4 @@ namespace tools
     bool CheckVersion( const std::string& expectedVersion, const std::string& actualVersion );
 }
 
-#endif // __Version_h_
+#endif // __VersionHelper_h_

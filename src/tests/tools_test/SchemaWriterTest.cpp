@@ -9,7 +9,7 @@
 
 #include "tools_test_pch.h"
 #include "tools/SchemaWriter.h"
-#include "tools/Version.h"
+#include "tools/VersionHelper.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_AUTO_TEST_CASE( test_schema_writer )

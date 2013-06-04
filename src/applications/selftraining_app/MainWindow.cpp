@@ -20,7 +20,7 @@
 #include "clients_gui/resources.h"
 #include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
-#include "tools/Version.h"
+#include "tools/VersionHelper.h"
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
