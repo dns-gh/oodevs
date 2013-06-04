@@ -2405,6 +2405,7 @@ void SimulationToClient::Convert( const sword::ControlLocalWeatherCreation& from
     CONVERT_CB_TO( top_left, top_left_coordinate, ConvertCoordLatLong );
     CONVERT_CB_TO( bottom_right, bottom_right_coordinate, ConvertCoordLatLong );
     CONVERT_CB( attributes, ConvertWeatherAttributes );
+    CONVERT_DATE( start_date );
 }
 
 // -----------------------------------------------------------------------------
