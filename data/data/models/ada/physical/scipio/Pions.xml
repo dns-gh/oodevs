@@ -9269,7 +9269,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="313" name="LOG . PC LOG BLD Secteur Transport" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Masalife.LOG.PC" id="313" name="LOG . PC LOG BLD Secteur Transport" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
@@ -19222,4 +19222,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0156006010" -->
+<!-- signature="1311465491" -->
