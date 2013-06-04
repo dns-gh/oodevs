@@ -29,6 +29,15 @@ namespace
         extended.insert(  6, '-' ); extended.insert(  4, '-' );
         return QDateTime::fromString( extended, Qt::ISODate );
     }
+
+    std::string MakeGDHString( const QDateTime& datetime )
+    {
+        // $$$$ SBO 2008-04-25: ...
+        QString str = datetime.toString( Qt::ISODate );
+        str.remove( ':' );
+        str.remove( '-' );
+        return str.toAscii().constData();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -98,8 +107,8 @@ MeteoLocal::MeteoLocal( const sword::ControlLocalWeatherCreation& msg, const ker
     , converter_  ( &converter )
     , topLeft_    ( converter_->ConvertFromGeo( geometry::Point2d( msg.top_left().longitude(), msg.top_left().latitude() ) ) )
     , bottomRight_( converter_->ConvertFromGeo( geometry::Point2d( msg.bottom_right().longitude(), msg.bottom_right().latitude() ) ) )
-    , startTime_  ( boost::posix_time::from_iso_string( msg.start_date().data() ) )
-    , endTime_    ( boost::posix_time::from_iso_string( msg.end_date().data() ) )
+    , startTime_  ( MakeDate( msg.start_date().data() ) )
+    , endTime_    ( MakeDate( msg.end_date().data() ) )
     , created_    ( false )
 {
     if( msg.weather().id() >= localCounter_ )
@@ -115,8 +124,8 @@ MeteoLocal::MeteoLocal( const sword::ControlLocalWeatherCreation& msg, unsigned 
     , converter_  ( 0 )
     , topLeft_    ( static_cast< float >( msg.top_left().longitude() ), static_cast< float >( msg.top_left().latitude() ) ) // $$$$ ABR 2011-06-08: Warning, no coordinate converter for dispatcher
     , bottomRight_( static_cast< float >( msg.bottom_right().longitude() ), static_cast< float >( msg.bottom_right().latitude() ) )
-    , startTime_  ( boost::posix_time::from_iso_string( msg.start_date().data() ) )
-    , endTime_    ( boost::posix_time::from_iso_string( msg.end_date().data() ) )
+    , startTime_  ( MakeDate( msg.start_date().data() ) )
+    , endTime_    ( MakeDate( msg.end_date().data() ) )
     , created_    ( false )
 {
     // NOTHING
@@ -262,8 +271,8 @@ void MeteoLocal::Update( const sword::ControlLocalWeatherCreation& msg )
     assert( converter_ );
     topLeft_     = converter_->ConvertFromGeo( geometry::Point2d( msg.top_left().longitude(), msg.top_left().latitude() ) );
     bottomRight_ = converter_->ConvertFromGeo( geometry::Point2d( msg.bottom_right().longitude(), msg.bottom_right().latitude() ) );
-    startTime_   = boost::posix_time::from_iso_string( msg.start_date().data() );
-    endTime_     = boost::posix_time::from_iso_string( msg.end_date().data() );
+    startTime_   = MakeDate( msg.start_date().data() );
+    endTime_     = MakeDate( msg.end_date().data() );
 }
 
 // -----------------------------------------------------------------------------
@@ -287,8 +296,8 @@ void MeteoLocal::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) cons
     msg().mutable_top_left()->set_latitude( topLeft_.Y() );
     msg().mutable_bottom_right()->set_longitude( bottomRight_.X() );
     msg().mutable_bottom_right()->set_latitude( bottomRight_.Y() );
-    msg().mutable_start_date()->set_data( boost::posix_time::to_iso_string( startTime_ ) );
-    msg().mutable_end_date()->set_data( boost::posix_time::to_iso_string( endTime_ ) );
+    msg().mutable_start_date()->set_data( MakeGDHString( startTime_ ) );
+    msg().mutable_end_date()->set_data( MakeGDHString( endTime_ ) );
     msg.Send( publisher );
 }
 
