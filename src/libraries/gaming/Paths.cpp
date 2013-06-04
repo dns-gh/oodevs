@@ -43,14 +43,13 @@ Paths::~Paths()
 // -----------------------------------------------------------------------------
 void Paths::DoUpdate( const sword::UnitAttributes& message )
 {
-    static const float threshold      = 30.f * 30.f;
-    static const float magicThreshold = 1000.f * 1000.f;
+    static const float threshold = 30.f * 30.f;
     if( message.has_position()  )
     {
         const Point2f position = converter_.ConvertToXY( message.position() );
         if( previousPath_.empty() || previousPath_.back().SquareDistance( position ) > threshold )
         {
-            if( pendingMagicMove_ && previousPath_.back().SquareDistance( position ) > magicThreshold )
+            if( pendingMagicMove_ )
             {
                 previousPath_.clear(); previousBox_ = Rectangle2f();
                 plannedPath_.clear(); plannedBox_ = Rectangle2f();
@@ -85,7 +84,7 @@ void Paths::DoUpdate( const sword::UnitPathFind& message )
 // -----------------------------------------------------------------------------
 void Paths::DoUpdate( const sword::UnitMagicAction& /*message*/ )
 {
-    pendingMagicMove_ = true;
+    pendingMagicMove_ = true; // necessary to prevent a tick lag
 }
 
 // -----------------------------------------------------------------------------
