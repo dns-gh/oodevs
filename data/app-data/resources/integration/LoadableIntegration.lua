@@ -38,6 +38,8 @@ end
 -- Default loadable/unloadable integration for friends or foe (agent knowledge)
 -- --------------------------------------------------------------------------------
 integration.loadFriendOrFoe = function( unit )
+    myself.loadedUnits = myself.loadedUnits or {}
+    myself.loadedUnits[ unit ] = true
     if DEC_ConnaissanceAgent_EstRenduAMonCamp( myself, unit.source ) then
         if not DEC_Prisonniers_EstEmbarque( unit.source ) then
             DEC_Prisonniers_CapturerEtEmbarquer( unit.source )
@@ -56,6 +58,7 @@ integration.loadFriendOrFoe = function( unit )
 end
 
 integration.unloadFriendOrFoe = function( unit )
+    myself.loadedUnits[ unit ] = nil
     if DEC_Prisonniers_EstEmbarque( unit.source ) then
         DEC_Prisonniers_Debarquer( unit.source )
         return true
