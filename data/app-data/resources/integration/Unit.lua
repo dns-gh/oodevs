@@ -46,7 +46,16 @@ integration.isKnowledgesAgentsInArea = function( area )
 end
 
 integration.getFriendsInArea = function( area )
-    return DEC_Connaissances_UnitesAmiesDansZone( area )
+    local friends = DEC_Connaissances_UnitesAmiesDansZone( area )
+    local DEC_ConnaissanceAgent_EnAgent = DEC_ConnaissanceAgent_EnAgent
+    for i=1,#friends do
+        if DEC_ConnaissanceAgent_EnAgent( friends[ i ] ) == myself then
+            friends[ i ] = nil
+            break
+        end
+    end
+    
+    return friends
 end
 
 integration.getKnowledgesLivingAgentsInCircle = function( position, distance )

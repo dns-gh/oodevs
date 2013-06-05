@@ -84,6 +84,8 @@ integration.canLoadFriend = function( unit, onlyLoadable )
     return true -- DEC_Agent_PeutTransporterPion( unit.source , onlyLoadable )
 end
 integration.loadFriend = function( unit )
+    myself.loadedUnits = myself.loadedUnits or {}
+    myself.loadedUnits[ unit ] = true
     if DEC_Agent_EstRefugie( unit.source ) then
         DEC_Agent_OrienterEtEmbarquer( meKnowledge.source, unit.source )
     else
@@ -92,6 +94,7 @@ integration.loadFriend = function( unit )
     return true
 end
 integration.unloadFriend = function( unit )
+    myself.loadedUnits[ unit ] = nil
     DEC_Transport_DebarquerPionSansDelais( unit.source )
     return true
 end
