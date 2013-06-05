@@ -554,8 +554,6 @@ PHY_DotationStock* PHY_RolePionLOG_Supply::AddEmptyStock( const PHY_DotationCate
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Supply::Update( bool /*bIsDead*/ )
 {
-    if( bHasChanged_ )
-        owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     assert( pStocks_ );
     pStocks_->Update(); // Stock checking
 }
