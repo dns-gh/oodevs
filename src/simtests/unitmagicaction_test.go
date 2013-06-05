@@ -212,8 +212,8 @@ Party[-]
 }
 
 func Nearby(pointA, pointB *swapi.Point) bool {
-	return math.Abs(pointA.X-pointB.X) < 1e-3 &&
-		math.Abs(pointA.Y-pointB.Y) < 1e-3
+	return math.Abs(pointA.X-pointB.X) < 1e-6 &&
+		math.Abs(pointA.Y-pointB.Y) < 1e-6
 }
 
 func (s *TestSuite) TestCreateUnit(c *C) {
@@ -244,7 +244,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	automat, err := client.CreateAutomat(formation.Id, 0, AutomatType, kg.Id)
 	c.Assert(err, IsNil)
 
-	pos := swapi.MakePoint(22, 29)
+	pos := swapi.MakePoint(-15.9219, 28.3456)
 
 	// Valid unit type, should be read from physical database instead
 	unitType := uint32(1)
@@ -265,13 +265,13 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 
 	// Check unit position
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return Nearby(&data.FindUnit(u.Id).Position, &swapi.Point{X: 22, Y: 29})
+		return Nearby(&data.FindUnit(u.Id).Position, pos)
 	})
 
 	automat = client.Model.GetAutomat(automat.Id)
 	c.Assert(automat.Units[u.Id], NotNil)
 
-	pos = swapi.MakePoint(25, 41)
+	pos = swapi.MakePoint(-15.8219, 28.2456)
 
 	// Second unit, not PC
 	u, err = client.CreateUnit(automat.Id, unitType, pos)
@@ -281,7 +281,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 
 	// Check unit position
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return Nearby(&data.FindUnit(u.Id).Position, &swapi.Point{X: 25, Y: 41})
+		return Nearby(&data.FindUnit(u.Id).Position, pos)
 	})
 
 	automat, err = client.CreateAutomat(formation.Id, 0, AutomatType, kg.Id)
@@ -469,7 +469,7 @@ func (s *TestSuite) TestTeleportUnit(c *C) {
 	unit, err := client.CreateUnit(automat.Id, UnitType, from)
 	c.Assert(err, IsNil)
 
-	pos := swapi.MakePoint(-14, 30)
+	pos := swapi.MakePoint(-15.8219, 28.2456)
 
 	// Cannot teleport unit if its automat is engaged
 	err = client.TeleportUnit(unit.Id, pos)
@@ -488,6 +488,6 @@ func (s *TestSuite) TestTeleportUnit(c *C) {
 
 	// Check unit position
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return Nearby(&data.FindUnit(unit.Id).Position, &swapi.Point{X: -14, Y: 30})
+		return Nearby(&data.FindUnit(unit.Id).Position, pos)
 	})
 }
