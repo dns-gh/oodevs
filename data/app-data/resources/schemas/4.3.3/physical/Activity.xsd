@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.12.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.12.1"">
   <xs:element name="packages">
     <xs:complexType>
       <xs:sequence>
@@ -34,6 +34,9 @@
       <xs:sequence>
         <xs:element ref="activity" maxOccurs="unbounded"/>
       </xs:sequence>
+	  <!-- FT 45389 - begin -->
+	  <xs:attribute name="model-version" type="T_Version"/>
+	  <!-- FT 45389 - end -->
     </xs:complexType>
   </xs:element>
 </xs:schema>
