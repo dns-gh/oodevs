@@ -12,16 +12,20 @@
 #include "moc_TimelineDockWidget.cpp"
 #include "Config.h"
 #include "clients_kernel/Tools.h"
-#include "timeline/api.h"
+#include "gaming/Simulation.h"
 #include "MT_Tools/MT_Logger.h"
+#include "protocol/Protocol.h"
+#include "timeline/api.h"
+#include "tools/Base64Converters.h"
 
 // -----------------------------------------------------------------------------
 // Name: TimelineDockWidget constructor
 // Created: ABR 2013-05-14
 // -----------------------------------------------------------------------------
-TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config )
+TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const Simulation& simulation )
     : gui::RichDockWidget( controllers, parent, "timeline-dock-widget" )
     , cfg_( new timeline::Configuration() )
+    , simulation_( simulation )
 {
     setCaption( tr( "Actions timeline" ) );
 
@@ -204,14 +208,18 @@ void TimelineDockWidget::OnContextMenuEvent( boost::shared_ptr< timeline::Event 
     }
     else
     {
-        QString plannedMissionText = tr( "Planned a mission" );
+        const QString plannedMissionText = tr( "Planned a mission" );
+        const QString dummyMission = "Create Dummy Mission";
         menu.addAction( plannedMissionText );
+        menu.addAction( dummyMission );
         if( QAction* resultingAction = menu.exec( QCursor::pos() ) )
         {
             if( resultingAction->text() == plannedMissionText )
             {
                 // Open mission panel in planning mode
             }
+            else if( resultingAction->text() == dummyMission )
+                CreateDummyMission();
         }
     }
 }
@@ -224,4 +232,51 @@ void TimelineDockWidget::OnKeyUp( int key )
 {
     if( selected_ && key == VK_DELETE )
         DeleteEvent( selected_->uuid );
+}
+
+// -----------------------------------------------------------------------------
+// Temporary method to test display
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::CreateDummyMission()
+{
+    // Get a time
+    QDateTime dateTime = simulation_.GetDateTime();
+    dateTime = dateTime.addSecs( 60 );
+
+    // Create dummy protobuf message
+    sword::ClientToSim msg;
+    sword::UnitOrder* unitOrder = msg.mutable_message()->mutable_unit_order();
+
+    unitOrder->mutable_tasker()->set_id( 79 );
+    unitOrder->mutable_type()->set_id( 44582 ); // Move To
+    unitOrder->set_label( "dummy mission" );
+    sword::MissionParameters* parameters = unitOrder->mutable_parameters();
+    parameters->add_elem()->add_value()->mutable_heading()->set_heading( 360 );
+    parameters->add_elem()->set_null_value( true );
+    parameters->add_elem()->set_null_value( true );
+    parameters->add_elem()->set_null_value( true );
+    sword::Location* location = parameters->add_elem()->add_value()->mutable_point()->mutable_location();
+    location->set_type( sword::Location_Geometry_point );
+    sword::CoordLatLong* latLong = location->mutable_coordinates()->add_elem();
+    latLong->set_latitude( 30.632128244641702 );
+    latLong->set_longitude( 28.976535107619295 );
+
+    unitOrder->mutable_start_time()->set_data( dateTime.toTimeSpec( Qt::UTC ).toString( "yyyyMMddTHHmmss" ) );
+
+    // Action
+    timeline::Action action;
+    action.target = "sword://sim";
+    action.apply = true;
+    action.payload = tools::ProtoToBase64( msg );
+
+    // Event
+    timeline::Event event;
+    //event.uuid; // $$$$ ABR 2013-05-24: Serv will generate it
+    event.name = "DummyMission";
+    event.info = "DummyMissionInfo";
+    event.begin = dateTime.toTimeSpec( Qt::UTC ).toString( "yyyy-MM-ddTHH:mm:ssZ" ).toStdString();
+    event.done = false;
+    event.action = action;
+
+    CreateEvent( event );
 }

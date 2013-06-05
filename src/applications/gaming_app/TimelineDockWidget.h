@@ -26,6 +26,7 @@ namespace timeline
 }
 
 class Config;
+class Simulation;
 
 // =============================================================================
 /** @class  TimelineDockWidget
@@ -40,7 +41,7 @@ class TimelineDockWidget : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config );
+             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const Simulation& simulation );
     virtual ~TimelineDockWidget();
     //@}
 
@@ -54,6 +55,7 @@ private:
     //! @name Helpers
     //@{
     void Error( const QString& text );
+    void CreateDummyMission(); // $$$$ ABR 2013-05-24: Test method
     //@}
 
 signals:
@@ -89,6 +91,8 @@ private:
 
     std::vector< std::string > creationRequestedEvents_;
     std::vector< std::string > deletionRequestedEvents_;
+
+    const Simulation& simulation_;
     //@}
 };
 
