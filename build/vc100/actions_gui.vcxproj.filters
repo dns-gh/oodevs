@@ -204,9 +204,6 @@
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamResourceNetworkType.h">
       <Filter>Source Files\Parameters\Resource Network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\MissionInterface.h">
-      <Filter>Source Files\Interface</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\actions_gui\EntityParameter.inl">

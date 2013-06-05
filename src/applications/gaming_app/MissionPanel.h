@@ -136,10 +136,7 @@ private:
     void AddMissionGroup( kernel::ContextMenu& menu, const QString& prefix, const T& list, const char* slot, int current );
 
     template< typename T >
-    void FillInterface( int id );
-
-    template< typename T >
-    void CreateMissionInterface( E_MissionType type, const QString& objectName, const std::string& missionSheetPhysicalTag );
+    void FillInterface( int id, const std::string& missionSheetPhysicalTag );
     //@}
 
 private:
@@ -151,8 +148,8 @@ private:
     gui::RichDateTimeEdit* planningDateTimeEdit_;
     gui::RichPushButton* okButton_;
     gui::RichPushButton* cancelButton_;
-    QStackedWidget* stack_;
     actions::gui::MissionInterface_ABC* pMissionInterface_;
+    E_MissionType currentType_;
 
     const StaticModel& static_;
     actions::ActionsModel& actionsModel_;

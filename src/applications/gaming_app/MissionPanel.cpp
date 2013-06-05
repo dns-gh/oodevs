@@ -51,7 +51,7 @@
 #include "actions/ActionTiming.h"
 
 #include "actions_gui/InterfaceBuilder_ABC.h"
-#include "actions_gui/MissionInterface.h"
+#include "actions_gui/MissionInterface_ABC.h"
 #include "actions_gui/resources.h"
 
 #include "ENT/ENT_Tr.h"
@@ -80,6 +80,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     , interfaceBuilder_        ( interfaceBuilder )
     , config_                  ( config )
     , timelinePublisher_       ( timelinePublisher )
+    , currentType_             ( eNbrMissionTypes )
 {
     setWindowTitle( tr( "Mission" ) );
     setFloating( true );
@@ -124,20 +125,15 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     bottomLayout->addWidget( cancelButton_ );
 
     // Main Layout
-    stack_ = new QStackedWidget();
-    CreateMissionInterface< kernel::MissionType >( eMissionType_Pawn, "unit-mission-interface", "units-mission-sheets-directory" );
-    CreateMissionInterface< kernel::MissionType >( eMissionType_Automat, "automat-mission-interface", "automata-mission-sheets-directory" );
-    CreateMissionInterface< kernel::MissionType >( eMissionType_Population, "crowd-mission-interface", "crowds-mission-sheets-directory" );
-    CreateMissionInterface< kernel::FragOrderType >( eMissionType_FragOrder, "fragorder-interface", "fragorders-mission-sheets-directory" );
-    stack_->insertWidget( eNbrMissionTypes, new QWidget() );
-    stack_->setCurrentIndex( eNbrMissionTypes );
+    pMissionInterface_ = new actions::gui::MissionInterface_ABC( 0, "mission-interface", controllers_, actionsModel_, config_ );
+    connect( pMissionInterface_, SIGNAL( PlannedMission( const actions::Action_ABC& ) ), this, SLOT( OnPlannedMission( const actions::Action_ABC& ) ) );
 
     QWidget* mainWidget = new QWidget();
     QVBoxLayout* mainLayout = new QVBoxLayout( mainWidget );
     mainLayout->setMargin( 0 );
     mainLayout->setSpacing( 0 );
     mainLayout->addLayout( topLayout );
-    mainLayout->addWidget( stack_, 1 );
+    mainLayout->addWidget( pMissionInterface_, 1 );
     mainLayout->addLayout( bottomLayout );
     setWidget( mainWidget );
     SetVisible( false );
@@ -167,19 +163,6 @@ void MissionPanel::SetVisible( bool visible )
     okButton_->setVisible( visible );
     cancelButton_->setVisible( visible );
     setVisible( visible );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionPanel::CreateMissionInterface
-// Created: ABR 2013-06-04
-// -----------------------------------------------------------------------------
-template< typename T >
-void MissionPanel::CreateMissionInterface( E_MissionType type, const QString& objectName, const std::string& missionSheetPhysicalTag )
-{
-    QWidget* missionInterface = new actions::gui::MissionInterface< T >( 0, objectName, controllers_, config_, missionSheetPhysicalTag, actionsModel_ );
-    stack_->insertWidget( type, missionInterface );
-    assert( planningCheckBox_ != 0 );
-    connect( missionInterface, SIGNAL( PlannedMission( const actions::Action_ABC& ) ), this, SLOT( OnPlannedMission( const actions::Action_ABC& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -416,15 +399,14 @@ void MissionPanel::AddMissions( const Decisions_ABC& decisions, kernel::ContextM
 // Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
 template< typename T >
-void MissionPanel::FillInterface( int id )
+void MissionPanel::FillInterface( int id, const std::string& missionSheetPhysicalTag )
 {
     if( !selectedEntity_ )
         return;
-    pMissionInterface_ = static_cast< actions::gui::MissionInterface_ABC* >( stack_->currentWidget() );
     pMissionInterface_->Purge();
     NotifyMission();
     const T& order = static_cast< tools::Resolver_ABC< T >& >( static_.types_).Get( id );
-    pMissionInterface_->Fill( interfaceBuilder_, *selectedEntity_, order );
+    pMissionInterface_->Fill( interfaceBuilder_, *selectedEntity_, order, missionSheetPhysicalTag );
     titleLabel_->setText( pMissionInterface_->Title() );
     planningCheckBox_->setCheckState( Qt::Unchecked );
     if( pMissionInterface_->IsEmpty() )
@@ -439,8 +421,8 @@ void MissionPanel::FillInterface( int id )
 // -----------------------------------------------------------------------------
 void MissionPanel::ActivateAgentMission( int id )
 {
-    stack_->setCurrentIndex( eMissionType_Pawn );
-    FillInterface< kernel::MissionType >( id );
+    currentType_ = eMissionType_Pawn;
+    FillInterface< kernel::MissionType >( id, "units-mission-sheets-directory" );
 }
 
 // -----------------------------------------------------------------------------
@@ -449,10 +431,10 @@ void MissionPanel::ActivateAgentMission( int id )
 // -----------------------------------------------------------------------------
 void MissionPanel::ActivateAutomatMission( int id )
 {
-    stack_->setCurrentIndex( eMissionType_Automat );
+    currentType_ = eMissionType_Automat;
     if( !selectedEntity_->Retrieve< kernel::AutomatDecisions_ABC >() )
         selectedEntity_ = selectedEntity_->Get< kernel::TacticalHierarchies >().GetSuperior();
-    FillInterface< kernel::MissionType >( id );
+    FillInterface< kernel::MissionType >( id, "automata-mission-sheets-directory" );
 }
 
 // -----------------------------------------------------------------------------
@@ -461,8 +443,8 @@ void MissionPanel::ActivateAutomatMission( int id )
 // -----------------------------------------------------------------------------
 void MissionPanel::ActivatePopulationMission( int id )
 {
-    stack_->setCurrentIndex( eMissionType_Population );
-    FillInterface< kernel::MissionType >( id );
+    currentType_ = eMissionType_Population;
+    FillInterface< kernel::MissionType >( id, "crowds-mission-sheets-directory" );
 }
 
 // -----------------------------------------------------------------------------
@@ -471,7 +453,7 @@ void MissionPanel::ActivatePopulationMission( int id )
 // -----------------------------------------------------------------------------
 void MissionPanel::ActivateFragOrder( int id )
 {
-    stack_->setCurrentIndex( eMissionType_FragOrder );
+    currentType_ = eMissionType_FragOrder;
     if( !selectedEntity_->Retrieve< kernel::AutomatDecisions_ABC >() )
     {
         Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( selectedEntity_->Get< kernel::TacticalHierarchies >().GetSuperior() );
@@ -479,7 +461,7 @@ void MissionPanel::ActivateFragOrder( int id )
             if( decisions->IsEmbraye() )
                 selectedEntity_ = superior;
     }
-    FillInterface< kernel::FragOrderType >( id );
+    FillInterface< kernel::FragOrderType >( id, "fragorders-mission-sheets-directory" );
 }
 
 // -----------------------------------------------------------------------------
@@ -488,7 +470,7 @@ void MissionPanel::ActivateFragOrder( int id )
 // -----------------------------------------------------------------------------
 void MissionPanel::Draw( gui::Viewport_ABC& viewport )
 {
-    if( pMissionInterface_ && isVisible() )
+    if( isVisible() )
     {
         glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
             glLineWidth( 2.f );
@@ -542,10 +524,8 @@ void MissionPanel::Disengage()
 // -----------------------------------------------------------------------------
 void MissionPanel::Close()
 {
-    if( pMissionInterface_ )
-        pMissionInterface_->Purge();
-    pMissionInterface_ = 0;
-    stack_->setCurrentIndex( eNbrMissionTypes );
+    currentType_ = eNbrMissionTypes;
+    pMissionInterface_->Purge();
     SetVisible( false );
 }
 
@@ -565,7 +545,7 @@ void MissionPanel::closeEvent( QCloseEvent* event )
 // -----------------------------------------------------------------------------
 void MissionPanel::NotifyMission()
 {
-    if( pMissionInterface_ && selectedEntity_ )
+    if( selectedEntity_ )
     {
         std::stringstream message;
         message << "/mission "
@@ -581,9 +561,12 @@ void MissionPanel::NotifyMission()
 // -----------------------------------------------------------------------------
 void MissionPanel::Validate()
 {
-    if( static_cast< E_MissionType >( stack_->currentIndex() ) == eNbrMissionTypes || !pMissionInterface_ || !pMissionInterface_->CheckValidity() )
+    if( currentType_  == eNbrMissionTypes || !pMissionInterface_->CheckValidity() )
         return;
-    pMissionInterface_->Publish();
+    if( currentType_ == eMissionType_FragOrder )
+        pMissionInterface_->Publish< kernel::FragOrderType >();
+    else
+        pMissionInterface_->Publish< kernel::MissionType >();
     Close();
 }
 
@@ -597,8 +580,7 @@ void MissionPanel::OnPlanningChecked( int state )
 
     planningDateTimeEdit_->setVisible( planned );
     planningDateTimeEdit_->setDateTime( simulation_.GetDateTime() );
-    if( pMissionInterface_ )
-        pMissionInterface_->SetPlanned( planned );
+    pMissionInterface_->SetPlanned( planned );
 }
 
 // -----------------------------------------------------------------------------

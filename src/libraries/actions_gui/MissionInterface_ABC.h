@@ -64,13 +64,13 @@ public:
     //! @name Constructors/Destructor
     //@{
              MissionInterface_ABC( QWidget* parent, const QString& name, kernel::Controllers& controllers,
-                                   const tools::ExerciseConfig& config, const std::string& missionSheetPhysicalTag );
+                                   actions::ActionsModel& actionModel, const tools::ExerciseConfig& config );
     virtual ~MissionInterface_ABC();
     //@}
 
     //! @name Abstract method
     //@{
-    virtual void Publish() = 0;
+    //virtual void Publish() = 0;
     //@}
 
     //! @name Operations
@@ -79,7 +79,7 @@ public:
     bool CheckValidity();
     void AddParameter( const QString& objectName, Param_ABC& parameter );
     void Draw( ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
-    void Fill( InterfaceBuilder_ABC& builder, const kernel::Entity_ABC& entity, const kernel::OrderType& orderType );
+    void Fill( InterfaceBuilder_ABC& builder, const kernel::Entity_ABC& entity, const kernel::OrderType& orderType, const std::string& missionSheetPhysicalTag );
     void Purge();
     void SetPlanned( bool planned );
     void CommitTo( actions::Action_ABC& action ) const;
@@ -89,6 +89,19 @@ public:
     //@{
     virtual QString Title() const;
     virtual int GetIndex( Param_ABC* param ) const;
+
+    template< typename T >
+    void Publish()
+    {
+        if( !order_ )
+            return;
+        Action_ABC* action = model_.CreateAction( *entity_, static_cast< const T& >( *order_ ) );
+        CommitTo( *action );
+        if( planned_ )
+            emit PlannedMission( *action );
+        else
+            model_.Publish( *action, 0 );
+    }
     //@}
 
 signals:
@@ -108,7 +121,8 @@ protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const tools::Path missionSheetPath_;
+    actions::ActionsModel& model_;
+    const tools::ExerciseConfig& config_;
 
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     const kernel::OrderType* order_;

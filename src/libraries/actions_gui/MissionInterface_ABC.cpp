@@ -67,12 +67,13 @@ namespace
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
 MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const QString& name, kernel::Controllers& controllers,
-                                            const tools::ExerciseConfig& config, const std::string& missionSheetPhysicalTag )
+                                            actions::ActionsModel& actionModel, const tools::ExerciseConfig& config )
     : QTabWidget( parent )
     , ParamInterface_ABC()
     , controllers_( controllers )
+    , model_( actionModel )
+    , config_( config )
     , entity_( controllers )
-    , missionSheetPath_( config.GetPhysicalChildPath( missionSheetPhysicalTag ) )
     , planned_( false )
 {
     setObjectName( name );
@@ -115,7 +116,7 @@ void MissionInterface_ABC::Purge()
 // Name: MissionInterface_ABC::Fill
 // Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::Fill( InterfaceBuilder_ABC& builder, const kernel::Entity_ABC& entity, const kernel::OrderType& order )
+void MissionInterface_ABC::Fill( InterfaceBuilder_ABC& builder, const kernel::Entity_ABC& entity, const kernel::OrderType& order, const std::string& missionSheetPhysicalTag )
 {
     entity_ = &entity;
     order_ = &order;
@@ -129,7 +130,7 @@ void MissionInterface_ABC::Fill( InterfaceBuilder_ABC& builder, const kernel::En
     // Help tab
     std::string doctrine = order.GetDoctrineInformation();
     std::string usage = order.GetUsageInformation();
-    tools::Path fileName = missionSheetPath_ / tools::Path::FromUTF8( order.GetName() ) + ".html";
+    tools::Path fileName = config_.GetPhysicalChildPath( missionSheetPhysicalTag ) / tools::Path::FromUTF8( order.GetName() ) + ".html";
     if( fileName.IsRegularFile() || ( !doctrine.empty() && !usage.empty() ) )
     {
         if( fileName.IsRegularFile() )

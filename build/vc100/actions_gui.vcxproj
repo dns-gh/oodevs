@@ -178,7 +178,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\actions_gui\MissionInterface.h" />
     <Qt_file_Mocing Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamInterface_ABC.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamLocation_ABC.h" />
