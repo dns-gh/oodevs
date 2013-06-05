@@ -137,6 +137,11 @@ func (model *Model) update(msg *SwordMessage) {
 			if mm.Headquarters != nil {
 				unit.Pc = *mm.Headquarters
 			}
+			if mm.Position != nil {
+				position := mm.GetPosition()
+				unit.Position.X = position.GetLongitude()
+				unit.Position.Y = position.GetLatitude()
+			}
 		} else if mm := m.GetAutomatCreation(); mm != nil {
 			automat := NewAutomat(
 				mm.GetAutomat().GetId(),

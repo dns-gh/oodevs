@@ -80,6 +80,7 @@ type Unit struct {
 	AutomatId uint32
 	Name      string
 	Pc        bool
+	Position  Point
 }
 
 func NewUnit(id, automatId uint32, name string, pc bool) *Unit {

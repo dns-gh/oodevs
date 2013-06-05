@@ -13,6 +13,7 @@ import (
 	"errors"
 	"fmt"
 	. "launchpad.net/gocheck"
+	"math"
 	"swapi"
 	"sword"
 )
@@ -210,6 +211,11 @@ Party[-]
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 }
 
+func Nearby(pointA, pointB *swapi.Point) bool {
+	return math.Abs(pointA.X-pointB.X) < 1e-6 &&
+		math.Abs(pointA.Y-pointB.Y) < 1e-6
+}
+
 func (s *TestSuite) TestCreateUnit(c *C) {
 	sim, client := connectAndWaitModel(c, "user", "user", ExCrossroadSmallOrbat)
 	defer sim.Stop()
@@ -238,7 +244,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	automat, err := client.CreateAutomat(formation.Id, 0, AutomatType, kg.Id)
 	c.Assert(err, IsNil)
 
-	pos := swapi.MakePoint(0, 0)
+	pos := swapi.MakePoint(22, 29)
 
 	// Valid unit type, should be read from physical database instead
 	unitType := uint32(1)
@@ -256,14 +262,27 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(u, NotNil)
 	c.Assert(u.Pc, Equals, true)
+
+	// Check unit position
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return Nearby(&data.FindUnit(u.Id).Position, &swapi.Point{X: 22, Y: 29})
+	})
+
 	automat = client.Model.GetAutomat(automat.Id)
 	c.Assert(automat.Units[u.Id], NotNil)
+
+	pos = swapi.MakePoint(25, 41)
 
 	// Second unit, not PC
 	u, err = client.CreateUnit(automat.Id, unitType, pos)
 	c.Assert(err, IsNil)
 	c.Assert(u, NotNil)
 	c.Assert(u.Pc, Equals, false)
+
+	// Check unit position
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return Nearby(&data.FindUnit(u.Id).Position, &swapi.Point{X: 25, Y: 41})
+	})
 
 	automat, err = client.CreateAutomat(formation.Id, 0, AutomatType, kg.Id)
 	c.Assert(err, IsNil)
