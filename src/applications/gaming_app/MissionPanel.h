@@ -36,12 +36,18 @@ namespace gui
 
 namespace actions
 {
+    class Action_ABC;
     class ActionsModel;
     namespace gui
     {
         class InterfaceBuilder_ABC;
         class MissionInterface_ABC;
     }
+}
+
+namespace timeline
+{
+    struct Event;
 }
 
 namespace tools
@@ -54,6 +60,7 @@ class Decisions_ABC;
 class StaticModel;
 class Publisher_ABC;
 class CommandPublisher;
+class TimelinePublisher;
 
 // =============================================================================
 // Created: APE 2004-03-19
@@ -72,7 +79,7 @@ public:
     MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher,
                   gui::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
                   const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
-                  const tools::ExerciseConfig& config );
+                  const tools::ExerciseConfig& config, TimelinePublisher& timelinePublisher );
     virtual ~MissionPanel();
     //@}
 
@@ -92,6 +99,13 @@ private slots:
     void Disengage();
     void Close();
     void closeEvent( QCloseEvent* pEvent );
+    void OnPlannedMission( const actions::Action_ABC& action, const QDateTime& planningDate );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void CreateEvent( const timeline::Event& );
     //@}
 
 private:
@@ -126,6 +140,7 @@ private:
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
     const tools::ExerciseConfig& config_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
+    TimelinePublisher& timelinePublisher_;
     //@}
 };
 

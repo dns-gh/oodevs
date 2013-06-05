@@ -15,6 +15,7 @@
 namespace kernel
 {
     class FragOrderType;
+    class Time_ABC;
 }
 
 namespace actions
@@ -38,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              FragmentaryOrderInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::Controllers& controllers,
-                                        actions::gui::InterfaceBuilder_ABC& builder, actions::ActionsModel& model, const tools::ExerciseConfig& config );
+                                        actions::gui::InterfaceBuilder_ABC& builder, actions::ActionsModel& model, const tools::ExerciseConfig& config, const kernel::Time_ABC& simulation );
     virtual ~FragmentaryOrderInterface();
     //@}
 

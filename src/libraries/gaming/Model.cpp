@@ -44,6 +44,7 @@
 #include "TacticalLineFactory.h"
 #include "TeamFactory.h"
 #include "TeamsModel.h"
+#include "TimelinePublisher.h"
 #include "UrbanBlockDetectionMap.h"
 #include "UrbanKnowledgeFactory.h"
 #include "UrbanModel.h"
@@ -93,7 +94,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , fires_                   ( *new FiresModel( agents_, agents_ ) )
     , weather_                 ( *new WeatherModel( controllers_.controller_, *this ) )
     , profiles_                ( *new UserProfilesModel( userProfileFactory_ ) )
-    , actions_                 ( *new actions::ActionsModel( actionFactory_, *new ActionPublisher( publisher, controllers_ ), publisher  ) )
+    , actions_                 ( *new actions::ActionsModel( actionFactory_, *new ActionPublisher( publisher, controllers_ ), publisher ) )
     , folk_                    ( *new FolkModel( controllers.controller_ ) )
     , aar_                     ( *new AfterActionModel( controllers.controller_, publisher ) )
     , drawings_                ( *new DrawingsModel( controllers, drawingFactory_, *this ) )
@@ -110,6 +111,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , publisher_               ( publisher )
     , eventFactory_            ( *new EventFactory() )
     , events_                  ( *new EventsModel( eventFactory_ ) )
+    , timelinePublisher_       ( *new TimelinePublisher() )
 {
     symbolsFactory_.Load( config );
 }

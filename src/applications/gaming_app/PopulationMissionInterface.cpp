@@ -22,8 +22,8 @@ using namespace actions;
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
 PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, Controllers& controllers,
-                                                        actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model, const tools::ExerciseConfig& config )
-    : actions::gui::MissionInterface_ABC( parent, mission, entity, controllers, config, "crowds-mission-sheets-directory" )
+                                                        actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model, const tools::ExerciseConfig& config, const kernel::Time_ABC& simulation )
+    : actions::gui::MissionInterface_ABC( parent, mission, entity, controllers, config, simulation, "crowds-mission-sheets-directory" )
     , model_( model )
     , mission_( mission )
 {
@@ -47,5 +47,8 @@ void PopulationMissionInterface::Publish()
 {
     Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
     CommitTo( *action );
-    model_.Publish( *action, 0 );
+    if( IsPlanned() )
+        emit PlannedMission( *action, GetPlanningDate() );
+    else
+        model_.Publish( *action, 0 );
 }

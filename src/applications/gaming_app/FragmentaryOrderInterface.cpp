@@ -22,8 +22,8 @@ using namespace actions;
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
 FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& entity, const FragOrderType& fragOrder, Controllers& controllers,
-                                                      actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model, const tools::ExerciseConfig& config )
-    : actions::gui::MissionInterface_ABC( parent, fragOrder, entity, controllers, config, "fragorders-mission-sheets-directory" )
+                                                      actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model, const tools::ExerciseConfig& config, const kernel::Time_ABC& simulation )
+    : actions::gui::MissionInterface_ABC( parent, fragOrder, entity, controllers, config, simulation, "fragorders-mission-sheets-directory" )
     , model_( model )
     , fragOrder_( fragOrder )
 {
@@ -47,5 +47,8 @@ void FragmentaryOrderInterface::Publish()
 {
     Action_ABC* action = model_.CreateAction( GetEntity(), fragOrder_ );
     CommitTo( *action );
-    model_.Publish( *action, 0 );
+    if( IsPlanned() )
+        emit PlannedMission( *action, GetPlanningDate() );
+    else
+        model_.Publish( *action, 0 );
 }

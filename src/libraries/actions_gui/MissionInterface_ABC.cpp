@@ -11,6 +11,8 @@
 #include "actions_gui/resources.h"
 #include "MissionInterface_ABC.h"
 #include "moc_MissionInterface_ABC.cpp"
+#include "clients_gui/RichCheckBox.h"
+#include "clients_gui/RichDateTimeEdit.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -18,6 +20,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModeController.h"
+#include "clients_kernel/Time_ABC.h"
 #include "ParamComboBox.h"
 #include "tools/ExerciseConfig.h"
 #include <tools/Path.h>
@@ -67,7 +70,7 @@ namespace
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::Controllers& controllers, const tools::ExerciseConfig& config, std::string missionSheetPath /*=""*/ )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::Controllers& controllers, const tools::ExerciseConfig& config, const kernel::Time_ABC& simulation, std::string missionSheetPath /*=""*/ )
     : Q3VBox            ( parent )
     , ParamInterface_ABC()
     , title_     ( order.GetName().c_str() )
@@ -107,16 +110,33 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
         }
     }
     {
-        Q3HBox* box = new Q3HBox( this );
-        box->setMargin( 5 );
-        box->setSpacing( 5 );
-        box->layout()->setAlignment( Qt::AlignRight );
-        ok_ = new ::gui::RichPushButton( "ok", tr( "Ok" ), box );
-        ::gui::RichPushButton* cancel = new ::gui::RichPushButton( "cancel", tr( "Cancel" ), box );
+        planningCheckBox_ = new ::gui::RichCheckBox( "planning-checkbox" );
+        planningCheckBox_->setText( tr( "Plan mission" ) );
+        planningDateTimeEdit_ = new ::gui::RichDateTimeEdit( "planning-datetimeedit" );
+        planningDateTimeEdit_->setVisible( false );
+        planningDateTimeEdit_->setCalendarPopup( true );
+        planningDateTimeEdit_->setTimeSpec( Qt::UTC );
+        planningDateTimeEdit_->setDateTime( simulation.GetDateTime() );
+        connect( planningCheckBox_, SIGNAL( stateChanged( int ) ), this, SLOT( OnPlanningChecked( int ) ) );
+
+        planningCheckBox_->setVisible( config.HasTimeline() );
+
+        ok_ = new ::gui::RichPushButton( "ok", tr( "Ok" ) );
+        ::gui::RichPushButton* cancel = new ::gui::RichPushButton( "cancel", tr( "Cancel" ) );
         ok_->setDefault( true );
         ok_->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
         connect( ok_, SIGNAL( clicked() ), SLOT( OnOk() ) );
         connect( cancel, SIGNAL( clicked() ), parent, SLOT( Close() ) );
+
+        QWidget* box = new QWidget( this );
+        QHBoxLayout* boxLayout = new QHBoxLayout( box );
+        boxLayout->setMargin( 5 );
+        boxLayout->setSpacing( 5 );
+        boxLayout->addWidget( planningCheckBox_ );
+        boxLayout->addWidget( planningDateTimeEdit_ );
+        boxLayout->addStretch( 1 );
+        boxLayout->addWidget( ok_ );
+        boxLayout->addWidget( cancel );
     }
     controllers_.modes_.Register( *this );
 }
@@ -270,4 +290,31 @@ void MissionInterface_ABC::NotifyModeChanged( E_Modes newMode )
     if( !ok_ )
         return;
     ok_->setText( newMode == eModes_Planning ? tr( "Add to planning" ) : tr( "Ok" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::OnPlanningChecked
+// Created: ABR 2013-05-31
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::OnPlanningChecked( int state )
+{
+    planningDateTimeEdit_->setVisible( state == Qt::Checked );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::IsPlanned
+// Created: ABR 2013-05-31
+// -----------------------------------------------------------------------------
+bool MissionInterface_ABC::IsPlanned() const
+{
+    return planningCheckBox_->checkState() == Qt::Checked;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::GetPlanningDate
+// Created: ABR 2013-05-31
+// -----------------------------------------------------------------------------
+QDateTime MissionInterface_ABC::GetPlanningDate() const
+{
+    return planningDateTimeEdit_->dateTime();
 }

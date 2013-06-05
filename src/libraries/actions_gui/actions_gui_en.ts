@@ -102,6 +102,10 @@
         <source>Add to planning</source>
         <translation type="unfinished">Add to planning</translation>
     </message>
+    <message>
+        <source>Plan mission</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>actions::gui::ParamBool</name>

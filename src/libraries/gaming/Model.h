@@ -64,6 +64,7 @@ class StaticModel;
 class TacticalLineFactory;
 class TeamFactory_ABC;
 class TeamsModel;
+class TimelinePublisher;
 class UrbanBlockDetectionMap;
 class UserProfileFactory_ABC;
 class UserProfilesModel;
@@ -157,6 +158,7 @@ public:
     Publisher_ABC& publisher_;
     const EventFactory& eventFactory_;
     EventsModel& events_;
+    TimelinePublisher& timelinePublisher_;
     //@}
 };
 

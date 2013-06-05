@@ -22,8 +22,8 @@ using namespace actions;
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
 UnitMissionInterface::UnitMissionInterface( QWidget* parent, Entity_ABC& entity, const kernel::MissionType& mission, Controllers& controllers,
-                                            actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model, const tools::ExerciseConfig& config )
-    : actions::gui::MissionInterface_ABC( parent, mission, entity, controllers, config, "units-mission-sheets-directory" )
+                                            actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model, const tools::ExerciseConfig& config, const kernel::Time_ABC& simulation )
+    : actions::gui::MissionInterface_ABC( parent, mission, entity, controllers, config, simulation, "units-mission-sheets-directory" )
     , model_( model )
     , mission_( mission )
 {
@@ -47,5 +47,8 @@ void UnitMissionInterface::Publish()
 {
     Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
     CommitTo( *action );
-    model_.Publish( *action, 0 );
+    if( IsPlanned() )
+        emit PlannedMission( *action, GetPlanningDate() );
+    else
+        model_.Publish( *action, 0 );
 }

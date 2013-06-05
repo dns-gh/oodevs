@@ -826,6 +826,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\EventAction.cpp">
       <Filter>Source Files\Model\Events</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\TimelinePublisher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1571,6 +1574,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\EventAction.h">
       <Filter>Source Files\Model\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\TimelinePublisher.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

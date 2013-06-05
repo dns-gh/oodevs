@@ -105,7 +105,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     }
     // Mission panel
     {
-        missionPanel_ = new MissionPanel( parent, controllers, staticModel, network.GetMessageMgr(), proxy, profile, model.actions_, simulation, *interfaceBuilder_, config );
+        missionPanel_ = new MissionPanel( parent, controllers, staticModel, network.GetMessageMgr(), proxy, profile, model.actions_, simulation, *interfaceBuilder_, config, model.timelinePublisher_ );
         missionPanel_->SetModes( eModes_Default | eModes_Replay );
         missionPanel_->SetMenuVisibility( false );
         parent->addDockWidget( Qt::LeftDockWidgetArea, missionPanel_ );
@@ -200,6 +200,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         timeline_ = new TimelineDockWidget( parent, controllers, config, simulation, model );
         timeline_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timeline_ );
+        QObject::connect( missionPanel_, SIGNAL( CreateEvent( const timeline::Event& ) ), timeline_, SIGNAL( CreateEvent( const timeline::Event& ) ) );
     }
     else
     {

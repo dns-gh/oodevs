@@ -26,11 +26,14 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class OrderType;
+    class Time_ABC;
 }
 
 namespace gui
 {
     class GlTools_ABC;
+    class RichCheckBox;
+    class RichDateTimeEdit;
     class Viewport_ABC;
 }
 
@@ -65,7 +68,7 @@ class MissionInterface_ABC : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::Controllers& controllers, const tools::ExerciseConfig& config, std::string missionSheetPath = "" );
+             MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::Controllers& controllers, const tools::ExerciseConfig& config, const kernel::Time_ABC& simulation, std::string missionSheetPath = "" );
     virtual ~MissionInterface_ABC();
     //@}
 
@@ -86,12 +89,14 @@ public slots:
     //! @name Slots
     //@{
     virtual void OnOk();
+    void OnPlanningChecked( int state );
     //@}
 
 signals:
     //! @name Signals
     //@{
     void OkClicked();
+    void PlannedMission( const actions::Action_ABC&, const QDateTime& );
     //@}
 
 protected:
@@ -101,6 +106,8 @@ protected:
     const kernel::Entity_ABC& GetEntity() const;
     void CreateTitle( const QString& title );
     void CommitTo( actions::Action_ABC& action ) const;
+    bool IsPlanned() const;
+    QDateTime GetPlanningDate() const;
     //@}
 
 private:
@@ -134,6 +141,8 @@ private:
     Q3VBox* optionalTab_;
     Q3ScrollView* sc1_;
     ::gui::RichPushButton* ok_;
+    ::gui::RichCheckBox* planningCheckBox_;
+    ::gui::RichDateTimeEdit* planningDateTimeEdit_;
     //@}
 };
 

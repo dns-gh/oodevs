@@ -29,8 +29,10 @@
 #include "gaming/CommandPublisher.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Decisions.h"
+#include "gaming/Event.h"
 #include "gaming/PopulationDecisions.h"
 #include "gaming/StaticModel.h"
+#include "gaming/TimelinePublisher.h"
 
 #include "protocol/ServerPublisher_ABC.h"
 
@@ -40,11 +42,15 @@
 #include "FragmentaryOrderInterface.h"
 #include "icons.h"
 
+#include "actions/Action_ABC.h"
 #include "actions/ActionTasker.h"
 #include "actions/EngageMagicAction.h"
 #include "actions/ActionTiming.h"
 
 #include "actions_gui/InterfaceBuilder_ABC.h"
+
+#include "ENT/ENT_Tr.h"
+#include "timeline/api.h"
 
 using namespace kernel;
 
@@ -55,7 +61,7 @@ using namespace kernel;
 MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher,
                             gui::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
                             const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
-                            const tools::ExerciseConfig& config )
+                            const tools::ExerciseConfig& config, TimelinePublisher& timelinePublisher )
     : gui::RichDockWidget      ( controllers, pParent, "mission" )
     , static_                  ( model )
     , actionsModel_            ( actionsModel )
@@ -67,6 +73,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     , simulation_              ( simulation )
     , interfaceBuilder_        ( interfaceBuilder )
     , config_                  ( config )
+    , timelinePublisher_       ( timelinePublisher )
 {
     setWindowTitle( tr( "Mission" ) );
     setFloating( true );
@@ -309,7 +316,7 @@ void MissionPanel::ActivateAgentMission( int id )
 {
     SetInterface( 0 );
     const kernel::MissionType& mission = static_cast< tools::Resolver_ABC< kernel::MissionType >& >( static_.types_).Get( id );
-    SetInterface( new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_, interfaceBuilder_, actionsModel_, config_ ) );
+    SetInterface( new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_, interfaceBuilder_, actionsModel_, config_, simulation_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -323,7 +330,7 @@ void MissionPanel::ActivateAutomatMission( int id )
     Entity_ABC* entity = selectedEntity_.ConstCast();
     if( !entity->Retrieve< kernel::AutomatDecisions_ABC >() )
         entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
-    SetInterface( new AutomateMissionInterface( this, *entity, mission, controllers_, interfaceBuilder_, actionsModel_, config_ ) );
+    SetInterface( new AutomateMissionInterface( this, *entity, mission, controllers_, interfaceBuilder_, actionsModel_, config_, simulation_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -334,7 +341,7 @@ void MissionPanel::ActivatePopulationMission( int id )
 {
     SetInterface( 0 );
     const kernel::MissionType& mission = static_cast< tools::Resolver_ABC< kernel::MissionType >& >( static_.types_).Get( id );
-    SetInterface( new PopulationMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_, interfaceBuilder_, actionsModel_ , config_ ) );
+    SetInterface( new PopulationMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_, interfaceBuilder_, actionsModel_ , config_, simulation_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -353,7 +360,7 @@ void MissionPanel::ActivateFragOrder( int id )
             if( decisions->IsEmbraye() )
                 entity = superior;
     }
-    SetInterface( new FragmentaryOrderInterface( this, *entity, order, controllers_, interfaceBuilder_, actionsModel_, config_ ) );
+    SetInterface( new FragmentaryOrderInterface( this, *entity, order, controllers_, interfaceBuilder_, actionsModel_, config_, simulation_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -445,6 +452,7 @@ void MissionPanel::SetInterface( actions::gui::MissionInterface_ABC* missionInte
         pMissionInterface_ = missionInterface;
         NotifyMission();
         connect( pMissionInterface_, SIGNAL( OkClicked() ), SLOT( Close() ) );
+        connect( pMissionInterface_, SIGNAL( PlannedMission( const actions::Action_ABC&, const QDateTime& ) ), SLOT( OnPlannedMission( const actions::Action_ABC&, const QDateTime& ) ) );
         if( pMissionInterface_->IsEmpty() )
             pMissionInterface_->OnOk();
         else
@@ -469,4 +477,21 @@ void MissionPanel::NotifyMission()
                 << "\"" << pMissionInterface_->Title().toStdString() << "\"";
         commandPublisher_->Send( "", message.str() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionPanel::OnPlannedMission
+// Created: ABR 2013-05-31
+// -----------------------------------------------------------------------------
+void MissionPanel::OnPlannedMission( const actions::Action_ABC& action, const QDateTime& planningDate )
+{
+    timeline::Event event;
+    event.name = action.GetType().GetName();
+    event.info = ENT_Tr::ConvertFromEventType( eEventTypes_Order, ENT_Tr_ABC::eToSim );
+    event.begin = planningDate.toString( EVENT_DATE_FORMAT ).toStdString();
+    event.action.target = "sword://sim";
+    event.action.apply = true;
+    action.Publish( timelinePublisher_, 0 );
+    event.action.payload = timelinePublisher_.GetPayload();
+    emit CreateEvent( event );
 }
