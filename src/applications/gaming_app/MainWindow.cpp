@@ -382,7 +382,6 @@ void MainWindow::Load()
     {
         controllers_.SaveOptions( eModes_Gaming );
         dockContainer_->Purge();
-        dockContainer_->Load();
         model_.Purge();
         selector_->Close();
         selector_->Load();
@@ -461,6 +460,7 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     {
         if( !connected_ && simulation.IsInitialized() )
         {
+            dockContainer_->Load();
             connected_ = true; // we update the caption until Model is totally loaded
             if( profile_.isEmpty() )
                 profile_ = tools::translate( "LoginDialog", "Anonymous" );

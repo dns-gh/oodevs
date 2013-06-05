@@ -3036,6 +3036,17 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Main</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TimelineFilteredViewWidget</name>
+    <message>
         <source>An error occurred during event creation process: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3088,6 +3099,45 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Current session</source>
         <translation>Sesión actual</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineToolBar</name>
+    <message>
+        <source>Remove current view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reports</source>
+        <translation type="unfinished">Reportes</translation>
+    </message>
+    <message>
+        <source>Multimedia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tasks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a new view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supervisor actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center the view on the simulation time</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

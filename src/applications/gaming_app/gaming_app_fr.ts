@@ -3039,6 +3039,17 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Binaire de timeline invalide &apos;%1&apos;</translation>
     </message>
     <message>
+        <source>Main</source>
+        <translation>Principale</translation>
+    </message>
+    <message>
+        <source>View %1</source>
+        <translation>Vue %1</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineFilteredViewWidget</name>
+    <message>
         <source>An error occurred during event creation process: %1</source>
         <translation>Une erreur s&apos;est produite pendant le processus de création d&apos;événement: %1</translation>
     </message>
@@ -3091,6 +3102,45 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Current session</source>
         <translation>Session courante</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineToolBar</name>
+    <message>
+        <source>Center the view on the simulation time</source>
+        <translation>Centrer la vue sur l&apos;heure de la simulation</translation>
+    </message>
+    <message>
+        <source>Edit filters</source>
+        <translation>Editer les filtres</translation>
+    </message>
+    <message>
+        <source>Create a new view</source>
+        <translation>Créer une nouvelle vue</translation>
+    </message>
+    <message>
+        <source>Remove current view</source>
+        <translation>Supprimer la vue courrante</translation>
+    </message>
+    <message>
+        <source>Orders</source>
+        <translation>Ordres</translation>
+    </message>
+    <message>
+        <source>Reports</source>
+        <translation>Comptes-rendus</translation>
+    </message>
+    <message>
+        <source>Multimedia</source>
+        <translation>Multimédia</translation>
+    </message>
+    <message>
+        <source>Tasks</source>
+        <translation>Tâches</translation>
+    </message>
+    <message>
+        <source>Supervisor actions</source>
+        <translation>Actions de supervision</translation>
     </message>
 </context>
 <context>

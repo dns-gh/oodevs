@@ -20,13 +20,11 @@ namespace kernel
 namespace timeline
 {
     struct Configuration;
-    struct Error;
-    struct Event;
-    class Server_ABC;
 }
 
 class Config;
 class Simulation;
+class TimelineFilteredViewWidget;
 
 // =============================================================================
 /** @class  TimelineDockWidget
@@ -51,48 +49,28 @@ public:
     void Disconnect();
     //@}
 
-private:
-    //! @name Helpers
-    //@{
-    void Error( const QString& text );
-    void CreateDummyMission(); // $$$$ ABR 2013-05-24: Test method
-    //@}
-
-signals:
-    //! @name Signals
-    //@{
-    void CreateEventSignal( const timeline::Event& event );
-    void DeleteEventSignal( const std::string& uuid );
-    //@}
-
-private slots:
+public slots:
     //! @name Slots
     //@{
-    void CreateEvent( const timeline::Event& event );
-    void DeleteEvent( const std::string& uuid );
-
-    void OnCreatedEvent( const timeline::Event& event, const timeline::Error& error );
-    void OnDeletedEvent( const std::string& uuid, const timeline::Error& error );
-
-    void OnSelectedEvent( boost::shared_ptr< timeline::Event > event );
-    void OnActivatedEvent( const timeline::Event& event );
-    void OnContextMenuEvent( boost::shared_ptr< timeline::Event > event );
-    void OnKeyUp( int key );
+    void AddFilteredView( QStringList filters );
+    void RemoveCurrentFilteredView();
     //@}
 
 private:
     //! @name Member data
     //@{
-    QWidget* mainWidget_;
-    std::auto_ptr< timeline::Server_ABC > server_;
-    std::auto_ptr< timeline::Configuration > cfg_;
-
-    boost::shared_ptr< timeline::Event > selected_;
-
-    std::vector< std::string > creationRequestedEvents_;
-    std::vector< std::string > deletionRequestedEvents_;
-
+    QTabWidget* tabWidget_;
+    QString mainTitle_;
+    std::vector< TimelineFilteredViewWidget* > filteredViews_;
+    boost::shared_ptr< timeline::Configuration > cfg_;
     const Simulation& simulation_;
+    bool isConnected_;
+    //@}
+
+private:
+    //! @name Static member data
+    //@{
+    static int maxTabNumber_;
     //@}
 };
 
