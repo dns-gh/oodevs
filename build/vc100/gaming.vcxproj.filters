@@ -137,6 +137,9 @@
     <Filter Include="Translations">
       <UniqueIdentifier>{06983202-6856-402d-8d8d-87b2dd40233f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Events">
+      <UniqueIdentifier>{5af45eb8-1d5f-419a-a062-7fbae4754b44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\gaming\gaming_pch.cpp">
@@ -810,6 +813,18 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\gaming\DrawableUnitContainer.cpp">
       <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\Event.cpp">
+      <Filter>Source Files\Model\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\EventFactory.cpp">
+      <Filter>Source Files\Model\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\EventsModel.cpp">
+      <Filter>Source Files\Model\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\EventAction.cpp">
+      <Filter>Source Files\Model\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1544,6 +1559,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\DrawableUnitContainer.h">
       <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\EventsModel.h">
+      <Filter>Source Files\Model\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\Event.h">
+      <Filter>Source Files\Model\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\EventFactory.h">
+      <Filter>Source Files\Model\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\EventAction.h">
+      <Filter>Source Files\Model\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -40,6 +40,8 @@ class AgentKnowledgeFactory;
 class AgentsModel;
 class DrawingFactory;
 class DrawingsModel;
+class EventFactory;
+class EventsModel;
 class FireFactory;
 class FireResultFactory;
 class FiresModel;
@@ -153,6 +155,8 @@ public:
     SurfaceFactory& surfaceFactory_;
     FloodProxy& floodProxy_;
     Publisher_ABC& publisher_;
+    const EventFactory& eventFactory_;
+    EventsModel& events_;
     //@}
 };
 

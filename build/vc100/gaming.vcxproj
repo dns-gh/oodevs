@@ -108,6 +108,10 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\gaming\CommandPostAttributes.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\DrawableUnitContainer.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Event.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\EventAction.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\EventFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\EventsModel.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\FloodProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\gaming_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -339,6 +343,10 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\CommandPostAttributes.h" />
     <ClInclude Include="..\..\src\libraries\gaming\DrawableUnitContainer.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Event.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\EventAction.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\EventFactory.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\EventsModel.h" />
     <ClInclude Include="..\..\src\libraries\gaming\FloodProxy.h" />
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h" />
     <ClInclude Include="..\..\src\libraries\gaming\HumanState.h" />

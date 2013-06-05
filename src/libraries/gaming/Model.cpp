@@ -17,6 +17,8 @@
 #include "AgentsModel.h"
 #include "DrawingFactory.h"
 #include "DrawingsModel.h"
+#include "EventFactory.h"
+#include "EventsModel.h"
 #include "FireFactory.h"
 #include "FireResultFactory.h"
 #include "FiresModel.h"
@@ -106,6 +108,8 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , surfaceFactory_          ( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanBlockDetectionMap_, meteo_ ) )
     , floodProxy_              ( *new FloodProxy( static_.detection_ ) )
     , publisher_               ( publisher )
+    , eventFactory_            ( *new EventFactory() )
+    , events_                  ( *new EventsModel( eventFactory_ ) )
 {
     symbolsFactory_.Load( config );
 }
@@ -197,6 +201,8 @@ tools::Resolver_ABC< kernel::UrbanObject_ABC >& Model::GetUrbanObjectResolver() 
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &events_;
+    delete &eventFactory_;
     delete &floodProxy_;
     delete &meteo_;
     delete &notes_;
@@ -259,4 +265,5 @@ void Model::Purge()
     knowledgeGroups_.Purge();
     teams_.Purge();
     meteo_.Purge();
+    events_.Purge();
 }
