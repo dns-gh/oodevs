@@ -25,7 +25,7 @@
 
 //$$$ Crap for Thales
 #ifndef APP_MODEL_VERSION
-#   define APP_MODEL_VERSION 4.12.0
+#   define APP_MODEL_VERSION 4.12.1
 #endif
 
 // -----------------------------------------------------------------------------
