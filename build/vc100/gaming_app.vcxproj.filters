@@ -1164,9 +1164,6 @@
     <ClInclude Include="..\..\src\applications\gaming_app\DockContainer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\TimelineDockWidget.h">
-      <Filter>Source Files\Panels\Actions</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.inl">
@@ -1501,5 +1498,10 @@
     <CustomBuild Include="..\..\src\applications\gaming_app\ProfilesPanel.h">
       <Filter>Source Files\Panels</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\TimelineDockWidget.h">
+      <Filter>Source Files\Panels\Actions</Filter>
+    </Qt_file_Mocing>
   </ItemGroup>
 </Project>

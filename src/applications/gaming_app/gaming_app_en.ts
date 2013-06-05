@@ -3023,15 +3023,31 @@ This data can&apos;t be projected.</source>
 <context>
     <name>TimelineDockWidget</name>
     <message>
-        <source>Warning</source>
-        <translation type="unfinished">Warning</translation>
-    </message>
-    <message>
         <source>Actions timeline</source>
         <translation type="unfinished">Actions timeline</translation>
     </message>
     <message>
         <source>Invalid timeline binary &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An error occurred during event creation process: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An error occurred during event deletion process: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Delete</translation>
+    </message>
+    <message>
+        <source>Planned a mission</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

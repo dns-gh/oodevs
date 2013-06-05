@@ -20,6 +20,8 @@ namespace kernel
 namespace timeline
 {
     struct Configuration;
+    struct Error;
+    struct Event;
     class Server_ABC;
 }
 
@@ -33,6 +35,7 @@ class Config;
 // =============================================================================
 class TimelineDockWidget : public gui::RichDockWidget
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -50,13 +53,42 @@ public:
 private:
     //! @name Helpers
     //@{
+    void Error( const QString& text );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void CreateEventSignal( const timeline::Event& event );
+    void DeleteEventSignal( const std::string& uuid );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void CreateEvent( const timeline::Event& event );
+    void DeleteEvent( const std::string& uuid );
+
+    void OnCreatedEvent( const timeline::Event& event, const timeline::Error& error );
+    void OnDeletedEvent( const std::string& uuid, const timeline::Error& error );
+
+    void OnSelectedEvent( boost::shared_ptr< timeline::Event > event );
+    void OnActivatedEvent( const timeline::Event& event );
+    void OnContextMenuEvent( boost::shared_ptr< timeline::Event > event );
+    void OnKeyUp( int key );
     //@}
 
 private:
     //! @name Member data
     //@{
+    QWidget* mainWidget_;
     std::auto_ptr< timeline::Server_ABC > server_;
     std::auto_ptr< timeline::Configuration > cfg_;
+
+    boost::shared_ptr< timeline::Event > selected_;
+
+    std::vector< std::string > creationRequestedEvents_;
+    std::vector< std::string > deletionRequestedEvents_;
     //@}
 };
 

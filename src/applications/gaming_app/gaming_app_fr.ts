@@ -3035,12 +3035,28 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Chronologie des actions</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation>Attention</translation>
-    </message>
-    <message>
         <source>Invalid timeline binary &apos;%1&apos;</source>
         <translation>Binaire de timeline invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>An error occurred during event creation process: %1</source>
+        <translation>Une erreur s&apos;est produite pendant le processus de création d&apos;événement: %1</translation>
+    </message>
+    <message>
+        <source>An error occurred during event deletion process: %1</source>
+        <translation>Une erreur s&apos;est produite pendant le processus de suppression d&apos;événement: %1</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Editer</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Planned a mission</source>
+        <translation>Plannifier une mission</translation>
     </message>
 </context>
 <context>

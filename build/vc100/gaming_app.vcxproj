@@ -1150,7 +1150,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\gaming_app\TimelineDockWidget.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\TimelineDockWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\TrafficabilityPrototype.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableCrew.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\UnitStateTableEquipment.h" />
