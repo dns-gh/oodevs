@@ -158,6 +158,7 @@ void MissionPanel::SetVisible( bool visible )
 {
     titleLabel_->setVisible( visible );
     pixmapLabel_->setVisible( visible );
+    pMissionInterface_->setVisible( visible );
     planningCheckBox_->setVisible( visible ? config_.HasTimeline() : false );
     planningDateTimeEdit_->setVisible( false );
     okButton_->setVisible( visible );

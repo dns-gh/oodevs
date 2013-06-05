@@ -10,19 +10,15 @@
 #include "actions_gui_pch.h"
 #include "MissionInterface.h"
 #include "moc_MissionInterface.cpp"
-#include "clients_gui/RichCheckBox.h"
-#include "clients_gui/RichDateTimeEdit.h"
-#include "clients_gui/RichPushButton.h"
+#include "actions/Action_ABC.h"
+#include "actions_gui/InterfaceBuilder_ABC.h"
+#include "actions_gui/Param_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/ModeController.h"
-#include "clients_kernel/Time_ABC.h"
-#include "ParamComboBox.h"
 #include "tools/ExerciseConfig.h"
-
 #include <QtWebKit/qwebview.h>
 
 using namespace actions::gui;
@@ -67,13 +63,14 @@ namespace
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
 MissionInterface::MissionInterface( QWidget* parent, const QString& name, kernel::Controllers& controllers,
-                                            actions::ActionsModel& actionModel, const tools::ExerciseConfig& config )
+                                    actions::ActionsModel& actionModel, const tools::ExerciseConfig& config )
     : QTabWidget( parent )
     , ParamInterface_ABC()
     , controllers_( controllers )
     , model_( actionModel )
     , config_( config )
     , entity_( controllers )
+    , order_( 0 )
     , planned_( false )
 {
     setObjectName( name );
@@ -99,6 +96,7 @@ MissionInterface::~MissionInterface()
 void MissionInterface::Purge()
 {
     entity_ = 0;
+    order_ = 0;
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
     {
         (*it)->RemoveFromController();
@@ -120,7 +118,6 @@ void MissionInterface::Fill( InterfaceBuilder_ABC& builder, const kernel::Entity
 {
     entity_ = &entity;
     order_ = &order;
-    title_ = order.GetName().c_str();
 
     setVisible( false ); // $$$$ ABR 2013-06-04: For some reason the current tab display doesn't refresh, probably because of Q3VBox. This will be fix when Param_ABC::BuildInterface will take a QVBoxLayout as parent instead of a QWidget
     builder.BuildAll( *this, entity, order );
@@ -188,7 +185,7 @@ bool MissionInterface::IsEmpty() const
 // -----------------------------------------------------------------------------
 QString MissionInterface::Title() const
 {
-    return title_;
+    return order_ ? QString::fromStdString( order_->GetName() ) : "";
 }
 
 // -----------------------------------------------------------------------------

@@ -12,31 +12,24 @@
 
 #include "ParamInterface_ABC.h"
 #include "actions/ActionsModel.h"
-#include "clients_kernel/ModesObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "tools/Observer_ABC.h"
-#include <tools/Path.h>
 
 namespace kernel
 {
     class Controllers;
     class Entity_ABC;
     class OrderType;
-    class Time_ABC;
 }
 
 namespace gui
 {
     class GlTools_ABC;
-    class RichCheckBox;
-    class RichDateTimeEdit;
     class Viewport_ABC;
 }
 
 namespace tools
 {
     class ExerciseConfig;
-    class Path;
 }
 
 namespace actions
@@ -68,11 +61,6 @@ public:
     virtual ~MissionInterface();
     //@}
 
-    //! @name Abstract method
-    //@{
-    //virtual void Publish() = 0;
-    //@}
-
     //! @name Operations
     //@{
     bool IsEmpty() const;
@@ -83,13 +71,6 @@ public:
     void Purge();
     void SetPlanned( bool planned );
     void CommitTo( actions::Action_ABC& action ) const;
-    //@}
-
-    //! @name ParamInterface_ABC implementation
-    //@{
-    virtual QString Title() const;
-    virtual int GetIndex( Param_ABC* param ) const;
-
     template< typename T >
     void Publish()
     {
@@ -104,20 +85,26 @@ public:
     }
     //@}
 
+    //! @name ParamInterface_ABC implementation
+    //@{
+    virtual QString Title() const;
+    virtual int GetIndex( Param_ABC* param ) const;
+    //@}
+
 signals:
     //! @name Signals
     //@{
     void PlannedMission( const actions::Action_ABC& );
     //@}
 
-protected:
+private:
     //! @name Types
     //@{
     typedef std::vector< Param_ABC* >      T_Parameters; // $$$$ ABR 2012-01-11: Todo : use sharepointer
     typedef T_Parameters::const_iterator CIT_Parameters;
     //@}
 
-protected:
+private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
@@ -128,7 +115,6 @@ protected:
     const kernel::OrderType* order_;
     T_Parameters parameters_;
 
-    QString title_;
     QWidget* mainTab_;
     QWidget* optionalTab_;
     QWidget* helpTab_;
