@@ -340,6 +340,7 @@ void AgentServerMsgMgr::OnReceiveControlEndTick( const sword::ControlEndTick& me
 void AgentServerMsgMgr::OnReceiveProfileCreation( const sword::ProfileCreation& message )
 {
     GetModel().profiles_.CreateProfile( message );
+    GetProfile().Update();
 }
 
 // -----------------------------------------------------------------------------

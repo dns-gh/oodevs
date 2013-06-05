@@ -80,6 +80,15 @@ void Profile::Login( const std::string& login, const std::string& password ) con
 
 // -----------------------------------------------------------------------------
 // Name: Profile::Update
+// Created: ABR 2013-06-05
+// -----------------------------------------------------------------------------
+void Profile::Update()
+{
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::Update
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
 void Profile::Update( const sword::AuthenticationToClient& wrapper )

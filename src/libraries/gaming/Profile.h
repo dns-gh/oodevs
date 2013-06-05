@@ -53,6 +53,7 @@ public:
     //@{
     void Login() const;
     void Login( const std::string& login, const std::string& password ) const;
+    void Update();
     void Update( const sword::AuthenticationToClient& wrapper );
     void Update( const Model& model, const sword::ProfileUpdate& message );
     void Update( const sword::ConnectedProfileList& message );
