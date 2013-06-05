@@ -167,6 +167,12 @@
     <Filter Include="Source Files\Dialogs\Magic actions\Logistic\Widgets">
       <UniqueIdentifier>{36af8616-cf93-4773-9fc0-08a69760afda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Panels\Timeline">
+      <UniqueIdentifier>{3f2ead49-ad03-4fa6-a3f2-796a288b57c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dialogs\Events">
+      <UniqueIdentifier>{32874e40-5761-4940-9f17-c6cde6ba3f4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\gaming_app\Application.cpp">
@@ -815,7 +821,43 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\TimelineDockWidget.cpp">
-      <Filter>Source Files\Panels\Actions</Filter>
+      <Filter>Source Files\Panels\Timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TimelineToolBar.cpp">
+      <Filter>Source Files\Panels\Timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\TimelineFilteredViewWidget.cpp">
+      <Filter>Source Files\Panels\Timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EventDialog.cpp">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EventMultimediaWidget.cpp">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EventTopWidget.cpp">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EventOrderWidget.cpp">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EventSupervisorActionWidget.cpp">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EventTaskWidget.cpp">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EventReportWidget.cpp">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EventBottomWidget.cpp">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EventDetailWidget.cpp">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EventWidget_ABC.cpp">
+      <Filter>Source Files\Dialogs\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1164,6 +1206,24 @@
     <ClInclude Include="..\..\src\applications\gaming_app\DockContainer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\EventOrderWidget.h">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\EventSupervisorActionWidget.h">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\EventTaskWidget.h">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\EventReportWidget.h">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\EventDetailWidget.h">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\EventWidget_ABC.h">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.inl">
@@ -1501,7 +1561,25 @@
   </ItemGroup>
   <ItemGroup>
     <Qt_file_Mocing Include="..\..\src\applications\gaming_app\TimelineDockWidget.h">
-      <Filter>Source Files\Panels\Actions</Filter>
+      <Filter>Source Files\Panels\Timeline</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\TimelineFilteredViewWidget.h">
+      <Filter>Source Files\Panels\Timeline</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\TimelineToolBar.h">
+      <Filter>Source Files\Panels\Timeline</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventDialog.h">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventBottomWidget.h">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventTopWidget.h">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventMultimediaWidget.h">
+      <Filter>Source Files\Dialogs\Events</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

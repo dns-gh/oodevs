@@ -644,6 +644,90 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>EventBottomWidget</name>
+    <message>
+        <source>Trigger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flag as complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a reminder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detail</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EventDialog</name>
+    <message>
+        <source>Event creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Event edition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This event is incomplete so it can&apos;t be triggered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EventMultimediaWidget</name>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select output directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EventTaskWidget</name>
+    <message>
+        <source>Label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EventToolbar</name>
     <message>
         <source>Notifications</source>
@@ -659,6 +743,17 @@ Reason: %3
     </message>
     <message>
         <source>%L1 pending messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EventTopWidget</name>
+    <message>
+        <source>Start date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
