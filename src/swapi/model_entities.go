@@ -9,8 +9,24 @@
 package swapi
 
 import (
+	"bytes"
+	"encoding/gob"
 	"time"
 )
+
+func DeepCopy(dst, src interface{}) interface{} {
+	// not the fastest method, but it works
+	buffer := new(bytes.Buffer)
+	err := gob.NewEncoder(buffer).Encode(src)
+	if err != nil {
+		panic(err)
+	}
+	err = gob.NewDecoder(buffer).Decode(dst)
+	if err != nil {
+		panic(err)
+	}
+	return dst
+}
 
 type Point struct {
 	X float64
@@ -35,10 +51,6 @@ func NewProfile(login, password string, supervisor bool) *Profile {
 	}
 }
 
-func (p *Profile) Copy() *Profile {
-	return NewProfile(p.Login, p.Password, p.Supervisor)
-}
-
 type Population struct {
 	Id      uint32
 	PartyId uint32
@@ -53,10 +65,6 @@ func NewPopulation(id, partyId uint32, name string) *Population {
 	}
 }
 
-func (p *Population) Copy() *Population {
-	return NewPopulation(p.Id, p.PartyId, p.Name)
-}
-
 type Crowd struct {
 	Id      uint32
 	PartyId uint32
@@ -69,10 +77,6 @@ func NewCrowd(id, partyId uint32, name string) *Crowd {
 		PartyId: partyId,
 		Name:    name,
 	}
-}
-
-func (c *Crowd) Copy() *Crowd {
-	return NewCrowd(c.Id, c.PartyId, c.Name)
 }
 
 type Unit struct {
@@ -91,10 +95,6 @@ func NewUnit(id, automatId uint32, name string, pc bool, position Point) *Unit {
 		Pc:        pc,
 		Position:  position,
 	}
-}
-
-func (u *Unit) Copy() *Unit {
-	return NewUnit(u.Id, u.AutomatId, u.Name, u.Pc, u.Position)
 }
 
 type Automat struct {
@@ -117,18 +117,6 @@ func NewAutomat(id, partyId, knowledgeGroupId uint32, name string) *Automat {
 		Engaged:          true,
 		KnowledgeGroupId: knowledgeGroupId,
 	}
-}
-
-func (a *Automat) Copy() *Automat {
-	other := NewAutomat(a.Id, a.PartyId, a.KnowledgeGroupId, a.Name)
-	other.Engaged = a.Engaged
-	for k, v := range a.Automats {
-		other.Automats[k] = v.Copy()
-	}
-	for k, v := range a.Units {
-		other.Units[k] = v.Copy()
-	}
-	return other
 }
 
 type Formation struct {
@@ -156,18 +144,6 @@ func NewFormation(id uint32, name string, parentId uint32,
 	}
 }
 
-func (formation *Formation) Copy() *Formation {
-	f := NewFormation(formation.Id, formation.Name, formation.ParentId,
-		formation.PartyId, formation.Level, formation.LogLevel)
-	for k, v := range formation.Formations {
-		f.Formations[k] = v.Copy()
-	}
-	for k, v := range formation.Automats {
-		f.Automats[k] = v.Copy()
-	}
-	return f
-}
-
 type KnowledgeGroup struct {
 	Id       uint32
 	Name     string
@@ -182,10 +158,6 @@ func NewKnowledgeGroup(id uint32, name string, parentId, partyId uint32) *Knowle
 		ParentId: parentId,
 		Name:     name,
 	}
-}
-
-func (k *KnowledgeGroup) Copy() *KnowledgeGroup {
-	return NewKnowledgeGroup(k.Id, k.Name, k.ParentId, k.PartyId)
 }
 
 type Party struct {
@@ -208,23 +180,6 @@ func NewParty(id uint32, name string) *Party {
 	}
 }
 
-func (party *Party) Copy() *Party {
-	p := NewParty(party.Id, party.Name)
-	for k, v := range party.Formations {
-		p.Formations[k] = v.Copy()
-	}
-	for k, v := range party.Crowds {
-		p.Crowds[k] = v.Copy()
-	}
-	for k, v := range party.Populations {
-		p.Populations[k] = v.Copy()
-	}
-	for k, v := range party.KnowledgeGroups {
-		p.KnowledgeGroups[k] = v.Copy()
-	}
-	return p
-}
-
 type ModelData struct {
 	Parties  map[uint32]*Party
 	Profiles map[string]*Profile
@@ -238,19 +193,6 @@ func NewModelData() *ModelData {
 		Parties:  map[uint32]*Party{},
 		Profiles: map[string]*Profile{},
 	}
-}
-
-func (model *ModelData) Copy() *ModelData {
-	m := NewModelData()
-	m.Tick = model.Tick
-	m.Time = model.Time
-	for k, v := range model.Parties {
-		m.Parties[k] = v.Copy()
-	}
-	for k, v := range model.Profiles {
-		m.Profiles[k] = v.Copy()
-	}
-	return m
 }
 
 func (model *ModelData) FindPartyByName(name string) *Party {

@@ -325,7 +325,8 @@ func (model *Model) WaitReady(timeout time.Duration) bool {
 func (model *Model) GetData() *ModelData {
 	var d *ModelData
 	model.waitCommand(func(model *Model) {
-		d = model.data.Copy()
+		d = &ModelData{}
+		DeepCopy(d, model.data)
 	})
 	return d
 }
@@ -335,7 +336,8 @@ func (model *Model) GetProfile(login string) *Profile {
 	model.waitCommand(func(model *Model) {
 		profile, ok := model.data.Profiles[login]
 		if ok {
-			p = profile.Copy()
+			p = &Profile{}
+			DeepCopy(p, profile)
 		}
 	})
 	return p
@@ -346,7 +348,8 @@ func (model *Model) GetFormation(formationId uint32) *Formation {
 	model.waitCommand(func(model *Model) {
 		formation := model.data.FindFormation(formationId)
 		if formation != nil {
-			f = formation.Copy()
+			f = &Formation{}
+			DeepCopy(f, formation)
 		}
 	})
 	return f
@@ -357,7 +360,8 @@ func (model *Model) GetAutomat(automatId uint32) *Automat {
 	model.waitCommand(func(model *Model) {
 		automat := model.data.FindAutomat(automatId)
 		if automat != nil {
-			a = automat.Copy()
+			a = &Automat{}
+			DeepCopy(a, automat)
 		}
 	})
 	return a
@@ -368,21 +372,23 @@ func (model *Model) GetUnit(unitId uint32) *Unit {
 	model.waitCommand(func(model *Model) {
 		unit := model.data.FindUnit(unitId)
 		if unit != nil {
-			u = unit.Copy()
+			u = &Unit{}
+			DeepCopy(u, unit)
 		}
 	})
 	return u
 }
 
 func (model *Model) GetCrowd(crowdId uint32) *Crowd {
-	var u *Crowd
+	var c *Crowd
 	model.waitCommand(func(model *Model) {
 		crowd := model.data.FindCrowd(crowdId)
 		if crowd != nil {
-			u = crowd.Copy()
+			c = &Crowd{}
+			DeepCopy(c, crowd)
 		}
 	})
-	return u
+	return c
 }
 
 func (model *Model) GetTick() int32 {
