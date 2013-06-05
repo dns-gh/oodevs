@@ -274,7 +274,7 @@ add_target( protocol_test tests "tests/protocol_test" OPTIONS protobuf protocol 
 target_link_libraries( protocol_test sword_tools )
 
 # tools_test
-add_target( tools_test tests "tests/tools_test" OPTIONS test )
+add_target( tools_test tests "tests/tools_test" OPTIONS protocol test )
 target_link_libraries( tools_test sword_tools ${ZIPSTREAM_LIBRARIES} )
 
 function( add_plugin target )

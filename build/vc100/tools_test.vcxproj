@@ -48,6 +48,7 @@
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_zip.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -59,6 +60,7 @@
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_zip.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -70,6 +72,7 @@
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_zip.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -81,6 +84,7 @@
     <Import Project="Property sheets\link_tools.props" />
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_zip.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -135,6 +139,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\tests\tools_test\Base64ConvertersTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\ClientNetworkerTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\EnvHelpersTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\FileMatcherTest.cpp" />
@@ -164,6 +169,9 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
   <ItemGroup>
     <ProjectReference Include="MT_Tools.vcxproj">
       <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
+    </ProjectReference>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
     </ProjectReference>
     <ProjectReference Include="tools.vcxproj">
       <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
