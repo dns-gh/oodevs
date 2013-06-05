@@ -10,6 +10,8 @@
 #ifndef __RichDateTimeEdit_h_
 #define __RichDateTimeEdit_h_
 
+#include <QtGui/qdatetimeedit.h>
+
 namespace gui
 {
 // =============================================================================
