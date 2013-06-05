@@ -139,7 +139,7 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamQuantity.cpp">
       <Filter>Source Files\Parameters\Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.cpp">
+    <ClCompile Include="..\..\src\libraries\actions_gui\MissionInterface.cpp">
       <Filter>Source Files\Interface</Filter>
     </ClCompile>
   </ItemGroup>
@@ -294,7 +294,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <Qt_file_Mocing Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.h">
+    <Qt_file_Mocing Include="..\..\src\libraries\actions_gui\MissionInterface.h">
       <Filter>Source Files\Interface</Filter>
     </Qt_file_Mocing>
   </ItemGroup>

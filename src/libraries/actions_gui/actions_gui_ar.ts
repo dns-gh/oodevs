@@ -69,7 +69,7 @@
     </message>
 </context>
 <context>
-    <name>actions::gui::MissionInterface_ABC</name>
+    <name>actions::gui::MissionInterface</name>
     <message>
         <source>Mandatory</source>
         <translation type="unfinished">إلزامية</translation>

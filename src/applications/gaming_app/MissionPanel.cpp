@@ -51,7 +51,7 @@
 #include "actions/ActionTiming.h"
 
 #include "actions_gui/InterfaceBuilder_ABC.h"
-#include "actions_gui/MissionInterface_ABC.h"
+#include "actions_gui/MissionInterface.h"
 #include "actions_gui/resources.h"
 
 #include "ENT/ENT_Tr.h"
@@ -125,7 +125,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     bottomLayout->addWidget( cancelButton_ );
 
     // Main Layout
-    pMissionInterface_ = new actions::gui::MissionInterface_ABC( 0, "mission-interface", controllers_, actionsModel_, config_ );
+    pMissionInterface_ = new actions::gui::MissionInterface( 0, "mission-interface", controllers_, actionsModel_, config_ );
     connect( pMissionInterface_, SIGNAL( PlannedMission( const actions::Action_ABC& ) ), this, SLOT( OnPlannedMission( const actions::Action_ABC& ) ) );
 
     QWidget* mainWidget = new QWidget();

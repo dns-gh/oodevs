@@ -32,7 +32,7 @@ namespace gui
 namespace actions {
 namespace gui {
 
-    class MissionInterface_ABC;
+    class MissionInterface;
     class Param_ABC;
     class ParamInterface_ABC;
 
@@ -54,7 +54,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void BuildAll( actions::gui::MissionInterface_ABC& missionInterface, const kernel::Entity_ABC& entity, const kernel::OrderType& order ) = 0;
+    virtual void BuildAll( actions::gui::MissionInterface& missionInterface, const kernel::Entity_ABC& entity, const kernel::OrderType& order ) = 0;
     virtual actions::gui::Param_ABC& BuildOne( const kernel::OrderParameter& parameter, bool isRegistered = true ) const = 0;
     //@}
 

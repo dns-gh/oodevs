@@ -13,7 +13,7 @@
 #include "LimaParameter.h"
 #include "LimitParameter.h"
 #include "ListParameter.h"
-#include "MissionInterface_ABC.h"
+#include "MissionInterface.h"
 #include "ParamAgent.h"
 #include "ParamAgentKnowledge.h"
 #include "ParamAtlasNature.h"
@@ -148,7 +148,7 @@ actions::gui::Param_ABC& InterfaceBuilder::BuildElement( const kernel::OrderPara
 // Name: InterfaceBuilder::Build
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-void InterfaceBuilder::BuildAll( actions::gui::MissionInterface_ABC& missionInterface, const kernel::Entity_ABC& entity, const kernel::OrderType& order )
+void InterfaceBuilder::BuildAll( actions::gui::MissionInterface& missionInterface, const kernel::Entity_ABC& entity, const kernel::OrderType& order )
 {
     missionInterface_ = &missionInterface;
     parentObject_ = &missionInterface;

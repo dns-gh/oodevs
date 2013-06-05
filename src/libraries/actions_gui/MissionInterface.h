@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __MissionInterface_ABC_h_
-#define __MissionInterface_ABC_h_
+#ifndef __MissionInterface_h_
+#define __MissionInterface_h_
 
 #include "ParamInterface_ABC.h"
 #include "actions/ActionsModel.h"
@@ -50,22 +50,22 @@ namespace actions
         class InterfaceBuilder_ABC;
 
 // =============================================================================
-/** @class  MissionInterface_ABC
-    @brief  MissionInterface_ABC
+/** @class  MissionInterface
+    @brief  MissionInterface
 */
 // Created: APE 2004-04-20
 // =============================================================================
-class MissionInterface_ABC : public QTabWidget
-                           , public ParamInterface_ABC
+class MissionInterface : public QTabWidget
+                       , public ParamInterface_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, const QString& name, kernel::Controllers& controllers,
+             MissionInterface( QWidget* parent, const QString& name, kernel::Controllers& controllers,
                                    actions::ActionsModel& actionModel, const tools::ExerciseConfig& config );
-    virtual ~MissionInterface_ABC();
+    virtual ~MissionInterface();
     //@}
 
     //! @name Abstract method
@@ -141,4 +141,4 @@ protected:
 }
 
 
-#endif // __MissionInterface_ABC_h_
+#endif // __MissionInterface_h_

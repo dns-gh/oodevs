@@ -64,7 +64,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void BuildAll( actions::gui::MissionInterface_ABC& missionInterface, const kernel::Entity_ABC& entity, const kernel::OrderType& order );
+    virtual void BuildAll( actions::gui::MissionInterface& missionInterface, const kernel::Entity_ABC& entity, const kernel::OrderType& order );
     virtual actions::gui::Param_ABC& BuildOne( const kernel::OrderParameter& parameter, bool isRegistered = true ) const;
     //@}
 
@@ -115,7 +115,7 @@ private:
     kernel::ObjectKnowledgeConverter_ABC*  objectKnowledgeConverter_;
     const kernel::Time_ABC*                simulation_;
 
-    actions::gui::MissionInterface_ABC*    missionInterface_;
+    actions::gui::MissionInterface*    missionInterface_;
     QObject*                               parentObject_;
     ParamInterface_ABC*                    paramInterface_;
     const kernel::Entity_ABC*              entity_;

@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "actions_gui_pch.h"
-#include "MissionInterface_ABC.h"
-#include "moc_MissionInterface_ABC.cpp"
+#include "MissionInterface.h"
+#include "moc_MissionInterface.cpp"
 #include "clients_gui/RichCheckBox.h"
 #include "clients_gui/RichDateTimeEdit.h"
 #include "clients_gui/RichPushButton.h"
@@ -63,10 +63,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC constructor
+// Name: MissionInterface constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const QString& name, kernel::Controllers& controllers,
+MissionInterface::MissionInterface( QWidget* parent, const QString& name, kernel::Controllers& controllers,
                                             actions::ActionsModel& actionModel, const tools::ExerciseConfig& config )
     : QTabWidget( parent )
     , ParamInterface_ABC()
@@ -84,19 +84,19 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const QString& name
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC destructor
+// Name: MissionInterface destructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::~MissionInterface_ABC()
+MissionInterface::~MissionInterface()
 {
     Purge();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::Purge
+// Name: MissionInterface::Purge
 // Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::Purge()
+void MissionInterface::Purge()
 {
     entity_ = 0;
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
@@ -113,10 +113,10 @@ void MissionInterface_ABC::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::Fill
+// Name: MissionInterface::Fill
 // Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::Fill( InterfaceBuilder_ABC& builder, const kernel::Entity_ABC& entity, const kernel::OrderType& order, const std::string& missionSheetPhysicalTag )
+void MissionInterface::Fill( InterfaceBuilder_ABC& builder, const kernel::Entity_ABC& entity, const kernel::OrderType& order, const std::string& missionSheetPhysicalTag )
 {
     entity_ = &entity;
     order_ = &order;
@@ -152,10 +152,10 @@ void MissionInterface_ABC::Fill( InterfaceBuilder_ABC& builder, const kernel::En
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CheckValidity
+// Name: MissionInterface::CheckValidity
 // Created: APE 2004-04-26
 // -----------------------------------------------------------------------------
-bool MissionInterface_ABC::CheckValidity()
+bool MissionInterface::CheckValidity()
 {
     bool b = true;
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
@@ -164,38 +164,38 @@ bool MissionInterface_ABC::CheckValidity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CommitTo
+// Name: MissionInterface::CommitTo
 // Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::CommitTo( actions::Action_ABC& action ) const
+void MissionInterface::CommitTo( actions::Action_ABC& action ) const
 {
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         (*it)->CommitTo( action );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::IsEmpty
+// Name: MissionInterface::IsEmpty
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-bool MissionInterface_ABC::IsEmpty() const
+bool MissionInterface::IsEmpty() const
 {
     return parameters_.empty();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::Title
+// Name: MissionInterface::Title
 // Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
-QString MissionInterface_ABC::Title() const
+QString MissionInterface::Title() const
 {
     return title_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::AddParameter
+// Name: MissionInterface::AddParameter
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::AddParameter( const QString& objectName, Param_ABC& parameter )
+void MissionInterface::AddParameter( const QString& objectName, Param_ABC& parameter )
 {
     parameters_.push_back( &parameter );
     QWidget* widget = parameter.BuildInterface( objectName, parameter.IsOptional() ? optionalTab_ : mainTab_ );
@@ -204,10 +204,10 @@ void MissionInterface_ABC::AddParameter( const QString& objectName, Param_ABC& p
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::Draw
+// Name: MissionInterface::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::Draw( gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const
+void MissionInterface::Draw( gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const
 {
     if( !entity_ )
         return;
@@ -220,10 +220,10 @@ void MissionInterface_ABC::Draw( gui::GlTools_ABC& tools, ::gui::Viewport_ABC& e
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::GetIndex
+// Name: MissionInterface::GetIndex
 // Created: ABR 2011-12-29
 // -----------------------------------------------------------------------------
-int MissionInterface_ABC::GetIndex( Param_ABC* param ) const
+int MissionInterface::GetIndex( Param_ABC* param ) const
 {
     for( int i = 0; i < (int)parameters_.size(); ++i )
         if( parameters_[ i ] == param )
@@ -232,10 +232,10 @@ int MissionInterface_ABC::GetIndex( Param_ABC* param ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::SetPlanned
+// Name: MissionInterface::SetPlanned
 // Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::SetPlanned( bool planned )
+void MissionInterface::SetPlanned( bool planned )
 {
     planned_ = planned;
 }

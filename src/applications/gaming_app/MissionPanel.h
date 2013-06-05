@@ -46,7 +46,7 @@ namespace actions
     namespace gui
     {
         class InterfaceBuilder_ABC;
-        class MissionInterface_ABC;
+        class MissionInterface;
     }
 }
 
@@ -148,7 +148,7 @@ private:
     gui::RichDateTimeEdit* planningDateTimeEdit_;
     gui::RichPushButton* okButton_;
     gui::RichPushButton* cancelButton_;
-    actions::gui::MissionInterface_ABC* pMissionInterface_;
+    actions::gui::MissionInterface* pMissionInterface_;
     E_MissionType currentType_;
 
     const StaticModel& static_;
