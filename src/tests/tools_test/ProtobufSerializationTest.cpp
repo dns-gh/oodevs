@@ -8,21 +8,11 @@
 // *****************************************************************************
 
 #include "tools_test_pch.h"
-#include "tools/Base64Converters.h"
+#include "tools/ProtobufSerialization.h"
 #include "protocol/Protocol.h"
 
 const std::string binary = "Hello World!!";
 const std::string base64 = "SGVsbG8gV29ybGQhIQ==";
-
-BOOST_AUTO_TEST_CASE( test_base64_encode )
-{
-    BOOST_CHECK_EQUAL( tools::BinaryToBase64( binary ), base64 );
-}
-
-BOOST_AUTO_TEST_CASE( test_base64_decode )
-{
-    BOOST_CHECK_EQUAL( tools::Base64ToBinary( base64 ), binary );
-}
 
 BOOST_AUTO_TEST_CASE( test_base64_proto_encode_decode )
 {
@@ -44,7 +34,7 @@ BOOST_AUTO_TEST_CASE( test_base64_proto_encode_decode )
     latLong->set_latitude( 30.6134 );
     latLong->set_longitude( 29.1151 );
 
-    const sword::ClientToSim msg2 = tools::Base64ToProto< sword::ClientToSim >( tools::ProtoToBase64( msg ) );
+    const sword::ClientToSim msg2 = tools::BinaryToProto< sword::ClientToSim >( tools::ProtoToBinary( msg ) );
 
     BOOST_CHECK_EQUAL( msg.DebugString(), msg2.DebugString() );
 }

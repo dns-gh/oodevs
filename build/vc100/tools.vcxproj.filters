@@ -150,9 +150,6 @@
     <ClCompile Include="..\..\src\libraries\tools\XmlStreamOperators.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\tools\Base64Converters.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\tools\VersionHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -359,7 +356,7 @@
     <ClInclude Include="..\..\src\libraries\tools\XmlStreamOperators.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\tools\Base64Converters.h">
+    <ClInclude Include="..\..\src\libraries\tools\ProtobufSerialization.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\VersionHelper.h">

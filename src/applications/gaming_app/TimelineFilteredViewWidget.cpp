@@ -22,7 +22,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
 #include "timeline/api.h"
-#include "tools/Base64Converters.h"
+#include "tools/ProtobufSerialization.h"
 
 // -----------------------------------------------------------------------------
 // Name: TimelineFilteredViewWidget constructor
@@ -344,7 +344,7 @@ void TimelineFilteredViewWidget::CreateDummyEvent( E_EventTypes type )
         sword::CoordLatLong* latLong = location->mutable_coordinates()->add_elem();
         latLong->set_latitude( 30.632128244641702 );
         latLong->set_longitude( 28.976535107619295 );
-        action.payload = tools::ProtoToBase64( msg );
+        action.payload = tools::ProtoToBinary( msg );
     }
 
     // Event

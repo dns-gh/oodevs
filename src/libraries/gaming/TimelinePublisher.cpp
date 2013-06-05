@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "TimelinePublisher.h"
 #include "protocol/Protocol.h"
-#include "tools/Base64Converters.h"
+#include "tools/ProtobufSerialization.h"
 
 // -----------------------------------------------------------------------------
 // Name: TimelinePublisher constructor
@@ -36,7 +36,7 @@ TimelinePublisher::~TimelinePublisher()
 // -----------------------------------------------------------------------------
 void TimelinePublisher::Send( const sword::ClientToSim& message )
 {
-    currentPayload_ = tools::ProtoToBase64( message );
+    currentPayload_ = tools::ProtoToBinary( message );
 }
 
 // -----------------------------------------------------------------------------

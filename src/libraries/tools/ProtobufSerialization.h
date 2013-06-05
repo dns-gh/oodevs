@@ -7,16 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef __Base64Converters_h_
-#define __Base64Converters_h_
+#ifndef __ProtobufSerialization_h_
+#define __ProtobufSerialization_h_
 
 namespace tools
 {
-    // standard conversion
-    std::string BinaryToBase64( const std::string& binary );
-    std::string Base64ToBinary( const std::string& base64 );
-
-    // protobuf binary conversion
     template< typename T >
     std::string ProtoToBinary( const T& message )
     {
@@ -33,18 +28,6 @@ namespace tools
         message.ParseFromIstream( &binaryStream );
         return message;
     }
-
-    // protobuf base64 conversion
-    template< typename T >
-    std::string ProtoToBase64( const T& message )
-    {
-        return BinaryToBase64( ProtoToBinary( message ) );
-    }
-    template< typename T >
-    T Base64ToProto( const std::string& base64 )
-    {
-        return BinaryToProto< T >( Base64ToBinary( base64 ) );
-    }
 }
 
-#endif // __Base64Converters_h_
+#endif // __ProtobufSerialization_h_

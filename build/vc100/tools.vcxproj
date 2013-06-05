@@ -104,7 +104,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\tools\App6Symbol.cpp" />
-    <ClCompile Include="..\..\src\libraries\tools\Base64Converters.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\Codec.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\EndpointResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\EnvHelpers.cpp" />
@@ -152,7 +151,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h" />
-    <ClInclude Include="..\..\src\libraries\tools\Base64Converters.h" />
     <ClInclude Include="..\..\src\libraries\tools\Codec.h" />
     <ClInclude Include="..\..\src\libraries\tools\ConnectionError.h" />
     <ClInclude Include="..\..\src\libraries\tools\EndpointResolver.h" />
@@ -164,6 +162,7 @@
     <ClInclude Include="..\..\src\libraries\tools\IpcQueue.h" />
     <ClInclude Include="..\..\src\libraries\tools\IpcWatch.h" />
     <ClInclude Include="..\..\src\libraries\tools\ObjectMessageCallback_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\tools\ProtobufSerialization.h" />
     <ClInclude Include="..\..\src\libraries\tools\ThreadPool.h" />
     <ClInclude Include="..\..\src\libraries\tools\tools_pch.h" />
     <ClInclude Include="..\..\src\libraries\tools\VersionHelper.h" />
