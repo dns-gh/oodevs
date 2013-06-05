@@ -601,3 +601,32 @@ func (c *Client) SendUnitFragOrder(unitId, fragOrderType uint32,
 	params *sword.MissionParameters) error {
 	return c.SendFragOrder(0, 0, unitId, fragOrderType, params)
 }
+
+func (c *Client) TeleportUnit(unitId uint32, location *Point) error {
+	actionType := sword.UnitMagicAction_move_to
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				UnitMagicAction: &sword.UnitMagicAction{
+					Tasker: makeUnitTasker(unitId),
+					Type:   &actionType,
+					Parameters: MakeParameters(
+						MakePointParam(location),
+					),
+				},
+			},
+		},
+	}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetUnitMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.UnitActionAck_no_error {
+			return nameof(sword.UnitActionAck_ErrorCode_name, int32(code))
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}

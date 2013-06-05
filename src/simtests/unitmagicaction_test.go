@@ -460,3 +460,34 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 	c.Assert(err, IsNil)
 	c.Assert(crowd, NotNil)
 }
+
+func (s *TestSuite) TestTeleportUnit(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	automat := createAutomat(c, client)
+	from := swapi.MakePoint(-15.9219, 28.3456)
+	unit, err := client.CreateUnit(automat.Id, UnitType, from)
+	c.Assert(err, IsNil)
+
+	pos := swapi.MakePoint(-14, 30)
+
+	// Cannot teleport unit if its automat is engaged
+	err = client.TeleportUnit(unit.Id, pos)
+	c.Assert(err, ErrorMatches, "error_automat_engaged")
+
+	// Should work with disengaged unit
+	err = client.SetAutomatMode(automat.Id, false)
+	c.Assert(err, IsNil)
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return !data.FindAutomat(automat.Id).Engaged
+	})
+
+	// Teleport unit
+	err = client.TeleportUnit(unit.Id, pos)
+	c.Assert(err, IsNil)
+
+	// Check unit position
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return Nearby(&data.FindUnit(unit.Id).Position, &swapi.Point{X: -14, Y: 30})
+	})
+}
