@@ -9,7 +9,7 @@
 
 #include "actions_gui_pch.h"
 #include "EntityParameter.h"
-#include "actions_gui/MissionInterface_ABC.h"
+#include "ParamInterface_ABC.h"
 
 using namespace actions::gui;
 

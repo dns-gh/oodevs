@@ -11,6 +11,7 @@
 #include "ParamLocationComposite.h"
 #include "moc_ParamLocationComposite.cpp"
 #include "InterfaceBuilder_ABC.h"
+#include "ParamInterface_ABC.h"
 #include "actions/Parameter.h"
 #include "actions/Location.h"
 #include "clients_kernel/OrderParameter.h"
@@ -20,7 +21,6 @@
 #include "clients_kernel/tools.h"
 #include "clients_gui/SubObjectName.h"
 #include <QtGui/QStackedWidget.h>
-#include "MissionInterface_ABC.h"
 
 using namespace actions::gui;
 

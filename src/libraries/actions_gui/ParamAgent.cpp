@@ -12,13 +12,13 @@
 #include "moc_ParamAgent.cpp"
 #include "ListParameter.h"
 #include "moc_ListParameter.cpp"
+#include "ParamInterface_ABC.h"
 #include "actions/Agent.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "MissionInterface_ABC.h"
 
 using namespace actions::gui;
 

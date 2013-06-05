@@ -15,6 +15,7 @@
 #include "ParamAutomat.h"
 #include "ParamBool.h"
 #include "ParamDateTime.h"
+#include "ParamInterface_ABC.h"
 #include "ParamLocation.h"
 #include "ParamNumericField.h"
 #include "ParamQuantity.h"
@@ -30,7 +31,6 @@
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Units.h"
 #include "tools/Resolver.h"
-#include "MissionInterface_ABC.h"
 
 using namespace actions::gui;
 
