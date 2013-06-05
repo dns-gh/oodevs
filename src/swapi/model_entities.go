@@ -83,17 +83,18 @@ type Unit struct {
 	Position  Point
 }
 
-func NewUnit(id, automatId uint32, name string, pc bool) *Unit {
+func NewUnit(id, automatId uint32, name string, pc bool, position Point) *Unit {
 	return &Unit{
 		Id:        id,
 		AutomatId: automatId,
 		Name:      name,
 		Pc:        pc,
+		Position:  position,
 	}
 }
 
 func (u *Unit) Copy() *Unit {
-	return NewUnit(u.Id, u.AutomatId, u.Name, u.Pc)
+	return NewUnit(u.Id, u.AutomatId, u.Name, u.Pc, u.Position)
 }
 
 type Automat struct {

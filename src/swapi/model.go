@@ -124,7 +124,8 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetUnit().GetId(),
 				mm.GetAutomat().GetId(),
 				mm.GetName(),
-				mm.GetPc())
+				mm.GetPc(),
+				Point{X: 0, Y: 0})
 			if !d.addUnit(unit) {
 				// XXX report the error here
 			}
