@@ -128,7 +128,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     CreateMissionInterface< kernel::MissionType >( eMissionType_Pawn, "unit-mission-interface", "units-mission-sheets-directory" );
     CreateMissionInterface< kernel::MissionType >( eMissionType_Automat, "automat-mission-interface", "automata-mission-sheets-directory" );
     CreateMissionInterface< kernel::MissionType >( eMissionType_Population, "crowd-mission-interface", "crowds-mission-sheets-directory" );
-    CreateMissionInterface< kernel::MissionType >( eMissionType_Pawn, "fragorder-interface", "fragorders-mission-sheets-directory" );
+    CreateMissionInterface< kernel::FragOrderType >( eMissionType_FragOrder, "fragorder-interface", "fragorders-mission-sheets-directory" );
     stack_->insertWidget( eNbrMissionTypes, new QWidget() );
     stack_->setCurrentIndex( eNbrMissionTypes );
 
