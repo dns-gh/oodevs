@@ -132,7 +132,7 @@ func StartGamingFromSimAndExe(executable, runDir string, simOpts *SimOpts) (
 		simDir := filepath.Dir(simOpts.Executable)
 		simRunDir := ""
 		if simOpts.RunDir == nil {
-			simRunDir = filepath.Dir(simDir)
+			simRunDir = simDir
 		} else {
 			simRunDir = *simOpts.RunDir
 		}
