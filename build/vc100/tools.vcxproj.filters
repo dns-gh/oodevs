@@ -144,8 +144,13 @@
     <ClCompile Include="..\..\src\libraries\tools\FileWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\tools\XmlStreamOperators.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\EnvHelpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\XmlStreamOperators.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\tools\Base64Converters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\tools\VersionHelper.cpp">
@@ -348,8 +353,13 @@
     <ClInclude Include="..\..\src\libraries\tools\FileWrapper.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\tools\XmlStreamOperators.h" />
     <ClInclude Include="..\..\src\libraries\tools\EnvHelpers.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\XmlStreamOperators.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\tools\Base64Converters.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\tools\VersionHelper.h">

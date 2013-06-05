@@ -44,6 +44,7 @@
     <Import Project="Property sheets\library_static_release.props" />
     <Import Project="Property sheets\precompiled_header.props" />
     <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -51,6 +52,7 @@
     <Import Project="Property sheets\library_static_release.props" />
     <Import Project="Property sheets\precompiled_header.props" />
     <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -58,6 +60,7 @@
     <Import Project="Property sheets\library_static_debug.props" />
     <Import Project="Property sheets\precompiled_header.props" />
     <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -65,6 +68,7 @@
     <Import Project="Property sheets\library_static_debug.props" />
     <Import Project="Property sheets\precompiled_header.props" />
     <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -100,6 +104,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\tools\App6Symbol.cpp" />
+    <ClCompile Include="..\..\src\libraries\tools\Base64Converters.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\Codec.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\EndpointResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\tools\EnvHelpers.cpp" />
@@ -147,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\tools\App6Symbol.h" />
+    <ClInclude Include="..\..\src\libraries\tools\Base64Converters.h" />
     <ClInclude Include="..\..\src\libraries\tools\Codec.h" />
     <ClInclude Include="..\..\src\libraries\tools\ConnectionError.h" />
     <ClInclude Include="..\..\src\libraries\tools\EndpointResolver.h" />
@@ -214,6 +220,11 @@
     <ClInclude Include="..\..\src\libraries\tools\SchemaWriter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\tools\XmlStreamOperators.h" />
     <ClInclude Include="..\..\src\libraries\tools\ZipExtractor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="protocol.vcxproj">
+      <Project>{e907053a-8f48-4029-b778-3b8435282539}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
