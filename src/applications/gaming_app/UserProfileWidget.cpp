@@ -88,6 +88,8 @@ void UserProfileWidget::Display( UserProfile& profile )
 void UserProfileWidget::Clean()
 {
     editedProfile_ = 0;
+    unitRights_->Clear();
+    populationRights_->Clear();
     setDisabled( true );
 }
 

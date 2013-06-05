@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     void Commit( bool savedStatus );
-    void Reset();
+    void Clear();
     bool NeedsSaving() const;
     virtual bool NeedsCommit() const = 0;
 

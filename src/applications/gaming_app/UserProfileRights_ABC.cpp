@@ -72,12 +72,12 @@ void UserProfileRights_ABC::Commit( bool savedStatus )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::Reset
+// Name: UserProfileRights_ABC::Clear
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::Reset()
+void UserProfileRights_ABC::Clear()
 {
-    // $$$$ SBO 2007-01-17: TODO: somehow undo changes
+    selectedProfile_ = 0;
 }
 
 // -----------------------------------------------------------------------------

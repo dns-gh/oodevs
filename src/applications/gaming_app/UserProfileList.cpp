@@ -220,4 +220,5 @@ void UserProfileList::Save( const UserProfile* timeControlProfile )
 void UserProfileList::Cancel()
 {
     editors_.clear();
+    pages_.Clean();
 }
