@@ -3066,8 +3066,8 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <source>Planned a mission</source>
-        <translation>Plannifier une mission</translation>
+        <source>Create an event</source>
+        <translation>Créer un évenement</translation>
     </message>
 </context>
 <context>

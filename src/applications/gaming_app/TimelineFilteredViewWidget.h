@@ -19,6 +19,7 @@ namespace timeline
 }
 
 class Config;
+class Model;
 class Simulation;
 
 // =============================================================================
@@ -34,7 +35,7 @@ class TimelineFilteredViewWidget : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineFilteredViewWidget( QWidget* parent, const Simulation& simulation, timeline::Configuration& cfg, int viewNumber, const QStringList& filters );
+             TimelineFilteredViewWidget( QWidget* parent, const Simulation& simulation, Model& model, timeline::Configuration& cfg, int viewNumber, const QStringList& filters );
     virtual ~TimelineFilteredViewWidget();
     //@}
 
@@ -87,6 +88,7 @@ private:
     QWidget* timelineWidget_;
     QVBoxLayout* mainLayout_;
     const Simulation& simulation_;
+    Model& model_;
 
     std::auto_ptr< timeline::Server_ABC > server_;
     std::auto_ptr< timeline::Configuration > cfg_;

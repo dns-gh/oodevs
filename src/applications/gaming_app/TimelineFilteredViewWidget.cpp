@@ -11,22 +11,26 @@
 #include "TimelineFilteredViewWidget.h"
 #include "moc_TimelineFilteredViewWidget.cpp"
 #include "TimelineToolBar.h"
+#include "ENT/ENT_Tr.h"
+#include "gaming/EventsModel.h"
+#include "gaming/Model.h"
 #include "gaming/Simulation.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
-#include "tools/Base64Converters.h"
 #include "timeline/api.h"
+#include "tools/Base64Converters.h"
 
 // -----------------------------------------------------------------------------
 // Name: TimelineFilteredViewWidget constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-TimelineFilteredViewWidget::TimelineFilteredViewWidget( QWidget* parent, const Simulation& simulation, timeline::Configuration& cfg, int viewNumber, const QStringList& filters )
+TimelineFilteredViewWidget::TimelineFilteredViewWidget( QWidget* parent, const Simulation& simulation, Model& model, timeline::Configuration& cfg, int viewNumber, const QStringList& filters )
     : QWidget( parent )
     , toolBar_( 0 )
     , timelineWidget_( 0 )
     , server_( 0 )
     , simulation_( simulation )
+    , model_( model )
     , cfg_( new timeline::Configuration( cfg ) )
     , viewNumber_( viewNumber )
 {
@@ -144,6 +148,7 @@ void TimelineFilteredViewWidget::OnCreatedEvent( const timeline::Event& event, c
             MT_LOG_ERROR_MSG( tr( "An error occurred during event creation process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
         creationRequestedEvents_.erase( it );
     }
+    model_.events_.Create( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -159,6 +164,7 @@ void TimelineFilteredViewWidget::OnDeletedEvent( const std::string& uuid, const 
             MT_LOG_ERROR_MSG( tr( "An error occurred during event deletion process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
         deletionRequestedEvents_.erase( it );
     }
+    model_.events_.Destroy( uuid );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,13 +174,14 @@ void TimelineFilteredViewWidget::OnDeletedEvent( const std::string& uuid, const 
 void TimelineFilteredViewWidget::OnSelectedEvent( boost::shared_ptr< timeline::Event > event )
 {
     selected_ = event;
-    //if( selected_.get() )
-    // {
-    //      Transform Event.Action.payload to binary
-    //      Transform binary into proto object
-    //      Retrieve missions parameters
-    //      Display them on map
-    // }
+    if( selected_.get() )
+    {
+        Event* gamingEvent = model_.events_.Find( event->uuid );
+        if( !gamingEvent )
+            gamingEvent = model_.events_.Create( *event );
+        //if( gamingEvent->GetType() == eEventTypes_Order )
+        //    static_cast< EventOrder* >( gamingEvent )->action_.Select( controllers_.actions_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +190,9 @@ void TimelineFilteredViewWidget::OnSelectedEvent( boost::shared_ptr< timeline::E
 // -----------------------------------------------------------------------------
 void TimelineFilteredViewWidget::OnActivatedEvent( const timeline::Event& /*event*/ )
 {
-    // Display mission panel filled with this event
+    // Display event dialog filled with this event
+    //Event& gamingEvent = model_.events_.Get( event.uuid );
+    //eventDialog_.Edit( gamingEvent );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,18 +218,22 @@ void TimelineFilteredViewWidget::OnContextMenuEvent( boost::shared_ptr< timeline
     }
     else
     {
-        const QString plannedMissionText = tr( "Planned a mission" );
         const QString dummyMission = "Create Dummy Mission";
-        menu.addAction( plannedMissionText );
+        QMenu createMenu;
+        createMenu.setTitle( tr( "Create an event" ) );
+        for( int i = 0; i < eNbrEventTypes; ++i )
+            createMenu.addAction( QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ) );
+        menu.addMenu( &createMenu );
         menu.addAction( dummyMission );
         if( QAction* resultingAction = menu.exec( QCursor::pos() ) )
         {
-            if( resultingAction->text() == plannedMissionText )
-            {
-                // Open mission panel in planning mode
-            }
-            else if( resultingAction->text() == dummyMission )
+            if( resultingAction->text() == dummyMission )
                 CreateDummyMission();
+            else
+            {
+                //E_EventTypes type = ENT_Tr::ConvertToEventType( resultingAction->text() );
+                //eventDialog_.Create( type );
+            }
         }
     }
 }

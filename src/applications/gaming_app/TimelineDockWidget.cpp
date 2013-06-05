@@ -23,11 +23,12 @@ int TimelineDockWidget::maxTabNumber_ = -1;
 // Name: TimelineDockWidget constructor
 // Created: ABR 2013-05-14
 // -----------------------------------------------------------------------------
-TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const Simulation& simulation )
+TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const Simulation& simulation, Model& model )
     : gui::RichDockWidget( controllers, parent, "timeline-dock-widget" )
     , cfg_( new timeline::Configuration() )
     , simulation_( simulation )
     , isConnected_( false )
+    , model_( model )
 {
     setCaption( tr( "Actions timeline" ) );
     mainTitle_ = tr( "Main" );
@@ -89,7 +90,7 @@ void TimelineDockWidget::Disconnect()
 // -----------------------------------------------------------------------------
 void TimelineDockWidget::AddFilteredView( QStringList filters )
 {
-    TimelineFilteredViewWidget* filteredView = new TimelineFilteredViewWidget( tabWidget_, simulation_, *cfg_, ++maxTabNumber_, filters );
+    TimelineFilteredViewWidget* filteredView = new TimelineFilteredViewWidget( tabWidget_, simulation_, model_, *cfg_, ++maxTabNumber_, filters );
     tabWidget_->addTab( filteredView, ( maxTabNumber_ == 0 ) ? mainTitle_ : tr( "View %1" ).arg( maxTabNumber_ ) );
     connect( filteredView, SIGNAL( AddNewFilteredView( const QStringList& ) ), this, SLOT( AddFilteredView( const QStringList& ) ) );
     connect( filteredView, SIGNAL( RemoveCurrentFilteredView() ), this, SLOT( RemoveCurrentFilteredView() ) );

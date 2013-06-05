@@ -23,6 +23,7 @@ namespace timeline
 }
 
 class Config;
+class Model;
 class Simulation;
 class TimelineFilteredViewWidget;
 
@@ -39,7 +40,7 @@ class TimelineDockWidget : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const Simulation& simulation );
+             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const Simulation& simulation, Model& model );
     virtual ~TimelineDockWidget();
     //@}
 
@@ -64,6 +65,7 @@ private:
     std::vector< TimelineFilteredViewWidget* > filteredViews_;
     boost::shared_ptr< timeline::Configuration > cfg_;
     const Simulation& simulation_;
+    Model& model_;
     bool isConnected_;
     //@}
 

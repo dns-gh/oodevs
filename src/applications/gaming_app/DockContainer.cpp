@@ -197,7 +197,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     if( config.HasTimeline() )
     {
         // New Timeline
-        timeline_ = new TimelineDockWidget( parent, controllers, config, simulation );
+        timeline_ = new TimelineDockWidget( parent, controllers, config, simulation, model );
         timeline_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timeline_ );
     }

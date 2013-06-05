@@ -3060,7 +3060,7 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">حذف</translation>
     </message>
     <message>
-        <source>Planned a mission</source>
+        <source>Create an event</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
