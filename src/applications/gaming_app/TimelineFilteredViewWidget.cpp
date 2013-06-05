@@ -10,11 +10,15 @@
 #include "gaming_app_pch.h"
 #include "TimelineFilteredViewWidget.h"
 #include "moc_TimelineFilteredViewWidget.cpp"
+#include "EventDialog.h"
 #include "TimelineToolBar.h"
+
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Time_ABC.h"
 #include "ENT/ENT_Tr.h"
+#include "gaming/AgentsModel.h"
 #include "gaming/EventsModel.h"
-#include "gaming/Model.h"
-#include "gaming/Simulation.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
 #include "timeline/api.h"
@@ -24,18 +28,22 @@
 // Name: TimelineFilteredViewWidget constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-TimelineFilteredViewWidget::TimelineFilteredViewWidget( QWidget* parent, const Simulation& simulation, Model& model, timeline::Configuration& cfg, int viewNumber, const QStringList& filters )
+TimelineFilteredViewWidget::TimelineFilteredViewWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, EventsModel& eventsModel, EventDialog& eventDialog, timeline::Configuration& cfg, int viewNumber, const QStringList& filters )
     : QWidget( parent )
+    , controllers_( controllers )
+    , simulation_( simulation )
+    , eventsModel_( eventsModel )
+    , eventDialog_( eventDialog )
     , toolBar_( 0 )
     , timelineWidget_( 0 )
     , server_( 0 )
-    , simulation_( simulation )
-    , model_( model )
     , cfg_( new timeline::Configuration( cfg ) )
     , viewNumber_( viewNumber )
 {
     setObjectName( QString( "timeline-filteredview-widget-%1" ).arg( viewNumber ) );
     mainLayout_ = new QVBoxLayout( this );
+    mainLayout_->setMargin( 0 );
+    mainLayout_->setSpacing( 0 );
     toolBar_ = new TimelineToolBar( 0, viewNumber == 0, filters );
     setObjectName( QString( "timeline-filteredview-widget-%1" ).arg( viewNumber ) );
     connect( toolBar_, SIGNAL( FilterSelectionChanged( const QStringList& ) ), this, SLOT( OnFilterSelectionChanged( const QStringList& ) ) );
@@ -77,9 +85,11 @@ void TimelineFilteredViewWidget::Connect()
     server_ = MakeServer( *cfg_ );
 
     connect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
+    //connect( this, SIGNAL( EditEventSignal( const timeline::Event& ) ), server_.get(), SLOT( EditEvent( const timeline::Event& ) ) );
     connect( this, SIGNAL( DeleteEventSignal( const std::string& ) ), server_.get(), SLOT( DeleteEvent( const std::string& ) ) );
 
     connect( server_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
+    //connect( server_.get(), SIGNAL( EditedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnEditedEvent( const timeline::Event&, const timeline::Error& ) ) );
     connect( server_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
 
     connect( server_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
@@ -97,9 +107,11 @@ void TimelineFilteredViewWidget::Disconnect()
     if( server_.get() )
     {
         disconnect( this, SIGNAL( CreateEventSignal( const timeline::Event& ) ), server_.get(), SLOT( CreateEvent( const timeline::Event& ) ) );
+        //disconnect( this, SIGNAL( EditEventSignal( const timeline::Event& ) ), server_.get(), SLOT( EditEvent( const timeline::Event& ) ) );
         disconnect( this, SIGNAL( DeleteEventSignal( const std::string& ) ), server_.get(), SLOT( DeleteEvent( const std::string& ) ) );
 
         disconnect( server_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
+        //disconnect( server_.get(), SIGNAL( EditedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnEditedEvent( const timeline::Event&, const timeline::Error& ) ) );
         disconnect( server_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
 
         disconnect( server_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
@@ -116,6 +128,20 @@ void TimelineFilteredViewWidget::Disconnect()
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::GetOrCreateEvent
+// Created: ABR 2013-05-30
+// -----------------------------------------------------------------------------
+Event& TimelineFilteredViewWidget::GetOrCreateEvent( const timeline::Event& event )
+{
+    Event* gamingEvent = eventsModel_.Find( event.uuid );
+    if( !gamingEvent )
+        gamingEvent = eventsModel_.Create( event );
+    else
+        gamingEvent->Update( event );
+    return *gamingEvent;
+}
+
+// -----------------------------------------------------------------------------
 // Name: TimelineFilteredViewWidget::CreateEvent
 // Created: ABR 2013-05-17
 // -----------------------------------------------------------------------------
@@ -123,6 +149,16 @@ void TimelineFilteredViewWidget::CreateEvent( const timeline::Event& event )
 {
     creationRequestedEvents_.push_back( event.uuid );
     emit CreateEventSignal( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::EditEvent
+// Created: ABR 2013-05-31
+// -----------------------------------------------------------------------------
+void TimelineFilteredViewWidget::EditEvent( const timeline::Event& event )
+{
+    editionRequestedEvents_.push_back( event.uuid );
+    emit EditEventSignal( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +184,23 @@ void TimelineFilteredViewWidget::OnCreatedEvent( const timeline::Event& event, c
             MT_LOG_ERROR_MSG( tr( "An error occurred during event creation process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
         creationRequestedEvents_.erase( it );
     }
-    model_.events_.Create( event );
+    eventsModel_.Create( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::OnEditedEvent
+// Created: ABR 2013-05-31
+// -----------------------------------------------------------------------------
+void TimelineFilteredViewWidget::OnEditedEvent( const timeline::Event& event, const timeline::Error& error )
+{
+    auto it = std::find( editionRequestedEvents_.begin(), editionRequestedEvents_.end(), event.uuid );
+    if( it != editionRequestedEvents_.end() )
+    {
+        if( error.code != timeline::EC_OK )
+            MT_LOG_ERROR_MSG( tr( "An error occurred during event creation process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
+        editionRequestedEvents_.erase( it );
+    }
+    eventsModel_.Update( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +216,7 @@ void TimelineFilteredViewWidget::OnDeletedEvent( const std::string& uuid, const 
             MT_LOG_ERROR_MSG( tr( "An error occurred during event deletion process: %1" ).arg( QString::fromStdString( error.text ) ).toStdString() );
         deletionRequestedEvents_.erase( it );
     }
-    model_.events_.Destroy( uuid );
+    eventsModel_.Destroy( uuid );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,11 +228,9 @@ void TimelineFilteredViewWidget::OnSelectedEvent( boost::shared_ptr< timeline::E
     selected_ = event;
     if( selected_.get() )
     {
-        Event* gamingEvent = model_.events_.Find( event->uuid );
-        if( !gamingEvent )
-            gamingEvent = model_.events_.Create( *event );
-        //if( gamingEvent->GetType() == eEventTypes_Order )
-        //    static_cast< EventOrder* >( gamingEvent )->action_.Select( controllers_.actions_ );
+        //Event& gamingEvent = GetOrCreateEvent( *event );
+        //if( gamingEvent.GetType() == eEventTypes_Order )
+        //    static_cast< EventAction* >( gamingEvent )->action_.Select( controllers_.actions_ );
     }
 }
 
@@ -188,11 +238,10 @@ void TimelineFilteredViewWidget::OnSelectedEvent( boost::shared_ptr< timeline::E
 // Name: TimelineFilteredViewWidget::OnActivatedEvent
 // Created: ABR 2013-05-24
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnActivatedEvent( const timeline::Event& /*event*/ )
+void TimelineFilteredViewWidget::OnActivatedEvent( const timeline::Event& event )
 {
-    // Display event dialog filled with this event
-    //Event& gamingEvent = model_.events_.Get( event.uuid );
-    //eventDialog_.Edit( gamingEvent );
+    Event& gamingEvent = GetOrCreateEvent( event );
+    eventDialog_.Edit( gamingEvent );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,22 +267,29 @@ void TimelineFilteredViewWidget::OnContextMenuEvent( boost::shared_ptr< timeline
     }
     else
     {
-        const QString dummyMission = "Create Dummy Mission";
-        QMenu createMenu;
+        QMenu createMenu, dummyMenu;
         createMenu.setTitle( tr( "Create an event" ) );
+        dummyMenu.setTitle( "Create dummy event" );
         for( int i = 0; i < eNbrEventTypes; ++i )
+        {
             createMenu.addAction( QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ) );
+            dummyMenu.addAction( QString( "Dummy " )+ QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ) );
+        }
         menu.addMenu( &createMenu );
-        menu.addAction( dummyMission );
+        menu.addMenu( &dummyMenu );
         if( QAction* resultingAction = menu.exec( QCursor::pos() ) )
         {
-            if( resultingAction->text() == dummyMission )
-                CreateDummyMission();
+            QString text = resultingAction->text();
+            QBool isDummy = text.contains( "Dummy " );
+            if( isDummy )
+                text.remove( "Dummy " );
+
+            E_EventTypes type = ENT_Tr::ConvertToEventType( text.toStdString() );
+            assert( type >= 0 && type < eNbrEventTypes );
+            if( isDummy )
+                CreateDummyEvent( type );
             else
-            {
-                //E_EventTypes type = ENT_Tr::ConvertToEventType( resultingAction->text() );
-                //eventDialog_.Create( type );
-            }
+                eventDialog_.Create( type );
         }
     }
 }
@@ -257,49 +313,46 @@ void TimelineFilteredViewWidget::OnFilterSelectionChanged( const QStringList& )
     // Send the new filter list to the timeline_server
 }
 
+
 // -----------------------------------------------------------------------------
 // Temporary method to test display
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::CreateDummyMission()
+void TimelineFilteredViewWidget::CreateDummyEvent( E_EventTypes type )
 {
     // Get a time
     QDateTime dateTime = simulation_.GetDateTime();
-    dateTime = dateTime.addSecs( 60 );
-
-    // Create dummy protobuf message
-    sword::ClientToSim msg;
-    sword::UnitOrder* unitOrder = msg.mutable_message()->mutable_unit_order();
-
-    unitOrder->mutable_tasker()->set_id( 79 );
-    unitOrder->mutable_type()->set_id( 44582 ); // Move To
-    unitOrder->set_label( "dummy mission" );
-    sword::MissionParameters* parameters = unitOrder->mutable_parameters();
-    parameters->add_elem()->add_value()->mutable_heading()->set_heading( 360 );
-    parameters->add_elem()->set_null_value( true );
-    parameters->add_elem()->set_null_value( true );
-    parameters->add_elem()->set_null_value( true );
-    sword::Location* location = parameters->add_elem()->add_value()->mutable_point()->mutable_location();
-    location->set_type( sword::Location_Geometry_point );
-    sword::CoordLatLong* latLong = location->mutable_coordinates()->add_elem();
-    latLong->set_latitude( 30.632128244641702 );
-    latLong->set_longitude( 28.976535107619295 );
-
-    unitOrder->mutable_start_time()->set_data( dateTime.toTimeSpec( Qt::UTC ).toString( "yyyyMMddTHHmmss" ) );
 
     // Action
     timeline::Action action;
     action.target = "sword://sim";
     action.apply = true;
-    action.payload = tools::ProtoToBase64( msg );
+    // Create dummy protobuf message if order
+    if( type == eEventTypes_Order )
+    {
+        sword::ClientToSim msg;
+        sword::UnitOrder* unitOrder = msg.mutable_message()->mutable_unit_order();
+        unitOrder->mutable_tasker()->set_id( 79 );
+        unitOrder->mutable_type()->set_id( 44582 ); // Move To
+        unitOrder->set_label( "dummy" + ENT_Tr::ConvertFromEventType( type ) );
+        sword::MissionParameters* parameters = unitOrder->mutable_parameters();
+        parameters->add_elem()->add_value()->mutable_heading()->set_heading( 360 );
+        parameters->add_elem()->set_null_value( true );
+        parameters->add_elem()->set_null_value( true );
+        parameters->add_elem()->set_null_value( true );
+        sword::Location* location = parameters->add_elem()->add_value()->mutable_point()->mutable_location();
+        location->set_type( sword::Location_Geometry_point );
+        sword::CoordLatLong* latLong = location->mutable_coordinates()->add_elem();
+        latLong->set_latitude( 30.632128244641702 );
+        latLong->set_longitude( 28.976535107619295 );
+        action.payload = tools::ProtoToBase64( msg );
+    }
 
     // Event
     timeline::Event event;
-    //event.uuid; // $$$$ ABR 2013-05-24: Serv will generate it
-    event.name = "DummyMission";
-    event.info = "DummyMissionInfo";
+    event.name = "Dummy " + ENT_Tr::ConvertFromEventType( type );
+    event.info = ENT_Tr::ConvertFromEventType( type, ENT_Tr_ABC::eToSim ); // $$$$ ABR 2013-05-30: Use event.action.target to differentiate different
     event.begin = dateTime.toTimeSpec( Qt::UTC ).toString( "yyyy-MM-ddTHH:mm:ssZ" ).toStdString();
     event.done = false;
     event.action = action;
-
     CreateEvent( event );
 }

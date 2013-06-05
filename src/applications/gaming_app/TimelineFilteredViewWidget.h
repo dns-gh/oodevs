@@ -10,6 +10,14 @@
 #ifndef __TimelineFilteredViewWidget_h_
 #define __TimelineFilteredViewWidget_h_
 
+#include "ENT/ENT_Enums_Gen.h"
+
+namespace kernel
+{
+    class Controllers;
+    class Time_ABC;
+}
+
 namespace timeline
 {
     struct Configuration;
@@ -19,8 +27,9 @@ namespace timeline
 }
 
 class Config;
-class Model;
-class Simulation;
+class Event;
+class EventDialog;
+class EventsModel;
 
 // =============================================================================
 /** @class  TimelineFilteredViewWidget
@@ -35,7 +44,7 @@ class TimelineFilteredViewWidget : public QWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineFilteredViewWidget( QWidget* parent, const Simulation& simulation, Model& model, timeline::Configuration& cfg, int viewNumber, const QStringList& filters );
+             TimelineFilteredViewWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, EventsModel& model, EventDialog& eventDialog, timeline::Configuration& cfg, int viewNumber, const QStringList& filters );
     virtual ~TimelineFilteredViewWidget();
     //@}
 
@@ -50,13 +59,15 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateDummyMission(); // $$$$ ABR 2013-05-24: Test method
+    void CreateDummyEvent( E_EventTypes type ); // $$$$ ABR 2013-05-24: Test method
+    Event& GetOrCreateEvent( const timeline::Event& event );
     //@}
 
 signals:
     //! @name Signals
     //@{
     void CreateEventSignal( const timeline::Event& event );
+    void EditEventSignal( const timeline::Event& event );
     void DeleteEventSignal( const std::string& uuid );
 
     void AddNewFilteredView( const QStringList& filters );
@@ -67,9 +78,11 @@ private slots:
     //! @name Slots
     //@{
     void CreateEvent( const timeline::Event& event );
+    void EditEvent( const timeline::Event& event );
     void DeleteEvent( const std::string& uuid );
 
     void OnCreatedEvent( const timeline::Event& event, const timeline::Error& error );
+    void OnEditedEvent( const timeline::Event& event, const timeline::Error& error );
     void OnDeletedEvent( const std::string& uuid, const timeline::Error& error );
 
     void OnSelectedEvent( boost::shared_ptr< timeline::Event > event );
@@ -83,18 +96,21 @@ private slots:
 private:
     //! @name Member data
     //@{
+    EventDialog& eventDialog_;
     int viewNumber_;
     QToolBar* toolBar_;
     QWidget* timelineWidget_;
     QVBoxLayout* mainLayout_;
-    const Simulation& simulation_;
-    Model& model_;
+    const kernel::Time_ABC& simulation_;
+    kernel::Controllers& controllers_;
+    EventsModel& eventsModel_;
 
     std::auto_ptr< timeline::Server_ABC > server_;
     std::auto_ptr< timeline::Configuration > cfg_;
     boost::shared_ptr< timeline::Event > selected_;
 
     std::vector< std::string > creationRequestedEvents_;
+    std::vector< std::string > editionRequestedEvents_;
     std::vector< std::string > deletionRequestedEvents_;
     //@}
 };

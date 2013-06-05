@@ -11,9 +11,11 @@
 #include "TimelineDockWidget.h"
 #include "moc_TimelineDockWidget.cpp"
 #include "Config.h"
+#include "EventDialog.h"
 #include "TimelineFilteredViewWidget.h"
 
 #include "clients_kernel/Tools.h"
+#include "gaming/Model.h"
 #include "MT_Tools/MT_Logger.h"
 #include "timeline/api.h"
 
@@ -23,12 +25,13 @@ int TimelineDockWidget::maxTabNumber_ = -1;
 // Name: TimelineDockWidget constructor
 // Created: ABR 2013-05-14
 // -----------------------------------------------------------------------------
-TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const Simulation& simulation, Model& model )
+TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const kernel::Time_ABC& simulation, Model& model )
     : gui::RichDockWidget( controllers, parent, "timeline-dock-widget" )
     , cfg_( new timeline::Configuration() )
     , simulation_( simulation )
     , isConnected_( false )
     , model_( model )
+    , eventDialog_( new EventDialog( parent, model.eventFactory_, simulation ) )
 {
     setCaption( tr( "Actions timeline" ) );
     mainTitle_ = tr( "Main" );
@@ -49,6 +52,12 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& co
     QStringList filters;
     filters << "all";
     AddFilteredView( filters ); // Main tab
+    assert( filteredViews_.size() == 1 );
+    TimelineFilteredViewWidget* mainWidget = filteredViews_[ 0 ];
+    connect( eventDialog_, SIGNAL( CreateEvent( const timeline::Event& ) ), mainWidget, SLOT( CreateEvent( const timeline::Event& ) ) );
+    connect( eventDialog_, SIGNAL( EditEvent( const timeline::Event& ) ), mainWidget, SLOT( EditEvent( const timeline::Event& ) ) );
+    connect( eventDialog_, SIGNAL( CreateInstantOrder( const EventAction& ) ), this, SIGNAL( CreateInstantOrder( const EventAction& ) ) );
+    connect( this, SIGNAL( CreateEvent( const timeline::Event& ) ), mainWidget, SLOT( CreateEvent( const timeline::Event& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +99,7 @@ void TimelineDockWidget::Disconnect()
 // -----------------------------------------------------------------------------
 void TimelineDockWidget::AddFilteredView( QStringList filters )
 {
-    TimelineFilteredViewWidget* filteredView = new TimelineFilteredViewWidget( tabWidget_, simulation_, model_, *cfg_, ++maxTabNumber_, filters );
+    TimelineFilteredViewWidget* filteredView = new TimelineFilteredViewWidget( tabWidget_, controllers_, simulation_, model_.events_, *eventDialog_, *cfg_, ++maxTabNumber_, filters );
     tabWidget_->addTab( filteredView, ( maxTabNumber_ == 0 ) ? mainTitle_ : tr( "View %1" ).arg( maxTabNumber_ ) );
     connect( filteredView, SIGNAL( AddNewFilteredView( const QStringList& ) ), this, SLOT( AddFilteredView( const QStringList& ) ) );
     connect( filteredView, SIGNAL( RemoveCurrentFilteredView() ), this, SLOT( RemoveCurrentFilteredView() ) );

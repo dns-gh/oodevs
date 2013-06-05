@@ -15,16 +15,19 @@
 namespace kernel
 {
     class Controllers;
+    class Time_ABC;
 }
 
 namespace timeline
 {
     struct Configuration;
+    struct Event;
 }
 
 class Config;
+class EventAction;
+class EventDialog;
 class Model;
-class Simulation;
 class TimelineFilteredViewWidget;
 
 // =============================================================================
@@ -40,7 +43,7 @@ class TimelineDockWidget : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const Simulation& simulation, Model& model );
+             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const kernel::Time_ABC& simulation, Model& model );
     virtual ~TimelineDockWidget();
     //@}
 
@@ -48,6 +51,13 @@ public:
     //@{
     void Connect();
     void Disconnect();
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void CreateEvent( const timeline::Event& );
+    void CreateInstantOrder( const EventAction& );
     //@}
 
 public slots:
@@ -60,11 +70,12 @@ public slots:
 private:
     //! @name Member data
     //@{
+    EventDialog* eventDialog_;
     QTabWidget* tabWidget_;
     QString mainTitle_;
     std::vector< TimelineFilteredViewWidget* > filteredViews_;
     boost::shared_ptr< timeline::Configuration > cfg_;
-    const Simulation& simulation_;
+    const kernel::Time_ABC& simulation_;
     Model& model_;
     bool isConnected_;
     //@}
