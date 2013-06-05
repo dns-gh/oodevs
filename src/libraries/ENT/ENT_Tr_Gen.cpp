@@ -441,6 +441,16 @@ ENT_Tr::T_ConverterLayerTypes ENT_Tr::LayerTypesConverter_[] =
     T_ConverterLayerTypes( "", "", (E_LayerTypes)-1 )
 };
 
+ENT_Tr::T_ConverterEventTypes ENT_Tr::EventTypesConverter_[] =
+{
+    T_ConverterEventTypes( "order",             QT_TRANSLATE_NOOP( "ENT_Tr", "Order" ),             eEventTypes_Order ),
+    T_ConverterEventTypes( "supervisor_action", QT_TRANSLATE_NOOP( "ENT_Tr", "Supervisor action" ), eEventTypes_SupervisorAction ),
+    T_ConverterEventTypes( "report",            QT_TRANSLATE_NOOP( "ENT_Tr", "Report" ),            eEventTypes_Report ),
+    T_ConverterEventTypes( "task",              QT_TRANSLATE_NOOP( "ENT_Tr", "Task" ),              eEventTypes_Task ),
+    T_ConverterEventTypes( "multimedia",        QT_TRANSLATE_NOOP( "ENT_Tr", "Multimedia" ),        eEventTypes_Multimedia ),
+    T_ConverterEventTypes( "", "", (E_EventTypes)-1 )
+};
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
 // Created: AGR
@@ -484,6 +494,7 @@ void ENT_Tr::InitTranslations()
     InitTr( ModesConverter_, "ENT_Tr" );
     InitTr( AgentNbcSuitConverter_, "ENT_Tr" );
     InitTr( LayerTypesConverter_, "ENT_Tr" );
+    InitTr( EventTypesConverter_, "ENT_Tr" );
 }
 
 //-----------------------------------------------------------------------------
@@ -819,6 +830,15 @@ const std::string& ENT_Tr::ConvertFromLayerType( E_LayerTypes nValue, E_Conversi
     return ENT_Tr::InverseFindInConverter( LayerTypesConverter_, nValue, nConverterType );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr_Gen::ConvertFromEventType
+// Created: ABR 2013-05-28
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromEventType( E_EventTypes nValue, E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( EventTypesConverter_, nValue, nConverterType );
+}
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToLocationType
 // Created: AGR
@@ -1150,4 +1170,13 @@ E_AgentNbcSuit ENT_Tr::ConvertToAgentNbcSuit( const std::string& strName )
 E_LayerTypes ENT_Tr::ConvertToLayerType( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( LayerTypesConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr_Gen::ConvertToEventType
+// Created: ABR 2013-05-28
+// -----------------------------------------------------------------------------
+E_EventTypes ENT_Tr::ConvertToEventType( const std::string& strName, E_Conversion mode )
+{
+    return ENT_Tr::FindInConverter( EventTypesConverter_, strName, mode );
 }

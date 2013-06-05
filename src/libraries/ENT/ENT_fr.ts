@@ -915,5 +915,25 @@
         <source>Resource networks</source>
         <translation>Réseaux de ressource</translation>
     </message>
+    <message>
+        <source>Order</source>
+        <translation>Ordre</translation>
+    </message>
+    <message>
+        <source>Supervisor action</source>
+        <translation>Action superviseur</translation>
+    </message>
+    <message>
+        <source>Report</source>
+        <translation>Compte-rendu</translation>
+    </message>
+    <message>
+        <source>Task</source>
+        <translation>Tâche</translation>
+    </message>
+    <message>
+        <source>Multimedia</source>
+        <translation>Multimédia</translation>
+    </message>
 </context>
 </TS>

@@ -444,4 +444,14 @@ enum E_AgentNbcSuit
     eNbrAgentNbcSuit
 };
 
+enum E_EventTypes
+{
+    eEventTypes_Order,
+    eEventTypes_SupervisorAction,
+    eEventTypes_Report,
+    eEventTypes_Task,
+    eEventTypes_Multimedia,
+    eNbrEventTypes
+};
+
 #endif // __ENT_Enums_Gen_h_
