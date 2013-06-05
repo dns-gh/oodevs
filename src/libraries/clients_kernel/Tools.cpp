@@ -78,6 +78,8 @@ QLocale tools::readLocale()
         return QLocale( QLocale::Spanish, QLocale::Spain );
     else if( locale.count( "ar" ) )
         return QLocale( QLocale::Arabic, QLocale::Algeria );
+    else if( locale.count( "pt" ) )
+        return QLocale( QLocale::Portuguese, QLocale::Brazil );
 
     return QLocale( QLocale::English, QLocale::UnitedStates );
 }
