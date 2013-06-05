@@ -5477,22 +5477,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Crowd</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Unit missions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automat missions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowd missions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fragmentary Orders</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

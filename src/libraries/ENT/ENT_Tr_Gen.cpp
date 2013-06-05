@@ -451,6 +451,16 @@ ENT_Tr::T_ConverterEventTypes ENT_Tr::EventTypesConverter_[] =
     T_ConverterEventTypes( "", "", (E_EventTypes)-1 )
 };
 
+ENT_Tr::T_ConverterMissionType ENT_Tr::MissionTypeConverter_[] =
+{
+    T_ConverterMissionType( "unit",      QT_TRANSLATE_NOOP( "ENT_Tr", "Unit missions" ),      eMissionType_Pawn ),
+    T_ConverterMissionType( "automat",   QT_TRANSLATE_NOOP( "ENT_Tr", "Automat missions" ),   eMissionType_Automat ),
+    T_ConverterMissionType( "crowd",     QT_TRANSLATE_NOOP( "ENT_Tr", "Crowd missions" ),     eMissionType_Population ),
+    T_ConverterMissionType( "fragOrder", QT_TRANSLATE_NOOP( "ENT_Tr", "Fragmentary Orders" ), eMissionType_FragOrder ),
+
+    T_ConverterMissionType( "", "", (E_MissionType)-1 )
+};
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
 // Created: AGR
@@ -495,6 +505,7 @@ void ENT_Tr::InitTranslations()
     InitTr( AgentNbcSuitConverter_, "ENT_Tr" );
     InitTr( LayerTypesConverter_, "ENT_Tr" );
     InitTr( EventTypesConverter_, "ENT_Tr" );
+    InitTr( MissionTypeConverter_, "ENT_Tr" );
 }
 
 //-----------------------------------------------------------------------------
@@ -839,6 +850,15 @@ const std::string& ENT_Tr::ConvertFromEventType( E_EventTypes nValue, E_Conversi
     return ENT_Tr::InverseFindInConverter( EventTypesConverter_, nValue, nConverterType );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromMissionType
+// Created: NPT 2013-02-15
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromMissionType( E_MissionType nValue, E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( MissionTypeConverter_, nValue, nConverterType );
+}
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToLocationType
 // Created: AGR
@@ -1179,4 +1199,13 @@ E_LayerTypes ENT_Tr::ConvertToLayerType( const std::string& strName )
 E_EventTypes ENT_Tr::ConvertToEventType( const std::string& strName, E_Conversion mode )
 {
     return ENT_Tr::FindInConverter( EventTypesConverter_, strName, mode );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToMissionType
+// Created: NPT 2013-02-15
+// -----------------------------------------------------------------------------
+E_MissionType ENT_Tr::ConvertToMissionType( const std::string& strName, E_Conversion mode )
+{
+    return ENT_Tr::FindInConverter( MissionTypeConverter_, strName, mode );
 }

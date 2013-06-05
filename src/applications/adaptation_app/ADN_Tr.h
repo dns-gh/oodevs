@@ -49,7 +49,6 @@ public:
     static const std::string& ConvertFromDays( E_Days, E_Conversion = eToTr );
     static const std::string& ConvertFromContextParameters( E_ContextParameters, E_Conversion = eToTr );
     static const std::string& ConvertFromEntityType( E_EntityType, E_Conversion = eToTr );
-    static const std::string& ConvertFromMissionType( E_MissionType, E_Conversion = eToTr );
     //@}
 
     //! @name Convert To functions
@@ -78,7 +77,6 @@ public:
     static E_Days                    ConvertToDays( const std::string& );
     static E_ContextParameters       ConvertToContextParameters( const std::string& );
     static E_EntityType              ConvertToEntityType( const std::string& );
-    static E_MissionType             ConvertToMissionType( const std::string& );
     //@}
 
     //! @name Initializer
@@ -114,7 +112,6 @@ public:
     typedef converter< E_Days >                     T_ConverterDays;
     typedef converter< E_ContextParameters >        T_ConverterContextParameters;
     typedef converter< E_EntityType >               T_ConverterEntityType;
-    typedef converter< E_MissionType >              T_ConverterMissionType;
     //@}
 
     //! @name Converters
@@ -143,7 +140,6 @@ public:
     static T_ConverterDays              daysConverter_[];
     static T_ConverterContextParameters contextParametersConverter_[];
     static T_ConverterEntityType        entityTypeConverter_[];
-    static T_ConverterMissionType       missionTypeConverter_[];
     //@}
 };
 

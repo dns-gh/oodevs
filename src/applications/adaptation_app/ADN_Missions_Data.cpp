@@ -16,6 +16,7 @@
 #include "ADN_AiEngine_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_enums.h"
+#include "ENT/ENT_Tr.h"
 #include "tools/Loader_ABC.h"
 #include <xeuseuleu/xsl.hpp>
 #include <boost/bind.hpp>
@@ -287,7 +288,7 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
     for( int type = 0; type < eNbrMissionTypes; ++type )
         if( missionsVector_[ type ].second.GetErrorStatus() == eError )
             throw MASA_EXCEPTION( tools::translate( "ADN_Missions_Data", "Invalid data on tab '%1', subtab '%2'" )
-                                  .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( ADN_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str() ).toStdString() );
+                                  .arg( ADN_Tr::ConvertFromWorkspaceElement( currentTab_ ).c_str() ).arg( ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str() ).toStdString() );
 
     output << xml::start( "missions" );
     ADN_Tools::AddSchema( output, "Missions" );
@@ -390,7 +391,7 @@ QStringList ADN_Missions_Data::GetAllMissionsThatUse( ADN_Objects_Data_ObjectInf
 {
     QStringList result;
     for( int type = 0; type < eNbrMissionTypes; ++type )
-        FillUsingMission( object.strName_.GetData(), missionsVector_[ type ].second, result, ADN_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ) );
+        FillUsingMission( object.strName_.GetData(), missionsVector_[ type ].second, result, ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ) );
     return result;
 }
 

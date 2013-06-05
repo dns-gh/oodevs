@@ -21,6 +21,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
+#include "ENT/ENT_Tr.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Objects constructor
@@ -358,7 +359,7 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
                                           ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), eObjects );
 
             for( int type = 0; type < eNbrMissionTypes; ++type )
-                FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str(),
+                FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str(),
                                               ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionsThatUse( static_cast< E_MissionType >( type ), *pCastData ), eMissions, type );
         }
         popupMenu.exec( pt );
@@ -388,7 +389,7 @@ std::string ADN_ListView_Objects::GetToolTipFor( const QModelIndex& index )
                         ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), result );
 
     for( int type = 0; type < eNbrMissionTypes; ++type )
-        FillMultiUsersList( ADN_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str(),
+        FillMultiUsersList( ENT_Tr::ConvertFromMissionType( static_cast< E_MissionType >( type ) ).c_str(),
                             ADN_Workspace::GetWorkspace().GetMissions().GetData().GetMissionsThatUse( static_cast< E_MissionType >( type ), *pCastData ), result );
 
     if( result.empty() )

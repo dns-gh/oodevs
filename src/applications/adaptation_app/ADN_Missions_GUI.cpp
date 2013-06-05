@@ -30,6 +30,7 @@
 #include "ADN_TextEdit.h"
 #include "ADN_HtmlViewer.h"
 #include "ADN_enums.h"
+#include "ENT/ENT_Tr.h"
 #include <boost/lexical_cast.hpp>
 
 namespace
@@ -145,7 +146,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( E_MissionType eMissionType )
     // -------------------------------------------------------------------------
     ADN_Missions_Data::T_Mission_Vector& missions = data_.GetMissions( eMissionType );
     ADN_GuiBuilder builder( strClassName_ );
-    builder.PushSubName( std::string( ADN_Tr::ConvertFromMissionType( eMissionType, ADN_Tr::eToSim ) + "-tab" ).c_str() );
+    builder.PushSubName( std::string( ENT_Tr::ConvertFromMissionType( eMissionType, ADN_Tr::eToSim ) + "-tab" ).c_str() );
     builder.PushSubName( "definition-tab" );
 
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
