@@ -903,3 +903,12 @@ Path ExerciseConfig::GetUrbanTerrainFile() const
 {
     return pWorldParameters_->urban_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::HasTimeline
+// Created: ABR 2013-05-31
+// -----------------------------------------------------------------------------
+bool ExerciseConfig::HasTimeline() const
+{
+    return false;
+}

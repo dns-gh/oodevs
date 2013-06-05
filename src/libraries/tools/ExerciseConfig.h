@@ -134,6 +134,8 @@ public:
     virtual bool IsDispatcherLogInBytes() const;
     virtual bool IsDispatcherProtobufLogInBytes() const;
     virtual bool IsLoggerPluginLogInBytes() const;
+
+    virtual bool HasTimeline() const;
     //@}
 
 private:
