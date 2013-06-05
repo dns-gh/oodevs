@@ -553,19 +553,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\icons.cpp">
       <Filter>Source Files\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\AutomateMissionInterface.cpp">
-      <Filter>Source Files\Missions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\FragmentaryOrderInterface.cpp">
-      <Filter>Source Files\Missions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\MissionPanel.cpp">
-      <Filter>Source Files\Missions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\PopulationMissionInterface.cpp">
-      <Filter>Source Files\Missions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\UnitMissionInterface.cpp">
       <Filter>Source Files\Missions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\KnowledgeGroupMagicOrdersInterface.cpp">
@@ -1028,18 +1016,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\icons.h">
       <Filter>Source Files\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\AutomateMissionInterface.h">
-      <Filter>Source Files\Missions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\FragmentaryOrderInterface.h">
-      <Filter>Source Files\Missions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\PopulationMissionInterface.h">
-      <Filter>Source Files\Missions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\UnitMissionInterface.h">
-      <Filter>Source Files\Missions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\CreationPanels.h">
       <Filter>Source Files\Creation</Filter>

@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "actions_gui_pch.h"
-#include "actions_gui/resources.h"
 #include "MissionInterface_ABC.h"
 #include "moc_MissionInterface_ABC.cpp"
 #include "clients_gui/RichCheckBox.h"
@@ -23,14 +22,14 @@
 #include "clients_kernel/Time_ABC.h"
 #include "ParamComboBox.h"
 #include "tools/ExerciseConfig.h"
-#include <tools/Path.h>
+
 #include <QtWebKit/qwebview.h>
 
 using namespace actions::gui;
 
 namespace
 {
-    Q3VBox* CreateTab( QTabWidget* parent, const QString& title, bool enabled = true )
+    QWidget* CreateTab( QTabWidget* parent, const QString& title, bool enabled = true )
     {
         // Scroll
         QScrollArea* scrollArea = new QScrollArea( parent );
@@ -51,18 +50,15 @@ namespace
         layout->addStretch( 10 );
         return tab;
     }
-}
 
-namespace
-{
-    void CreateLineField( const QString& name, const QString& text, QVBoxLayout* parentLayout )
+    QWidget* CreateLineField( const QString& name, const QString& text, QWidget* parent )
     {
         QTextEdit* textEdit = new QTextEdit( text );
         textEdit->setReadOnly( true );
-        QGroupBox* group = new QGroupBox( name );
+        QGroupBox* group = new QGroupBox( name, parent );
         QVBoxLayout* layout = new QVBoxLayout( group );
         layout->addWidget( textEdit );
-        parentLayout->addWidget( group );
+        return group;
     }
 }
 
@@ -70,75 +66,20 @@ namespace
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::Controllers& controllers, const tools::ExerciseConfig& config, const kernel::Time_ABC& simulation, std::string missionSheetPath /*=""*/ )
-    : Q3VBox            ( parent )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const QString& name, kernel::Controllers& controllers,
+                                            const tools::ExerciseConfig& config, const std::string& missionSheetPhysicalTag )
+    : QTabWidget( parent )
     , ParamInterface_ABC()
-    , title_     ( order.GetName().c_str() )
     , controllers_( controllers )
-    , entity_    ( entity )
+    , entity_( controllers )
+    , missionSheetPath_( config.GetPhysicalChildPath( missionSheetPhysicalTag ) )
+    , planned_( false )
 {
+    setObjectName( name );
     setMinimumSize( 280, 250 );
-    CreateTitle( title_ );
-    tabs_ = new QTabWidget( this );
-    mainTab_ = CreateTab( tabs_, tr( "Mandatory" ) );
-    optionalTab_ = CreateTab( tabs_, tr( "Optional" ) );
-    {
-        std::string doctrine = order.GetDoctrineInformation();
-        std::string usage = order.GetUsageInformation();
-        tools::Path fileName = config.GetPhysicalChildPath( missionSheetPath ) / tools::Path::FromUTF8( order.GetName() ) + ".html";
-        if( fileName.IsRegularFile() || ( !doctrine.empty() && !usage.empty() ) )
-        {
-            QWidget* helpTab = new QWidget( tabs_ );
-            tabs_->addTab( helpTab, tr( "Help" ) );
-            QVBoxLayout* helpLayout = new QVBoxLayout( helpTab );
-
-            if( fileName.IsRegularFile() )
-            {
-                fileName.MakePreferred();
-                QWebView* missionSheetText = new QWebView();
-                missionSheetText->setContextMenuPolicy( Qt::NoContextMenu );
-                missionSheetText->load( QUrl( fileName.Normalize().ToUTF8().c_str() ) );
-                helpLayout->addWidget( missionSheetText );
-            }
-            else 
-            {
-                if( !doctrine.empty() )
-                    CreateLineField( tr( "Doctrine" ), doctrine.c_str(), helpLayout );
-                if( !usage.empty() )
-                    CreateLineField( tr( "Usage" ), usage.c_str(), helpLayout );
-            }
-        }
-    }
-    {
-        planningCheckBox_ = new ::gui::RichCheckBox( "planning-checkbox" );
-        planningCheckBox_->setText( tr( "Plan mission" ) );
-        planningDateTimeEdit_ = new ::gui::RichDateTimeEdit( "planning-datetimeedit" );
-        planningDateTimeEdit_->setVisible( false );
-        planningDateTimeEdit_->setCalendarPopup( true );
-        planningDateTimeEdit_->setTimeSpec( Qt::UTC );
-        planningDateTimeEdit_->setDateTime( simulation.GetDateTime() );
-        connect( planningCheckBox_, SIGNAL( stateChanged( int ) ), this, SLOT( OnPlanningChecked( int ) ) );
-
-        planningCheckBox_->setVisible( config.HasTimeline() );
-
-        ok_ = new ::gui::RichPushButton( "ok", tr( "Ok" ) );
-        ::gui::RichPushButton* cancel = new ::gui::RichPushButton( "cancel", tr( "Cancel" ) );
-        ok_->setDefault( true );
-        ok_->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
-        connect( ok_, SIGNAL( clicked() ), SLOT( OnOk() ) );
-        connect( cancel, SIGNAL( clicked() ), parent, SLOT( Close() ) );
-
-        QWidget* box = new QWidget( this );
-        QHBoxLayout* boxLayout = new QHBoxLayout( box );
-        boxLayout->setMargin( 5 );
-        boxLayout->setSpacing( 5 );
-        boxLayout->addWidget( planningCheckBox_ );
-        boxLayout->addWidget( planningDateTimeEdit_ );
-        boxLayout->addStretch( 1 );
-        boxLayout->addWidget( ok_ );
-        boxLayout->addWidget( cancel );
-    }
-    controllers_.modes_.Register( *this );
+    mainTab_ = CreateTab( this, tr( "Mandatory" ) );
+    optionalTab_ = CreateTab( this, tr( "Optional" ) );
+    helpTab_ = CreateTab( this, tr( "Help" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,11 +88,66 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
 // -----------------------------------------------------------------------------
 MissionInterface_ABC::~MissionInterface_ABC()
 {
+    Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::Purge
+// Created: ABR 2013-06-04
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::Purge()
+{
+    entity_ = 0;
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
+    {
         (*it)->RemoveFromController();
-    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         delete *it;
-    controllers_.modes_.Unregister( *this );
+    }
+    parameters_.clear();
+
+    // Some params store their widget, so widget deletion need to be after parameters
+    for( auto it = widgetToDelete_.begin(); it != widgetToDelete_.end(); ++it )
+        delete *it;
+    widgetToDelete_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::Fill
+// Created: ABR 2013-06-04
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::Fill( InterfaceBuilder_ABC& builder, const kernel::Entity_ABC& entity, const kernel::OrderType& order )
+{
+    entity_ = &entity;
+    order_ = &order;
+    title_ = order.GetName().c_str();
+
+    setVisible( false ); // $$$$ ABR 2013-06-04: For some reason the current tab display doesn't refresh, probably because of Q3VBox. This will be fix when Param_ABC::BuildInterface will take a QVBoxLayout as parent instead of a QWidget
+    builder.BuildAll( *this, entity, order );
+    setVisible( true );
+    setCurrentIndex( 0 );
+
+    // Help tab
+    std::string doctrine = order.GetDoctrineInformation();
+    std::string usage = order.GetUsageInformation();
+    tools::Path fileName = missionSheetPath_ / tools::Path::FromUTF8( order.GetName() ) + ".html";
+    if( fileName.IsRegularFile() || ( !doctrine.empty() && !usage.empty() ) )
+    {
+        if( fileName.IsRegularFile() )
+        {
+            fileName.MakePreferred();
+            QWebView* missionSheetText = new QWebView( helpTab_ );
+            missionSheetText->setContextMenuPolicy( Qt::NoContextMenu );
+            missionSheetText->load( QUrl( fileName.Normalize().ToUTF8().c_str() ) );
+            widgetToDelete_.push_back( missionSheetText );
+        }
+        else
+        {
+            if( !doctrine.empty() )
+                widgetToDelete_.push_back( CreateLineField( tr( "Doctrine" ), doctrine.c_str(), helpTab_ ) );
+            if( !usage.empty() )
+                widgetToDelete_.push_back( CreateLineField( tr( "Usage" ), usage.c_str(), helpTab_ ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -167,6 +163,16 @@ bool MissionInterface_ABC::CheckValidity()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::CommitTo
+// Created: ABR 2013-06-04
+// -----------------------------------------------------------------------------
+void MissionInterface_ABC::CommitTo( actions::Action_ABC& action ) const
+{
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
+        (*it)->CommitTo( action );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::IsEmpty
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
@@ -176,21 +182,12 @@ bool MissionInterface_ABC::IsEmpty() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::GetEntity
-// Created: SBO 2007-03-15
+// Name: MissionInterface_ABC::Title
+// Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC& MissionInterface_ABC::GetEntity() const
+QString MissionInterface_ABC::Title() const
 {
-    return entity_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateTitle
-// Created: SBO 2007-03-15
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateTitle( const QString& title )
-{
-    paintEvent( 0 , title);
+    return title_;
 }
 
 // -----------------------------------------------------------------------------
@@ -200,18 +197,9 @@ void MissionInterface_ABC::CreateTitle( const QString& title )
 void MissionInterface_ABC::AddParameter( const QString& objectName, Param_ABC& parameter )
 {
     parameters_.push_back( &parameter );
-    parameter.BuildInterface( objectName, parameter.IsOptional() ? optionalTab_ : mainTab_ );
+    QWidget* widget = parameter.BuildInterface( objectName, parameter.IsOptional() ? optionalTab_ : mainTab_ );
+    widgetToDelete_.push_back( widget );
     parameter.RegisterIn( controllers_.actions_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CommitTo
-// Created: SBO 2007-03-19
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CommitTo( actions::Action_ABC& action ) const
-{
-    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
-        (*it)->CommitTo( action );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,52 +208,14 @@ void MissionInterface_ABC::CommitTo( actions::Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::Draw( gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const
 {
+    if( !entity_ )
+        return;
     for( auto it = parameters_.begin() ; it != parameters_.end() ; ++it )
     {
-        const geometry::Point2f p = entity_.Get< kernel::Positions >().GetPosition();
+        const geometry::Point2f p = entity_->Get< kernel::Positions >().GetPosition();
         extent.SetHotpoint( p );
         (*it)->Draw( p, extent, tools );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::OnOk
-// Created: SBO 2007-03-12
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::OnOk()
-{
-    if( !CheckValidity() )
-        return;
-    Publish();
-    emit( OkClicked() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::Title
-// Created: AGE 2008-07-15
-// -----------------------------------------------------------------------------
-QString MissionInterface_ABC::Title() const
-{
-    return title_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::paintEvent
-// Created: FPT 2011-06-28
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::paintEvent( QPaintEvent*, QString title )
-{
-    Q3HBox* box = new Q3HBox( this );
-    box->setPaletteBackgroundColor( Qt::white );
-    box->setFixedHeight( 32 );
-    QLabel* label = new QLabel( " " + title, box );
-    QFont font = label->font();
-    font.setBold( true );
-    font.setPixelSize( 16 );
-    label->setFont( font );
-    label = new QLabel( box );
-    label->setPixmap( MAKE_PIXMAP( mission_title ) );
-    label->setAlignment( Qt::AlignRight );
 }
 
 // -----------------------------------------------------------------------------
@@ -281,40 +231,10 @@ int MissionInterface_ABC::GetIndex( Param_ABC* param ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::NotifyModeChanged
-// Created: ABR 2013-02-15
+// Name: MissionInterface_ABC::SetPlanned
+// Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::NotifyModeChanged( E_Modes newMode )
+void MissionInterface_ABC::SetPlanned( bool planned )
 {
-    ModesObserver_ABC::NotifyModeChanged( newMode );
-    if( !ok_ )
-        return;
-    ok_->setText( newMode == eModes_Planning ? tr( "Add to planning" ) : tr( "Ok" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::OnPlanningChecked
-// Created: ABR 2013-05-31
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::OnPlanningChecked( int state )
-{
-    planningDateTimeEdit_->setVisible( state == Qt::Checked );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::IsPlanned
-// Created: ABR 2013-05-31
-// -----------------------------------------------------------------------------
-bool MissionInterface_ABC::IsPlanned() const
-{
-    return planningCheckBox_->checkState() == Qt::Checked;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::GetPlanningDate
-// Created: ABR 2013-05-31
-// -----------------------------------------------------------------------------
-QDateTime MissionInterface_ABC::GetPlanningDate() const
-{
-    return planningDateTimeEdit_->dateTime();
+    planned_ = planned;
 }

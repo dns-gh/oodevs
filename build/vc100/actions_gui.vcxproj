@@ -114,6 +114,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\InterfaceBuilder.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamQuantity.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamDotationTypeList.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetworkNode.cpp" />
@@ -145,7 +146,6 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamEquipmentList.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamHumanWoundList.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamUrbanBlock.cpp" />
-    <ClCompile Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\actions_gui\actions_gui_pch.h" />
@@ -178,6 +178,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\actions_gui\MissionInterface.h" />
+    <Qt_file_Mocing Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamInterface_ABC.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamLocation_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamResourceNetworkNode.h">
@@ -497,24 +499,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamUrbanBlock.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\InterfaceBuilder_ABC.h" />
-    <CustomBuild Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\actions_gui\actions_gui_ar.ts" />

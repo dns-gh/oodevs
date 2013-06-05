@@ -100,9 +100,6 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamHumanWoundList.cpp">
       <Filter>Source Files\Parameters\Static model types</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.cpp">
-      <Filter>Source Files\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamBool.cpp">
       <Filter>Source Files\Parameters\Common</Filter>
     </ClCompile>
@@ -141,6 +138,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamQuantity.cpp">
       <Filter>Source Files\Parameters\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.cpp">
+      <Filter>Source Files\Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +204,9 @@
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamResourceNetworkType.h">
       <Filter>Source Files\Parameters\Resource Network</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions_gui\MissionInterface.h">
+      <Filter>Source Files\Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\actions_gui\EntityParameter.inl">
@@ -259,9 +262,6 @@
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamHumanWoundList.h">
       <Filter>Source Files\Parameters\Static model types</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.h">
-      <Filter>Source Files\Interface</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamLocationComposite.h">
       <Filter>Source Files\Parameters\Locations</Filter>
     </CustomBuild>
@@ -295,5 +295,10 @@
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamQuantity.h">
       <Filter>Source Files\Parameters\Common</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Qt_file_Mocing Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.h">
+      <Filter>Source Files\Interface</Filter>
+    </Qt_file_Mocing>
   </ItemGroup>
 </Project>

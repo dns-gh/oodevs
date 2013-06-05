@@ -2263,6 +2263,22 @@ This data can&apos;t be projected.</source>
         <source>Fragmentary orders</source>
         <translation>Fragmentary orders</translation>
     </message>
+    <message>
+        <source>Plan mission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Add to planning</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NoteDialog</name>

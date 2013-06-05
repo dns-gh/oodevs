@@ -10,16 +10,12 @@
 #ifndef __MissionInterface_ABC_h_
 #define __MissionInterface_ABC_h_
 
-QT_FORWARD_DECLARE_CLASS( QTextEdit )
-
 #include "ParamInterface_ABC.h"
-#include <boost/noncopyable.hpp>
-#pragma warning( push, 0 )
-#include <Qt3Support/q3vbox.h>
-#pragma warning( pop )
+#include "actions/ActionsModel.h"
 #include "clients_kernel/ModesObserver_ABC.h"
-#include "clients_gui/RichPushButton.h"
+#include "clients_kernel/SafePointer.h"
 #include "tools/Observer_ABC.h"
+#include <tools/Path.h>
 
 namespace kernel
 {
@@ -40,17 +36,18 @@ namespace gui
 namespace tools
 {
     class ExerciseConfig;
+    class Path;
 }
-
-class QTabWidget;
 
 namespace actions
 {
     class Action_ABC;
+    class ActionsModel;
 
     namespace gui
     {
         class Param_ABC;
+        class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  MissionInterface_ABC
@@ -58,25 +55,34 @@ namespace actions
 */
 // Created: APE 2004-04-20
 // =============================================================================
-class MissionInterface_ABC : public Q3VBox
+class MissionInterface_ABC : public QTabWidget
                            , public ParamInterface_ABC
-                           , public tools::Observer_ABC
-                           , public kernel::ModesObserver_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::Controllers& controllers, const tools::ExerciseConfig& config, const kernel::Time_ABC& simulation, std::string missionSheetPath = "" );
+             MissionInterface_ABC( QWidget* parent, const QString& name, kernel::Controllers& controllers,
+                                   const tools::ExerciseConfig& config, const std::string& missionSheetPhysicalTag );
     virtual ~MissionInterface_ABC();
+    //@}
+
+    //! @name Abstract method
+    //@{
+    virtual void Publish() = 0;
     //@}
 
     //! @name Operations
     //@{
-    void Draw( ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
-    void AddParameter(  const QString& objectName, Param_ABC& parameter );
+    bool CheckValidity();
+    void AddParameter( const QString& objectName, Param_ABC& parameter );
+    void Draw( ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
+    void Fill( InterfaceBuilder_ABC& builder, const kernel::Entity_ABC& entity, const kernel::OrderType& orderType );
+    void Purge();
+    void SetPlanned( bool planned );
+    void CommitTo( actions::Action_ABC& action ) const;
     //@}
 
     //! @name ParamInterface_ABC implementation
@@ -85,68 +91,40 @@ public:
     virtual int GetIndex( Param_ABC* param ) const;
     //@}
 
-public slots:
-    //! @name Slots
-    //@{
-    virtual void OnOk();
-    void OnPlanningChecked( int state );
-    //@}
-
 signals:
     //! @name Signals
     //@{
-    void OkClicked();
-    void PlannedMission( const actions::Action_ABC&, const QDateTime& );
+    void PlannedMission( const actions::Action_ABC& );
     //@}
 
 protected:
-    //! @name Helpers
-    //@{
-    virtual void NotifyModeChanged( E_Modes newMode );
-    const kernel::Entity_ABC& GetEntity() const;
-    void CreateTitle( const QString& title );
-    void CommitTo( actions::Action_ABC& action ) const;
-    bool IsPlanned() const;
-    QDateTime GetPlanningDate() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    virtual void paintEvent( QPaintEvent*, QString title );
-    //@}
-
-    //! @name Helpers
-    //@{
-    bool CheckValidity();
-    void Commit();
-    virtual void Publish() = 0;
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< Param_ABC* >      T_Parameters; // $$$$ ABR 2012-01-11: Todo : use sharepointer
     typedef T_Parameters::const_iterator CIT_Parameters;
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
-    QString title_;
     kernel::Controllers& controllers_;
-    kernel::Entity_ABC& entity_;
+    const tools::Path missionSheetPath_;
+
+    kernel::SafePointer< kernel::Entity_ABC > entity_;
+    const kernel::OrderType* order_;
     T_Parameters parameters_;
-    QTabWidget* tabs_;
-    Q3VBox* mainTab_;
-    Q3VBox* optionalTab_;
-    Q3ScrollView* sc1_;
-    ::gui::RichPushButton* ok_;
-    ::gui::RichCheckBox* planningCheckBox_;
-    ::gui::RichDateTimeEdit* planningDateTimeEdit_;
+
+    QString title_;
+    QWidget* mainTab_;
+    QWidget* optionalTab_;
+    QWidget* helpTab_;
+    std::vector< QWidget* > widgetToDelete_;
+    bool planned_;
     //@}
 };
 
     }
 }
+
 
 #endif // __MissionInterface_ABC_h_

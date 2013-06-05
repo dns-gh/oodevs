@@ -90,22 +90,6 @@
         <source>Usage</source>
         <translation type="unfinished">Utilisation</translation>
     </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">OK</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
-    </message>
-    <message>
-        <source>Add to planning</source>
-        <translation type="unfinished">Ajouter au planning</translation>
-    </message>
-    <message>
-        <source>Plan mission</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>actions::gui::ParamBool</name>

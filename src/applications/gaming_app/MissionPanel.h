@@ -13,6 +13,7 @@
 #include "clients_gui/RichDockWidget.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "clients_kernel/ModesObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Iterator.h"
 
@@ -31,6 +32,10 @@ namespace kernel
 namespace gui
 {
     class GlTools_ABC;
+    class RichLabel;
+    class RichCheckBox;
+    class RichDateTimeEdit;
+    class RichPushButton;
     class Viewport_ABC;
 }
 
@@ -70,6 +75,7 @@ class MissionPanel : public gui::RichDockWidget
                    , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                    , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                   , public kernel::ModesObserver_ABC
 {
     Q_OBJECT
 
@@ -97,9 +103,11 @@ private slots:
     void ActivatePopulationMission( int );
     void Engage();
     void Disengage();
+    void Validate();
     void Close();
-    void closeEvent( QCloseEvent* pEvent );
-    void OnPlannedMission( const actions::Action_ABC& action, const QDateTime& planningDate );
+    virtual void closeEvent( QCloseEvent* pEvent );
+    void OnPlanningChecked( int state );
+    void OnPlannedMission( const actions::Action_ABC& action );
     //@}
 
 signals:
@@ -115,20 +123,37 @@ private:
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
+    virtual void NotifyModeChanged( E_Modes newMode );
 
+    void SetVisible( bool visible );
+    void FillInterface( int id ) const;
     QAction* AddMissions( tools::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot, int current );
     void AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot, const QPixmap& pixmap = QPixmap() );
     QAction* AddFragOrders( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
-    void SetInterface( actions::gui::MissionInterface_ABC* missionInterface );
     void NotifyMission();
 
     template< typename E, typename T >
     void AddMissionGroup( kernel::ContextMenu& menu, const QString& prefix, const T& list, const char* slot, int current );
+
+    template< typename T >
+    void FillInterface( int id );
+
+    template< typename T >
+    void CreateMissionInterface( E_MissionType type, const QString& objectName, const std::string& missionSheetPhysicalTag );
     //@}
 
 private:
     //! @name Member Data
     //@{
+    gui::RichLabel* titleLabel_;
+    gui::RichLabel* pixmapLabel_;
+    gui::RichCheckBox* planningCheckBox_;
+    gui::RichDateTimeEdit* planningDateTimeEdit_;
+    gui::RichPushButton* okButton_;
+    gui::RichPushButton* cancelButton_;
+    QStackedWidget* stack_;
+    actions::gui::MissionInterface_ABC* pMissionInterface_;
+
     const StaticModel& static_;
     actions::ActionsModel& actionsModel_;
     std::auto_ptr< Publisher_ABC > publisher_;
@@ -136,7 +161,7 @@ private:
     const kernel::Profile_ABC& profile_;
     std::auto_ptr< CommandPublisher > commandPublisher_;
     const kernel::Time_ABC& simulation_;
-    actions::gui::MissionInterface_ABC* pMissionInterface_;
+    
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
     const tools::ExerciseConfig& config_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;

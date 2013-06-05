@@ -2271,6 +2271,22 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Crowd missions</source>
         <translation>Missions foules</translation>
     </message>
+    <message>
+        <source>Plan mission</source>
+        <translation>Plannifier</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>Add to planning</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NoteDialog</name>

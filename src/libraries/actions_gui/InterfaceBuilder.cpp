@@ -148,7 +148,7 @@ actions::gui::Param_ABC& InterfaceBuilder::BuildElement( const kernel::OrderPara
 // Name: InterfaceBuilder::Build
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-void InterfaceBuilder::BuildAll( actions::gui::MissionInterface_ABC& missionInterface, kernel::Entity_ABC& entity, const kernel::OrderType& order )
+void InterfaceBuilder::BuildAll( actions::gui::MissionInterface_ABC& missionInterface, const kernel::Entity_ABC& entity, const kernel::OrderType& order )
 {
     missionInterface_ = &missionInterface;
     parentObject_ = &missionInterface;
@@ -216,7 +216,7 @@ ParamInterface_ABC& InterfaceBuilder::GetParamInterface() const
 // Name: InterfaceBuilder::GetCurrentEntity
 // Created: ABR 2012-01-05
 // -----------------------------------------------------------------------------
-kernel::Entity_ABC& InterfaceBuilder::GetCurrentEntity() const
+const kernel::Entity_ABC& InterfaceBuilder::GetCurrentEntity() const
 {
     assert( entity_ != 0 );
     return *entity_;

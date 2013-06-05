@@ -366,11 +366,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\Menu.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\PopulationOptionChooser.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\icons.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\AutomateMissionInterface.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\FragmentaryOrderInterface.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\MissionPanel.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\PopulationMissionInterface.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\UnitMissionInterface.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\KnowledgeGroupMagicOrdersInterface.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\MagicOrdersInterface.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ObjectMagicOrdersInterface.cpp" />
@@ -2097,8 +2093,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\gaming_app\icons.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\AutomateMissionInterface.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\FragmentaryOrderInterface.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\MissionPanel.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
@@ -2117,8 +2111,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\gaming_app\PopulationMissionInterface.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\UnitMissionInterface.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\KnowledgeGroupMagicOrdersInterface.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>

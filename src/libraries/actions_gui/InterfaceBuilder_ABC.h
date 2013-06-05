@@ -54,7 +54,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void BuildAll( actions::gui::MissionInterface_ABC& missionInterface, kernel::Entity_ABC& entity, const kernel::OrderType& order ) = 0;
+    virtual void BuildAll( actions::gui::MissionInterface_ABC& missionInterface, const kernel::Entity_ABC& entity, const kernel::OrderType& order ) = 0;
     virtual actions::gui::Param_ABC& BuildOne( const kernel::OrderParameter& parameter, bool isRegistered = true ) const = 0;
     //@}
 
@@ -63,7 +63,7 @@ public:
     virtual QObject* GetParentObject() const = 0;
     virtual ParamInterface_ABC& GetParamInterface() const = 0;
     virtual ::gui::ParametersLayer& GetParameterLayer() const = 0;
-    virtual kernel::Entity_ABC& GetCurrentEntity() const = 0;
+    virtual const kernel::Entity_ABC& GetCurrentEntity() const = 0;
     virtual bool HasCurrentEntity() const = 0;
     virtual kernel::Controllers& GetControllers() const = 0;
     virtual kernel::AgentKnowledgeConverter_ABC* GetAgentKnowledgeConverter() const = 0;

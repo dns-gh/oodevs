@@ -56,7 +56,7 @@ ParamEquipmentList::~ParamEquipmentList()
 QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget* parent )
 {
     Param_ABC::BuildInterface( objectName, parent );
-    kernel::MaintenanceStates_ABC* maintenance = builder_.HasCurrentEntity() ? builder_.GetCurrentEntity().Retrieve< kernel::MaintenanceStates_ABC >() : 0;
+    const kernel::MaintenanceStates_ABC* maintenance = builder_.HasCurrentEntity() ? builder_.GetCurrentEntity().Retrieve< kernel::MaintenanceStates_ABC >() : 0;
     QGridLayout* layout = new QGridLayout( group_ );
     {
         baseList_ = new QListWidget( parent );
