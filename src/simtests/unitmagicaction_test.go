@@ -212,8 +212,8 @@ Party[-]
 }
 
 func Nearby(pointA, pointB *swapi.Point) bool {
-	return math.Abs(pointA.X-pointB.X) < 1e-6 &&
-		math.Abs(pointA.Y-pointB.Y) < 1e-6
+	return math.Abs(pointA.X-pointB.X) < 1e-3 &&
+		math.Abs(pointA.Y-pointB.Y) < 1e-3
 }
 
 func (s *TestSuite) TestCreateUnit(c *C) {
