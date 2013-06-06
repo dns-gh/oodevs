@@ -82,7 +82,7 @@ func MakeQuantity(value int32) *sword.MissionParameter {
 		})
 }
 
-func MakeCoords(points ...*Point) *sword.CoordLatLongList {
+func MakeCoords(points ...Point) *sword.CoordLatLongList {
 	coords := []*sword.CoordLatLong{}
 	for _, p := range points {
 		coords = append(coords, &sword.CoordLatLong{
@@ -102,35 +102,35 @@ func ReadPoint(value *sword.CoordLatLong) Point {
 	return Point{X: value.GetLatitude(), Y: value.GetLongitude()}
 }
 
-func MakePointLocation(point *Point) *sword.Location {
+func MakePointLocation(point Point) *sword.Location {
 	return &sword.Location{
 		Type:        sword.Location_point.Enum(),
 		Coordinates: MakeCoords(point),
 	}
 }
 
-func MakeLineLocation(from, to *Point) *sword.Location {
+func MakeLineLocation(from, to Point) *sword.Location {
 	return &sword.Location{
 		Type:        sword.Location_line.Enum(),
 		Coordinates: MakeCoords(from, to),
 	}
 }
 
-func MakeRectangleLocation(from, to *Point) *sword.Location {
+func MakeRectangleLocation(from, to Point) *sword.Location {
 	return &sword.Location{
 		Type:        sword.Location_rectangle.Enum(),
 		Coordinates: MakeCoords(from, to),
 	}
 }
 
-func MakeRectangleParam(from, to *Point) *sword.MissionParameter {
+func MakeRectangleParam(from, to Point) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
 			Location: MakeRectangleLocation(from, to),
 		})
 }
 
-func MakePointParam(point *Point) *sword.MissionParameter {
+func MakePointParam(point Point) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
 			Point: &sword.Point{
@@ -154,7 +154,7 @@ func MakeNullValue() *sword.MissionParameter {
 	}
 }
 
-func MakeLimit(from, to *Point) *sword.MissionParameter {
+func MakeLimit(from, to Point) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
 			Limit: &sword.Line{

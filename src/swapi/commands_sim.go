@@ -146,7 +146,7 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 	return created, nil
 }
 
-func (c *Client) createUnit(automatId, unitType uint32, location *Point,
+func (c *Client) createUnit(automatId, unitType uint32, location Point,
 	name *string, pc *bool) (*Unit, error) {
 	tasker := &sword.Tasker{}
 	if automatId != 0 {
@@ -208,11 +208,11 @@ func (c *Client) createUnit(automatId, unitType uint32, location *Point,
 	return created, err
 }
 
-func (c *Client) CreateUnit(automatId, unitType uint32, location *Point) (*Unit, error) {
+func (c *Client) CreateUnit(automatId, unitType uint32, location Point) (*Unit, error) {
 	return c.createUnit(automatId, unitType, location, nil, nil)
 }
 
-func (c *Client) CreateUnitWithName(automatId, unitType uint32, location *Point,
+func (c *Client) CreateUnitWithName(automatId, unitType uint32, location Point,
 	name string, pc bool) (*Unit, error) {
 	return c.createUnit(automatId, unitType, location, &name, &pc)
 }
@@ -364,7 +364,7 @@ func (c *Client) CreateAutomat(formationId, automatId, automatType,
 }
 
 func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
-	location *Point, healthy, wounded, dead int32, name string) (*Crowd, error) {
+	location Point, healthy, wounded, dead int32, name string) (*Crowd, error) {
 	tasker := &sword.Tasker{}
 	if partyId != 0 {
 		tasker.Party = &sword.PartyId{
@@ -597,7 +597,7 @@ func (c *Client) SendUnitFragOrder(unitId, fragOrderType uint32,
 	return c.SendFragOrder(0, 0, unitId, fragOrderType, params)
 }
 
-func (c *Client) TeleportUnit(unitId uint32, location *Point) error {
+func (c *Client) TeleportUnit(unitId uint32, location Point) error {
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
@@ -642,7 +642,7 @@ func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) 
 						MakeEnumeration(int32(local.Precipitation)),
 						MakeTime(local.StartTime),
 						MakeTime(local.EndTime),
-						MakeRectangleParam(&local.BottomRight, &local.TopLeft),
+						MakeRectangleParam(local.BottomRight, local.TopLeft),
 						MakeIdentifier(local.Id),
 					),
 				},
