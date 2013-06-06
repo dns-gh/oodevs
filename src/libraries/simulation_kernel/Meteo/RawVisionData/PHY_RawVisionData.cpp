@@ -13,7 +13,6 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_InterpolatedFunction.h"
 #include "tools/InputBinaryStream.h"
 #include <tools/Path.h>
 
