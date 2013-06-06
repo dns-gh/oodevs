@@ -293,9 +293,12 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     if( ! path_.GetUnitSpeeds().IsPassable( nToTerrainType ) )
         return IMPOSSIBLE_DESTINATION( "Terrain type" );
 
-    auto f = boost::bind( &IsSlopeTooSteep, boost::cref( altitudeData_ ), from, _1, rMaxSlope_ * rMaxSlope_ );
-    if( Elevation( altitudeData_.GetCellSize() ).FindPath( from, to, f ) )
-        return IMPOSSIBLE_WAY( "Slope" );
+    if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathFinderSlope() )
+    {
+        auto f = boost::bind( &IsSlopeTooSteep, boost::cref( altitudeData_ ), from, _1, rMaxSlope_ * rMaxSlope_ );
+        if( Elevation( altitudeData_.GetCellSize() ).FindPath( from, to, f ) )
+            return IMPOSSIBLE_WAY( "Slope" );
+    }
 
     // Cost computation taken various dynamic terrain items into account
     double rDynamicCost = 0.;

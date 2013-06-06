@@ -73,6 +73,7 @@ public:
     unsigned int       GetEndTick                () const;
     bool               GetPausedAtStartup        () const;
     unsigned int       GetPathFinderThreads      () const;
+    bool               UsePathFinderSlope        () const;
     const std::string& GetCheckpointNameTestMode () const;
 
     int                GetRandomSeed             () const;
@@ -153,6 +154,7 @@ private:
     bool           bFrozenMode_;
     bool           bEmbeddedDispatcher_;
     bool           bPausedAtStartup_;
+    bool           pathfinderSlope_;
     std::string    strCheckPointNameTestMode_;
     T_CRCMap       CRCMap_;
     int            randomSeed_;

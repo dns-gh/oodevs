@@ -59,6 +59,7 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , bFrozenMode_( false )
     , bEmbeddedDispatcher_( false )
     , bPausedAtStartup_( false )
+    , pathfinderSlope_( true )
     , randomSeed_( 0 )
     , setpause_( 0 )
     , setstepmul_( 0 )
@@ -152,6 +153,7 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
                     >> xml::end
                     >> xml::start( "pathfinder" )
                         >> xml::attribute( "threads", pathFinderThreads_ )
+                        >> xml::optional >> xml::attribute( "slope", pathfinderSlope_ )
                     >> xml::end
                     >> xml::optional
                     >> xml::start( "random" )
