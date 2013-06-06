@@ -90,13 +90,12 @@ func (c *Client) CreateFormation(partyId uint32, parentId uint32,
 		}
 		taskerId = partyId
 	}
-	actionType := sword.UnitMagicAction_formation_creation
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
 					Tasker: tasker,
-					Type:   &actionType,
+					Type:   sword.UnitMagicAction_formation_creation.Enum(),
 					Parameters: MakeParameters(
 						MakeFloat(float32(level)),
 						MakeString(name),
@@ -155,7 +154,6 @@ func (c *Client) createUnit(automatId, unitType uint32, location *Point,
 			Id: proto.Uint32(automatId),
 		}
 	}
-	actionType := sword.UnitMagicAction_unit_creation
 	params := []*sword.MissionParameter{
 		MakeIdentifier(unitType),
 		MakePointParam(location),
@@ -171,7 +169,7 @@ func (c *Client) createUnit(automatId, unitType uint32, location *Point,
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
 					Tasker:     tasker,
-					Type:       &actionType,
+					Type:       sword.UnitMagicAction_unit_creation.Enum(),
 					Parameters: MakeParameters(params...),
 				},
 			},
@@ -274,13 +272,12 @@ func (c *Client) SendAutomatOrder(unitId, missionType uint32,
 }
 
 func (c *Client) DeleteUnit(unitId uint32) error {
-	actionType := sword.UnitMagicAction_delete_unit
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
 					Tasker:     makeUnitTasker(unitId),
-					Type:       &actionType,
+					Type:       sword.UnitMagicAction_delete_unit.Enum(),
 					Parameters: MakeParameters(),
 				},
 			},
@@ -327,13 +324,12 @@ func (c *Client) CreateAutomat(formationId, automatId, automatType,
 			Id: proto.Uint32(formationId),
 		}
 	}
-	actionType := sword.UnitMagicAction_automat_creation
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
 					Tasker: tasker,
-					Type:   &actionType,
+					Type:   sword.UnitMagicAction_automat_creation.Enum(),
 					Parameters: MakeParameters(
 						MakeIdentifier(automatType),
 						MakeIdentifier(knowledgeGroupId),
@@ -381,7 +377,6 @@ func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 		}
 	}
 
-	actionType := sword.UnitMagicAction_crowd_creation
 	params := []*sword.MissionParameter{
 		MakeString(crowdType),
 		MakePointParam(location),
@@ -396,7 +391,7 @@ func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
 					Tasker:     tasker,
-					Type:       &actionType,
+					Type:       sword.UnitMagicAction_crowd_creation.Enum(),
 					Parameters: MakeParameters(params...),
 				},
 			},
@@ -603,13 +598,12 @@ func (c *Client) SendUnitFragOrder(unitId, fragOrderType uint32,
 }
 
 func (c *Client) TeleportUnit(unitId uint32, location *Point) error {
-	actionType := sword.UnitMagicAction_move_to
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
 					Tasker: makeUnitTasker(unitId),
-					Type:   &actionType,
+					Type:   sword.UnitMagicAction_move_to.Enum(),
 					Parameters: MakeParameters(
 						MakePointParam(location),
 					),
