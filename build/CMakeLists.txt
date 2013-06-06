@@ -2,10 +2,12 @@ cmake_minimum_required( VERSION 2.8 )
 project( sword )
 
 enable_testing()
-include( ${MASA_MACROS} )
 
 get_filename_component( root_dir "${CMAKE_SOURCE_DIR}/.." REALPATH )
 include_directories( ${root_dir}/src/libraries )
+
+include( ${MASA_MACROS} )
+
 add_definitions(
     -DBOOST_SPIRIT_THREADSAFE
     -DPLATFORM=${platform}
