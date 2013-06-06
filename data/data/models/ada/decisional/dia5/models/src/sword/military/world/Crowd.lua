@@ -143,7 +143,7 @@ return
     hideInto = masalife.brain.integration.startStopAction( 
     { 
         start = function( self )
-            meKnowledge:RC( eRC_startHiddingInTheCrowd )
+            meKnowledge:RC( eRC_startHidingInTheCrowd )
             integration.lockCrowdKnowledge( self )
             integration.startHidingInCrowd( self )
         end,
@@ -151,7 +151,7 @@ return
             return true -- this action cannot fail...
         end,
         stop = function( self )
-            meKnowledge:RC( eRC_stopHiddingInTheCrowd )
+            meKnowledge:RC( eRC_stopHidingInTheCrowd )
             integration.stopHidingInCrowd( self )
             integration.unlockCrowdKnowledge( self )
         end
