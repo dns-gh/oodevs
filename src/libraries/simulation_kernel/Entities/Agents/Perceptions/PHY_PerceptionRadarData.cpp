@@ -67,11 +67,11 @@ PHY_PerceptionRadarData::~PHY_PerceptionRadarData()
 
 namespace
 {
-    bool CanPerceive( const MT_Vector2D& sourcePosition, const MT_Vector2D& targetPosition, double sensorHeight )
+    bool CanPerceive( const MT_Vector2D& sourcePosition, const MT_Vector2D& targetPosition, double sensorHeight, double perceiverAltitude, double targetAltitude  )
     {
         static const double targetHeight = 2.0;
-        const MT_Vector3D vSource3D( sourcePosition.rX_, sourcePosition.rY_, sensorHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( sourcePosition.rX_, sourcePosition.rY_ ) );
-        const MT_Vector3D vTarget3D( targetPosition.rX_, targetPosition.rY_, targetHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( targetPosition.rX_, targetPosition.rY_ ) );
+        const MT_Vector3D vSource3D( sourcePosition.rX_, sourcePosition.rY_, sensorHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( sourcePosition.rX_, sourcePosition.rY_ ) + perceiverAltitude );
+        const MT_Vector3D vTarget3D( targetPosition.rX_, targetPosition.rY_, targetHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( targetPosition.rX_, targetPosition.rY_ ) + targetAltitude );
 
         PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
         while ( !(++it).End() )
@@ -91,6 +91,7 @@ namespace
 void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& targets, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
     const MT_Vector2D& perceiverPosition = perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
+    double perceiverAltitude = perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetHeight();
     for( TER_Agent_ABC::CIT_AgentPtrVector it = targets.begin(); it != targets.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
@@ -100,7 +101,8 @@ void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perce
         if( detectionComputer->CanBeSeen() && pRadarType_->CanAcquire( perceiver.GetPion(), target ) )
         {
             const MT_Vector2D& targetPosition = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
-            if( CanPerceive( perceiverPosition, targetPosition, sensorHeight_ ) )
+            double targetAltitude = target.GetRole< PHY_RoleInterface_Location >().GetHeight();
+            if( CanPerceive( perceiverPosition, targetPosition, sensorHeight_, perceiverAltitude, targetAltitude ) )
             {
                 sAcquisitionData& agentData = acquisitionData_[ &target ];
                 agentData.bUpdated_ = true;
