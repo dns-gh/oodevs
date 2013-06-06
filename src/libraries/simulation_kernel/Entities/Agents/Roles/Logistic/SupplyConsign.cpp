@@ -514,7 +514,7 @@ void SupplyConsign::OnResourceRemovedFromConvoy( const PHY_DotationCategory& dot
 // -----------------------------------------------------------------------------
 void SupplyConsign::OnConvoyEndMission()
 {
-    SetState( eFinished );
+    ResetConsign();
 }
 
 // =============================================================================
