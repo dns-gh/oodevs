@@ -26,8 +26,7 @@ enum E_VisionObject // $$$$ _RC_ SLI 2012-07-24: Copied from simulation_kernel/m
     eVisionEmpty      = 0x0,
     eVisionForest     = 0x1,
     eVisionUrban      = 0x2,
-    eVisionGround     = 0x4,
-    eNbrVisionObjects = 4
+    eVisionGround     = 0x4
 };
 
 }
