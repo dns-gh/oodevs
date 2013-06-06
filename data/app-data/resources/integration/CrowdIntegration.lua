@@ -420,6 +420,7 @@ integration.startDemonstrate = function( crowd )
     local intensite = S_IntensiteManifestationSurPions()
     crowd.manifIntensity = intensite
     crowd.actionSurPions = DEC__StartTirSurPions( intensite )
+    DEC_Population_ChangeDemonstrationState( true )
 end
 
 integration.uptateDemonstrate = function( crowd )
@@ -436,6 +437,7 @@ integration.stopDemonstrate = function( crowd )
         crowd.actionSurPions = DEC__StopAction( crowd.actionSurPions )
         crowd.actionSurPions = nil
     end
+    DEC_Population_ChangeDemonstrationState( false )
 end
 
 integration.isCivilian = function( pion )

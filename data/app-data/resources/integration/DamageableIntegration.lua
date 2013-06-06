@@ -1,5 +1,6 @@
 integration.startDamageUrbanBlock = function( urbanBlock )
     urbanBlock.actionDamage = DEC_DetruireBlocUrbain( urbanBlock.source )
+    DEC_Population_ChangeUrbanDestructionState( true )
     return false
 end
 
@@ -8,6 +9,7 @@ integration.stopDamageUrbanBlock = function( urbanBlock )
         urbanBlock.actionDamage = DEC__StopAction( urbanBlock.actionDamage )
         urbanBlock.actionDamage = nil
     end
+    DEC_Population_ChangeUrbanDestructionState( false )
     return true
 end
 
