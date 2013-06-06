@@ -1506,7 +1506,7 @@
       <ph target-posture="PostePrepareGenie" value="1"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="00010018" codeLFRIL="" codeNNO="1111110020018" id="69" id-nature="3" name="Charg 7,62" nature="Solide" package-mass="0.001" package-size="0.001" package-volume="0.001" type="Mitraille">
+  <resource category="munition" codeEMAT6="" codeEMAT8="00010018" codeLFRIL="" codeNNO="1111110020018" id="69" id-nature="3" name="Charg 7,62" nature="Solide" package-mass="0.038" package-size="1000" package-volume="0.035" type="Mitraille">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.1" protection="CombattantProtege" repairable-with-evacuation="0.25" repairable-without-evacuation="0.2"/>
@@ -1594,7 +1594,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1305 166 0100" codeLFRIL="" codeNNO="1305 14 412 7113" id="73" id-nature="3" name="CART 7.62" nature="Solide" package-mass="0.001" package-size="0.001" package-volume="0.001" type="Mitraille">
+  <resource category="munition" codeEMAT6="" codeEMAT8="1305 166 0100" codeLFRIL="" codeNNO="1305 14 412 7113" id="73" id-nature="3" name="CART 7.62" nature="Solide" package-mass="0.038" package-size="1000" package-volume="0.035" type="Mitraille">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.1" protection="CombattantProtege" repairable-with-evacuation="0.25" repairable-without-evacuation="0.2"/>
@@ -2751,4 +2751,4 @@
   <resource category="funeraire" codeEMAT6="" codeEMAT8="00010075" codeLFRIL="" codeNNO="1111110020075" id="146" id-nature="3" name="Sac mortuaire" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
   <resource category="funeraire" codeEMAT6="" codeEMAT8="00010076" codeLFRIL="" codeNNO="1111110020076" id="147" id-nature="3" name="Conteneur mortuaire" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
 </resources>
-<!-- signature="3724803326" -->
+<!-- signature="3860563214" -->
