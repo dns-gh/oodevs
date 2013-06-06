@@ -4979,6 +4979,9 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_DetectionRange.h">
       <Filter>Source Files\Entities\Effects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Meteo\RawVisionData\Elevation.h">
+      <Filter>Source Files\Knowledge\Meteo\RawVisionData</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\simulation_kernel\Network\NET_AsnException.inl">

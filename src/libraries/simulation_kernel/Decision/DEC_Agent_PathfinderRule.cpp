@@ -19,6 +19,7 @@
 #include "Tools/MIL_Tools.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
+#include "Meteo/RawVisionData/Elevation.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include <urban/Model.h>
 
@@ -266,6 +267,15 @@ namespace
 #   define IMPOSSIBLE_WAY( reason )         -1.
 #endif // DEBUG_IMPOSSIBLE_PATHFIND
 
+namespace
+{
+    bool IsSlopeTooSteep( const PHY_RawVisionData& data, const MT_Vector2D& from, const MT_Vector2D& to, double maxSquareSlope )
+    {
+        const double delta = data.GetAltitude( to ) - data.GetAltitude( from );
+        return delta * delta > from.SquareDistance( to ) * maxSquareSlope;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::GetCost
 // Created: AGE 2005-03-08
@@ -283,22 +293,15 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     if( ! path_.GetUnitSpeeds().IsPassable( nToTerrainType ) )
         return IMPOSSIBLE_DESTINATION( "Terrain type" );
 
-    const double rDistance     = from.Distance( to );
-    const double rAltitudeFrom = altitudeData_.GetAltitude( from );
-    const double rAltitudeTo   = altitudeData_.GetAltitude( to );
-    {
-        const double rDelta          = rAltitudeTo - rAltitudeFrom;
-        double rSlope = rDistance > 0 ? rDelta / rDistance : 0;
-        if( rSlope < 0 )
-            rSlope *= -1;
-        if( rSlope > rMaxSlope_ )
-            return IMPOSSIBLE_WAY( "Slope" );
-    }
+    auto f = boost::bind( &IsSlopeTooSteep, boost::cref( altitudeData_ ), from, _1, rMaxSlope_ * rMaxSlope_ );
+    if( Elevation( altitudeData_.GetCellSize() ).FindPath( from, to, f ) )
+        return IMPOSSIBLE_WAY( "Slope" );
 
     // Cost computation taken various dynamic terrain items into account
     double rDynamicCost = 0.;
 
     // Altitude
+    const double rAltitudeTo   = altitudeData_.GetAltitude( to );
     const double rAltitudeCost = GetAltitudeCost( rAltitudeTo );
     rDynamicCost += rAltitudeCost;
 
@@ -340,6 +343,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
         return IMPOSSIBLE_WAY( "Populations" );
     rDynamicCost += rPopulationsCost;
 
+    const double rDistance = from.Distance( to );
     const double rBaseCost = bShort_ ? rDistance : ( rDistance / rSpeed );
     return rBaseCost * ( 1 + rDynamicCost );
 }

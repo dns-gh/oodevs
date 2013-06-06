@@ -219,6 +219,7 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\ComposantePionTest.cpp" />
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ElevationTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\MIL_DecontaminationTest.cpp" />
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\simulation_kernel_test_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
