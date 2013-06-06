@@ -115,3 +115,11 @@ func Test(t *testing.T) { TestingT(t) }
 type TestSuite struct{}
 
 var _ = Suite(&TestSuite{})
+
+func (t *TestSuite) SetUpSuite(c *C) {
+	log.Println("application", application)
+	log.Println("rootdir", rootdir)
+	log.Println("rundir", rundir)
+	log.Println("testPort", testPort)
+	log.Println("legacy", legacy)
+}
