@@ -42,7 +42,11 @@ public:
     //! @name Types
     //@{
     typedef PHY_RoleAction_Transport RoleInterface;
+    //@}
 
+private:
+    //! @name Types
+    //@{
     struct sTransportData
     {
         sTransportData();
