@@ -44,6 +44,10 @@ public:
     static std::vector< boost::shared_ptr< TER_Localisation > > GetCurrentLocations ( const MIL_Population& callerPopulation );
     static double GetUrbanBlockAngriness( const MIL_Population& callerPopulation );
     static void ReintegrateUrbanBlock( MIL_Population& callerPopulation );
+    static void SetUrbanDestructionState( MIL_Population& callerPopulation, bool state );
+    static bool GetUrbanDestructionState( MIL_Population& callerPopulation );
+    static void SetDemonstrationState( MIL_Population& callerPopulation, bool state );
+    static bool GetDemonstrationState( MIL_Population& callerPopulation );
 
     // Knowledge agents
     static int GetKnowledgeAgentRoePopulation ( unsigned int agentId );

@@ -20,6 +20,7 @@
 #include "Entities/MIL_Entity_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Decision/DEC_Tools.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 
 namespace xml
 {

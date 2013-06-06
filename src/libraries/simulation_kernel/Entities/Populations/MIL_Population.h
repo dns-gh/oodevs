@@ -163,6 +163,10 @@ public:
     void SetUrbanBlockAngriness( double );
     void ChangeComposition( unsigned int healthy, unsigned int wounded, unsigned int contaminated, unsigned int dead );
     double ComputeUrbanBlocDestruction( MIL_UrbanObject_ABC* pUrbanObjet );
+    void SetUrbanDestructionState( bool state );
+    bool GetUrbanDestructionState();
+    void SetDemonstrationState( bool state );
+    bool GetDemonstrationState();
     //@}
 
     //! @name Tools
@@ -268,6 +272,8 @@ private:
     bool                                        bHasDoneMagicMove_;
     bool                                        criticalIntelligenceChanged_;
     bool                                        armedIndividualsChanged_;
+    bool                                        isDamagingUrbanBlock_;
+    bool                                        isDemonstrating_;
     std::auto_ptr< MIL_AffinitiesMap >          pAffinities_;
     std::auto_ptr< MIL_DictionaryExtensions >   pExtensions_;
     double                                      urbanBlockAngriness_;
