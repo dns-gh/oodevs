@@ -16,6 +16,8 @@
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/FragOrderType.h"
+#include "clients_kernel/MissionType.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -158,4 +160,77 @@ BOOST_FIXTURE_TEST_CASE( hla_check_object_mapping, Fixture )
     const kernel::StaticModel& st( StaticModel() );
     CheckEntry< kernel::ObjectType > checker( st.objectTypes_, ObjectMappingFile() );
     parseMapping(ObjectMappingFile(), checker);
+}
+
+namespace
+{
+    class MissionFixture
+    {
+    public:
+        MissionFixture()
+            : config_( fileObserver_ )
+        {
+            config_.Parse( sizeof(CMD_LINE)/sizeof(CMD_LINE[0]), CMD_LINE );
+            pluginRoot_ = config_.BuildPluginDirectory( "hla" );
+            staticModel_.Load( config_ );
+        }
+        ~MissionFixture()
+        {
+            staticModel_.Purge();
+        }
+
+        template <typename F>
+        void parseMission(const std::string& , xml::xistream& xis, const F& ftor)
+        {
+            const std::string mission = xis.value< std::string >();
+            ftor(mission);
+        }
+        template <typename F>
+        void parseMissions(const std::string& section, const F& ftor)
+        {
+            tools::Xifstream xis( pluginRoot_ / "configuration.xml" );
+            xis >> xml::start("configuration")
+                    >> xml::start("missions")
+                        >> xml::start(section)
+                            >> xml::list( *this, &MissionFixture::parseMission<F>, boost::cref(ftor) );
+        }
+        const tools::Path& PluginRoot() const { return pluginRoot_; }
+        const tools::ExerciseConfig& Config() const { return config_; }
+        const kernel::StaticModel& StaticModel() const { return staticModel_; }
+
+    private:
+        VoidRealFileLoaderObserver fileObserver_;
+        tools::SessionConfig config_;
+        tools::Path pluginRoot_;
+        kernel::StaticModel staticModel_;
+    };
+    struct MissionResolver : public tools::Resolver< kernel::MissionType, std::string >
+    {
+    public:
+        MissionResolver( const tools::Resolver_ABC< kernel::MissionType >& missions)
+        {
+            tools::Iterator< const kernel::MissionType& > it=missions.CreateIterator();
+            while(it.HasMoreElements())
+            {
+                const kernel::MissionType& elem = it.NextElement();
+                if( !elem.IsAutomat() )
+                    Register( elem.GetName(), const_cast< kernel::MissionType& >( elem ) );
+            }
+        }
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( hla_check_frag_orders, MissionFixture )
+{
+    const kernel::StaticModel& st( StaticModel() );
+    CheckEntry< kernel::FragOrderType > checker( st.types_, PluginRoot() );
+    parseMissions( "fragOrders" , checker );
+}
+
+BOOST_FIXTURE_TEST_CASE( hla_check_transport_request_missions, MissionFixture )
+{
+    const kernel::StaticModel& st( StaticModel() );
+    MissionResolver resolver( st.types_ );
+    CheckEntry< kernel::MissionType > checker( resolver, PluginRoot() );
+    parseMissions( "request" , checker );
 }

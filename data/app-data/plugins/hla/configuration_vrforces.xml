@@ -12,21 +12,21 @@
     </types>
     <missions>
         <fragOrders>
-            <pause>Pause maneuver</pause>
-            <resume>Resume maneuver</resume>
-            <cancel>Cancel maneuver</cancel>
+            <pause>Pause movement</pause>
+            <resume>Resume movement</resume>
+            <cancel>End mission</cancel>
         </fragOrders>
         <request>
-            <transport>COMMON - request transport</transport>
-            <embarkment>COMMON - request embark</embarkment>
-            <disembarkment>COMMON - request take off</disembarkment>
-            <embarkment>COMMON - request landing</embarkment>
-            <disembarkment>COMMON - request disembark</disembarkment>
+            <transport>COMMON - Request transport</transport>
+            <embarkment>COMMON - Request embark</embarkment>
+            <disembarkment>COMMON - Request take off</disembarkment>
+            <embarkment>COMMON - Request landing</embarkment>
+            <disembarkment>COMMON - Request disembark</disembarkment>
         </request>
         <offer>
-            <transport>COMMON - offer transport</transport>
-            <embarkment>COMMON - offer embark</embarkment>
-            <disembarkment>COMMON - offer disembark</disembarkment>
+            <transport>COMMON - Offer transport</transport>
+            <embarkment>COMMON - Offer embark</embarkment>
+            <disembarkment>COMMON - Offer disembark</disembarkment>
         </offer>
     </missions>
     <reports>
