@@ -20,9 +20,8 @@ namespace
         {}
         void TestAdjacent( const MT_Vector2D& from, const MT_Vector2D& to )
         {
-            mock::sequence s;
             MOCK_FUNCTOR( collector, bool( const MT_Vector2D& ) );
-            MOCK_EXPECT( collector ).once().with( to ).in( s ).returns( false );
+            MOCK_EXPECT( collector ).once().with( to ).returns( false );
             elevation.FindPath( from, to, collector );
         }
         void TestConsecutive( const MT_Vector2D& from, const MT_Vector2D& middle, const MT_Vector2D& to )
