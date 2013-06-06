@@ -45,7 +45,7 @@
                 </skill>
             </skills>
         </stage>
-        <stage label="Sortir du réseau souterrain">
+        <stage label="Sortir du réseau souterrain" disable-when-done="true">
             <skills>
                 <skill name="france.military.platoon.skills.SortirDuReseauSouterrain" main="true">
                     <parameter name="objective">
