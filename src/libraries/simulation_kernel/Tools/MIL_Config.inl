@@ -272,6 +272,16 @@ unsigned int MIL_Config::GetPathFinderThreads() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Config::UsePathFinderSlope
+// Created: MCO 2013-06-06
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::UsePathFinderSlope() const
+{
+    return pathfinderSlope_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Config::GetCheckpointTestName
 // Created: JSR 2010-03-11
 // -----------------------------------------------------------------------------
