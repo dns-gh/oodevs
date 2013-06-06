@@ -137,6 +137,26 @@ bool DEC_Knowledge_PopulationConcentrationPerception::IsPerceived() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentrationPerception::IsDestructingUrbanblocks
+// Created: NPT 2013-06-05
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationConcentrationPerception::IsDestructingUrbanblocks() const
+{
+    assert( pPopulationKnowledge_ );
+    return pPopulationKnowledge_->IsDestructingUrbanblocks();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentrationPerception::IsDemonstrating
+// Created: NPT 2013-06-05
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationConcentrationPerception::IsDemonstrating() const
+{
+    assert( pPopulationKnowledge_ );
+    return pPopulationKnowledge_->IsDemonstrating();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentrationPerception::GetNbrAliveHumans
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------

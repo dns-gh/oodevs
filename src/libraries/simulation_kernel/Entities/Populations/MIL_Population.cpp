@@ -22,6 +22,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -89,6 +90,8 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
+    , isDamagingUrbanBlock_       ( false )
+    , isDemonstrating_            ( false )
     , pAffinities_                ( new MIL_AffinitiesMap( xis ) )
     , pExtensions_                ( new MIL_DictionaryExtensions( xis ) )
 {
@@ -141,6 +144,8 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
+    , isDamagingUrbanBlock_       ( false )
+    , isDemonstrating_            ( false )
     , pAffinities_                ( 0 )
     , pExtensions_                ( 0 )
 {
@@ -171,6 +176,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
+    , isDamagingUrbanBlock_       ( false )
+    , isDemonstrating_            ( false )
     , pAffinities_                ( new MIL_AffinitiesMap() )
     , pExtensions_                ( new MIL_DictionaryExtensions() )
 {
@@ -1610,6 +1617,42 @@ bool MIL_Population::HasHumansChanged() const
         if( ( **itFlow ).HasHumansChanged() )
             return true;
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::SetUrbanDestructionState
+// Created: NPT 2013-06-05
+// -----------------------------------------------------------------------------
+void MIL_Population::SetUrbanDestructionState( bool state )
+{
+    isDamagingUrbanBlock_ = state;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetUrbanDestructionState
+// Created: NPT 2013-06-05
+// -----------------------------------------------------------------------------
+bool MIL_Population::GetUrbanDestructionState()
+{
+    return isDamagingUrbanBlock_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::SetDemonstrationState
+// Created: NPT 2013-06-05
+// -----------------------------------------------------------------------------
+void MIL_Population::SetDemonstrationState( bool state )
+{
+    isDemonstrating_ = state;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetDemonstrationState
+// Created: NPT 2013-06-05
+// -----------------------------------------------------------------------------
+bool MIL_Population::GetDemonstrationState()
+{
+    return isDemonstrating_;
 }
 
 // -----------------------------------------------------------------------------

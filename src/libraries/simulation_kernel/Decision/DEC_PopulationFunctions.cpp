@@ -69,6 +69,42 @@ unsigned int DEC_PopulationFunctions::GetAttitude( const MIL_Population& callerP
     return callerPopulation.GetAttitude().GetID() ;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::SetUrbanDestructionState
+// Created: NPT 2013-06-05
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::SetUrbanDestructionState( MIL_Population& callerPopulation, bool state )
+{
+    callerPopulation.SetUrbanDestructionState( state );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetUrbanDestructionState
+// Created: NPT 2013-06-05
+// -----------------------------------------------------------------------------
+bool DEC_PopulationFunctions::GetUrbanDestructionState( MIL_Population& callerPopulation )
+{
+    return callerPopulation.GetUrbanDestructionState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::SetDemonstrationState
+// Created: NPT 2013-06-05
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::SetDemonstrationState( MIL_Population& callerPopulation, bool state )
+{
+    callerPopulation.SetDemonstrationState( state );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetDemonstrationState
+// Created: NPT 2013-06-05
+// -----------------------------------------------------------------------------
+bool DEC_PopulationFunctions::GetDemonstrationState( MIL_Population& callerPopulation )
+{
+    return callerPopulation.GetDemonstrationState();
+}
+
 namespace
 {
     class PopulationVisitor : public MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >

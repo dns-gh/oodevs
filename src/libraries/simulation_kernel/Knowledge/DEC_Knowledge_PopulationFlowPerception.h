@@ -49,6 +49,7 @@ public:
     bool Clean();
     bool IsIdentified();
     bool IsPerceived () const; // Perception au tick courant
+    bool IsDestructingUrbanblocks() const;
     //@}
 
     //! @name Accessors

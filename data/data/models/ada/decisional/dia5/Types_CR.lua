@@ -480,4 +480,5 @@ eRC_LogSuperiorAdded = 513
 eRC_LogSuperiorRemoved = 514
 eRC_startHiddingInTheCrowd = 515
 eRC_stopHiddingInTheCrowd = 516
-eNbr = 517
+eRC_CloseCrowdDemonstration = 517
+eNbr = 518

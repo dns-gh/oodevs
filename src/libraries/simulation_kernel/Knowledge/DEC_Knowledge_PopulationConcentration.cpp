@@ -23,6 +23,8 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include <boost/shared_ptr.hpp>
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationConcentration )
 
@@ -198,8 +200,23 @@ void DEC_Knowledge_PopulationConcentration::Update( const DEC_Knowledge_Populati
         bool postEvent = pAttitude_ == 0;
         pAttitude_ = &perception.GetAttitude();
         bAttitudeUpdated_ = true;
+
         if( postEvent )
+        {
             MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_AttitudePopulation, pAttitude_->GetID() );
+            auto bbKg = perception.GetAgentPerceiving().GetKnowledgeGroup()->GetKnowledge();
+            if( bbKg )
+            {
+                boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( pPopulationKnowledge_->GetID() );
+                if( pKnowledge )
+                {
+                   if( perception.IsDestructingUrbanblocks() )
+                       MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_CloseCrowdUrbanDestruction, pKnowledge );
+                   if( perception.IsDemonstrating() )
+                       MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_CloseCrowdDemonstration, pKnowledge );
+    }
+            }
+        }
     }
     if( pPopulationKnowledge_->IsRecon() )
     {

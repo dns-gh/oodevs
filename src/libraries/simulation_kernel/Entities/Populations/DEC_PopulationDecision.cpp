@@ -219,6 +219,14 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
         boost::function< int() >(boost::bind( &DEC_PopulationFunctions::GetAttitude, boost::ref( GetPopulation() ) ) );
     brain[ "DEC_Population_Positions" ] =
         boost::function< std::vector< boost::shared_ptr< TER_Localisation > >() >(boost::bind( &DEC_PopulationFunctions::GetCurrentLocations, boost::cref( GetPopulation() ) ) );
+    brain[ "DEC_Population_ChangeUrbanDestructionState" ] =
+        boost::function< void ( bool ) >(boost::bind( &DEC_PopulationFunctions::SetUrbanDestructionState, boost::ref( GetPopulation() ), _1 ) );
+    brain[ "DEC_Population_UrbanDestructionState" ] =
+        boost::function< bool() >(boost::bind( &DEC_PopulationFunctions::GetUrbanDestructionState, boost::ref( GetPopulation() ) ) );
+    brain[ "DEC_Population_ChangeDemonstrationState" ] =
+        boost::function< void ( bool ) >(boost::bind( &DEC_PopulationFunctions::SetDemonstrationState, boost::ref( GetPopulation() ), _1 ) );
+    brain[ "DEC_Population_DemonstrationState" ] =
+        boost::function< bool() >(boost::bind( &DEC_PopulationFunctions::GetDemonstrationState, boost::ref( GetPopulation() ) ) );
 
     // Move
     brain[ "DEC_Agent_NiveauInstallation" ] = boost::bind( &DEC_PopulationFunctions::GetMovingState, boost::ref( GetPopulation() ) );

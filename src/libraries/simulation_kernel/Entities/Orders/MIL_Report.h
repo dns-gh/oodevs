@@ -173,7 +173,8 @@ public:
         eRC_SurrenderedUnitIdentified = 511,
         eRC_TransportRoundTrip = 512,
         eRC_LogSuperiorAdded = 513,
-        eRC_LogSuperiorRemoved = 514
+        eRC_LogSuperiorRemoved = 514,
+        eRC_CloseCrowdDemonstration = 517
     };
     //@}
 

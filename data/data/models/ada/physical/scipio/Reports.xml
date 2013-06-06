@@ -707,5 +707,8 @@
   </report>
   <report category="operational" id="515" message="Agent se dissimule dans la foule"/>
   <report category="operational" id="516" message="Agent ne se dissimule plus dans la foule"/>
+  <report category="operational" id="517" message="La foule %1 est en train de manifester">
+    <parameter type="CrowdKnowledge"/>
+  </report>
 </reports>
-<!-- signature="4202547132" -->
+<!-- signature="2380303184" -->

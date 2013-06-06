@@ -308,6 +308,26 @@ const MIL_Agent_ABC& DEC_Knowledge_PopulationPerception::GetAgentPerceiving() co
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::IsDestructingUrbanblocks
+// Created: NPT 2013-06-05
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationPerception::IsDestructingUrbanblocks() const
+{
+    assert( pPopulationPerceived_ );
+    return pPopulationPerceived_->GetUrbanDestructionState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationPerception::IsDemonstrating
+// Created: NPT 2013-06-05
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationPerception::IsDemonstrating() const
+{
+    assert( pPopulationPerceived_ );
+    return pPopulationPerceived_->GetDemonstrationState();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationPerception::NotifyAttacker
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------

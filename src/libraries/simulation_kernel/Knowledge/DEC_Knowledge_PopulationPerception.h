@@ -86,6 +86,8 @@ public:
     //@{
     MIL_Population& GetPopulationPerceived() const;
     const MIL_Agent_ABC& GetAgentPerceiving() const;
+    bool IsDestructingUrbanblocks() const;
+    bool IsDemonstrating() const;
     //@}
 
 private:
