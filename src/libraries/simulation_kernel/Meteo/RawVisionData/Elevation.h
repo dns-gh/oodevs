@@ -39,6 +39,7 @@ public:
         const int x2 = static_cast< int >( to.rX_ / cellSize_ );
         const int y2 = static_cast< int >( to.rY_ / cellSize_ );
 
+        // Bresenham's line algorithm
         const int delta_x = x2 - x1;
         const int ix = (delta_x > 0) - (delta_x < 0);
         const int d_x = std::abs( delta_x ) << 1;
