@@ -79,6 +79,7 @@ self.done_BEH_Manoeuvre_Pion_AllerStationner = function( self, _, v ) self.eEtat
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             DEC_Transport_Annuler()
+                            DEC_FinMission()
                                                         do return end
 
                         end
