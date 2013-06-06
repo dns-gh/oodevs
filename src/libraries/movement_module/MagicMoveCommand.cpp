@@ -42,6 +42,7 @@ void MagicMoveCommand::Execute( const wrapper::View& parameters, const wrapper::
     wrapper::Effect effect( model[ "entities" ][ identifier ][ "movement" ] );
     effect[ "position" ] = parameters[ "position" ];
     effect[ "speed" ] = 0;
+    effect[ "path/points" ];
     effect.Post();
 }
 

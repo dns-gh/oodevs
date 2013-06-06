@@ -25,6 +25,7 @@
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_Fire.h"
@@ -132,6 +133,8 @@ void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
     }
 
     pTransporter_ = &transporter;
+
+    owner_->GetRole< moving::PHY_RoleAction_Moving >().NotifyCurrentPathChanged();
 
     owner_->Apply( &location::LocationActionNotificationHandler_ABC::Hide );
     vLoadingPosition_= transporter.GetRole< PHY_RoleInterface_Location >().GetPosition();

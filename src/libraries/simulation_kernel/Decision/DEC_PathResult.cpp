@@ -260,7 +260,6 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
 void DEC_PathResult::Serialize( sword::Path& asn, int firstPoint, int pathSizeThreshold ) const
 {
     assert( !resultList_.empty() );
-    asn.mutable_location()->set_type( sword::Location::line );
     int index = 0;
     CIT_PathPointList it = resultList_.begin();
     std::advance( it, firstPoint );

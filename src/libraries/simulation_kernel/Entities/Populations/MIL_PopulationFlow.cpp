@@ -660,8 +660,9 @@ void MIL_PopulationFlow::SendFullState() const
     client::CrowdFlowUpdate asnMsg;
     asnMsg().mutable_flow()->set_id( GetID() );
     asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
-    if( !SerializeCurrentPath( *asnMsg().mutable_path() ) )
-        asnMsg().clear_path();
+    sword::Path& path = *asnMsg().mutable_path();
+    path.mutable_location()->set_type( sword::Location::line );
+    SerializeCurrentPath( path );
     NET_ASN_Tools::WritePath( flowShape_, *asnMsg().mutable_parts() );
     NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     asnMsg().set_speed( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
@@ -684,8 +685,9 @@ void MIL_PopulationFlow::SendChangedState() const
     client::CrowdFlowUpdate asnMsg;
     asnMsg().mutable_flow()->set_id( GetID() );
     asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
-    if( bPathUpdated_ && !SerializeCurrentPath( *asnMsg().mutable_path() ) )
-        asnMsg().clear_path();
+    sword::Path& path = *asnMsg().mutable_path();
+    path.mutable_location()->set_type( sword::Location::line );
+    SerializeCurrentPath( *asnMsg().mutable_path() );
     if( bFlowShapeUpdated_ )
         NET_ASN_Tools::WritePath( flowShape_, *asnMsg().mutable_parts() );
     if( bDirectionUpdated_ )

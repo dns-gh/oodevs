@@ -307,8 +307,9 @@ void PHY_RoleAction_Moving::SendCurrentPath( unsigned int context ) const
 {
     client::UnitPathFind asnMsg;
     asnMsg().mutable_unit()->set_id( owner_->GetID() );
-    if( !SerializeCurrentPath( *asnMsg().mutable_path() ) )
-        return;
+    sword::Path& path = *asnMsg().mutable_path();
+    path.mutable_location()->set_type( sword::Location::line );
+    SerializeCurrentPath( path );
     asnMsg.Send( NET_Publisher_ABC::Publisher(), context );
 }
 

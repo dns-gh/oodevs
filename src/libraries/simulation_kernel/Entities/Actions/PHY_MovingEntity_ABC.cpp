@@ -79,9 +79,9 @@ void PHY_MovingEntity_ABC::SerializeEnvironmentType( sword::UnitEnvironmentType&
 // Name: PHY_MovingEntity_ABC::SerializeCurrentPath
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-bool PHY_MovingEntity_ABC::SerializeCurrentPath( sword::Path& asn ) const
+void PHY_MovingEntity_ABC::SerializeCurrentPath( sword::Path& asn ) const
 {
-    return pathWalker_.SerializeCurrentPath( asn );
+    pathWalker_.SerializeCurrentPath( asn );
 }
 
 // -----------------------------------------------------------------------------

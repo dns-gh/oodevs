@@ -77,7 +77,7 @@ public:
     //! @name Network
     //@{
     void SerializeEnvironmentType( sword::UnitEnvironmentType& msg ) const;
-    bool SerializeCurrentPath( sword::Path& asn ) const;
+    void SerializeCurrentPath( sword::Path& asn ) const;
     //@}
 
 private:

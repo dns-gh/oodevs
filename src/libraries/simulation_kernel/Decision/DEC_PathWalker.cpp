@@ -583,10 +583,8 @@ void DEC_PathWalker::SerializeEnvironmentType( sword::UnitEnvironmentType& msg )
 // Name: DEC_PathWalker::SerializeCurrentPath
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-bool DEC_PathWalker::SerializeCurrentPath( sword::Path& asn ) const
+void DEC_PathWalker::SerializeCurrentPath( sword::Path& asn ) const
 {
-    if( !pCurrentPath_.get() )
-        return false;
-    pCurrentPath_->Serialize( asn, pointsPassed_, 2*pathSizeThreshold );
-    return true;
+    if( pCurrentPath_.get() )
+        pCurrentPath_->Serialize( asn, pointsPassed_, 2*pathSizeThreshold );
 }

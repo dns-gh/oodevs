@@ -146,8 +146,6 @@ namespace
 {
     bool Serialize( client::UnitPathFind& message, unsigned int identifier, const core::Model& points )
     {
-        if( ! points.GetSize() )
-            return false;
         message().mutable_unit()->set_id( identifier );
         sword::Path& root = *message().mutable_path();
         root.mutable_location()->set_type( sword::Location::line );
