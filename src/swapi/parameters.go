@@ -11,6 +11,11 @@ package swapi
 import (
 	"code.google.com/p/goprotobuf/proto"
 	"sword"
+	"time"
+)
+
+const (
+	BoostTimeLayout = "20060102T150405.999999999"
 )
 
 func MakeParameters(args ...*sword.MissionParameter) *sword.MissionParameters {
@@ -33,6 +38,13 @@ func MakeParameter(args ...*sword.MissionParameter_Value) *sword.MissionParamete
 
 func MakeEmpty() *sword.MissionParameter {
 	return MakeParameter()
+}
+
+func MakeInt(value int32) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			IntValue: proto.Int32(value),
+		})
 }
 
 func MakeFloat(value float32) *sword.MissionParameter {
@@ -83,6 +95,13 @@ func MakeCoords(points ...*Point) *sword.CoordLatLongList {
 	}
 }
 
+func ReadPoint(value *sword.CoordLatLong) Point {
+	if value == nil {
+		return Point{}
+	}
+	return Point{X: value.GetLatitude(), Y: value.GetLongitude()}
+}
+
 func MakePointLocation(point *Point) *sword.Location {
 	return &sword.Location{
 		Type:        sword.Location_point.Enum(),
@@ -95,6 +114,20 @@ func MakeLineLocation(from, to *Point) *sword.Location {
 		Type:        sword.Location_line.Enum(),
 		Coordinates: MakeCoords(from, to),
 	}
+}
+
+func MakeRectangleLocation(from, to *Point) *sword.Location {
+	return &sword.Location{
+		Type:        sword.Location_rectangle.Enum(),
+		Coordinates: MakeCoords(from, to),
+	}
+}
+
+func MakeRectangleParam(from, to *Point) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Location: MakeRectangleLocation(from, to),
+		})
 }
 
 func MakePointParam(point *Point) *sword.MissionParameter {
@@ -128,6 +161,29 @@ func MakeLimit(from, to *Point) *sword.MissionParameter {
 				Location: MakeLineLocation(from, to),
 			},
 		})
+}
+
+func MakeEnumeration(value int32) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Enumeration: proto.Int32(value),
+		})
+}
+
+func MakeTime(value time.Time) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			DateTime: &sword.DateTime{
+				Data: proto.String(value.UTC().Format(BoostTimeLayout)),
+			},
+		})
+}
+
+func GetTime(value *sword.DateTime) (time.Time, error) {
+	if value == nil {
+		return time.Time{}, ErrInvalidTime
+	}
+	return time.Parse(BoostTimeLayout, value.GetData())
 }
 
 // Return the first value of the index-th parameter of params, or nil.

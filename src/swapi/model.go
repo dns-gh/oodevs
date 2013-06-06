@@ -9,12 +9,15 @@
 package swapi
 
 import (
+	"errors"
 	"fmt"
 	"sword"
 	"time"
 )
 
-const DatePattern = "20060102T150405"
+var (
+	ErrInvalidTime = errors.New("invalid time")
+)
 
 type modelCmd struct {
 	done chan int
@@ -107,7 +110,7 @@ func (model *Model) update(msg *SwordMessage) {
 		if m.GetControlSendCurrentStateEnd() != nil {
 			model.ready = true
 		} else if mm := m.GetControlBeginTick(); mm != nil {
-			t, err := time.Parse(DatePattern, mm.GetDateTime().GetData())
+			t, err := GetTime(mm.GetDateTime())
 			if err != nil {
 				// XXX: report parsing error here
 				return
@@ -139,9 +142,7 @@ func (model *Model) update(msg *SwordMessage) {
 				unit.Pc = *mm.Headquarters
 			}
 			if mm.Position != nil {
-				position := mm.GetPosition()
-				unit.Position.X = position.GetLongitude()
-				unit.Position.Y = position.GetLatitude()
+				unit.Position = ReadPoint(mm.GetPosition())
 			}
 		} else if mm := m.GetAutomatCreation(); mm != nil {
 			automat := NewAutomat(
