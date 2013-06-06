@@ -34,22 +34,10 @@ type Point struct {
 	Y float64
 }
 
-func MakePoint(x, y float64) *Point {
-	return &Point{X: x, Y: y}
-}
-
 type Profile struct {
 	Login      string
 	Password   string
 	Supervisor bool
-}
-
-func NewProfile(login, password string, supervisor bool) *Profile {
-	return &Profile{
-		Login:      login,
-		Password:   password,
-		Supervisor: supervisor,
-	}
 }
 
 type Population struct {
@@ -58,26 +46,10 @@ type Population struct {
 	Name    string
 }
 
-func NewPopulation(id, partyId uint32, name string) *Population {
-	return &Population{
-		Id:      id,
-		PartyId: partyId,
-		Name:    name,
-	}
-}
-
 type Crowd struct {
 	Id      uint32
 	PartyId uint32
 	Name    string
-}
-
-func NewCrowd(id, partyId uint32, name string) *Crowd {
-	return &Crowd{
-		Id:      id,
-		PartyId: partyId,
-		Name:    name,
-	}
 }
 
 type Unit struct {
@@ -87,16 +59,6 @@ type Unit struct {
 	Pc         bool
 	Position   Point
 	PathPoints uint32
-}
-
-func NewUnit(id, automatId uint32, name string, pc bool, position Point) *Unit {
-	return &Unit{
-		Id:        id,
-		AutomatId: automatId,
-		Name:      name,
-		Pc:        pc,
-		Position:  position,
-	}
 }
 
 type Automat struct {
@@ -151,15 +113,6 @@ type KnowledgeGroup struct {
 	Name     string
 	PartyId  uint32
 	ParentId uint32
-}
-
-func NewKnowledgeGroup(id uint32, name string, parentId, partyId uint32) *KnowledgeGroup {
-	return &KnowledgeGroup{
-		Id:       id,
-		PartyId:  partyId,
-		ParentId: parentId,
-		Name:     name,
-	}
 }
 
 type Party struct {

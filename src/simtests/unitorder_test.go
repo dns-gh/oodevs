@@ -28,8 +28,8 @@ func (s *TestSuite) TestGenericMission(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
 	automat := createAutomat(c, client)
-	from := swapi.MakePoint(-15.9219, 28.3456)
-	to := swapi.MakePoint(-15.8193, 28.3456)
+	from := &swapi.Point{X: -15.9219, Y: 28.3456}
+	to := &swapi.Point{X: -15.8193, Y: 28.3456}
 	unit, err := client.CreateUnit(automat.Id, UnitType, from)
 	c.Assert(err, IsNil)
 
@@ -68,12 +68,12 @@ func (s *TestSuite) TestAutomatMission(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
 	automat := createAutomat(c, client)
-	from := swapi.MakePoint(-15.9219, 28.3456)
+	from := &swapi.Point{X: -15.9219, Y: 28.3456}
 
-	limit11 := swapi.MakePoint(-15.8241, 28.3241)
-	limit12 := swapi.MakePoint(-15.8092, 28.3458)
-	limit21 := swapi.MakePoint(-15.8066, 28.3156)
-	limit22 := swapi.MakePoint(-15.7941, 28.3410)
+	limit11 := &swapi.Point{X: -15.8241, Y: 28.3241}
+	limit12 := &swapi.Point{X: -15.8092, Y: 28.3458}
+	limit21 := &swapi.Point{X: -15.8066, Y: 28.3156}
+	limit22 := &swapi.Point{X: -15.7941, Y: 28.3410}
 
 	_, err := client.CreateUnit(automat.Id, UnitType, from)
 	c.Assert(err, IsNil)
@@ -118,8 +118,8 @@ func (s *TestSuite) TestCrowdMission(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
 	data := client.Model.GetData()
-	from := swapi.MakePoint(-15.9219, 28.3456)
-	to := swapi.MakePoint(-15.8193, 28.3456)
+	from := &swapi.Point{X: -15.9219, Y: 28.3456}
+	to := &swapi.Point{X: -15.8193, Y: 28.3456}
 
 	party := data.FindPartyByName("party")
 	c.Assert(party, NotNil)

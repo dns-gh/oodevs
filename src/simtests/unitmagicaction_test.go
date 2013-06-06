@@ -244,7 +244,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	automat, err := client.CreateAutomat(formation.Id, 0, AutomatType, kg.Id)
 	c.Assert(err, IsNil)
 
-	pos := swapi.MakePoint(-15.9219, 28.3456)
+	pos := &swapi.Point{X: -15.9219, Y: 28.3456}
 
 	// Valid unit type, should be read from physical database instead
 	unitType := uint32(1)
@@ -271,7 +271,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	automat = client.Model.GetAutomat(automat.Id)
 	c.Assert(automat.Units[u.Id], NotNil)
 
-	pos = swapi.MakePoint(-15.8219, 28.2456)
+	pos = &swapi.Point{X: -15.8219, Y: 28.2456}
 
 	// Second unit, not PC
 	u, err = client.CreateUnit(automat.Id, unitType, pos)
@@ -418,7 +418,7 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
 	data := client.Model.GetData()
-	pos := swapi.MakePoint(0, 0)
+	pos := &swapi.Point{X: 0, Y: 0}
 	model := client.Model
 	crowdName := "crowd"
 	healthy, wounded, dead := int32(10), int32(11), int32(12)
@@ -465,11 +465,11 @@ func (s *TestSuite) TestTeleportUnit(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
 	automat := createAutomat(c, client)
-	from := swapi.MakePoint(-15.9219, 28.3456)
+	from := &swapi.Point{X: -15.9219, Y: 28.3456}
 	unit, err := client.CreateUnit(automat.Id, UnitType, from)
 	c.Assert(err, IsNil)
 
-	pos := swapi.MakePoint(-15.8219, 28.2456)
+	pos := &swapi.Point{X: -15.8219, Y: 28.2456}
 
 	// Cannot teleport unit if its automat is engaged
 	err = client.TeleportUnit(unit.Id, pos)

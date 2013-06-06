@@ -22,7 +22,7 @@ func (s *TestSuite) TestAutomatFragOrder(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
 	automat := createAutomat(c, client)
-	from := swapi.MakePoint(-15.9219, 28.3456)
+	from := &swapi.Point{X: -15.9219, Y: 28.3456}
 	_, err := client.CreateUnit(automat.Id, UnitType, from)
 	c.Assert(err, IsNil)
 
@@ -62,8 +62,8 @@ func (s *TestSuite) TestCrowdFragOrder(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
 	data := client.Model.GetData()
-	from := swapi.MakePoint(-15.9219, 28.3456)
-	to := swapi.MakePoint(-15.8193, 28.3456)
+	from := &swapi.Point{X: -15.9219, Y: 28.3456}
+	to := &swapi.Point{X: -15.8193, Y: 28.3456}
 
 	party := data.FindPartyByName("party")
 	c.Assert(party, NotNil)
@@ -100,7 +100,7 @@ func (s *TestSuite) TestUnitFragOrder(c *C) {
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
 	automat := createAutomat(c, client)
-	from := swapi.MakePoint(-15.9219, 28.3456)
+	from := &swapi.Point{X: -15.9219, Y: 28.3456}
 	unit, err := client.CreateUnit(automat.Id, UnitType, from)
 	c.Assert(err, IsNil)
 

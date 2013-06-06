@@ -123,12 +123,13 @@ func (model *Model) update(msg *SwordMessage) {
 				mm.GetName())
 			d.Parties[party.Id] = party
 		} else if mm := m.GetUnitCreation(); mm != nil {
-			unit := NewUnit(
+			unit := &Unit{
 				mm.GetUnit().GetId(),
 				mm.GetAutomat().GetId(),
 				mm.GetName(),
 				mm.GetPc(),
-				Point{X: 0, Y: 0})
+				Point{},
+				0}
 			if !d.addUnit(unit) {
 				// XXX report the error here
 			}
@@ -195,18 +196,18 @@ func (model *Model) update(msg *SwordMessage) {
 					formation.ParentId))
 			}
 		} else if mm := m.GetCrowdCreation(); mm != nil {
-			crowd := NewCrowd(
+			crowd := &Crowd{
 				mm.GetCrowd().GetId(),
 				mm.GetParty().GetId(),
-				mm.GetName())
+				mm.GetName()}
 			if !d.addCrowd(crowd) {
 				// XXX report error here
 			}
 		} else if mm := m.GetPopulationCreation(); mm != nil {
-			population := NewPopulation(
+			population := &Population{
 				mm.GetId().GetId(),
 				mm.GetParty().GetId(),
-				mm.GetName())
+				mm.GetName()}
 			if !d.addPopulation(population) {
 				// XXX report error here
 			}
@@ -225,11 +226,11 @@ func (model *Model) update(msg *SwordMessage) {
 		} else if mm := m.GetUnitDestruction(); mm != nil {
 			d.removeUnit(mm.GetUnit().GetId())
 		} else if mm := m.GetKnowledgeGroupCreation(); mm != nil {
-			group := NewKnowledgeGroup(
+			group := &KnowledgeGroup{
 				mm.GetKnowledgeGroup().GetId(),
 				mm.GetName(),
-				mm.GetParent().GetId(),
-				mm.GetParty().GetId())
+				mm.GetParty().GetId(),
+				mm.GetParent().GetId()}
 			if !d.addKnowledgeGroup(group) {
 				// XXX report error here
 			}
@@ -268,16 +269,16 @@ func (model *Model) update(msg *SwordMessage) {
 	} else if msg.AuthenticationToClient != nil {
 		m := msg.AuthenticationToClient.GetMessage()
 		if mm := m.GetProfileCreation(); mm != nil {
-			profile := NewProfile(
+			profile := &Profile{
 				mm.GetProfile().GetLogin(),
 				mm.GetProfile().GetPassword(),
-				mm.GetProfile().GetSupervisor())
+				mm.GetProfile().GetSupervisor()}
 			d.addProfile(profile)
 		} else if mm := m.GetProfileUpdate(); mm != nil {
-			profile := NewProfile(
+			profile := &Profile{
 				mm.GetProfile().GetLogin(),
 				mm.GetProfile().GetPassword(),
-				mm.GetProfile().GetSupervisor())
+				mm.GetProfile().GetSupervisor()}
 			d.updateProfile(mm.GetLogin(), profile)
 			// XXX report error here
 		} else if mm := m.GetProfileDestruction(); mm != nil {
