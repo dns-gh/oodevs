@@ -232,7 +232,7 @@ void DEC_ActionFunctions::TransportKnowledge_AddPion( DEC_Decision_ABC& callerAg
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::Transport_MagicLoadPion
+// Name: DEC_ActionFunctions::Transport_MagicLoadPionInCarrier
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Transport_MagicLoadPionInCarrier( MIL_AgentPion& caller, const DEC_Decision_ABC* pCarrier )
@@ -243,7 +243,7 @@ void DEC_ActionFunctions::Transport_MagicLoadPionInCarrier( MIL_AgentPion& calle
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::Transport_MagicLoadPion
+// Name: DEC_ActionFunctions::Transport_MagicUnloadPionFromCarrier
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Transport_MagicUnloadPionFromCarrier( MIL_AgentPion& caller )
@@ -255,7 +255,7 @@ void DEC_ActionFunctions::Transport_MagicUnloadPionFromCarrier( MIL_AgentPion& c
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ActionFunctions::Transport_MagicLoadPion
+// Name: DEC_ActionFunctions::Transport_GetCarrier
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_ActionFunctions::Transport_GetCarrier( const MIL_AgentPion& caller )
