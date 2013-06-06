@@ -5125,9 +5125,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_DecisionCallbackAction_ABC.inl">
       <Filter>Source Files\Entities\Actions</Filter>
     </None>
-    <None Include="..\..\src\libraries\simulation_kernel\meteo\PHY_MeteoDataManager.inl">
-      <Filter>Source Files\Knowledge\Meteo</Filter>
-    </None>
     <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_AmmoEffect.inl">
       <Filter>Source Files\Knowledge\Meteo\RawVisionData</Filter>
     </None>
@@ -5482,6 +5479,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_DetectionRange.h">
       <Filter>Source Files\Entities\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Meteo\RawVisionData\Elevation.h">
+      <Filter>Source Files\Knowledge\Meteo\RawVisionData</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

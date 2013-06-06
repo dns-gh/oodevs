@@ -333,5 +333,8 @@
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\ComposantePionTest.cpp">
       <Filter>Source Files\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\ElevationTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

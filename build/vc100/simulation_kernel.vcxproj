@@ -989,6 +989,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\Remote\MIL_AgentPion_Remote.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\Remote\MIL_AgentTypePion_Remote.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\KnowledgesVisitor_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Meteo\RawVisionData\Elevation.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Meteo\RawVisionData\ElevationGrid.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Random_ABC.h" />
@@ -1750,7 +1751,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_NbcAgentType.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_ActionLogistic.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Entities\Actions\PHY_DecisionCallbackAction_ABC.inl" />
-    <None Include="..\..\src\libraries\simulation_kernel\meteo\PHY_MeteoDataManager.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_AmmoEffect.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\meteo\rawvisiondata\PHY_RawVisionDataIterator.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\MIL_AgentServer.inl" />
