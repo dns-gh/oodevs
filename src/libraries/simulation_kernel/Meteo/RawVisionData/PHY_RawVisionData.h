@@ -42,7 +42,6 @@ public:
         eNbrVisionObjects = 4
     };
 
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -50,9 +49,7 @@ public:
     virtual ~PHY_RawVisionData();
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Tools */
-    //-------------------------------------------------------------------------
+    // @name Operations
     //@{
     const ElevationGrid::sCell& operator () ( const MT_Vector2D& ) const;
     const ElevationGrid::sCell& operator () ( double, double ) const;
@@ -84,22 +81,11 @@ public:
 
     void RegisterWeatherEffect  ( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
     void UnregisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
-    //@}
 
-    //-------------------------------------------------------------------------
-    /** @name IN/OUT */
-    //-------------------------------------------------------------------------
-    //@{
     bool Read( const tools::Path& file );
     //@}
 
 private:
-    struct ElevationOffset
-    {
-        TER_Localisation localisation_;
-        short offset_;
-    };
-
     friend class PHY_RawVisionDataIterator;
 
     // Convertisseurs de coordonnées SIM en coordonnées du tableau
