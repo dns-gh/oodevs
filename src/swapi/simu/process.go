@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"swapi"
@@ -41,6 +42,38 @@ type SimOpts struct {
 
 	// Prefix the tail output with supplied string
 	TailPrefix string
+}
+
+func CheckPaths(directory bool, paths ...string) error {
+	for _, path := range paths {
+		fi, err := os.Stat(path)
+		if err != nil {
+			return errors.New("'" + path + "' is invalid " + err.Error())
+		}
+		if fi.IsDir() != directory {
+			if directory {
+				return errors.New("'" + path + "' is not a directory")
+			} else {
+				return errors.New("'" + path + "' is not a file")
+			}
+		}
+	}
+	return nil
+}
+
+func IsFile(paths ...string) error      { return CheckPaths(false, paths...) }
+func IsDirectory(paths ...string) error { return CheckPaths(true, paths...) }
+
+func (o *SimOpts) Check() error {
+	err := IsFile(o.Executable)
+	if err != nil {
+		return err
+	}
+	if o.RunDir == nil {
+		p := filepath.Dir(o.Executable)
+		o.RunDir = &p
+	}
+	return IsDirectory(*o.RunDir, o.RootDir, o.DataDir)
 }
 
 func (o *SimOpts) GetExerciseDir() string {
@@ -201,8 +234,9 @@ func waitForNetwork(waitch chan error, host string, timeout time.Duration) {
 // simulation might still be returned if the connection timed out or the
 // process terminated before a connection can be made.
 func StartSim(opts *SimOpts) (*SimProcess, error) {
-	if len(opts.Executable) <= 0 {
-		return nil, errors.New("simulation_app executable path is not defined")
+	err := opts.Check()
+	if err != nil {
+		return nil, err
 	}
 	sessionDir := filepath.Join(opts.RootDir, "exercises", opts.ExerciseName,
 		"sessions", opts.SessionName)
@@ -233,12 +267,7 @@ func StartSim(opts *SimOpts) (*SimProcess, error) {
 	args = append(args, fmt.Sprintf("--legacy=%d", legacy))
 
 	cmd := exec.Command(opts.Executable, args...)
-	rundir := opts.RunDir
-	if rundir == nil {
-		p := filepath.Dir(opts.Executable)
-		rundir = &p
-	}
-	cmd.Dir = *rundir
+	cmd.Dir = *opts.RunDir
 	sim := SimProcess{
 		cmd:            cmd,
 		tailch:         make(chan int, 1),

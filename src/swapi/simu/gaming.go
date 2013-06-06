@@ -25,6 +25,18 @@ type GamingOpts struct {
 	ExerciseName string
 }
 
+func (o *GamingOpts) Check() error {
+	err := IsFile(o.Executable)
+	if err != nil {
+		return err
+	}
+	if o.RunDir == nil {
+		p := filepath.Dir(o.Executable)
+		o.RunDir = &p
+	}
+	return IsDirectory(*o.RunDir, o.RootDir, o.DataDir)
+}
+
 type GamingProcess struct {
 	cmd *exec.Cmd
 	// Passed channel will be signalled once the process ends
@@ -66,8 +78,9 @@ func (gaming *GamingProcess) Wait(d time.Duration) bool {
 }
 
 func StartGaming(opts *GamingOpts) (*GamingProcess, error) {
-	if len(opts.Executable) <= 0 {
-		return nil, errors.New("gaming executable path is not defined")
+	err := opts.Check()
+	if err != nil {
+		return nil, err
 	}
 	args := []string{
 		"--root-dir=" + opts.RootDir,
@@ -76,18 +89,13 @@ func StartGaming(opts *GamingOpts) (*GamingProcess, error) {
 		"--session=" + opts.SessionName,
 	}
 	cmd := exec.Command(opts.Executable, args...)
-	rundir := opts.RunDir
-	if rundir == nil {
-		p := filepath.Dir(opts.Executable)
-		rundir = &p
-	}
-	cmd.Dir = *rundir
+	cmd.Dir = *opts.RunDir
 	gaming := GamingProcess{
 		cmd:       cmd,
 		waitqueue: make(chan chan int, 1),
 		Opts:      opts,
 	}
-	err := cmd.Start()
+	err = cmd.Start()
 
 	// Process.Wait() cannot be called concurrently, so always wait for process
 	// termination and handle wait requests. Callers wanting to wait for
