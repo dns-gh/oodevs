@@ -1195,6 +1195,15 @@ double PHY_ComposanteTypePion::GetMaxRangeToDirectFire() const
     return rRange;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::HasWeaponTypes
+// Created: MMC 2013-06-03
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::HasWeaponTypes() const
+{
+    return !weaponTypes_.empty();
+}
+
 // =============================================================================
 // LOGISTIC
 // =============================================================================

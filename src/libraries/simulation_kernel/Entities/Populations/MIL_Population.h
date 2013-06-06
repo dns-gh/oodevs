@@ -83,6 +83,7 @@ public:
     unsigned int GetDeadHumans() const;
     unsigned int GetAllHumansInConcentration( unsigned int concentrationId );
     void HealWounded();
+    void AddArmedHumans( unsigned int armedHumans );
     double GetArmedIndividuals() const;
     void SetArmedIndividuals( double armedIndividuals );
     double GetNewArmedIndividuals() const;

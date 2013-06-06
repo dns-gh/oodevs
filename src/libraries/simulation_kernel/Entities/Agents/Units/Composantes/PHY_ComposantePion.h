@@ -152,7 +152,7 @@ public:
 
     //! @name Fire / Dangerosity
     //@{
-    void ApplyPopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages, double armedIndividuals );
+    void ApplyPopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages, double armedIndividuals, bool& bCanBePlundered );
     void ApplyDirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages );
     void ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages, double ratio );
     void ApplyExplosion( const AttritionCapacity& capacity, PHY_FireDamages_Agent& fireDamages );

@@ -908,13 +908,13 @@ void PHY_RolePion_Composantes::ApplyDirectFireOnMajorComposantes( const PHY_Dota
 // Name: PHY_RolePion_Composantes::ApplyPopulationFire
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyPopulationFire( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& fireResult, double armedIndividuals )
+void PHY_RolePion_Composantes::ApplyPopulationFire( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& fireResult, double armedIndividuals, bool& bCanBePlundered )
 {
     assert( std::find( composantes_.begin(), composantes_.end(), &compTarget ) != composantes_.end() );
     PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( *owner_ );
     PHY_ComposantePion& compTargetPion = static_cast< PHY_ComposantePion& >( compTarget );
     if( compTargetPion.CanBeFired() )
-        compTargetPion.ApplyPopulationFire( populationType, populationAttitude, fireDamages, armedIndividuals );
+        compTargetPion.ApplyPopulationFire( populationType, populationAttitude, fireDamages, armedIndividuals, bCanBePlundered );
 }
 
 // -----------------------------------------------------------------------------
