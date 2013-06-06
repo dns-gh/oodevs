@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<reports model-version="4.12.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Reports.xsd">
+<reports model-version="4.12.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Reports.xsd">
   <report category="operational" id="0" message="NTR"/>
   <report category="operational" id="1" message="blocked by obstacle %1">
     <parameter type="ObjectKnowledge"/>
@@ -708,4 +708,4 @@
   <report category="operational" id="515" message="Agent is hiding in the crowd"/>
   <report category="operational" id="516" message="Agent is no more hidden in the crowd"/>
 </reports>
-<!-- signature="3420171278" -->
+<!-- signature="1100284507" -->

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<health model-version="4.12.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Medical.xsd">
+<health model-version="4.12.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Medical.xsd">
   <times diagnosis-life-expectancy-factor="2" diagnosis-time="10m" sorting-time="5m"/>
   <injuries>
     <injury caring-time="40m" category="UE" life-expectancy="2h" percentage="4" resting-time="1m"/>
@@ -24,4 +24,4 @@
     <resource-availability-alert availability-threshold="0" resource="doctor"/>
   </resource-availability-alerts>
 </health>
-<!-- signature="1416270320" -->
+<!-- signature="1902351602" -->
