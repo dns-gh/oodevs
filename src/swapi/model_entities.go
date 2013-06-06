@@ -11,6 +11,7 @@ package swapi
 import (
 	"bytes"
 	"encoding/gob"
+	"sword"
 	"time"
 )
 
@@ -181,9 +182,31 @@ func NewParty(id uint32, name string) *Party {
 	}
 }
 
+type Weather struct {
+	Temperature   float32
+	WindSpeed     float32
+	WindDirection int32
+	CloudFloor    float32
+	CloudCeil     float32
+	CloudDensity  float32
+	Precipitation sword.WeatherAttributes_EnumPrecipitationType
+	Lightning     sword.WeatherAttributes_EnumLightingType
+}
+
+type LocalWeather struct {
+	Weather
+	StartTime   time.Time
+	EndTime     time.Time
+	TopLeft     Point
+	BottomRight Point
+	Id          uint32
+}
+
 type ModelData struct {
-	Parties  map[uint32]*Party
-	Profiles map[string]*Profile
+	Parties       map[uint32]*Party
+	Profiles      map[string]*Profile
+	GlobalWeather Weather
+	LocalWeathers map[uint32]*LocalWeather
 	// Tick and time of the most recent started tick
 	Tick int32
 	Time time.Time
@@ -191,8 +214,9 @@ type ModelData struct {
 
 func NewModelData() *ModelData {
 	return &ModelData{
-		Parties:  map[uint32]*Party{},
-		Profiles: map[string]*Profile{},
+		Parties:       map[uint32]*Party{},
+		Profiles:      map[string]*Profile{},
+		LocalWeathers: map[uint32]*LocalWeather{},
 	}
 }
 
@@ -412,6 +436,19 @@ func (model *ModelData) addKnowledgeGroup(group *KnowledgeGroup) bool {
 	party, ok := model.Parties[group.PartyId]
 	if ok {
 		party.KnowledgeGroups[group.Id] = group
+		return true
+	}
+	return false
+}
+
+func (model *ModelData) addLocalWeather(weather *LocalWeather) {
+	model.LocalWeathers[weather.Id] = weather
+}
+
+func (model *ModelData) removeLocalWeather(id uint32) bool {
+	_, ok := model.LocalWeathers[id]
+	if ok {
+		delete(model.LocalWeathers, id)
 		return true
 	}
 	return false

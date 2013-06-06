@@ -233,6 +233,37 @@ func (model *Model) update(msg *SwordMessage) {
 			if !d.addKnowledgeGroup(group) {
 				// XXX report error here
 			}
+		} else if mm := m.GetControlLocalWeatherCreation(); mm != nil {
+			start, err := GetTime(mm.GetStartDate())
+			if err != nil { // XXX report error here
+				return
+			}
+			end, err := GetTime(mm.GetEndDate())
+			if err != nil { // XXX report error here
+				return
+			}
+			attr := mm.GetAttributes()
+			// most attributes are truncated here...
+			w := &LocalWeather{
+				Weather: Weather{
+					Temperature:   float32(attr.GetTemperature()),
+					WindSpeed:     float32(attr.GetWindSpeed()),
+					WindDirection: attr.GetWindDirection().GetHeading(),
+					CloudFloor:    float32(attr.GetCloudFloor()),
+					CloudCeil:     float32(attr.GetCloudCeiling()),
+					CloudDensity:  float32(attr.GetCloudDensity()),
+					Precipitation: attr.GetPrecipitation(),
+					//Lighting:      attr.GetLighting(),
+				},
+				StartTime:   start,
+				EndTime:     end,
+				TopLeft:     ReadPoint(mm.GetTopLeft()),
+				BottomRight: ReadPoint(mm.GetBottomRight()),
+				Id:          mm.GetWeather().GetId(),
+			}
+			d.addLocalWeather(w)
+		} else if mm := m.GetControlLocalWeatherDestruction(); mm != nil {
+			d.removeLocalWeather(mm.GetWeather().GetId())
 		}
 	} else if msg.AuthenticationToClient != nil {
 		m := msg.AuthenticationToClient.GetMessage()
@@ -402,6 +433,18 @@ func (model *Model) GetCrowd(crowdId uint32) *Crowd {
 		}
 	})
 	return c
+}
+
+func (model *Model) GetLocalWeather(id uint32) *LocalWeather {
+	var w *LocalWeather
+	model.waitCommand(func(model *Model) {
+		weather, ok := model.data.LocalWeathers[id]
+		if ok {
+			w := &LocalWeather{}
+			DeepCopy(w, weather)
+		}
+	})
+	return w
 }
 
 func (model *Model) GetTick() int32 {

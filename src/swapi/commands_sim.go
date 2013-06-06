@@ -624,3 +624,53 @@ func (c *Client) TeleportUnit(unitId uint32, location *Point) error {
 	}
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) {
+	// FIXME lighting is ignored because it's completely broken
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				MagicAction: &sword.MagicAction{
+					Type: sword.MagicAction_local_weather.Enum(),
+					Parameters: MakeParameters(
+						MakeFloat(local.Temperature),
+						MakeFloat(local.WindSpeed),
+						MakeHeading(local.WindDirection),
+						MakeFloat(local.CloudFloor),
+						MakeFloat(local.CloudCeil),
+						MakeFloat(local.CloudDensity),
+						MakeEnumeration(int32(local.Precipitation)),
+						MakeTime(local.StartTime),
+						MakeTime(local.EndTime),
+						MakeRectangleParam(&local.BottomRight, &local.TopLeft),
+						MakeIdentifier(local.Id),
+					),
+				},
+			},
+		},
+	}
+	var id uint32
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.MagicActionAck_no_error {
+			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
+		}
+		id = reply.GetWeather().GetId()
+		return nil
+	}
+	err := <-c.postSimRequest(msg, handler)
+	if err != nil {
+		return nil, err
+	}
+	ok := c.Model.WaitCondition(func(data *ModelData) bool {
+		return data.LocalWeathers[id] != nil
+	})
+	if !ok {
+		return nil, ErrTimeout
+	}
+	return c.Model.GetLocalWeather(id), nil
+}
