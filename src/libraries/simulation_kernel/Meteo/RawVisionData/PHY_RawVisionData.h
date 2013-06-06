@@ -11,6 +11,7 @@
 #define __PHY_RawVisionData_h_
 
 #include "ElevationGrid.h"
+#include "meteo/PHY_RawVisionData_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
 
 class PHY_AmmoEffect;

@@ -11,7 +11,6 @@
 #define ElevationGrid_h
 
 #include "meteo/Meteo.h"
-#include "meteo/PHY_RawVisionData_ABC.h"
 #include <graphics/ElevationBaseGrid.h>
 
 class PHY_AmmoEffect;
