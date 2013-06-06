@@ -99,7 +99,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( wrapper.message().has_automat_order() )
         workspace.GetEntityManager        ().OnReceiveAutomatOrder                   ( wrapper.message().automat_order()                      , nCtx, clientId );
     else if( wrapper.message().has_crowd_order() )
-        workspace.GetEntityManager        ().OnReceiveCrowdOrder                     ( wrapper.message().crowd_order()                   , nCtx, clientId );
+        workspace.GetEntityManager        ().OnReceiveCrowdOrder                     ( wrapper.message().crowd_order()                        , nCtx, clientId );
     else if( wrapper.message().has_frag_order() )
         workspace.GetEntityManager        ().OnReceiveFragOrder                      ( wrapper.message().frag_order()                         , nCtx, clientId );
     else if( wrapper.message().has_set_automat_mode() )
@@ -118,7 +118,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
         if( wrapper.message().magic_action().type() == sword::MagicAction::global_weather ||
             wrapper.message().magic_action().type() == sword::MagicAction::local_weather ||
             wrapper.message().magic_action().type() == sword::MagicAction::local_weather_destruction )
-            workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                   ( wrapper.message().magic_action()                       , nCtx );
+            workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                   ( wrapper.message().magic_action()                       , nCtx, clientId );
         else if( wrapper.message().magic_action().type() == sword::MagicAction::change_diplomacy )
             workspace.GetEntityManager        ().OnReceiveChangeDiplomacy            ( wrapper.message().magic_action()                       , nCtx );
         else if( wrapper.message().magic_action().type() == sword::MagicAction::change_resource_network_properties )

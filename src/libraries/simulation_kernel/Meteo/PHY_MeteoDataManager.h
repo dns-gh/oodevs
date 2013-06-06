@@ -70,7 +70,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void OnReceiveMsgMeteo( const sword::MagicAction& msg, unsigned int context );
+    virtual void OnReceiveMsgMeteo( const sword::MagicAction& msg, unsigned context, unsigned client );
     //@}
 
     //! @name CheckPoints

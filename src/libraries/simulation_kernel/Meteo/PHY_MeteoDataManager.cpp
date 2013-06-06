@@ -140,12 +140,29 @@ void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
     AddMeteo( *new PHY_LocalMeteo( localCounter_++, xis, pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() ) );
 }
 
+namespace
+{
+    void AckLocalWeather( uint32_t id, unsigned context, unsigned client, const std::string& msg = std::string() )
+    {
+        if( !id && !msg.empty() )
+            MT_LOG_ERROR_MSG( msg );
+        client::MagicActionAck ack;
+        ack().set_error_code( id ? sword::MagicActionAck::no_error
+                                 : sword::MagicActionAck::error_invalid_parameter );
+        if( id )
+            ack().mutable_weather()->set_id( id );
+        auto& pub = NET_Publisher_ABC::Publisher();
+        ack.Send( pub, context, client );
+        client::ControlLocalWeatherAck().Send( pub, context, client ); ///< deprecated
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, unsigned int context )
+void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, unsigned context, unsigned client )
 {
     if( msg.type() == sword::MagicAction::global_weather )
     {
@@ -161,35 +178,33 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, uns
         {
             const sword::MissionParameter& idParameter = msg.parameters().elem( 10 );
             if( idParameter.value_size() != 1 || !idParameter.value().Get( 0 ).has_identifier() )
-                throw MASA_EXCEPTION( "Local meteo: bad ID parameter." );
-
+                return AckLocalWeather( 0, context, client, "invalid local weather id" );
             id = idParameter.value().Get( 0 ).identifier();
         }
         if( id == 0 )
-            AddMeteo( *new PHY_LocalMeteo( localCounter_++, msg.parameters(), pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() ) );
+        {
+            auto meteo = new PHY_LocalMeteo( localCounter_++, msg.parameters(), pEphemeride_->GetLightingBase(), MIL_Time_ABC::GetTime().GetTickDuration() );
+            id = meteo->GetId();
+            AddMeteo( *meteo );
+        }
         else
         {
-            weather::Meteo* meteo = Find( id );
+            auto meteo = Find( id );
             if( !meteo )
-                throw MASA_EXCEPTION( "Local meteo: unknown id." );
+                return AckLocalWeather( 0, context, client, "unknown local weather id" );
             static_cast< PHY_LocalMeteo* >( meteo )->Update( msg.parameters() );
         }
-        client::ControlLocalWeatherAck replyMsg;
-        replyMsg.Send( NET_Publisher_ABC::Publisher(), context );
+        AckLocalWeather( id, context, client );
     }
     else if( msg.type() == sword::MagicAction::local_weather_destruction )
     {
         if( msg.parameters().elem_size() != 1 || msg.parameters().elem( 0 ).value_size() != 1 || !msg.parameters().elem( 0 ).value().Get( 0 ).has_identifier() )
-            throw MASA_EXCEPTION( "Local meteo destruction: bad ID parameter." );
+            return AckLocalWeather( 0, context, client, "invalid local weather id" );
         unsigned int id = msg.parameters().elem( 0 ).value().Get( 0 ).identifier();
-
         weather::Meteo* meteo = Find( id );
         if( !meteo )
-            throw MASA_EXCEPTION( "Local meteo: unknown id." );
-        {
-            client::ControlLocalWeatherAck replyMsg;
-            replyMsg.Send( NET_Publisher_ABC::Publisher(), context );
-        }
+            return AckLocalWeather( 0, context, client, "unknown local weather id" );
+        AckLocalWeather( id, context, client );
         meteo->SendDestruction();
         Remove( id );
     }

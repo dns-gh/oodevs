@@ -206,6 +206,8 @@ message MagicActionAck {
     //! Reason for the failure of the magic action execution operation
     //! @see ErrorCode
     required ErrorCode error_code = 1;
+    //! The weather identifier
+    optional WeatherId weather    = 2;    
 }
 
 /** @struct ObjectMagicActionAck
