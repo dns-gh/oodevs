@@ -235,11 +235,6 @@
 					<xs:documentation xml:lang="en">Object knowledge list.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="objective">
-				<xs:annotation>
-					<xs:documentation xml:lang="en">Objective, associates a location and a datetime.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
 			<xs:enumeration value="objectivelist">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">List of objectives.</xs:documentation>
@@ -268,6 +263,11 @@
 			<xs:enumeration value="pathpoint">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Internal. Path point for use within a path.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="phaseline">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Phase line.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="phaselinelist">
