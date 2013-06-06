@@ -50,6 +50,7 @@ public:
     bool IsIdentified();
     bool IsPerceived () const; // Perception au tick courant
     bool IsDestructingUrbanblocks() const;
+    bool IsDemonstrating() const;
     //@}
 
     //! @name Accessors

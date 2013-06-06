@@ -145,6 +145,15 @@ bool DEC_Knowledge_PopulationFlowPerception::IsDestructingUrbanblocks() const
     return pPopulationKnowledge_->IsDestructingUrbanblocks();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPerception::IsDemonstrating
+// Created: NPT 2013-06-06
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_PopulationFlowPerception::IsDemonstrating() const
+{
+    assert( pPopulationKnowledge_ );
+    return pPopulationKnowledge_->IsDemonstrating();
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPerception::GetNbrAliveHumans
