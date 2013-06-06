@@ -36,6 +36,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
+#include "Meteo/RawVisionData/Elevation.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Urban/MIL_UrbanCache.h"
 #include "simulation_terrain/TER_Pathfinder_ABC.h"
@@ -402,11 +403,10 @@ double PathAdapter::GetPopulationAttitudeCost( unsigned int attitudeID ) const
 
 namespace
 {
-    bool IsSlopeTooSteep( const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeFrom, double rAltitudeTo, double squareSlope )
+    bool IsSlopeTooSteep( const PHY_RawVisionData& data, const MT_Vector2D& from, const MT_Vector2D& to, double maxSquareSlope )
     {
-        const double rSquareDelta = Square( rAltitudeTo - rAltitudeFrom );
-        const double rSquareDistance = from.SquareDistance( to );
-        return rSquareDelta > squareSlope * rSquareDistance;
+        const double delta = data.GetAltitude( to ) - data.GetAltitude( from );
+        return Square( delta ) > from.SquareDistance( to ) * maxSquareSlope;
     }
 }
 
@@ -416,12 +416,12 @@ namespace
 // -----------------------------------------------------------------------------
 double PathAdapter::GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D& to, double costPerMeter ) const
 {
-    const double rAltitudeFrom = data_.GetAltitude( from );
-    const double rAltitudeTo = data_.GetAltitude( to );
-    if( IsSlopeTooSteep( from, to, rAltitudeFrom, rAltitudeTo, squareSlope_ ) )
+    auto f = boost::bind( &IsSlopeTooSteep, boost::cref( data_ ), from, _1, squareSlope_ );
+    if( Elevation( data_.GetCellSize() ).FindPath( from, to, f ) )
         return -1;
+    const double altitudeTo = data_.GetAltitude( to );
     const double altitude = costPerMeter > 0 ? data_.GetMaxAltitude() : data_.GetMinAltitude();
-    return ( altitude - rAltitudeTo ) * costPerMeter;
+    return ( altitude - altitudeTo ) * costPerMeter;
 }
 
 namespace

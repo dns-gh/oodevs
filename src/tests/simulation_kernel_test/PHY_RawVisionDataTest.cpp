@@ -93,4 +93,3 @@ BOOST_FIXTURE_TEST_CASE( phy_rawvisiondata_getaltitude_offsets, Fixture )
     alt = vision.GetAltitude( 1000, 1, true );
     BOOST_CHECK_CLOSE( 0, alt - refalt2, 1.1 );
 }
-
