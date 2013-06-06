@@ -114,6 +114,4 @@ private:
 
 BOOST_CLASS_EXPORT_KEY( PHY_MeteoDataManager )
 
-#include "PHY_MeteoDataManager.inl"
-
 #endif // __PHY_MeteoDataManager_h_
