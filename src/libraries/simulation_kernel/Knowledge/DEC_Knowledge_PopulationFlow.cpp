@@ -27,6 +27,7 @@
 #include "Tools/MIL_Tools.h"
 #include "protocol/ClientSenders.h"
 #include <boost/serialization/split_free.hpp>
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlow )
 
@@ -232,7 +233,21 @@ void DEC_Knowledge_PopulationFlow::Update( const DEC_Knowledge_PopulationFlowPer
         pAttitude_ = &perception.GetAttitude();
         bAttitudeUpdated_ = true;
         if( postEvent )
+        {
             MIL_Report::PostEvent( perception.GetAgentPerceiving(), report::eRC_AttitudePopulation, pAttitude_->GetID() );
+            auto bbKg = perception.GetAgentPerceiving().GetKnowledgeGroup()->GetKnowledge();
+            if( bbKg )
+            {
+                boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = bbKg->GetKnowledgePopulationFromID( pPopulationKnowledge_->GetID() );
+                if( pKnowledge )
+                {
+                    if( perception.IsDestructingUrbanblocks() )
+                        MIL_Report::PostEvent( perception.GetAgentPerceiving(), report::eRC_CloseCrowdUrbanDestruction, pKnowledge );
+                    if( perception.IsDemonstrating() )
+                        MIL_Report::PostEvent( perception.GetAgentPerceiving(), report::eRC_CloseCrowdDemonstration, pKnowledge );
+                }
+            }
+        }
     }
     if( pPopulationKnowledge_->IsRecon() )
     {
