@@ -14,11 +14,9 @@
 #include "meteo/PHY_RawVisionData_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
 
-class PHY_AmmoEffect;
 class MT_Ellipse;
 class PHY_IndirectFireDotationClass;
 class PHY_MeteoDataManager;
-class ElevationGrid;
 
 namespace tools
 {
