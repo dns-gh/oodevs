@@ -91,6 +91,7 @@ public:
     double GetSensorRotationAngle() const;
     double GetWeight             () const;
     double GetMaxSlope           () const;
+    bool   HasWeaponTypes        () const;
     //@}
 
     //! @name Load/unload - Transport

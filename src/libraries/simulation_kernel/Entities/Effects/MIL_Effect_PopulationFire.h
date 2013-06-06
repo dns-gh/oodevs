@@ -15,6 +15,7 @@
 #include "MIL_Effect_ABC.h"
 
 class MIL_Agent_ABC;
+class MIL_Population;
 class MIL_PopulationType;
 class MIL_PopulationAttitude;
 class PHY_Composante_ABC;
@@ -27,7 +28,7 @@ class PHY_FireResults_ABC;
 class MIL_Effect_PopulationFire : public MIL_Effect_ABC
 {
 public:
-             MIL_Effect_PopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, double armedIndividuals );
+             MIL_Effect_PopulationFire( MIL_Population& population, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, double armedIndividuals );
     virtual ~MIL_Effect_PopulationFire();
 
     //! @name Operations
@@ -36,6 +37,7 @@ public:
     //@}
 
 private:
+    MIL_Population& population_;
     const MIL_PopulationType& populationType_;
     const MIL_PopulationAttitude& populationAttitude_;
     MIL_Agent_ABC& target_;

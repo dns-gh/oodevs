@@ -481,4 +481,5 @@ eRC_LogSuperiorRemoved = 514
 eRC_startHidingInTheCrowd = 515
 eRC_stopHidingInTheCrowd = 516
 eRC_CloseCrowdDemonstration = 517
-eNbr = 518
+eRC_MilitaryEquipmentPlundered = 518
+eNbr = 519

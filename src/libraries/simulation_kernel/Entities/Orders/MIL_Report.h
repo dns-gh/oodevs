@@ -174,7 +174,8 @@ public:
         eRC_TransportRoundTrip = 512,
         eRC_LogSuperiorAdded = 513,
         eRC_LogSuperiorRemoved = 514,
-        eRC_CloseCrowdDemonstration = 517
+        eRC_CloseCrowdDemonstration = 517,
+        eRC_MilitaryEquipmentPlundered = 518
     };
     //@}
 

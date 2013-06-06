@@ -710,5 +710,6 @@
   <report category="operational" id="517" message="La foule %1 est en train de manifester">
     <parameter type="CrowdKnowledge"/>
   </report>
+  <report category="operational" id="518" message="Matériel militaire pillé par la foule"/>
 </reports>
-<!-- signature="2380303184" -->
+<!-- signature="1685213623" -->

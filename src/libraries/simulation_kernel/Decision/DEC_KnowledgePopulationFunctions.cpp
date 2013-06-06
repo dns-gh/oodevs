@@ -249,7 +249,7 @@ bool DEC_KnowledgePopulationFunctions::HasFlow( const MIL_AgentPion& caller, int
 // Name: DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals
 // Created: LMT 2011-04-01
 // -----------------------------------------------------------------------------
-void DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals( const MIL_AgentPion& callerAgent, int knowledgeId, const double rArmedIndividuals)
+void DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals( const MIL_AgentPion& callerAgent, int knowledgeId, const double rArmedIndividuals )
 {
     auto bbKg = callerAgent.GetKnowledgeGroup()->GetKnowledge();
     if( bbKg )

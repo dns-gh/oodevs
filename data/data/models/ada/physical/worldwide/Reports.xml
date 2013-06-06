@@ -710,5 +710,6 @@
   <report category="operational" id="517" message="The crowd %1 is demonstrating">
     <parameter type="CrowdKnowledge"/>
   </report>
+  <report category="operational" id="518" message="Military equipment plundered by the crowd"/>
 </reports>
-<!-- signature="3398652094" -->
+<!-- signature="3208507528" -->
