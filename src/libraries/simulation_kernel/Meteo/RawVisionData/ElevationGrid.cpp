@@ -16,8 +16,7 @@ ElevationGrid::sCell ElevationGrid::emptyCell_;
 // Name: ElevationGrid constructor
 // Created: LGY 2013-02-04
 // -----------------------------------------------------------------------------
-ElevationGrid::ElevationGrid( double cellSize, unsigned int width, unsigned int height,
-                              sCell** ppCells )
+ElevationGrid::ElevationGrid( double cellSize, unsigned int width, unsigned int height, sCell** ppCells )
     : ElevationBaseGrid( cellSize, width, height )
     , ppCells_( ppCells )
 {

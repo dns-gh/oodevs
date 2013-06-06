@@ -24,7 +24,7 @@ class PHY_AmmoEffect;
 class ElevationGrid : public ElevationBaseGrid
 {
 public:
-    //! @name types
+    //! @name Types
     //@{
     typedef unsigned char envBits;  // champ de bit
 
@@ -60,17 +60,14 @@ public:
         envBits        e  : 8;                          // champ de bit représentant l'environnement visuel statique
         boost::shared_ptr< weather::Meteo > pMeteo;     // météo locale
         PHY_AmmoEffect* pEffects;                       // effets météo provoqués par des munitions ( fumigènes, obus eclairants )
-
         static const weather::Meteo* pGlobalMeteo_;
-
     };
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ElevationGrid( double cellSize, unsigned int width, unsigned int height,
-                            sCell** ppCells );
+             ElevationGrid( double cellSize, unsigned int width, unsigned int height, sCell** ppCells );
     virtual ~ElevationGrid();
     //@}
 

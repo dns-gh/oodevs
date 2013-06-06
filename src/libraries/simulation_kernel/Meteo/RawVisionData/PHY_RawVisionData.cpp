@@ -244,8 +244,8 @@ namespace
 // -----------------------------------------------------------------------------
 void PHY_RawVisionData::ModifyAltitude( const TER_Localisation& localisation, short heightOffset, unsigned int objectId )
 {
-    pElevationGrid_->SetAltitude( objectId, Convert( localisation.GetPoints() ), localisation.GetType() == TER_Localisation::ePolygon,
-                                  heightOffset );
+    pElevationGrid_->SetAltitude(
+        objectId, Convert( localisation.GetPoints() ), localisation.GetType() == TER_Localisation::ePolygon, heightOffset );
 }
 
 //-----------------------------------------------------------------------------
