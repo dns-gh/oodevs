@@ -80,11 +80,12 @@ func NewCrowd(id, partyId uint32, name string) *Crowd {
 }
 
 type Unit struct {
-	Id        uint32
-	AutomatId uint32
-	Name      string
-	Pc        bool
-	Position  Point
+	Id         uint32
+	AutomatId  uint32
+	Name       string
+	Pc         bool
+	Position   Point
+	PathPoints uint32
 }
 
 func NewUnit(id, automatId uint32, name string, pc bool, position Point) *Unit {

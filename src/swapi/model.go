@@ -209,6 +209,18 @@ func (model *Model) update(msg *SwordMessage) {
 			if !d.addPopulation(population) {
 				// XXX report error here
 			}
+		} else if mm := m.GetUnitPathfind(); mm != nil {
+			unit := d.FindUnit(mm.GetUnit().GetId())
+			if unit == nil {
+				// XXX report error here
+				return
+			}
+			if mm.Path != nil && mm.Path.Location != nil {
+				unit.PathPoints = uint32(0)
+				if mm.Path.Location.Coordinates != nil {
+					unit.PathPoints = uint32(len(mm.Path.Location.Coordinates.Elem))
+				}
+			}
 		} else if mm := m.GetUnitDestruction(); mm != nil {
 			d.removeUnit(mm.GetUnit().GetId())
 		} else if mm := m.GetKnowledgeGroupCreation(); mm != nil {
