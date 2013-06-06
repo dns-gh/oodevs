@@ -54,6 +54,7 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , bEmbeddedDispatcher_( false )
     , bPausedAtStartup_( false )
     , bLegacy_( true )
+    , pathfinderSlope_( true )
     , randomSeed_( 0 )
     , setpause_( 0 )
     , setstepmul_( 0 )
@@ -163,7 +164,8 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
                         >> xml::attribute( "setstepmul", setstepmul_ )
                     >> xml::end
                     >> xml::start( "pathfinder" )
-                        >> xml::attribute( "threads", pathFinderThreads_ );
+                        >> xml::attribute( "threads", pathFinderThreads_ )
+                        >> xml::optional >> xml::attribute( "slope", pathfinderSlope_ );
     if( xis.has_attribute( "max-calculation-time" ) )
     {
         unsigned int t;
@@ -313,6 +315,15 @@ const tools::Path& MIL_Config::GetIntegrationDir() const
 boost::optional< unsigned int > MIL_Config::GetPathFinderMaxComputationTime() const
 {
     return pathFinderMaxComputationTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::UsePathFinderSlope
+// Created: MCO 2013-06-06
+// -----------------------------------------------------------------------------
+bool MIL_Config::UsePathFinderSlope() const
+{
+    return pathfinderSlope_;
 }
 
 // -----------------------------------------------------------------------------
