@@ -78,7 +78,7 @@ public:
     static bool AgentCanFly( const MIL_Agent_ABC& callerAgent );
     static double GetCurrentSpeed( const DEC_Decision_ABC* agent );
     static void CreateInstantaneously( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Gen_Object > genObject );
-
+    static bool PionCanFly( const DEC_Decision_ABC* callerAgent );
     static bool AgentCanConstructObjectWithLoaded( const DEC_Decision_ABC* agent, const std::string& type );
     static bool AgentCanConstructObjectWithLoadedAndLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation );
     static bool AgentHasDotationForBuilding(const DEC_Decision_ABC* agent, const std::string& type );

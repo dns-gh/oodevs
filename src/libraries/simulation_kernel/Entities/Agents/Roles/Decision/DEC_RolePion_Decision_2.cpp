@@ -423,6 +423,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< bool( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::CanRelievePion, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Suicide", boost::bind( &DEC_AgentFunctions::Suicide, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Agent_DisableCrowdEffect", &DEC_AgentFunctions::DisableCrowdEffect );
+    RegisterFunction( "DEC_Agent_PionCanFly", boost::function< bool( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::PionCanFly, _1 ) ) );
+
+
 
     // Agent knowledge accessors
     RegisterFunction( "DEC_ConnaissanceAgent_NiveauDePerceptionCourant",
