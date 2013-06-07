@@ -10,7 +10,6 @@ package simu
 
 import (
 	"encoding/xml"
-	"errors"
 	"fmt"
 	"io/ioutil"
 )
@@ -38,7 +37,7 @@ func ReadProfiles(data []byte) (*Profiles, error) {
 	p := Profiles{}
 	err := xml.Unmarshal(data, &p)
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf("cannot parse profiles: %v", err))
+		return nil, fmt.Errorf("cannot parse profiles: %v", err)
 	}
 	return &p, nil
 }
@@ -46,13 +45,13 @@ func ReadProfiles(data []byte) (*Profiles, error) {
 func ReadProfilesFile(profilePath string) (*Profiles, error) {
 	data, err := ioutil.ReadFile(profilePath)
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf(
-			"failed to read profiles file: %v", profilePath))
+		return nil, fmt.Errorf(
+			"failed to read profiles file: %v", profilePath)
 	}
 	profiles, err := ReadProfiles(data)
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf(
-			"failed to parse profiles file: %v", err))
+		return nil, fmt.Errorf(
+			"failed to parse profiles file: %v", err)
 	}
-	return profiles, err
+	return profiles, nil
 }

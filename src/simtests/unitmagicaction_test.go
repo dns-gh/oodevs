@@ -10,7 +10,6 @@ package simtests
 
 import (
 	"code.google.com/p/goprotobuf/proto"
-	"errors"
 	"fmt"
 	. "launchpad.net/gocheck"
 	"math"
@@ -55,10 +54,10 @@ func postInvalidUnitMagicAction(client *swapi.Client, msg *swapi.SwordMessage) e
 		if reply := m.GetUnitMagicActionAck(); reply != nil {
 			_, err = swapi.GetUnitMagicActionAck(reply)
 			if err == nil {
-				err = errors.New(fmt.Sprintf("Got unexpected success: %v", m))
+				err = fmt.Errorf("Got unexpected success: %v", m)
 			}
 		} else {
-			err = errors.New(fmt.Sprintf("Got unexpected: %v", m))
+			err = fmt.Errorf("Got unexpected: %v", m)
 		}
 		quit <- err
 		return true

@@ -171,7 +171,7 @@ func ReadSession(data []byte) (*Session, error) {
 	x := xmlSession{}
 	err := xml.Unmarshal(data, &x)
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf("cannot parse session: %v", err))
+		return nil, fmt.Errorf("cannot parse session: %v", err)
 	}
 	session := Session{}
 	err = session.syncSession(&x)
@@ -184,13 +184,13 @@ func ReadSession(data []byte) (*Session, error) {
 func ReadSessionFile(sessionPath string) (*Session, error) {
 	data, err := ioutil.ReadFile(sessionPath)
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf(
-			"failed to read session file: %v", sessionPath))
+		return nil, fmt.Errorf(
+			"failed to read session file: %v", sessionPath)
 	}
 	session, err := ReadSession(data)
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf(
-			"failed to parse session file: %v", err))
+		return nil, fmt.Errorf(
+			"failed to parse session file: %v", err)
 	}
 	return session, err
 }

@@ -51,7 +51,7 @@ func Disconnect(link io.ReadWriter, timeout time.Duration) bool {
 }
 
 func unexpected(value interface{}) error {
-	return errors.New(fmt.Sprintf("got unexpected value %v", value))
+	return fmt.Errorf("got unexpected value %v", value)
 }
 
 func nameof(names map[int32]string, code int32) error {
@@ -253,8 +253,8 @@ func (c *Client) DeleteProfile(login string) error {
 		}
 		removed := c.Model.GetProfile(reply.GetLogin())
 		if removed != nil {
-			return errors.New(fmt.Sprintf(
-				"Profile has not been destroyed: %v", removed))
+			return fmt.Errorf(
+				"Profile has not been destroyed: %v", removed)
 		}
 		return nil
 	}

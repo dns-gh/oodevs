@@ -11,7 +11,6 @@ package swapi
 import (
 	"code.google.com/p/goprotobuf/proto"
 	"encoding/binary"
-	"errors"
 	"fmt"
 	"io"
 	"sword"
@@ -178,7 +177,7 @@ func decode(msg *SwordMessage, tag uint32, data []uint8) error {
 		msg.Context = msg.SimulationToClient.GetContext()
 		msg.ClientId = msg.SimulationToClient.GetClientId()
 	default:
-		return errors.New(fmt.Sprintf("unknown tag: %d", tag))
+		return fmt.Errorf("unknown tag: %d", tag)
 	}
 	return err
 }
@@ -191,7 +190,7 @@ func (r *Reader) Decode(msg *SwordMessage) error {
 	}
 	size := int(header.Size - 4)
 	if size > MaxMessageSize {
-		return errors.New(fmt.Sprintf("packet size too big %d", size))
+		return fmt.Errorf("packet size too big %d", size)
 	}
 	if int(size) > len(r.cache) {
 		r.cache = make([]uint8, size)

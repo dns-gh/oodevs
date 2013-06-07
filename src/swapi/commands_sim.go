@@ -19,16 +19,12 @@ var (
 	ErrContinue = errors.New("continue")
 )
 
-func makeError(format string, args ...interface{}) error {
-	return errors.New(fmt.Sprintf(format, args...))
-}
-
 func mismatch(name string, a, b interface{}) error {
-	return makeError("%v mismatch %v != %v", name, a, b)
+	return fmt.Errorf("%v mismatch %v != %v", name, a, b)
 }
 
 func invalid(name string, value interface{}) error {
-	return makeError("invalid %v: %v", name, value)
+	return fmt.Errorf("invalid %v: %v", name, value)
 }
 
 func makeUnitTasker(unitId uint32) *sword.Tasker {
@@ -466,7 +462,7 @@ func (c *Client) SetAutomatMode(automatId uint32, engaged bool) error {
 			return unexpected(msg)
 		}
 		if reply.GetAutomate() == nil || reply.GetAutomate().GetId() != automatId {
-			return makeError("invalid automat identifier")
+			return fmt.Errorf("invalid automat identifier")
 		}
 		if code := reply.GetErrorCode(); code != sword.SetAutomatModeAck_no_error {
 			return nameof(sword.SetAutomatModeAck_ErrorCode_name, int32(code))
