@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	BoostTimeLayout = "20060102T150405.999999999"
+	BoostTimeLayout = "20060102T150405"
 )
 
 func MakeParameters(args ...*sword.MissionParameter) *sword.MissionParameters {
