@@ -12,7 +12,7 @@
 #ifndef __PHY_SmokeData_h_
 #define __PHY_SmokeData_h_
 
-#include "simulation_kernel/FireData_ABC.h"
+#include "FireData_ABC.h"
 
 class MIL_Agent_ABC;
 class PHY_Weapon;
@@ -28,7 +28,7 @@ namespace firing
 class PHY_SmokeData : public FireData_ABC
 {
 public:
-     PHY_SmokeData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, unsigned int nNbrAmmo );
+             PHY_SmokeData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory );
     virtual ~PHY_SmokeData();
 
     //! @name Operations
@@ -40,10 +40,9 @@ public:
 private:
     //! @name Member data
     //@{
-    MIL_Agent_ABC&                    firer_;
+    MIL_Agent_ABC& firer_;
     const PHY_IndirectFireDotationClass& indirectWeaponCategory_;
-    const unsigned int                              nNbrAmmo_;
-          PHY_Weapon*                       pWeapon_;
+    PHY_Weapon* pWeapon_;
     //@}
 };
 

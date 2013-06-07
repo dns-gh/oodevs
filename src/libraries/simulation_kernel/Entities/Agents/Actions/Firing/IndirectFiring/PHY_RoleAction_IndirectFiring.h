@@ -57,7 +57,7 @@ public:
     void FireSuspended();
 
     const PHY_DotationCategory* GetMunitionForIndirectFire( const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D* vTargetPosition );
-    int ThrowSmoke( const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo );
+    int ThrowSmoke( const MT_Vector2D& vTargetPosition );
     //@}
 
     //! @name Return codes

@@ -12,6 +12,10 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Weapon.h"
 #include "PHY_WeaponType.h"
+#include "AlgorithmsFactories.h"
+#include "MIL_Time_ABC.h"
+#include "WeaponReloadingComputerFactory_ABC.h"
+#include "WeaponReloadingComputer_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -22,22 +26,17 @@
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
-#include "MIL_Time_ABC.h"
-
-#include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/WeaponReloadingComputerFactory_ABC.h"
-#include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Weapon constructor
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
 PHY_Weapon::PHY_Weapon( const MIL_Time_ABC& time, const PHY_WeaponType& type, bool bMajor )
-    : time_                   ( time )
-    , type_                   ( type )
-    , bMajor_                 ( bMajor )
+    : time_( time )
+    , type_( type )
+    , bMajor_( bMajor )
     , nNbrAmmoFiredFromLoader_( 0 )
-    , rNextTimeStepToFire_    ( time_.GetCurrentTimeStep() )
+    , rNextTimeStepToFire_( time_.GetCurrentTimeStep() )
 {
     // NOTHING
 }
@@ -131,7 +130,7 @@ double PHY_Weapon::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_A
 // -----------------------------------------------------------------------------
 bool PHY_Weapon::IsReady() const
 {
-    return (unsigned int)rNextTimeStepToFire_ <= time_.GetCurrentTimeStep();
+    return static_cast< unsigned int >( rNextTimeStepToFire_ ) <= time_.GetCurrentTimeStep();
 }
 
 // -----------------------------------------------------------------------------
@@ -181,13 +180,13 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Co
 {
     assert( type_.CanDirectFire() && IsReady() );
 
-          bool bHasFired        = false;
+    bool bHasFired = false;
     const unsigned int nCurrentTimeStep = time_.GetCurrentTimeStep();
-    const unsigned int nNextTimeStep    = nCurrentTimeStep + 1;
-    if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
+    const unsigned int nNextTimeStep = nCurrentTimeStep + 1;
+    if( rNextTimeStepToFire_ < static_cast< float >( nCurrentTimeStep ) )
         rNextTimeStepToFire_ = nCurrentTimeStep;
 
-    while( (unsigned int)rNextTimeStepToFire_ < nNextTimeStep )
+    while( static_cast< unsigned int >( rNextTimeStepToFire_ ) < nNextTimeStep )
     {
         unsigned int nNbrAmmoToFire = type_.GetNbrAmmoPerBurst();
 
@@ -196,7 +195,7 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Co
 
         assert( nNbrAmmoToFire > 0 );
 
-        unsigned int nNbrAmmoReserved = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire );
+        unsigned int nNbrAmmoReserved = static_cast< unsigned int >( firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire ) );
 
         if( nNbrAmmoReserved )
         {
@@ -228,17 +227,17 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& ta
     assert( type_.CanDirectFire() && IsReady() );
 
     const unsigned int nCurrentTimeStep = time_.GetCurrentTimeStep();
-    const unsigned int nNextTimeStep    = nCurrentTimeStep + 1;
-    if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
+    const unsigned int nNextTimeStep = nCurrentTimeStep + 1;
+    if( rNextTimeStepToFire_ < static_cast< float >( nCurrentTimeStep ) )
         rNextTimeStepToFire_ = nCurrentTimeStep;
 
-    if( (unsigned int)rNextTimeStepToFire_ < nNextTimeStep )
+    if( static_cast< unsigned int >( rNextTimeStepToFire_ ) < nNextTimeStep )
     {
-        const PHY_RoePopulation& roe  = firer.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
+        const PHY_RoePopulation& roe = firer.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
         const double rDamageSurface = target.GetPopulation().GetType().GetDamageSurface( roe );
-        const unsigned int     nKilledHumans  = (unsigned int)ceil( rDamageSurface * target.GetDensity() );
+        const unsigned int nKilledHumans = static_cast< unsigned int >( ceil( rDamageSurface * target.GetDensity() ) );
 
-        unsigned int nNbrAmmoToFire = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nKilledHumans );
+        unsigned int nNbrAmmoToFire = static_cast< unsigned int >( firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nKilledHumans ) );
 
         type_.DirectFire( firer, target, nNbrAmmoToFire, fireResult );
 
@@ -258,11 +257,11 @@ bool PHY_Weapon::IndirectFire( MIL_Agent_ABC& firer, MIL_Effect_IndirectFire& ef
 
     bool bHasFired = false;
     const unsigned int nCurrentTimeStep = time_.GetCurrentTimeStep();
-    const unsigned int nNextTimeStep    = nCurrentTimeStep + 1;
-    if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
+    const unsigned int nNextTimeStep = nCurrentTimeStep + 1;
+    if( rNextTimeStepToFire_ < static_cast< float >( nCurrentTimeStep ) )
         rNextTimeStepToFire_ = nCurrentTimeStep;
 
-    while( (unsigned int)rNextTimeStepToFire_ < nNextTimeStep && !effect.IsInterventionTypeFired() )
+    while( static_cast< unsigned int >( rNextTimeStepToFire_ ) < nNextTimeStep && !effect.IsInterventionTypeFired() )
     {
         unsigned int nNbrAmmoToFire = type_.GetNbrAmmoPerBurst();
         if( type_.GetNbrAmmoPerLoader() != 0 )
@@ -271,7 +270,7 @@ bool PHY_Weapon::IndirectFire( MIL_Agent_ABC& firer, MIL_Effect_IndirectFire& ef
         nNbrAmmoToFire = std::min( nNbrAmmoToFire, effect.GetNbrAmmoToCompleteInterventionType() );
         assert( nNbrAmmoToFire > 0 );
 
-        unsigned int nNbrAmmoReserved = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire );
+        unsigned int nNbrAmmoReserved = static_cast< unsigned int >( firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire ) );
         if( nNbrAmmoReserved )
         {
             nNbrAmmoFiredFromLoader_ += nNbrAmmoReserved;
@@ -297,9 +296,31 @@ bool PHY_Weapon::IndirectFire( MIL_Agent_ABC& firer, MIL_Effect_IndirectFire& ef
 // Name: PHY_Weapon::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-void PHY_Weapon::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const
-{//@TODO MGD See with AHC if we remove this GetRole kind
-    const MT_Vector2D& vSourcePosition = firer.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmo );
-    type_.ThrowSmoke( firer, vSourcePosition, vTargetPosition, nNbrAmmo, fireResult );
+void PHY_Weapon::ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, PHY_FireResults_ABC& fireResult )
+{
+    const unsigned int nCurrentTimeStep = time_.GetCurrentTimeStep();
+    const unsigned int nNextTimeStep = nCurrentTimeStep + 1;
+    if( rNextTimeStepToFire_ < static_cast< float >( nCurrentTimeStep ) )
+        rNextTimeStepToFire_ = nCurrentTimeStep;
+    while( static_cast< unsigned int >( rNextTimeStepToFire_ ) < nNextTimeStep )
+    {
+        unsigned int nNbrAmmoToFire = type_.GetNbrAmmoPerBurst();
+        if( type_.GetNbrAmmoPerLoader() != 0 )
+            nNbrAmmoToFire = std::min( nNbrAmmoToFire, type_.GetNbrAmmoPerLoader() - nNbrAmmoFiredFromLoader_ );
+
+        const MT_Vector2D& vSourcePosition = firer.GetRole< PHY_RoleInterface_Location >().GetPosition();
+        unsigned int nNbrAmmoReserved = static_cast< unsigned int >( firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire ) );
+        if( nNbrAmmoReserved )
+        {
+            nNbrAmmoFiredFromLoader_ += nNbrAmmoReserved;
+
+            type_.ThrowSmoke( firer, vSourcePosition, vTargetPosition, nNbrAmmoReserved, fireResult );
+            rNextTimeStepToFire_ += type_.GetBurstDuration();
+            if( nNbrAmmoFiredFromLoader_ == type_.GetNbrAmmoPerLoader() )
+            {
+                rNextTimeStepToFire_ += ModifyReloadingDuration( firer, type_.GetReloadingDuration() );
+                nNbrAmmoFiredFromLoader_  = 0;
+            }
+        }
+    }
 }

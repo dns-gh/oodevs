@@ -36,9 +36,9 @@ public:
 
     //! @name Accessors
     //@{
-          bool                  IsReady            () const; // $$$ Retourne "pas en train de tirer" ni "pas en train de recharger" - NE TIENT PAS COMPTE DES DOTATIONS - COMMUN DIRECT ET INDIRECT
-          bool                  CanDirectFire      () const;
-          bool                  CanIndirectFire    () const;
+    bool IsReady() const; // $$$ Retourne "pas en train de tirer" ni "pas en train de recharger" - NE TIENT PAS COMPTE DES DOTATIONS - COMMUN DIRECT ET INDIRECT
+    bool CanDirectFire() const;
+    bool CanIndirectFire() const;
     const PHY_DotationCategory& GetDotationCategory() const;
 
     const PHY_WeaponType& GetType() const
@@ -53,18 +53,18 @@ public:
 
     //! @name Operations
     //@{
-    bool     IndirectFire             ( MIL_Agent_ABC& firer, MIL_Effect_IndirectFire& effect );
-    bool     DirectFire               ( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH );
-    bool     DirectFire               ( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, PHY_FireResults_ABC& fireResult );
-    void     ThrowSmoke               ( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
-    double GetDangerosity           ( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH, bool bUseAmmo ) const;
-    double GetDangerosity           ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwFirerAndTarget, bool bUseAmmo ) const;
-    double GetMaxRangeToFireOn      ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
-    double GetMinRangeToFireOn      ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
-    double GetMaxRangeToDirectFire  () const;
+    bool IndirectFire( MIL_Agent_ABC& firer, MIL_Effect_IndirectFire& effect );
+    bool DirectFire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH );
+    bool DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, PHY_FireResults_ABC& fireResult );
+    void ThrowSmoke( MIL_Agent_ABC& firer, const MT_Vector2D& vTargetPosition, PHY_FireResults_ABC& fireResult );
+    double GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, bool bUsePH, bool bUseAmmo ) const;
+    double GetDangerosity( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& compTarget, double rDistBtwFirerAndTarget, bool bUseAmmo ) const;
+    double GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
+    double GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
+    double GetMaxRangeToDirectFire() const;
     double GetMaxRangeToIndirectFire() const;
     double GetMinRangeToIndirectFire() const;
-    int    GetNumberOfDotationPerBurst( const PHY_DotationCategory& ) const;
+    int GetNumberOfDotationPerBurst( const PHY_DotationCategory& ) const;
     //@}
 
 private:
@@ -74,12 +74,12 @@ private:
     //@}
 
 private:
-    const MIL_Time_ABC&   time_;
+    const MIL_Time_ABC& time_;
     const PHY_WeaponType& type_;
-    const bool            bMajor_;
+    const bool bMajor_;
 
-    unsigned int        nNbrAmmoFiredFromLoader_;
-    double    rNextTimeStepToFire_;
+    unsigned int nNbrAmmoFiredFromLoader_;
+    double rNextTimeStepToFire_;
 };
 
 #endif // __PHY_Weapon_h_

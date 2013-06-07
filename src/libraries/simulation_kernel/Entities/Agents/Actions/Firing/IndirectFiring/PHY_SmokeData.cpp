@@ -11,27 +11,25 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_SmokeData.h"
+#include "AlgorithmsFactories.h"
+#include "DotationComputer_ABC.h"
+#include "DotationComputerFactory_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
-
-#include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/DotationComputer_ABC.h"
-#include "simulation_kernel/DotationComputerFactory_ABC.h"
+#include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
 
 using namespace firing;
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SmokeData constructor
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-PHY_SmokeData::PHY_SmokeData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, unsigned int nNbrAmmo )
-    : firer_                 ( firer )
+PHY_SmokeData::PHY_SmokeData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory )
+    : firer_( firer )
     , indirectWeaponCategory_( indirectWeaponCategory )
-    , nNbrAmmo_              ( nNbrAmmo )
-    , pWeapon_               ( 0 )
+    , pWeapon_( 0 )
 {
     // NOTHING
 }
@@ -60,8 +58,9 @@ void PHY_SmokeData::operator()( const PHY_ComposantePion& compFirer, PHY_Weapon&
 
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer_.GetAlgorithms().dotationComputerFactory_->Create() );
     firer_.Execute( *dotationComputer );
-    if( dotationComputer->GetDotationValue( weapon.GetDotationCategory() ) < nNbrAmmo_ )
+    if( dotationComputer->GetDotationValue( weapon.GetDotationCategory() ) < weapon.GetType().GetNbrAmmoPerBurst() )
         return;
+
     pWeapon_ = &weapon;
 }
 
