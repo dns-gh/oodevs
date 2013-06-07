@@ -1552,6 +1552,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>The following object is invalid and will be deleted at next save: %1</source>
         <translation>L&apos;objet suivant est invalide et sera supprimé à la prochaine sauvegarde : %1</translation>
     </message>
+    <message>
+        <source>Some urban blocks used by population %1 were removed from terrain, population will be modified at next save.</source>
+        <translation>Des blocs urbains utilisés par la population %1 ont été supprimés du terrain, la population sera modifié pour ne plus en tenir compte à la prochaine sauvegarde.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

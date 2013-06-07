@@ -327,7 +327,7 @@ Inhabitant_ABC* AgentFactory::Create( xml::xistream& xis, Team_ABC& parent, cons
 {
     Inhabitant* result = new Inhabitant( xis, type, controllers_.controller_, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
-    result->Attach< Positions >( *new InhabitantPositions( xis, controllers_.controller_, static_.coordinateConverter_, model_.urban_, *result, dico ) );
+    result->Attach< Positions >( *new InhabitantPositions( xis, controllers_.controller_, static_.coordinateConverter_, model_, *result, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dico ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );

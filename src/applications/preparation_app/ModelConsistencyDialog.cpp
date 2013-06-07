@@ -126,6 +126,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eUnitOutsideMap ] = tools::translate( "ModelConsistencyDialog", "Entity '%1' is outside the map. It will be repositioned to the origin." );
     errorDescriptions_[ eCityAreaLimitExceeded ] = tools::translate( "ModelConsistencyDialog", "City area exceeds %1 km²" );
     errorDescriptions_[ eImpossibleObjectCreation ] = tools::translate( "ModelConsistencyDialog", "The following object is invalid and will be deleted at next save: %1" );
+    errorDescriptions_[ eInhabitantBlockRemoved ] = tools::translate( "ModelConsistencyDialog", "Some urban blocks used by population %1 were removed from terrain, population will be modified at next save." );
     errorDescriptions_[ eOthers ] = "%1";
     errorDescriptions_[ eOthersMask ] = "%1";
 }

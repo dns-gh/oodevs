@@ -33,6 +33,7 @@ namespace xml
     class xistream;
 }
 
+class Model;
 class UrbanModel;
 
 // =============================================================================
@@ -61,7 +62,7 @@ public:
     //@{
              InhabitantPositions( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location,
                                   const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary );
-             InhabitantPositions( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel,
+             InhabitantPositions( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, Model& uodel,
                                   kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary );
     virtual ~InhabitantPositions();
     //@}
@@ -92,7 +93,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ReadLivingUrbanBlock( xml::xistream& xis );
+    void ReadLivingUrbanBlock( xml::xistream& xis, bool& blocksDeleted );
     void ComputePosition();
     void UpdateDictionary();
     void Add( const kernel::UrbanObject_ABC& object, const geometry::Polygon2f& polygon );

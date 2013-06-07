@@ -65,6 +65,7 @@ enum E_ConsistencyCheck
     eCityAreaLimitExceeded,
     eUnitOutsideMap,
     eImpossibleObjectCreation,
+    eInhabitantBlockRemoved,
     eOthers,
     eOthersMask,
 };

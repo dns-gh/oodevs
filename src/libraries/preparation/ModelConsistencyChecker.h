@@ -64,7 +64,7 @@ public:
                 || type_ == eProfileNoRole || type_ == eNoOrbat || type_ == eSignature
                 || type_ == eBadLogisticSubordinate || type_ == eUnknownInfrastructure || type_ == eUnknownResourceNetwork
                 || type_ == eDiffusionList || type_ == eMelmil || type_ == eDeletedUrbanBlocks || type_ == eDeletedPopulationUrbanBlocks
-                || type_ == eCityAreaLimitExceeded || type_ == eImpossibleObjectCreation;
+                || type_ == eCityAreaLimitExceeded || type_ == eImpossibleObjectCreation || type_ == eInhabitantBlockRemoved;
         }
         E_ConsistencyCheck type_;
         T_Items items_;

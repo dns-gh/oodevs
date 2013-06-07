@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "InhabitantPositions.h"
+#include "Model.h"
 #include "UrbanHierarchies.h"
 #include "UrbanModel.h"
 #include "clients_kernel/AccommodationTypes.h"
@@ -16,6 +17,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/InfrastructureType.h"
+#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
@@ -94,11 +96,11 @@ InhabitantPositions::InhabitantPositions( kernel::Controller& controller, const 
 // Name: InhabitantPositions constructor
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-InhabitantPositions::InhabitantPositions( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel,
+InhabitantPositions::InhabitantPositions( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, Model& model,
                                           kernel::Inhabitant_ABC& inhabitant , kernel::PropertiesDictionary& dictionary )
     : controller_( controller )
     , converter_ ( converter )
-    , urbanModel_( urbanModel )
+    , urbanModel_( model.urban_ )
     , inhabitant_( inhabitant )
     , dictionary_( dictionary )
     , position_  ( 0, 0 )
@@ -107,9 +109,13 @@ InhabitantPositions::InhabitantPositions( xml::xistream& xis, kernel::Controller
     , infrastructures_( 0 )
     , medicalInfrastructures_( 0 )
 {
+    bool blocksDeleted = false;
     xis >> xml::start( "living-area" )
-            >> xml::list( "urban-block" , *this, &InhabitantPositions::ReadLivingUrbanBlock )
+            >> xml::list( "urban-block" , *this, &InhabitantPositions::ReadLivingUrbanBlock, blocksDeleted )
         >> xml::end;
+    if( blocksDeleted )
+        model.AppendLoadingError( eInhabitantBlockRemoved, inhabitant_.GetName().toStdString(), &inhabitant_ );
+
     ComputePosition();
     UpdateDictionary();
     controller_.Register( *this );
@@ -128,13 +134,13 @@ InhabitantPositions::~InhabitantPositions()
 // Name: InhabitantPositions::ReadLivingUrbanBlock
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-void InhabitantPositions::ReadLivingUrbanBlock( xml::xistream& xis )
+void InhabitantPositions::ReadLivingUrbanBlock( xml::xistream& xis, bool& blocksDeleted )
 {
     kernel::UrbanObject_ABC* pObject = urbanModel_.tools::Resolver< kernel::UrbanObject_ABC >::Find( xis.attribute< unsigned long >( "id" ) );
-    if( !pObject )
-        xis.error( "error in loading living urban block for population" );
-    else
+    if( pObject )
         livingUrbanObject_.push_back( boost::make_tuple( pObject->GetId(), pObject->GetName(), pObject ) );
+    else
+        blocksDeleted = true;
 }
 
 // -----------------------------------------------------------------------------
