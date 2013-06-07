@@ -185,7 +185,7 @@ void IndicatorPlot::UpdatePlot( gui::GQ_PlotData* plot, const IndicatorRequest& 
         max_ = std::max( value, max_ );
     }
     YAxis().SetAxisRange( min_, max_ * 1.1, true );
-    XAxis().SetAxisRange( firstTick, static_cast< double >( firstTick + request.Result().size() ), true );
+    XAxis().SetAxisRange( 0, static_cast< double >( firstTick + request.Result().size() ), true );
 }
 
 // -----------------------------------------------------------------------------
