@@ -76,6 +76,12 @@ ADN_Missions_Mission* ADN_Missions_Mission::CreateCopy()
         ADN_Missions_Parameter* newParam = (*it)->CreateCopy();
         newMission->parameters_.AddItem( newParam );
     }
+    newMission->descriptionContext_ = descriptionContext_.GetData();
+    newMission->descriptionBehavior_ = descriptionBehavior_.GetData();
+    newMission->descriptionSpecific_ = descriptionSpecific_.GetData();
+    newMission->descriptionComment_ = descriptionComment_.GetData();
+    newMission->descriptionMissionEnd_ = descriptionMissionEnd_.GetData();
+    newMission->attachments_ = attachments_;
     return newMission;
 }
 

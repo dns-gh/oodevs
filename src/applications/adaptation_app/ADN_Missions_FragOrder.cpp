@@ -54,6 +54,12 @@ ADN_Missions_FragOrder* ADN_Missions_FragOrder::CreateCopy()
         ADN_Missions_Parameter* newParam = (*it)->CreateCopy();
         newFragOrder->parameters_.AddItem( newParam );
     }
+    newFragOrder->descriptionContext_ = descriptionContext_.GetData();
+    newFragOrder->descriptionBehavior_ = descriptionBehavior_.GetData();
+    newFragOrder->descriptionSpecific_ = descriptionSpecific_.GetData();
+    newFragOrder->descriptionComment_ = descriptionComment_.GetData();
+    newFragOrder->descriptionMissionEnd_ = descriptionMissionEnd_.GetData();
+    newFragOrder->attachments_ = attachments_;
     return newFragOrder;
 }
 
