@@ -90,6 +90,7 @@ private:
     void OnReceiveClientToMessenger( const sword::ClientToMessenger& message );
     void ClearFilesWhenLoadingCheckpoint( const std::string& checkpointDirectory );
     void SaveCheckpoint( const std::string& checkpointDirectory );
+    void UpdateCurrentTick( int currentTick, const std::string& date );
     //@}
 
     //! @name Member data

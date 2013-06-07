@@ -108,18 +108,26 @@ LogisticPlugin::~LogisticPlugin()
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticPlugin::UpdateCurrentTick
+// Created: LDC 2013-06-07
+// -----------------------------------------------------------------------------
+void LogisticPlugin::UpdateCurrentTick( int currentTick, const std::string& date )
+{
+    currentTick_ = currentTick;       
+    for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
+        (*r)->SetTime( currentTick_, date );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticPlugin::Receive
 // Created: MMC 2012-09-11
 // -----------------------------------------------------------------------------
 void LogisticPlugin::Receive( const sword::SimToClient& message )
 {
-    if( message.message().has_control_begin_tick() )
-    {
-        currentTick_ = message.message().control_begin_tick().current_tick();
-        std::string simTime = message.message().control_begin_tick().date_time().data();        
-        for( auto r = resolvers_.begin(); r != resolvers_.end(); ++r )
-            (*r)->SetTime( currentTick_, simTime );
-    }
+    if( message.message().has_control_information() )
+        UpdateCurrentTick( message.message().control_information().current_tick(), message.message().control_information().date_time().data() );
+    else if( message.message().has_control_begin_tick() )
+        UpdateCurrentTick( message.message().control_begin_tick().current_tick(), message.message().control_begin_tick().date_time().data() );
     else if( message.message().has_control_checkpoint_save_end() )
         SaveCheckpoint( config_.GetCheckpointDirectory( message.message().control_checkpoint_save_end().name() ) );
     else
