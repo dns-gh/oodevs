@@ -613,6 +613,9 @@ end
 integration.StartLendVSRAM = function ( pionRenforce, pionARenforcer, nbrAmbulances )
     DEC_StartPreterVSRAM( pionRenforce.source, pionARenforcer.source, nbrAmbulances )
 end
+integration.LendAmbulances = function ( pionRenforce, pionARenforcer, nbrAmbulances )
+    DEC_StartPreterVSRAM( pionRenforce, pionARenforcer, nbrAmbulances )
+end
 
 -- -------------------------------------------------------------------------------- 
 -- Start Get VSRAM
@@ -621,6 +624,9 @@ end
 -- --------------------------------------------------------------------------------
 integration.StartGetVSRAM = function ( pionRenforce, nbrAmbulances )
     DEC_RecupererVSRAM( pionRenforce.source, nbrAmbulances )
+end
+integration.GetBackAmbulances = function ( pionRenforce, nbrAmbulances )
+    DEC_RecupererVSRAM( pionRenforce, nbrAmbulances )
 end
 
 -- -------------------------------------------------------------------------------- 
