@@ -884,7 +884,7 @@
         <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
         <update name="htmlhelp" version="4.74.8702"/>
         <update name="iconv"/>
-        <update name="log4cxx"/>
+        <update name="log4cxx" version="0.10.0"/>
         <update name="masalife/brain"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="exercises-dev" todir="${data.dir}/exercises"/>
