@@ -370,9 +370,12 @@ return
         return DEC_ConnaissanceObjet_Type( self.source )
     end,
     -- commit attak
-    attackIt = function( self, suicide, dotation  )
-        return integration.attackObject( self, suicide, dotation )
-    end,
+    attackIt = masalife.brain.integration.startStopAction( 
+    { 
+        start = integration.startAttackIt, 
+        started = integration.updateAttackIt, 
+        stop = integration.stopAttackIt
+    } ),
     plannedworkToWork = function( self )
         return self
     end,
