@@ -99,7 +99,7 @@ func ReadPoint(value *sword.CoordLatLong) Point {
 	if value == nil {
 		return Point{}
 	}
-	return Point{X: value.GetLatitude(), Y: value.GetLongitude()}
+	return Point{X: value.GetLongitude(), Y: value.GetLatitude()}
 }
 
 func MakePointLocation(point Point) *sword.Location {
