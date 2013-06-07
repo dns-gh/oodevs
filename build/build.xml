@@ -15,7 +15,7 @@
         <update name="goprotobuf"/>
         <update name="models" package="decisional-dev" todir="${data.dir}/data/models"/>
         <update name="models" package="terrains-dev" todir="${data.dir}/data/terrains"/>
-        <update name="protobuf"/>
+        <update name="protobuf" version="2.3.0"/>
         <update name="sword" package="protobuf" todir="${src.dir}/sword"/>
         <update name="sword" package="binaries_${platform}" todir="${run.dir}"/>
     </target>
