@@ -864,13 +864,13 @@
     ============================================================================
     -->
     <target name="update" description="update package dependencies">
-        <update name="7z"/>
+        <update name="7z" version="9.30-1"/>
         <update name="asciidoc" version="8.6.8"/>
         <update name="boost"/>
-        <update name="bugtrap"/>
+        <update name="bugtrap" version="1.3.3291.42976"/>
         <update name="buildtools"/>
         <update name="cmake"/>
-        <update name="depends"/>
+        <update name="depends" version="2.2.6000"/>
         <update name="excel"/>
         <update name="flexlm"/>
         <update name="gdal"/>
