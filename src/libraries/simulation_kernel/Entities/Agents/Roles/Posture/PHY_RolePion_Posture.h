@@ -132,9 +132,10 @@ private:
     //! @name Tools
     //@{
     bool HasChanged() const;
-    void ChangePosture( const PHY_Posture& newPosture );
+    bool ChangePosture( const PHY_Posture& newPosture );
     void ChangePostureCompletionPercentage( double rNewPercentage );
     void Uninstall();
+    bool UpdatePosture( bool bIsDead );
     //@}
 
     //! @name Serialization

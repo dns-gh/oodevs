@@ -138,14 +138,15 @@ void PHY_RolePion_Posture::ChangePostureCompletionPercentage( double rNewPercent
 // Name: PHY_RolePion_Posture::ChangePosture
 // Created: NLD 2005-07-27
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
+bool PHY_RolePion_Posture::ChangePosture( const PHY_Posture& newPosture )
 {
     if( pCurrentPosture_ == &newPosture )
-        return;
+        return false;
     pLastPosture_    = pCurrentPosture_;
     pCurrentPosture_ = &newPosture;
     bPostureHasChanged_    = true;
     bPercentageHasChanged_ = true;
+    return true;
 }
 
 namespace
@@ -160,21 +161,34 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::UpdatePosture
+// Created: LDC 2013-06-07
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Posture::UpdatePosture( bool bIsDead )
+{
+    std::auto_ptr< PostureComputer_ABC > computer( owner_.GetAlgorithms().postureComputerFactory_->Create( random, owner_.GetType().GetUnitType(), *pCurrentPosture_,
+                                                                                                           bIsDead, bDiscreteModeEnabled_, rPostureCompletionPercentage_,
+                                                                                                           rStealthFactor_, rTimingFactor_, bIsParkedOnEngineerArea_ ) );
+    owner_.Execute( *computer );
+    PostureComputer_ABC::Results& result = computer->Result();
+    bool changed = false;
+    if( result.newPosture_ )
+        changed = ChangePosture( *result.newPosture_ );
+    ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );
+    bIsStealth_ = result.bIsStealth_;
+    return changed;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::Update
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::Update( bool bIsDead )
 {
     Uninstall();
-    std::auto_ptr< PostureComputer_ABC > computer( owner_.GetAlgorithms().postureComputerFactory_->Create( random, owner_.GetType().GetUnitType(), *pCurrentPosture_,
-                                                                                                           bIsDead, bDiscreteModeEnabled_, rPostureCompletionPercentage_,
-                                                                                                           rStealthFactor_, rTimingFactor_, bIsParkedOnEngineerArea_ ) );
-    owner_.Execute( *computer );
-    PostureComputer_ABC::Results& result = computer->Result();
-    if( result.newPosture_ )
-        ChangePosture( *result.newPosture_ );
-    ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );
-    bIsStealth_ = result.bIsStealth_;
+    bool updated = UpdatePosture( bIsDead );
+    while( 1. == rPostureCompletionPercentage_ && updated )
+        updated = UpdatePosture( bIsDead );
     if( HasChanged() )
     {
         owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
