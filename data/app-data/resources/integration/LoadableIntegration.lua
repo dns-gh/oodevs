@@ -58,7 +58,9 @@ integration.loadFriendOrFoe = function( unit )
 end
 
 integration.unloadFriendOrFoe = function( unit )
-    myself.loadedUnits[ unit ] = nil
+    if myself.loadedUnits then
+        myself.loadedUnits[ unit ] = nil
+    end
     if DEC_Prisonniers_EstEmbarque( unit.source ) then
         DEC_Prisonniers_Debarquer( unit.source )
         return true
@@ -97,7 +99,9 @@ integration.loadFriend = function( unit )
     return true
 end
 integration.unloadFriend = function( unit )
-    myself.loadedUnits[ unit ] = nil
+    if myself.loadedUnits then
+        myself.loadedUnits[ unit ] = nil
+    end
     DEC_Transport_DebarquerPionSansDelais( unit.source )
     return true
 end
@@ -330,4 +334,12 @@ end
 
 integration.isDuringTransport = function( )
     return DEC_Transport_EnCoursDeTransport()
+end
+
+integration.areSuppliesLoaded = function( unit )
+    return unit.source:GetsuppliesLoaded_()
+end
+
+integration.setSuppliesLoaded = function( unit, bool )
+    return unit.source:SetsuppliesLoaded_( bool )
 end
