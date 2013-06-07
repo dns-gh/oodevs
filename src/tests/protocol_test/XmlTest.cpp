@@ -113,7 +113,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( read_boolean, Fixture )
 {
-    AddParameterValue( xos, "bool", true );
+    AddParameterValue( xos, "boolean", true );
     const auto msg = Read< MissionParameters >();
     BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
     BOOST_CHECK(  msg.elem( 0 ).value( 0 ).booleanvalue() );
