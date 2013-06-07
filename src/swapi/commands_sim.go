@@ -642,7 +642,7 @@ func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) 
 						MakeEnumeration(int32(local.Precipitation)),
 						MakeTime(local.StartTime),
 						MakeTime(local.EndTime),
-						MakeRectangleParam(local.BottomRight, local.TopLeft),
+						MakeRectangleParam(local.TopLeft, local.BottomRight),
 						MakeIdentifier(local.Id),
 					),
 				},
@@ -666,14 +666,11 @@ func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) 
 	if err != nil {
 		return nil, err
 	}
-	return local, nil
-	/*
-		ok := c.Model.WaitCondition(func(data *ModelData) bool {
-			return data.LocalWeathers[id] != nil
-		})
-		if !ok {
-			return nil, ErrTimeout
-		}
-		return c.Model.GetLocalWeather(id), nil
-	*/
+	ok := c.Model.WaitCondition(func(data *ModelData) bool {
+		return data.LocalWeathers[id] != nil
+	})
+	if !ok {
+		return nil, ErrTimeout
+	}
+	return c.Model.GetLocalWeather(id), nil
 }

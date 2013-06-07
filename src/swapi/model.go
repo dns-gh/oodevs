@@ -236,11 +236,13 @@ func (model *Model) update(msg *SwordMessage) {
 			}
 		} else if mm := m.GetControlLocalWeatherCreation(); mm != nil {
 			start, err := GetTime(mm.GetStartDate())
-			if err != nil { // XXX report error here
+			if err != nil {
+				// XXX report error here
 				return
 			}
 			end, err := GetTime(mm.GetEndDate())
-			if err != nil { // XXX report error here
+			if err != nil {
+				// XXX report error here
 				return
 			}
 			attr := mm.GetAttributes()
@@ -441,7 +443,7 @@ func (model *Model) GetLocalWeather(id uint32) *LocalWeather {
 	model.waitCommand(func(model *Model) {
 		weather, ok := model.data.LocalWeathers[id]
 		if ok {
-			w := &LocalWeather{}
+			w = &LocalWeather{}
 			DeepCopy(w, weather)
 		}
 	})
