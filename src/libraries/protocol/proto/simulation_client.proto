@@ -514,6 +514,7 @@ message FormationCreation {
 message FormationUpdate {
     required FormationId       formation             = 1;  //!< The formation identifier @see FormationId
     optional Extension         extension             = 2;  //!< The extension fields
+    optional string            app6symbol            = 3;  //!< The formation APP-6 symbol
 }
 
 /** @struct FormationDestruction

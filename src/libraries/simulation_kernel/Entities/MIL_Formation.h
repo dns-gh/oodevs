@@ -141,6 +141,7 @@ private:
     std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
     std::auto_ptr< MIL_Color > pColor_;
     std::string symbol_;
+    bool bSymbolChanged_;
     //@}
 };
 

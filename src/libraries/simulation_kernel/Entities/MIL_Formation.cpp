@@ -49,6 +49,7 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
     , pExtensions_( new MIL_DictionaryExtensions( xis ) )
     , pColor_( new MIL_Color( xis ) )
     , symbol_( xis.attribute< std::string >( "nature", "" ) )
+    , bSymbolChanged_( false )
 {
     pLevel_ = PHY_NatureLevel::Find( xis.attribute< std::string >( "level" ) );
     if( !pLevel_ )
@@ -84,6 +85,7 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
     , pParent_    ( parent )
     , pLevel_     ( 0 )
     , pExtensions_( new MIL_DictionaryExtensions() )
+    , bSymbolChanged_( false )
 {
     pLevel_ = PHY_NatureLevel::Find( level );
     if( !pLevel_ )
@@ -128,6 +130,7 @@ MIL_Formation::MIL_Formation( const std::string& name )
     , pLevel_     ( 0 )
     , pExtensions_( 0 )
     , pColor_     ( 0 )
+    , bSymbolChanged_( false )
 {
     // NOTHING
 }
@@ -348,6 +351,10 @@ void MIL_Formation::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg 
             }
         }
         break;
+    case sword::change_symbol:
+        symbol_ = msg.parameters().elem( 0 ).value( 0 ).acharstr();
+        bSymbolChanged_ = true;
+        break;
     default:
         break;
     }
@@ -512,15 +519,18 @@ void MIL_Formation::Apply( MIL_EntitiesVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void MIL_Formation::UpdateNetwork()
 {
-   if( pBrainLogistic_.get() )
+    if( pBrainLogistic_.get() )
         pBrainLogistic_->SendChangedState();
-   if( pExtensions_->HasChanged() )
-   {
-       client::FormationUpdate message;
-       message().mutable_formation()->set_id( nID_ );
-       pExtensions_->UpdateNetwork( message );
-       message.Send( NET_Publisher_ABC::Publisher() );
-   }
+    if( pExtensions_->HasChanged() || bSymbolChanged_ )
+    {
+        client::FormationUpdate message;
+        message().mutable_formation()->set_id( nID_ );
+        if( bSymbolChanged_ )
+            message().set_app6symbol( symbol_ );
+        if( pExtensions_->HasChanged() )
+            pExtensions_->UpdateNetwork( message );
+        message.Send( NET_Publisher_ABC::Publisher() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -531,4 +541,5 @@ void MIL_Formation::Clean()
 {
     if( pBrainLogistic_.get() )
         pBrainLogistic_->Clean();
+    bSymbolChanged_ = false;
 }

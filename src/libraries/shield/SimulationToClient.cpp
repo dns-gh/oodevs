@@ -538,6 +538,7 @@ void SimulationToClient::Convert( const sword::FormationUpdate& from, MsgsSimToC
 {
     CONVERT_ID( formation );
     CONVERT_CB( extension, ConvertExtension );
+    CONVERT( app6symbol );
 }
 
 // -----------------------------------------------------------------------------

@@ -152,6 +152,7 @@ void Formation::SendFullUpdate( ClientPublisher_ABC& publisher) const
             entry->set_name( it->first );
             entry->set_value( it->second );
         }
+        asn().set_app6symbol( app6symbol_ );
         asn.Send( publisher );
     }
     if( logisticEntity_.get() )
@@ -295,6 +296,8 @@ void Formation::DoUpdate( const sword::FormationUpdate& msg )
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
+    if( msg.has_app6symbol() )
+        app6symbol_ = msg.app6symbol();
 }
 
 // -----------------------------------------------------------------------------
