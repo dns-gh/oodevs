@@ -505,16 +505,11 @@ double PHY_DotationCategory::FindUrbanAttritionScore( const PHY_MaterialComposit
 // -----------------------------------------------------------------------------
 bool PHY_DotationCategory::IsSignificantChange( double newValue, double oldValue, double capacity ) const
 {
-    if( &type_ == PHY_DotationType::munition_ ||
-        &type_ == PHY_DotationType::mine_ ||
-        &type_ == PHY_DotationType::explosif_ ||
-        &type_ == PHY_DotationType::agentExtincteur_ ||
-        0. == capacity )
-        return ( static_cast< unsigned int >( oldValue ) != static_cast< unsigned int >( newValue ) );
+    if( &type_ != PHY_DotationType::ration_ && &type_ != PHY_DotationType::carburant_ || capacity == 0 )
+        return static_cast< unsigned int >( oldValue ) != static_cast< unsigned int >( newValue );
     if( newValue == 0 )
         return true;
-    double delta = std::abs( oldValue - newValue );
-    return ( delta/capacity ) >= 0.05;
+    return std::abs( oldValue - newValue ) >= capacity * 0.05; // $$$$ MCO 2013-06-07: hard-coded 5% threshold
 }
 
 // -----------------------------------------------------------------------------
