@@ -90,7 +90,13 @@ void ADN_ListView_DescriptionAttachment::AddFile()
 // -----------------------------------------------------------------------------
 void ADN_ListView_DescriptionAttachment::CopyName()
 {
-    QApplication::clipboard()->setText( GetModel().item( currentIndex().row() )->text() );
+    QModelIndex index = selectionModel()->currentIndex();
+    if( index.isValid() )
+    {
+        QStandardItem* item = dataModel_.GetItemFromIndex( index );
+        if( item )
+            QApplication::clipboard()->setText( item->text() );
+    }
 }
 
 // -----------------------------------------------------------------------------
