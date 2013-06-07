@@ -666,11 +666,14 @@ func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) 
 	if err != nil {
 		return nil, err
 	}
-	ok := c.Model.WaitCondition(func(data *ModelData) bool {
-		return data.LocalWeathers[id] != nil
-	})
-	if !ok {
-		return nil, ErrTimeout
-	}
-	return c.Model.GetLocalWeather(id), nil
+	return local, nil
+	/*
+		ok := c.Model.WaitCondition(func(data *ModelData) bool {
+			return data.LocalWeathers[id] != nil
+		})
+		if !ok {
+			return nil, ErrTimeout
+		}
+		return c.Model.GetLocalWeather(id), nil
+	*/
 }
