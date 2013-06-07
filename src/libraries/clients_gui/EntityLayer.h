@@ -180,6 +180,18 @@ protected:
     //@}
 };
 
+template<>
+void EntityLayer< kernel::Entity_ABC >::SelectColor( const kernel::Entity_ABC& );
+
+template<>
+void EntityLayer< kernel::Entity_ABC >::ContextMenu( const kernel::GraphicalEntity_ABC&, const geometry::Point2f&, const QPoint& );
+
+template<>
+void EntityLayer< kernel::Entity_ABC >::FillContextMenu( const kernel::GraphicalEntity_ABC&, kernel::ContextMenu& );
+
+template<>
+bool EntityLayer< kernel::Entity_ABC >::IsIn( const kernel::GraphicalEntity_ABC& ) const;
+
 }
 
 #include "EntityLayer.inl"

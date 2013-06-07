@@ -230,6 +230,15 @@ bool ObjectType::HasLodgingCapacity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectType::HasResourceNetwork
+// Created: JSR 2013-06-07
+// -----------------------------------------------------------------------------
+bool ObjectType::HasResourceNetwork() const
+{
+    return( capacities_.find( "resources" ) != capacities_.end() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectType::IsUrban
 // Created: SLG 2011-01-06
 // -----------------------------------------------------------------------------

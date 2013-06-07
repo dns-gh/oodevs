@@ -11,7 +11,7 @@
 #define __gui_ResourceNetworksLayer_h_
 
 #include "EntityLayer.h"
-#include "clients_kernel/UrbanObject_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 
 namespace kernel
 {
@@ -30,9 +30,9 @@ namespace gui
 /** @class  ResourceNetworksLayer
     @brief  Resource networks layer
 */
-// Created: LGY 2015-05-15
+// Created: LGY 2013-05-15
 // =============================================================================
-class ResourceNetworksLayer : public EntityLayer< kernel::UrbanObject_ABC >
+class ResourceNetworksLayer : public EntityLayer< kernel::Entity_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -44,6 +44,9 @@ public:
 
     //! @name Operations
     //@{
+    virtual void NotifyCreated( const kernel::Entity_ABC& entity );
+    virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
+
     virtual void Draw( const kernel::Entity_ABC& entity, Viewport_ABC& viewport, bool pickingMode );
     virtual bool IsInside( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& rectangle ) const;
     virtual bool IsSelected( const kernel::Entity_ABC& entity ) const;

@@ -382,3 +382,43 @@ void EntityLayerBase::Pick( const geometry::Point2f& point )
                 selection_.insert( entity.GetId() );
         }
 }
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::SelectColor
+// Created: JSR 2013-06-07
+// -----------------------------------------------------------------------------
+template<>
+void EntityLayer< kernel::Entity_ABC >::SelectColor( const kernel::Entity_ABC& )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::ContextMenu
+// Created: JSR 2013-06-07
+// -----------------------------------------------------------------------------
+template<>
+void EntityLayer<kernel::Entity_ABC>::ContextMenu( const kernel::GraphicalEntity_ABC& , const geometry::Point2f& , const QPoint&  )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::FillContextMenu
+// Created: JSR 2013-06-07
+// -----------------------------------------------------------------------------
+template<>
+void EntityLayer< kernel::Entity_ABC >::FillContextMenu( const kernel::GraphicalEntity_ABC& , kernel::ContextMenu& )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityLayer::IsIn
+// Created: JSR 2013-06-07
+// -----------------------------------------------------------------------------
+template<>
+bool EntityLayer< kernel::Entity_ABC >::IsIn( const kernel::GraphicalEntity_ABC& ) const
+{
+    return false;
+}
