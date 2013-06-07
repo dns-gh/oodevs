@@ -298,8 +298,8 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
         return "heading";
     if( type == "location" && type_ == "polygon" )
         return "polygon";
-    if( type == "integer" && type_ == "numeric" )
-        return "numeric";
+    if( type == "numeric" && type_ == "integer" )
+        return "integer";
     if( type == "list" || type == "string" )
         return type_;
     if( type == "location" && type_ == "locationcomposite")
