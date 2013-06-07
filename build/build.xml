@@ -893,7 +893,7 @@
         <update name="mongoose"/>
         <update name="openssl"/>
         <update name="proj4"/>
-        <update name="protobuf"/>
+        <update name="protobuf" version="2.3.0"/>
         <update name="python"/>
         <update name="qt"/>
         <update name="spatialite"/>
@@ -906,10 +906,10 @@
         <update name="tools"/>
         <update name="turtle"/>
         <update name="vcredist" package="vcredist"/>
-        <update name="xalan-c"/>
-        <update name="xerces-c"/>
+        <update name="xalan-c" version="svn rev 990605 + patch"/>
+        <update name="xerces-c" version="3.1.1"/>
         <update name="xeumeuleu"/>
-        <update name="zlib"/>
+        <update name="zlib" version="1.2.3"/>
         <!-- timeline_ui dependencies -->
         <update name="cef" package="dll/${platform32}" todir="${run.dir}/cef"/>
         <update name="timeline"/>
