@@ -186,3 +186,7 @@ end
 integration.agentIsFlying = function( teammate )
     return teammate.source:DEC_Agent_EstEnVol()
 end
+
+integration.agentCanFly = function( teammate )
+    return DEC_Agent_PionCanFly( teammate.source )
+end
