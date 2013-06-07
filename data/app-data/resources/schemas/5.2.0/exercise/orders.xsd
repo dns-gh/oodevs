@@ -121,6 +121,11 @@
 					<xs:documentation xml:lang="en">Resource type identifier.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="inhabitant">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Inhabitant.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="enumeration">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Enumeration.</xs:documentation>
@@ -251,6 +256,21 @@
 					<xs:documentation xml:lang="en">Number.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="crowd">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Crowd.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="crowdknowledge">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Crowd knowledge.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="urbanknowledge">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Urban knowledge.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="objectknowledge">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Object knowledge.</xs:documentation>
@@ -269,6 +289,16 @@
 			<xs:enumeration value="obstacletype">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Internal. Obstacle type "preliminary" or "reserved" for use within a genobject.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="pullFlowParameters">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Pull flow parameters.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="pushflowparameters">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Push flow parameters.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="path">
@@ -304,6 +334,21 @@
 			<xs:enumeration value="PhaseLineList">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Phase line list uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="resource">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Resource.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="resourcenetworktype">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Resource network type.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="resourcenetworknode">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Resource network node.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="point">
