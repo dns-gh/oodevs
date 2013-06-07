@@ -589,6 +589,8 @@ void RegisterTelepathyFunctions( sword::Brain& brain )
     brain.RegisterMethod( "ClearlisteZonesTir_", &DEC_Decision_ABC::ClearListeZonesTir );
     brain.RegisterMethod( "GetobjMisEnCours_", &DEC_Decision_ABC::GetObjMisEnCours );
     brain.RegisterMethod( "SetobjMisEnCours_", &DEC_Decision_ABC::SetObjMisEnCours );
+    brain.RegisterMethod( "GetsuppliesLoaded_", &DEC_Decision_ABC::GetSuppliesLoaded );
+    brain.RegisterMethod( "SetsuppliesLoaded_", &DEC_Decision_ABC::SetSuppliesLoaded );
     brain.RegisterMethod( "GetobjectifCourant_", &DEC_Decision_ABC::GetObjectifCourant );
     brain.RegisterMethod( "GetplotRavitaillementAssigne_", &DEC_Decision_ABC::GetPlotRavitaillementAssigne );
     brain.RegisterMethod( "SetplotRavitaillementAssigne_", &DEC_Decision_ABC::SetPlotRavitaillementAssigne );

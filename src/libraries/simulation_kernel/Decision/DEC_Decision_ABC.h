@@ -108,6 +108,8 @@ public:
     virtual void SetEnPhaseRavitaillement( bool ) = 0;
     virtual bool GetMiseEnOeuvre() = 0;
     virtual void SetMiseEnOeuvre( bool ) = 0;
+    virtual bool GetSuppliesLoaded() = 0;
+    virtual void SetSuppliesLoaded( bool ) = 0;
     virtual int  GetEtatFeu() = 0;
     virtual std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > GetListeEnisTirAutorise() = 0;
     virtual void SetListeEnisTirAutorise( const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& ) = 0;

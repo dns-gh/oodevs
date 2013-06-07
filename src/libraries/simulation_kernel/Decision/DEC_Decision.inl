@@ -848,6 +848,26 @@ void DEC_Decision< T >::SetObjMisEnCours( boost::shared_ptr< DEC_Knowledge_Objec
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Decision::GetSuppliesLoaded(
+// Created: NMI 2013-06-07
+// -----------------------------------------------------------------------------
+template< class T >
+bool DEC_Decision< T >::GetSuppliesLoaded()
+{
+    return GetVariable<bool>( "myself.bSuppliesLoaded_" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::SetSuppliesLoaded
+// Created: NMI 2013-06-07
+// -----------------------------------------------------------------------------
+template< class T >
+void DEC_Decision< T >::SetSuppliesLoaded( bool value )
+{
+    SetVariable( "myself.bSuppliesLoaded_", value );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Decision::GetObjectifCourant(
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
