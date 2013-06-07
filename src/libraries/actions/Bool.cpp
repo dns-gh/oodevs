@@ -101,5 +101,5 @@ void Bool::CommitTo( T_Setter setter ) const
 // -----------------------------------------------------------------------------
 std::string Bool::SerializeType() const
 {
-    return "bool";
+    return "boolean";
 }

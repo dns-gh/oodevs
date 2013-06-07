@@ -104,7 +104,7 @@ namespace
 
     void WriteBool( xml::xostream& xos, const Value& src )
     {
-        WritePair( xos, "bool", src.booleanvalue() );
+        WritePair( xos, "boolean", src.booleanvalue() );
     }
 
     void WriteInteger( xml::xostream& xos, const Value& src )
