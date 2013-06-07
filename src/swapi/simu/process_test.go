@@ -75,7 +75,7 @@ func (s *TestSuite) TestSuccess(c *C) {
 
 	opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
 	sim, err := StartSim(opts)
-	defer sim.Kill()
+	defer sim.Stop()
 	// Since the simulation can run the 3 ticks before the test connection
 	// returns successfully, we cannot check the error returned by StartSim
 	// unless we have a way to start in paused mode and unpause it. Instead,
@@ -110,7 +110,7 @@ func (s *TestSuite) TestDelayedStartupFailure(c *C) {
 
 	opts.SessionName = filepath.Base(filepath.Dir(sessionPath))
 	sim, err := StartSim(opts)
-	defer sim.Kill()
+	defer sim.Stop()
 
 	c.Assert(err, ErrorMatches, "failed to start simulation")
 	if sim.Success() {

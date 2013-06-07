@@ -203,7 +203,7 @@ func (s *TestSuite) TestLegacyOption(c *C) {
 		WriteSession(c, opts, session)
 		sim, err := simu.StartSim(opts)
 		c.Assert(err, IsNil)
-		defer sim.Kill()
+		defer sim.Stop()
 		c.Assert(sim.Wait(2*time.Minute), Equals, true)
 		logData := ReadTextFile(c, opts.GetSimLogPath())
 		re, err := regexp.Compile("(?s).*- Release - Legacy mode.*")
