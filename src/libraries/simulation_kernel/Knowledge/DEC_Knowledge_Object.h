@@ -68,7 +68,7 @@ public:
 
     //! @name Collision
     //@{
-    bool CanCollideWith( const MIL_Agent_ABC& agent ) const;
+    bool CanCollideWith( const MIL_Agent_ABC& agent, bool bCheckBypassed = true ) const;
     bool CanCollideWithEntity() const;
     bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
     bool CanInteractWithEntity() const;

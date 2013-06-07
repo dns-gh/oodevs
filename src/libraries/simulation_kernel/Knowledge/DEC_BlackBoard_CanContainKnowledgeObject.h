@@ -66,7 +66,7 @@ public:
     void Prepare();
     void UpdateUniversalObjects( const MIL_Army_ABC& team );
     void Merge( const DEC_BlackBoard_CanContainKnowledgeObject* subGroup, const MIL_Army_ABC& teamKnowing  );
-    void GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter );
+    void GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter, bool bCheckBypassed = true );
     void GetObjectsInCircle( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const MT_Vector2D& center, double rRadius, bool nonActivatedObstacles );
     void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Localisation& zone );
     void GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Polygon& zone );

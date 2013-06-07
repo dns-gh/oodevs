@@ -793,9 +793,10 @@ int DEC_Knowledge_Object::GetActivationTime() const
 // Name: DEC_Knowledge_Object::CanCollideWith
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_Object::CanCollideWith( const MIL_Agent_ABC& agent ) const
+bool DEC_Knowledge_Object::CanCollideWith( const MIL_Agent_ABC& agent, bool bCheckBypassed /*= true*/ ) const
 {
-    return ( !IsReservedObstacle() || IsReservedObstacleActivated() ) && !IsBypassed() && CanInteractWith( agent )
+    bool bIsBypassed = bCheckBypassed ? IsBypassed() : false;
+    return ( !IsReservedObstacle() || IsReservedObstacleActivated() ) && !bIsBypassed && CanInteractWith( agent )
          && agent.GetRole< PHY_RoleInterface_Location >().GetHeight() <= GetMaxInteractionHeight();
 }
 

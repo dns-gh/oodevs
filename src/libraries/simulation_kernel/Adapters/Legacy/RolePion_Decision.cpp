@@ -166,6 +166,9 @@ void RolePion_Decision::RegisterPath()
     RegisterFunction( "DEC_GetNextObjectOnPath",
         boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( boost::shared_ptr< DEC_Knowledge_Object >, float, const std::vector< std::string >& ) >(
         boost::bind( &DEC_PathFunctions::GetNextObjectOnPath, boost::ref( GetPion() ), _1, _2, _3 ) ) );
+    RegisterFunction( "DEC_GetNextObjectOnPathWithBypassed",
+        boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( boost::shared_ptr< DEC_Knowledge_Object >, float, const std::vector< std::string >& ) >(
+        boost::bind( &DEC_PathFunctions::GetNextObjectOnPathWithBypassed, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     RegisterFunction( "DEC_GetNextRemovableObjectOnPath",
         boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( const DEC_Decision_ABC&, boost::shared_ptr< DEC_Knowledge_Object >, float ) >(
         boost::bind( &DEC_PathFunctions::GetNextRemovableObjectOnPath, _1, _2, _3 ) ) );

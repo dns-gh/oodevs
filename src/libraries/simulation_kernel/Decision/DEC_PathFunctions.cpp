@@ -128,13 +128,13 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::ExtrapolatePosition( const M
 
 namespace
 {
-    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextObjectOnPath( MIL_ObjectFilter& filter, const MIL_Agent_ABC& callerAgent )
+    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextObjectOnPath( MIL_ObjectFilter& filter, const MIL_Agent_ABC& callerAgent, bool bCheckBypassed = true )
     {
         std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
         boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
         double rDistanceCollision = 0.;
         T_KnowledgeObjectVector knowledges;
-        callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( knowledges, callerAgent, filter );
+        callerAgent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( knowledges, callerAgent, filter, bCheckBypassed );
         if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( knowledges, rDistanceCollision, pObjectColliding, callerAgent, false, false ) )
         {
             result.first = false;
@@ -147,6 +147,20 @@ namespace
         result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceCollision );
         return result;
     }
+
+    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextObjectOnPath( const MIL_Agent_ABC& callerAgent, const std::vector< std::string >& params, bool bCheckBypassed = true )
+    {
+        if( params.empty() )
+        {
+            MIL_DangerousObjectFilter filter;
+            return ::GetNextObjectOnPath( filter, callerAgent, bCheckBypassed );
+        }
+        else
+        {
+            MIL_ObjectFilter filter( params );
+            return ::GetNextObjectOnPath( filter, callerAgent, bCheckBypassed );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -155,16 +169,16 @@ namespace
 // -----------------------------------------------------------------------------
 std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextObjectOnPath( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > /*oId*/, float /*oDistance*/, const std::vector< std::string >& params )
 {
-    if( params.empty() )
-    {
-        MIL_DangerousObjectFilter filter;
-        return ::GetNextObjectOnPath( filter, callerAgent );
-    }
-    else
-    {
-        MIL_ObjectFilter filter( params );
-        return ::GetNextObjectOnPath( filter, callerAgent );
-    }
+    return ::GetNextObjectOnPath( callerAgent, params );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFunctions::GetNextObjectOnPathWithBypassed
+// Created: MMC 2013-06-06
+// -----------------------------------------------------------------------------
+std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextObjectOnPathWithBypassed( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > /*oId*/, float /*oDistance*/, const std::vector< std::string >& params )
+{
+    return ::GetNextObjectOnPath( callerAgent, params, false );
 }
 
 class CanRemoveFromPathComputer : public OnComponentComputer_ABC

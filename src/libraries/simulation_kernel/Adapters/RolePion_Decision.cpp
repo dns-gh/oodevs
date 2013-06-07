@@ -265,11 +265,11 @@ void RolePion_Decision::RegisterControlActions()
 
 namespace
 {
-    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > NextObjectOnPath( const MIL_ObjectFilter& filter, const MIL_Agent_ABC& agent, const core::Model& model )
+    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > NextObjectOnPath( const MIL_ObjectFilter& filter, const MIL_Agent_ABC& agent, const core::Model& model, bool bCheckBypassed = true )
     {
         double rDistanceCollision = 0;
         KnowledgeCache cache;
-        agent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( cache.objectsToAvoid_, agent, filter );
+        agent.GetKnowledgeGroup()->GetKnowledgeObjectContainer().GetObjectsAtInteractionHeight( cache.objectsToAvoid_, agent, filter, bCheckBypassed );
         std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
         const SWORD_Model* pObject = 0;
         if( cache.objectsToAvoid_.empty() || ! GET_HOOK( ComputeAgentFutureObjectCollision )( core::Convert( &model ), core::Convert( &model[ "entities" ][ agent.GetID() ] ), &cache, rDistanceCollision, &pObject ) )
@@ -287,18 +287,26 @@ namespace
         result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceCollision );
         return result;
     }
-    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextObjectOnPath( const MIL_Agent_ABC& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Object > oId, const std::vector< std::string >& params )
+    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextObjOnPath( const MIL_Agent_ABC& agent, const core::Model& model, const std::vector< std::string >& params, bool bCheckBypassed = true )
     {
         if( params.empty() )
         {
             MIL_DangerousObjectFilter filter;
-            return NextObjectOnPath( filter, agent, model );
+            return NextObjectOnPath( filter, agent, model, bCheckBypassed );
         }
         else
         {
             MIL_ObjectFilter filter( params );
-            return NextObjectOnPath( filter, agent, model );
+            return NextObjectOnPath( filter, agent, model, bCheckBypassed );
         }
+    }
+    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextObjectOnPath( const MIL_Agent_ABC& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Object > /*oId*/, const std::vector< std::string >& params )
+    {
+        return GetNextObjOnPath( agent, model, params );
+    }
+    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextObjectOnPathWithBypassed( const MIL_Agent_ABC& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Object > /*oId*/, const std::vector< std::string >& params )
+    {
+        return GetNextObjOnPath( agent, model, params, false );
     }
     boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const MIL_AgentPion& agent, const core::Model& model, const double time, bool bBoundOnPath )
     {
@@ -469,6 +477,9 @@ void RolePion_Decision::RegisterPath()
     RegisterFunction( "DEC_GetNextObjectOnPath",
         boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( boost::shared_ptr< DEC_Knowledge_Object >, float, const std::vector< std::string >& ) >(
             boost::bind( &GetNextObjectOnPath, boost::ref( GetPion() ), boost::cref( model_ ), _1, _3 ) ) );
+    RegisterFunction( "DEC_GetNextObjectOnPathWithBypassed",
+        boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( boost::shared_ptr< DEC_Knowledge_Object >, float, const std::vector< std::string >& ) >(
+            boost::bind( &GetNextObjectOnPathWithBypassed, boost::ref( GetPion() ), boost::cref( model_ ), _1, _3 ) ) );
     RegisterFunction( "DEC_GetNextRemovableObjectOnPath",
         boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( const DEC_Decision_ABC&, boost::shared_ptr< DEC_Knowledge_Object >, float ) >(
             boost::bind( &GetNextRemovableObjectOnPath, boost::cref( model_ ), _1, _2 ) ) );
