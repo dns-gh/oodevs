@@ -76,28 +76,25 @@ func NewModel() *Model {
 }
 
 func (model *Model) run() {
-	for {
-		select {
-		case rq := <-model.requests:
-			if rq.Message != nil {
-				model.update(rq.Message)
-				for i := 0; i != len(model.conds); {
-					if model.conds[i].cond(model) {
-						model.conds[i].done <- 1
-						model.conds = append(model.conds[:i], model.conds[i+1:]...)
-						continue
-					}
-					i++
+	for rq := range model.requests {
+		if rq.Message != nil {
+			model.update(rq.Message)
+			for i := 0; i != len(model.conds); {
+				if model.conds[i].cond(model) {
+					model.conds[i].done <- 1
+					model.conds = append(model.conds[:i], model.conds[i+1:]...)
+					continue
 				}
-			} else if rq.Command != nil {
-				rq.Command.cmd(model)
-				rq.Command.done <- 1
-			} else if rq.Cond != nil {
-				if rq.Cond.cond(model) {
-					rq.Cond.done <- 1
-				} else {
-					model.conds = append(model.conds, rq.Cond)
-				}
+				i++
+			}
+		} else if rq.Command != nil {
+			rq.Command.cmd(model)
+			rq.Command.done <- 1
+		} else if rq.Cond != nil {
+			if rq.Cond.cond(model) {
+				rq.Cond.done <- 1
+			} else {
+				model.conds = append(model.conds, rq.Cond)
 			}
 		}
 	}
