@@ -64,6 +64,10 @@ do
                             DEC_Trace( "======= Frag order --> WAIT =====" )
                             SetStateVariable( "VE_SePoster", 2 )
                             _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_SArreter" then
+                            DEC_Trace( "======= Frag order --> S'Arreter =====" )
+                            SetStateVariable( "VE_SePoster", 2 )
+                            _continue = false
                         elseif switch_1 == "Rep_OrderConduite_Deboucher"
                         or switch_1 == "Rep_OrderConduite_Poursuivre" then
                             DEC_Trace( "======= Frag order --> RESUME =====" )

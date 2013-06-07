@@ -109,6 +109,11 @@ do
                             g_bOrdreAnibas = true
                             StartActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, emptyTable )
                             _continue = false
+                        elseif switch_1 == "Rep_OrderConduite_SArreter" then
+                            DEC_Trace( "$ --- ORDRE SArreter ---$" )
+                            g_bOrdreAnibas = true
+                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, emptyTable )
+                            _continue = false
                         elseif switch_1 == "Rep_OrderConduite_Deboucher"
                         or switch_1 == "Rep_OrderConduite_Poursuivre" then
                             DEC_Trace( "$ --- ORDRE Poursuivre ---$" )
