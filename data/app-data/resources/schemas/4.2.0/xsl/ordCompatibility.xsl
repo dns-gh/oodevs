@@ -16,18 +16,18 @@
     <xsl:template match="@type">
         <xsl:choose>
             <xsl:when test=".='lima'"><xsl:attribute name="type">phaseline</xsl:attribute></xsl:when>
-            <xsl:when test=".='Direction' or .='direction'"><xsl:attribute name="type">Heading</xsl:attribute></xsl:when>
-            <xsl:when test=".='PhaseLineList' or .='phaselinelist'"><xsl:attribute name="type">PhaseLine</xsl:attribute></xsl:when>
-            <xsl:when test=".='IntelligenceList' or .='intelligencelist'"><xsl:attribute name="type">Intelligence</xsl:attribute></xsl:when>
-            <xsl:when test=".='Bool' or .='bool'"><xsl:attribute name="type">Boolean</xsl:attribute></xsl:when>
-            <xsl:when test=".='AutomateBM' or .='Automate' or .='automatebm' or .='automate'"><xsl:attribute name="type">Automat</xsl:attribute></xsl:when>
-            <xsl:when test=".='PopulationKnowledge' or .='populationknowledge'"><xsl:attribute name="type">CrowdKnowledge</xsl:attribute></xsl:when>
-            <xsl:when test=".='DotationType' or .='dotationtype'"><xsl:attribute name="type">ResourceType</xsl:attribute></xsl:when>
-            <xsl:when test=".='genobject' or .='GenObjectList' or .='genobjectBM' or .='genobjectbm'"><xsl:attribute name="type">Plannedwork</xsl:attribute></xsl:when>
-            <xsl:when test=".='obstacle'"><xsl:attribute name="type">Plannedwork</xsl:attribute></xsl:when>
-            <xsl:when test=".='UrbanBlock' or .='UrbanBlockBM' or .='urbanblock' or .='urbanblockbm'"><xsl:attribute name="type">UrbanKnowledge</xsl:attribute></xsl:when>
-            <xsl:when test="contains(.,'AreaBM')"><xsl:attribute name="type">Polygon</xsl:attribute></xsl:when>
-            <xsl:when test="contains(.,'areabm')"><xsl:attribute name="type">Polygon</xsl:attribute></xsl:when>
+            <xsl:when test=".='Direction' or .='direction'"><xsl:attribute name="type">heading</xsl:attribute></xsl:when>
+            <xsl:when test=".='PhaseLineList' or .='phaselinelist'"><xsl:attribute name="type">phaseLine</xsl:attribute></xsl:when>
+            <xsl:when test=".='IntelligenceList' or .='intelligencelist'"><xsl:attribute name="type">intelligence</xsl:attribute></xsl:when>
+            <xsl:when test=".='Bool' or .='bool'"><xsl:attribute name="type">boolean</xsl:attribute></xsl:when>
+            <xsl:when test=".='AutomateBM' or .='Automate' or .='automatebm' or .='automate'"><xsl:attribute name="type">automat</xsl:attribute></xsl:when>
+            <xsl:when test=".='PopulationKnowledge' or .='populationknowledge'"><xsl:attribute name="type">crowdKnowledge</xsl:attribute></xsl:when>
+            <xsl:when test=".='DotationType' or .='dotationtype'"><xsl:attribute name="type">resourceType</xsl:attribute></xsl:when>
+            <xsl:when test=".='genobject' or .='GenObjectList' or .='genobjectBM' or .='genobjectbm'"><xsl:attribute name="type">plannedwork</xsl:attribute></xsl:when>
+            <xsl:when test=".='obstacle'"><xsl:attribute name="type">plannedwork</xsl:attribute></xsl:when>
+            <xsl:when test=".='UrbanBlock' or .='UrbanBlockBM' or .='urbanblock' or .='urbanblockbm'"><xsl:attribute name="type">urbanKnowledge</xsl:attribute></xsl:when>
+            <xsl:when test="contains(.,'AreaBM')"><xsl:attribute name="type">polygon</xsl:attribute></xsl:when>
+            <xsl:when test="contains(.,'areabm')"><xsl:attribute name="type">polygon</xsl:attribute></xsl:when>
             <xsl:when test="contains(.,'ListBM')"><xsl:attribute name="type"><xsl:value-of select="substring-before(.,'ListBM')"/></xsl:attribute></xsl:when>
             <xsl:when test="contains(.,'listbm')"><xsl:attribute name="type"><xsl:value-of select="substring-before(.,'listbm')"/></xsl:attribute></xsl:when>
             <xsl:when test="contains(.,'List')"><xsl:attribute name="type"><xsl:value-of select="substring-before(.,'List')"/></xsl:attribute></xsl:when>
