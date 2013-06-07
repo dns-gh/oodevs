@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="../physical/tools.xsd"/>
 	<xs:simpleType name="ParameterType">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Describes the list of available action parameters, including magic actions, missions and fragorders</xs:documentation>
@@ -45,6 +46,11 @@
 					<xs:documentation xml:lang="en">Automat.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="automat">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Automat.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="Automate">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Automat uppercase alias.</xs:documentation>
@@ -66,6 +72,11 @@
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="Bool">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Bool uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="boolean">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Bool uppercase alias.</xs:documentation>
 				</xs:annotation>
@@ -105,6 +116,11 @@
 					<xs:documentation xml:lang="en">Resource type uppercase alias.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="resourceType">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Resource type identifier.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="enumeration">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Enumeration.</xs:documentation>
@@ -128,6 +144,11 @@
 			<xs:enumeration value="GenObject">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Engineered object uppercase alias.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="plannedwork">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Engineered object.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="genobjectlist">
@@ -466,6 +487,7 @@
 			<xs:sequence>
 				<xs:element name="action" type="ActionBase" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="ParameterDirection">
