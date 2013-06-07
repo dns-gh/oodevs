@@ -66,7 +66,7 @@ public:
     virtual void SendFullState   ( unsigned int context = 0 ) const;
     virtual void SendChangedState() const;
 
-    virtual void OnReceiveChangeQuotas( const sword::MissionParameter& message );
+    virtual std::set< const PHY_DotationCategory* > OnReceiveChangeQuotas( const sword::MissionParameter& message );
     //@}
 
 private:

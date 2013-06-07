@@ -155,6 +155,7 @@ void PHY_UnitType::ReadStock( xml::xistream& xis )
         xis.error( "stock: threshold not in [0..100]" );
     rThreshold /= 100.;
     stockLogisticThresholdRatios_[ pType->GetID() ] = rThreshold;
+    definedStockLogisticTypes_.insert( pType );
 }
 
 // -----------------------------------------------------------------------------
@@ -513,4 +514,13 @@ unsigned int PHY_UnitType::GetPionEfficiency( E_PionEfficiency pionEfficiency ) 
 E_CrossingHeight PHY_UnitType::GetCrossingHeight() const
 {
     return crossingHeight_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::IsStockLogisticTypeDefined
+// Created: MMC 2013-06-05
+// -----------------------------------------------------------------------------
+bool PHY_UnitType::IsStockLogisticTypeDefined( const PHY_DotationLogisticType& type ) const
+{
+    return definedStockLogisticTypes_.find( &type ) != definedStockLogisticTypes_.end();
 }

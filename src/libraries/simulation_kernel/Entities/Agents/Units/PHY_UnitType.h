@@ -70,6 +70,7 @@ public:
     bool IsAutonomous() const;
     unsigned int GetPionEfficiency( E_PionEfficiency pionEfficiency ) const;
     E_CrossingHeight GetCrossingHeight() const;
+    bool IsStockLogisticTypeDefined( const PHY_DotationLogisticType& type ) const;
     //@}
 
 private:
@@ -143,6 +144,7 @@ private:
     unsigned int nEngineeringReconEfficiency_;
     unsigned int nUrbanAreaEfficiency_;
     E_CrossingHeight crossingHeight_;
+    std::set< const PHY_DotationLogisticType* > definedStockLogisticTypes_;
     //@}
 };
 

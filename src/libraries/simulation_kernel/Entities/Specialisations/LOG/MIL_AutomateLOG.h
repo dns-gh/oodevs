@@ -145,6 +145,7 @@ public:
     virtual       bool         BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
     
     void           OnReceiveLogSupplyPushFlow         ( const sword::PushFlowParameters& parameters, const AutomateFactory_ABC& automateResolver );
+    MIL_Automate*  GetStockAutomat                    ( const PHY_DotationCategory& dotationCategory, bool& deployed );
     //@}
 
     //! @name Funeral
@@ -212,4 +213,3 @@ private:
 BOOST_CLASS_EXPORT_KEY( MIL_AutomateLOG )
 
 #endif // __MIL_AutomateLOG_h_
-

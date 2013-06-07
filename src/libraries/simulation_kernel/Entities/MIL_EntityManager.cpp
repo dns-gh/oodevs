@@ -1514,13 +1514,22 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
         MIL_AutomateLOG* pSupplier = FindBrainLogistic( message.parameters().elem( 0 ).value( 0 ) );
         if( !pSupplier )
             throw NET_AsnException< sword::LogSupplyChangeQuotasAck::ErrorCode >( sword::LogSupplyChangeQuotasAck_ErrorCode_error_invalid_supplier );
-
+        
         // Param 1: quotas
+        std::set< const PHY_DotationCategory* > quotasTypes;
         const sword::MissionParameter& quotas = message.parameters().elem( 1 );
         const boost::shared_ptr< logistic::LogisticLink_ABC > superiorLink = pSupplied->FindSuperiorLink( *pSupplier );
         if( superiorLink.get() )
-            superiorLink->OnReceiveChangeQuotas( quotas );
+            quotasTypes = superiorLink->OnReceiveChangeQuotas( quotas );
         //$$ throw sinon ??
+
+        for( std::set< const PHY_DotationCategory* >::iterator typeIt = quotasTypes.begin(); typeIt != quotasTypes.end(); ++typeIt )
+        {
+            bool bDeployed = false;
+            MIL_Automate* pStockAutomat = pSupplier->GetStockAutomat( **typeIt, bDeployed );
+            if( pStockAutomat && !bDeployed )
+                MIL_Report::PostEvent( *pStockAutomat, MIL_Report::eRC_SupplierUnavailable );
+        }
     }
     catch( NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >& e )
     {

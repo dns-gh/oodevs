@@ -17,6 +17,7 @@
 class MIL_AutomateLOG;
 class PHY_DotationCategory;
 class MIL_AgentPion;
+class PHY_DotationCategory;
 
 namespace sword
 {
@@ -61,7 +62,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void OnReceiveChangeQuotas( const sword::MissionParameter& message ) = 0;
+    virtual std::set< const PHY_DotationCategory* > OnReceiveChangeQuotas( const sword::MissionParameter& message ) = 0;
     //@}
 
     //! @name CheckPoint

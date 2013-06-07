@@ -14,7 +14,9 @@
 
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Roles/Logistic/FuneralConfig.h"
@@ -22,6 +24,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/Roles/Deployment/PHY_RolePion_Deployment.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include <boost/foreach.hpp>
 
@@ -281,6 +284,10 @@ class MedicalCollectionAmbulanceAuthorizedToGoVisitor : public MIL_LogisticEntit
               bool                            bAuthorized_;
 };
 
+// =============================================================================
+// SUPPLY
+// =============================================================================
+
 class SupplyStockReservationVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
@@ -368,7 +375,7 @@ class SupplyStockContainerVisitor : public MIL_LogisticEntitiesVisitor
 
             const PHY_RoleInterface_Supply* candidate = tmp.RetrieveRole< PHY_RoleInterface_Supply >();
             if( candidate!=0 && candidate->CanReserveStock( dotationCategory_ ) )
-                pSelected_ = const_cast<PHY_RoleInterface_Supply*>(candidate);
+                pSelected_ = const_cast<PHY_RoleInterface_Supply*>( candidate );
         }
 
     public:
@@ -486,6 +493,38 @@ class SupplyConvoyCapacityVisitor : public MIL_LogisticEntitiesVisitor
     public:
         int             nScore_;
         MIL_AgentPion*  pSelected_;
+};
+
+class SupplyDeployementVisitor : public MIL_LogisticEntitiesVisitor
+{
+public:
+    SupplyDeployementVisitor( const PHY_DotationCategory& dotation )
+        : dotation_( dotation ), pDeployedStock_( 0 ), pUndeployedStock_( 0 )
+    {
+    }
+
+    void Visit( const MIL_AgentPion& agent )
+    {
+        const PHY_RoleInterface_Supply* pSupply = agent.RetrieveRole< PHY_RoleInterface_Supply >();
+        if( !pSupply )
+            return;
+        const PHY_RolePion_Deployment* pDeployment = agent.RetrieveRole< PHY_RolePion_Deployment >();
+        if( !pDeployment )
+            return;
+        MIL_AgentPion* pAgent =  const_cast< MIL_AgentPion* >( &agent );
+        if( pAgent->GetType().GetUnitType().IsStockLogisticTypeDefined( dotation_.GetLogisticType() ) )
+        {
+            if( pDeployment->IsDeployed() && !agent.IsDead() )
+                pDeployedStock_ = pAgent;
+            else
+                pUndeployedStock_ = pAgent;
+        }
+    }
+
+public:
+    const PHY_DotationCategory& dotation_;
+    MIL_AgentPion* pDeployedStock_;
+    MIL_AgentPion* pUndeployedStock_;
 };
 
 //??? XXX
