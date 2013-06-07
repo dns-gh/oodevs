@@ -70,8 +70,13 @@ UserProfileWidget::~UserProfileWidget()
 // -----------------------------------------------------------------------------
 void UserProfileWidget::Display( UserProfile& profile )
 {
-    unitRights_->Commit( true );
-    populationRights_->Commit( true );
+    if( editedProfile_ )
+    {
+        if( unitRights_->NeedsCommit() )
+            unitRights_->Commit( unitRights_->NeedsCommit() );
+        if( populationRights_->NeedsCommit() )
+            populationRights_->Commit( unitRights_->NeedsCommit() );
+    }
     editedProfile_ = &profile;
     login_->setText( profile.GetLogin() );
     password_->setText( profile.GetPassword() );
