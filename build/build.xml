@@ -886,10 +886,10 @@
         <update name="iconv" version="1.14"/>
         <update name="log4cxx" version="0.10.0"/>
         <update name="masalife/brain" version="2013-1.0"/>
-        <update name="models" version="trunk" package="decisional-dev" todir="${data.dir}/data/models"/>
-        <update name="models" version="trunk" package="exercises-dev" todir="${data.dir}/exercises"/>
-        <update name="models" version="trunk" package="propagations-dev" todir="${data.dir}/data/propagations"/>
-        <update name="models" version="trunk" package="terrains-dev" todir="${data.dir}/data/terrains"/>
+        <update name="models" version="5.2" package="decisional-dev" todir="${data.dir}/data/models"/>
+        <update name="models" version="5.2" package="exercises-dev" todir="${data.dir}/exercises"/>
+        <update name="models" version="5.2" package="propagations-dev" todir="${data.dir}/data/propagations"/>
+        <update name="models" version="5.2" package="terrains-dev" todir="${data.dir}/data/terrains"/>
         <update name="mongoose" version="3.3.r351"/>
         <update name="openssl" version="1.0.0d"/>
         <update name="proj4" version="4.8.0"/>
