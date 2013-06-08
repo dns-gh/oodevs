@@ -181,4 +181,5 @@
     <upgrade schema="schemas/5.1.3/physical/Reports.xsd" apply="schemas/5.2.0/xsl/reports_5.1.3-5.2.0.xsl"/>
     <upgrade schema="schemas/5.1.3/physical/Equipments.xsd" apply="schemas/5.2.0/xsl/equipments_5.1.3-5.2.0.xsl"/>
   </migration>
+  <migration from="5.2.0" to="5.2.1"/>
 </migrations>

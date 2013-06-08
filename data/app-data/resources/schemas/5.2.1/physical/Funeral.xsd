@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:element name="funeral">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">TODO</xs:documentation>
+			<xs:documentation xml:lang="fr">TODO</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="fake-transporter">
+					<xs:complexType>
+						<xs:attribute name="speed" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="packagings">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">TODO</xs:documentation>
+						<xs:documentation xml:lang="fr">TODO</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence minOccurs="0" maxOccurs="unbounded">
+							<xs:element name="packaging">
+								<xs:complexType>
+									<xs:attribute name="resource" type="xs:string" use="required"/>
+									<xs:attribute name="process-duration" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">TODO</xs:documentation>
+											<xs:documentation xml:lang="fr">Nom de la classe logistique</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="terminal" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
