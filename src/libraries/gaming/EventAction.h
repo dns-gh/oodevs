@@ -15,6 +15,7 @@
 namespace actions
 {
     class Action_ABC;
+    class ActionFactory_ABC;
 }
 
 // =============================================================================
@@ -29,13 +30,16 @@ class EventAction : public Event
 public:
     //! @name Constructors/Destructor
     //@{
-             EventAction( E_EventTypes type, const timeline::Event& event );
+             EventAction( E_EventTypes type, const timeline::Event& event, const actions::ActionFactory_ABC& actionFactory );
     virtual ~EventAction();
     //@}
 
     //! @name Operations
     //@{
     virtual Event* Clone() const;
+    virtual void Update( const timeline::Event& event );
+    const actions::Action_ABC* GetAction() const;
+    E_MissionType GetMissionType() const;
     //@}
 
 private:
@@ -46,7 +50,9 @@ private:
 private:
     //! @name Member data
     //@{
+    const actions::ActionFactory_ABC& actionFactory_;
     std::auto_ptr< actions::Action_ABC > action_;
+    E_MissionType missionType_;
     //@}
 };
 

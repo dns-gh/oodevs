@@ -272,7 +272,8 @@ void TimelineFilteredViewWidget::OnContextMenuEvent( boost::shared_ptr< timeline
         dummyMenu.setTitle( "Create dummy event" );
         for( int i = 0; i < eNbrEventTypes; ++i )
         {
-            createMenu.addAction( QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ) );
+            if( i != eEventTypes_Report )
+                createMenu.addAction( QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ) );
             dummyMenu.addAction( QString( "Dummy " )+ QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ) );
         }
         menu.addMenu( &createMenu );
@@ -319,19 +320,28 @@ void TimelineFilteredViewWidget::OnFilterSelectionChanged( const QStringList& )
 // -----------------------------------------------------------------------------
 void TimelineFilteredViewWidget::CreateDummyEvent( E_EventTypes type )
 {
-    // Get a time
-    QDateTime dateTime = simulation_.GetDateTime();
-
     // Action
     timeline::Action action;
-    action.target = "sword://sim";
-    action.apply = true;
-    // Create dummy protobuf message if order
+    switch( type )
+    {
+    case eEventTypes_Order:
+    case eEventTypes_SupervisorAction:
+        action.target = "sword://sim";
+        break;
+    case eEventTypes_Report:
+        action.target = "sword://client";
+        break;
+    case eEventTypes_Multimedia:
+        action.target = "sword://multimedia";
+        break;
+    }
+
+    // Create dummy protobuf message if order or supervisor action
     if( type == eEventTypes_Order )
     {
         sword::ClientToSim msg;
         sword::UnitOrder* unitOrder = msg.mutable_message()->mutable_unit_order();
-        unitOrder->mutable_tasker()->set_id( 79 );
+        unitOrder->mutable_tasker()->set_id( 159 );
         unitOrder->mutable_type()->set_id( 44582 ); // Move To
         unitOrder->set_label( "dummy" + ENT_Tr::ConvertFromEventType( type ) );
         sword::MissionParameters* parameters = unitOrder->mutable_parameters();
@@ -346,12 +356,25 @@ void TimelineFilteredViewWidget::CreateDummyEvent( E_EventTypes type )
         latLong->set_longitude( 28.976535107619295 );
         action.payload = tools::ProtoToBinary( msg );
     }
+    else if( type == eEventTypes_SupervisorAction )
+    {
+        sword::ClientToSim msg;
+        sword::UnitMagicAction* unitMagic = msg.mutable_message()->mutable_unit_magic_action();
+        unitMagic->mutable_tasker()->mutable_unit()->set_id( 159 );
+        unitMagic->set_type( sword::UnitMagicAction_Type_move_to );
+        sword::Location* location = unitMagic->mutable_parameters()->add_elem()->add_value()->mutable_point()->mutable_location();
+        location->set_type( sword::Location_Geometry_point );
+        sword::CoordLatLong* latLong = location->mutable_coordinates()->add_elem();
+        latLong->set_latitude( 30.632128244641702 );
+        latLong->set_longitude( 28.976535107619295 );
+        action.payload = tools::ProtoToBinary( msg );
+    }
 
     // Event
     timeline::Event event;
     event.name = "Dummy " + ENT_Tr::ConvertFromEventType( type );
-    event.info = ENT_Tr::ConvertFromEventType( type, ENT_Tr_ABC::eToSim ); // $$$$ ABR 2013-05-30: Use event.action.target to differentiate different
-    event.begin = dateTime.toTimeSpec( Qt::UTC ).toString( "yyyy-MM-ddTHH:mm:ssZ" ).toStdString();
+    event.info = "Dummy Infos";
+    event.begin = simulation_.GetDateTime().toTimeSpec( Qt::UTC ).toString( "yyyy-MM-ddTHH:mm:ssZ" ).toStdString();
     event.done = false;
     event.action = action;
     CreateEvent( event );

@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "EventSupervisorActionWidget.h"
 #include "ENT/ENT_Tr.h"
+#include "gaming/Event.h"
 #include "timeline/api.h"
 
 // -----------------------------------------------------------------------------
@@ -46,5 +47,5 @@ void EventSupervisorActionWidget::Fill( const Event& /*event*/ )
 // -----------------------------------------------------------------------------
 void EventSupervisorActionWidget::Commit( timeline::Event& event ) const
 {
-    event.info = ENT_Tr::ConvertFromEventType( eEventTypes_SupervisorAction, ENT_Tr_ABC::eToSim );
+    event.action.target = "sword://sim";
 }

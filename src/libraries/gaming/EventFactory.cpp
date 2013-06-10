@@ -17,7 +17,8 @@
 // Name: EventFactory constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-EventFactory::EventFactory()
+EventFactory::EventFactory( const actions::ActionFactory_ABC& actionFactory )
+    : actionFactory_( actionFactory )
 {
     // NOTHING
 }
@@ -37,8 +38,13 @@ EventFactory::~EventFactory()
 // -----------------------------------------------------------------------------
 Event* EventFactory::Create( const timeline::Event& event ) const
 {
-    //Retrieve type from event.action.target instead of event.info
-    E_EventTypes type = ENT_Tr::ConvertToEventType( event.info, ENT_Tr_ABC::eToSim );
+    E_EventTypes type = eEventTypes_Task;
+    if( event.action.target == "sword://sim" )
+        type = eEventTypes_Order;
+    else if( event.action.target == "sword://client" )
+        type = eEventTypes_Report;
+    else if( event.action.target == "sword://multimedia" )
+        type = eEventTypes_Multimedia;
     return Create( type, &event );
 }
 
@@ -46,7 +52,7 @@ Event* EventFactory::Create( const timeline::Event& event ) const
 // Name: EventFactory::Create
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-Event* EventFactory::Create( E_EventTypes type, const timeline::Event* event ) const
+Event* EventFactory::Create( E_EventTypes type, const timeline::Event* event /* = 0 */ ) const
 {
     Event* result = 0;
     static const timeline::Event dummyEvent;
@@ -54,7 +60,7 @@ Event* EventFactory::Create( E_EventTypes type, const timeline::Event* event ) c
     {
     case eEventTypes_Order:
     case eEventTypes_SupervisorAction:
-        result = new EventAction( type, ( event ) ? *event : dummyEvent );
+        result = new EventAction( type, ( event ) ? *event : dummyEvent, actionFactory_ );
         break;
     case eEventTypes_Report:
     case eEventTypes_Task:

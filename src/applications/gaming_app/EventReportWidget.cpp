@@ -46,5 +46,5 @@ void EventReportWidget::Fill( const Event& /*event*/ )
 // -----------------------------------------------------------------------------
 void EventReportWidget::Commit( timeline::Event& event ) const
 {
-    event.info = ENT_Tr::ConvertFromEventType( eEventTypes_Report, ENT_Tr_ABC::eToSim );
+    event.action.target = "sword://client";
 }

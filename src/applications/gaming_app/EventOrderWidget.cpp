@@ -46,7 +46,7 @@ void EventOrderWidget::Fill( const Event& /*event*/ )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::Commit( timeline::Event& event ) const
 {
-    event.info = ENT_Tr::ConvertFromEventType( eEventTypes_Order, ENT_Tr_ABC::eToSim );
+    event.action.target = "sword://sim";
 }
 
 // -----------------------------------------------------------------------------

@@ -109,7 +109,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , surfaceFactory_          ( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanBlockDetectionMap_, meteo_ ) )
     , floodProxy_              ( *new FloodProxy( static_.detection_ ) )
     , publisher_               ( publisher )
-    , eventFactory_            ( *new EventFactory() )
+    , eventFactory_            ( *new EventFactory( actionFactory_ ) )
     , events_                  ( *new EventsModel( eventFactory_ ) )
     , timelinePublisher_       ( *new TimelinePublisher() )
 {

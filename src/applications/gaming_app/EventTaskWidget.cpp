@@ -54,6 +54,7 @@ EventTaskWidget::~EventTaskWidget()
 void EventTaskWidget::Fill( const Event& event )
 {
     label_->setText( QString::fromStdString( event.GetEvent().name ) );
+    description_->setText( QString::fromStdString( event.GetEvent().info ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,5 +64,5 @@ void EventTaskWidget::Fill( const Event& event )
 void EventTaskWidget::Commit( timeline::Event& event ) const
 {
     event.name = label_->text().toStdString();
-    event.info = ENT_Tr::ConvertFromEventType( eEventTypes_Task, ENT_Tr_ABC::eToSim );
+    event.info = description_->text().toStdString();
 }

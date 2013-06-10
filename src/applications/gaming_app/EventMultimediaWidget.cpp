@@ -70,7 +70,8 @@ void EventMultimediaWidget::Fill( const Event& event )
 void EventMultimediaWidget::Commit( timeline::Event& event ) const
 {
     event.name = label_->text().toStdString();
-    event.info = ENT_Tr::ConvertFromEventType( eEventTypes_Multimedia, ENT_Tr_ABC::eToSim );
+    event.info = file_->text().toStdString();
+    event.action.target = "sword://multimedia";
 }
 
 // -----------------------------------------------------------------------------
