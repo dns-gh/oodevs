@@ -842,15 +842,7 @@
         <python>
             <arg value="${bin.dir}/protolint/protolint.py"/>
             <arg value="compare"/>
-            <!-- The RulesOfEngagement enumeration was changed since 5.1.x,
-                 a none=0 was removed and all other values shifted. We think
-                 this change is acceptable since this feature was unlikely to
-                 be used by clients and this is only a notification, not a
-                 parameter.
-            -->
-            <arg value="--exclude=SimToClient.Content.UnitAttributes.RulesOfEngagement.Value"/>
-            <arg value="--exclude=SimToClient.Content.AutomatAttributes.RulesOfEngagement.Value"/>
-            <arg value="${bin.dir}/protolint/proto/proto-5.1.x"/>
+            <arg value="${bin.dir}/protolint/proto/proto-5.2.x"/>
             <arg value="${src.dir}/libraries/protocol/proto"/>
         </python>
     </target>
