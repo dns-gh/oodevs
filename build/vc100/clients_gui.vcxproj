@@ -160,7 +160,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichBaseObject.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichRadioButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Selection.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SubObjectName.cpp" />
@@ -801,7 +800,6 @@
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\RichBaseObject.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichListView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichRadioButton.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichWarnWidget.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichWarnWidget_ABC.h" />

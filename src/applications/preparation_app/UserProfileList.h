@@ -19,7 +19,7 @@ namespace kernel
 
 namespace gui
 {
-    class RichListView;
+    template< typename T > class RichWidget;
 }
 
 class UserProfile;
@@ -96,7 +96,7 @@ private:
     T_Profiles             profiles_;
     T_ProfileEditors       editors_;
     UserProfileWidget&     pages_;
-    gui::RichListView*          list_;
+    gui::RichWidget< QListView >*          list_;
     QSortFilterProxyModel* proxyModel_;
     QStandardItemModel*    dataModel_;
     std::auto_ptr< NewProfileDialog > pNewProfileDialog_;

@@ -19,7 +19,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_gui/RichPushButton.h"
-#include "clients_gui/RichListView.h"
+#include "clients_gui/RichWidget.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileList constructor
@@ -43,8 +43,8 @@ UserProfileList::UserProfileList( QWidget* parent, UserProfileWidget& pages, ker
     proxyModel_->setDynamicSortFilter( true );
     proxyModel_->setSortCaseSensitivity( Qt::CaseInsensitive );
     proxyModel_->setSourceModel( dataModel_ );
-    list_ = new gui::RichListView( "list", this );
-    list_->setViewMode( gui::RichListView::ListMode );
+    list_ = new gui::RichWidget< QListView >( "list", this );
+    list_->setViewMode( gui::RichWidget< QListView >::ListMode );
     list_->setSelectionMode( QAbstractItemView::SingleSelection );
     list_->setModel( proxyModel_ );
 
