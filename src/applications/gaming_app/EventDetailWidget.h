@@ -50,7 +50,8 @@ private:
     QCheckBox* done_;
     QLineEdit* target_;
     QCheckBox* apply_;
-    QTextEdit* payload_;
+    QTextEdit* payloadBase64_;
+    QTextEdit* payloadString_;
     //@}
 };
 

@@ -10,7 +10,10 @@
 #include "gaming_app_pch.h"
 #include "EventDetailWidget.h"
 #include "gaming/Event.h"
+#include "protocol/Protocol.h"
 #include "timeline/api.h"
+#include "tools/ProtobufSerialization.h"
+#include <tools/Base64Converters.h>
 
 // -----------------------------------------------------------------------------
 // Name: EventDetailWidget constructor
@@ -19,16 +22,29 @@
 EventDetailWidget::EventDetailWidget()
 {
     uuid_ = new QLineEdit();
+    uuid_->setReadOnly( true );
     name_ = new QLineEdit();
+    name_->setReadOnly( true );
     info_ = new QTextEdit();
+    info_->setFixedHeight( 50 );
+    info_->setReadOnly( true );
     begin_ = new QLineEdit();
+    begin_->setReadOnly( true );
     end_ = new QLineEdit();
+    end_->setReadOnly( true );
     done_ = new QCheckBox();
+    done_->setEnabled( false );
     target_ = new QLineEdit();
+    target_->setReadOnly( true );
     apply_ = new QCheckBox();
-    payload_ = new QTextEdit();
+    apply_->setEnabled( false );
+    payloadBase64_ = new QTextEdit();
+    payloadBase64_->setReadOnly( true );
+    payloadBase64_->setFixedHeight( 50 );
+    payloadString_ = new QTextEdit();
+    payloadString_->setReadOnly( true );
 
-    QGridLayout* gridLayout = new QGridLayout( 10, 2 );
+    QGridLayout* gridLayout = new QGridLayout( 11, 2 );
     mainLayout_->addLayout( gridLayout );
     gridLayout->setMargin( 10 );
     gridLayout->setSpacing( 10 );
@@ -49,8 +65,10 @@ EventDetailWidget::EventDetailWidget()
     gridLayout->addWidget( target_, 7, 1 );
     gridLayout->addWidget( new QLabel( "Apply" ), 8, 0 );
     gridLayout->addWidget( apply_, 8, 1 );
-    gridLayout->addWidget( new QLabel( "Payload" ), 9, 0 );
-    gridLayout->addWidget( payload_, 9, 1 );
+    gridLayout->addWidget( new QLabel( "Base64 Payload" ), 9, 0 );
+    gridLayout->addWidget( payloadBase64_, 9, 1 );
+    gridLayout->addWidget( new QLabel( "String Payload" ), 10, 0 );
+    gridLayout->addWidget( payloadString_, 10, 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +95,13 @@ void EventDetailWidget::Fill( const Event& event )
     done_->setCheckState( timelineEvent.done ? Qt::Checked : Qt::Unchecked );
     target_->setText( QString::fromStdString( timelineEvent.action.target ) );
     apply_->setCheckState( timelineEvent.action.apply ? Qt::Checked : Qt::Unchecked );
-    payload_->setText( QString::fromStdString( timelineEvent.action.payload ) );
+    payloadBase64_->setText( QString::fromStdString( tools::BinaryToBase64( timelineEvent.action.payload ) ) );
+    if( timelineEvent.action.target == CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
+        payloadString_->setText( QString::fromStdString( tools::BinaryToProto< sword::ClientToSim >( timelineEvent.action.payload ).DebugString() ) );
+    else if ( timelineEvent.action.target == CREATE_EVENT_TARGET( EVENT_REPORT_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
+        payloadString_->setText( QString::fromStdString( tools::BinaryToProto< sword::SimToClient >( timelineEvent.action.payload ).DebugString() ) );
+    else
+        payloadString_->setText( QString::fromStdString( timelineEvent.action.payload ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,6 +110,7 @@ void EventDetailWidget::Fill( const Event& event )
 // -----------------------------------------------------------------------------
 void EventDetailWidget::Commit( timeline::Event& event ) const
 {
+    assert( false ); // $$$$ ABR 2013-06-10: Not supposed to be used
     event.uuid = uuid_->text().toStdString();
     event.name = name_->text().toStdString();
     event.info = info_->text().toStdString();
@@ -94,5 +119,5 @@ void EventDetailWidget::Commit( timeline::Event& event ) const
     event.done = done_->checkState() == Qt::Checked;
     event.action.target = target_->text().toStdString();
     event.action.apply = apply_->checkState() == Qt::Checked;
-    event.action.payload = payload_->text().toStdString();
+    event.action.payload = tools::Base64ToBinary( payloadBase64_->text().toStdString() );
 }
