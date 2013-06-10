@@ -62,12 +62,12 @@ void Acceptor::AllowConnections()
     boost::system::error_code error;
     const boost::asio::ip::tcp::resolver::iterator iterator = resolver_.Resolve( endpoint_, error );
     if( error )
-        throw ConnectionError( tools::FromLocalCharsetToUtf8( error.message() ) + " ( " + endpoint_ + " )" );
+        throw MASA_CONNECTION_ERROR( tools::FromLocalCharsetToUtf8( error.message() ) + " ( " + endpoint_ + " )" );
     const boost::asio::ip::tcp::endpoint endpoint = *iterator;
     acceptor_.open( endpoint.protocol() );
     acceptor_.bind( endpoint, error );
     if( error )
-        throw ConnectionError( tools::FromLocalCharsetToUtf8( error.message() ) + " ( " + endpoint_ + " )" );
+        throw MASA_CONNECTION_ERROR( tools::FromLocalCharsetToUtf8( error.message() ) + " ( " + endpoint_ + " )" );
     acceptor_.listen( 0 );
     Listen();
 }
