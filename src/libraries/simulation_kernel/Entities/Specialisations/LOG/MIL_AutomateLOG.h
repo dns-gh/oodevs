@@ -148,6 +148,7 @@ public:
 
     void ResetConsignsForConvoyPion( const MIL_AgentPion& pion );
     void ResetConsignsForProvider( const MIL_AgentPion& pion );
+    MIL_Automate*  GetStockAutomat                    ( const PHY_DotationCategory& dotationCategory, bool& deployed );
     //@}
 
     //! @name Funeral
@@ -212,4 +213,3 @@ private:
 BOOST_CLASS_EXPORT_KEY( MIL_AutomateLOG )
 
 #endif // __MIL_AutomateLOG_h_
-

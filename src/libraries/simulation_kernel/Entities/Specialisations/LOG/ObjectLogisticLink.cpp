@@ -99,9 +99,9 @@ void ObjectLogisticLink::SendChangedState() const
 // Name: ObjectLogisticLink::OnReceiveChangeQuotas
 // Created: NLD 2011-01-10
 // -----------------------------------------------------------------------------
-void ObjectLogisticLink::OnReceiveChangeQuotas( const sword::MissionParameter& )
+std::set< const PHY_DotationCategory* > ObjectLogisticLink::OnReceiveChangeQuotas( const sword::MissionParameter& )
 {
-    // NOTHING
+    return std::set< const PHY_DotationCategory* >();
 }
 
 // -----------------------------------------------------------------------------

@@ -549,6 +549,26 @@ void MIL_AutomateLOG::ResetConsignsForProvider( const MIL_AgentPion& pion )
             ++it;
     }
 }
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateLOG::CheckSupplyDeployed
+// Created: MMC 2013-06-04
+// -----------------------------------------------------------------------------
+MIL_Automate* MIL_AutomateLOG::GetStockAutomat( const PHY_DotationCategory& dotationCategory, bool& deployed )
+{
+    deployed = false;
+    SupplyDeployementVisitor visitor( dotationCategory );
+    Visit( visitor );
+    if( visitor.pDeployedStock_ )
+    {
+        deployed = true;
+        return &visitor.pDeployedStock_->GetAutomate();
+    }
+    if( visitor.pUndeployedStock_ )
+        return &visitor.pUndeployedStock_->GetAutomate();
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG::OnSupplyConvoyArriving

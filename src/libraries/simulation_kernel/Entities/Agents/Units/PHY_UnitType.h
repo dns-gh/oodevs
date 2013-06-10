@@ -73,6 +73,7 @@ public:
     unsigned int GetPionEfficiency( E_PionEfficiency pionEfficiency ) const;
     E_CrossingHeight GetCrossingHeight() const;
     const PHY_NbcSuit& GetNbcSuit() const;
+    bool IsStockLogisticTypeDefined( const PHY_DotationLogisticType& type ) const;
     //@}
 
 private:
@@ -143,6 +144,7 @@ private:
     unsigned int nUrbanAreaEfficiency_;
     E_CrossingHeight crossingHeight_;
     boost::shared_ptr< const PHY_NbcSuit > suit_;
+    std::set< const PHY_DotationLogisticType* > definedStockLogisticTypes_;
     //@}
 };
 
