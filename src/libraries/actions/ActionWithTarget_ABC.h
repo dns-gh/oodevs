@@ -30,6 +30,11 @@ public:
     virtual ~ActionWithTarget_ABC();
     //@}
 
+    //! @name Member
+    //@{
+    unsigned int GetEntityId() const { return entityId_; }
+    //@}
+
 protected:
     //! @name Member data
     //@{
