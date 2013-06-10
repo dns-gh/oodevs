@@ -62,7 +62,7 @@ namespace
                                      "  <parameter dia-name='boundaryLimit2_' is-context='true' name='Limit 2' optional='false' type='Limit'/>"
                                      "  <parameter dia-name='echelonNumber' max-value='2' min-value='1' name='Echelon number' optional='true' type='Integer'/>"
                                     "</mission>" );
-            kernel::MissionType* type = new kernel::MissionType( xis >> xml::start( "mission" ) );
+            kernel::MissionType* type = new kernel::MissionType( xis >> xml::start( "mission" ), eMissionType_Automat );
             staticModel.types_.tools::Resolver< kernel::MissionType >::Register( 44523, *type );
         }
         virtual ~Fixture()

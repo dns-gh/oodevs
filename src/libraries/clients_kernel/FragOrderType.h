@@ -35,6 +35,7 @@ public:
     //@{
     bool IsMissionRequired() const;
     bool IsAvailableFor( const kernel::Entity_ABC& entity ) const;
+    E_MissionType GetType() const;
     //@}
 
 private:

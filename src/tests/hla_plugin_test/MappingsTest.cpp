@@ -213,7 +213,7 @@ namespace
             while(it.HasMoreElements())
             {
                 const kernel::MissionType& elem = it.NextElement();
-                if( !elem.IsAutomat() )
+                if( !elem.GetType() == eMissionType_Automat )
                     Register( elem.GetName(), const_cast< kernel::MissionType& >( elem ) );
             }
         }

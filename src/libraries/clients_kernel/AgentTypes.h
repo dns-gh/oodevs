@@ -11,6 +11,7 @@
 #define __AgentTypes_h_
 
 #include "tools/Resolver.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace xml { class xistream; };
 namespace tools
@@ -108,8 +109,8 @@ private:
     void ReallyReadSensor( xml::xistream& xis, const std::string& sensor );
     void ReadSensor( xml::xistream& xis );
     void ReadModel( xml::xistream& xis, const T_Resolver& missionResolver,  tools::Resolver< DecisionalModel, std::string >& models );
-    void ReadMissions( xml::xistream& xis, const std::string& name, T_MissionResolver& missions );
-    void ReadMissionType( xml::xistream& xis, T_MissionResolver& missions );
+    void ReadMissions( xml::xistream& xis, const std::string& name, E_MissionType type );
+    void ReadMissionType( xml::xistream& xis, E_MissionType type );
     void ReadFragOrderType( xml::xistream& xis );
 
     void RegisterActionType( MagicActionType& actionType );
@@ -119,9 +120,7 @@ private:
 private:
     //! @name Member data
     //@{
-    T_MissionResolver unitMissions_;
-    T_MissionResolver automatMissions_;
-    T_MissionResolver populationMissions_;
+    T_MissionResolver missions_[ 3 ];
     SymbolFactory* symbolFactory_;
     //@}
 

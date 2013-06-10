@@ -75,3 +75,12 @@ bool FragOrderType::IsAvailableFor( const kernel::Entity_ABC& entity ) const
         return typeName == "population";
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: FragOrderType::GetType
+// Created: ABR 2013-06-07
+// -----------------------------------------------------------------------------
+E_MissionType FragOrderType::GetType() const
+{
+    return eMissionType_FragOrder;
+}

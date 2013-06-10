@@ -18,8 +18,9 @@ using namespace kernel;
 // Name: MissionType constructor
 // Created: SBO 2008-03-05
 // -----------------------------------------------------------------------------
-MissionType::MissionType( xml::xistream& xis )
+MissionType::MissionType( xml::xistream& xis, E_MissionType type )
     : OrderType( xis )
+    , type_( type )
 {
     Read( xis );
 }
@@ -42,7 +43,6 @@ void MissionType::Read( xml::xistream& xis )
     std::string mrt;
     xis >> xml::optional >> xml::attribute( "mrt-dia-behavior", mrt )
         >> xml::list( "parameter", *this, &MissionType::ReadParameter );
-    automat_ = !mrt.empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -56,10 +56,10 @@ void MissionType::ReadParameter( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionType::IsAutomat
-// Created: SBO 2008-06-02
+// Name: MissionType::GetType
+// Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
-bool MissionType::IsAutomat() const
+E_MissionType MissionType::GetType() const
 {
-    return automat_;
+    return type_;
 }

@@ -86,9 +86,9 @@ void AgentTypes::Purge()
     unitModels_.DeleteAll();
     automatModels_.DeleteAll();
     populationModels_.DeleteAll();
-    unitMissions_.DeleteAll();
-    automatMissions_.DeleteAll();
-    populationMissions_.DeleteAll();
+    missions_[ eMissionType_Pawn ].DeleteAll();
+    missions_[ eMissionType_Automat ].DeleteAll();
+    missions_[ eMissionType_Population ].DeleteAll();
     tools::Resolver< MissionType >::Clear();
     tools::Resolver< FragOrderType >::DeleteAll();
     tools::Resolver< FragOrderType, std::string >::Clear();
@@ -144,9 +144,9 @@ void AgentTypes::ReadComponent( xml::xistream& xis )
 void AgentTypes::ReadOrderTypes( xml::xistream& xis )
 {
     xis >> xml::start( "missions" );
-    ReadMissions( xis, "units"      , unitMissions_ );
-    ReadMissions( xis, "automats"   , automatMissions_ );
-    ReadMissions( xis, "populations", populationMissions_ );
+    ReadMissions( xis, "units"      , eMissionType_Pawn );
+    ReadMissions( xis, "automats"   , eMissionType_Automat );
+    ReadMissions( xis, "populations", eMissionType_Population );
     xis     >> xml::start( "fragorders" )
                 >> xml::list( "fragorder", *this, &AgentTypes::ReadFragOrderType )
             >> xml::end;
@@ -156,10 +156,10 @@ void AgentTypes::ReadOrderTypes( xml::xistream& xis )
 // Name: AgentTypes::ReadMissions
 // Created: SBO 2008-03-05
 // -----------------------------------------------------------------------------
-void AgentTypes::ReadMissions( xml::xistream& xis, const std::string& name, T_MissionResolver& missions )
+void AgentTypes::ReadMissions( xml::xistream& xis, const std::string& name, E_MissionType type )
 {
     xis >> xml::start( name );
-    xis     >> xml::list( "mission", *this, &AgentTypes::ReadMissionType, missions )
+    xis     >> xml::list( "mission", *this, &AgentTypes::ReadMissionType, type )
         >> xml::end;
 }
 
@@ -167,11 +167,12 @@ void AgentTypes::ReadMissions( xml::xistream& xis, const std::string& name, T_Mi
 // Name: AgentTypes::ReadMissionType
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void AgentTypes::ReadMissionType( xml::xistream& xis, T_MissionResolver& missions )
+void AgentTypes::ReadMissionType( xml::xistream& xis, E_MissionType type )
 {
-    MissionType* mission = new MissionType( xis );
+    assert( type == eMissionType_Pawn || type == eMissionType_Automat || type == eMissionType_Population );
+    MissionType* mission = new MissionType( xis, type );
     tools::Resolver< MissionType >::Register( mission->GetId(), *mission );
-    missions.Register( mission->GetName(), *mission );
+    missions_[ type ].Register( mission->GetName(), *mission );
 }
 
 // -----------------------------------------------------------------------------
@@ -213,7 +214,7 @@ void AgentTypes::ReadModels( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadModel( xml::xistream& xis, const T_Resolver& missionResolver, tools::Resolver< DecisionalModel, std::string >& models )
 {
-    MissionFactory factory( unitMissions_, automatMissions_, populationMissions_, *this );
+    MissionFactory factory( missions_[ eMissionType_Pawn ], missions_[ eMissionType_Automat ], missions_[ eMissionType_Population ], *this );
     DecisionalModel* model = new DecisionalModel( xis, factory, missionResolver, (Resolver< FragOrderType >&)*this );
     models.Register( model->GetName(), *model );
 }

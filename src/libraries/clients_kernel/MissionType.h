@@ -11,6 +11,7 @@
 #define __MissionType_h_
 
 #include "OrderType.h"
+#include "ENT/ENT_Enums_Gen.h"
 
 namespace kernel
 {
@@ -26,13 +27,13 @@ class MissionType : public OrderType
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MissionType( xml::xistream& xis );
+    explicit MissionType( xml::xistream& xis, E_MissionType type_ );
     virtual ~MissionType();
     //@}
 
     //! @name Accessors
     //@{
-    bool IsAutomat() const;
+    E_MissionType GetType() const;
     //@}
 
 private:
@@ -45,7 +46,7 @@ private:
 private:
     //! @name Member data
     //@{
-    bool automat_;
+    E_MissionType type_;
     //@}
 };
 

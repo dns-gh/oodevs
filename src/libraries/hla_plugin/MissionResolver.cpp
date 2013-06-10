@@ -26,7 +26,7 @@ MissionResolver::MissionResolver( const tools::Resolver_ABC< kernel::MissionType
     {
         const kernel::MissionType& mission = it.NextElement();
         T_Mission& missionId = missions_[ mission.GetName() ];
-        missionId = mission.IsAutomat() ? std::make_pair( mission.GetId(), missionId.second ) : std::make_pair( missionId.first, mission.GetId() );
+        missionId = mission.GetType() == eMissionType_Automat ? std::make_pair( mission.GetId(), missionId.second ) : std::make_pair( missionId.first, mission.GetId() );
     }
     for( tools::Iterator< const kernel::FragOrderType& > it = fragOrders.CreateIterator(); it.HasMoreElements(); )
     {
