@@ -330,8 +330,8 @@ def _comparemessages(ui, idx, oldname, oldtype, oldscope, newname, newtype,
                     ret += 1
         elif _isenum(newt):
             return writeerr('error: new field is an enum but not the old one')
+        return ret
 
-        return 0
     seen.append((oldtype, newtype))
     oldscope = _makescope(oldscope, oldt)
     newscope = _makescope(newscope, newt)
