@@ -3,36 +3,38 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __RichGroupBox_h_
-#define __RichGroupBox_h_
+#ifndef __RichWidget_h_
+#define __RichWidget_h_
 
-#include "RichWarnWidget.h"
+#include "ObjectNameManager.h"
 
 namespace gui
 {
 
 // =============================================================================
-/** @class  RichGroupBox
-    @brief  RichGroupBox
+/** @class  RichWidget
+    @brief  RichWidget
 */
-// Created: ABR 2011-11-21
+// Created: ABR 2013-06-07
 // =============================================================================
-class RichGroupBox : public RichWarnWidget< QGroupBox >
+template< typename T >
+class RichWidget : public T
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RichGroupBox( const QString& objectName, QWidget* parent = 0 );
-             RichGroupBox( const QString& objectName, const QString& title, QWidget* parent = 0 );
-    virtual ~RichGroupBox();
+    explicit RichWidget( const QString& objectName, QWidget* parent = 0 );
+    virtual ~RichWidget();
     //@}
 };
 
+#include "RichWidget.inl"
+
 } //! namespace gui
 
-#endif // __RichGroupBox_h_
+#endif // __RichWidget_h_

@@ -10,6 +10,8 @@
 #ifndef __RichLabel_h_
 #define __RichLabel_h_
 
+#include "RichWarnWidget.h"
+
 namespace gui
 {
     class SimplerRichText;
@@ -20,7 +22,7 @@ namespace gui
 */
 // Created: SBO 2006-04-18
 // =============================================================================
-class RichLabel : public QLabel
+class RichLabel : public RichWarnWidget< QLabel >
 {
     Q_OBJECT
 
@@ -35,7 +37,6 @@ public:
 
     //! @name Operations
     //@{
-    void Warn( int msec );
     virtual void setText( const QString& );
     //@}
 
@@ -51,19 +52,6 @@ protected:
     virtual void mouseMoveEvent( QMouseEvent* );
     virtual void mouseReleaseEvent( QMouseEvent* e );
     virtual void drawContents( QPainter* p );
-    //@}
-
-private slots:
-    //! @name slots
-    //@{
-    void OnWarnStop();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    RichLabel( const RichLabel& );            //!< Copy constructor
-    RichLabel& operator=( const RichLabel& ); //!< Assignment operator
     //@}
 
 private:

@@ -157,6 +157,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesGroupDictionary.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RasterProcess.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ResourceNetworksLayer.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichBaseObject.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichComboBox.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.cpp" />
@@ -807,6 +808,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\Property_ABC.h" />
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\RasterProcess.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ResourceNetworksLayer.h" />
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\RichBaseObject.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichComboBox.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.h" />
@@ -819,6 +821,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\RichTimeEdit.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichToolButton.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichTreeWidget.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichWarnWidget.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichWarnWidget_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichWidget.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Selection.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SubObjectName.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ObjectNameManager.h" />
@@ -964,7 +969,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\RichGroupBox.h">
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichGroupBox.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -977,7 +982,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
+    </ClInclude>
     <CustomBuild Include="..\..\src\libraries\clients_gui\RichLineEdit.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -2550,6 +2555,8 @@
     <None Include="..\..\src\libraries\clients_gui\EntityTreeView.inl" />
     <None Include="..\..\src\libraries\clients_gui\HierarchyTreeView.inl" />
     <None Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.inl" />
+    <None Include="..\..\src\libraries\clients_gui\RichWarnWidget.inl" />
+    <None Include="..\..\src\libraries\clients_gui\RichWidget.inl" />
     <None Include="..\..\src\libraries\clients_gui\SearchTreeView.inl" />
     <None Include="..\..\src\libraries\clients_gui\StandardModel.inl" />
     <None Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.inl" />

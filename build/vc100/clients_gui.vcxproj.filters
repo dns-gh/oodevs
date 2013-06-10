@@ -134,6 +134,9 @@
     <Filter Include="Source Files\MVC\View">
       <UniqueIdentifier>{fc70547b-557f-4096-ad92-7fd43680e4eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\RichObjects">
+      <UniqueIdentifier>{ea7bfce5-3dd6-4aca-99a7-992d24cc97bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_gui\clients_gui_pch.cpp">
@@ -188,12 +191,6 @@
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\InternalLinks.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichItemFactory.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichLabel.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\SimplerRichText.cpp">
@@ -733,9 +730,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\ChangeSuperiorDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichGroupBox.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListEditor.cpp">
       <Filter>Source Files\Dialogs\Diffusion List</Filter>
     </ClCompile>
@@ -748,9 +742,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchLineEdit.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichLineEdit.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchButton.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
@@ -758,18 +749,6 @@
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\ColorController.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichAction.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichDockWidget.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichMenu.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichToolBar.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\SelectionLayer.cpp">
@@ -934,59 +913,11 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectNameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichPushButton.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichTextEdit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichCheckBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichTabWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\SubObjectName.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichComboBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichTableView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichListView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichToolButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichRadioButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichListWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichTreeWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichTableWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichTimeEdit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\TerrainPreference.cpp">
       <Filter>Source Files\Preferences</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichMenuBar.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\Selection.cpp">
       <Filter>Source Files\gl\Strategies</Filter>
@@ -1026,6 +957,81 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\ResourceNetworksLayer.cpp">
       <Filter>Source Files\gl\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichAction.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichDockWidget.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichGroupBox.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichItemFactory.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichLabel.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichLineEdit.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichMenu.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichPushButton.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichToolBar.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichCheckBox.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichComboBox.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichListView.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichListWidget.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichMenuBar.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichRadioButton.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTableView.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTableWidget.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTabWidget.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTextEdit.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTimeEdit.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichToolButton.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichTreeWidget.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichBaseObject.cpp">
+      <Filter>Source Files\RichObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1449,22 +1455,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchButton.h">
       <Filter>Source Files\Lists</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichSpinBox.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\ColorController.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichToolBar.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichAction.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichDockWidget.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichMenu.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\SelectionLayer.h">
@@ -1620,55 +1611,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\ObjectNameManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichPushButton.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichTextEdit.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichCheckBox.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichTabWidget.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\SubObjectName.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichComboBox.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichTableView.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichListView.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichToolButton.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichRadioButton.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichListWidget.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichTreeWidget.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichTableWidget.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichTimeEdit.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichMenuBar.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\Selection.h">
@@ -1734,6 +1677,81 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\ResourceNetworksLayer.h">
       <Filter>Source Files\gl\Layers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichToolBar.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichAction.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichDialogButtonBox.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichDockWidget.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichMenu.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichPushButton.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichSpinBox.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichCheckBox.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichComboBox.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichListView.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichListWidget.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichMenuBar.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichRadioButton.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichTableView.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichTableWidget.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichTabWidget.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichTextEdit.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichTimeEdit.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichToolButton.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichTreeWidget.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichWidget.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichGroupBox.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichWarnWidget.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichWarnWidget_ABC.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl">
@@ -1787,6 +1805,12 @@
     <None Include="..\..\src\libraries\clients_gui\clients_gui_pt.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\clients_gui\RichWidget.inl">
+      <Filter>Source Files\RichObjects</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_gui\RichWarnWidget.inl">
+      <Filter>Source Files\RichObjects</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\clients_gui\HelpSystem.h">
@@ -1814,12 +1838,6 @@
       <Filter>Source Files\Panels</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\DecimalSpinBoxAndSlider.h">
-      <Filter>Source Files\Tools</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\RichItemFactory.h">
-      <Filter>Source Files\Tools</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\RichLabel.h">
       <Filter>Source Files\Tools</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ValuedComboBox.h">
@@ -2032,14 +2050,8 @@
     <CustomBuild Include="..\..\src\libraries\clients_gui\ChangeSuperiorDialog.h">
       <Filter>Source Files\Dialogs</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\RichGroupBox.h">
-      <Filter>Source Files\Tools</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\DiffusionListEditor.h">
       <Filter>Source Files\Dialogs\Diffusion List</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\RichLineEdit.h">
-      <Filter>Source Files\Tools</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ClearButton.h">
       <Filter>Source Files\Lists</Filter>
@@ -2110,6 +2122,15 @@
     <CustomBuild Include="..\..\src\libraries\clients_gui\CircularEventStrategy.h">
       <Filter>Source Files\gl\Strategies</Filter>
     </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\RichItemFactory.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\RichLabel.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\RichLineEdit.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\Layer.h">
@@ -2126,6 +2147,9 @@
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\RasterProcess.h">
       <Filter>Source Files</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\RichBaseObject.h">
+      <Filter>Source Files\RichObjects</Filter>
     </Qt_file_Mocing>
   </ItemGroup>
 </Project>

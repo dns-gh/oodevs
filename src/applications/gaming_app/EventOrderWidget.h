@@ -29,6 +29,7 @@ namespace actions
 
 namespace gui
 {
+    template< typename T > class RichWarnWidget;
     class RichComboBox;
     class RichGroupBox;
     class RichLabel;
@@ -135,10 +136,9 @@ private:
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
     const kernel::Profile_ABC& profile_;
 
-    gui::RichComboBox* missionTypeCombo_;
+    gui::RichWarnWidget< QComboBox >* missionTypeCombo_;
     QVBoxLayout* missionComboLayout_;
-    //gui::ValuedComboBox< const kernel::OrderType* >* missionCombo_;
-    gui::RichComboBox* missionCombo_;
+    gui::RichWarnWidget< QComboBox >* missionCombo_;
     QStandardItemModel missionModel_;
     gui::RichGroupBox* targetGroupBox_;
     gui::RichLabel* targetLabel_;

@@ -19,10 +19,9 @@ using namespace gui;
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
 RichLabel::RichLabel( const QString& objectName, QWidget* parent /* = 0*/ )
-    : QLabel( parent )
+    : RichWarnWidget< QLabel >( objectName, parent )
     , richText_( new SimplerRichText( "", font() ) )
 {
-    setObjectName( objectName );
     setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     setMouseTracking( true );
 }
@@ -32,10 +31,10 @@ RichLabel::RichLabel( const QString& objectName, QWidget* parent /* = 0*/ )
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 RichLabel::RichLabel( const QString& objectName, const QString& text, QWidget* parent )
-    : QLabel( text, parent )
+    : RichWarnWidget< QLabel >( objectName, parent )
     , richText_( new SimplerRichText( text, font() ) )
 {
-    setObjectName( objectName );
+    setText( text );
     setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     setMouseTracking( true );
 }
@@ -45,7 +44,7 @@ RichLabel::RichLabel( const QString& objectName, const QString& text, QWidget* p
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 RichLabel::RichLabel( const QString& objectName, const QString& text, bool required, QWidget* parent )
-    : QLabel( text, parent )
+    : RichWarnWidget< QLabel >( objectName, parent )
     , richText_( new SimplerRichText( text, font() ) )
 {
     if( required )
@@ -55,7 +54,7 @@ RichLabel::RichLabel( const QString& objectName, const QString& text, bool requi
         setFont( font );
         richText_->setDefaultFont( font );
     }
-    setObjectName( objectName );
+    setText( text );
     setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     setMouseTracking( true );
 }
@@ -67,25 +66,6 @@ RichLabel::RichLabel( const QString& objectName, const QString& text, bool requi
 RichLabel::~RichLabel()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichLabel::Warn
-// Created: SBO 2006-04-18
-// -----------------------------------------------------------------------------
-void RichLabel::Warn( int msec )
-{
-    setPaletteForegroundColor( Qt::red );
-    QTimer::singleShot( msec, this, SLOT( OnWarnStop() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichLabel::OnWarnStop
-// Created: SBO 2006-04-18
-// -----------------------------------------------------------------------------
-void RichLabel::OnWarnStop()
-{
-    setPaletteForegroundColor( Qt::black );
 }
 
 // -----------------------------------------------------------------------------

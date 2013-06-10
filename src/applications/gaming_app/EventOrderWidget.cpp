@@ -12,9 +12,9 @@
 #include "moc_EventOrderWidget.cpp"
 #include "actions/ActionWithTarget_ABC.h"
 #include "actions_gui/MissionInterface.h"
-#include "clients_gui/RichComboBox.h"
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/RichLabel.h"
+#include "clients_gui/RichWarnWidget.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -53,7 +53,7 @@ EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& mod
     , missionCombo_( 0 )
 {
     // Top
-    missionTypeCombo_ = new gui::RichComboBox( "event-order-mission-type-combobox" );
+    missionTypeCombo_ = new gui::RichWarnWidget< QComboBox >( "event-order-mission-type-combobox" );
     missionComboLayout_ = new QVBoxLayout();
     missionComboLayout_->setMargin( 0 );
     missionComboLayout_->setSpacing( 0 );
@@ -277,7 +277,7 @@ const Decisions_ABC* EventOrderWidget::GetTargetDecision() const
 void EventOrderWidget::FillMission()
 {
     delete missionCombo_;
-    missionCombo_ = new gui::RichComboBox( "event-order-mission-combobox" );
+    missionCombo_ = new gui::RichWarnWidget< QComboBox >( "event-order-mission-combobox" );
 
     QSortFilterProxyModel* proxy = new QSortFilterProxyModel( missionCombo_ );
     proxy->setSourceModel( missionCombo_->model() );
@@ -356,7 +356,10 @@ void EventOrderWidget::WarnIfTargetAndMissionAreNotCompatible() const
     if( needWarning )
     {
         // Add Warn on missionCombo_ here
+        missionTypeCombo_->Warn();
+        missionCombo_->Warn();
         targetGroupBox_->Warn();
+        targetLabel_->Warn();
     }
 }
 
