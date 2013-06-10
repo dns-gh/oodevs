@@ -81,7 +81,7 @@ void ResourceNetworksLayer::Draw( const kernel::Entity_ABC& entity, Viewport_ABC
         {
             const geometry::Point2f position = GetPosition( entity );
             viewport.SetHotpoint( position );
-            attribute->Draw( viewport, tools_, GetAlpha() );
+            attribute->Draw( viewport, tools_, position, GetAlpha() );
         }
 }
 

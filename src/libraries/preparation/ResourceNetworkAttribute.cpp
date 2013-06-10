@@ -21,17 +21,14 @@
 #include "clients_kernel/ResourceNetworkType.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace geometry;
-
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, bool isUrban, const geometry::Point2f position,
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, bool isUrban,
                                                     const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
     : controllers_( controllers )
     , isUrban_    ( isUrban )
-    , position_   ( position )
     , urbans_     ( urbans )
     , objects_    ( objects )
     , resources_  ( resources )
@@ -54,11 +51,10 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2011-02-23
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, bool isUrban, const geometry::Point2f position,
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, bool isUrban,
                                                     const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
     : controllers_( controllers )
     , isUrban_    ( isUrban )
-    , position_   ( position )
     , urbans_     ( urbans )
     , objects_    ( objects )
     , resources_  ( resources )
@@ -104,14 +100,13 @@ QString ResourceNetworkAttribute::GetLinkName( const std::string& resource, unsi
 // Name: ResourceNetworkAttribute::Draw
 // Created: LGY 2013-03-07
 // -----------------------------------------------------------------------------
-void ResourceNetworkAttribute::Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools, float alpha ) const
+void ResourceNetworkAttribute::Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools, const geometry::Point2f& from, float alpha ) const
 {
     int filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< int >();
     if( filter == 1 )// off
         return;
     if( filter == 3 && !IsSelected() ) // selected outgoing
         return;
-    Point2f from = position_;
 
     glPushAttrib( GL_LINE_BIT );
     glLineWidth( 1.f );
@@ -131,7 +126,7 @@ void ResourceNetworkAttribute::Draw( const gui::Viewport_ABC& viewport, const gu
                     if( !resourceTarget || ( !IsSelected() && !resourceTarget->IsSelected() ) )
                         continue;
                 }
-                Point2f to;
+                geometry::Point2f to;
                 if( link->urban_ )
                 {
                     if( const kernel::UrbanObject_ABC* obj = urbans_.Find( link->id_ ) )
@@ -147,7 +142,7 @@ void ResourceNetworkAttribute::Draw( const gui::Viewport_ABC& viewport, const gu
                         continue;
                 }
 
-                if( viewport.IsVisible( Rectangle2f( from, to ) ) )
+                if( viewport.IsVisible( geometry::Rectangle2f( from, to ) ) )
                     tools.DrawArrow( from, to );
             }
         else

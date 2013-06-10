@@ -49,5 +49,5 @@ ResourceNetworkPrototype::~ResourceNetworkPrototype()
 void ResourceNetworkPrototype::Commit( const kernel::Team_ABC& )
 {
     if( creation_ )
-        creation_->Attach< gui::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, false, creation_->Get< Positions >().GetPosition(), urbans_, objects_, resources_ ) );
+        creation_->Attach< gui::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, false, urbans_, objects_, resources_ ) );
 }

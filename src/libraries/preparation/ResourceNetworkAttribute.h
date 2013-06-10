@@ -52,9 +52,9 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, bool isUrban, const geometry::Point2f position
+             ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, bool isUrban
                                      , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
-             ResourceNetworkAttribute( kernel::Controllers& controllers, bool isUrban, const geometry::Point2f position
+             ResourceNetworkAttribute( kernel::Controllers& controllers, bool isUrban
                                      , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
     virtual ~ResourceNetworkAttribute();
     //@}
@@ -62,7 +62,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const;
-    virtual void Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools, float alpha ) const;
+    virtual void Draw( const gui::Viewport_ABC& viewport, const gui::GlTools_ABC& tools, const geometry::Point2f& position, float alpha ) const;
     void Update( xml::xistream& xis );
     void Update( const gui::ResourceNetwork_ABC::T_ResourceNodes& nodes );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
@@ -92,7 +92,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     bool isUrban_;
-    const geometry::Point2f position_;
     const T_Urbans& urbans_;
     const T_Objects& objects_;
     const T_Resources& resources_;
