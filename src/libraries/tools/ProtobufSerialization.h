@@ -16,7 +16,7 @@ namespace tools
     std::string ProtoToBinary( const T& message )
     {
         std::stringstream binaryStream;
-        message.SerializeToOstream( &binaryStream );
+        message.SerializePartialToOstream( &binaryStream );
         return binaryStream.str();
     }
     template< typename T >
@@ -25,7 +25,7 @@ namespace tools
         std::stringstream binaryStream;
         binaryStream << binary;
         T message;
-        message.ParseFromIstream( &binaryStream );
+        message.ParsePartialFromIstream( &binaryStream );
         return message;
     }
 }
