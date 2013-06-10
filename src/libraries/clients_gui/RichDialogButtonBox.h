@@ -10,6 +10,8 @@
 #ifndef __RichDialogButtonBox_h_
 #define __RichDialogButtonBox_h_
 
+#include "RichWidget.h"
+
 namespace gui
 {
 
@@ -19,31 +21,18 @@ namespace gui
 */
 // Created: NPT 2013-03-22
 // =============================================================================
-class RichDialogButtonBox : public QDialogButtonBox
+class RichDialogButtonBox : public RichWidget< QDialogButtonBox >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             RichDialogButtonBox( const QString& objectname, StandardButtons buttonType );
+    explicit RichDialogButtonBox( const QString& objectname, QWidget* parent = 0 );
+             RichDialogButtonBox( const QString& objectname, StandardButtons buttonType, QWidget* parent = 0 );
     virtual ~RichDialogButtonBox();
-    //@}
-
-    //! @name Operations
-    //@{
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __RichDialogButtonBox_h_

@@ -10,7 +10,7 @@
 #ifndef __gui_RichCheckBox_h_
 #define __gui_RichCheckBox_h_
 
-#include <boost/noncopyable.hpp>
+#include "RichWidget.h"
 #include "QtGui/qcheckbox.h"
 
 namespace gui
@@ -21,30 +21,15 @@ namespace gui
 */
 // Created: NPT 2013-03-12
 // =============================================================================
-class RichCheckBox : public QCheckBox
-                   , private boost::noncopyable
-    {
+class RichCheckBox : public RichWidget< QCheckBox >
+{
 
 public:
     //! @name Constructors/Destructor
     //@{
-    RichCheckBox( const QString& objectName, QWidget* parent = 0 );
-    RichCheckBox( const QString& objectName, const QString& text, QWidget* parent = 0 );
+    explicit RichCheckBox( const QString& objectName, QWidget* parent = 0 );
+             RichCheckBox( const QString& objectName, const QString& text, QWidget* parent = 0 );
     virtual ~RichCheckBox();
-    //@}
-
-    //! @name Operations
-    //@{
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

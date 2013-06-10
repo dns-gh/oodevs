@@ -9,18 +9,27 @@
 
 #include "clients_gui_pch.h"
 #include "RichRadioButton.h"
-#include "ObjectNameManager.h"
 
 using namespace gui;
+
+// -----------------------------------------------------------------------------
+// Name: RichRadioButton constructor
+// Created: ABR 2013-06-10
+// -----------------------------------------------------------------------------
+RichRadioButton::RichRadioButton( const QString& objectName, QWidget* parent /*= 0*/ )
+    : RichWidget< QRadioButton >( objectName, parent )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: RichRadioButton constructor
 // Created: NPT 2013-03-14
 // -----------------------------------------------------------------------------
 RichRadioButton::RichRadioButton( const QString& objectName, const QString& text, QWidget* parent /*= 0*/ )
-    : QRadioButton( text, parent )
+    : RichWidget< QRadioButton >( objectName, parent )
 {
-    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
+    setText( text );
 }
 
 // -----------------------------------------------------------------------------
@@ -29,5 +38,5 @@ RichRadioButton::RichRadioButton( const QString& objectName, const QString& text
 // -----------------------------------------------------------------------------
 RichRadioButton::~RichRadioButton()
 {
-        ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
+    // NOTHING
 }

@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "RichCheckBox.h"
-#include "ObjectNameManager.h"
 
 using namespace gui;
 
@@ -18,9 +17,9 @@ using namespace gui;
 // Created: NPT 2013-03-12
 // -----------------------------------------------------------------------------
 RichCheckBox::RichCheckBox( const QString& objectName, QWidget* parent /*= 0*/ )
-    : QCheckBox( parent )
+    : RichWidget< QCheckBox >( objectName, parent )
 {
-    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,9 +27,9 @@ RichCheckBox::RichCheckBox( const QString& objectName, QWidget* parent /*= 0*/ )
 // Created: NPT 2013-03-12
 // -----------------------------------------------------------------------------
 RichCheckBox::RichCheckBox( const QString& objectName, const QString& text, QWidget* parent /* = 0 */ )
-    : QCheckBox( text, parent )
+    : RichWidget< QCheckBox >( objectName, parent )
 {
-    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
+    setText( text );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,5 +38,5 @@ RichCheckBox::RichCheckBox( const QString& objectName, const QString& text, QWid
 // -----------------------------------------------------------------------------
 RichCheckBox::~RichCheckBox()
 {
-    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
+    // NOTHING
 }

@@ -10,6 +10,7 @@
 #ifndef __RichPushButton_h_
 #define __RichPushButton_h_
 
+#include "RichWidget.h"
 #include "QtGui/qpushbutton.h"
 
 namespace gui
@@ -20,30 +21,15 @@ namespace gui
 */
 // Created: NPT 2013-03-12
 // =============================================================================
-class RichPushButton : public QPushButton
-                     , private boost::noncopyable
+class RichPushButton : public RichWidget< QPushButton >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    RichPushButton( const QString& objectName, const QString& text, QWidget* parent = 0 );
-    RichPushButton( const QString& objectName, const QIcon & icon, const QString& text, QWidget* parent = 0 );
+             RichPushButton( const QString& objectName, const QString& text, QWidget* parent = 0 );
+             RichPushButton( const QString& objectName, const QIcon & icon, const QString& text, QWidget* parent = 0 );
     virtual ~RichPushButton();
-    //@}
-
-    //! @name Operations
-    //@{
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

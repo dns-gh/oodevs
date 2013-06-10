@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "RichPushButton.h"
-#include "ObjectNameManager.h"
 
 using namespace gui;
 
@@ -18,9 +17,9 @@ using namespace gui;
 // Created: NPT 2013-03-12
 // -----------------------------------------------------------------------------
 RichPushButton::RichPushButton( const QString& objectName, const QString& text, QWidget* parent )
-    : QPushButton( text, parent )
+    : RichWidget< QPushButton >( objectName, parent )
 {
-    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
+    setText( text );
 }
 
 // -----------------------------------------------------------------------------
@@ -28,9 +27,10 @@ RichPushButton::RichPushButton( const QString& objectName, const QString& text, 
 // Created: NPT 2013-03-12
 // -----------------------------------------------------------------------------
 RichPushButton::RichPushButton( const QString& objectName, const QIcon & icon, const QString& text, QWidget* parent /*= 0*/ )
-    : QPushButton( icon, text, parent )
+    : RichWidget< QPushButton >( objectName, parent )
 {
-    ObjectNameManager::getInstance()->SetObjectName( this, objectName );
+    setText( text );
+    setIcon( icon );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,5 +39,5 @@ RichPushButton::RichPushButton( const QString& objectName, const QIcon & icon, c
 // -----------------------------------------------------------------------------
 RichPushButton::~RichPushButton()
 {
-    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
+    // NOTHING
 }

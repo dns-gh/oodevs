@@ -10,7 +10,7 @@
 #ifndef __RichRadioButton_h_
 #define __RichRadioButton_h_
 
-#include <boost/noncopyable.hpp>
+#include "RichWidget.h"
 
 namespace gui
 {
@@ -21,31 +21,18 @@ namespace gui
 */
 // Created: NPT 2013-03-14
 // =============================================================================
-class RichRadioButton : public QRadioButton
+class RichRadioButton : public RichWidget< QRadioButton >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    RichRadioButton( const QString& objectName, const QString& text, QWidget* parent  = 0 );
+    explicit RichRadioButton( const QString& objectName, QWidget* parent  = 0 );
+             RichRadioButton( const QString& objectName, const QString& text, QWidget* parent  = 0 );
     virtual ~RichRadioButton();
-    //@}
-
-    //! @name Operations
-    //@{
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 
-}
+} //! namespace gui
 
 #endif // __RichRadioButton_h_

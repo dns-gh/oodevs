@@ -15,12 +15,23 @@ using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: RichDialogButtonBox constructor
+// Created: ABR 2013-06-10
+// -----------------------------------------------------------------------------
+RichDialogButtonBox::RichDialogButtonBox( const QString& objectname, QWidget* parent /*= 0*/ )
+    : RichWidget< QDialogButtonBox >( objectname, parent )
+{
+    for( int i = 0; i < buttons().size(); ++i )
+        buttons().at( i )->setObjectName( objectname + QString::number( i ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichDialogButtonBox constructor
 // Created: NPT 2013-03-22
 // -----------------------------------------------------------------------------
-RichDialogButtonBox::RichDialogButtonBox( const QString& objectname, StandardButtons buttonType )
-    : QDialogButtonBox( buttonType )
+RichDialogButtonBox::RichDialogButtonBox( const QString& objectname, StandardButtons buttonType, QWidget* parent /* = 0 */ )
+    : RichWidget< QDialogButtonBox >( objectname, parent )
 {
-    ObjectNameManager::getInstance()->SetObjectName( this, objectname );
+    setStandardButtons( buttonType );
     for( int i = 0; i < buttons().size(); ++i )
         buttons().at( i )->setObjectName( objectname + QString::number( i ) );
 
@@ -32,5 +43,5 @@ RichDialogButtonBox::RichDialogButtonBox( const QString& objectname, StandardBut
 // -----------------------------------------------------------------------------
 RichDialogButtonBox::~RichDialogButtonBox()
 {
-    ObjectNameManager::getInstance()->RemoveRegisteredName( objectName() );
+    // NOTHING
 }
