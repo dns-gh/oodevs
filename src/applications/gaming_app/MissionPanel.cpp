@@ -228,9 +228,9 @@ void MissionPanel::NotifyDeleted( const kernel::Entity_ABC& entity )
 // Name: MissionPanel::NotifyModeChanged
 // Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
-void MissionPanel::NotifyModeChanged( E_Modes newMode )
+void MissionPanel::NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode )
 {
-    ModesObserver_ABC::NotifyModeChanged( newMode );
+    RichDockWidget::NotifyModeChanged( newMode, useDefault, firstChangeToSavedMode );
     if( okButton_ )
         okButton_->setText( newMode == eModes_Planning ? tr( "Add to planning" ) : tr( "Ok" ) );
 }

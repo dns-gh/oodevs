@@ -75,7 +75,6 @@ class MissionPanel : public gui::RichDockWidget
                    , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                    , public tools::ElementObserver_ABC< kernel::Entity_ABC >
-                   , public kernel::ModesObserver_ABC
 {
     Q_OBJECT
 
@@ -123,7 +122,7 @@ private:
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
-    virtual void NotifyModeChanged( E_Modes newMode );
+    virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
 
     void SetVisible( bool visible );
     void FillInterface( int id ) const;
