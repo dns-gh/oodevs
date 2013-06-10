@@ -167,8 +167,13 @@ bool EntityLayerBase::HandleMouseMove( QMouseEvent* , const geometry::Point2f& p
             tooltip_->Hide();
 
         bool found = false;
-        for( auto it = entities_.begin(); it != entities_.end() && !found; ++it )
-            found = DisplayTooltip( **it, point );
+        if( selected_ )
+            found = DisplayTooltip( *selected_, point );
+        if( !found )
+        {
+            for( auto it = entities_.begin(); it != entities_.end() && !found; ++it )
+                found = DisplayTooltip( **it, point );
+        }
         return found;
     }
     return false;
