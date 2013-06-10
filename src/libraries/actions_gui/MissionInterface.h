@@ -56,8 +56,7 @@ class MissionInterface : public QTabWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface( QWidget* parent, const QString& name, kernel::Controllers& controllers,
-                                   actions::ActionsModel& actionModel, const tools::ExerciseConfig& config );
+             MissionInterface( QWidget* parent, const QString& name, kernel::Controllers& controllers, const tools::ExerciseConfig& config );
     virtual ~MissionInterface();
     //@}
 
@@ -71,17 +70,17 @@ public:
     void Purge();
     void SetPlanned( bool planned );
     void CommitTo( actions::Action_ABC& action ) const;
-    template< typename T >
-    void Publish()
+    template< typename T, typename Creator >
+    void Publish( Creator& creator ) const
     {
         if( !order_ )
             return;
-        Action_ABC* action = model_.CreateAction( *entity_, static_cast< const T& >( *order_ ) );
+        Action_ABC* action = creator.CreateAction( *entity_, static_cast< const T& >( *order_ ) );
         CommitTo( *action );
         if( planned_ )
             emit PlannedMission( *action );
         else
-            model_.Publish( *action, 0 );
+            creator.Publish( *action, 0 );
     }
     //@}
 
@@ -94,7 +93,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void PlannedMission( const actions::Action_ABC& );
+    void PlannedMission( const actions::Action_ABC& ) const;
     //@}
 
 private:
@@ -108,7 +107,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    actions::ActionsModel& model_;
     const tools::ExerciseConfig& config_;
 
     kernel::SafePointer< kernel::Entity_ABC > entity_;

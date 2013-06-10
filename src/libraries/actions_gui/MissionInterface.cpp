@@ -68,12 +68,10 @@ namespace
 // Name: MissionInterface constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface::MissionInterface( QWidget* parent, const QString& name, kernel::Controllers& controllers,
-                                    actions::ActionsModel& actionModel, const tools::ExerciseConfig& config )
+MissionInterface::MissionInterface( QWidget* parent, const QString& name, kernel::Controllers& controllers, const tools::ExerciseConfig& config )
     : QTabWidget( parent )
     , ParamInterface_ABC()
     , controllers_( controllers )
-    , model_( actionModel )
     , config_( config )
     , entity_( controllers )
     , order_( 0 )

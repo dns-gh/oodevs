@@ -125,7 +125,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     bottomLayout->addWidget( cancelButton_ );
 
     // Main Layout
-    pMissionInterface_ = new actions::gui::MissionInterface( 0, "mission-interface", controllers_, actionsModel_, config_ );
+    pMissionInterface_ = new actions::gui::MissionInterface( 0, "mission-interface", controllers_, config_ );
     connect( pMissionInterface_, SIGNAL( PlannedMission( const actions::Action_ABC& ) ), this, SLOT( OnPlannedMission( const actions::Action_ABC& ) ) );
 
     QWidget* mainWidget = new QWidget();
@@ -406,7 +406,7 @@ void MissionPanel::FillInterface( int id )
         return;
     pMissionInterface_->Purge();
     NotifyMission();
-    const T& order = static_cast< tools::Resolver_ABC< T >& >( static_.types_).Get( id );
+    const T& order = static_cast< tools::Resolver_ABC< T >& >( static_.types_ ).Get( id );
     pMissionInterface_->Fill( interfaceBuilder_, *selectedEntity_, order, currentType_ );
     titleLabel_->setText( pMissionInterface_->Title() );
     planningCheckBox_->setCheckState( Qt::Unchecked );
@@ -565,9 +565,9 @@ void MissionPanel::Validate()
     if( currentType_  == eNbrMissionTypes || !pMissionInterface_->CheckValidity() )
         return;
     if( currentType_ == eMissionType_FragOrder )
-        pMissionInterface_->Publish< kernel::FragOrderType >();
+        pMissionInterface_->Publish< kernel::FragOrderType >( actionsModel_ );
     else
-        pMissionInterface_->Publish< kernel::MissionType >();
+        pMissionInterface_->Publish< kernel::MissionType >( actionsModel_ );
     Close();
 }
 
