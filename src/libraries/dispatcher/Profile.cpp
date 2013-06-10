@@ -409,8 +409,9 @@ void Profile::SetRight( const kernel::Automat_ABC& entity, bool readonly, bool r
 void Profile::SerializeProfile( xml::xostream& xos ) const
 {
     xos << xml::start( "profile" );
-    if( roleId_ != -1 )
-        xos << xml::attribute( "role", roleId_ );
+    std::string role = GetStringFromRoleId();
+    if( !role.empty() )
+        xos << xml::attribute( "role", role );
     xos     << xml::attribute( "name", strLogin_ )
             << xml::attribute( "password", strPassword_ )
             << xml::attribute( "supervision", bSupervision_ )
@@ -461,4 +462,27 @@ void Profile::SetRoleIdFromString( const std::string& role )
             roleId_ = entry->GetId();
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::GetStringFromRoleId
+// Created: JSR 2013-06-10
+// -----------------------------------------------------------------------------
+std::string Profile::GetStringFromRoleId() const
+{
+    if( roleId_ != -1 )
+    {
+        DictionaryType* dictionary = model_.GetExtensionTypes().tools::StringResolver< DictionaryType >::Find( "T_User_Role" );
+        if ( dictionary )
+        {
+            auto it = dictionary->CreateIterator();
+            while( it.HasMoreElements() )
+            {
+                const DictionaryEntryType& entry = it.NextElement();
+                if( entry.GetId() == static_cast< unsigned int >( roleId_ ) )
+                    return entry.GetKey();
+            }
+        }
+    }
+    return "";
 }

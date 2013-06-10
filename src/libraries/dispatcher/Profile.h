@@ -111,6 +111,7 @@ private:
     void ReadRights( const sword::Profile& message );
 
     void SetRoleIdFromString( const std::string& role );
+    std::string GetStringFromRoleId() const;
 
     template< typename T >
     void SerializeRights( xml::xostream& xos, const std::string& tag, const T& list ) const;
