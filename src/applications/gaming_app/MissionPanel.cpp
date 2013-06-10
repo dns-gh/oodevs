@@ -13,7 +13,7 @@
 
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/RichCheckBox.h"
-#include "clients_gui/RichDateTimeEdit.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/RichPushButton.h"
 
@@ -104,7 +104,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     // Bottom Layout
     planningCheckBox_ = new gui::RichCheckBox( "planning-checkbox" );
     planningCheckBox_->setText( tr( "Plan mission" ) );
-    planningDateTimeEdit_ = new ::gui::RichDateTimeEdit( "planning-datetimeedit" );
+    planningDateTimeEdit_ = new ::gui::RichWidget< QDateTimeEdit >( "planning-datetimeedit" );
     planningDateTimeEdit_->setCalendarPopup( true );
     planningDateTimeEdit_->setTimeSpec( Qt::UTC );
     planningDateTimeEdit_->setDateTime( simulation_.GetDateTime() );

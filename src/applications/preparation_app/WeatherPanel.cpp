@@ -11,7 +11,7 @@
 #include "WeatherPanel.h"
 #include "moc_WeatherPanel.cpp"
 #include "clients_gui/RichGroupBox.h"
-#include "clients_gui/RichDateTimeEdit.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/RichWidget.h"
 #include "clients_gui/WeatherWidget.h"
 #include "clients_gui/WeatherLayer.h"
@@ -40,7 +40,7 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Control
     headerLayout_->addWidget( timeBox );
     timeBox->layout()->setMargin( 5 );
     new QLabel( tr( "Exercise date:" ), timeBox );
-    time_ = new gui::RichDateTimeEdit( "time", timeBox );
+    time_ = new gui::RichWidget< QDateTimeEdit >( "time", timeBox );
     time_->setDateTime( QDateTime::currentDateTime() );
 
     // Ephemerides

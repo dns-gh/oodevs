@@ -26,7 +26,7 @@ namespace gui
     template< typename T > class ValuedComboBox;
     class WeatherLayer;
     template< typename T > class RichWidget;
-    class RichDateTimeEdit;
+    template< typename T > class RichWidget;
 }
 namespace weather
 {
@@ -77,7 +77,7 @@ private:
     kernel::Controllers& controllers_;
     WeatherModel* currentModel_;
 
-    gui::RichDateTimeEdit* time_;
+    gui::RichWidget< QDateTimeEdit >* time_;
     gui::RichWidget< QTimeEdit >* sunrise_;
     gui::RichWidget< QTimeEdit >* sunset_;
     gui::ValuedComboBox< E_LightingType >* dayLighting_;

@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "WeatherPanel.h"
 #include "moc_WeatherPanel.cpp"
-#include "RichDateTimeEdit.h"
+#include "RichWidget.h"
 #include "RichGroupBox.h"
 #include "RichPushButton.h"
 #include "SubObjectName.h"
@@ -120,9 +120,9 @@ void WeatherPanel::CreateLocalParameters()
 {
     localWidget_->setMinimumHeight( 400 );
     QLabel* startTimeLabel = new QLabel( tr( "Start time:" ) );
-    startTime_ = new RichDateTimeEdit( "startTime" );
+    startTime_ = new RichWidget< QDateTimeEdit >( "startTime" );
     QLabel* endTimeLabel = new QLabel( tr( "End time:" ) );
-    endTime_ = new RichDateTimeEdit( "endTime" );
+    endTime_ = new RichWidget< QDateTimeEdit >( "endTime" );
 
     parametersGroup_ = new gui::RichGroupBox( "parametersGroup", tr( "Time and position parameters" ), localWidget_ );
     QGridLayout* parametersGrouplayout = new QGridLayout( parametersGroup_ );

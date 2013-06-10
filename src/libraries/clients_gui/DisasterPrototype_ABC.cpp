@@ -13,7 +13,7 @@
 #include "Tools.h"
 #include "LoadableTimeEdit.h"
 #include "RichCheckBox.h"
-#include "RichDateTimeEdit.h"
+#include "RichWidget.h"
 #include "SubObjectName.h"
 #include "tools/GeneralConfig.h"
 #include <boost/bind.hpp>
@@ -38,7 +38,7 @@ DisasterPrototype_ABC::DisasterPrototype_ABC( QWidget* parent, const tools::Gene
     checkbox_ = new RichCheckBox( "time", tools::translate( "gui::DisasterPrototype_ABC", "Time:" ) );
     connect( checkbox_, SIGNAL( stateChanged( int ) ), this, SLOT( OnStateChanged( int ) ) );
     layout->addWidget( checkbox_ );
-    date_ = new RichDateTimeEdit( "date" );
+    date_ = new RichWidget< QDateTimeEdit >( "date" );
     date_->setEnabled( false );
     layout->addWidget( date_ );
 }

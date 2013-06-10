@@ -34,7 +34,7 @@ namespace gui
     class GlTools_ABC;
     class RichLabel;
     class RichCheckBox;
-    class RichDateTimeEdit;
+    template< typename T > class RichWidget;
     class RichPushButton;
     class Viewport_ABC;
 }
@@ -144,7 +144,7 @@ private:
     gui::RichLabel* titleLabel_;
     gui::RichLabel* pixmapLabel_;
     gui::RichCheckBox* planningCheckBox_;
-    gui::RichDateTimeEdit* planningDateTimeEdit_;
+    gui::RichWidget< QDateTimeEdit >* planningDateTimeEdit_;
     gui::RichPushButton* okButton_;
     gui::RichPushButton* cancelButton_;
     actions::gui::MissionInterface* pMissionInterface_;

@@ -25,7 +25,7 @@ namespace gui
     class WeatherWidget;
     class RichPushButton;
     class RichGroupBox;
-    class RichDateTimeEdit;
+    template< typename T > class RichWidget;
 
 // =============================================================================
 /** @class  WeatherPanel
@@ -99,8 +99,8 @@ protected:
     WeatherWidget*          globalWeatherWidget_;
 
     weather::MeteoLocal*    selectedLocal_;
-    RichDateTimeEdit*       startTime_;
-    RichDateTimeEdit*       endTime_;
+    RichWidget< QDateTimeEdit >*       startTime_;
+    RichWidget< QDateTimeEdit >*       endTime_;
     //@}
 
 };
