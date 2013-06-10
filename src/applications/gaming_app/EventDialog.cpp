@@ -66,7 +66,6 @@ EventDialog::EventDialog( QWidget* parent, kernel::Controllers& controllers, Mod
     EventTaskWidget* taskWidget = new EventTaskWidget();
     EventMultimediaWidget* multimediaWidget = new EventMultimediaWidget();
     detailWidget_ = new EventDetailWidget();
-    detailWidget_->setEnabled( false );
 
     stack_ = new QStackedWidget();
     stack_->insertWidget( eEventTypes_Order,            orderWidget );

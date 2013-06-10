@@ -47,5 +47,5 @@ void EventSupervisorActionWidget::Fill( const Event& /*event*/ )
 // -----------------------------------------------------------------------------
 void EventSupervisorActionWidget::Commit( timeline::Event& event ) const
 {
-    event.action.target = "sword://sim";
+    event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
 }

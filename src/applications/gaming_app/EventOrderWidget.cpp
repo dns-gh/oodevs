@@ -156,6 +156,7 @@ void EventOrderWidget::Commit( timeline::Event& event ) const
         return;
     missionInterface_->SetPlanned( true );
     Publish( &event );
+    event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
 }
 
 // -----------------------------------------------------------------------------

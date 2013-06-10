@@ -594,7 +594,7 @@ void MissionPanel::OnPlannedMission( const actions::Action_ABC& action, timeline
     event.name = action.GetType().GetName();
     event.info = ENT_Tr::ConvertFromEventType( eEventTypes_Order, ENT_Tr_ABC::eToSim );
     event.begin = planningDateTimeEdit_->dateTime().toString( EVENT_DATE_FORMAT ).toStdString();
-    event.action.target = "sword://sim";
+    event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
     event.action.apply = true;
     action.Publish( timelinePublisher_, 0 );
     event.action.payload = timelinePublisher_.GetPayload();

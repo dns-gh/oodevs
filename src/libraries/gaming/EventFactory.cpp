@@ -39,11 +39,11 @@ EventFactory::~EventFactory()
 Event* EventFactory::Create( const timeline::Event& event ) const
 {
     E_EventTypes type = eEventTypes_Task;
-    if( event.action.target == "sword://sim" )
+    if( event.action.target == CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
         type = eEventTypes_Order;
-    else if( event.action.target == "sword://client" )
+    else if( event.action.target == CREATE_EVENT_TARGET( EVENT_REPORT_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
         type = eEventTypes_Report;
-    else if( event.action.target == "sword://multimedia" )
+    else if( event.action.target == CREATE_EVENT_TARGET( EVENT_MULTIMEDIA_PROTOCOL, EVENT_MULTIMEDIA_SERVICE ) )
         type = eEventTypes_Multimedia;
     return Create( type, &event );
 }

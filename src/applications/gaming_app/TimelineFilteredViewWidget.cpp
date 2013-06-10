@@ -336,13 +336,13 @@ void TimelineFilteredViewWidget::CreateDummyEvent( E_EventTypes type )
     {
     case eEventTypes_Order:
     case eEventTypes_SupervisorAction:
-        action.target = "sword://sim";
+        action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
         break;
     case eEventTypes_Report:
-        action.target = "sword://client";
+        action.target = CREATE_EVENT_TARGET( EVENT_REPORT_PROTOCOL, EVENT_SIMULATION_SERVICE );
         break;
     case eEventTypes_Multimedia:
-        action.target = "sword://multimedia";
+        action.target = CREATE_EVENT_TARGET( EVENT_MULTIMEDIA_PROTOCOL, EVENT_MULTIMEDIA_SERVICE );
         break;
     }
 
