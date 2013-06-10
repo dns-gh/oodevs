@@ -17,7 +17,7 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "RichWidget.h"
 #include "RichPushButton.h"
-#include "RichTableWidget.h"
+#include "RichWidget.h"
 #include "SubObjectName.h"
 #include "Tools.h"
 
@@ -116,7 +116,7 @@ DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, Controllers& controll
     setMaximumSize( maxWidth, maxHeight );
 
     // Table
-    table_ = new RichTableWidget( "table", this );
+    table_ = new RichWidget< QTableWidget >( "table", this );
     table_->setSelectionMode( QAbstractItemView::NoSelection );
     table_->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     table_->verticalHeader()->setResizeMode( QHeaderView::Stretch );

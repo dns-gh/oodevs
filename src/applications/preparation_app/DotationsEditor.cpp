@@ -12,7 +12,7 @@
 #include "moc_DotationsEditor.cpp"
 #include "clients_gui/CommonDelegate.h"
 #include "clients_gui/RichPushButton.h"
-#include "clients_gui/RichTableWidget.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/SubObjectName.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
@@ -42,7 +42,7 @@ DotationsEditor::DotationsEditor( QWidget* parent, const kernel::ObjectTypes& ob
     setMinimumSize( 500, 500 );
 
     // Table
-    table_ = new gui::RichTableWidget( "table" );
+    table_ = new gui::RichWidget< QTableWidget >( "table" );
     gui::CommonDelegate* delegate = new gui::CommonDelegate( this );
     table_->setItemDelegate( delegate );
     table_->setColumnCount( 2 );
@@ -56,7 +56,7 @@ DotationsEditor::DotationsEditor( QWidget* parent, const kernel::ObjectTypes& ob
 
     // Info Panel
     infosLabel_ = new QLabel( this );
-    infosTable_ = new gui::RichTableWidget( "infoTable" );
+    infosTable_ = new gui::RichWidget< QTableWidget >( "infoTable" );
     infosTable_->setSelectionMode( QAbstractItemView::NoSelection );
     infosTable_->setColumnCount( 4 );
     infosTable_->horizontalHeader()->setResizeMode( QHeaderView::Stretch );

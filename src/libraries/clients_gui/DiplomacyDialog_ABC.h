@@ -24,7 +24,7 @@ namespace kernel
 
 namespace gui
 {
-    class RichTableWidget;
+    template< typename T > class RichWidget;
 // =============================================================================
 /** @class  DiplomacyDialog_ABC
     @brief  DiplomacyDialog_ABC
@@ -80,7 +80,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Profile_ABC& profile_;
-    RichTableWidget* table_;
+    RichWidget< QTableWidget >* table_;
     T_Teams teams_;
     int minCellWidth_;
     //@}

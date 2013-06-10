@@ -14,7 +14,7 @@
 #include "clients_gui/RichSpinBox.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichWidget.h"
-#include "clients_gui/RichTableWidget.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/Usages.h"
 #include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/AccommodationTypes.h"
@@ -43,7 +43,7 @@ UsagesDockWidget::UsagesDockWidget( QWidget* parent, kernel::Controllers& contro
     buttonLayout->addWidget( pMotivations_ );
     buttonLayout->addWidget( pButton_ );
 
-    pTable_ = new gui::RichTableWidget( "usageDockTable" );
+    pTable_ = new gui::RichWidget< QTableWidget >( "usageDockTable" );
     pTable_->setColumnCount( 2 );
     QStringList labels;
     labels.append( tr( "Usages" ) );

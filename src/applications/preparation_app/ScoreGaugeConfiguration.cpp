@@ -14,7 +14,7 @@
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichSpinBox.h"
 #include "clients_gui/RichLineEdit.h"
-#include "clients_gui/RichTableWidget.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "indicators/Gauge.h"
@@ -96,7 +96,7 @@ ScoreGaugeConfiguration::ScoreGaugeConfiguration( QWidget* parent, kernel::Contr
                 connect( reverse, SIGNAL( clicked() ), SLOT( OnReverseSymbols() ) );
             }
         }
-        intervals_ = new gui::RichTableWidget("intervalsTable" );
+        intervals_ = new gui::RichWidget< QTableWidget >("intervalsTable" );
         {
             intervals_->setColumnCount( 3 );
             QStringList headers;

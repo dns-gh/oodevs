@@ -24,7 +24,7 @@ namespace gui
 {
     class RichPushButton;
     template< typename T > class RichWidget;
-    class RichTableWidget;
+    template< typename T > class RichWidget;
 }
 
 class StaticModel;
@@ -91,7 +91,7 @@ private:
     StaticModel& staticModel_;
     gui::RichWidget< QComboBox >* pMotivations_;
     gui::RichPushButton* pButton_;
-    gui::RichTableWidget* pTable_;
+    gui::RichWidget< QTableWidget >* pTable_;
     bool isEditing_;
     T_Elements selectedElements_;
     //@}

@@ -32,7 +32,7 @@ namespace gui
     class RichSpinBox;
     class RichLineEdit;
     class RichGroupBox;
-    class RichTableWidget;
+    template< typename T > class RichWidget;
 }
 
 // =============================================================================
@@ -94,7 +94,7 @@ private:
     gui::RichSpinBox* steps_;
     gui::RichLineEdit* min_;
     gui::RichLineEdit* max_;
-    gui::RichTableWidget* intervals_;
+    gui::RichWidget< QTableWidget >* intervals_;
     //@}
 };
 

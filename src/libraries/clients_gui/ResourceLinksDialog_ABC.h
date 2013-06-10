@@ -33,7 +33,7 @@ namespace kernel
 namespace gui
 {
     class RichPushButton;
-    class RichTableWidget;
+    template< typename T > class RichWidget;
     class RichListWidget;
     class RichGroupBox;
     class RichSpinBox;
@@ -126,7 +126,7 @@ protected:
     Q3HBox* stockBox_;
     RichSpinBox* maxStock_;
     RichSpinBox* stock_;
-    RichTableWidget* table_;
+    RichWidget< QTableWidget >* table_;
     RichPushButton* okButton_;
     RichPushButton* cancelButton_;
     //@}

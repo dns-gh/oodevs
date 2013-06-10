@@ -25,7 +25,7 @@ namespace kernel
 
 namespace gui
 {
-    class RichTableWidget;
+    template< typename T > class RichWidget;
 }
 
 class Dotation;
@@ -89,8 +89,8 @@ private:
     const kernel::Resolver2< kernel::DotationType >& dotations_;
     const kernel::Entity_ABC* current_;
     DotationsItem** value_;
-    gui::RichTableWidget* table_;
-    gui::RichTableWidget* infosTable_;
+    gui::RichWidget< QTableWidget >* table_;
+    gui::RichWidget< QTableWidget >* infosTable_;
     QLabel* infosLabel_;
     //@}
 };

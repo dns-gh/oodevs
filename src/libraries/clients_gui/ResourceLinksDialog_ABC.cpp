@@ -17,7 +17,7 @@
 #include "RichListWidget.h"
 #include "RichSpinBox.h"
 #include "RichPushButton.h"
-#include "RichTableWidget.h"
+#include "RichWidget.h"
 #include "SubObjectName.h"
 #include "tools.h"
 
@@ -94,7 +94,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
         connect( stock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnStockChanged( int ) ) );
         stockBox_->hide();
     }
-    table_ = new RichTableWidget( "table" );
+    table_ = new RichWidget< QTableWidget >( "table" );
     table_->setSelectionMode( QAbstractItemView::NoSelection );
     table_->setColumnCount( 3 );
     groupBoxLayout->addWidget( table_ );
