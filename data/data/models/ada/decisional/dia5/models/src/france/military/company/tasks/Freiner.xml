@@ -80,7 +80,7 @@
         </parameter>
         <parameter name="taskForSupporting">
             <value>
-                <string>france.military.platoon.tasks.Appuyer</string>
+                <string>france.military.platoon.tasks.Appuyer;france.military.platoon.tasks.AppuyerMortier</string>
             </value>
         </parameter>
     </next-task>

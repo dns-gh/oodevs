@@ -168,7 +168,7 @@ create = function( self )
         end
         manageFeedback( bestUnits )
         -- Le second echelon recoit les missions de soutien
-        giveSupport ( self, self.params.supportTasks, #self.entitiesWithoutMission, eEtatEchelon_Reserve)
+        giveSupport ( self, self.params.supportTasks, #self.entitiesWithoutMission, eEtatEchelon_Reserve )
 
         -- Ceux qui n'ont toujours pas de mission recoivent la mission par défaut
         giveMission ( self, self.params.defaultTask, #self.entitiesWithoutMission, eEtatEchelon_None )
@@ -221,9 +221,14 @@ create = function( self )
           end
       end
       
-      if self.sendSupport then 
+      if self.sendSupport then
+        local tasksForSupporting = explode( ";", self.params.taskForSupporting ) 
         for _, supportingEntity in pairs( echelons[4] ) do
-          meKnowledge:sendTaskToPion( supportingEntity , self.params.taskForSupporting , { objectives = tableObjectives, marcheRetrograde = true } , eEtatEchelon_Reserve )  
+            for _, taskForSupporting in pairs( tasksForSupporting ) do
+                if integration.RetrievePionTask( supportingEntity, taskForSupporting ) then
+                    meKnowledge:sendTaskToPion( supportingEntity , taskForSupporting , { objectives = tableObjectives, marcheRetrograde = true } , eEtatEchelon_Reserve )  
+                end
+            end
         end
         self.sendSupport = false
       end
