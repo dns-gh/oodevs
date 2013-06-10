@@ -78,7 +78,7 @@ namespace
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
 Menu::Menu( const QString& objectName, QMainWindow* pParent, kernel::Controllers& controllers, const DialogContainer& dialogs, const QString& license )
-    : RichMenuBar ( objectName, pParent )
+    : RichWidget< QMenuBar >( objectName, pParent )
     , controllers_( controllers )
 {
     // File
