@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Tools.h"
 #include "CommonDelegate.h"
-#include "RichTableView.h"
+#include "RichWidget.h"
 
 namespace kernel
 {
@@ -27,7 +27,7 @@ namespace gui
 */
 // Created: ABR 2011-07-05
 // =============================================================================
-class UnitStateTable_ABC : public RichTableView
+class UnitStateTable_ABC : public RichWidget< QTableView >
 {
 public:
     //! @name Constructors/Destructor

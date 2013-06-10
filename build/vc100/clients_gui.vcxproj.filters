@@ -1006,9 +1006,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichRadioButton.cpp">
       <Filter>Source Files\RichObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichTableView.cpp">
-      <Filter>Source Files\RichObjects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\RichBaseObject.cpp">
       <Filter>Source Files\RichObjects</Filter>
     </ClCompile>
@@ -1693,9 +1690,6 @@
       <Filter>Source Files\RichObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichRadioButton.h">
-      <Filter>Source Files\RichObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichTableView.h">
       <Filter>Source Files\RichObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichWidget.h">

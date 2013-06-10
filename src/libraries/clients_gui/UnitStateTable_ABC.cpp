@@ -24,7 +24,7 @@ using namespace gui;
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
 UnitStateTable_ABC::UnitStateTable_ABC( const QString& objectName, QWidget* parent, int numCols )
-    : RichTableView( objectName, parent )
+    : RichWidget< QTableView >( objectName, parent )
     , dataModel_ ( parent )
     , proxyModel_( parent )
     , delegate_  ( parent )

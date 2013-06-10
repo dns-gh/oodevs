@@ -14,7 +14,7 @@
 #include "RichCheckBox.h"
 #include "RichGroupBox.h"
 #include "RichPushButton.h"
-#include "RichTableView.h"
+#include "RichWidget.h"
 #include "SubObjectName.h"
 #include <boost/foreach.hpp>
 
@@ -42,7 +42,7 @@ ConsistencyDialog_ABC::ConsistencyDialog_ABC( const QString& objectName, QWidget
     // Proxy instantiated in ConsistencyDialog constructor
 
     // View
-    tableView_ = new RichTableView( "tableView", this );
+    tableView_ = new RichWidget< QTableView >( "tableView", this );
     tableView_->setSortingEnabled( true );
     tableView_->setSelectionBehavior( QAbstractItemView::SelectRows );
     tableView_->setSelectionMode( QAbstractItemView::SingleSelection );

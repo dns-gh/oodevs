@@ -20,7 +20,7 @@ namespace gui
 {
     class CommonDelegate;
     class RichPushButton;
-    class RichTableView;
+    template< typename T > class RichWidget;
 }
 
 namespace kernel
@@ -117,7 +117,7 @@ private:
     const ::StaticModel& staticModel_;
     QStandardItemModel* dataModel_;
     gui::CommonDelegate* delegate_;
-    gui::RichTableView* tableView_;
+    gui::RichWidget< QTableView >* tableView_;
     gui::RichPushButton* validateButton_;
     gui::RichPushButton* cancelButton_;
     bool showStocks_;

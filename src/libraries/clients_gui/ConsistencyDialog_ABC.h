@@ -20,7 +20,7 @@ namespace kernel
 namespace gui
 {
     template< typename EnumError > class FilterProxyModel;
-    class RichTableView;
+    template< typename T > class RichWidget;
     class RichGroupBox;
     class RichCheckBox;
 
@@ -86,7 +86,7 @@ protected:
     //! @name Member data
     //@{
     kernel::ConsistencyChecker_ABC&     checker_;
-    RichTableView*                      tableView_;
+    RichWidget< QTableView >*                      tableView_;
     QStandardItemModel*                 dataModel_;
     QSignalMapper*                      pMapper_;
 

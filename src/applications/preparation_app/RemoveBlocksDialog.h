@@ -23,7 +23,7 @@ namespace gui
 {
     class RichPushButton;
     class RichSpinBox;
-    class RichTableView;
+    template< typename T > class RichWidget;
 }
 
 class UrbanModel;
@@ -76,7 +76,7 @@ private:
     gui::RichSpinBox*                       sizeEditor_;
     gui::RichPushButton*                    deleteButton_;
     QWidget*                                listWidget_;
-    gui::RichTableView*                             tableView_;
+    gui::RichWidget< QTableView >*                             tableView_;
     QStandardItemModel*                     dataModel_;
     QStringList                             horizontalHeaders_;
     bool                                    processing_;

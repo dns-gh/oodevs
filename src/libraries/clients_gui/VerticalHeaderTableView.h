@@ -10,7 +10,7 @@
 #ifndef __VerticalHeaderTableView_h_
 #define __VerticalHeaderTableView_h_
 
-#include "RichTableView.h"
+#include "RichWidget.h"
 
 namespace gui
 {
@@ -42,7 +42,7 @@ public:
 */
 // Created: ABR 2012-02-24
 // =============================================================================
-class VerticalHeaderTableView : public RichTableView
+class VerticalHeaderTableView : public RichWidget< QTableView >
 {
 public:
     //! @name Constructors/Destructor

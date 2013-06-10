@@ -9,7 +9,7 @@
 
 #include "clients_kernel/ConsistencyChecker_ABC.h"
 #include "FilterProxyModel.h"
-#include "RichTableView.h"
+#include "RichWidget.h"
 #include "RichCheckBox.h"
 
 namespace gui

@@ -14,7 +14,7 @@
 #include "preparation/StaticModel.h"
 #include "preparation/performanceIndicator.h"
 #include "clients_gui/RichWidget.h"
-#include "clients_gui/RichTableView.h"
+#include "clients_gui/RichWidget.h"
 #include <QtGui/QGridLayout.h>
 #include <QtGui/QPalette.h>
 #include <QtGui/QProgressBar.h>
@@ -78,7 +78,7 @@ PerformanceDialog::PerformanceDialog( QWidget* parent, Model& model, const Stati
         dataModel_->item( ePerformanceData_MultiStationLoadLevel, i )->setFont( boldFont );
     }
 
-    gui::RichTableView* dataTable = new gui::RichTableView( "dataTable", this );
+    gui::RichWidget< QTableView >* dataTable = new gui::RichWidget< QTableView >( "dataTable", this );
     dataTable->setModel( dataModel_ );
     dataTable->horizontalHeader()->setVisible( false );
     dataTable->verticalHeader()->setVisible( false );

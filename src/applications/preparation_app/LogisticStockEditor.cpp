@@ -12,7 +12,7 @@
 #include "moc_LogisticStockEditor.cpp"
 #include "clients_gui/CommonDelegate.h"
 #include "clients_gui/RichPushButton.h"
-#include "clients_gui/RichTableView.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
@@ -59,7 +59,7 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, Controllers& controll
     delegate_ = new gui::CommonDelegate( this );
     delegate_->AddSpinBoxOnColumn( eDays, 0, std::numeric_limits< int >::max() );
 
-    tableView_ = new gui::RichTableView( "tableView", this );
+    tableView_ = new gui::RichWidget< QTableView >( "tableView", this );
     tableView_->setModel( dataModel_ );
     tableView_->setItemDelegate( delegate_ );
     tableView_->setSelectionBehavior( QAbstractItemView::SelectRows );

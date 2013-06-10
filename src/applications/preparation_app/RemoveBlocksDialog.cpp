@@ -19,7 +19,7 @@
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichSpinBox.h"
-#include "clients_gui/RichTableView.h"
+#include "clients_gui/RichWidget.h"
 #include "preparation/UrbanHierarchies.h"
 #include "preparation/UrbanModel.h"
 
@@ -52,7 +52,7 @@ RemoveBlocksDialog::RemoveBlocksDialog( QWidget* parent, kernel::Controllers& co
     // List view
     horizontalHeaders_ << "" << tr( "ID" ) << tr( "Name" ) << tr( "Area (m²)" );
     dataModel_ = new QStandardItemModel( this );
-    tableView_ = new gui::RichTableView( "tableView" );
+    tableView_ = new gui::RichWidget< QTableView >( "tableView" );
     tableView_->setSortingEnabled( true );
     tableView_->setSelectionBehavior( QAbstractItemView::SelectRows );
     tableView_->setSelectionMode( QAbstractItemView::SingleSelection );
@@ -66,7 +66,7 @@ RemoveBlocksDialog::RemoveBlocksDialog( QWidget* parent, kernel::Controllers& co
     proxyModel->setSourceModel( dataModel_ );
     proxyModel->setSortRole( Qt::UserRole + 2 );
     tableView_->setModel( proxyModel );
-    tableView_->setEditTriggers( gui::RichTableView::AllEditTriggers );
+    tableView_->setEditTriggers( gui::RichWidget< QTableView >::AllEditTriggers );
 
     // Label layout
     QLabel* selectAllLabel = new QLabel();
