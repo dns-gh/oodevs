@@ -400,14 +400,14 @@ void MissionPanel::AddMissions( const Decisions_ABC& decisions, kernel::ContextM
 // Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
 template< typename T >
-void MissionPanel::FillInterface( int id, const std::string& missionSheetPhysicalTag )
+void MissionPanel::FillInterface( int id )
 {
     if( !selectedEntity_ )
         return;
     pMissionInterface_->Purge();
     NotifyMission();
     const T& order = static_cast< tools::Resolver_ABC< T >& >( static_.types_).Get( id );
-    pMissionInterface_->Fill( interfaceBuilder_, *selectedEntity_, order, missionSheetPhysicalTag );
+    pMissionInterface_->Fill( interfaceBuilder_, *selectedEntity_, order, currentType_ );
     titleLabel_->setText( pMissionInterface_->Title() );
     planningCheckBox_->setCheckState( Qt::Unchecked );
     if( pMissionInterface_->IsEmpty() )
@@ -423,7 +423,7 @@ void MissionPanel::FillInterface( int id, const std::string& missionSheetPhysica
 void MissionPanel::ActivateAgentMission( int id )
 {
     currentType_ = eMissionType_Pawn;
-    FillInterface< kernel::MissionType >( id, "units-mission-sheets-directory" );
+    FillInterface< kernel::MissionType >( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -435,7 +435,7 @@ void MissionPanel::ActivateAutomatMission( int id )
     currentType_ = eMissionType_Automat;
     if( !selectedEntity_->Retrieve< kernel::AutomatDecisions_ABC >() )
         selectedEntity_ = selectedEntity_->Get< kernel::TacticalHierarchies >().GetSuperior();
-    FillInterface< kernel::MissionType >( id, "automata-mission-sheets-directory" );
+    FillInterface< kernel::MissionType >( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -445,7 +445,7 @@ void MissionPanel::ActivateAutomatMission( int id )
 void MissionPanel::ActivatePopulationMission( int id )
 {
     currentType_ = eMissionType_Population;
-    FillInterface< kernel::MissionType >( id, "crowds-mission-sheets-directory" );
+    FillInterface< kernel::MissionType >( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -462,7 +462,7 @@ void MissionPanel::ActivateFragOrder( int id )
             if( decisions->IsEmbraye() )
                 selectedEntity_ = superior;
     }
-    FillInterface< kernel::FragOrderType >( id, "fragorders-mission-sheets-directory" );
+    FillInterface< kernel::FragOrderType >( id );
 }
 
 // -----------------------------------------------------------------------------

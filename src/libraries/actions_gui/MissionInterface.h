@@ -67,7 +67,7 @@ public:
     bool CheckValidity();
     void AddParameter( const QString& objectName, Param_ABC& parameter );
     void Draw( ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
-    void Fill( InterfaceBuilder_ABC& builder, const kernel::Entity_ABC& entity, const kernel::OrderType& orderType, const std::string& missionSheetPhysicalTag );
+    void Fill( InterfaceBuilder_ABC& builder, const kernel::Entity_ABC& entity, const kernel::OrderType& orderType, E_MissionType type );
     void Purge();
     void SetPlanned( bool planned );
     void CommitTo( actions::Action_ABC& action ) const;
@@ -120,6 +120,8 @@ private:
     QWidget* helpTab_;
     std::vector< QWidget* > widgetToDelete_;
     bool planned_;
+
+    static std::map< E_MissionType, const std::string > missionSheetPhysicalTags_;
     //@}
 };
 

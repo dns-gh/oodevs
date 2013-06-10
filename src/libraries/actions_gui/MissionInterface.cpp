@@ -19,9 +19,15 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Controllers.h"
 #include "tools/ExerciseConfig.h"
+#include <boost/assign.hpp>
 #include <QtWebKit/qwebview.h>
 
 using namespace actions::gui;
+
+std::map< E_MissionType, const std::string > MissionInterface::missionSheetPhysicalTags_ = boost::assign::map_list_of( eMissionType_Pawn, "units-mission-sheets-directory" )
+                                                                                                                     ( eMissionType_Automat, "automata-mission-sheets-directory" )
+                                                                                                                     ( eMissionType_Population, "crowds-mission-sheets-directory" )
+                                                                                                                     ( eMissionType_FragOrder, "fragorders-mission-sheets-directory" );
 
 namespace
 {
@@ -114,7 +120,7 @@ void MissionInterface::Purge()
 // Name: MissionInterface::Fill
 // Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
-void MissionInterface::Fill( InterfaceBuilder_ABC& builder, const kernel::Entity_ABC& entity, const kernel::OrderType& order, const std::string& missionSheetPhysicalTag )
+void MissionInterface::Fill( InterfaceBuilder_ABC& builder, const kernel::Entity_ABC& entity, const kernel::OrderType& order, E_MissionType type )
 {
     entity_ = &entity;
     order_ = &order;
@@ -127,7 +133,8 @@ void MissionInterface::Fill( InterfaceBuilder_ABC& builder, const kernel::Entity
     // Help tab
     std::string doctrine = order.GetDoctrineInformation();
     std::string usage = order.GetUsageInformation();
-    tools::Path fileName = config_.GetPhysicalChildPath( missionSheetPhysicalTag ) / tools::Path::FromUTF8( order.GetName() ) + ".html";
+    assert( type >= 0 && type < eNbrMissionTypes );
+    tools::Path fileName = config_.GetPhysicalChildPath( missionSheetPhysicalTags_[ type ] ) / tools::Path::FromUTF8( order.GetName() ) + ".html";
     if( fileName.IsRegularFile() || ( !doctrine.empty() && !usage.empty() ) )
     {
         if( fileName.IsRegularFile() )

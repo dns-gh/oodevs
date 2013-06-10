@@ -135,7 +135,7 @@ private:
     void AddMissionGroup( kernel::ContextMenu& menu, const QString& prefix, const T& list, const char* slot, int current );
 
     template< typename T >
-    void FillInterface( int id, const std::string& missionSheetPhysicalTag );
+    void FillInterface( int id );
     //@}
 
 private:
