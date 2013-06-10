@@ -126,7 +126,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
 
     // Main Layout
     pMissionInterface_ = new actions::gui::MissionInterface( 0, "mission-interface", controllers_, config_ );
-    connect( pMissionInterface_, SIGNAL( PlannedMission( const actions::Action_ABC& ) ), this, SLOT( OnPlannedMission( const actions::Action_ABC& ) ) );
+    connect( pMissionInterface_, SIGNAL( PlannedMission( const actions::Action_ABC&, timeline::Event* ) ), this, SLOT( OnPlannedMission( const actions::Action_ABC&, timeline::Event* ) ) );
 
     QWidget* mainWidget = new QWidget();
     QVBoxLayout* mainLayout = new QVBoxLayout( mainWidget );
@@ -585,10 +585,10 @@ void MissionPanel::OnPlanningChecked( int state )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionPanel::OnPlannedMission
+// Name: MissionPanel::PlanMission
 // Created: ABR 2013-05-31
 // -----------------------------------------------------------------------------
-void MissionPanel::OnPlannedMission( const actions::Action_ABC& action )
+void MissionPanel::OnPlannedMission( const actions::Action_ABC& action, timeline::Event* ) const
 {
     timeline::Event event;
     event.name = action.GetType().GetName();
@@ -600,3 +600,4 @@ void MissionPanel::OnPlannedMission( const actions::Action_ABC& action )
     event.action.payload = timelinePublisher_.GetPayload();
     emit CreateEvent( event );
 }
+

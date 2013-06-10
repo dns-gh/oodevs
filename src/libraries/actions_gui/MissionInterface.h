@@ -27,6 +27,11 @@ namespace gui
     class Viewport_ABC;
 }
 
+namespace timeline
+{
+    struct Event;
+}
+
 namespace tools
 {
     class ExerciseConfig;
@@ -71,14 +76,14 @@ public:
     void SetPlanned( bool planned );
     void CommitTo( actions::Action_ABC& action ) const;
     template< typename T, typename Creator >
-    void Publish( Creator& creator ) const
+    void Publish( Creator& creator, timeline::Event* event = 0 ) const
     {
         if( !order_ )
             return;
         Action_ABC* action = creator.CreateAction( *entity_, static_cast< const T& >( *order_ ) );
         CommitTo( *action );
         if( planned_ )
-            emit PlannedMission( *action );
+            emit PlannedMission( *action, event );
         else
             creator.Publish( *action, 0 );
     }
@@ -93,7 +98,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void PlannedMission( const actions::Action_ABC& ) const;
+    void PlannedMission( const actions::Action_ABC&, timeline::Event* ) const;
     //@}
 
 private:

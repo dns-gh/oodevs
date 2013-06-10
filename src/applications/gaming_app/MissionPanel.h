@@ -106,13 +106,13 @@ private slots:
     void Close();
     virtual void closeEvent( QCloseEvent* pEvent );
     void OnPlanningChecked( int state );
-    void OnPlannedMission( const actions::Action_ABC& action );
+    void OnPlannedMission( const actions::Action_ABC& action, timeline::Event* event ) const;
     //@}
 
 signals:
     //! @name Signals
     //@{
-    void CreateEvent( const timeline::Event& );
+    void CreateEvent( const timeline::Event& ) const;
     //@}
 
 private:
@@ -157,7 +157,7 @@ private:
     const kernel::Profile_ABC& profile_;
     std::auto_ptr< CommandPublisher > commandPublisher_;
     const kernel::Time_ABC& simulation_;
-    
+
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
     const tools::ExerciseConfig& config_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
