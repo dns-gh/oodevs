@@ -13,11 +13,14 @@
 #include "EventDialog.h"
 #include "TimelineToolBar.h"
 
+#include "actions/Action_ABC.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Time_ABC.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/AgentsModel.h"
+#include "gaming/EventAction.h"
 #include "gaming/EventsModel.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
@@ -225,13 +228,20 @@ void TimelineFilteredViewWidget::OnDeletedEvent( const std::string& uuid, const 
 // -----------------------------------------------------------------------------
 void TimelineFilteredViewWidget::OnSelectedEvent( boost::shared_ptr< timeline::Event > event )
 {
+    bool hadSelection = selected_.get() != 0;
     selected_ = event;
     if( selected_.get() )
     {
-        //Event& gamingEvent = GetOrCreateEvent( *event );
-        //if( gamingEvent.GetType() == eEventTypes_Order )
-        //    static_cast< EventAction* >( gamingEvent )->action_.Select( controllers_.actions_ );
+        Event& gamingEvent = GetOrCreateEvent( *event );
+        if( gamingEvent.GetType() == eEventTypes_Order )
+        {
+            const actions::Action_ABC* action = static_cast< EventAction& >( gamingEvent ).GetAction();
+            if( action )
+                action->Select( controllers_.actions_ );
+        }
     }
+    else if( hadSelection )
+        controllers_.actions_.DeselectAll();
 }
 
 // -----------------------------------------------------------------------------
