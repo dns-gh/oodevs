@@ -14,7 +14,7 @@
 #include "ResourceNetwork_ABC.h"
 #include "RichCheckBox.h"
 #include "RichGroupBox.h"
-#include "RichListWidget.h"
+#include "RichWidget.h"
 #include "RichSpinBox.h"
 #include "RichPushButton.h"
 #include "RichWidget.h"
@@ -51,7 +51,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     pMainLayout_->setSpacing( 5 );
     pMainLayout_->setMargin( 5 );
     Q3VBox* pNodeBox = new Q3VBox( pMainLayout_ );
-    dotationList_ = new RichListWidget( "datationList", pNodeBox );
+    dotationList_ = new RichWidget< QListWidget >( "datationList", pNodeBox );
     dotationList_->setMaximumHeight( 60 );
     connect( dotationList_, SIGNAL( currentRowChanged ( int ) ), this, SLOT( Update() ) );
     groupBox_ = new RichGroupBox( "EnabledgroupBox", tools::translate( "gui::ResourceLinksDialog_ABC", "Enabled" ), pNodeBox );

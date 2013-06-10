@@ -34,7 +34,7 @@ namespace gui
 {
     class RichPushButton;
     template< typename T > class RichWidget;
-    class RichListWidget;
+    template< typename T > class RichWidget;
     class RichGroupBox;
     class RichSpinBox;
     class RichCheckBox;
@@ -117,7 +117,7 @@ protected:
     unsigned int id_;
     gui::ResourceNetwork_ABC::T_ResourceNodes resourceNodes_;
     Q3VBox* pMainLayout_;
-    RichListWidget* dotationList_;
+    RichWidget< QListWidget >* dotationList_;
     RichGroupBox* groupBox_;
     RichSpinBox* production_;
     RichPushButton* generateProduction_;

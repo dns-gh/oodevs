@@ -26,7 +26,7 @@ namespace xml
 
 namespace gui
 {
-    class RichListWidget;
+    template< typename T > class RichWidget;
 }
 
 class Filter_ABC;
@@ -43,7 +43,7 @@ class FilterManager : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, gui::RichListWidget& list, QStackedWidget& stack, QWidget& parent );
+             FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, gui::RichWidget< QListWidget >& list, QStackedWidget& stack, QWidget& parent );
     virtual ~FilterManager();
     //@}
 
@@ -51,7 +51,7 @@ public:
     //@{
     const std::string GetName() const;
     const std::string GetId() const;
-    void AddFilter( Filter_ABC& filter, gui::RichListWidget& list, QStackedWidget& stack );
+    void AddFilter( Filter_ABC& filter, gui::RichWidget< QListWidget >& list, QStackedWidget& stack );
     Filter_ABC& GetFilter( unsigned int index );
     const Filter_ABC& GetFilter( unsigned int index ) const;
     void Update();
@@ -60,7 +60,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ReadFilter( xml::xistream& xis, gui::RichListWidget& list, QStackedWidget& stack );
+    void ReadFilter( xml::xistream& xis, gui::RichWidget< QListWidget >& list, QStackedWidget& stack );
     //@}
 
 private:

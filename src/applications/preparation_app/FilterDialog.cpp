@@ -15,7 +15,7 @@
 #include "Menu.h"
 #include "MainWindow.h"
 #include "clients_gui/RichGroupBox.h"
-#include "clients_gui/RichListWidget.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_kernel/Tools.h"
 #include <string>
@@ -31,7 +31,7 @@ FilterDialog::FilterDialog( const QString& objectName, QWidget* parent, xml::xis
     gui::SubObjectName subObject( objectName + "FilterDialog" );
 
     // Filters list box
-    list_ = new gui::RichListWidget( "filterList" );
+    list_ = new gui::RichWidget< QListWidget >( "filterList" );
     connect( list_, SIGNAL( currentRowChanged( int ) ), SLOT( OnSelectFilter( int ) ) );
 
     gui::RichGroupBox* selectFilterBox = new gui::RichGroupBox( "selectFilter", tools::translate( "FilterDialog", "Select filter:" ), this );

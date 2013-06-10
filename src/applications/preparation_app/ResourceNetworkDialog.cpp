@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ResourceNetworkDialog.h"
 #include "clients_gui/RichPushButton.h"
-#include "clients_gui/RichListWidget.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/UrbanObject.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/AgentTypes.h"

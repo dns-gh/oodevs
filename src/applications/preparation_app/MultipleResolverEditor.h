@@ -15,7 +15,7 @@
 
 namespace gui
 {
-    class RichListWidget;
+    template< typename T > class RichWidget;
 }
 
 // =============================================================================
@@ -53,7 +53,7 @@ protected:
     //@{
     std::vector< const Entity* > entities_;
     std::vector< Entity* >* values_;
-    gui::RichListWidget* listBox_;
+    gui::RichWidget< QListWidget >* listBox_;
     //@}
 };
 

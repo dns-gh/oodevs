@@ -20,7 +20,7 @@
 // -----------------------------------------------------------------------------
 SuccessFactorProfileList::SuccessFactorProfileList( const QString& objectName, kernel::Controllers& controllers )
     : controllers_( controllers )
-    , RichListWidget( objectName )
+    , RichWidget< QListWidget >( objectName )
 {
     setSelectionMode( QAbstractItemView::MultiSelection );
     controllers_.Register( *this );

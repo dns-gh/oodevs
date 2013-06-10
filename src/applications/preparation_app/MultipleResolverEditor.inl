@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "MultipleResolverEditor.h"
 #include "clients_gui/RichPushButton.h"
-#include "clients_gui/RichListWidget.h"
+#include "clients_gui/RichWidget.h"
 
 // -----------------------------------------------------------------------------
 // Name: MultipleResolverEditor constructor
@@ -25,7 +25,7 @@ MultipleResolverEditor< Entity, Resolver >::MultipleResolverEditor( const QStrin
     setMinimumSize( 250, 250 );
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
     // List
-    listBox_ = new gui::RichListWidget( "listBox" );
+    listBox_ = new gui::RichWidget< QListWidget >( "listBox" );
     listBox_->setSelectionMode( QAbstractItemView::MultiSelection );
     tools::Iterator< const Entity& > it = resolver.CreateIterator();
     while( it.HasMoreElements() )

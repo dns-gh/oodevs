@@ -24,7 +24,7 @@ namespace gui
      class LocationParser_ABC;
      class RichPushButton;
      class RichLineEdit;
-     class RichListWidget;
+     template< typename T > class RichWidget;
 // =============================================================================
 /** @class  LocationEditorBox
     @brief  LocationEditorBox
@@ -77,7 +77,7 @@ private:
     kernel::ContextMenu* parserMenu_;
     RichLineEdit* singleField_;
     QMenu* subMenu_;
-    RichListWidget* list_;
+    RichWidget< QListWidget >* list_;
     QWidget* coordBox_;
     int parserSelected_;
     //@}

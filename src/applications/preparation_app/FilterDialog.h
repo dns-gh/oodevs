@@ -23,7 +23,7 @@ namespace xml
 namespace gui
 {
     class RichPushButton;
-    class RichListWidget;
+    template< typename T > class RichWidget;
 }
 
 class Filter_ABC;
@@ -82,7 +82,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< FilterManager > filterManager_;
-    gui::RichListWidget*           list_;
+    gui::RichWidget< QListWidget >*           list_;
     QLabel*                        description_;
     gui::RichPushButton*           okButton_;
     QStackedWidget*                stack_;

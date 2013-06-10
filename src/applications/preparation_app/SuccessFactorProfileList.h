@@ -11,7 +11,7 @@
 #define __SuccessFactorProfileList_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include "clients_gui/RichListWidget.h"
+#include "clients_gui/RichWidget.h"
 
 namespace kernel
 {
@@ -27,7 +27,7 @@ class UserProfile;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorProfileList : public gui::RichListWidget
+class SuccessFactorProfileList : public gui::RichWidget< QListWidget >
                                , public tools::Observer_ABC
                                , public tools::ElementObserver_ABC< UserProfile >
 {

@@ -13,7 +13,7 @@
 #include "LocationParsers.h"
 #include "LocationParser_ABC.h"
 #include "RichLineEdit.h"
-#include "RichListWidget.h"
+#include "RichWidget.h"
 #include "RichPushButton.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/CoordinateSystems.h"
@@ -54,7 +54,7 @@ LocationEditorBox::LocationEditorBox( kernel::Controllers& controllers, const ke
     SelectParser( converter.GetCoordSystem().GetDefault() );
 
     subMenu_ = new kernel::ContextMenu();
-    list_ = new RichListWidget( "list", subMenu_ );
+    list_ = new RichWidget< QListWidget >( "list", subMenu_ );
     subMenu_->hide();
 
     connect( parserMenu_, SIGNAL( activated( int ) ), SLOT( SelectParser( int ) ) );
