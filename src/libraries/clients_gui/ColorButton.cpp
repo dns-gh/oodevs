@@ -30,7 +30,7 @@ namespace
 // Created: LGY 2011-09-30
 // -----------------------------------------------------------------------------
 ColorButton::ColorButton( const QString& objectName, QWidget* parent, const std::string& color )
-    : RichToolButton( objectName, parent )
+    : RichWidget< QToolButton >( objectName, parent )
     , options_( QColorDialog::ShowAlphaChannel )
 {
     setAutoRaise( true );
@@ -46,11 +46,12 @@ ColorButton::ColorButton( const QString& objectName, QWidget* parent, const std:
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
 ColorButton::ColorButton( const QString& objectName, QWidget* parent /* = 0*/, const char* text /* = 0*/, QColor color /* = black*/ )
-    : RichToolButton( objectName, parent, text )
+    : RichWidget< QToolButton >( objectName, parent )
     , previous_( color )
     , current_( color )
     , options_( static_cast< QColorDialog::ColorDialogOption >( 0 ) )
 {
+    setText( text );
     setAutoRaise( true );
     setMinimumSize( 25, 25 );
     setMaximumWidth( height() * 4 / 3 );

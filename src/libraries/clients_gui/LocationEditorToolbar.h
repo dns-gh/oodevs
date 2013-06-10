@@ -23,7 +23,7 @@ namespace gui
 {
     class LocationEditorBox;
     class LocationsLayer;
-    class RichToolButton;
+    template< typename T > class RichWidget;
     class View_ABC;
 
 // =============================================================================
@@ -88,7 +88,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     View_ABC& view_;
     LocationsLayer& layer_;
-    gui::RichToolButton* paramsButton_;
+    gui::RichWidget< QToolButton >* paramsButton_;
     kernel::ContextMenu* bookmarksMenu_;
     T_Bookmarks bookmarks_;
     geometry::Point2f menuPoint_;

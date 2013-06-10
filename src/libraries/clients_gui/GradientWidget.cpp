@@ -43,17 +43,17 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
     Q3HBox* box = new Q3HBox( this );
     presetCombo_ = new RichWidget< QComboBox >( "presetCombo", box );
 
-    RichToolButton* copyPreset = new RichToolButton( "copyPreset", box );
+    RichWidget< QToolButton >* copyPreset = new RichWidget< QToolButton >( "copyPreset", box );
     copyPreset->setPixmap( MAKE_PIXMAP( copy ) );
     copyPreset->setTextLabel( tr( "Copy preset" ) );
     copyPreset->setFixedSize( 22, 22 );
 
-    RichToolButton* renamePreset = new RichToolButton( "renamePreset", box );
+    RichWidget< QToolButton >* renamePreset = new RichWidget< QToolButton >( "renamePreset", box );
     renamePreset->setPixmap( MAKE_PIXMAP( pen_cursor ) );
     renamePreset->setTextLabel( tr( "Rename preset" ) );
     renamePreset->setFixedSize( 22, 22 );
 
-    RichToolButton* removePreset = new RichToolButton( "removePreset", box );
+    RichWidget< QToolButton >* removePreset = new RichWidget< QToolButton >( "removePreset", box );
     removePreset->setPixmap( MAKE_PIXMAP( trash ) );
     removePreset->setTextLabel( tr( "Delete preset" ) );
     removePreset->setFixedSize( 22, 22 );

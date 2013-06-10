@@ -1021,12 +1021,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTimeEdit.cpp">
       <Filter>Source Files\RichObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichToolButton.cpp">
-      <Filter>Source Files\RichObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichTreeWidget.cpp">
-      <Filter>Source Files\RichObjects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\RichBaseObject.cpp">
       <Filter>Source Files\RichObjects</Filter>
     </ClCompile>
@@ -1726,12 +1720,6 @@
       <Filter>Source Files\RichObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichTimeEdit.h">
-      <Filter>Source Files\RichObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichToolButton.h">
-      <Filter>Source Files\RichObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichTreeWidget.h">
       <Filter>Source Files\RichObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichWidget.h">

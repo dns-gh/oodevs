@@ -11,7 +11,7 @@
 #define __ColorButton_h_
 
 #include <QtGui/qcolordialog.h>
-#include "RichToolButton.h"
+#include "RichWidget.h"
 
 namespace gui
 {
@@ -22,7 +22,7 @@ namespace gui
 */
 // Created: SBO 2006-04-04
 // =============================================================================
-class ColorButton : public RichToolButton
+class ColorButton : public RichWidget< QToolButton >
 {
     Q_OBJECT
 

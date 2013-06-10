@@ -19,7 +19,7 @@
 #include "DrawingCategoryItem.h"
 #include "FileDialog.h"
 #include "RichGroupBox.h"
-#include "RichToolButton.h"
+#include "RichWidget.h"
 #include "SubObjectName.h"
 #include "RichWidget.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -73,19 +73,19 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     box->setFrameStyle( QFrame::StyledPanel | Q3Frame::Raised );
     box->setSpacing( 2 );
 
-    RichToolButton* btn = new RichToolButton( "LoadDrawings", box );
+    RichWidget< QToolButton >* btn = new RichWidget< QToolButton >( "LoadDrawings", box );
     btn->setAutoRaise( true );
     btn->setIconSet( MAKE_PIXMAP( open ) );
     QToolTip::add( btn, tr( "Load drawings file" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( Open() ) );
 
-    btn = new RichToolButton( "saveDrawings", box );
+    btn = new RichWidget< QToolButton >( "saveDrawings", box );
     btn->setAutoRaise( true );
     btn->setIconSet( MAKE_PIXMAP( save ) );
     QToolTip::add( btn, tr( "Save drawings to file" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( Save() ) );
 
-    btn = new RichToolButton( "clearDrawings", box );
+    btn = new RichWidget< QToolButton >( "clearDrawings", box );
     btn->setAutoRaise( true );
     btn->setIconSet( MAKE_PIXMAP( cross ) );
     btn->setFixedSize( 25, 25 );
@@ -98,7 +98,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     toolBox_->setBackgroundColor( Qt::white );
     connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChange( const QColor& ) ) );
 
-    btn = new RichToolButton( "startDrawing", box );
+    btn = new RichWidget< QToolButton >( "startDrawing", box );
     btn->setAutoRaise( true );
     btn->setIconSet( MAKE_PIXMAP( pencil ) );
     btn->setFixedSize( 25, 25 );

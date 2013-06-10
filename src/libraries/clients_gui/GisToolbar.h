@@ -38,7 +38,7 @@ namespace gui
     class TerrainProfilerLayer;
     class ContourLinesObserver;
     class RichDockWidget;
-    class RichToolButton;
+    template< typename T > class RichWidget;
 
 // =============================================================================
 /** @class  GisToolbar
@@ -62,7 +62,7 @@ public:
 
     //! @name Accessors
     //@{
-    RichToolButton* GetTerrainProfilerButton() const;
+    RichWidget< QToolButton >* GetTerrainProfilerButton() const;
     //@}
 
 private slots:
@@ -98,7 +98,7 @@ private:
     RichCheckBox* contourBoxEnabled_;
     ColorButton* colorContourLines_;
     QLabel* progress_;
-    RichToolButton* terrainProfilerButton_;
+    RichWidget< QToolButton >* terrainProfilerButton_;
     //@}
 };
 

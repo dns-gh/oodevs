@@ -167,8 +167,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTableView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTableWidget.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTimeEdit.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichToolButton.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichTreeWidget.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Selection.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SubObjectName.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectNameManager.cpp" />
@@ -817,8 +815,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\RichTableView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichTableWidget.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichTimeEdit.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichToolButton.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichTreeWidget.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichWarnWidget.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichWarnWidget_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichWidget.h" />

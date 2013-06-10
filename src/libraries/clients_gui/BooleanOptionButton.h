@@ -11,7 +11,7 @@
 #define __BooleanOptionButton_h_
 
 #include "clients_kernel/OptionsObserver_ABC.h"
-#include "RichToolButton.h"
+#include "RichWidget.h"
 
 namespace kernel
 {
@@ -26,7 +26,7 @@ namespace gui
 */
 // Created: AGE 2006-03-30
 // =============================================================================
-class BooleanOptionButton : public RichToolButton, public tools::Observer_ABC, public kernel::OptionsObserver_ABC
+class BooleanOptionButton : public RichWidget< QToolButton >, public tools::Observer_ABC, public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 public:

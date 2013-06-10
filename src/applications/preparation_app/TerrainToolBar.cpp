@@ -15,7 +15,7 @@
 #include "clients_gui/ImageWrapper.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/RichSpinBox.h"
-#include "clients_gui/RichToolButton.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/SymbolSizeOptionChooser.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/UrbanObject_ABC.h"
@@ -25,9 +25,9 @@
 
 namespace
 {
-    gui::RichToolButton* AddButton( const QString& objectName, QWidget* parent, const QObject *receiver, const char *member, const QString& toolTip = "", const tools::Path& iconPath = "", bool isCheckable = false )
+    gui::RichWidget< QToolButton >* AddButton( const QString& objectName, QWidget* parent, const QObject *receiver, const char *member, const QString& toolTip = "", const tools::Path& iconPath = "", bool isCheckable = false )
     {
-        gui::RichToolButton* button = new gui::RichToolButton( objectName, parent );
+        gui::RichWidget< QToolButton >* button = new gui::RichWidget< QToolButton >( objectName, parent );
         QObject::connect( button, SIGNAL( clicked() ), receiver, member );
         if( !toolTip.isEmpty() )
             button->setToolTip( toolTip );
@@ -37,7 +37,7 @@ namespace
         return button;
     }
 
-    QDoubleSpinBox* CreateSwitchModeButtonContextMenu( gui::RichToolButton* button )
+    QDoubleSpinBox* CreateSwitchModeButtonContextMenu( gui::RichWidget< QToolButton >* button )
     {
         QWidget* holder = new QWidget;
         QHBoxLayout* hLayout = new QHBoxLayout;
@@ -60,7 +60,7 @@ namespace
         menu->addAction( action );
 
         button->setPopupDelay( 0 );
-        button->setPopupMode( gui::RichToolButton::MenuButtonPopup );
+        button->setPopupMode( gui::RichWidget< QToolButton >::MenuButtonPopup );
         button->setPopup( menu );
 
         return spinBox;

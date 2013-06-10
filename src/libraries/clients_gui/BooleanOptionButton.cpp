@@ -20,7 +20,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 BooleanOptionButton::BooleanOptionButton( const QString& objectName, const QIcon& iconSet, const QString& toolTip, QWidget* parent, kernel::Options& options,
                                           const std::string& option, bool savable )
-    : RichToolButton( objectName, parent )
+    : RichWidget< QToolButton >( objectName, parent )
     , options_( options )
     , option_( option )
     , toolTip_( toolTip )

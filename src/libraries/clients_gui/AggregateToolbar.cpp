@@ -13,7 +13,7 @@
 #include "AutomatsLayer.h"
 #include "FormationLayer.h"
 #include "resources.h"
-#include "RichToolButton.h"
+#include "RichWidget.h"
 #include "SubObjectName.h"
 #include "ImageWrapper.h"
 #include "clients_kernel/Controller.h"
@@ -47,11 +47,11 @@ AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
     , displayMenu_( 0 )
 {
     SubObjectName subObject( "AggregateToolbar" );
-    RichToolButton* btn = new RichToolButton( "aggregate" );
+    RichWidget< QToolButton >* btn = new RichWidget< QToolButton >( "aggregate" );
     btn->setAutoRaise( true );
     btn->setPopupDelay( 0 );
     btn->setIconSet( MAKE_ICON( aggregate ) );
-    btn->setPopupMode( RichToolButton::MenuButtonPopup );
+    btn->setPopupMode( RichWidget< QToolButton >::MenuButtonPopup );
     QToolTip::add( btn, tools::translate( "AggregateToolbar", "Aggregate all automats" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( Aggregate() ) );
     addWidget( btn );
@@ -62,7 +62,7 @@ AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
     btn->setPopup( levelMenu_ );
     connect( levelMenu_, SIGNAL( activated( int ) ), SLOT( Aggregate( int ) ) );
 
-    btn = new RichToolButton( "disaggregateAll" );
+    btn = new RichWidget< QToolButton >( "disaggregateAll" );
     btn->setAutoRaise( true );
     btn->setIconSet( MAKE_ICON( desaggregate ) );
     QToolTip::add( btn, tools::translate( "AggregateToolbar", "Disaggregate all" ) );
@@ -72,7 +72,7 @@ AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
     QIcon dndIcon;
     dndIcon.addPixmap( MAKE_PIXMAP( dnd_lock ), QIcon::Normal, QIcon::On );
     dndIcon.addPixmap( MAKE_PIXMAP( dnd_unlock ), QIcon::Normal, QIcon::Off );
-    btn = new RichToolButton( "lockUnlockDragDrop" );
+    btn = new RichWidget< QToolButton >( "lockUnlockDragDrop" );
     btn->setIcon( dndIcon );
     btn->setToggleButton( true );
     btn->setAutoRaise( true );
@@ -82,10 +82,10 @@ AggregateToolbar::AggregateToolbar( kernel::Controller& controller,
 
     if( showDisplayModes)
     {
-        btn = new RichToolButton( "changeOrbatDisplayMode" );
+        btn = new RichWidget< QToolButton >( "changeOrbatDisplayMode" );
         btn->setIcon( gui::Icon( tools::GeneralConfig::BuildResourceChildFile( "images/gaming/eye.png" ) ) );
         btn->setAutoRaise( true );
-        btn->setPopupMode( RichToolButton::InstantPopup );
+        btn->setPopupMode( RichWidget< QToolButton >::InstantPopup );
         QToolTip::add( btn, tools::translate( "AggregateToolbar", "Change Orbat display mode" ) );
         addWidget( btn );
 

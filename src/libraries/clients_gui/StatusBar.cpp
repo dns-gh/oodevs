@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "StatusBar.h"
 #include "moc_StatusBar.cpp"
-#include "RichToolButton.h"
+#include "RichWidget.h"
 #include "SubObjectName.h"
 #include "TerrainPicker.h"
 #include "clients_kernel/DetectionMap.h"
@@ -37,7 +37,7 @@ StatusBar::StatusBar( kernel::Controllers& controllers, QStatusBar* parent, Terr
     , parent_       ( parent )
 {
     SubObjectName subObject( "statusBar" );
-    RichToolButton* toolButton = new RichToolButton( "toolButton", parent );
+    RichWidget< QToolButton >* toolButton = new RichWidget< QToolButton >( "toolButton", parent );
     toolButton->setPopupDelay( 0 );
     toolButton->adjustSize();
     parent->addWidget( toolButton, 0, true );

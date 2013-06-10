@@ -67,7 +67,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         connect( height_, SIGNAL( valueChanged( int ) ), SLOT( OnHeightChanged( int ) ) );
         connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
 
-        terrainProfilerButton_ = new RichToolButton( "terrainProfilerButton", this );
+        terrainProfilerButton_ = new RichWidget< QToolButton >( "terrainProfilerButton", this );
         terrainProfilerButton_->setIconSet( MakePixmap( "gis_terrainprofiler" ) );
         QToolTip::add( terrainProfilerButton_, tools::translate( "gui::GisToolBar", "Show terrain profiler tool" ) );
         terrainProfilerButton_->setToggleButton( true );
@@ -261,7 +261,7 @@ void GisToolbar::OnColorChanged( const QColor& color )
 // Name: GisToolbar::GetTerrainProfilerButton
 // Created: ABR 2012-05-15
 // -----------------------------------------------------------------------------
-RichToolButton* GisToolbar::GetTerrainProfilerButton() const
+RichWidget< QToolButton >* GisToolbar::GetTerrainProfilerButton() const
 {
     return terrainProfilerButton_;
 }

@@ -23,7 +23,7 @@
 #include "LocationEditorBox.h"
 #include "LocationParsers.h"
 #include "RichLineEdit.h"
-#include "RichToolButton.h"
+#include "RichWidget.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
@@ -46,15 +46,15 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
 {
     locBox_ = new LocationEditorBox( controllers, converter );
     locBox_->AddParser( new FeatureNameParser( controllers ), tr( "Feature" ) );
-    RichToolButton* gotoButton = new RichToolButton( "gotoButton", this );
+    RichWidget< QToolButton >* gotoButton = new RichWidget< QToolButton >( "gotoButton", this );
     gotoButton->setIconSet( MAKE_PIXMAP( goto ) );
     gotoButton->setPopupDelay( 0 );
-    gotoButton->setPopupMode( RichToolButton::MenuButtonPopup );
+    gotoButton->setPopupMode( RichWidget< QToolButton >::MenuButtonPopup );
     bookmarksMenu_ = new kernel::ContextMenu( gotoButton );
     gotoButton->setPopup( bookmarksMenu_ );
     ClearBookmarks();
     QToolTip::add( gotoButton, tr( "Center on location" ) );
-    paramsButton_ = new RichToolButton( "paramsButton", this );
+    paramsButton_ = new RichWidget< QToolButton >( "paramsButton", this );
     paramsButton_->setIconSet( MAKE_PIXMAP( special_point ) );
     QToolTip::add( paramsButton_, tr( "Set special point" ) );
 

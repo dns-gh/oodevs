@@ -19,7 +19,7 @@ namespace kernel
 
 namespace gui
 {
-    class RichToolButton;
+    template< typename T > class RichWidget;
 }
 
 class StaticModel;
@@ -64,8 +64,8 @@ private:
 private:
     //! @name Member data
     //@{
-    gui::RichToolButton* increaseButton_;
-    gui::RichToolButton* decreaseButton_;
+    gui::RichWidget< QToolButton >* increaseButton_;
+    gui::RichWidget< QToolButton >* decreaseButton_;
     kernel::Controllers& controllers_;
     //@}
 };

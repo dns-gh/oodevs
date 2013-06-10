@@ -9,14 +9,14 @@
 
 #include "preparation_app_pch.h"
 #include "FileToolbar.h"
-#include "clients_gui/RichToolButton.h"
+#include "clients_gui/RichWidget.h"
 #include "Menu.h"
 
 namespace
 {
     void AddToolButton( const QString& objectName, QToolBar* parent, QAction* action )
     {
-        gui::RichToolButton* button = new gui::RichToolButton( objectName, parent );
+        gui::RichWidget< QToolButton >* button = new gui::RichWidget< QToolButton >( objectName, parent );
         button->setDefaultAction( action );
         parent->addWidget( button );
     }

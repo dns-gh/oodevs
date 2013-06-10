@@ -15,7 +15,7 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Tools.h"
 #include "clients_gui/SubObjectName.h"
-#include "clients_gui/RichToolButton.h"
+#include "clients_gui/RichWidget.h"
 
 namespace
 {
@@ -44,13 +44,13 @@ SymbolSizeOptionChooser::SymbolSizeOptionChooser( QWidget* parent, QToolBar* too
     gui::SubObjectName subObject( "SymbolSizeOptionChooser" );
     if( toolBar )
     {
-        increaseButton_ = new gui::RichToolButton( "increaseButton", toolBar );
+        increaseButton_ = new gui::RichWidget< QToolButton >( "increaseButton", toolBar );
         toolBar->addWidget( increaseButton_ );
         increaseButton_->setTextLabel( tools::translate( "Menu", "Increase symbol size" ) );
         increaseButton_->setIconSet( increaseIcon );
         connect( increaseButton_, SIGNAL( clicked() ), this, SLOT( OnIncreaseSymbolUnit() ) );
         
-        decreaseButton_ = new gui::RichToolButton( "decreaseButton", toolBar );
+        decreaseButton_ = new gui::RichWidget< QToolButton >( "decreaseButton", toolBar );
         toolBar->addWidget( decreaseButton_ );
         decreaseButton_->setTextLabel( tools::translate( "Menu", "Decrease symbol size" ) );
         decreaseButton_->setIconSet( decreaseIcon );

@@ -13,7 +13,7 @@
 #include "TreeViewsPanel.h"
 #include "clients_gui/AggregateToolbar.h"
 #include "clients_gui/ImageWrapper.h"
-#include "clients_gui/RichToolButton.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_kernel/Controllers.h"
 #include "ENT/ENT_Enums_Gen.h"
 
@@ -40,7 +40,7 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
     gui::AggregateToolbar* aggregateToolbar = new gui::AggregateToolbar( controllers.controller_, automats, formation, false );
     toolbarBox->addLayout( aggregateToolbar, 0, 0, 1, 1, Qt::AlignLeft );
 
-    expandButton_ = new gui::RichToolButton( "expandButton" );
+    expandButton_ = new gui::RichWidget< QToolButton >( "expandButton" );
     expandButton_->setFixedSize( 20, 20 );
     expandButton_->setAutoRaise( true );
     expandButton_->setIcon( expandIcon_ );

@@ -21,7 +21,7 @@ namespace gui
 {
     class ExclusiveEventStrategy;
     class ParametersLayer;
-    class RichToolButton;
+    template< typename T > class RichWidget;
 }
 
 namespace kernel
@@ -103,10 +103,10 @@ private:
     gui::ParametersLayer& paramLayer_;
     UrbanModel& urbanModel_;
     kernel::SafePointer< kernel::UrbanObject_ABC > selected_;
-    gui::RichToolButton* switchModeButton_;
-    gui::RichToolButton* blockCreationButton_;
-    gui::RichToolButton* blockCreationAutoButton_;
-    gui::RichToolButton* blockRemoveButton_;
+    gui::RichWidget< QToolButton >* switchModeButton_;
+    gui::RichWidget< QToolButton >* blockCreationButton_;
+    gui::RichWidget< QToolButton >* blockCreationAutoButton_;
+    gui::RichWidget< QToolButton >* blockRemoveButton_;
     QDoubleSpinBox* roadWidthSpinBox_;
     T_UrbanColors urbanColors_;
     unsigned char blinks_;
