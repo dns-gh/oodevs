@@ -212,6 +212,10 @@ integration.launchDREB = function()
     end
 end
 
+integration.launchSmokesOnEni = function( eni )
+    DEC_Tir_LancerFumigeneSurConnaissance( eni )
+end
+
 integration.getMaxRangeIndirectFireWithoutSelectAmmo = function()
     return DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition()
 end
