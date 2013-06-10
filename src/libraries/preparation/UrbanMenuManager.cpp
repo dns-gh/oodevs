@@ -24,6 +24,7 @@
 #include "clients_kernel/UrbanTemplateType.h"
 #include "clients_kernel/Usages_ABC.h"
 #include <QtCore/QSignalMapper>
+#include <QtGui/qmessagebox.h>
 
 // -----------------------------------------------------------------------------
 // Name: UrbanMenuManager constructor
@@ -151,18 +152,21 @@ void UrbanMenuManager::CreateInfrastructuresMenu( kernel::ContextMenu& menu ) co
         if( action )
            action->setEnabled( hasInfra );
     }
-    tools::Iterator< const kernel::InfrastructureType& > it = staticModel_.objectTypes_.tools::StringResolver< kernel::InfrastructureType >::CreateIterator();
-    while( it.HasMoreElements() )
+    if( oneElement && ( static_cast< const UrbanHierarchies& >( oneElement->Get< kernel::Hierarchies >() ) ).GetLevel() == eUrbanLevelBlock )
     {
-        const kernel::InfrastructureType& type = it.NextElement();
-        QString name( type.GetName().c_str() );
-        QAction* action = inframenu->InsertItem( "Infrastructures", name, pInfraMapper_, SLOT( map() ) );
-        if( infraType && infraType == &type )
+        tools::Iterator< const kernel::InfrastructureType& > it = staticModel_.objectTypes_.tools::StringResolver< kernel::InfrastructureType >::CreateIterator();
+        while( it.HasMoreElements() )
         {
-            action->setCheckable( true );
-            action->setChecked( true );
+            const kernel::InfrastructureType& type = it.NextElement();
+            QString name( type.GetName().c_str() );
+            QAction* action = inframenu->InsertItem( "Infrastructures", name, pInfraMapper_, SLOT( map() ) );
+            if( infraType && infraType == &type )
+            {
+                action->setCheckable( true );
+                action->setChecked( true );
+            }
+            pInfraMapper_->setMapping( action, name );
         }
-        pInfraMapper_->setMapping( action, name );
     }
 }
 
@@ -247,6 +251,27 @@ void UrbanMenuManager::OnDelete()
 // -----------------------------------------------------------------------------
 void UrbanMenuManager::OnDeleteInfrastructures()
 {
+    bool isBlock = true;
+    if( element_ )
+    {
+        if( static_cast< const UrbanHierarchies& >( element_->Get< kernel::Hierarchies >() ).GetLevel() != eUrbanLevelBlock )
+            isBlock = false;
+    }
+    else
+        for( IT_Elements it = selected_.begin(); it != selected_.end(); ++it )
+        {
+            kernel::UrbanObject_ABC& object = const_cast< kernel::UrbanObject_ABC& >( **it );
+            if( static_cast< const UrbanHierarchies& >( object.Get< kernel::Hierarchies >() ).GetLevel() != eUrbanLevelBlock )
+            {
+                isBlock = false;
+                break;
+            }
+        }
+    if( !isBlock )
+        if( QMessageBox::warning( 0, tr( "Warning" ), tr( "Are you sure you want to delete all children infrastructures ?" )
+            , QMessageBox::Yes | QMessageBox::No, QMessageBox::No ) == QMessageBox::No )
+            return;
+
     if( element_ )
         DoApplyInfrastructure( *element_, 0 );
     else

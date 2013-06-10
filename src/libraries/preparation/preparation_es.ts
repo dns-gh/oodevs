@@ -882,6 +882,14 @@ Detalle: %1.</translation>
         <source>Apply properties to children</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete all children infrastructures ?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UrbanModel</name>

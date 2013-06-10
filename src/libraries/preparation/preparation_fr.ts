@@ -882,6 +882,14 @@ Détail: %1.</translation>
         <source>Apply properties to children</source>
         <translation>Appliquer les propriétés aux éléments inférieurs</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete all children infrastructures ?</source>
+        <translation>Etes vous sûr de vouloir supprimer les infrastrucures des éléments inférieurs?</translation>
+    </message>
 </context>
 <context>
     <name>UrbanModel</name>
