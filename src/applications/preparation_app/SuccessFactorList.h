@@ -20,7 +20,7 @@ namespace kernel
 namespace gui
 {
     class RichPushButton;
-    class RichTreeWidget;
+    template< typename T > class RichWidget;
 }
 
 class ScoresModel;
@@ -74,7 +74,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::RichTreeWidget* factors_;
+    gui::RichWidget< QTreeWidget >* factors_;
     SuccessFactorEditor* editor_;
     gui::RichPushButton* editButton_;
     gui::RichPushButton* deleteButton_;

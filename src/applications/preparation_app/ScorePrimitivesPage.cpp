@@ -14,7 +14,7 @@
 #include "indicators/Primitive.h"
 #include "indicators/Primitives.h"
 #include "clients_gui/RichPushButton.h"
-#include "clients_gui/RichTreeWidget.h"
+#include "clients_gui/RichWidget.h"
 
 Q_DECLARE_METATYPE( const indicators::Primitive* )
 
@@ -30,7 +30,7 @@ ScorePrimitivesPage::ScorePrimitivesPage( const QString& objectName, QWidget* pa
 {
     gui::SubObjectName subObject( objectName );
     {
-        list_ = new gui::RichTreeWidget( "list", this );
+        list_ = new gui::RichWidget< QTreeWidget >( "list", this );
         list_->setRootIsDecorated( false );
         list_->setHeaderHidden( true );
         connect( list_, SIGNAL( itemSelectionChanged() ), SLOT( OnSelectionChanged() ) );

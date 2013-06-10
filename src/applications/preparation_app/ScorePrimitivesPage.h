@@ -28,7 +28,7 @@ namespace indicators
 
 namespace gui
 {
-    class RichTreeWidget;
+    template< typename T > class RichWidget;
 }
 
 // =============================================================================
@@ -84,7 +84,7 @@ private:
     kernel::Controllers& controllers_;
     T_Filter filter_;
     const indicators::Primitives& primitives_;
-    gui::RichTreeWidget* list_;
+    gui::RichWidget< QTreeWidget >* list_;
     //@}
 };
 

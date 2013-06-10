@@ -40,7 +40,7 @@ namespace gui
 {
     class GlTools_ABC;
     class Viewport_ABC;
-    class RichTreeWidget;
+    template< typename T > class RichWidget;
 }
 
 namespace tools
@@ -109,7 +109,7 @@ private:
     //@{
     kernel::Controllers&             controllers_;
     ScoresModel&                     model_;
-    gui::RichTreeWidget*                  scores_;
+    gui::RichWidget< QTreeWidget >*                  scores_;
     ScoreEditor*                     editor_;
     const tools::ExerciseConfig&     config_;
     Q3HBox*                          generatorBox_;

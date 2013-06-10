@@ -13,7 +13,7 @@
 
 #include "ScoreVariableCreationWizard.h"
 
-#include "clients_gui/RichTreeWidget.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/SimpleLocationDrawer.h"
 #include "clients_gui/UtmParser.h"
 #include "clients_gui/RichPushButton.h"
@@ -35,7 +35,7 @@ ScoreVariablesList::ScoreVariablesList( kernel::Controllers& controllers, const 
                                         gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
     : tools_( tools )
     , wizard_( new ScoreVariableCreationWizard( this, controllers, tools, builder ) )
-    , list_( new gui::RichTreeWidget( "scoreList", this ) )
+    , list_( new gui::RichWidget< QTreeWidget >( "scoreList", this ) )
     , parser_( new gui::UtmParser( controllers, staticModel.coordinateConverter_ ) )
 {
     gui::SubObjectName subObject( "ScoreVariablesList" );

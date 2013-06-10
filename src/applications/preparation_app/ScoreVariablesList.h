@@ -24,7 +24,7 @@ namespace gui
     class ParametersLayer;
     class UtmParser;
     class Viewport_ABC;
-    class RichTreeWidget;
+    template< typename T > class RichWidget;
 }
 
 namespace indicators
@@ -96,7 +96,7 @@ private:
     //@{
     const gui::GlTools_ABC& tools_;
     ScoreVariableCreationWizard* wizard_;
-    gui::RichTreeWidget* list_;
+    gui::RichWidget< QTreeWidget >* list_;
     std::auto_ptr< kernel::Location_ABC > location_;
     std::auto_ptr< gui::UtmParser > parser_;
     //@}

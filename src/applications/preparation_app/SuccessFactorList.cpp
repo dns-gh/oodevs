@@ -13,7 +13,7 @@
 #include "SuccessFactorEditor.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/RichPushButton.h"
-#include "clients_gui/RichTreeWidget.h"
+#include "clients_gui/RichWidget.h"
 #include "preparation/SuccessFactor.h"
 
 Q_DECLARE_METATYPE( const SuccessFactor* )
@@ -24,7 +24,7 @@ Q_DECLARE_METATYPE( const SuccessFactor* )
 // -----------------------------------------------------------------------------
 SuccessFactorList::SuccessFactorList( QWidget* parent, kernel::Controllers& controllers, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores, SuccessFactorsModel& success )
     : controllers_( controllers )
-    , factors_( new gui::RichTreeWidget( "factors" ) )
+    , factors_( new gui::RichWidget< QTreeWidget >( "factors" ) )
     , editor_( new SuccessFactorEditor( parent, controllers_, actionTypes, scores, success ) )
 {
     gui::SubObjectName subObject( "SuccessFactorList" );

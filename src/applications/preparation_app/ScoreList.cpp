@@ -13,7 +13,7 @@
 #include "ScoreEditor.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/RichPushButton.h"
-#include "clients_gui/RichTreeWidget.h"
+#include "clients_gui/RichWidget.h"
 #include "indicators/Primitives.h"
 #include "preparation/Score_ABC.h"
 #include "preparation/ScoresModel.h"
@@ -29,7 +29,7 @@ ScoreList::ScoreList( kernel::Controllers& controllers, ScoresModel& model, cons
                       const StaticModel& staticModel, gui::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
     : controllers_( controllers )
     , model_      ( model )
-    , scores_     ( new gui::RichTreeWidget( "scores", this ) )
+    , scores_     ( new gui::RichWidget< QTreeWidget >( "scores", this ) )
     , editor_     ( new ScoreEditor( this, controllers, model, staticModel, tools, builder ) )
     , config_     ( config )
 {
