@@ -140,6 +140,10 @@ int main( int /*argc*/, char* /*argv*/[] )
     {
         MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
+    catch( const std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Simulation failure - Reason : '" << tools::GetExceptionMsg( e ) << "'" );
+    }
     google::protobuf::ShutdownProtobufLibrary();
     app.reset();
     MT_LOG_UNREGISTER_LOGGER( *crashFileLogger );
