@@ -167,7 +167,7 @@ void DEC_Workspace::LoadDIA( MIL_Config& config, xml::xistream& xis )
         >> xml::optional >> xml::attribute( "model-version", decisionalVersion );
 
     const std::string runtimeVersion = tools::AppProjectVersion();
-    if( !tools::CheckVersion( decisionalVersion, runtimeVersion ) )
+    if( !tools::CheckVersion( decisionalVersion, runtimeVersion, 2u ) )
         throw MASA_EXCEPTION( "Decisional model version (" + decisionalVersion + ") does not match runtime version (" + runtimeVersion + ")" );
 
 

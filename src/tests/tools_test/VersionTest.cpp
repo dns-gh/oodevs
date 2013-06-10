@@ -25,4 +25,10 @@ BOOST_AUTO_TEST_CASE( version_comparison )
     BOOST_CHECK( tools::CheckVersion( "1.1", "2" ) );
     BOOST_CHECK( tools::CheckVersion( "1.1.0", "1.1" ) );
     BOOST_CHECK( tools::CheckVersion( "2.1", "2.1.0" ) );
+
+    BOOST_CHECK( tools::CheckVersion( "5.2.0", "5.2.6", 2u ) );
+    BOOST_CHECK( tools::CheckVersion( "5.2.2", "5.2.1", 2u ) );
+    BOOST_CHECK( tools::CheckVersion( "5.2", "5.2.1", 2u ) );
+    BOOST_CHECK( !tools::CheckVersion( "5.3.2", "5.2.1", 2u ) );
+    BOOST_CHECK( !tools::CheckVersion( "5.2", "5.1.1", 2u ) );
 }

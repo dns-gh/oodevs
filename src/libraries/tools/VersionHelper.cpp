@@ -96,7 +96,7 @@ const std::vector< int > tools::SplitVersion( const std::string& version )
 // Name: Version::CheckVersion
 // Created: LGY 2012-05-04
 // -----------------------------------------------------------------------------
-bool tools::CheckVersion( const std::string& expectedVersion, const std::string& actualVersion )
+bool tools::CheckVersion( const std::string& expectedVersion, const std::string& actualVersion, unsigned int versionNumber )
 {
     std::vector< int > expected = SplitVersion( expectedVersion );
     std::vector< int > actual = SplitVersion( actualVersion );
@@ -108,6 +108,12 @@ bool tools::CheckVersion( const std::string& expectedVersion, const std::string&
         actual.resize( expected.size() );
     else
         expected.resize( actual.size() );
+
+    if( versionNumber != 0u )
+    {
+        actual.resize( versionNumber );
+        expected.resize( versionNumber );
+    }
 
     return !std::lexicographical_compare( actual.begin(), actual.end(),
                                        expected.begin(), expected.end() );
