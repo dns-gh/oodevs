@@ -1018,9 +1018,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTextEdit.cpp">
       <Filter>Source Files\RichObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichTimeEdit.cpp">
-      <Filter>Source Files\RichObjects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\RichBaseObject.cpp">
       <Filter>Source Files\RichObjects</Filter>
     </ClCompile>
@@ -1717,9 +1714,6 @@
       <Filter>Source Files\RichObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichTextEdit.h">
-      <Filter>Source Files\RichObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichTimeEdit.h">
       <Filter>Source Files\RichObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichWidget.h">

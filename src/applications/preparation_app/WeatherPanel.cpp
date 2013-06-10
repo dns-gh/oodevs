@@ -12,7 +12,7 @@
 #include "moc_WeatherPanel.cpp"
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/RichDateTimeEdit.h"
-#include "clients_gui/RichTimeEdit.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/WeatherWidget.h"
 #include "clients_gui/WeatherLayer.h"
 #include "clients_kernel/Controllers.h"
@@ -47,10 +47,10 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Control
     {
         gui::SubObjectName subObject( "Ephemerides" );
         QLabel* sunriseLabel = new QLabel( tr( "Sunrise:" ) );
-        sunrise_ = new gui::RichTimeEdit( "sunrise");
+        sunrise_ = new gui::RichWidget< QTimeEdit >( "sunrise");
 
         QLabel* sunsetLabel = new QLabel( tr( "Sunset:" ) );
-        sunset_ = new gui::RichTimeEdit( "sunset" );
+        sunset_ = new gui::RichWidget< QTimeEdit >( "sunset" );
 
         QLabel* dayLabel = new QLabel( tr( "Day lighting:" ) );
         dayLighting_ = new gui::ValuedComboBox< E_LightingType >( "dayLighting" );

@@ -25,7 +25,7 @@ namespace gui
     class PanelStack_ABC;
     template< typename T > class ValuedComboBox;
     class WeatherLayer;
-    class RichTimeEdit;
+    template< typename T > class RichWidget;
     class RichDateTimeEdit;
 }
 namespace weather
@@ -78,8 +78,8 @@ private:
     WeatherModel* currentModel_;
 
     gui::RichDateTimeEdit* time_;
-    gui::RichTimeEdit* sunrise_;
-    gui::RichTimeEdit* sunset_;
+    gui::RichWidget< QTimeEdit >* sunrise_;
+    gui::RichWidget< QTimeEdit >* sunset_;
     gui::ValuedComboBox< E_LightingType >* dayLighting_;
     gui::ValuedComboBox< E_LightingType >* nightLighting_;
     QDateTimeEdit* endTime_;

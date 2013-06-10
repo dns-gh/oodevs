@@ -11,7 +11,7 @@
 #include "LoadableTimeEdit.h"
 #include "ObjectPrototypeLoader_ABC.h"
 #include "ObjectNameManager.h"
-#include "RichTimeEdit.h"
+#include "RichWidget.h"
 
 using namespace gui;
 
@@ -22,7 +22,7 @@ using namespace gui;
 LoadableTimeEdit::LoadableTimeEdit( const QString& objectName, QWidget* parent )
     : LoadableFieldTemplate< QTimeEdit >( parent, objectName )
 {
-    SetDefaultValueWidget( new RichTimeEdit( "default" + objectName ,this ) );
+    SetDefaultValueWidget( new RichWidget< QTimeEdit >( "default" + objectName ,this ) );
 }
 
 // -----------------------------------------------------------------------------
