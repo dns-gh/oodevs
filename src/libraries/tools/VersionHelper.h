@@ -24,7 +24,7 @@ namespace tools
     // - expectedVersion is a smaller or equal version than actualVersion.
     // Basically, we want ascending compatibility with tolerance for
     // non-version strings.
-    bool CheckVersion( const std::string& expectedVersion, const std::string& actualVersion );
+    bool CheckVersion( const std::string& expectedVersion, const std::string& actualVersion, unsigned int versionNumber = 0u );
 }
 
 #endif // __VersionHelper_h_
