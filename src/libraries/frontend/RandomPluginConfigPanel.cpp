@@ -244,8 +244,10 @@ void RandomPluginConfigPanel::OnContextChanged( int index )
         distributionList_->setCurrentItem( bDistributions_[ context ] ? 1 : 0 );
         deviation_->setText( QString::number( rDeviations_[ context ] ) );
         mean_->setText( QString::number( rMeans_[ context ] ) );
-        deviation_->setEnabled( bDistributions_[ context ] );
-        mean_->setEnabled( bDistributions_[ context ] );
+        standardDeviationLabel_->setVisible( bDistributions_[ context ] );
+        deviation_->setVisible( bDistributions_[ context ] );
+        mean_->setVisible( bDistributions_[ context ] );
+        meanLabel_->setVisible( bDistributions_[ context ] );
     }
 }
 
@@ -255,8 +257,10 @@ void RandomPluginConfigPanel::OnContextChanged( int index )
 // -----------------------------------------------------------------------------
 void RandomPluginConfigPanel::OnDistributionChanged( int index )
 {
-    deviation_->setEnabled( index != 0 );
-    mean_->setEnabled( index != 0 );
+    standardDeviationLabel_->setVisible( index != 0 );
+    deviation_->setVisible( index != 0 );
+    meanLabel_->setVisible( index != 0 );
+    mean_->setVisible( index != 0 );
     ERandomContexts context = ( ERandomContexts ) contextList_->currentItem();
     if( context >= eFire && context < eContextsNbr )
     {
