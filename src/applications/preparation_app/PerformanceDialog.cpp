@@ -13,7 +13,7 @@
 #include "preparation/Model.h"
 #include "preparation/StaticModel.h"
 #include "preparation/performanceIndicator.h"
-#include "clients_gui/RichTextEdit.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/RichTableView.h"
 #include <QtGui/QGridLayout.h>
 #include <QtGui/QPalette.h>
@@ -36,7 +36,7 @@ PerformanceDialog::PerformanceDialog( QWidget* parent, Model& model, const Stati
     , limitValueMulti_    ( new QLabel( this ) )
     , limitLineSingle_    ( new QLabel( this ) )
     , limitLineMulti_     ( new QLabel( this ) )
-    , textEdit_           ( new gui::RichTextEdit( "textEdit", this ) )
+    , textEdit_           ( new gui::RichWidget< QTextEdit >( "textEdit", this ) )
     , progressLimit_      ( 40 )
 {
     gui::SubObjectName subObject( "PerformanceDialog" );
@@ -101,7 +101,7 @@ PerformanceDialog::PerformanceDialog( QWidget* parent, Model& model, const Stati
     layout->addWidget( textEdit_, 3, 0, 1, 2 );
 
     textEdit_->setReadOnly( true );
-    textEdit_->setLineWrapMode( gui::RichTextEdit::NoWrap );
+    textEdit_->setLineWrapMode( gui::RichWidget< QTextEdit >::NoWrap );
     loadLevelSingle_->setMinimumWidth( 280 );
     loadLevelSingle_->setMinimumHeight( 25 );
     loadLevelSingle_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );

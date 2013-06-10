@@ -26,7 +26,7 @@ namespace indicators
 
 namespace gui
 {
-    class RichTextEdit;
+    template< typename T > class RichWidget;
 }
 
 // =============================================================================
@@ -43,7 +43,7 @@ class ScoreSyntaxHighlighter : public QSyntaxHighlighter
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreSyntaxHighlighter( gui::RichTextEdit* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives );
+             ScoreSyntaxHighlighter( gui::RichWidget< QTextEdit >* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives );
     virtual ~ScoreSyntaxHighlighter();
     //@}
 

@@ -17,7 +17,7 @@ namespace kernel
 
 namespace gui
 {
-    class RichTextEdit;
+    template< typename T > class RichWidget;
 }
 
 class Model;
@@ -87,7 +87,7 @@ private:
     QLabel* limitValueMulti_;
     QLabel* limitLineSingle_;
     QLabel* limitLineMulti_;
-    gui::RichTextEdit* textEdit_;
+    gui::RichWidget< QTextEdit >* textEdit_;
 
     const int progressLimit_;
 };

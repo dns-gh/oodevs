@@ -16,7 +16,7 @@
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/RichLineEdit.h"
 #include "clients_gui/RichPushButton.h"
-#include "clients_gui/RichTextEdit.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/RichTreeView.h"
 #include <boost/algorithm/string.hpp>
 #include "tools/ExerciseConfig.h"
@@ -75,7 +75,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         hLayout->addWidget( textFormat );
         textFormat->setToggleButton( true );
         connect( textFormat, SIGNAL( toggled( bool ) ), this, SLOT( OnToggleDisplayMode( bool ) ) );
-        briefing_ = new gui::RichTextEdit( "briefing" );
+        briefing_ = new gui::RichWidget< QTextEdit >( "briefing" );
         vLayout->addWidget( briefing_ );
         briefing_->setTextFormat( Qt::RichText );
         grid->addWidget( box, 1, 0, 1, 2 );

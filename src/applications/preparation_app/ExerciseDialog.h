@@ -18,7 +18,7 @@ namespace gui
 {
     class RichCheckBox;
     class RichLineEdit;
-    class RichTextEdit;
+    template< typename T > class RichWidget;
     class RichTreeView;
 }
 
@@ -104,7 +104,7 @@ private:
     gui::RichLineEdit* name_;
     gui::ValuedComboBox< QString >* lang_;
     QString selectedLang_;
-    gui::RichTextEdit* briefing_;
+    gui::RichWidget< QTextEdit >* briefing_;
     T_Briefings briefings_;
     QStandardItemModel* resources_;
     QStandardItemModel* orderFiles_;

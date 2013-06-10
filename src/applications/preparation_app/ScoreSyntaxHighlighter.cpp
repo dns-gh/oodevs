@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ScoreSyntaxHighlighter.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_gui/RichTextEdit.h"
+#include "clients_gui/RichWidget.h"
 #include "indicators/Primitive.h"
 #include "indicators/Primitives.h"
 
@@ -18,7 +18,7 @@
 // Name: ScoreSyntaxHighlighter constructor
 // Created: SBO 2009-05-07
 // -----------------------------------------------------------------------------
-ScoreSyntaxHighlighter::ScoreSyntaxHighlighter( gui::RichTextEdit* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives )
+ScoreSyntaxHighlighter::ScoreSyntaxHighlighter( gui::RichWidget< QTextEdit >* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives )
     : QSyntaxHighlighter( editor )
     , controllers_( controllers )
     , primitives_( primitives )

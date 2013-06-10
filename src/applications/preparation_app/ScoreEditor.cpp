@@ -36,11 +36,11 @@ using namespace kernel;
 
 namespace
 {
-    class FormulaLineEdit : public gui::RichTextEdit
+    class FormulaLineEdit : public gui::RichWidget< QTextEdit >
     {
     public:
         explicit FormulaLineEdit()
-            : gui::RichTextEdit( "FormulaLineEdit" )
+            : gui::RichWidget< QTextEdit >( "FormulaLineEdit" )
         {
             setMaximumHeight( 50 );
         }
@@ -53,18 +53,18 @@ namespace
                 QTextCursor cursor = textCursor();
                 int selectionStart = cursor.selectionStart();
                 int selectionEnd = cursor.selectionEnd();
-                gui::RichTextEdit::focusOutEvent( e );
+                gui::RichWidget< QTextEdit >::focusOutEvent( e );
                 cursor.setPosition( selectionStart );
                 cursor.setPosition( selectionEnd, QTextCursor::KeepAnchor );
                 setTextCursor( cursor );
             }
             else
-                gui::RichTextEdit::focusOutEvent( e );
+                gui::RichWidget< QTextEdit >::focusOutEvent( e );
         }
 
         virtual void mousePressEvent( QMouseEvent* e )
         {
-            gui::RichTextEdit::mousePressEvent( e );
+            gui::RichWidget< QTextEdit >::mousePressEvent( e );
             mouseDoubleClickEvent( e );
         }
 

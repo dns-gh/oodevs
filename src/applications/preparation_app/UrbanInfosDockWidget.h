@@ -22,7 +22,7 @@ namespace kernel
 
 namespace gui
 {
-    class RichTextEdit;
+    template< typename T > class RichWidget;
 }
 
 class StaticModel;
@@ -68,7 +68,7 @@ private:
     kernel::Controllers& controllers_;
     UrbanModel&          model_;
     QLabel*              urbanBlocksCount_;
-    gui::RichTextEdit*   infoEditText_;
+    gui::RichWidget< QTextEdit >*   infoEditText_;
     QStringList          infos_;
     QStringList          values_;
     T_Elements           selectedElements_;

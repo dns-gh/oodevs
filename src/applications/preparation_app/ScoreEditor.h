@@ -10,7 +10,7 @@
 #ifndef __ScoreEditor_h_
 #define __ScoreEditor_h_
 
-#include "clients_gui/RichTextEdit.h"
+#include "clients_gui/RichWidget.h"
 
 namespace actions
 {
@@ -105,7 +105,7 @@ private:
     ScoresModel& model_;
     Score_ABC* current_;
     gui::RichLineEdit* name_;
-    gui::RichTextEdit* formula_;
+    gui::RichWidget< QTextEdit >* formula_;
     QLabel* checkResult_;
     gui::RichPushButton* ok_;
     QLabel* help_;
