@@ -51,7 +51,7 @@ InhabitantCreationPanel::InhabitantCreationPanel( QWidget* parent, gui::PanelSta
 
     QLabel* typeLabel = new QLabel( tr( "Type:" ) );
     inhabitantTypes_ = new gui::ValuedComboBox< const InhabitantType* >( "inhabitantTypes" );
-    inhabitantTypes_->setSorting( true );
+    inhabitantTypes_->SetSorting( true );
     connect( inhabitantTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 
     QLabel* numberLabel = new QLabel( tr( "Number:" ) );

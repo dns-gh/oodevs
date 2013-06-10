@@ -96,7 +96,7 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, ::gui::PanelStack_ABC& pa
 
         new QLabel( tools::translate( "FireCreationPanel", "Ammunition:" ), group );
         ammunitionsBox_ = new ::gui::ValuedComboBox< int >( "ammunitionsBox", group );
-        ammunitionsBox_->setSorting( true );
+        ammunitionsBox_->SetSorting( true );
 
         new QLabel( tools::translate( "FireCreationPanel", "Iteration:" ), group );
         interventionType_ = new QLineEdit( "1", group );

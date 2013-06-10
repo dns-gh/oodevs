@@ -128,7 +128,7 @@ QWidget* ParamObstacle::BuildInterface( const QString& objectName, QWidget* pare
     // Type
     {
         typeCombo_ = new ::gui::ValuedComboBox< const kernel::ObjectType* >( "typeCombo", parent );
-        typeCombo_->setSorting( true );
+        typeCombo_->SetSorting( true );
         tools::Iterator< const kernel::ObjectType& > it = objectTypes_.StringResolver< kernel::ObjectType >::CreateIterator();
         while( it.HasMoreElements() )
         {

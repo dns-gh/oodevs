@@ -162,21 +162,21 @@ unsigned int ValuedComboBox<T>::Count() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ValuedComboBox::sorting
+// Name: ValuedComboBox::Sorting
 // Created: SBO 2005-09-22
 // -----------------------------------------------------------------------------
 template< typename T >
-bool ValuedComboBox<T>::sorting()
+bool ValuedComboBox<T>::Sorting()
 {
     return sorting_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ValuedComboBox::setSorting
+// Name: ValuedComboBox::SetSorting
 // Created: SBO 2005-09-22
 // -----------------------------------------------------------------------------
 template< typename T >
-void ValuedComboBox<T>::setSorting( bool sorting )
+void ValuedComboBox<T>::SetSorting( bool sorting )
 {
     sorting_ = sorting;
 }

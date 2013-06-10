@@ -66,7 +66,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( const QString& objectName, QWidget* pa
 
         QLabel* typeLabel = new QLabel( tr( "Type:" ) );
         objectTypes_ = new ValuedComboBox< const ObjectType* >( "objectTypes" );
-        objectTypes_->setSorting( true );
+        objectTypes_->SetSorting( true );
         connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 
         position_ = new RichLabel( "Location", tr( "Location:" ) );

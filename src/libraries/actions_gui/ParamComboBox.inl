@@ -54,7 +54,7 @@ QWidget* ParamComboBox< T >::BuildInterface( const QString& objectName, QWidget*
     QVBoxLayout* layout = new QVBoxLayout( group_ );
 
     comboBox_ = new ::gui::ValuedComboBox< T >( "ParamComboBox", parent );
-    comboBox_->setSorting( true );
+    comboBox_->SetSorting( true );
     for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
         comboBox_->AddItem( it->first, it->second );
     layout->addWidget( comboBox_ );

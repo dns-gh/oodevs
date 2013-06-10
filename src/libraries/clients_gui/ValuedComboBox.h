@@ -44,7 +44,7 @@ public:
     //! @name Accessors
     //@{
     T    GetValue    ();
-    bool sorting     ();
+    bool Sorting     ();
     //@}
 
     //! @name Operations
@@ -59,7 +59,7 @@ public:
     void Clear();
     unsigned int Count() const;
 
-    void setSorting( bool sorting );
+    void SetSorting( bool sorting );
     //@}
 
 private:
