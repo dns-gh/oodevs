@@ -11,12 +11,14 @@
     <macrodef name="compare-proto">
         <attribute name="olddir"/>
         <attribute name="newdir"/>
+        <element name="args" implicit="true" optional="true"/>
         <sequential>
             <python taskname="protolint" failonerror="true">
                 <arg value="${src.dir}/protolint/protolint.py"/>
                 <arg value="compare"/>
                 <arg value="@{olddir}"/>
                 <arg value="@{newdir}"/>
+                <args/>
             </python>
         </sequential>
     </macrodef>
@@ -39,6 +41,16 @@
         <compare-proto olddir="${data.dir}/proto-5.0.2" newdir="${data.dir}/proto-5.1.1"/>
         <compare-proto olddir="${data.dir}/proto-5.1.1" newdir="${data.dir}/proto-5.1.2"/>
         <compare-proto olddir="${data.dir}/proto-5.1.2" newdir="${data.dir}/proto-5.1.3"/>
+        <compare-proto olddir="${data.dir}/proto-5.1.3" newdir="${data.dir}/proto-5.2.1">
+            <!-- The RulesOfEngagement enumeration was changed since 5.1.x,
+                 a none=0 was removed and all other values shifted. We think
+                 this change is acceptable since this feature was unlikely to
+                 be used by clients and this is only a notification, not a
+                 parameter.
+            -->
+            <arg value="--exclude=SimToClient.Content.UnitAttributes.RulesOfEngagement.Value"/>
+            <arg value="--exclude=SimToClient.Content.AutomatAttributes.RulesOfEngagement.Value"/>
+        </compare-proto>
     </target>
 
     <target name="package">
@@ -50,6 +62,8 @@
                      update referenced version upon releases -->
                 <zipfileset dir="${data.dir}/proto-5.1.3"
                     prefix="protolint/proto/proto-5.1.x"/>
+                <zipfileset dir="${data.dir}/proto-5.2.1"
+                    prefix="protolint/proto/proto-5.2.x"/>
             </zip>
         </safe-move>
     </target>
