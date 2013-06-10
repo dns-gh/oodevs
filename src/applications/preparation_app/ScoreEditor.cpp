@@ -20,7 +20,7 @@
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/RichLineEdit.h"
-#include "clients_gui/RichTabWidget.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "indicators/Gauge.h"
 #include "indicators/Primitive.h"
@@ -152,7 +152,7 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, Sco
         grid->addWidget( informationBox, 0, 0 );
     }
     {
-        gui::RichTabWidget* tabs = new gui::RichTabWidget( "tabs", this );
+        gui::RichWidget< QTabWidget >* tabs = new gui::RichWidget< QTabWidget >( "tabs", this );
         {
             gui::SubObjectName subObject( "tabs" );
             QWidget* page = new QWidget( tabs );

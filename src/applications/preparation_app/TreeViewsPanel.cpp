@@ -35,16 +35,16 @@
 TreeViewsPanel::TreeViewsPanel( kernel::Controllers& controllers, gui::EntitySymbols& icons, ModelBuilder& modelBuilder,
                                 Model& model, std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols,
                                 StaticModel& staticModel, const gui::AggregateToolbar& aggregateToolbar )
-    : gui::RichTabWidget( "TreeViewsPanel" )
+    : gui::RichWidget< QTabWidget >( "TreeViewsPanel" )
 {
     gui::SubObjectName subObject( "TreeViewsPanel" );
     {
-        gui::RichTabWidget* pFirstAgentsTabWidget = new gui::RichTabWidget( "FirstAgentsTabWidget" );
+        gui::RichWidget< QTabWidget >* pFirstAgentsTabWidget = new gui::RichWidget< QTabWidget >( "FirstAgentsTabWidget" );
         {
             gui::SubObjectName subObject( "pFirstAgentsTabWidget" );
             CreateUnitTabWidget( pFirstAgentsTabWidget, this, controllers, icons, modelBuilder, model, staticModel, treeViews, aggregateToolbar, true );
         }
-        pSecondAgentsTabWidget_ = new gui::RichTabWidget( "SecondAgentsTabWidget" );
+        pSecondAgentsTabWidget_ = new gui::RichWidget< QTabWidget >( "SecondAgentsTabWidget" );
         {
             gui::SubObjectName subObject( "pSecondAgentsTabWidget_" );
             pSecondAgentsTabWidget_->hide();
@@ -105,7 +105,7 @@ TreeViewsPanel::~TreeViewsPanel()
 // Name: TreeViewsPanel::CreateUnitTabWidget
 // Created: LGY 2012-06-27
 // -----------------------------------------------------------------------------
-void TreeViewsPanel::CreateUnitTabWidget( gui::RichTabWidget* parent, gui::RichTabWidget* tabWidget, kernel::Controllers& controllers,
+void TreeViewsPanel::CreateUnitTabWidget( gui::RichWidget< QTabWidget >* parent, gui::RichWidget< QTabWidget >* tabWidget, kernel::Controllers& controllers,
                                           gui::EntitySymbols& icons, ModelBuilder& modelBuilder, Model& model,
                                           StaticModel& staticModel, std::vector< gui::SearchTreeView_ABC* >& treeViews,
                                           const gui::AggregateToolbar& aggregateToolbar, bool first )

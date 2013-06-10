@@ -191,7 +191,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichLineEdit.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichMenu.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichPushButton.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichTabWidget.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichToolBar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SearchButton.cpp" />
@@ -994,7 +993,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\RichMenu.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichPushButton.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichSpinBox.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichTabWidget.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichToolBar.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\RichTreeView.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>

@@ -15,7 +15,7 @@
 namespace gui
 {
     class SpinBoxAndSlider;
-    class RichTabWidget;
+    template< typename T > class RichWidget;
     class RichPushButton;
     class RichLineEdit;
 
@@ -60,7 +60,7 @@ private:
     //! @name Member data
     //@{
     int               pixelSize_;
-    RichTabWidget*    tabWidget_;
+    RichWidget< QTabWidget >*    tabWidget_;
     SpinBoxAndSlider* pixelSizeEditor_;
     RichLineEdit*        nameEditor_;
     RichLineEdit*        fileEditor_;

@@ -33,7 +33,7 @@ namespace
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
 ScorePrimitivesLibrary::ScorePrimitivesLibrary( QWidget* parent, kernel::Controllers& controllers, const indicators::Primitives& primitives )
-    : gui::RichTabWidget( "ScorePrimitivesLibrary", parent )
+    : gui::RichWidget< QTabWidget >( "ScorePrimitivesLibrary", parent )
 {
     gui::SubObjectName subObject( "ScorePrimitivesLibrary" );
     AddPage( tr( "Data" )     , new ScorePrimitivesPage( "DataScorePrimitivesPage", this, controllers, primitives, boost::bind( &::FilterExtractors, _1 ) ) );

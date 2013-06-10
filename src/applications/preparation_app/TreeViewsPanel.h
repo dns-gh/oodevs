@@ -10,7 +10,7 @@
 #ifndef __TreeViewsPanel_h__
 #define __TreeViewsPanel_h__
 
-#include "clients_gui/RichTabWidget.h"
+#include "clients_gui/RichWidget.h"
 
 namespace kernel
 {
@@ -36,7 +36,7 @@ class StaticModel;
 */
 // Created: LGY 2012-06-26
 // =============================================================================
-class TreeViewsPanel : public gui::RichTabWidget
+class TreeViewsPanel : public gui::RichWidget< QTabWidget >
 {
     Q_OBJECT
 
@@ -61,7 +61,7 @@ public slots:
 private:
     //! @name Helpers
     //@{
-    void CreateUnitTabWidget( gui::RichTabWidget* parent, gui::RichTabWidget* tabWidget, kernel::Controllers& controllers,
+    void CreateUnitTabWidget( gui::RichWidget< QTabWidget >* parent, gui::RichWidget< QTabWidget >* tabWidget, kernel::Controllers& controllers,
                               gui::EntitySymbols& icons, ModelBuilder& modelBuilder, Model& model, StaticModel& staticModel,
                               std::vector< gui::SearchTreeView_ABC* >& treeViews, const gui::AggregateToolbar& aggregateToolbar, bool first );
     void Configure( gui::SearchTreeView_ABC* searchTreeView, std::vector< gui::SearchTreeView_ABC* >& treeViews,
@@ -71,7 +71,7 @@ private:
 private:
     //! @name Member Data
     //@{
-    gui::RichTabWidget* pSecondAgentsTabWidget_;
+    gui::RichWidget< QTabWidget >* pSecondAgentsTabWidget_;
     std::vector< gui::HierarchyTreeView_ABC* > firstUnitViews_;
     std::vector< gui::HierarchyTreeView_ABC* > secondUnitViews_;
     //@}

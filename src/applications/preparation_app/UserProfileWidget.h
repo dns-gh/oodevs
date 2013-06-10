@@ -11,7 +11,7 @@
 #define __UserProfileWidget_h_
 
 #include <boost/noncopyable.hpp>
-#include "clients_gui/RichTabWidget.h"
+#include "clients_gui/RichWidget.h"
 
 namespace kernel
 {
@@ -39,7 +39,7 @@ class ProfilesChecker_ABC;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class UserProfileWidget : public gui::RichTabWidget
+class UserProfileWidget : public gui::RichWidget< QTabWidget >
 {
     Q_OBJECT
 

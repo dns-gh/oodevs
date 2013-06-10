@@ -29,7 +29,7 @@
 #include "preparation/Model.h"
 #include "clients_gui/RichCheckBox.h"
 #include "clients_gui/RichLineEdit.h"
-#include "clients_gui/RichTabWidget.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/RichGroupBox.h"
 
 using namespace kernel;
@@ -51,7 +51,7 @@ namespace
 // -----------------------------------------------------------------------------
 UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent, Controllers& controllers, const gui::EntitySymbols& icons,
                                       const ExtensionTypes& extensions, ProfilesChecker_ABC& checker, Model& model )
-    : gui::RichTabWidget( objectName, parent )
+    : gui::RichWidget< QTabWidget >( objectName, parent )
     , controllers_( controllers )
     , extensions_ ( extensions )
     , checker_    ( checker )
@@ -107,7 +107,7 @@ UserProfileWidget::UserProfileWidget( const QString& objectName, QWidget* parent
 
         Q3HBox* holder = new Q3HBox();
         supervisor_ = new gui::RichCheckBox( "supervisorActions", tr( "Supervisor actions" ), holder );
-        gui::RichTabWidget* tabs = new gui::RichTabWidget( "RichTabWidget" );
+        gui::RichWidget< QTabWidget >* tabs = new gui::RichWidget< QTabWidget >( "RichWidget< QTabWidget >" );
 
         UserProfileUnitRights* unitRights = new UserProfileUnitRights( "unitRights", tabs, controllers, icons, tr( "Units" ) );
         tabs->addTab( unitRights, tr( "Units" ) );

@@ -11,7 +11,7 @@
 #include "UnitStateDialog.h"
 #include "moc_UnitStateDialog.cpp"
 #include "RichPushButton.h"
-#include "RichTabWidget.h"
+#include "RichWidget.h"
 #include "SubObjectName.h"
 #include "UnitStateTable_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -47,7 +47,7 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     selectedEntityLabel_->setAlignment( Qt::AlignCenter );
     selectedEntityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
     // Tabs
-    tabWidget_ = new RichTabWidget( "tabs", this );
+    tabWidget_ = new RichWidget< QTabWidget >( "tabs", this );
     // Buttons
     Q3HBox* buttons = new Q3HBox( this, "UnitStateDialog_HBox_Buttons" );
     buttons->setSpacing( 5 );

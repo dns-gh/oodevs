@@ -18,7 +18,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_gui/RichTabWidget.h"
+#include "clients_gui/RichWidget.h"
 #include "preparation/InitialState.h"
 #include <boost/smart_ptr/make_shared.hpp>
 

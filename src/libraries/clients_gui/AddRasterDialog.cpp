@@ -14,7 +14,7 @@
 #include "FileDialog.h"
 #include "RichLineEdit.h"
 #include "RichPushButton.h"
-#include "RichTabWidget.h"
+#include "RichWidget.h"
 #include "SubObjectName.h"
 #include <boost/algorithm/string.hpp>
 
@@ -31,7 +31,7 @@ AddRasterDialog::AddRasterDialog( QWidget* parent )
     SubObjectName subObject( "AddRasterDialog" );
     setCaption( tr( "Add a raster layer" ) );
     setMinimumSize( 300, 200 );
-    tabWidget_ = new RichTabWidget( "tabWidget" );
+    tabWidget_ = new RichWidget< QTabWidget >( "tabWidget" );
 
     // General tab
     QWidget* generalTab = new QWidget( tabWidget_ );
