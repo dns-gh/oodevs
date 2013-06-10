@@ -391,7 +391,7 @@ void ADN_Sensors_Data::TargetInfos::WriteArchive( xml::xostream& output )
 // Created: LGY 2012-12-03
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::DisasterInfos::DisasterInfos()
-    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos(), 0, true )
+    : ADN_CrossedRef( ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos(), 0, true, "type" )
     , rDetectionThreshold_( 0)
 {
     // NOTHING
