@@ -12,7 +12,7 @@
 
 #include "RichToolBar.h"
 #include "RichCheckBox.h"
-#include "RichComboBox.h"
+#include "RichWidget.h"
 #include "RichSpinBox.h"
 
 #include "tools/ElementObserver_ABC.h"
@@ -91,7 +91,7 @@ private:
     kernel::Controllers& controllers_;
     const kernel::DetectionMap& detection_;
     RichCheckBox* watershedEnabled_;
-    RichComboBox* mode_;
+    RichWidget< QComboBox >* mode_;
     RichSpinBox* height_;
     RichSpinBox* linesHeight_;
     ColorButton* color_;

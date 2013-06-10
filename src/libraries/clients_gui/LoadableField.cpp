@@ -11,7 +11,7 @@
 #include "LoadableField.h"
 #include "moc_LoadableField.cpp"
 #include "ObjectPrototypeLoader_ABC.h"
-#include "RichComboBox.h"
+#include "RichWidget.h"
 
 using namespace gui;
 
@@ -25,7 +25,7 @@ LoadableField::LoadableField( QWidget* parent, const QString& objectName )
     , defaultValueWidget_( 0 )
     , currentLoader_     ( 0 )
 {
-    fieldName_ = new RichComboBox( objectName, this );
+    fieldName_ = new RichWidget< QComboBox >( objectName, this );
     connect( fieldName_, SIGNAL( activated( const QString& ) ), this, SLOT( FieldSelected( const QString& ) ) );
     SetPossibleFields( QStringList() );
 }

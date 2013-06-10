@@ -15,7 +15,7 @@
 #include "ENT/ENT_Tr_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "RichLineEdit.h"
-#include "RichComboBox.h"
+#include "RichWidget.h"
 
 namespace kernel
 {
@@ -63,7 +63,7 @@ signals:
 */
 // Created: ABR 2012-06-18
 // =============================================================================
-class CheckComboBox : public RichComboBox
+class CheckComboBox : public RichWidget< QComboBox >
 {
     Q_OBJECT
 

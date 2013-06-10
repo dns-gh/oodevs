@@ -20,7 +20,7 @@ namespace kernel
 
 namespace gui
 {
-    class RichComboBox;
+    template< typename T > class RichWidget;
 // =============================================================================
 /** @class  VisualisationScalesPanel
     @brief  VisualisationScalesPanel
@@ -81,8 +81,8 @@ private:
     static const Scale DefaultScales[ 14 ];
     Scale currentScales_[ 14 ];
     kernel::Controllers& controllers_;
-    RichComboBox* minCombos_[ 14 ];
-    RichComboBox* maxCombos_[ 14 ];
+    RichWidget< QComboBox >* minCombos_[ 14 ];
+    RichWidget< QComboBox >* maxCombos_[ 14 ];
     //@}
 };
 

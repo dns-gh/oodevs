@@ -11,7 +11,7 @@
 #include "VisualisationScalesPanel.h"
 #include "moc_VisualisationScalesPanel.cpp"
 #include "RichPushButton.h"
-#include "RichComboBox.h"
+#include "RichWidget.h"
 #include "RichGroupBox.h"
 #include "SubObjectName.h"
 #include "clients_kernel/Controllers.h"
@@ -75,11 +75,11 @@ VisualisationScalesPanel::VisualisationScalesPanel( QWidget* parent, kernel::Con
         QLabel* label = new QLabel( elements[ i ] );
         currentScales_[ i ].min_ = controllers_.options_.GetOption( strMinScale + boost::lexical_cast< std::string >( i ), DefaultScales[ i ].min_ ).To< int >();
         currentScales_[ i ].max_ = controllers_.options_.GetOption( strMaxScale + boost::lexical_cast< std::string >( i ), DefaultScales[ i ].max_ ).To< int >();
-        minCombos_[ i ] = new RichComboBox( "minCombos" + QString::number( i ) );
+        minCombos_[ i ] = new RichWidget< QComboBox >( "minCombos" + QString::number( i ) );
         minCombos_[ i ]->insertStringList( scales );
         minCombos_[ i ]->setCurrentItem( ConvertFromScale( currentScales_[ i ].min_ ) );
         connect( minCombos_[ i ], SIGNAL( activated( int ) ), this, SLOT( OnValueChanged( int ) ) );
-        maxCombos_[ i ] = new RichComboBox( "maxCombos" + QString::number( i ) );
+        maxCombos_[ i ] = new RichWidget< QComboBox >( "maxCombos" + QString::number( i ) );
         maxCombos_[ i ]->insertStringList( scales );
         maxCombos_[ i ]->setCurrentItem( ConvertFromScale( currentScales_[ i ].max_ ) );
         connect( maxCombos_[ i ], SIGNAL( activated( int ) ), this, SLOT( OnValueChanged( int ) ) );

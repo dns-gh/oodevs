@@ -29,7 +29,7 @@ namespace gui
     class NatureEditionWidget;
     class SymbolIcons;
     class UnitPreviewIcon;
-    class RichComboBox;
+    template< typename T > class RichWidget;
 }
 
 // =============================================================================
@@ -94,7 +94,7 @@ private:
     E_GhostType ghostType_;
     std::string level_;
     QString levelBase_;
-    gui::RichComboBox* levelComboBox_;
+    gui::RichWidget< QComboBox >* levelComboBox_;
     QStringList levelNames_;
     // Nature
     gui::NatureEditionWidget* natureWidget_;

@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "CommonDelegate.h"
 #include "moc_CommonDelegate.cpp"
-#include "RichComboBox.h"
+#include "RichWidget.h"
 #include "RichLineEdit.h"
 #include "RichSpinBox.h"
 #include "Roles.h"
@@ -278,7 +278,7 @@ QWidget* CommonDelegate::createEditor( QWidget* parent, const QStyleOptionViewIt
     }
     else if( const QStringList* element = Find( comboBoxs_, position->id_ ) )
     {
-        RichComboBox* editor = new RichComboBox( "editorComboBox", parent );
+        RichWidget< QComboBox >* editor = new RichWidget< QComboBox >( "editorComboBox", parent );
         editor->addItems( *element );
         return editor;
     }
@@ -321,7 +321,7 @@ void CommonDelegate::setEditorData( QWidget* editor, const QModelIndex& index ) 
     else if( const QStringList* element = Find( comboBoxs_, position->id_ ) )
     {
         int value = newIndex.model()->data( newIndex, Roles::DataRole ).toInt();
-        RichComboBox* comboBox = static_cast< RichComboBox* >( editor );
+        RichWidget< QComboBox >* comboBox = static_cast< RichWidget< QComboBox >* >( editor );
         comboBox->setCurrentIndex( value );
     }
     else if( const QString* element = Find( lineEdits_, position->id_ ) )
@@ -364,7 +364,7 @@ void CommonDelegate::setModelData( QWidget* editor, QAbstractItemModel* model, c
     }
     else if( const QStringList* element = Find( comboBoxs_, position->id_ ) )
     {
-        RichComboBox* comboBox = static_cast< RichComboBox* >( editor );
+        RichWidget< QComboBox >* comboBox = static_cast< RichWidget< QComboBox >* >( editor );
         model->setData( index, comboBox->currentIndex(), Roles::DataRole );
         model->setData( index, comboBox->currentText(), Qt::EditRole );
     }

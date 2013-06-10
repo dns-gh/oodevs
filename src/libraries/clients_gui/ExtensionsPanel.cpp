@@ -31,7 +31,7 @@
 #include "DiffusionListFunctors.h"
 #include "DiffusionListLineEdit.h"
 #include "RichCheckBox.h"
-#include "RichComboBox.h"
+#include "RichWidget.h"
 #include "RichGroupBox.h"
 #include "SubObjectName.h"
 #include <boost/lexical_cast.hpp>
@@ -212,7 +212,7 @@ namespace
         mutable unsigned int trailing_;
     };
 
-    void FillCombo( RichComboBox& combo, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver )
+    void FillCombo( RichWidget< QComboBox >& combo, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver )
     {
         std::string dictionary;
         std::string kind;
@@ -313,7 +313,7 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute, int cur
         break;
     case AttributeType::ETypeDictionary:
         {
-            RichComboBox* combo = new RichComboBox( attribute.GetName().c_str() );
+            RichWidget< QComboBox >* combo = new RichWidget< QComboBox >( attribute.GetName().c_str() );
             FillCombo( *combo, attribute, extensions_ );
             try
             {
@@ -332,7 +332,7 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute, int cur
         break;
     case AttributeType::ETypeLoosyDictionary:
         {
-            RichComboBox* combo = new RichComboBox( attribute.GetName().c_str() );
+            RichWidget< QComboBox >* combo = new RichWidget< QComboBox >( attribute.GetName().c_str() );
             FillCombo( *combo, attribute, extensions_ );
             if( min != -1 || max != 1 )
             {
@@ -440,7 +440,7 @@ void ExtensionsPanel::Commit()
                 break;
             case AttributeType::ETypeDictionary:
                 {
-                    RichComboBox* combo = static_cast< RichComboBox* >( "combo", *it );
+                    RichWidget< QComboBox >* combo = static_cast< RichWidget< QComboBox >* >( "combo", *it );
                     const std::string key = GetDictionaryKey( combo->currentText(), *attribute, extensions_ );
                     if( !key.empty() )
                         ext->SetValue( combo->name(), enabled ? key : "" );
@@ -450,7 +450,7 @@ void ExtensionsPanel::Commit()
                 break;
             case AttributeType::ETypeLoosyDictionary:
                 {
-                    RichComboBox* combo = static_cast< RichComboBox* >( "combo", *it );
+                    RichWidget< QComboBox >* combo = static_cast< RichWidget< QComboBox >* >( "combo", *it );
                     QString text = combo->currentText();
                     int pos = 0;
                     if( !combo->validator() || combo->validator()->validate( text, pos ) == QValidator::Acceptable )
@@ -509,7 +509,7 @@ void ExtensionsPanel::UpdateDisplay()
                 break;
             case AttributeType::ETypeDictionary:
                 {
-                    RichComboBox* combo = static_cast< RichComboBox* >( "combo", *it );
+                    RichWidget< QComboBox >* combo = static_cast< RichWidget< QComboBox >* >( "combo", *it );
                     const std::string& selected = GetDictionaryString( value.toStdString(), *attribute, extensions_ );
                     if( !selected.empty() )
                         combo->setCurrentText( selected.c_str() );
@@ -517,7 +517,7 @@ void ExtensionsPanel::UpdateDisplay()
                 break;
             case AttributeType::ETypeLoosyDictionary:
                 {
-                    RichComboBox* combo = static_cast< RichComboBox* >( "combo", *it );
+                    RichWidget< QComboBox >* combo = static_cast< RichWidget< QComboBox >* >( "combo", *it );
                     combo->setCurrentText( enabled ? value : "" );
                     int pos = 0;
                     combo->setPaletteBackgroundColor( ( !combo->validator() || combo->validator()->validate( value, pos ) == QValidator::Acceptable ) ? Qt::white : Qt::yellow );

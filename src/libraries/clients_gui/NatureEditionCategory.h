@@ -14,7 +14,7 @@
 
 namespace gui
 {
-    class RichComboBox;
+    template< typename T > class RichWidget;
 // =============================================================================
 /** @class  NatureEditionCategory
     @brief  NatureEditionCategory
@@ -71,7 +71,7 @@ private:
     int                              row_;
     int                              deep_;
     QLabel*                          label_;
-    RichComboBox*                    box_;
+    RichWidget< QComboBox >*                    box_;
     const kernel::SymbolRule*        rule_;
     std::map< QString, std::string > internalNames_;
     QString                          current_;

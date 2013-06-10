@@ -49,7 +49,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         Q3HBox* waterShedBox = new Q3HBox( this );
         watershedEnabled_ = new RichCheckBox( "watershedEnabled", tools::translate( "gui::GisToolBar", "Watershed" ), waterShedBox );
         QToolTip::add( watershedEnabled_, tools::translate( "gui::GisToolBar", "Enable/disable watershed display" ) );
-        mode_ = new RichComboBox( "mode", waterShedBox );
+        mode_ = new RichWidget< QComboBox >( "mode", waterShedBox );
         mode_->insertItem( tools::translate( "gui::GisToolBar", "<" ) );
         mode_->insertItem( tools::translate( "gui::GisToolBar", ">" ) );
         mode_->setMaximumWidth( 60 );

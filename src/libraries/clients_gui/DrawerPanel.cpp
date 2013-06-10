@@ -21,7 +21,7 @@
 #include "RichGroupBox.h"
 #include "RichToolButton.h"
 #include "SubObjectName.h"
-#include "RichComboBox.h"
+#include "RichWidget.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -105,7 +105,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     QToolTip::add( btn, tr( "Start drawing" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( StartDrawing() ) );
 
-    RichComboBox* combo = new RichComboBox( "line", box );;
+    RichWidget< QComboBox >* combo = new RichWidget< QComboBox >( "line", box );;
     combo->setEditable( false );
 
     QVector< qreal > dashes;

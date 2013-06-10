@@ -14,7 +14,7 @@ namespace gui
 {
     class RichPushButton;
     class RichLineEdit;
-    class RichComboBox;
+    template< typename T > class RichWidget;
 }
 
 namespace tools
@@ -57,8 +57,8 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     gui::RichLineEdit* exerciseName_;
-    gui::RichComboBox* editTerrainList_;
-    gui::RichComboBox* editModelList_;
+    gui::RichWidget< QComboBox >* editTerrainList_;
+    gui::RichWidget< QComboBox >* editModelList_;
     gui::RichPushButton* ok_;
     //@}
 };

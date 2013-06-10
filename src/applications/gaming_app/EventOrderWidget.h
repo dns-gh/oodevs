@@ -30,7 +30,6 @@ namespace actions
 namespace gui
 {
     template< typename T > class RichWarnWidget;
-    class RichComboBox;
     class RichGroupBox;
     class RichLabel;
 }

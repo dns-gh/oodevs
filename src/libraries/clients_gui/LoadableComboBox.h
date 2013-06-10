@@ -21,7 +21,7 @@ namespace gui
 */
 // Created: JSR 2011-07-07
 // =============================================================================
-class LoadableComboBox : public LoadableFieldTemplate< RichComboBox >
+class LoadableComboBox : public LoadableFieldTemplate< RichWidget< QComboBox > >
 {
 public:
     //! @name Constructors/Destructor

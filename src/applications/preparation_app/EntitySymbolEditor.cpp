@@ -14,7 +14,7 @@
 #include "clients_gui/NatureEditionCategory.h"
 #include "clients_gui/NatureEditionWidget.h"
 #include "clients_gui/UnitPreviewIcon.h"
-#include "clients_gui/RichComboBox.h"
+#include "clients_gui/RichWidget.h"
 
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -35,7 +35,7 @@ EntitySymbolEditor::EntitySymbolEditor( QGridLayout* layout, int row, kernel::Co
 {
     // Level
     layout->addWidget( new QLabel( tr( "Hierarchy level:" ), this ), row, 0 );
-    levelComboBox_ = new gui::RichComboBox( "levelComboBox", this );
+    levelComboBox_ = new gui::RichWidget< QComboBox >( "levelComboBox", this );
     levelBase_ = tr( "Select a parent automat or formation" );
     connect( levelComboBox_, SIGNAL( activated( int ) ), SLOT( UpdateSymbol() ) );
     layout->addWidget( levelComboBox_, row, 1 );

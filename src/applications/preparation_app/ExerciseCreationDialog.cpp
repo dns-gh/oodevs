@@ -15,7 +15,7 @@
 #include "tools/GeneralConfig.h"
 #include "clients_gui/RichPushButton.h"
 #include "clients_gui/RichLineEdit.h"
-#include "clients_gui/RichComboBox.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/RichGroupBox.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -50,7 +50,7 @@ ExerciseCreationDialog::ExerciseCreationDialog( QWidget* parent, const tools::Ge
     }
     {
 
-        editTerrainList_ = new gui::RichComboBox( "editTerrainList" );
+        editTerrainList_ = new gui::RichWidget< QComboBox >( "editTerrainList" );
         editTerrainList_->clear();
         editTerrainList_->addItems( fc::PathListToQStringList( fc::ListTerrains( config_ ) ) );
 
@@ -60,8 +60,8 @@ ExerciseCreationDialog::ExerciseCreationDialog( QWidget* parent, const tools::Ge
         grid->addMultiCellWidget( editTerrainBox, 1, 1, 0, 2 );
     }
     {
-        //RichComboBox
-        editModelList_ = new gui::RichComboBox( "editModelList" );
+        //RichWidget< QComboBox >
+        editModelList_ = new gui::RichWidget< QComboBox >( "editModelList" );
         editModelList_->clear();
         const tools::Path::T_Paths decisionalModels = fc::ListModels( config_ );
         for( auto it = decisionalModels.begin(); it != decisionalModels.end(); ++it )

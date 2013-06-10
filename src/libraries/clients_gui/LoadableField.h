@@ -13,7 +13,7 @@
 namespace gui
 {
     class ObjectPrototypeLoader_ABC;
-    class RichComboBox;
+    template< typename T > class RichWidget;
 
 // =============================================================================
 /** @class  LoadableField
@@ -56,7 +56,7 @@ private:
     //! @name Member data
     //@{
     const QString probableName_;
-    RichComboBox* fieldName_;
+    RichWidget< QComboBox >* fieldName_;
     //@}
 };
 

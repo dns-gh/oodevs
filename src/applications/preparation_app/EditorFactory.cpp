@@ -21,7 +21,7 @@
 #include "preparation/TeamKarmas.h"
 #include "preparation/LogisticLevel.h"
 #include "clients_gui/CriticalIntelligenceDialog.h"
-#include "clients_gui/RichComboBox.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_gui/Tools.h"
 #include "clients_gui/ValueEditor.h"
@@ -180,12 +180,12 @@ void EditorFactory::Call( kernel::NBCAgent** const& value )
 namespace
 {
     template< typename Enum >
-    class EnumEditor : public gui::RichComboBox
+    class EnumEditor : public gui::RichWidget< QComboBox >
                      , public gui::ValueEditor< Enum >
     {
     public:
         explicit EnumEditor( QWidget* parent )
-            : gui::RichComboBox( "EnumEditor", parent )
+            : gui::RichWidget< QComboBox >( "EnumEditor", parent )
         {
             for( int i = 0; i < int( Enum::max() ); ++i )
                 insertItem( Enum( i ).ToString() );

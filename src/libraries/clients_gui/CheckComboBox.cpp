@@ -119,7 +119,7 @@ void CheckComboBox::CheckComboLineEdit::mousePressEvent( QMouseEvent* event )
 // Created: ABR 2012-06-18
 // -----------------------------------------------------------------------------
 CheckComboBox::CheckComboBox( const QString& objectName, QWidget* parent /* = 0 */ )
-    : RichComboBox( objectName, parent )
+    : RichWidget< QComboBox >( objectName, parent )
     , lineEdit_ ( 0 )
     , separator_( ";" )
     , allText_  ( "" )

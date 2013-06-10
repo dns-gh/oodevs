@@ -22,7 +22,7 @@ namespace kernel
 
 namespace gui
 {
-    class RichComboBox;
+    template< typename T > class RichWidget;
 // =============================================================================
 /** @class  CoordinateSystemsPanel
     @brief  CoordinateSystemsPanel
@@ -54,7 +54,7 @@ private:
      kernel::Options& options_;
      kernel::Controllers& controllers_;
      kernel::CoordinateSystems& coordinateSystems_;
-     RichComboBox* listCoordSys_;
+     RichWidget< QComboBox >* listCoordSys_;
      kernel::CoordinateSystems::Projection previousCoordinateSystem_;
     //@}
 };

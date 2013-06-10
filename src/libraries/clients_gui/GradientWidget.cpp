@@ -17,7 +17,7 @@
 #include "GradientPreferences.h"
 #include "PresetDialog.h"
 #include "resources.h"
-#include "RichComboBox.h"
+#include "RichWidget.h"
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
@@ -41,7 +41,7 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
 {
     setMaximumHeight( 150 );
     Q3HBox* box = new Q3HBox( this );
-    presetCombo_ = new RichComboBox( "presetCombo", box );
+    presetCombo_ = new RichWidget< QComboBox >( "presetCombo", box );
 
     RichToolButton* copyPreset = new RichToolButton( "copyPreset", box );
     copyPreset->setPixmap( MAKE_PIXMAP( copy ) );

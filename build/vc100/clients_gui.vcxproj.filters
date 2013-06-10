@@ -991,9 +991,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichCheckBox.cpp">
       <Filter>Source Files\RichObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichComboBox.cpp">
-      <Filter>Source Files\RichObjects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.cpp">
       <Filter>Source Files\RichObjects</Filter>
     </ClCompile>
@@ -1699,9 +1696,6 @@
       <Filter>Source Files\RichObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichCheckBox.h">
-      <Filter>Source Files\RichObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichComboBox.h">
       <Filter>Source Files\RichObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h">

@@ -11,7 +11,7 @@
 #include "UndergroundPrototype_ABC.h"
 
 #include "LoadableComboBox.h"
-#include "RichComboBox.h"
+#include "RichWidget.h"
 #include "RichLabel.h"
 #include "SubObjectName.h"
 #include "Tools.h"
@@ -77,7 +77,7 @@ void UndergroundPrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
 // -----------------------------------------------------------------------------
 void UndergroundPrototype_ABC::NotifyUpdated( const kernel::UndergroundAttribute_ABC& attribute )
 {
-    RichComboBox* combo = network_->GetDefaultValueWidget();
+    RichWidget< QComboBox >* combo = network_->GetDefaultValueWidget();
     if( combo )
     {
         const std::string& network = attribute.GetNetwork();

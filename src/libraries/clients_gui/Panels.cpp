@@ -13,7 +13,7 @@
 
 #include "InfoPanel_ABC.h"
 #include "RichPushButton.h"
-#include "RichComboBox.h"
+#include "RichWidget.h"
 #include "SubObjectName.h"
 #include "resources.h"
 
@@ -38,7 +38,7 @@ Panels::Panels( const QString& objectName, QWidget* pParent )
     next_->setMaximumSize( 20, 20 );
     next_->setFlat( true );
 
-    combo_ = new RichComboBox( "combo" );
+    combo_ = new RichWidget< QComboBox >( "combo" );
     combo_->setFocusPolicy( Qt::StrongFocus );
 
     QHBoxLayout* box = new QHBoxLayout();

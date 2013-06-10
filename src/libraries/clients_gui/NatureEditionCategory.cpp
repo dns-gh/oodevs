@@ -12,17 +12,17 @@
 #include "moc_NatureEditionCategory.cpp"
 #include "Tools.h"
 #include "clients_kernel/SymbolRule.h"
-#include "RichComboBox.h"
+#include "RichWidget.h"
 
 using namespace gui;
 using namespace kernel;
 
 namespace
 {
-    class NoWheelComboBox : public RichComboBox
+    class NoWheelComboBox : public RichWidget< QComboBox >
     {
     public :
-        NoWheelComboBox( const QString& objectName ) : RichComboBox( objectName ) {}
+        NoWheelComboBox( const QString& objectName ) : RichWidget< QComboBox >( objectName ) {}
         virtual ~NoWheelComboBox() {}
         virtual void wheelEvent( QWheelEvent * ) {}
     };

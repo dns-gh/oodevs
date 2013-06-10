@@ -16,7 +16,7 @@ namespace gui
 {
     class InfoPanel_ABC;
     class RichPushButton;
-    class RichComboBox;
+    template< typename T > class RichWidget;
 
 // =============================================================================
 /** @class  Panels
@@ -89,7 +89,7 @@ private:
     //@{
     RichPushButton*     previous_;
     RichPushButton*     next_;
-    RichComboBox*       combo_;
+    RichWidget< QComboBox >*       combo_;
     QStackedWidget*     stack_;
     QWidget*            dummy_;
 

@@ -13,7 +13,7 @@
 
 #include "clients_gui/RichSpinBox.h"
 #include "clients_gui/RichPushButton.h"
-#include "clients_gui/RichComboBox.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/RichTableWidget.h"
 #include "clients_gui/Usages.h"
 #include "clients_kernel/AccommodationType.h"
@@ -38,7 +38,7 @@ UsagesDockWidget::UsagesDockWidget( QWidget* parent, kernel::Controllers& contro
 {
     gui::SubObjectName subObject( this->objectName() );
     QHBoxLayout* buttonLayout = new QHBoxLayout();
-    pMotivations_ = new gui::RichComboBox( "motivations" );
+    pMotivations_ = new gui::RichWidget< QComboBox >( "motivations" );
     pButton_ = new gui::RichPushButton( "add", tr( "Add" ) );
     buttonLayout->addWidget( pMotivations_ );
     buttonLayout->addWidget( pButton_ );

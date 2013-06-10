@@ -23,7 +23,7 @@ namespace kernel
 namespace gui
 {
     class RichPushButton;
-    class RichComboBox;
+    template< typename T > class RichWidget;
     class RichTableWidget;
 }
 
@@ -89,7 +89,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     StaticModel& staticModel_;
-    gui::RichComboBox* pMotivations_;
+    gui::RichWidget< QComboBox >* pMotivations_;
     gui::RichPushButton* pButton_;
     gui::RichTableWidget* pTable_;
     bool isEditing_;

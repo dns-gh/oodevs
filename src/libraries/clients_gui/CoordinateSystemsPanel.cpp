@@ -12,7 +12,7 @@
 #include "moc_CoordinateSystemsPanel.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
-#include "clients_gui/RichComboBox.h"
+#include "clients_gui/RichWidget.h"
 #include "clients_gui/RichGroupBox.h"
 
 using namespace gui;
@@ -31,7 +31,7 @@ CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent, kernel::Control
     , previousCoordinateSystem_( kernel::CoordinateSystems::E_Mgrs )
 {
     QLabel* coordinateLabel = new QLabel( tr( "Select current coordinate system:" ) );
-    listCoordSys_ = new RichComboBox( "listCoordSys" );
+    listCoordSys_ = new RichWidget< QComboBox >( "listCoordSys" );
     listCoordSys_->setEditable( false );
 
     RichGroupBox* box = new RichGroupBox( "coordinateSystem", tr( "Coordinate System" ), this );
