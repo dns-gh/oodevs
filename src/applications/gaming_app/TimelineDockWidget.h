@@ -12,9 +12,18 @@
 
 #include "clients_gui/RichDockWidget.h"
 
+namespace actions
+{
+    namespace gui
+    {
+        class InterfaceBuilder_ABC;
+    }
+}
+
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
     class Time_ABC;
 }
 
@@ -43,7 +52,8 @@ class TimelineDockWidget : public gui::RichDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const kernel::Time_ABC& simulation, Model& model );
+             TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const kernel::Time_ABC& simulation,
+                                 Model& model, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile );
     virtual ~TimelineDockWidget();
     //@}
 

@@ -454,7 +454,7 @@
     <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventBottomWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\EventDetailWidget.h" />
     <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventMultimediaWidget.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\EventOrderWidget.h" />
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventOrderWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\EventReportWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\EventSupervisorActionWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\EventTaskWidget.h" />

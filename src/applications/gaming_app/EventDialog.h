@@ -13,8 +13,18 @@
 #include "clients_gui/ModalDialog.h"
 #include "ENT/ENT_Enums_Gen.h"
 
+namespace actions
+{
+    namespace gui
+    {
+        class InterfaceBuilder_ABC;
+    }
+}
+
 namespace kernel
 {
+    class Controllers;
+    class Profile_ABC;
     class Time_ABC;
 }
 
@@ -23,12 +33,18 @@ namespace timeline
     struct Event;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 class Event;
 class EventAction;
 class EventBottomWidget;
 class EventFactory;
 class EventTopWidget;
 class EventWidget_ABC;
+class Model;
 
 // =============================================================================
 /** @class  EventDialog
@@ -36,14 +52,15 @@ class EventWidget_ABC;
 */
 // Created: ABR 2013-05-28
 // =============================================================================
-class EventDialog : public ModalDialog
+class EventDialog : public QDialog
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EventDialog( QWidget* parent, const EventFactory& factory, const kernel::Time_ABC& simulation );
+             EventDialog( QWidget* parent, kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
+                          const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile );
     virtual ~EventDialog();
     //@}
 
@@ -58,6 +75,7 @@ private:
     //@{
     void SetEventType( E_EventTypes type );
     void Commit( timeline::Event& event );
+    void Purge();
     void Fill();
     //@}
 

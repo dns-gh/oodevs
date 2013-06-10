@@ -25,6 +25,8 @@
 #include "gaming/Event.h"
 #include "gaming/EventAction.h"
 #include "gaming/EventFactory.h"
+#include "gaming/Model.h"
+#include "gaming/StaticModel.h"
 
 #include "timeline/api.h"
 
@@ -32,9 +34,10 @@
 // Name: EventDialog constructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventDialog::EventDialog( QWidget* parent, const EventFactory& factory, const kernel::Time_ABC& simulation )
-    : ModalDialog( parent, "event-dialog" )
-    , factory_( factory )
+EventDialog::EventDialog( QWidget* parent, kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
+                          const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile )
+    : QDialog( parent )
+    , factory_( model.eventFactory_ )
     , simulation_( simulation )
     , topWidget_( 0 )
     , bottomWidget_( 0 )
@@ -42,8 +45,9 @@ EventDialog::EventDialog( QWidget* parent, const EventFactory& factory, const ke
     , currentWidget_( 0 )
     , editing_( false )
 {
+    setObjectName( "event-dialog" );
     setModal( false );
-    setMinimumWidth( 500 );
+    setMinimumWidth( 600 );
     setMinimumHeight( 600 );
 
     topWidget_ = new EventTopWidget( simulation_ );
@@ -56,7 +60,7 @@ EventDialog::EventDialog( QWidget* parent, const EventFactory& factory, const ke
     connect( bottomWidget_, SIGNAL( ShowDetail() ),     this, SLOT( OnShowDetail() ) );
 
     // Content
-    EventOrderWidget* orderWidget = new EventOrderWidget();
+    EventOrderWidget* orderWidget = new EventOrderWidget( controllers, model, config, interfaceBuilder, profile );
     EventSupervisorActionWidget* supervisorWidget = new EventSupervisorActionWidget();
     EventReportWidget* reportWidget = new EventReportWidget();
     EventTaskWidget* taskWidget = new EventTaskWidget();
@@ -100,6 +104,7 @@ void EventDialog::Create( E_EventTypes type )
     editing_ = false;
     event_.reset( factory_.Create( type ) );
     SetEventType( type );
+    Purge();
     Fill();
     show();
 }
@@ -114,6 +119,7 @@ void EventDialog::Edit( Event& event )
     editing_ = true;
     event_.reset( event.Clone() );
     SetEventType( event.GetType() );
+    Purge();
     Fill();
     show();
 }
@@ -126,6 +132,18 @@ void EventDialog::SetEventType( E_EventTypes type )
 {
     stack_->setCurrentIndex( type );
     currentWidget_ = static_cast< EventWidget_ABC* >( stack_->widget( type ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDialog::Purge
+// Created: ABR 2013-06-06
+// -----------------------------------------------------------------------------
+void EventDialog::Purge()
+{
+    topWidget_->Purge();
+    currentWidget_->Purge();
+    bottomWidget_->Purge();
+    detailWidget_->Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -159,32 +177,9 @@ void EventDialog::Commit( timeline::Event& event )
 void EventDialog::OnTrigger()
 {
     if( currentWidget_->IsValid() )
-    {
-        timeline::Event event;
-        Commit( event );
-        event_->Update( event );
-
-        if( event_->GetType() == eEventTypes_Order )
-            emit CreateInstantOrder( static_cast< const EventAction& >( *event_ ) );
-        else
-        {
-            timeline::Event& event = event_->GetEvent();
-            QDateTime currentTime = simulation_.GetDateTime();
-            if( !event.end.empty() )
-            {
-                QDateTime beginTime = QDateTime::fromString( QString::fromStdString( event.begin ), EVENT_DATE_FORMAT );
-                QDateTime endTime = QDateTime::fromString( QString::fromStdString( event.end ), EVENT_DATE_FORMAT );
-                QDateTime newEndTime = currentTime.addMSecs( beginTime.daysTo( endTime ) * 1000 * 60 * 60 * 24 + beginTime.time().msecsTo( endTime.time() ) );
-                event.end = newEndTime.toString( EVENT_DATE_FORMAT ).toStdString();
-            }
-            event.begin = currentTime.toString( EVENT_DATE_FORMAT ).toStdString();
-            emit CreateEvent( event );
-        }
-    }
+        currentWidget_->Trigger();
     else
-    {
         QMessageBox::warning( this, tr( "Warning" ), tr( "This event is incomplete so it can't be triggered.") );
-    }
 }
 
 // -----------------------------------------------------------------------------

@@ -197,7 +197,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     if( config.HasTimeline() )
     {
         // New Timeline
-        timeline_ = new TimelineDockWidget( parent, controllers, config, simulation, model );
+        timeline_ = new TimelineDockWidget( parent, controllers, config, simulation, model, *interfaceBuilder_, profile );
         timeline_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timeline_ );
         QObject::connect( missionPanel_, SIGNAL( CreateEvent( const timeline::Event& ) ), timeline_, SIGNAL( CreateEvent( const timeline::Event& ) ) );
@@ -242,6 +242,8 @@ DockContainer::~DockContainer()
 {
     delete afterAction_;
     delete missionPanel_;
+    if( timeline_ )
+        delete timeline_;
 }
 
 // -----------------------------------------------------------------------------

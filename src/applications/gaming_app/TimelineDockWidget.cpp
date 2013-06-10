@@ -25,14 +25,16 @@ int TimelineDockWidget::maxTabNumber_ = -1;
 // Name: TimelineDockWidget constructor
 // Created: ABR 2013-05-14
 // -----------------------------------------------------------------------------
-TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const kernel::Time_ABC& simulation, Model& model )
+TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const kernel::Time_ABC& simulation,
+                                        Model& model, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile )
     : gui::RichDockWidget( controllers, parent, "timeline-dock-widget" )
     , cfg_( new timeline::Configuration() )
     , simulation_( simulation )
     , isConnected_( false )
     , model_( model )
-    , eventDialog_( new EventDialog( parent, model.eventFactory_, simulation ) )
+    , eventDialog_( 0 )
 {
+    // Init
     setCaption( tr( "Actions timeline" ) );
     mainTitle_ = tr( "Main" );
 
@@ -42,18 +44,24 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& co
     cfg_->rundir = "cef";
     cfg_->binary = "cef/timeline_client.exe";
     cfg_->external = true;
-
     if( !cfg_->binary.IsRegularFile() )
         MT_LOG_ERROR_MSG( tr( "Invalid timeline binary '%1'" ).arg( QString::fromStdWString( cfg_->binary.ToUnicode() ) ).toStdString() );
 
+    // Dialog
+    eventDialog_ = new EventDialog( this, controllers, model, config, simulation, interfaceBuilder, profile );
+
+    // Tab widget
     tabWidget_ = new QTabWidget( this );
     setWidget( tabWidget_ );
 
+    // Main tab
     QStringList filters;
     filters << "all";
-    AddFilteredView( filters ); // Main tab
+    AddFilteredView( filters );
     assert( filteredViews_.size() == 1 );
     TimelineFilteredViewWidget* mainWidget = filteredViews_[ 0 ];
+
+    // Connections
     connect( eventDialog_, SIGNAL( CreateEvent( const timeline::Event& ) ), mainWidget, SLOT( CreateEvent( const timeline::Event& ) ) );
     connect( eventDialog_, SIGNAL( EditEvent( const timeline::Event& ) ), mainWidget, SLOT( EditEvent( const timeline::Event& ) ) );
     connect( eventDialog_, SIGNAL( CreateInstantOrder( const EventAction& ) ), this, SIGNAL( CreateInstantOrder( const EventAction& ) ) );

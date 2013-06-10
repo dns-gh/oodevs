@@ -1182,9 +1182,6 @@
     <ClInclude Include="..\..\src\applications\gaming_app\DockContainer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\EventOrderWidget.h">
-      <Filter>Source Files\Dialogs\Events</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\EventSupervisorActionWidget.h">
       <Filter>Source Files\Dialogs\Events</Filter>
     </ClInclude>
@@ -1555,6 +1552,9 @@
       <Filter>Source Files\Dialogs\Events</Filter>
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventMultimediaWidget.h">
+      <Filter>Source Files\Dialogs\Events</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\applications\gaming_app\EventOrderWidget.h">
       <Filter>Source Files\Dialogs\Events</Filter>
     </Qt_file_Mocing>
   </ItemGroup>

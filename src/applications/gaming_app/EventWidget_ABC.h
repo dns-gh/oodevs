@@ -35,7 +35,9 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Purge();
     virtual bool IsValid() const;
+    virtual void Trigger() const;
     //@}
 
     //! @name Abstract operations
