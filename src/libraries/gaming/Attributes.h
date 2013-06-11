@@ -65,7 +65,6 @@ public:
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const;
-    float ComputePostureFactor( const std::vector< float >& factors ) const; // $$$$ AGE 2006-04-19: move in Postures ?
     float GetDistanceModificator( const kernel::SensorType& ) const;
     //@}
 
