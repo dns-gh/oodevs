@@ -202,7 +202,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
         parent->addDockWidget( Qt::TopDockWidgetArea, timeline_ );
         QObject::connect( missionPanel_, SIGNAL( CreateEvent( const timeline::Event& ) ), timeline_, SIGNAL( CreateEvent( const timeline::Event& ) ) );
     }
-    else
+
     {
         // Old Timeline
         TimelinePanel* timelinePanel = new TimelinePanel( parent, controllers, model, *scheduler_, config, profile, *displayExtractor_ );
