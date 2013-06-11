@@ -11,6 +11,7 @@
 #include "FuneralPackagingResource.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "tools/xmlcodecs.h"
+#include "Tools/MIL_Tools.h"
 
 using namespace logistic;
 
@@ -29,6 +30,7 @@ FuneralPackagingResource::FuneralPackagingResource( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "process-duration", processDuration_ );
     if( processDuration_ < 0 )
         xis.error( "Invalid process duration" );
+    processDuration_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( processDuration_ ) );
 
     xis >> xml::attribute( "terminal", terminal_ );
 }
