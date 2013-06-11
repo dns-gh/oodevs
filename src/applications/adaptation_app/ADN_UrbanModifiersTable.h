@@ -23,6 +23,7 @@ namespace helpers
 // =============================================================================
 class ADN_UrbanModifiersTable : public ADN_Table
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

@@ -130,7 +130,7 @@ BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
     urbanRole->NotifyMovingInsideObject( *urbanBlock );
     firer.RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
 
-    BOOST_CHECK_CLOSE( 0.48, urbanRole->ComputeUrbanProtection( *pCategory ), 1. );
+    BOOST_CHECK_CLOSE( 0.32, urbanRole->ComputeUrbanProtection( *pCategory ), 1. );
 
     urbanBlock.reset();
     TER_World::DestroyWorld();

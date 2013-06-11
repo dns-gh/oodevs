@@ -6618,8 +6618,8 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">المواد</translation>
     </message>
     <message>
-        <source>Modifiers</source>
-        <translation type="unfinished">المعدلات</translation>
+        <source>Protection</source>
+        <translation type="unfinished">حماية</translation>
     </message>
 </context>
 <context>

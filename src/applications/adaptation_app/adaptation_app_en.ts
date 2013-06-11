@@ -6630,8 +6630,8 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>Material</translation>
     </message>
     <message>
-        <source>Modifiers</source>
-        <translation>Modifiers</translation>
+        <source>Protection</source>
+        <translation type="unfinished">Protection</translation>
     </message>
 </context>
 <context>

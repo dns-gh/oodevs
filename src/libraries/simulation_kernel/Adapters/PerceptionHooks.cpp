@@ -389,7 +389,7 @@ namespace
     DEFINE_HOOK( GetUrbanObjectStructuralState, 1, double, ( const SWORD_Model* urbanObject ) )
     {
         const StructuralCapacity* structuralCapacity = GET_DATA( urbanObject, MIL_UrbanObject_ABC ).Retrieve< StructuralCapacity >();
-        return structuralCapacity ? structuralCapacity->GetStructuralState() : 0;
+        return structuralCapacity ? structuralCapacity->GetStructuralState() : 1;
     }
     DEFINE_HOOK( HasUrbanObjectArchitecture, 1, bool, ( const SWORD_Model* urbanObject ) )
     {
