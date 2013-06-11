@@ -53,7 +53,7 @@ MIL_Object_ABC::MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& ty
     , bReadyForDeletion_    ( false )
 {
     if( GetType().GetCapacity< SpawnCapacity >() )
-        idManager_.GetId(); // we need to skip one ID for dynamic created object.
+        idManager_.GetId( forcedId + 1, true ); // we need to skip one ID for dynamic created object.
 }
 
 // -----------------------------------------------------------------------------

@@ -138,6 +138,7 @@ public:
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
     bool ConvertIdToUrbanId( unsigned int& id ) const;
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
+    unsigned long FindMaxId( const MIL_Config& config ) const;
     //@}
 
     //! @name Stats
@@ -319,7 +320,7 @@ private:
     std::auto_ptr< KnowledgeGroupFactory_ABC >    knowledgeGroupFactory_;  // has to be declared before armyFactory
     std::auto_ptr< ArmyFactory_ABC >              armyFactory_;
 
-    T_Profilers profilers_;
+    T_Profilers profilers_;    
     //@}
 };
 
