@@ -206,11 +206,11 @@ void DefaultPostureComputer::Update()
     if( bMoving_ )
     {
         const double completion = ComputeCompletion( results_.postureCompletionPercentage_, posture_, coefficientsModifier_, rTimingFactor_, isParkedOnEngineerArea_, boost::bind( &PostureTime_ABC::GetPostureTearDownTime, boost::cref( time_ ), _1 ), boost::bind( &Remove, _1, _2 ) );
-        return ComputeMovingPosture( results_, bIsLoaded_, bDiscreteModeEnabled_, completion, posture_ );
+        ComputeMovingPosture( results_, bIsLoaded_, bDiscreteModeEnabled_, completion, posture_ );
     }
     else
     {
         const double completion = ComputeCompletion( results_.postureCompletionPercentage_, posture_, coefficientsModifier_, rTimingFactor_, isParkedOnEngineerArea_, boost::bind( &PostureTime_ABC::GetPostureSetupTime, boost::cref( time_ ), _1 ), boost::bind( &Add, _1, _2 ) );
-        return ComputeStopPosture( results_, isParkedOnEngineerArea_, bStopped_, completion, posture_ );
+        ComputeStopPosture( results_, isParkedOnEngineerArea_, bStopped_, completion, posture_ );
     }
 }

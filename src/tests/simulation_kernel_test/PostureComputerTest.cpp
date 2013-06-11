@@ -14,6 +14,10 @@
 #include "simulation_kernel/MIL_Random_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
+#define CHECK_POSTURE( expected, actual ) \
+    BOOST_CHECK_MESSAGE( expected == actual, \
+        (expected ? (expected)->GetName() : "0") + " != " + (actual ? (actual)->GetName() : "0") )
+
 namespace
 {
     MOCK_BASE_CLASS( MockPostureTime, posture::PostureTime_ABC )
@@ -58,7 +62,7 @@ BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_and_loaded_changes_to_mo
     computer.NotifyLoaded();
     MOCK_EXPECT( time.GetPostureTearDownTime ).once().returns( tearDownTime );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
-    BOOST_CHECK( result.newPosture_ == &PHY_Posture::mouvement_ );
+    CHECK_POSTURE( &PHY_Posture::mouvement_, result.newPosture_ );
     BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, completion, 0.0001 );
 }
 
@@ -83,7 +87,7 @@ BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_and_loaded_in_discrete_m
     computer.NotifyLoaded();
     MOCK_EXPECT( time.GetPostureTearDownTime ).once().returns( 10 );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
-    BOOST_CHECK( result.newPosture_ == &PHY_Posture::mouvementDiscret_ );
+    CHECK_POSTURE( &PHY_Posture::mouvementDiscret_, result.newPosture_ );
 }
 
 BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_and_unloaded_changes_to_short_stopping_posture, Fixture )
@@ -92,7 +96,7 @@ BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_and_unloaded_changes_to_
     computer.SetPostureMovement();
     MOCK_EXPECT( time.GetPostureTearDownTime ).once().returns( 10 );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
-    BOOST_CHECK( result.newPosture_ == &PHY_Posture::posteReflexe_ );
+    CHECK_POSTURE( &PHY_Posture::posteReflexe_, result.newPosture_ );
 }
 
 BOOST_FIXTURE_TEST_CASE( partially_completed_posture_but_moving_uses_posture_time, Fixture )
@@ -109,11 +113,11 @@ BOOST_FIXTURE_TEST_CASE( moving_posture_but_stopped_changes_to_stopped_posture, 
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::mouvement_, false, false, 0, 1, 1, false );
     computer.UnsetPostureMovement();
     const posture::PostureComputer_ABC::Results& result = computer.Result();
-    BOOST_CHECK( result.newPosture_ == &PHY_Posture::arret_ );
+    CHECK_POSTURE( &PHY_Posture::arret_, result.newPosture_ );
     BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, 0, 0.0001 );
 }
 
-BOOST_FIXTURE_TEST_CASE( completion_percent_increase_with_posture_time, Fixture )
+BOOST_FIXTURE_TEST_CASE( completion_percent_increases_with_posture_time, Fixture )
 {
     const double completionPercent = 0;
     const double timeForNextPosture = 5;
@@ -208,7 +212,7 @@ BOOST_FIXTURE_TEST_CASE( moving_posture_but_dead_is_stopped_and_completed, Fixtu
     const double completionPercent = 0;
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::mouvement_, isDead, false, completionPercent, 1, 1, false );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
-    BOOST_CHECK( result.newPosture_ == &PHY_Posture::arret_ );
+    CHECK_POSTURE( &PHY_Posture::arret_, result.newPosture_ );
     BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, 1, 0.0001 );
 }
 
@@ -219,7 +223,7 @@ BOOST_FIXTURE_TEST_CASE( parked_on_engineer_area_changes_to_its_special_posture,
     posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, completionPercent, 1, 1, parkedOnEngineerArea );
     MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( 0 );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
-    BOOST_CHECK( result.newPosture_ == &PHY_Posture::postePrepareGenie_ );
+    CHECK_POSTURE( &PHY_Posture::postePrepareGenie_, result.newPosture_ );
     BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, 1, 0.0001 );
 }
 
@@ -227,16 +231,16 @@ namespace
 {
     struct CheckFixture : public Fixture
     {
-        void CheckNextPosture( const PHY_Posture& current, const PHY_Posture* next )
+        void CheckStoppedPosture( const PHY_Posture& current, const PHY_Posture* next )
         {
             const double completionPercent = 1;
             posture::DefaultPostureComputer computer( random, time, current, false, false, completionPercent, 1, 1, false );
             MOCK_EXPECT( time.GetPostureSetupTime ).returns( 0 );
             const posture::PostureComputer_ABC::Results& result = computer.Result();
-            BOOST_CHECK( result.newPosture_ == next );
-            BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, 0., 0.0001 );
+            CHECK_POSTURE( result.newPosture_, next );
+            BOOST_CHECK_SMALL( result.postureCompletionPercentage_, 0.0001 );
         }
-        void CheckPreviousPosture( const PHY_Posture& current, const PHY_Posture* previous )
+        void CheckMovingPosture( const PHY_Posture& current, const PHY_Posture& previous )
         {
             const double completionPercent = 0;
             posture::DefaultPostureComputer computer( random, time, current, false, false, completionPercent, 1, 1, false );
@@ -244,29 +248,29 @@ namespace
             computer.NotifyLoaded();
             MOCK_EXPECT( time.GetPostureTearDownTime ).returns( 0 );
             const posture::PostureComputer_ABC::Results& result = computer.Result();
-            BOOST_CHECK( result.newPosture_ == previous );
+            CHECK_POSTURE( result.newPosture_, &previous );
         }
     };
 }
 
 BOOST_FIXTURE_TEST_CASE( completed_posture_changes_to_next_posture, CheckFixture )
 {
-    CheckNextPosture( PHY_Posture::arret_            , &PHY_Posture::posteReflexe_ );
-    CheckNextPosture( PHY_Posture::posteReflexe_     , &PHY_Posture::poste_ );
-    CheckNextPosture( PHY_Posture::poste_            , &PHY_Posture::posteAmenage_ );
-    CheckNextPosture( PHY_Posture::posteAmenage_     , 0 );
-    CheckNextPosture( PHY_Posture::postePrepareGenie_, 0 );
-    CheckNextPosture( PHY_Posture::mouvement_        , 0 );
-    CheckNextPosture( PHY_Posture::mouvementDiscret_ , 0 );
+    CheckStoppedPosture( PHY_Posture::arret_            , &PHY_Posture::posteReflexe_ );
+    CheckStoppedPosture( PHY_Posture::posteReflexe_     , &PHY_Posture::poste_ );
+    CheckStoppedPosture( PHY_Posture::poste_            , &PHY_Posture::posteAmenage_ );
+    CheckStoppedPosture( PHY_Posture::posteAmenage_     , 0 );
+    CheckStoppedPosture( PHY_Posture::postePrepareGenie_, 0 );
+    CheckStoppedPosture( PHY_Posture::mouvement_        , 0 );
+    CheckStoppedPosture( PHY_Posture::mouvementDiscret_ , 0 );
 }
 
 BOOST_FIXTURE_TEST_CASE( moving_entity_changes_to_previous_posture, CheckFixture )
 {
-    CheckPreviousPosture( PHY_Posture::arret_            , &PHY_Posture::mouvement_ );
-    CheckPreviousPosture( PHY_Posture::posteReflexe_     , &PHY_Posture::arret_ );
-    CheckPreviousPosture( PHY_Posture::poste_            , &PHY_Posture::posteReflexe_ );
-    CheckPreviousPosture( PHY_Posture::posteAmenage_     , &PHY_Posture::poste_ );
-    CheckPreviousPosture( PHY_Posture::postePrepareGenie_, &PHY_Posture::mouvement_ );
-    CheckPreviousPosture( PHY_Posture::mouvement_        , &PHY_Posture::mouvement_ );
-    CheckPreviousPosture( PHY_Posture::mouvementDiscret_ , &PHY_Posture::mouvement_ );
+    CheckMovingPosture( PHY_Posture::arret_            , PHY_Posture::mouvement_ );
+    CheckMovingPosture( PHY_Posture::posteReflexe_     , PHY_Posture::arret_ );
+    CheckMovingPosture( PHY_Posture::poste_            , PHY_Posture::posteReflexe_ );
+    CheckMovingPosture( PHY_Posture::posteAmenage_     , PHY_Posture::poste_ );
+    CheckMovingPosture( PHY_Posture::postePrepareGenie_, PHY_Posture::mouvement_ );
+    CheckMovingPosture( PHY_Posture::mouvement_        , PHY_Posture::mouvement_ );
+    CheckMovingPosture( PHY_Posture::mouvementDiscret_ , PHY_Posture::mouvement_ );
 }
