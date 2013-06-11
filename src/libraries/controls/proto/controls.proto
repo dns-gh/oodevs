@@ -15,6 +15,7 @@ enum ClientType
     CLIENT_RESIZE       = 0x100;
     CLIENT_QUIT         = 0x101;
     CLIENT_RELOAD       = 0x102;
+    CLIENT_LOAD         = 0x103;
     // event commands
     CLIENT_EVENT_CREATE = 0x200;
     CLIENT_EVENT_DELETE = 0x201;
@@ -74,6 +75,7 @@ message ClientCommand
 {
     optional ClientType type  = 1;
     optional Event      event = 2;
+    optional string     url   = 3;
 }
 
 message ServerCommand

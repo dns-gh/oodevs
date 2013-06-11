@@ -50,10 +50,10 @@ public:
     void Start();
     void UpdateSize();
     void Reload();
+    void Load( const std::string& url );
 
 private:
     void Resize( int width, int height );
-    void Load( const std::string& url );
 
 protected:
     IMPLEMENT_REFCOUNTING( Browser );

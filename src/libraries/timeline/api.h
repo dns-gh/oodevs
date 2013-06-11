@@ -117,6 +117,7 @@ public:
     // Public slots
 public slots:
     virtual void Reload() = 0;
+    virtual void Load( const std::string& url ) = 0;
     virtual bool CreateEvent( const timeline::Event& event ) = 0;
     virtual bool DeleteEvent( const std::string& uuid ) = 0;
 

@@ -51,6 +51,7 @@ public:
     virtual void OnResizeClient();
     virtual void OnQuitClient();
     virtual void OnReloadClient();
+    virtual void OnLoadClient( const std::string& url );
     virtual void OnCreateEvent( const Event& event );
     virtual void OnDeleteEvent( const std::string& uuid );
 

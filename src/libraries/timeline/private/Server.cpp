@@ -120,6 +120,13 @@ void Server::Reload()
     write_->Write( &buffer[0], buffer.size() );
 }
 
+void Server::Load( const std::string& url )
+{
+    std::vector< uint8_t > buffer( controls::LoadClient( 0, 0, url ) );
+    controls::LoadClient( &buffer[0], buffer.size(), url );
+    write_->Write( &buffer[0], buffer.size() );
+}
+
 bool Server::CreateEvent( const Event& event )
 {
     if( !event.IsValid() )

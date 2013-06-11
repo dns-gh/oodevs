@@ -24,6 +24,8 @@ Controller::Controller( const Configuration& cfg )
     : ui_ ( new Ui::Main() )
 {
     ui_->setupUi( &main_ );
+    ui_->toolBar->addWidget( &url_ );
+    url_.setText( QString::fromStdString( cfg.url ) );
     Configuration next = cfg;
     next.widget = ui_->centralwidget;
     ctx_ = timeline::MakeServer( next );
@@ -31,6 +33,7 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ui_->actionCreate, SIGNAL( triggered() ), this, SLOT( OnCreateEvent() ) );
     QObject::connect( ui_->actionDelete, SIGNAL( triggered() ), this, SLOT( OnDeleteEvent() ) );
     QObject::connect( ui_->actionTestCreate, SIGNAL( triggered() ), this, SLOT( OnTestCreate() ) );
+    QObject::connect( &url_, SIGNAL( editingFinished() ), this, SLOT( OnLoad() ) );
     QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
     QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
@@ -98,6 +101,11 @@ void Controller::OnReload()
     uuid_.clear();
     ui_->actionDelete->setEnabled( false );
     ctx_->Reload();
+}
+
+void Controller::OnLoad()
+{
+    ctx_->Load( url_.text().toStdString() );
 }
 
 void Controller::OnCreateEvent()

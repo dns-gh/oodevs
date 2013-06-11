@@ -21,6 +21,7 @@ namespace controls
     size_t ResizeClient( void* dst, size_t size );
     size_t QuitClient  ( void* dst, size_t size );
     size_t ReloadClient( void* dst, size_t size );
+    size_t LoadClient  ( void* dst, size_t size, const std::string& url );
     size_t CreateEvent ( void* dst, size_t size, const Event& event );
     size_t DeleteEvent ( void* dst, size_t size, const std::string& uuid );
 
@@ -32,6 +33,7 @@ namespace controls
         virtual void OnResizeClient() = 0;
         virtual void OnQuitClient()   = 0;
         virtual void OnReloadClient() = 0;
+        virtual void OnLoadClient( const std::string& url ) = 0;
         virtual void OnCreateEvent( const Event& event ) = 0;
         virtual void OnDeleteEvent( const std::string& uuid ) = 0;
     };

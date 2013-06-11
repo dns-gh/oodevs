@@ -43,6 +43,7 @@ public:
 
     /// Server_ABC methods
     virtual void Reload();
+    virtual void Load( const std::string& url );
     virtual bool CreateEvent( const Event& event );
     virtual bool DeleteEvent( const std::string& uuid );
 

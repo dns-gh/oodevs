@@ -37,6 +37,7 @@ public:
 
 public slots:
     void OnReload();
+    void OnLoad();
     void OnCreateEvent();
     void OnCreatedEvent( const timeline::Event& event, const timeline::Error& error );
     void OnSelectedEvent( boost::shared_ptr< timeline::Event > event );
@@ -59,6 +60,7 @@ private:
     std::auto_ptr< Ui::Main > ui_;
     std::auto_ptr< timeline::Server_ABC > ctx_;
     std::string uuid_;
+    QLineEdit url_;
 };
 
 class OnSignal_ABC : public QObject

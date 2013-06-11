@@ -100,6 +100,11 @@ void Client::OnReloadClient()
     browser_->Reload();
 }
 
+void Client::OnLoadClient( const std::string& url )
+{
+    browser_->Load( url );
+}
+
 namespace
 {
     void PostTask( const CefThreadId& id, CefRefPtr< CefTask > task )
