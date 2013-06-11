@@ -252,6 +252,7 @@ DockContainer::~DockContainer()
 // -----------------------------------------------------------------------------
 void DockContainer::Purge()
 {
+    missionPanel_->Purge();
     orbatDockWidget_->Purge();
     if( timeline_ )
         timeline_->Disconnect();

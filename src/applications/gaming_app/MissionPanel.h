@@ -91,6 +91,7 @@ public:
     //! @name Operations
     //@{
     void Draw( gui::Viewport_ABC& viewport );
+    void Purge();
     //@}
 
 private slots:
@@ -125,6 +126,7 @@ private:
     virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
 
     void SetVisible( bool visible );
+    virtual void SetLastVisible();
     void FillInterface( int id ) const;
     QAction* AddMissions( tools::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot, int current );
     void AddMissions( const Decisions_ABC& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot, const QPixmap& pixmap = QPixmap() );
