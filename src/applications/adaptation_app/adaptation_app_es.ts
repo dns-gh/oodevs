@@ -2924,8 +2924,8 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Masalife</source>
-        <translation type="unfinished"></translation>
+        <source>DIA5</source>
+        <translation>DIA5</translation>
     </message>
 </context>
 <context>

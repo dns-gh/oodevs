@@ -2901,16 +2901,16 @@ PNG (*.png)
         <translation type="unfinished">الملف</translation>
     </message>
     <message>
-        <source>Masalife</source>
-        <translation type="unfinished">ماساليفي</translation>
-    </message>
-    <message>
         <source>Missions</source>
         <translation type="unfinished">البعثات</translation>
     </message>
     <message>
         <source>FragOrders</source>
         <translation type="unfinished">فراجورديرس</translation>
+    </message>
+    <message>
+        <source>DIA5</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

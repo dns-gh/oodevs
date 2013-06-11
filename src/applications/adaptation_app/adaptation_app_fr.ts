@@ -2933,8 +2933,8 @@ PNG (*.png)</translation>
         <translation>Modèles de foules</translation>
     </message>
     <message>
-        <source>Masalife</source>
-        <translation>Masalife</translation>
+        <source>DIA5</source>
+        <translation>DIA5</translation>
     </message>
 </context>
 <context>

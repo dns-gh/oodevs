@@ -2913,16 +2913,16 @@ PNG (*.png)
         <translation>File</translation>
     </message>
     <message>
-        <source>Masalife</source>
-        <translation>Masalife</translation>
-    </message>
-    <message>
         <source>Missions</source>
         <translation>Missions</translation>
     </message>
     <message>
         <source>FragOrders</source>
         <translation>FragOrders</translation>
+    </message>
+    <message>
+        <source>DIA5</source>
+        <translation>DIA5</translation>
     </message>
 </context>
 <context>
