@@ -277,7 +277,7 @@
   <report category="operational" id="215" message="Fin de silence radar"/>
   <report category="operational" id="216" message="Tir sur riposte"/>
   <report category="operational" id="217" message="Tir interdit"/>
-  <report category="operational" id="218" message="Tir libre"/>
+  <report category="operational" id="218" message="Tir autorisé"/>
   <report category="operational" id="219" message="Trace : %1">
     <parameter type="String"/>
   </report>
