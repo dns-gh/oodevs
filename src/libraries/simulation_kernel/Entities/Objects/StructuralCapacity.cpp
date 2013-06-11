@@ -226,7 +226,7 @@ void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PH
     // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
     if( area == 0 || materialAttribute == 0 )
         return;
-    structuralState_ = (float)std::max( 0., (double)structuralState_ - dotation.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) / area );
+    structuralState_ = (float)std::max( 0., (double)structuralState_ - ( 1 - dotation.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) ) / area );
     object.ApplyStructuralState( structuralState_ );
 }
 
