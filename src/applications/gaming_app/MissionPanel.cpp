@@ -167,6 +167,15 @@ void MissionPanel::SetVisible( bool visible )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionPanel::SetLastVisible
+// Created: LDC 2013-06-11
+// -----------------------------------------------------------------------------
+void MissionPanel::SetLastVisible()
+{
+    SetVisible( false );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionPanel::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
@@ -520,13 +529,23 @@ void MissionPanel::Disengage()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionPanel::Purge
+// Created: LDC 2013-06-10
+// -----------------------------------------------------------------------------
+void MissionPanel::Purge()
+{
+    titleLabel_->setText( "" );
+    currentType_ = eNbrMissionTypes;
+    pMissionInterface_->Purge();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionPanel::Close
 // Created: LDC 2011-08-29
 // -----------------------------------------------------------------------------
 void MissionPanel::Close()
 {
-    currentType_ = eNbrMissionTypes;
-    pMissionInterface_->Purge();
+    Purge();
     SetVisible( false );
 }
 

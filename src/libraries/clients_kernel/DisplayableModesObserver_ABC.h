@@ -54,6 +54,7 @@ public:
     void SetHiddenModes( int modes ) { hiddenModes_ = modes; }
     void SetVisibleModes( int modes ) { visibleModes_ = modes; }
     void SetVisibleByDefault( bool visibleByDefault ) { visibleByDefault_ = visibleByDefault; }
+    virtual void SetLastVisible() { SetVisible( visible_ ); }
     int GetHiddenModes() const { return hiddenModes_; }
     int GetVisibleModes() const { return visibleModes_; }
     bool GetVisibleByDefault() const { return visibleByDefault_; }
@@ -85,7 +86,7 @@ public:
         {
             EnsureIsEnabled();
             if( !firstChangeToSavedMode )                       // first change to saved mode, let register choose if visible or not
-                SetVisible( visible_ );
+                SetLastVisible();
         }
         currentMode_ = newMode;
         SetReadOnly( IsReadOnly() );
