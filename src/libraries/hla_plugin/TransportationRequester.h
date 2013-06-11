@@ -138,6 +138,7 @@ private:
     std::vector<unsigned int> embarkmentIds_;
     std::vector<unsigned int> disembarkmentIds_;
     const unsigned int missionCompleteReportId_;
+    const unsigned int awaitingCarriersReportId_;
     const unsigned int pauseId_;
     const unsigned int resumeId_;
     const unsigned int cancelId_;

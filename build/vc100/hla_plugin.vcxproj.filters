@@ -355,6 +355,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\OtherArealObject.cpp">
       <Filter>Source Files\Classes\rpr</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ProtocolTools.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -842,6 +845,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\OtherArealObject.h">
       <Filter>Source Files\Classes\rpr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ProtocolTools.h">
+      <Filter>Source Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

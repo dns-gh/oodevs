@@ -15,6 +15,7 @@
 #include "MissionResolver_ABC.h"
 #include "TransportedUnitsVisitor_ABC.h"
 #include "CallsignResolver_ABC.h"
+#include "ProtocolTools.h"
 #include "protocol/Simulation.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
@@ -159,9 +160,8 @@ namespace
     }
     rpr::WorldLocation ReadLocation( const sword::MissionParameter& parameter )
     {
-        return rpr::WorldLocation( parameter.value( 0 ).point().location().coordinates().elem( 0 ).latitude(),
-                                   parameter.value( 0 ).point().location().coordinates().elem( 0 ).longitude(),
-                                   0. );
+        const geometry::Point2d point = ProtocolTools::ConvertToPoint( parameter );
+        return rpr::WorldLocation( point.X(), point.Y(), 0. );
     }
 }
 
@@ -222,13 +222,25 @@ void TransportationOfferer::Receive( interactions::NetnRequestConvoy& request )
     pendingOffers_[ ServiceIdentifier( offer ) ] = offer;
 }
 
+namespace
+{
+    bool isNullParameter( const sword::MissionParameter& p )
+    {
+        return p.has_null_value() && p.null_value();
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: TransportationOfferer::Notify
 // Created: SLI 2011-10-27
 // -----------------------------------------------------------------------------
 void TransportationOfferer::Notify( const sword::UnitOrder& message, int /*context*/ )
 {
-    if( message.type().id() == transportIdentifier_ && message.parameters().elem_size() >= 7 )
+    if( message.type().id() == transportIdentifier_ && message.parameters().elem_size() == 10  &&
+        !isNullParameter( message.parameters().elem( 8 ) ) && // serviceId
+        !isNullParameter( message.parameters().elem( 4 ) ) && // units
+        !isNullParameter( message.parameters().elem( 6 ) ) && // embark area
+        !isNullParameter( message.parameters().elem( 5 ) ) // destination area
+        )
     {
         const std::string& serviceId = message.parameters().elem( 8 ).value( 0 ).acharstr();
         T_Offers::iterator it = pendingOffers_.find( serviceId );
@@ -250,12 +262,17 @@ void TransportationOfferer::Notify( const sword::UnitOrder& message, int /*conte
                                                                                                     callsignResolver_.ResolveUniqueId( agent ),
                                                                                                     NetnObjectFeatureStruct() ) );
         }
-        if( message.parameters().elem( 9 ).value( 0 ).booleanvalue() )
+        if( !isNullParameter( message.parameters().elem( 9 ) ) && 
+            message.parameters().elem( 9 ).value_size() > 0 
+            && message.parameters().elem( 9 ).value( 0 ).booleanvalue() )
             offer.offerType = 0;
         offerInteractionSender_.Send( offer );
         Transfer( pendingOffers_, offeredOffers_, serviceId );
     }
-    else if( message.type().id() == embarkIdentifier_ && message.parameters().elem_size() >= 5 )
+    else if( message.type().id() == embarkIdentifier_ && message.parameters().elem_size() == 8 &&
+        !isNullParameter( message.parameters().elem( 6 ) ) && // serviceId
+        !isNullParameter( message.parameters().elem( 4 ) ) && // embarked units
+        !isNullParameter( message.parameters().elem( 5 ) ) ) // area
     {
         const std::string& serviceId = message.parameters().elem( 6 ).value( 0 ).acharstr();
         T_Offers::iterator it = pendingOffers_.find( serviceId );
@@ -276,12 +293,17 @@ void TransportationOfferer::Notify( const sword::UnitOrder& message, int /*conte
                                                                                                     callsignResolver_.ResolveUniqueId( agent ),
                                                                                                     NetnObjectFeatureStruct() ) );
         }
-        if( message.parameters().elem( 7 ).value( 0 ).booleanvalue() )
+        if( !isNullParameter( message.parameters().elem( 7 ) ) && 
+            message.parameters().elem( 7 ).value_size() > 0 
+            && message.parameters().elem( 7 ).value( 0 ).booleanvalue() )
             offer.offerType = 0;
         offerInteractionSender_.Send( offer );
         Transfer( pendingOffers_, offeredOffers_, serviceId );
     }
-    else if( message.type().id() == disembarkIdentifier_ && message.parameters().elem_size() >= 5 )
+    else if( message.type().id() == disembarkIdentifier_ && message.parameters().elem_size() == 8 &&
+        !isNullParameter( message.parameters().elem( 6 ) ) && // serviceId
+        !isNullParameter( message.parameters().elem( 4 ) ) && // embarked units
+        !isNullParameter( message.parameters().elem( 5 ) ) ) // area
     {
         const std::string& serviceId = message.parameters().elem( 6 ).value( 0 ).acharstr();
         T_Offers::iterator it = pendingOffers_.find( serviceId );
@@ -302,7 +324,9 @@ void TransportationOfferer::Notify( const sword::UnitOrder& message, int /*conte
                                                                                                     callsignResolver_.ResolveUniqueId( agent ),
                                                                                                     NetnObjectFeatureStruct() ) );
         }
-        if( message.parameters().elem( 7 ).value( 0 ).booleanvalue() )
+        if( !isNullParameter( message.parameters().elem( 7 ) ) && 
+            message.parameters().elem( 7 ).value_size() > 0 
+            && message.parameters().elem( 7 ).value( 0 ).booleanvalue() )
             offer.offerType = 0;
         offerInteractionSender_.Send( offer );
         Transfer( pendingOffers_, offeredOffers_, serviceId );
