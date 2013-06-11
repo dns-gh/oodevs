@@ -37,6 +37,27 @@ UserProfilePopulationControls::~UserProfilePopulationControls()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfilePopulationControls::showEvent
+// Created: NPT 2013-06-10
+// -----------------------------------------------------------------------------
+void UserProfilePopulationControls::showEvent( QShowEvent* event )
+{
+    if( selectedProfile_ )
+        UserProfileControls_ABC::Display( *selectedProfile_ );
+    gui::PopulationListView::showEvent( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfilePopulationControls::hideEvent
+// Created: NPT 2013-06-10
+// -----------------------------------------------------------------------------
+void UserProfilePopulationControls::hideEvent( QHideEvent* event )
+{
+    Commit();
+    gui::PopulationListView::hideEvent( event );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfilePopulationControls::viewportResizeEvent
 // Created: LGY 2011-09-12
 // -----------------------------------------------------------------------------
@@ -70,7 +91,7 @@ void UserProfilePopulationControls::OnItemClicked( Q3ListViewItem* item, const Q
 // -----------------------------------------------------------------------------
 bool UserProfilePopulationControls::CanWrite( const kernel::Entity_ABC* entity ) const
 {
-    return ( entity && dynamic_cast< const kernel::Population_ABC* >( entity ) );
+    return entity != 0;
 }
 
 // -----------------------------------------------------------------------------

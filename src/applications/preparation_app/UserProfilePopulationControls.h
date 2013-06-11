@@ -32,6 +32,9 @@ public:
              UserProfilePopulationControls( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
                                             ControlsChecker_ABC& checker );
     virtual ~UserProfilePopulationControls();
+
+    virtual void showEvent( QShowEvent* event );
+    virtual void hideEvent( QHideEvent* event );
     //@}
 
 private slots:

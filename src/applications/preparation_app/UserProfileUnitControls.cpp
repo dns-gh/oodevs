@@ -124,6 +124,28 @@ void UserProfileUnitControls::Show()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::showEvent
+// Created: NPT 2013-06-10
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::showEvent( QShowEvent* event )
+{
+    Show();
+    if( selectedProfile_ )
+        UserProfileControls_ABC::Display( *selectedProfile_ );
+    T_Parent::showEvent( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::hideEvent
+// Created: NPT 2013-06-10
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::hideEvent( QHideEvent* event )
+{
+    Commit();
+    T_Parent::hideEvent( event );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfileUnitControls::viewportResizeEvent
 // Created: LGY 2011-09-13
 // -----------------------------------------------------------------------------

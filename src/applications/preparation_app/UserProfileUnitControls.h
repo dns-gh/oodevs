@@ -21,13 +21,18 @@ namespace gui
 
 class Model;
 
+namespace
+{
+    typedef gui::HierarchyListView< ProfileHierarchies_ABC > T_Parent;
+}
+
 // =============================================================================
 /** @class  UserProfileUnitControls
     @brief  User profile unit controls
 */
 // Created: LGY 2011-09-13
 // =============================================================================
-class UserProfileUnitControls : public gui::HierarchyListView< ProfileHierarchies_ABC >
+class UserProfileUnitControls : public T_Parent
                               , public UserProfileControls_ABC
                               , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
@@ -51,6 +56,9 @@ public:
     virtual void Display( UserProfile& profile );
     virtual void Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
     void Show();
+
+    virtual void showEvent( QShowEvent* event );
+    virtual void hideEvent( QHideEvent* event );
 
     virtual void NotifyCreated( const ProfileHierarchies_ABC& hierarchy );
     virtual void NotifyUpdated( const ProfileHierarchies_ABC& hierarchy );

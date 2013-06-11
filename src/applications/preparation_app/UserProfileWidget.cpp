@@ -96,6 +96,8 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         UserProfilePopulationControls* populationRights = new UserProfilePopulationControls( tabs, controllers, factory, checker_ );
         tabs->addTab( populationRights, tr( "Crowds" ) );
         pPopulations_ = populationRights;
+        pPopulations_->BindWithProfileControl( pUnits_ );
+        pUnits_->BindWithProfileControl( pPopulations_ );
 
         addTab( box, tr( "Permissions" ) );
 
@@ -205,6 +207,10 @@ namespace
 // -----------------------------------------------------------------------------
 void UserProfileWidget::Display( UserProfile& profile )
 {
+    if( pUnits_->NeedsSaving() )
+        pUnits_->Commit();
+    if( pPopulations_->NeedsSaving() )
+        pPopulations_->Commit();
     profile_ = &profile;
     login_->setText( profile.GetLogin() );
     password_->setText( profile.GetPassword() );

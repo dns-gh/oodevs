@@ -50,6 +50,9 @@ public:
     virtual void Display( UserProfile& profile );
     void Update( bool supervisor, UserProfile& profile );
     void Initialize( bool collapse = true );
+    bool NeedsSaving();
+    void Commit();
+    void BindWithProfileControl( UserProfileControls_ABC* profileControl );
     //@}
 
 protected:
@@ -81,7 +84,6 @@ private:
 
     //! @name Helpers
     //@{
-    void Commit();
     void SetItem( Q3ListViewItem* item, Status status );
 
     void ReadRights( gui::ValuedListItem* item, bool control );
@@ -91,6 +93,8 @@ private:
     void DeselectParent( gui::ValuedListItem* item );
     void DeselectChild( gui::ValuedListItem* item );
     bool IsControlled( gui::ValuedListItem* item ) const;
+    bool AreAllChildrenControlled( const gui::ValuedListItem* item );
+    const gui::ValuedListItem* GetListItem( unsigned int entityID );
 
     void Check( gui::ValuedListItem* item, bool control );
     void CheckErrors( gui::ValuedListItem* item, T_Errors& errors );
@@ -99,14 +103,18 @@ private:
     void UpdateColor( gui::ValuedListItem* item );
     //@}
 
+protected:
+    UserProfile* selectedProfile_;
+
 private:
     //! @name Member data
     //@{
     Q3ListView* listView_;
     ControlsChecker_ABC& checker_;
-    UserProfile* profile_;
     QPixmap check_;
     bool supervisor_;
+    bool needsSaving_;
+    UserProfileControls_ABC* profileControl_;
     //@}
 };
 

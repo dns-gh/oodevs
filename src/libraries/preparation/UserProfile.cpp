@@ -153,7 +153,7 @@ UserProfile::~UserProfile()
 // Name: UserProfile::Serialize
 // Created: SBO 2007-01-17
 // -----------------------------------------------------------------------------
-void UserProfile::Serialize( xml::xostream& xos ) const
+void UserProfile::Serialize( xml::xostream& xos )
 {
     T_Ids readSides;
     T_Ids readFormations;
@@ -165,6 +165,11 @@ void UserProfile::Serialize( xml::xostream& xos ) const
     T_Ids writePopulations;
 
     bool testProfile = userRole_.empty();
+
+    UpdateRightsWithSuperior( writeAutomats_, writeSides_ );
+    UpdateRightsWithSuperior( readAutomats_, readSides_ );
+    UpdateRightsWithSuperior( writePopulations_, writeSides_ );
+    UpdateRightsWithSuperior( readPopulations_, readSides_ );
 
     if( HasProperty( "readAll" ) )
     {
@@ -430,6 +435,28 @@ void UserProfile::SetRight( unsigned long id, T_Ids& ids, bool status )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfile::UpdateRights
+// Created: NPT 2013-06-11
+// -----------------------------------------------------------------------------
+void UserProfile::UpdateRightsWithSuperior( T_Ids& ids, T_Ids& superiorIds )
+{
+    for( auto it = ids.begin(); it != ids.end(); )
+    {
+        const kernel::Entity_ABC* entity = model_.FindEntity( *it );
+        if( entity )
+        {
+            const kernel::Entity_ABC& superior = entity->Get< kernel::TacticalHierarchies >().GetTop();
+            if( std::find( superiorIds.begin(), superiorIds.end(), superior.GetId() ) != superiorIds.end() )
+                it = ids.erase( it );
+            else
+                ++it;
+        }
+        else
+            ++it;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfile::SetReadable
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
@@ -447,6 +474,7 @@ void UserProfile::SetReadable( const kernel::Entity_ABC& entity, bool readable )
     else if( dynamic_cast< const kernel::Ghost_ABC* >( &entity ) )
         SetRight( id, readGhosts_, readable );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile::SetWriteable

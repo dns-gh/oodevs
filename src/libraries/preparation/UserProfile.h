@@ -76,7 +76,7 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos ) const;
+    void Serialize( xml::xostream& xos );
     UserProfile& operator=( const UserProfile& );
     void NotifyTeamDeleted( unsigned long teamId );
     void NotifyFormationDeleted( unsigned long formationId );
@@ -115,6 +115,7 @@ private:
     void SetRight( unsigned long id, T_Ids& ids, bool status );
     bool HasProperty( const std::string& name ) const;
     void ComputeLowLevel();
+    void UpdateRightsWithSuperior( T_Ids& ids, T_Ids& teamIds );
     //@}
 
 private:

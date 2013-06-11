@@ -16,6 +16,7 @@
 #include "clients_kernel/Tools.h"
 #include "preparation/ProfileHierarchies_ABC.h"
 #include "preparation/UserProfile.h"
+#include "preparation/Team.h"
 #include <boost/foreach.hpp>
 
 using namespace gui;
@@ -28,9 +29,11 @@ using namespace kernel;
 UserProfileControls_ABC::UserProfileControls_ABC( Q3ListView* listView, ControlsChecker_ABC& checker )
     : listView_  ( listView )
     , checker_   ( checker )
-    , profile_   ( 0 )
+    , selectedProfile_   ( 0 )
     , check_     ( MAKE_PIXMAP( check ) )
     , supervisor_( false )
+    , needsSaving_( false )
+    , profileControl_( 0 )
 {
     listView_->header()->show();
     listView_->addColumn( tools::translate( "UserProfileControls", "Control" ), 60 );
@@ -55,7 +58,7 @@ UserProfileControls_ABC::~UserProfileControls_ABC()
 // -----------------------------------------------------------------------------
 void UserProfileControls_ABC::Commit()
 {
-    if( !profile_ )
+    if( !selectedProfile_ )
         return;
     for( Q3ListViewItemIterator it( listView_ ); it.current(); ++it )
         if( const ValuedListItem* item = static_cast< const ValuedListItem* >( *it ) )
@@ -66,16 +69,25 @@ void UserProfileControls_ABC::Commit()
             if( CanWrite( entity ) )
             {
                 const bool isWriteable = isReadable && !supervisor_ ;
-                profile_->SetReadable( *entity, isReadable && !isWriteable );
-                profile_->SetWriteable( *entity, isWriteable );
+                selectedProfile_->SetReadable( *entity, isReadable && !isWriteable );
+                selectedProfile_->SetWriteable( *entity, isWriteable );
             }
             else
             {
-                profile_->SetReadable( *entity, isReadable );
-                profile_->SetWriteable( *entity, false );
+                selectedProfile_->SetReadable( *entity, isReadable );
+                selectedProfile_->SetWriteable( *entity, false );
             }
         }
     UpdateFilter();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::SetSecondProfileControl
+// Created: NPT 2013-06-11
+// -----------------------------------------------------------------------------
+void UserProfileControls_ABC::BindWithProfileControl( UserProfileControls_ABC* profileControl )
+{
+    profileControl_ = profileControl;
 }
 
 // -----------------------------------------------------------------------------
@@ -84,15 +96,15 @@ void UserProfileControls_ABC::Commit()
 // -----------------------------------------------------------------------------
 void UserProfileControls_ABC::Display( UserProfile& profile )
 {
-    Initialize( profile.GetWriteProfilesCount() != 0 );
+    needsSaving_ = false;
+    Initialize( profile.GetProfilesCount() == 0 );
     listView_->setDisabled( false );
-    profile_ = &profile;
-    ValuedListItem* child = static_cast< ValuedListItem* >( listView_->firstChild() );
-    while( child )
+    selectedProfile_ = &profile;
+    for( Q3ListViewItemIterator it( listView_ ); it.current(); ++it )
     {
+        ValuedListItem* child = static_cast< ValuedListItem* >( *it );
         UpdateColor( child );
         ReadRights( child, IsControlled( child ) );
-        child = static_cast< ValuedListItem* >( child->nextSibling() );
     }
 }
 
@@ -134,7 +146,44 @@ bool UserProfileControls_ABC::IsControlled( gui::ValuedListItem* item ) const
     const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
     if( !entity || !CanWrite( entity ) )
         return false;
-    return supervisor_ ? profile_->IsReadable( *entity ) : profile_->IsWriteable( *entity );
+    if( item->parent() && IsControlled( static_cast< ValuedListItem* >( item->parent() ) ) )
+        return true;
+    return supervisor_ ? selectedProfile_->IsReadable( *entity ) : selectedProfile_->IsWriteable( *entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::AreAllChildrenControlled
+// Created: NPT 2013-06-11
+// -----------------------------------------------------------------------------
+bool UserProfileControls_ABC::AreAllChildrenControlled( const gui::ValuedListItem* item )
+{
+    if( !item )
+        return false;
+    bool allSelect = true;
+    ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
+    while( value )
+    {
+        if( value->text( 2 ).toInt() != eControl )
+            allSelect = false;
+        value = static_cast< ValuedListItem* >( value->nextSibling() );
+    }
+    return allSelect;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::GetListItem
+// Created: NPT 2013-06-11
+// -----------------------------------------------------------------------------
+const gui::ValuedListItem* UserProfileControls_ABC::GetListItem( unsigned int entityID )
+{
+    for( Q3ListViewItemIterator it( listView_ ); it.current(); ++it )
+    {
+        const ValuedListItem* value = static_cast< ValuedListItem* >( *it );
+        const Entity_ABC* entity = value->GetValue< const Entity_ABC >();
+        if( entity && entity->GetId() == entityID )
+            return value;
+    }
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,9 +202,15 @@ bool UserProfileControls_ABC::CanWrite( const kernel::Entity_ABC* /*entity*/ ) c
 void UserProfileControls_ABC::UpdateRights( gui::ValuedListItem* item, bool control )
 {
     if( control )
+    {
         SelectChild( item );
+        SelectParent( item );
+    }
     else
+    {
         DeselectChild( item );
+        DeselectParent( item );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -174,6 +229,10 @@ void UserProfileControls_ABC::SelectParent( gui::ValuedListItem* item )
                 allSelect = false;
             value = static_cast< ValuedListItem* >( value->nextSibling() );
         }
+        const Entity_ABC* entity = parent->GetValue< const Entity_ABC >();
+        if( static_cast< const Team* >( entity ) && profileControl_ )
+            if( !profileControl_->AreAllChildrenControlled( profileControl_->GetListItem( entity->GetId() ) ) )
+                return;
         if( allSelect && parent->text( 2 ).toInt() != eControl )
             SetItem( parent, eControl );
         SelectParent( parent );
@@ -187,15 +246,11 @@ void UserProfileControls_ABC::SelectParent( gui::ValuedListItem* item )
 void UserProfileControls_ABC::SelectChild( gui::ValuedListItem* item )
 {
     SetItem( item, eControl );
-
-    if( gui::ValuedListItem* parent = static_cast< ValuedListItem* >( item->parent() ) )
+    ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
+    while( value )
     {
-        ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
-        while( value )
-        {
-            SelectChild( value );
-            value = static_cast< ValuedListItem* >( value->nextSibling() );
-        }
+        SelectChild( value );
+        value = static_cast< ValuedListItem* >( value->nextSibling() );
     }
 }
 
@@ -218,14 +273,11 @@ void UserProfileControls_ABC::DeselectParent( gui::ValuedListItem* item )
 void UserProfileControls_ABC::DeselectChild( gui::ValuedListItem* item )
 {
     SetItem( item, eNothing );
-    if( gui::ValuedListItem* parent = static_cast< ValuedListItem* >( item->parent() ) )
+    ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
+    while( value )
     {
-        ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
-        while( value )
-        {
-            DeselectChild( value );
-            value = static_cast< ValuedListItem* >( value->nextSibling() );
-        }
+        DeselectChild( value );
+        value = static_cast< ValuedListItem* >( value->nextSibling() );
     }
 }
 
@@ -247,6 +299,7 @@ void UserProfileControls_ABC::OnItemClicked( Q3ListViewItem* item, const QPoint&
     {
         UpdateRights( static_cast< ValuedListItem* >( item ), control );
         Commit();
+        needsSaving_ = true;
     }
 }
 
@@ -264,7 +317,16 @@ void UserProfileControls_ABC::Initialize( bool collapse )
         if( collapse )
             listView_->setOpen( *it, false );
     }
-    profile_ = 0;
+    selectedProfile_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::NeedsSaving
+// Created: NPT 2013-06-10
+// -----------------------------------------------------------------------------
+bool UserProfileControls_ABC::NeedsSaving()
+{
+    return needsSaving_;
 }
 
 // -----------------------------------------------------------------------------
@@ -287,7 +349,7 @@ void UserProfileControls_ABC::SetItem( Q3ListViewItem* item, Status status )
 void UserProfileControls_ABC::Update( bool supervisor, UserProfile& profile )
 {
     supervisor_ = supervisor;
-    profile_ = &profile;
+    selectedProfile_ = &profile;
     listView_->setColumnText( 1, supervisor ? tools::translate( "UserProfileControls", "View" ) :
                                               tools::translate( "UserProfileControls", "Control" ) );
     for( Q3ListViewItemIterator it( listView_ ); it.current(); ++it )
@@ -345,7 +407,7 @@ void UserProfileControls_ABC::CheckErrors( gui::ValuedListItem* item, T_Errors& 
 void UserProfileControls_ABC::CheckErrors( const kernel::Entity_ABC& entity, T_Errors& errors )
 {
     BOOST_FOREACH( const std::string& result, checker_.Find( entity ) )
-        if( profile_->GetLogin().toAscii().constData() != result )
+        if( selectedProfile_->GetLogin().toAscii().constData() != result )
             errors.push_back( std::make_pair( result, &entity ) );
 }
 
@@ -357,7 +419,7 @@ void UserProfileControls_ABC::UpdateColor( gui::ValuedListItem* item )
 {
     if( const Entity_ABC* entity = item->GetValue< const Entity_ABC >() )
         if( entity && entity->Retrieve< ProfileHierarchies_ABC >() )
-            if( !supervisor_ && profile_ && checker_.IsControlledByLowLevel( profile_->GetLogin().toAscii().constData(), *entity ) )
+            if( !supervisor_ && selectedProfile_ && checker_.IsControlledByLowLevel( selectedProfile_->GetLogin().toAscii().constData(), *entity ) )
                 item->SetFontColor( QColor( 255, 10, 10 ) );
 }
 
