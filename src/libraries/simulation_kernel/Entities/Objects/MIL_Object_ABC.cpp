@@ -166,7 +166,8 @@ void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
     pType_ = &file.GetObjectTypeResolver().FindType( type );
     file >> pArmy_
          >> bMarkedForDestruction_
-         >> bReadyForDeletion_;
+         >> bReadyForDeletion_
+         >> interaction_;
 }
 
 // -----------------------------------------------------------------------------
@@ -180,7 +181,8 @@ void MIL_Object_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
     file << pType_->GetName();
     file << pArmy_
          << bMarkedForDestruction_
-         << bReadyForDeletion_;
+         << bReadyForDeletion_
+         << interaction_;
 }
 
 // -----------------------------------------------------------------------------
