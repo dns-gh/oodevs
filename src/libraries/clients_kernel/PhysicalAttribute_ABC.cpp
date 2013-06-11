@@ -41,7 +41,7 @@ PhysicalAttribute_ABC::~PhysicalAttribute_ABC()
 Architecture_ABC& PhysicalAttribute_ABC::GetArchitecture() const
 {
     assert( architecture_.get() );
-    return *architecture_.get();
+    return *architecture_;
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ Architecture_ABC& PhysicalAttribute_ABC::GetArchitecture() const
 Usages_ABC& PhysicalAttribute_ABC::GetUsages() const
 {
     assert( usages_.get() );
-    return *usages_.get();
+    return *usages_;
 }
 
 // -----------------------------------------------------------------------------

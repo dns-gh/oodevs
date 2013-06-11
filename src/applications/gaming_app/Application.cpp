@@ -57,7 +57,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** ar
     network_.reset( new Network( *services_, *simulation_, *logger_, config_->GetNetworkTimeOut() ) );
     simulationController_.reset( new SimulationController( *simulation_, *controllers_, network_->GetMessageMgr() ) );
     rcResolver_.reset( new RcEntityResolver( *controllers_ ) );
-    staticModel_.reset( new ::StaticModel( *controllers_, *rcResolver_.get(), *simulation_ ) );
+    staticModel_.reset( new ::StaticModel( *controllers_, *rcResolver_, *simulation_ ) );
     model_.reset( new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *config_ ) );
     profile_.reset( new Profile( *controllers_, network_->GetMessageMgr(), config_->GetLogin(), config_->IsLoginInCommandLine() ) );
     network_->GetMessageMgr().SetElements( *model_, *profile_ );

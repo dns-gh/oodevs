@@ -52,7 +52,7 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, boost
     , instantaneous_( instantaneous )
 {
     role_.SetCreator( *pObject_ );
-    pObject_->Initialize( *pGenObject.get() );
+    pObject_->Initialize( *pGenObject );
     if( !instantaneous_ )
     {
         ConstructionAttribute* attribute = pObject_->RetrieveAttribute< ConstructionAttribute >();

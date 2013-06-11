@@ -37,7 +37,7 @@ PHY_ActionPrepareObject::PHY_ActionPrepareObject( MIL_AgentPion& pion, boost::sh
     , role_( pion.GetRole< PHY_RoleAction_Objects >() )
     , pObject_( CreateObject( pion, pGenObject ) )
 {
-    pObject_->Initialize( *pGenObject.get() );
+    pObject_->Initialize( *pGenObject );
     pObject_->RetrieveAttribute< ConstructionAttribute >()->Set( 0. );
     pObject_->RetrieveAttribute< ConstructionAttribute >()->NotifyBuildByGen();
     Callback( role_.GetInitialReturnCode() );

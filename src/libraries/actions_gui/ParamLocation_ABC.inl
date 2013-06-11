@@ -137,7 +137,7 @@ void ParamLocation_ABC< BaseParameter >::OnMenuClick()
     else if( parameter_.GetType() == "point" && popupPosition_.get() )
     {
         kernel::Point locPoint;
-        locPoint.AddPoint( *popupPosition_.get() );
+        locPoint.AddPoint( *popupPosition_ );
         Handle( locPoint.Clone() );
     }
     else if( parameter_.GetType() == "polygon" )

@@ -68,7 +68,7 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
     if( *logLevel != PHY_LogisticLevel::none_ )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *logLevel ) );
-        pLogisticAction_.reset( new PHY_ActionLogistic< MIL_AutomateLOG >( *pBrainLogistic_.get() ) );
+        pLogisticAction_.reset( new PHY_ActionLogistic< MIL_AutomateLOG >( *pBrainLogistic_ ) );
         RegisterAction( pLogisticAction_ );
     }
 }
@@ -96,7 +96,7 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
     if( *logLevel != PHY_LogisticLevel::none_ )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *logLevel ) );
-        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
+        pLogisticAction_.reset( new PHY_ActionLogistic< MIL_AutomateLOG >( *pBrainLogistic_ ) );
         RegisterAction( pLogisticAction_ );
     }
     if( pParent_ )
@@ -206,7 +206,7 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
     pColor_.reset( pColor );
     if( pBrainLogistic_.get() )
     {
-        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
+        pLogisticAction_.reset( new PHY_ActionLogistic< MIL_AutomateLOG >( *pBrainLogistic_ ) );
         this->RegisterAction( pLogisticAction_ );
     }
 }
