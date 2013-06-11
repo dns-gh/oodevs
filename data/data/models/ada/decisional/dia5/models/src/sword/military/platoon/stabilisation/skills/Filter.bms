@@ -49,7 +49,7 @@ rootnode
                     local crowdsNearUnit = {}
                     for i = 1, #crowds do
                         local crowd = CreateKnowledge( integration.ontology.types.population, crowds[i])
-                        if integration.distance( meKnowledge , crowd ) then
+                        if integration.distance( meKnowledge , crowd ) < 200 then
                             crowdsNearUnit[#crowdsNearUnit + 1 ] = crowd
                         end
                     end
