@@ -6617,8 +6617,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Matériau</translation>
     </message>
     <message>
-        <source>Modifiers</source>
-        <translation>Modificateurs</translation>
+        <source>Protection</source>
+        <translation>Protection</translation>
     </message>
 </context>
 <context>

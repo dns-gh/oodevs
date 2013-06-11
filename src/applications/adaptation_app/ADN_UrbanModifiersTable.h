@@ -25,6 +25,7 @@ namespace helpers
 class ADN_UrbanModifiersTable : public ADN_Table2
                               , private boost::noncopyable
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

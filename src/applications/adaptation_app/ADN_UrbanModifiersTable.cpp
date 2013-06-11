@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_UrbanModifiersTable.h"
+#include "moc_ADN_UrbanModifiersTable.cpp"
 #include "ADN_Equipement_Data.h"
 #include "ADN_Equipement_GUI.h"
 #include "ADN_Connector_Table_ABC.h"
@@ -65,7 +66,7 @@ ADN_UrbanModifiersTable::ADN_UrbanModifiersTable( QWidget* pParent, ADN_Connecto
     setColumnStretchable( 0, true );
     setColumnStretchable( 1, true );
     horizontalHeader()->setLabel( 0, tr( "Material" ) );
-    horizontalHeader()->setLabel( 1, tr( "Modifiers" ) );
+    horizontalHeader()->setLabel( 1, tr( "Protection" ) );
     // connector creation
     pConnector_ = new ADN_UrbanModifiersTable_Connector( *this );
     pGuiConnector = pConnector_;
