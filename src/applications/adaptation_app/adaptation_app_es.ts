@@ -6635,8 +6635,8 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation type="unfinished">Material</translation>
     </message>
     <message>
-        <source>Modifiers</source>
-        <translation type="unfinished">Modificadores</translation>
+        <source>Protection</source>
+        <translation type="unfinished">Protección</translation>
     </message>
 </context>
 <context>

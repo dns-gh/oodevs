@@ -15,9 +15,10 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Objects/MaterialAttribute.h"
-#include "Urban/MIL_UrbanObject_ABC.h"
-#include "Tools/MIL_Geometry.h"
+#include "Entities/Objects/StructuralCapacity.h"
 #include "MT_Tools/MT_Ellipse.h"
+#include "Tools/MIL_Geometry.h"
+#include "Urban/MIL_UrbanObject_ABC.h"
 #include "Urban/PHY_MaterialCompositionType.h"
 #include "Urban/UrbanPhysicalCapacity.h"
 #pragma warning( push, 0 )
@@ -120,6 +121,10 @@ double InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCateg
 {
     if( const MaterialAttribute* materialAttribute = urbanObject_.RetrieveAttribute< MaterialAttribute >() )
         if( const UrbanPhysicalCapacity* physical = urbanObject_.Retrieve< UrbanPhysicalCapacity >() )
-            return ( 1 - dotationCategory.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) ) * physical->GetOccupation();
+        {
+            const StructuralCapacity* structural = urbanObject_.Retrieve< StructuralCapacity >();
+            float structuralState = structural ? structural->GetStructuralState() : 1.f;
+            return dotationCategory.GetUrbanAttritionScore( materialAttribute->GetMaterial() ) * physical->GetOccupation() * structuralState;
+        }
     return 0.;
 }

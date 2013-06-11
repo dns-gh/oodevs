@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_UrbanModifiersTable.h"
+#include "moc_ADN_UrbanModifiersTable.cpp"
 #include "ADN_Resources_Data.h"
 #include "ADN_Resources_GUI.h"
 
@@ -25,7 +26,7 @@ ADN_UrbanModifiersTable::ADN_UrbanModifiersTable( const QString& objectName, ADN
     setShowGrid( false );
     QStringList horizontalHeaders;
     horizontalHeaders << tr( "Material" )
-        << tr( "Modifiers" );
+        << tr( "Protection" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );

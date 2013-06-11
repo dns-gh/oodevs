@@ -6613,7 +6613,7 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Modifiers</source>
+        <source>Protection</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
