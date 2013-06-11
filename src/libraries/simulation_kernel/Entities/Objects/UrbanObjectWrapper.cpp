@@ -443,7 +443,7 @@ float UrbanObjectWrapper::GetStructuralState() const
         if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
             if ( const StructuralCapacity* structuralCapacity = Retrieve< StructuralCapacity >() )
                 return structuralCapacity->GetStructuralState();
-    return 0.0f;
+    return 1.0f;
 }
 
 // -----------------------------------------------------------------------------
