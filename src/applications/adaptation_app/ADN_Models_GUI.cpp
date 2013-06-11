@@ -85,7 +85,7 @@ QWidget* ADN_Models_GUI::BuildPage( E_EntityType eEntityType, ADN_Models_Data::T
     nameField->ConnectWithRefValidity( model );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, "dia-type", tr( "DIA type" ), vInfosConnectors[ eDiaType ] );
     DIAFileChooser_[ eEntityType ] = builder.AddFileField( pInfoHolder, "file", tr( "File" ), vInfosConnectors[ eFile ] );
-    builder.AddField< ADN_CheckBox >( pInfoHolder, "masalife", tr( "Masalife" ), vInfosConnectors[ eMasalife ] );
+    builder.AddField< ADN_CheckBox >( pInfoHolder, "masalife", tr( "DIA5" ), vInfosConnectors[ eMasalife ] );
 
     // Missions
     Q3GroupBox* pMissionsGroup = new Q3HGroupBox( tr( "Missions" ) );

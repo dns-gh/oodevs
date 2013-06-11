@@ -2899,16 +2899,16 @@ PNG (*.png)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Masalife</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Missions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>FragOrders</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DIA5</source>
+        <translation>DIA5</translation>
     </message>
 </context>
 <context>
