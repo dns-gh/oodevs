@@ -50,7 +50,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     std::string strNature;
     xis >> xml::attribute( "id", nMosID_ )
         >> xml::attribute( "nature", strNature )
-        >> xml::optional() >> xml::attribute( "ied", ied_ );
+        >> xml::optional >> xml::attribute( "ied", ied_ );
     pNature_ = PHY_DotationNature::Find( strNature );
     if( !pNature_ )
         xis.error( "Unknown dotation nature" );

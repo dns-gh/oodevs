@@ -50,7 +50,7 @@ void ActionLoader::Load( const tools::Path& filename )
     tools::Xifstream xis( filename );
     xis >> xml::start( "actions" )
             >> xml::list( "action", *this, &ActionLoader::ReadAction, errors )
-        >> xml::end();
+        >> xml::end;
 
     if( errors != "" )
         throw std::exception( std::string( "The order file contains error(s), some actions could not be loaded:\n'" + errors + "'" ).c_str() );

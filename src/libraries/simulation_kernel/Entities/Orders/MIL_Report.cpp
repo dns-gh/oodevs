@@ -50,7 +50,7 @@ void MIL_Report::ReadReport( xml::xistream& xis )
     unsigned int id;
     std::string key;
     xis >> xml::attribute( "id", id )
-        >> xml::optional() >> xml::attribute( "key", key );
+        >> xml::optional >> xml::attribute( "key", key );
     const MIL_Report*& pReport = reports_[ id ];
     if( pReport )
         xis.error( "Report id already defined" );

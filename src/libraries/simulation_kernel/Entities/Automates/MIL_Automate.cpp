@@ -311,7 +311,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 // -----------------------------------------------------------------------------
 void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigned int gcMult, sword::DEC_Logger* logger )
 {
-    xis >> xml::optional() >> xml::attribute( "engaged", bEngaged_ );
+    xis >> xml::optional >> xml::attribute( "engaged", bEngaged_ );
     unsigned int nKnowledgeGroup;
     xis >> xml::attribute( "knowledge-group", nKnowledgeGroup );
     RegisterRole( *new DEC_AutomateDecision( *this, gcPause, gcMult, logger ) ) ;
@@ -326,7 +326,7 @@ void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigne
         throw MASA_EXCEPTION( MT_FormatString( "Automat with id %d has no knowledge group", nID_ ) );
 
     std::string logLevelStr( PHY_LogisticLevel::none_.GetName() );
-    xis >> xml::optional() >> xml::attribute( "logistic-level", logLevelStr );
+    xis >> xml::optional >> xml::attribute( "logistic-level", logLevelStr );
     const PHY_LogisticLevel* pLogLevel = PHY_LogisticLevel::Find( logLevelStr );
     if( !pLogLevel )
         throw MASA_EXCEPTION( MT_FormatString( "Automat with id %d has an invalid logistic level", nID_ ) );

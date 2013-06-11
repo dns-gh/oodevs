@@ -61,7 +61,7 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
     xis >> xml::list( "formation", *this, &MIL_Formation::InitializeFormation, formationFactory )
         >> xml::list( "automat", *this, &MIL_Formation::InitializeAutomate, automateFactory );
     std::string logLevelStr( PHY_LogisticLevel::none_.GetName() );
-    xis >> xml::optional() >> xml::attribute("logistic-level", logLevelStr);
+    xis >> xml::optional >> xml::attribute("logistic-level", logLevelStr);
     const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find(logLevelStr);
     if( !logLevel )
         xis.error( "Invalid logistic level" );
