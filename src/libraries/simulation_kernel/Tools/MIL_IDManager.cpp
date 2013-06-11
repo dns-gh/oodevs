@@ -36,9 +36,14 @@ MIL_IDManager::~MIL_IDManager()
 // Name: MIL_IDManager::SetKeepIdsMode
 // Created: MMC 2013-05-27
 // -----------------------------------------------------------------------------
-void MIL_IDManager::SetKeepIdsMode( bool bKeepIds )
+void MIL_IDManager::SetKeepIdsMode( bool bKeepIds, unsigned long lastIdBeforeKeepIds /*= 1*/ )
 {
-    if( !bKeepIds )
+    if( bKeepIds )
+    {
+        if( lastIdBeforeKeepIds > 1 )
+            last_ = lastIdBeforeKeepIds;
+    }
+    else
         ids_.clear();
     bKeepIds_ = bKeepIds;
 }

@@ -101,7 +101,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     pTheAgentServer_ = this;
     AgentServerInit initGuard( pTheAgentServer_ );
 
-    MIL_IDManager::SetKeepIdsMode( true );
+    MIL_IDManager::SetKeepIdsMode( true, pEntityManager_->FindMaxId( config_ ) + 2 );
     config_.AddFileToCRC( config_.GetExerciseFile() );
     config_.GetLoader().LoadFile( config_.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, settings_, _1 ) );
     ReadStaticData();

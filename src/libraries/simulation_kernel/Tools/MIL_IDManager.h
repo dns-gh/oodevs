@@ -28,7 +28,7 @@ public:
 public:
     //! @name Operations
     //@{
-    static void SetKeepIdsMode( bool bKeepIds );
+    static void SetKeepIdsMode( bool bKeepIds, unsigned long lastIdBeforeKeepIds = 1 );
     unsigned long GetId( unsigned long wishedId = 0, bool bForceId = false );
     template< typename Archive >
     void serialize( Archive& archive, unsigned int version );
