@@ -59,7 +59,7 @@ namespace
         void AddItem( const QString& label, const T& value )
         {
             toolBarMenu_->AddItem( label, value );
-            menu_->AddItem( label, value );
+            menu_->OnSelected( menu_->AddItem( label, value ) );
         }
 
         OptionMenu< T >* toolBarMenu_;
@@ -111,7 +111,7 @@ namespace
         }
     }
 
-    void AddSubMenu4( QToolBar* toolBar, kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option, kernel::FourStateOption state = kernel::FourStateOption::Selected() )
+    void AddSubMenu4( QToolBar* toolBar, kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option, kernel::FourStateOption state = kernel::FourStateOption::Off() )
     {
         {
             QToolButton* button = new QToolButton( toolBar );
@@ -163,21 +163,21 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     pParent->addToolBar( toolBar );
     toolBar->setLabel( tools::translate( "Menu", "Units toolbar" ) );
 
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision lines" )   , MakePixmap( "vision_lines" )   , controllers.options_, "VisionLines" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision cones" )   , MakePixmap( "vision_cones" )   , controllers.options_, "VisionCones", kernel::FourStateOption::Off() );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision surfaces" ), MakePixmap( "vision_surfaces" ), controllers.options_, "VisionSurfaces", kernel::FourStateOption::Off() );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision lines" )   , MakePixmap( "vision_lines" )   , controllers.options_, "VisionLines", kernel::FourStateOption::Selected() );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision cones" )   , MakePixmap( "vision_cones" )   , controllers.options_, "VisionCones" );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision surfaces" ), MakePixmap( "vision_surfaces" ), controllers.options_, "VisionSurfaces" );
     subMenu->insertSeparator();
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Weapon ranges" ) , MakePixmap( "weapon_ranges" ), controllers.options_, "WeaponRanges", kernel::FourStateOption::Off() );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Weapon ranges" ) , MakePixmap( "weapon_ranges" ), controllers.options_, "WeaponRanges" );
     subMenu->insertItem( tools::translate( "Menu", "Efficient Range" ), new EfficientRangeDialog( this, controllers, staticModel.objectTypes_, controllers.options_ ), SLOT( exec() ) );
     subMenu->insertSeparator();
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Routes" )        , MakePixmap( "path_ahead" ) , controllers.options_, "Paths" );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Routes" )        , MakePixmap( "path_ahead" ) , controllers.options_, "Paths", kernel::FourStateOption::Selected() );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Covered routes" ), MakePixmap( "path_behind" ), controllers.options_, "OldPaths" );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Direction" )     , MakePixmap( "direction" )  , controllers.options_, "Direction" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Unit detail" )   , MakePixmap( "unit_detail" ), controllers.options_, "UnitDetails" );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Unit detail" )   , MakePixmap( "unit_detail" ), controllers.options_, "UnitDetails", kernel::FourStateOption::On() );
     subMenu->insertSeparator();
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Convex hulls" ),     MakePixmap( "convex_hulls" )    , controllers.options_, "ConvexHulls", kernel::FourStateOption::Off() );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Current Mission" ),  MakePixmap( "current_mission" ) , controllers.options_, "MissionParameters" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Decisional State" ), MakePixmap( "decisional_state" ), controllers.options_, "DecisionalState" );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Convex hulls" ),     MakePixmap( "convex_hulls" )    , controllers.options_, "ConvexHulls" );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Current Mission" ),  MakePixmap( "current_mission" ) , controllers.options_, "MissionParameters", kernel::FourStateOption::Selected() );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Decisional State" ), MakePixmap( "decisional_state" ), controllers.options_, "DecisionalState", kernel::FourStateOption::Selected() );
     menu->insertItem( tools::translate( "Menu", "Units..." ), subMenu );
 
     subMenu = new kernel::ContextMenu( menu );
@@ -190,10 +190,10 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Real time actions" ), MAKE_ICON( realtimelog )              , controllers.options_, "RealTimeLogistic" );
     {
         CompositeMenu< int > composite( subMenu, toolBar, tools::translate( "Menu", "Resource networks" ), MakePixmap( "resource_networks" ), controllers.options_, "ResourceNetworks" );
-        composite.AddItem( tools::translate( "Menu", "On" ), 0 );
-        composite.AddItem( tools::translate( "Menu", "Off" ), 1 );
         composite.AddItem( tools::translate( "Menu", "Selected: all links" ), 2 );
         composite.AddItem( tools::translate( "Menu", "Selected: outgoing links" ), 3 );
+        composite.AddItem( tools::translate( "Menu", "On" ), 0 );
+        composite.AddItem( tools::translate( "Menu", "Off" ), 1 );
     }
     menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu );
 
@@ -215,7 +215,6 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
 
     {
         CompositeMenu< float > composite( subMenu, toolBar, tools::translate( "Menu", "Grid" ), MakePixmap( "grid" ), controllers.options_, "GridSize" );
-        composite.AddItem( tools::translate( "Menu", "Off"    ),  -1 );
         composite.AddItem( tools::translate( "Menu", "100m"  ),  0.1f );
         composite.AddItem( tools::translate( "Menu", "250m" ),  0.25f );
         composite.AddItem( tools::translate( "Menu", "500m"  ),  0.5f );
@@ -223,6 +222,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
         composite.AddItem( tools::translate( "Menu", "2.5km"  ),  2.5f );
         composite.AddItem( tools::translate( "Menu", "5km"  ),  5.0f );
         composite.AddItem( tools::translate( "Menu", "10km" ), 10.0f );
+        composite.AddItem( tools::translate( "Menu", "Off"    ),  -1 );
     }
 
     {
