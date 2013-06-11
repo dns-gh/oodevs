@@ -901,7 +901,7 @@
         <update name="xalan-c" version="svn rev 990605 + patch"/>
         <update name="xerces-c" version="3.1.1"/>
         <update name="xeumeuleu"/>
-        <update name="zlib" version="1.2.3"/>
+        <update name="zlib" version="1.2.6.r167"/>
         <!-- timeline_ui dependencies -->
         <update name="cef" package="dll/${platform32}" todir="${run.dir}/cef"/>
         <update name="timeline"/>
