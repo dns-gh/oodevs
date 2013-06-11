@@ -44,7 +44,7 @@ unsigned LogisticVirtualAction::GetTimeRemaining( unsigned actionId, unsigned du
     {
         if( timeRemainingForCurrentAction_ > 0 ) 
             --timeRemainingForCurrentAction_;
-        else
+        if( timeRemainingForCurrentAction_ == 0 ) 
             currentActionId_ = std::numeric_limits< unsigned >::max();
     }
     else
