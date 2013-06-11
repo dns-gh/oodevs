@@ -95,13 +95,21 @@ void EventDetailWidget::Fill( const Event& event )
     done_->setCheckState( timelineEvent.done ? Qt::Checked : Qt::Unchecked );
     target_->setText( QString::fromStdString( timelineEvent.action.target ) );
     apply_->setCheckState( timelineEvent.action.apply ? Qt::Checked : Qt::Unchecked );
-    payloadBase64_->setText( QString::fromStdString( tools::BinaryToBase64( timelineEvent.action.payload ) ) );
-    if( timelineEvent.action.target == CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
-        payloadString_->setText( QString::fromStdString( tools::BinaryToProto< sword::ClientToSim >( timelineEvent.action.payload ).DebugString() ) );
-    else if ( timelineEvent.action.target == CREATE_EVENT_TARGET( EVENT_REPORT_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
-        payloadString_->setText( QString::fromStdString( tools::BinaryToProto< sword::SimToClient >( timelineEvent.action.payload ).DebugString() ) );
+    if( !timelineEvent.action.payload.empty() )
+    {
+        payloadBase64_->setText( QString::fromStdString( tools::BinaryToBase64( timelineEvent.action.payload ) ) );
+        if( timelineEvent.action.target == CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
+            payloadString_->setText( QString::fromStdString( tools::BinaryToProto< sword::ClientToSim >( timelineEvent.action.payload ).DebugString() ) );
+        else if ( timelineEvent.action.target == CREATE_EVENT_TARGET( EVENT_REPORT_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
+            payloadString_->setText( QString::fromStdString( tools::BinaryToProto< sword::SimToClient >( timelineEvent.action.payload ).DebugString() ) );
+        else
+            payloadString_->setText( QString::fromStdString( timelineEvent.action.payload ) );
+    }
     else
-        payloadString_->setText( QString::fromStdString( timelineEvent.action.payload ) );
+    {
+        payloadBase64_->setText( "" );
+        payloadString_->setText( "" );
+    }
 }
 
 // -----------------------------------------------------------------------------
