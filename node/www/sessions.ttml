@@ -414,7 +414,7 @@
             </div>
             <div class="control-group">
                 <div class="controls">
-                    <a class="btn btn-info" href="/sword_client_vc100_setup.exe">
+                    <a class="btn btn-info" href="/sword_client_setup_vc100.exe">
                         <img alt="" width="32" height="32" src="img/tango/32x32/apps/system-installer.png" />
                         Get Client
                     </a>

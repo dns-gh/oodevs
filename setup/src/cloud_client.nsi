@@ -16,7 +16,7 @@
 !endif
 
 Name "Sword Client"
-OutFile "${DISTDIR}\sword_client_${PLATFORM}_setup.exe"
+OutFile "${DISTDIR}\sword_client_setup_${PLATFORM}.exe"
 InstallDir "${PRG}\$(^Name)"
 InstallDirRegKey HKLM "Software\MASA Group\$(^Name)" "Install_Dir"
 RequestExecutionLevel admin

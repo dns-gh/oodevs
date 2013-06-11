@@ -22,7 +22,7 @@
 !insertmacro GetOptions
 
 Name "Sword Cloud"
-OutFile "${DISTDIR}\sword_cloud_${PLATFORM}_setup.exe"
+OutFile "${DISTDIR}\sword_cloud_setup_${PLATFORM}.exe"
 InstallDir "${PRG}\$(^Name)"
 InstallDirRegKey HKLM "Software\MASA Group\$(^Name)" "Install_Dir"
 RequestExecutionLevel admin
@@ -149,9 +149,9 @@ Section $(^Name)
     File /r /x ".svn" "${CLOUD}\www\*.ttml"
     File /r /x ".svn" "${CLOUD}\www\img"
     !ifdef SUB_PLATFORM
-        File "${OUTDIR}\..\${SUB_PLATFORM}\sword_client_${SUB_PLATFORM}_setup.exe"
+        File "${OUTDIR}\..\${SUB_PLATFORM}\sword_client_setup_${SUB_PLATFORM}.exe"
     !else
-        File "${DISTDIR}\sword_client_${PLATFORM}_setup.exe"
+        File "${DISTDIR}\sword_client_setup_${PLATFORM}.exe"
     !endif
 
 
