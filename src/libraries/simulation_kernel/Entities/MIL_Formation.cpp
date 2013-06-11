@@ -60,15 +60,15 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
         pArmy_->RegisterFormation( *this );
     xis >> xml::list( "formation", *this, &MIL_Formation::InitializeFormation, formationFactory )
         >> xml::list( "automat", *this, &MIL_Formation::InitializeAutomate, automateFactory );
-    std::string logLevelStr( PHY_LogisticLevel::none_.GetName() );
+    std::string logLevelStr = PHY_LogisticLevel::none_.GetName();
     xis >> xml::optional >> xml::attribute("logistic-level", logLevelStr);
     const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find(logLevelStr);
     if( !logLevel )
         xis.error( "Invalid logistic level" );
-    if( PHY_LogisticLevel::logistic_base_ == *logLevel )
+    if( *logLevel != PHY_LogisticLevel::none_ )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *logLevel ) );
-        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
+        pLogisticAction_.reset( new PHY_ActionLogistic< MIL_AutomateLOG >( *pBrainLogistic_.get() ) );
         RegisterAction( pLogisticAction_ );
     }
 }

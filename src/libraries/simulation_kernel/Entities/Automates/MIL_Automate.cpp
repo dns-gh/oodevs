@@ -324,8 +324,7 @@ void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigne
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
     if( !pKnowledgeGroup_ )
         throw MASA_EXCEPTION( MT_FormatString( "Automat with id %d has no knowledge group", nID_ ) );
-
-    std::string logLevelStr( PHY_LogisticLevel::none_.GetName() );
+    std::string logLevelStr = PHY_LogisticLevel::none_.GetName();
     xis >> xml::optional >> xml::attribute( "logistic-level", logLevelStr );
     const PHY_LogisticLevel* pLogLevel = PHY_LogisticLevel::Find( logLevelStr );
     if( !pLogLevel )
@@ -335,11 +334,8 @@ void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigne
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *pLogLevel ) );
         pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_ ) );
         RegisterAction( pLogisticAction_ );
-
-        // Automat having logistic brain are always there own tc2
         pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, *pBrainLogistic_, false /* no quotas*/, xis ) );
     }
-
     pKnowledgeGroup_->RegisterAutomate( *this );
 }
 
