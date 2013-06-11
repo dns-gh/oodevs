@@ -63,7 +63,7 @@ BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_and_loaded_changes_to_mo
     MOCK_EXPECT( time.GetPostureTearDownTime ).once().returns( tearDownTime );
     const posture::PostureComputer_ABC::Results& result = computer.Result();
     CHECK_POSTURE( &PHY_Posture::mouvement_, result.newPosture_ );
-    BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, completion, 0.0001 );
+    BOOST_CHECK_EQUAL( 1, result.postureCompletionPercentage_ );
 }
 
 BOOST_FIXTURE_TEST_CASE( stopped_posture_but_now_moving_must_wait_completion_decrease_before_changing_to_moving_posture, Fixture )
@@ -249,6 +249,8 @@ namespace
             MOCK_EXPECT( time.GetPostureTearDownTime ).returns( 0 );
             const posture::PostureComputer_ABC::Results& result = computer.Result();
             CHECK_POSTURE( result.newPosture_, &previous );
+            if( &previous == &PHY_Posture::mouvement_ )
+                BOOST_CHECK_EQUAL( 1, result.postureCompletionPercentage_ );
         }
     };
 }

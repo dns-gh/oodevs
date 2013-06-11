@@ -143,7 +143,10 @@ namespace
         else if( isDiscreteModeEnabled )
             results.newPosture_ = &PHY_Posture::mouvementDiscret_;
         else
+        {
             results.newPosture_ = &PHY_Posture::mouvement_;
+            results.postureCompletionPercentage_ = 1;
+        }
     }
     void ComputeStopPosture( PostureComputer_ABC::Results& results, bool isParkedOnEngineerArea, bool forceStop, double completion, const PHY_Posture& current )
     {
