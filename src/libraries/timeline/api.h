@@ -82,6 +82,8 @@ private:
     size_t      sizeof_;
 };
 
+typedef std::vector< Event > Events;
+
 enum ErrorCode
 {
     EC_OK                    = 200,
@@ -119,14 +121,20 @@ public slots:
     virtual void Reload() = 0;
     virtual void Load( const std::string& url ) = 0;
     virtual bool CreateEvent( const timeline::Event& event ) = 0;
+    virtual bool ReadEvents() = 0;
+    virtual bool ReadEvent( const std::string& uuid ) = 0;
+    virtual bool UpdateEvent( const timeline::Event& event ) = 0;
     virtual bool DeleteEvent( const std::string& uuid ) = 0;
 
     // Public signals
 signals:
     void Ready();
-    void CreatedEvent ( const timeline::Event& event, const timeline::Error& error );
+    void CreatedEvent( const timeline::Event& event, const timeline::Error& error );
+    void GetEvents( const timeline::Events& events, const timeline::Error& error );
+    void GetEvent( const timeline::Event& event, const timeline::Error& error );
+    void UpdatedEvent( const timeline::Event& event, const timeline::Error& error );
+    void DeletedEvent( const std::string& uuid, const timeline::Error& error );
     void SelectedEvent( boost::shared_ptr< timeline::Event > event );
-    void DeletedEvent ( const std::string& uuid, const timeline::Error& error );
     void ActivatedEvent( const timeline::Event& event );
     void ContextMenuEvent( boost::shared_ptr< timeline::Event > event );
     void KeyDown( int key );

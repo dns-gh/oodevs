@@ -43,16 +43,18 @@ public slots:
     void OnSelectedEvent( boost::shared_ptr< timeline::Event > event );
     void OnDeletedEvent( const std::string& uuid, const timeline::Error& error );
     void OnDeleteEvent();
-    void OnTestCreate();
+    void OnTestCrud();
     void OnActivatedEvent( const timeline::Event& event );
     void OnContextMenuEvent( boost::shared_ptr< timeline::Event > event );
     void OnKeyDown( int key );
     void OnKeyPress( int key );
     void OnKeyUp( int key );
 
-private:
+public:
     void WaitReady() const;
     int  Create( const std::vector< std::string >& args );
+    int  Read  ( const std::vector< std::string >& args );
+    int  Update( const std::vector< std::string >& args );
     int  Delete( const std::vector< std::string >& args );
 
 private:
@@ -70,7 +72,10 @@ public:
              OnSignal_ABC() {}
     virtual ~OnSignal_ABC() {}
 public slots:
-    virtual void OnCreatedEvent( const timeline::Event& /*event*/, const timeline::Error& /*error*/ ) {}
+    virtual void OnCreatedEvent( const timeline::Event&  /*event*/,  const timeline::Error& /*error*/ ) {}
+    virtual void OnReadEvents  ( const timeline::Events& /*events*/, const timeline::Error& /*error*/ ) {}
+    virtual void OnReadEvent   ( const timeline::Event&  /*event*/,  const timeline::Error& /*error*/ ) {}
+    virtual void OnUpdatedEvent( const timeline::Event&  /*event*/,  const timeline::Error& /*error*/ ) {}
     virtual void OnDeletedEvent( const std::string& /*uuid*/, const timeline::Error& /*error*/ ) {}
 };
 

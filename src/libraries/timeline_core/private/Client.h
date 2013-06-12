@@ -53,6 +53,9 @@ public:
     virtual void OnReloadClient();
     virtual void OnLoadClient( const std::string& url );
     virtual void OnCreateEvent( const Event& event );
+    virtual void OnReadEvents();
+    virtual void OnReadEvent( const std::string& uuid );
+    virtual void OnUpdateEvent( const Event& event );
     virtual void OnDeleteEvent( const std::string& uuid );
 
 private:

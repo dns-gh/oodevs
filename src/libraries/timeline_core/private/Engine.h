@@ -30,6 +30,7 @@ namespace timeline
 {
     struct Event;
     struct Error;
+    typedef std::vector< Event > Events;
 }
 
 namespace timeline
@@ -46,18 +47,27 @@ public:
     void Register   ( CefRefPtr< CefV8Context > context );
     void Unregister ();
     void CreateEvent( const Event& event );
+    void ReadEvents ();
+    void ReadEvent  ( const std::string& uuid );
+    void UpdateEvent( const Event& event );
     void DeleteEvent( const std::string& uuid );
 
 private:
-    void CreatedEvent( const Event& event, const Error& err );
-    void DeletedEvent( const std::string& uuid, const Error& err );
+    void SendCreatedEvent( const Event& event, const Error& err );
+    void SendReadEvents  ( const Events& events, const Error& err );
+    void SendReadEvent   ( const Event& event, const Error& err );
+    void SendUpdatedEvent( const Event& event, const Error& err );
+    void SendDeletedEvent( const std::string& uuid, const Error& err );
 
     // V8 handlers
     CefRefPtr< CefV8Value > OnReady                ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnCreatedEvent         ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnReadEvents           ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnReadEvent            ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnUpdatedEvent         ( const CefV8ValueList& args );
+    CefRefPtr< CefV8Value > OnDeletedEvent         ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnSelectEvent          ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnDeselectEvent        ( const CefV8ValueList& args );
-    CefRefPtr< CefV8Value > OnDeletedEvent         ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnActivateEvent        ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnContextMenuEvent     ( const CefV8ValueList& args );
     CefRefPtr< CefV8Value > OnContextMenuBackground( const CefV8ValueList& args );

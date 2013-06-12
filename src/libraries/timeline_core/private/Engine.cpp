@@ -140,9 +140,12 @@ void Engine::Register( CefRefPtr< CefV8Context > context )
     SetValue( gaming, "enabled", true );
     SetValue( gaming, "ready",                  0, boost::bind( &Engine::OnReady, this, _1 ) );
     SetValue( gaming, "created_event",          2, boost::bind( &Engine::OnCreatedEvent,          this, _1 ) );
+    SetValue( gaming, "get_read_events",        2, boost::bind( &Engine::OnReadEvents,            this, _1 ) );
+    SetValue( gaming, "get_read_event",         2, boost::bind( &Engine::OnReadEvent,             this, _1 ) );
+    SetValue( gaming, "updated_event",          2, boost::bind( &Engine::OnUpdatedEvent,          this, _1 ) );
+    SetValue( gaming, "deleted_event",          2, boost::bind( &Engine::OnDeletedEvent,          this, _1 ) );
     SetValue( gaming, "select_event",           1, boost::bind( &Engine::OnSelectEvent,           this, _1 ) );
     SetValue( gaming, "deselect_event",         0, boost::bind( &Engine::OnDeselectEvent,         this, _1 ) );
-    SetValue( gaming, "deleted_event",          2, boost::bind( &Engine::OnDeletedEvent,          this, _1 ) );
     SetValue( gaming, "activate_event",         1, boost::bind( &Engine::OnActivateEvent,         this, _1 ) );
     SetValue( gaming, "contextmenu_event",      1, boost::bind( &Engine::OnContextMenuEvent,      this, _1 ) );
     SetValue( gaming, "contextmenu_background", 0, boost::bind( &Engine::OnContextMenuBackground, this, _1 ) );
@@ -257,19 +260,19 @@ void Engine::CreateEvent( const timeline::Event& event )
 {
     Gate gate;
     if( !gate.Acquire( ctx_ ) )
-        return CreatedEvent( event, Error( EC_INTERNAL_SERVER_ERROR, "unable to acquire v8 context" ) );
+        return SendCreatedEvent( event, Error( EC_INTERNAL_SERVER_ERROR, "unable to acquire v8 context" ) );
     auto create_event = GetValue( ctx_, "gaming.create_event" );
     if( !create_event )
-        return CreatedEvent( event, Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.create_event" ) );
+        return SendCreatedEvent( event, Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.create_event" ) );
     auto data = CefV8Value::CreateObject( 0 );
     SetEvent( data, event );
     CefV8ValueList args;
     args.push_back( data );
     if( !gate.Execute( create_event, args ) )
-        return CreatedEvent( event, Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.create_event" ) );
+        return SendCreatedEvent( event, Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.create_event" ) );
 }
 
-void Engine::CreatedEvent( const timeline::Event& event, const timeline::Error& error )
+void Engine::SendCreatedEvent( const timeline::Event& event, const timeline::Error& error )
 {
     Write( device_, boost::bind( &controls::CreatedEvent, _1, _2, event, error ) );
 }
@@ -282,7 +285,7 @@ CefRefPtr< CefV8Value > Engine::OnReady( const CefV8ValueList& /*args*/ )
 
 CefRefPtr< CefV8Value > Engine::OnCreatedEvent( const CefV8ValueList& args )
 {
-    CreatedEvent( GetEvent( args[0] ), GetError( args[1] ) );
+    SendCreatedEvent( GetEvent( args[0] ), GetError( args[1] ) );
     return 0;
 }
 
@@ -344,23 +347,102 @@ void Engine::DeleteEvent( const std::string& uuid )
 {
     Gate gate;
     if( !gate.Acquire( ctx_ ) )
-        return DeletedEvent( uuid, Error( EC_INTERNAL_SERVER_ERROR, "unable to acquire v8 context" ) );
+        return SendDeletedEvent( uuid, Error( EC_INTERNAL_SERVER_ERROR, "unable to acquire v8 context" ) );
     auto delete_event = GetValue( ctx_, "gaming.delete_event" );
     if( !delete_event )
-        return DeletedEvent( uuid, Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.delete_event" ) );
+        return SendDeletedEvent( uuid, Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.delete_event" ) );
     CefV8ValueList args;
     args.push_back( CefV8Value::CreateString( uuid ) );
     if( !gate.Execute( delete_event, args ) )
-        return DeletedEvent( uuid, Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.delete_event" ) );
+        return SendDeletedEvent( uuid, Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.delete_event" ) );
 }
 
 CefRefPtr< CefV8Value > Engine::OnDeletedEvent( const CefV8ValueList& args )
 {
-    DeletedEvent( args[0]->GetStringValue(), GetError( args[1] ) );
+    SendDeletedEvent( args[0]->GetStringValue(), GetError( args[1] ) );
     return 0;
 }
 
-void Engine::DeletedEvent( const std::string& uuid, const timeline::Error& error )
+void Engine::SendDeletedEvent( const std::string& uuid, const timeline::Error& error )
 {
     Write( device_, boost::bind( &controls::DeletedEvent, _1, _2, uuid, error ) );
+}
+
+void Engine::ReadEvents()
+{
+    Gate gate;
+    if( !gate.Acquire( ctx_ ) )
+        return SendReadEvents( Events(), Error( EC_INTERNAL_SERVER_ERROR, "unable to acquire v8 context" ) );
+    auto read_events = GetValue( ctx_, "gaming.read_events" );
+    if( !read_events )
+        return SendReadEvents( Events(), Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.read_events" ) );
+    if( !gate.Execute( read_events, CefV8ValueList() ) )
+        return SendReadEvents( Events(), Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.read_events" ) );
+}
+
+CefRefPtr< CefV8Value > Engine::OnReadEvents( const CefV8ValueList& args )
+{
+    Events rpy;
+    const auto& list = args[0];
+    for( int i = 0; i < list->GetArrayLength(); ++i )
+        rpy.push_back( GetEvent( list->GetValue( i ) ) );
+    SendReadEvents( rpy, GetError( args[1] ) );
+    return 0;
+}
+
+void Engine::SendReadEvents( const timeline::Events& events, const timeline::Error& error )
+{
+    Write( device_, boost::bind( &controls::ReadEvents, _1, _2, events, error ) );
+}
+
+void Engine::ReadEvent( const std::string& uuid )
+{
+    Gate gate;
+    if( !gate.Acquire( ctx_ ) )
+        return SendReadEvent( Event(), Error( EC_INTERNAL_SERVER_ERROR, "unable to acquire v8 context" ) );
+    auto read_event = GetValue( ctx_, "gaming.read_event" );
+    if( !read_event )
+        return SendReadEvent( Event(), Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.read_event" ) );
+    CefV8ValueList args;
+    args.push_back( CefV8Value::CreateString( uuid ) );
+    if( !gate.Execute( read_event, args ) )
+        return SendReadEvent( Event(), Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.read_event" ) );
+}
+
+CefRefPtr< CefV8Value > Engine::OnReadEvent( const CefV8ValueList& args )
+{
+    SendReadEvent( GetEvent( args[0] ), GetError( args[1] ) );
+    return 0;
+}
+
+void Engine::SendReadEvent( const timeline::Event& event, const timeline::Error& error )
+{
+    Write( device_, boost::bind( &controls::ReadEvent, _1, _2, event, error ) );
+}
+
+void Engine::UpdateEvent( const timeline::Event& event )
+{
+    Gate gate;
+    if( !gate.Acquire( ctx_ ) )
+        return SendUpdatedEvent( Event(), Error( EC_INTERNAL_SERVER_ERROR, "unable to acquire v8 context" ) );
+    auto update_event = GetValue( ctx_, "gaming.update_event" );
+    if( !update_event )
+        return SendUpdatedEvent( Event(), Error( EC_INTERNAL_SERVER_ERROR, "unable to find gaming.update event" ) );
+    auto data = CefV8Value::CreateObject( 0 );
+    SetEvent( data, event );
+    CefV8ValueList args;
+    args.push_back( data );
+    if( !gate.Execute( update_event, args ) )
+        return SendUpdatedEvent( Event(), Error( EC_INTERNAL_SERVER_ERROR, "unable to execute gaming.update_event" ) );
+}
+
+CefRefPtr< CefV8Value > Engine::OnUpdatedEvent( const CefV8ValueList& args )
+{
+    SendUpdatedEvent( GetEvent( args[0] ), GetError( args[1] ) );
+    return 0;
+}
+
+void Engine::SendUpdatedEvent( const timeline::Event& event, const timeline::Error& error )
+{
+    Write( device_, boost::bind( &controls::UpdatedEvent, _1, _2, event, error ) );
 }

@@ -10,15 +10,18 @@ package sdk;
 
 enum ClientType
 {
-    CLIENT_INVALID      = 0x000;
+    CLIENT_INVALID        = 0x000;
     // commands
-    CLIENT_RESIZE       = 0x100;
-    CLIENT_QUIT         = 0x101;
-    CLIENT_RELOAD       = 0x102;
-    CLIENT_LOAD         = 0x103;
+    CLIENT_RESIZE         = 0x100;
+    CLIENT_QUIT           = 0x101;
+    CLIENT_RELOAD         = 0x102;
+    CLIENT_LOAD           = 0x103;
     // event commands
-    CLIENT_EVENT_CREATE = 0x200;
-    CLIENT_EVENT_DELETE = 0x201;
+    CLIENT_EVENT_CREATE   = 0x200;
+    CLIENT_EVENT_READ_ALL = 0x201;
+    CLIENT_EVENT_READ_ONE = 0x202;
+    CLIENT_EVENT_UPDATE   = 0x203;
+    CLIENT_EVENT_DELETE   = 0x204;
 }
 
 enum ServerType
@@ -28,12 +31,15 @@ enum ServerType
     SERVER_READY                       = 0x100;
     // event commands
     SERVER_EVENT_CREATED               = 0x200;
-    SERVER_EVENT_SELECTED              = 0x201;
-    SERVER_EVENT_DESELECTED            = 0x202;
-    SERVER_EVENT_DELETED               = 0x203;
-    SERVER_EVENT_ACTIVATED             = 0x204;
-    SERVER_EVENT_CONTEXTMENU           = 0x205;
-    SERVER_EVENT_CONTEXTMENUBACKGROUND = 0x206;
+    SERVER_EVENT_READ_ALL              = 0x201;
+    SERVER_EVENT_READ_ONE              = 0x202;
+    SERVER_EVENT_UPDATED               = 0x203;
+    SERVER_EVENT_DELETED               = 0x204;
+    SERVER_EVENT_SELECTED              = 0x205;
+    SERVER_EVENT_DESELECTED            = 0x206;
+    SERVER_EVENT_ACTIVATED             = 0x207;
+    SERVER_EVENT_CONTEXTMENU           = 0x208;
+    SERVER_EVENT_CONTEXTMENUBACKGROUND = 0x209;
     // keyboard event
     SERVER_KEYBOARD_KEYDOWN            = 0x300;
     SERVER_KEYBOARD_KEYPRESS           = 0x301;
@@ -84,4 +90,5 @@ message ServerCommand
     optional Event         event         = 2;
     optional Error         error         = 3;
     optional KeyBoardEvent keyboardevent = 4;
+    repeated Event         events        = 5;
 }

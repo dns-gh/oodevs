@@ -124,6 +124,14 @@ namespace
         return dst;
     }
 
+    Events GetEvents( const google::protobuf::RepeatedPtrField< sdk::Event >& events )
+    {
+        Events rpy;
+        for( auto it = events.begin(); it != events.end(); ++it )
+            rpy.push_back( GetEvent( *it ) );
+        return rpy;
+    }
+
     void SetError( sdk::Error& dst, const Error& error )
     {
         dst.set_code( error.code );
@@ -144,6 +152,27 @@ size_t tic::CreateEvent( void* data, size_t size, const Event& event )
     return Marshall( data, size, cmd );
 }
 
+size_t tic::ReadEvents( void* data, size_t size )
+{
+    return MarshallType< ClientCommand >( data, size, sdk::CLIENT_EVENT_READ_ALL );
+}
+
+size_t tic::ReadEvent( void* data, size_t size, const std::string& uuid )
+{
+    ClientCommand cmd;
+    cmd.set_type( sdk::CLIENT_EVENT_READ_ONE );
+    cmd.mutable_event()->set_uuid( uuid );
+    return Marshall( data, size, cmd );
+}
+
+size_t tic::UpdateEvent( void* data, size_t size, const Event& event )
+{
+    ClientCommand cmd;
+    cmd.set_type( sdk::CLIENT_EVENT_UPDATE );
+    SetEvent( *cmd.mutable_event(), event );
+    return Marshall( data, size, cmd );
+}
+
 size_t tic::DeleteEvent( void* data, size_t size, const std::string& uuid )
 {
     ClientCommand cmd;
@@ -158,12 +187,15 @@ void tic::ParseClient( ClientHandler_ABC& handler, const void* data, size_t size
     Unmarshall( cmd, data, size );
     switch( cmd.type() )
     {
-        case sdk::CLIENT_RESIZE:        return handler.OnResizeClient();
-        case sdk::CLIENT_QUIT:          return handler.OnQuitClient();
-        case sdk::CLIENT_RELOAD:        return handler.OnReloadClient();
-        case sdk::CLIENT_LOAD:          return handler.OnLoadClient( cmd.url() );
-        case sdk::CLIENT_EVENT_CREATE:  return handler.OnCreateEvent( GetEvent( cmd.event() ) );
-        case sdk::CLIENT_EVENT_DELETE:  return handler.OnDeleteEvent( GetEvent( cmd.event() ).uuid );
+        case sdk::CLIENT_RESIZE:         return handler.OnResizeClient();
+        case sdk::CLIENT_QUIT:           return handler.OnQuitClient();
+        case sdk::CLIENT_RELOAD:         return handler.OnReloadClient();
+        case sdk::CLIENT_LOAD:           return handler.OnLoadClient( cmd.url() );
+        case sdk::CLIENT_EVENT_CREATE:   return handler.OnCreateEvent( GetEvent( cmd.event() ) );
+        case sdk::CLIENT_EVENT_READ_ALL: return handler.OnReadEvents();
+        case sdk::CLIENT_EVENT_READ_ONE: return handler.OnReadEvent( GetEvent( cmd.event() ).uuid );
+        case sdk::CLIENT_EVENT_UPDATE:   return handler.OnUpdateEvent( GetEvent( cmd.event() ) );
+        case sdk::CLIENT_EVENT_DELETE:   return handler.OnDeleteEvent( GetEvent( cmd.event() ).uuid );
     }
 }
 
@@ -181,6 +213,43 @@ size_t tic::CreatedEvent( void* data, size_t size, const Event& event, const Err
     return Marshall( data, size, cmd );
 }
 
+size_t tic::ReadEvents( void* data, size_t size, const Events& events, const Error& error )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::SERVER_EVENT_READ_ALL );
+    for( auto it = events.begin(); it != events.end(); ++it )
+        SetEvent( *cmd.mutable_events()->Add(), *it );
+    SetError( *cmd.mutable_error(), error );
+    return Marshall( data, size, cmd );
+}
+
+size_t tic::ReadEvent( void* data, size_t size, const Event& event, const Error& error )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::SERVER_EVENT_READ_ONE );
+    SetEvent( *cmd.mutable_event(), event );
+    SetError( *cmd.mutable_error(), error );
+    return Marshall( data, size, cmd );
+}
+
+size_t tic::UpdatedEvent( void* data, size_t size, const Event& event, const Error& error )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::SERVER_EVENT_UPDATED );
+    SetEvent( *cmd.mutable_event(), event );
+    SetError( *cmd.mutable_error(), error );
+    return Marshall( data, size, cmd );
+}
+
+size_t tic::DeletedEvent( void* data, size_t size, const std::string& uuid, const Error& error )
+{
+    ServerCommand cmd;
+    cmd.set_type( sdk::SERVER_EVENT_DELETED );
+    cmd.mutable_event()->set_uuid( uuid );
+    SetError( *cmd.mutable_error(), error );
+    return Marshall( data, size, cmd );
+}
+
 size_t tic::SelectedEvent( void* data, size_t size, const Event& event )
 {
     ServerCommand cmd;
@@ -192,15 +261,6 @@ size_t tic::SelectedEvent( void* data, size_t size, const Event& event )
 size_t tic::DeselectedEvent( void* data, size_t size )
 {
     return MarshallType< ServerCommand >( data, size, sdk::SERVER_EVENT_DESELECTED );
-}
-
-size_t tic::DeletedEvent( void* data, size_t size, const std::string& uuid, const Error& error )
-{
-    ServerCommand cmd;
-    cmd.set_type( sdk::SERVER_EVENT_DELETED );
-    cmd.mutable_event()->set_uuid( uuid );
-    SetError( *cmd.mutable_error(), error );
-    return Marshall( data, size, cmd );
 }
 
 size_t tic::ActivatedEvent( void* data, size_t size, const Event& event )
@@ -256,9 +316,12 @@ void tic::ParseServer( ServerHandler_ABC& handler, const void* data, size_t size
     {
         case sdk::SERVER_READY:                       return handler.OnReadyServer();
         case sdk::SERVER_EVENT_CREATED:               return handler.OnCreatedEvent ( GetEvent( cmd.event() ), GetError( cmd.error() ) );
+        case sdk::SERVER_EVENT_READ_ALL:              return handler.OnReadEvents( GetEvents( cmd.events() ), GetError( cmd.error() ) );
+        case sdk::SERVER_EVENT_READ_ONE:              return handler.OnReadEvent( GetEvent( cmd.event() ), GetError( cmd.error() ) );
+        case sdk::SERVER_EVENT_UPDATED:               return handler.OnUpdatedEvent( GetEvent( cmd.event() ), GetError( cmd.error() ) );
+        case sdk::SERVER_EVENT_DELETED:               return handler.OnDeletedEvent( GetEvent( cmd.event() ).uuid, GetError( cmd.error() ) );
         case sdk::SERVER_EVENT_SELECTED:              return handler.OnSelectedEvent( GetEvent( cmd.event() ) );
         case sdk::SERVER_EVENT_DESELECTED:            return handler.OnDeselectedEvent();
-        case sdk::SERVER_EVENT_DELETED:               return handler.OnDeletedEvent( GetEvent( cmd.event() ).uuid, GetError( cmd.error() ) );
         case sdk::SERVER_EVENT_ACTIVATED:             return handler.OnActivatedEvent( GetEvent( cmd.event() ) );
         case sdk::SERVER_EVENT_CONTEXTMENU:           return handler.OnContextMenuEvent( GetEvent( cmd.event() ) );
         case sdk::SERVER_EVENT_CONTEXTMENUBACKGROUND: return handler.OnContextMenuBackground();

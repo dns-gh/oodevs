@@ -76,6 +76,7 @@ Server::Server( const Configuration& cfg )
     qRegisterMetaType< boost::shared_ptr< Event > >( "boost::shared_ptr< timeline::Event >" );
     qRegisterMetaType< std::string >( "std::string" );
     qRegisterMetaType< Event >( "timeline::Event" );
+    qRegisterMetaType< Events >( "timeline::Events" );
     qRegisterMetaType< Error >( "timeline::Error" );
     auto layout = new QVBoxLayout( cfg.widget );
     auto widget = new Widget( *write_, cfg.widget );
@@ -131,6 +132,23 @@ bool Server::CreateEvent( const Event& event )
     return Write( *write_, boost::bind( &controls::CreateEvent, _1, _2, event ) );
 }
 
+bool Server::ReadEvents()
+{
+    return Write( *write_, static_cast< size_t ( * )( void*, size_t ) >( &controls::ReadEvents ) );
+}
+
+bool Server::ReadEvent( const std::string& uuid )
+{
+    return Write( *write_, boost::bind( &controls::ReadEvent, _1, _2, uuid ) );
+}
+
+bool Server::UpdateEvent( const Event& event )
+{
+    if( !event.IsValid() )
+        return false;
+    return Write( *write_, boost::bind( &controls::UpdateEvent, _1, _2, event ) );
+}
+
 bool Server::DeleteEvent( const std::string& uuid )
 {
     return Write( *write_, boost::bind( &controls::DeleteEvent, _1, _2, uuid ) );
@@ -169,6 +187,26 @@ void Server::OnCreatedEvent( const Event& event, const Error& error )
     emit CreatedEvent( event, error );
 }
 
+void Server::OnReadEvents( const Events& events, const Error& error )
+{
+    emit GetEvents( events, error );
+}
+
+void Server::OnReadEvent( const Event& event, const Error& error )
+{
+    emit GetEvent( event, error );
+}
+
+void Server::OnUpdatedEvent( const Event& event, const Error& error )
+{
+    emit UpdatedEvent( event, error );
+}
+
+void Server::OnDeletedEvent( const std::string& uuid, const Error& error )
+{
+    emit DeletedEvent( uuid, error );
+}
+
 void Server::OnSelectedEvent( const Event& event )
 {
     emit SelectedEvent( boost::make_shared< Event >( event ) );
@@ -177,11 +215,6 @@ void Server::OnSelectedEvent( const Event& event )
 void Server::OnDeselectedEvent()
 {
     emit SelectedEvent( boost::shared_ptr< Event >() );
-}
-
-void Server::OnDeletedEvent( const std::string& uuid, const Error& error )
-{
-    emit DeletedEvent( uuid, error );
 }
 
 void Server::OnActivatedEvent( const Event& event )

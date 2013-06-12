@@ -213,6 +213,7 @@ func (s *TestSuite) TestServerConnects(c *C) {
 	defer client.Process.Kill()
 	WaitCommand(c, client)
 }
+
 func (s *TestSuite) TestServerDeletes(c *C) {
 	script, model := MakeServerConfig(c)
 	server := StartServer(c, script)
@@ -238,4 +239,24 @@ func CreateEvent(c *C, uuid string) {
 func (s *TestSuite) TestServerCreates(c *C) {
 	CreateEvent(c, gouuid.New())
 	CreateEvent(c, "")
+}
+
+func (s *TestSuite) TestServerReads(c *C) {
+	script, _ := MakeServerConfig(c)
+	server := StartServer(c, script)
+	defer server.Process.Kill()
+	uuid := gouuid.New()
+	client := StartClient(c, "read", uuid)
+	defer client.Process.Kill()
+	WaitCommand(c, client)
+}
+
+func (s *TestSuite) TestServerUpdates(c *C) {
+	script, _ := MakeServerConfig(c)
+	server := StartServer(c, script)
+	defer server.Process.Kill()
+	uuid := gouuid.New()
+	client := StartClient(c, "update", uuid)
+	defer client.Process.Kill()
+	WaitCommand(c, client)
 }

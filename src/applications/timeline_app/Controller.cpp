@@ -14,6 +14,7 @@
 #include "moc_Controller.cpp"
 
 #include <boost/assign/list_of.hpp>
+#include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
@@ -32,7 +33,7 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ui_->actionReload, SIGNAL( triggered() ), this, SLOT( OnReload() ) );
     QObject::connect( ui_->actionCreate, SIGNAL( triggered() ), this, SLOT( OnCreateEvent() ) );
     QObject::connect( ui_->actionDelete, SIGNAL( triggered() ), this, SLOT( OnDeleteEvent() ) );
-    QObject::connect( ui_->actionTestCreate, SIGNAL( triggered() ), this, SLOT( OnTestCreate() ) );
+    QObject::connect( ui_->actionTest, SIGNAL( triggered() ), this, SLOT( OnTestCrud() ) );
     QObject::connect( &url_, SIGNAL( editingFinished() ), this, SLOT( OnLoad() ) );
     QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), this, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
@@ -166,12 +167,15 @@ void Controller::OnDeletedEvent( const std::string& uuid, const Error& error )
             .arg( QString::fromStdString( error.text ) ) );
 }
 
-void Controller::OnTestCreate()
+void Controller::OnTestCrud()
 {
     const std::string uuid = boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
     try
     {
         Create( boost::assign::list_of( uuid ) );
+        Delete( boost::assign::list_of( uuid ) );
+        Read( boost::assign::list_of( uuid ) );
+        Update( boost::assign::list_of( uuid ) );
     }
     catch( const std::exception& err )
     {
@@ -265,6 +269,21 @@ namespace
             && Equals( lhs.action, rhs.action );
     }
 
+    bool Equals( const Events& lhs, const Events& rhs )
+    {
+        if( lhs.size() != rhs.size() )
+            return false;
+        Events copy = rhs;
+        for( auto it = lhs.begin(); it != lhs.end(); ++it )
+        {
+            auto ju = std::find_if( copy.begin(), copy.end(), boost::bind( static_cast< bool(*)(const Event&,const Event&) >( &Equals ), boost::cref( *it ), _1 ) );
+            if( ju == copy.end() )
+                return false;
+            copy.erase( ju );
+        }
+        return true;
+    }
+
     bool Equals( const Error& lhs, const Error& rhs )
     {
         return lhs.code == rhs.code
@@ -301,6 +320,14 @@ namespace
             .arg( QString::fromStdString( event.end ) )
             .arg( event.done )
             .arg( Dump( event.action ) );
+    }
+
+    QString Dump( const Events& events )
+    {
+        QStringList list;
+        for( auto it = events.begin(); it != events.end(); ++it )
+            list << Dump( *it );
+        return "[" + list.join(",") + "]";
     }
 
     QString Dump( const Error& error )
@@ -389,6 +416,132 @@ int Controller::Create( const std::vector< std::string >& args )
     return 0;
 }
 
+namespace
+{
+    struct CheckReadEvent : public OnSignal_ABC
+    {
+        CheckReadEvent( QEventLoop& loop )
+            : OnSignal_ABC()
+            , loop_       ( loop )
+        {
+            // NOTHING
+        }
+        void OnReadEvents( const Events& events, const Error& error )
+        {
+            events_  = events;
+            error_ = error;
+            QTimer::singleShot( 0, &loop_, SLOT( quit() ) );
+        }
+        void OnReadEvent( const Event& event, const Error& error )
+        {
+            events_.push_back( event );
+            error_ = error;
+            QTimer::singleShot( 0, &loop_, SLOT( quit() ) );
+        }
+        QEventLoop& loop_;
+        Events events_;
+        Error error_;
+    };
+
+    std::pair< Events, Error > ReadEvents( Server_ABC& ctx, const std::string& uuid = std::string() )
+    {
+        QEventLoop wait;
+        CheckReadEvent read( wait );
+        QObject::connect( &ctx, SIGNAL( GetEvents( const timeline::Events&, const timeline::Error& ) ), &read, SLOT( OnReadEvents( const timeline::Events&, const timeline::Error& ) ) );
+        QObject::connect( &ctx, SIGNAL( GetEvent ( const timeline::Event&,  const timeline::Error& ) ), &read, SLOT( OnReadEvent ( const timeline::Event&,  const timeline::Error& ) ) );
+        if( uuid.empty() )
+            ctx.ReadEvents();
+        else
+            ctx.ReadEvent( uuid );
+        wait.exec();
+        return std::make_pair( read.events_, read.error_ );
+    }
+
+    void ResetEvents( Controller& control, Server_ABC& ctx, const Events& events )
+    {
+        const auto pair = ReadEvents( ctx );
+        for( auto it = pair.first.begin(); it != pair.first.end(); ++it )
+            control.Delete( boost::assign::list_of( it->uuid ) );
+        for( auto it = events.begin(); it != events.end(); ++it )
+            CreateEvent::Create( ctx, *it );
+    }
+}
+
+int Controller::Read( const std::vector< std::string >& args )
+{
+    if( args.size() != 1 )
+        throw std::runtime_error( "usage: read <uuid>" );
+    const Events ref = boost::assign::list_of
+        ( Event( args[0], "some_name", "some_info", "2013-01-01T11:00:04Z", std::string(), false, Action() ) )
+        ( Event( boost::lexical_cast< std::string >( boost::uuids::random_generator()() ), "some_name2", "some_info2", "2017-02-03T17:24:13Z", std::string(), false, Action() ) );
+    ResetEvents( *this, *ctx_, ref );
+    auto pair = ReadEvents( *ctx_ );
+    Check( pair.second );
+    if( !Equals( pair.first, ref ) )
+        throw std::runtime_error( QString( "invalid events %1:%2" ).
+            arg( Dump( pair.first ) ).
+            arg( Dump( ref ) ).toStdString() );
+    pair = ReadEvents( *ctx_, args[0] );
+    Check( pair.second );
+    if( pair.first.empty() )
+        throw std::runtime_error( "missing event" );
+    Check( *pair.first.begin(), ref[0] );
+    return 0;
+}
+
+namespace
+{
+    struct UpdateEvent : public OnSignal_ABC
+    {
+        UpdateEvent( QEventLoop& loop )
+            : OnSignal_ABC()
+            , loop_       ( loop )
+        {
+            // NOTHING
+        }
+        void OnUpdatedEvent( const Event& event, const Error& error )
+        {
+            event_  = event;
+            error_ = error;
+            QTimer::singleShot( 0, &loop_, SLOT( quit() ) );
+        }
+        static std::pair< Event, Error > Update( Server_ABC& ctx, const Event& event )
+        {
+            QEventLoop wait;
+            UpdateEvent update( wait );
+            QObject::connect( &ctx, SIGNAL( UpdatedEvent( const timeline::Event&, const timeline::Error& ) ), &update, SLOT( OnUpdatedEvent( const timeline::Event&, const timeline::Error& ) ) );
+            ctx.UpdateEvent( event );
+            wait.exec();
+            return std::make_pair( update.event_, update.error_ );
+        }
+        QEventLoop& loop_;
+        Event event_;
+        Error error_;
+    };
+}
+
+int Controller::Update( const std::vector< std::string >& args )
+{
+    if( args.size() != 1 )
+        throw std::runtime_error( "usage: read <uuid>" );
+    const Event event( args[0], "some_name", "some_info",
+        "2013-01-01T11:00:04Z", std::string(), false, Action() );
+    ResetEvents( *this, *ctx_, boost::assign::list_of( event ) );
+    Event next = event;
+    next.name = "updated_name";
+    next.info = "updated_info";
+    next.begin = "2013-01-01T12:00:04Z";
+    next.end = "2013-01-01T13:00:04Z";
+    next.done = false;
+    next.action.target = "protocol://host:port";
+    next.action.apply = true;
+    next.action.payload = "updated_payload";
+    const auto pair = UpdateEvent::Update( *ctx_, next );
+    Check( pair.second );
+    Check( pair.first, next );
+    return 0;
+}
+
 int Controller::Execute( const std::string& command, const std::vector< std::string >& args )
 {
     WaitReady();
@@ -398,5 +551,9 @@ int Controller::Execute( const std::string& command, const std::vector< std::str
         return Delete( args );
     if( command == "create" )
         return Create( args );
+    if( command == "read" )
+        return Read( args );
+    if( command == "update" )
+        return Update( args );
     throw std::runtime_error( "unexpected command " + command );
 }

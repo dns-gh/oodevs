@@ -31,6 +31,9 @@ namespace controls
     size_t ReloadClient( void* dst, size_t size );
     size_t LoadClient  ( void* dst, size_t size, const std::string& url );
     size_t CreateEvent ( void* dst, size_t size, const Event& event );
+    size_t ReadEvents  ( void* dst, size_t size );
+    size_t ReadEvent   ( void* dst, size_t size, const std::string& uuid );
+    size_t UpdateEvent ( void* dst, size_t size, const Event& event );
     size_t DeleteEvent ( void* dst, size_t size, const std::string& uuid );
 
     struct ClientHandler_ABC : public boost::noncopyable
@@ -43,6 +46,9 @@ namespace controls
         virtual void OnReloadClient() = 0;
         virtual void OnLoadClient( const std::string& url ) = 0;
         virtual void OnCreateEvent( const Event& event ) = 0;
+        virtual void OnReadEvents() = 0;
+        virtual void OnReadEvent( const std::string& uuid ) = 0;
+        virtual void OnUpdateEvent( const Event& event ) = 0;
         virtual void OnDeleteEvent( const std::string& uuid ) = 0;
     };
 
@@ -50,9 +56,12 @@ namespace controls
 
     size_t ReadyServer          ( void* data, size_t size );
     size_t CreatedEvent         ( void* data, size_t size, const Event& event, const Error& error );
+    size_t ReadEvents           ( void* data, size_t size, const Events& events, const Error& error );
+    size_t ReadEvent            ( void* data, size_t size, const Event& event, const Error& error );
+    size_t UpdatedEvent         ( void* data, size_t size, const Event& event, const Error& error );
+    size_t DeletedEvent         ( void* data, size_t size, const std::string& uuid, const Error& error );
     size_t SelectedEvent        ( void* data, size_t size, const Event& event );
     size_t DeselectedEvent      ( void* data, size_t size );
-    size_t DeletedEvent         ( void* data, size_t size, const std::string& uuid, const Error& error );
     size_t ActivatedEvent       ( void* data, size_t size, const Event& event );
     size_t ContextMenuEvent     ( void* data, size_t size, const Event& event );
     size_t ContextMenuBackground( void* data, size_t size );
@@ -67,9 +76,12 @@ namespace controls
 
         virtual void OnReadyServer          () = 0;
         virtual void OnCreatedEvent         ( const Event& event, const Error& error ) = 0;
+        virtual void OnReadEvents           ( const Events& events, const Error& error ) = 0;
+        virtual void OnReadEvent            ( const Event& event, const Error& error ) = 0;
+        virtual void OnUpdatedEvent         ( const Event& event, const Error& error ) = 0;
+        virtual void OnDeletedEvent         ( const std::string& uuid, const Error& error ) = 0;
         virtual void OnSelectedEvent        ( const Event& event ) = 0;
         virtual void OnDeselectedEvent      () = 0;
-        virtual void OnDeletedEvent         ( const std::string& uuid, const Error& error ) = 0;
         virtual void OnActivatedEvent       ( const Event& event ) = 0;
         virtual void OnContextMenuEvent     ( const Event& event ) = 0;
         virtual void OnContextMenuBackground() = 0;
