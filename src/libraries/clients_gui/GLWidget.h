@@ -87,6 +87,7 @@ public:
     virtual void DrawLife         ( const geometry::Point2f& center, float height, float factor = 1.f, bool fixedSize = true ) const;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where, const QFont& font ) const;
     virtual void Print            ( const std::string& message, const geometry::Point2f& where ) const;
+    virtual void DrawInfrastructureSymbol( const std::string& symbol, const geometry::Point2f& where, float factor, float thickness ) const;
     virtual void DrawApp6Symbol   ( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f, unsigned int direction = 0 ) const;
     virtual void DrawApp6Symbol   ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f, float thickness = 1.f, unsigned int direction = 0 ) const;
     virtual void DrawApp6SymbolFixedSize( const std::string& symbol, const geometry::Point2f& where, float factor, unsigned int direction ) const;
@@ -123,7 +124,8 @@ private:
     //@{
     float ComputeZoomFactor( float& factor, bool bVariableSize = true ) const;
     void DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where
-        , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight, unsigned int angle, float xFactor, float yFactor, float svgDeltaX = -20, float svgDeltaY = -80 ) const;
+        , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth, unsigned int printHeight,
+        unsigned int angle, float xFactor, float yFactor, float svgDeltaX = -20, float svgDeltaY = -80, bool checkAlpha = true ) const;
     void DrawTail( const T_PointVector& points, float width ) const;
     //@}
 

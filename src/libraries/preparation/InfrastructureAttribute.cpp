@@ -170,7 +170,7 @@ void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
 void InfrastructureAttribute::Draw( const geometry::Point2f& /*where*/, const gui::Viewport_ABC& viewport, gui::GlTools_ABC& tools ) const
 {
     if( type_ && viewport.IsHotpointVisible() && controllers_.options_.GetOption( "Infra", true ).To< bool >() )
-        tools.DrawApp6Symbol( type_->GetSymbol(), position_, 0.1f, 0.1f );
+        tools.DrawInfrastructureSymbol( type_->GetSymbol(), position_, 0.1f, 0.1f );
 }
 
 // -----------------------------------------------------------------------------

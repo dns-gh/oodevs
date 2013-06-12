@@ -112,7 +112,7 @@ void InfrastructureAttribute::Draw( const geometry::Point2f& /*where*/, const gu
     if( viewport.IsHotpointVisible() )
     {
         if( type_ )
-            tools.DrawApp6Symbol( type_->GetSymbol(), position_, 0.1f, 0.1f );
+            tools.DrawInfrastructureSymbol( type_->GetSymbol(), position_, 0.1f, 0.1f );
         if( !enabled_ )
             tools.DrawSvg( "infra.svg", position_, 0.1f );
     }
