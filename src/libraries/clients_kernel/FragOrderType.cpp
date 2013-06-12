@@ -72,7 +72,7 @@ bool FragOrderType::IsAvailableFor( const kernel::Entity_ABC& entity ) const
     if( 0 == diaType_.compare( 0, repOrderAutomat.size(), repOrderAutomat ) )
         return typeName == "automat";
     if( 0 == diaType_.compare( 0, repOrderPopulation.size(), repOrderPopulation) )
-        return typeName == "population";
+        return typeName == "crowd";
     return true;
 }
 
