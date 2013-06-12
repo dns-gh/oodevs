@@ -234,11 +234,8 @@ void TimelineFilteredViewWidget::OnSelectedEvent( boost::shared_ptr< timeline::E
     {
         Event& gamingEvent = GetOrCreateEvent( *event );
         if( gamingEvent.GetType() == eEventTypes_Order )
-        {
-            const actions::Action_ABC* action = static_cast< EventAction& >( gamingEvent ).GetAction();
-            if( action )
+            if( const actions::Action_ABC* action = static_cast< EventAction& >( gamingEvent ).GetAction() )
                 action->Select( controllers_.actions_ );
-        }
     }
     else if( hadSelection )
         controllers_.actions_.DeselectAll();
@@ -251,6 +248,9 @@ void TimelineFilteredViewWidget::OnSelectedEvent( boost::shared_ptr< timeline::E
 void TimelineFilteredViewWidget::OnActivatedEvent( const timeline::Event& event )
 {
     Event& gamingEvent = GetOrCreateEvent( event );
+    if( gamingEvent.GetType() == eEventTypes_Order )
+        if( const actions::Action_ABC* action = static_cast< EventAction& >( gamingEvent ).GetAction() )
+            action->Select( controllers_.actions_ );
     eventDialog_.Edit( gamingEvent );
 }
 
