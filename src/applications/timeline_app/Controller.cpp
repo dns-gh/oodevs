@@ -310,6 +310,22 @@ namespace
             .arg( error.code )
             .arg( QString::fromStdString( error.text ) );
     }
+
+    void Check( const Error& value )
+    {
+        if( !Equals( value, Error() ) )
+            throw std::runtime_error( QString( "invalid error %1" ).
+                arg( Dump( value ) ).toStdString() );
+    }
+
+    void Check( const Event& lhs, const Event& rhs )
+    {
+        if( !Equals( lhs, rhs ) )
+            throw std::runtime_error( QString( "invalid event %1:%2" ).
+                arg( Dump( lhs ) ).
+                arg( Dump( rhs ) ).
+                toStdString() );
+    }
 }
 
 int Controller::Delete( const std::vector< std::string >& args )
@@ -321,9 +337,7 @@ int Controller::Delete( const std::vector< std::string >& args )
     QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), &deleter, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
     ctx_->DeleteEvent( args[0] );
     wait.exec();
-    if( !Equals( deleter.error_, Error() ) )
-        throw std::runtime_error( QString( "invalid error %1" ).
-            arg( Dump( deleter.error_ ) ).toStdString() );
+    Check( deleter.error_ );
     if( deleter.uuid_ != args[0] )
         throw std::runtime_error( "invalid uuid" );
     return 0;
@@ -345,6 +359,15 @@ namespace
             error_ = error;
             QTimer::singleShot( 0, &loop_, SLOT( quit() ) );
         }
+        static std::pair< Event, Error > Create( Server_ABC& ctx, const Event& event )
+        {
+            QEventLoop wait;
+            CreateEvent creator( wait );
+            QObject::connect( &ctx, SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), &creator, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
+            ctx.CreateEvent( event );
+            wait.exec();
+            return std::make_pair( creator.event_, creator.error_ );
+        }
         QEventLoop& loop_;
         Event event_;
         Error error_;
@@ -355,24 +378,14 @@ int Controller::Create( const std::vector< std::string >& args )
 {
     if( args.size() != 1 )
         throw std::runtime_error( "usage: create <uuid>" );
-    QEventLoop wait;
-    CreateEvent creator( wait );
-    QObject::connect( ctx_.get(), SIGNAL( CreatedEvent( const timeline::Event&, const timeline::Error& ) ), &creator, SLOT( OnCreatedEvent( const timeline::Event&, const timeline::Error& ) ) );
     Action action( "zomgjohndoe", true, "hello world" );
     Event event( args[0], "some_name", "some_info", "2013-01-01T11:00:04Z", std::string(), false, action );
-    ctx_->CreateEvent( event );
-    wait.exec();
-    if( !Equals( creator.error_, Error() ) )
-        throw std::runtime_error( QString( "invalid error %1" ).
-            arg( Dump( creator.error_ ) ).toStdString() );
+    const auto pair = CreateEvent::Create( *ctx_, event );
+    Check( pair.second );
     // if input uuid is empty, use the server generated uuid
     if( event.uuid.empty() )
-        event.uuid = creator.event_.uuid;
-    if( !Equals( creator.event_, event ) )
-        throw std::runtime_error( QString( "invalid event %1:%2" ).
-            arg( Dump( creator.event_ ) ).
-            arg( Dump( event ) ).
-            toStdString() );
+        event.uuid = pair.first.uuid;
+    Check( pair.first, event );
     return 0;
 }
 
