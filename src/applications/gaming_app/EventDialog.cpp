@@ -134,6 +134,16 @@ void EventDialog::SetEventType( E_EventTypes type )
 }
 
 // -----------------------------------------------------------------------------
+// Name: EventDialog::closeEvent
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+void EventDialog::closeEvent( QCloseEvent * event )
+{
+    Purge();
+    QDialog::closeEvent( event );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EventDialog::Purge
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------

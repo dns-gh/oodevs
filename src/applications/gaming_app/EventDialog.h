@@ -77,6 +77,7 @@ private:
     void Commit( timeline::Event& event );
     void Purge();
     void Fill();
+    virtual void closeEvent( QCloseEvent * event );
     //@}
 
 signals:
