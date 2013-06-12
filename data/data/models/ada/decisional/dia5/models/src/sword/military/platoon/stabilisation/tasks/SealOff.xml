@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.stabilisation.tasks.SealOff" source-version="1.0.0" knowledge-class="sword.military.platoon.stabilisation.tasks.knowledge.SealOff">
-	<description>Mission qui consiste à boucler un objectif.&#xD;
+    <description>Mission qui consiste à boucler un objectif.&#xD;
     </description>
-	<parameters>
-		<parameter name="objective">
-			<description>L'objectif à boucler.</description>
-			<type>
-				<class name="sword.military.knowledge.Sealable"/>
-			</type>
-		</parameter>
-		<parameter name="position" nullable="true">
-			<type>
-				<class name="sword.military.knowledge.decisional.Reachable"/>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-	</parameters>
-	<stages>
-		<stage label="Bouclage de l'objectif." permanent="true">
-			<description>Deplacement vers position puis bouclage</description>
-			<goal>
-				<description>Boucler</description>
-			</goal>
-			<skills>
-				<skill name="sword.military.platoon.stabilisation.skills.SealOff">
-					<parameter name="objective">
-						<value>
-							<parameter>objective</parameter>
-						</value>
-					</parameter>
-					<parameter name="position">
-						<value>
-							<parameter>position</parameter>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <parameters>
+        <parameter name="objective">
+            <description>L'objectif à boucler.</description>
+            <type>
+                <class name="sword.military.knowledge.Sealable"/>
+            </type>
+        </parameter>
+        <parameter name="position" nullable="true">
+            <type>
+                <class name="sword.military.knowledge.decisional.Reachable"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Bouclage de l'objectif" permanent="true">
+            <description>Deplacement vers position puis bouclage</description>
+            <goal>
+                <description>Boucler</description>
+            </goal>
+            <skills>
+                <skill name="sword.military.platoon.stabilisation.skills.SealOff">
+                    <parameter name="objective">
+                        <value>
+                            <parameter>objective</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="position">
+                        <value>
+                            <parameter>position</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

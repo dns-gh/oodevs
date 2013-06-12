@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.EscorterRefugiesVersCamp" source-version="1.0.0" knowledge-class="france.military.platoon.tasks.knowledges.EscorterRefugiesVersCamp">
-	<parameters>
-		<parameter name="camp">
-			<type>
-				<class name="sword.military.knowledge.Camp"/>
-			</type>
-		</parameter>
-		<parameter name="entities">
-			<type>
-				<list>
-					<class name="sword.military.knowledge.decisional.Loadable"/>
-				</list>
-			</type>
-		</parameter>
-	</parameters>
-	<goal>
-		<description>Escorter les réfugiés vers un camp</description>
-	</goal>
-	<stages>
-		<stage label="Déplacement vers les unités réfugiées.">
-			<skills>
-				<skill name="sword.military.platoon.skills.primitives.Load" main="true">
-					<parameter name="entities">
-						<value>
-							<parameter>entities</parameter>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-		<stage label="Déplacement vers le camp" disable-when-done="true">
-			<skills>
-				<skill name="sword.military.platoon.skills.DischargeIn" main="true">
-					<parameter name="elements">
-						<value>
-							<parameter>entities</parameter>
-						</value>
-					</parameter>
-					<parameter name="camp">
-						<value>
-							<parameter>camp</parameter>
-						</value>
-					</parameter>
-				</skill>
-				<skill name="france.military.platoon.skills.LibererEmbarques">
-					<parameter name="entities">
-						<value>
-							<parameter>entities</parameter>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <parameters>
+        <parameter name="camp">
+            <type>
+                <class name="sword.military.knowledge.Camp"/>
+            </type>
+        </parameter>
+        <parameter name="entities">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Loadable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Escorter les réfugiés vers un camp</description>
+    </goal>
+    <stages>
+        <stage label="Déplacement vers les unités réfugiées">
+            <skills>
+                <skill name="sword.military.platoon.skills.primitives.Load" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="Déplacement vers le camp" disable-when-done="true">
+            <skills>
+                <skill name="sword.military.platoon.skills.DischargeIn" main="true">
+                    <parameter name="elements">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="camp">
+                        <value>
+                            <parameter>camp</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="france.military.platoon.skills.LibererEmbarques">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

@@ -18,7 +18,7 @@
         <description>Escorter des prisonniers vers une position</description>
     </goal>
     <stages>
-        <stage label="Déplacement vers les prisonniers.">
+        <stage label="Déplacement vers les prisonniers">
             <skills>
                 <skill name="sword.military.platoon.skills.primitives.TransportPrisoners" main="true">
                     <parameter name="platoons">

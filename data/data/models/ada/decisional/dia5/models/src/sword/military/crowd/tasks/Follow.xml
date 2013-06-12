@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.crowd.tasks.Follow" source-version="1.0.0" knowledge-class="sword.military.crowd.tasks.knowldege.CrowdTask">
-  <parameters>
-    <parameter name="objective">
-      <type>
-        <class name="sword.military.crowd.world.interfaces.Reachable"/>
-      </type>
-    </parameter>
-  </parameters>
-  <stages>
-    <stage label="Suivre l'objectif." disable-when-done="true">
-      <skills>
-        <skill name="sword.military.crowd.skills.actions.MoveTo" main="true">
-          <parameter name="entity">
-            <value>
-              <parameter>objective</parameter>
-            </value>
-          </parameter>
-        </skill>
-      </skills>
-    </stage>
-  </stages>
+    <parameters>
+        <parameter name="objective">
+            <type>
+                <class name="sword.military.crowd.world.interfaces.Reachable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Suivre l'objectif" disable-when-done="true">
+            <skills>
+                <skill name="sword.military.crowd.skills.actions.MoveTo" main="true">
+                    <parameter name="entity">
+                        <value>
+                            <parameter>objective</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

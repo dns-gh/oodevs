@@ -9,7 +9,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Escorter une unité." permanent="true">
+        <stage label="Escorter une unité" permanent="true">
             <skills>
                 <skill name="france.military.platoon.skills.Escort" priority="0.9">
                     <parameter name="objective">

@@ -25,7 +25,7 @@
         <description>Surveiller les objectifs à partir des positions (engagement des éléments ennemis).</description>
     </goal>
     <stages>
-        <stage label="Occupation des positions." permanent="true">
+        <stage label="Occupation des positions" permanent="true">
             <description>Appliquer des feux et observer l'objectif à partir de la position de couverture suivant l'unité à flanc-garder.</description>
             <goal>
                 <description>Occuper les positions.</description>

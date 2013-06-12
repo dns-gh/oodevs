@@ -37,7 +37,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Suivre." disable-when-done="true">
+        <stage label="Suivre" disable-when-done="true">
             <skills>
                 <skill name="sword.military.company.skills.Lead" main="true">
                     <parameter name="companyTask">

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.stabilisation.tasks.InquireAbout" source-version="1.0.0" knowledge-class="sword.military.platoon.stabilisation.tasks.knowledge.InquireAbout">
-  <parameters>
-    <parameter name="crowd">
-      <type>
-        <class name="sword.military.world.Crowd"/>
-      </type>
-    </parameter>
-  </parameters>
-  <stages>
-    <stage label="Renseigner sur la foule." disable-when-done="true">
-      <skills>
-        <skill name="sword.military.platoon.stabilisation.skills.InquireAbout" main="true">
-          <parameter name="crowd">
-            <value>
-              <parameter>crowd</parameter>
-            </value>
-          </parameter>
-        </skill>
-      </skills>
-    </stage>
-  </stages>
+    <parameters>
+        <parameter name="crowd">
+            <type>
+                <class name="sword.military.world.Crowd"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Renseigner sur la foule" disable-when-done="true">
+            <skills>
+                <skill name="sword.military.platoon.stabilisation.skills.InquireAbout" main="true">
+                    <parameter name="crowd">
+                        <value>
+                            <parameter>crowd</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

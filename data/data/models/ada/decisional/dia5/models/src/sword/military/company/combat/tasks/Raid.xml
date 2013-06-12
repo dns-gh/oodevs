@@ -1,70 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.combat.tasks.Raid" source-version="1.0.0" knowledge-class="sword.military.company.combat.tasks.knowledges.RaidEffect">
-  <parameters>
-    <parameter name="objective">
-      <type>
-        <class name="sword.military.knowledge.decisional.Destroying"/>
-      </type>
-    </parameter>
-    <parameter name="companyTask">
-      <type>
-        <simple name="string"/>
-      </type>
-    </parameter>
-    <parameter name="mainTasks">
-      <type>
-        <simple name="string"/>
-      </type>
-    </parameter>
-    <parameter name="supportTasks">
-      <type>
-        <simple name="string"/>
-      </type>
-    </parameter>
-    <parameter name="defaultTask">
-      <description>La mission que l'on donne par défaut aux pions.</description>
-      <type>
-        <simple name="string"/>
-      </type>
-    </parameter>
-    <parameter name="taskForSupporting">
-      <description>La mission que l'on donne aux pions de SE pour aider un pion de PE en difficulté.</description>
-      <type>
-        <simple name="string"/>
-      </type>
-    </parameter>
-  </parameters>
-  <stages>
-    <stage label="Effectuer un raid sur l'objectif.">
-      <skills>
-        <skill name="sword.military.company.skills.Lead" main="true">
-          <parameter name="companyTask">
-            <value>
-              <parameter>companyTask</parameter>
-            </value>
-          </parameter>
-          <parameter name="mainTasks">
-            <value>
-              <parameter>mainTasks</parameter>
-            </value>
-          </parameter>
-          <parameter name="supportTasks">
-            <value>
-              <parameter>supportTasks</parameter>
-            </value>
-          </parameter>
-          <parameter name="taskForSupporting">
-            <value>
-              <parameter>taskForSupporting</parameter>
-            </value>
-          </parameter>
-          <parameter name="defaultTask">
-            <value>
-              <parameter>defaultTask</parameter>
-            </value>
-          </parameter>
-        </skill>
-      </skills>
-    </stage>
-  </stages>
+    <parameters>
+        <parameter name="objective">
+            <type>
+                <class name="sword.military.knowledge.decisional.Destroying"/>
+            </type>
+        </parameter>
+        <parameter name="companyTask">
+            <type>
+                <simple name="string"/>
+            </type>
+        </parameter>
+        <parameter name="mainTasks">
+            <type>
+                <simple name="string"/>
+            </type>
+        </parameter>
+        <parameter name="supportTasks">
+            <type>
+                <simple name="string"/>
+            </type>
+        </parameter>
+        <parameter name="defaultTask">
+            <description>La mission que l'on donne par défaut aux pions.</description>
+            <type>
+                <simple name="string"/>
+            </type>
+        </parameter>
+        <parameter name="taskForSupporting">
+            <description>La mission que l'on donne aux pions de SE pour aider un pion de PE en difficulté.</description>
+            <type>
+                <simple name="string"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Effectuer un raid sur l'objectif">
+            <skills>
+                <skill name="sword.military.company.skills.Lead" main="true">
+                    <parameter name="companyTask">
+                        <value>
+                            <parameter>companyTask</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <parameter>mainTasks</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <parameter>supportTasks</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <parameter>taskForSupporting</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <parameter>defaultTask</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

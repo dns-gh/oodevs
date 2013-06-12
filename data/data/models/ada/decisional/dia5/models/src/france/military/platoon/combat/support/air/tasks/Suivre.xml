@@ -20,7 +20,7 @@
                 </skill>
             </skills>
         </stage>
-        <stage label="Suivre.">
+        <stage label="Suivre">
             <skills>
                 <skill name="sword.military.platoon.skills.Follow" main="true">
                     <parameter name="entities">

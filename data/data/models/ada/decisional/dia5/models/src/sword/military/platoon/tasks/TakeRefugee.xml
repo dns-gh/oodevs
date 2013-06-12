@@ -16,7 +16,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Déplacement vers l'unité considérée comme réfugié.">
+        <stage label="Déplacement vers l'unité considérée comme réfugié">
             <skills>
                 <skill name="sword.military.platoon.skills.TakeRefugee" main="true">
                     <parameter name="unit">

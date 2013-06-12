@@ -9,7 +9,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Transmission des informations au destinataire." disable-when-done="true">
+        <stage label="Transmission des informations au destinataire" disable-when-done="true">
             <skills>
                 <skill name="france.military.platoon.terrorism.skills.Renseigner" main="true">
                     <parameter name="destinataire">

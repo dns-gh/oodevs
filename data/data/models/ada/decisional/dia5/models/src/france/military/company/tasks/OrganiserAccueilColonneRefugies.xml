@@ -10,7 +10,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Organiser l'accueil des réfugiés.">
+        <stage label="Organiser l'accueil des réfugiés">
             <description>Organiser l'accueil des réfugiés.</description>
             <skills>
                 <skill name="sword.military.company.skills.Lead" main="true">

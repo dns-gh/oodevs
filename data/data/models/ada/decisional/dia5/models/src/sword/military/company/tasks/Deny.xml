@@ -82,7 +82,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Interdiction des objectifs.">
+        <stage label="Interdiction des objectifs">
             <skills>
                 <skill name="sword.military.company.skills.Lead" main="true">
                     <parameter name="companyTask">

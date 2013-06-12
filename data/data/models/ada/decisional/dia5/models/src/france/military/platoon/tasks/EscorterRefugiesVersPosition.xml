@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.EscorterRefugiesVersPosition" source-version="1.0.0" knowledge-class="france.military.platoon.tasks.knowledges.EscorterRefugiesVersPosition">
-	<parameters>
-		<parameter name="position">
-			<type>
-				<class name="sword.military.knowledge.decisional.Loading"/>
-			</type>
-		</parameter>
-		<parameter name="entities">
-			<type>
-				<list>
-					<class name="sword.military.knowledge.decisional.Loadable"/>
-				</list>
-			</type>
-		</parameter>
-	</parameters>
-	<goal>
-		<description>Escorter des réfugiés vers une position</description>
-	</goal>
-	<stages>
-		<stage label="Déplacement vers les prisonniers.">
-			<skills>
-				<skill name="sword.military.platoon.skills.primitives.Load" main="true">
-					<parameter name="entities">
-						<value>
-							<parameter>entities</parameter>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-		<stage label="Déplacement vers la position" disable-when-done="true">
-			<skills>
-				<skill name="sword.military.platoon.skills.primitives.Unload" main="true">
-					<parameter name="entities">
-						<value>
-							<parameter>entities</parameter>
-						</value>
-					</parameter>
-					<parameter name="positions">
-						<value>
-							<list>
-								<parameter>position</parameter>
-							</list>
-						</value>
-					</parameter>
-				</skill>
-				<skill name="france.military.platoon.skills.LibererEmbarques">
-					<parameter name="entities">
-						<value>
-							<parameter>entities</parameter>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <parameters>
+        <parameter name="position">
+            <type>
+                <class name="sword.military.knowledge.decisional.Loading"/>
+            </type>
+        </parameter>
+        <parameter name="entities">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Loadable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Escorter des réfugiés vers une position</description>
+    </goal>
+    <stages>
+        <stage label="Déplacement vers les prisonniers">
+            <skills>
+                <skill name="sword.military.platoon.skills.primitives.Load" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="Déplacement vers la position" disable-when-done="true">
+            <skills>
+                <skill name="sword.military.platoon.skills.primitives.Unload" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <list>
+                                <parameter>position</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="france.military.platoon.skills.LibererEmbarques">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

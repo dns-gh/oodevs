@@ -38,7 +38,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Controler la foule.">
+        <stage label="Controler la foule">
             <skills>
                 <skill name="sword.military.company.skills.Lead" main="true">
                     <parameter name="companyTask">

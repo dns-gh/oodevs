@@ -13,7 +13,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Début de l'escorte vers l'objectif." disable-when-done="true">
+        <stage label="Début de l'escorte vers l'objectif" disable-when-done="true">
             <skills>
                 <skill name="sword.military.platoon.skills.Escort" main="true">
                     <parameter name="friendUnit">

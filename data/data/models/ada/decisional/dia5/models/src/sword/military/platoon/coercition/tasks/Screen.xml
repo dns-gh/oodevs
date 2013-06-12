@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.coercition.tasks.Screen" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Screen">
-  <description>Garder le contact visuel sur l'ennemi, face à des objectifs, à partir de positions et engager si occasion se présente.</description>
-  <parameters>
-    <parameter name="positions">
-      <description>Positions à sur lesquelles se déplacer.</description>
-      <type>
-        <list>
-          <class name="sword.military.knowledge.decisional.Neutralizing"/>
-          <class name="sword.military.knowledge.decisional.Observing"/>
-        </list>
-      </type>
-    </parameter>
-  </parameters>
-  <goal>
-    <description>Se déplacer en observant les ennemis à partir des positions (engagement éventuel).</description>
-  </goal>
-  <stages>
-    <stage label="Occupation des positions." permanent="false" disable-when-done="true">
-      <description>Observer l'objectif à partir d'une position et se déplacer en reculant fâce à des ennemis (engagement évetuel).</description>
-      <goal>
-        <description>Occuper les positions.</description>
-      </goal>
-      <skills>
-        <skill name="sword.military.platoon.coercition.skills.Screen" main="true">
-          <parameter name="positions">
-            <value>
-              <parameter>positions</parameter>
-            </value>
-          </parameter>
-        </skill>
-      </skills>
-    </stage>
-  </stages>
+    <description>Garder le contact visuel sur l'ennemi, face à des objectifs, à partir de positions et engager si occasion se présente.</description>
+    <parameters>
+        <parameter name="positions">
+            <description>Positions à sur lesquelles se déplacer.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Neutralizing"/>
+                    <class name="sword.military.knowledge.decisional.Observing"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Se déplacer en observant les ennemis à partir des positions (engagement éventuel).</description>
+    </goal>
+    <stages>
+        <stage label="Occupation des positions" permanent="false" disable-when-done="true">
+            <description>Observer l'objectif à partir d'une position et se déplacer en reculant fâce à des ennemis (engagement évetuel).</description>
+            <goal>
+                <description>Occuper les positions.</description>
+            </goal>
+            <skills>
+                <skill name="sword.military.platoon.coercition.skills.Screen" main="true">
+                    <parameter name="positions">
+                        <value>
+                            <parameter>positions</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>
