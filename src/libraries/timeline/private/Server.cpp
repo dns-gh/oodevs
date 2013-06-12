@@ -13,6 +13,7 @@
 #include "controls/controls.h"
 
 #include <tools/IpcDevice.h>
+#include <boost/bind.hpp>
 #include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/lexical_cast.hpp>
@@ -115,32 +116,24 @@ void Server::OnError( QProcess::ProcessError error )
 
 void Server::Reload()
 {
-    std::vector< uint8_t > buffer( controls::ReloadClient( 0, 0 ) );
-    controls::ReloadClient( &buffer[0], buffer.size() );
-    write_->Write( &buffer[0], buffer.size() );
+    Write( *write_, &controls::ReloadClient );
 }
 
 void Server::Load( const std::string& url )
 {
-    std::vector< uint8_t > buffer( controls::LoadClient( 0, 0, url ) );
-    controls::LoadClient( &buffer[0], buffer.size(), url );
-    write_->Write( &buffer[0], buffer.size() );
+    Write( *write_, boost::bind( &controls::LoadClient, _1, _2, url ) );
 }
 
 bool Server::CreateEvent( const Event& event )
 {
     if( !event.IsValid() )
         return false;
-    std::vector< uint8_t > buffer( controls::CreateEvent( 0, 0, event ) );
-    controls::CreateEvent( &buffer[0], buffer.size(), event );
-    return write_->Write( &buffer[0], buffer.size() );
+    return Write( *write_, boost::bind( &controls::CreateEvent, _1, _2, event ) );
 }
 
 bool Server::DeleteEvent( const std::string& uuid )
 {
-    std::vector< uint8_t > buffer( controls::DeleteEvent( 0, 0, uuid ) );
-    controls::DeleteEvent( &buffer[0], buffer.size(), uuid );
-    return write_->Write( &buffer[0], buffer.size() );
+    return Write( *write_, boost::bind( &controls::DeleteEvent, _1, _2, uuid ) );
 }
 
 void Server::Run()

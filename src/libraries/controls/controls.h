@@ -14,6 +14,14 @@
 #include <cstdint>
 #include <vector>
 
+namespace tools
+{
+namespace ipc
+{
+    class Device;
+}
+}
+
 namespace timeline
 {
 namespace controls
@@ -72,6 +80,14 @@ namespace controls
 
     void ParseServer( ServerHandler_ABC& server, const void* src, size_t size );
 }
+
+    template< typename T >
+    bool Write( tools::ipc::Device& device, const T& operand )
+    {
+        std::vector< uint8_t > buffer( operand( static_cast< void* >( 0 ), 0 ) );
+        operand( &buffer[0], buffer.size() );
+        return device.Write( &buffer[0], buffer.size() );
+    }
 }
 
 #endif//CONTROLS_H__

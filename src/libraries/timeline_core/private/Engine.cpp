@@ -271,16 +271,12 @@ void Engine::CreateEvent( const timeline::Event& event )
 
 void Engine::CreatedEvent( const timeline::Event& event, const timeline::Error& error )
 {
-    std::vector< uint8_t > buffer( controls::CreatedEvent( 0, 0, event, error ) );
-    controls::CreatedEvent( &buffer[0], buffer.size(), event, error );
-    device_.Write( &buffer[0], buffer.size() );
+    Write( device_, boost::bind( &controls::CreatedEvent, _1, _2, event, error ) );
 }
 
 CefRefPtr< CefV8Value > Engine::OnReady( const CefV8ValueList& /*args*/ )
 {
-    std::vector< uint8_t > buffer( controls::ReadyServer( 0, 0 ) );
-    controls::ReadyServer( &buffer[0], buffer.size() );
-    device_.Write( &buffer[0], buffer.size() );
+    Write( device_, &controls::ReadyServer );
     return 0;
 }
 
@@ -293,70 +289,54 @@ CefRefPtr< CefV8Value > Engine::OnCreatedEvent( const CefV8ValueList& args )
 CefRefPtr< CefV8Value > Engine::OnSelectEvent( const CefV8ValueList& args )
 {
     const Event event = GetEvent( args[0] );
-    std::vector< uint8_t > buffer( controls::SelectedEvent( 0, 0, event ) );
-    controls::SelectedEvent( &buffer[0], buffer.size(), event );
-    device_.Write( &buffer[0], buffer.size() );
+    Write( device_, boost::bind( &controls::SelectedEvent, _1, _2, event ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnDeselectEvent( const CefV8ValueList& /*args*/ )
 {
-    std::vector< uint8_t > buffer( controls::DeselectedEvent( 0, 0 ) );
-    controls::DeselectedEvent( &buffer[0], buffer.size() );
-    device_.Write( &buffer[0], buffer.size() );
+    Write( device_, &controls::DeselectedEvent );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnActivateEvent( const CefV8ValueList& args )
 {
     const Event event = GetEvent( args[0] );
-    std::vector< uint8_t > buffer( controls::ActivatedEvent( 0, 0, event ) );
-    controls::ActivatedEvent( &buffer[0], buffer.size(), event );
-    device_.Write( &buffer[0], buffer.size() );
+    Write( device_, boost::bind( &controls::ActivatedEvent, _1, _2, event ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnContextMenuEvent( const CefV8ValueList& args )
 {
     const Event event = GetEvent( args[0] );
-    std::vector< uint8_t > buffer( controls::ContextMenuEvent( 0, 0, event ) );
-    controls::ContextMenuEvent( &buffer[0], buffer.size(), event );
-    device_.Write( &buffer[0], buffer.size() );
+    Write( device_, boost::bind( &controls::ContextMenuEvent, _1, _2, event ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnContextMenuBackground( const CefV8ValueList& /*args*/ )
 {
-    std::vector< uint8_t > buffer( controls::ContextMenuBackground( 0, 0 ) );
-    controls::ContextMenuBackground( &buffer[0], buffer.size() );
-    device_.Write( &buffer[0], buffer.size() );
+    Write( device_, &controls::ContextMenuBackground );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnKeyDown( const CefV8ValueList& args )
 {
     int key = args[0]->GetIntValue();
-    std::vector< uint8_t > buffer( controls::KeyDown( 0, 0, key ) );
-    controls::KeyDown( &buffer[0], buffer.size(), key );
-    device_.Write( &buffer[0], buffer.size() );
+    Write( device_, boost::bind( &controls::KeyDown, _1, _2, key ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnKeyPress( const CefV8ValueList& args )
 {
     int key = args[0]->GetIntValue();
-    std::vector< uint8_t > buffer( controls::KeyPress( 0, 0, key ) );
-    controls::KeyPress( &buffer[0], buffer.size(), key );
-    device_.Write( &buffer[0], buffer.size() );
+    Write( device_, boost::bind( &controls::KeyPress, _1, _2, key ) );
     return 0;
 }
 
 CefRefPtr< CefV8Value > Engine::OnKeyUp( const CefV8ValueList& args )
 {
     int key = args[0]->GetIntValue();
-    std::vector< uint8_t > buffer( controls::KeyUp( 0, 0, key ) );
-    controls::KeyUp( &buffer[0], buffer.size(), key );
-    device_.Write( &buffer[0], buffer.size() );
+    Write( device_, boost::bind( &controls::KeyUp, _1, _2, key ) );
     return 0;
 }
 
@@ -382,7 +362,5 @@ CefRefPtr< CefV8Value > Engine::OnDeletedEvent( const CefV8ValueList& args )
 
 void Engine::DeletedEvent( const std::string& uuid, const timeline::Error& error )
 {
-    std::vector< uint8_t > buffer( controls::DeletedEvent( 0, 0, uuid, error ) );
-    controls::DeletedEvent( &buffer[0], buffer.size(), uuid, error );
-    device_.Write( &buffer[0], buffer.size() );
+    Write( device_, boost::bind( &controls::DeletedEvent, _1, _2, uuid, error ) );
 }
