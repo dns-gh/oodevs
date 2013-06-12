@@ -88,32 +88,6 @@ void WorldParameters::Serialize( const Path& filename, const tools::SchemaWriter
     << xml::end; // terrain
 }
 
-// -----------------------------------------------------------------------------
-// Name: WorldParameters::Purge
-// Created: JSR 2011-10-12
-// -----------------------------------------------------------------------------
-void WorldParameters::Purge()
-{
-    latitude_ = 0;
-    longitude_ = 0;
-    width_ = 0;
-    height_ = 0;
-    graphicsDirectory_.Clear();
-    detectionDirectory_.Clear();
-    pathfindGraph_.Clear();
-    pathfindLinks_.Clear();
-    pathfindNodes_.Clear();
-    detection_.Clear();
-    urban_.Clear();
-    populationGraph_.Clear();
-    xMin_.clear();
-    xMax_.clear();
-    yMin_.clear();
-    yMax_.clear();
-    utmZones_.clear();
-    terrainSamePhysical_ = true;
-}
-
 namespace
 {
     Path BuildChildPath( const Path& parentFile, const Path& child )

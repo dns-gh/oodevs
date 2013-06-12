@@ -40,7 +40,6 @@ public:
     //! @name Operations
     //@{
     void Serialize( const Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
-    void Purge();
     //@}
 
 private:
