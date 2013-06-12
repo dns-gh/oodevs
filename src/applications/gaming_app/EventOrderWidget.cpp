@@ -18,6 +18,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/AutomatDecisions_ABC.h"
 #include "clients_kernel/FragOrder.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Mission.h"
@@ -109,7 +110,7 @@ void EventOrderWidget::Purge()
     SetTarget( 0 );
     missionTypeCombo_->setCurrentIndex( eMissionType_Pawn );
     currentType_ = eMissionType_Pawn;
-    if( !missionInterface_ )
+    if( missionInterface_ )
         missionInterface_->Purge();
 }
 
@@ -264,7 +265,7 @@ const Decisions_ABC* EventOrderWidget::GetTargetDecision() const
         if( target_->GetTypeName() == kernel::Agent_ABC::typeName_ )
             decisions = target_->Retrieve< Decisions >();
         if( target_->GetTypeName() == kernel::Automat_ABC::typeName_ )
-            decisions = target_->Retrieve< AutomatDecisions >();
+            decisions = static_cast< const AutomatDecisions* >( target_->Retrieve< kernel::AutomatDecisions_ABC >() );
         if( target_->GetTypeName() == kernel::Population_ABC::typeName_ )
             decisions = target_->Retrieve< PopulationDecisions >();
     }
@@ -284,15 +285,15 @@ void EventOrderWidget::FillMission()
     proxy->setSourceModel( missionCombo_->model() );
     missionCombo_->model()->setParent( proxy );
     missionCombo_->setModel( proxy );
-    connect( missionCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnMissionChanged( int ) ) );
     missionComboLayout_->addWidget( missionCombo_ );
 
     if( target_ )
     {
         const Decisions_ABC* decisions = GetTargetDecision();
         assert( decisions != 0 );
-        if( !decisions->CanBeOrdered() )
-            return;
+        // $$$$ ABR 2013-06-11: Find what to do with a unit in an engaged automat, for now we display his available unit missions
+        // if( !decisions->CanBeOrdered() )
+        //     return;
         if( currentType_ == eMissionType_FragOrder )
             AddCompatibleFragOrders( *decisions );
         else
@@ -307,6 +308,7 @@ void EventOrderWidget::FillMission()
     }
     missionCombo_->model()->sort( 0 );
     missionCombo_->setCurrentIndex( 0 );
+    connect( missionCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnMissionChanged( int ) ) );
     missionChoosed_ = false;
     BuildMissionInterface();
 }
@@ -443,6 +445,7 @@ void EventOrderWidget::OnPlannedMission( const actions::Action_ABC& action, time
     assert( event );
     action.Publish( model_.timelinePublisher_, 0 );
     event->action.payload = model_.timelinePublisher_.GetPayload();
+    event->name = action.GetName();
 }
 
 // -----------------------------------------------------------------------------
