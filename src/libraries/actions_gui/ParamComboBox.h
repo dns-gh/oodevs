@@ -45,15 +45,16 @@ public:
     void AddItem( const QString& name, T value );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     T GetValue() const;
+    void Clear();
     //@}
 
-private:
+protected:
     //! @name Types
     //@{
     typedef std::vector< std::pair< QString, T > > T_Values;
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     T_Values                    values_;

@@ -416,7 +416,8 @@ void MissionPanel::FillInterface( int id )
     pMissionInterface_->Purge();
     NotifyMission();
     const T& order = static_cast< tools::Resolver_ABC< T >& >( static_.types_ ).Get( id );
-    pMissionInterface_->Fill( interfaceBuilder_, *selectedEntity_, order, currentType_ );
+    pMissionInterface_->Fill( interfaceBuilder_, order, currentType_ );
+    pMissionInterface_->SetEntity( selectedEntity_ );
     titleLabel_->setText( pMissionInterface_->Title() );
     planningCheckBox_->setCheckState( Qt::Unchecked );
     if( pMissionInterface_->IsEmpty() )

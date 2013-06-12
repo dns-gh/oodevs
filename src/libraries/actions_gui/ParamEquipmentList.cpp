@@ -56,24 +56,12 @@ ParamEquipmentList::~ParamEquipmentList()
 QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget* parent )
 {
     Param_ABC::BuildInterface( objectName, parent );
-    const kernel::MaintenanceStates_ABC* maintenance = builder_.HasCurrentEntity() ? builder_.GetCurrentEntity().Retrieve< kernel::MaintenanceStates_ABC >() : 0;
     QGridLayout* layout = new QGridLayout( group_ );
     {
         baseList_ = new QListWidget( parent );
         baseList_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
         baseList_->setSortingEnabled( true );
         baseList_->sortItems( Qt::AscendingOrder );
-        tools::Iterator< const kernel::EquipmentType& > it( resolver_.CreateIterator() );
-        while( it.HasMoreElements() )
-        {
-            const kernel::EquipmentType& type = it.NextElement();
-            if( !maintenance || !maintenance->HasPriority( &type ) )
-            {
-                QListWidgetItem* item = new QListWidgetItem( type.GetName().c_str() );
-                item->setData( EquipmentRole, QVariant::fromValue( &type ) );
-                baseList_->addItem( item );
-            }
-        }
 
         ::gui::RichPushButton* addBtn = new ::gui::RichPushButton( "addBtn", MAKE_ICON( right_arrow ), QString::null, parent );
         addBtn->setFixedSize( 32, 32 );
@@ -91,12 +79,6 @@ QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget*
     {
         list_ = new QListWidget( parent );
         list_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
-        if( maintenance )
-        {
-            std::vector< const kernel::EquipmentType* > priorities = maintenance->GetPriorities();
-            for( std::vector< const kernel::EquipmentType* >::const_reverse_iterator it = priorities.rbegin(); it != priorities.rend(); ++it )
-                list_->addItem( QString( ( **it ).GetName().c_str() ) );
-        }
 
         ::gui::RichPushButton* upBtn = new ::gui::RichPushButton( "upBtn", MAKE_ICON( arrow_up ), QString::null, parent );
         upBtn->setFixedSize( 32, 32 );
@@ -111,6 +93,7 @@ QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget*
         connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
         connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
     }
+    group_->setEnabled( false );
     return group_;
 }
 
@@ -196,4 +179,40 @@ void ParamEquipmentList::Move( QListWidget* from, QListWidget* to )
 bool ParamEquipmentList::InternalCheckValidity() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamEquipmentList::SetEntity
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+void ParamEquipmentList::SetEntity( const kernel::Entity_ABC* entity )
+{
+    group_->setEnabled( IsInParam() || entity != 0 );
+
+    baseList_->clear();
+    list_->clear();
+
+    if( entity == 0 )
+        return;
+
+    const kernel::MaintenanceStates_ABC* maintenance = entity->Retrieve< kernel::MaintenanceStates_ABC >();
+
+    auto it( resolver_.CreateIterator() );
+    while( it.HasMoreElements() )
+    {
+        const kernel::EquipmentType& type = it.NextElement();
+        if( !maintenance || !maintenance->HasPriority( &type ) )
+        {
+            QListWidgetItem* item = new QListWidgetItem( type.GetName().c_str() );
+            item->setData( EquipmentRole, QVariant::fromValue( &type ) );
+            baseList_->addItem( item );
+        }
+    }
+
+    if( maintenance )
+    {
+        std::vector< const kernel::EquipmentType* > priorities = maintenance->GetPriorities();
+        for( auto it = priorities.rbegin(); it != priorities.rend(); ++it )
+            list_->addItem( QString( ( **it ).GetName().c_str() ) );
+    }
 }

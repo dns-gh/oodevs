@@ -42,6 +42,7 @@ public:
     //@{
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual void SetEntity( const kernel::Entity_ABC* entity );
     //@}
 
 private:
@@ -54,7 +55,6 @@ private:
     //! @name Member data
     //@{
     const tools::Resolver_ABC< kernel::DotationType >& resolver_;
-    const kernel::Entity_ABC& agent_;
     //@}
 };
 

@@ -64,7 +64,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void BuildAll( actions::gui::MissionInterface& missionInterface, const kernel::Entity_ABC& entity, const kernel::OrderType& order );
+    virtual void BuildAll( actions::gui::MissionInterface& missionInterface, const kernel::OrderType& order );
     virtual actions::gui::Param_ABC& BuildOne( const kernel::OrderParameter& parameter, bool isRegistered = true ) const;
     //@}
 
@@ -73,8 +73,6 @@ public:
     virtual QObject* GetParentObject() const;
     virtual ParamInterface_ABC& GetParamInterface() const;
     virtual ::gui::ParametersLayer& GetParameterLayer() const;
-    virtual const kernel::Entity_ABC& GetCurrentEntity() const;
-    virtual bool HasCurrentEntity() const;
     virtual kernel::Controllers& GetControllers() const;
     virtual kernel::AgentKnowledgeConverter_ABC* GetAgentKnowledgeConverter() const;
     virtual kernel::ObjectKnowledgeConverter_ABC* GetObjectKnowledgeConverter() const;
@@ -115,10 +113,9 @@ private:
     kernel::ObjectKnowledgeConverter_ABC*  objectKnowledgeConverter_;
     const kernel::Time_ABC*                simulation_;
 
-    actions::gui::MissionInterface*    missionInterface_;
+    actions::gui::MissionInterface*        missionInterface_;
     QObject*                               parentObject_;
     ParamInterface_ABC*                    paramInterface_;
-    const kernel::Entity_ABC*              entity_;
     T_BuilderFunctors                      builderFunctors_;
     //@}
 };

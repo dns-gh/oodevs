@@ -90,6 +90,7 @@ public:
     virtual bool CheckValidity();
     virtual bool InternalCheckValidity() const;
     virtual void CommitTo( actions::ParameterContainer_ABC& ) const = 0;
+    virtual void SetEntity( const kernel::Entity_ABC* entity );
     //@}
 
     //! @name Accessors

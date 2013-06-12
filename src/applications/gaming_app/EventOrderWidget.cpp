@@ -321,6 +321,8 @@ void EventOrderWidget::SetTarget( const kernel::Entity_ABC* entity )
 {
     target_ = entity;
     targetLabel_->setText( ( target_ ) ? target_->GetName() : "---" );
+    if( missionInterface_ )
+        missionInterface_->SetEntity( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -329,9 +331,9 @@ void EventOrderWidget::SetTarget( const kernel::Entity_ABC* entity )
 // -----------------------------------------------------------------------------
 void EventOrderWidget::WarnIfTargetAndMissionAreNotCompatible() const
 {
-    bool needWarning = true;
     if( target_ )
     {
+        bool needWarning = true;
         const kernel::OrderType* order = static_cast< const kernel::OrderType* >( missionCombo_->itemData( missionCombo_->currentIndex() ).value< kernel::VariantPointer >().ptr_ );
         const Decisions_ABC* decisions = GetTargetDecision();
         assert( decisions != 0 && order != 0 );
@@ -355,14 +357,14 @@ void EventOrderWidget::WarnIfTargetAndMissionAreNotCompatible() const
             while( needWarning && it.HasMoreElements() )
                 needWarning = it.NextElement().GetName() != order->GetName();
         }
-    }
-    if( needWarning )
-    {
-        // Add Warn on missionCombo_ here
-        missionTypeCombo_->Warn();
-        missionCombo_->Warn();
-        targetGroupBox_->Warn();
-        targetLabel_->Warn();
+        if( needWarning )
+        {
+            if( missionInterface_ )
+                missionInterface_->SetEntity( 0 );
+            missionCombo_->Warn();
+            targetGroupBox_->Warn();
+            targetLabel_->Warn();
+        }
     }
 }
 
@@ -375,12 +377,10 @@ void EventOrderWidget::BuildMissionInterface()
     if( !missionInterface_ )
         return;
     missionInterface_->Purge();
-    if( target_ ) // $$$$ ABR 2013-06-07: Should be remove when missionInterface will be able to be filled without an entity
-    {
-        const kernel::OrderType* order = static_cast< const kernel::OrderType* >( missionCombo_->itemData( missionCombo_->currentIndex() ).value< kernel::VariantPointer >().ptr_ );
-        if( order )
-            missionInterface_->Fill( interfaceBuilder_, *target_, *order, currentType_ );
-    }
+    const kernel::OrderType* order = static_cast< const kernel::OrderType* >( missionCombo_->itemData( missionCombo_->currentIndex() ).value< kernel::VariantPointer >().ptr_ );
+    if( order )
+        missionInterface_->Fill( interfaceBuilder_, *order, currentType_ );
+    missionInterface_->SetEntity( target_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -428,10 +428,7 @@ void EventOrderWidget::OnTargetSelected()
         return;
     SetTarget( contextMenuEntity_ );
     if( missionChoosed_ )
-    {
-        BuildMissionInterface();  // $$$$ ABR 2013-06-07: Should be removed when missionInterface will be able to be filled without an entity
         WarnIfTargetAndMissionAreNotCompatible();
-    }
     else
         FillMission();
 }

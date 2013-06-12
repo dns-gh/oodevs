@@ -51,6 +51,7 @@ public:
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual bool InternalCheckValidity() const;
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual void SetEntity( const kernel::Entity_ABC* entity );
     //@}
 
 private slots:

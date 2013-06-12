@@ -152,6 +152,15 @@ void ParamLocationComposite::InternalBuildInterface()
         connect( static_cast< QGroupBox* >( widget ), SIGNAL( clicked( bool ) ), this, SLOT( OnChecked( bool ) ) );
         widgets_.push_back( widget );
     }
+
+    for( auto it = widgets_.begin(); it != widgets_.end(); ++it )
+    {
+        if( ( *it )->isEnabled() )
+        {
+            stack_->setCurrentWidget( *it );
+            break;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -269,4 +278,14 @@ void ParamLocationComposite::CreateInternalMenu( kernel::ContextMenu& mainMenu )
     kernel::ContextMenu* menu = new kernel::ContextMenu( &mainMenu );
     menu->setTitle( GetMenuName() );
     internalMenu_ = menu;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::SetEntity
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::SetEntity( const kernel::Entity_ABC* entity )
+{
+    for( auto it = params_.begin(); it != params_.end(); ++it )
+        ( *it )->SetEntity( entity );
 }

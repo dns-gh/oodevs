@@ -436,3 +436,19 @@ void ListParameter< ConcreteElement >::CreateInternalMenu( kernel::ContextMenu& 
     menu->setTitle( GetMenuName() );
     internalMenu_ = menu;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::SetEntity
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::SetEntity( const kernel::Entity_ABC* entity )
+{
+    for( int row = 0; row < model_.rowCount(); ++row )
+    {
+        QStandardItem* item = model_.item( row );
+        if( item )
+            if( Param_ABC* param = item->data( ParamRole ).value< Param_ABC* >() )
+                param->SetEntity( entity );
+    }
+}

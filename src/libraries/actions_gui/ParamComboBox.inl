@@ -93,3 +93,15 @@ T ParamComboBox< T >::GetValue() const
 {
     return ( comboBox_ && comboBox_->count() ) ? comboBox_->GetValue() : 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamComboBox::Clear
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+template< typename T >
+void ParamComboBox< T >::Clear()
+{
+    if( comboBox_ )
+        comboBox_->clear();
+    values_.clear();
+}

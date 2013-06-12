@@ -11,6 +11,7 @@
 #define __ParamObjectKnowledge_h_
 
 #include "EntityParameter.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
@@ -44,6 +45,8 @@ public:
     //! @name Operations
     //@{
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
+    virtual void SetEntity( const kernel::Entity_ABC* entity );
     //@}
 
 private:
@@ -56,7 +59,7 @@ private:
     //! @name Member data
     //@{
     kernel::ObjectKnowledgeConverter_ABC* converter_;
-    const kernel::Entity_ABC& agent_;
+    kernel::SafePointer< kernel::Entity_ABC > agent_;
     //@}
 };
 

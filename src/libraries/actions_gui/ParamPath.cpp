@@ -25,7 +25,7 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamPath::ParamPath( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : ParamLocation_ABC< actions::parameters::Path >( builder, parameter )
-    , entity_( builder.GetCurrentEntity() )
+    , entity_( builder.GetControllers() )
 {
     // NOTHING
 }
@@ -45,6 +45,29 @@ ParamPath::~ParamPath()
 // -----------------------------------------------------------------------------
 void ParamPath::OnMenuClick()
 {
-    layer_.StartPath( *this, entity_.Get< kernel::Positions >() );
+    if( !entity_ )
+        return;
+    layer_.StartPath( *this, entity_->Get< kernel::Positions >() );
     ParamLocation_ABC< actions::parameters::Path >::OnMenuClick();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPath::BuildInterface
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+QWidget* ParamPath::BuildInterface( const QString& objectName, QWidget* parent )
+{
+    QWidget* result = ParamLocation_ABC< actions::parameters::Path >::BuildInterface( objectName, parent );
+    group_->setEnabled( false );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPath::SetEntity
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+void ParamPath::SetEntity( const kernel::Entity_ABC* entity )
+{
+    entity_ = entity;
+    group_->setEnabled( IsInParam() || entity != 0 );
 }

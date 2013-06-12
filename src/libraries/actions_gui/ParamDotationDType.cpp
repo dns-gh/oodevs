@@ -28,7 +28,6 @@ using namespace actions::gui;
 ParamDotationDType::ParamDotationDType( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : ParamComboBox< int >( builder, parameter )
     , resolver_( builder.GetStaticModel().objectTypes_ )
-    , agent_( builder.GetCurrentEntity() )
 {
     // NOTHING
 }
@@ -48,18 +47,9 @@ ParamDotationDType::~ParamDotationDType()
 // -----------------------------------------------------------------------------
 QWidget* ParamDotationDType::BuildInterface( const QString& objectName, QWidget* parent )
 {
-    const kernel::Dotations_ABC* dotations = agent_.Retrieve< kernel::Dotations_ABC >();
-    if( dotations )
-    {
-        tools::Iterator< const kernel::DotationType& > it = resolver_.CreateIterator();
-        while( it.HasMoreElements() )
-        {
-            const kernel::DotationType& type = it.NextElement();
-            if( type.IsAmmunition() && dotations->Accept( type ) )
-                AddItem( type.GetName().c_str(), type.GetId() );
-        }
-    }
-    return ParamComboBox< int >::BuildInterface( objectName, parent );
+    QWidget* result = ParamComboBox< int >::BuildInterface( objectName, parent );
+    group_->setEnabled( false );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -81,4 +71,29 @@ void ParamDotationDType::CommitTo( actions::ParameterContainer_ABC& action ) con
 bool ParamDotationDType::InternalCheckValidity() const
 {
     return GetValue() != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamDotationDType::SetEntity
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+void ParamDotationDType::SetEntity( const kernel::Entity_ABC* entity )
+{
+    group_->setEnabled( IsInParam() || entity != 0 );
+    Clear();
+    if( entity == 0 )
+        return;
+    const kernel::Dotations_ABC* dotations = entity->Retrieve< kernel::Dotations_ABC >();
+    if( dotations )
+    {
+        tools::Iterator< const kernel::DotationType& > it = resolver_.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const kernel::DotationType& type = it.NextElement();
+            if( type.IsAmmunition() && dotations->Accept( type ) )
+                AddItem( type.GetName().c_str(), type.GetId() );
+        }
+    }
+    for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
+        comboBox_->AddItem( it->first, it->second );
 }

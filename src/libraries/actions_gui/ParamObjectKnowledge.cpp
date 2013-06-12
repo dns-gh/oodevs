@@ -28,7 +28,7 @@ using namespace actions::gui;
 ParamObjectKnowledge::ParamObjectKnowledge( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : EntityParameter< kernel::ObjectKnowledge_ABC >( builder, parameter )
     , converter_( builder.GetObjectKnowledgeConverter() )
-    , agent_    ( builder.GetCurrentEntity() )
+    , agent_( builder.GetControllers() )
 {
     assert( converter_ != 0 );
 }
@@ -48,11 +48,11 @@ ParamObjectKnowledge::~ParamObjectKnowledge()
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledge::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
 {
-    if( !entity.GetType().IsUrban() && parameter_.HasGenObject( entity.GetType().GetName() ) )
+    if( agent_ && !entity.GetType().IsUrban() && parameter_.HasGenObject( entity.GetType().GetName() ) )
     {
-        const kernel::Hierarchies* hierarchies = agent_.Retrieve< kernel::CommunicationHierarchies >();
+        const kernel::Hierarchies* hierarchies = agent_->Retrieve< kernel::CommunicationHierarchies >();
         if( ! hierarchies )
-            hierarchies = agent_.Retrieve< kernel::TacticalHierarchies >();
+            hierarchies = agent_->Retrieve< kernel::TacticalHierarchies >();
         const kernel::Team_ABC& team = static_cast< const kernel::Team_ABC& >( hierarchies->GetTop() );
         const kernel::ObjectKnowledge_ABC* knowledge = converter_->Find( entity, team );
         if( knowledge )
@@ -69,4 +69,25 @@ void ParamObjectKnowledge::CommitTo( actions::ParameterContainer_ABC& action ) c
     std::auto_ptr< actions::parameters::Entity< kernel::ObjectKnowledge_ABC > > param( new actions::parameters::ObjectKnowledge( parameter_, controller_ ) );
     EntityParameter< kernel::ObjectKnowledge_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObjectKnowledge::BuildInterface
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+QWidget* ParamObjectKnowledge::BuildInterface( const QString& objectName, QWidget* parent )
+{
+    QWidget* result = EntityParameter< kernel::ObjectKnowledge_ABC >::BuildInterface( objectName, parent );
+    group_->setEnabled( false );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObjectKnowledge::SetEntity
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+void ParamObjectKnowledge::SetEntity( const kernel::Entity_ABC* entity )
+{
+    agent_ = entity;
+    group_->setEnabled( IsInParam() || entity != 0 );
 }

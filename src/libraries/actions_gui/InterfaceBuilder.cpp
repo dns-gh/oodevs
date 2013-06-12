@@ -69,7 +69,6 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers, gui::Param
     , staticModel_             ( staticModel )
     , simulation_              ( simulation )
     , missionInterface_        ( 0 )
-    , entity_                  ( 0 )
 {
     // Base types
     AddFunctor< actions::gui::ParamBool >               ( "boolean" );
@@ -148,12 +147,11 @@ actions::gui::Param_ABC& InterfaceBuilder::BuildElement( const kernel::OrderPara
 // Name: InterfaceBuilder::Build
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-void InterfaceBuilder::BuildAll( actions::gui::MissionInterface& missionInterface, const kernel::Entity_ABC& entity, const kernel::OrderType& order )
+void InterfaceBuilder::BuildAll( actions::gui::MissionInterface& missionInterface, const kernel::OrderType& order )
 {
     missionInterface_ = &missionInterface;
     parentObject_ = &missionInterface;
     paramInterface_ = &missionInterface;
-    entity_ = &entity;
     tools::Iterator< const kernel::OrderParameter& > it = order.CreateIterator();
     while( it.HasMoreElements() )
         BuildOne( it.NextElement() );
@@ -172,7 +170,7 @@ actions::gui::Param_ABC& InterfaceBuilder::BuildOne( const kernel::OrderParamete
     {
         T_BuilderFunctor functor = it->second;
         actions::gui::Param_ABC& param = (this->*functor)( parameter );
-        if( isRegistered )
+        if( isRegistered && missionInterface_ )
             missionInterface_->AddParameter( param.GetType().c_str(), param );
         return param;
     }
@@ -210,25 +208,6 @@ ParamInterface_ABC& InterfaceBuilder::GetParamInterface() const
 ::gui::ParametersLayer& InterfaceBuilder::GetParameterLayer() const
 {
     return layer_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: InterfaceBuilder::GetCurrentEntity
-// Created: ABR 2012-01-05
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC& InterfaceBuilder::GetCurrentEntity() const
-{
-    assert( entity_ != 0 );
-    return *entity_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: InterfaceBuilder::HasCurrentEntity
-// Created: MMC 2012-09-13
-// -----------------------------------------------------------------------------
-bool InterfaceBuilder::HasCurrentEntity() const
-{
-    return entity_ != 0;
 }
 
 // -----------------------------------------------------------------------------

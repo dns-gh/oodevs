@@ -23,7 +23,7 @@ using namespace actions::gui;
 ParamPopulationKnowledge::ParamPopulationKnowledge( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : EntityParameter< kernel::PopulationKnowledge_ABC >( builder, parameter )
     , converter_( builder.GetAgentKnowledgeConverter() )
-    , agent_( builder.GetCurrentEntity() )
+    , agent_( builder.GetControllers() )
 {
     assert( converter_ != 0 );
 }
@@ -43,7 +43,9 @@ ParamPopulationKnowledge::~ParamPopulationKnowledge()
 // -----------------------------------------------------------------------------
 void ParamPopulationKnowledge::NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu )
 {
-    const kernel::PopulationKnowledge_ABC* knowledge = converter_->Find( entity, agent_ );
+    if( !agent_ )
+        return;
+    const kernel::PopulationKnowledge_ABC* knowledge = converter_->Find( entity, *agent_ );
     if( knowledge )
         EntityParameter< kernel::PopulationKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
 }
@@ -57,4 +59,25 @@ void ParamPopulationKnowledge::CommitTo( actions::ParameterContainer_ABC& action
     std::auto_ptr< actions::parameters::Entity< kernel::PopulationKnowledge_ABC > > param( new actions::parameters::PopulationKnowledge( parameter_, controller_ ) );
     EntityParameter< kernel::PopulationKnowledge_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPopulationKnowledge::BuildInterface
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+QWidget* ParamPopulationKnowledge::BuildInterface( const QString& objectName, QWidget* parent )
+{
+    QWidget* result = EntityParameter< kernel::PopulationKnowledge_ABC >::BuildInterface( objectName, parent );
+    group_->setEnabled( false );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPopulationKnowledge::SetEntity
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+void ParamPopulationKnowledge::SetEntity( const kernel::Entity_ABC* entity )
+{
+    agent_ = entity;
+    group_->setEnabled( IsInParam() || entity != 0 );
 }

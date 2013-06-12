@@ -59,6 +59,7 @@ public:
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& container ) const;
     virtual bool CheckValidity();
+    virtual void SetEntity( const kernel::Entity_ABC* entity );
     //@}
 
 protected:

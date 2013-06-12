@@ -402,3 +402,12 @@ QString Param_ABC::GetNextNameAndId( const QStandardItemModel& model )
     int previousId = model.rowCount() != 0? model.item( model.rowCount() -1 )->data( IdRole ).toInt() : 0 ;
     return tools::translate( "ListParameter", "%1 (item %2)" ).arg( parameter_.GetName().c_str() ).arg( previousId + 1 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::SetEntity
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+void Param_ABC::SetEntity( const kernel::Entity_ABC* )
+{
+    // NOTHING
+}

@@ -115,16 +115,26 @@ void MissionInterface::Purge()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionInterface::SetEntity
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+void MissionInterface::SetEntity( const kernel::Entity_ABC* entity )
+{
+    entity_ = entity;
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
+        (*it)->SetEntity( entity );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionInterface::Fill
 // Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
-void MissionInterface::Fill( InterfaceBuilder_ABC& builder, const kernel::Entity_ABC& entity, const kernel::OrderType& order, E_MissionType type )
+void MissionInterface::Fill( InterfaceBuilder_ABC& builder, const kernel::OrderType& order, E_MissionType type )
 {
-    entity_ = &entity;
     order_ = &order;
 
     setVisible( false ); // $$$$ ABR 2013-06-04: For some reason the current tab display doesn't refresh, probably because of Q3VBox. This will be fix when Param_ABC::BuildInterface will take a QVBoxLayout as parent instead of a QWidget
-    builder.BuildAll( *this, entity, order );
+    builder.BuildAll( *this, order );
     setVisible( true );
     setCurrentIndex( 0 );
 

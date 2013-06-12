@@ -11,6 +11,7 @@
 #define __ParamPath_h_
 
 #include "ParamLocation_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
@@ -43,6 +44,12 @@ public:
     virtual ~ParamPath();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
+    virtual void SetEntity( const kernel::Entity_ABC* entity );
+    //@}
+
 protected:
     //! @name Param_ABC
     //@{
@@ -52,7 +59,7 @@ protected:
 private:
     //! @name Member data
     //@{
-    const kernel::Entity_ABC& entity_;
+    kernel::SafePointer< kernel::Entity_ABC > entity_;
     //@}
 };
 
