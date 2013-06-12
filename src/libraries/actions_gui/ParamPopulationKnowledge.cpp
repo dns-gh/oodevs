@@ -79,5 +79,6 @@ QWidget* ParamPopulationKnowledge::BuildInterface( const QString& objectName, QW
 void ParamPopulationKnowledge::SetEntity( const kernel::Entity_ABC* entity )
 {
     agent_ = entity;
-    group_->setEnabled( IsInParam() || entity != 0 );
+    if( group_ )
+        group_->setEnabled( IsInParam() || entity != 0 );
 }

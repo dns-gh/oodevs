@@ -187,13 +187,14 @@ bool ParamEquipmentList::InternalCheckValidity() const
 // -----------------------------------------------------------------------------
 void ParamEquipmentList::SetEntity( const kernel::Entity_ABC* entity )
 {
-    group_->setEnabled( IsInParam() || entity != 0 );
+    if( group_ )
+        group_->setEnabled( IsInParam() || entity != 0 );
+
+    if( entity == 0 || baseList_ == 0 || list_ == 0 ) 
+        return;
 
     baseList_->clear();
     list_->clear();
-
-    if( entity == 0 )
-        return;
 
     const kernel::MaintenanceStates_ABC* maintenance = entity->Retrieve< kernel::MaintenanceStates_ABC >();
 

@@ -79,9 +79,10 @@ bool ParamDotationDType::InternalCheckValidity() const
 // -----------------------------------------------------------------------------
 void ParamDotationDType::SetEntity( const kernel::Entity_ABC* entity )
 {
-    group_->setEnabled( IsInParam() || entity != 0 );
+    if( group_ )
+        group_->setEnabled( IsInParam() || entity != 0 );
     Clear();
-    if( entity == 0 )
+    if( entity == 0 || comboBox_ == 0 )
         return;
     const kernel::Dotations_ABC* dotations = entity->Retrieve< kernel::Dotations_ABC >();
     if( dotations )

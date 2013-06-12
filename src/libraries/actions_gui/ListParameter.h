@@ -13,6 +13,7 @@
 #include "Param_ABC.h"
 #include "actions/ParameterList.h"
 #include "InterfaceBuilder_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 Q_DECLARE_METATYPE( actions::gui::Param_ABC* )
 
@@ -169,6 +170,7 @@ private:
     unsigned int                min_;
     unsigned int                max_;
     bool                        createEnabled_;
+    kernel::SafePointer< kernel::Entity_ABC > entity_;
     //@}
 
 };

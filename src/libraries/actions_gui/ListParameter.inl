@@ -25,6 +25,7 @@ ListParameter< ConcreteElement >::ListParameter( const InterfaceBuilder_ABC& bui
     , max_          ( parameter.MaxOccurs() )
     , createEnabled_( true )
     , count_        ( 0 )
+    , entity_       ( builder.GetControllers() )
 {
     CreatePotential();
 }
@@ -53,7 +54,10 @@ void ListParameter< ConcreteElement >::CreatePotential()
     potential_ = 0;
     potential_ = CreateElement();
     if( potential_ )
+    {
         potential_->RegisterIn( controller_ );
+        potential_->SetEntity( entity_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -148,6 +152,7 @@ void ListParameter< ConcreteElement >::AddElement( Param_ABC& param )
     Q3VBox* widget = new Q3VBox( list_->parentWidget() );
     widgets_[ &param ] = widget;
     param.BuildInterface( param.GetName(), widget );
+    param.SetEntity( entity_ );
 
     //add element to list
     QStandardItem* item = new QStandardItem( param.GetName() );
@@ -444,6 +449,9 @@ void ListParameter< ConcreteElement >::CreateInternalMenu( kernel::ContextMenu& 
 template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::SetEntity( const kernel::Entity_ABC* entity )
 {
+    entity_ = entity;
+    if( potential_ )
+        potential_->SetEntity( entity );
     if( !list_ )
         return;
     for( int row = 0; row < model_.rowCount(); ++row )

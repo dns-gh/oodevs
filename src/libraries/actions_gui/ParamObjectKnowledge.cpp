@@ -89,5 +89,6 @@ QWidget* ParamObjectKnowledge::BuildInterface( const QString& objectName, QWidge
 void ParamObjectKnowledge::SetEntity( const kernel::Entity_ABC* entity )
 {
     agent_ = entity;
-    group_->setEnabled( IsInParam() || entity != 0 );
+    if( group_ )
+        group_->setEnabled( IsInParam() || entity != 0 );
 }

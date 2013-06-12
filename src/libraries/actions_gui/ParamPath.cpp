@@ -69,5 +69,6 @@ QWidget* ParamPath::BuildInterface( const QString& objectName, QWidget* parent )
 void ParamPath::SetEntity( const kernel::Entity_ABC* entity )
 {
     entity_ = entity;
-    group_->setEnabled( IsInParam() || entity != 0 );
+    if( group_ )
+        group_->setEnabled( IsInParam() || entity != 0 );
 }
