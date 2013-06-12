@@ -253,7 +253,12 @@ integration.query.getPCUnit = function()
 end
 
 integration.GetSuperiorKnowledge = function( unit ) 
-    return CreateKnowledge( integration.ontology.types.automat, DEC_GetAutomate( unit.source ) )
+    local getAutomat = function() pcall( DEC_GetAutomate( unit.source ) ) end
+    local result, automat = pcall( getAutomat )
+    if not result then
+        return false
+    end
+    return CreateKnowledge( integration.ontology.types.automat, automat )
 end
 
 -- -------------------------------------------------------------------------------- 
