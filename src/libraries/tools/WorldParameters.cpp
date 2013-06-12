@@ -149,7 +149,10 @@ void WorldParameters::ReadTerrain( const Path& terrainFile, xml::xistream& xis )
                 >> xml::end
             >> xml::end
         >> xml::end;
-        terrainSamePhysical_ = ( terrainDataSet == dataset_.ToUTF8() && terrainPhysical == physical_.ToUTF8() );
+        if( !terrainDataSet.empty() || !terrainPhysical.empty() )
+            // Terrains are no longer linked to physical/decisional dbs
+            terrainSamePhysical_ = ( terrainDataSet == dataset_.ToUTF8()
+                    && terrainPhysical == physical_.ToUTF8() );
     }
     else
     {
