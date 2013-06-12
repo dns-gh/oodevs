@@ -281,9 +281,6 @@ namespace
 // -----------------------------------------------------------------------------
 void Model::Load( const tools::ExerciseConfig& config )
 {
-    if( !config.IsTerrainSamePhysicalRef() )
-        AppendLoadingError( eOthers, tools::translate( "Model", "Terrain's physical base does not match the one selected for the exercise. All urban materials, roofshapes, usages and infrastructures will be lost at next save." ).toAscii().constData() );
-
     width_ = config.GetTerrainWidth();
     height_ = config.GetTerrainHeight();
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
@@ -292,6 +289,8 @@ void Model::Load( const tools::ExerciseConfig& config )
     if( !config.GetLoader().LoadOptionalFile( config.GetUrbanFile(), boost::bind( &UrbanModel::LoadUrban, &urban_, _1 ) ) )
         if( config.GetLoader().LoadOptionalFile( config.GetTerrainUrbanFile(), boost::bind( &UrbanModel::LoadUrban, &urban_, _1 ) ) )
         {
+            if( !config.IsTerrainSamePhysicalRef() )
+                AppendLoadingError( eOthers, tools::translate( "Model", "Terrain's physical base does not match the one selected for the exercise. All urban materials, roofshapes, usages and infrastructures will be lost at next save." ).toAscii().constData() );
             oldUrbanMode_ = true;
             config.GetLoader().LoadOptionalFile( config.GetUrbanStateFile(), boost::bind( &UrbanModel::LoadUrbanState, &urban_, _1 ) );
         }
