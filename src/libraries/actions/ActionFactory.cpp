@@ -210,11 +210,11 @@ void ActionFactory::AddTiming( actions::Action_ABC& action, const Message& messa
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const sword::UnitOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const sword::UnitOrder& message, bool needRegistration ) const
 {
     const kernel::MissionType& mission = missions_.Get( message.type().id() );
     const kernel::Entity_ABC& tasker = entities_.GetAgent( message.tasker().id() );
-    std::auto_ptr< actions::Action_ABC > action( new actions::AgentMission( tasker, mission, controller_, true ) );
+    std::auto_ptr< actions::Action_ABC > action( new actions::AgentMission( tasker, mission, controller_, needRegistration ) );
     AddTiming( *action, message );
     action->Attach( *new ActionTasker( &tasker ) );
     action->Polish();
@@ -226,11 +226,11 @@ actions::Action_ABC* ActionFactory::CreateAction( const sword::UnitOrder& messag
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const sword::AutomatOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const sword::AutomatOrder& message, bool needRegistration ) const
 {
     const kernel::MissionType& mission = missions_.Get( message.type().id() );
     const kernel::Entity_ABC& tasker = entities_.GetAutomat( message.tasker().id() );
-    std::auto_ptr< actions::Action_ABC > action( new actions::AutomatMission( tasker, mission, controller_, true ) );
+    std::auto_ptr< actions::Action_ABC > action( new actions::AutomatMission( tasker, mission, controller_, needRegistration ) );
     AddTiming( *action, message );
     action->Attach( *new ActionTasker( &tasker ) );
     action->Polish();
@@ -242,11 +242,11 @@ actions::Action_ABC* ActionFactory::CreateAction( const sword::AutomatOrder& mes
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const sword::CrowdOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const sword::CrowdOrder& message, bool needRegistration ) const
 {
     const kernel::MissionType& mission = missions_.Get( message.type().id() );
     const kernel::Entity_ABC& tasker = entities_.GetPopulation( message.tasker().id() );
-    std::auto_ptr< actions::Action_ABC > action( new actions::PopulationMission( tasker, mission, controller_, true ) );
+    std::auto_ptr< actions::Action_ABC > action( new actions::PopulationMission( tasker, mission, controller_, needRegistration ) );
     AddTiming( *action, message );
     action->Attach( *new ActionTasker( &tasker ) );
     action->Polish();
@@ -279,11 +279,11 @@ namespace
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const sword::FragOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const sword::FragOrder& message, bool needRegistration ) const
 {
     const kernel::Entity_ABC& tasker = FindTasker( message, entities_ );
     const kernel::FragOrderType& order = fragOrders_.Get( message.type().id() );
-    std::auto_ptr< actions::Action_ABC > action( new actions::FragOrder( tasker, order, controller_, true ) );
+    std::auto_ptr< actions::Action_ABC > action( new actions::FragOrder( tasker, order, controller_, needRegistration ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     action->Attach( *new ActionTasker( &tasker ) );
     action->Polish();

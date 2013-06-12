@@ -58,22 +58,22 @@ void EventAction::Update( const timeline::Event& event )
     {
         if( msg.message().has_unit_order() )
         {
-            action_.reset( actionFactory_.CreateAction( msg.message().unit_order() ) );
+            action_.reset( actionFactory_.CreateAction( msg.message().unit_order(), false ) );
             missionType_ = eMissionType_Pawn;
         }
         else if( msg.message().has_automat_order() )
         {
-            action_.reset( actionFactory_.CreateAction( msg.message().automat_order() ) );
+            action_.reset( actionFactory_.CreateAction( msg.message().automat_order(), false ) );
             missionType_ = eMissionType_Automat;
         }
         else if( msg.message().has_crowd_order() )
         {
-            action_.reset( actionFactory_.CreateAction( msg.message().crowd_order() ) );
+            action_.reset( actionFactory_.CreateAction( msg.message().crowd_order(), false ) );
             missionType_ = eMissionType_Population;
         }
         else if( msg.message().has_frag_order() )
         {
-            action_.reset( actionFactory_.CreateAction( msg.message().frag_order() ) );
+            action_.reset( actionFactory_.CreateAction( msg.message().frag_order(), false ) );
             missionType_ = eMissionType_FragOrder;
         }
         else

@@ -74,10 +74,10 @@ public:
     virtual Action_ABC* CreateAction( xml::xistream& xis, bool readonly = false ) const = 0;
     virtual Action_ABC* CreateStubAction( xml::xistream& xis ) const = 0;
 
-    virtual Action_ABC* CreateAction( const sword::UnitOrder& message ) const = 0;
-    virtual Action_ABC* CreateAction( const sword::AutomatOrder& message ) const = 0;
-    virtual Action_ABC* CreateAction( const sword::CrowdOrder& message ) const = 0;
-    virtual Action_ABC* CreateAction( const sword::FragOrder& message ) const = 0;
+    virtual Action_ABC* CreateAction( const sword::UnitOrder& message, bool needRegistration ) const = 0;
+    virtual Action_ABC* CreateAction( const sword::AutomatOrder& message, bool needRegistration ) const = 0;
+    virtual Action_ABC* CreateAction( const sword::CrowdOrder& message, bool needRegistration ) const = 0;
+    virtual Action_ABC* CreateAction( const sword::FragOrder& message, bool needRegistration ) const = 0;
 
     virtual Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, const geometry::Point2f& point, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, ActionsModel& actionsModel, const kernel::Time_ABC& simulation ) const = 0;
     virtual Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_ ) const = 0;

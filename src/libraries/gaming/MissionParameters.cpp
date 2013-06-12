@@ -73,7 +73,7 @@ void MissionParameters::UpdateMessage( const T& message )
 
     try
     {
-        Action_ABC* action = factory_.CreateAction( message );
+        Action_ABC* action = factory_.CreateAction( message, true );
         Register( action->GetId(), *action );
         controller_.Update( *this );
     }
