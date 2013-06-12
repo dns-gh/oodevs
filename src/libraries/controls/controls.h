@@ -64,7 +64,7 @@ namespace controls
     size_t DeselectedEvent      ( void* data, size_t size );
     size_t ActivatedEvent       ( void* data, size_t size, const Event& event );
     size_t ContextMenuEvent     ( void* data, size_t size, const Event& event );
-    size_t ContextMenuBackground( void* data, size_t size );
+    size_t ContextMenuBackground( void* data, size_t size, const std::string& time );
     size_t KeyDown              ( void* data, size_t size, int key );
     size_t KeyPress             ( void* data, size_t size, int key );
     size_t KeyUp                ( void* data, size_t size, int key );
@@ -84,7 +84,7 @@ namespace controls
         virtual void OnDeselectedEvent      () = 0;
         virtual void OnActivatedEvent       ( const Event& event ) = 0;
         virtual void OnContextMenuEvent     ( const Event& event ) = 0;
-        virtual void OnContextMenuBackground() = 0;
+        virtual void OnContextMenuBackground( const std::string& time ) = 0;
         virtual void OnKeyDown              ( int key ) = 0;
         virtual void OnKeyPress             ( int key ) = 0;
         virtual void OnKeyUp                ( int key ) = 0;

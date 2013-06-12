@@ -224,12 +224,12 @@ void Server::OnActivatedEvent( const Event& event )
 
 void Server::OnContextMenuEvent( const Event& event )
 {
-    emit ContextMenuEvent( boost::make_shared< Event >( event ) );
+    emit ContextMenuEvent( boost::make_shared< Event >( event ), event.begin );
 }
 
-void Server::OnContextMenuBackground()
+void Server::OnContextMenuBackground( const std::string& time )
 {
-    emit ContextMenuEvent( boost::shared_ptr< Event >() );
+    emit ContextMenuEvent( boost::shared_ptr< Event >(), time );
 }
 
 void Server::OnKeyDown( int key )

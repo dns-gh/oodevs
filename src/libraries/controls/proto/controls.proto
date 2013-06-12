@@ -91,4 +91,5 @@ message ServerCommand
     optional Error         error         = 3;
     optional KeyBoardEvent keyboardevent = 4;
     repeated Event         events        = 5;
+    optional string        time          = 6;
 }

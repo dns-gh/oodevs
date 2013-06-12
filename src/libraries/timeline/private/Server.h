@@ -61,7 +61,7 @@ public:
     virtual void OnDeselectedEvent();
     virtual void OnActivatedEvent( const Event& event );
     virtual void OnContextMenuEvent( const Event& event );
-    virtual void OnContextMenuBackground();
+    virtual void OnContextMenuBackground( const std::string& time );
     virtual void OnKeyDown( int key );
     virtual void OnKeyPress( int key );
     virtual void OnKeyUp( int key );

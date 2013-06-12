@@ -148,7 +148,7 @@ void Engine::Register( CefRefPtr< CefV8Context > context )
     SetValue( gaming, "deselect_event",         0, boost::bind( &Engine::OnDeselectEvent,         this, _1 ) );
     SetValue( gaming, "activate_event",         1, boost::bind( &Engine::OnActivateEvent,         this, _1 ) );
     SetValue( gaming, "contextmenu_event",      1, boost::bind( &Engine::OnContextMenuEvent,      this, _1 ) );
-    SetValue( gaming, "contextmenu_background", 0, boost::bind( &Engine::OnContextMenuBackground, this, _1 ) );
+    SetValue( gaming, "contextmenu_background", 1, boost::bind( &Engine::OnContextMenuBackground, this, _1 ) );
     SetValue( gaming, "keydown",                1, boost::bind( &Engine::OnKeyDown,               this, _1 ) );
     SetValue( gaming, "keypress",               1, boost::bind( &Engine::OnKeyPress,              this, _1 ) );
     SetValue( gaming, "keyup",                  1, boost::bind( &Engine::OnKeyUp,                 this, _1 ) );
@@ -316,9 +316,10 @@ CefRefPtr< CefV8Value > Engine::OnContextMenuEvent( const CefV8ValueList& args )
     return 0;
 }
 
-CefRefPtr< CefV8Value > Engine::OnContextMenuBackground( const CefV8ValueList& /*args*/ )
+CefRefPtr< CefV8Value > Engine::OnContextMenuBackground( const CefV8ValueList& args )
 {
-    Write( device_, &controls::ContextMenuBackground );
+    const std::string time = args[0]->GetStringValue();
+    Write( device_, boost::bind( &controls::ContextMenuBackground, _1, _2, time ) );
     return 0;
 }
 

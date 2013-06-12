@@ -45,7 +45,7 @@ public slots:
     void OnDeleteEvent();
     void OnTestCrud();
     void OnActivatedEvent( const timeline::Event& event );
-    void OnContextMenuEvent( boost::shared_ptr< timeline::Event > event );
+    void OnContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time );
     void OnKeyDown( int key );
     void OnKeyPress( int key );
     void OnKeyUp( int key );

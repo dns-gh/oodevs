@@ -39,7 +39,7 @@ Controller::Controller( const Configuration& cfg )
     QObject::connect( ctx_.get(), SIGNAL( SelectedEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnSelectedEvent( boost::shared_ptr< timeline::Event > ) ) );
     QObject::connect( ctx_.get(), SIGNAL( DeletedEvent( const std::string&, const timeline::Error& ) ), this, SLOT( OnDeletedEvent( const std::string&, const timeline::Error& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( ActivatedEvent( const timeline::Event& ) ), this, SLOT( OnActivatedEvent( const timeline::Event& ) ) );
-    QObject::connect( ctx_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event > ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event > ) ) );
+    QObject::connect( ctx_.get(), SIGNAL( ContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ), this, SLOT( OnContextMenuEvent( boost::shared_ptr< timeline::Event >, const std::string& ) ) );
     QObject::connect( ctx_.get(), SIGNAL( KeyDown( int ) ), this, SLOT( OnKeyDown( int ) ) );
     QObject::connect( ctx_.get(), SIGNAL( KeyPress( int ) ), this, SLOT( OnKeyPress( int ) ) );
     QObject::connect( ctx_.get(), SIGNAL( KeyUp( int ) ), this, SLOT( OnKeyUp( int ) ) );
@@ -188,7 +188,7 @@ void Controller::OnActivatedEvent( const timeline::Event& event )
     ui_->statusBar->showMessage( QString( "event %1 activated" ).arg( QString::fromStdString( event.uuid ) ) );
 }
 
-void Controller::OnContextMenuEvent( boost::shared_ptr< timeline::Event > event )
+void Controller::OnContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time )
 {
     if( event )
     {
@@ -204,6 +204,7 @@ void Controller::OnContextMenuEvent( boost::shared_ptr< timeline::Event > event 
         ui_->statusBar->showMessage( "context menu is requested on the background" );
         QMenu menu;
         menu.addAction( "Background context menu" );
+        menu.addAction( QString( "Event time %1" ).arg( QString::fromStdString( time ) ) );
         menu.exec( QCursor::pos() );
     }
 }

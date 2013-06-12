@@ -279,9 +279,12 @@ size_t tic::ContextMenuEvent( void* data, size_t size, const Event& event )
     return Marshall( data, size, cmd );
 }
 
-size_t tic::ContextMenuBackground( void* data, size_t size )
+size_t tic::ContextMenuBackground( void* data, size_t size, const std::string& time )
 {
-    return MarshallType< ServerCommand >( data, size, sdk::SERVER_EVENT_CONTEXTMENUBACKGROUND );
+    ServerCommand cmd;
+    cmd.set_type( sdk::SERVER_EVENT_CONTEXTMENUBACKGROUND );
+    cmd.set_time( time );
+    return Marshall( data, size, cmd );
 }
 
 size_t tic::KeyDown( void* data, size_t size, int key )
@@ -324,7 +327,7 @@ void tic::ParseServer( ServerHandler_ABC& handler, const void* data, size_t size
         case sdk::SERVER_EVENT_DESELECTED:            return handler.OnDeselectedEvent();
         case sdk::SERVER_EVENT_ACTIVATED:             return handler.OnActivatedEvent( GetEvent( cmd.event() ) );
         case sdk::SERVER_EVENT_CONTEXTMENU:           return handler.OnContextMenuEvent( GetEvent( cmd.event() ) );
-        case sdk::SERVER_EVENT_CONTEXTMENUBACKGROUND: return handler.OnContextMenuBackground();
+        case sdk::SERVER_EVENT_CONTEXTMENUBACKGROUND: return handler.OnContextMenuBackground( cmd.time() );
         case sdk::SERVER_KEYBOARD_KEYDOWN:            return handler.OnKeyDown( cmd.keyboardevent().keydown() );
         case sdk::SERVER_KEYBOARD_KEYPRESS:           return handler.OnKeyPress( cmd.keyboardevent().keypress() );
         case sdk::SERVER_KEYBOARD_KEYUP:              return handler.OnKeyUp( cmd.keyboardevent().keyup() );
