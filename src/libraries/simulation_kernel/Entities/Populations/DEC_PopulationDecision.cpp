@@ -382,7 +382,6 @@ bool DEC_PopulationDecision::HasStateChanged() const
 // -----------------------------------------------------------------------------
 DEC_AutomateDecision* DEC_PopulationDecision::GetDecAutomate() const
 {
-    assert( false );
     throw MASA_EXCEPTION( "DEC_GetAutomate unexpected on population" );
 }
 
