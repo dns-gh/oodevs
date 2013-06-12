@@ -896,15 +896,6 @@ const std::vector< unsigned char >& ExerciseConfig::GetUtmZones() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::GetUrbanTerrainFile
-// Created: LGY 2012-06-05
-// -----------------------------------------------------------------------------
-Path ExerciseConfig::GetUrbanTerrainFile() const
-{
-    return pWorldParameters_->urban_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::HasTimeline
 // Created: ABR 2013-05-31
 // -----------------------------------------------------------------------------

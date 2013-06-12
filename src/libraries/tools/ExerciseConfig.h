@@ -100,7 +100,6 @@ public:
     Path GetPathfindGraphFile() const;
     Path GetPathfindLinksFile() const;
     Path GetPathfindNodesFile() const;
-    Path GetUrbanTerrainFile() const;
 
     float GetTerrainWidth() const;
     float GetTerrainHeight() const;
