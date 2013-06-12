@@ -45,6 +45,7 @@
 #include "SimulationLighting.h"
 #include "StatusBar.h"
 #include "TeamLayer.h"
+#include "TimelineDockWidget.h"
 #include "UserProfileDialog.h"
 #include "WeatherLayer.h"
 #include "OrbatPanel.h"
@@ -292,6 +293,9 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     gui::Layer& agents               = *new AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, *pProfile_, model_.actions_, simulation );
     gui::Layer& missionsLayer        = *new gui::MiscLayer< MissionPanel >( dockContainer_->GetMissionPanel() );
     gui::Layer& creationsLayer       = *new gui::MiscLayer< CreationPanels >( dockContainer_->GetCreationPanel() );
+    gui::Layer* timelineLayer = 0;
+    if( config_.HasTimeline() )
+        timelineLayer = new gui::MiscLayer< TimelineDockWidget >( *dockContainer_->GetTimelineDockWidget() );
     gui::Layer& raster               = *new gui::RasterLayer( controllers_.controller_ );
     gui::Layer& watershed            = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
     gui::Layer& elevation3d          = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
@@ -340,6 +344,8 @@ void MainWindow::CreateLayers( gui::Layer& locationsLayer, gui::Layer& weather, 
     AddLayer( *glProxy_, *preferenceDialog_, missionsLayer, "main,miniviews" );
     AddLayer( *glProxy_, *preferenceDialog_, actionsLayer, "main" );
     AddLayer( *glProxy_, *preferenceDialog_, creationsLayer, "main" );
+    if( timelineLayer )
+        AddLayer( *glProxy_, *preferenceDialog_, *timelineLayer, "main" );
     AddLayer( *glProxy_, *preferenceDialog_, *parameters_, "main" );
     AddLayer( *glProxy_, *preferenceDialog_, metrics, "main" );
     AddLayer( *glProxy_, *preferenceDialog_, locationsLayer, "main" );

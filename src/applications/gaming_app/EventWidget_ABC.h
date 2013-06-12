@@ -10,6 +10,11 @@
 #ifndef __EventWidget_ABC_h_
 #define __EventWidget_ABC_h_
 
+namespace gui
+{
+    class Viewport_ABC;
+}
+
 namespace timeline
 {
     struct Event;
@@ -38,6 +43,7 @@ public:
     virtual void Purge();
     virtual bool IsValid() const;
     virtual void Trigger() const;
+    virtual void Draw( gui::Viewport_ABC& viewport );
     //@}
 
     //! @name Abstract operations

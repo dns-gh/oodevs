@@ -95,6 +95,7 @@ public:
     ProfilingPanel& GetProfilingPanel() const;
     gui::TerrainProfiler& GetTerrainProfiler() const;
     gui::MiniViews& GetMiniView() const;
+    TimelineDockWidget* GetTimelineDockWidget() const;
     //@}
 
 private:

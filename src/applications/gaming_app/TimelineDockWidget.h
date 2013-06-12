@@ -20,6 +20,12 @@ namespace actions
     }
 }
 
+namespace gui
+{
+    class GlTools_ABC;
+    class Viewport_ABC;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -53,7 +59,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const kernel::Time_ABC& simulation,
-                                 Model& model, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile );
+                                 Model& model, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile,
+                                 gui::GlTools_ABC& tools );
     virtual ~TimelineDockWidget();
     //@}
 
@@ -61,6 +68,7 @@ public:
     //@{
     void Connect();
     void Disconnect();
+    void Draw( gui::Viewport_ABC& viewport );
     //@}
 
 signals:

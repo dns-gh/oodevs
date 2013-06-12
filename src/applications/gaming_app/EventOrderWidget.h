@@ -29,6 +29,7 @@ namespace actions
 
 namespace gui
 {
+    class GlTools_ABC;
     template< typename T > class RichWarnWidget;
     class RichGroupBox;
     class RichLabel;
@@ -73,7 +74,9 @@ class EventOrderWidget : public EventWidget_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             EventOrderWidget( kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile );
+             EventOrderWidget( kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
+                               actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile,
+                               gui::GlTools_ABC& tools );
     virtual ~EventOrderWidget();
     //@}
 
@@ -85,6 +88,7 @@ private:
     virtual void Commit( timeline::Event& event ) const;
     virtual void Trigger() const;
     virtual bool IsValid() const;
+    virtual void Draw( gui::Viewport_ABC& viewport );
     //@}
 
     //! @name Obersvers implementation
@@ -134,6 +138,7 @@ private:
     Model& model_;
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
     const kernel::Profile_ABC& profile_;
+    gui::GlTools_ABC& tools_;
 
     gui::RichWarnWidget< QComboBox >* missionTypeCombo_;
     QVBoxLayout* missionComboLayout_;

@@ -35,7 +35,8 @@
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
 EventDialog::EventDialog( QWidget* parent, kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
-                          const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile )
+                          const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder,
+                          const kernel::Profile_ABC& profile, gui::GlTools_ABC& tools )
     : QDialog( parent )
     , factory_( model.eventFactory_ )
     , simulation_( simulation )
@@ -60,7 +61,7 @@ EventDialog::EventDialog( QWidget* parent, kernel::Controllers& controllers, Mod
     connect( bottomWidget_, SIGNAL( ShowDetail() ),     this, SLOT( OnShowDetail() ) );
 
     // Content
-    EventOrderWidget* orderWidget = new EventOrderWidget( controllers, model, config, interfaceBuilder, profile );
+    EventOrderWidget* orderWidget = new EventOrderWidget( controllers, model, config, interfaceBuilder, profile, tools );
     EventSupervisorActionWidget* supervisorWidget = new EventSupervisorActionWidget();
     EventReportWidget* reportWidget = new EventReportWidget();
     EventTaskWidget* taskWidget = new EventTaskWidget();
@@ -240,4 +241,14 @@ void EventDialog::OnSave()
         emit CreateEvent( event );
         editing_ = true;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDialog::Draw
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+void EventDialog::Draw( gui::Viewport_ABC& viewport )
+{
+    if( currentWidget_ )
+        currentWidget_->Draw( viewport );
 }

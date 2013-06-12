@@ -197,7 +197,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     if( config.HasTimeline() )
     {
         // New Timeline
-        timeline_ = new TimelineDockWidget( parent, controllers, config, simulation, model, *interfaceBuilder_, profile );
+        timeline_ = new TimelineDockWidget( parent, controllers, config, simulation, model, *interfaceBuilder_, profile, proxy );
         timeline_->SetModes( eModes_Default );
         parent->addDockWidget( Qt::TopDockWidgetArea, timeline_ );
         QObject::connect( missionPanel_, SIGNAL( CreateEvent( const timeline::Event& ) ), timeline_, SIGNAL( CreateEvent( const timeline::Event& ) ) );
@@ -320,4 +320,13 @@ gui::TerrainProfiler& DockContainer::GetTerrainProfiler() const
 gui::MiniViews& DockContainer::GetMiniView() const
 {
     return *miniView_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DockContainer::GetTimelineDockWidget
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+TimelineDockWidget* DockContainer::GetTimelineDockWidget() const
+{
+    return timeline_;
 }

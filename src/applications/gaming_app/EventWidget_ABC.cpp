@@ -58,3 +58,12 @@ void EventWidget_ABC::Purge()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: EventWidget_ABC::Draw
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+void EventWidget_ABC::Draw( gui::Viewport_ABC& )
+{
+    // NOTHING
+}

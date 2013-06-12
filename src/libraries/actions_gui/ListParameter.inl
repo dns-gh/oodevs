@@ -444,6 +444,8 @@ void ListParameter< ConcreteElement >::CreateInternalMenu( kernel::ContextMenu& 
 template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::SetEntity( const kernel::Entity_ABC* entity )
 {
+    if( !list_ )
+        return;
     for( int row = 0; row < model_.rowCount(); ++row )
     {
         QStandardItem* item = model_.item( row );

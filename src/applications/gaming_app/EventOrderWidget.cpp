@@ -12,6 +12,7 @@
 #include "moc_EventOrderWidget.cpp"
 #include "actions/ActionWithTarget_ABC.h"
 #include "actions_gui/MissionInterface.h"
+#include "clients_gui/GLToolColors.h"
 #include "clients_gui/RichGroupBox.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/RichWarnWidget.h"
@@ -42,12 +43,15 @@
 // Name: EventOrderWidget constructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile )
+EventOrderWidget::EventOrderWidget( kernel::Controllers& controllers, Model& model, const tools::ExerciseConfig& config,
+                                    actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile,
+                                    gui::GlTools_ABC& tools )
     : EventWidget_ABC()
     , controllers_( controllers )
     , model_( model )
     , interfaceBuilder_( interfaceBuilder )
     , profile_( profile )
+    , tools_( tools )
     , contextMenuEntity_( controllers )
     , target_( controllers )
     , missionInterface_( 0 )
@@ -493,4 +497,20 @@ void EventOrderWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
     if( target_ == &entity || contextMenuEntity_ == &entity )
         Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::Draw
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+void EventOrderWidget::Draw( gui::Viewport_ABC& viewport )
+{
+    if( isVisible() && missionInterface_ )
+    {
+        glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+        glLineWidth( 2.f );
+        glColor4f( COLOR_PARAM );
+        missionInterface_->Draw( tools_, viewport );
+        glPopAttrib();
+    }
 }

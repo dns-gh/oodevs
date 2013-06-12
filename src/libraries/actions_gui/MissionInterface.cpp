@@ -221,11 +221,9 @@ void MissionInterface::AddParameter( const QString& objectName, Param_ABC& param
 // -----------------------------------------------------------------------------
 void MissionInterface::Draw( gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const
 {
-    if( !entity_ )
-        return;
     for( auto it = parameters_.begin() ; it != parameters_.end() ; ++it )
     {
-        const geometry::Point2f p = entity_->Get< kernel::Positions >().GetPosition();
+        const geometry::Point2f p = ( entity_ ) ? entity_->Get< kernel::Positions >().GetPosition() : geometry::Point2f( 0.f, 0.f );
         extent.SetHotpoint( p );
         (*it)->Draw( p, extent, tools );
     }

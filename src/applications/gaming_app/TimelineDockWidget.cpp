@@ -26,7 +26,8 @@ int TimelineDockWidget::maxTabNumber_ = -1;
 // Created: ABR 2013-05-14
 // -----------------------------------------------------------------------------
 TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& controllers, const Config& config, const kernel::Time_ABC& simulation,
-                                        Model& model, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile )
+                                        Model& model, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, const kernel::Profile_ABC& profile,
+                                        gui::GlTools_ABC& tools )
     : gui::RichDockWidget( controllers, parent, "timeline-dock-widget" )
     , cfg_( new timeline::Configuration() )
     , simulation_( simulation )
@@ -48,7 +49,7 @@ TimelineDockWidget::TimelineDockWidget( QWidget* parent, kernel::Controllers& co
         MT_LOG_ERROR_MSG( tr( "Invalid timeline binary '%1'" ).arg( QString::fromStdWString( cfg_->binary.ToUnicode() ) ).toStdString() );
 
     // Dialog
-    eventDialog_ = new EventDialog( this, controllers, model, config, simulation, interfaceBuilder, profile );
+    eventDialog_ = new EventDialog( this, controllers, model, config, simulation, interfaceBuilder, profile, tools );
 
     // Tab widget
     tabWidget_ = new QTabWidget( this );
@@ -138,4 +139,14 @@ void TimelineDockWidget::RemoveCurrentFilteredView()
     for( auto it = filteredViews_.begin(); it != filteredViews_.end(); ++it )
         if( maxTabNumber_ < ( *it )->GetViewNumber() )
             maxTabNumber_ = ( *it )->GetViewNumber();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineDockWidget::Draw
+// Created: ABR 2013-06-11
+// -----------------------------------------------------------------------------
+void TimelineDockWidget::Draw( gui::Viewport_ABC& viewport )
+{
+    if( eventDialog_ )
+        eventDialog_->Draw( viewport );
 }
