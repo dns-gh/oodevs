@@ -375,6 +375,15 @@ void GlProxy::Print( const std::string& message, const geometry::Point2f& where,
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::DrawInfrastructureSymbol
+// Created: LGY 2013-06-12
+// -----------------------------------------------------------------------------
+void GlProxy::DrawInfrastructureSymbol( const std::string& symbol, const geometry::Point2f& where, float factor, float thickness ) const
+{
+    tools_->DrawInfrastructureSymbol( symbol, where, factor, thickness );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::DrawApp6Symbol
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------

@@ -877,6 +877,17 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: GLWidget::DrawInfrastructureSymbol
+// Created: LGY 2013-06-12
+// -----------------------------------------------------------------------------
+void GlWidget::DrawInfrastructureSymbol( const std::string& symbol, const geometry::Point2f& where, float factor, float thickness ) const
+{
+    thickness *= ComputeZoomFactor( factor );
+    DrawApp6Symbol( symbol, DefaultStyle(), where, baseWidth_ * factor, viewport_
+        , static_cast< unsigned int >( windowWidth_ * thickness ), static_cast< unsigned int >( windowHeight_ * thickness ), 0u, 1., 1., -20, -80, false );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::DrawApp6Symbol
 // Created: AGE 2008-05-07
 // -----------------------------------------------------------------------------
@@ -999,7 +1010,7 @@ void GlWidget::DrawTail( const T_PointVector& points, float width ) const
 void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where
                               , float expectedWidth, const geometry::Rectangle2f& viewport, unsigned int printWidth
                               , unsigned int printHeight, unsigned int direction, float xFactor, float yFactor
-                              , const float svgDeltaX, const float svgDeltaY ) const
+                              , const float svgDeltaX, const float svgDeltaY, bool checkAlpha ) const
 {
     const float svgWidth = 360;
     const float expectedHeight = expectedWidth * 0.660f;
@@ -1017,7 +1028,7 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
             glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0.0f );
             glScalef( scaleRatio, -scaleRatio, 1 );
             glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-            Base().PrintApp6( symbol, style, viewport, printWidth, printHeight );
+            Base().PrintApp6( symbol, style, viewport, printWidth, printHeight, checkAlpha );
         glPopMatrix();
     glPopAttrib();
 }

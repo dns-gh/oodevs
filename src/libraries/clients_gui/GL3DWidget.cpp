@@ -506,6 +506,15 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& s
 
 
 // -----------------------------------------------------------------------------
+// Name: GL3DWidget::DrawInfrastructureSymbol
+// Created: LGY 2013-06-12
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawInfrastructureSymbol( const std::string& symbol, const geometry::Point2f& where, float factor, float /*thickness*/ ) const
+{
+    DrawApp6Symbol( symbol, DefaultStyle(), where, factor, 1.f, 0u );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GL3DWidget::DrawApp6SymbolFixedSize
 // Created: LGY 2013-03-12
 // -----------------------------------------------------------------------------
