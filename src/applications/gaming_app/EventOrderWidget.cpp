@@ -457,7 +457,7 @@ void EventOrderWidget::AddTargetToMenu( const kernel::Entity_ABC& entity, kernel
     if( profile_.CanBeOrdered( entity ) && isVisible() && ( currentType_ == allowedType || currentType_ == eMissionType_FragOrder ) )
     {
         contextMenuEntity_ = &entity;
-        menu.InsertItem( "Parameter", tr( "Target" ), this, SLOT( OnTargetSelected() ) );
+        menu.InsertItem( "Target", tr( "Target" ), this, SLOT( OnTargetSelected() ) );
     }
 }
 

@@ -54,6 +54,7 @@ void ContextMenu::InitializeBaseCategories()
         baseCategories_.push_back( "Command" );
         baseCategories_.push_back( "Helpers" );
         baseCategories_.push_back( "Creation" );
+        baseCategories_.push_back( "Target" );
         baseCategories_.push_back( "Parameter" );
     }
 }
