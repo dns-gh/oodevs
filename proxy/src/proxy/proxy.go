@@ -19,7 +19,7 @@ const (
 )
 
 func main() {
-	log.Println("Sword Proxy - copyright Masa Group 2012")
+	log.Println("Sword Proxy - copyright Masa Group 2013")
 
 	runtime.GOMAXPROCS(runtime.NumCPU())
 

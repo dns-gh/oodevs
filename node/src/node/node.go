@@ -21,7 +21,7 @@ import (
 )
 
 func main() {
-	log.Println("Sword Node - copyright Masa Group 2012")
+	log.Println("Sword Node - copyright Masa Group 2013")
 
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
