@@ -19,7 +19,6 @@ namespace xml
 
 namespace tools
 {
-    class SchemaWriter_ABC;
     class Loader_ABC;
 
 // =============================================================================
@@ -37,15 +36,11 @@ public:
     virtual ~WorldParameters();
     //@}
 
-    //! @name Operations
-    //@{
-    void Serialize( const Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
-    //@}
-
 private:
     //! @name Helpers
     //@{
-    void ReadTerrain( const Path& terrainFile, xml::xistream& xis );
+    void ReadTerrain( const Path& terrainFile, const Path& dataset,
+            const Path& physical, xml::xistream& xis );
     void ReadPopulation( const Path& populationFile, xml::xistream& xis );
     void ReadWorld( const Path& world );
     void ReadExtent( const Path& extent );
@@ -64,8 +59,6 @@ public:
     Path pathfindNodes_;
     Path detection_;
     Path populationGraph_;
-    Path dataset_;
-    Path physical_;
     std::string xMin_;
     std::string xMax_;
     std::string yMin_;

@@ -25,7 +25,6 @@ namespace tools
     class Loader_ABC;
     class RealFileLoaderObserver_ABC;
     class WorldParameters;
-    class SchemaWriter_ABC;
 
 // =============================================================================
 /** @class  ExerciseConfig
@@ -109,8 +108,6 @@ public:
     const std::vector< unsigned char >& GetUtmZones() const;
 
     bool IsTerrainSamePhysicalRef() const;
-
-    void SerializeTerrainFiles( const SchemaWriter_ABC& schemaWriter ) const;  //$$$ Rien à foutre la ...
     //@}
 
     //! @name Operations
