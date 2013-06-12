@@ -23,10 +23,8 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamAgentKnowledge::ParamAgentKnowledge( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : EntityParameter< kernel::Agent_ABC >( builder, parameter )
-    , converter_( builder.GetAgentKnowledgeConverter() )
-    , agent_    ( builder.GetCurrentEntity() )
 {
-    assert( converter_ != 0 );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +42,7 @@ ParamAgentKnowledge::~ParamAgentKnowledge()
 // -----------------------------------------------------------------------------
 void ParamAgentKnowledge::NotifyContextMenu( const kernel::AgentKnowledge_ABC& knowledge, kernel::ContextMenu& menu )
 {
-        EntityParameter< kernel::Agent_ABC >::NotifyContextMenu( *knowledge.GetEntity(), menu );
+    EntityParameter< kernel::Agent_ABC >::NotifyContextMenu( *knowledge.GetEntity(), menu );
 }
 
 // -----------------------------------------------------------------------------

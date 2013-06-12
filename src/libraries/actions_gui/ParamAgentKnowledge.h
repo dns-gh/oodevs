@@ -51,13 +51,6 @@ private:
     //@{
     virtual void NotifyContextMenu( const kernel::AgentKnowledge_ABC& knowledge, kernel::ContextMenu& menu );
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::AgentKnowledgeConverter_ABC* converter_;
-    const kernel::Entity_ABC& agent_;
-    //@}
 };
 
     }
