@@ -36,7 +36,7 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     setCaption( tr( "Unit state" ) );
     assert( tabWidget_ );
     tabs_.push_back( boost::make_shared< UnitStateTableCrew >( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_ ) );
-    tabs_.push_back( boost::make_shared< UnitStateTableEquipment >( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_ ) );
+    tabs_.push_back( boost::make_shared< UnitStateTableEquipment >( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_, profile ) );
     tabs_.push_back( boost::make_shared< UnitStateTableResource > ( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_ ) );
     tabWidget_->addTab( tabs_[ eCrew      ].get(), tr( "Crew" ) );
     tabWidget_->addTab( tabs_[ eEquipment ].get(), tr( "Equipments" ) );

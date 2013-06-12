@@ -35,12 +35,13 @@
 // Created: ABR 2011-07-07
 // -----------------------------------------------------------------------------
 UnitStateTableEquipment::UnitStateTableEquipment( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                                  const kernel::Time_ABC& simulation, QWidget* parent )
+                                                  const kernel::Time_ABC& simulation, QWidget* parent, const kernel::Profile_ABC& profile )
     : gui::UnitStateTableEquipment( parent )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )
     , simulation_  ( simulation )
+    , profile_     ( profile )
     , selected_    ( controllers )
 {
     controllers_.Register( *this );
@@ -131,8 +132,9 @@ void UnitStateTableEquipment::NotifyUpdated( const Equipments& equipments )
 bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
 {
     assert( selected_ == &selected && selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
-    tools::Iterator< const Equipment& > itEquip = selected.Get< Equipments >().CreateIterator();
     rowsChanged_.clear();
+    bool hideBreakdown = IsReadOnly() && controllers_.GetCurrentMode() != eModes_Replay;
+    auto itEquip = selected.Get< Equipments >().CreateIterator();
     while( itEquip.HasMoreElements() )
     {
         const Equipment& equipment = itEquip.NextElement();
@@ -145,9 +147,9 @@ bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
         const QStringList* breakdowns = delegate_.GetComboContent( row, eBreakdown );
         if( LineChanged( name, row, equipment.available_,     eEquipmentState_Available ) ||
             LineChanged( name, row, equipment.unavailable_,   eEquipmentState_Destroyed ) ||
-            LineChanged( name, row, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.GetBreakdowns( IsReadOnly() ) ) : std::vector< unsigned int >()  ) ||
+            LineChanged( name, row, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.GetBreakdowns( hideBreakdown ) ) : std::vector< unsigned int >()  ) ||
             LineChanged( name, row, equipment.onSiteFixable_, eEquipmentState_OnSiteFixable ) ||
-            LineChanged( name, row, equipment.inMaintenance_, eEquipmentState_InMaintenance, breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.GetBreakdownsInTreatment( IsReadOnly() ) ) : std::vector< unsigned int >() ) ||
+            LineChanged( name, row, equipment.inMaintenance_, eEquipmentState_InMaintenance, breakdowns ? BreakdownIDToComboIndex( *breakdowns, equipment.GetBreakdownsInTreatment( hideBreakdown ) ) : std::vector< unsigned int >() ) ||
             LineChanged( name, row, equipment.prisonners_,    eEquipmentState_Prisonner ) )
             rowsChanged_[ equipment.type_.GetId() ] = first_row;
     }
@@ -162,7 +164,8 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
 {
     selected_ = &selected;
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
-    tools::Iterator< const Equipment& > itEquip = selected.Get< Equipments >().CreateIterator();
+    bool hideBreakdown = IsReadOnly() && controllers_.GetCurrentMode() != eModes_Replay;
+    auto itEquip = selected.Get< Equipments >().CreateIterator();
     while( itEquip.HasMoreElements() )
     {
         const Equipment& equipment = itEquip.NextElement();
@@ -171,15 +174,15 @@ void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
         QStringList breakdowns;
         tools::Iterator< const kernel::BreakdownOriginType& > itBreakdown = equipment.type_.CreateBreakdownsIterator();
         if( itBreakdown.HasMoreElements() )
-            breakdowns << tr( "Random" );
+            breakdowns << ( profile_.CanDoMagic( selected ) ? tools::translate( "UnitStateTableEquipment",  "Random" ) : tools::translate( "UnitStateTableEquipment", "Unknown" ) );
         while( itBreakdown.HasMoreElements() )
             breakdowns << itBreakdown.NextElement().GetName().c_str();
         // States
         AddLines( name, equipment.available_,     eEquipmentState_Available,                breakdowns );
         AddLines( name, equipment.unavailable_,   eEquipmentState_Destroyed,                breakdowns );
-        AddLines( name, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, breakdowns, BreakdownIDToComboIndex( breakdowns, equipment.GetBreakdowns( IsReadOnly() ) ) );
+        AddLines( name, equipment.repairable_,    eEquipmentState_RepairableWithEvacuation, breakdowns, BreakdownIDToComboIndex( breakdowns, equipment.GetBreakdowns( hideBreakdown ) ) );
         AddLines( name, equipment.onSiteFixable_, eEquipmentState_OnSiteFixable,            breakdowns );
-        AddLines( name, equipment.inMaintenance_, eEquipmentState_InMaintenance,            breakdowns, BreakdownIDToComboIndex( breakdowns, equipment.GetBreakdownsInTreatment( IsReadOnly() ) ) );
+        AddLines( name, equipment.inMaintenance_, eEquipmentState_InMaintenance,            breakdowns, BreakdownIDToComboIndex( breakdowns, equipment.GetBreakdownsInTreatment( hideBreakdown ) ) );
         AddLines( name, equipment.prisonners_,    eEquipmentState_Prisonner,                breakdowns );
     }
 }
@@ -195,7 +198,7 @@ void UnitStateTableEquipment::Commit( kernel::Entity_ABC& selected ) const
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_equipment_state" );
     actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, tools::translate( "UnitStateTableEquipment", "Change equipment state" ), true );
 
-    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    auto it = actionType.CreateIterator();
     actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
     action->AddParameter( *parameterList );
 

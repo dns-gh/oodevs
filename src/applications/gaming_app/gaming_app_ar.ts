@@ -3389,6 +3389,10 @@ This data can&apos;t be projected.</source>
         <source>Change equipment state</source>
         <translation type="unfinished">تغيير حالة المعدات</translation>
     </message>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateTableResource</name>
