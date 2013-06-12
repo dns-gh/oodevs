@@ -114,6 +114,10 @@ integration.getNextObjectOnPath = function( model, distance, paramsList )
     return DEC_GetNextObjectOnPath( model, distance, paramsList )
 end
 
+integration.getNextObjectOnPathWithBypassed = function( model, distance, paramsList )
+    return DEC_GetNextObjectOnPathWithBypassed( model, distance, paramsList )
+end
+
 integration.isManeuverGenObject = function( genObject )
     return DEC_GenObject_TypeObstacleManoeuvre( genObject )
 end
