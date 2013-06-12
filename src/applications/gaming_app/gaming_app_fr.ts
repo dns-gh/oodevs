@@ -3388,6 +3388,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Change equipment state</source>
         <translation>Modifier l&apos;état de l&apos;équipement</translation>
     </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Inconnue</translation>
+    </message>
 </context>
 <context>
     <name>UnitStateTableResource</name>

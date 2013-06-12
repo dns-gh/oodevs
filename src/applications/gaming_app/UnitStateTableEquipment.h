@@ -46,7 +46,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UnitStateTableEquipment( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
-                                      const kernel::Time_ABC& simulation, QWidget* parent );
+                                      const kernel::Time_ABC& simulation, QWidget* parent, const kernel::Profile_ABC& profile );
     virtual ~UnitStateTableEquipment();
     //@}
 
@@ -81,6 +81,7 @@ private:
     const StaticModel&                        staticModel_;
     actions::ActionsModel&                    actionsModel_;
     const kernel::Time_ABC&                   simulation_;
+    const kernel::Profile_ABC&                profile_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     mutable T_Changes                         rowsChanged_;
     //@}

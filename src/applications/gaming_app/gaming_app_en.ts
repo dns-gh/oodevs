@@ -3380,6 +3380,10 @@ This data can&apos;t be projected.</source>
         <source>Change equipment state</source>
         <translation>Change equipment state</translation>
     </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Unknown</translation>
+    </message>
 </context>
 <context>
     <name>UnitStateTableResource</name>
