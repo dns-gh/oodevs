@@ -31,7 +31,7 @@ LogisticConsignsWidget_ABC::LogisticConsignsWidget_ABC( QWidget* parent, kernel:
     connect( pConsignTreeView_, SIGNAL( itemExpanded( QTreeWidgetItem* ) ), SLOT( OnItemExpanded( QTreeWidgetItem* ) ) );
     pLayout->addWidget( pConsignTreeView_ );
 
-    pConsignHandledTreeView_ = CreateTreeWidget( tools::translate( "LogisticConsignsWidget_ABC", "Processing consigns" ) );
+    pConsignHandledTreeView_ = CreateTreeWidget( tools::translate( "LogisticConsignsWidget_ABC", "Processing instructions" ) );
     gui::LinkItemDelegate* handledDelegate = new gui::LinkItemDelegate( pConsignHandledTreeView_ );
     pConsignHandledTreeView_->setItemDelegateForColumn( 1, handledDelegate );
     connect( handledDelegate, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) )

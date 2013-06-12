@@ -1111,7 +1111,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Système mortuaire</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation>Consignes</translation>
     </message>
 </context>
@@ -1122,7 +1122,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Chaîne de maintenance</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation>Consignes</translation>
     </message>
     <message>
@@ -1137,7 +1137,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Chaîne médicale</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation>Consignes</translation>
     </message>
     <message>
@@ -1209,7 +1209,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Chaîne ravitaillement</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation>Consignes</translation>
     </message>
     <message>
@@ -1535,7 +1535,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Requètes logistiques</translation>
     </message>
     <message>
-        <source>Processing consigns</source>
+        <source>Processing instructions</source>
         <translation>Consignes en traitement</translation>
     </message>
 </context>

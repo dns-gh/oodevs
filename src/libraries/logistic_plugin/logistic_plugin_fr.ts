@@ -156,7 +156,7 @@
         <translation>non</translation>
     </message>
     <message>
-        <source>consign finished</source>
+        <source>instruction finished</source>
         <translation>consigne terminée</translation>
     </message>
 </context>

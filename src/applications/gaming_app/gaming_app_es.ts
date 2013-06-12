@@ -1109,7 +1109,7 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation type="unfinished">Consignas</translation>
     </message>
 </context>
@@ -1120,7 +1120,7 @@ Reason: %3
         <translation>Sistema de mantenimiento</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation>Consignas</translation>
     </message>
     <message>
@@ -1135,7 +1135,7 @@ Reason: %3
         <translation>Sistema médico</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation>Consignas</translation>
     </message>
     <message>
@@ -1207,7 +1207,7 @@ Reason: %3
         <translation>Sistema de abastecimiento</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation type="unfinished">Consignas</translation>
     </message>
     <message>
@@ -1533,7 +1533,7 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Processing consigns</source>
+        <source>Processing instructions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

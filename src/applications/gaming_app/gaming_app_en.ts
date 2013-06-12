@@ -1108,7 +1108,7 @@ Reason: %3
         <translation>Funeral system</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation type="unfinished">Requests</translation>
     </message>
 </context>
@@ -1119,7 +1119,7 @@ Reason: %3
         <translation>Maintenance system</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation>Requests</translation>
     </message>
     <message>
@@ -1134,7 +1134,7 @@ Reason: %3
         <translation>Medical system</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation>Requests</translation>
     </message>
     <message>
@@ -1206,7 +1206,7 @@ Reason: %3
         <translation>Supply system</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation>Requests</translation>
     </message>
     <message>
@@ -1532,8 +1532,8 @@ Reason: %3
         <translation>Logistic requests</translation>
     </message>
     <message>
-        <source>Processing consigns</source>
-        <translation>Processing consigns</translation>
+        <source>Processing instructions</source>
+        <translation>Processing instructions</translation>
     </message>
 </context>
 <context>

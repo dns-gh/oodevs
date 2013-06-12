@@ -34,7 +34,7 @@ InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controlle
     QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );
     statusLayout->addWidget( new MaintenanceStatusWidget( tabs, controllers, factory ) );
 
-    tabs->addTab( new LogisticConsignsWidget< LogMaintenanceConsign, LogMaintenanceConsigns >( tabs, controllers, extractor ), tools::translate( "InfoMaintenanceDialog", "Consigns" ) );
+    tabs->addTab( new LogisticConsignsWidget< LogMaintenanceConsign, LogMaintenanceConsigns >( tabs, controllers, extractor ), tools::translate( "InfoMaintenanceDialog", "Instructions" ) );
     tabs->addTab( pHaulersRepairersWidget, tools::translate( "InfoMaintenanceDialog", "Equipment availabilities" ) );
     tabs->addTab( statusWidget, tools::translate( "SupplyStates", "Chain status" ) );
     setMinimumWidth( 420 );

@@ -1108,7 +1108,7 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1119,7 +1119,7 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1134,7 +1134,7 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1206,7 +1206,7 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1532,7 +1532,7 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Processing consigns</source>
+        <source>Processing instructions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

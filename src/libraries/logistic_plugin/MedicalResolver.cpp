@@ -120,7 +120,7 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
         unitId_ = boost::lexical_cast< std::string >( msg.unit().id() );
         nameResolver.GetAgentName( msg.unit().id(), unit_ );
     }
-    state_ = tools::translate( "logistic", "consign finished" ).toAscii().constData();
+    state_ = tools::translate( "logistic", "instruction finished" ).toAscii().constData();
     resolver.AddToLineIndex( 1 );
     return *this;
 }

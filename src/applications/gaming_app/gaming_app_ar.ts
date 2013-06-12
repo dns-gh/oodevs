@@ -1109,7 +1109,7 @@ Reason: %3
         <translation type="unfinished">نظام جنازة</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation type="unfinished">يلقي</translation>
     </message>
 </context>
@@ -1120,7 +1120,7 @@ Reason: %3
         <translation type="unfinished">صيانة النظام</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation type="unfinished">يلقي</translation>
     </message>
     <message>
@@ -1135,7 +1135,7 @@ Reason: %3
         <translation type="unfinished">النظام الطبي</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation type="unfinished">يلقي</translation>
     </message>
     <message>
@@ -1207,7 +1207,7 @@ Reason: %3
         <translation type="unfinished">نظام العرض</translation>
     </message>
     <message>
-        <source>Consigns</source>
+        <source>Instructions</source>
         <translation type="unfinished">يلقي</translation>
     </message>
     <message>
@@ -1533,7 +1533,7 @@ Reason: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Processing consigns</source>
+        <source>Processing instructions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

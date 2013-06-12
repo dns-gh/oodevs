@@ -36,7 +36,7 @@ InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& cont
     QVBoxLayout* statusLayout = new QVBoxLayout( statusWidget );
     statusLayout->addWidget( new MedicalStatusWidget( tabs, controllers, factory ) );
 
-    tabs->addTab( new LogisticConsignsWidget< LogMedicalConsign, LogMedicalConsigns >( tabs, controllers, extractor ), tools::translate( "InfoMedicalDialog", "Consigns" ) );    
+    tabs->addTab( new LogisticConsignsWidget< LogMedicalConsign, LogMedicalConsigns >( tabs, controllers, extractor ), tools::translate( "InfoMedicalDialog", "Instructions" ) );    
     tabs->addTab( ambulancesDoctorsWidget, tools::translate( "InfoMedicalDialog", "Equipment availabilities" ) );
     tabs->addTab( statusWidget, tools::translate( "SupplyStates", "Chain status" ) );
     setMinimumWidth( 450 );

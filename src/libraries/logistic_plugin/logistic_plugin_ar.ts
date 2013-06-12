@@ -100,7 +100,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>consign finished</source>
+        <source>instruction finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
