@@ -204,7 +204,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< tools::Loader_ABC > fileLoader_;
-    std::auto_ptr< tools::WorldParameters > pWorldParameters_;
+    std::auto_ptr< const tools::WorldParameters > pWorldParameters_;
 
     std::string modelVersion_;
 
