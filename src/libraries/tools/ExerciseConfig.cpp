@@ -878,15 +878,6 @@ bool ExerciseConfig::IsTerrainSamePhysicalRef() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::SerializeTerrainFiles
-// Created: LGY 2012-06-04
-// -----------------------------------------------------------------------------
-void ExerciseConfig::SerializeTerrainFiles( const SchemaWriter_ABC& schemaWriter ) const
-{
-    pWorldParameters_->Serialize( GetTerrainFile(), schemaWriter );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetUtmZones
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------

@@ -9,9 +9,7 @@
 
 #include "tools_pch.h"
 #include "WorldParameters.h"
-#include "ExerciseConfig.h"
 #include "Loader_ABC.h"
-#include "SchemaWriter_ABC.h"
 #include "FileWrapper.h"
 #include "XmlStreamOperators.h"
 #include <boost/lexical_cast.hpp>
@@ -24,11 +22,11 @@ using namespace tools;
 // Created: LGY 2012-06-04
 // -----------------------------------------------------------------------------
 WorldParameters::WorldParameters( const Loader_ABC& fileLoader, const Path& dataset, const Path& physical, const Path& terrainFile, const Path& populationFile )
-    : dataset_ ( dataset )
-    , physical_( physical )
-    , terrainSamePhysical_( true )
+    : terrainSamePhysical_( true )
 {
-    fileLoader.LoadFile( terrainFile, boost::bind( &WorldParameters::ReadTerrain, this, boost::cref( terrainFile ), _1 ) );
+    fileLoader.LoadFile( terrainFile, boost::bind( &WorldParameters::ReadTerrain,
+                this, boost::cref( terrainFile ), boost::cref( dataset ),
+                boost::cref( physical ), _1 ));
     if( !populationFile.IsEmpty() )
         fileLoader.LoadFile( populationFile, boost::bind( &WorldParameters::ReadPopulation, this, boost::cref( populationFile ), _1 ) );
 }
@@ -40,49 +38,6 @@ WorldParameters::WorldParameters( const Loader_ABC& fileLoader, const Path& data
 WorldParameters::~WorldParameters()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: WorldParameters::Serialize
-// Created: ABR 2012-05-24
-// -----------------------------------------------------------------------------
-void WorldParameters::Serialize( const Path& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
-{
-    tools::Xofstream xos( filename );
-    xos << xml::start( "terrain" );
-    schemaWriter.WriteSchema( xos, "terrain", "terrain" );
-    xos << xml::start( "data" )
-            << xml::start( "location" )
-                << xml::start( "center" )
-                    << xml::attribute( "latitude", latitude_ )
-                    << xml::attribute( "longitude", longitude_ )
-                << xml::end
-                << xml::start( "dimension" )
-                    << xml::attribute( "width", width_ )
-                    << xml::attribute( "height", height_ )
-                << xml::end
-                << xml::start( "extent" )
-                    << xml::attribute( "x-min", xMin_ )
-                    << xml::attribute( "x-max", xMax_ )
-                    << xml::attribute( "y-min", yMin_ )
-                    << xml::attribute( "y-max", yMax_ )
-                << xml::end
-            << xml::end
-            << xml::start( "pathfind" )
-                << xml::attribute( "directory", "Pathfind" )
-            << xml::end
-            << xml::start( "detection" )
-                << xml::attribute( "directory", "Detection" )
-            << xml::end
-            << xml::start( "graphics" )
-                << xml::attribute( "directory", "Graphics" )
-            << xml::end
-            << xml::start( "model" )
-                << xml::attribute( "dataset", dataset_ )
-                << xml::attribute( "physical", physical_ )
-            << xml::end
-        << xml::end // data
-    << xml::end; // terrain
 }
 
 namespace
@@ -110,7 +65,8 @@ void WorldParameters::ReadPopulation( const Path& populationFile, xml::xistream&
 // Name: WorldParameters::ReadTerrain
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void WorldParameters::ReadTerrain( const Path& terrainFile, xml::xistream& xis )
+void WorldParameters::ReadTerrain( const Path& terrainFile, const Path& dataset,
+        const Path& physical, xml::xistream& xis )
 {
     std::string world, pathfind, graphics, detection;
     if( xis.has_child( "terrain" ) )
@@ -151,8 +107,8 @@ void WorldParameters::ReadTerrain( const Path& terrainFile, xml::xistream& xis )
         >> xml::end;
         if( !terrainDataSet.empty() || !terrainPhysical.empty() )
             // Terrains are no longer linked to physical/decisional dbs
-            terrainSamePhysical_ = ( terrainDataSet == dataset_.ToUTF8()
-                    && terrainPhysical == physical_.ToUTF8() );
+            terrainSamePhysical_ = ( terrainDataSet == dataset.ToUTF8()
+                    && terrainPhysical == physical.ToUTF8() );
     }
     else
     {
