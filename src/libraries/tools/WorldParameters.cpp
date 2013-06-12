@@ -77,9 +77,6 @@ void WorldParameters::Serialize( const Path& filename, const tools::SchemaWriter
             << xml::start( "graphics" )
                 << xml::attribute( "directory", "Graphics" )
             << xml::end
-            << xml::start( "urban" )
-                << xml::attribute( "file", "urban/urban.xml" )
-            << xml::end
             << xml::start( "model" )
                 << xml::attribute( "dataset", dataset_ )
                 << xml::attribute( "physical", physical_ )
@@ -116,7 +113,6 @@ void WorldParameters::ReadPopulation( const Path& populationFile, xml::xistream&
 void WorldParameters::ReadTerrain( const Path& terrainFile, xml::xistream& xis )
 {
     std::string world, pathfind, graphics, detection;
-    std::string urban( "urban/urban.xml" );
     if( xis.has_child( "terrain" ) )
     {
         std::string terrainDataSet, terrainPhysical;
@@ -147,9 +143,6 @@ void WorldParameters::ReadTerrain( const Path& terrainFile, xml::xistream& xis )
                 >> xml::start( "graphics" )
                     >> xml::attribute( "directory", graphics )
                 >> xml::end
-                >> xml::optional >> xml::start( "urban" )
-                    >> xml::attribute( "file", urban )
-                >> xml::end
                 >> xml::optional >> xml::start( "model" )
                     >> xml::attribute( "dataset", terrainDataSet )
                     >> xml::attribute( "physical", terrainPhysical )
@@ -178,7 +171,6 @@ void WorldParameters::ReadTerrain( const Path& terrainFile, xml::xistream& xis )
     pathfindGraph_ = BuildChildPath( terrainFile, Path::FromUTF8( pathfind + "/graph.bin" ) );
     pathfindLinks_ = BuildChildPath( terrainFile, Path::FromUTF8( pathfind + "/links.bin" ) );
     pathfindNodes_ = BuildChildPath( terrainFile, Path::FromUTF8( pathfind + "/nodes.bin" ) );
-    urban_ = BuildChildPath( terrainFile, Path::FromUTF8( urban ) );
 }
 
 // -----------------------------------------------------------------------------

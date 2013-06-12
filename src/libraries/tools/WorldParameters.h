@@ -63,7 +63,6 @@ public:
     Path pathfindLinks_;
     Path pathfindNodes_;
     Path detection_;
-    Path urban_;
     Path populationGraph_;
     Path dataset_;
     Path physical_;
