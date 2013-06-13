@@ -1002,9 +1002,12 @@ void MIL_PopulationFlow::MoveAlong( const MT_Vector2D& destination )
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::CancelMove()
 {
-    pHeadPath_->Cancel();
-    pHeadPath_->DecRef();
-    pHeadPath_.reset();
+    if( pHeadPath_ )
+    {
+        pHeadPath_->Cancel();
+        pHeadPath_->DecRef();
+        pHeadPath_.reset();
+    }
 }
 
 // -----------------------------------------------------------------------------
