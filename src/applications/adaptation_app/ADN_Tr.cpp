@@ -246,18 +246,15 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "Point",                 QT_TRANSLATE_NOOP("ADN_Tr", "Point" ),                  eMissionParameterTypePoint ),
     T_ConverterMissionParameterType( "Polygon",               QT_TRANSLATE_NOOP("ADN_Tr", "Polygon" ),                eMissionParameterTypePolygon ),
     T_ConverterMissionParameterType( "Location",              QT_TRANSLATE_NOOP("ADN_Tr", "Location" ),               eMissionParameterTypeLocation ),
-    T_ConverterMissionParameterType( "EquipmentType",         QT_TRANSLATE_NOOP("ADN_Tr", "Equipment type" ),         eMissionParameterTypeEquipmentType ),
     T_ConverterMissionParameterType( "ResourceType",          QT_TRANSLATE_NOOP("ADN_Tr", "Resource type" ),          eMissionParameterTypeDotationType ),
     T_ConverterMissionParameterType( "MaintenancePriorities", QT_TRANSLATE_NOOP("ADN_Tr", "Maintenance priorities" ), eMissionParameterTypeMaintenancePriorities ),
     T_ConverterMissionParameterType( "MedicalPriorities",     QT_TRANSLATE_NOOP("ADN_Tr", "Medical priorities" ),     eMissionParameterTypeMedicalPriorities ),
-    T_ConverterMissionParameterType( "IndirectFire",          QT_TRANSLATE_NOOP("ADN_Tr", "Indirect fire" ),          eMissionParameterTypeIndirectFire ),
     T_ConverterMissionParameterType( "Limit",                 QT_TRANSLATE_NOOP("ADN_Tr", "Limit" ),                  eMissionParameterTypeLimit ),
     T_ConverterMissionParameterType( "PhaseLine",             QT_TRANSLATE_NOOP("ADN_Tr", "Phase line" ),             eMissionParameterTypePhaseLine ),
     T_ConverterMissionParameterType( "UrbanKnowledge",        QT_TRANSLATE_NOOP("ADN_Tr", "Urban knowledge" ),        eMissionParameterTypeUrbanBlock ),
     T_ConverterMissionParameterType( "LocationComposite",     QT_TRANSLATE_NOOP("ADN_Tr", "Location composite" ),     eMissionParameterTypeLocationComposite ),
     T_ConverterMissionParameterType( "ResourceNetworkNode",   QT_TRANSLATE_NOOP("ADN_Tr", "Resource network node" ),  eMissionParameterTypeResourceNetworkNode ),
     T_ConverterMissionParameterType( "ResourceNetworkType",   QT_TRANSLATE_NOOP("ADN_Tr", "Resource network type" ),  eMissionParameterTypeResourceNetworkType ),
-    T_ConverterMissionParameterType( "Stage",                 QT_TRANSLATE_NOOP("ADN_Tr", "Stage" ),                  eMissionParameterTypeStage ),
 
     T_ConverterMissionParameterType( "", "", (E_MissionParameterType)-1 )
 };

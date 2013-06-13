@@ -5255,10 +5255,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>Location</translation>
     </message>
     <message>
-        <source>Equipment type</source>
-        <translation>Equipment type</translation>
-    </message>
-    <message>
         <source>Resource type</source>
         <translation>Resource type</translation>
     </message>
@@ -5269,10 +5265,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Medical priorities</source>
         <translation>Medical priorities</translation>
-    </message>
-    <message>
-        <source>Indirect fire</source>
-        <translation>Indirect fire</translation>
     </message>
     <message>
         <source>Limit</source>
@@ -5489,10 +5481,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Remote</source>
         <translation>Remote</translation>
-    </message>
-    <message>
-        <source>Stage</source>
-        <translation>Stage</translation>
     </message>
 </context>
 <context>

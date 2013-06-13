@@ -383,20 +383,17 @@ enum E_MissionParameterType
     eMissionParameterTypePoint                  = 14,
     eMissionParameterTypePolygon                = 15,
     eMissionParameterTypeLocation               = 16,
-    eMissionParameterTypeEquipmentType          = 17,
-    eMissionParameterTypeDotationType           = 18,
-    eMissionParameterTypeMaintenancePriorities  = 19,
-    eMissionParameterTypeMedicalPriorities      = 20,
-    eMissionParameterTypeIndirectFire           = 21,
-    eMissionParameterTypeLimit                  = 22,
-    eMissionParameterTypePhaseLine              = 23,
-    eMissionParameterTypeUrbanBlock             = 24,
-    eMissionParameterTypeLocationComposite      = 25,
-    eMissionParameterTypeResourceNetworkNode    = 26,
-    eMissionParameterTypeResourceNetworkType    = 27,
-    eMissionParameterTypeStage                  = 28,
+    eMissionParameterTypeDotationType           = 17,
+    eMissionParameterTypeMaintenancePriorities  = 18,
+    eMissionParameterTypeMedicalPriorities      = 19,
+    eMissionParameterTypeLimit                  = 20,
+    eMissionParameterTypePhaseLine              = 21,
+    eMissionParameterTypeUrbanBlock             = 22,
+    eMissionParameterTypeLocationComposite      = 23,
+    eMissionParameterTypeResourceNetworkNode    = 24,
+    eMissionParameterTypeResourceNetworkType    = 25,
 
-    eNbrMissionParameterType                    = 29
+    eNbrMissionParameterType                    = 26
 };
 
 enum E_ConstructorType

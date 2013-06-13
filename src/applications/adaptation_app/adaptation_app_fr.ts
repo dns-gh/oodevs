@@ -5291,10 +5291,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Travaux génie</translation>
     </message>
     <message>
-        <source>Equipment type</source>
-        <translation>Type d&apos;equipement</translation>
-    </message>
-    <message>
         <source>Resource type</source>
         <translation>Type de dotation</translation>
     </message>
@@ -5305,10 +5301,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Medical priorities</source>
         <translation>Priorités médicales</translation>
-    </message>
-    <message>
-        <source>Indirect fire</source>
-        <translation>Tir indirect</translation>
     </message>
     <message>
         <source>Phase line</source>
@@ -5505,10 +5497,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Remote</source>
         <translation>Distant</translation>
-    </message>
-    <message>
-        <source>Stage</source>
-        <translation>Phase</translation>
     </message>
 </context>
 <context>
