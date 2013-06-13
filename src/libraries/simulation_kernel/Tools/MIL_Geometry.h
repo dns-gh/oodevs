@@ -29,6 +29,7 @@ public:
     static void Scale( TER_Polygon& result, const T_PointVector& polygon, double distance ); // $$$$ MCO : where are the unit tests ?!
     static void ComputeHull( T_PointVector& result, const T_PointVector& polygon );
     static double IntersectionArea( const TER_Localisation& localisation1, const TER_Localisation& localisation2 );
+    static bool IsEntirelyCovered( const TER_Localisation& toCover, const std::vector< TER_Localisation >& covers );
     //@}
 };
 

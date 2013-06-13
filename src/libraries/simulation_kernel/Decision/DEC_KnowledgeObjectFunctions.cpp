@@ -169,9 +169,9 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& calle
         if( *it && location->IsIntersecting( ( *it )->GetLocalisation() ) )
         {
             if( ContaminationCapacity* pContaminationCapacity = IsValidObjectCapacity< ContaminationCapacity >( *it ) )
-                pContaminationCapacity->DecontaminateZone( *location );
+                pContaminationCapacity->DecontaminateZone( *(*it)->GetObjectKnown(), *location );
             if( IntoxicationCapacity* pIntoxicationCapacity = IsValidObjectCapacity< IntoxicationCapacity >( *it ) )
-                pIntoxicationCapacity->DesintoxicateZone( *location );
+                pIntoxicationCapacity->DesintoxicateZone( *(*it)->GetObjectKnown(), *location );
         }
 }
 

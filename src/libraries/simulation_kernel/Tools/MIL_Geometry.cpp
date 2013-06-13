@@ -99,15 +99,30 @@ void MIL_Geometry::ComputeHull( T_PointVector& hull, const T_PointVector& vertic
 
 namespace
 {
-    template< typename T >
-    T PrivateIntersectionArea( const bg::model::polygon< bg::model::d2::point_xy< T > >& poly1, const bg::model::polygon< bg::model::d2::point_xy< T > >& poly2 )
+    typedef bg::model::polygon< bg::model::d2::point_xy< double > > bgPolygon;
+
+    double PrivateIntersectionArea( const bgPolygon& poly1, const bgPolygon& poly2 )
     {
-        std::vector< bg::model::polygon< bg::model::d2::point_xy< T > > > polygonResult;
+        std::vector< bgPolygon > polygonResult;
         bg::intersection( poly2, poly1, polygonResult );
         double intersectArea = 0;
-        for( std::vector< bg::model::polygon< bg::model::d2::point_xy< T > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
+        for( auto it = polygonResult.begin(); it != polygonResult.end(); ++it )
             intersectArea += bg::area( *it );
-        return static_cast< T >( intersectArea );
+        return static_cast< double >( intersectArea );
+    }
+
+    void GetPolygonFromLocalisation( const T_PointVector& vertices, bgPolygon& poly )
+    {
+        std::vector< bg::model::d2::point_xy< double > > vectorTemp; vectorTemp.reserve( vertices.size() );
+        for( auto it = vertices.begin(); it != vertices.end(); ++it )
+            vectorTemp.push_back( bg::model::d2::point_xy< double >( it->rX_, it->rY_ ) );
+        bg::assign_points( poly, vectorTemp );
+        bg::correct( poly );
+    }
+
+    void GetPolygonFromLocalisation( const TER_Localisation& localisation, bgPolygon& poly )
+    {
+        GetPolygonFromLocalisation( localisation.GetPoints(), poly );
     }
 }
 
@@ -117,23 +132,40 @@ namespace
 // -----------------------------------------------------------------------------
 double MIL_Geometry::IntersectionArea( const TER_Localisation& localisation1, const TER_Localisation& localisation2 )
 {
-    bg::model::polygon< bg::model::d2::point_xy< double > > poly1;
-    bg::model::polygon< bg::model::d2::point_xy< double > > poly2;
-    {
-        CT_PointVector& vertices1 = localisation1.GetPoints();
-        std::vector< bg::model::d2::point_xy< double > > vectorTemp;
-        for( auto it = vertices1.begin(); it != vertices1.end(); ++it )
-            vectorTemp.push_back( bg::model::d2::point_xy< double >( it->rX_, it->rY_ ) );
-        bg::assign_points( poly1, vectorTemp );
-        bg::correct( poly1 );
-    }
-    {
-        CT_PointVector& vertices2 = localisation2.GetPoints();
-        std::vector< bg::model::d2::point_xy< double > > vectorTemp;
-        for( auto it = vertices2.begin(); it != vertices2.end(); ++it )
-            vectorTemp.push_back( bg::model::d2::point_xy< double >( it->rX_, it->rY_ ) );
-        bg::assign_points( poly2, vectorTemp );
-        bg::correct( poly2 );
-    }
+    bgPolygon poly1, poly2;
+    GetPolygonFromLocalisation( localisation1, poly1 );
+    GetPolygonFromLocalisation( localisation2, poly2 );
     return PrivateIntersectionArea( poly1, poly2 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Geometry::IsEntirelyCovered
+// Created: MMC 2013-06-11
+// -----------------------------------------------------------------------------
+bool MIL_Geometry::IsEntirelyCovered( const TER_Localisation& toCover, const std::vector< TER_Localisation >& covers )
+{
+    if( covers.empty() )
+        return false;
+
+    bgPolygon polyToCover;
+    GetPolygonFromLocalisation( toCover, polyToCover );
+    
+    std::list< bgPolygon > notCovered;
+    notCovered.push_back( polyToCover );
+    for( auto itCover = covers.begin(); itCover != covers.end(); ++itCover )
+    {
+        bgPolygon cover;
+        GetPolygonFromLocalisation( *itCover, cover );
+
+        std::list< bgPolygon > newNotCovered;
+        for( auto it = notCovered.begin(); it != notCovered.end(); ++it )
+        {
+            std::list< bgPolygon > result;
+            bg::difference( *it, cover, result );
+            if( !result.empty() )
+                newNotCovered.insert( newNotCovered.end(), result.begin(), result.end() );
+        }
+        notCovered = newNotCovered;
+    }
+    return notCovered.empty();
 }

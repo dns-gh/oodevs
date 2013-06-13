@@ -22,6 +22,7 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
+#include "Tools/MIL_Geometry.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ContaminationCapacity )
 
@@ -105,6 +106,7 @@ void ContaminationCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agen
 {
     const MT_Vector2D& position = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const NBCAttribute* pNBC = object.RetrieveAttribute< NBCAttribute >();
+
     if( !IsInsideDecontaminatedZone( position ) && pNBC && pNBC->IsContaminating() )
     {
         const ToxicAttribute_ABC* pAttribute = object.RetrieveAttribute< ToxicAttribute_ABC >();
@@ -149,11 +151,32 @@ bool ContaminationCapacity::IsInsideDecontaminatedZone( const MT_Vector2D& posit
     return false;
 }
 
+namespace
+{
+    void GetLocationsFromPtrVector( const boost::ptr_vector< TER_Localisation >& ptrLocations, std::vector< TER_Localisation >& locations )
+    {
+        locations.reserve( ptrLocations.size() );
+        for( auto it = ptrLocations.begin(); it != ptrLocations.end(); ++it )
+            if( (*it).GetPoints().size() > 2 )
+                locations.push_back( *it );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ContaminationCapacity::Decontaminate
 // Created: JCR 2008-08-19
 // -----------------------------------------------------------------------------
-void ContaminationCapacity::DecontaminateZone( const TER_Localisation& zone )
+void ContaminationCapacity::DecontaminateZone( MIL_Object_ABC& object, const TER_Localisation& zone )
 {
     decontaminatedZones_.push_back( new TER_Localisation( zone ) );
+
+    if( zone.Contains( object.GetLocalisation() ) )
+        object.MarkForDestruction();
+    else if( object.GetLocalisation().GetPoints().size() > 1 )
+    {
+        std::vector< TER_Localisation > covers;
+        GetLocationsFromPtrVector( decontaminatedZones_, covers );
+        if( MIL_Geometry::IsEntirelyCovered( object.GetLocalisation(), covers ) )
+            object.MarkForDestruction();
+    }
 }

@@ -21,6 +21,7 @@
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
 #include <boost/serialization/vector.hpp>
 #include <xeumeuleu/xml.hpp>
+#include "Tools/MIL_Geometry.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( IntoxicationCapacity )
 
@@ -136,13 +137,34 @@ void IntoxicationCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_
     }
 }
 
+namespace
+{
+    void GetLocationsFromPtrVector( const boost::ptr_vector< TER_Localisation >& ptrLocations, std::vector< TER_Localisation >& locations )
+    {
+        locations.reserve( ptrLocations.size() );
+        for( auto it = ptrLocations.begin(); it != ptrLocations.end(); ++it )
+            if( (*it).GetPoints().size() > 2 )
+                locations.push_back( *it );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: IntoxicationCapacity::DesintoxicateZone
 // Created: JSR 2010-08-18
 // -----------------------------------------------------------------------------
-void IntoxicationCapacity::DesintoxicateZone( const TER_Localisation& zone )
+void IntoxicationCapacity::DesintoxicateZone( MIL_Object_ABC& object, const TER_Localisation& zone )
 {
     desintoxicatedZones_.push_back( new TER_Localisation( zone ) );
+
+    if( zone.Contains( object.GetLocalisation() ) )
+        object.MarkForDestruction();
+    else if( object.GetLocalisation().GetPoints().size() > 1 )
+    {
+        std::vector< TER_Localisation > covers;
+        GetLocationsFromPtrVector( desintoxicatedZones_, covers );
+        if( MIL_Geometry::IsEntirelyCovered( object.GetLocalisation(), covers ) )
+            object.MarkForDestruction();
+    }
 }
 
 // -----------------------------------------------------------------------------

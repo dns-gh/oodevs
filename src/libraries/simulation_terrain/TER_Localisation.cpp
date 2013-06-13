@@ -1032,16 +1032,31 @@ bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation, dou
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_Localisation::IsIntersectingWithBorderLines
+// Created: MMC 2013-06-12
+// -----------------------------------------------------------------------------
+bool TER_Localisation::IsIntersectingWithBorderLines( const MT_Line& line ) const
+{
+    if( pointVector_.size() > 1 )
+        for( std::size_t index = 0; index < (pointVector_.size() - 1); ++index )
+            if( MT_Line( pointVector_[ index ], pointVector_[ index + 1 ] ).Intersect2D( line ) )
+                return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_Localisation::Contains
 // Created: BCI 2011-02-24
 // -----------------------------------------------------------------------------
 bool TER_Localisation::Contains( const TER_Localisation& other, double rPrecision ) const
 {
     for( auto it = other.pointVector_.begin(); it != other.pointVector_.end(); ++it )
-    {
         if( !IsInside( *it, rPrecision ) )
             return false;
-    }
+    if( pointVector_.size() > 2 && other.pointVector_.size() > 1 )
+        for( std::size_t index = 0; index < (other.pointVector_.size() - 1); ++index )
+            if( IsIntersectingWithBorderLines( MT_Line( other.pointVector_[ index ], other.pointVector_[ index + 1 ] ) ) )
+                return false;
     return true;
 }
 
