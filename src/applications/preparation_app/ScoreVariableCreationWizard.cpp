@@ -79,7 +79,6 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Contr
         type_->AddItem( tr( "Inhabitant" ), "inhabitant" );
         type_->AddItem( tr( "Inhabitant list" ), "inhabitant list" );
         connect( type_, SIGNAL( activated( int ) ), SLOT( OnChangeType() ) );
-        connect( type_, SIGNAL( activated( int ) ), SLOT( OnChangeType() ) );
 
         gui::RichGroupBox* informationBox = new gui::RichGroupBox( "Information", tr( "Information" ), this );
         QVBoxLayout* informationBoxLayout = new QVBoxLayout( informationBox );
@@ -270,7 +269,8 @@ namespace
             ( tools::translate( "ScoreDef", "Unavailable" ).toStdString(), "unavailable" )
             ( tools::translate( "ScoreDef", "Repairable" ).toStdString(), "repairable" )
             ( tools::translate( "ScoreDef", "Repairing" ).toStdString(), "repairing" )
-            ( tools::translate( "ScoreDef", "Prisoner" ).toStdString(), "prisoner" );
+            ( tools::translate( "ScoreDef", "On site fixable" ).toStdString(), "on_site_fixable" )
+            ( tools::translate( "ScoreDef", "Prisoner" ).toStdString(), "captured" );
     }
 
     std::map< std::string, std::string > FireTypes()

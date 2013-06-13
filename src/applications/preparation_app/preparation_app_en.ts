@@ -2011,6 +2011,10 @@ This data can&apos;t be projected.</translation>
         <source>Wounded UE</source>
         <translation>Wounded UE</translation>
     </message>
+    <message>
+        <source>On site fixable</source>
+        <translation>On site fixable</translation>
+    </message>
 </context>
 <context>
     <name>ScoreDialog</name>
