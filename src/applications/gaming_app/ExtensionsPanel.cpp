@@ -16,6 +16,7 @@
 #include "actions/ActionTasker.h"
 #include "actions/ParameterList.h"
 #include "actions/UnitMagicAction.h"
+#include "clients_gui/RichGroupBox.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/OrderParameter.h"

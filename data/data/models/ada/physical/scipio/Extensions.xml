@@ -5132,7 +5132,7 @@
     </attribute>
     <attribute extends="unit;automat;formation" name="OriginalSuperior" type="numeric">
       <labels>
-        <label language="fr" text="Pour les pions, identifiant de l'automate supérieur originel, Pour les automates et les formations, identifiant de la formation supérieure originelle. 0 ou non présent si pas de supérieur originel"/>
+        <label language="fr" text="Supérieur originel"/>
       </labels>
     </attribute>
   </orbat-attributes>

@@ -33,7 +33,7 @@ namespace gui
 {
     class DiffusionListDialog;
     class EntitySymbols;
-    class ItemFactory_ABC;
+    class RichGroupBox;
 
 // =============================================================================
 /** @class  ExtensionsPanel
@@ -61,7 +61,7 @@ protected:
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyDeleted( const kernel::Entity_ABC& element );
     virtual void NotifyUpdated( const kernel::DictionaryExtensions& extensions );
-    void AddWidget( const kernel::AttributeType& attribute );
+    void AddWidget( const kernel::AttributeType& attribute, int currentRow );
     void DeleteWidgets();
     void UpdateDisplay();
     void UpdateDependencies();
@@ -92,8 +92,9 @@ protected:
     const kernel::ExtensionTypes&        extensions_;
     std::auto_ptr< DiffusionListDialog > diffusionDialog_;
     Q3VBox*                              pMainLayout_;
-    Q3VBox*                              pExtensionLayout_;
-    Q3GroupBox*                          pGroupBox_;
+    QWidget*                             pExtensionLayout_;
+    RichGroupBox*                        pGroupBox_;
+    QGridLayout*                         pGroupBoxLayout_;
     T_Widgets                            widgets_;
     bool                                 updating_;
     //@}

@@ -12,7 +12,7 @@
 #include "clients_gui_pch.h"
 #include "ExtensionsPanel.h"
 #include "moc_ExtensionsPanel.cpp"
-
+#include "clients_gui/RichGroupBox.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AttributeType.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -59,11 +59,15 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
     , pGroupBox_      ( 0 )
     , updating_       ( false )
 {
-    pMainLayout_ = new Q3VBox( this );
+    QScrollArea* area = new QScrollArea();
+    pMainLayout_ = new Q3VBox( area );
     pMainLayout_->setMargin( 5 );
     pMainLayout_->setSpacing( 5 );
-    pExtensionLayout_ = new Q3VBox( pMainLayout_ );
-    setWidget( pMainLayout_ );
+    pExtensionLayout_ = new QWidget( pMainLayout_ );
+    area->setWidgetResizable( true );
+    area->setAlignment( Qt::AlignTop );
+    setWidget( area );
+    area->setWidget( pMainLayout_ );
     controllers_.Update( *this );
 }
 
@@ -108,13 +112,18 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
                 type->GetAttributeTypes( "party", attributes );
             if( attributes.size() )
             {
-                pGroupBox_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Enabled" ), pExtensionLayout_ );
+                pGroupBox_ = new RichGroupBox( tr( "Enabled" ), 0 );
+                pGroupBoxLayout_ = new QGridLayout( pGroupBox_ );
                 pGroupBox_->setCheckable( true );
-                pGroupBox_->setMargin( 5 );
-                for( ExtensionType::RCIT_AttributesTypes it = attributes.rbegin(); it != attributes.rend(); ++it )
-                    AddWidget( **it );
-                QHBoxLayout* layout = static_cast< QHBoxLayout* >( pGroupBox_->layout() );
-                layout->addStretch( 2 );
+                int currentRow = 0;
+                for( ExtensionType::RCIT_AttributesTypes it = attributes.rbegin(); it != attributes.rend(); ++it, ++currentRow )
+                    AddWidget( **it, currentRow );
+                pGroupBoxLayout_->setColStretch( 1, 4 );
+                delete pExtensionLayout_->layout();
+                QVBoxLayout* pExtensionLayoutLayout = new QVBoxLayout( pExtensionLayout_ );
+                pExtensionLayoutLayout->addWidget( pGroupBox_ );
+                pExtensionLayoutLayout->setAlignment( Qt::AlignTop );
+                pExtensionLayoutLayout->addStretch();
                 UpdateDependencies();
                 const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
                 if( !ext )
@@ -258,7 +267,7 @@ namespace
 // Name: ExtensionsPanel::AddWidget
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
+void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute, int currentRow )
 {
     if( !selected_ )
         return;
@@ -267,7 +276,9 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
     std::string value( ext ? ext->GetValue( attribute.GetName() ) : "" );
     if( attribute.GetType() == AttributeType::ETypeBoolean )
     {
-        QCheckBox* box = new QCheckBox( attribute.GetLabel( language, "" ).c_str(), pGroupBox_, attribute.GetName().c_str() );
+        QCheckBox* box = new QCheckBox( attribute.GetLabel( language, "" ).c_str() );
+        box->setName( attribute.GetName().c_str() );
+        pGroupBoxLayout_->addWidget( box, currentRow, 0 );
         widgets_.push_back( box );
         box->setChecked( value == "true" );
         connect( box, SIGNAL( toggled( bool ) ), SLOT( Commit() ) );
@@ -276,54 +287,59 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
     int min;
     int max;
     attribute.GetMinMaxLength( min, max );
-    Q3HBox* box = new Q3HBox( pGroupBox_ );
-    box->setStretchFactor( new QLabel( attribute.GetLabel( language, "" ).c_str(), box ), 1 );
+    QLabel* attributeNameLabel = new QLabel( attribute.GetLabel( language, "" ).c_str() );
+    pGroupBoxLayout_->addWidget( attributeNameLabel );
     switch( attribute.GetType() )
     {
     case AttributeType::ETypeString:
         if( attribute.GetName() == "Information" ) // $$$$ ABR 2012-03-19: Hack caused by this f**** frozen icd, TODO replace by a 'longstring' type.
         {
-            QTextEdit* edit = new QTextEdit( box, attribute.GetName().c_str() );
+            QTextEdit* edit = new QTextEdit();
+            edit->setName( attribute.GetName().c_str() );
             edit->insert( value.c_str() );
             edit->setFixedHeight( 90 );
-            box->setStretchFactor( edit, 1 );
+            pGroupBoxLayout_->addWidget( edit, currentRow, 1 );
             widgets_.push_back( edit );
             connect( edit, SIGNAL( textChanged() ), SLOT( Commit() ) );
         }
         else
         {
-            QLineEdit* edit = new QLineEdit( box, attribute.GetName().c_str() );
+            QLineEdit* edit = new QLineEdit();
+            edit->setName( attribute.GetName().c_str() );
             if( min != -1 || max != -1 )
                 edit->setValidator( new QMinMaxValidator( edit, min, max ) );
             edit->insert( value.c_str() );
-            box->setStretchFactor( edit, 1 );
+            pGroupBoxLayout_->addWidget( edit, currentRow, 1 );
             widgets_.push_back( edit );
             connect( edit, SIGNAL( textChanged( const QString & ) ), SLOT( Commit() ) );
         }
         break;
     case AttributeType::ETypeAlphanumeric:
         {
-            QLineEdit* edit = new QLineEdit( box, attribute.GetName().c_str() );
+            QLineEdit* edit = new QLineEdit();
+            edit->setName( attribute.GetName().c_str() );
             edit->setValidator( new QMinMaxValidator( edit, min, max, new QRegExpValidator( QRegExp( "[a-zA-Z0-9.]*" ), edit ) ) );
             edit->insert( value.c_str() );
-            box->setStretchFactor( edit, 1 );
+            pGroupBoxLayout_->addWidget( edit, currentRow, 1 );
             widgets_.push_back( edit );
             connect( edit, SIGNAL( textChanged( const QString & ) ), SLOT( Commit() ) );
         }
         break;
     case AttributeType::ETypeNumeric:
         {
-            QLineEdit* edit = new QLineEdit( box, attribute.GetName().c_str() );
+            QLineEdit* edit = new QLineEdit();
+            edit->setName( attribute.GetName().c_str() );
             edit->setValidator( new QMinMaxValidator( edit, min, max, new QIntValidator( edit ) ) );
             edit->insert( value.c_str() );
-            box->setStretchFactor( edit, 1 );
+            pGroupBoxLayout_->addWidget( edit, currentRow, 1 );
             widgets_.push_back( edit );
             connect( edit, SIGNAL( textChanged( const QString & ) ), SLOT( Commit() ) );
         }
         break;
     case AttributeType::ETypeDictionary:
         {
-            QComboBox* combo = new QComboBox( box, attribute.GetName().c_str() );
+            QComboBox* combo = new QComboBox();
+            combo->setName( attribute.GetName().c_str() );
             bool nationality = attribute.GetName() == "Nationalite";
             FillCombo( *combo, attribute, extensions_, nationality );
             try
@@ -336,7 +352,7 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
             {
                 // NOTHING
             }
-            box->setStretchFactor( combo, 1 );
+            pGroupBoxLayout_->addWidget( combo, currentRow, 1 );
             widgets_.push_back( combo );
             connect( combo, SIGNAL( activated( int ) ), SLOT( Commit() ) );
             if( nationality )
@@ -345,7 +361,9 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
         break;
     case AttributeType::ETypeLoosyDictionary:
         {
-            QComboBox* combo = new QComboBox( true, box, attribute.GetName().c_str() );
+            QComboBox* combo = new QComboBox();
+            combo->setEditable( true );
+            combo->setName( attribute.GetName().c_str() );
             FillCombo( *combo, attribute, extensions_, false );
             if( min != -1 || max != 1 )
             {
@@ -358,7 +376,7 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
             }
             else
                 combo->setCurrentText( value.c_str() );
-            box->setStretchFactor( combo, 1 );
+            pGroupBoxLayout_->addWidget( combo, currentRow, 1 );
             widgets_.push_back( combo );
             connect( combo, SIGNAL( activated( int ) ), SLOT( Commit() ) );
         }
@@ -369,10 +387,10 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
                 return;
             const std::string extensionName = extensions_.GetNameByType( AttributeType::ETypeDiffusionList );
             assert( !extensionName.empty() );
-            DiffusionListLineEdit* edit = new DiffusionListLineEdit( box, controllers_, selected_, *diffusionDialog_, extensionName, attribute.GetName().c_str() );
+            DiffusionListLineEdit* edit = new DiffusionListLineEdit( 0, controllers_, selected_, *diffusionDialog_, extensionName, attribute.GetName().c_str() );
             edit->insert( value.c_str() );
             edit->setValidator( new QMinMaxValidator( edit, min, max, new QRegExpValidator( DiffusionListData::regexp_, edit ) ) );
-            box->setStretchFactor( edit, 1 );
+            pGroupBoxLayout_->addWidget( edit, currentRow, 1 );
             widgets_.push_back( edit );
             connect( edit, SIGNAL( textChanged( const QString & ) ), SLOT( Commit() ) );
         }
