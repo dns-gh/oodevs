@@ -25,6 +25,8 @@
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/ptree.hpp>
 
+#include <tools/Version.h>
+
 using namespace host;
 using namespace property_tree;
 using runtime::Async;
@@ -746,6 +748,23 @@ struct Exercise : public Item
     const T_Profiles  profiles_;
 };
 
+typedef std::vector< std::string > T_Tokens;
+T_Tokens Split( const std::string& value )
+{
+    std::vector< std::string > tokens;
+    boost::algorithm::split( tokens, value, boost::is_any_of( "." ) );
+    return tokens;
+}
+std::string Splice( const T_Tokens& src, size_t end )
+{
+    const T_Tokens slice( src.begin(), src.begin() + std::min( end, src.size() ) );
+    return boost::algorithm::join( slice, "." );
+}
+std::string GetVersion( const std::string& version )
+{
+    return version.empty() ? "Unversioned" : version;
+}
+
 struct Client : public Item
 {
     Client( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id, const Metadata* meta )
@@ -764,11 +783,14 @@ struct Client : public Item
         return Path();
     }
 
-    static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items, const Metadata* meta )
+    static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items )
     {
         const Path file = root / "gaming_app.exe";
         if( fs.IsFile( file ) )
-            AttachSimple< Client >( async, file, fs, root, items, meta );
+        {
+            Metadata meta( false, "gaming", GetVersion( Splice( Split( tools::GetAppVersion( file.wstring(), "Unversioned" ) ), 3 ) ) );
+            AttachSimple< Client >( async, file, fs, root, items, &meta );
+        }
     }
 };
 }
@@ -852,7 +874,7 @@ bool FillItems( Async& async, const FileSystem_ABC& fs, const Path& path, Packag
     Model::Parse   ( async, fs, path, items, meta );
     Terrain::Parse ( async, fs, path, items, meta );
     Exercise::Parse( async, fs, path, items, meta );
-    Client::Parse  ( async, fs, path, items, meta );
+    Client::Parse  ( async, fs, path, items );
     return true;
 }
 }

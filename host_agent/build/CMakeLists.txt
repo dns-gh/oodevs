@@ -50,6 +50,8 @@ masa_set_external_library( ZLIB_LIBRARIES               zlibd zlib )
 masa_set_internal_library( BCRYPT_LIBRARIES             bcrypt )
 masa_set_internal_library( SQLITE3_LIBRARIES            sqlite3 )
 
+masa_set_external_library( TOOLS_LIBRARIES              tools_d tools )
+
 # runtime
 masa_add_target( runtime libraries "libraries/runtime" )
 target_link_libraries( runtime
@@ -76,8 +78,10 @@ target_link_libraries( web
 masa_add_target( host libraries "libraries/host" )
 target_link_libraries( host
     web
+    version
     ${BCRYPT_LIBRARIES}
     ${SQLITE3_LIBRARIES}
+    ${TOOLS_LIBRARIES}
 )
 
 # cloud_server
