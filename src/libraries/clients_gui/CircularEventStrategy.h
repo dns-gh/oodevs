@@ -104,7 +104,6 @@ private:
     std::auto_ptr< Selection > selection_;
     GlTools_ABC& tools_;
     QTimer* timer_;
-    geometry::Point2f point_;
     bool tooltiped_;
     //@}
 };

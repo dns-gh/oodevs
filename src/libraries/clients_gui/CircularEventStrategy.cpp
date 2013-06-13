@@ -326,7 +326,6 @@ void CircularEventStrategy::HandleMouseDoubleClick( QMouseEvent* mouse, const ge
 // -----------------------------------------------------------------------------
 void CircularEventStrategy::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    point_ = point;
     if( tooltiped_ )
         HideTooltip();
     timer_->start( 500 );
@@ -406,10 +405,11 @@ void CircularEventStrategy::OnDisplayToolTip()
 {
     if( QApplication::activeWindow() && !QApplication::activePopupWidget() )
     {
-        if( !tooltiped_ )
+        if( !tooltiped_ && tools_.HasFocus() )
         {
             GlTools_ABC::T_ObjectsPicking selection;
-            tools_.FillSelection( point_, selection );
+            geometry::Point2f point = tools_.MapToterrainCoordinates( QCursor::pos().x(), QCursor::pos().y() );
+            tools_.FillSelection( point, selection );
             if( !selection.empty() )
                 for( auto it = layers_.begin(); it != layers_.end(); ++it )
                      if( ( *it )->ShowTooltip( selection.back() ) )

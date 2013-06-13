@@ -84,6 +84,8 @@ public:
     virtual void RenderPicking( const T_ObjectPicking& object ) = 0;
     virtual bool IsPickingMode() const = 0;
     virtual QColor GetPickingColor() const = 0;
+    virtual geometry::Point2f MapToterrainCoordinates( int x, int y ) = 0;
+    virtual bool HasFocus() = 0;
     //@}
 
     //! @name Accessors

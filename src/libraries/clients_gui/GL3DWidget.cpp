@@ -906,3 +906,21 @@ void Gl3dWidget::paintGL()
 {
     Widget3D::paintGL();
 }
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::MapToterrainCoordinates
+// Created: NPT 2013-06-12
+// -----------------------------------------------------------------------------
+geometry::Point2f Gl3dWidget::MapToterrainCoordinates( int x, int y )
+{
+    return geometry::Point2f( ( float )x, ( float )y );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GL3DWidget::HasFocus
+// Created: NPT 2013-06-13
+// -----------------------------------------------------------------------------
+bool Gl3dWidget::HasFocus()
+{
+    return hasFocus() && QApplication::widgetAt( QCursor::pos() ) == this;
+}

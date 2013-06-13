@@ -106,6 +106,8 @@ public:
 
     virtual void resizeGL( int w, int h );
     virtual void paintGL();
+    virtual geometry::Point2f MapToterrainCoordinates( int x, int y );
+    virtual bool HasFocus();
     //@}
 
 protected:

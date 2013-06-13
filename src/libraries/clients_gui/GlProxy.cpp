@@ -580,3 +580,22 @@ QColor GlProxy::GetPickingColor() const
 {
     return tools_->GetPickingColor();
 }
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::MapToterrainCoordinates
+// Created: NPT 2013-06-12
+// -----------------------------------------------------------------------------
+geometry::Point2f GlProxy::MapToterrainCoordinates( int x, int y )
+{
+    return tools_->MapToterrainCoordinates( x, y );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::HasFocus
+// Created: NPT 2013-06-13
+// -----------------------------------------------------------------------------
+bool GlProxy::HasFocus()
+{
+    return tools_->HasFocus();
+}
+

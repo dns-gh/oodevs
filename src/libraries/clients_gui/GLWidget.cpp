@@ -1135,6 +1135,24 @@ void GlWidget::SetCurrentCursor( const QCursor& cursor )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GLWidget::MapToterrainCoordinates
+// Created: NPT 2013-06-12
+// -----------------------------------------------------------------------------
+geometry::Point2f GlWidget::MapToterrainCoordinates( int x, int y )
+{
+    return RetrieveCoordinates( mapFromGlobal( QPoint( x, y ) ).x(), mapFromGlobal( QPoint( x, y ) ).y() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLWidget::HasFocus
+// Created: NPT 2013-06-13
+// -----------------------------------------------------------------------------
+bool GlWidget::HasFocus()
+{
+    return hasFocus() && QApplication::widgetAt( QCursor::pos() ) == this;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::OptionChanged
 // Created: JSR 2010-06-14
 // -----------------------------------------------------------------------------
