@@ -33,8 +33,12 @@ integration.getAgentMajorOpsState = function( agent )
     return agent:DEC_Agent_EtatOpsMajeur()
 end
 
-integration.getAgentOpsState = function()
-    return DEC_Agent_EtatOps()
+integration.getAgentOpsState = function( agent )
+    return agent:DEC_Agent_EtatOps()
+end
+
+integration.isAgentImmobilized = function( agent )
+    return DEC_Agent_EstImmobilise( agent )
 end
 
 integration.isKnowledgeAgentValid = function( agent )

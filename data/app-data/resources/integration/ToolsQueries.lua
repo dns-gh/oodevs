@@ -306,7 +306,10 @@ integration.getEntitiesFromAutomatCommunication = function ( automat, role, with
     local nTemp = #temp
     for i = 1, nTemp do
         local pion = temp[i]
-        knowledges[ #knowledges + 1 ] = CreateKnowledge( integration.ontology.types.agent, pion )
+        local knowledge = CreateKnowledge( integration.ontology.types.agent, pion )
+        if not knowledge:isDestroyed() then
+            knowledges[ #knowledges + 1 ] = knowledge
+        end
     end
 
     if role ~= "none" then --TODO replace by NIL when a queries will have nullable parameters
@@ -345,7 +348,7 @@ integration.getOperationnalEntitiesFromAutomat = function ( automat, role, withP
     local entities = integration.getEntitiesFromAutomatCommunication( automat, role, withPC)
     local operationnalEntities = {}
     for i = 1, #entities do
-        if entities[i].source:DEC_Agent_EtatOpsMajeur() ~= 0 then
+        if entities[i]:isOperational() then
             operationnalEntities[#operationnalEntities + 1] = entities[i]
         end
     end
