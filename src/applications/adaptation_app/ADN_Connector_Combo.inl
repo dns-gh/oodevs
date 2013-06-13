@@ -68,11 +68,9 @@ void ADN_Connector_Combo<T>::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTa
 
     bIsConnected_=false;
 
+    Clear();
     if( pCombo_->IsAutoEnabled() )
-    {
-        Clear();
         pCombo_->setEnabled(false);
-    }
 }
 
 //-----------------------------------------------------------------------------
