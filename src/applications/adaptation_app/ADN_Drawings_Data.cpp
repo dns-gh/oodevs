@@ -37,6 +37,8 @@ namespace
         virtual bool ShouldDisplay( const std::string& ) const { return true; }
         virtual bool ShouldDisplay( const std::string&, bool ) const { return true; }
         virtual bool ShouldDisplay( E_LayerTypes ) const { return true; }
+        virtual geometry::Point2f MapToterrainCoordinates( int x, int y ){ return geometry::Point2f( ( float )x, ( float )y ); };
+        virtual bool HasFocus(){ return true; };
         //@}
 
         //! @name Accessors
