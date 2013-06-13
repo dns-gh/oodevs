@@ -267,11 +267,6 @@ bool BeginWith( const Path& prefix, const Path& path )
     return true;
 }
 
-bool IsMetadataFile( const Path& path, const Path& root )
-{
-    return ( root / Metadata::GetFilename() ) == path;
-}
-
 struct Item : Package_ABC::Item_ABC
 {
     Item( const FileSystem_ABC& fs, const Path& root, size_t id, const std::string& name, const std::string& date, const Metadata* meta )
@@ -370,9 +365,9 @@ struct Item : Package_ABC::Item_ABC
             action_ = "update";
     }
 
-    virtual FileSystem_ABC::T_Predicate IsItemFile( const Path& root ) const
+    virtual FileSystem_ABC::T_Predicate IsItemFile( const Path& /*root*/ ) const
     {
-        return !boost::bind( &IsMetadataFile, _1, boost::cref( root ) );
+        return FileSystem_ABC::T_Predicate();
     }
 
     void MakeChecksum( const FileSystem_ABC& fs )
@@ -776,6 +771,11 @@ namespace
 	}
 }
 
+bool IsMetadataFile( const Path& path, const Path& root )
+{
+    return ( root / Metadata::GetFilename() ) == path;
+}
+
 struct Client : public Item
 {
     Client( const FileSystem_ABC& fs, const Path& root, const Path& file, size_t id, const Metadata* meta )
@@ -792,6 +792,11 @@ struct Client : public Item
     Path GetSuffix() const
     {
         return Path();
+    }
+
+    virtual FileSystem_ABC::T_Predicate IsItemFile( const Path& root ) const
+    {
+        return !boost::bind( &IsMetadataFile, _1, boost::cref( root ) );
     }
 
     static void Parse( Async& async, const FileSystem_ABC& fs, const Path& root, Package::T_Items& items )
