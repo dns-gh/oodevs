@@ -748,21 +748,27 @@ struct Exercise : public Item
     const T_Profiles  profiles_;
 };
 
-typedef std::vector< std::string > T_Tokens;
-T_Tokens Split( const std::string& value )
+namespace
 {
-    std::vector< std::string > tokens;
-    boost::algorithm::split( tokens, value, boost::is_any_of( "." ) );
-    return tokens;
-}
-std::string Splice( const T_Tokens& src, size_t end )
-{
-    const T_Tokens slice( src.begin(), src.begin() + std::min( end, src.size() ) );
-    return boost::algorithm::join( slice, "." );
-}
-std::string GetVersion( const std::string& version )
-{
-    return version.empty() ? "Unversioned" : version;
+	typedef std::vector< std::string > T_Tokens;
+
+	T_Tokens Split( const std::string& value )
+	{
+		std::vector< std::string > tokens;
+		boost::algorithm::split( tokens, value, boost::is_any_of( "." ) );
+		return tokens;
+	}
+
+	std::string Splice( const T_Tokens& src, size_t end )
+	{
+		const T_Tokens slice( src.begin(), src.begin() + std::min( end, src.size() ) );
+		return boost::algorithm::join( slice, "." );
+	}
+
+	std::string GetVersion( const std::string& version )
+	{
+		return version.empty() ? "Unversioned" : version;
+	}
 }
 
 struct Client : public Item
