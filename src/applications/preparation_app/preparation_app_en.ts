@@ -381,14 +381,6 @@
         <translation>Exercise</translation>
     </message>
     <message>
-        <source>Information</source>
-        <translation>Information</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation>Name:</translation>
-    </message>
-    <message>
         <source>Briefing</source>
         <translation>Briefing</translation>
     </message>

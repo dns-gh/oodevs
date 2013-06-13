@@ -379,14 +379,6 @@
         <translation type="unfinished">ممارسة</translation>
     </message>
     <message>
-        <source>Information</source>
-        <translation type="unfinished">معلومات</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="unfinished">الاسم:</translation>
-    </message>
-    <message>
         <source>Briefing</source>
         <translation type="unfinished">إحاطة إعلامية</translation>
     </message>

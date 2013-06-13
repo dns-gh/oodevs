@@ -379,14 +379,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Briefing</source>
         <translation type="unfinished"></translation>
     </message>
