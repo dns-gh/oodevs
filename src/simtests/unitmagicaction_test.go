@@ -248,6 +248,10 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	// Valid unit type, should be read from physical database instead
 	unitType := uint32(1)
 
+    // No tasker
+	_, err = client.CreateUnit(0, unitType, pos)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
 	// Invalid automat
 	_, err = client.CreateUnit(InvalidIdentifier, unitType, pos)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
