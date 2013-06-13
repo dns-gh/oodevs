@@ -71,7 +71,7 @@ public:
     bool CheckValidity();
     void AddParameter( const QString& objectName, Param_ABC& parameter );
     void Draw( ::gui::GlTools_ABC& tools, ::gui::Viewport_ABC& extent ) const;
-    void Fill( InterfaceBuilder_ABC& builder, const kernel::OrderType& orderType, E_MissionType type );
+    void Build( InterfaceBuilder_ABC& builder, const kernel::OrderType& orderType, E_MissionType type );
     void SetEntity( const kernel::Entity_ABC* entity );
     void Purge();
     void SetPlanned( bool planned );

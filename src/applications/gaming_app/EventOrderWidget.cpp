@@ -383,7 +383,7 @@ void EventOrderWidget::BuildMissionInterface()
     missionInterface_->Purge();
     const kernel::OrderType* order = static_cast< const kernel::OrderType* >( missionCombo_->itemData( missionCombo_->currentIndex() ).value< kernel::VariantPointer >().ptr_ );
     if( order )
-        missionInterface_->Fill( interfaceBuilder_, *order, currentType_ );
+        missionInterface_->Build( interfaceBuilder_, *order, currentType_ );
     missionInterface_->SetEntity( target_ );
 }
 

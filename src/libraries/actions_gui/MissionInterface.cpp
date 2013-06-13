@@ -126,10 +126,10 @@ void MissionInterface::SetEntity( const kernel::Entity_ABC* entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionInterface::Fill
+// Name: MissionInterface::Build
 // Created: ABR 2013-06-04
 // -----------------------------------------------------------------------------
-void MissionInterface::Fill( InterfaceBuilder_ABC& builder, const kernel::OrderType& order, E_MissionType type )
+void MissionInterface::Build( InterfaceBuilder_ABC& builder, const kernel::OrderType& order, E_MissionType type )
 {
     order_ = &order;
 
