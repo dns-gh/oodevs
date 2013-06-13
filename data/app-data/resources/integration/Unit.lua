@@ -34,7 +34,11 @@ integration.getAgentMajorOpsState = function( agent )
 end
 
 integration.getAgentOpsState = function( agent )
-    return agent:DEC_Agent_EtatOps()
+    if agent then
+        return agent:DEC_Agent_EtatOps()
+    else
+        return DEC_Agent_EtatOps()
+    end
 end
 
 integration.isAgentImmobilized = function( agent )
