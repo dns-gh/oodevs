@@ -114,5 +114,7 @@ void ADN_Weapons_WizardPage::ApplyOptions()
         ADN_Equipement_Data::CategoryInfo* pAmmo = ammoDotation.FindCategory( strAmmo );
         ADN_Equipement_Data::AmmoCategoryInfo* ammo = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( pAmmo );        
         element_->ptrAmmunition_ = ammo;
+
+        element_->ConnectLauncherAmmunition();
     }
 }

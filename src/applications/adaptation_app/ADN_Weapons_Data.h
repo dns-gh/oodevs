@@ -125,6 +125,7 @@ public:
         std::string GetItemName();
 
         WeaponInfos* CreateCopy();
+        void ConnectLauncherAmmunition();
 
         void ReadArchive( xml::xistream& input );
         void ReadTargetSize( xml::xistream& input );

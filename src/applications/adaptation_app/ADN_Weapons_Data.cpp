@@ -289,6 +289,18 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapons_Data::WeaponInfos::CreateCopy()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Weapons_Data::WeaponInfos::ConnectLauncherAmmunition
+// Created: JSR 2013-06-13
+// -----------------------------------------------------------------------------
+void ADN_Weapons_Data::WeaponInfos::ConnectLauncherAmmunition()
+{
+    if( !ptrLauncher_.GetData() || !ptrAmmunition_.GetData() )
+        return;
+    bDirect_ = ptrLauncher_.GetData()->bDirect_.GetData() && ptrAmmunition_.GetData()->bDirect_.GetData();
+    bIndirect_ = ptrLauncher_.GetData()->bIndirect_.GetData() && ptrAmmunition_.GetData()->bIndirect_.GetData();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data::WeaponInfos::ReadTargetSize
 // Created: AGE 2007-08-17
 // -----------------------------------------------------------------------------
