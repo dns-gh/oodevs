@@ -141,6 +141,8 @@ void TimelineRuler::DrawDates( QPainter& painter ) const
     while( lastX < width() )
     {
         const long x = long( ConvertToPosition( next ) ) - startX_;
+        if( x <= 0 )
+            return;
         const QString text = GetDateText( metrics, current.date(), x - lastX );
         painter.drawLine( x, 0, x, height() );
         if( !text.isEmpty() )
@@ -169,6 +171,8 @@ void TimelineRuler::DrawTimes( QPainter& painter ) const
     while( lastX < w )
     {
         const long x = long( ConvertToPosition( next ) ) - startX_;
+        if( x <= 0 )
+            return;
         const QString text = GetTimeText( metrics, current.time(), x - lastX );
         painter.drawLine( x, height() - tickHeight_, x, height() );
         if( !text.isEmpty() )
@@ -205,6 +209,8 @@ unsigned long TimelineRuler::ConvertToPosition( const QDateTime& datetime ) cons
 // -----------------------------------------------------------------------------
 long TimelineRuler::ConvertToSeconds( long pixels ) const
 {
+    if( tickStep_ == 0 )
+        return 0;
     return pixels * 3600 / int( tickStep_ );
 }
 
@@ -224,6 +230,7 @@ long TimelineRuler::ConvertToPixels( long secs ) const
 void TimelineRuler::ZoomIn()
 {
     tickStep_ *= 2;
+    tickStep_ = std::min< int >( 100000, tickStep_ );
     update();
 }
 
