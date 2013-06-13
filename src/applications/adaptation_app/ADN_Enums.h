@@ -416,10 +416,10 @@ enum E_PropagationModel
 
 enum E_EntityType
 {
-    eEntityType_Pawn                = 0,
-    eEntityType_Automat             = 1,
-    eEntityType_Population          = 2,
-    eNbrEntityTypes                 = 3
+    eEntityType_Pawn       = 0,
+    eEntityType_Automat    = 1,
+    eEntityType_Population = 2,
+    eNbrEntityTypes        = 3
 };
 
 enum E_Days
