@@ -5250,6 +5250,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Equipment type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Resource type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5259,6 +5263,10 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Medical priorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5283,6 +5291,10 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Resource network type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

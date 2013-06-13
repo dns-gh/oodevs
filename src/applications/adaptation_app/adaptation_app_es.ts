@@ -5280,6 +5280,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Equipment type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Resource type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5290,6 +5294,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Medical priorities</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect fire</source>
+        <translation type="unfinished">Fuego indirecto</translation>
     </message>
     <message>
         <source>Phase line</source>
@@ -5485,6 +5493,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
