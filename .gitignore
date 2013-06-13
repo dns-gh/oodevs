@@ -1,0 +1,11 @@
+/bin/
+/run/
+/out/
+/include/
+/pkg/
+tags
+/src/sword/
+*.swp
+/lib/
+/data/data/
+sessions/
