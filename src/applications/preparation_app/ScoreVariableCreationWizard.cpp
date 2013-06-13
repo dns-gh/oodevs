@@ -227,6 +227,7 @@ void ScoreVariableCreationWizard::OnChangeType()
     if( parameter_ )
     {
         parameter_->BuildInterface( type_->GetValue().c_str(), paramBox_ );
+        parameter_->SetEnabled( true );
         parameter_->RegisterIn( controllers_.actions_ );
     }
     else

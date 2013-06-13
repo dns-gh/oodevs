@@ -411,3 +411,13 @@ void Param_ABC::SetEntity( const kernel::Entity_ABC* )
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::SetEnabled
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void Param_ABC::SetEnabled( bool enabled )
+{
+    if( group_ )
+        group_->setEnabled( enabled );
+}

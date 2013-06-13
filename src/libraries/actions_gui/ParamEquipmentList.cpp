@@ -62,6 +62,14 @@ QWidget* ParamEquipmentList::BuildInterface( const QString& objectName, QWidget*
         baseList_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
         baseList_->setSortingEnabled( true );
         baseList_->sortItems( Qt::AscendingOrder );
+        tools::Iterator< const kernel::EquipmentType& > it( resolver_.CreateIterator() );
+        while( it.HasMoreElements() )
+        {
+            const kernel::EquipmentType& type = it.NextElement();
+            QListWidgetItem* item = new QListWidgetItem( type.GetName().c_str() );
+            item->setData( EquipmentRole, QVariant::fromValue( &type ) );
+            baseList_->addItem( item );
+        }
 
         ::gui::RichPushButton* addBtn = new ::gui::RichPushButton( "addBtn", MAKE_ICON( right_arrow ), QString::null, parent );
         addBtn->setFixedSize( 32, 32 );

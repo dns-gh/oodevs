@@ -103,6 +103,7 @@ public:
     QString GetMenuName() const;
     virtual bool IsChecked() const;
     virtual bool IsOptional() const;
+    void SetEnabled( bool enabled );
     void SetOptional( bool optional );
     virtual void SetParentList( ListParameterBase* parentList );
     virtual void SetName( const QString& name );
