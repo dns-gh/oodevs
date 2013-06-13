@@ -248,7 +248,7 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	// Valid unit type, should be read from physical database instead
 	unitType := uint32(1)
 
-    // No tasker
+	// No tasker
 	_, err = client.CreateUnit(0, unitType, pos)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
@@ -483,6 +483,10 @@ func (s *TestSuite) TestTeleportUnit(c *C) {
 	c.Assert(err, IsNil)
 
 	pos := swapi.Point{X: -15.8219, Y: 28.2456}
+
+	// No tasker
+	err = client.TeleportUnit(0, pos)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// Cannot teleport unit if its automat is engaged
 	err = client.TeleportUnit(unit.Id, pos)
