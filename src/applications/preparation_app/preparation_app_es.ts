@@ -379,14 +379,6 @@
         <translation>Ejercicio</translation>
     </message>
     <message>
-        <source>Information</source>
-        <translation>Información</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation>Nombre:</translation>
-    </message>
-    <message>
         <source>Briefing</source>
         <translation>Resumen</translation>
     </message>

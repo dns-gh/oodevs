@@ -101,7 +101,6 @@ private:
     kernel::Controllers& controllers_;
     Exercise& exercise_;
     const tools::ExerciseConfig& config_;
-    gui::RichLineEdit* name_;
     gui::ValuedComboBox< QString >* lang_;
     QString selectedLang_;
     gui::RichTextEdit* briefing_;

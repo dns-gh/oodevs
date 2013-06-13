@@ -44,16 +44,6 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
     grid->setRowStretch( 3, 1 );
     grid->setRowStretch( 4, 1 );
     {
-        gui::RichGroupBox* box = new gui::RichGroupBox( "information", tr( "Information" ), this );
-        gui::SubObjectName subObject( "information" );
-        QHBoxLayout* layout = new QHBoxLayout();
-        box->setLayout( layout );
-        layout->addWidget( new QLabel( tr( "Name:" ) ) );
-        name_ = new gui::RichLineEdit( "name", box );
-        layout->addWidget( name_ );
-        grid->addWidget( box, 0, 0, 1, 2 );
-    }
-    {
         gui::RichGroupBox* box = new gui::RichGroupBox( "briefingBox", tr( "Briefing" ), this );
         gui::SubObjectName subObject( "briefingBox" );
         QVBoxLayout* vLayout = new QVBoxLayout();
@@ -78,7 +68,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         briefing_ = new gui::RichTextEdit( "briefing" );
         vLayout->addWidget( briefing_ );
         briefing_->setTextFormat( Qt::RichText );
-        grid->addWidget( box, 1, 0, 1, 2 );
+        grid->addWidget( box, 0, 0, 1, 2 );
     }
     {
         gui::RichGroupBox* box = new gui::RichGroupBox( "filesBox", tr( "Files" ) );
@@ -103,7 +93,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         vLayout->addWidget( del );
         del->setMaximumWidth( 40 );
         connect( del, SIGNAL( clicked() ), this, SLOT( OnDeleteResource() ) );
-        grid->addWidget( box, 2, 0, 1, 2 );
+        grid->addWidget( box, 1, 0, 1, 2 );
     }
     {
         gui::RichGroupBox* box = new gui::RichGroupBox( "orderFilesBox", tr( "Order files" ) );
@@ -126,7 +116,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         vLayout->addWidget( del );
         del->setMaximumWidth( 40 );
         connect( del, SIGNAL( clicked() ), this, SLOT( OnDeleteOrderFile() ) );
-        grid->addWidget( box, 3, 0, 1, 2 );
+        grid->addWidget( box, 2, 0, 1, 2 );
     }
     {
         gui::RichGroupBox* box = new gui::RichGroupBox( "parameters", tr( "Parameters" ) );
@@ -137,7 +127,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         vLayout->addWidget( infiniteDotationsCheckBox_ );
         humanEvolutionCheckBox_ = new gui::RichCheckBox( "humanEvolutionCheckBox", tr( "Human factors automatic evolution" ) );
         vLayout->addWidget( humanEvolutionCheckBox_ );
-        grid->addWidget( box, 4, 0, 1, 2 );
+        grid->addWidget( box, 3, 0, 1, 2 );
     }
     {
         QHBoxLayout* box = new QHBoxLayout();
@@ -177,7 +167,6 @@ void ExerciseDialog::NotifyCreated( const Exercise& exercise )
 // -----------------------------------------------------------------------------
 void ExerciseDialog::Update( const Exercise& exercise )
 {
-    name_->setText( exercise.GetName() );
     briefings_.clear();
     resources_->removeRows( 0, resources_->rowCount() );
     orderFiles_->removeRows( 0, orderFiles_->rowCount() );;
@@ -293,7 +282,6 @@ namespace
 void ExerciseDialog::OnAccept()
 {
     OnChangeLang();
-    exercise_.SetName( name_->text() );
     for( T_Briefings::const_iterator it = briefings_.begin(); it != briefings_.end(); ++it )
         exercise_.SetBriefing( it->first, it->second );
     exercise_.ClearResources();
