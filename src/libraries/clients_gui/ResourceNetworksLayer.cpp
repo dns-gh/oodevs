@@ -14,6 +14,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_kernel/UrbanObject_ABC.h"
 
 using namespace gui;
 
@@ -55,7 +56,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ResourceNetworksLayer::NotifyCreated( const kernel::Entity_ABC& entity )
 {
-    if( entity.Retrieve< ResourceNetwork_ABC >() || 
+    if( entity.GetTypeName() == kernel::UrbanObject_ABC::typeName_ ||
         ( entity.GetTypeName() == kernel::Object_ABC::typeName_ && static_cast< const kernel::Object_ABC& >( entity ).GetType().HasResourceNetwork() ) )
         EntityLayer< kernel::Entity_ABC >::NotifyCreated( entity );
 }
