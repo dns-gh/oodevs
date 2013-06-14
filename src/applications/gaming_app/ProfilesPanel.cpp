@@ -184,7 +184,7 @@ void ProfilesPanel::Reconnect()
             const std::string& login = profile->GetLogin().toStdString();
             if( profile->IsPasswordProtected() )
             {
-                ReconnectLoginDialog* pLoginDialog = new ReconnectLoginDialog( this, *profile, network_ );
+                ReconnectLoginDialog* pLoginDialog = new ReconnectLoginDialog( this, *profile, filter_, network_ );
                 if( pLoginDialog->exec() == QDialog::Accepted )
                     Clean();
             }

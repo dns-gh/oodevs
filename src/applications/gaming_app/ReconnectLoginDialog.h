@@ -12,8 +12,9 @@
 
 #include "LoginDialog.h"
 
-class UserProfile;
 class Network;
+class ProfileFilter;
+class UserProfile;
 
 // =============================================================================
 /** @class  ReconnectLoginDialog
@@ -26,7 +27,7 @@ class ReconnectLoginDialog : public LoginDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ReconnectLoginDialog( QWidget* pParent, const UserProfile& profile, Network& network );
+             ReconnectLoginDialog( QWidget* pParent, const UserProfile& profile, ProfileFilter& filter, Network& network );
     virtual ~ReconnectLoginDialog();
     //@}
 
@@ -41,6 +42,7 @@ private:
     //! @name Member data
     //@{
     const UserProfile& profile_;
+    ProfileFilter& filter_;
     Network& network_;
     //@}
 };
