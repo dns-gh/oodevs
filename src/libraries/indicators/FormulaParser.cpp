@@ -74,7 +74,8 @@ public:
         {
             number_ = bs::leaf_node_d[ bs::real_p ];
             string_ = bs::no_node_d[ bs::ch_p( '\'' ) ] >> bs::leaf_node_d[ *( bs::anychar_p - bs::ch_p( '\'' ) ) ] >> bs::no_node_d[ bs::ch_p( '\'' ) ];
-            constant_ = number_ | string_;
+            title_ = bs::no_node_d[ bs::ch_p( '~' ) ] >> bs::leaf_node_d[ *( bs::anychar_p - bs::ch_p( '~' ) ) ] >> bs::no_node_d[ bs::ch_p( '~' ) ];
+            constant_ = title_ | number_ | string_;
 
             identifier_ = bs::leaf_node_d[ ( ( bs::alpha_p | '_' ) >> *( bs::alnum_p | '_' | '-' ) ) ];
             variable_   = bs::no_node_d[ bs::ch_p( '$' ) ] >> identifier_;
@@ -90,6 +91,7 @@ public:
             BOOST_SPIRIT_DEBUG_RULE( start_ );
             BOOST_SPIRIT_DEBUG_RULE( number_ );
             BOOST_SPIRIT_DEBUG_RULE( string_ );
+            BOOST_SPIRIT_DEBUG_RULE( title_ );
             BOOST_SPIRIT_DEBUG_RULE( variable_ );
             BOOST_SPIRIT_DEBUG_RULE( functionCall_ );
             BOOST_SPIRIT_DEBUG_RULE( functionParameters_ );
@@ -103,6 +105,7 @@ public:
         bs::rule< T, bs::parser_context<>, bs::parser_tag< StartTag > >              start_;
         bs::rule< T, bs::parser_context<>, bs::parser_tag< NumberTag > >             number_;
         bs::rule< T, bs::parser_context<>, bs::parser_tag< StringTag > >             string_;
+        bs::rule< T, bs::parser_context<>, bs::parser_tag< StringTag > >              title_;
         bs::rule< T, bs::parser_context<>, bs::parser_tag< VariableTag > >           variable_;
         bs::rule< T, bs::parser_context<>, bs::parser_tag< FunctionCallTag > >       functionCall_;
         bs::rule< T, bs::parser_context<>, bs::parser_tag< FunctionParametersTag > > functionParameters_;
