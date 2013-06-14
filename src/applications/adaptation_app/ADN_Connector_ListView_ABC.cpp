@@ -70,11 +70,9 @@ void ADN_Connector_ListView_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC*
     disconnect( pTarget, SIGNAL( SendErrorStatus( ADN_ErrorStatus, const QString& ) ), &list_, SLOT( Warn( ADN_ErrorStatus, const QString& ) ) );
 
     bIsConnected_ = false;
+    Clear();
     if( list_.IsAutoEnabled() )
-    {
-        Clear();
         list_.setEnabled(false);
-    }
 }
 
 // -----------------------------------------------------------------------------
