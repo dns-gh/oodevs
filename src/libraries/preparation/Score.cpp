@@ -173,7 +173,7 @@ void Score::Serialize( xml::xostream& xos ) const
 void Score::SerializeIndicators( xml::xostream& xos ) const
 {
     xos << xml::start( "indicators" );
-    SerializeIndicator( xos, QString( "indicator( ~%1~, %2 )" ).arg( name_ ).arg( formula_ ) );
+    SerializeIndicator( xos, QString( "indicator( '%1', %2 )" ).arg( name_ ).arg( formula_ ) );
     xos << xml::end;
 }
 
