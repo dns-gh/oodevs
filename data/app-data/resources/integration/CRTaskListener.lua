@@ -142,7 +142,7 @@ function RegisterDoneTaskListener()
         -- NOTHING
     end
     function doneTaskListener:TaskFinished( taskName )
-        integration.notifyTaskEnded()
+        -- NOTHING
     end
     function doneTaskListener:TaskDone()
         integration.notifyTaskEnded()
