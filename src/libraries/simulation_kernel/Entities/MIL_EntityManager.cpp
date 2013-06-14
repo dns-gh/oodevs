@@ -203,7 +203,7 @@ namespace
             return tasker.party().id();
         if( tasker.has_population() )
             return tasker.population().id();
-        throw MASA_EXCEPTION( "Misformed tasker in protocol message" );
+        throw MASA_INVALIDTASKER;
     }
 }
 MIL_Automate* TaskerToAutomat( MIL_EntityManager_ABC& manager, const Tasker& tasker )
@@ -1444,10 +1444,11 @@ void MIL_EntityManager::OnReceiveCrowdOrder( const CrowdOrder& message, unsigned
 void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned int nCtx, unsigned int clientId )
 {
     client::FragOrderAck ack;
-    unsigned int taskerId = TaskerToId( message.tasker() );
     ack().set_error_code( OrderAck::no_error );
+    ack().mutable_tasker()->mutable_unit()->set_id( 0 );
     try
     {
+        unsigned int taskerId = TaskerToId( message.tasker() );
         if( MIL_Automate* pAutomate = FindAutomate( taskerId ) )
         {
             ack().mutable_tasker()->mutable_automat()->set_id( taskerId );
@@ -1464,14 +1465,20 @@ void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned i
             pPion->OnReceiveFragOrder( message );
         }
         else
-        {
-            ack().mutable_tasker()->mutable_unit()->set_id( 0 );
             throw MASA_EXCEPTION_ASN( OrderAck::ErrorCode, OrderAck::error_invalid_unit );
-        }
     }
     catch( const NET_AsnException< OrderAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
+    }
+    catch( const NET_InvalidTasker& )
+    {
+        ack().set_error_code( OrderAck::error_invalid_unit );
+    }
+    catch( const std::exception& e )
+    {
+        ack().set_error_code( OrderAck::error_invalid_parameter );
+        ack().set_error_msg( tools::GetExceptionMsg( e ) );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }

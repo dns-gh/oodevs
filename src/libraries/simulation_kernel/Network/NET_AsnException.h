@@ -59,4 +59,16 @@ public:
 
 #define MASA_BADPARAM_ASN( ErrorIdType, ErrorId, Name ) NET_AsnBadParam< ErrorIdType >( ErrorId, __FILE__, __FUNCTION__, __LINE__, Name )
 
+class NET_InvalidTasker : public tools::Exception
+{
+public:
+    NET_InvalidTasker( const std::string& file, const std::string& function,
+            const unsigned int line ) throw()
+        : tools::Exception( file, function, line, "invalid tasker" )
+    {}
+    virtual ~NET_InvalidTasker() throw() {}
+};
+
+#define MASA_INVALIDTASKER NET_InvalidTasker( __FILE__, __FUNCTION__, __LINE__ )
+
 #endif // __NET_AsnException_h_
