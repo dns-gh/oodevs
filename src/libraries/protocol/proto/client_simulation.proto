@@ -76,7 +76,9 @@ message UnitMagicAction {
         @todo Uniformize, for instance unit_creation != create_wound
     */
     enum Type {
-        //! A move to magic action
+        //! Teleport a unit
+        //! The tasker must reference the unit to teleport.
+        //! parameters[0], Point: destination coordinates.
         move_to                           = 0;
         //! A surrender to magic action
         surrender_to                      = 1;
