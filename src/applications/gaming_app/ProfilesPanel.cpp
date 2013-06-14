@@ -190,6 +190,7 @@ void ProfilesPanel::Reconnect()
             }
             else
             {
+                filter_.RemoveFilter();
                 network_.GetMessageMgr().Reconnect( login, "" );
                 Clean();
             }
