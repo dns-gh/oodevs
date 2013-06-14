@@ -1085,24 +1085,6 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsi
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
-namespace
-{
-    void CreateCrowd( boost::function< void() > fun, unsigned int nCtx )
-    {
-        try
-        {
-            fun();
-        }
-        catch( const NET_AsnException< UnitActionAck::ErrorCode >& e )
-        {
-            client::MagicActionAck ack;
-            ack().set_error_code( MagicActionAck::error_invalid_parameter );
-            ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
-            throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, e.GetErrorID() );
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveUnitMagicAction
 // Created: JSR 2010-04-13
@@ -1188,14 +1170,19 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
                 FindFormation( id ), nCtx, ack() );
             break;
         case UnitMagicAction::crowd_creation:
-            if( MIL_Formation* pFormation = FindFormation( id ) )
-                ::CreateCrowd( boost::bind( &MIL_EntityManager::ProcessCrowdCreationRequest, this,
-                        boost::cref( message ), boost::ref( pFormation->GetArmy() ), nCtx,  boost::ref( ack() ) ), nCtx );
-            else if( MIL_Army_ABC*  pArmy = armyFactory_->Find( id ) )
-                ::CreateCrowd( boost::bind( &MIL_EntityManager::ProcessCrowdCreationRequest, this,
-                        boost::cref( message ), boost::ref( *pArmy ), nCtx,  boost::ref( ack() ) ), nCtx );
-            else
-                throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
+            try
+            {
+                ProcessCrowdCreationRequest( message, id, nCtx, ack() );
+            }
+            catch( const NET_AsnException< UnitActionAck::ErrorCode >& )
+            {
+                // Old behaviour, some UnitMagicAction used to return
+                // MagicActionAck, no idea why.
+                client::MagicActionAck ack;
+                ack().set_error_code( MagicActionAck::error_invalid_parameter );
+                ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+                throw;
+            }
             break;
         case UnitMagicAction::transfer_equipment:
             if( MIL_AgentPion* pPion = FindAgentPion( id ) )
@@ -1335,8 +1322,17 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
 // Name: MIL_EntityManager::ProcessCrowdCreationRequest
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& message, MIL_Army_ABC& army, unsigned int context, sword::UnitMagicActionAck& ack )
+void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& message,\
+        unsigned int parentId, unsigned int context, sword::UnitMagicActionAck& ack )
 {
+    MIL_Army_ABC* parent = 0;
+    if( MIL_Formation* formation = FindFormation( parentId ))
+        parent = &formation->GetArmy();
+    else if( MIL_Army_ABC* army = armyFactory_->Find( parentId ))
+        parent = army;
+    else
+        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
+
     if( !message.has_parameters() || message.parameters().elem_size() != 6
         || message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_acharstr()
         || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get( 0 ).has_point()
@@ -1364,7 +1360,7 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
         throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
 
     std::string name = parameters.elem( 5 ).value().Get( 0 ).acharstr();
-    MIL_Population& popu = populationFactory_->Create( type, point, number, name, army, 0, context );
+    MIL_Population& popu = populationFactory_->Create( type, point, number, name, *parent, 0, context );
     popu.ChangeComposition( healthy, wounded, 0, dead );
 
     client::MagicActionAck oldAck;
