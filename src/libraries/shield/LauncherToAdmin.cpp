@@ -255,6 +255,12 @@ namespace
         CONVERT( profile );
         CONVERT_DATE( date_time );
     }
+    void ConvertEntityCreation( const sword::SessionNotification::EntityCreation& from, MsgsLauncherToAdmin::MsgSessionNotification::EntityCreation* to )
+    {
+        CONVERT( long_name );
+        CONVERT_CB( id, ConvertTasker );
+        CONVERT_CB( superior, ConvertTasker );
+    }
     void ConvertNotification( const sword::SessionNotification::Notification& from, MsgsLauncherToAdmin::MsgSessionNotification::Notification* to )
     {
         CONVERT_CB( unit_update, ConvertUnitUpdate );
@@ -265,6 +271,7 @@ namespace
         CONVERT_CB( log_history_request_for_play, ConvertLogHistoryRequestForPlay );
         if( to && from.has_log_history_request_for_replay_ack() )
             to->mutable_log_history_request_for_replay_ack();
+        CONVERT_CB( entity_creation, ConvertEntityCreation );
     }
 }
 

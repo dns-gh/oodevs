@@ -163,7 +163,11 @@ BOOST_FIXTURE_TEST_CASE( session_notification_from_launcher_is_converted, Contex
     content.mutable_session_notification()->mutable_notification()->mutable_log_history_request_for_play()->set_profile( "profile" );
     content.mutable_session_notification()->mutable_notification()->mutable_log_history_request_for_play()->mutable_date_time()->set_data( "date" );
     content.mutable_session_notification()->mutable_notification()->mutable_log_history_request_for_replay_ack();
-    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { session_notification { exercise: \"name\" session: \"session\" notification { log_history_request_for_play { profile: \"profile\" date_time { data: \"date\" } } log_history_request_for_replay_ack { } } } }" ) );
+    auto creation = content.mutable_session_notification()->mutable_notification()->mutable_entity_creation();
+    creation->set_long_name( "LongName" );
+    creation->mutable_id()->mutable_automat()->set_id( 42 );
+    creation->mutable_superior()->mutable_formation()->set_id( 4 );
+    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { session_notification { exercise: \"name\" session: \"session\" notification { log_history_request_for_play { profile: \"profile\" date_time { data: \"date\" } } log_history_request_for_replay_ack { } entity_creation { long_name: \"LongName\" id { automat { id: 42 } } superior { formation { id: 4 } } } } } }" ) );
     converter.ReceiveLauncherToAdmin( msg );
 }
 

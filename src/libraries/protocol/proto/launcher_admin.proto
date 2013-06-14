@@ -236,6 +236,11 @@ message SessionNotification {
         required DateTime date_time = 2;
     }
     message LogHistoryRequestForReplayAck {}
+    message EntityCreation {
+        required string long_name = 1;
+        required Tasker id = 2;
+        required Tasker superior = 3;
+    }
     message Notification {
         optional UnitUpdate      unit_update        = 1;
         optional FormationUpdate formation_update   = 2;
@@ -244,6 +249,7 @@ message SessionNotification {
         optional ExportCreation  export_creation    = 5;
         optional LogHistoryRequestForPlay log_history_request_for_play = 6; // FT 45373
         optional LogHistoryRequestForReplayAck log_history_request_for_replay_ack = 7; // FT 45373
+        optional EntityCreation  entity_creation = 8;
     }
     required string         exercise = 1; 
     required string         session  = 2; 
