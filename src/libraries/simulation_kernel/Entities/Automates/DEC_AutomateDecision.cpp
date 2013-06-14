@@ -198,8 +198,6 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_Automate_PionsAvecPC", boost::bind( &DEC_AutomateFunctions::GetPionsWithPC, boost::ref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_Automate_PionsSansPC", boost::bind( &DEC_AutomateFunctions::GetPionsWithoutPC, boost::ref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_Automate_PionPC", boost::bind( &DEC_AutomateFunctions::GetPionPC, boost::ref( GetAutomate() ) ) );
-    brain.RegisterFunction( "DEC_Automate_PionPCDeAutomate",
-        boost::function< DEC_Decision_ABC*( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetPionPCOfAutomate, _1 ) ) );
     brain.RegisterFunction( "DEC_Automate_AutomatesSubordonnes", boost::bind( &DEC_AutomateFunctions::GetAutomates, boost::cref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_Automate_PionsMelee", boost::bind( &DEC_AutomateFunctions::GetPionsMelee, boost::cref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_Automate_PionsGenie", boost::bind( &DEC_AutomateFunctions::GetPionsGenie, boost::cref( GetAutomate() ) ) );

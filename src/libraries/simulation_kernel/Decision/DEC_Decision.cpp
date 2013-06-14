@@ -12,14 +12,16 @@
 #include "DEC_Tools.h"
 #include "Entities/Orders/MIL_MissionParameter_ABC.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
-#include "Decision/DEC_AutomateFunctions.h"
+#include "Decision/DEC_ActionFunctions.h"
 #include "Decision/DEC_AgentFunctions.h"
+#include "Decision/DEC_AutomateFunctions.h"
 #include "Decision/DEC_CommunicationFunctions.h"
 #include "Decision/DEC_DIAFunctions.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_KnowledgeAgentFunctions.h"
 #include "Decision/DEC_KnowledgeFunctions.h"
 #include "Decision/DEC_KnowledgeObjectFunctions.h"
+#include "Decision/DEC_KnowledgePopulationFunctions.h"
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_MiscFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
@@ -90,6 +92,7 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterMethod( "DEC_Pion_PionsAvecPCCommunication", &DEC_Decision_ABC::GetCommunicationPionsWithPC );
     brain.RegisterMethod( "DEC_Automate_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC );
     brain.RegisterMethod( "DEC_Automate_PionsAvecPCCommunication", &DEC_Decision_ABC::GetCommunicationPionsWithPC );
+    brain.RegisterFunction( "DEC_Automate_PionPCDeAutomate", &DEC_AutomateFunctions::GetPionPCOfAutomate );
     brain.RegisterFunction( "DEC_Automate_PionsDeAutomateSansPC", &DEC_AutomateFunctions::GetPionsOfAutomateWithoutPC );
     brain.RegisterFunction( "DEC_Automate_PionsDeAutomateAvecPC", &DEC_AutomateFunctions::GetAutomatPionsWithPC );
     brain.RegisterFunction( "DEC_Automate_PionsDeAutomateSansPCCommunication", &DEC_AutomateFunctions::GetCommunicationPionsOfAutomateWithoutPC );
@@ -119,6 +122,22 @@ void RegisterUnitFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Agent_CanMoveOn", &DEC_TerrainFunctions::CanMoveOn );
     
     brain.RegisterFunction( "DEC_Agent_ForcerImmunisationNbc", &DEC_AgentFunctions::TemporaryImmunizeAgent );
+    brain.RegisterFunction( "DEC_Agent_ARadar", &DEC_AgentFunctions::AgentHasRadar );
+    brain.RegisterFunction( "DEC_Agent_RapportDeForceLocal", &DEC_AgentFunctions::GetRapForLocalAgent );
+    brain.RegisterFunction( "DEC_HasMission", &DEC_AgentFunctions::HasMission );
+
+    brain.RegisterFunction( "DEC_Agent_GetTempsDeploiement", &DEC_AgentFunctions::GetInstallationTime );     // $$$$ ABR 2011-12-15: Old method, should be removed soon
+    brain.RegisterFunction( "DEC_Agent_GetTempsDedeploiement", &DEC_AgentFunctions::GetUninstallationTime ); // $$$$ ABR 2011-12-15: Old method, should be removed soon
+    
+    brain.RegisterFunction( "DEC_GenObject_CreateInstantaneously", &DEC_AgentFunctions::CreateInstantaneously );
+    brain.RegisterFunction( "DEC_Agent_CanPerformHealthEvacuation", &DEC_AgentFunctions::CanPerformHealthEvacuation );
+    brain.RegisterFunction( "DEC_Agent_EstBrouille", &DEC_AgentFunctions::IsJammed );
+    brain.RegisterFunction( "DEC_Agent_EstEnSilenceRadioEmission", &DEC_AgentFunctions::IsInEmissionBlackout );
+    brain.RegisterFunction( "DEC_Agent_EstEnSilenceRadioReception", &DEC_AgentFunctions::IsInReceptionBlackout );
+    brain.RegisterFunction( "DEC_Agent_IsInSmoke", &DEC_AgentFunctions::IsInSmoke );
+    brain.RegisterFunction( "DEC_Agent_GetCurrentSpeed", &DEC_AgentFunctions::GetCurrentSpeed );
+    brain.RegisterFunction( "DEC_Agent_DisableCrowdEffect", &DEC_AgentFunctions::DisableCrowdEffect );
+    brain.RegisterFunction( "DEC_Agent_PionCanFly", boost::function< bool( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::PionCanFly, _1 ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +187,48 @@ void RegisterAgentKnowledgeFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceAgent_TuerOfficiers", &DEC_KnowledgeAgentFunctions::KillOfficers );
     brain.RegisterFunction( "DEC_Connaissances_UnitesPrenantAPartieSurAmi" , &DEC_KnowledgeFunctions::GetAgentsAttackingAlly );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_GetMilPionType", &DEC_KnowledgeAgentFunctions::GetMilPionType );
-    brain.RegisterFunction( "DEC_HasMission", &DEC_AgentFunctions::HasMission );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion", &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion );
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance", &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge );    
+    brain.RegisterFunction( "DEC_ConnaissanceAgent_EnAgent", &DEC_KnowledgeAgentFunctions::GetAgent );
+    brain.RegisterFunction( "DEC_Connaissances_PartageConnaissancesAvecConnaissanceAgent", &DEC_KnowledgeAgentFunctions::ShareKnowledgesWith );
+    brain.RegisterFunction( "DEC_GetConcentrationLaPlusProche", &DEC_KnowledgePopulationFunctions::GetClosestConcentration );
+    brain.RegisterFunction( "DEC_GetPositionConcentration", &DEC_KnowledgePopulationFunctions::GetConcentrationPosition );
+    brain.RegisterFunction( "DEC_GetNombrePersonnesDansConcentration", &DEC_KnowledgePopulationFunctions::GetAllHumansInConcentration );
+    brain.RegisterFunction( "DEC_GetNombrePersonnesDansFoule", &DEC_KnowledgePopulationFunctions::GetAllHumans );
+    brain.RegisterFunction( "DEC_ObjectKnowledge_GetObjectsInZone", &DEC_KnowledgeFunctions::GetObjectsWithCapacityInZone );
+    brain.RegisterFunction( "DEC_ObjectKnowledge_IsPositionInside", &DEC_KnowledgeFunctions::IsPositionInsideObjectOfType );
+    brain.RegisterFunction( "DEC_GetModulationVitesseMax", &DEC_MiscFunctions::GetMaxSpeedModificator );
+    brain.RegisterFunction( "DEC_GetSzName", &DEC_MiscFunctions::GetName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterRepresentationFunctions
+// Created: LDC 2013-06-14
+// -----------------------------------------------------------------------------
+void RegisterRepresentationFunctions( sword::Brain& brain )
+{
+    brain.RegisterFunction( "DEC_AddEnemyRepresentation", &DEC_MiscFunctions::AddEnemyRepresentation );
+    brain.RegisterFunction( "DEC_RemoveEnemyRepresentation", &DEC_MiscFunctions::RemoveEnemyRepresentation );
+    brain.RegisterFunction( "DEC_GetEnemyRepresentations", &DEC_MiscFunctions::GetEnemyRepresentation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterActionFunctions
+// Created: LDC 2013-06-14
+// -----------------------------------------------------------------------------
+void RegisterActionFunctions( sword::Brain& brain )
+{
+    brain.RegisterFunction( "DEC_Connaissance_PeutTransporterPion", &DEC_ActionFunctions::CanTransportKnowledge );
+    brain.RegisterFunction( "DEC_Agent_PeutTransporterFoule", &DEC_ActionFunctions::CanTransportCrowd );
+    brain.RegisterFunction( "DEC_Agent_GetCapacityToTransportCrowd", &DEC_ActionFunctions::GetCapacityToTransportCrowd );
+    brain.RegisterFunction( "DEC_Agent_TransporteFoule", &DEC_ActionFunctions::IsTransportingCrowd );
+    brain.RegisterFunction( "DEC_Connaissance_Transporter", &DEC_ActionFunctions::Knowledge_Load );
+    brain.RegisterFunction( "DEC_TransportConnaissance_AjouterPion", &DEC_ActionFunctions::TransportKnowledge_AddPion );
+    brain.RegisterFunction( "DEC_Agent_OrienterEtEmbarquer" , &DEC_ActionFunctions::LoadAgentInCamp );
+    brain.RegisterFunction( "DEC_Agent_RefugieEstEmbarque", &DEC_ActionFunctions::IsAgentLoaded );
+    brain.RegisterFunction( "DEC_Agent_DebarquerRefugiesDansCamp", &DEC_ActionFunctions::UnLoadAgentInCamp );
+    brain.RegisterFunction( "DEC_Agent_EstRendu", &DEC_ActionFunctions::IsSurrendered );
+    brain.RegisterFunction( "DEC_Agent_EstRefugie", &DEC_ActionFunctions::IsRefugee );
 }
 
 // -----------------------------------------------------------------------------
@@ -245,6 +305,8 @@ void RegisterGeometryFunctions( sword::Brain& brain)
     brain.RegisterFunction( "DEC_Geometrie_StartCalculLignesAvantEtArrierePourPion", &DEC_GeometryFunctions::StartComputingFrontAndBackLinesForPlatoon );
     brain.RegisterMethod( "DEC_Geometrie_X", &MT_Vector2D::GetX );
     brain.RegisterMethod( "DEC_Geometrie_Y", &MT_Vector2D::GetY );
+    brain.RegisterFunction( "DEC_Geometrie_CalculerDistanceLigneAvant", &DEC_GeometryFunctions::ComputeDistanceFromFrontLine );
+    brain.RegisterFunction( "DEC_Geometrie_StopCalculLignesAvantEtArriere", &DEC_GeometryFunctions::StopComputingFrontAndBackLines );
 }
 
 // -----------------------------------------------------------------------------
@@ -421,6 +483,7 @@ void RegisterSpecificPointsFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_GetDestPoint", &DEC_PathFunctions::GetDestPoint );
     brain.RegisterFunction( "DEC_GetTypeLimaPoint", &DEC_PathFunctions::GetTypeLimaPoint );
     brain.RegisterFunction( "DEC_GetLimaPoint", &DEC_PathFunctions::GetLimaPoint );
+    brain.RegisterFunction( "DEC_GetNextRemovableObjectOnPath", &DEC_PathFunctions::GetNextRemovableObjectOnPath );
 }
 
 // -----------------------------------------------------------------------------
@@ -624,7 +687,7 @@ void RegisterItineraryFunctions( sword::Brain& brain )
 // -----------------------------------------------------------------------------
 void RegisterToolsFunctions( sword::Brain& brain )
 {
-    brain.RegisterFunction( "DEC_RandomValue", boost::function< int( int, int ) >( boost::bind( &DEC_DIAFunctions::GetRandomValue, _1 , _2 ) ) );
+    brain.RegisterFunction( "DEC_RandomValue", &DEC_DIAFunctions::GetRandomValue );
 }
 
 // -----------------------------------------------------------------------------
@@ -635,7 +698,9 @@ void RegisterCommonUserFunctions( sword::Brain& brain, bool isMasalife )
 {
     RegisterUnitFunctions( brain );
     RegisterPopulationFunctions( brain );
+    RegisterActionFunctions( brain );
     RegisterAgentKnowledgeFunctions( brain );
+    RegisterRepresentationFunctions( brain );
     RegisterGeometryFunctions( brain );
     RegisterUrbanBlockFunctions( brain );
     RegisterResourceNetworkFunctions( brain );

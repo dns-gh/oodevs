@@ -169,9 +169,6 @@ void RolePion_Decision::RegisterPath()
     RegisterFunction( "DEC_GetNextObjectOnPathWithBypassed",
         boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( boost::shared_ptr< DEC_Knowledge_Object >, float, const std::vector< std::string >& ) >(
         boost::bind( &DEC_PathFunctions::GetNextObjectOnPathWithBypassed, boost::ref( GetPion() ), _1, _2, _3 ) ) );
-    RegisterFunction( "DEC_GetNextRemovableObjectOnPath",
-        boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( const DEC_Decision_ABC&, boost::shared_ptr< DEC_Knowledge_Object >, float ) >(
-        boost::bind( &DEC_PathFunctions::GetNextRemovableObjectOnPath, _1, _2, _3 ) ) );
     RegisterFunction( "DEC_ShouldEmbark",
         boost::function< bool( boost::shared_ptr< DEC_Path_ABC > ) >( boost::bind( &DEC_PathFunctions::ShouldEmbark, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Itineraire_Etat",
@@ -227,7 +224,6 @@ void RolePion_Decision::RegisterPerception()
     RegisterFunction( "DEC_Perception_DesactiverObserveurTir", boost::bind( &DEC_PerceptionFunctions::DisableFireObserver, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Perception_PointEstVisible", boost::function< bool( MT_Vector2D* ) >( boost::bind( &DEC_PerceptionFunctions::IsPointVisible, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Connaissances_IdentifierToutesUnitesDansZone", boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::IdentifyAllAgentsInZone, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_Agent_ARadar", &DEC_AgentFunctions::AgentHasRadar );
     RegisterFunction( "DEC_GetPerception", boost::function< double( boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_PerceptionFunctions::GetPerception, boost::cref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_Perception_ActiverModeEnregistrement", boost::bind( &DEC_PerceptionFunctions::EnableRecordMode, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Perception_DesactiverModeEnregistrement", boost::bind( &DEC_PerceptionFunctions::DisableRecordMode, boost::ref( GetPion() ) ) );
@@ -297,8 +293,6 @@ void RolePion_Decision::RegisterKnowledge()
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPotentialAttrition, boost::cref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_ConnaissanceAgent_Dangerosite",
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosity, boost::cref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurPion", &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion );
-    RegisterFunction( "DEC_ConnaissanceAgent_DangerositeSurConnaissance", &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge );
 }
 
 // -----------------------------------------------------------------------------
@@ -307,7 +301,6 @@ void RolePion_Decision::RegisterKnowledge()
 // -----------------------------------------------------------------------------
 void RolePion_Decision::RegisterAgentKnowledgeFunctions()
 {
-    RegisterFunction( "DEC_Agent_RapportDeForceLocal", &DEC_AgentFunctions::GetRapForLocalAgent );
     RegisterFunction( "DEC_RapportDeForceLocal", boost::bind( &DEC_KnowledgeFunctions::GetRapForLocal, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_Connaissances_UnitesEnnemiesDangereuses", boost::bind( &DEC_KnowledgeFunctions::GetDangerousEnemies, boost::ref( GetPion() ) ) );
     RegisterFunction( "DEC_ConnaissanceBlocUrbain_RapForLocal",
