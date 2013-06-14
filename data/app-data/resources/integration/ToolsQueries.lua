@@ -307,10 +307,18 @@ integration.getEntitiesFromAutomatCommunication = function ( automat, role, with
     for i = 1, nTemp do
         local pion = temp[i]
         local knowledge = CreateKnowledge( integration.ontology.types.agent, pion )
-        if not knowledge:isDestroyed() then
+        local fun = function() return knowledge:isDestroyed() end
+        local ok, isDestroyed = pcall( fun )
+        DEC_Trace( "Err = "..tostring( ok )..", destroyed = "..tostring( isDestroyed ) )
+        if ok then
+            if not isDestroyed then
+                knowledges[ #knowledges + 1 ] = knowledge
+            end
+        else
             knowledges[ #knowledges + 1 ] = knowledge
         end
     end
+    DEC_Trace( "TRied to command "..tostring( nTemp )..", gave orders to "..tostring( #knowledges ) )
 
     if role ~= "none" then --TODO replace by NIL when a queries will have nullable parameters
         return integration.filterPionWithRole( knowledges, role )
