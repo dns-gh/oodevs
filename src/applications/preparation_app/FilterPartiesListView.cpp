@@ -23,8 +23,6 @@ FilterPartiesListView::FilterPartiesListView( QWidget* parent, bool checkedByDef
     , uncheckedPixmap_ ( MAKE_PIXMAP( cross ) )
     , checkedByDefault_( checkedByDefault )
 {
-    setMaximumHeight( 100 );
-
     addColumn( "Checkbox" );
     addColumn( "Hidden checkbox", 0 );
     addColumn( "Hidden party id", 0 );
