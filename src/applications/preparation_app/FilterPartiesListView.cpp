@@ -26,7 +26,6 @@ FilterPartiesListView::FilterPartiesListView( QWidget* parent, bool checkedByDef
     , uncheckedPixmap_ ( MAKE_PIXMAP( cross ) )
     , checkedByDefault_( checkedByDefault )
 {
-    setMaximumHeight( 100 );
     setModel( &model_ );
     setEditTriggers( 0 );
     setRootIsDecorated( false );
