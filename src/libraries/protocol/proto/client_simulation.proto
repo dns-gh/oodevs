@@ -337,7 +337,22 @@ message MagicAction {
     enum Type {
         //! A global weather magic action
         global_weather                     = 0;
-        //! A local weather magic action
+        //! Create or update a local weather.
+        //! parameters[0], AReal: temperature.
+        //! parameters[1], AReal: wind speed in km/h.
+        //! parameters[2], Heading: the direction where the wind flows
+        //!   in degrees.
+        //! parameters[3], AReal: cloud layer bottom altitude in meters.
+        //! parameters[4], AReal: cloud layer top altitude in meters.
+        //! parameters[5], AReal: cloud density.
+        //! parameters[6], Enumeration: a value within PrecipicationType.
+        //! parameters[7], Datetime: start time.
+        //! parameters[8], Datetime: end time.
+        //! parameters[9], Location: a location with two points defining
+        //!   the area top-left and bottom right corners.
+        //! parameters[10], Identifier, optional: the identifier of a
+        //!   local weather to update. If not passed, a local weather is
+        //!   created instead.
         local_weather                      = 1;
         //! A local weather destruction magic action
         local_weather_destruction          = 2;
