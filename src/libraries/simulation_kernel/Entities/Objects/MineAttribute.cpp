@@ -30,6 +30,7 @@ MineAttribute::MineAttribute()
     , nFullNbrDotation_   ( 0 )
     , nCurrentNbrDotation_( 0 )
     , miningPercentage_   ( 1., 0.05, 0., 1.)
+    , bMustBeMined_       ( false )
 {
     // NOTHING
 }
@@ -43,6 +44,7 @@ MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, unsigned int
     , nFullNbrDotation_   ( nDefaultMaxNbrDotation )
     , nCurrentNbrDotation_( nDefaultMaxNbrDotation )
     , miningPercentage_   ( 1., 0.05, 0., 1.)
+    , bMustBeMined_       ( false )
 {
     // NOTHING
 }
@@ -56,6 +58,7 @@ MineAttribute::MineAttribute( const sword::MissionParameter_Value& attributes  )
     , nFullNbrDotation_   ( 0 )
     , nCurrentNbrDotation_( 0 )
     , miningPercentage_   ( 1., 0.05, 0., 1.)
+    , bMustBeMined_       ( false )
 {
     if( attributes.list_size() == 2 )
         miningPercentage_.Set( static_cast< double >( attributes.list( 1 ).quantity() )/100. );
@@ -104,6 +107,24 @@ void MineAttribute::SetMaxDotations( const PHY_DotationCategory& category, unsig
 }
 
 // -----------------------------------------------------------------------------
+// Name: MineAttribute::MustBeMined
+// Created: MMC 2013-06-14
+// -----------------------------------------------------------------------------
+bool MineAttribute::MustBeMined() const
+{
+    return bMustBeMined_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MineAttribute::SetMustBeMined
+// Created: MMC 2013-06-14
+// -----------------------------------------------------------------------------
+void MineAttribute::SetMustBeMined( bool val )
+{
+    bMustBeMined_ = val;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MineAttribute::operator=
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
@@ -113,6 +134,7 @@ MineAttribute& MineAttribute::operator=( const MineAttribute& rhs )
     miningPercentage_ = rhs.miningPercentage_;
     nFullNbrDotation_ = rhs.nFullNbrDotation_;
     dotation_ = rhs.dotation_;
+    bMustBeMined_ = rhs.bMustBeMined_;
     return *this;
 }
 
@@ -123,13 +145,14 @@ MineAttribute& MineAttribute::operator=( const MineAttribute& rhs )
 void MineAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     std::string dotation;
+    double percentage = 0.;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar >> dotation
        >> nFullNbrDotation_
-       >> nCurrentNbrDotation_;
-    double tmp;
-    ar >> tmp;
-    miningPercentage_.Set( tmp );
+       >> nCurrentNbrDotation_
+       >> percentage
+       >> bMustBeMined_;
+    miningPercentage_.Set( percentage );
     dotation_ = PHY_DotationType::FindDotationCategory( dotation );
 }
 
@@ -146,7 +169,8 @@ void MineAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
        ar << "";
     ar << nFullNbrDotation_
        << nCurrentNbrDotation_
-       << (double)miningPercentage_.Get();
+       << (double)miningPercentage_.Get()
+       << bMustBeMined_;
 }
 
 // -----------------------------------------------------------------------------

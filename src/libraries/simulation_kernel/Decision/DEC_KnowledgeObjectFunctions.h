@@ -36,12 +36,14 @@ public:
     static bool IsNearEffectArea( boost::shared_ptr< MT_Vector2D > point, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, double distance );
     static int IsBypassed( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int IsMined( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int IsFullMined( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int IsBreached( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int IsConstructed( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsReservedObstacleActivated( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int GetActivationTime( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsReservedObstacle( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsKnowledgeValid( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static bool MustBeMined( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
     static int QueueForDecontamination( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int QueueUnitForDecontamination( DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );

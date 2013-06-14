@@ -320,7 +320,7 @@ int DEC_KnowledgeObjectFunctions::IsBypassed( boost::shared_ptr< DEC_Knowledge_O
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeObjectFunctions::IsBypassed
+// Name: DEC_KnowledgeObjectFunctions::IsMined
 // Created: DDA 2012-03-16
 // -----------------------------------------------------------------------------
 int DEC_KnowledgeObjectFunctions::IsMined( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
@@ -328,6 +328,26 @@ int DEC_KnowledgeObjectFunctions::IsMined( boost::shared_ptr< DEC_Knowledge_Obje
     if( pKnowledge && pKnowledge->IsValid() )
         return static_cast< int >( pKnowledge->IsMined() ? eTristate_True : eTristate_False );
     return static_cast< int >( eTristate_DontKnow );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::IsFullMined
+// Created: MMC 2013-06-14
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::IsFullMined( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+        return static_cast< int >( pKnowledge->IsFullMined() ? eTristate_True : eTristate_False );
+    return static_cast< int >( eTristate_DontKnow );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::MustBeMined
+// Created: MMC 2013-06-14
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeObjectFunctions::MustBeMined( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    return pKnowledge && pKnowledge->IsValid() && pKnowledge->MustBeMined();
 }
 
 // -----------------------------------------------------------------------------

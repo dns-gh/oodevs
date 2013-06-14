@@ -367,7 +367,7 @@ void RegisterAreaFunctions( sword::Brain& brain )
 void RegisterFuseauFunctions( sword::Brain& brain )
 {
     brain.RegisterFunction( "DEC_Fuseau_Width", &DEC_GeometryFunctions::GetWidth );
-	brain.RegisterFunction( "DEC_Fuseau_IsNull", &DEC_GeometryFunctions::IsNull );
+    brain.RegisterFunction( "DEC_Fuseau_IsNull", &DEC_GeometryFunctions::IsNull );
 }
 
 // -----------------------------------------------------------------------------
@@ -400,7 +400,6 @@ void RegisterParametersCopyFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_UserTypeList_PushBack_Mission", &DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission );
     brain.RegisterFunction( "DEC_GenObjectList_PushBack_Mission", &DEC_DIAFunctions::CopyGenObjectToGenObjectListMission );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterListsManipulationFunctions
@@ -441,6 +440,7 @@ void RegisterEngineerObjectsFunctions( sword::Brain& brain )
     brain.RegisterMethod( "DEC_GenObject_DateActivationMines", &DEC_Gen_Object::GetActivationTime );
     brain.RegisterMethod( "DEC_GenObject_Name", &DEC_Gen_Object::GetName );
     brain.RegisterMethod( "DEC_GenObject_HasCapacity", &DEC_Gen_Object::HasCapacity );
+    brain.RegisterMethod( "DEC_GenObject_Mining", &DEC_Gen_Object::GetMining );
 }
 
 // -----------------------------------------------------------------------------
@@ -457,6 +457,8 @@ void RegisterObjectsFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceObjet_IssuesDuMemeReseauSouterrain", DEC_KnowledgeObjectFunctions::EnterAndExitInSameUndergroundNetwork );
     brain.RegisterFunction( "DEC_ObjectKnowledge_HasCapacity", &DEC_KnowledgeObjectFunctions::HasCapacity );
     brain.RegisterFunction( "DEC_ObjectKnowledge_BuildInstantaneously", &DEC_KnowledgeObjectFunctions::BuildInstantaneously );
+    brain.RegisterFunction( "DEC_ObjectKnowledge_IsFullMined", &DEC_KnowledgeObjectFunctions::IsFullMined );
+    brain.RegisterFunction( "DEC_ObjectKnowledge_MustBeMined", &DEC_KnowledgeObjectFunctions::MustBeMined );
 }
 
 // -----------------------------------------------------------------------------

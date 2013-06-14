@@ -38,7 +38,6 @@
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "Entities/Objects/TrafficabilityAttribute.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
-#include "Entities/Objects/MineAttribute.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -748,6 +747,17 @@ bool DEC_Knowledge_Object::IsMined() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsFullMined
+// Created: MMC 2013-06-14
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::IsFullMined() const
+{
+    if( const MineAttribute* attr = RetrieveAttribute< MineAttribute >() )
+        return attr->GetState() >= 1.;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::IsConstructed
 // Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
@@ -775,6 +785,17 @@ bool DEC_Knowledge_Object::IsReservedObstacleActivated() const
 {
     if( const ObstacleAttribute* activable = RetrieveAttribute< ObstacleAttribute >() )
         return activable->IsActivated();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::MustBeMined
+// Created: MMC 2013-06-14
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::MustBeMined() const
+{
+    if( const MineAttribute* attr = RetrieveAttribute< MineAttribute >() )
+        return attr->MustBeMined();
     return false;
 }
 

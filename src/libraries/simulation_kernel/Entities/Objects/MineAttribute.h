@@ -81,6 +81,8 @@ public:
     unsigned int GetDotationType() const;
     void Set( double percentage );
     void SetMaxDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
+    bool MustBeMined() const;
+    void SetMustBeMined( bool val );
     //@}
 
     //! @name Copy
@@ -96,6 +98,7 @@ private:
     unsigned int nFullNbrDotation_;
     unsigned int nCurrentNbrDotation_;
     mutable NetworkBufferedPercentageValue< double > miningPercentage_;
+    bool bMustBeMined_;
     //@}
 };
 

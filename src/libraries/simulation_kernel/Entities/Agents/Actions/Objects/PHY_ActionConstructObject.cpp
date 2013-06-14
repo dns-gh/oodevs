@@ -63,7 +63,10 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, boost
         }
         MineAttribute* mineAttribute = pObject_->RetrieveAttribute< MineAttribute >();
         if( mineAttribute )
-            mineAttribute->Set( pGenObject->GetMining() ? 1. : 0. ); //default valorization is set to 100%
+        {
+            mineAttribute->Set( 0. ); //default valorization is set to 100%
+            mineAttribute->SetMustBeMined( pGenObject->GetMining() );
+        }
         TimeLimitedAttribute* timeLimitedAttribute = pObject_->RetrieveAttribute< TimeLimitedAttribute >();
         if( timeLimitedAttribute )
             timeLimitedAttribute->SetLifeTime( static_cast< unsigned int >( pGenObject->GetTimeLimit() ) );
