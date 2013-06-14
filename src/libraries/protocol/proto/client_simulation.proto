@@ -145,6 +145,14 @@ message UnitMagicAction {
         //! A formation creation magic action
         formation_creation                = 28;
         //! A crowd creation magic action
+        //! The tasker must be set to the parent party or formation.
+        //! parameters[0], ACharStr: crowd type name.
+        //! parameters[1], Point: crowd location.
+        //! parameters[2], Quantity: healty persons count.
+        //! parameters[3], Quantity: wounded persons count.
+        //! parameters[4], Quantity: dead persons count.
+        //! parameters[5], ACharStr: crowd name.
+        //! result[0], CrowdId: created crowd identifier.
         crowd_creation                    = 29;
         //! A log supply pull flow magic action
         log_supply_pull_flow              = 30;

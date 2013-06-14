@@ -119,6 +119,8 @@
 #include "Adapters/Legacy/Sink.h"
 #include "Adapters/FloodModel.h"
 
+#define MASA_BADPARAM_UNIT( name ) MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, name )
+
 using namespace sword;
 
 void TerminatePhysicalSingletons()
@@ -1333,22 +1335,32 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
     else
         throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_unit );
 
-    if( !message.has_parameters() || message.parameters().elem_size() != 6
-        || message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_acharstr()
-        || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get( 0 ).has_point()
-        || message.parameters().elem( 2 ).value_size() != 1 || !message.parameters().elem( 2 ).value().Get( 0 ).has_quantity()
-        || message.parameters().elem( 3 ).value_size() != 1 || !message.parameters().elem( 3 ).value().Get( 0 ).has_quantity()
-        || message.parameters().elem( 4 ).value_size() != 1 || !message.parameters().elem( 4 ).value().Get( 0 ).has_quantity()
-        || message.parameters().elem( 5 ).value_size() != 1 || !message.parameters().elem( 5 ).value().Get( 0 ).has_acharstr() )
-    {
-        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
-    }
+    if( !message.has_parameters() || message.parameters().elem_size() != 6 )
+        throw MASA_BADPARAM_UNIT( "invalid parameters count, 6 parameters expected" );
+    if( message.parameters().elem( 0 ).value_size() != 1 ||
+            !message.parameters().elem( 0 ).value().Get( 0 ).has_acharstr() )
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be an ACharStr" );
+    if( message.parameters().elem( 1 ).value_size() != 1 ||
+            !message.parameters().elem( 1 ).value().Get( 0 ).has_point() )
+        throw MASA_BADPARAM_UNIT( "parameters[1] must be a Point" );
+    if( message.parameters().elem( 2 ).value_size() != 1 ||
+            !message.parameters().elem( 2 ).value().Get( 0 ).has_quantity() )
+        throw MASA_BADPARAM_UNIT( "parameters[2] must be a Quantity" );
+    if( message.parameters().elem( 3 ).value_size() != 1
+            || !message.parameters().elem( 3 ).value().Get( 0 ).has_quantity() )
+        throw MASA_BADPARAM_UNIT( "parameters[3] must be a Quantity" );
+    if( message.parameters().elem( 4 ).value_size() != 1 ||
+            !message.parameters().elem( 4 ).value().Get( 0 ).has_quantity() )
+        throw MASA_BADPARAM_UNIT( "parameters[4] must be a Quantity" );
+    if( message.parameters().elem( 5 ).value_size() != 1 ||
+            !message.parameters().elem( 5 ).value().Get( 0 ).has_acharstr() )
+        throw MASA_BADPARAM_UNIT( "parameters[5] must be an ACharStr" );
 
     const ::MissionParameters& parameters = message.parameters();
     std::string type = parameters.elem( 0 ).value().Get( 0 ).acharstr();
     ::Location location = parameters.elem( 1 ).value().Get( 0 ).point().location();
     if( !location.has_coordinates() )
-        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "invalid crowd location" );
 
     const unsigned int healthy = parameters.elem( 2 ).value().Get( 0 ).quantity();
     const unsigned int wounded = parameters.elem( 3 ).value().Get( 0 ).quantity();
@@ -1357,7 +1369,7 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
     MIL_Tools::ConvertCoordMosToSim( location.coordinates().elem( 0 ), point );
     int number = healthy + wounded + dead;
     if( number == 0 )
-        throw MASA_EXCEPTION_ASN( UnitActionAck_ErrorCode, UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "crowd cannot be created empty" );
 
     std::string name = parameters.elem( 5 ).value().Get( 0 ).acharstr();
     MIL_Population& popu = populationFactory_->Create( type, point, number, name, *parent, 0, context );
