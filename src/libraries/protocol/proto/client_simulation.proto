@@ -363,6 +363,10 @@ message MagicAction {
         //! A change resource network properties magic action
         change_resource_network_properties = 5;
         //! A fire order on location magic action
+        //! parameters[0], Location or Point: fire location.
+        //! parameters[1], ResourceType: resource type.
+        //! parameters[2], AReal: real multiplied by an intervention type
+        //!  of a resource type to calculate the iterations number.
         create_fire_order_on_location      = 6;
     }
     //! The type of magic action
