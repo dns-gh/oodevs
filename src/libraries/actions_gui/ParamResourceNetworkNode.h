@@ -52,6 +52,8 @@ public:
     virtual void CommitTo( actions::ParameterContainer_ABC& ) const;
     virtual bool InternalCheckValidity() const;
     virtual void CreateInternalMenu( kernel::ContextMenu& menu );
+    virtual void Visit( const actions::parameters::Resource& param );
+    virtual void Visit( const actions::parameters::ResourceNetworkNode& param );
     //@}
 
 private:

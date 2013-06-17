@@ -31,6 +31,11 @@ public:
     virtual ~Resource();
     //@}
 
+    //! @name Operatoins
+    //@{
+    virtual void Accept( ParameterVisitor_ABC& visitor ) const;
+    //@}
+
 private:
     //! @name Helpers
     //@{

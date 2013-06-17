@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "AtlasNature.h"
+#include "ParameterVisitor_ABC.h"
 #include "clients_kernel/AtlasNatures.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
@@ -129,4 +130,13 @@ void AtlasNature::Display( kernel::Displayer_ABC& displayer ) const
 std::string AtlasNature::SerializeType() const
 {
     return "natureatlas";
+}
+
+// -----------------------------------------------------------------------------
+// Name: AtlasNature::Accept
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void AtlasNature::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

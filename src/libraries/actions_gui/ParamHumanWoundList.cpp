@@ -182,3 +182,17 @@ bool ParamHumanWoundList::InternalCheckValidity() const
 {
     return list_ && model_.rowCount() != 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamHumanWoundList::Visit
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void ParamHumanWoundList::Visit( const actions::parameters::MedicalPriorities& param )
+{
+    ActivateOptionalIfNeeded( param );
+    model_.clear();
+    QString value = param.GetValue();
+    QStringList values = value.split( QRegExp( ", " ) );
+    for( auto it = values.begin(); it != values.end(); ++it )
+        model_.appendRow( new QStandardItem( *it ) );
+}

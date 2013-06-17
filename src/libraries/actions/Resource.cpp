@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "Resource.h"
+#include "ParameterVisitor_ABC.h"
 
 using namespace actions;
 using namespace parameters;
@@ -39,4 +40,13 @@ Resource::~Resource()
 std::string Resource::SerializeType() const
 {
     return "resource";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Resource::Accept
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void Resource::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

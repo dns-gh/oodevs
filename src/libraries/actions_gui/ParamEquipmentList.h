@@ -52,6 +52,7 @@ public:
     virtual bool InternalCheckValidity() const;
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual void SetEntity( const kernel::Entity_ABC* entity );
+    virtual void Visit( const actions::parameters::MaintenancePriorities& param );
     //@}
 
 private slots:

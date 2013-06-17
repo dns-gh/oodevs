@@ -51,6 +51,7 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void CommitTo( sword::MissionParameter& asn ) const;
     virtual void CommitTo( sword::MissionParameter_Value& asn ) const;
+    virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 
 private:

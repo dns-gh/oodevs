@@ -46,6 +46,7 @@ public:
     //@{
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual void Visit( const actions::parameters::AtlasNature& param );
     //@}
 
 private slots:
@@ -55,11 +56,6 @@ private slots:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void AddField( const QString& name, unsigned char byte, unsigned char mask );
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< const kernel::AtlasNature* > T_NatureFields;
@@ -71,6 +67,7 @@ private:
     const kernel::AtlasNatures& natures_;
     kernel::AtlasNature nature_;
     T_NatureFields fields_;
+    std::vector< QCheckBox* > checkboxs_;
     //@}
 };
 

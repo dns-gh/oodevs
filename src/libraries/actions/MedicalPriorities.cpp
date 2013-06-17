@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "MedicalPriorities.h"
+#include "ParameterVisitor_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -134,4 +135,13 @@ bool MedicalPriorities::IsSet() const
 std::string MedicalPriorities::SerializeType() const
 {
     return "medicalpriorities";
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalPriorities::Accept
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void MedicalPriorities::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

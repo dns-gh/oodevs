@@ -13,6 +13,7 @@
 #include "InterfaceBuilder_ABC.h"
 #include "ParamInterface_ABC.h"
 #include "actions/ParameterContainer_ABC.h"
+#include "actions/Resource.h"
 #include "actions/ResourceNetworkNode.h"
 #include "actions/String.h"
 #include "clients_gui/ResourceNetwork_ABC.h"
@@ -178,3 +179,35 @@ bool ParamResourceNetworkNode::InternalCheckValidity() const
     return selected_ != 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ParamResourceNetworkNode::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void ParamResourceNetworkNode::Visit( const actions::parameters::Resource& param )
+{
+    resourceName_->setText( param.GetValue() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamResourceNetworkNode::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void ParamResourceNetworkNode::Visit( const actions::parameters::ResourceNetworkNode& param )
+{
+    const kernel::Entity_ABC* entity = param.GetValue();
+    current_ = entity;
+    selected_ = entity;
+    if( !entity )
+        return;
+
+    ActivateOptionalIfNeeded( param );
+    objectName_->setText( selected_->GetName() );
+
+    assert( param.Count() == 1 );
+    auto it = param.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const actions::Parameter_ABC& parameter = it.NextElement();
+        parameter.Accept( *this );
+    }
+}

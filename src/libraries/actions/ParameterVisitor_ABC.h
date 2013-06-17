@@ -16,6 +16,7 @@ namespace actions
 
     namespace parameters {
         class Agent;
+        class AtlasNature;
         class Army;
         class Automat;
         class Bool;
@@ -31,12 +32,15 @@ namespace actions
         class KnowledgeGroup;
         class Lima;
         class Location;
+        class MaintenancePriorities;
+        class MedicalPriorities;
         class Numeric;
         class ObjectKnowledge;
         class Path;
         class PathPoint;
         class PopulationKnowledge;
         class Quantity;
+        class Resource;
         class ResourceNetworkNode;
         class ResourceNetworkType;
         class String;
@@ -60,33 +64,37 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Visit( const parameters::Agent&               ) {}
-    virtual void Visit( const parameters::Automat&             ) {}
-    virtual void Visit( const parameters::Army&                ) {}
-    virtual void Visit( const parameters::Bool&                ) {}
-    virtual void Visit( const parameters::Crowd&               ) {}
-    virtual void Visit( const parameters::DateTime&            ) {}
-    virtual void Visit( const parameters::Direction&           ) {}
-    virtual void Visit( const parameters::DotationType&        ) {}
-    virtual void Visit( const parameters::EngineerConstruction&) {}
-    virtual void Visit( const parameters::Enumeration&         ) {}
-    virtual void Visit( const parameters::ExtensionList&       ) {}
-    virtual void Visit( const parameters::Identifier&          ) {}
-    virtual void Visit( const parameters::Inhabitant&          ) {}
-    virtual void Visit( const parameters::KnowledgeGroup&      ) {}
-    virtual void Visit( const parameters::Lima&                ) {}
-    virtual void Visit( const parameters::Location&            ) {}
-    virtual void Visit( const parameters::Numeric&             ) {}
-    virtual void Visit( const parameters::ObjectKnowledge&     ) {}
-    virtual void Visit( const parameters::Path&                ) {}
-    virtual void Visit( const parameters::PathPoint&           ) {}
-    virtual void Visit( const parameters::PopulationKnowledge& ) {}
-    virtual void Visit( const parameters::Quantity&            ) {}
-    virtual void Visit( const parameters::ResourceNetworkNode& ) {}
-    virtual void Visit( const parameters::ResourceNetworkType& ) {}
-    virtual void Visit( const parameters::String&              ) {}
-    virtual void Visit( const parameters::UrbanBlock&          ) {}
-    virtual void Visit( const Parameter_ABC&                   ) {}
+    virtual void Visit( const parameters::Agent&                 ) {}
+    virtual void Visit( const parameters::AtlasNature&           ) {}
+    virtual void Visit( const parameters::Automat&               ) {}
+    virtual void Visit( const parameters::Army&                  ) {}
+    virtual void Visit( const parameters::Bool&                  ) {}
+    virtual void Visit( const parameters::Crowd&                 ) {}
+    virtual void Visit( const parameters::DateTime&              ) {}
+    virtual void Visit( const parameters::Direction&             ) {}
+    virtual void Visit( const parameters::DotationType&          ) {}
+    virtual void Visit( const parameters::EngineerConstruction&  ) {}
+    virtual void Visit( const parameters::Enumeration&           ) {}
+    virtual void Visit( const parameters::ExtensionList&         ) {}
+    virtual void Visit( const parameters::Identifier&            ) {}
+    virtual void Visit( const parameters::Inhabitant&            ) {}
+    virtual void Visit( const parameters::KnowledgeGroup&        ) {}
+    virtual void Visit( const parameters::Lima&                  ) {}
+    virtual void Visit( const parameters::Location&              ) {}
+    virtual void Visit( const parameters::MaintenancePriorities& ) {}
+    virtual void Visit( const parameters::MedicalPriorities&     ) {}
+    virtual void Visit( const parameters::Numeric&               ) {}
+    virtual void Visit( const parameters::ObjectKnowledge&       ) {}
+    virtual void Visit( const parameters::Path&                  ) {}
+    virtual void Visit( const parameters::PathPoint&             ) {}
+    virtual void Visit( const parameters::PopulationKnowledge&   ) {}
+    virtual void Visit( const parameters::Quantity&              ) {}
+    virtual void Visit( const parameters::Resource&              ) {}
+    virtual void Visit( const parameters::ResourceNetworkNode&   ) {}
+    virtual void Visit( const parameters::ResourceNetworkType&   ) {}
+    virtual void Visit( const parameters::String&                ) {}
+    virtual void Visit( const parameters::UrbanBlock&            ) {}
+    virtual void Visit( const Parameter_ABC&                     ) {}
     //@}
 };
 

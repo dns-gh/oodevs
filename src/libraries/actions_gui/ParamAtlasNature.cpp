@@ -58,8 +58,9 @@ QWidget* ParamAtlasNature::BuildInterface( const QString& objectName, QWidget* p
     while( it.HasMoreElements() )
     {
         const kernel::AtlasNature& nature = it.NextElement();
-        new QCheckBox( nature.GetName(), buttonGroup );
+        QCheckBox* checkBox = new QCheckBox( nature.GetName(), buttonGroup );
         fields_.push_back( &nature );
+        checkboxs_.push_back( checkBox );
     }
     connect( buttonGroup, SIGNAL( clicked( int ) ), SLOT( OnClicked( int ) ) );
     layout->addWidget( buttonGroup );
@@ -85,4 +86,21 @@ void ParamAtlasNature::CommitTo( actions::ParameterContainer_ABC& action ) const
 void ParamAtlasNature::OnClicked( int id )
 {
     nature_.Toggle( *fields_[id] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAtlasNature::Visit
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void ParamAtlasNature::Visit( const actions::parameters::AtlasNature& param )
+{
+    ActivateOptionalIfNeeded( param );
+    const kernel::AtlasNature& nature = param.GetValue();
+    unsigned short value = nature.GetValue();
+    assert( fields_.size() == checkboxs_.size() );
+    for( int i = 0; i < fields_.size(); ++i )
+    {
+        if( fields_[ i ] != 0 && checkboxs_[ i ] != 0 )
+            checkboxs_[ i ]->setCheckState( ( fields_[ i ]->GetValue() & value ) != 0 ? Qt::Checked : Qt::Unchecked );
+    }
 }

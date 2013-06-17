@@ -20,6 +20,11 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
 
+//#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
+//#pragma warning( pop )
+
 Q_DECLARE_METATYPE( const kernel::EquipmentType* )
 
 #define EquipmentRole ( Qt::UserRole + 1 )
@@ -224,4 +229,35 @@ void ParamEquipmentList::SetEntity( const kernel::Entity_ABC* entity )
         for( auto it = priorities.rbegin(); it != priorities.rend(); ++it )
             list_->addItem( QString( ( **it ).GetName().c_str() ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamEquipmentList::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void ParamEquipmentList::Visit( const actions::parameters::MaintenancePriorities& param )
+{
+    ActivateOptionalIfNeeded( param );
+    std::string value;
+    param.CommitTo( value );
+    std::vector< std::string > priorities;
+    boost::split( priorities, value, boost::algorithm::is_any_of( "," ) );
+
+    baseList_->clear();
+    list_->clear();
+    tools::Iterator< const kernel::EquipmentType& > it( resolver_.CreateIterator() );
+    while( it.HasMoreElements() )
+    {
+        const kernel::EquipmentType& type = it.NextElement();
+        if( std::find( priorities.begin(), priorities.end(), boost::lexical_cast< std::string >( type.GetId() ) ) == priorities.end() )
+        {
+            QListWidgetItem* item = new QListWidgetItem( type.GetName().c_str() );
+            item->setData( EquipmentRole, QVariant::fromValue( &type ) );
+            baseList_->addItem( item );
+        }
+    }
+
+    for( auto it = priorities.begin(); it != priorities.end(); ++it )
+        if( kernel::EquipmentType* type = resolver_.Find( boost::lexical_cast< unsigned long >( *it ) ) )
+            list_->addItem( QString::fromStdString( type->GetName() ) );
 }

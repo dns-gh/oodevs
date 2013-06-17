@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "MaintenancePriorities.h"
+#include "ParameterVisitor_ABC.h"
 #include "clients_kernel/EquipmentType.h"
 #include "protocol/Protocol.h"
 #pragma warning( push )
@@ -155,4 +156,13 @@ bool MaintenancePriorities::IsSet() const
 std::string MaintenancePriorities::SerializeType() const
 {
     return "maintenancepriorities";
+}
+
+// -----------------------------------------------------------------------------
+// Name: MaintenancePriorities::Accept
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void MaintenancePriorities::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }
