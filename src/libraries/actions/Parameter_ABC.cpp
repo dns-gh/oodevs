@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "Parameter_ABC.h"
+#include "ParameterVisitor_ABC.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/GlTooltip_ABC.h"
 #include "clients_kernel/Tools.h"
@@ -232,6 +233,7 @@ void Parameter_ABC::CommitTo( sword::MissionParameter& message ) const
 // -----------------------------------------------------------------------------
 void Parameter_ABC::Accept( ParameterVisitor_ABC& visitor ) const
 {
+    visitor.Visit( *this );
     for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Accept( visitor );
 }

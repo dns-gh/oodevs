@@ -21,6 +21,33 @@
 
 using namespace kernel;
 
+namespace
+{
+    class OrderParameterValueVisitor : public OrderParameterValueVisitor_ABC
+                                     , private boost::noncopyable
+    {
+    public:
+        OrderParameterValueVisitor( OrderParameter& parameter )
+            : parameter_( parameter )
+        {
+            // NOTHING
+        }
+
+        virtual ~OrderParameterValueVisitor()
+        {
+            // NOTHING
+        }
+
+        virtual void Visit( const OrderParameterValue& value )
+        {
+            parameter_.AddValue( value.GetId(), value.GetName() );
+        }
+
+    private:
+        OrderParameter& parameter_;
+    };
+}
+
 namespace actions {
     namespace parameters {
 
@@ -46,7 +73,11 @@ ParameterList::ParameterList( const kernel::OrderParameter& parameter, const ::g
     int i = 0;
     for( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >::const_iterator it = list.begin(); it != list.end(); ++it, ++i )
     {
-        Parameter_ABC* param = factory.CreateParameter( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).toStdString(), "location", false ), *it, entity );
+        kernel::OrderParameter newParameter = OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).toStdString(), parameter.GetType(), parameter.IsOptional() );
+        OrderParameterValueVisitor visitor( newParameter );
+        parameter.Accept( visitor );
+
+        Parameter_ABC* param = factory.CreateParameter( newParameter, *it, entity );
         if( param )
             AddParameter( *param );
         else

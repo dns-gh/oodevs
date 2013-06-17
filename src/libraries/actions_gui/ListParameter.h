@@ -109,6 +109,11 @@ public:
     virtual void SetEntity( const kernel::Entity_ABC* entity );
     //@}
 
+    //! @name ParameterVisitor_ABC implementation
+    //@{
+    virtual void Visit( const actions::Parameter_ABC& param );
+    //@}
+
 protected:
     //! @name Operations
     //@{

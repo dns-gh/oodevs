@@ -462,3 +462,25 @@ void ListParameter< ConcreteElement >::SetEntity( const kernel::Entity_ABC* enti
                 param->SetEntity( entity );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::Visit
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::Visit( const actions::Parameter_ABC& param )
+{
+    auto it = param.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const actions::Parameter_ABC& elem = it.NextElement();
+        if( ! list_ || ( model_.rowCount() && ! CheckValidity() ) )
+            return;
+        Param_ABC* param = CreateElement();
+        if( param )
+        {
+            AddElement( *param );
+            elem.Accept( *param );
+        }
+    }
+}
