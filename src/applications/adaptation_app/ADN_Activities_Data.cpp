@@ -226,7 +226,7 @@ void ADN_Activities_Data::WriteArchive( xml::xostream& output )
 {
     EnsureActivityActivitesIdSingle();
     output  << xml::start( "package-activity" );
-    ADN_Tools::AddSchema( output, "Activities" );
+    ADN_Tools::AddSchema( output, "Activity" );
     output      << xml::start( "activities" );
                     for( auto it = activities_.begin(); it != activities_.end(); ++it )
                         (*it)->WriteArchive( output );
