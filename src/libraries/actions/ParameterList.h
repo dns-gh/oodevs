@@ -53,7 +53,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ParameterList( const kernel::OrderParameter& parameter );
-             ParameterList( const kernel::OrderParameter& parameter, const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list, const actions::ParameterFactory_ABC& factory, const kernel::Entity_ABC& entity );
+             ParameterList( const kernel::OrderParameter& parameter, const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list, const actions::ParameterFactory_ABC& factory, const kernel::Entity_ABC* entity );
     virtual ~ParameterList();
     //@}
 

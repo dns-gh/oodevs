@@ -67,3 +67,12 @@ void EventWidget_ABC::Draw( gui::Viewport_ABC& )
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: EventWidget_ABC::Warn
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void EventWidget_ABC::Warn() const
+{
+    // NOTHING
+}

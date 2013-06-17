@@ -88,6 +88,7 @@ private:
     virtual void Commit( timeline::Event& event ) const;
     virtual void Trigger() const;
     virtual bool IsValid() const;
+    virtual void Warn() const;
     virtual void Draw( gui::Viewport_ABC& viewport );
     //@}
 
@@ -105,7 +106,8 @@ private:
     const Decisions_ABC* GetTargetDecision() const;
     void FillMission();
     void SetTarget( const kernel::Entity_ABC* entity );
-    void WarnIfTargetAndMissionAreNotCompatible() const;
+    bool AreTargetAndMissionCompatible() const;
+    void WarnTargetAndMission() const;
     void BuildMissionInterface();
     void FillMissionInterface( const EventAction& event );
     void Publish( timeline::Event* event = 0 ) const;

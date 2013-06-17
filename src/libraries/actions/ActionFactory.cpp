@@ -11,11 +11,10 @@
 #include "ActionFactory.h"
 #include "ActionTasker.h"
 #include "ActionTiming.h"
-#include "AgentMission.h"
-#include "AutomatMission.h"
 #include "AutomatCreationMagicAction.h"
 #include "CreationListener_ABC.h"
 #include "EngageMagicAction.h"
+#include "EntityMission.h"
 #include "FragOrder.h"
 #include "Identifier.h"
 #include "KnowledgeGroupMagicAction.h"
@@ -26,7 +25,6 @@
 #include "ParameterFactory_ABC.h"
 #include "ParameterList.h"
 #include "Point.h"
-#include "PopulationMission.h"
 #include "Quantity.h"
 #include "String.h"
 #include "Bool.h"
@@ -111,20 +109,18 @@ namespace
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
+actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC* target, const kernel::MissionType& mission ) const
 {
     std::auto_ptr< actions::Action_ABC > action;
-    if( target.GetTypeName() == kernel::Agent_ABC::typeName_ )
+    if( mission.GetType() == eMissionType_Pawn )
         action.reset( new actions::AgentMission( target, mission, controller_, true ) );
-    else if( target.GetTypeName() == kernel::Automat_ABC::typeName_ )
+    if( mission.GetType() == eMissionType_Automat )
         action.reset( new actions::AutomatMission( target, mission, controller_, true ) );
-    else if( target.GetTypeName() == kernel::Population_ABC::typeName_ )
+    else if( mission.GetType() == eMissionType_Population )
         action.reset( new actions::PopulationMission( target, mission, controller_, true ) );
-    else
-        throw MASA_EXCEPTION( "Cannot resolve executing entity" );
 
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( &target, false ) );
+    action->Attach( *new ActionTasker( target, false ) );
     action->Polish();
     return action.release();
 }
@@ -133,11 +129,11 @@ actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& targ
 // Name: ActionFactory::CreateAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder ) const
+actions::Action_ABC* ActionFactory::CreateAction( const kernel::Entity_ABC* target, const kernel::FragOrderType& fragOrder ) const
 {
     std::auto_ptr< actions::Action_ABC > action( new actions::FragOrder( target, fragOrder, controller_, true ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( &target, false ) );
+    action->Attach( *new ActionTasker( target, false ) );
     action->Polish();
     return action.release();
 }
@@ -213,10 +209,10 @@ void ActionFactory::AddTiming( actions::Action_ABC& action, const Message& messa
 actions::Action_ABC* ActionFactory::CreateAction( const sword::UnitOrder& message, bool needRegistration ) const
 {
     const kernel::MissionType& mission = missions_.Get( message.type().id() );
-    const kernel::Entity_ABC& tasker = entities_.GetAgent( message.tasker().id() );
+    const kernel::Entity_ABC* tasker = entities_.FindAgent( message.tasker().id() );
     std::auto_ptr< actions::Action_ABC > action( new actions::AgentMission( tasker, mission, controller_, needRegistration ) );
     AddTiming( *action, message );
-    action->Attach( *new ActionTasker( &tasker ) );
+    action->Attach( *new ActionTasker( tasker ) );
     action->Polish();
     AddParameters( *action, mission, message.parameters() );
     return action.release();
@@ -229,10 +225,10 @@ actions::Action_ABC* ActionFactory::CreateAction( const sword::UnitOrder& messag
 actions::Action_ABC* ActionFactory::CreateAction( const sword::AutomatOrder& message, bool needRegistration ) const
 {
     const kernel::MissionType& mission = missions_.Get( message.type().id() );
-    const kernel::Entity_ABC& tasker = entities_.GetAutomat( message.tasker().id() );
+    const kernel::Entity_ABC* tasker = entities_.FindAutomat( message.tasker().id() );
     std::auto_ptr< actions::Action_ABC > action( new actions::AutomatMission( tasker, mission, controller_, needRegistration ) );
     AddTiming( *action, message );
-    action->Attach( *new ActionTasker( &tasker ) );
+    action->Attach( *new ActionTasker( tasker ) );
     action->Polish();
     AddParameters( *action, mission, message.parameters() );
     return action.release();
@@ -245,10 +241,10 @@ actions::Action_ABC* ActionFactory::CreateAction( const sword::AutomatOrder& mes
 actions::Action_ABC* ActionFactory::CreateAction( const sword::CrowdOrder& message, bool needRegistration ) const
 {
     const kernel::MissionType& mission = missions_.Get( message.type().id() );
-    const kernel::Entity_ABC& tasker = entities_.GetPopulation( message.tasker().id() );
+    const kernel::Entity_ABC* tasker = entities_.FindPopulation( message.tasker().id() );
     std::auto_ptr< actions::Action_ABC > action( new actions::PopulationMission( tasker, mission, controller_, needRegistration ) );
     AddTiming( *action, message );
-    action->Attach( *new ActionTasker( &tasker ) );
+    action->Attach( *new ActionTasker( tasker ) );
     action->Polish();
     AddParameters( *action, mission, message.parameters() );
     return action.release();
@@ -256,22 +252,15 @@ actions::Action_ABC* ActionFactory::CreateAction( const sword::CrowdOrder& messa
 
 namespace
 {
-    const kernel::Entity_ABC& FindTasker( sword::FragOrder message, const kernel::EntityResolver_ABC& entities )
+    const kernel::Entity_ABC* FindTasker( sword::FragOrder message, const kernel::EntityResolver_ABC& entities )
     {
         if( message.tasker().has_automat() )
-            try
-            {
-                return entities.GetAutomat( message.tasker().automat().id() );
-            }
-            catch( ... )
-            {
-                throw TargetNotFound( message.tasker().automat().id() );
-            }
+            return entities.FindAutomat( message.tasker().automat().id() );
         if( message.tasker().has_crowd() )
-            return entities.GetPopulation( message.tasker().crowd().id() );
+            return entities.FindPopulation( message.tasker().crowd().id() );
         if( message.tasker().has_unit() )
-            return entities.GetAgent( message.tasker().unit().id() );
-        throw TargetNotFound();
+            return entities.FindAgent( message.tasker().unit().id() );
+        return 0;
     }
 }
 
@@ -281,11 +270,11 @@ namespace
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateAction( const sword::FragOrder& message, bool needRegistration ) const
 {
-    const kernel::Entity_ABC& tasker = FindTasker( message, entities_ );
+    const kernel::Entity_ABC* tasker = FindTasker( message, entities_ );
     const kernel::FragOrderType& order = fragOrders_.Get( message.type().id() );
     std::auto_ptr< actions::Action_ABC > action( new actions::FragOrder( tasker, order, controller_, needRegistration ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( &tasker ) );
+    action->Attach( *new ActionTasker( tasker ) );
     action->Polish();
     AddParameters( *action, order, message.parameters() );
     return action.release();
@@ -626,12 +615,15 @@ void ActionFactory::AddParameters( actions::Action_ABC& action, const kernel::Or
     int i = 0;
     while( it.HasMoreElements() )
     {
+        const kernel::OrderParameter& param = it.NextElement();
         if( i >= message.elem_size() )
             throw MASA_EXCEPTION( "Mission parameter count does not match mission definition" );
         if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
-            if( const kernel::Entity_ABC* entity = entities_.FindEntity( tasker->GetTaskerId() ) )
-                if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), message.elem( i++ ), *entity ) )
-                    action.AddParameter( *newParam );
+        {
+            const kernel::Entity_ABC* entity = entities_.FindEntity( tasker->GetTaskerId() );
+            if( actions::Parameter_ABC* newParam = factory_.CreateParameter( param, message.elem( i++ ), entity ) )
+                action.AddParameter( *newParam );
+        }
     }
 }
 

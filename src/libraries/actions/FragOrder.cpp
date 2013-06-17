@@ -41,7 +41,7 @@ namespace
 // Name: FragOrder constructor
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
-FragOrder::FragOrder( const Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::Controller& controller, bool registered )
+FragOrder::FragOrder( const Entity_ABC* entity, const kernel::FragOrderType& fragOrder, kernel::Controller& controller, bool registered )
     : ActionWithTarget_ABC( controller, fragOrder, entity )
     , controller_         ( controller )
     , registered_         ( registered )

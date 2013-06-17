@@ -189,7 +189,10 @@ void EventDialog::OnTrigger()
     if( currentWidget_->IsValid() )
         currentWidget_->Trigger();
     else
+    {
+        currentWidget_->Warn();
         QMessageBox::warning( this, tr( "Warning" ), tr( "This event is incomplete so it can't be triggered.") );
+    }
 }
 
 // -----------------------------------------------------------------------------

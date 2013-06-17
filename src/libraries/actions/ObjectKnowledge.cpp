@@ -32,8 +32,8 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, Controller& c
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long id, const ObjectKnowledgeConverter_ABC& converter,
-                                  const Entity_ABC& owner, Controller& controller, const kernel::EntityResolver_ABC& entities )
-    : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, entities.FindObject( id ) ? converter.Find( *entities.FindObject( id ), owner ) : 0, controller )
+                                  const Entity_ABC* owner, Controller& controller, const kernel::EntityResolver_ABC& entities )
+    : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, entities.FindObject( id ) && owner ? converter.Find( entities.GetObject( id ), *owner ) : 0, controller )
 {
     // NOTHING
 }

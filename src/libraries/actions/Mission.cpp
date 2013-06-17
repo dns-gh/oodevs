@@ -53,7 +53,7 @@ namespace
 // Name: Mission constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Mission::Mission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered /* = true */ )
+Mission::Mission( const kernel::Entity_ABC* entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered /* = true */ )
     : ActionWithTarget_ABC( controller, mission, entity )
     , controller_         ( controller )
     , registered_         ( registered )

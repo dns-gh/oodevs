@@ -3,56 +3,55 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2013 MASA Group
 //
 // *****************************************************************************
 
 #include "actions_pch.h"
-#include "AgentMission.h"
-#include "clients_kernel/OrderType.h"
-#include "protocol/ServerPublisher_ABC.h"
-#include "protocol/SimulationSenders.h"
-
-using namespace actions;
+#include "EntityMission.h"
 
 // -----------------------------------------------------------------------------
-// Name: AgentMission constructor
-// Created: SBO 2007-05-21
+// Name: EntityMission constructor
+// Created: ABR 2013-06-14
 // -----------------------------------------------------------------------------
-AgentMission::AgentMission( const Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered /* = true*/ )
+template< typename T >
+EntityMission< T >::EntityMission( const kernel::Entity_ABC* entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered /*= true*/ )
     : Mission( entity, mission, controller, registered )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentMission constructor
-// Created: SBO 2007-05-21
+// Name: EntityMission constructor
+// Created: ABR 2013-06-14
 // -----------------------------------------------------------------------------
-AgentMission::AgentMission( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity, bool stub )
+template< typename T >
+EntityMission< T >::EntityMission( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity, bool stub )
     : Mission( xis, controller, missions, entity, stub )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentMission destructor
-// Created: SBO 2007-05-21
+// Name: EntityMission destructor
+// Created: ABR 2013-06-14
 // -----------------------------------------------------------------------------
-AgentMission::~AgentMission()
+template< typename T >
+EntityMission< T >::~EntityMission()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentMission::Publish
-// Created: SBO 2007-05-21
+// Name: EntityMission::Publish
+// Created: ABR 2013-06-14
 // -----------------------------------------------------------------------------
-void AgentMission::Publish( Publisher_ABC& publisher, int ) const
+template< typename T >
+void EntityMission< T >::Publish( Publisher_ABC& publisher, int ) const
 {
-    simulation::UnitOrder message;
+    T message;
     message().mutable_tasker()->set_id( entityId_ );
-    message().mutable_type()->set_id( GetType().GetId() );
+    message().mutable_type()->set_id( GetType().GetId());
     CommitTo( *message().mutable_parameters() );
-    message.Send( publisher, 0 );
+    message.Send( publisher );
 }

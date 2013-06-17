@@ -139,8 +139,6 @@ void EventOrderWidget::Fill( const Event& event )
             entity = model_.agents_.tools::Resolver< kernel::Automat_ABC >::Find( mission->GetEntityId() );
         if( entity == 0 )
             entity = model_.agents_.tools::Resolver< kernel::Population_ABC >::Find( mission->GetEntityId() );
-        if( entity == 0 )
-            throw MASA_EXCEPTION( "Entity not found" );
         SetTarget( entity );
 
         FillMission();
@@ -162,6 +160,7 @@ void EventOrderWidget::Commit( timeline::Event& event ) const
     missionInterface_->SetPlanned( true );
     Publish( &event );
     event.action.target = CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE );
+    event.action.apply = IsValid(); // $$$$ ABR 2013-06-14: TODO: Separate missionInterface->CheckValidity() and missionInterface->Warn()
 }
 
 // -----------------------------------------------------------------------------
@@ -182,7 +181,24 @@ void EventOrderWidget::Trigger() const
 // -----------------------------------------------------------------------------
 bool EventOrderWidget::IsValid() const
 {
-    return ( missionInterface_ ) ? missionInterface_->CheckValidity() : false;
+    return target_ && AreTargetAndMissionCompatible() && missionInterface_ && missionInterface_->CheckValidity();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::Warn
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void EventOrderWidget::Warn() const
+{
+    if( !target_ )
+    {
+        targetGroupBox_->Warn();
+        targetLabel_->Warn();
+    }
+    else if( !AreTargetAndMissionCompatible() )
+        WarnTargetAndMission();
+    if( missionInterface_ )
+        missionInterface_->CheckValidity(); // $$$$ ABR 2013-06-14: TODO Use missionInterface_->Warn() when ready
 }
 
 // -----------------------------------------------------------------------------
@@ -330,10 +346,10 @@ void EventOrderWidget::SetTarget( const kernel::Entity_ABC* entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventOrderWidget::WarnIfTargetAndMissionAreNotCompatible
-// Created: ABR 2013-06-06
+// Name: EventOrderWidget::AreTargetAndMissionCompatible
+// Created: ABR 2013-06-14
 // -----------------------------------------------------------------------------
-void EventOrderWidget::WarnIfTargetAndMissionAreNotCompatible() const
+bool EventOrderWidget::AreTargetAndMissionCompatible() const
 {
     if( target_ )
     {
@@ -361,15 +377,22 @@ void EventOrderWidget::WarnIfTargetAndMissionAreNotCompatible() const
             while( needWarning && it.HasMoreElements() )
                 needWarning = it.NextElement().GetName() != order->GetName();
         }
-        if( needWarning )
-        {
-            if( missionInterface_ )
-                missionInterface_->SetEntity( 0 );
-            missionCombo_->Warn();
-            targetGroupBox_->Warn();
-            targetLabel_->Warn();
-        }
+        return !needWarning;
     }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventOrderWidget::WarnTargetAndMission
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void EventOrderWidget::WarnTargetAndMission() const
+{
+    if( missionInterface_ )
+        missionInterface_->SetEntity( 0 );
+    missionCombo_->Warn();
+    targetGroupBox_->Warn();
+    targetLabel_->Warn();
 }
 
 // -----------------------------------------------------------------------------
@@ -420,7 +443,8 @@ void EventOrderWidget::OnMissionChanged( int )
 {
     missionChoosed_ = true;
     BuildMissionInterface();
-    WarnIfTargetAndMissionAreNotCompatible();
+    if( !AreTargetAndMissionCompatible() )
+        WarnTargetAndMission();
 }
 
 // -----------------------------------------------------------------------------
@@ -433,7 +457,10 @@ void EventOrderWidget::OnTargetSelected()
         return;
     SetTarget( contextMenuEntity_ );
     if( missionChoosed_ )
-        WarnIfTargetAndMissionAreNotCompatible();
+    {
+        if( !AreTargetAndMissionCompatible() )
+            WarnTargetAndMission();
+    }
     else
         FillMission();
 }

@@ -77,17 +77,17 @@ public:
     void SetPlanned( bool planned );
     void CommitTo( actions::Action_ABC& action ) const;
     void FillFrom( const actions::Action_ABC& action );
-    template< typename T, typename Creator >
-    void Publish( Creator& creator, timeline::Event* event = 0 ) const
+    template< typename T >
+    void Publish( actions::ActionsModel& model, timeline::Event* event = 0 ) const
     {
         if( !order_ )
             return;
-        Action_ABC* action = creator.CreateAction( *entity_, static_cast< const T& >( *order_ ) );
+        Action_ABC* action = model.CreateAction( static_cast< const T& >( *order_ ), entity_ );
         CommitTo( *action );
         if( planned_ )
             emit PlannedMission( *action, event );
         else
-            creator.Publish( *action, 0 );
+            model.Publish( *action, 0 );
     }
     //@}
 

@@ -12,6 +12,8 @@
 
 #include "tools/Resolver.h"
 #include <boost/noncopyable.hpp>
+#include "Action_ABC.h"
+#include "ActionFactory_ABC.h"
 
 class Publisher_ABC;
 
@@ -77,8 +79,8 @@ public:
 
     //! @name Operations
     //@{
-    Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission );
-    Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder );
+    template< typename T >
+    Action_ABC* CreateAction( const T& order, const kernel::Entity_ABC* target = 0 );
 
     Action_ABC* CreateAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, const kernel::Time_ABC& simulation );
     Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_ );
@@ -114,6 +116,18 @@ private:
     Publisher_ABC& defaultPublisher_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateAction
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+template< typename T >
+Action_ABC* ActionsModel::CreateAction( const T& order, const kernel::Entity_ABC* target /*= 0*/ )
+{
+    Action_ABC* action = factory_.CreateAction( target, order );
+    Register( action->GetId(), *action );
+    return action;
+}
 
 }
 

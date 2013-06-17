@@ -66,7 +66,7 @@ ParameterList::ParameterList( const kernel::OrderParameter& parameter )
 // Name: ParameterList constructor
 // Created: MGD 2010-11-09
 // -----------------------------------------------------------------------------
-ParameterList::ParameterList( const kernel::OrderParameter& parameter, const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list, const actions::ParameterFactory_ABC& factory, const kernel::Entity_ABC& entity )
+ParameterList::ParameterList( const kernel::OrderParameter& parameter, const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list, const actions::ParameterFactory_ABC& factory, const kernel::Entity_ABC* entity )
     : Parameter< QString >( parameter )
     , parameter_( parameter )
 {

@@ -29,6 +29,7 @@ namespace kernel
     class Automat_ABC;
     class Entity_ABC;
     class FragOrderType;
+    class MagicActionType;
     class MissionType;
     class Object_ABC;
     class PopulationType;
@@ -69,8 +70,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const = 0;
-    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder ) const = 0;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::MissionType& mission ) const = 0;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC* target, const kernel::FragOrderType& fragOrder ) const = 0;
+    virtual Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MagicActionType& fragOrder, const QString& name ) const = 0;
     virtual Action_ABC* CreateAction( xml::xistream& xis, bool readonly = false ) const = 0;
     virtual Action_ABC* CreateStubAction( xml::xistream& xis ) const = 0;
 

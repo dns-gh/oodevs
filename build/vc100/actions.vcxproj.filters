@@ -166,22 +166,13 @@
     <ClCompile Include="..\..\src\libraries\actions\ActionWithTarget_ABC.cpp">
       <Filter>Source Files\Action types</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions\AgentMission.cpp">
-      <Filter>Source Files\Action types</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions\AutomatCreationListener.cpp">
-      <Filter>Source Files\Action types</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions\AutomatMission.cpp">
       <Filter>Source Files\Action types</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions\FragOrder.cpp">
       <Filter>Source Files\Action types</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions\Mission.cpp">
-      <Filter>Source Files\Action types</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions\PopulationMission.cpp">
       <Filter>Source Files\Action types</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions\AutomatCreationMagicAction.cpp">
@@ -393,13 +384,7 @@
     <ClInclude Include="..\..\src\libraries\actions\ActionWithTarget_ABC.h">
       <Filter>Source Files\Action types</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions\AgentMission.h">
-      <Filter>Source Files\Action types</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions\AutomatCreationListener.h">
-      <Filter>Source Files\Action types</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions\AutomatMission.h">
       <Filter>Source Files\Action types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions\CreationListener_ABC.h">
@@ -409,9 +394,6 @@
       <Filter>Source Files\Action types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions\Mission.h">
-      <Filter>Source Files\Action types</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions\PopulationMission.h">
       <Filter>Source Files\Action types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions\AutomatCreationMagicAction.h">
@@ -456,6 +438,9 @@
     <ClInclude Include="..\..\src\libraries\actions\ActionError.h">
       <Filter>Source Files\Action types\Extensions</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\EntityMission.h">
+      <Filter>Source Files\Action types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\actions\Parameter.inl">
@@ -478,6 +463,9 @@
     </None>
     <None Include="..\..\src\libraries\actions\actions_pt.ts">
       <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\actions\EntityMission.inl">
+      <Filter>Source Files\Action types</Filter>
     </None>
   </ItemGroup>
 </Project>

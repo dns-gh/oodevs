@@ -25,7 +25,7 @@ class ActionWithTarget_ABC : public Action_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionWithTarget_ABC( kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target );
+             ActionWithTarget_ABC( kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC* target );
              ActionWithTarget_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target );
     virtual ~ActionWithTarget_ABC();
     //@}

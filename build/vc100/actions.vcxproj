@@ -164,12 +164,9 @@
     <ClCompile Include="..\..\src\libraries\actions\String.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\UrbanBlock.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\ActionWithTarget_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\actions\AgentMission.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\AutomatCreationListener.cpp" />
-    <ClCompile Include="..\..\src\libraries\actions\AutomatMission.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\FragOrder.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\Mission.cpp" />
-    <ClCompile Include="..\..\src\libraries\actions\PopulationMission.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\AutomatCreationMagicAction.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\EngageMagicAction.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\KnowledgeGroupMagicAction.cpp" />
@@ -188,6 +185,7 @@
     <ClInclude Include="..\..\src\libraries\actions\ActionsFilter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\actions\ActionsModel.h" />
     <ClInclude Include="..\..\src\libraries\actions\ActionParameterFactory.h" />
+    <ClInclude Include="..\..\src\libraries\actions\EntityMission.h" />
     <ClInclude Include="..\..\src\libraries\actions\Parameter.h" />
     <ClInclude Include="..\..\src\libraries\actions\Parameter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\actions\ParameterContainer_ABC.h" />
@@ -241,13 +239,10 @@
     <ClInclude Include="..\..\src\libraries\actions\String.h" />
     <ClInclude Include="..\..\src\libraries\actions\UrbanBlock.h" />
     <ClInclude Include="..\..\src\libraries\actions\ActionWithTarget_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\actions\AgentMission.h" />
     <ClInclude Include="..\..\src\libraries\actions\AutomatCreationListener.h" />
-    <ClInclude Include="..\..\src\libraries\actions\AutomatMission.h" />
     <ClInclude Include="..\..\src\libraries\actions\CreationListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\actions\FragOrder.h" />
     <ClInclude Include="..\..\src\libraries\actions\Mission.h" />
-    <ClInclude Include="..\..\src\libraries\actions\PopulationMission.h" />
     <ClInclude Include="..\..\src\libraries\actions\AutomatCreationMagicAction.h" />
     <ClInclude Include="..\..\src\libraries\actions\EngageMagicAction.h" />
     <ClInclude Include="..\..\src\libraries\actions\KnowledgeGroupMagicAction.h" />
@@ -261,6 +256,7 @@
     <None Include="..\..\src\libraries\actions\actions_ar.ts" />
     <None Include="..\..\src\libraries\actions\actions_en.ts" />
     <None Include="..\..\src\libraries\actions\actions_pt.ts" />
+    <None Include="..\..\src\libraries\actions\EntityMission.inl" />
     <None Include="..\..\src\libraries\actions\Parameter.inl" />
     <None Include="..\..\src\libraries\actions\Knowledge_ABC.inl" />
     <None Include="..\..\src\libraries\actions\actions_es.ts" />

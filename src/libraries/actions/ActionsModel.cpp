@@ -9,8 +9,6 @@
 
 #include "actions_pch.h"
 #include "ActionsModel.h"
-#include "Action_ABC.h"
-#include "ActionFactory_ABC.h"
 #include "ActionsFilter_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/StaticModel.h"
@@ -70,28 +68,6 @@ void ActionsModel::Purge( const ActionsFilter_ABC* filter /* = 0*/ )
             else
                 ++it;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateAction
-// Created: SBO 2007-03-12
-// -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateAction( const Entity_ABC& target, const MissionType& mission )
-{
-    Action_ABC* action = factory_.CreateAction( target, mission );
-    Register( action->GetId(), *action );
-    return action;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsModel::CreateAction
-// Created: SBO 2007-03-19
-// -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateAction( const Entity_ABC& target, const FragOrderType& fragOrder )
-{
-    Action_ABC* action = factory_.CreateAction( target, fragOrder );
-    Register( action->GetId(), *action );
-    return action;
 }
 
 // -----------------------------------------------------------------------------

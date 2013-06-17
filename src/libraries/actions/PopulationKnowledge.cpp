@@ -32,8 +32,8 @@ PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, kerne
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 PopulationKnowledge::PopulationKnowledge( const OrderParameter& parameter, unsigned long id, AgentKnowledgeConverter_ABC& converter,
-                                          const Entity_ABC& owner, kernel::Controller& controller, const kernel::EntityResolver_ABC& entities )
-    : Knowledge_ABC< PopulationKnowledge_ABC >( parameter, converter.Find( entities.GetPopulation( id ), owner ), controller )
+                                          const Entity_ABC* owner, kernel::Controller& controller, const kernel::EntityResolver_ABC& entities )
+    : Knowledge_ABC< PopulationKnowledge_ABC >( parameter, entities.FindPopulation( id ) && owner ? converter.Find( entities.GetPopulation( id ), *owner ) : 0, controller )
 {
     // NOTHING
 }
