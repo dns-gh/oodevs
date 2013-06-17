@@ -224,6 +224,7 @@ void PHY_ActionMove::StopAction()
     if( pMainPath_.get() )
     {
         role_.MoveCanceled( pMainPath_ );
+        role_.NotifyCurrentPathChanged();
         pMainPath_->DecRef();
         executionSuspended_ = false;
     }

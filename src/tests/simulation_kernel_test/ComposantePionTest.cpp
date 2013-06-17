@@ -10,7 +10,6 @@
 #include "simulation_kernel_test_pch.h"
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "StubMIL_AgentPion.h"
@@ -62,8 +61,6 @@ BOOST_AUTO_TEST_CASE( if_a_pion_is_transported_its_composantes_can_not_perceive 
 
     transport::PHY_RolePion_Transported* roleTransported = new transport::PHY_RolePion_Transported( *fixture.pPion_ );
     fixture.pPion_->RegisterRole( *roleTransported );
-    moving::PHY_RoleAction_Moving* roleMoving = new moving::PHY_RoleAction_Moving( *fixture.pPion_ );
-    fixture.pPion_->RegisterRole( *roleMoving );
 
     BOOST_CHECK( composanteLoadable.CanPerceive( 0 ) );
     BOOST_CHECK( composanteUnloadable.CanPerceive( 0 ) );

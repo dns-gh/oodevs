@@ -19,7 +19,6 @@
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -103,8 +102,6 @@ BOOST_FIXTURE_TEST_CASE( PhComputerFirerPositionTest, Fixture )
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* firerlocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *firerlocationRole );
-    moving::PHY_RoleAction_Moving* roleMoving = new moving::PHY_RoleAction_Moving( *firerFixture.pPion_ );
-    firerFixture.pPion_->RegisterRole( *roleMoving );
     urbanRole->NotifyMovingInsideObject( *urbanBlock);
     firerlocationRole->MagicMove( MT_Vector2D( 1, 1 ) );
     const MT_Vector2D result( 2, 1.5 );
@@ -119,10 +116,6 @@ BOOST_FIXTURE_TEST_CASE( PhComputerTargetPositionTest, Fixture )
     targetFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *targetLocationRole );
     PHY_RolePion_Location* firerLocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *firerLocationRole );
-    moving::PHY_RoleAction_Moving* firerRoleMoving = new moving::PHY_RoleAction_Moving( *firerFixture.pPion_ );
-    firerFixture.pPion_->RegisterRole( *firerRoleMoving );
-    moving::PHY_RoleAction_Moving* targetRoleMoving = new moving::PHY_RoleAction_Moving( *targetFixture.pPion_ );
-    targetFixture.pPion_->RegisterRole( *targetRoleMoving );
     urbanRole->NotifyMovingInsideObject( *urbanBlock );
     targetLocationRole->MagicMove( MT_Vector2D( 1, 1 ) );
     firerLocationRole->MagicMove( MT_Vector2D( 3, 2 ) );
@@ -139,8 +132,6 @@ BOOST_FIXTURE_TEST_CASE( PhComputerIndirectPhModifier, Fixture )
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* locationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
-    moving::PHY_RoleAction_Moving* roleMoving = new moving::PHY_RoleAction_Moving( *firerFixture.pPion_ );
-    firerFixture.pPion_->RegisterRole( *roleMoving );
     urbanRole->NotifyMovingInsideObject( *urbanBlock );
     locationRole->MagicMove( MT_Vector2D( 1, 1 ) );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *locationRole );

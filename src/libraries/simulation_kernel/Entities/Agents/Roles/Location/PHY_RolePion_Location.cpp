@@ -14,7 +14,6 @@
 #include "CheckPoints/SerializationTools.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_PopulationInteraction.h"
@@ -277,7 +276,6 @@ void PHY_RolePion_Location::MagicMove( const MT_Vector2D& vPosition )
 
     Hide();
     Show( vPosition );
-    owner_->GetRole< moving::PHY_RoleAction_Moving >().NotifyCurrentPathChanged();
 }
 
 // =============================================================================

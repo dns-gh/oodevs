@@ -134,8 +134,6 @@ void PHY_RolePion_Transported::LoadForTransport( const MIL_Agent_ABC& transporte
 
     pTransporter_ = &transporter;
 
-    owner_->GetRole< moving::PHY_RoleAction_Moving >().NotifyCurrentPathChanged();
-
     owner_->Apply( &location::LocationActionNotificationHandler_ABC::Hide );
     vLoadingPosition_= transporter.GetRole< PHY_RoleInterface_Location >().GetPosition();
     if( bTransportOnlyLoadable && vHumanTransporterPosition_.IsZero() )

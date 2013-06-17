@@ -94,6 +94,7 @@ BOOST_FIXTURE_TEST_CASE( stopping_command_cancels_pathfind_job, MovementFixture 
     MOCK_EXPECT( DeleteKnowledgeCache );
     ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "speed", 0 ) );
     ExpectEffect( entity[ "movement/intention" ], sword::test::MakeModel( false ) );
+    ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "path/points", sword::test::MakeModel() ) );
     commands.Stop( command );
     mock::verify();
     ExecuteCommands();
@@ -109,6 +110,7 @@ namespace
             MOCK_EXPECT( DeleteKnowledgeCache );
             ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "speed", 0 ) );
             ExpectEffect( entity[ "movement/intention" ], sword::test::MakeModel( false ) );
+            ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "path/points", sword::test::MakeModel() ) );
             StopCommand( command );
         }
     };
