@@ -490,13 +490,13 @@ void ContourLinesLayer::Conrec()
 
 namespace
 {
-    void CreateGLArrays( GLenum mode, const std::vector< boost::shared_ptr< T_PointVector > >& contours, int maxSize )
+    void CreateGLArrays( GLenum mode, const std::vector< boost::shared_ptr< T_PointVector > >& contours, unsigned int maxSize )
     {
         const std::size_t size = contours.size();
         for( register std::size_t i = 0; i < size; ++i )
         {
             const T_PointVector* l = contours[ i ].get();
-            int incr = 0;
+            unsigned int incr = 0;
             while( incr* maxSize < l->size() )
             {
                 glVertexPointer( 2, GL_FLOAT, 0, &( ( *l )[ incr* maxSize ] ) );
