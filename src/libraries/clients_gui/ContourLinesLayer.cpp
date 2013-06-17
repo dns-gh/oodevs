@@ -38,9 +38,11 @@ ContourLinesLayer::ContourLinesLayer( Controllers& controllers, DetectionMap& ma
     , stopThread_   ( false )
     , threadRunning_( false )
     , computed_     ( false )
+    , glMaxVerticesSize_( 1000 )
 {
     controllers_.Register( *this );
     thread_.reset( new tools::thread::ThreadPool( 1 ) );
+    glGetIntegerv( GL_MAX_TEXTURE_SIZE, &glMaxVerticesSize_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -459,6 +461,7 @@ void ContourLinesLayer::Conrec()
                     if( contour->loop_ )
                     {
                         T_PointVector* v = new T_PointVector( contour->points_.begin(), contour->points_.end() );
+                        v->push_back( v->front() );
                         loops_[ large ? 0 : 2 ].push_back( boost::shared_ptr< T_PointVector >( v ) );
                         contours.erase( contours.begin() + index );
                     }
@@ -487,14 +490,19 @@ void ContourLinesLayer::Conrec()
 
 namespace
 {
-    void CreateGLArrays( GLenum mode, const std::vector< boost::shared_ptr< T_PointVector > >& contours )
+    void CreateGLArrays( GLenum mode, const std::vector< boost::shared_ptr< T_PointVector > >& contours, int maxSize )
     {
         const std::size_t size = contours.size();
         for( register std::size_t i = 0; i < size; ++i )
         {
             const T_PointVector* l = contours[ i ].get();
-            glVertexPointer( 2, GL_FLOAT, 0, &( *l )[ 0 ] );
-            glDrawArrays( mode, 0, static_cast< GLsizei >( l->size() ) );
+            int incr = 0;
+            while( incr* maxSize < l->size() )
+            {
+                glVertexPointer( 2, GL_FLOAT, 0, &( ( *l )[ incr* maxSize ] ) );
+                glDrawArrays( mode, 0, static_cast< GLsizei >( maxSize < l->size() - incr* maxSize? maxSize : l->size() - incr* maxSize ) );
+                ++incr;
+            }
         }
     }
 }
@@ -521,17 +529,16 @@ void ContourLinesLayer::CreateCallList()
             return;
         }
     }
-
     callListId_ = glGenLists( 1 );
     glNewList( callListId_, GL_COMPILE );
     glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
     glEnableClientState( GL_VERTEX_ARRAY );
     glLineWidth( 2.f );
-    CreateGLArrays( GL_LINE_LOOP, loops_[ 0 ] );
-    CreateGLArrays( GL_LINE_STRIP, loops_[ 1 ] );
+    CreateGLArrays( GL_LINE_STRIP, loops_[ 0 ], glMaxVerticesSize_ );
+    CreateGLArrays( GL_LINE_STRIP, loops_[ 1 ], glMaxVerticesSize_ );
     glLineWidth( 1.f );
-    CreateGLArrays( GL_LINE_LOOP, loops_[ 2 ] );
-    CreateGLArrays( GL_LINE_STRIP, loops_[ 3 ] );
+    CreateGLArrays( GL_LINE_STRIP, loops_[ 2 ], glMaxVerticesSize_ );
+    CreateGLArrays( GL_LINE_STRIP, loops_[ 3 ], glMaxVerticesSize_ );
     glDisableClientState( GL_VERTEX_ARRAY );
     glEndList();
     loops_[ 0 ].clear();

@@ -84,6 +84,7 @@ private:
     bool computed_;
     ContourLinesObserver observer_;
     static bool valid_;
+    int glMaxVerticesSize_;
     //@}
 };
 
