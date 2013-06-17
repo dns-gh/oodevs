@@ -33,7 +33,7 @@ namespace actions
 */
 // Created: LDC 2010-08-18
 // =============================================================================
-class ParamLocationComposite: public Param_ABC
+class ParamLocationComposite: public Param_ABC // $$$$ ABR 2013-06-14: Should be rename in ParamComposite, it can handle any type of Param_ABC
 {
     Q_OBJECT
 
@@ -60,11 +60,23 @@ public:
     virtual void CommitTo( actions::ParameterContainer_ABC& container ) const;
     virtual bool CheckValidity();
     virtual void SetEntity( const kernel::Entity_ABC* entity );
+
+    virtual void Visit( const actions::parameters::Agent& param );
+    virtual void Visit( const actions::parameters::Automat& param );
+    virtual void Visit( const actions::parameters::Location& param );
+    virtual void Visit( const actions::parameters::ObjectKnowledge& param );
+    virtual void Visit( const actions::parameters::Path& param );
+    virtual void Visit( const actions::parameters::Point& param );
+    virtual void Visit( const actions::parameters::Polygon& param );
+    virtual void Visit( const actions::parameters::PopulationKnowledge& param );
+    virtual void Visit( const actions::parameters::UrbanBlock& param );
     //@}
 
 protected:
     //! @name Helpers
     //@{
+    template< typename T >
+    void InternalVisit( const T& param, const std::string& type );
     void InternalBuildInterface();
     virtual void NotifyChanged( Param_ABC& param );
     virtual bool IsChecked() const;

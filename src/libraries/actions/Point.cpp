@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "Point.h"
+#include "ParameterVisitor_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -104,4 +105,13 @@ void Point::CommitTo( sword::CoordLatLong& message ) const
 std::string Point::SerializeType() const
 {
     return "point";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Point::Accept
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void Point::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

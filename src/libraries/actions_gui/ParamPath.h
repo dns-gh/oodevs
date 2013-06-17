@@ -48,6 +48,7 @@ public:
     //@{
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void SetEntity( const kernel::Entity_ABC* entity );
+    virtual void Visit( const actions::parameters::Path& param );
     //@}
 
 protected:

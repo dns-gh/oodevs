@@ -130,7 +130,8 @@ void Path::VisitCurve( const T_PointVector& /*points*/ )
 // -----------------------------------------------------------------------------
 void Path::AddPoint( const geometry::Point2f& p, std::size_t i, std::size_t count )
 {
-    Point pt; pt.AddPoint( p );
+    kernel::Point pt;
+    pt.AddPoint( p );
     QString label;
     if( i + 1 == count )
         label = tools::translate( "Parameter", "Destination" );
@@ -230,4 +231,13 @@ bool Path::IsSet() const
 std::string Path::SerializeType() const
 {
     return "path";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path::GetPoints
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+const T_PointVector& Path::GetPoints() const
+{
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED; // $$$$ ABR 2013-06-14: Here juste to allow ParamLocation_ABC to be templated, since path is not a LocationBase ...
 }

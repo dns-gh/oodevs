@@ -12,8 +12,20 @@
 #include "moc_ParamLocationComposite.cpp"
 #include "InterfaceBuilder_ABC.h"
 #include "ParamInterface_ABC.h"
+
+#include "actions/Agent.h"
+#include "actions/Automat.h"
+#include "actions/Location.h"
+#include "actions/ObjectKnowledge.h"
+#include "actions/Path.h"
+#include "actions/Point.h"
+#include "actions/Polygon.h"
+#include "actions/PopulationKnowledge.h"
+#include "actions/UrbanBlock.h"
+
 #include "actions/Parameter.h"
 #include "actions/Location.h"
+
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
@@ -198,8 +210,8 @@ void ParamLocationComposite::NotifyChanged( Param_ABC& param )
 {
     selectedParam_ = &param;
     assert( widgets_.size() == params_.size() );
-    std::vector<Param_ABC*>::const_iterator it = params_.begin();
-    std::vector<QWidget*>::const_iterator itWidget = widgets_.begin();
+    auto it = params_.begin();
+    auto itWidget = widgets_.begin();
     for( ; it != params_.end(); ++it, ++itWidget )
     {
         if( selectedParam_ == *it )
@@ -288,4 +300,106 @@ void ParamLocationComposite::SetEntity( const kernel::Entity_ABC* entity )
 {
     for( auto it = params_.begin(); it != params_.end(); ++it )
         ( *it )->SetEntity( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::Visit( const actions::parameters::Agent& param )
+{
+    InternalVisit( param, param.IsKnowledge() ? "agentknowledge" : "agent" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::Visit( const actions::parameters::Automat& param )
+{
+    InternalVisit( param, "automat" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::Visit( const actions::parameters::Location& param )
+{
+    InternalVisit( param, tools::ToString( param.GetLocationType() ).toStdString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::Visit( const actions::parameters::ObjectKnowledge& param )
+{
+    InternalVisit( param, "objectknowledge" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::Visit( const actions::parameters::Path& param )
+{
+    InternalVisit( param, "path" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::Visit( const actions::parameters::Point& param )
+{
+    InternalVisit( param, "point" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::Visit( const actions::parameters::Polygon& param )
+{
+    InternalVisit( param, "polygon" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::Visit( const actions::parameters::PopulationKnowledge& param )
+{
+    InternalVisit( param, "crowdknowledge" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::Visit( const actions::parameters::UrbanBlock& param )
+{
+    InternalVisit( param, "urbanknowledge" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::InternalVisit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+template< typename T >
+void ParamLocationComposite::InternalVisit( const T& param, const std::string& type )
+{
+    for( auto it = params_.begin(); it != params_.end(); ++it )
+    {
+        Param_ABC* internalParam = *it;
+        if( !internalParam )
+            continue;
+        if( internalParam->GetType() == type )
+        {
+            param.Accept( *internalParam );
+            NotifyChanged( *internalParam );
+            return;
+        }
+    }
 }

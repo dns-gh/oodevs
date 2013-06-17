@@ -38,6 +38,8 @@ namespace actions
         class ObjectKnowledge;
         class Path;
         class PathPoint;
+        class Point;
+        class Polygon;
         class PopulationKnowledge;
         class Quantity;
         class Resource;
@@ -58,8 +60,23 @@ class ParameterVisitor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParameterVisitor_ABC() {}
-    virtual ~ParameterVisitor_ABC() {}
+    ParameterVisitor_ABC( bool recursive = true )
+        : recursiveVisit_( recursive )
+    {
+        // NOTHING
+    }
+    virtual ~ParameterVisitor_ABC()
+    {
+        // NOTHING
+    }
+    //@}
+
+    //! @name Accesors
+    //@{
+    bool IsRecursive()
+    {
+        return recursiveVisit_;
+    }
     //@}
 
     //! @name Operations
@@ -87,6 +104,8 @@ public:
     virtual void Visit( const parameters::ObjectKnowledge&       ) {}
     virtual void Visit( const parameters::Path&                  ) {}
     virtual void Visit( const parameters::PathPoint&             ) {}
+    virtual void Visit( const parameters::Point&                 ) {}
+    virtual void Visit( const parameters::Polygon&               ) {}
     virtual void Visit( const parameters::PopulationKnowledge&   ) {}
     virtual void Visit( const parameters::Quantity&              ) {}
     virtual void Visit( const parameters::Resource&              ) {}
@@ -95,6 +114,12 @@ public:
     virtual void Visit( const parameters::String&                ) {}
     virtual void Visit( const parameters::UrbanBlock&            ) {}
     virtual void Visit( const Parameter_ABC&                     ) {}
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    bool recursiveVisit_;
     //@}
 };
 

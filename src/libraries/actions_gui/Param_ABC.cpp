@@ -24,6 +24,7 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 Param_ABC::Param_ABC( QObject* parent, const ParamInterface_ABC& paramInterface, const kernel::OrderParameter& parameter )
     : QObject( parent )
+    , ParameterVisitor_ABC( false )
     , paramInterface_ ( paramInterface )
     , parameter_      ( parameter )
     , parentList_     ( 0 )
@@ -418,7 +419,7 @@ void Param_ABC::SetEntity( const kernel::Entity_ABC* )
 // -----------------------------------------------------------------------------
 void Param_ABC::ActivateOptionalIfNeeded( const actions::Parameter_ABC& param )
 {
-    if( param.IsOptional() && param.IsSet() )
+    if( group_ && param.IsOptional() && param.IsSet() )
         group_->setChecked( true );
 }
 

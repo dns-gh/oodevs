@@ -15,6 +15,7 @@
 #pragma warning( pop )
 
 #include <geometry/types.h>
+#include "Types.h"
 
 namespace kernel
 {

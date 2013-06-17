@@ -55,6 +55,7 @@ public:
     void CommitTo( sword::Location& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual bool IsSet() const;
+    const T_PointVector& GetPoints() const;
     //@}
 
 protected:

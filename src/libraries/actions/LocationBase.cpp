@@ -339,3 +339,21 @@ bool LocationBase::IsValid() const
 {
     return CheckValidity();
 }
+
+// -----------------------------------------------------------------------------
+// Name: LocationBase::GetPoints
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+const T_PointVector& LocationBase::GetPoints() const
+{
+    return points_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationBase::GetLocationType
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+E_LocationType LocationBase::GetLocationType() const
+{
+    return type_;
+}

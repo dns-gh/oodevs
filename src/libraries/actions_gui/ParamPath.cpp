@@ -12,8 +12,10 @@
 #include "InterfaceBuilder_ABC.h"
 #include "actions/Action_ABC.h"
 #include "actions/Path.h"
+#include "actions/PathPoint.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Path.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Positions.h"
 
@@ -71,4 +73,26 @@ void ParamPath::SetEntity( const kernel::Entity_ABC* entity )
     entity_ = entity;
     if( group_ )
         group_->setEnabled( IsInParam() || entity != 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamPath::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void ParamPath::Visit( const actions::parameters::Path& param )
+{
+    if( !entity_ )
+        return;
+
+    ActivateOptionalIfNeeded( param );
+    location_.reset( new kernel::Path( entity_->Get< kernel::Positions >() ) );
+    pPosLabel_->setText( location_->GetName() );
+
+    auto it = param.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const actions::parameters::PathPoint& param = static_cast< const actions::parameters::PathPoint& >( it.NextElement() );
+        assert( param.GetPoints().size() == 1 );
+        location_->AddPoint( param.GetPoints().front() );
+    }
 }

@@ -86,19 +86,6 @@ void Polygon::CommitTo( sword::MissionParameter_Value& message ) const
         CommitTo( *message.mutable_area()->mutable_location() );
 }
 
-namespace
-{
-    struct AsnSerializer : public ParameterVisitor_ABC
-    {
-        explicit AsnSerializer( sword::Location& message ) : message_( &message ) {}
-        virtual void Visit( const Location& param )
-        {
-            param.CommitTo( *message_ );
-        }
-        sword::Location* message_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: Path::CommitTo
 // Created: SBO 2007-05-22
@@ -106,8 +93,7 @@ namespace
 void Polygon::CommitTo( sword::Location& message ) const
 {
     message.set_type( sword::Location::polygon );
-    AsnSerializer serializer( message );
-    Accept( serializer );
+    Location::CommitTo( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,4 +103,13 @@ void Polygon::CommitTo( sword::Location& message ) const
 std::string Polygon::SerializeType() const
 {
     return "polygon";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Polygon::Accept
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+void Polygon::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

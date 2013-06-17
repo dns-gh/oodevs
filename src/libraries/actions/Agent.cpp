@@ -117,3 +117,12 @@ std::string Agent::SerializeType() const
         return "agentknowledge";
     return "agent";
 }
+
+// -----------------------------------------------------------------------------
+// Name: Agent::IsKnowledge
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+bool Agent::IsKnowledge() const
+{
+    return isKnowledge_;
+}

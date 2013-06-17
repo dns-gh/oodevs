@@ -234,8 +234,9 @@ void Parameter_ABC::CommitTo( sword::MissionParameter& message ) const
 void Parameter_ABC::Accept( ParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-    for( auto it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->Accept( visitor );
+    if( visitor.IsRecursive() )
+        for( auto it = elements_.begin(); it != elements_.end(); ++it )
+            it->second->Accept( visitor );
 }
 
 // -----------------------------------------------------------------------------

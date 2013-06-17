@@ -13,11 +13,15 @@
 #include "Param_ABC.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/ShapeHandler_ABC.h"
-#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/Circle.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/Lines.h"
 #include "clients_kernel/OrderParameter.h"
-#include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Point.h"
+#include "clients_kernel/Polygon.h"
+#include "clients_kernel/Rectangle.h"
+#include "clients_kernel/StaticModel.h"
 #include "actions/Location.h"
 #include "actions/ParameterContainer_ABC.h"
 #include "actions/Path.h"
@@ -66,6 +70,7 @@ public:
     virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void Handle( kernel::Location_ABC& location );
     virtual void OnMenuClick();
+    virtual void Visit( const BaseParameter& param );
     //@}
 
 private:

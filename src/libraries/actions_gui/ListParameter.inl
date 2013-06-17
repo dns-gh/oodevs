@@ -470,12 +470,12 @@ void ListParameter< ConcreteElement >::SetEntity( const kernel::Entity_ABC* enti
 template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::Visit( const actions::Parameter_ABC& param )
 {
+    if( ! list_ || ( model_.rowCount() && ! CheckValidity() ) )
+        return;
     auto it = param.CreateIterator();
     while( it.HasMoreElements() )
     {
         const actions::Parameter_ABC& elem = it.NextElement();
-        if( ! list_ || ( model_.rowCount() && ! CheckValidity() ) )
-            return;
         Param_ABC* param = CreateElement();
         if( param )
         {

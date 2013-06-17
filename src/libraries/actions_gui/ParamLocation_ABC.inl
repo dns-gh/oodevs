@@ -159,3 +159,30 @@ void ParamLocation_ABC< BaseParameter >::CommitTo( actions::ParameterContainer_A
     else
         action.AddParameter( *new BaseParameter( parameter_, converter_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation_ABC::Visit
+// Created: ABR 2013-06-14
+// -----------------------------------------------------------------------------
+template< typename BaseParameter >
+void ParamLocation_ABC< BaseParameter >::Visit( const BaseParameter& param )
+{
+    ActivateOptionalIfNeeded( param );
+
+    if( parameter_.GetType() == "circle" )
+        location_.reset( new kernel::Circle() );
+    else if( parameter_.GetType() == "line" )
+        location_.reset( new kernel::Lines() );
+    else if( parameter_.GetType() == "point" )
+        location_.reset( new kernel::Point() );
+    else if( parameter_.GetType() == "polygon" )
+        location_.reset( new kernel::Polygon() );
+    else if( parameter_.GetType() == "rectangle" )
+        location_.reset( new kernel::Rectangle() );
+
+    pPosLabel_->setText( location_->GetName() );
+
+    const T_PointVector& points = param.GetPoints();
+    for( auto it = points.begin(); it != points.end(); ++it )
+        location_->AddPoint( *it );
+}

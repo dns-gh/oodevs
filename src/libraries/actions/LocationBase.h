@@ -65,6 +65,8 @@ public:
     void CommitTo( std::string& content ) const;
     void CommitTo( sword::Location& message ) const;
     void Clean( sword::Location& message ) const;
+    const T_PointVector& GetPoints() const;
+    E_LocationType GetLocationType() const;
     //@}
 
 protected:
