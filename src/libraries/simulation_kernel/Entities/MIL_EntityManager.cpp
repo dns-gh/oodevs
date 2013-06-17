@@ -1981,41 +1981,47 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
     ack().set_error_code( ActionCreateFireOrderAck::no_error );
     try
     {
-        if( !msg.has_parameters() || msg.parameters().elem_size() != 3)
-            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target );
+        if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
+            throw MASA_BADPARAM_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target,
+                                     "invalid parameters count, 3 parameters expected" );
 
         // Location
         const MissionParameter& location = msg.parameters().elem( 0 );
         if( location.value_size() != 1 || !( location.value().Get( 0 ).has_location() || location.value().Get( 0 ).has_point() ) )
-            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target );
+            throw MASA_BADPARAM_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target,
+                                     "parameters[0] must be a location" );
 
         // Ammo
         const MissionParameter& ammo = msg.parameters().elem( 1 );
         if( ammo.value_size() != 1 || !ammo.value().Get( 0 ).has_resourcetype() )
-            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_ammunition );
+            throw MASA_BADPARAM_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_ammunition,
+                                     "parameters[1] must be a resource type" );
 
-        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
+        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get( 0 ).resourcetype().id() );
         if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
-            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_ammunition );
+            throw MASA_BADPARAM_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_ammunition,
+                                     "parameters[1] must be a dotation category identifier that can be used for indirect fire" );
 
         // Iterations
         const MissionParameter& iterations = msg.parameters().elem( 2 );
         if( iterations.value_size() != 1 || !iterations.value().Get( 0 ).has_areal() )
-            throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_iteration );
+            throw MASA_BADPARAM_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_iteration,
+                                     "parameters[2] must be a real" );
 
-        unsigned int ammos = static_cast< unsigned int >( pDotationCategory->ConvertToNbrAmmo( iterations.value().Get(0).areal() ) );
+        unsigned int ammos = static_cast< unsigned int >( pDotationCategory->ConvertToNbrAmmo( iterations.value().Get( 0 ).areal() ) );
 
-        PHY_FireResults_Default fireResult;
         MT_Vector2D targetPos;
         if( location.value().Get( 0 ).has_location() )
             MIL_Tools::ConvertCoordMosToSim( location.value().Get( 0 ).location().coordinates().elem( 0 ), targetPos );
         else if( location.value().Get( 0 ).has_point() )
         {
             const sword::Point& point = location.value().Get( 0 ).point();
-            if( point.location().type() != sword::Location::point  || point.location().coordinates().elem_size() != 1 )
-                throw MASA_EXCEPTION_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target );
+            if( point.location().type() != sword::Location::point || point.location().coordinates().elem_size() != 1 )
+                throw MASA_BADPARAM_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_target,
+                                         "parameters[0] must be a point with one coordinate" );
             MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), targetPos );
         }
+        PHY_FireResults_Default fireResult;
         pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
     }
     catch( const NET_AsnException< ActionCreateFireOrderAck::ErrorCode >& e )
