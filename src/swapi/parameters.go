@@ -139,6 +139,13 @@ func MakePointParam(point Point) *sword.MissionParameter {
 		})
 }
 
+func MakeLocationParam(point Point) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			Location: MakePointLocation(point),
+		})
+}
+
 func MakeHeading(heading int32) *sword.MissionParameter {
 	return MakeParameter(
 		&sword.MissionParameter_Value{
@@ -175,6 +182,15 @@ func MakeTime(value time.Time) *sword.MissionParameter {
 		&sword.MissionParameter_Value{
 			DateTime: &sword.DateTime{
 				Data: proto.String(value.UTC().Format(BoostTimeLayout)),
+			},
+		})
+}
+
+func MakeResourceType(value uint32) *sword.MissionParameter {
+	return MakeParameter(
+		&sword.MissionParameter_Value{
+			ResourceType: &sword.ResourceType{
+				Id: proto.Uint32(value),
 			},
 		})
 }

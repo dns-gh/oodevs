@@ -670,3 +670,28 @@ func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) 
 	}
 	return c.Model.GetLocalWeather(id), nil
 }
+
+func (c *Client) CreateFireOnLocation(params *sword.MissionParameters) error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				MagicAction: &sword.MagicAction{
+					Type:       sword.MagicAction_create_fire_order_on_location.Enum(),
+					Parameters: params,
+				},
+			},
+		},
+	}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetActionCreateFireOrderAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.ActionCreateFireOrderAck_no_error {
+			return nameof(sword.ActionCreateFireOrderAck_ErrorCode_name, int32(code))
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
