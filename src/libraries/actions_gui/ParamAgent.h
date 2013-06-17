@@ -48,6 +48,7 @@ public:
     //! @name Operations
     //@{
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual void Visit( const actions::parameters::Agent& param );
     //@}
 
 private:

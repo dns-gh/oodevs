@@ -92,3 +92,12 @@ void ParamObjectKnowledge::SetEntity( const kernel::Entity_ABC* entity )
     if( group_ )
         group_->setEnabled( IsInParam() || entity != 0 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamObjectKnowledge::Visit
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void ParamObjectKnowledge::Visit( const actions::parameters::ObjectKnowledge& param )
+{
+    InternalVisit( param );
+}

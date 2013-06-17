@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "Crowd.h"
+#include "ParameterVisitor_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 
 using namespace kernel;
@@ -71,4 +72,13 @@ Crowd::~Crowd()
 std::string Crowd::SerializeType() const
 {
     return std::string( "crowd" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Crowd::Accept
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void Crowd::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

@@ -43,3 +43,12 @@ void ParamAutomat::CommitTo( actions::ParameterContainer_ABC& action ) const
     EntityParameter< kernel::Automat_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamAutomat::Visit
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void ParamAutomat::Visit( const actions::parameters::Automat& param )
+{
+    InternalVisit( param );
+}

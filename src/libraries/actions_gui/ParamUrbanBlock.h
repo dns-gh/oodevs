@@ -36,6 +36,7 @@ public:
     //@{
     virtual void NotifyContextMenu( const kernel::UrbanObject_ABC& entity, kernel::ContextMenu& menu );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual void Visit( const actions::parameters::UrbanBlock& param );
     //@}
 };
 

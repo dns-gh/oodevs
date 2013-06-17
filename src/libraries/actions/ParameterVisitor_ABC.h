@@ -19,6 +19,7 @@ namespace actions
         class Army;
         class Automat;
         class Bool;
+        class Crowd;
         class DateTime;
         class Direction;
         class DotationType;
@@ -26,6 +27,7 @@ namespace actions
         class Enumeration;
         class ExtensionList;
         class Identifier;
+        class Inhabitant;
         class KnowledgeGroup;
         class Lima;
         class Location;
@@ -62,6 +64,7 @@ public:
     virtual void Visit( const parameters::Automat&             ) {}
     virtual void Visit( const parameters::Army&                ) {}
     virtual void Visit( const parameters::Bool&                ) {}
+    virtual void Visit( const parameters::Crowd&               ) {}
     virtual void Visit( const parameters::DateTime&            ) {}
     virtual void Visit( const parameters::Direction&           ) {}
     virtual void Visit( const parameters::DotationType&        ) {}
@@ -69,6 +72,7 @@ public:
     virtual void Visit( const parameters::Enumeration&         ) {}
     virtual void Visit( const parameters::ExtensionList&       ) {}
     virtual void Visit( const parameters::Identifier&          ) {}
+    virtual void Visit( const parameters::Inhabitant&          ) {}
     virtual void Visit( const parameters::KnowledgeGroup&      ) {}
     virtual void Visit( const parameters::Lima&                ) {}
     virtual void Visit( const parameters::Location&            ) {}

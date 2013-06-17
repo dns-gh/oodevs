@@ -43,3 +43,12 @@ void ParamInhabitant::CommitTo( actions::ParameterContainer_ABC& action ) const
     EntityParameter< kernel::Inhabitant_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamInhabitant::Visit
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void ParamInhabitant::Visit( const actions::parameters::Inhabitant& param )
+{
+    InternalVisit( param );
+}

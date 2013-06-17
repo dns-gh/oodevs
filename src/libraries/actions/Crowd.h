@@ -42,6 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual std::string SerializeType() const;
+    virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 
 private:

@@ -11,6 +11,7 @@
 #define __EntityParameter_h_
 
 #include "Param_ABC.h"
+#include "actions/Entity.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -59,7 +60,7 @@ protected:
     void Display( const QString& what );
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     QLabel* entityLabel_;
@@ -93,14 +94,22 @@ public:
     virtual void OnMenuClick();
     //@}
 
-    //! @name Helpers
+    //! @name ContextMenuObserver< ConcreteEntity > implementation
     //@{
-public:
     virtual void NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu );
+    //@}
+
 protected:
-    virtual bool InternalCheckValidity() const;
+    //! @name ElementObserver_ABC< ConcreteEntity > implementation
+    //@{
     virtual void NotifyUpdated( const ConcreteEntity& ) {};
     virtual void NotifyDeleted( const ConcreteEntity& entity );
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual bool InternalCheckValidity() const;
+    virtual void InternalVisit( const actions::parameters::Entity< ConcreteEntity >& param );
     //@}
 
 protected:

@@ -82,3 +82,12 @@ void ParamPopulationKnowledge::SetEntity( const kernel::Entity_ABC* entity )
     if( group_ )
         group_->setEnabled( IsInParam() || entity != 0 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamPopulationKnowledge::Visit
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void ParamPopulationKnowledge::Visit( const actions::parameters::PopulationKnowledge& param )
+{
+    InternalVisit( param );
+}

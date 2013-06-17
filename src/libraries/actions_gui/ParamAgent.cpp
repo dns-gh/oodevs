@@ -75,7 +75,7 @@ void ParamAgent::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel:
 // Name: ParamAgent::NotifyContextMenu
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void ParamAgent::NotifyContextMenu( const kernel::AgentKnowledge_ABC& /*knowledge*/, kernel::ContextMenu& /*menu*/ )
+void ParamAgent::NotifyContextMenu( const kernel::AgentKnowledge_ABC& knowledge, kernel::ContextMenu& menu )
 {
     EntityParameter< kernel::Agent_ABC >::NotifyContextMenu( *knowledge.GetEntity(), menu );
 }
@@ -127,4 +127,13 @@ void ParamAgent::CommitTo( actions::ParameterContainer_ABC& action ) const
     std::auto_ptr< actions::parameters::Entity< kernel::Agent_ABC > > param( new actions::parameters::Agent( parameter_, controller_ ) );
     EntityParameter< kernel::Agent_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgent::Visit
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void ParamAgent::Visit( const actions::parameters::Agent& param )
+{
+    InternalVisit( param );
 }

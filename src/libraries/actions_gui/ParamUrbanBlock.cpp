@@ -55,3 +55,12 @@ void ParamUrbanBlock::CommitTo( actions::ParameterContainer_ABC& action ) const
     EntityParameter< UrbanObject_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamUrbanBlock::Visit
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void ParamUrbanBlock::Visit( const actions::parameters::UrbanBlock& param )
+{
+    InternalVisit( param );
+}

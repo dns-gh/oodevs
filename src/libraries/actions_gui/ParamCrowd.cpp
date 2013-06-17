@@ -43,3 +43,12 @@ void ParamCrowd::CommitTo( actions::ParameterContainer_ABC& action ) const
     EntityParameter< kernel::Population_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamCrowd::Visit
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void ParamCrowd::Visit( const actions::parameters::Crowd& param )
+{
+    InternalVisit( param );
+}

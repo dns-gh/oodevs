@@ -132,3 +132,15 @@ void EntityParameter< ConcreteEntity >::SetPotential( const ConcreteEntity& enti
 {
     potential_ = &entity;
 }
+
+// -----------------------------------------------------------------------------
+// Name: EntityParameter::InternalVisit
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityParameter< ConcreteEntity >::InternalVisit( const actions::parameters::Entity< ConcreteEntity >& param )
+{
+    ActivateOptionalIfNeeded( param );
+    potential_ = param.GetValue();
+    OnMenuClick();
+}
