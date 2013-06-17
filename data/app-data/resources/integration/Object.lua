@@ -106,6 +106,10 @@ integration.getGenObjectType = function( genObject )
     return DEC_GenObject_Type( genObject )
 end
 
+integration.hasCapacityGenObject = function( capacity )
+    return DEC_GenObject_HasCapacity( capacity )
+end
+
 integration.getKnowledgeObjectType = function( object )
     return DEC_ConnaissanceObjet_Type( object )
 end
