@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "Bool.h"
+#include "ParameterVisitor_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -102,4 +103,13 @@ void Bool::CommitTo( T_Setter setter ) const
 std::string Bool::SerializeType() const
 {
     return "boolean";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Bool::Accept
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void Bool::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

@@ -46,6 +46,8 @@ public:
     void CommitTo( sword::DateTime& message ) const;
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
+    virtual void Accept( ParameterVisitor_ABC& visitor ) const;
+    const std::string& GetTime() const;
     //@}
 
 private:

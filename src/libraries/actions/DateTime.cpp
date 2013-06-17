@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "DateTime.h"
+#include "ParameterVisitor_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
@@ -146,4 +147,22 @@ void DateTime::CommitTo( sword::MissionParameter_Value& message ) const
 std::string DateTime::SerializeType() const
 {
     return "datetime";
+}
+
+// -----------------------------------------------------------------------------
+// Name: DateTime::Accept
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void DateTime::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DateTime::GetTime
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+const std::string& DateTime::GetTime() const
+{
+    return time_;
 }

@@ -191,3 +191,12 @@ void LimitParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) cons
     else
         parameter.AddParameter( *new actions::parameters::Limit( parameter_, converter_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LimitParameter::Visit
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void LimitParameter::Visit( const actions::parameters::Location& /*param*/ )
+{
+     // $$$$ ABR 2013-06-12: TODO
+}

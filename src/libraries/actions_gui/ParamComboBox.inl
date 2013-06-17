@@ -105,3 +105,29 @@ void ParamComboBox< T >::Clear()
         comboBox_->clear();
     values_.clear();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamComboBox::InternalVisit
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+template< typename T >
+void ParamComboBox< T >::InternalVisit( const actions::parameters::Parameter< std::string >& param )
+{
+    ActivateOptionalIfNeeded( param );
+    if( param.IsSet() )
+    {
+        int index = comboBox_->findText( QString::fromStdString( param.GetValue() ) );
+        if( index != -1 )
+            comboBox_->setCurrentIndex( index );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamComboBox::Visit
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+template< typename T >
+void ParamComboBox< T >::Visit( const actions::parameters::Enumeration& param )
+{
+    InternalVisit( param );
+}

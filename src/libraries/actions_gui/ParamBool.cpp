@@ -91,3 +91,14 @@ void ParamBool::OnCurrentIndexChanged( int index )
 {
     value_ = ( index == 0 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamBool::Visit
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void ParamBool::Visit( const actions::parameters::Bool& param )
+{
+    ActivateOptionalIfNeeded( param );
+    if( param.IsSet() )
+        SetValue( param.GetValue() );
+}

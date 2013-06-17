@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "Direction.h"
+#include "ParameterVisitor_ABC.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
 #include "protocol/Protocol.h"
@@ -125,4 +126,13 @@ void Direction::CommitTo( sword::MissionParameter_Value& message ) const
 std::string Direction::SerializeType() const
 {
     return "heading";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Direction::Accept
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void Direction::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

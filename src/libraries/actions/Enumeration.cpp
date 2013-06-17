@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "Enumeration.h"
+#include "ParameterVisitor_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/OrderParameterValue.h"
 #include "protocol/Protocol.h"
@@ -102,4 +103,13 @@ void Enumeration::CommitTo( sword::MissionParameter_Value& message ) const
 std::string Enumeration::SerializeType() const
 {
     return "enumeration";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Enumeration::Accept
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void Enumeration::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

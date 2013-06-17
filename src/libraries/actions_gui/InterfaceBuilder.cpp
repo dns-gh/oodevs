@@ -75,6 +75,7 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers, gui::Param
     AddFunctor< actions::gui::ParamDirection >          ( "heading" );
     AddFunctor< actions::gui::ParamInt >                ( "integer");
     AddFunctor< actions::gui::ParamFloat >              ( "float" );
+    AddFunctor< actions::gui::ParamUnsignedInt >        ( "identifier" );
     AddFunctor< actions::gui::ParamStringField >        ( "string" );
     AddFunctor< actions::gui::ParamDateTime >           ( "datetime" );
     AddFunctor< actions::gui::ParamComboBox< int > >    ( "enumeration" );

@@ -413,6 +413,16 @@ void Param_ABC::SetEntity( const kernel::Entity_ABC* )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Param_ABC::ActivateOptionalIfNeeded
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void Param_ABC::ActivateOptionalIfNeeded( const actions::Parameter_ABC& param )
+{
+    if( param.IsOptional() && param.IsSet() )
+        group_->setChecked( true );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Param_ABC::SetEnabled
 // Created: ABR 2013-06-13
 // -----------------------------------------------------------------------------

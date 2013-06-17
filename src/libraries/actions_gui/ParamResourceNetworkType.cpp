@@ -80,3 +80,11 @@ bool ParamResourceNetworkType::InternalCheckValidity() const
     return GetValue() != 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ParamResourceNetworkType::Visit
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void ParamResourceNetworkType::Visit( const actions::parameters::ResourceNetworkType& param )
+{
+    InternalVisit( param );
+}

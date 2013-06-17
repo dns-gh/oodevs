@@ -45,6 +45,7 @@ public:
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual bool InternalCheckValidity() const;
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual void Visit( const actions::parameters::Quantity& param );
     void SetLimit( int min, int max );
     void SetSuffix( const QString& suffix );
     //@}

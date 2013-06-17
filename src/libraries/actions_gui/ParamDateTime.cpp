@@ -45,10 +45,10 @@ QWidget* ParamDateTime::BuildInterface( const QString& objectName, QWidget* pare
 {
     Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
-    QDateTimeEdit* edit = new QDateTimeEdit( parent );
-    edit->setDateTime( date_ );
-    connect( edit, SIGNAL( dateTimeChanged( const QDateTime& ) ), SLOT( OnChanged( const QDateTime& ) ) );
-    layout->addWidget( edit );
+    dateTimeEdit_ = new QDateTimeEdit( parent );
+    dateTimeEdit_->setDateTime( date_ );
+    connect( dateTimeEdit_, SIGNAL( dateTimeChanged( const QDateTime& ) ), SLOT( OnChanged( const QDateTime& ) ) );
+    layout->addWidget( dateTimeEdit_ );
     return group_;
 }
 
@@ -90,4 +90,15 @@ void ParamDateTime::Draw( const geometry::Point2f& point, const ::gui::Viewport_
 {
     if( date_.isValid() )
         tools.Print( date_.toString( "dd-MM-yy hh:mm:ss" ).toStdString(), point, QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamDateTime::Visit
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void ParamDateTime::Visit( const actions::parameters::DateTime& param )
+{
+    ActivateOptionalIfNeeded( param );
+    if( param.IsSet() )
+        dateTimeEdit_->setDateTime( QDateTime::fromString( param.GetTime().c_str(), "yyyyMMddTHHmmss" ) );
 }

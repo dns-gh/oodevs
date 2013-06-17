@@ -35,3 +35,15 @@ void ParamNumericField< int >::SetLimits( int min, int max )
     validator = new QIntValidator( min, max, pEdit_ );
     pEdit_->setValidator( validator );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamNumericField::SetLimits
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+template<>
+void ParamNumericField< unsigned int >::SetLimits( unsigned int min, unsigned int max )
+{
+    QValidator* validator;
+    validator = new QIntValidator( static_cast< int >( min ), static_cast< int >( max ), pEdit_ );
+    pEdit_->setValidator( validator );
+}

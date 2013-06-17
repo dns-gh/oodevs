@@ -45,11 +45,11 @@ QWidget* ParamTime::BuildInterface( const QString& objectName, QWidget* parent )
 {
     Param_ABC::BuildInterface( objectName, parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
-    QTimeEdit* edit = new QTimeEdit( parent );
-    edit->setTime( time_ );
-    edit->setDisplayFormat( "hh:mm:ss" );
-    connect( edit, SIGNAL( timeChanged( const QTime& ) ), SLOT( OnChanged( const QTime& ) ) );
-    layout->addWidget( edit );
+    timeEdit_ = new QTimeEdit( parent );
+    timeEdit_->setTime( time_ );
+    timeEdit_->setDisplayFormat( "hh:mm:ss" );
+    connect( timeEdit_, SIGNAL( timeChanged( const QTime& ) ), SLOT( OnChanged( const QTime& ) ) );
+    layout->addWidget( timeEdit_ );
     return group_;
 }
 
@@ -82,4 +82,20 @@ void ParamTime::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 void ParamTime::OnChanged( const QTime& time )
 {
     time_ = time;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamTime::Visit
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void ParamTime::Visit( const actions::parameters::Quantity& param )
+{
+    ActivateOptionalIfNeeded( param );
+    if( param.IsSet() )
+    {
+        int seconds = param.GetValue();
+        time_ = QTime( 0, 0, 0, 0 );
+        time_.addSecs( seconds );
+        timeEdit_->setTime( time_ );
+    }
 }

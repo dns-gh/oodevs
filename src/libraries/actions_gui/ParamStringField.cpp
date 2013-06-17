@@ -69,3 +69,14 @@ void ParamStringField::CommitTo( actions::ParameterContainer_ABC& action ) const
     else
         action.AddParameter( *new actions::parameters::String( parameter_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamStringField::Visit
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void ParamStringField::Visit( const actions::parameters::String& param )
+{
+    ActivateOptionalIfNeeded( param );
+    if( param.IsSet() )
+        pEdit_->setText( param.GetValue() );
+}

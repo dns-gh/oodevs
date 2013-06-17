@@ -12,27 +12,34 @@
 
 namespace actions
 {
+    class Parameter_ABC;
+
     namespace parameters {
-        class Numeric;
-        class EngineerConstruction;
-        class Lima;
-        class Location;
-        class Path;
-        class PathPoint;
         class Agent;
-        class Automat;
         class AgentKnowledge;
-        class ObjectKnowledge;
-        class PopulationKnowledge;
-        class DotationType;
         class Army;
-        class Quantity;
+        class Automat;
+        class Bool;
+        class DateTime;
+        class Direction;
+        class DotationType;
+        class EngineerConstruction;
+        class Enumeration;
+        class ExtensionList;
         class Identifier;
         class KnowledgeGroup;
-        class UrbanBlock;
+        class Lima;
+        class Location;
+        class Numeric;
+        class ObjectKnowledge;
+        class Path;
+        class PathPoint;
+        class PopulationKnowledge;
+        class Quantity;
         class ResourceNetworkNode;
         class ResourceNetworkType;
-        class ExtensionList;
+        class String;
+        class UrbanBlock;
     }
 
 // =============================================================================
@@ -52,26 +59,32 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Visit( const parameters::Numeric&             ) {}
-    virtual void Visit( const parameters::EngineerConstruction&) {}
-    virtual void Visit( const parameters::Lima&                ) {}
-    virtual void Visit( const parameters::Path&                ) {}
-    virtual void Visit( const parameters::PathPoint&           ) {}
-    virtual void Visit( const parameters::Location&            ) {}
     virtual void Visit( const parameters::Agent&               ) {}
-    virtual void Visit( const parameters::Automat&             ) {}
     virtual void Visit( const parameters::AgentKnowledge&      ) {}
-    virtual void Visit( const parameters::ObjectKnowledge&     ) {}
-    virtual void Visit( const parameters::PopulationKnowledge& ) {}
-    virtual void Visit( const parameters::UrbanBlock&          ) {}
-    virtual void Visit( const parameters::DotationType&        ) {}
+    virtual void Visit( const parameters::Automat&             ) {}
     virtual void Visit( const parameters::Army&                ) {}
-    virtual void Visit( const parameters::Quantity&            ) {}
+    virtual void Visit( const parameters::Bool&                ) {}
+    virtual void Visit( const parameters::DateTime&            ) {}
+    virtual void Visit( const parameters::Direction&           ) {}
+    virtual void Visit( const parameters::DotationType&        ) {}
+    virtual void Visit( const parameters::EngineerConstruction&) {}
+    virtual void Visit( const parameters::Enumeration&         ) {}
+    virtual void Visit( const parameters::ExtensionList&       ) {}
     virtual void Visit( const parameters::Identifier&          ) {}
     virtual void Visit( const parameters::KnowledgeGroup&      ) {}
+    virtual void Visit( const parameters::Lima&                ) {}
+    virtual void Visit( const parameters::Location&            ) {}
+    virtual void Visit( const parameters::Numeric&             ) {}
+    virtual void Visit( const parameters::ObjectKnowledge&     ) {}
+    virtual void Visit( const parameters::Path&                ) {}
+    virtual void Visit( const parameters::PathPoint&           ) {}
+    virtual void Visit( const parameters::PopulationKnowledge& ) {}
+    virtual void Visit( const parameters::Quantity&            ) {}
     virtual void Visit( const parameters::ResourceNetworkNode& ) {}
     virtual void Visit( const parameters::ResourceNetworkType& ) {}
-    virtual void Visit( const parameters::ExtensionList&       ) {}
+    virtual void Visit( const parameters::String&              ) {}
+    virtual void Visit( const parameters::UrbanBlock&          ) {}
+    virtual void Visit( const Parameter_ABC&                   ) {}
     //@}
 };
 

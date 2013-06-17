@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "actions/Action_ABC.h"
+#include "actions/Identifier.h"
 #include "actions/Numeric.h"
 #include <QtGui/qvalidator.h>
 #include "InterfaceBuilder_ABC.h"
@@ -119,6 +120,30 @@ void ParamNumericField< NumericType >::Hide()
 {
     if( group_ )
         group_->hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamNumericField::Visit
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+template< typename NumericType >
+void ParamNumericField< NumericType >::Visit( const actions::parameters::Identifier& param )
+{
+    ActivateOptionalIfNeeded( param );
+    if( param.IsSet() )
+        pEdit_->setText( QString::number( param.GetValue() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamNumericField::Visit
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+template< typename NumericType >
+void ParamNumericField< NumericType >::Visit( const actions::parameters::Numeric& param )
+{
+    ActivateOptionalIfNeeded( param );
+    if( param.IsSet() )
+        pEdit_->setText( QString::number( param.GetValue() ) );
 }
 
 }

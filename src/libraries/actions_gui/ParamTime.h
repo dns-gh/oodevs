@@ -13,6 +13,8 @@
 #include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
+class QTimeEdit;
+
 namespace actions
 {
     namespace gui
@@ -43,6 +45,7 @@ public:
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual bool InternalCheckValidity() const;
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual void Visit( const actions::parameters::Quantity& param );
     //@}
 
 private slots:
@@ -54,6 +57,7 @@ private slots:
 private:
     //! @name Member data
     //@{
+    QTimeEdit* timeEdit_;
     QTime time_;
     int days_;
     //@}

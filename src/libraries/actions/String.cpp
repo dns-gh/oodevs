@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "String.h"
+#include "ParameterVisitor_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -103,4 +104,13 @@ void String::Serialize( xml::xostream& xos ) const
 std::string String::SerializeType() const
 {
     return "string";
+}
+
+// -----------------------------------------------------------------------------
+// Name: String::Accept
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void String::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

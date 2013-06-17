@@ -46,12 +46,18 @@ public:
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     T GetValue() const;
     void Clear();
+    virtual void Visit( const actions::parameters::Enumeration& param );
     //@}
 
 protected:
     //! @name Types
     //@{
     typedef std::vector< std::pair< QString, T > > T_Values;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void InternalVisit( const actions::parameters::Parameter< std::string >& param );
     //@}
 
 protected:

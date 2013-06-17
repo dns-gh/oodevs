@@ -12,6 +12,8 @@
 
 #include "Param_ABC.h"
 
+class QDial;
+
 namespace kernel
 {
     class OrderParameter;
@@ -44,6 +46,7 @@ public:
     //@{
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual void Visit( const actions::parameters::Direction& direction );
     //@}
 
 private slots:
@@ -55,6 +58,7 @@ private slots:
 private:
     //! @name Member data
     //@{
+    QDial* dial_;
     int value_;
     //@}
 };

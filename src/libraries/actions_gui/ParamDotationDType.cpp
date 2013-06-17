@@ -98,3 +98,12 @@ void ParamDotationDType::SetEntity( const kernel::Entity_ABC* entity )
     for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
         comboBox_->AddItem( it->first, it->second );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamDotationDType::Visit
+// Created: ABR 2013-06-13
+// -----------------------------------------------------------------------------
+void ParamDotationDType::Visit( const actions::parameters::DotationType& param )
+{
+    InternalVisit( param );
+}

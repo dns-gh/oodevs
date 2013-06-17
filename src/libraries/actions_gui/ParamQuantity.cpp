@@ -112,3 +112,14 @@ void ParamQuantity::OnChanged( int value )
 {
     modifier_ = value;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamQuantity::Visit
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void ParamQuantity::Visit( const actions::parameters::Quantity& param )
+{
+    ActivateOptionalIfNeeded( param );
+    if( param.IsSet() )
+        spinBox_->setValue( param.GetValue() );
+}

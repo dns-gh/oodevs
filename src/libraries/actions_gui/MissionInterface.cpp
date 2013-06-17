@@ -11,6 +11,7 @@
 #include "MissionInterface.h"
 #include "moc_MissionInterface.cpp"
 #include "actions/Action_ABC.h"
+#include "actions/Parameter_ABC.h"
 #include "actions_gui/InterfaceBuilder_ABC.h"
 #include "actions_gui/Param_ABC.h"
 #include "clients_gui/Viewport_ABC.h"
@@ -183,6 +184,22 @@ void MissionInterface::CommitTo( actions::Action_ABC& action ) const
 {
     for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         (*it)->CommitTo( action );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterface::FillFrom
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void MissionInterface::FillFrom( const actions::Action_ABC& action )
+{
+    auto itAction = action.CreateIterator();
+    for( auto it = parameters_.begin(); it != parameters_.end() && itAction.HasMoreElements(); ++it )
+    {
+        const actions::Parameter_ABC& actionParam = itAction.NextElement();
+        assert( ( *it )->GetName() == actionParam.GetName() );
+        if( ( *it )->GetName() == actionParam.GetName() )
+            actionParam.Accept( **it );
+    }
 }
 
 // -----------------------------------------------------------------------------

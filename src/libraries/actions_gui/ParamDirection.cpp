@@ -58,13 +58,13 @@ QWidget* ParamDirection::BuildInterface( const QString& objectName, QWidget* par
 {
     Param_ABC::BuildInterface( objectName, parent );
     QHBoxLayout* layout = new QHBoxLayout( group_ );
-    QDial* dial = new QDial( 0, turnDegrees - 1, 1, 0, parent );
-    layout->addWidget( dial );
-    dial->setWrapping( true );
-    dial->setMaximumSize( 50, 50 );
-    connect( dial, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
-    dial->setValue( AddHalfTurn( value_ ) );
-    layout->addWidget( dial, Qt::AlignCenter );
+    dial_ = new QDial( 0, turnDegrees - 1, 1, 0, parent );
+    layout->addWidget( dial_ );
+    dial_->setWrapping( true );
+    dial_->setMaximumSize( 50, 50 );
+    connect( dial_, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
+    dial_->setValue( AddHalfTurn( value_ ) );
+    layout->addWidget( dial_, Qt::AlignCenter );
     return group_;
 }
 
@@ -87,4 +87,15 @@ void ParamDirection::CommitTo( actions::ParameterContainer_ABC& action ) const
 void ParamDirection::OnValueChanged( int value )
 {
     value_ = AddHalfTurn( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamDirection::Visit
+// Created: ABR 2013-06-12
+// -----------------------------------------------------------------------------
+void ParamDirection::Visit( const actions::parameters::Direction& param )
+{
+    ActivateOptionalIfNeeded( param );
+    if( param.IsSet() )
+        dial_->setValue( AddHalfTurn( param.GetValue() ) );
 }

@@ -10,6 +10,7 @@
 #ifndef __Param_ABC_h_
 #define __Param_ABC_h_
 
+#include "actions/ParameterVisitor_ABC.h"
 #include "clients_gui/Drawable_ABC.h"
 #include "clients_gui/RichGroupBox.h"
 #include "clients_kernel/ContextMenu.h"
@@ -51,6 +52,7 @@ namespace gui
 
 namespace actions
 {
+    class Parameter_ABC;
     class ParameterContainer_ABC;
 
     namespace gui
@@ -67,6 +69,7 @@ namespace actions
 class Param_ABC : public QObject
                 , public tools::Observer_ABC
                 , public ::gui::Drawable_ABC
+                , public ParameterVisitor_ABC
 {
     Q_OBJECT
 
@@ -105,6 +108,7 @@ public:
     virtual bool IsOptional() const;
     void SetEnabled( bool enabled );
     void SetOptional( bool optional );
+    void ActivateOptionalIfNeeded( const actions::Parameter_ABC& param );
     virtual void SetParentList( ListParameterBase* parentList );
     virtual void SetName( const QString& name );
     virtual void SetKeyName( const std::string& keyName );

@@ -76,6 +76,7 @@ public:
     void Purge();
     void SetPlanned( bool planned );
     void CommitTo( actions::Action_ABC& action ) const;
+    void FillFrom( const actions::Action_ABC& action );
     template< typename T, typename Creator >
     void Publish( Creator& creator, timeline::Event* event = 0 ) const
     {

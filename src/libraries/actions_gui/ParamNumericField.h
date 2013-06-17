@@ -43,6 +43,8 @@ public:
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     void SetLimits( NumericType min, NumericType max );
     void SetSuffix( const QString& suffix );
+    virtual void Visit( const actions::parameters::Identifier& param );
+    virtual void Visit( const actions::parameters::Numeric& param );
     //@}
 
 private:
@@ -60,8 +62,9 @@ private:
     //@}
 };
 
-typedef ParamNumericField< int >   ParamInt;
-typedef ParamNumericField< float > ParamFloat;
+typedef ParamNumericField< int >          ParamInt;
+typedef ParamNumericField< unsigned int > ParamUnsignedInt;
+typedef ParamNumericField< float >        ParamFloat;
 
     }
 }

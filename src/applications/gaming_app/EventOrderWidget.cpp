@@ -391,9 +391,10 @@ void EventOrderWidget::BuildMissionInterface()
 // Name: EventOrderWidget::FillMissionInterface
 // Created: ABR 2013-06-06
 // -----------------------------------------------------------------------------
-void EventOrderWidget::FillMissionInterface( const EventAction& /*event*/ )
+void EventOrderWidget::FillMissionInterface( const EventAction& event )
 {
-    // Fill parameters with current action
+    if( const actions::Action_ABC* action = event.GetAction() )
+        missionInterface_->FillFrom( *action );
 }
 
 // -----------------------------------------------------------------------------
