@@ -185,7 +185,7 @@ public:
     void OnReceiveKnowledgeMagicAction     ( const sword::KnowledgeMagicAction& message, unsigned int nCtx );
     void OnReceiveChangeDiplomacy          ( const sword::MagicAction&          message, unsigned int nCtx );
     void OnReceiveChangeResourceLinks      ( const sword::MagicAction&          message, unsigned int nCtx );
-    void OnReceiveCreateFireOrderOnLocation( const sword::MagicAction&          message, unsigned int nCtx );
+    void OnReceiveCreateFireOrderOnLocation( const sword::MagicAction&          message, unsigned int nCtx, unsigned int clientId );
     void OnReceiveBurningCellRequest       ( const sword::BurningCellRequest&   message, unsigned int nCtx );
     // LTO begin
     void OnReceiveKnowledgeGroupCreation    ( const sword::MagicAction&         message, unsigned int nCtx );

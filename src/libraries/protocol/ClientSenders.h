@@ -15,7 +15,7 @@
 
 namespace client
 {
-    GENERATE_MESSAGE( sword::SimToClient, sword, ActionCreateFireOrderAck               , action_create_fire_order_ack              )
+    GENERATE_MESSAGE_WITH_CLIENTID( sword::SimToClient, sword, ActionCreateFireOrderAck , action_create_fire_order_ack              )
     GENERATE_MESSAGE( sword::SimToClient, sword, AutomatAttributes                      , automat_attributes                        )
     GENERATE_MESSAGE( sword::SimToClient, sword, AutomatChangeKnowledgeGroup            , automat_change_knowledge_group            )
     GENERATE_MESSAGE( sword::SimToClient, sword, AutomatChangeKnowledgeGroupAck         , automat_change_knowledge_group_ack        )

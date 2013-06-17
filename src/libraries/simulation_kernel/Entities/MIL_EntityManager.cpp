@@ -1975,7 +1975,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
 // Name: MIL_EntityManager::OnReceiveCreateFireOrderOnLocation
 // Created: ABR 2011-01-19
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& msg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& msg, unsigned int nCtx, unsigned int clientId )
 {
     client::ActionCreateFireOrderAck ack;
     ack().set_error_code( ActionCreateFireOrderAck::no_error );
@@ -2022,7 +2022,7 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
     {
         ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx, clientId );
 }
 
 // -----------------------------------------------------------------------------
