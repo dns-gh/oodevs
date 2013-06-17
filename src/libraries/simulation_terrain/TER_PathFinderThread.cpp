@@ -54,9 +54,6 @@ TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData,
     pPathfinder_.reset( new TerrainPathfinder( staticData ) );
     pPathfinder_->SetPickingDistances( 1000.f, 10000.f ); // minpicking, maxpicking
     pPathfinder_->SetEndConnectionSetup( nMaxEndConnections, static_cast< float >( rMinEndConnectionLength * 1.1 ) ); // applying factor of 10%
-    // Temporary: make this the default and remove the call once we are sure
-    // dynamic segment annotation is correct.
-    pPathfinder_->EnableMiddleNodePicking( true );
     if( !bUseSameThread )
         Start();
 }
