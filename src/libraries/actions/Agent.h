@@ -33,9 +33,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              Agent( const kernel::OrderParameter& parameter, kernel::Controller& controller, bool isKnowledge = false );
-             Agent( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
-             Agent( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
-             Agent( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+             Agent( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller, bool isKnowledge = false );
+             Agent( const kernel::OrderParameter& parameter, unsigned int id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller, bool isKnowledge = false );
+             Agent( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller, bool isKnowledge );
     virtual ~Agent();
     //@}
 

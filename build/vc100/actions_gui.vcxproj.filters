@@ -64,9 +64,6 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamInhabitant.cpp">
       <Filter>Source Files\Parameters\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamAgentKnowledge.cpp">
-      <Filter>Source Files\Parameters\Knowledges</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamObjectKnowledge.cpp">
       <Filter>Source Files\Parameters\Knowledges</Filter>
     </ClCompile>
@@ -158,9 +155,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamInhabitant.h">
       <Filter>Source Files\Parameters\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamAgentKnowledge.h">
-      <Filter>Source Files\Parameters\Knowledges</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamObjectKnowledge.h">
       <Filter>Source Files\Parameters\Knowledges</Filter>

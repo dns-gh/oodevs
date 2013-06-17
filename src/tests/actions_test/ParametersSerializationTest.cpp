@@ -11,7 +11,6 @@
 #include "MockEntityResolver.h"
 #include "Tools.h"
 #include "actions/Agent.h"
-#include "actions/AgentKnowledgeOrder.h"
 #include "actions/Automat.h"
 #include "actions/AtlasNature.h"
 #include "actions/Bool.h"
@@ -28,6 +27,7 @@
 #include "actions/Path.h"
 #include "actions/Polygon.h"
 #include "actions/PopulationKnowledgeOrder.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/AtlasNatures.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -572,21 +572,13 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_ObjectKnowledge, KnowledgeFixtu
 BOOST_FIXTURE_TEST_CASE( ParametersSerialization_AgentKnowledge, KnowledgeFixture )
 {
     const std::string input( "<parameter name='test' type='agentknowledge' value='42'/>" );
-
+    kernel::Controller controller;
     MockAgent agent;
-    MOCK_EXPECT( resolver.FindAgent ).with( 42u ).returns( &agent );
-    MockAgent owner;
-    MockAgentKnowledgeConverter converter;
-    MockAgentKnowledge knowledge;
-    MOCK_EXPECT( converter.FindAgentKnowledgeFromAgent ).once().in( s ).with( mock::same( agent ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge.GetEntity ).once().in( s ).returns( &agent );
-    MOCK_EXPECT( agent.GetId ).once().in( s ).returns( 42u );
-    MOCK_EXPECT( converter.FindAgentKnowledgeFromAgent ).once().in( s ).with( mock::same( agent ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge.GetEntity ).once().in( s ).returns( &agent );
-    MOCK_EXPECT( agent.GetId ).once().in( s ).returns( 42u );
-
+    MOCK_EXPECT( agent.GetId ).returns( 42 );
+    MockEntityResolver resolver;
+    MOCK_EXPECT( resolver.GetAgent ).with( 42u ).returns( boost::ref( agent ) );
     std::auto_ptr< sword::MissionParameter > message( Serialize( "agentknowledge", input,
-        bl::bind( bl::new_ptr< actions::parameters::AgentKnowledgeOrder >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
-
-    BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).agentknowledge().id() );
+        bl::bind( bl::new_ptr< actions::parameters::Agent >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
+    CheckSet( *message );
+    BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).agent().id() );
 }

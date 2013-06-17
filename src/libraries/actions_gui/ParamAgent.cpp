@@ -15,6 +15,7 @@
 #include "ParamInterface_ABC.h"
 #include "actions/Agent.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/OrderParameter.h"
@@ -68,6 +69,15 @@ void ParamAgent::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel:
         kernel::ContextMenu* listMenu = menu.SubMenu( paramInterface_.Title().toStdString(), parentList_->GetName(), true, paramInterface_.GetIndex( parentList_ ) );
         listMenu->insertItem( tools::translate( "Param_ABC", "Add formation's agents" ), this, SLOT( AddHierarchy() ), 0, -1, 0 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgent::NotifyContextMenu
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+void ParamAgent::NotifyContextMenu( const kernel::AgentKnowledge_ABC& /*knowledge*/, kernel::ContextMenu& /*menu*/ )
+{
+    EntityParameter< kernel::Agent_ABC >::NotifyContextMenu( *knowledge.GetEntity(), menu );
 }
 
 // -----------------------------------------------------------------------------

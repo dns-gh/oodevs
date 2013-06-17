@@ -49,12 +49,6 @@
     <ClCompile Include="..\..\src\libraries\actions\Agent.cpp">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions\AgentKnowledge.cpp">
-      <Filter>Source Files\Parameters\Types</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions\AgentKnowledgeOrder.cpp">
-      <Filter>Source Files\Parameters\Types</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions\Army.cpp">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClCompile>
@@ -274,12 +268,6 @@
       <Filter>Source Files\Parameters</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions\Agent.h">
-      <Filter>Source Files\Parameters\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions\AgentKnowledge.h">
-      <Filter>Source Files\Parameters\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions\AgentKnowledgeOrder.h">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions\Army.h">

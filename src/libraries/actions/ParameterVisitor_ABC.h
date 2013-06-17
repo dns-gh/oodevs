@@ -16,7 +16,6 @@ namespace actions
 
     namespace parameters {
         class Agent;
-        class AgentKnowledge;
         class Army;
         class Automat;
         class Bool;
@@ -60,7 +59,6 @@ public:
     //! @name Operations
     //@{
     virtual void Visit( const parameters::Agent&               ) {}
-    virtual void Visit( const parameters::AgentKnowledge&      ) {}
     virtual void Visit( const parameters::Automat&             ) {}
     virtual void Visit( const parameters::Army&                ) {}
     virtual void Visit( const parameters::Bool&                ) {}

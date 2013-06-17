@@ -133,7 +133,6 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamAutomat.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamCrowd.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamInhabitant.cpp" />
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamAgentKnowledge.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamObjectKnowledge.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamPopulationKnowledge.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamLocation.cpp" />
@@ -347,7 +346,6 @@
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamAutomat.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamCrowd.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamInhabitant.h" />
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamAgentKnowledge.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamObjectKnowledge.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamPopulationKnowledge.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamLocation.h" />

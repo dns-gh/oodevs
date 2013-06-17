@@ -15,7 +15,6 @@
 #include "ListParameter.h"
 #include "MissionInterface.h"
 #include "ParamAgent.h"
-#include "ParamAgentKnowledge.h"
 #include "ParamAtlasNature.h"
 #include "ParamAutomat.h"
 #include "ParamBool.h"
@@ -93,13 +92,13 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers, gui::Param
     // Entities
     AddFunctor< actions::gui::ParamAgent >              ( "agent" );
     AddFunctor< actions::gui::ParamAutomat >            ( "automat" );
-    AddFunctor< actions::gui::ParamCrowd >              ( "crowd" );            // Not used yet
-    AddFunctor< actions::gui::ParamInhabitant >         ( "inhabitant" );       // Not used yet
+    AddFunctor< actions::gui::ParamCrowd >              ( "crowd" );            // Not used yet, but ready to be !
+    AddFunctor< actions::gui::ParamInhabitant >         ( "inhabitant" );       // Same as previous
     AddFunctor< actions::gui::ParamUrbanBlock >         ( "urbanknowledge" );   // Misnamed, should be "urbanblock" instead of "urbanknowledge"
     AddFunctor< actions::gui::LimitParameter >          ( "limit" );
     AddFunctor< actions::gui::LimaParameter >           ( "phaseline" );
     // Knowledges
-    AddFunctor< actions::gui::ParamAgentKnowledge >     ( "agentknowledge" );
+    AddFunctor< actions::gui::ParamAgent >              ( "agentknowledge" );
     AddFunctor< actions::gui::ParamObjectKnowledge >    ( "objectknowledge" );
     AddFunctor< actions::gui::ParamPopulationKnowledge >( "crowdknowledge" );
     // Misc

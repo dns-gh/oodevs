@@ -15,6 +15,7 @@
 
 namespace kernel
 {
+    class AgentKnowledge_ABC;
     class Automat_ABC;
     class Formation_ABC;
 }
@@ -33,6 +34,7 @@ namespace actions
 class ParamAgent : public EntityParameter< kernel::Agent_ABC >
                  , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                  , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
+                 , public kernel::ContextMenuObserver_ABC< kernel::AgentKnowledge_ABC >
 {
     Q_OBJECT
 
@@ -54,6 +56,7 @@ private:
     void AddHierarchy( const kernel::Entity_ABC& superior );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::AgentKnowledge_ABC& knowledge, kernel::ContextMenu& menu );
     //@}
 
 private slots:

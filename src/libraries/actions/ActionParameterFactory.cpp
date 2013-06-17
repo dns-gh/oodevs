@@ -11,8 +11,6 @@
 #include "ActionParameterFactory.h"
 
 #include "Agent.h"
-#include "AgentKnowledge.h"
-#include "AgentKnowledgeOrder.h"
 #include "Army.h"
 #include "AtlasNature.h"
 #include "Automat.h"
@@ -128,7 +126,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
     if( message.has_path() )
         return ( nullValue ) ? new parameters::Path( parameter, converter_ )                : new parameters::Path( parameter, converter_, message.path().location() );
     if( message.has_agentknowledge() )
-        return ( nullValue ) ? new parameters::AgentKnowledge( parameter, controller_ )     : new parameters::AgentKnowledge( parameter, message.agentknowledge().id(), agentKnowledgeConverter_, entity, controller_, entities_ );
+        return ( nullValue ) ? new parameters::Agent( parameter, controller_, true )        : new parameters::Agent( parameter, message.agentknowledge().id(), entities_, controller_, true );
     if( message.has_objectknowledge() )
         return ( nullValue ) ? new parameters::ObjectKnowledge( parameter, controller_ )    : new parameters::ObjectKnowledge( parameter, message.objectknowledge().id(), objectKnowledgeConverter_, entity, controller_, entities_ );
     if( message.has_crowdknowledge() )
@@ -382,7 +380,7 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList, entity, parameter.GetName() );
     }
     else if( type == "agentknowledge" )
-        param.reset( new parameters::AgentKnowledgeOrder( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
+        param.reset( new parameters::Agent( parameter, xis, entities_, controller_, true ) );
     else if( type == "crowdknowledge" )
         param.reset( new parameters::PopulationKnowledgeOrder( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "objectknowledge" ) 
