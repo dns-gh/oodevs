@@ -248,6 +248,10 @@ func (s *TestSuite) TestCreateUnit(c *C) {
 	// Valid unit type, should be read from physical database instead
 	unitType := uint32(1)
 
+	// No tasker
+	_, err = client.CreateUnit(0, unitType, pos)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
 	// Invalid automat
 	_, err = client.CreateUnit(InvalidIdentifier, unitType, pos)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
@@ -414,6 +418,11 @@ func (s *TestSuite) TestCreateAutomat(c *C) {
 }
 
 func (s *TestSuite) TestCreateCrowd(c *C) {
+	checkError := func(crowd *swapi.Crowd, err error, expected string) {
+		c.Assert(crowd, IsNil)
+		c.Assert(err, ErrorMatches, expected)
+	}
+
 	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
 	defer sim.Stop()
 	data := client.Model.GetData()
@@ -426,27 +435,31 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 	c.Assert(party, NotNil)
 
 	// Invalid tasker
-	_, err := client.CreateCrowd(0, 0, CrowdType, pos, healthy, wounded, dead, crowdName)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	crowd, err := client.CreateCrowd(0, 0, CrowdType, pos, healthy, wounded, dead, crowdName)
+	checkError(crowd, err, "error_invalid_unit")
 
 	// Invalid party identifier
-	_, err = client.CreateCrowd(InvalidIdentifier, 0, CrowdType, pos, healthy, wounded, dead, crowdName)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	crowd, err = client.CreateCrowd(InvalidIdentifier, 0, CrowdType, pos,
+		healthy, wounded, dead, crowdName)
+	checkError(crowd, err, "error_invalid_unit")
 
 	// Invalid party identifier
-	_, err = client.CreateCrowd(0, InvalidIdentifier, CrowdType, pos, healthy, wounded, dead, crowdName)
-	c.Assert(err, ErrorMatches, "error_invalid_unit")
+	crowd, err = client.CreateCrowd(0, InvalidIdentifier, CrowdType, pos,
+		healthy, wounded, dead, crowdName)
+	checkError(crowd, err, "error_invalid_unit")
 
 	// We can't create a crowd with 0 humans
-	_, err = client.CreateCrowd(party.Id, 0, CrowdType, pos, 0, 0, 0, crowdName)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	crowd, err = client.CreateCrowd(party.Id, 0, CrowdType, pos, 0, 0, 0, crowdName)
+	checkError(crowd, err, "error_invalid_parameter")
 
 	// Invalid crowd type
-	_, err = client.CreateCrowd(party.Id, 0, "invalidType", pos, healthy, wounded, dead, crowdName)
-	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+	crowd, err = client.CreateCrowd(party.Id, 0, "invalidType", pos, healthy,
+		wounded, dead, crowdName)
+	checkError(crowd, err, "error_invalid_parameter")
 
 	// Create crowd in party
-	crowd, err := client.CreateCrowd(party.Id, 0, CrowdType, pos, healthy, wounded, dead, crowdName)
+	crowd, err = client.CreateCrowd(party.Id, 0, CrowdType, pos, healthy,
+		wounded, dead, crowdName)
 	c.Assert(err, IsNil)
 	c.Assert(crowd, NotNil)
 
@@ -455,7 +468,8 @@ func (s *TestSuite) TestCreateCrowd(c *C) {
 	formation := formations[0]
 
 	// Create crowd in party with formation identifier
-	crowd, err = client.CreateCrowd(formation.Id, 0, CrowdType, pos, healthy, wounded, dead, crowdName)
+	crowd, err = client.CreateCrowd(formation.Id, 0, CrowdType, pos, healthy,
+		wounded, dead, crowdName)
 	c.Assert(err, IsNil)
 	c.Assert(crowd, NotNil)
 }
@@ -469,6 +483,10 @@ func (s *TestSuite) TestTeleportUnit(c *C) {
 	c.Assert(err, IsNil)
 
 	pos := swapi.Point{X: -15.8219, Y: 28.2456}
+
+	// No tasker
+	err = client.TeleportUnit(0, pos)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
 
 	// Cannot teleport unit if its automat is engaged
 	err = client.TeleportUnit(unit.Id, pos)

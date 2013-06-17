@@ -28,6 +28,10 @@ func (s *TestSuite) TestAutomatFragOrder(c *C) {
 
 	params := swapi.MakeParameters()
 
+	// Cannot send frag order without tasker
+	err = client.SendAutomatFragOrder(0, FragOrderNbcSuitOn, params)
+	c.Assert(err, ErrorMatches, "error_invalid_unit")
+
 	// Cannot send frag order with an invalid automat identifier
 	err = client.SendAutomatFragOrder(InvalidIdentifier, FragOrderNbcSuitOn, params)
 	c.Assert(err, ErrorMatches, "error_invalid_unit")
