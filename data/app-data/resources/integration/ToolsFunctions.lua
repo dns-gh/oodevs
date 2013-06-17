@@ -107,6 +107,10 @@ function CreateProxyKnowledge( strKnowledgeType, knowledgeSource, params )
     if not knowledgeFactory[ knowledgeSource ][ strKnowledgeType ] then
        knowledgeFactory[ knowledgeSource ][ strKnowledgeType ] = {}
        knowledgeFactory[ knowledgeSource ][ strKnowledgeType ].knowledge = CreateKnowledge( strKnowledgeType, knowledgeFactory[ knowledgeSource ][ strKnowledgeType ], params )
+    else
+        for i, j in pairs( params ) do
+            knowledgeFactory[ knowledgeSource ][ strKnowledgeType ].knowledge[i] = j
+        end
     end
     return knowledgeFactory[ knowledgeSource ][ strKnowledgeType ].knowledge
 end
