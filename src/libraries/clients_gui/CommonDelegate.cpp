@@ -114,7 +114,7 @@ unsigned int CommonDelegate::AddLineEdit( int fromRow, int toRow, int fromCol, i
 // -----------------------------------------------------------------------------
 unsigned int CommonDelegate::AddCheckBox( int fromRow, int toRow, int fromCol, int toCol )
 {
-    return AddSimpleWidget( fromRow, toRow, fromCol, toCol, checkBoxs_ );
+    return AddSimpleWidget( fromRow, toRow, fromCol, toCol, checkboxes_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -287,7 +287,7 @@ QWidget* CommonDelegate::createEditor( QWidget* parent, const QStyleOptionViewIt
         RichLineEdit* editor = new RichLineEdit( "editorLineEdit", parent );
         return editor;
     }
-    else if( std::find( checkBoxs_.begin(), checkBoxs_.end(), position->id_ ) != checkBoxs_.end() )
+    else if( std::find( checkboxes_.begin(), checkboxes_.end(), position->id_ ) != checkboxes_.end() )
     {
         return 0;
     }
@@ -331,7 +331,7 @@ void CommonDelegate::setEditorData( QWidget* editor, const QModelIndex& index ) 
             lineEdit->setValidator( new QRegExpValidator( QRegExp( *element ), 0 ) );
         lineEdit->setText( newIndex.model()->data( newIndex, Qt::EditRole ).toString() );
     }
-    else if( std::find( checkBoxs_.begin(), checkBoxs_.end(), position->id_ ) != checkBoxs_.end() )
+    else if( std::find( checkboxes_.begin(), checkboxes_.end(), position->id_ ) != checkboxes_.end() )
     {
 
     }
@@ -374,7 +374,7 @@ void CommonDelegate::setModelData( QWidget* editor, QAbstractItemModel* model, c
         model->setData( index, editLine->text(), Roles::DataRole );
         model->setData( index, editLine->text(), Qt::EditRole );
     }
-    else if( std::find( checkBoxs_.begin(), checkBoxs_.end(), position->id_ ) != checkBoxs_.end() )
+    else if( std::find( checkboxes_.begin(), checkboxes_.end(), position->id_ ) != checkboxes_.end() )
     {
 
     }

@@ -251,7 +251,7 @@ protected:
     T_DoubleSpinBoxs doubleSpinBoxs_;
     T_ComboBoxs      comboBoxs_;
     T_LineEdits      lineEdits_;
-    T_SimpleWidget   checkBoxs_;
+    T_SimpleWidget   checkboxes_;
 
     T_Positions                                     positions_;
     T_Dependencies                                  dependencies_;

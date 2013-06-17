@@ -158,7 +158,7 @@ void ADN_Resources_GUI::BuildGeneric( E_DotationFamily nType )
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "nature", tr( "Nature" ), vConnectors[ eGenNature] );
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "logistic-supply-class", tr( "Logistic supply class" ), vConnectors[ eGenLogisticSupplyClass] );
     ADN_CheckBox* networkUsableCheckBox = builder.AddField< ADN_CheckBox >( pInfoHolder, "resource-network-usable", tr( "Usable within a resource network" ), vConnectors[ eGenNetworkUsable ] );
-    vNetworkUsableCheckBoxs_.push_back( networkUsableCheckBox );
+    vNetworkUsablecheckboxes_.push_back( networkUsableCheckBox );
     connect( networkUsableCheckBox, SIGNAL( stateChanged( int ) ), SLOT( NetworkUsableActivated( int ) ) );
 
     // Packaging
@@ -255,7 +255,7 @@ void ADN_Resources_GUI::BuildAmmunition()
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "nature", tr( "Nature" ), vConnectors[ eNature ] );
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, "logistic-supply-class", tr( "Logistic supply class" ), vConnectors[ eLogisticSupplyClass] );
     ADN_CheckBox* networkUsableCheckBox = builder.AddField< ADN_CheckBox >( pInfoHolder, "resource-network-usable", tr( "Usable within a resource network" ), vConnectors[ eNetworkUsable ] );
-    vNetworkUsableCheckBoxs_.push_back( networkUsableCheckBox );
+    vNetworkUsablecheckboxes_.push_back( networkUsableCheckBox );
     connect( networkUsableCheckBox, SIGNAL( stateChanged( int ) ), SLOT( NetworkUsableActivated( int ) ) );
     builder.AddField< ADN_CheckBox >( pInfoHolder, "improvised-explosive", tr( "Improvised explosive device" ), vConnectors[ eIsIED ] );
 
@@ -557,7 +557,7 @@ void ADN_Resources_GUI::NetworkUsableActivated( int state )
     assert( pTabWidget_ );
     int currentIndex = pTabWidget_->currentIndex();
     ADN_Resources_Data::T_CategoryInfos_Vector& networkUsableVector = data_.GetNetworkUsableResources();
-    assert( vListViews_[ currentIndex ] && vNetworkUsableCheckBoxs_[ currentIndex ] );
+    assert( vListViews_[ currentIndex ] && vNetworkUsablecheckboxes_[ currentIndex ] );
     ADN_Resources_Data::CategoryInfo* current = static_cast< ADN_Resources_Data::CategoryInfo* >( vListViews_[ currentIndex ]->GetCurrentData() );
     if( !current )
         return;
@@ -593,7 +593,7 @@ void ADN_Resources_GUI::NetworkUsableActivated( int state )
                 QMessageBox::Ok, QMessageBox::Cancel );
             if( result == QMessageBox::Cancel )
             {
-                vNetworkUsableCheckBoxs_[ currentIndex ]->setCheckState( Qt::Checked );
+                vNetworkUsablecheckboxes_[ currentIndex ]->setCheckState( Qt::Checked );
                 return;
             }
         }

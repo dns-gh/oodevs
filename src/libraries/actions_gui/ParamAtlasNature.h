@@ -67,7 +67,7 @@ private:
     const kernel::AtlasNatures& natures_;
     kernel::AtlasNature nature_;
     T_NatureFields fields_;
-    std::vector< QCheckBox* > checkboxs_;
+    std::vector< QCheckBox* > checkboxes_;
     //@}
 };
 

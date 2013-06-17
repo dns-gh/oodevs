@@ -347,7 +347,7 @@ void CommonDelegate::Purge()
     doubleSpinBoxs_.clear();
     comboBoxs_.clear();
     lineEdits_.clear();
-    checkBoxs_.clear();
+    checkboxes_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -423,7 +423,7 @@ bool CommonDelegate::IsCheckBox( const QModelIndex& index ) const
     const CommonDelegate::DelegatePosition* position = IsInPosition( newIndex.row(), newIndex.column() );
     if( !position )
         return false;
-    if( std::find( checkBoxs_.begin(), checkBoxs_.end(), position->id_ ) != checkBoxs_.end() )
+    if( std::find( checkboxes_.begin(), checkboxes_.end(), position->id_ ) != checkboxes_.end() )
         return true;
     return false;
 }

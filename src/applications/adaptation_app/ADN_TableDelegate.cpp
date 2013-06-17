@@ -295,7 +295,7 @@ QWidget* ADN_TableDelegate::createEditor( QWidget* parent, const QStyleOptionVie
         editor->setAlignment( qApp->isRightToLeft() ? Qt::AlignRight : Qt::AlignLeft );
         return editor;
     }
-    else if( std::find( checkBoxs_.begin(), checkBoxs_.end(), position->id_ ) != checkBoxs_.end() )
+    else if( std::find( checkboxes_.begin(), checkboxes_.end(), position->id_ ) != checkboxes_.end() )
     {
         return 0;
     }
