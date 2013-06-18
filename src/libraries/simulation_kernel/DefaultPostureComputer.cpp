@@ -30,8 +30,8 @@ DefaultPostureComputer::DefaultPostureComputer( const MIL_Random_ABC& random, co
     , bDiscreteModeEnabled_  ( bDiscreteModeEnabled )
     , rCompletionPercentage_ ( rCompletionPercentage )
     , rStealthFactor_        ( rStealthFactor )
-    , rTimingFactor_         ( rTimingFactor )
     , isParkedOnEngineerArea_( isParkedOnEngineerArea )
+    , modifier_              ( 1 / rTimingFactor )
     , bMoving_               ( false )
     , bStopped_              ( false )
     , bIsLoaded_             ( false )
@@ -83,7 +83,7 @@ void DefaultPostureComputer::NotifyLoaded()
 // -----------------------------------------------------------------------------
 void DefaultPostureComputer::AddCoefficientModifier( double coef )
 {
-    coefficientsModifier_.push_back( coef );
+    modifier_ *= coef;
 }
 
 namespace
@@ -208,18 +208,6 @@ double DefaultPostureComputer::ComputeCompletion( const GetTime& time, const Acc
     const PHY_Posture* next = isParkedOnEngineerArea_ ? &PHY_Posture::postePrepareGenie_ : posture_.GetNextAutoPosture();
     if( !next )
         return 0;
-    const double postureTime = ApplyModifiers( (time_.*time)( *next ) );
+    const double postureTime = (time_.*time)( *next ) * modifier_;
     return accumulator( results_.postureCompletionPercentage_, postureTime );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::ApplyModifiers
-// Created: MCO 2013-06-12
-// -----------------------------------------------------------------------------
-double DefaultPostureComputer::ApplyModifiers( double time ) const
-{
-    assert( rTimingFactor_ > 0 );
-    for( auto it = coefficientsModifier_.begin(); it != coefficientsModifier_.end(); ++it )
-        time *= *it;
-    return time / rTimingFactor_;
 }

@@ -52,7 +52,6 @@ private:
     double ComputeCompletion( const GetTime& time, const Accumulator& accumulator ) const;
     void ComputeMovingPosture();
     void ComputeStopPosture();
-    double ApplyModifiers( double time ) const;
     //@}
 
 private:
@@ -65,9 +64,8 @@ private:
     const bool bDiscreteModeEnabled_;
     const double rCompletionPercentage_;
     const double rStealthFactor_;
-    const double rTimingFactor_;
     const bool isParkedOnEngineerArea_;
-    std::vector< double > coefficientsModifier_;
+    double modifier_;
     bool bMoving_;
     bool bStopped_;
     bool bIsLoaded_;
