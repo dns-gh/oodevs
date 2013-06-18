@@ -206,10 +206,21 @@ func (model *Model) update(msg *SwordMessage) {
 				// XXX report error here
 				return
 			}
-			crowd.Healthy = mm.GetHealthy()
-			crowd.Wounded = mm.GetWounded()
-			crowd.Dead = mm.GetDead()
-			crowd.Contaminated = mm.GetContaminated()
+			if mm.Healthy != nil {
+				crowd.Healthy = *mm.Healthy
+			}
+			if mm.Wounded != nil {
+				crowd.Wounded = *mm.Wounded
+			}
+			if mm.Dead != nil {
+				crowd.Dead = *mm.Dead
+			}
+			if mm.Contaminated != nil {
+				crowd.Contaminated = *mm.Contaminated
+			}
+			if mm.ArmedIndividuals != nil {
+				crowd.ArmedIndividuals = *mm.ArmedIndividuals
+			}
 		} else if mm := m.GetPopulationCreation(); mm != nil {
 			population := &Population{
 				mm.GetId().GetId(),
