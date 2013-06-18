@@ -12,8 +12,8 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Actions/Moving/SpeedStrategy_ABC.h"
 
-namespace moving
-{
+using namespace moving;
+
 // -----------------------------------------------------------------------------
 // Name: DefaultSpeedComputer constructor
 // Created: AHC 2009-10-01
@@ -166,6 +166,4 @@ void UnloadedSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& componen
         speed_ = std::min( speed_, strategy_.ApplyOnComponent( component ) );
         hasUsableComponent_ = true;
     }
-}
-
 }

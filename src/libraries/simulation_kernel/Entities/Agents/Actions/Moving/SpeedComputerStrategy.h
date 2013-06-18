@@ -18,8 +18,7 @@ class TerrainData;
 
 namespace moving
 {
-
-class PHY_RoleAction_InterfaceMoving;
+    class PHY_RoleAction_InterfaceMoving;
 
 // =============================================================================
 /** @class  SpeedComputerStrategy
@@ -32,8 +31,8 @@ class SpeedComputerStrategy : public SpeedStrategy_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const MIL_Object_ABC& obj, const TerrainData* env=0 );
-             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData* env=0 );
+             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const MIL_Object_ABC& obj, const TerrainData* env = 0 );
+             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData* env = 0 );
     virtual ~SpeedComputerStrategy();
     //@}
 
@@ -42,7 +41,7 @@ public:
     virtual double ApplyOnComponent( const PHY_ComposantePion& comp ) const;
     virtual double ApplyOnReinforcement( const MIL_Agent_ABC& pion ) const;
     virtual double ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& population ) const;
-    virtual double AddModifier( double ratio, bool isMax=true ) const;
+    virtual double AddModifier( double ratio, bool isMax = true ) const;
     //@}
 
 private:

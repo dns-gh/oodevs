@@ -16,7 +16,6 @@ class PHY_ComposantePion;
 
 namespace moving
 {
-
 // =============================================================================
 /** @class  SpeedStrategy_ABC
     @brief  SpeedStrategy_ABC
@@ -37,7 +36,7 @@ public:
     virtual double ApplyOnComponent( const PHY_ComposantePion& ) const = 0;
     virtual double ApplyOnReinforcement( const MIL_Agent_ABC& ) const = 0;
     virtual double ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& ) const = 0;
-    virtual double AddModifier( double ratio, bool isMax=true ) const = 0;
+    virtual double AddModifier( double ratio, bool isMax = true ) const = 0;
     //@}
 };
 
