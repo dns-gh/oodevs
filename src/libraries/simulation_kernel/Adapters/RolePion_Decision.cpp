@@ -21,6 +21,7 @@
 #include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -378,10 +379,12 @@ namespace
             return true;
         const double timeUnloaded = length / maxSpeedUnloaded;
         const double speed = agent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetTheoricMaxSpeed( true );
-        if( !speed )
+        if( speed == 0 )
             return false;
-        const double timeLoaded = ( length / speed ) + DEC_AgentFunctions::GetLoadingTime( agent ) * 60 + DEC_AgentFunctions::GetUnloadingTime( agent ) * 60; //Conversion minutes into hours
-        return ( timeLoaded < timeUnloaded );
+        const double timeLoaded = length / speed
+            + agent.GetRole< transport::PHY_RoleAction_Loading >().GetLoadingTime()
+            + agent.GetRole< transport::PHY_RoleAction_Loading >().GetUnloadingTime();
+        return timeLoaded < timeUnloaded;
     }
     int GetPathState( DEC_Path_ABC* pPath )
     {

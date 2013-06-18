@@ -18,6 +18,7 @@
 #include "Decision/DEC_AgentFunctions.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -56,8 +57,10 @@ bool DEC_PathFunctions::ShouldEmbark( MIL_AgentPion& callerAgent, boost::shared_
     const double speed = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( true );
     if( !speed )
         return false;
-    const double timeLoaded = ( length / speed ) + DEC_AgentFunctions::GetLoadingTime( callerAgent ) * 60 + DEC_AgentFunctions::GetUnloadingTime( callerAgent ) * 60; //Conversion minutes into hours
-    return ( timeLoaded < timeUnloaded );
+    const double timeLoaded = length / speed
+        + callerAgent.GetRole< transport::PHY_RoleAction_Loading >().GetLoadingTime()
+        + callerAgent.GetRole< transport::PHY_RoleAction_Loading >().GetUnloadingTime();
+    return timeLoaded < timeUnloaded;
 }
 
 // -----------------------------------------------------------------------------

@@ -98,10 +98,10 @@ void PHY_Speeds::ReadTerrain( xml::xistream& xis )
     if( data.Area() == 0xFF )
         xis.error( "Unknown terrain type '" + strTerrainType + "'" );
     double& speed = SpeedFor( data );
-    speed = xis.attribute< double >( "value" );
+    speed = xis.attribute< double >( "value" ); // km/h
     if( speed < 0 )
         xis.error( "speed: terrain < 0" );
-    speed = MIL_Tools::ConvertSpeedMosToSim( speed );
+    speed = MIL_Tools::ConvertSpeedMosToSim( speed ); // m/tick
     rMaxSpeed_ = std::max( rMaxSpeed_, speed );
     if( xis.has_attribute( "construction-speed" ) )
         rConstructionSpeeds_[ strTerrainType ] = xis.attribute< unsigned int >( "construction-speed" ) * 0.01;

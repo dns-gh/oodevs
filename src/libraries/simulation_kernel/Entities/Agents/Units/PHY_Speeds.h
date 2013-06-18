@@ -40,8 +40,8 @@ public:
 
     //! @name Operations
     //@{
-    double GetMaxSpeed() const;
-    double GetMaxSpeed( const TerrainData& data ) const;
+    double GetMaxSpeed() const;                          // m/tick
+    double GetMaxSpeed( const TerrainData& data ) const; // m/tick
     bool   IsPassable ( const TerrainData& data ) const;
     bool HasConstructionSpeeds() const;
     double GetConstructionSpeed( const TerrainData& data ) const;
