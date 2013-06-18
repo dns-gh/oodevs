@@ -143,15 +143,6 @@ double RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& e
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetTheoricMaxSpeed
-// Created: LMT 2010-05-04
-// -----------------------------------------------------------------------------
-double RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
-{
-    return ComputeSpeed( moving::SpeedComputerStrategy( true, false, true, loaded ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RoleAction_Moving::GetSpeedWithReinforcement
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------

@@ -35,7 +35,6 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
     , isTheoric_        ( isTheoric )
     , compFunctor_      ( boost::mem_fn( &PHY_ComposantePion::GetMaxSpeed ) )
     , pionFunctor_      ( boost::bind( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement, _1 ) )
-    , filter_           ( boost::mem_fn( &PHY_ComposantePion::CanMove ) )
 {
     // NOTHING
 }
@@ -49,7 +48,6 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
     , isMax_            ( isMaxSpeed )
     , isTheoric_        ( isTheoric )
     , compFunctor_      ( boost::bind< double, PHY_ComposantePion, const TerrainData& >( &PHY_ComposantePion::GetMaxSpeed, _1, boost::cref( env ) ) )
-    , filter_           ( boost::mem_fn( &PHY_ComposantePion::CanMove ) )
 {
     if( isMaxSpeed )
         pionFunctor_ = boost::bind( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement, _1 );
@@ -67,26 +65,8 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
     , isTheoric_        ( false )
     , compFunctor_      ( boost::bind< double, PHY_ComposantePion, const MIL_Object_ABC& >( &PHY_ComposantePion::GetMaxSpeed, _1, boost::cref( obj ) ) )
     , pionFunctor_      ( boost::bind( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement, _1 ) )
-    , filter_           ( boost::mem_fn( &PHY_ComposantePion::CanMove ) )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: SpeedComputerStrategy constructor
-// Created: MCO 2013-06-13
-// -----------------------------------------------------------------------------
-SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, bool isTheoric, bool loaded )
-    : withReinforcement_( withReinforcement )
-    , isMax_            ( isMaxSpeed )
-    , isTheoric_        ( isTheoric )
-    , compFunctor_      ( boost::mem_fn( &PHY_ComposantePion::GetMaxSpeed ) )
-    , pionFunctor_      ( boost::bind( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement, _1 ) )
-{
-    if( loaded )
-        filter_ = boost::bind( &PHY_ComposantePion::IsLoadable, _1 );
-    else
-        filter_ = ! boost::bind( &PHY_ComposantePion::IsLoadable, _1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,9 +84,9 @@ SpeedComputerStrategy::~SpeedComputerStrategy()
 // -----------------------------------------------------------------------------
 double SpeedComputerStrategy::ApplyOnComponent( const PHY_ComposantePion& comp ) const
 {
-    if( ! comp.IsUsable() || ! filter_( comp ) )
-        return 0;
-    return compFunctor_( comp );
+    if( comp.CanMove() )
+        return compFunctor_( comp );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

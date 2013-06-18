@@ -42,28 +42,6 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_Ag
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFunctions::ShouldEmbark
-// Created: LMT 2010-05-04
-// -----------------------------------------------------------------------------
-bool DEC_PathFunctions::ShouldEmbark( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Path_ABC > path )
-{
-    if( !path )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    const double length = path->GetLength();
-    const double maxSpeedUnloaded = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( false );
-    if( maxSpeedUnloaded == 0 )
-        return true;
-    const double timeUnloaded = length / maxSpeedUnloaded;
-    const double speed = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( true );
-    if( !speed )
-        return false;
-    const double timeLoaded = length / speed
-        + callerAgent.GetRole< transport::PHY_RoleAction_Loading >().GetLoadingTime()
-        + callerAgent.GetRole< transport::PHY_RoleAction_Loading >().GetUnloadingTime();
-    return timeLoaded < timeUnloaded;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPoint
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------

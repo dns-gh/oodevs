@@ -34,7 +34,6 @@ public:
              SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, bool isTheoric = false );
              SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData& env, bool isTheoric = false );
              SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const MIL_Object_ABC& obj );
-             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, bool isTheoric, bool loaded );
     virtual ~SpeedComputerStrategy();
     //@}
 
@@ -54,7 +53,6 @@ private:
     bool isTheoric_;
     boost::function< double( const PHY_ComposantePion& ) > compFunctor_;
     boost::function< double( const PHY_RoleAction_InterfaceMoving& ) > pionFunctor_;
-    boost::function< bool( const PHY_ComposantePion& ) > filter_;
     //@}
 };
 
