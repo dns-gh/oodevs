@@ -165,14 +165,24 @@ void ActionsLogger::LoadOrdersIfCheckpoint()
 // Created: BAX 2013-02-11
 // -----------------------------------------------------------------------------
 template< typename T, typename U >
-void ActionsLogger::LogAction( const T& message, const U& mutator )
+void ActionsLogger::LogActionFrom( const T& message, const U& mutator )
 {
-    if( !message.has_type() || !message.type().id() )
-        return;
     LoadOrdersIfCheckpoint();
     sword::ClientToSim msg;
     *( msg.mutable_message()->*mutator )() = message;
     actions_.push_back( std::make_pair( tools::QTimeToBoostTime( timer_.GetDateTime() ), msg ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsLogger::LogAction
+// Created: BAX 2013-02-11
+// -----------------------------------------------------------------------------
+template< typename T, typename U >
+void ActionsLogger::LogAction( const T& message, const U& mutator )
+{
+    if( !message.has_type() || !message.type().id() )
+        return;
+    LogActionFrom( message, mutator );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,6 +219,36 @@ void ActionsLogger::Log( const sword::CrowdOrder& message )
 void ActionsLogger::Log( const sword::FragOrder& message )
 {
     LogAction( message, &Content::mutable_frag_order );
+}
+
+namespace
+{
+    sword::UnitMagicAction MakeUnitMagicAction( const sword::UnitMagicActionAck& ack )
+    {
+        sword::UnitMagicAction msg;
+        msg.mutable_tasker()->CopyFrom( ack.tasker() );
+        msg.set_type( ack.type() );
+        msg.mutable_parameters()->CopyFrom( ack.result() );
+        msg.set_name( ack.name() );
+        return msg;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsLogger::Log
+// Created: SBO 2010-05-11
+// -----------------------------------------------------------------------------
+void ActionsLogger::Log( const sword::UnitMagicActionAck& ack )
+{
+    switch( ack.type() )
+    {
+        case sword::UnitMagicAction::log_supply_pull_flow:
+        case sword::UnitMagicAction::log_supply_push_flow:
+        case sword::UnitMagicAction::log_supply_change_quotas:
+        case sword::UnitMagicAction::change_logistic_links:
+            LogActionFrom( MakeUnitMagicAction( ack ), &Content::mutable_unit_magic_action );
+            break;
+    }
 }
 
 // -----------------------------------------------------------------------------
