@@ -86,16 +86,6 @@ void DefaultPostureComputer::AddCoefficientModifier( double coef )
     coefficientsModifier_.push_back( coef );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::AddUrbanCoefficientModifier
-// Created: MGD 2009-09-21
-// -----------------------------------------------------------------------------
-void DefaultPostureComputer::AddUrbanCoefficientModifier( double coef )
-{
-    if( &posture_ == &PHY_Posture::poste_ )
-        coefficientsModifier_.push_back( coef );
-}
-
 namespace
 {
     void ComputeDeathPosture( PostureComputer_ABC::Results& results )

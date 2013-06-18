@@ -40,7 +40,6 @@ public:
     virtual void SetPostureMovement();
     virtual void UnsetPostureMovement();
     virtual void AddCoefficientModifier( double coef );
-    virtual void AddUrbanCoefficientModifier( double coef );
     virtual void NotifyLoaded();
 
     virtual Results& Result();

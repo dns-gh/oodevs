@@ -160,29 +160,6 @@ BOOST_FIXTURE_TEST_CASE( timing_factor_changes_completion_percent_increase_rate,
     BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, completionPercent + 1 / ( timeForNextPosture / timingFactor ), 0.0001 );
 }
 
-BOOST_FIXTURE_TEST_CASE( urban_modifier_is_applied_only_if_posture_is_parked, Fixture )
-{
-    const double completionPercent = 0;
-    const double timeForNextPosture = 5;
-    const double urbanModifier = 0.5;
-    const double unmodified = completionPercent + 1 / timeForNextPosture;
-    const double modified = completionPercent + 1 / ( timeForNextPosture * urbanModifier );
-    {
-        posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, completionPercent, 1, 1, false );
-        computer.AddUrbanCoefficientModifier( urbanModifier );
-        MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( timeForNextPosture );
-        const posture::PostureComputer_ABC::Results& result = computer.Result();
-        BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, unmodified, 0.0001 );
-    }
-    {
-        posture::DefaultPostureComputer computer( random, time, PHY_Posture::poste_, false, false, completionPercent, 1, 1, false );
-        computer.AddUrbanCoefficientModifier( urbanModifier );
-        MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( timeForNextPosture );
-        const posture::PostureComputer_ABC::Results& result = computer.Result();
-        BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, modified, 0.0001 );
-    }
-}
-
 BOOST_FIXTURE_TEST_CASE( stealth_is_enabled_if_roll_is_greater_than_stealth_factor, Fixture )
 {
     mock::reset( random );

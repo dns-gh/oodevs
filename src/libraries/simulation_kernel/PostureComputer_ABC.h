@@ -53,7 +53,6 @@ public:
     virtual void SetPostureMovement() = 0;
     virtual void UnsetPostureMovement() = 0;
     virtual void AddCoefficientModifier( double coef ) = 0;
-    virtual void AddUrbanCoefficientModifier( double coef ) = 0;
     virtual void NotifyLoaded() = 0;
     virtual Results& Result() = 0;
     //@}
