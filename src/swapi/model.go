@@ -193,13 +193,23 @@ func (model *Model) update(msg *SwordMessage) {
 					formation.ParentId))
 			}
 		} else if mm := m.GetCrowdCreation(); mm != nil {
-			crowd := &Crowd{
+			crowd := NewCrowd(
 				mm.GetCrowd().GetId(),
 				mm.GetParty().GetId(),
-				mm.GetName()}
+				mm.GetName())
 			if !d.addCrowd(crowd) {
 				// XXX report error here
 			}
+		} else if mm := m.GetCrowdUpdate(); mm != nil {
+			crowd := d.FindCrowd(mm.GetCrowd().GetId())
+			if crowd == nil {
+				// XXX report error here
+				return
+			}
+			crowd.Healthy = mm.GetHealthy()
+			crowd.Wounded = mm.GetWounded()
+			crowd.Dead = mm.GetDead()
+			crowd.Contaminated = mm.GetContaminated()
 		} else if mm := m.GetPopulationCreation(); mm != nil {
 			population := &Population{
 				mm.GetId().GetId(),

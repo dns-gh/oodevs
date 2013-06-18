@@ -47,9 +47,21 @@ type Population struct {
 }
 
 type Crowd struct {
-	Id      uint32
-	PartyId uint32
-	Name    string
+	Id           uint32
+	PartyId      uint32
+	Name         string
+	Healthy      int32
+	Wounded      int32
+	Dead         int32
+	Contaminated int32
+}
+
+func NewCrowd(id, partyId uint32, name string) *Crowd {
+	return &Crowd{
+		Id:      id,
+		PartyId: partyId,
+		Name:    name,
+	}
 }
 
 type Unit struct {
