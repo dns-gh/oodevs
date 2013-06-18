@@ -70,9 +70,6 @@ public:
     //@{
     virtual bool Reinforce( MIL_AgentPion& pion );
     virtual void CancelReinforcement();
-    virtual bool IsReinforcing() const;
-    virtual bool IsReinforced() const;
-    virtual bool IsReinforcedBy( MIL_AgentPion& pion ) const;
 
     void ChangeConsumptionMode( dotation::ConsumptionModeChangeRequest_ABC& request );
     //@}
@@ -98,8 +95,6 @@ public:
     //! @name Accessors
     //@{
     virtual const T_Pions& GetReinforcements() const;
-    virtual bool CanReinforce() const;
-    virtual bool CanBeReinforced() const;
     //@}
 
 private:
@@ -108,10 +103,14 @@ private:
     virtual bool HasChanged() const;
     //@}
 
-    //! @name Notifications
+    //! @name Helpers
     //@{
     void NotifyReinforcementAdded  ( MIL_AgentPion& reinforcement );
     void NotifyReinforcementRemoved( MIL_AgentPion& reinforcement );
+
+    bool IsReinforcedBy( MIL_AgentPion& pion ) const;
+    bool CanBeReinforced() const;
+    bool CanReinforce() const;
     //@}
 
 private:

@@ -228,24 +228,6 @@ void PHY_RolePion_Reinforcement::NotifyReinforcementRemoved( MIL_AgentPion& rein
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Reinforcement::IsReinforcing
-// Created: NLD 2004-09-13
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Reinforcement::IsReinforcing() const
-{
-    return pPionReinforced_ != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Reinforcement::IsReinforced
-// Created: NLD 2004-09-13
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Reinforcement::IsReinforced() const
-{
-    return !reinforcements_.empty();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement::HasChanged
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
@@ -291,7 +273,7 @@ void PHY_RolePion_Reinforcement::Execute( moving::SpeedComputer_ABC& algorithm )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::Execute( moving::MoveComputer_ABC& algorithm ) const
 {
-    if( IsReinforcing() )
+    if( pPionReinforced_ )
         algorithm.NotifyReinforcing();
 }
 
