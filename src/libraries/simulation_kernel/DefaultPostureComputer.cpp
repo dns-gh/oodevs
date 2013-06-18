@@ -127,11 +127,6 @@ namespace
             return 0;
         return std::max( 0., currentCompletion - ( 1 / postureTime ) );
     }
-    void ComputePreviousPosture( PostureComputer_ABC::Results& results, const PHY_Posture& previous )
-    {
-        results.postureCompletionPercentage_ = 1;
-        results.newPosture_ = &previous;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +139,10 @@ void DefaultPostureComputer::ComputeMovingPosture()
     if( results_.postureCompletionPercentage_ > 0 )
         return;
     if( posture_.GetPreviousAutoPosture() )
-        return ComputePreviousPosture( results_, *posture_.GetPreviousAutoPosture() );
+    {
+        results_.postureCompletionPercentage_ = 1;
+        results_.newPosture_ = posture_.GetPreviousAutoPosture();
+    }
     else if( ! bIsLoaded_ )
         results_.newPosture_ = &PHY_Posture::posteReflexe_;
     else if( bDiscreteModeEnabled_ )
@@ -163,14 +161,6 @@ namespace
         if( postureTime == 0 )
             return 1;
         return std::min( 1., currentCompletion + ( 1 / postureTime ) );
-    }
-    void ComputeNextPosture( PostureComputer_ABC::Results& results, const PHY_Posture& current )
-    {
-        const PHY_Posture* pNextAutoPosture = current.GetNextAutoPosture();
-        if( !pNextAutoPosture )
-            return;
-        results.postureCompletionPercentage_ = 0;
-        results.newPosture_ = pNextAutoPosture;
     }
 }
 
@@ -195,7 +185,11 @@ void DefaultPostureComputer::ComputeStopPosture()
         results_.newPosture_ = &PHY_Posture::postePrepareGenie_;
         return;
     }
-    return ComputeNextPosture( results_, posture_ );
+    if( posture_.GetNextAutoPosture() )
+    {
+        results_.postureCompletionPercentage_ = 0;
+        results_.newPosture_ = posture_.GetNextAutoPosture();
+    }
 }
 
 // -----------------------------------------------------------------------------
