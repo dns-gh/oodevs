@@ -590,14 +590,12 @@ namespace
         for( size_t i = 0; i < COUNT_OF( converters ); ++i )
             if( CALL( src, converters[i].Has )() )
                 return converters[i].Write( xos, writer, src );
-        if( src.list_size() )
-        {
-            xos << xml::attribute( "type", "list" );
-            const auto& list = src.list();
-            for( auto it = list.begin(); it != list.end(); ++it )
-                WriteValue( xml::xosubstream( xos ) << xml::start( "parameter" ), writer, *it );
+        if( !src.list_size() )
             return;
-        }
+        xos << xml::attribute( "type", "list" );
+        const auto& list = src.list();
+        for( auto it = list.begin(); it != list.end(); ++it )
+            WriteValue( xml::xosubstream( xos ) << xml::start( "parameter" ), writer, *it );
     }
 }
 
@@ -621,6 +619,7 @@ namespace
         if( first.has_objectknowledge() )           return "objectknowledge";
         if( first.has_agentknowledge() )            return "agentknowledge";
         if( first.has_agent() )                     return "agent";
+        if( first.list_size() )                     return "list";
         if( CheckAll( src, &Value::has_location ) ) return "location";
         if( CheckAll( src, &Value::has_path ) )     return "path";
         if( CheckAll( src, &Value::has_point ) )    return "point";
@@ -634,9 +633,10 @@ void protocol::Write( xml::xostream& xos, const Writer_ABC& writer, const Missio
     const size_t size = src.value_size();
     if( !size )
         return;
-    if( size == 1 )
+    const auto type = GetType( src );
+    if( size == 1 && type != "list" )
         return WriteValue( xos, writer, src.value( 0 ) );
-    xos << xml::attribute( "type", GetType( src ) );
+    xos << xml::attribute( "type", type );
     const auto& list = src.value();
     for( auto it = list.begin(); it != list.end(); ++it )
         WriteValue( xml::xosubstream( xos ) << xml::start( "parameter" ), writer, *it );

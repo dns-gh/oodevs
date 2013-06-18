@@ -823,6 +823,20 @@ namespace
         dst.set_null_value( !valid );
     }
 
+    void AddValueParameter( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        MissionParameter next;
+        Read( reader, next, xis );
+        if( next.has_null_value() && !next.null_value() )
+            *dst.add_value() = next.value( 0 );
+    }
+
+    void ReadValues( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
+    {
+        xis >> xml::list( "parameter", boost::bind( &AddValueParameter, boost::cref( reader ), boost::ref( dst ), _1 ) );
+        dst.set_null_value( !dst.value_size() );
+    }
+
     void AddLocationComposite( const Reader_ABC& reader, MissionParameter& dst, xml::xistream& xis )
     {
         MissionParameter next;
@@ -854,6 +868,7 @@ namespace
         { &ReadPolygonList,         "polygon" },
         { &ReadUnitKnowledgeList,   "agentknowledge" },
         { &ReadUnitList,            "agent" },
+        { &ReadValues,              "list" },
     };
 
     const struct { T_Read Read; std::string name; } readers[] = {

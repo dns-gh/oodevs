@@ -834,14 +834,16 @@ BOOST_FIXTURE_TEST_CASE( read_list, Fixture )
     const std::string input =
     "<action>"
     "  <parameter type='list'>"
-    "    <parameter type='polygon'>"
-    "      <location type='polygon'>"
-    "        <point coordinates='dummy'/>"
-    "        <point coordinates='dummy'/>"
-    "        <point coordinates='dummy'/>"
-    "      </location>"
+    "    <parameter type='list'>"
+    "      <parameter type='polygon'>"
+    "        <location type='polygon'>"
+    "          <point coordinates='dummy'/>"
+    "          <point coordinates='dummy'/>"
+    "          <point coordinates='dummy'/>"
+    "        </location>"
+    "      </parameter>"
+    "      <parameter type='agent' value='1106'/>"
     "    </parameter>"
-    "    <parameter type='agent' value='1106'/>"
     "  </parameter>"
     "</action>";
     MOCK_EXPECT( reader.Convert ).exactly( 3 ).returns( dummy );
@@ -851,6 +853,35 @@ BOOST_FIXTURE_TEST_CASE( read_list, Fixture )
     BOOST_CHECK_EQUAL( val.list_size(), 2 );
     CheckLocation( val.list( 0 ).area().location(), Location::polygon, 3 );
     BOOST_CHECK_EQUAL( val.list( 1 ).agent().id(), 1106u );
+    CheckCycle( input, msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( read_change_quota_links, Fixture )
+{
+    const std::string input =
+    "<action>"
+    "  <parameter type='list'>"
+    "    <parameter type='list'>"
+    "      <parameter type='identifier' value='3'/>"
+    "      <parameter type='quantity' value='4'/>"
+    "    </parameter>"
+    "    <parameter type='list'>"
+    "      <parameter type='identifier' value='5'/>"
+    "      <parameter type='quantity' value='6'/>"
+    "    </parameter>"
+    "  </parameter>"
+    "</action>";
+    const auto msg = Read< MissionParameters >( input );
+    BOOST_CHECK_EQUAL( msg.elem_size(), 1 );
+    BOOST_CHECK_EQUAL( msg.elem( 0 ).value_size(), 2 );
+    BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 0 ).list_size(), 2 );
+    BOOST_CHECK_EQUAL( msg.elem( 0 ).value( 1 ).list_size(), 2 );
+    auto& first = msg.elem( 0 ).value( 0 );
+    BOOST_CHECK_EQUAL( first.list( 0 ).identifier(), 3u );
+    BOOST_CHECK_EQUAL( first.list( 1 ).quantity(), 4 );
+    auto& second = msg.elem( 0 ).value( 1 );
+    BOOST_CHECK_EQUAL( second.list( 0 ).identifier(), 5u );
+    BOOST_CHECK_EQUAL( second.list( 1 ).quantity(), 6 );
     CheckCycle( input, msg );
 }
 
