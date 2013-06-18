@@ -39,7 +39,7 @@ namespace sword
 // =============================================================================
 class RoleAction_Moving : public moving::PHY_RoleAction_InterfaceMoving
                         , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
-                        , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
+                        , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -72,18 +72,24 @@ public:
     virtual double GetMaxSpeed() const;
     virtual double GetMaxSpeed( const TerrainData& environment ) const;
     virtual double GetMaxSlope() const;
+    virtual double GetTheoricSpeedWithReinforcement( const TerrainData& environment ) const;
     virtual double GetTheoricMaxSpeed( bool loaded ) const;
+    virtual double GetTheoricMaxSpeedWithReinforcement() const;
     virtual void SetSpeedModificator( double rFactor );
     virtual void SetMaxSpeedModificator( double rFactor );
     virtual double GetMaxSpeedModificator() const;
     virtual bool CanMove() const;
     virtual bool IsReady() const;
-    virtual double GetTheoricMaxSpeedWithReinforcement() const;
     virtual bool HasKnowledgeObject( const MIL_Object_ABC& object ) const;
-    virtual void SetTheoricSpeed( bool ) const;
 
     bool HasResources();
     virtual void ApplyTrafficModifier();
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    void SetTheoricSpeed( bool ) const;
     //@}
 
 private:

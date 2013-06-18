@@ -174,6 +174,18 @@ void RoleAction_Moving::SetTheoricSpeed( bool value ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::GetTheoricSpeedWithReinforcement
+// Created: MCO 2013-06-13
+// -----------------------------------------------------------------------------
+double RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& environment ) const
+{
+    SetTheoricSpeed( true );
+    double result = GetSpeedWithReinforcement( environment );
+    SetTheoricSpeed( false );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: RoleAction_Moving::GetTheoricMaxSpeed
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------

@@ -218,7 +218,6 @@ double PHY_RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
     return result;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::GetSpeedWithReinforcement
 // Created: NLD 2004-09-23
@@ -229,6 +228,18 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
     std::auto_ptr< SpeedComputer_ABC > computer = owner_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
     owner_->Execute( *computer );
     return std::min( computer->GetSpeed(), GetMaxSpeedWithReinforcement() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::GetTheoricSpeedWithReinforcement
+// Created: MCO 2013-06-13
+// -----------------------------------------------------------------------------
+double PHY_RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& environment ) const
+{
+    SetTheoricSpeed( true );
+    double result = GetSpeedWithReinforcement( environment );
+    SetTheoricSpeed( false );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -513,7 +524,6 @@ void PHY_RoleAction_Moving::Clean()
     bEnvironmentHasChanged_ = false;
     bHasMove_               = false;
     bIntentToMove_          = false;
-    bTheoricMaxSpeed_       = false;
     rTrafficModificator_    = 1.;
 }
 
