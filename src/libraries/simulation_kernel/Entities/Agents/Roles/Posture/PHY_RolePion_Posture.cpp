@@ -170,7 +170,7 @@ bool PHY_RolePion_Posture::UpdatePosture( bool bIsDead )
                                                                                                            bIsDead, bDiscreteModeEnabled_, rPostureCompletionPercentage_,
                                                                                                            rStealthFactor_, rTimingFactor_, bIsParkedOnEngineerArea_ ) );
     owner_.Execute( *computer );
-    PostureComputer_ABC::Results& result = computer->Result();
+    const PostureComputer_ABC::Results& result = computer->Result();
     bool changed = false;
     if( result.newPosture_ )
         changed = ChangePosture( *result.newPosture_ );

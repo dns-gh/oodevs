@@ -54,7 +54,8 @@ public:
     virtual void UnsetPostureMovement() = 0;
     virtual void AddCoefficientModifier( double coef ) = 0;
     virtual void NotifyLoaded() = 0;
-    virtual Results& Result() = 0;
+
+    virtual const Results& Result() = 0;
     //@}
 };
 

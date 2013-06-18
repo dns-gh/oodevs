@@ -42,7 +42,7 @@ public:
     virtual void AddCoefficientModifier( double coef );
     virtual void NotifyLoaded();
 
-    virtual Results& Result();
+    virtual const Results& Result();
     //@}
 
 private:

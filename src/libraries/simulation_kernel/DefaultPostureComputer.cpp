@@ -104,7 +104,7 @@ namespace
 // Name: DefaultPostureComputer::Result
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-PostureComputer_ABC::Results& DefaultPostureComputer::Result()
+const PostureComputer_ABC::Results& DefaultPostureComputer::Result()
 {
     if( bIsDead_ )
     {
