@@ -40,7 +40,7 @@ BaseSpeedComputer::~BaseSpeedComputer()
 // Name: BaseSpeedComputer::ApplyOnReinforcement
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-void BaseSpeedComputer::ApplyOnReinforcement( MIL_Agent_ABC& reinforcement )
+void BaseSpeedComputer::ApplyOnReinforcement( const MIL_Agent_ABC& reinforcement )
 {
     speed_ = std::min( speed_, strategy_.ApplyOnReinforcement( reinforcement ) );
 }

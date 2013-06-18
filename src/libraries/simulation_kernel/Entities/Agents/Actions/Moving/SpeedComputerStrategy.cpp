@@ -93,10 +93,10 @@ double SpeedComputerStrategy::ApplyOnComponent( const PHY_ComposantePion& comp )
 // Name: SpeedComputerStrategy::ApplyOnReinforcement
 // Created: LDC 2009-12-16
 // -----------------------------------------------------------------------------
-double SpeedComputerStrategy::ApplyOnReinforcement( MIL_Agent_ABC& pion ) const
+double SpeedComputerStrategy::ApplyOnReinforcement( const MIL_Agent_ABC& pion ) const
 {
     return withReinforcement_ ?
-        pionFunctor_( pion.GetRole<PHY_RoleAction_InterfaceMoving>() ) :
+        pionFunctor_( pion.GetRole< PHY_RoleAction_InterfaceMoving >() ) :
             std::numeric_limits< double >::max();
 }
 

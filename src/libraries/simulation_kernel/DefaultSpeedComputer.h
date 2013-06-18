@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void ApplyOnReinforcement( MIL_Agent_ABC& );
+    virtual void ApplyOnReinforcement( const MIL_Agent_ABC& );
     virtual void ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& );
     virtual void AddModifier( double ratio, bool isMax=true );
     virtual double GetSpeed() const;
