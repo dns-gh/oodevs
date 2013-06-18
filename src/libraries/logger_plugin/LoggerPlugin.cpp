@@ -129,46 +129,47 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
 {
     if( !Initialize() )
         return;
-    if( message.message().has_report() )
+    const auto& msg = message.message();
+    if( msg.has_report() )
     {
         int id = 0;
-        if( message.message().report().source().has_unit() )
-            id = message.message().report().source().unit().id();
-        else if( message.message().report().source().has_automat() )
-            id = message.message().report().source().automat().id();
-        else if( message.message().report().source().has_crowd() )
-            id = message.message().report().source().crowd().id();
+        if( msg.report().source().has_unit() )
+            id = msg.report().source().unit().id();
+        else if( msg.report().source().has_automat() )
+            id = msg.report().source().automat().id();
+        else if( msg.report().source().has_crowd() )
+            id = msg.report().source().crowd().id();
         kernel::Entity_ABC* entity = Find( model_, id );
-        FormatMessage( factory_.FormatReport( message.message().report() ), "Report",
+        FormatMessage( factory_.FormatReport( msg.report() ), "Report",
                        entity ? entity->GetName().toStdString() : "Unknown entity", id,
-                       factory_.GetTime( message.message().report().time() ).toString( "hh:mm:ss" ).toStdString() );
+                       factory_.GetTime( msg.report().time() ).toString( "hh:mm:ss" ).toStdString() );
     }
-    else if( message.message().has_trace() )
+    else if( msg.has_trace() )
     {
         int id = 0;
-        if( message.message().trace().source().has_unit() )
-            id = message.message().trace().source().unit().id();
-        else if( message.message().trace().source().has_automat() )
-            id = message.message().trace().source().automat().id();
-        else if( message.message().trace().source().has_crowd() )
-            id = message.message().trace().source().crowd().id();
+        if( msg.trace().source().has_unit() )
+            id = msg.trace().source().unit().id();
+        else if( msg.trace().source().has_automat() )
+            id = msg.trace().source().automat().id();
+        else if( msg.trace().source().has_crowd() )
+            id = msg.trace().source().crowd().id();
         kernel::Entity_ABC* entity = Find( model_, id );
-        FormatMessage( message.message().trace().message(), "Trace",
+        FormatMessage( msg.trace().message(), "Trace",
                        entity ? entity->GetName().toStdString() : "Unknown entity", id, date_ );
     }
-    else if( message.message().has_control_information() )
+    else if( msg.has_control_information() )
     {
-        date_ = Format( message.message().control_information().date_time().data().c_str() );
-        simulation_->Update( message.message().control_information() );
+        date_ = Format( msg.control_information().date_time().data().c_str() );
+        simulation_->Update( msg.control_information() );
     }
-    else if( message.message().has_control_begin_tick() )
+    else if( msg.has_control_begin_tick() )
     {
-        date_ = Format( message.message().control_begin_tick().date_time().data().c_str() );
-        simulation_->Update( message.message().control_begin_tick() );
+        date_ = Format( msg.control_begin_tick().date_time().data().c_str() );
+        simulation_->Update( msg.control_begin_tick() );
     }
-    else if( message.message().has_control_end_tick() )
+    else if( msg.has_control_end_tick() )
     {
-        nCurrentTick_ = message.message().control_end_tick().current_tick();
+        nCurrentTick_ = msg.control_end_tick().current_tick();
         if( pLogger_.get() )
         {
             std::string information = "**** Time tick " + boost::lexical_cast< std::string >( nCurrentTick_ ) + " - [" + date_ + "] - "
@@ -176,67 +177,69 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
             pLogger_->Log( MT_Logger_ABC::eLogLevel_Info, information.c_str() );
         }
     }
-    else if( message.message().has_unit_order() )
+    else if( msg.has_unit_order() )
     {
-        kernel::Entity_ABC* agent = model_.Agents().Find( message.message().unit_order().tasker().id() );
+        kernel::Entity_ABC* agent = model_.Agents().Find( msg.unit_order().tasker().id() );
         if( agent )
-            FormatMission( agent->GetName().toStdString().c_str(), message.message().unit_order().tasker().id(), message.message().unit_order().type().id() );
-        actions_->Log( message.message().unit_order() );
+            FormatMission( agent->GetName().toStdString().c_str(), msg.unit_order().tasker().id(), msg.unit_order().type().id() );
+        actions_->Log( msg.unit_order() );
     }
-    else if( message.message().has_automat_order() )
+    else if( msg.has_automat_order() )
     {
-        kernel::Entity_ABC* automat = model_.Automats().Find( message.message().automat_order().tasker().id() );
+        kernel::Entity_ABC* automat = model_.Automats().Find( msg.automat_order().tasker().id() );
         if( automat )
-            FormatMission( automat->GetName().toStdString().c_str(), message.message().automat_order().tasker().id(), message.message().automat_order().type().id() );
-        actions_->Log( message.message().automat_order() );
+            FormatMission( automat->GetName().toStdString().c_str(), msg.automat_order().tasker().id(), msg.automat_order().type().id() );
+        actions_->Log( msg.automat_order() );
     }
-    else if( message.message().has_crowd_order() )
+    else if( msg.has_crowd_order() )
     {
-        kernel::Entity_ABC* population = model_.Populations().Find( message.message().crowd_order().tasker().id() );
+        kernel::Entity_ABC* population = model_.Populations().Find( msg.crowd_order().tasker().id() );
         if( population )
-            FormatMission( population->GetName().toStdString().c_str(), message.message().crowd_order().tasker().id(), message.message().crowd_order().type().id() );
-        actions_->Log( message.message().crowd_order() );
+            FormatMission( population->GetName().toStdString().c_str(), msg.crowd_order().tasker().id(), msg.crowd_order().type().id() );
+        actions_->Log( msg.crowd_order() );
     }
-    else if( message.message().has_start_unit_fire() )
+    else if( msg.has_start_unit_fire() )
     {
-        kernel::Entity_ABC* agent = model_.Agents().Find( message.message().start_unit_fire().firing_unit().id() );
+        kernel::Entity_ABC* agent = model_.Agents().Find( msg.start_unit_fire().firing_unit().id() );
         if( agent )
         {
             kernel::Entity_ABC* target = 0;
-            if( message.message().start_unit_fire().target().has_unit() )
-                target = model_.Agents().Find( message.message().start_unit_fire().target().unit().id() );
-            else if( message.message().start_unit_fire().target().has_crowd() )
-                target = model_.Populations().Find( message.message().start_unit_fire().target().crowd().id() );
+            if( msg.start_unit_fire().target().has_unit() )
+                target = model_.Agents().Find( msg.start_unit_fire().target().unit().id() );
+            else if( msg.start_unit_fire().target().has_crowd() )
+                target = model_.Populations().Find( msg.start_unit_fire().target().crowd().id() );
             std::string text = "Fire on ";
             if( target )
                 text += boost::lexical_cast< std::string >( target->GetName().toStdString() ) + "[" +
                         boost::lexical_cast< std::string >( target->GetId() ) + "]";
             else
                 text += "position";
-            //*file_ << ", ammo = " << message.message().start_unit_fire().ammunition();
-            FormatMessage( text, "Fire", agent->GetName().toStdString(), message.message().start_unit_fire().firing_unit().id(), date_ );
+            //*file_ << ", ammo = " << msg.start_unit_fire().ammunition();
+            FormatMessage( text, "Fire", agent->GetName().toStdString(), msg.start_unit_fire().firing_unit().id(), date_ );
         }
     }
-    else if( message.message().has_stop_unit_fire() )
+    else if( msg.has_stop_unit_fire() )
     {
-        if( message.message().stop_unit_fire().has_units_damages() )
-            LogUnitsFireDamages( message.message().stop_unit_fire().units_damages() );
-        if( message.message().stop_unit_fire().has_crowds_damages() )
-            LogPopulationsFireDamages( message.message().stop_unit_fire().crowds_damages() );
+        if( msg.stop_unit_fire().has_units_damages() )
+            LogUnitsFireDamages( msg.stop_unit_fire().units_damages() );
+        if( msg.stop_unit_fire().has_crowds_damages() )
+            LogPopulationsFireDamages( msg.stop_unit_fire().crowds_damages() );
     }
-    else if( message.message().has_start_crowd_fire() )
+    else if( msg.has_start_crowd_fire() )
     {
-        kernel::Entity_ABC* agent = model_.Populations().Find( message.message().start_crowd_fire().firing_crowd().id() );
+        kernel::Entity_ABC* agent = model_.Populations().Find( msg.start_crowd_fire().firing_crowd().id() );
         if( agent )
-            FormatMessage( "", "Fire", agent->GetName().toStdString(), message.message().start_crowd_fire().firing_crowd().id(), date_ );
+            FormatMessage( "", "Fire", agent->GetName().toStdString(), msg.start_crowd_fire().firing_crowd().id(), date_ );
     }
-    else if( message.message().has_stop_crowd_fire() )
+    else if( msg.has_stop_crowd_fire() )
     {
-        if( message.message().stop_crowd_fire().has_units_damages() )
-            LogUnitsFireDamages( message.message().stop_crowd_fire().units_damages() );
+        if( msg.stop_crowd_fire().has_units_damages() )
+            LogUnitsFireDamages( msg.stop_crowd_fire().units_damages() );
     }
-    else if( message.message().has_control_checkpoint_save_end() )
-        actions_->SaveCheckpointActiveMissions( message.message().control_checkpoint_save_end().name() );
+    else if( msg.has_control_checkpoint_save_end() )
+    {
+        actions_->SaveCheckpointActiveMissions( msg.control_checkpoint_save_end().name() );
+    }
 }
 
 // -----------------------------------------------------------------------------
