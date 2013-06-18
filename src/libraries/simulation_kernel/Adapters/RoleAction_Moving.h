@@ -24,6 +24,11 @@ namespace posture
     class PostureComputer_ABC;
 }
 
+namespace moving
+{
+    class SpeedStrategy_ABC;
+}
+
 namespace core
 {
     class Model;
@@ -89,7 +94,7 @@ public:
 private:
     //! @name Member data
     //@{
-    void SetTheoricSpeed( bool ) const;
+    double ComputeSpeed( const moving::SpeedStrategy_ABC& strategy ) const;
     //@}
 
 private:

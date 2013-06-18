@@ -35,6 +35,7 @@ namespace posture
 
 namespace moving
 {
+    class SpeedStrategy_ABC;
 
 // =============================================================================
 // @class  PHY_RoleAction_Moving
@@ -129,6 +130,7 @@ private:
     double GetMaxSpeed( const MIL_Object_ABC& object ) const;
     double ApplyMaxSpeedModificators( double rSpeed ) const;
     double ApplySpeedModificators( double rSpeed ) const;
+    double ComputeSpeed( const SpeedStrategy_ABC& strategy ) const;
     //@}
 
     //! @name Network

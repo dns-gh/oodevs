@@ -94,14 +94,15 @@ void RoleAction_Moving::Execute( moving::SpeedComputer_ABC& algorithm ) const
     algorithm.AddModifier( rSpeedModificator_, false );
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::ComputeSpeed
+// Created: MCO 2013-06-13
+// -----------------------------------------------------------------------------
+double RoleAction_Moving::ComputeSpeed( const moving::SpeedStrategy_ABC& strategy ) const
 {
-    double ComputeSpeed( MIL_AgentPion& owner, const moving::SpeedComputerStrategy& strategy )
-    {
-        std::auto_ptr< moving::SpeedComputer_ABC > computer = owner.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
-        owner.Execute( *computer );
-        return computer->GetSpeed();
-    }
+    std::auto_ptr< moving::SpeedComputer_ABC > computer = owner_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    owner_->Execute( *computer );
+    return computer->GetSpeed();
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +111,7 @@ namespace
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 {
-    return ComputeSpeed( *owner_, moving::SpeedComputerStrategy( true, false, environment ) );
+    return ComputeSpeed( moving::SpeedComputerStrategy( true, false, environment ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,19 +120,7 @@ double RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetMaxSpeed() const
 {
-    return ComputeSpeed( *owner_, moving::SpeedComputerStrategy( true, false ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetMaxSlope
-// Created: AGE 2005-04-13
-// -----------------------------------------------------------------------------
-double RoleAction_Moving::GetMaxSlope() const
-{
-    std::auto_ptr< moving::MaxSlopeComputer_ABC > computer =
-            owner_->GetAlgorithms().moveComputerFactory_->CreateMaxSlopeComputer();
-    owner_->Execute< OnComponentComputer_ABC >( *computer );
-    return computer->GetMaxSlope();
+    return ComputeSpeed( moving::SpeedComputerStrategy( true, false ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,7 +129,7 @@ double RoleAction_Moving::GetMaxSlope() const
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 {
-    return ComputeSpeed( *owner_, moving::SpeedComputerStrategy( true, true ) );
+    return ComputeSpeed( moving::SpeedComputerStrategy( true, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,7 +138,7 @@ double RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement() const
 {
-    return ComputeSpeed( *owner_, moving::SpeedComputerStrategy( true, true, true ) );
+    return ComputeSpeed( moving::SpeedComputerStrategy( true, true, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -159,7 +148,7 @@ double RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement() const
 double RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& environment ) const
 {
     const moving::SpeedComputerStrategy strategy( false, true, environment, true );
-    return std::min( ComputeSpeed( *owner_, strategy ), GetMaxSpeedWithReinforcement() );
+    return std::min( ComputeSpeed( strategy ), GetMaxSpeedWithReinforcement() );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +157,7 @@ double RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& e
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
 {
-    return ComputeSpeed( *owner_, moving::SpeedComputerStrategy( true, false, true, loaded ) );
+    return ComputeSpeed( moving::SpeedComputerStrategy( true, false, true, loaded ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +167,7 @@ double RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
 double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment ) const
 {
     const moving::SpeedComputerStrategy strategy( false, true, environment );
-    return std::min( ComputeSpeed( *owner_, strategy ), GetMaxSpeedWithReinforcement() );
+    return std::min( ComputeSpeed( strategy ), GetMaxSpeedWithReinforcement() );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,9 +183,21 @@ double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environm
     const double rCurrentMaxSpeed = GetMaxSpeed();
     const double rCurrentEnvSpeed = GetSpeedWithReinforcement( environment );
     const moving::SpeedComputerStrategy strategy( false, true, object );
-    double rObjectSpeed = std::min( ComputeSpeed( *owner_, strategy ), rCurrentMaxSpeed );
+    double rObjectSpeed = std::min( ComputeSpeed( strategy ), rCurrentMaxSpeed );
     rObjectSpeed *= rSpeedModificator_;
     return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed, *owner_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::GetMaxSlope
+// Created: AGE 2005-04-13
+// -----------------------------------------------------------------------------
+double RoleAction_Moving::GetMaxSlope() const
+{
+    std::auto_ptr< moving::MaxSlopeComputer_ABC > computer =
+            owner_->GetAlgorithms().moveComputerFactory_->CreateMaxSlopeComputer();
+    owner_->Execute< OnComponentComputer_ABC >( *computer );
+    return computer->GetMaxSlope();
 }
 
 // -----------------------------------------------------------------------------
