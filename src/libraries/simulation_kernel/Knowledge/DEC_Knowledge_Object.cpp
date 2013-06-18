@@ -794,7 +794,9 @@ bool DEC_Knowledge_Object::IsReservedObstacleActivated() const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Object::MustBeMined() const
 {
-    if( const MineAttribute* attr = RetrieveAttribute< MineAttribute >() )
+    if( !pObjectKnown_ )
+        return false;
+    if( const MineAttribute* attr = pObjectKnown_->RetrieveAttribute< MineAttribute >() )
         return attr->MustBeMined();
     return false;
 }
