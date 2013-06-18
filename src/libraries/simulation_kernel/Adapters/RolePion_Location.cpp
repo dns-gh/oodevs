@@ -357,7 +357,7 @@ void RolePion_Location::Clean()
 void RolePion_Location::Follow( const MIL_Agent_ABC& agent )
 {
     sink_->PostCommand( "follow", core::MakeModel( "identifier", owner_->GetID() )
-                                                ( "followed", agent.GetID() ) );
+                                                 ( "followed", agent.GetID() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -380,8 +380,8 @@ void RolePion_Location::Hide()
 void RolePion_Location::Show( const MT_Vector2D& vPosition )
 {
     sink_->PostCommand( "magic move", core::MakeModel( "identifier", owner_->GetID() )
-                                                    ( "position/x", vPosition.rX_ )
-                                                    ( "position/y", vPosition.rY_ ) );
+                                                     ( "position/x", vPosition.rX_ )
+                                                     ( "position/y", vPosition.rY_ ) );
     TER_Object_ABC::T_ObjectVector objectsColliding;
     TER_World::GetWorld().GetObjectManager().GetListAt( vPosition, objectsColliding );
     for( TER_Object_ABC::CIT_ObjectVector itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )

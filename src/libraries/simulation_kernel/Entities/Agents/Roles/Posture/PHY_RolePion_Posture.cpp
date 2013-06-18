@@ -510,7 +510,7 @@ void PHY_RolePion_Posture::Hide()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::Show
 // Created: LDC 2013-05-24
@@ -519,7 +519,7 @@ void PHY_RolePion_Posture::Show( const MT_Vector2D& )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::Follow
 // Created: LDC 2013-05-24
