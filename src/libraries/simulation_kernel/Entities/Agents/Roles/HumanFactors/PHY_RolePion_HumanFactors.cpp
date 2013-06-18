@@ -460,7 +460,7 @@ void PHY_RolePion_HumanFactors::Execute( firing::WeaponReloadingComputer_ABC& al
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::Execute
+// Name: PHY_RolePion_HumanFactors::Execute
 // Created: MGD 2009-09-22
 // -----------------------------------------------------------------------------
 void PHY_RolePion_HumanFactors::Execute( posture::PostureComputer_ABC& algorithm ) const
@@ -471,7 +471,7 @@ void PHY_RolePion_HumanFactors::Execute( posture::PostureComputer_ABC& algorithm
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::Execute
+// Name: PHY_RolePion_HumanFactors::Execute
 // Created: MGD 2009-10-06
 // -----------------------------------------------------------------------------
 void PHY_RolePion_HumanFactors::Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const

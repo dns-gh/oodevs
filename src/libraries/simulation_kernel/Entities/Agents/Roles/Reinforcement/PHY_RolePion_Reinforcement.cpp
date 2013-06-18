@@ -305,7 +305,7 @@ void PHY_RolePion_Reinforcement::ChangeConsumptionMode( dotation::ConsumptionMod
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Reinforcement::NotifyMovingOutsideObject
+// Name: PHY_RolePion_Reinforcement::NotifyMovingInsideObject
 // Created: AHC 2009-10-06
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::NotifyMovingInsideObject( MIL_Object_ABC& object )
