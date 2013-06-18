@@ -671,7 +671,7 @@ func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) 
 	return c.Model.GetLocalWeather(id), nil
 }
 
-func (c *Client) CreateFireOnLocation(params *sword.MissionParameters) error {
+func (c *Client) CreateFireOnLocationTest(params *sword.MissionParameters) error {
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
@@ -694,4 +694,12 @@ func (c *Client) CreateFireOnLocation(params *sword.MissionParameters) error {
 		return nil
 	}
 	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) CreateFireOnLocation(location Point, ammoType uint32, salvoCount int) error {
+	params := MakeParameters(
+		MakePointParam(location),
+		MakeResourceType(ammoType),
+		MakeFloat(float32(salvoCount)))
+	return c.CreateFireOnLocationTest(params)
 }
