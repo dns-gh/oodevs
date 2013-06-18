@@ -19,10 +19,10 @@ using namespace moving;
 
 namespace
 {
-double MaxSpeedEnvObj(const PHY_ComposantePion& comp, const TerrainData& environment, const MIL_Object_ABC& object )
-{
-    return std::min( comp.GetMaxSpeed(environment), comp.GetMaxSpeed(object));
-}
+    double MaxSpeedEnvObj( const PHY_ComposantePion& comp, const TerrainData& environment, const MIL_Object_ABC& object )
+    {
+        return std::min( comp.GetMaxSpeed( environment ), comp.GetMaxSpeed( object ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
 {
     if( env )
     {
-        compFunctor_ = boost::bind( ::MaxSpeedEnvObj, _1, boost::cref( *env ), boost::cref( obj ) );
+        compFunctor_ = boost::bind( &MaxSpeedEnvObj, _1, boost::cref( *env ), boost::cref( obj ) );
         if( isMaxSpeed )
             pionFunctor_ = boost::mem_fn( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement );
         else
@@ -43,7 +43,7 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
     }
     else
     {
-        compFunctor_ = boost::bind( boost::mem_fn<double, PHY_ComposantePion, const MIL_Object_ABC&>( &PHY_ComposantePion::GetMaxSpeed ), _1, boost::cref( obj ) );
+        compFunctor_ = boost::bind< double, PHY_ComposantePion, const MIL_Object_ABC& >( &PHY_ComposantePion::GetMaxSpeed, _1, boost::cref( obj ) );
         pionFunctor_ = boost::mem_fn( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement );
     }
 }
@@ -58,7 +58,7 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
 {
     if( env )
     {
-        compFunctor_ = boost::bind( boost::mem_fn<double,PHY_ComposantePion,const TerrainData&>( &PHY_ComposantePion::GetMaxSpeed ), _1, boost::cref( *env ) );
+        compFunctor_ = boost::bind< double, PHY_ComposantePion, const TerrainData& >( &PHY_ComposantePion::GetMaxSpeed, _1, boost::cref( *env ) );
         if( isMaxSpeed )
             pionFunctor_ = boost::mem_fn( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement );
         else
@@ -66,8 +66,8 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
     }
     else
     {
-        compFunctor_ = boost::mem_fn(&PHY_ComposantePion::GetMaxSpeed);
-        pionFunctor_ = boost::mem_fn(&PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement);
+        compFunctor_ = boost::mem_fn( &PHY_ComposantePion::GetMaxSpeed );
+        pionFunctor_ = boost::mem_fn( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement );
     }
 }
 
@@ -96,8 +96,8 @@ double SpeedComputerStrategy::ApplyOnComponent( const PHY_ComposantePion& comp )
 double SpeedComputerStrategy::ApplyOnReinforcement( MIL_Agent_ABC& pion ) const
 {
     return withReinforcement_ ?
-        pionFunctor_( pion.GetRole<PHY_RoleAction_InterfaceMoving>() ):
-            std::numeric_limits<double>::max();
+        pionFunctor_( pion.GetRole<PHY_RoleAction_InterfaceMoving>() ) :
+            std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ double SpeedComputerStrategy::ApplyOnReinforcement( MIL_Agent_ABC& pion ) const
 // -----------------------------------------------------------------------------
 double SpeedComputerStrategy::ApplyOnPopulation(const DEC_Knowledge_PopulationCollision& population ) const
 {
-    return isMax_ ? population.GetPionMaxSpeed() : std::numeric_limits<double>::max();
+    return isMax_ ? population.GetPionMaxSpeed() : std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
