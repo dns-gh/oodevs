@@ -318,7 +318,7 @@ bool RoleAction_Moving::HasKnowledgeObject( const MIL_Object_ABC& object ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::ApplyTrafficModifier
+// Name: RoleAction_Moving::ApplyTrafficModifier
 // Created: JSR 2012-01-12
 // -----------------------------------------------------------------------------
 void RoleAction_Moving::ApplyTrafficModifier()
