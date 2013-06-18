@@ -106,59 +106,6 @@ PostureComputer_ABC::Results& DefaultPostureComputer::Result()
     return results_;
 }
 
-namespace
-{
-    void ComputeNextPosture( PostureComputer_ABC::Results& results, const PHY_Posture& current )
-    {
-        const PHY_Posture* pNextAutoPosture = current.GetNextAutoPosture();
-        if( !pNextAutoPosture )
-            return;
-        results.postureCompletionPercentage_ = 0;
-        results.newPosture_ = pNextAutoPosture;
-    }
-    void ComputePreviousPosture( PostureComputer_ABC::Results& results, const PHY_Posture& previous )
-    {
-        results.postureCompletionPercentage_ = 1;
-        results.newPosture_ = &previous;
-    }
-    void ComputeMovingPosture( PostureComputer_ABC::Results& results, bool isLoaded, bool isDiscreteModeEnabled, double completion, const PHY_Posture& current )
-    {
-        results.postureCompletionPercentage_ = completion;
-        if( completion > 0 )
-            return;
-        if( current.GetPreviousAutoPosture() )
-            return ComputePreviousPosture( results, *current.GetPreviousAutoPosture() );
-        else if( !isLoaded )
-            results.newPosture_ = &PHY_Posture::posteReflexe_;
-        else if( isDiscreteModeEnabled )
-            results.newPosture_ = &PHY_Posture::mouvementDiscret_;
-        else
-        {
-            results.newPosture_ = &PHY_Posture::mouvement_;
-            results.postureCompletionPercentage_ = 1;
-        }
-    }
-    void ComputeStopPosture( PostureComputer_ABC::Results& results, bool isParkedOnEngineerArea, bool forceStop, double completion, const PHY_Posture& current )
-    {
-        results.postureCompletionPercentage_ = completion;
-        if( forceStop && ( &current == &PHY_Posture::mouvement_
-                        || &current == &PHY_Posture::mouvementDiscret_ ) )
-        {
-            results.newPosture_ = &PHY_Posture::arret_;
-            results.postureCompletionPercentage_ = 0;
-            return;
-        }
-        if( completion < 1 )
-            return;
-        if( isParkedOnEngineerArea )
-        {
-            results.newPosture_ = &PHY_Posture::postePrepareGenie_;
-            return;
-        }
-        return ComputeNextPosture( results, current );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: DefaultPostureComputer::Update
 // Created: MCO 2013-06-12
@@ -208,6 +155,55 @@ namespace
         if( postureTime == 0 )
             return 0;
         return std::max( 0., currentCompletion - ( 1 / postureTime ) );
+    }
+    void ComputeNextPosture( PostureComputer_ABC::Results& results, const PHY_Posture& current )
+    {
+        const PHY_Posture* pNextAutoPosture = current.GetNextAutoPosture();
+        if( !pNextAutoPosture )
+            return;
+        results.postureCompletionPercentage_ = 0;
+        results.newPosture_ = pNextAutoPosture;
+    }
+    void ComputePreviousPosture( PostureComputer_ABC::Results& results, const PHY_Posture& previous )
+    {
+        results.postureCompletionPercentage_ = 1;
+        results.newPosture_ = &previous;
+    }
+    void ComputeMovingPosture( PostureComputer_ABC::Results& results, bool isLoaded, bool isDiscreteModeEnabled, double completion, const PHY_Posture& current )
+    {
+        results.postureCompletionPercentage_ = completion;
+        if( completion > 0 )
+            return;
+        if( current.GetPreviousAutoPosture() )
+            return ComputePreviousPosture( results, *current.GetPreviousAutoPosture() );
+        else if( !isLoaded )
+            results.newPosture_ = &PHY_Posture::posteReflexe_;
+        else if( isDiscreteModeEnabled )
+            results.newPosture_ = &PHY_Posture::mouvementDiscret_;
+        else
+        {
+            results.newPosture_ = &PHY_Posture::mouvement_;
+            results.postureCompletionPercentage_ = 1;
+        }
+    }
+    void ComputeStopPosture( PostureComputer_ABC::Results& results, bool isParkedOnEngineerArea, bool forceStop, double completion, const PHY_Posture& current )
+    {
+        results.postureCompletionPercentage_ = completion;
+        if( forceStop && ( &current == &PHY_Posture::mouvement_
+                        || &current == &PHY_Posture::mouvementDiscret_ ) )
+        {
+            results.newPosture_ = &PHY_Posture::arret_;
+            results.postureCompletionPercentage_ = 0;
+            return;
+        }
+        if( completion < 1 )
+            return;
+        if( isParkedOnEngineerArea )
+        {
+            results.newPosture_ = &PHY_Posture::postePrepareGenie_;
+            return;
+        }
+        return ComputeNextPosture( results, current );
     }
 }
 
