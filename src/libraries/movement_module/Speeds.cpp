@@ -20,8 +20,8 @@ using namespace sword::movement;
 
 DECLARE_HOOK( ConvertSpeedMosToSim, double, ( double speed ) )
 DECLARE_HOOK( GetLandTypeName, const char*, ( const TerrainData& terrain ) )
-DECLARE_HOOK( GetTheoricMaxSpeedWithReinforcement, double, ( const SWORD_Model* entity ) )
-DECLARE_HOOK( GetSpeedWithReinforcement, double, ( const SWORD_Model* entity, const TerrainData& environment ) )
+DECLARE_HOOK( GetTheoricMaxSpeed, double, ( const SWORD_Model* entity ) )
+DECLARE_HOOK( GetSpeed, double, ( const SWORD_Model* entity, const TerrainData& environment ) )
 
 // -----------------------------------------------------------------------------
 // Name: Speeds constructor
@@ -39,10 +39,7 @@ Speeds::Speeds( xml::xistream& xis, unsigned int timeStepDuration )
     rAreaSpeeds_.resize( TerrainData::nAreaTypes, -1. );
     rBorderSpeeds_.resize( TerrainData::nBorderTypes, -1. );
     rLinearSpeeds_.resize( TerrainData::nLinearTypes, -1. );
-
-    xis >> xml::optional
-        >> xml::list( "speeds", *this, &Speeds::ReadSpeed, timeStepDuration );
-
+    xis >> xml::list( "speeds", *this, &Speeds::ReadSpeed, timeStepDuration );
     CheckInitialization( xis, timeStepDuration );
     GenerateMasks();
 }
@@ -52,8 +49,8 @@ Speeds::Speeds( xml::xistream& xis, unsigned int timeStepDuration )
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
 Speeds::Speeds( const wrapper::View& entity )
-    : rMaxSpeed_               ( GET_HOOK( GetTheoricMaxSpeedWithReinforcement )( entity ) )
-    , rBaseSpeed_              ( GET_HOOK( GetSpeedWithReinforcement )( entity, TerrainData() ) )
+    : rMaxSpeed_               ( GET_HOOK( GetTheoricMaxSpeed )( entity ) )
+    , rBaseSpeed_              ( GET_HOOK( GetSpeed )( entity, TerrainData() ) )
     , nLinearPassabilityMask_  ( 0 )
     , nAreaPassabilityMask_    ( 0 )
     , nAreaImpassabilityMask_  ( 0 )
@@ -83,7 +80,7 @@ void Speeds::Initialize( const wrapper::View& entity )
     assert( allTypes.size() - 1 == size ); // sans unknown
     for( unsigned int nOffset = 0; nOffset < size; ++nOffset )
     {
-        double speed = GET_HOOK( GetSpeedWithReinforcement )( entity, TerrainData::FromString( allTypes[ nOffset ] ) );
+        double speed = GET_HOOK( GetSpeed )( entity, TerrainData::FromString( allTypes[ nOffset ] ) );
         if( nOffset < TerrainData::nAreaTypes )
             rAreaSpeeds_.push_back( speed );
         else if( nOffset < TerrainData::nAreaTypes + TerrainData::nBorderTypes )

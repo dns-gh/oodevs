@@ -54,9 +54,6 @@ public:
     //@{
     virtual bool Reinforce( MIL_AgentPion& pion ) = 0;
     virtual void CancelReinforcement() = 0;
-    virtual bool IsReinforcing() const = 0;
-    virtual bool IsReinforced() const = 0;
-    virtual bool IsReinforcedBy( MIL_AgentPion& pion ) const = 0;
     //@}
 
     //! @name Network
@@ -68,8 +65,6 @@ public:
     //! @name Accessors
     //@{
     virtual const T_Pions& GetReinforcements() const = 0;
-    virtual bool CanReinforce() const = 0;
-    virtual bool CanBeReinforced() const = 0;
     //@}
 
 private:

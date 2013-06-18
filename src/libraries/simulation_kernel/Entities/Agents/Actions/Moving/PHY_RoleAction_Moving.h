@@ -35,6 +35,7 @@ namespace posture
 
 namespace moving
 {
+    class SpeedStrategy_ABC;
 
 // =============================================================================
 // @class  PHY_RoleAction_Moving
@@ -75,17 +76,16 @@ public:
 
     //! @name Accessors
     //@{
-    virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const;
-    virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
-    virtual double GetMaxSpeedWithReinforcement() const;
+    virtual double GetSpeed( const TerrainData& environment ) const;
+    virtual double GetSpeed( const TerrainData& environment, const MIL_Object_ABC& object ) const;
     virtual double GetMaxSpeed() const;
     virtual double GetMaxSpeed( const TerrainData& environment ) const;
-    virtual double GetMaxSlope() const;
-    virtual double GetTheoricMaxSpeed( bool loaded ) const;
-    virtual double GetTheoricMaxSpeedWithReinforcement() const;
+    virtual double GetTheoricSpeed( const TerrainData& environment ) const;
+    virtual double GetTheoricMaxSpeed() const;
     virtual void SetSpeedModificator( double rFactor );
     virtual void SetMaxSpeedModificator( double rFactor );
     virtual double GetMaxSpeedModificator() const;
+    virtual double GetMaxSlope() const;
     virtual void ApplyTrafficModifier();
     virtual bool HasResources();
     virtual bool CanMove() const;
@@ -93,8 +93,6 @@ public:
 
     virtual const MT_Vector2D& GetPosition () const;
     virtual const MT_Vector2D& GetDirection() const;
-    /** Whether to use theoric speed (for pathfinding) or actual speed (to compute real speed when moving) */
-    virtual void SetTheoricSpeed( bool ) const;
     //@}
 
     //! @name Network
@@ -120,16 +118,15 @@ public:
     //@{
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
     virtual bool HasKnowledgeObject   ( const MIL_Object_ABC& object ) const;
-    virtual double GetObjectCost      ( const MIL_ObjectType_ABC& objectType,
-                                        const DEC_PathType& pathType ) const;
+    virtual double GetObjectCost      ( const MIL_ObjectType_ABC& objectType, const DEC_PathType& pathType ) const;
     //@}
 
 private:
     //! @name Speed management
     //@{
-    double GetMaxSpeed( const MIL_Object_ABC& object ) const;
     double ApplyMaxSpeedModificators( double rSpeed ) const;
     double ApplySpeedModificators( double rSpeed ) const;
+    double ComputeSpeed( const SpeedStrategy_ABC& strategy ) const;
     //@}
 
     //! @name Network
@@ -151,7 +148,6 @@ private:
     bool                        bEnvironmentHasChanged_;
     bool                        bHasMove_;
     bool                        bIntentToMove_;
-    mutable bool bTheoricMaxSpeed_;
     //@}
 };
 

@@ -8,9 +8,12 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "simulation_kernel/DefaultPostureComputer.h"
-#include "simulation_kernel/Entities/Agents/Units/Postures/PHY_Posture.h"
-#include "simulation_kernel/Entities/Agents/Units/Postures/PostureTime_ABC.h"
+#include "DefaultPostureComputer.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentType_ABC.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Entities/Agents/Units/Postures/PostureTime_ABC.h"
 #include "MIL_Random_ABC.h"
 #include "MIL_Random.h"
 
@@ -30,8 +33,8 @@ DefaultPostureComputer::DefaultPostureComputer( const MIL_Random_ABC& random, co
     , bDiscreteModeEnabled_  ( bDiscreteModeEnabled )
     , rCompletionPercentage_ ( rCompletionPercentage )
     , rStealthFactor_        ( rStealthFactor )
-    , rTimingFactor_         ( rTimingFactor )
     , isParkedOnEngineerArea_( isParkedOnEngineerArea )
+    , modifier_              ( 1 / rTimingFactor )
     , bMoving_               ( false )
     , bStopped_              ( false )
     , bIsLoaded_             ( false )
@@ -68,6 +71,51 @@ void DefaultPostureComputer::UnsetPostureMovement()
         bStopped_ = true;
 }
 
+namespace
+{
+    template< typename Container >
+    struct ReinforcementVisitor : posture::PostureComputer_ABC
+    {
+        ReinforcementVisitor( MIL_Agent_ABC& pion, Container& container )
+            : container_( container )
+            , result_   ( 1 )
+        {
+            pion.Execute( *this );
+            container.push_back( std::make_pair( &pion.GetType().GetUnitType(), result_ ) );
+        }
+    private:
+        virtual void ApplyOnReinforcement( MIL_Agent_ABC& pion )
+        {
+            ReinforcementVisitor( pion, container_ );
+        }
+        virtual void AddCoefficientModifier( double coef )
+        {
+            result_ *= coef;
+        }
+        virtual void SetPostureMovement()
+        {}
+        virtual void UnsetPostureMovement()
+        {}
+        virtual void NotifyLoaded()
+        {}
+        virtual const Results& Result()
+        {
+            throw __FUNCTION__;
+        }
+        Container& container_;
+        double result_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultPostureComputer::ApplyOnReinforcement
+// Created: MCO 2013-06-12
+// -----------------------------------------------------------------------------
+void DefaultPostureComputer::ApplyOnReinforcement( MIL_Agent_ABC& pion )
+{
+    ReinforcementVisitor< T_Reinforcements >( pion, reinforcements_ );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DefaultPostureComputer::NotifyLoaded
 // Created: MGD 2009-09-21
@@ -78,32 +126,12 @@ void DefaultPostureComputer::NotifyLoaded()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::MustBeForce
+// Name: DefaultPostureComputer::AddCoefficientModifier
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
 void DefaultPostureComputer::AddCoefficientModifier( double coef )
 {
-    coefficientsModifier_.push_back( coef );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::MustBeForce
-// Created: MGD 2009-09-21
-// -----------------------------------------------------------------------------
-void DefaultPostureComputer::AddUrbanCoefficientModifier( double coef )
-{
-    if( &( posture_ ) == &PHY_Posture::poste_ )
-        coefficientsModifier_.push_back( coef );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::GetPosture
-// Created: MGD 2009-09-21
-// -----------------------------------------------------------------------------
-PostureComputer_ABC::Results& DefaultPostureComputer::Result()
-{
-    Update();
-    return results_;
+    modifier_ *= coef;
 }
 
 namespace
@@ -118,102 +146,112 @@ namespace
     {
         results.bIsStealth_ = random.rand_oi( 0., 1., MIL_Random::ePerception ) > stealthFactor;
     }
-    void ComputeNextPosture( PostureComputer_ABC::Results& results, const PHY_Posture& current )
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultPostureComputer::Result
+// Created: MGD 2009-09-21
+// -----------------------------------------------------------------------------
+const PostureComputer_ABC::Results& DefaultPostureComputer::Result()
+{
+    if( bIsDead_ )
     {
-        const PHY_Posture* pNextAutoPosture = current.GetNextAutoPosture();
-        if( !pNextAutoPosture )
-            return;
-        results.postureCompletionPercentage_ = 0.;
-        results.newPosture_ = pNextAutoPosture;
+        ComputeDeathPosture( results_ );
+        return results_;
     }
-    void ComputePreviousPosture( PostureComputer_ABC::Results& results, const PHY_Posture& previous )
-    {
-        results.postureCompletionPercentage_ = 1.;
-        results.newPosture_ = &previous;
-    }
-    void ComputeMovingPosture( PostureComputer_ABC::Results& results, bool isLoaded, bool isDiscreteModeEnabled, double completion, const PHY_Posture& current )
-    {
-        results.postureCompletionPercentage_ = completion;
-        if( completion > 0. )
-            return;
-        if( current.GetPreviousAutoPosture() )
-            return ComputePreviousPosture( results, *current.GetPreviousAutoPosture() );
-        else if( !isLoaded )
-            results.newPosture_ = &PHY_Posture::posteReflexe_;
-        else if( isDiscreteModeEnabled )
-            results.newPosture_ = &PHY_Posture::mouvementDiscret_;
-        else
-        {
-            results.newPosture_ = &PHY_Posture::mouvement_;
-            results.postureCompletionPercentage_ = 1;
-        }
-    }
-    void ComputeStopPosture( PostureComputer_ABC::Results& results, bool isParkedOnEngineerArea, bool forceStop, double completion, const PHY_Posture& current )
-    {
-        results.postureCompletionPercentage_ = completion;
-        if( forceStop && ( &current == &PHY_Posture::mouvement_
-                        || &current == &PHY_Posture::mouvementDiscret_ ) )
-        {
-            results.newPosture_ = &PHY_Posture::arret_;
-            results.postureCompletionPercentage_ = 0.;
-            return;
-        }
-        if( completion < 1. )
-            return;
-        if( isParkedOnEngineerArea )
-        {
-            results.newPosture_ = &PHY_Posture::postePrepareGenie_;
-            return;
-        }
-        return ComputeNextPosture( results, current );
-    }
-    double ApplyModifiers( double time, const std::vector< double >& coefficientsModifier, double timingFactor )
-    {
-        assert( timingFactor > 0. );
-        for( auto it = coefficientsModifier.begin(); it != coefficientsModifier.end(); ++it )
-            time *= *it;
-        return time / timingFactor;
-    }
-    double Add( double currentCompletion, double postureTime )
-    {
-        if( postureTime == 0. )
-            return 1.;
-        return std::min( 1., currentCompletion + ( 1. / postureTime ) );
-    }
+    ComputeStealthMode( results_, random_, rStealthFactor_ );
+    if( bMoving_ )
+        ComputeMovingPosture();
+    else
+        ComputeStopPosture();
+    return results_;
+}
+
+namespace
+{
     double Remove( double currentCompletion, double postureTime )
     {
-        if( postureTime == 0. )
-            return 0.;
-        return std::max( 0., currentCompletion - ( 1. / postureTime ) );
-    }
-    template< typename Time, typename Accumulator >
-    double ComputeCompletion( double currentCompletion, const PHY_Posture& current, const std::vector< double >& coefficientsModifier, double timingFactor, bool isParkedOnEngineerArea, const Time& time, const Accumulator& accumulator )
-    {
-        const PHY_Posture* next = isParkedOnEngineerArea ? &PHY_Posture::postePrepareGenie_ : current.GetNextAutoPosture();
-        if( !next )
-            return 0.;
-        const double postureTime = ApplyModifiers( time( *next ), coefficientsModifier, timingFactor );
-        return accumulator( currentCompletion, postureTime );
+        if( postureTime == 0 )
+            return 0;
+        return std::max( 0., currentCompletion - ( 1 / postureTime ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::Update
-// Created: MGD 2009-09-22
+// Name: DefaultPostureComputer::ComputeMovingPosture
+// Created: MCO 2013-06-12
 // -----------------------------------------------------------------------------
-void DefaultPostureComputer::Update()
+void DefaultPostureComputer::ComputeMovingPosture()
 {
-    if( bIsDead_ )
-        return ComputeDeathPosture( results_ );
-    ComputeStealthMode( results_, random_, rStealthFactor_ );
-    if( bMoving_ )
+    results_.postureCompletionPercentage_ = ComputeCompletion( &PostureTime_ABC::GetPostureTearDownTime, &Remove );
+    if( results_.postureCompletionPercentage_ > 0 )
+        return;
+    if( posture_.GetPreviousAutoPosture() )
     {
-        const double completion = ComputeCompletion( results_.postureCompletionPercentage_, posture_, coefficientsModifier_, rTimingFactor_, isParkedOnEngineerArea_, boost::bind( &PostureTime_ABC::GetPostureTearDownTime, boost::cref( time_ ), _1 ), boost::bind( &Remove, _1, _2 ) );
-        ComputeMovingPosture( results_, bIsLoaded_, bDiscreteModeEnabled_, completion, posture_ );
+        results_.postureCompletionPercentage_ = 1;
+        results_.newPosture_ = posture_.GetPreviousAutoPosture();
     }
+    else if( ! bIsLoaded_ )
+        results_.newPosture_ = &PHY_Posture::posteReflexe_;
+    else if( bDiscreteModeEnabled_ )
+        results_.newPosture_ = &PHY_Posture::mouvementDiscret_;
     else
     {
-        const double completion = ComputeCompletion( results_.postureCompletionPercentage_, posture_, coefficientsModifier_, rTimingFactor_, isParkedOnEngineerArea_, boost::bind( &PostureTime_ABC::GetPostureSetupTime, boost::cref( time_ ), _1 ), boost::bind( &Add, _1, _2 ) );
-        ComputeStopPosture( results_, isParkedOnEngineerArea_, bStopped_, completion, posture_ );
+        results_.newPosture_ = &PHY_Posture::mouvement_;
+        results_.postureCompletionPercentage_ = 1;
     }
+}
+
+namespace
+{
+    double Add( double currentCompletion, double postureTime )
+    {
+        if( postureTime == 0 )
+            return 1;
+        return std::min( 1., currentCompletion + ( 1 / postureTime ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultPostureComputer::ComputeStopPosture
+// Created: MCO 2013-06-12
+// -----------------------------------------------------------------------------
+void DefaultPostureComputer::ComputeStopPosture()
+{
+    if( bStopped_ && ( &posture_ == &PHY_Posture::mouvement_
+                    || &posture_ == &PHY_Posture::mouvementDiscret_ ) )
+    {
+        results_.newPosture_ = &PHY_Posture::arret_;
+        results_.postureCompletionPercentage_ = 0;
+        return;
+    }
+    results_.postureCompletionPercentage_ = ComputeCompletion( &PostureTime_ABC::GetPostureSetupTime, &Add );
+    if( results_.postureCompletionPercentage_ < 1 )
+        return;
+    if( isParkedOnEngineerArea_ )
+    {
+        results_.newPosture_ = &PHY_Posture::postePrepareGenie_;
+        return;
+    }
+    if( posture_.GetNextAutoPosture() )
+    {
+        results_.postureCompletionPercentage_ = 0;
+        results_.newPosture_ = posture_.GetNextAutoPosture();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultPostureComputer::ComputeCompletion
+// Created: MCO 2013-06-12
+// -----------------------------------------------------------------------------
+template< typename GetTime, typename Accumulator >
+double DefaultPostureComputer::ComputeCompletion( const GetTime& time, const Accumulator& accumulator ) const
+{
+    const PHY_Posture* next = isParkedOnEngineerArea_ ? &PHY_Posture::postePrepareGenie_ : posture_.GetNextAutoPosture();
+    if( !next )
+        return 0;
+    double postureTime = (time_.*time)( *next ) * modifier_;
+    for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+        postureTime = std::max( postureTime, (it->first->*time)( *next ) * it->second );
+    return accumulator( results_.postureCompletionPercentage_, postureTime );
 }

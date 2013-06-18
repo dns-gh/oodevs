@@ -10,15 +10,12 @@
 #ifndef __moving_SpeedComputer_ABC_H__
 #define __moving_SpeedComputer_ABC_H__
 
-class DEC_Knowledge_PopulationCollision;
 class MIL_Agent_ABC;
 class PHY_ComposantePion;
+class DEC_Knowledge_PopulationCollision;
 
 namespace moving
 {
-
-class SpeedStrategy_ABC;
-
 // =============================================================================
 /** @class  SpeedComputer_ABC
     @brief  SpeedComputer_ABC
@@ -37,7 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     virtual void ApplyOnComponent( const PHY_ComposantePion& ) = 0;
-    virtual void ApplyOnReinforcement( MIL_Agent_ABC& ) = 0;
+    virtual void ApplyOnReinforcement( const MIL_Agent_ABC& ) = 0;
     virtual void AddModifier( double ratio, bool isMax = true ) = 0;
     virtual void ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& ) = 0;
     virtual double GetSpeed() const = 0;

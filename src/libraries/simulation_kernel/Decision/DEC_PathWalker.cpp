@@ -98,7 +98,6 @@ MT_Vector2D DEC_PathWalker::ExtrapolatePosition( const MT_Vector2D& position, co
 // Name: DEC_PathWalker::ComputeCurrentSpeed
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-inline
 void DEC_PathWalker::ComputeCurrentSpeed()
 {
     const DEC_PathPoint& curPathPoint = **itCurrentPathPoint_;
@@ -111,14 +110,13 @@ void DEC_PathWalker::ComputeCurrentSpeed()
             environment_ = tmpEnvironment;
         }
     }
-    rCurrentSpeed_ = movingEntity_.GetSpeedWithReinforcement( environment_ );
+    rCurrentSpeed_ = movingEntity_.GetSpeed( environment_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker::InitializeEnvironment
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-inline
 void DEC_PathWalker::InitializeEnvironment( const DEC_PathResult& path )
 {
     DEC_PathResult::CIT_PathPointList itPathPointTmp = itCurrentPathPoint_;
@@ -318,7 +316,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
     for( auto itObject = itCurMoveStep->ponctualObjectsOnSet_.begin(); itObject != itCurMoveStep->ponctualObjectsOnSet_.end(); ++itObject )
     {
         MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
-        double rSpeedWithinObject = movingEntity_.GetSpeedWithReinforcement( environment_, object );
+        double rSpeedWithinObject = movingEntity_.GetSpeed( environment_, object );
         if( movingEntity_.CanObjectInteractWith( object ) )
         {
             if( !bFirstMove ) //// $$$$$ !bFirstMove A REVOIR - PERMET DE SORTIR D'UN OBSTACLE PONCTUEL
@@ -349,7 +347,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
         if( movingEntity_.CanObjectInteractWith( object ) )
         {
             movingEntity_.NotifyMovingInsideObject( object );
-            rMaxSpeedForStep = std::min( rMaxSpeedForStep, movingEntity_.GetSpeedWithReinforcement( environment_, object) );
+            rMaxSpeedForStep = std::min( rMaxSpeedForStep, movingEntity_.GetSpeed( environment_, object) );
             if( rMaxSpeedForStep == 0. )
             {
                 rCurrentSpeed_ = 0;

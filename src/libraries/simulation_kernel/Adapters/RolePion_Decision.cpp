@@ -21,6 +21,7 @@
 #include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -368,21 +369,6 @@ namespace
     {
         return CreatePathToPoint( agent, model, end.get(), pathType );
     }
-    bool ShouldEmbark( MIL_AgentPion& agent, const boost::shared_ptr< DEC_Path_ABC >& path )
-    {
-        if( !path )
-            throw MASA_EXCEPTION( "invalid parameter." );
-        const double length = path->GetLength();
-        const double maxSpeedUnloaded = agent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetTheoricMaxSpeed( false );
-        if( maxSpeedUnloaded == 0 )
-            return true;
-        const double timeUnloaded = length / maxSpeedUnloaded;
-        const double speed = agent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetTheoricMaxSpeed( true );
-        if( !speed )
-            return false;
-        const double timeLoaded = ( length / speed ) + DEC_AgentFunctions::GetLoadingTime( agent ) * 60 + DEC_AgentFunctions::GetUnloadingTime( agent ) * 60; //Conversion minutes into hours
-        return ( timeLoaded < timeUnloaded );
-    }
     int GetPathState( DEC_Path_ABC* pPath )
     {
         if( !pPath )
@@ -483,8 +469,6 @@ void RolePion_Decision::RegisterPath()
     RegisterFunction( "DEC_GetNextRemovableObjectOnPath",
         boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( const DEC_Decision_ABC&, boost::shared_ptr< DEC_Knowledge_Object >, float ) >(
             boost::bind( &GetNextRemovableObjectOnPath, boost::cref( model_ ), _1, _2 ) ) );
-    RegisterFunction( "DEC_ShouldEmbark",
-        boost::function< bool( const boost::shared_ptr< DEC_Path_ABC >& ) >( boost::bind( &ShouldEmbark, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Itineraire_Etat",
         boost::function< int ( DEC_Path_ABC* ) >( boost::bind( &GetPathState, _1 ) ) );
 }

@@ -170,7 +170,7 @@ bool PHY_RolePion_Posture::UpdatePosture( bool bIsDead )
                                                                                                            bIsDead, bDiscreteModeEnabled_, rPostureCompletionPercentage_,
                                                                                                            rStealthFactor_, rTimingFactor_, bIsParkedOnEngineerArea_ ) );
     owner_.Execute( *computer );
-    PostureComputer_ABC::Results& result = computer->Result();
+    const PostureComputer_ABC::Results& result = computer->Result();
     bool changed = false;
     if( result.newPosture_ )
         changed = ChangePosture( *result.newPosture_ );
@@ -510,7 +510,7 @@ void PHY_RolePion_Posture::Hide()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::Show
 // Created: LDC 2013-05-24
@@ -519,14 +519,15 @@ void PHY_RolePion_Posture::Show( const MT_Vector2D& )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::Follow
 // Created: LDC 2013-05-24
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::Follow( const MIL_Agent_ABC& agent )
 {
-    const PHY_RoleInterface_Posture& otherPosture = agent.GetRole< PHY_RoleInterface_Posture >();
-    ChangePosture( otherPosture.GetCurrentPosture() );
-    ChangePostureCompletionPercentage( otherPosture.GetPostureCompletionPercentage() );
+    const PHY_RolePion_Posture& posture = agent.GetRole< PHY_RolePion_Posture >();
+    ChangePosture( posture.GetCurrentPosture() );
+    ChangePostureCompletionPercentage( posture.GetPostureCompletionPercentage() );
+    bIsStealth_ = posture.bIsStealth_;
 }

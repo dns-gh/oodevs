@@ -295,10 +295,10 @@ void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::GetSpeedWithReinforcement
+// Name: MIL_PopulationFlow::GetSpeed
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-double MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*environment*/, const MIL_Object_ABC& object ) const
+double MIL_PopulationFlow::GetSpeed( const TerrainData& /*environment*/, const MIL_Object_ABC& object ) const
 {
     double result = GetMaxSpeed();
     if( CanObjectInteractWith( object ) )
@@ -741,10 +741,10 @@ void MIL_PopulationFlow::save( MIL_CheckPointOutArchive& file, const unsigned in
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::GetSpeedWithReinforcement
+// Name: MIL_PopulationFlow::GetSpeed
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-double MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*environment*/ ) const
+double MIL_PopulationFlow::GetSpeed( const TerrainData& /*environment*/ ) const
 {
     return GetMaxSpeed();
 }

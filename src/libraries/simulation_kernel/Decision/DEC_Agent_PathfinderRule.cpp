@@ -18,7 +18,6 @@
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
 #include "Urban/MIL_UrbanCache.h"
-#include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/RawVisionData/Elevation.h"
 #include "Meteo/PHY_MeteoDataManager.h"

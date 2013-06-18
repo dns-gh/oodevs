@@ -107,9 +107,9 @@ namespace movement
             const double maxSpeed = 50;
             const double baseSpeed = 10;
             const double terrainSpeed = 20;
-            MOCK_EXPECT( GetTheoricMaxSpeedWithReinforcement ).once().returns( maxSpeed );
-            MOCK_EXPECT( GetSpeedWithReinforcement ).once().returns( baseSpeed );
-            MOCK_EXPECT( GetSpeedWithReinforcement ).exactly( TerrainData::nAreaTypes + TerrainData::nBorderTypes + TerrainData::nLinearTypes ).returns( terrainSpeed );
+            MOCK_EXPECT( GetTheoricMaxSpeed ).once().returns( maxSpeed );
+            MOCK_EXPECT( GetSpeed ).once().returns( baseSpeed );
+            MOCK_EXPECT( GetSpeed ).exactly( TerrainData::nAreaTypes + TerrainData::nBorderTypes + TerrainData::nLinearTypes ).returns( terrainSpeed );
             MOCK_EXPECT( NotifyPathCreation ).once().returns( pathId );
             MOCK_EXPECT( GetPathHandler ).once().with( pathId ).returns( handler );
             MOCK_EXPECT( InitializePath ).once();

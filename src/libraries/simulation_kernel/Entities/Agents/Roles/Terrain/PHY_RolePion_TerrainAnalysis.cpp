@@ -33,11 +33,11 @@
 // Created: MGD 2010-04-20
 // -----------------------------------------------------------------------------
 PHY_RolePion_TerrainAnalysis::PHY_RolePion_TerrainAnalysis( MIL_Agent_ABC& pion )
-    : owner_                ( pion )
-    , cacheRadius_          ( 3000.f )
-    , cacheSafety_          ( 0.f )
-    , crossroadsCacheValid_ ( false )
-    , safetyCacheValid_     ( false )
+    : owner_               ( pion )
+    , cacheRadius_         ( 3000.f )
+    , cacheSafety_         ( 0.f )
+    , crossroadsCacheValid_( false )
+    , safetyCacheValid_    ( false )
 {
     // NOTHING
 }
@@ -78,6 +78,7 @@ void PHY_RolePion_TerrainAnalysis::CheckFuseau()
         fuseau_ = fuseau;
     }
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_TerrainAnalysis::Update
 // Created: MGD 2010-04-20
@@ -105,7 +106,7 @@ void PHY_RolePion_TerrainAnalysis::UpdateCrossroads()
     //Remove old points out of range
     //Note that it's better than clearing the buffer as it allows to keep the same shared ptr so directia won't spawn a new node
     //for a changed shared_ptr while the position remains the same.
-    for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::iterator it = crossroadsBuffer_.begin(); it != crossroadsBuffer_.end(); )
+    for( auto it = crossroadsBuffer_.begin(); it != crossroadsBuffer_.end(); )
     {
         if( it->second->SquareDistance( lastPos_ ) > squareRange )
             it = crossroadsBuffer_.erase( it );
@@ -114,12 +115,12 @@ void PHY_RolePion_TerrainAnalysis::UpdateCrossroads()
     }
     //Add new points
     std::vector< boost::shared_ptr< MT_Vector2D > > temp = TER_AnalyzerManager::GetAnalyzerManager().FindCrossroadsWithinCircle( lastPos_, static_cast< float >( range ) );
-    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = temp.begin(); it != temp.end(); ++it )
+    for( auto it = temp.begin(); it != temp.end(); ++it )
         crossroadsBuffer_.insert( std::pair< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >( **it, *it ) );
     //Remove outside fuseau
     if( !fuseau_.IsNull() )
     {
-        for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::iterator it = crossroadsBuffer_.begin(); it != crossroadsBuffer_.end(); )
+        for( auto it = crossroadsBuffer_.begin(); it != crossroadsBuffer_.end(); )
         {
             if( !fuseau_.IsInside( it->first ) )
                 it = crossroadsBuffer_.erase( it );
@@ -140,7 +141,7 @@ void PHY_RolePion_TerrainAnalysis::UpdateSafety( float radius, float safetyDista
     //Remove old points out of range
     //Note that it's better than clearing the buffer as it allows to keep the same shared ptr so directia won't spawn a new node
     //for a changed shared_ptr while the position remains the same.
-    for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::iterator it = safetyBuffer_.begin(); it != safetyBuffer_.end(); )
+    for( auto it = safetyBuffer_.begin(); it != safetyBuffer_.end(); )
     {
         if( it->second->SquareDistance( lastPos_ ) > squareRange )
             it = safetyBuffer_.erase( it );
@@ -150,12 +151,12 @@ void PHY_RolePion_TerrainAnalysis::UpdateSafety( float radius, float safetyDista
     //Add new points
     std::vector< boost::shared_ptr< MT_Vector2D > > positions;
     TER_AnalyzerManager::GetAnalyzerManager().FindSafetyPositionsWithinCircle( lastPos_, radius, safetyDistance, positions );
-    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = positions.begin(); it != positions.end(); ++it )
+    for( auto it = positions.begin(); it != positions.end(); ++it )
         safetyBuffer_.insert( std::pair< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >( **it, *it ) );
     //Remove outside fuseau
     if( !fuseau_.IsNull() )
     {
-        for( std::map< MT_Vector2D, boost::shared_ptr< MT_Vector2D > >::iterator it = safetyBuffer_.begin(); it != safetyBuffer_.end(); )
+        for( auto it = safetyBuffer_.begin(); it != safetyBuffer_.end(); )
         {
             if( !fuseau_.IsInside( it->first ) )
                 it = safetyBuffer_.erase( it );
@@ -191,16 +192,15 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnTerrain( const std::vector< MT_Vecto
 {
     if( owner_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() || points.empty() )
         return true;
-
-        for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
-        {
-            const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *it );
-            double maxSpeed = owner_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed( data );
-        if( maxSpeed > 0. )
+    for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
+    {
+        const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *it );
+        double maxSpeed = owner_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed( data );
+        if( maxSpeed > 0 )
             return true;
-        }
-    return false;
     }
+    return false;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock
@@ -210,13 +210,12 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock( const std::vector< MT_Ve
 {
     if( owner_.GetType().GetUnitType().CanFly() || points.empty() )
         return true;
-
     double weight = owner_.GetRole< PHY_RoleInterface_Composantes >().GetMaxWeight();
     for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
         if( DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
             return true;
     return false;
-        }
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_TerrainAnalysis::CanMoveOnBurningCells
@@ -226,7 +225,6 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnBurningCells( const std::vector< MT_
 {
     if( owner_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() || points.size() <= 1 )
     return true;
-
     std::vector< MT_Vector2D >::const_iterator itStart = points.begin();
     std::vector< MT_Vector2D >::const_iterator itEnd = points.begin();
     ++itEnd;
@@ -250,7 +248,7 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnKnowledgeObject( const std::vector< 
     if( knowledgesObject.empty() )
         return true;
 
-    for( std::vector< MT_Vector2D >::const_iterator itPoint = points.begin(); itPoint != points.end(); ++itPoint )
+    for( auto itPoint = points.begin(); itPoint != points.end(); ++itPoint )
     {
         bool isInside = false;
         T_PointVector pathPoints;
@@ -263,10 +261,10 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnKnowledgeObject( const std::vector< 
                 isInside = true;
                 break;
             }
-    }
+        }
         if( !isInside )
             return true;
-}
+    }
     return false;
 }
 

@@ -800,15 +800,14 @@ bool MIL_Automate::NotifyImprisoned( const MIL_Object_ABC& camp )
 // -----------------------------------------------------------------------------
 double MIL_Automate::GetAlivePionsMaxSpeed() const
 {
-    double rMaxSpeed = std::numeric_limits< double >::max();
+    double maxSpeed = std::numeric_limits< double >::max();
     for( auto it = pions_.begin(); it != pions_.end(); ++it )
     {
-        const MIL_AgentPion& pion = **it;
-        const double rSpeed = pion.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed();
-        if( rSpeed != 0. )
-            rMaxSpeed = std::min( rMaxSpeed, rSpeed );
+        const double speed = (*it)->GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed();
+        if( speed != 0 )
+            maxSpeed = std::min( maxSpeed, speed );
     }
-    return rMaxSpeed;
+    return maxSpeed;
 }
 
 // -----------------------------------------------------------------------------

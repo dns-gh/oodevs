@@ -376,13 +376,13 @@ namespace
         pathfind.SetCallback( 0 );
         return bResult;
     }
-    DEFINE_HOOK( GetSpeedWithReinforcement, 2, double, ( const SWORD_Model* entity, const TerrainData& environment ) )
+    DEFINE_HOOK( GetSpeed, 2, double, ( const SWORD_Model* entity, const TerrainData& environment ) )
     {
-        return GET_ROLE( entity, RoleAction_Moving ).GetSpeedWithReinforcement( environment );
+        return GET_ROLE( entity, RoleAction_Moving ).GetSpeed( environment );
     }
-    DEFINE_HOOK( GetTheoricMaxSpeedWithReinforcement, 1, double, ( const SWORD_Model* entity ) )
+    DEFINE_HOOK( GetTheoricMaxSpeed, 1, double, ( const SWORD_Model* entity ) )
     {
-        return GET_ROLE( entity, RoleAction_Moving ).GetTheoricMaxSpeedWithReinforcement();
+        return GET_ROLE( entity, RoleAction_Moving ).GetTheoricMaxSpeed();
     }
     DEFINE_HOOK( NotifyMovingOnPathPoint, 2, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) // $$$$ MCO 2012-10-15: not used because only for populations which are not supported for now
     {
@@ -410,9 +410,9 @@ namespace
     {
         return GET_DATA( object, MIL_Object_ABC ).IsOnBorder( point );
     }
-    DEFINE_HOOK( GetSpeedWithReinforcementObject, 3, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) )
+    DEFINE_HOOK( GetSpeedObject, 3, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) )
     {
-        return GET_ROLE( entity, RoleAction_Moving ).GetSpeedWithReinforcement( environment, GET_DATA( object, MIL_Object_ABC ) );
+        return GET_ROLE( entity, RoleAction_Moving ).GetSpeed( environment, GET_DATA( object, MIL_Object_ABC ) );
     }
     DEFINE_HOOK( CanObjectInteractWith, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) )
     {

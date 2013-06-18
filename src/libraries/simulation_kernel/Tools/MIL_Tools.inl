@@ -79,7 +79,7 @@ double MIL_Tools::ConvertHoursToSim( double v ) // h -> DeltaT
 // Created: JVT 04-02-02
 //-----------------------------------------------------------------------------
 inline
-double MIL_Tools::ConvertSimToMinutes( double v ) // deltaT -> m
+double MIL_Tools::ConvertSimToMinutes( double v ) // deltaT -> min
 {
     return v * MIL_Time_ABC::GetTime().GetTickDuration() / 60.;
 }

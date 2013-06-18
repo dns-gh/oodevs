@@ -18,9 +18,7 @@
 #include "Entities/Agents/Units/Weapons/PHY_WeaponDataType_DirectFire.h"
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
-
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Urban/MIL_UrbanObject.h"
@@ -28,7 +26,6 @@
 #include "MockMIL_Time_ABC.h"
 #include "MockSink.h"
 #include "MockAgent.h"
-#include "MockRoleInterface_Posture.h"
 #include "MockPHY_Composante_ABC.h"
 #include "MockPHY_FireResults_ABC.h"
 #include "MockPHY_RoleInterface_ActiveProtection.h"

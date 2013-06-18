@@ -11,14 +11,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Reinforcement.h"
+#include "SpeedComputer_ABC.h"
+#include "MoveComputer_ABC.h"
+#include "PostureComputer_ABC.h"
+#include "NetworkNotificationHandler_ABC.h"
+#include "ConsumptionModeChangeRequest_ABC.h"
+#include "ObjectCollisionNotificationHandler_ABC.h"
+#include "LocationActionNotificationHandler_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_kernel/SpeedComputer_ABC.h"
-#include "simulation_kernel/MoveComputer_ABC.h"
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
-#include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
-#include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/range/algorithm_ext/erase.hpp>
 
@@ -227,24 +228,6 @@ void PHY_RolePion_Reinforcement::NotifyReinforcementRemoved( MIL_AgentPion& rein
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Reinforcement::IsReinforcing
-// Created: NLD 2004-09-13
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Reinforcement::IsReinforcing() const
-{
-    return pPionReinforced_ != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Reinforcement::IsReinforced
-// Created: NLD 2004-09-13
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Reinforcement::IsReinforced() const
-{
-    return !reinforcements_.empty();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Reinforcement::HasChanged
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
@@ -290,8 +273,18 @@ void PHY_RolePion_Reinforcement::Execute( moving::SpeedComputer_ABC& algorithm )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::Execute( moving::MoveComputer_ABC& algorithm ) const
 {
-    if( IsReinforcing() )
+    if( pPionReinforced_ )
         algorithm.NotifyReinforcing();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::Execute
+// Created: MCO 2013-06-12
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Reinforcement::Execute( posture::PostureComputer_ABC& algorithm ) const
+{
+    for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+        algorithm.ApplyOnReinforcement( **it );
 }
 
 // -----------------------------------------------------------------------------
@@ -305,7 +298,7 @@ void PHY_RolePion_Reinforcement::ChangeConsumptionMode( dotation::ConsumptionMod
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Reinforcement::NotifyMovingOutsideObject
+// Name: PHY_RolePion_Reinforcement::NotifyMovingInsideObject
 // Created: AHC 2009-10-06
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::NotifyMovingInsideObject( MIL_Object_ABC& object )

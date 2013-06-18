@@ -413,7 +413,7 @@ float DEC_AutomateFunctions::PionTimeToMoveDistance( const DEC_Decision_ABC* pio
     if( !pion )
         throw MASA_EXCEPTION( "Invalid pion in PionTimeToMoveDistance" );
     const double rDistance = MIL_Tools::ConvertMeterToSim( distance );
-    const double rMaxSpeed = pion->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeedWithReinforcement();
+    const double rMaxSpeed = pion->GetPion().GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed();
     return rMaxSpeed != 0. ? float( MIL_Tools::ConvertSimToMinutes( rDistance / rMaxSpeed ) ) : std::numeric_limits< float >::max();
 }
 

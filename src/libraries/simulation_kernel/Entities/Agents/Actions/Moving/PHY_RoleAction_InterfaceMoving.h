@@ -37,18 +37,14 @@ public:
     virtual void Update( bool bIsDead ) = 0;
     virtual void Clean() = 0;
 
-    virtual double GetMaxSpeedWithReinforcement() const = 0;
-    virtual double GetTheoricMaxSpeed( bool loaded ) const = 0;
-    virtual double GetTheoricMaxSpeedWithReinforcement() const = 0;
-    virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const = 0;
-    virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const = 0;
-    virtual double GetMaxSpeedModificator() const = 0;
     virtual double GetMaxSpeed() const = 0;
     virtual double GetMaxSpeed( const TerrainData& environment ) const = 0;
+    virtual double GetTheoricMaxSpeed() const = 0;
+    virtual double GetSpeed( const TerrainData& environment ) const = 0;
+    virtual double GetSpeed( const TerrainData& environment, const MIL_Object_ABC& object ) const = 0;
+    virtual double GetTheoricSpeed( const TerrainData& environment ) const = 0;
+    virtual double GetMaxSpeedModificator() const = 0;
     virtual double GetMaxSlope() const = 0;
-
-    /** Whether to use theoric speed (for pathfinding) or actual speed (to compute real speed when moving) */
-    virtual void SetTheoricSpeed( bool ) const = 0;
 
     virtual void SetSpeedModificator( double rFactor ) = 0;
     virtual void SetMaxSpeedModificator( double rFactor ) = 0;

@@ -134,34 +134,6 @@ DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vP
     Initialize( initialWaypoints_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::DEC_Agent_Path
-// Created: LMT 2010-05-04
-// -----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType, bool loaded )
-    : DEC_PathResult           ( pathType )
-    , queryMaker_              ( queryMaker )
-    , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
-    , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >(), loaded )
-    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
-    , pathKnowledgeObjects_    ( )
-    , rCostOutsideOfAllObjects_( 0. )
-    , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
-    , bDecPointsInserted_      ( false )
-    , destroyed_( false )
-{
-    queryMaker_.RegisterPath( *this );
-    fuseau_ = queryMaker.GetOrderManager().GetFuseau();
-    automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-    initialWaypoints_.reserve( 2 );
-    nextWaypoints_.reserve( 1 );
-    initialWaypoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    initialWaypoints_.push_back( vPosEnd );
-    nextWaypoints_.push_back( vPosEnd );
-    Initialize( initialWaypoints_ );
-}
-
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path destructor
 // Created: DFT 02-03-04
@@ -269,7 +241,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
                     if( const MIL_Object_ABC* pObject = knowledge.GetObjectKnown() )
                     {
                         TerrainData data;
-                        double rMaxSpeed = queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( data, *pObject );
+                        double rMaxSpeed = queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeed( data, *pObject );
                         if( rMaxSpeed == 0. || rMaxSpeed == std::numeric_limits< double >::max() )
                             continue;
                     }

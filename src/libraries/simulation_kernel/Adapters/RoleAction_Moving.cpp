@@ -44,7 +44,6 @@ RoleAction_Moving::RoleAction_Moving()
     , rSpeedModificator_   ( 1. )
     , rMaxSpeedModificator_( 1. )
     , bHasMove_            ( false )
-    , bTheoricMaxSpeed_    ( false )
 {
     // NOTHING
 }
@@ -60,7 +59,6 @@ RoleAction_Moving::RoleAction_Moving( MIL_AgentPion& pion, const core::Model& en
     , rSpeedModificator_   ( 1. )
     , rMaxSpeedModificator_( 1. )
     , bHasMove_            ( false )
-    , bTheoricMaxSpeed_    ( false )
 {
     // NOTHING
 }
@@ -92,45 +90,84 @@ void RoleAction_Moving::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void RoleAction_Moving::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-    if( !bTheoricMaxSpeed_ )
-        algorithm.AddModifier( rMaxSpeedModificator_ * (*entity_)[ "movement/traffic-modifier" ], true );
+    algorithm.AddModifier( rMaxSpeedModificator_ * (*entity_)[ "movement/traffic-modifier" ], true );
     algorithm.AddModifier( rSpeedModificator_, false );
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::ComputeSpeed
+// Created: MCO 2013-06-13
+// -----------------------------------------------------------------------------
+double RoleAction_Moving::ComputeSpeed( const moving::SpeedStrategy_ABC& strategy ) const
 {
-    double ComputeSpeed( MIL_AgentPion& owner, const moving::SpeedComputerStrategy& strategy )
-    {
-        std::auto_ptr< moving::SpeedComputer_ABC > computer = owner.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
-        owner.Execute( *computer );
-        return computer->GetSpeed();
-    }
-    double ComputeSpeed( MIL_AgentPion& owner, const moving::SpeedComputerStrategy& strategy, bool loaded )
-    {
-        std::auto_ptr< moving::SpeedComputer_ABC > computer = owner.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy, loaded );
-        owner.Execute( *computer );
-        return computer->GetSpeed();
-    }
+    std::auto_ptr< moving::SpeedComputer_ABC > computer = owner_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    owner_->Execute( *computer );
+    return computer->GetSpeed();
 }
 
 // -----------------------------------------------------------------------------
 // Name: RoleAction_Moving::GetMaxSpeed
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-double RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
-{
-    moving::SpeedComputerStrategy strategy( true, false, &environment );
-    return ComputeSpeed( *owner_, strategy );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetMaxSpeed
-// Created: NLD 2004-09-06
+// Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetMaxSpeed() const
 {
-    moving::SpeedComputerStrategy strategy( true, false, 0 );
-    return ComputeSpeed( *owner_, strategy );
+    return ComputeSpeed( moving::SpeedComputerStrategy( true ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::GetMaxSpeed
+// Created: MCO 2013-06-13
+// -----------------------------------------------------------------------------
+double RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
+{
+    return ComputeSpeed( moving::SpeedComputerStrategy( true, environment ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::GetTheoricMaxSpeed
+// Created: LDC 2012-08-27
+// -----------------------------------------------------------------------------
+double RoleAction_Moving::GetTheoricMaxSpeed() const
+{
+    return ComputeSpeed( moving::SpeedComputerStrategy( true, true ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::GetTheoricSpeed
+// Created: MCO 2013-06-13
+// -----------------------------------------------------------------------------
+double RoleAction_Moving::GetTheoricSpeed( const TerrainData& environment ) const
+{
+    const moving::SpeedComputerStrategy strategy( false, environment, true );
+    return std::min( ComputeSpeed( strategy ), GetMaxSpeed() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::GetSpeed
+// Created: NLD 2004-09-23
+// -----------------------------------------------------------------------------
+double RoleAction_Moving::GetSpeed( const TerrainData& environment ) const
+{
+    const moving::SpeedComputerStrategy strategy( false, environment );
+    return std::min( ComputeSpeed( strategy ), GetMaxSpeed() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::GetSpeed
+// Created: NLD 2004-09-23
+// -----------------------------------------------------------------------------
+double RoleAction_Moving::GetSpeed( const TerrainData& environment, const MIL_Object_ABC& object ) const
+{
+    if( !object().HasMobilityInfluence() )
+        return std::numeric_limits< double >::max();
+    if( !object().IsTrafficable( *owner_ ) )
+        return 0;
+    const double rCurrentMaxSpeed = GetMaxSpeed();
+    const double rCurrentEnvSpeed = GetSpeed( environment );
+    const moving::SpeedComputerStrategy strategy( false, object );
+    double rObjectSpeed = std::min( ComputeSpeed( strategy ), rCurrentMaxSpeed );
+    rObjectSpeed *= rSpeedModificator_;
+    return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed, *owner_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,81 +183,6 @@ double RoleAction_Moving::GetMaxSlope() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetMaxSpeedWithReinforcement
-// Created: NLD 2004-09-23
-// -----------------------------------------------------------------------------
-double RoleAction_Moving::GetMaxSpeedWithReinforcement() const
-{
-    moving::SpeedComputerStrategy strategy( true, true, 0 );
-    return ComputeSpeed( *owner_, strategy );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement
-// Created: LDC 2012-08-27
-// -----------------------------------------------------------------------------
-double RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement() const
-{
-    SetTheoricSpeed( true );
-    double result = GetMaxSpeedWithReinforcement();
-    SetTheoricSpeed( false );
-    return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::SetTheoricSpeed
-// Created: LDC 2012-08-27
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::SetTheoricSpeed( bool value ) const
-{
-    bTheoricMaxSpeed_ = value;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetTheoricMaxSpeed
-// Created: LMT 2010-05-04
-// -----------------------------------------------------------------------------
-double RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
-{
-    SetTheoricSpeed( true );
-    moving::SpeedComputerStrategy strategy( true, false, 0 );
-    double result = ComputeSpeed( *owner_, strategy, loaded );
-    SetTheoricSpeed( false );
-    return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetSpeedWithReinforcement
-// Created: NLD 2004-09-23
-// -----------------------------------------------------------------------------
-double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment ) const
-{
-    moving::SpeedComputerStrategy strategy( false, true, &environment );
-    double rSpeed = ComputeSpeed( *owner_, strategy );
-    rSpeed = std::min( rSpeed, GetMaxSpeedWithReinforcement() );
-    return rSpeed;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetSpeedWithReinforcement
-// Created: NLD 2004-09-23
-// -----------------------------------------------------------------------------
-double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const
-{
-    if( !object().HasMobilityInfluence() )
-        return std::numeric_limits< double >::max();
-    if( !object().IsTrafficable( *owner_ ) )
-        return 0;
-    moving::SpeedComputerStrategy strategy( false, true, object );
-    double rObjectSpeed = ComputeSpeed( *owner_, strategy );
-    const double rCurrentMaxSpeed = GetMaxSpeed();
-    const double rCurrentEnvSpeed = GetSpeedWithReinforcement( environment );
-    rObjectSpeed = std::min( rObjectSpeed, rCurrentMaxSpeed );
-    rObjectSpeed *= rSpeedModificator_;
-    return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed, *owner_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RoleAction_Moving::ApplyMove
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
@@ -229,7 +191,7 @@ void RoleAction_Moving::ApplyMove( const MT_Vector2D& /*position*/, const MT_Vec
     if( ! CanMove() )
         return;
     rSpeed_ = rSpeed;
-    bHasMove_ = ( rSpeed != 0. );
+    bHasMove_ = ( rSpeed != 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -274,8 +236,8 @@ bool RoleAction_Moving::HasResources()
 // -----------------------------------------------------------------------------
 void RoleAction_Moving::Update( bool /*bIsDead*/ )
 {
-    if (!bHasMove_)
-        rSpeed_ = 0.;
+    if( ! bHasMove_ )
+        rSpeed_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -284,8 +246,7 @@ void RoleAction_Moving::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void RoleAction_Moving::Clean()
 {
-    bHasMove_         = false;
-    bTheoricMaxSpeed_ = false;
+    bHasMove_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -339,7 +300,7 @@ bool RoleAction_Moving::HasKnowledgeObject( const MIL_Object_ABC& object ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::ApplyTrafficModifier
+// Name: RoleAction_Moving::ApplyTrafficModifier
 // Created: JSR 2012-01-12
 // -----------------------------------------------------------------------------
 void RoleAction_Moving::ApplyTrafficModifier()

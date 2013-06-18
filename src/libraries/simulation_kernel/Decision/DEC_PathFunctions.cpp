@@ -18,6 +18,7 @@
 #include "Decision/DEC_AgentFunctions.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -41,26 +42,6 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_Ag
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFunctions::ShouldEmbark
-// Created: LMT 2010-05-04
-// -----------------------------------------------------------------------------
-bool DEC_PathFunctions::ShouldEmbark( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Path_ABC > path )
-{
-    if( !path )
-        throw MASA_EXCEPTION( "invalid parameter." );
-    const double length = path->GetLength();
-    const double maxSpeedUnloaded = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( false );
-    if( maxSpeedUnloaded == 0 )
-        return true;
-    const double timeUnloaded = length / maxSpeedUnloaded;
-    const double speed = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( true );
-    if( !speed )
-        return false;
-    const double timeLoaded = ( length / speed ) + DEC_AgentFunctions::GetLoadingTime( callerAgent ) * 60 + DEC_AgentFunctions::GetUnloadingTime( callerAgent ) * 60; //Conversion minutes into hours
-    return ( timeLoaded < timeUnloaded );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPoint
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
@@ -70,20 +51,6 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
     boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, *pEnd, *pPathType ) );
-    pPath->ComputePath( pPath );
-    return pPath;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathFunctions::CreatePathToPoint
-// Created: LMT 2010-05-04
-// -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType, bool loaded )
-{
-    assert( pEnd );
-    const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
-    assert( pPathType );
-    boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, *pEnd, *pPathType, loaded ) );
     pPath->ComputePath( pPath );
     return pPath;
 }

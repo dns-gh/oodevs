@@ -24,6 +24,11 @@ namespace posture
     class PostureComputer_ABC;
 }
 
+namespace moving
+{
+    class SpeedStrategy_ABC;
+}
+
 namespace core
 {
     class Model;
@@ -39,7 +44,7 @@ namespace sword
 // =============================================================================
 class RoleAction_Moving : public moving::PHY_RoleAction_InterfaceMoving
                         , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
-                        , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
+                        , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -66,24 +71,28 @@ public:
 
     //! @name Accessors
     //@{
-    virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const;
-    virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
-    virtual double GetMaxSpeedWithReinforcement() const;
+    virtual double GetSpeed( const TerrainData& environment ) const;
+    virtual double GetSpeed( const TerrainData& environment, const MIL_Object_ABC& object ) const;
     virtual double GetMaxSpeed() const;
     virtual double GetMaxSpeed( const TerrainData& environment ) const;
-    virtual double GetMaxSlope() const;
-    virtual double GetTheoricMaxSpeed( bool loaded ) const;
+    virtual double GetTheoricSpeed( const TerrainData& environment ) const;
+    virtual double GetTheoricMaxSpeed() const;
     virtual void SetSpeedModificator( double rFactor );
     virtual void SetMaxSpeedModificator( double rFactor );
     virtual double GetMaxSpeedModificator() const;
+    virtual double GetMaxSlope() const;
     virtual bool CanMove() const;
     virtual bool IsReady() const;
-    virtual double GetTheoricMaxSpeedWithReinforcement() const;
     virtual bool HasKnowledgeObject( const MIL_Object_ABC& object ) const;
-    virtual void SetTheoricSpeed( bool ) const;
 
     bool HasResources();
     virtual void ApplyTrafficModifier();
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    double ComputeSpeed( const moving::SpeedStrategy_ABC& strategy ) const;
     //@}
 
 private:
@@ -94,9 +103,7 @@ private:
     double             rSpeed_;
     double             rSpeedModificator_;
     double             rMaxSpeedModificator_;
-    // Network         
     bool               bHasMove_;
-    mutable bool       bTheoricMaxSpeed_;
     //@}
 };
 

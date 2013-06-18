@@ -97,9 +97,9 @@ inline std::ostream& operator<<( std::ostream& s, const MT_Vector2D& v )
     APPLY( ComputePathfind, 13, bool, ( TER_Pathfinder_ABC& pathfind, bool needRefine, bool strictClosest, const geometry::Point2f& from, const geometry::Point2f& to, PathfindEvaluateCost evaluate, void* evaluateData, PathfindGetCost get, void* getData, PathfindHandlePathPoint handler, void* handlerData, PathfindShouldEndComputation termination, void* terminationData ) ) \
     APPLY( CanObjectInteractWith, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \
     APPLY( GetObjectListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) ) \
-    APPLY( GetSpeedWithReinforcement, 2, double, ( const SWORD_Model* entity, const TerrainData& environment ) ) \
-    APPLY( GetTheoricMaxSpeedWithReinforcement, 1, double, ( const SWORD_Model* entity ) ) \
-    APPLY( GetSpeedWithReinforcementObject, 3, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) ) \
+    APPLY( GetSpeed, 2, double, ( const SWORD_Model* entity, const TerrainData& environment ) ) \
+    APPLY( GetTheoricMaxSpeed, 1, double, ( const SWORD_Model* entity ) ) \
+    APPLY( GetSpeedObject, 3, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) ) \
     APPLY( NotifyMovingInsideObject, 2, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \
     APPLY( NotifyMovingOnPathPoint, 2, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) \
     APPLY( NotifyMovingOutsideObject, 2, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \

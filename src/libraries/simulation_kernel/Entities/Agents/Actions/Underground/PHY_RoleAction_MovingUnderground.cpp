@@ -214,7 +214,7 @@ bool PHY_RoleAction_MovingUnderground::HideInUndergroundNetwork( boost::shared_p
     bHasChanged_ = true;
     preparingToHide_ = true;
     unsigned int duration = MIL_Time_ABC::GetTime().GetTickDuration();
-    speed_ = duration == 0 ? 0 : owner_->GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetSpeedWithReinforcement( TerrainData(), *object ) / duration;
+    speed_ = duration == 0 ? 0 : owner_->GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetSpeed( TerrainData(), *object ) / duration;
     preparingToHide_ = false;
     pCurrentLocation_ = pKnowledge;
     currentNetwork_ = attr->Network();

@@ -267,8 +267,10 @@ void PHY_UnitType::ReadPosture( xml::xistream& xis )
     assert( postureTimes_.size() > posture.GetID() );
     double setupTime;
     double tearDownTime;
-    tools::ReadTimeAttribute( xis, "setup-time", setupTime );
-    tools::ReadTimeAttribute( xis, "tear-down-time", tearDownTime );
+    if( ! tools::ReadTimeAttribute( xis, "setup-time", setupTime ) )
+        throw MASA_EXCEPTION( xis.context() + "invalid posture setup time" );
+    if( ! tools::ReadTimeAttribute( xis, "tear-down-time", tearDownTime ) )
+        throw MASA_EXCEPTION( xis.context() + "invalid posture tear down time" );
     postureTimes_[ posture.GetID() ] = std::make_pair( static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( setupTime ) ),
                                                        static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( tearDownTime ) ) );
 }
