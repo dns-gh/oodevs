@@ -593,6 +593,18 @@ func (c *Client) SendUnitFragOrder(unitId, fragOrderType uint32,
 	return c.SendFragOrder(0, 0, unitId, fragOrderType, params)
 }
 
+func defaultUnitMagicHandler(msg *sword.SimToClient_Content) error {
+	reply := msg.GetUnitMagicActionAck()
+	if reply == nil {
+		return unexpected(msg)
+	}
+	_, err := GetUnitMagicActionAck(reply)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (c *Client) TeleportUnit(unitId uint32, location Point) error {
 	msg := SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
@@ -607,17 +619,7 @@ func (c *Client) TeleportUnit(unitId uint32, location Point) error {
 			},
 		},
 	}
-	handler := func(msg *sword.SimToClient_Content) error {
-		reply := msg.GetUnitMagicActionAck()
-		if reply == nil {
-			return unexpected(msg)
-		}
-		code := reply.GetErrorCode()
-		if code != sword.UnitActionAck_no_error {
-			return nameof(sword.UnitActionAck_ErrorCode_name, int32(code))
-		}
-		return nil
-	}
+	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
 
@@ -693,5 +695,21 @@ func (c *Client) CreateFireOnLocation(params *sword.MissionParameters) error {
 		}
 		return nil
 	}
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) SendTotalDestruction(crowdId uint32) error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				UnitMagicAction: &sword.UnitMagicAction{
+					Tasker:     makeUnitTasker(crowdId),
+					Type:       sword.UnitMagicAction_crowd_total_destruction.Enum(),
+					Parameters: MakeParameters(),
+				},
+			},
+		},
+	}
+	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
