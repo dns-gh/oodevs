@@ -324,7 +324,6 @@ void TimelineFilteredViewWidget::OnFilterSelectionChanged( const QStringList& )
     // Send the new filter list to the timeline_server
 }
 
-
 // -----------------------------------------------------------------------------
 // Temporary method to test display
 // -----------------------------------------------------------------------------
@@ -353,7 +352,6 @@ void TimelineFilteredViewWidget::CreateDummyEvent( E_EventTypes type )
         sword::UnitOrder* unitOrder = msg.mutable_message()->mutable_unit_order();
         unitOrder->mutable_tasker()->set_id( 159 );
         unitOrder->mutable_type()->set_id( 44582 ); // Move To
-        unitOrder->set_label( "dummy" + ENT_Tr::ConvertFromEventType( type ) );
         sword::MissionParameters* parameters = unitOrder->mutable_parameters();
         parameters->add_elem()->add_value()->mutable_heading()->set_heading( 360 );
         parameters->add_elem()->set_null_value( true );
