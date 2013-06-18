@@ -89,8 +89,8 @@ private:
     //! @name Helpers
     //@{
     virtual double GetMaxSpeed() const;
-    virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const;
-    virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
+    virtual double GetSpeed( const TerrainData& environment ) const;
+    virtual double GetSpeed( const TerrainData& environment, const MIL_Object_ABC& object ) const;
     //@}
 
     //! @name  Position operations

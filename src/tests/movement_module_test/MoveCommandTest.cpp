@@ -47,7 +47,7 @@ namespace
             entity[ "movement/is-ready" ] = isReady;
             MOCK_EXPECT( GetWorldWeldValue ).returns( 1000 );
             MOCK_EXPECT( GetLimas );
-            MOCK_EXPECT( GetSpeedWithReinforcement ).returns( speed );
+            MOCK_EXPECT( GetSpeed ).returns( speed );
             MOCK_EXPECT( GetObjectListWithinCircle );
             MOCK_EXPECT( UpdateObjectsToAvoid ).returns( obstaclesChange );
             ExecuteCommands();
@@ -133,7 +133,7 @@ BOOST_FIXTURE_TEST_CASE( movement_command_sends_movement_environment_effect_when
     MOCK_EXPECT( NotifyMovingOnPathPoint ).once();
     Advance( 1, sword::movement::PathWalker::eRunning );
     MOCK_EXPECT( NotifyMovingOnPathPoint ).once();
-    MOCK_EXPECT( GetSpeedWithReinforcement ).once().returns( 4 );
+    MOCK_EXPECT( GetSpeed ).once().returns( 4 );
     ExpectEffect( entity[ "movement/environment" ], sword::test::MakeModel( "area", TerrainData().Area() )
                                                                           ( "left", 0 )
                                                                           ( "right", 0 )
@@ -324,7 +324,7 @@ BOOST_FIXTURE_TEST_CASE( object_colliding_with_path_makes_command_send_blocked_b
 {
     AddObjectOnPath();
     MOCK_EXPECT( CanObjectInteractWith ).once().returns( true );
-    MOCK_EXPECT( GetSpeedWithReinforcementObject ).once().returns( 0. );
+    MOCK_EXPECT( GetSpeedObject ).once().returns( 0. );
     MOCK_EXPECT( ObjectIsInside ).returns( false );
     MOCK_EXPECT( NotifyMovingOutsideObject ).once();
     ExpectEffect( entity[ "movement/path" ] );
@@ -333,7 +333,7 @@ BOOST_FIXTURE_TEST_CASE( object_colliding_with_path_makes_command_send_blocked_b
     AddObjectOnPath();
     MOCK_EXPECT( CanObjectInteractWith ).returns( true );
     MOCK_EXPECT( NotifyMovingInsideObject ).once();
-    MOCK_EXPECT( GetSpeedWithReinforcementObject ).once().returns( 0. );
+    MOCK_EXPECT( GetSpeedObject ).once().returns( 0. );
     MOCK_EXPECT( ObjectIsInside ).returns( false );
     MOCK_EXPECT( ObjectIsOnBorder ).returns( false );
     MOCK_EXPECT( NotifyMovingOutsideObject ).once();

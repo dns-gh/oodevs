@@ -799,7 +799,7 @@ double MIL_Automate::GetAlivePionsMaxSpeed() const
     double maxSpeed = std::numeric_limits< double >::max();
     for( auto it = pions_.begin(); it != pions_.end(); ++it )
     {
-        const double speed = (*it)->GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeedWithReinforcement();
+        const double speed = (*it)->GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed();
         if( speed != 0 )
             maxSpeed = std::min( maxSpeed, speed );
     }

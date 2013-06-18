@@ -25,8 +25,8 @@ using namespace sword::movement;
 
 DECLARE_HOOK( CanObjectInteractWith, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) )
 DECLARE_HOOK( GetObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
-DECLARE_HOOK( GetSpeedWithReinforcement, double, ( const SWORD_Model* entity, const TerrainData& environment ) )
-DECLARE_HOOK( GetSpeedWithReinforcementObject, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) )
+DECLARE_HOOK( GetSpeed, double, ( const SWORD_Model* entity, const TerrainData& environment ) )
+DECLARE_HOOK( GetSpeedObject, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) )
 DECLARE_HOOK( GetWorldWeldValue, double, () ) // $$$$ MCO : "static data" which amazingly is hard-coded to 10 in simulation_terrain
 DECLARE_HOOK( NotifyMovingInsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) )
 DECLARE_HOOK( NotifyMovingOnPathPoint, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) )
@@ -137,7 +137,7 @@ void PathWalker::ComputeCurrentSpeed( const wrapper::View& entity ) const
     const PathPoint& curPathPoint = **itCurrentPathPoint_;
     if( curPathPoint.GetType() == PathPoint::eTypePointPath )
         SetEnvironmentType( curPathPoint.GetObjectTypesToNextPoint(), entity );
-    speed_ = GET_HOOK( GetSpeedWithReinforcement )( entity, environment_ );
+    speed_ = GET_HOOK( GetSpeed )( entity, environment_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -376,7 +376,7 @@ bool PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveSte
     for( it = itCurMoveStep->ponctualObjectsOnSet_.begin(); it != itCurMoveStep->ponctualObjectsOnSet_.end(); ++it )
     {
         const wrapper::View& object = *it;
-        double rSpeedWithinObject = GET_HOOK( GetSpeedWithReinforcementObject )( entity, environment_, object );
+        double rSpeedWithinObject = GET_HOOK( GetSpeedObject )( entity, environment_, object );
         if( GET_HOOK( CanObjectInteractWith )( entity, object ) )
         {
             if( !bFirstMove ) //// $$$$$ !bFirstMove A REVOIR - PERMET DE SORTIR D'UN OBSTACLE PONCTUEL
@@ -407,7 +407,7 @@ bool PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveSte
         if( GET_HOOK( CanObjectInteractWith )( entity, object ) )
         {
             GET_HOOK( NotifyMovingInsideObject )( entity, object );
-            rMaxSpeedForStep = std::min( rMaxSpeedForStep, GET_HOOK( GetSpeedWithReinforcementObject )( entity, environment_, object) );
+            rMaxSpeedForStep = std::min( rMaxSpeedForStep, GET_HOOK( GetSpeedObject )( entity, environment_, object) );
             if( rMaxSpeedForStep == 0 )
             {
                 speed_ = 0;

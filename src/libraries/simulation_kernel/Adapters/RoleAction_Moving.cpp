@@ -106,64 +106,64 @@ double RoleAction_Moving::ComputeSpeed( const moving::SpeedStrategy_ABC& strateg
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetMaxSpeedWithReinforcement
+// Name: RoleAction_Moving::GetMaxSpeed
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-double RoleAction_Moving::GetMaxSpeedWithReinforcement() const
+double RoleAction_Moving::GetMaxSpeed() const
 {
     return ComputeSpeed( moving::SpeedComputerStrategy( true ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetMaxSpeedWithReinforcement
+// Name: RoleAction_Moving::GetMaxSpeed
 // Created: MCO 2013-06-13
 // -----------------------------------------------------------------------------
-double RoleAction_Moving::GetMaxSpeedWithReinforcement( const TerrainData& environment ) const
+double RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 {
     return ComputeSpeed( moving::SpeedComputerStrategy( true, environment ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement
+// Name: RoleAction_Moving::GetTheoricMaxSpeed
 // Created: LDC 2012-08-27
 // -----------------------------------------------------------------------------
-double RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement() const
+double RoleAction_Moving::GetTheoricMaxSpeed() const
 {
     return ComputeSpeed( moving::SpeedComputerStrategy( true, true ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetTheoricSpeedWithReinforcement
+// Name: RoleAction_Moving::GetTheoricSpeed
 // Created: MCO 2013-06-13
 // -----------------------------------------------------------------------------
-double RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& environment ) const
+double RoleAction_Moving::GetTheoricSpeed( const TerrainData& environment ) const
 {
     const moving::SpeedComputerStrategy strategy( false, environment, true );
-    return std::min( ComputeSpeed( strategy ), GetMaxSpeedWithReinforcement() );
+    return std::min( ComputeSpeed( strategy ), GetMaxSpeed() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetSpeedWithReinforcement
+// Name: RoleAction_Moving::GetSpeed
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment ) const
+double RoleAction_Moving::GetSpeed( const TerrainData& environment ) const
 {
     const moving::SpeedComputerStrategy strategy( false, environment );
-    return std::min( ComputeSpeed( strategy ), GetMaxSpeedWithReinforcement() );
+    return std::min( ComputeSpeed( strategy ), GetMaxSpeed() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetSpeedWithReinforcement
+// Name: RoleAction_Moving::GetSpeed
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const
+double RoleAction_Moving::GetSpeed( const TerrainData& environment, const MIL_Object_ABC& object ) const
 {
     if( !object().HasMobilityInfluence() )
         return std::numeric_limits< double >::max();
     if( !object().IsTrafficable( *owner_ ) )
         return 0;
-    const double rCurrentMaxSpeed = GetMaxSpeedWithReinforcement();
-    const double rCurrentEnvSpeed = GetSpeedWithReinforcement( environment );
+    const double rCurrentMaxSpeed = GetMaxSpeed();
+    const double rCurrentEnvSpeed = GetSpeed( environment );
     const moving::SpeedComputerStrategy strategy( false, object );
     double rObjectSpeed = std::min( ComputeSpeed( strategy ), rCurrentMaxSpeed );
     rObjectSpeed *= rSpeedModificator_;

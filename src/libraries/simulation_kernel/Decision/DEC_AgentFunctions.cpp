@@ -879,7 +879,7 @@ float DEC_AgentFunctions::TimeLeftForMoving( const MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 float DEC_AgentFunctions::TimeToMoveDistance( const MIL_Agent_ABC& callerAgent, float distance )
 {
-   const double rMaxSpeed = callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeedWithReinforcement();
+   const double rMaxSpeed = callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed();
    if( rMaxSpeed == 0 )
        return std::numeric_limits< float >::max();
     return static_cast< float >( MIL_Tools::ConvertSimToMinutes( MIL_Tools::ConvertMeterToSim( distance ) / rMaxSpeed ) );
@@ -897,7 +897,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetInterceptionPoint( const
         result.reset( new MT_Vector2D() );
         DEC_GeometryFunctions::GetInterceptionPoint( pKnowledge->GetPosition(), pKnowledge->GetDirection() * pKnowledge->GetSpeed(),
                 callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(),
-                callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeedWithReinforcement(), *result );
+                callerAgent.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed(), *result );
     }
     return result;
 }

@@ -141,65 +141,65 @@ double PHY_RoleAction_Moving::ComputeSpeed( const SpeedStrategy_ABC& strategy ) 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement
+// Name: PHY_RoleAction_Moving::GetMaxSpeed
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
+double PHY_RoleAction_Moving::GetMaxSpeed() const
 {
     return ComputeSpeed( SpeedComputerStrategy( true ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement
+// Name: PHY_RoleAction_Moving::GetMaxSpeed
 // Created: MCO 2013-06-13
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement( const TerrainData& environment ) const
+double PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 {
     return ComputeSpeed( SpeedComputerStrategy( true, environment ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::GetSpeedWithReinforcement
+// Name: PHY_RoleAction_Moving::GetSpeed
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment ) const
+double PHY_RoleAction_Moving::GetSpeed( const TerrainData& environment ) const
 {
     const SpeedComputerStrategy strategy( false, environment );
-    return std::min( ComputeSpeed( strategy ), GetMaxSpeedWithReinforcement() );
+    return std::min( ComputeSpeed( strategy ), GetMaxSpeed() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::GetTheoricSpeedWithReinforcement
+// Name: PHY_RoleAction_Moving::GetTheoricSpeed
 // Created: MCO 2013-06-13
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& environment ) const
+double PHY_RoleAction_Moving::GetTheoricSpeed( const TerrainData& environment ) const
 {
     const SpeedComputerStrategy strategy( false, environment, true );
-    return std::min( ComputeSpeed( strategy ), GetMaxSpeedWithReinforcement() );
+    return std::min( ComputeSpeed( strategy ), GetMaxSpeed() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement
+// Name: PHY_RoleAction_Moving::GetTheoricMaxSpeed
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement() const
+double PHY_RoleAction_Moving::GetTheoricMaxSpeed() const
 {
     return ComputeSpeed( SpeedComputerStrategy( true, true ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::GetSpeedWithReinforcement
+// Name: PHY_RoleAction_Moving::GetSpeed
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const
+double PHY_RoleAction_Moving::GetSpeed( const TerrainData& environment, const MIL_Object_ABC& object ) const
 {
     if( !object().HasMobilityInfluence() )
         return std::numeric_limits< double >::max();
     if( !object().IsTrafficable( *owner_ ) )
         return 0;
     double rObjectSpeed = ComputeSpeed( SpeedComputerStrategy( false, object ) );
-    const double rCurrentMaxSpeed = GetMaxSpeedWithReinforcement();
-    const double rCurrentEnvSpeed = GetSpeedWithReinforcement( environment );
+    const double rCurrentMaxSpeed = GetMaxSpeed();
+    const double rCurrentEnvSpeed = GetSpeed( environment );
     rObjectSpeed = std::min( rObjectSpeed, rCurrentMaxSpeed );
     rObjectSpeed = ApplySpeedModificators( rObjectSpeed );
     return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed, *owner_ );

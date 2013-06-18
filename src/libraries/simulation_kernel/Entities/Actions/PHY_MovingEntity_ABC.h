@@ -47,8 +47,8 @@ public:
 
     //! @name
     //@{
-    virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const = 0;
-    virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const = 0;
+    virtual double GetSpeed( const TerrainData& environment ) const = 0;
+    virtual double GetSpeed( const TerrainData& environment, const MIL_Object_ABC& object ) const = 0;
     //@}
 
     //! @name

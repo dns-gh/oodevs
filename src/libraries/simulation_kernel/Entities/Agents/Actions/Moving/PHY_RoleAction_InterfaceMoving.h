@@ -37,12 +37,12 @@ public:
     virtual void Update( bool bIsDead ) = 0;
     virtual void Clean() = 0;
 
-    virtual double GetMaxSpeedWithReinforcement() const = 0;
-    virtual double GetMaxSpeedWithReinforcement( const TerrainData& environment ) const = 0;
-    virtual double GetTheoricMaxSpeedWithReinforcement() const = 0;
-    virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const = 0;
-    virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const = 0;
-    virtual double GetTheoricSpeedWithReinforcement( const TerrainData& environment ) const = 0;
+    virtual double GetMaxSpeed() const = 0;
+    virtual double GetMaxSpeed( const TerrainData& environment ) const = 0;
+    virtual double GetTheoricMaxSpeed() const = 0;
+    virtual double GetSpeed( const TerrainData& environment ) const = 0;
+    virtual double GetSpeed( const TerrainData& environment, const MIL_Object_ABC& object ) const = 0;
+    virtual double GetTheoricSpeed( const TerrainData& environment ) const = 0;
     virtual double GetMaxSpeedModificator() const = 0;
     virtual double GetMaxSlope() const = 0;
 

@@ -41,8 +41,8 @@ PHY_Speeds::PHY_Speeds( xml::xistream& xis )
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
 PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_InterfaceMoving& role )
-    : rMaxSpeed_               ( role.GetTheoricMaxSpeedWithReinforcement() )
-    , rBaseSpeed_              ( role.GetSpeedWithReinforcement( TerrainData() ) )
+    : rMaxSpeed_               ( role.GetTheoricMaxSpeed() )
+    , rBaseSpeed_              ( role.GetSpeed( TerrainData() ) )
     , nLinearPassabilityMask_  ( 0 )
     , nAreaPassabilityMask_    ( 0 )
     , nAreaImpassabilityMask_  ( 0 )
@@ -54,7 +54,7 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_InterfaceMoving& role )
     assert( allTypes.size() - 1 == size ); // without unknown
     for( unsigned int nOffset = 0; nOffset < size; ++nOffset )
     {
-        const double speed = role.GetTheoricSpeedWithReinforcement( TerrainData::FromString( allTypes[ nOffset ] ) );
+        const double speed = role.GetTheoricSpeed( TerrainData::FromString( allTypes[ nOffset ] ) );
         if( nOffset < TerrainData::nAreaTypes )
             rAreaSpeeds_.push_back( speed );
         else if( nOffset < TerrainData::nAreaTypes + TerrainData::nBorderTypes )
