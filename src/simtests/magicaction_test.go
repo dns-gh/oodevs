@@ -14,6 +14,13 @@ import (
 	"sword"
 )
 
+const (
+	// Resource type without indirect fire
+	ResourceTypeWithoutIndirectFire = uint32(1)
+	// Resource type with indirect fire
+	ResourceTypeWithIndirectFire = uint32(8)
+)
+
 func (s *TestSuite) TestControlLocalWeatherCreation(c *C) {
 	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
 	defer sim.Stop()
@@ -59,4 +66,62 @@ func (s *TestSuite) TestControlLocalWeatherCreation(c *C) {
 
 	weathers = client.Model.GetData().LocalWeathers
 	c.Assert(weathers, HasLen, 1)
+}
+
+func (s *TestSuite) TestFireOrderCreation(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return !data.Time.IsZero()
+	})
+
+	// error: invalid parameters count, 3 parameters expected
+	params := swapi.MakeParameters()
+	err := client.CreateFireOnLocation(params)
+	c.Assert(err, ErrorMatches, "error_invalid_target")
+
+	// error: first parameter must be a location or a point
+	params = swapi.MakeParameters(
+		swapi.MakeNullValue(),
+		swapi.MakeNullValue(),
+		swapi.MakeNullValue())
+	err = client.CreateFireOnLocation(params)
+	c.Assert(err, ErrorMatches, "error_invalid_target")
+
+	params.Elem[0] = swapi.MakePointParam(swapi.Point{X: -15.8241, Y: 28.3241})
+
+	// error: second parameter must be a resource type
+	err = client.CreateFireOnLocation(params)
+	c.Assert(err, ErrorMatches, "error_invalid_ammunition")
+
+	params.Elem[1] = swapi.MakeResourceType(uint32(12345))
+
+	// error: second parameter must be a valid resource type
+	err = client.CreateFireOnLocation(params)
+	c.Assert(err, ErrorMatches, "error_invalid_ammunition")
+
+	params.Elem[1] = swapi.MakeResourceType(ResourceTypeWithoutIndirectFire)
+
+	// error: second parameter must be a resource type with a indirect fire
+	err = client.CreateFireOnLocation(params)
+	c.Assert(err, ErrorMatches, "error_invalid_ammunition")
+
+	params.Elem[1] = swapi.MakeResourceType(ResourceTypeWithIndirectFire)
+
+	// error: third parameter must be a real
+	err = client.CreateFireOnLocation(params)
+	c.Assert(err, ErrorMatches, "error_invalid_iteration")
+
+	params.Elem[2] = swapi.MakeFloat(float32(5))
+
+	// indirect fire with a point
+	err = client.CreateFireOnLocation(params)
+	c.Assert(err, IsNil)
+
+	params.Elem[0] = swapi.MakeLocationParam(swapi.Point{X: -15.8241, Y: 28.3241})
+
+	// indirect fire with a location
+	err = client.CreateFireOnLocation(params)
+	c.Assert(err, IsNil)
 }
