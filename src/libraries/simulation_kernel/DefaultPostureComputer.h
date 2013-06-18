@@ -53,6 +53,8 @@ private:
 
     template< typename GetTime, typename Accumulator >
     double ComputeCompletion( const GetTime& time, const Accumulator& accumulator ) const;
+    void ComputeMovingPosture();
+    void ComputeStopPosture();
     double ApplyModifiers( double time ) const;
     //@}
 
