@@ -33,7 +33,7 @@ class PHY_Speeds : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration );
+    explicit PHY_Speeds( xml::xistream& xis );
     explicit PHY_Speeds( const moving::PHY_RoleAction_InterfaceMoving& role );
     virtual ~PHY_Speeds();
     //@}
@@ -51,9 +51,9 @@ private:
     //! @name Helpers
     //@{
     void Initialize( const moving::PHY_RoleAction_InterfaceMoving& role, bool theoricSpeed );
-    void ReadSpeed          ( xml::xistream& xis, unsigned int timeStepDuration );
+    void ReadSpeed          ( xml::xistream& xis );
     void ReadTerrain        ( xml::xistream& xis );
-    void CheckInitialization( xml::xistream& xis, unsigned int timeStepDuration );
+    void CheckInitialization( xml::xistream& xis );
     double& SpeedFor( const TerrainData& data );
     void GenerateMasks();
     //@}

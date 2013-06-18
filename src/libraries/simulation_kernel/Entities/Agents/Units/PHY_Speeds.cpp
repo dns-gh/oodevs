@@ -19,7 +19,7 @@
 // Name: PHY_Speeds constructor
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
-PHY_Speeds::PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration )
+PHY_Speeds::PHY_Speeds( xml::xistream& xis )
     : rMaxSpeed_               ( -1. )
     , rBaseSpeed_              ( -1. )
     , nLinearPassabilityMask_  ( 0 )
@@ -31,8 +31,8 @@ PHY_Speeds::PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration )
     rAreaSpeeds_.resize( TerrainData::nAreaTypes, -1. );
     rBorderSpeeds_.resize( TerrainData::nBorderTypes, -1. );
     rLinearSpeeds_.resize( TerrainData::nLinearTypes, -1. );
-    xis >> xml::list( "speeds", *this, &PHY_Speeds::ReadSpeed, timeStepDuration );
-    CheckInitialization( xis, timeStepDuration );
+    xis >> xml::list( "speeds", *this, &PHY_Speeds::ReadSpeed );
+    CheckInitialization( xis );
     GenerateMasks();
 }
 
@@ -78,12 +78,12 @@ PHY_Speeds::~PHY_Speeds()
 // Name: PHY_Speeds::ReadSpeed
 // Created: ABL 2007-07-23
 // -----------------------------------------------------------------------------
-void PHY_Speeds::ReadSpeed( xml::xistream& xis, unsigned int timeStepDuration )
+void PHY_Speeds::ReadSpeed( xml::xistream& xis )
 {
-    rMaxSpeed_ = xis.attribute< double >( "max" );
+    rMaxSpeed_ = xis.attribute< double >( "max" ); // km/h
     if( rMaxSpeed_ <= 0 )
         xis.error( "speeds: max <= 0" );
-    rMaxSpeed_ *= 1000. * timeStepDuration / 3600.;
+    rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ ); // m/tick
     xis >> xml::list( "speed", *this, &PHY_Speeds::ReadTerrain );
 }
 
@@ -107,19 +107,11 @@ void PHY_Speeds::ReadTerrain( xml::xistream& xis )
         rConstructionSpeeds_[ strTerrainType ] = xis.attribute< unsigned int >( "construction-speed" ) * 0.01;
 }
 
-namespace
-{
-    double ConvertSpeedToMOS( double speed, unsigned int timeStepDuration )
-    {
-        return speed * 3600. / timeStepDuration / 1000.;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Speeds::CheckInitialization
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
-void PHY_Speeds::CheckInitialization( xml::xistream& xis, unsigned int timeStepDuration )
+void PHY_Speeds::CheckInitialization( xml::xistream& xis )
 {
     for( unsigned int i = 0; i < rAreaSpeeds_.size(); ++i )
     {
@@ -135,7 +127,7 @@ void PHY_Speeds::CheckInitialization( xml::xistream& xis, unsigned int timeStepD
         {
             assert( i < rAreaSpeeds_.size() );
             rBorderSpeeds_[ i ] = rAreaSpeeds_[ i ];
-            MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, static_cast< unsigned char >( 1 << i ), 0, 0 ) ) << " not initialized. Defaulted to " << ConvertSpeedToMOS( rBorderSpeeds_[ i ], timeStepDuration ) << " km/h." );
+            MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, static_cast< unsigned char >( 1 << i ), 0, 0 ) ) << " not initialized. Defaulted to " << MIL_Tools::ConvertSpeedSimToMos( rBorderSpeeds_[ i ] ) << " km/h." );
         }
     }
     for( unsigned int i = 0; i < rLinearSpeeds_.size() - 1; ++i )
@@ -150,7 +142,7 @@ void PHY_Speeds::CheckInitialization( xml::xistream& xis, unsigned int timeStepD
     if( rLinearSpeeds_[ lastIndex ] == -1 )
     {
         rLinearSpeeds_[ lastIndex ] = SpeedFor( TerrainData::SmallRoad() );
-        MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, 0, 0, static_cast< unsigned short >( 1 << lastIndex ) ) ) << " not initialized. Defaulted to " <<  ConvertSpeedToMOS( rLinearSpeeds_[ lastIndex ], timeStepDuration ) << " km/h." );
+        MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, 0, 0, static_cast< unsigned short >( 1 << lastIndex ) ) ) << " not initialized. Defaulted to " <<  MIL_Tools::ConvertSpeedSimToMos( rLinearSpeeds_[ lastIndex ] ) << " km/h." );
 
     }
     if( rMaxSpeed_ == 0. )
