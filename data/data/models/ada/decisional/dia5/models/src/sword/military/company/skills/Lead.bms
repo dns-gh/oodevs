@@ -56,6 +56,7 @@ end
 
 local function manageAddedAndDeletedUnits( self )
     local redone = false
+    self.listenFrontElementInitialized = false
     local DEC_HasMission = DEC_HasMission
     local oldEntities = self.parameters.commandingEntities
     local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
@@ -66,6 +67,8 @@ local function manageAddedAndDeletedUnits( self )
         if ( not exists( newEntities, entity ) ) and ( not integration.isLogisticConvoy( entity.source ) ) then
              self:create()
              redone = true
+             self.listenFrontElementInitialized = true
+             integration.initializeListenFrontElement()
              break
         end
     end
@@ -151,7 +154,8 @@ create = function( self )
             return
         end
         manageFeedback( bestUnits )
-
+        self.bestUnits = copyTable( bestUnits )
+        
         -- Le second echelon recoit les missions de "supportTask"
         issueMission ( self, self.params.supportTasks, #self.entitiesWithoutMission, eEtatEchelon_Second )
 
@@ -167,6 +171,13 @@ end,
 activate = function( self )
     if myself.newTask then
       self:create()
+    end
+    
+    if self.listenFrontElementInitialized then -- if a subordinate destroyed before and tasks issued a new time
+        for _, elem in pairs (self.bestUnits) do
+            integration.ListenFrontElement( elem.entity )
+        end
+        self.listenFrontElementInitialized = false
     end
 
     if self.params.manageAddedAndDeletedUnits then
