@@ -1,6 +1,7 @@
 /bin/
 /run/
 /out/
+/dist/
 /include/
 /pkg/
 tags
