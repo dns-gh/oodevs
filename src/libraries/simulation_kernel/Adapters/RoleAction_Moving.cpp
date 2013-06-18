@@ -111,7 +111,7 @@ double RoleAction_Moving::ComputeSpeed( const moving::SpeedStrategy_ABC& strateg
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 {
-    return ComputeSpeed( moving::SpeedComputerStrategy( true, true ) );
+    return ComputeSpeed( moving::SpeedComputerStrategy( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ double RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetMaxSpeedWithReinforcement( const TerrainData& environment ) const
 {
-    return ComputeSpeed( moving::SpeedComputerStrategy( true, true, environment ) );
+    return ComputeSpeed( moving::SpeedComputerStrategy( true, environment ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +129,7 @@ double RoleAction_Moving::GetMaxSpeedWithReinforcement( const TerrainData& envir
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement() const
 {
-    return ComputeSpeed( moving::SpeedComputerStrategy( true, true, true ) );
+    return ComputeSpeed( moving::SpeedComputerStrategy( true, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +138,7 @@ double RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement() const
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& environment ) const
 {
-    const moving::SpeedComputerStrategy strategy( false, true, environment, true );
+    const moving::SpeedComputerStrategy strategy( false, environment, true );
     return std::min( ComputeSpeed( strategy ), GetMaxSpeedWithReinforcement() );
 }
 
@@ -148,7 +148,7 @@ double RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& e
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment ) const
 {
-    const moving::SpeedComputerStrategy strategy( false, true, environment );
+    const moving::SpeedComputerStrategy strategy( false, environment );
     return std::min( ComputeSpeed( strategy ), GetMaxSpeedWithReinforcement() );
 }
 
@@ -164,7 +164,7 @@ double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environm
         return 0;
     const double rCurrentMaxSpeed = GetMaxSpeedWithReinforcement();
     const double rCurrentEnvSpeed = GetSpeedWithReinforcement( environment );
-    const moving::SpeedComputerStrategy strategy( false, true, object );
+    const moving::SpeedComputerStrategy strategy( false, object );
     double rObjectSpeed = std::min( ComputeSpeed( strategy ), rCurrentMaxSpeed );
     rObjectSpeed *= rSpeedModificator_;
     return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed, *owner_ );

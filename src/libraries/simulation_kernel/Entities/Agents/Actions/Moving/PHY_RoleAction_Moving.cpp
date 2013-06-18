@@ -146,7 +146,7 @@ double PHY_RoleAction_Moving::ComputeSpeed( const SpeedStrategy_ABC& strategy ) 
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 {
-    return ComputeSpeed( SpeedComputerStrategy( true, true ) );
+    return ComputeSpeed( SpeedComputerStrategy( true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +155,7 @@ double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement( const TerrainData& environment ) const
 {
-    return ComputeSpeed( SpeedComputerStrategy( true, true, environment ) );
+    return ComputeSpeed( SpeedComputerStrategy( true, environment ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +164,7 @@ double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement( const TerrainData& e
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment ) const
 {
-    const SpeedComputerStrategy strategy( false, true, environment );
+    const SpeedComputerStrategy strategy( false, environment );
     return std::min( ComputeSpeed( strategy ), GetMaxSpeedWithReinforcement() );
 }
 
@@ -174,7 +174,7 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& environment ) const
 {
-    const SpeedComputerStrategy strategy( false, true, environment, true );
+    const SpeedComputerStrategy strategy( false, environment, true );
     return std::min( ComputeSpeed( strategy ), GetMaxSpeedWithReinforcement() );
 }
 
@@ -184,7 +184,7 @@ double PHY_RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainDat
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement() const
 {
-    return ComputeSpeed( SpeedComputerStrategy( true, true, true ) );
+    return ComputeSpeed( SpeedComputerStrategy( true, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +197,7 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
         return std::numeric_limits< double >::max();
     if( !object().IsTrafficable( *owner_ ) )
         return 0;
-    double rObjectSpeed = ComputeSpeed( SpeedComputerStrategy( false, true, object ) );
+    double rObjectSpeed = ComputeSpeed( SpeedComputerStrategy( false, object ) );
     const double rCurrentMaxSpeed = GetMaxSpeedWithReinforcement();
     const double rCurrentEnvSpeed = GetSpeedWithReinforcement( environment );
     rObjectSpeed = std::min( rObjectSpeed, rCurrentMaxSpeed );
