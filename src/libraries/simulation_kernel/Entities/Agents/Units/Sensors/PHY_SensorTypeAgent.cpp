@@ -346,7 +346,6 @@ void PHY_SensorTypeAgent::ReadUrbanBlockModifier( xml::xistream& xis, unsigned i
 // Name: PHY_SensorTypeAgent::GetPopulationFactor
 // Created: NLD 2005-10-28
 // -----------------------------------------------------------------------------
-inline
 double PHY_SensorTypeAgent::GetPopulationFactor( double rDensity ) const
 {
     if( rDensity == 0. || rPopulationDensity_ == 0. )
@@ -537,7 +536,6 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
 // Created: JVT 02-07-12
 // Last modified: JVT 03-01-27
 //-----------------------------------------------------------------------------
-inline
 const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpretExtinction( double rExtinction ) const
 {
     if( rExtinction >= rDetectionDist_ - rIdentificationDist_ )
