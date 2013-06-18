@@ -8,9 +8,12 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "simulation_kernel/DefaultPostureComputer.h"
-#include "simulation_kernel/Entities/Agents/Units/Postures/PHY_Posture.h"
-#include "simulation_kernel/Entities/Agents/Units/Postures/PostureTime_ABC.h"
+#include "DefaultPostureComputer.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentType_ABC.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Entities/Agents/Units/Postures/PostureTime_ABC.h"
 #include "MIL_Random_ABC.h"
 #include "MIL_Random.h"
 
@@ -66,6 +69,51 @@ void DefaultPostureComputer::UnsetPostureMovement()
 {
     if( !bMoving_ ) // $$$$ LDC Role action flying can force movement with 0 horizontal speed.
         bStopped_ = true;
+}
+
+namespace
+{
+    template< typename Container >
+    struct ReinforcementVisitor : posture::PostureComputer_ABC
+    {
+        ReinforcementVisitor( MIL_Agent_ABC& pion, Container& container )
+            : container_( container )
+            , result_   ( 1 )
+        {
+            pion.Execute( *this );
+            container.push_back( std::make_pair( &pion.GetType().GetUnitType(), result_ ) );
+        }
+    private:
+        virtual void ApplyOnReinforcement( MIL_Agent_ABC& pion )
+        {
+            ReinforcementVisitor( pion, container_ );
+        }
+        virtual void AddCoefficientModifier( double coef )
+        {
+            result_ *= coef;
+        }
+        virtual void SetPostureMovement()
+        {}
+        virtual void UnsetPostureMovement()
+        {}
+        virtual void NotifyLoaded()
+        {}
+        virtual const Results& Result()
+        {
+            throw __FUNCTION__;
+        }
+        Container& container_;
+        double result_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultPostureComputer::ApplyOnReinforcement
+// Created: MCO 2013-06-12
+// -----------------------------------------------------------------------------
+void DefaultPostureComputer::ApplyOnReinforcement( MIL_Agent_ABC& pion )
+{
+    ReinforcementVisitor< T_Reinforcements >( pion, reinforcements_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,6 +250,8 @@ double DefaultPostureComputer::ComputeCompletion( const GetTime& time, const Acc
     const PHY_Posture* next = isParkedOnEngineerArea_ ? &PHY_Posture::postePrepareGenie_ : posture_.GetNextAutoPosture();
     if( !next )
         return 0;
-    const double postureTime = (time_.*time)( *next ) * modifier_;
+    double postureTime = (time_.*time)( *next ) * modifier_;
+    for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+        postureTime = std::max( postureTime, (it->first->*time)( *next ) * it->second );
     return accumulator( results_.postureCompletionPercentage_, postureTime );
 }

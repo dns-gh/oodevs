@@ -11,14 +11,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Reinforcement.h"
+#include "SpeedComputer_ABC.h"
+#include "MoveComputer_ABC.h"
+#include "PostureComputer_ABC.h"
+#include "NetworkNotificationHandler_ABC.h"
+#include "ConsumptionModeChangeRequest_ABC.h"
+#include "ObjectCollisionNotificationHandler_ABC.h"
+#include "LocationActionNotificationHandler_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_kernel/SpeedComputer_ABC.h"
-#include "simulation_kernel/MoveComputer_ABC.h"
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
-#include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
-#include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/range/algorithm_ext/erase.hpp>
 
@@ -292,6 +293,16 @@ void PHY_RolePion_Reinforcement::Execute( moving::MoveComputer_ABC& algorithm ) 
 {
     if( IsReinforcing() )
         algorithm.NotifyReinforcing();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Reinforcement::Execute
+// Created: MCO 2013-06-12
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Reinforcement::Execute( posture::PostureComputer_ABC& algorithm ) const
+{
+    for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+        algorithm.ApplyOnReinforcement( **it );
 }
 
 // -----------------------------------------------------------------------------

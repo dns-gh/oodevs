@@ -8,9 +8,13 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
+#include "MockAgent.h"
+#include "MockMIL_Time_ABC.h"
 #include "simulation_kernel/DefaultPostureComputer.h"
 #include "simulation_kernel/Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "simulation_kernel/Entities/Agents/Units/Postures/PostureTime_ABC.h"
+#include "simulation_kernel/Entities/Agents/MIL_AgentType_ABC.h"
+#include "simulation_kernel/Entities/Agents/Units/PHY_UnitType.h"
 #include "simulation_kernel/MIL_Random_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -29,6 +33,18 @@ namespace
     {
         MOCK_METHOD( rand_oi, 3 )
     };
+    MOCK_BASE_CLASS( MockAgentType, MIL_AgentType_ABC )
+    {
+        MOCK_METHOD( IsMilitia, 0 )
+        MOCK_METHOD( IsRefugee, 0 )
+        MOCK_METHOD( IsTerrorist, 0 )
+        MOCK_METHOD( GetUnitType, 0 )
+        MOCK_METHOD( GetFeedbackTime, 0 )
+        MOCK_METHOD( RegisterFunctions, 2 )
+        MOCK_METHOD( GetModel, 0 )
+        MOCK_METHOD( GetDistanceAvantPoint, 1 )
+        MOCK_METHOD( GetDistanceAvantLima, 0 )
+    };
     struct Fixture
     {
         Fixture()
@@ -44,6 +60,8 @@ namespace
         MockMIL_Random random;
     };
 }
+
+BOOST_AUTO_TEST_SUITE( posture )
 
 BOOST_FIXTURE_TEST_CASE( stopped_posture_with_unfinished_completion_does_not_change_posture, Fixture )
 {
@@ -204,6 +222,31 @@ BOOST_FIXTURE_TEST_CASE( parked_on_engineer_area_changes_to_its_special_posture,
     BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, 1, 0.0001 );
 }
 
+BOOST_FIXTURE_TEST_CASE( reinforcing_agent_posture_time_modifies_completion, Fixture )
+{
+    MockMIL_Time_ABC t;
+    MOCK_EXPECT( t.GetTickDuration ).returns( 10u );
+    posture::DefaultPostureComputer computer( random, time, PHY_Posture::arret_, false, false, 0, 1, 1, false );
+    MockAgent agent;
+    MockAgentType type;
+    MOCK_EXPECT( agent.GetType ).returns( boost::cref( type ) );
+    xml::xistringstream xis( "<root>"
+                             "  <equipments/>"
+                             "  <crew-ranks/>"
+                             "  <postures>"
+                             "    <posture name='PosteReflexe' setup-time='100s' tear-down-time='100s'/>"
+                             "  </postures>"
+                             "  <nbc decontamination-delay='0' suit=''/>"
+                             "</root>");
+    xis >> xml::start( "root" );
+    PHY_UnitType utype( xis );
+    MOCK_EXPECT( type.GetUnitType ).returns( boost::cref( utype ) );
+    computer.ApplyOnReinforcement( agent );
+    MOCK_EXPECT( time.GetPostureSetupTime ).once().returns( 5 );
+    const posture::PostureComputer_ABC::Results& result = computer.Result();
+    BOOST_CHECK_CLOSE( result.postureCompletionPercentage_, 0.1, 0.0001 );
+}
+
 namespace
 {
     struct CheckFixture : public Fixture
@@ -253,3 +296,5 @@ BOOST_FIXTURE_TEST_CASE( moving_entity_changes_to_previous_posture, CheckFixture
     CheckMovingPosture( PHY_Posture::mouvement_        , PHY_Posture::mouvement_ );
     CheckMovingPosture( PHY_Posture::mouvementDiscret_ , PHY_Posture::mouvement_ );
 }
+
+BOOST_AUTO_TEST_SUITE_END()

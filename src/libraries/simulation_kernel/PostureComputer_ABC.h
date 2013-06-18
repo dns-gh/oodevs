@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 
+class MIL_Agent_ABC;
 class PHY_Posture;
 
 namespace posture
@@ -52,6 +53,7 @@ public:
     //@{
     virtual void SetPostureMovement() = 0;
     virtual void UnsetPostureMovement() = 0;
+    virtual void ApplyOnReinforcement( MIL_Agent_ABC& ) = 0;
     virtual void AddCoefficientModifier( double coef ) = 0;
     virtual void NotifyLoaded() = 0;
 
@@ -59,6 +61,6 @@ public:
     //@}
 };
 
-} // namespace firing
+}
 
 #endif // __PostureComputer_ABC_h_

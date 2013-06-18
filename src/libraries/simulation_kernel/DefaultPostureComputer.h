@@ -11,6 +11,7 @@
 #define __DefaultPostureComputer_h_
 
 #include "simulation_kernel/PostureComputer_ABC.h"
+#include <vector>
 
 class MIL_Random_ABC;
 
@@ -39,6 +40,7 @@ public:
     //@{
     virtual void SetPostureMovement();
     virtual void UnsetPostureMovement();
+    virtual void ApplyOnReinforcement( MIL_Agent_ABC& pion );
     virtual void AddCoefficientModifier( double coef );
     virtual void NotifyLoaded();
 
@@ -55,6 +57,12 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::vector< std::pair< const PostureTime_ABC*, double > > T_Reinforcements;
+    //@}
+
+private:
     //! @name Attribute
     //@{
     const MIL_Random_ABC& random_;
@@ -65,6 +73,7 @@ private:
     const double rCompletionPercentage_;
     const double rStealthFactor_;
     const bool isParkedOnEngineerArea_;
+    T_Reinforcements reinforcements_;
     double modifier_;
     bool bMoving_;
     bool bStopped_;

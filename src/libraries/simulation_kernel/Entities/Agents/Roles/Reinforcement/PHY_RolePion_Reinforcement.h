@@ -28,13 +28,19 @@ namespace moving
     class MoveComputer_ABC;
 }
 
+namespace posture
+{
+    class PostureComputer_ABC;
+}
+
 // =============================================================================
 // @class  PHY_RolePion_Reinforcement
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Reinforcement : public PHY_RoleInterface_Reinforcement
-                                 , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC>
-                                 , public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC>
+                                 , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
+                                 , public tools::AlgorithmModifier_ABC< moving::MoveComputer_ABC >
+                                 , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
                                  , public dotation::ConsumptionChangeRequestHandler_ABC
                                  , public transport::TransportNotificationHandler_ABC
                                  , public terrain::ObjectCollisionNotificationHandler_ABC
@@ -53,9 +59,11 @@ public:
 
     //! @name Operations
     //@{
-    void Update    ( bool bIsDead );
-    void Clean     ();
-    virtual void Execute(moving::MoveComputer_ABC& algorithm) const;
+    void Update( bool bIsDead );
+    void Clean();
+    virtual void Execute( moving::MoveComputer_ABC& algorithm ) const;
+    virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
+    virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Operations
@@ -66,7 +74,6 @@ public:
     virtual bool IsReinforced() const;
     virtual bool IsReinforcedBy( MIL_AgentPion& pion ) const;
 
-    void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     void ChangeConsumptionMode( dotation::ConsumptionModeChangeRequest_ABC& request );
     //@}
 
