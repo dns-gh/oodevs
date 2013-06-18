@@ -10,15 +10,12 @@
 #ifndef __moving_SpeedComputer_ABC_H__
 #define __moving_SpeedComputer_ABC_H__
 
-class DEC_Knowledge_PopulationCollision;
 class MIL_Agent_ABC;
 class PHY_ComposantePion;
+class DEC_Knowledge_PopulationCollision;
 
 namespace moving
 {
-
-class SpeedStrategy_ABC;
-
 // =============================================================================
 /** @class  SpeedComputer_ABC
     @brief  SpeedComputer_ABC

@@ -100,9 +100,7 @@ private:
     double             rSpeed_;
     double             rSpeedModificator_;
     double             rMaxSpeedModificator_;
-    // Network         
     bool               bHasMove_;
-    mutable bool       bTheoricMaxSpeed_;
     //@}
 };
 

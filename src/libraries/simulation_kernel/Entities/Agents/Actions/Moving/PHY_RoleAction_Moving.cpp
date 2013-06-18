@@ -58,7 +58,6 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving()
     , bEnvironmentHasChanged_( true )
     , bHasMove_              ( false )
     , bIntentToMove_         ( false )
-    , bTheoricMaxSpeed_      ( false )
 {
         // NOTHING
 }
@@ -77,7 +76,6 @@ PHY_RoleAction_Moving::PHY_RoleAction_Moving( MIL_AgentPion& pion )
     , bEnvironmentHasChanged_( true )
     , bHasMove_              ( false )
     , bIntentToMove_         ( false )
-    , bTheoricMaxSpeed_      ( false )
 {
     // NOTHING
 }
@@ -126,21 +124,8 @@ double PHY_RoleAction_Moving::ApplySpeedModificators( double rSpeed ) const
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-    if( !bTheoricMaxSpeed_ )
-        algorithm.AddModifier( rMaxSpeedModificator_ * rTrafficModificator_, true );
+    algorithm.AddModifier( rMaxSpeedModificator_ * rTrafficModificator_, true );
     algorithm.AddModifier( rSpeedModificator_, false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::SetTheoricSpeed
-// Created: LDC 2012-08-22
-// Set to true when speedcomputers must NOT take into account decisional or
-// traffic limitations, typically when computing a path. Must be set back to true
-// when computing speed for actual movement.
-// -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::SetTheoricSpeed( bool value ) const
-{
-    bTheoricMaxSpeed_ = value; // $$$$ MCO 2013-06-13: move into SpeedComputer
 }
 
 // -----------------------------------------------------------------------------
@@ -209,13 +194,10 @@ double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
 {
-    SetTheoricSpeed( true );
-    const SpeedComputerStrategy strategy( true, false, loaded );
+    const SpeedComputerStrategy strategy( true, false, true, loaded );
     std::auto_ptr< SpeedComputer_ABC > computer = owner_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
     owner_->Execute( *computer );
-    double result = computer->GetSpeed();
-    SetTheoricSpeed( false );
-    return result;
+    return computer->GetSpeed();
 }
 
 // -----------------------------------------------------------------------------
@@ -236,10 +218,10 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& environment ) const
 {
-    SetTheoricSpeed( true );
-    double result = GetSpeedWithReinforcement( environment );
-    SetTheoricSpeed( false );
-    return result;
+    const SpeedComputerStrategy strategy( false, true, environment, true );
+    std::auto_ptr< SpeedComputer_ABC > computer = owner_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    owner_->Execute( *computer );
+    return std::min( computer->GetSpeed(), GetMaxSpeedWithReinforcement() );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,10 +230,10 @@ double PHY_RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainDat
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement() const
 {
-    SetTheoricSpeed( true );
-    double result = GetMaxSpeedWithReinforcement();
-    SetTheoricSpeed( false );
-    return result;
+    const SpeedComputerStrategy strategy( true, true, true );
+    std::auto_ptr< SpeedComputer_ABC > computer = owner_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    owner_->Execute( *computer );
+    return computer->GetSpeed();
 }
 
 // -----------------------------------------------------------------------------

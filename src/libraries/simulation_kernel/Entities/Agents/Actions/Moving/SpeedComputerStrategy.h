@@ -31,10 +31,10 @@ class SpeedComputerStrategy : public SpeedStrategy_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement );
-             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData& env );
+             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, bool isTheoric = false );
+             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData& env, bool isTheoric = false );
              SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const MIL_Object_ABC& obj );
-             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, bool loaded );
+             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, bool isTheoric, bool loaded );
     virtual ~SpeedComputerStrategy();
     //@}
 
@@ -51,6 +51,7 @@ private:
     //@{
     bool withReinforcement_;
     bool isMax_;
+    bool isTheoric_;
     boost::function< double( const PHY_ComposantePion& ) > compFunctor_;
     boost::function< double( const PHY_RoleAction_InterfaceMoving& ) > pionFunctor_;
     boost::function< bool( const PHY_ComposantePion& ) > filter_;

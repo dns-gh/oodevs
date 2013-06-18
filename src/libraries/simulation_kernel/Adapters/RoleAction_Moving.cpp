@@ -44,7 +44,6 @@ RoleAction_Moving::RoleAction_Moving()
     , rSpeedModificator_   ( 1. )
     , rMaxSpeedModificator_( 1. )
     , bHasMove_            ( false )
-    , bTheoricMaxSpeed_    ( false )
 {
     // NOTHING
 }
@@ -60,7 +59,6 @@ RoleAction_Moving::RoleAction_Moving( MIL_AgentPion& pion, const core::Model& en
     , rSpeedModificator_   ( 1. )
     , rMaxSpeedModificator_( 1. )
     , bHasMove_            ( false )
-    , bTheoricMaxSpeed_    ( false )
 {
     // NOTHING
 }
@@ -92,8 +90,7 @@ void RoleAction_Moving::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void RoleAction_Moving::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-    if( !bTheoricMaxSpeed_ )
-        algorithm.AddModifier( rMaxSpeedModificator_ * (*entity_)[ "movement/traffic-modifier" ], true );
+    algorithm.AddModifier( rMaxSpeedModificator_ * (*entity_)[ "movement/traffic-modifier" ], true );
     algorithm.AddModifier( rSpeedModificator_, false );
 }
 
@@ -152,19 +149,7 @@ double RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement() const
 {
-    SetTheoricSpeed( true );
-    double result = GetMaxSpeedWithReinforcement();
-    SetTheoricSpeed( false );
-    return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::SetTheoricSpeed
-// Created: LDC 2012-08-27
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::SetTheoricSpeed( bool value ) const
-{
-    bTheoricMaxSpeed_ = value;
+    return ComputeSpeed( *owner_, moving::SpeedComputerStrategy( true, true, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,10 +158,8 @@ void RoleAction_Moving::SetTheoricSpeed( bool value ) const
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& environment ) const
 {
-    SetTheoricSpeed( true );
-    double result = GetSpeedWithReinforcement( environment );
-    SetTheoricSpeed( false );
-    return result;
+    const moving::SpeedComputerStrategy strategy( false, true, environment, true );
+    return std::min( ComputeSpeed( *owner_, strategy ), GetMaxSpeedWithReinforcement() );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,11 +168,7 @@ double RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& e
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
 {
-    SetTheoricSpeed( true );
-    const moving::SpeedComputerStrategy strategy( true, false, loaded );
-    double result = ComputeSpeed( *owner_, strategy );
-    SetTheoricSpeed( false );
-    return result;
+    return ComputeSpeed( *owner_, moving::SpeedComputerStrategy( true, false, true, loaded ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -285,7 +264,6 @@ void RoleAction_Moving::Update( bool /*bIsDead*/ )
 void RoleAction_Moving::Clean()
 {
     bHasMove_ = false;
-    bTheoricMaxSpeed_ = false;
 }
 
 // -----------------------------------------------------------------------------

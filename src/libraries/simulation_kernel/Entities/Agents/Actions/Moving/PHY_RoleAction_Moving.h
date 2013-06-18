@@ -129,7 +129,6 @@ private:
     double GetMaxSpeed( const MIL_Object_ABC& object ) const;
     double ApplyMaxSpeedModificators( double rSpeed ) const;
     double ApplySpeedModificators( double rSpeed ) const;
-    void SetTheoricSpeed( bool ) const;
     //@}
 
     //! @name Network
@@ -151,7 +150,6 @@ private:
     bool                        bEnvironmentHasChanged_;
     bool                        bHasMove_;
     bool                        bIntentToMove_;
-    mutable bool bTheoricMaxSpeed_;
     //@}
 };
 

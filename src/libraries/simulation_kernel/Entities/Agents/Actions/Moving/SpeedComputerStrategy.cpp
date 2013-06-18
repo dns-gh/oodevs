@@ -29,9 +29,10 @@ namespace
 // Name: SpeedComputerStrategy constructor
 // Created: LDC 2009-12-16
 // -----------------------------------------------------------------------------
-SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement )
+SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, bool isTheoric )
     : withReinforcement_( withReinforcement )
     , isMax_            ( isMaxSpeed )
+    , isTheoric_        ( isTheoric )
     , compFunctor_      ( boost::mem_fn( &PHY_ComposantePion::GetMaxSpeed ) )
     , pionFunctor_      ( boost::mem_fn( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement ) )
     , filter_           ( boost::mem_fn( &PHY_ComposantePion::CanMove ) )
@@ -43,9 +44,10 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
 // Name: SpeedComputerStrategy constructor
 // Created: LDC 2009-12-16
 // -----------------------------------------------------------------------------
-SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData& env )
+SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData& env, bool isTheoric )
     : withReinforcement_( withReinforcement )
     , isMax_            ( isMaxSpeed )
+    , isTheoric_        ( isTheoric )
     , compFunctor_      ( boost::bind< double, PHY_ComposantePion, const TerrainData& >( &PHY_ComposantePion::GetMaxSpeed, _1, boost::cref( env ) ) )
     , filter_           ( boost::mem_fn( &PHY_ComposantePion::CanMove ) )
 {
@@ -62,6 +64,7 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
 SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const MIL_Object_ABC& obj )
     : withReinforcement_( withReinforcement )
     , isMax_            ( isMaxSpeed )
+    , isTheoric_        ( false )
     , compFunctor_      ( boost::bind< double, PHY_ComposantePion, const MIL_Object_ABC& >( &PHY_ComposantePion::GetMaxSpeed, _1, boost::cref( obj ) ) )
     , pionFunctor_      ( boost::mem_fn( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement ) )
     , filter_           ( boost::mem_fn( &PHY_ComposantePion::CanMove ) )
@@ -73,9 +76,10 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
 // Name: SpeedComputerStrategy constructor
 // Created: MCO 2013-06-13
 // -----------------------------------------------------------------------------
-SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, bool loaded )
+SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, bool isTheoric, bool loaded )
     : withReinforcement_( withReinforcement )
     , isMax_            ( isMaxSpeed )
+    , isTheoric_        ( isTheoric )
     , compFunctor_      ( boost::mem_fn( &PHY_ComposantePion::GetMaxSpeed ) )
     , pionFunctor_      ( boost::mem_fn( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement ) )
 {
@@ -129,7 +133,9 @@ double SpeedComputerStrategy::ApplyOnPopulation( const DEC_Knowledge_PopulationC
 // Name: SpeedComputerStrategy::AddModifier
 // Created: LDC 2009-12-16
 // -----------------------------------------------------------------------------
-double SpeedComputerStrategy::AddModifier( double ratio, bool isMax /*=true*/ ) const
+double SpeedComputerStrategy::AddModifier( double ratio, bool isMax ) const
 {
+    if( isTheoric_ != ! isMax )
+        return 1;
     return isMax == isMax_ ? ratio : 1.0;
 }
