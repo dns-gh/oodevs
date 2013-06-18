@@ -1206,6 +1206,8 @@ message UnitOrder {
     optional Location          symbolLocation = 5;
     //! The start date and time
     optional DateTime          start_time     = 6;
+    //! optional name
+    optional string            name           = 7;
 }
 
 /** @struct AutomatOrder
@@ -1224,6 +1226,8 @@ message AutomatOrder {
     optional Location          symbolLocation = 5;
     //! The start date and time
     optional DateTime          start_time     = 6;
+    //! optional name
+    optional string            name           = 7;
 }
 
 /** @struct CrowdOrder
@@ -1242,6 +1246,8 @@ message CrowdOrder {
     optional Location          symbolLocation = 5;
     //! The start date and time
     optional DateTime          start_time     = 6;
+    //! optional name
+    optional string            name           = 7;
 }
 
 /** @struct FragOrder
@@ -1260,6 +1266,8 @@ message FragOrder {
     optional Location          symbolLocation = 5;
     //! The start date and time
     optional DateTime          start_time     = 6;
+    //! optional name
+    optional string            name           = 7;
 }
 
 /** @struct ClientObjectProperty

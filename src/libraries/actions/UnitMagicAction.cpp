@@ -104,6 +104,7 @@ void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
         throw MASA_EXCEPTION( "Unknown tasker" );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
+    message().set_name( GetName().toStdString() );
     message.Send( publisher, context );
     if( type == sword::UnitMagicAction_Type_move_to && entity_ )
         entity_.ConstCast()->Update( message() );

@@ -116,6 +116,7 @@ void MIL_PopulationMission::Send() const
     asn().mutable_type()->set_id( GetType().GetID() );
     Serialize( *asn().mutable_parameters() );
     NET_ASN_Tools::WriteGDH( MIL_Time_ABC::GetTime().GetRealTime(), *asn().mutable_start_time() );
+    asn().set_name( GetName() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
