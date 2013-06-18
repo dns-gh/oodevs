@@ -2008,7 +2008,12 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
             throw MASA_BADPARAM_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_iteration,
                                      "parameters[2] must be a real" );
 
-        unsigned int ammos = static_cast< unsigned int >( pDotationCategory->ConvertToNbrAmmo( iterations.value().Get( 0 ).areal() ) );
+        const float value = iterations.value().Get( 0 ).areal();
+        if( value < 0.f )
+            throw MASA_BADPARAM_ASN( ActionCreateFireOrderAck::ErrorCode, ActionCreateFireOrderAck::error_invalid_iteration,
+                                     "parameters[2] must be a positif real number" );
+
+        unsigned int ammos = static_cast< unsigned int >( pDotationCategory->ConvertToNbrAmmo( value ) );
 
         MT_Vector2D targetPos;
         if( location.value().Get( 0 ).has_location() )
