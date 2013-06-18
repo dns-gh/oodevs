@@ -713,3 +713,23 @@ func (c *Client) SendTotalDestruction(crowdId uint32) error {
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) SendChangeArmedIndividuals(crowdId uint32, armedIndividuals int32) error {
+	params := MakeParameters()
+	if armedIndividuals != 0 {
+		params = MakeParameters(MakeQuantity(armedIndividuals))
+	}
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				UnitMagicAction: &sword.UnitMagicAction{
+					Tasker:     makeUnitTasker(crowdId),
+					Type:       sword.UnitMagicAction_crowd_change_armed_individuals.Enum(),
+					Parameters: params,
+				},
+			},
+		},
+	}
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
