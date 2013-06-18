@@ -137,3 +137,11 @@ end
 integration.addToDecontaminationList = function( unit, object )
     DEC_ConnaissanceObjet_DemandeDeDecontaminationSurPion(unit.source, object.source)
 end
+
+integration.genObjectNeedsImprovement = function( plannedObject )
+    return DEC_GenObject_Mining( plannedObject.source )
+end
+
+integration.objectNeedsImprovement = function( kObject )
+    return DEC_ObjectKnowledge_MustBeMined( kObject.source )
+end
