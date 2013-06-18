@@ -75,20 +75,6 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFunctions::CreatePathToPoint
-// Created: LMT 2010-05-04
-// -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType, bool loaded )
-{
-    assert( pEnd );
-    const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
-    assert( pPathType );
-    boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, *pEnd, *pPathType, loaded ) );
-    pPath->ComputePath( pPath );
-    return pPath;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPointList
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------

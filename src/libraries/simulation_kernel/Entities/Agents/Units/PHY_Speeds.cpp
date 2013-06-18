@@ -49,23 +49,20 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_InterfaceMoving& role )
     , nBorderImpassabilityMask_( 0 )
     , nLinearImpassabilityMask_( 0 )
 {
-    Initialize( role, true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Speeds constructor
-// Created: LMT 2010-05-04
-// -----------------------------------------------------------------------------
-PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_InterfaceMoving& role, bool loaded )
-    : rMaxSpeed_               ( role.GetTheoricMaxSpeed( loaded ) )
-    , rBaseSpeed_              ( role.GetSpeedWithReinforcement( TerrainData() ) )
-    , nLinearPassabilityMask_  ( 0 )
-    , nAreaPassabilityMask_    ( 0 )
-    , nAreaImpassabilityMask_  ( 0 )
-    , nBorderImpassabilityMask_( 0 )
-    , nLinearImpassabilityMask_( 0 )
-{
-    Initialize( role, false );
+    std::vector< std::string > allTypes = TerrainData::GetAllTypes();
+    const unsigned int size = TerrainData::nAreaTypes + TerrainData::nBorderTypes + TerrainData::nLinearTypes;
+    assert( allTypes.size() - 1 == size ); // without unknown
+    for( unsigned int nOffset = 0; nOffset < size; ++nOffset )
+    {
+        const double speed = role.GetTheoricSpeedWithReinforcement( TerrainData::FromString( allTypes[ nOffset ] ) );
+        if( nOffset < TerrainData::nAreaTypes )
+            rAreaSpeeds_.push_back( speed );
+        else if( nOffset < TerrainData::nAreaTypes + TerrainData::nBorderTypes )
+            rBorderSpeeds_.push_back( speed );
+        else
+            rLinearSpeeds_.push_back( speed );
+    }
+    GenerateMasks();
 }
 
 // -----------------------------------------------------------------------------
@@ -75,30 +72,6 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_InterfaceMoving& role, bool
 PHY_Speeds::~PHY_Speeds()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Speeds::Initialize
-// Created: JSR 2012-02-02
-// -----------------------------------------------------------------------------
-void PHY_Speeds::Initialize( const moving::PHY_RoleAction_InterfaceMoving& role, bool theoricSpeed )
-{
-    std::vector< std::string > allTypes = TerrainData::GetAllTypes();
-    const unsigned int size = TerrainData::nAreaTypes + TerrainData::nBorderTypes + TerrainData::nLinearTypes;
-    assert( allTypes.size() - 1 == size ); // sans unknown
-    for( unsigned int nOffset = 0; nOffset < size; ++nOffset )
-    {
-        double speed = theoricSpeed
-            ? role.GetTheoricSpeedWithReinforcement( TerrainData::FromString( allTypes[ nOffset ] ) )
-            : role.GetSpeedWithReinforcement( TerrainData::FromString( allTypes[ nOffset ] ) );
-        if( nOffset < TerrainData::nAreaTypes )
-            rAreaSpeeds_.push_back( speed );
-        else if( nOffset < TerrainData::nAreaTypes + TerrainData::nBorderTypes )
-            rBorderSpeeds_.push_back( speed );
-        else
-            rLinearSpeeds_.push_back( speed );
-    }
-    GenerateMasks();
 }
 
 // -----------------------------------------------------------------------------

@@ -39,10 +39,7 @@ Speeds::Speeds( xml::xistream& xis, unsigned int timeStepDuration )
     rAreaSpeeds_.resize( TerrainData::nAreaTypes, -1. );
     rBorderSpeeds_.resize( TerrainData::nBorderTypes, -1. );
     rLinearSpeeds_.resize( TerrainData::nLinearTypes, -1. );
-
-    xis >> xml::optional
-        >> xml::list( "speeds", *this, &Speeds::ReadSpeed, timeStepDuration );
-
+    xis >> xml::list( "speeds", *this, &Speeds::ReadSpeed, timeStepDuration );
     CheckInitialization( xis, timeStepDuration );
     GenerateMasks();
 }
