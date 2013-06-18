@@ -526,7 +526,8 @@ void PHY_RolePion_Posture::Show( const MT_Vector2D& )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::Follow( const MIL_Agent_ABC& agent )
 {
-    const PHY_RoleInterface_Posture& otherPosture = agent.GetRole< PHY_RoleInterface_Posture >();
-    ChangePosture( otherPosture.GetCurrentPosture() );
-    ChangePostureCompletionPercentage( otherPosture.GetPostureCompletionPercentage() );
+    const PHY_RolePion_Posture& posture = agent.GetRole< PHY_RolePion_Posture >();
+    ChangePosture( posture.GetCurrentPosture() );
+    ChangePostureCompletionPercentage( posture.GetPostureCompletionPercentage() );
+    bIsStealth_ = posture.bIsStealth_;
 }
