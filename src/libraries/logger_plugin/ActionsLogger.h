@@ -22,6 +22,7 @@ namespace sword
     class CrowdOrder;
     class UnitOrder;
     class FragOrder;
+    class UnitMagicActionAck;
     class ClientToSim;
 }
 
@@ -79,6 +80,7 @@ public:
     void Log( const sword::AutomatOrder& message );
     void Log( const sword::CrowdOrder& message );
     void Log( const sword::FragOrder& message );
+    void Log( const sword::UnitMagicActionAck& ack );
     void Close();
     //@}
 
@@ -100,6 +102,8 @@ private:
     void SaveTo( const tools::Path& filename, const T_Filter& filter ) const;
     void Commit() const;
     void LoadOrdersIfCheckpoint();
+    template< typename T, typename U >
+    void LogActionFrom( const T& message, const U& mutator );
     template< typename T, typename U >
     void LogAction( const T& message, const U& mutator );
     //@}

@@ -240,6 +240,10 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
     {
         actions_->SaveCheckpointActiveMissions( msg.control_checkpoint_save_end().name() );
     }
+    else if( msg.has_unit_magic_action_ack() )
+    {
+        actions_->Log( msg.unit_magic_action_ack() );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -1111,6 +1111,10 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
     ack().mutable_unit()->set_id( id );
     ack().set_error_code( UnitActionAck::no_error );
     ack().set_error_msg( "" );
+    ack().mutable_result()->CopyFrom( message.parameters() );
+    ack().mutable_tasker()->CopyFrom( message.tasker() );
+    ack().set_type( message.type() );
+    ack().set_name( message.name() );
     try
     {
         switch( message.type() )
@@ -1765,7 +1769,7 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
         MIL_AutomateLOG* pSupplier = FindBrainLogistic( message.parameters().elem( 0 ).value( 0 ) );
         if( !pSupplier )
             throw MASA_EXCEPTION_ASN( sword::LogSupplyChangeQuotasAck::ErrorCode, sword::LogSupplyChangeQuotasAck_ErrorCode_error_invalid_supplier );
-        
+
         // Param 1: quotas
         std::set< const PHY_DotationCategory* > quotasTypes;
         const sword::MissionParameter& quotas = message.parameters().elem( 1 );
