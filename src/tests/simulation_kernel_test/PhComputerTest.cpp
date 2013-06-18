@@ -18,8 +18,6 @@
 #include "Entities/Agents/Units/Weapons/PHY_WeaponDataType_DirectFire.h"
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
-
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Urban/MIL_UrbanObject.h"
