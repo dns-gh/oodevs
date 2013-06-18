@@ -49,8 +49,6 @@ public:
 private:
     //! @name Operations
     //@{
-    void Update();
-
     template< typename GetTime, typename Accumulator >
     double ComputeCompletion( const GetTime& time, const Accumulator& accumulator ) const;
     void ComputeMovingPosture();

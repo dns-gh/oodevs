@@ -78,7 +78,7 @@ void DefaultPostureComputer::NotifyLoaded()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::MustBeForce
+// Name: DefaultPostureComputer::AddCoefficientModifier
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
 void DefaultPostureComputer::AddCoefficientModifier( double coef )
@@ -87,23 +87,13 @@ void DefaultPostureComputer::AddCoefficientModifier( double coef )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::MustBeForce
+// Name: DefaultPostureComputer::AddUrbanCoefficientModifier
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
 void DefaultPostureComputer::AddUrbanCoefficientModifier( double coef )
 {
     if( &posture_ == &PHY_Posture::poste_ )
         coefficientsModifier_.push_back( coef );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::GetPosture
-// Created: MGD 2009-09-21
-// -----------------------------------------------------------------------------
-PostureComputer_ABC::Results& DefaultPostureComputer::Result()
-{
-    Update();
-    return results_;
 }
 
 namespace
@@ -121,18 +111,22 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::Update
-// Created: MGD 2009-09-22
+// Name: DefaultPostureComputer::Result
+// Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
-void DefaultPostureComputer::Update()
+PostureComputer_ABC::Results& DefaultPostureComputer::Result()
 {
     if( bIsDead_ )
-        return ComputeDeathPosture( results_ );
+    {
+        ComputeDeathPosture( results_ );
+        return results_;
+    }
     ComputeStealthMode( results_, random_, rStealthFactor_ );
     if( bMoving_ )
         ComputeMovingPosture();
     else
         ComputeStopPosture();
+    return results_;
 }
 
 namespace
@@ -215,7 +209,7 @@ void DefaultPostureComputer::ComputeStopPosture()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultPostureComputer::Update
+// Name: DefaultPostureComputer::ComputeCompletion
 // Created: MCO 2013-06-12
 // -----------------------------------------------------------------------------
 template< typename GetTime, typename Accumulator >
