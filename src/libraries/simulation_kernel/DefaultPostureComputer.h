@@ -42,6 +42,7 @@ public:
     virtual void AddCoefficientModifier( double coef );
     virtual void AddUrbanCoefficientModifier( double coef );
     virtual void NotifyLoaded();
+
     virtual Results& Result();
     //@}
 
@@ -49,6 +50,10 @@ private:
     //! @name Operations
     //@{
     void Update();
+
+    template< typename GetTime, typename Accumulator >
+    double ComputeCompletion( const GetTime& time, const Accumulator& accumulator ) const;
+    double ApplyModifiers( double time ) const;
     //@}
 
 private:
