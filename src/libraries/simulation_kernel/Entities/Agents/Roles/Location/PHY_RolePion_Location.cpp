@@ -85,10 +85,6 @@ PHY_RolePion_Location::~PHY_RolePion_Location()
     // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Location::load
 // Created: JVT 2005-04-05
@@ -102,7 +98,6 @@ void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const unsigned 
     file >> pvPosition_;
     file >> bHasDoneMagicMove_;
     file >> bHasMove_;
-
     UpdatePatch();
 }
 
@@ -119,10 +114,6 @@ void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const unsigned
     file << bHasDoneMagicMove_;
     file << bHasMove_;
 }
-
-// =============================================================================
-// ACCESSORS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Location::GetAgent
@@ -142,10 +133,6 @@ double PHY_RolePion_Location::GetAltitude() const
     return MIL_Tools::GetAltitude( *pvPosition_ ) + rHeight_;
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Location::SetHeight
 // Created: NLD 2004-10-04
@@ -164,7 +151,6 @@ void PHY_RolePion_Location::SetHeight( double rHeight )
 // Created: DFT 02-02-27
 // Last modified: JVT 04-06-01
 //-----------------------------------------------------------------------------
-inline
 void PHY_RolePion_Location::SetPosition( const MT_Vector2D& vPosition )
 {
     if( vPosition == *pvPosition_ )
@@ -181,7 +167,6 @@ void PHY_RolePion_Location::SetPosition( const MT_Vector2D& vPosition )
 // Name: PHY_RolePion_Location::SetDirection
 // Created: JVT 02-07-18
 //-----------------------------------------------------------------------------
-inline
 void PHY_RolePion_Location::SetDirection( const MT_Vector2D& vDirection )
 {
     if( vDirection == vDirection_ )
@@ -195,7 +180,6 @@ void PHY_RolePion_Location::SetDirection( const MT_Vector2D& vDirection )
 // Name: PHY_RolePion_Location::SetCurrentSpeed
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
-inline
 void PHY_RolePion_Location::SetCurrentSpeed( double rSpeed )
 {
     if( rCurrentSpeed_ == rSpeed )

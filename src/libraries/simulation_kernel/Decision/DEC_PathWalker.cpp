@@ -98,7 +98,6 @@ MT_Vector2D DEC_PathWalker::ExtrapolatePosition( const MT_Vector2D& position, co
 // Name: DEC_PathWalker::ComputeCurrentSpeed
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-inline
 void DEC_PathWalker::ComputeCurrentSpeed()
 {
     const DEC_PathPoint& curPathPoint = **itCurrentPathPoint_;
@@ -118,7 +117,6 @@ void DEC_PathWalker::ComputeCurrentSpeed()
 // Name: DEC_PathWalker::InitializeEnvironment
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-inline
 void DEC_PathWalker::InitializeEnvironment( const DEC_PathResult& path )
 {
     DEC_PathResult::CIT_PathPointList itPathPointTmp = itCurrentPathPoint_;
