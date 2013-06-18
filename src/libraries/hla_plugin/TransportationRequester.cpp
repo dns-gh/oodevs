@@ -15,6 +15,7 @@
 #include "Subordinates_ABC.h"
 #include "ContextFactory_ABC.h"
 #include "InteractionSender_ABC.h"
+#include "ProtocolTools.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include <set>
@@ -38,11 +39,19 @@ namespace
         return name;
     }
 
-    unsigned int ResolveReportId( xml::xisubstream xis )
+    unsigned int ResolveReportId( xml::xisubstream xis, const std::string& report, bool optional=false )
     {
         unsigned int reportType = 0;
-        xis >> xml::start( "reports" )
-                >> xml::content( "mission-complete", reportType );
+        if(!optional)
+        {
+            xis >> xml::start( "reports" )
+                >> xml::content( report, reportType );
+        }
+        else
+        {
+            xis >> xml::start( "reports" )
+                >> xml::optional >> xml::content( report, reportType );
+        }
         return reportType;
     }
 
@@ -56,9 +65,12 @@ namespace
 
     std::vector< char > ResolveUniqueIdFromCallsign( const std::string& callsign, const interactions::ListOfUnits& listOfTransporters )
     {
-        BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, listOfTransporters.list )
+        for( auto it = listOfTransporters.list.begin(); listOfTransporters.list.end() != it; ++it )
+        {
+            const NetnObjectDefinitionStruct& unit( *it );
             if( unit.callsign.str() == callsign )
                 return unit.uniqueId;
+        }
         return std::vector< char >();
     }
 
@@ -69,29 +81,6 @@ namespace
        to.consumer = from.consumer;
        to.provider = from.provider;
        to.serviceType = from.serviceType;
-    }
-
-    geometry::Point2d ReadLocation( const sword::MissionParameter_Value& value )
-    {
-        if( value.has_location() )
-            return geometry::Point2d( value.location().coordinates().elem( 0 ).latitude(),
-                                      value.location().coordinates().elem( 0 ).longitude() );
-        if( value.has_point() )
-            return geometry::Point2d( value.point().location().coordinates().elem( 0 ).latitude(),
-                                      value.point().location().coordinates().elem( 0 ).longitude() );
-        if( value.has_area() ) // FIXME: compute barycenter
-            return geometry::Point2d( value.area().location().coordinates().elem( 0 ).latitude(),
-                                      value.area().location().coordinates().elem( 0 ).longitude() );
-        return geometry::Point2d();
-    }
-
-    geometry::Point2d ReadLocation( const sword::MissionParameter& parameter )
-    {
-        if( parameter.value( 0 ).has_location() )
-            return geometry::Point2d( parameter.value( 0 ).location().coordinates().elem( 0 ).latitude(),
-                                      parameter.value( 0 ).location().coordinates().elem( 0 ).longitude() );
-        return geometry::Point2d( parameter.value( 0 ).point().location().coordinates().elem( 0 ).latitude(),
-                                  parameter.value( 0 ).point().location().coordinates().elem( 0 ).longitude() );
     }
 
     long long ReadTime( const sword::MissionParameter& parameter )
@@ -126,7 +115,8 @@ TransportationRequester::TransportationRequester( xml::xisubstream xis, const Mi
                                                   InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender,
                                                   InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender,
                                                   InteractionSender_ABC< interactions::NetnCancelConvoy >& cancelSender )
-    : missionCompleteReportId_( ResolveReportId( xis ) )
+    : missionCompleteReportId_( ResolveReportId( xis, "mission-complete" ) )
+    , awaitingCarriersReportId_( ResolveReportId( xis, "awaiting-carriers", true ) )
     , pauseId_                ( resolver.ResolveAutomat( GetName( xis, "fragOrders", "pause" ) ) )
     , resumeId_               ( resolver.ResolveAutomat( GetName( xis, "fragOrders", "resume" ) ) )
     , cancelId_               ( resolver.ResolveAutomat( GetName( xis, "fragOrders", "cancel" ) ) )
@@ -199,9 +189,9 @@ void TransportationRequester::ProcessTransport(const T& message, bool isAutmaton
    if( message.parameters().elem_size() == 8 &&
         std::find( transportIds_.begin(), transportIds_.end(), message.type().id() ) != transportIds_.end() )
     {
-        const geometry::Point2d embarkmentPoint = ReadLocation( message.parameters().elem( 4 ).value( 0 ) );
+        const geometry::Point2d embarkmentPoint = ProtocolTools::ConvertToPoint( message.parameters().elem( 4 ) );
         const long long embarkmentTime = ReadTime( message.parameters().elem( 5 ) );
-        const geometry::Point2d debarkmentPoint = ReadLocation( message.parameters().elem( 6 ).value( 0 ) );
+        const geometry::Point2d debarkmentPoint = ProtocolTools::ConvertToPoint( message.parameters().elem( 6 ) );
         const long long debarkmentTime = ReadTime( message.parameters().elem( 7 ) );
         const unsigned int context = contextFactory_.Create();
         pendingRequests_.right.erase( message.tasker().id() );
@@ -241,7 +231,7 @@ void TransportationRequester::ProcessEmbark(const T& message, bool isAutomaton, 
         std::find( missions.begin(), missions.end(), message.type().id() ) != missions.end() )
     {
         const NetnTransportStruct::ConvoyType transportType = embark ? NetnTransportStruct::E_Embarkment : NetnTransportStruct::E_Disembarkment ;
-        const geometry::Point2d embarkmentPoint = ReadLocation( message.parameters().elem( 4 ).value( 0 ) );
+        const geometry::Point2d embarkmentPoint = ProtocolTools::ConvertToPoint( message.parameters().elem( 4 ) );
         const long long embarkmentTime = ReadTime( message.parameters().elem( 5 ) );
         const unsigned int context = contextFactory_.Create();
         pendingRequests_.right.erase( message.tasker().id() );
@@ -309,7 +299,10 @@ void TransportationRequester::Receive( interactions::NetnOfferConvoy& interactio
         return;
     }
     if( interaction.offerType != 1 ) // full offer
-        return Reject( rejectSender_, interaction, "Offering only partial offer" );
+    {
+        Reject( rejectSender_, interaction, "Offering only partial offer" );
+        return;
+    }
     interactions::NetnAcceptOffer accept;
     CopyService( interaction, accept );
     acceptSender_.Send( accept );
@@ -335,7 +328,8 @@ void TransportationRequester::Notify( const sword::Report& message, int /*contex
 {
     if( !( message.source().has_automat() || message.source().has_unit() ) )
         return;
-    if( message.type().id() != missionCompleteReportId_ )
+    if( message.type().id() != missionCompleteReportId_ && 
+        message.type().id() != awaitingCarriersReportId_ )
         return;
     const unsigned int identifier = message.source().has_automat() ? message.source().automat().id() : message.source().unit().id();
     T_Requests::right_const_iterator request = acceptedRequests_.right.find( identifier );
@@ -395,6 +389,7 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
     BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, units.list )
     {
         const unsigned int id = callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId );
+
         simulation::UnitMagicAction message;
         message().mutable_tasker()->mutable_unit()->set_id( transporterId );
         message().set_type( static_cast< sword::UnitMagicAction_Type >( actionType ) );
@@ -462,9 +457,11 @@ void TransportationRequester::Receive( interactions::NetnConvoyDestroyedEntities
     const unsigned int context = interaction.serviceId.eventCount;
     if( serviceStartedRequests_.left.find( context ) == serviceStartedRequests_.left.end() )
         return;
+
     BOOST_FOREACH( const NetnObjectDefinitionStruct& entity, interaction.listOfEmbarkedObjectDestroyed.list )
     {
         const unsigned int entityIdentifier = callsignResolver_.ResolveSimulationIdentifier( entity.uniqueId );
+
         simulation::UnitMagicAction message;
         message().mutable_tasker()->mutable_unit()->set_id( entityIdentifier );
         message().set_type( sword::UnitMagicAction::destroy_all );
@@ -518,7 +515,14 @@ void TransportationRequester::ReadMission(xml::xistream& xis, std::vector<unsign
 {
     std::string name;
     xis >> name;
-    v.push_back( resolver.ResolveAutomat( name ) );
+    try
+    {
+        v.push_back( resolver.ResolveAutomat( name ) );
+    }
+    catch( const tools::Exception& )
+    {
+        // NOTHING
+    }
     v.push_back( resolver.ResolveUnit( name ) );
 }
 

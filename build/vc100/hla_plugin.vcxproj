@@ -172,6 +172,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\OwnershipController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\OwnershipStrategy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\PlatformProxy.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ProtocolTools.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteOrbatShaper.cpp" />
@@ -309,6 +310,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\OwnershipStrategy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\OwnershipStrategy_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\PlatformProxy.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ProtocolTools.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentController.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver_ABC.h" />

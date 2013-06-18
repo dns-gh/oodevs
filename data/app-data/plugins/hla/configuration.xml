@@ -31,6 +31,7 @@
     </missions>
     <reports>
         <mission-complete>12</mission-complete>
+        <awaiting-carriers>147</awaiting-carriers>
     </reports>
     <drawings>
         <divesture-area>Misc./Disaggregation area</divesture-area>

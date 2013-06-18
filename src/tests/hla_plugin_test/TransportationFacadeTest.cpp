@@ -144,6 +144,7 @@ BOOST_FIXTURE_TEST_CASE( netn_transportation_facade_invalid_transport_request, F
     MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "resume" ).returns( resumeId );
     MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "cancel" ).returns( cancelId );
     MOCK_EXPECT( missionResolver.ResolveAutomat ).once().with( "transport_request" ).throws( tools::Exception( "file", "function", 1, "mission transport_request does not exist") );
+    MOCK_EXPECT( missionResolver.ResolveUnit ).once().with( "transport_request" ).throws( tools::Exception( "file", "function", 1, "mission transport_request does not exist") );
 
     MOCK_EXPECT( logger.LogError ).once();
 
