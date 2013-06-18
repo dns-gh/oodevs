@@ -81,13 +81,13 @@ public:
     virtual double GetMaxSpeedWithReinforcement() const;
     virtual double GetMaxSpeed() const;
     virtual double GetMaxSpeed( const TerrainData& environment ) const;
-    virtual double GetMaxSlope() const;
     virtual double GetTheoricSpeedWithReinforcement( const TerrainData& environment ) const;
     virtual double GetTheoricMaxSpeed( bool loaded ) const;
     virtual double GetTheoricMaxSpeedWithReinforcement() const;
     virtual void SetSpeedModificator( double rFactor );
     virtual void SetMaxSpeedModificator( double rFactor );
     virtual double GetMaxSpeedModificator() const;
+    virtual double GetMaxSlope() const;
     virtual void ApplyTrafficModifier();
     virtual bool HasResources();
     virtual bool CanMove() const;
@@ -120,8 +120,7 @@ public:
     //@{
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
     virtual bool HasKnowledgeObject   ( const MIL_Object_ABC& object ) const;
-    virtual double GetObjectCost      ( const MIL_ObjectType_ABC& objectType,
-                                        const DEC_PathType& pathType ) const;
+    virtual double GetObjectCost      ( const MIL_ObjectType_ABC& objectType, const DEC_PathType& pathType ) const;
     //@}
 
 private:
