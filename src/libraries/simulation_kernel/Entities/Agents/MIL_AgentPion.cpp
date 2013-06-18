@@ -48,7 +48,6 @@
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
