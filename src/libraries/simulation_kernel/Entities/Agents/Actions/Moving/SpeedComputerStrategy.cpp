@@ -32,6 +32,7 @@ namespace
 SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const MIL_Object_ABC& obj, const TerrainData* env /* =0*/ )
     : withReinforcement_( withReinforcement )
     , isMax_            ( isMaxSpeed )
+    , filter_           ( boost::mem_fn( &PHY_ComposantePion::CanMove ) )
 {
     if( env )
     {
@@ -55,6 +56,7 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
 SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData* env /* =0*/ )
     : withReinforcement_( withReinforcement )
     , isMax_            ( isMaxSpeed )
+    , filter_           ( boost::mem_fn( &PHY_ComposantePion::CanMove ) )
 {
     if( env )
     {
@@ -72,6 +74,22 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
 }
 
 // -----------------------------------------------------------------------------
+// Name: SpeedComputerStrategy constructor
+// Created: MCO 2013-06-13
+// -----------------------------------------------------------------------------
+SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, bool loaded )
+    : withReinforcement_( withReinforcement )
+    , isMax_            ( isMaxSpeed )
+    , compFunctor_      ( boost::mem_fn( &PHY_ComposantePion::GetMaxSpeed ) )
+    , pionFunctor_      ( boost::mem_fn( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement ) )
+{
+    if( loaded )
+        filter_ = boost::bind( &PHY_ComposantePion::IsLoadable, _1 );
+    else
+        filter_ = ! boost::bind( &PHY_ComposantePion::IsLoadable, _1 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SpeedComputerStrategy destructor
 // Created: LDC 2009-12-16
 // -----------------------------------------------------------------------------
@@ -86,6 +104,8 @@ SpeedComputerStrategy::~SpeedComputerStrategy()
 // -----------------------------------------------------------------------------
 double SpeedComputerStrategy::ApplyOnComponent( const PHY_ComposantePion& comp ) const
 {
+    if( ! comp.IsUsable() || ! filter_( comp ) )
+        return 0;
     return compFunctor_( comp );
 }
 
@@ -95,9 +115,9 @@ double SpeedComputerStrategy::ApplyOnComponent( const PHY_ComposantePion& comp )
 // -----------------------------------------------------------------------------
 double SpeedComputerStrategy::ApplyOnReinforcement( const MIL_Agent_ABC& pion ) const
 {
-    return withReinforcement_ ?
-        pionFunctor_( pion.GetRole< PHY_RoleAction_InterfaceMoving >() ) :
-            std::numeric_limits< double >::max();
+    return withReinforcement_
+        ? pionFunctor_( pion.GetRole< PHY_RoleAction_InterfaceMoving >() )
+        : std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------

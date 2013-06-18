@@ -14,8 +14,7 @@
 
 namespace moving
 {
-
-class SpeedStrategy_ABC;
+    class SpeedStrategy_ABC;
 
 // =============================================================================
 /** @class  DefaultSpeedComputer
@@ -23,17 +22,18 @@ class SpeedStrategy_ABC;
 */
 // Created: AHC 2009-10-01
 // =============================================================================
-class BaseSpeedComputer : public SpeedComputer_ABC
+class DefaultSpeedComputer : public SpeedComputer_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             BaseSpeedComputer( const SpeedStrategy_ABC& strategy );
-    virtual ~BaseSpeedComputer();
+    explicit DefaultSpeedComputer( const SpeedStrategy_ABC& strategy );
+    virtual ~DefaultSpeedComputer();
     //@}
 
     //! @name Operations
     //@{
+    virtual void ApplyOnComponent( const PHY_ComposantePion& );
     virtual void ApplyOnReinforcement( const MIL_Agent_ABC& );
     virtual void ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& );
     virtual void AddModifier( double ratio, bool isMax = true );
@@ -45,35 +45,8 @@ protected:
     const SpeedStrategy_ABC& strategy_;
     double speedRatio_;
     double speed_;
-    bool hasUsableComponent_;
+    bool hasComponent_;
     //@}
-};
-
-class DefaultSpeedComputer : public BaseSpeedComputer
-{
-public:
-             DefaultSpeedComputer( const SpeedStrategy_ABC& strategy );
-    virtual ~DefaultSpeedComputer();
-
-    virtual void ApplyOnComponent( const PHY_ComposantePion& );
-};
-
-class LoadedSpeedComputer : public BaseSpeedComputer
-{
-public:
-             LoadedSpeedComputer( const SpeedStrategy_ABC& strategy );
-    virtual ~LoadedSpeedComputer();
-
-    virtual void ApplyOnComponent( const PHY_ComposantePion& );
-};
-
-class UnloadedSpeedComputer : public BaseSpeedComputer
-{
-public:
-             UnloadedSpeedComputer( const SpeedStrategy_ABC& strategy );
-    virtual ~UnloadedSpeedComputer();
-
-    virtual void ApplyOnComponent( const PHY_ComposantePion& );
 };
 
 }

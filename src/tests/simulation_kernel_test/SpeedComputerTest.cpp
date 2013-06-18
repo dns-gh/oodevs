@@ -12,7 +12,6 @@
 #include "MoveComputerFactory.h"
 #include "SpeedComputer_ABC.h"
 #include "MockAgent.h"
-#include <boost/noncopyable.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: DefaultSpeedComputerTest
@@ -30,10 +29,7 @@ namespace
             }
             void Execute( moving::SpeedComputer_ABC& algorithm ) const
             {
-                {
-                    moving::SpeedComputerStrategy strategy( true, false, 0 );
-                    factory_.CreateSpeedComputer( strategy );
-                }
+                factory_.CreateSpeedComputer( moving::SpeedComputerStrategy( true, false ) );
                 MockAgent stubby;
                 algorithm.ApplyOnReinforcement( stubby );
             }
@@ -46,7 +42,7 @@ BOOST_AUTO_TEST_CASE( DefaultSpeedComputerTest )
 {
     moving::MoveComputerFactory moveComputerFactory;
     ReentrantRole role( moveComputerFactory );
-    moving::SpeedComputerStrategy strategy( true, false, 0 );
+    moving::SpeedComputerStrategy strategy( true, false );
     std::auto_ptr< moving::SpeedComputer_ABC > computer = moveComputerFactory.CreateSpeedComputer( strategy );
     role.Execute( *computer );
     BOOST_CHECK_EQUAL( 0., computer->GetSpeed() );

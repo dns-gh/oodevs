@@ -173,7 +173,7 @@ double PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) cons
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetMaxSpeed() const
 {
-    const SpeedComputerStrategy strategy( true, false, 0 );
+    const SpeedComputerStrategy strategy( true, false );
     std::auto_ptr< SpeedComputer_ABC > computer = owner_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
     owner_->Execute( *computer );
     return computer->GetSpeed();
@@ -197,7 +197,7 @@ double PHY_RoleAction_Moving::GetMaxSlope() const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 {
-    const SpeedComputerStrategy strategy( true, true, 0 );
+    const SpeedComputerStrategy strategy( true, true );
     std::auto_ptr< SpeedComputer_ABC > computer = owner_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
     owner_->Execute( *computer );
     return computer->GetSpeed();
@@ -210,8 +210,8 @@ double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 double PHY_RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
 {
     SetTheoricSpeed( true );
-    const SpeedComputerStrategy strategy( true, false, 0 );
-    std::auto_ptr< SpeedComputer_ABC > computer = owner_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy, loaded );
+    const SpeedComputerStrategy strategy( true, false, loaded );
+    std::auto_ptr< SpeedComputer_ABC > computer = owner_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
     owner_->Execute( *computer );
     double result = computer->GetSpeed();
     SetTheoricSpeed( false );

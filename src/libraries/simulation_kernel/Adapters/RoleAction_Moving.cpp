@@ -105,12 +105,6 @@ namespace
         owner.Execute( *computer );
         return computer->GetSpeed();
     }
-    double ComputeSpeed( MIL_AgentPion& owner, const moving::SpeedComputerStrategy& strategy, bool loaded )
-    {
-        std::auto_ptr< moving::SpeedComputer_ABC > computer = owner.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy, loaded );
-        owner.Execute( *computer );
-        return computer->GetSpeed();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +122,7 @@ double RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetMaxSpeed() const
 {
-    return ComputeSpeed( *owner_, moving::SpeedComputerStrategy( true, false, 0 ) );
+    return ComputeSpeed( *owner_, moving::SpeedComputerStrategy( true, false ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,7 +143,7 @@ double RoleAction_Moving::GetMaxSlope() const
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 {
-    return ComputeSpeed( *owner_, moving::SpeedComputerStrategy( true, true, 0 ) );
+    return ComputeSpeed( *owner_, moving::SpeedComputerStrategy( true, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,8 +186,8 @@ double RoleAction_Moving::GetTheoricSpeedWithReinforcement( const TerrainData& e
 double RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
 {
     SetTheoricSpeed( true );
-    const moving::SpeedComputerStrategy strategy( true, false, 0 );
-    double result = ComputeSpeed( *owner_, strategy, loaded );
+    const moving::SpeedComputerStrategy strategy( true, false, loaded );
+    double result = ComputeSpeed( *owner_, strategy );
     SetTheoricSpeed( false );
     return result;
 }
