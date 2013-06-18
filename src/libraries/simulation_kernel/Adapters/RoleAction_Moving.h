@@ -74,8 +74,7 @@ public:
     virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const;
     virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const;
     virtual double GetMaxSpeedWithReinforcement() const;
-    virtual double GetMaxSpeed() const;
-    virtual double GetMaxSpeed( const TerrainData& environment ) const;
+    virtual double GetMaxSpeedWithReinforcement( const TerrainData& environment ) const;
     virtual double GetTheoricSpeedWithReinforcement( const TerrainData& environment ) const;
     virtual double GetTheoricMaxSpeed( bool loaded ) const;
     virtual double GetTheoricMaxSpeedWithReinforcement() const;

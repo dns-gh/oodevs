@@ -106,30 +106,21 @@ double RoleAction_Moving::ComputeSpeed( const moving::SpeedStrategy_ABC& strateg
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetMaxSpeed
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-double RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
-{
-    return ComputeSpeed( moving::SpeedComputerStrategy( true, false, environment ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetMaxSpeed
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-double RoleAction_Moving::GetMaxSpeed() const
-{
-    return ComputeSpeed( moving::SpeedComputerStrategy( true, false ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RoleAction_Moving::GetMaxSpeedWithReinforcement
 // Created: NLD 2004-09-23
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 {
     return ComputeSpeed( moving::SpeedComputerStrategy( true, true ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RoleAction_Moving::GetMaxSpeedWithReinforcement
+// Created: MCO 2013-06-13
+// -----------------------------------------------------------------------------
+double RoleAction_Moving::GetMaxSpeedWithReinforcement( const TerrainData& environment ) const
+{
+    return ComputeSpeed( moving::SpeedComputerStrategy( true, true, environment ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,7 +171,7 @@ double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environm
         return std::numeric_limits< double >::max();
     if( !object().IsTrafficable( *owner_ ) )
         return 0;
-    const double rCurrentMaxSpeed = GetMaxSpeed();
+    const double rCurrentMaxSpeed = GetMaxSpeedWithReinforcement();
     const double rCurrentEnvSpeed = GetSpeedWithReinforcement( environment );
     const moving::SpeedComputerStrategy strategy( false, true, object );
     double rObjectSpeed = std::min( ComputeSpeed( strategy ), rCurrentMaxSpeed );

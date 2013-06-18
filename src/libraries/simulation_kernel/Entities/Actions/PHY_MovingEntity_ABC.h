@@ -47,7 +47,6 @@ public:
 
     //! @name
     //@{
-    virtual double GetMaxSpeed              () const = 0;
     virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const = 0;
     virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const = 0;
     //@}

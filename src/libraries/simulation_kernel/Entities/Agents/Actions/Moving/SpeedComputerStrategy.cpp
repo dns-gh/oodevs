@@ -34,7 +34,7 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
     , isMax_            ( isMaxSpeed )
     , isTheoric_        ( isTheoric )
     , compFunctor_      ( boost::mem_fn( &PHY_ComposantePion::GetMaxSpeed ) )
-    , pionFunctor_      ( boost::mem_fn( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement ) )
+    , pionFunctor_      ( boost::bind( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement, _1 ) )
     , filter_           ( boost::mem_fn( &PHY_ComposantePion::CanMove ) )
 {
     // NOTHING
@@ -52,7 +52,7 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
     , filter_           ( boost::mem_fn( &PHY_ComposantePion::CanMove ) )
 {
     if( isMaxSpeed )
-        pionFunctor_ = boost::mem_fn( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement );
+        pionFunctor_ = boost::bind( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement, _1 );
     else
         pionFunctor_ = boost::bind( &PHY_RoleAction_InterfaceMoving::GetSpeedWithReinforcement, _1, boost::cref( env ) );
 }
@@ -66,7 +66,7 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
     , isMax_            ( isMaxSpeed )
     , isTheoric_        ( false )
     , compFunctor_      ( boost::bind< double, PHY_ComposantePion, const MIL_Object_ABC& >( &PHY_ComposantePion::GetMaxSpeed, _1, boost::cref( obj ) ) )
-    , pionFunctor_      ( boost::mem_fn( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement ) )
+    , pionFunctor_      ( boost::bind( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement, _1 ) )
     , filter_           ( boost::mem_fn( &PHY_ComposantePion::CanMove ) )
 {
     // NOTHING
@@ -81,7 +81,7 @@ SpeedComputerStrategy::SpeedComputerStrategy( bool isMaxSpeed, bool withReinforc
     , isMax_            ( isMaxSpeed )
     , isTheoric_        ( isTheoric )
     , compFunctor_      ( boost::mem_fn( &PHY_ComposantePion::GetMaxSpeed ) )
-    , pionFunctor_      ( boost::mem_fn( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement ) )
+    , pionFunctor_      ( boost::bind( &PHY_RoleAction_InterfaceMoving::GetMaxSpeedWithReinforcement, _1 ) )
 {
     if( loaded )
         filter_ = boost::bind( &PHY_ComposantePion::IsLoadable, _1 );

@@ -195,7 +195,7 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnTerrain( const std::vector< MT_Vecto
     for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
     {
         const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *it );
-        double maxSpeed = owner_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeed( data );
+        double maxSpeed = owner_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSpeedWithReinforcement( data );
         if( maxSpeed > 0 )
             return true;
     }
