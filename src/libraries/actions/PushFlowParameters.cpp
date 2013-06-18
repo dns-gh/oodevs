@@ -60,8 +60,7 @@ PushFlowParameters::PushFlowParameters( const kernel::OrderParameter& parameter,
     xis >> xml::list( "recipient", *this, &PushFlowParameters::ReadRecipient, entityResolver, dotationTypeResolver )
         >> xml::list( "transporter", *this, &PushFlowParameters::ReadTransporter, equipmentTypeResolver );
     xis >> xml::optional >> xml::start( "type" )
-            >> xml::attribute( "supply", isSupply_ )
-        >> xml::end;
+        >> xml::attribute( "supply", isSupply_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,9 +81,8 @@ void PushFlowParameters::ReadRecipient( xml::xistream& xis, const kernel::Entity
     kernel::Automat_ABC& automat = entityResolver.GetAutomat( xis.attribute< unsigned int >( "id" ) );
     Recipient& recipient = recipients_[ &automat ];
     xis >> xml::list( "resource", *this, &PushFlowParameters::ReadResource, dotationTypeResolver, recipient.resources_ )
-        >> xml::start( "path" )
-            >> xml::list( "point", *this, &PushFlowParameters::ReadPoint, recipient.path_ )
-        >> xml::end;
+        >> xml::optional >> xml::start( "path" )
+            >> xml::list( "point", *this, &PushFlowParameters::ReadPoint, recipient.path_ );
 }
 
 // -----------------------------------------------------------------------------
