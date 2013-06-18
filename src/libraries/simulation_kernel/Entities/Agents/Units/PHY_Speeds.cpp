@@ -300,12 +300,3 @@ double& PHY_Speeds::SpeedFor( const TerrainData& data )
         return rLinearSpeeds_[ data.ExtractLinearOffset() ];
     return rBaseSpeed_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Speeds::DumpSpeeds
-// Created: AGE 2005-02-03
-// -----------------------------------------------------------------------------
-void PHY_Speeds::DumpSpeeds( const TerrainData& ) const
-{
-    MT_LOG_INFO_MSG( "Speed dump not implemented..." ); // $$$$ AGE 2005-02-03:
-}

@@ -47,11 +47,6 @@ public:
     double GetConstructionSpeed( const TerrainData& data ) const;
     //@}
 
-    //! @name Accessors
-    //@{
-    void DumpSpeeds( const TerrainData& data ) const;
-    //@}
-
 private:
     //! @name Helpers
     //@{
