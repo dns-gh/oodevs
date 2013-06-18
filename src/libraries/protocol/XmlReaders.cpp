@@ -970,17 +970,21 @@ namespace
         dst.mutable_type()->set_id( xis.attribute< int32_t >( "id" ) );
         if( const auto opt = TestAttribute< std::string >( xis, "start_time" ) )
             dst.mutable_start_time()->set_data( *opt );
+        if( const auto name = TestAttribute< std::string >( xis, "name" ) )
+            dst.set_name( *name );
         TryAddParameters< T >( reader, dst, xis );
     }
 
     template< typename T, typename U >
     void ReadMagic( const Reader_ABC& reader, U& dst, xml::xistream& xis )
     {
-        const std::string name = xis.attribute< std::string >( "id" );
-        const auto type = FindName< T >( name );
+        const std::string id = xis.attribute< std::string >( "id" );
+        const auto type = FindName< T >( id );
         if( !type )
-            throw MASA_EXCEPTION( "Unknown type '" + name + "'" );
+            throw MASA_EXCEPTION( "Unknown type '" + id + "'" );
         dst.set_type( *type );
+        if( const auto name = TestAttribute< std::string >( xis, "name" ) )
+            dst.set_name( *name );
         TryAddParameters< U >( reader, dst, xis );
     }
 
@@ -1059,6 +1063,8 @@ void protocol::Read( const Reader_ABC&, SetAutomatMode& dst, xml::xistream& xis 
 {
     dst.mutable_automate()->set_id( xis.attribute< int32_t >( "target" ) );
     dst.set_mode( ReadAutomatMode( xis ) );
+    if( const auto name = TestAttribute< std::string >( xis, "name" ) )
+        dst.set_name( *name );
 }
 
 namespace

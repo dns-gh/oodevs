@@ -83,5 +83,6 @@ void EngageMagicAction::Publish( Publisher_ABC& publisher, int ) const
     simulation::SetAutomatMode message;
     message().mutable_automate()->set_id( entityId_ );
     message().set_mode( engaged_ ? sword::engaged : sword::disengaged );
+    message().set_name( GetName().toStdString() );
     message.Send( publisher );
 }

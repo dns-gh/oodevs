@@ -81,5 +81,6 @@ void MagicAction::Publish( Publisher_ABC& publisher, int ) const
     simulation::MagicAction message;
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
+    message().set_name( GetName().toStdString() );
     message.Send( publisher );
 }

@@ -44,6 +44,8 @@ message SetAutomatMode {
     required AutomatId       automate = 1;
     //! The new mode
     required EnumAutomatMode mode     = 2;
+    //! optional name
+    optional string            name   = 3;
 }
 
 /** @struct UnitCreationRequest
@@ -217,6 +219,8 @@ message UnitMagicAction {
     required Type              type       = 2;
     //! The magic action parameters depending on the magic action type
     required MissionParameters parameters = 3;
+    //! optional name
+    optional string            name       = 4;
 }
 
 /** @struct KnowledgeMagicAction
@@ -246,6 +250,8 @@ message KnowledgeMagicAction {
     required Type              type            = 2;
     //! The magic action parameters, depending on the magic action type
     required MissionParameters parameters      = 3;
+    //! optional name
+    optional string            name            = 4;
 }
 
 /** @struct ObjectMagicAction
@@ -320,6 +326,8 @@ message ObjectMagicAction {
     //! be the object type name and the second parameter must be the
     //! object location
     required MissionParameters parameters = 3;
+    //! optional name
+    optional string            name       = 4;
 }
 
 /** @struct MagicAction
@@ -373,6 +381,8 @@ message MagicAction {
     required Type              type       = 1;
     //! The parameters of the magic action
     required MissionParameters parameters = 2;
+    //! optional name
+    optional string            name       = 3;
 }
 
 /** @struct ControlCheckPointSetFrequency

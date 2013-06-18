@@ -53,5 +53,6 @@ void EntityMission< T >::Publish( Publisher_ABC& publisher, int ) const
     message().mutable_tasker()->set_id( entityId_ );
     message().mutable_type()->set_id( GetType().GetId());
     CommitTo( *message().mutable_parameters() );
+    message().set_name( GetName().toStdString() );
     message.Send( publisher );
 }

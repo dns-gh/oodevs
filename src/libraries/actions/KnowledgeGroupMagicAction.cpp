@@ -83,5 +83,6 @@ void KnowledgeGroupMagicAction::Publish( Publisher_ABC& publisher, int ) const
     message().mutable_knowledge_group()->set_id( entityId_ );
     message().set_type( type );
     CommitTo( *message().mutable_parameters() );
+    message().set_name( GetName().toStdString() );
     message.Send( publisher );
 }

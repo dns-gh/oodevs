@@ -671,8 +671,10 @@ namespace
     template< typename T >
     void WriteOrder( xml::xostream& xos, const Writer_ABC& writer, const T& src, const std::string& type )
     {
-        xos << xml::attribute( "type", type );
-        xos << xml::attribute( "id", src.type().id() );
+        xos << xml::attribute( "type", type )
+            << xml::attribute( "id", src.type().id() );
+        if( src.has_name() )
+            xos << xml::attribute( "name", src.name() );
         if( src.has_start_time() )
             xos << xml::attribute( "start_time", src.start_time().data() );
         if( src.has_parameters() )
@@ -718,9 +720,11 @@ void protocol::Write( xml::xostream& xos, const Writer_ABC& writer, const FragOr
 namespace
 {
     template< typename T, typename U >
-    void WriteMagic( xml::xostream& xos, const Writer_ABC& writer, const U& src, const std::string& name )
+    void WriteMagic( xml::xostream& xos, const Writer_ABC& writer, const U& src, const std::string& type )
     {
-        xos << xml::attribute( "type", name );
+        xos << xml::attribute( "type", type );
+        if( src.has_name() )
+            xos << xml::attribute( "name", src.name() );
         if( src.has_type() )
             if( const auto opt = FindType< T >( src.type() ) )
                 xos << xml::attribute( "id", *opt );
@@ -757,6 +761,8 @@ void protocol::Write( xml::xostream& xos, const Writer_ABC& writer, const Knowle
 void protocol::Write( xml::xostream& xos, const Writer_ABC&, const SetAutomatMode& src )
 {
     xos << xml::attribute( "type", "change_mode" );
+    if( src.has_name() )
+        xos << xml::attribute( "name", src.name() );
     if( src.has_automate() )
         xos << xml::attribute( "target", src.automate().id() );
     if( src.has_mode() )
