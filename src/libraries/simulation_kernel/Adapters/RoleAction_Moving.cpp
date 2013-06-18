@@ -113,7 +113,7 @@ namespace
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 {
-    return ComputeSpeed( *owner_, moving::SpeedComputerStrategy( true, false, &environment ) );
+    return ComputeSpeed( *owner_, moving::SpeedComputerStrategy( true, false, environment ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -198,7 +198,7 @@ double RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment ) const
 {
-    const moving::SpeedComputerStrategy strategy( false, true, &environment );
+    const moving::SpeedComputerStrategy strategy( false, true, environment );
     return std::min( ComputeSpeed( *owner_, strategy ), GetMaxSpeedWithReinforcement() );
 }
 

@@ -161,7 +161,7 @@ double PHY_RoleAction_Moving::GetMaxSpeed( const MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 {
-    const SpeedComputerStrategy strategy( true, false, &environment );
+    const SpeedComputerStrategy strategy( true, false, environment );
     std::auto_ptr< SpeedComputer_ABC > computer = owner_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
     owner_->Execute( *computer );
     return computer->GetSpeed();
@@ -224,7 +224,7 @@ double PHY_RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environment ) const
 {
-    const SpeedComputerStrategy strategy( false, true, &environment );
+    const SpeedComputerStrategy strategy( false, true, environment );
     std::auto_ptr< SpeedComputer_ABC > computer = owner_->GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
     owner_->Execute( *computer );
     return std::min( computer->GetSpeed(), GetMaxSpeedWithReinforcement() );

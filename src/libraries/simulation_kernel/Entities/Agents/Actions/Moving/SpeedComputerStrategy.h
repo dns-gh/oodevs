@@ -31,8 +31,9 @@ class SpeedComputerStrategy : public SpeedStrategy_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const MIL_Object_ABC& obj, const TerrainData* env = 0 );
-             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData* env = 0 );
+             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement );
+             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const TerrainData& env );
+             SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, const MIL_Object_ABC& obj );
              SpeedComputerStrategy( bool isMaxSpeed, bool withReinforcement, bool loaded );
     virtual ~SpeedComputerStrategy();
     //@}
