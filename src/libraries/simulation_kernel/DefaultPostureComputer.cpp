@@ -196,7 +196,6 @@ namespace
 // -----------------------------------------------------------------------------
 void DefaultPostureComputer::ComputeStopPosture()
 {
-    results_.postureCompletionPercentage_ = ComputeCompletion( &PostureTime_ABC::GetPostureSetupTime, &Add );
     if( bStopped_ && ( &posture_ == &PHY_Posture::mouvement_
                     || &posture_ == &PHY_Posture::mouvementDiscret_ ) )
     {
@@ -204,6 +203,7 @@ void DefaultPostureComputer::ComputeStopPosture()
         results_.postureCompletionPercentage_ = 0;
         return;
     }
+    results_.postureCompletionPercentage_ = ComputeCompletion( &PostureTime_ABC::GetPostureSetupTime, &Add );
     if( results_.postureCompletionPercentage_ < 1 )
         return;
     if( isParkedOnEngineerArea_ )
