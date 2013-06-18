@@ -11,7 +11,6 @@
 #define __DetectionComputerFactory_h_
 
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
-#include "simulation_kernel/PostureComputer_ABC.h"
 
 namespace detection
 {

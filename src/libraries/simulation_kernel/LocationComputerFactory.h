@@ -11,7 +11,6 @@
 #define __LocationComputerFactory_h_
 
 #include "LocationComputerFactory_ABC.h"
-#include "PostureComputer_ABC.h"
 
 namespace location
 {

@@ -11,7 +11,6 @@
 #define __MoveComputerFactory_h_
 
 #include "simulation_kernel/MoveComputerFactory_ABC.h"
-#include "simulation_kernel/PostureComputer_ABC.h"
 
 namespace moving
 {

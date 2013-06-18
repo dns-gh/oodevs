@@ -11,7 +11,6 @@
 #define __DotationComputerFactory_h_
 
 #include "simulation_kernel/DotationComputerFactory_ABC.h"
-#include "simulation_kernel/PostureComputer_ABC.h"
 
 namespace dotation
 {
