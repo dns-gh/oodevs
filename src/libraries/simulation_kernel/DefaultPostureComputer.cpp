@@ -219,7 +219,7 @@ void DefaultPostureComputer::ComputeStopPosture()
 // Created: MCO 2013-06-12
 // -----------------------------------------------------------------------------
 template< typename GetTime, typename Accumulator >
-double DefaultPostureComputer:: ComputeCompletion( const GetTime& time, const Accumulator& accumulator ) const
+double DefaultPostureComputer::ComputeCompletion( const GetTime& time, const Accumulator& accumulator ) const
 {
     const PHY_Posture* next = isParkedOnEngineerArea_ ? &PHY_Posture::postePrepareGenie_ : posture_.GetNextAutoPosture();
     if( !next )
