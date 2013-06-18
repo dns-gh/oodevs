@@ -440,7 +440,7 @@ void RegisterEngineerObjectsFunctions( sword::Brain& brain )
     brain.RegisterMethod( "DEC_GenObject_DateActivationMines", &DEC_Gen_Object::GetActivationTime );
     brain.RegisterMethod( "DEC_GenObject_Name", &DEC_Gen_Object::GetName );
     brain.RegisterMethod( "DEC_GenObject_HasCapacity", &DEC_Gen_Object::HasCapacity );
-    brain.RegisterMethod( "DEC_GenObject_Mining", &DEC_Gen_Object::GetMining );
+    brain.RegisterFunction( "DEC_GenObject_Mining", &DEC_ObjectFunctions::GetGenObjectMining );
 }
 
 // -----------------------------------------------------------------------------

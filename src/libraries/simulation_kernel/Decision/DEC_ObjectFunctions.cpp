@@ -111,6 +111,18 @@ const TER_Localisation& DEC_ObjectFunctions::GetGenObjectLocalisation( boost::sh
         throw MASA_EXCEPTION( "invalid parameter." );
     return knowledgeId->GetLocalisation();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::GetGenObjectLocalisation
+// Created: MIA 2013-06-18
+// -----------------------------------------------------------------------------
+bool DEC_ObjectFunctions::GetGenObjectMining( boost::shared_ptr< DEC_Gen_Object > knowledgeId )
+{
+    if( !knowledgeId )
+        throw MASA_EXCEPTION( "invalid parameter." );
+    return knowledgeId->GetMining();
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_ObjectFunctions::GetObjectKnowledgeLocalisation
 // Created: DDA 2011-10-26

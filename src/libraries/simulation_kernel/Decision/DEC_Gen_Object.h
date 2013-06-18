@@ -67,8 +67,8 @@ public:
     bool HasCapacity( const std::string& capacity ) const;
     int GetAltitudeModifier() const;
     int GetTimeLimit() const;
-    bool GetMining() const;
     int GetLodging() const;
+    bool GetMining() const;
     //@}
 
     //! @name Operations

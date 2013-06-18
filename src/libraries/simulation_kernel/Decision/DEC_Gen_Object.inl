@@ -118,16 +118,6 @@ int DEC_Gen_Object::GetTimeLimit() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Gen_Object::GetMining
-// Created: MMC 2012-04-20
-// -----------------------------------------------------------------------------
-inline
-bool DEC_Gen_Object::GetMining() const
-{
-    return mining_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Gen_Object::GetLodging
 // Created: MMC 2012-07-04
 // -----------------------------------------------------------------------------
@@ -135,4 +125,14 @@ inline
 int DEC_Gen_Object::GetLodging() const
 {
     return lodging_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object::GetMining
+// Created: MMC 2013-06-18
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Gen_Object::GetMining() const
+{
+    return mining_;
 }
