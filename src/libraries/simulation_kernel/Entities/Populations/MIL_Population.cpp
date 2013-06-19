@@ -1795,8 +1795,13 @@ MT_Vector2D MIL_Population::GetFlowHeadPosition()
 void MIL_Population::OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    criticalIntelligence_ = msg.parameters().elem( 0 ).value( 0 ).acharstr();
+        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameters expected" );
+
+    const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
+    if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_acharstr() )
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be a Acharstr" );
+
+    criticalIntelligence_ = parameter.value( 0 ).acharstr();
     criticalIntelligenceChanged_ = true;
 }
 
