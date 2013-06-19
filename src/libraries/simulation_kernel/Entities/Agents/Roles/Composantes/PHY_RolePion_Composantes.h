@@ -347,6 +347,7 @@ private:
     bool bLoansChanged_;
     bool bExternalMustChange_;
     bool bIsLoaded_;
+    bool bUnderIndirectFire_;
     bool bNeutralized_;
 
     // Maintenance

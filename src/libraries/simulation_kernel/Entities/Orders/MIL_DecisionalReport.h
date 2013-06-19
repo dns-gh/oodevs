@@ -92,6 +92,8 @@ namespace report
     const MIL_DecisionalReport eRC_DecesBlessePendantHospitalisation( "eRC_DecesBlessePendantHospitalisation" );
     const MIL_DecisionalReport eRC_TerrainDifficile( "eRC_TerrainDifficile" );
     const MIL_DecisionalReport eRC_PlusDeCarburant( "eRC_PlusDeCarburant" );
+    const MIL_DecisionalReport eRC_DebutNeutralisation( "eRC_DebutNeutralisation" );
+    const MIL_DecisionalReport eRC_FinNeutralisation( "eRC_FinNeutralisation" );
     const MIL_DecisionalReport eRC_PriseAPartieParPopulation( "eRC_PriseAPartieParPopulation" );
     const MIL_DecisionalReport eRC_DebutInterventionFaceAPopulation( "eRC_DebutInterventionFaceAPopulation" );
     const MIL_DecisionalReport eRC_PopulationVictimeAffrontements( "eRC_PopulationVictimeAffrontements" );
