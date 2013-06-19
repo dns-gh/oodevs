@@ -235,13 +235,13 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
         if( message.message().stop_crowd_fire().has_units_damages() )
             LogUnitsFireDamages( message.message().stop_crowd_fire().units_damages() );
     }
-    else if( msg.has_control_checkpoint_save_end() )
+    else if( message.message().has_control_checkpoint_save_end() )
     {
-        actions_->SaveCheckpointActiveMissions( msg.control_checkpoint_save_end().name() );
+        actions_->SaveCheckpointActiveMissions( message.message().control_checkpoint_save_end().name() );
     }
-    else if( msg.has_unit_magic_action_ack() )
+    else if( message.message().has_unit_magic_action_ack() )
     {
-        actions_->Log( msg.unit_magic_action_ack() );
+        actions_->Log( message.message().unit_magic_action_ack() );
     }
 }
 
