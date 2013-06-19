@@ -95,7 +95,7 @@
     </message>
     <message>
         <source>Obstacle type</source>
-        <translation>Type d'obstacle</translation>
+        <translation>Type d&apos;obstacle</translation>
     </message>
     <message>
         <source>Construction location</source>

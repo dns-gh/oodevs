@@ -11,11 +11,17 @@
 #define __EventAction_h_
 
 #include "Event.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace actions
 {
     class Action_ABC;
-    class ActionFactory_ABC;
+    class ActionsModel;
+}
+
+namespace kernel
+{
+    class Controllers;
 }
 
 // =============================================================================
@@ -30,7 +36,7 @@ class EventAction : public Event
 public:
     //! @name Constructors/Destructor
     //@{
-             EventAction( E_EventTypes type, const timeline::Event& event, const actions::ActionFactory_ABC& actionFactory );
+             EventAction( E_EventTypes type, const timeline::Event& event, actions::ActionsModel& model, kernel::Controllers& controllers );
     virtual ~EventAction();
     //@}
 
@@ -45,13 +51,15 @@ public:
 private:
     //! @name Helpers
     //@{
+    void Purge();
     //@}
 
 private:
     //! @name Member data
     //@{
-    const actions::ActionFactory_ABC& actionFactory_;
-    std::auto_ptr< actions::Action_ABC > action_;
+    actions::ActionsModel& model_;
+    kernel::Controllers& controllers_;
+    kernel::SafePointer< actions::Action_ABC > action_;
     E_MissionType missionType_;
     //@}
 };

@@ -261,7 +261,7 @@ void ActionController::SetMultipleSelection( const GraphicalEntity_ABC::T_Graphi
 // Name: ActionController::IsSelected
 // Created: NPT 2012-11-30
 // -----------------------------------------------------------------------------
-bool ActionController::IsSelected( GraphicalEntity_ABC* selectable ) const
+bool ActionController::IsSelected( const GraphicalEntity_ABC* selectable ) const
 {
     const Selectionner_ABC* selectionner = GetSelectionner( selectable );
     for( auto it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )

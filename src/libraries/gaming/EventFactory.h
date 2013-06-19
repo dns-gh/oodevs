@@ -14,7 +14,12 @@
 
 namespace actions
 {
-    class ActionFactory_ABC;
+    class ActionsModel;
+}
+
+namespace kernel
+{
+    class Controllers;
 }
 
 namespace timeline
@@ -36,7 +41,7 @@ class EventFactory : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             EventFactory( const actions::ActionFactory_ABC& actionFactory );
+             EventFactory( actions::ActionsModel& actionsModel, kernel::Controllers& controllers );
     virtual ~EventFactory();
     //@}
 
@@ -49,7 +54,8 @@ public:
 private:
     //! @name Member data
     //@{
-    const actions::ActionFactory_ABC& actionFactory_;
+    actions::ActionsModel& actionsModel_;
+    kernel::Controllers& controllers_;
     //@}
 };
 

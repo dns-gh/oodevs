@@ -131,7 +131,7 @@ void EventOrderWidget::Fill( const Event& event )
         const actions::ActionWithTarget_ABC* mission = static_cast< const actions::ActionWithTarget_ABC* >( action );
         const kernel::OrderType& order = mission->GetType();
 
-        // Fill combo with with action infos
+        // Fill combo with action infos
         missionTypeCombo_->setCurrentIndex( eventAction.GetMissionType() );
 
         kernel::Entity_ABC* entity = model_.agents_.tools::Resolver< kernel::Agent_ABC >::Find( mission->GetEntityId() );

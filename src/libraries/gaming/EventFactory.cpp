@@ -10,6 +10,8 @@
 #include "gaming_pch.h"
 #include "EventFactory.h"
 #include "EventAction.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "ENT/ENT_Tr.h"
 #include "timeline/api.h"
 
@@ -17,8 +19,9 @@
 // Name: EventFactory constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-EventFactory::EventFactory( const actions::ActionFactory_ABC& actionFactory )
-    : actionFactory_( actionFactory )
+EventFactory::EventFactory( actions::ActionsModel& actionsModel, kernel::Controllers& controllers )
+    : actionsModel_( actionsModel )
+    , controllers_( controllers )
 {
     // NOTHING
 }
@@ -60,7 +63,7 @@ Event* EventFactory::Create( E_EventTypes type, const timeline::Event* event /* 
     {
     case eEventTypes_Order:
     case eEventTypes_SupervisorAction:
-        result = new EventAction( type, ( event ) ? *event : dummyEvent, actionFactory_ );
+        result = new EventAction( type, ( event ) ? *event : dummyEvent, actionsModel_, controllers_ );
         break;
     case eEventTypes_Report:
     case eEventTypes_Task:

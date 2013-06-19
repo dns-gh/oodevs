@@ -16,9 +16,10 @@
 // Name: EventsModel constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-EventsModel::EventsModel( const EventFactory& factory )
+EventsModel::EventsModel( const EventFactory& factory, kernel::Controller& controller )
     : StringResolver()
     , factory_( factory )
+    , controller_( controller )
 {
     // NOTHING
 }
@@ -40,6 +41,7 @@ Event* EventsModel::Create( const timeline::Event& event )
 {
     Event* newEvent = factory_.Create( event );
     Register( event.uuid, *newEvent );
+    controller_.Create( *newEvent );
     return newEvent;
 }
 
@@ -51,6 +53,7 @@ void EventsModel::Update( const timeline::Event& event )
 {
     Event& gamingEvent = Get( event.uuid );
     gamingEvent.Update( event );
+    controller_.Update( gamingEvent );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +62,12 @@ void EventsModel::Update( const timeline::Event& event )
 // -----------------------------------------------------------------------------
 void EventsModel::Destroy( const std::string& uuid )
 {
-    Remove( uuid );
+    Event* event = Remove( uuid );
+    if( event )
+    {
+        controller_.Delete( *event );
+        delete event;
+    }
 }
 
 // -----------------------------------------------------------------------------

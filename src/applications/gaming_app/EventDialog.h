@@ -12,6 +12,7 @@
 
 #include "clients_gui/ModalDialog.h"
 #include "ENT/ENT_Enums_Gen.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace actions
 {
@@ -59,6 +60,8 @@ class Model;
 // Created: ABR 2013-05-28
 // =============================================================================
 class EventDialog : public QDialog
+                  , public tools::ElementObserver_ABC< Event >
+                  , public tools::Observer_ABC
 {
     Q_OBJECT
 
@@ -74,7 +77,7 @@ public:
     //! @name Operations
     //@{
     void Create( E_EventTypes type );
-    void Edit( Event& event );
+    void Edit( const Event& event );
     void Draw( gui::Viewport_ABC& viewport );
     //@}
 
@@ -86,6 +89,12 @@ private:
     void Purge();
     void Fill();
     virtual void closeEvent( QCloseEvent * event );
+    //@}
+
+    //! @name ElementObserver_ABC< Event > implementation
+    //@{
+    virtual void NotifyUpdated( const Event& event );
+    virtual void NotifyDeleted( const Event& event );
     //@}
 
 signals:
@@ -119,6 +128,8 @@ private:
     int lastCurrentIndex_;
     std::auto_ptr< Event > event_;
     bool editing_;
+    const QString creationCaption_;
+    const QString editionCaption_;
     //@}
 };
 

@@ -94,7 +94,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , fires_                   ( *new FiresModel( agents_, agents_ ) )
     , weather_                 ( *new WeatherModel( controllers_.controller_, *this ) )
     , profiles_                ( *new UserProfilesModel( userProfileFactory_ ) )
-    , actions_                 ( *new actions::ActionsModel( actionFactory_, *new ActionPublisher( publisher, controllers_ ), publisher ) )
+    , actions_                 ( *new actions::ActionsModel( actionFactory_, *new ActionPublisher( publisher, controllers_ ), publisher, controllers.controller_ ) )
     , folk_                    ( *new FolkModel( controllers.controller_ ) )
     , aar_                     ( *new AfterActionModel( controllers.controller_, publisher ) )
     , drawings_                ( *new DrawingsModel( controllers, drawingFactory_, *this ) )
@@ -109,8 +109,8 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , surfaceFactory_          ( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanBlockDetectionMap_, meteo_ ) )
     , floodProxy_              ( *new FloodProxy( static_.detection_ ) )
     , publisher_               ( publisher )
-    , eventFactory_            ( *new EventFactory( actionFactory_ ) )
-    , events_                  ( *new EventsModel( eventFactory_ ) )
+    , eventFactory_            ( *new EventFactory( actions_, controllers ) )
+    , events_                  ( *new EventsModel( eventFactory_, controllers.controller_ ) )
     , timelinePublisher_       ( *new TimelinePublisher() )
 {
     symbolsFactory_.Load( config );

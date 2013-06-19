@@ -150,6 +150,7 @@ Event& TimelineFilteredViewWidget::GetOrCreateEvent( const timeline::Event& even
 // -----------------------------------------------------------------------------
 void TimelineFilteredViewWidget::CreateEvent( const timeline::Event& event )
 {
+    assert( !event.uuid.empty() );
     creationRequestedEvents_.push_back( event.uuid );
     emit CreateEventSignal( event );
 }
@@ -170,6 +171,7 @@ void TimelineFilteredViewWidget::EditEvent( const timeline::Event& event )
 // -----------------------------------------------------------------------------
 void TimelineFilteredViewWidget::DeleteEvent( const std::string& uuid )
 {
+    controllers_.actions_.DeselectAll();
     deletionRequestedEvents_.push_back( uuid );
     emit DeleteEventSignal( uuid );
 }

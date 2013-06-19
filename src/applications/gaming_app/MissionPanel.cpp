@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+#pragma warning( disable: 4724 )
+
 #include "gaming_app_pch.h"
 #include "MissionPanel.h"
 #include "moc_MissionPanel.cpp"
@@ -57,6 +59,10 @@
 #include "ENT/ENT_Tr.h"
 #include "timeline/api.h"
 #include "tools/ExerciseConfig.h"
+
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/random_generator.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 using namespace kernel;
 
@@ -611,6 +617,7 @@ void MissionPanel::OnPlanningChecked( int state )
 void MissionPanel::OnPlannedMission( const actions::Action_ABC& action, timeline::Event* ) const
 {
     timeline::Event event;
+    event.uuid = boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
     event.name = action.GetType().GetName();
     event.info = ENT_Tr::ConvertFromEventType( eEventTypes_Order, ENT_Tr_ABC::eToSim );
     event.begin = planningDateTimeEdit_->dateTime().toString( EVENT_DATE_FORMAT ).toStdString();

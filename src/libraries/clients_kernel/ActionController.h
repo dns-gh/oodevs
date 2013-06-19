@@ -66,7 +66,7 @@ public:
     //@{
     template< typename T >
     void AllowMultipleSelection( int mode );
-    bool IsSelected( GraphicalEntity_ABC* selectable ) const;
+    bool IsSelected( const GraphicalEntity_ABC* selectable ) const;
     bool IsSingleSelection( const GraphicalEntity_ABC* selectable ) const;
     bool HasMultipleSelection() const;
     const Selectionner_ABC* GetSelectionner( const GraphicalEntity_ABC* selectable ) const; // private ?

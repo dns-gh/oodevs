@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+#pragma warning( disable: 4724 )
+
 #include "gaming_app_pch.h"
 #include "EventDialog.h"
 #include "moc_EventDialog.cpp"
@@ -30,6 +32,10 @@
 
 #include "timeline/api.h"
 
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/random_generator.hpp>
+#include <boost/uuid/uuid_io.hpp>
+
 // -----------------------------------------------------------------------------
 // Name: EventDialog constructor
 // Created: ABR 2013-05-30
@@ -45,6 +51,8 @@ EventDialog::EventDialog( QWidget* parent, kernel::Controllers& controllers, Mod
     , stack_( 0 )
     , currentWidget_( 0 )
     , editing_( false )
+    , creationCaption_( tr( "Event creation" ) )
+    , editionCaption_( tr( "Event edition" ) )
 {
     setObjectName( "event-dialog" );
     setModal( false );
@@ -100,7 +108,7 @@ EventDialog::~EventDialog()
 // -----------------------------------------------------------------------------
 void EventDialog::Create( E_EventTypes type )
 {
-    setCaption( tr( "Event creation" ) );
+    setCaption( creationCaption_ );
     editing_ = false;
     event_.reset( factory_.Create( type ) );
     SetEventType( type );
@@ -113,9 +121,9 @@ void EventDialog::Create( E_EventTypes type )
 // Name: EventDialog::Edit
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDialog::Edit( Event& event )
+void EventDialog::Edit( const Event& event )
 {
-    setCaption( tr( "Event edition" ) );
+    setCaption( editionCaption_ );
     editing_ = true;
     event_.reset( event.Clone() );
     SetEventType( event.GetType() );
@@ -236,11 +244,13 @@ void EventDialog::OnSave()
 {
     timeline::Event event;
     Commit( event );
+    event.uuid = ( editing_ ) ? event_->GetEvent().uuid : boost::lexical_cast< std::string >( boost::uuids::random_generator()() );
     event_->Update( event );
     if( editing_ )
         emit EditEvent( event );
     else
     {
+        setCaption( editionCaption_ );
         emit CreateEvent( event );
         editing_ = true;
     }
@@ -252,6 +262,26 @@ void EventDialog::OnSave()
 // -----------------------------------------------------------------------------
 void EventDialog::Draw( gui::Viewport_ABC& viewport )
 {
-    if( currentWidget_ )
+    if( currentWidget_ && isVisible() )
         currentWidget_->Draw( viewport );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDialog::NotifyUpdated
+// Created: ABR 2013-06-18
+// -----------------------------------------------------------------------------
+void EventDialog::NotifyUpdated( const Event& event )
+{
+    if( event_->GetEvent().uuid == event.GetEvent().uuid )
+        Edit( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventDialog::NotifyDeleted
+// Created: ABR 2013-06-18
+// -----------------------------------------------------------------------------
+void EventDialog::NotifyDeleted( const Event& event )
+{
+    if( event_->GetEvent().uuid == event.GetEvent().uuid )
+         Purge();
 }

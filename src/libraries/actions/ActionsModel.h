@@ -73,7 +73,7 @@ class ActionsModel : public tools::Resolver< Action_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher, Publisher_ABC& defaultPublisher );
+             ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher, Publisher_ABC& defaultPublisher, kernel::Controller& controller );
     virtual ~ActionsModel();
     //@}
 
@@ -81,6 +81,9 @@ public:
     //@{
     template< typename T >
     Action_ABC* CreateAction( const T& order, const kernel::Entity_ABC* target = 0 );
+
+    template< typename T >
+    Action_ABC* CreateAction( const T& message, bool needRegistration );
 
     Action_ABC* CreateAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, const kernel::Time_ABC& simulation );
     Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_ );
@@ -111,6 +114,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     ActionFactory_ABC& factory_;
     Publisher_ABC& publisher_;
     Publisher_ABC& defaultPublisher_;
@@ -125,6 +129,18 @@ template< typename T >
 Action_ABC* ActionsModel::CreateAction( const T& order, const kernel::Entity_ABC* target /*= 0*/ )
 {
     Action_ABC* action = factory_.CreateAction( target, order );
+    Register( action->GetId(), *action );
+    return action;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateAction
+// Created: ABR 2013-06-18
+// -----------------------------------------------------------------------------
+template< typename T >
+Action_ABC* ActionsModel::CreateAction( const T& message, bool needRegistration )
+{
+    Action_ABC* action = factory_.CreateAction( message, needRegistration );
     Register( action->GetId(), *action );
     return action;
 }

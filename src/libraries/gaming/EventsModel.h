@@ -14,6 +14,11 @@
 #include <boost/noncopyable.hpp>
 #include "Event.h"
 
+namespace kernel
+{
+    class Controller;
+}
+
 namespace timeline
 {
     struct Event;
@@ -34,7 +39,7 @@ class EventsModel : public tools::StringResolver< Event >
 public:
     //! @name Constructors/Destructor
     //@{
-             EventsModel( const EventFactory& factory );
+             EventsModel( const EventFactory& factory, kernel::Controller& controller );
     virtual ~EventsModel();
     //@}
 
@@ -50,6 +55,7 @@ private:
     //! @name Member data
     //@{
     const EventFactory& factory_;
+    kernel::Controller& controller_;
     //@}
 };
 

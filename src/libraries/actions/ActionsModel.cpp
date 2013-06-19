@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "ActionsModel.h"
 #include "ActionsFilter_ABC.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/StaticModel.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -29,10 +30,11 @@ using namespace actions;
 // Name: ActionsModel constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsModel::ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher, Publisher_ABC& defaultPublisher )
-    : factory_         ( factory )
-    , publisher_       ( publisher )
+ActionsModel::ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher, Publisher_ABC& defaultPublisher, kernel::Controller& controller )
+    : factory_( factory )
+    , publisher_( publisher )
     , defaultPublisher_( defaultPublisher )
+    , controller_( controller )
 {
     // NOTHING
 }
@@ -198,8 +200,12 @@ Action_ABC* ActionsModel::CreateObjectDestroyMagicAction( const kernel::Entity_A
 // -----------------------------------------------------------------------------
 void ActionsModel::Destroy( const Action_ABC& action )
 {
-    Remove( action.GetId() );
-    delete &action;
+    Action_ABC* toDeleteAction = Remove( action.GetId() );
+    if( toDeleteAction )
+    {
+        controller_.Delete( *toDeleteAction );
+        delete toDeleteAction;
+    }
 }
 
 // -----------------------------------------------------------------------------
