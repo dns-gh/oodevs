@@ -108,8 +108,6 @@ VisionCones::~VisionCones()
     for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
     delete map_;
-    if( current_ )
-      delete current_;
 }
 
 // -----------------------------------------------------------------------------
