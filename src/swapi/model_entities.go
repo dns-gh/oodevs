@@ -56,13 +56,15 @@ type Crowd struct {
 	Contaminated         int32
 	ArmedIndividuals     float32
 	CriticalIntelligence string
+	Adhesions            map[uint32]float32
 }
 
 func NewCrowd(id, partyId uint32, name string) *Crowd {
 	return &Crowd{
-		Id:      id,
-		PartyId: partyId,
-		Name:    name,
+		Id:        id,
+		PartyId:   partyId,
+		Name:      name,
+		Adhesions: map[uint32]float32{},
 	}
 }
 

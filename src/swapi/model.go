@@ -224,6 +224,11 @@ func (model *Model) update(msg *SwordMessage) {
 			if mm.ArmedIndividuals != nil {
 				crowd.ArmedIndividuals = *mm.ArmedIndividuals
 			}
+			if mm.Adhesions != nil {
+				for _, value := range mm.Adhesions.Adhesion {
+					crowd.Adhesions[value.GetParty().GetId()] = value.GetValue()
+				}
+			}
 		} else if mm := m.GetPopulationCreation(); mm != nil {
 			population := &Population{
 				mm.GetId().GetId(),
