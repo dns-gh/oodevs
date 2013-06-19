@@ -46,6 +46,7 @@
 #include "clients_gui/RichItemFactory.h"
 #include "gaming/ActionsScheduler.h"
 #include "gaming/AgentServerMsgMgr.h"
+#include "gaming/LimitsModel.h"
 #include "gaming/Model.h"
 #include "gaming/Network.h"
 #include "gaming/ProfileFilter.h"
@@ -65,7 +66,7 @@ DockContainer::DockContainer( QMainWindow* parent, kernel::Controllers& controll
     : timeline_( 0 )
 {
     // Tools
-    interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers, paramLayer, staticModel, &model.agentKnowledgeConverter_, &model.objectKnowledgeConverter_, &simulation ) );
+    interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers, paramLayer, staticModel, &model.agentKnowledgeConverter_, &model.objectKnowledgeConverter_, &simulation, &model.limits_ ) );
     scheduler_.reset( new ActionsScheduler( parent, controllers, simulation, model.actions_, network.GetMessageMgr() ) );
     displayExtractor_.reset( new gui::DisplayExtractor( parent ) );
     QObject::connect( displayExtractor_.get(), SIGNAL( LinkClicked( const QString& ) ), &interpreter, SLOT( Interprete( const QString& ) ) );

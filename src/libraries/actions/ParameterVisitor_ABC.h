@@ -31,6 +31,7 @@ namespace actions
         class Inhabitant;
         class KnowledgeGroup;
         class Lima;
+        class Limit;
         class Location;
         class MaintenancePriorities;
         class MedicalPriorities;
@@ -97,6 +98,7 @@ public:
     virtual void Visit( const parameters::Inhabitant&            ) {}
     virtual void Visit( const parameters::KnowledgeGroup&        ) {}
     virtual void Visit( const parameters::Lima&                  ) {}
+    virtual void Visit( const parameters::Limit&                 ) {}
     virtual void Visit( const parameters::Location&              ) {}
     virtual void Visit( const parameters::MaintenancePriorities& ) {}
     virtual void Visit( const parameters::MedicalPriorities&     ) {}

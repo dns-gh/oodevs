@@ -11,6 +11,7 @@
 #define __InterfaceBuilder_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -20,6 +21,7 @@ namespace kernel
     class Entity_ABC;
     class ObjectKnowledgeConverter_ABC;
     class StaticModel;
+    class TacticalLine_ABC;
     class OrderParameter;
     class OrderType;
 }
@@ -66,6 +68,7 @@ public:
     virtual kernel::Controllers& GetControllers() const = 0;
     virtual kernel::AgentKnowledgeConverter_ABC* GetAgentKnowledgeConverter() const = 0;
     virtual kernel::ObjectKnowledgeConverter_ABC* GetObjectKnowledgeConverter() const = 0;
+    virtual tools::Resolver< kernel::TacticalLine_ABC >* GetTacticalLineResolver() const = 0;
     virtual const QDateTime GetCurrentDateTime() const = 0;
     virtual const kernel::StaticModel& GetStaticModel() const = 0;
     //@}

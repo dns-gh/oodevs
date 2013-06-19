@@ -55,8 +55,11 @@ DateTime::DateTime( const OrderParameter& parameter, const sword::DateTime& date
     : Parameter< QString >( parameter )
     , time_( date.data() )
 {
-    bpt::ptime time( bpt::from_iso_string( time_ ) );
-    SetValue( bpt::to_simple_string( time ).c_str() );
+    if( !time_.empty() )
+    {
+        bpt::ptime time( bpt::from_iso_string( time_ ) );
+        SetValue( bpt::to_simple_string( time ).c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------

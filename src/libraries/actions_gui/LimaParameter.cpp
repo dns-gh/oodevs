@@ -11,9 +11,12 @@
 #include "LimaParameter.h"
 #include "moc_LimaParameter.cpp"
 #include "ListParameter.h"
+#include "LocationComparator.h"
 #include "ParamDateTime.h"
 #include "ParamInterface_ABC.h"
+#include "actions/DateTime.h"
 #include "actions/Lima.h"
+#include "actions/Location.h"
 #include "clients_gui/GlTools_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
@@ -33,7 +36,8 @@ using namespace actions::gui;
 LimaParameter::LimaParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
     , controller_( builder.GetControllers().controller_ )
-    , converter_   ( builder.GetStaticModel().coordinateConverter_ )
+    , converter_( builder.GetStaticModel().coordinateConverter_ )
+    , resolver_( builder.GetTacticalLineResolver() )
     , clickedLine_ ( 0 )
     , selectedLine_( 0 )
     , functions_   ( new QListWidget() )
@@ -239,4 +243,58 @@ void LimaParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
     }
     else
         parameter.AddParameter( *new actions::parameters::Lima( kernel::OrderParameter( GetName().toStdString(), "phaseline", false ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::Visit
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+void LimaParameter::Visit( const actions::parameters::Lima& param )
+{
+    assert( resolver_ != 0 );
+    ActivateOptionalIfNeeded( param );
+    const QStringList functions = QStringList::split( ", ", param.GetValue() );
+    for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
+        functions_->setItemSelected( functions_->item( i ), functions.indexOf( tools::ToShortString( (kernel::E_FuncLimaType)i ) ) != -1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::Visit
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+void LimaParameter::Visit( const actions::parameters::Location& param )
+{
+    // $$$$ ABR 2013-06-17: Ugly, but without the entity or at least the entity's id in the param ... we can't do better
+    assert( resolver_ != 0 );
+    assert( param.GetLocationType() == eLocationType_Line );
+    LocationComparator comparator( param.GetPoints() );
+    auto it = resolver_->CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::TacticalLine_ABC& line = it.NextElement();
+        const kernel::Positions& pos = line.Get< kernel::Positions >();
+        pos.Accept( comparator );
+        if( comparator.HasMatched() )
+        {
+            clickedLine_ = &line;
+            break;
+        }
+    }
+    if( clickedLine_ )
+    {
+        ActivateOptionalIfNeeded( param );
+        selectedLine_ = clickedLine_;
+        entityLabel_->setText( selectedLine_->GetName() );
+    }
+    else
+        entityLabel_->setText( "---" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::Visit
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+void LimaParameter::Visit( const actions::parameters::DateTime& param )
+{
+    schedule_->Visit( param );
 }

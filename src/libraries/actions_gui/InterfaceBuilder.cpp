@@ -60,13 +60,14 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers, gui::ParametersLayer& layer, const kernel::StaticModel& staticModel,
                                     kernel::AgentKnowledgeConverter_ABC* knowledgeConverter /* = 0*/, kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter /* = 0*/,
-                                    const kernel::Time_ABC* simulation /* = 0*/ )
+                                    const kernel::Time_ABC* simulation /* = 0*/, tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver /* = 0 */ )
     : controllers_             ( controllers )
     , layer_                   ( layer )
     , knowledgeConverter_      ( knowledgeConverter )
     , objectKnowledgeConverter_( objectKnowledgeConverter )
     , staticModel_             ( staticModel )
     , simulation_              ( simulation )
+    , tacticalLineResolver_    ( tacticalLineResolver )
     , missionInterface_        ( 0 )
 {
     // Base types
@@ -273,4 +274,13 @@ void InterfaceBuilder::SetParentObject( QObject* parent )
 void InterfaceBuilder::SetParamInterface( ParamInterface_ABC& paramInterface )
 {
     paramInterface_ = &paramInterface;
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::Resolver< kernel::TacticalLine_ABC >* InterfaceBuilder::GetTacticalLineResolver
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+tools::Resolver< kernel::TacticalLine_ABC >* InterfaceBuilder::GetTacticalLineResolver() const
+{
+    return tacticalLineResolver_;
 }

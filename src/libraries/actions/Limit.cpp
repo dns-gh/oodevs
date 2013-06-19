@@ -9,9 +9,11 @@
 
 #include "actions_pch.h"
 #include "Limit.h"
+#include "ParameterVisitor_ABC.h"
 #include "protocol/Protocol.h"
 
-using namespace actions::parameters;
+using namespace actions;
+using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
@@ -19,6 +21,7 @@ using namespace actions::parameters;
 // -----------------------------------------------------------------------------
 Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter )
     : Location( parameter, converter )
+    , limitId_( 0 )
 {
     // NOTHING
 }
@@ -29,6 +32,7 @@ Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateC
 // -----------------------------------------------------------------------------
 Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Line& line )
     : Location( parameter, converter, line.location() )
+    , limitId_( 0 )
 {
     // NOTHING
 }
@@ -39,6 +43,7 @@ Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateC
 // -----------------------------------------------------------------------------
 Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
     : Location( parameter, converter, location )
+    , limitId_( 0 )
 {
     // NOTHING
 }
@@ -49,6 +54,7 @@ Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateC
 // -----------------------------------------------------------------------------
 Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis )
     : Location( parameter, converter, xis )
+    , limitId_( 0 )
 {
     // NOTHING
 }
@@ -98,4 +104,22 @@ void Limit::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
 std::string Limit::SerializeType() const
 {
     return "limit";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Limit::Accept
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+void Limit::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Limit::GetLimitId
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+unsigned long Limit::GetLimitId() const
+{
+    return limitId_;
 }

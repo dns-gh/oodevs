@@ -10,6 +10,7 @@
 #include "actions_gui_pch.h"
 #include "LimitParameter.h"
 #include "InterfaceBuilder_ABC.h"
+#include "LocationComparator.h"
 #include "ParamInterface_ABC.h"
 #include "actions/Limit.h"
 #include "actions/Action_ABC.h"
@@ -31,6 +32,7 @@ LimitParameter::LimitParameter( const InterfaceBuilder_ABC& builder, const kerne
     : Param_ABC  ( builder.GetParentObject(), builder.GetParamInterface(), parameter )
     , controller_( builder.GetControllers().controller_ )
     , converter_ ( builder.GetStaticModel().coordinateConverter_ )
+    , resolver_  ( builder.GetTacticalLineResolver() )
     , potential_ ( 0 )
     , selected_  ( 0 )
 {
@@ -194,9 +196,32 @@ void LimitParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) cons
 
 // -----------------------------------------------------------------------------
 // Name: LimitParameter::Visit
-// Created: ABR 2013-06-12
+// Created: ABR 2013-06-17
 // -----------------------------------------------------------------------------
-void LimitParameter::Visit( const actions::parameters::Location& /*param*/ )
+void LimitParameter::Visit( const actions::parameters::Limit& param )
 {
-     // $$$$ ABR 2013-06-12: TODO
+    // $$$$ ABR 2013-06-17: Ugly, but without the entity or at least the entity's id in the param ... we can't do better
+    assert( resolver_ != 0 );
+    assert( param.GetLocationType() == eLocationType_Line );
+    LocationComparator comparator( param.GetPoints() );
+    auto it = resolver_->CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::TacticalLine_ABC& line = it.NextElement();
+        const kernel::Positions& pos = line.Get< kernel::Positions >();
+        pos.Accept( comparator );
+        if( comparator.HasMatched() )
+        {
+            potential_ = &line;
+            break;
+        }
+    }
+    if( potential_ )
+    {
+        ActivateOptionalIfNeeded( param );
+        selected_ = potential_;
+        Display( potential_->GetName() );
+    }
+    else
+        Display( "---" );
 }

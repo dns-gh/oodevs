@@ -114,6 +114,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\InterfaceBuilder.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions_gui\LocationComparator.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\MissionInterface.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamQuantity.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamDotationTypeList.cpp" />
@@ -178,6 +179,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <Qt_file_Mocing Include="..\..\src\libraries\actions_gui\MissionInterface.h" />
+    <ClInclude Include="..\..\src\libraries\actions_gui\LocationComparator.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamInterface_ABC.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamLocation_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamResourceNetworkNode.h">

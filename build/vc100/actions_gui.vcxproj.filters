@@ -139,6 +139,9 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\MissionInterface.cpp">
       <Filter>Source Files\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\LocationComparator.cpp">
+      <Filter>Source Files\Parameters\Tactical lines</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\actions_gui\actions_gui_pch.h">
@@ -197,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamResourceNetworkType.h">
       <Filter>Source Files\Parameters\Resource Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions_gui\LocationComparator.h">
+      <Filter>Source Files\Parameters\Tactical lines</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

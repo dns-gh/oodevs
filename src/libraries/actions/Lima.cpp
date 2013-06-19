@@ -53,7 +53,7 @@ Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
         functions.append( tools::ToShortString( (E_FuncLimaType)message.fonctions(i) ) );
     SetValue( functions.join( ", " ) );
     AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).toStdString(), "location", false ), converter, message.line().location() ) );
-    AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).toStdString(), "datetime", false ), message.time() ) );
+    AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).toStdString(), "datetime", true ), message.time() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +122,7 @@ void Lima::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& con
     if( type == "location" )
         AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).toStdString(), "location", false ), converter, xis ) );
     else if( type == "datetime" )
-        AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).toStdString(), "datetime", false ), xis ) );
+        AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).toStdString(), "datetime", true ), xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,6 +202,9 @@ void Lima::Clean( sword::PhaseLineOrder& message ) const
 void Lima::Accept( ParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
+        if( it->second != 0 )
+            it->second->Accept( visitor );
 }
 
 // -----------------------------------------------------------------------------

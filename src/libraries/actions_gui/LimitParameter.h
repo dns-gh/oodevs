@@ -52,7 +52,7 @@ public:
     virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    virtual void Visit( const actions::parameters::Location& param );
+    virtual void Visit( const actions::parameters::Limit& param );
     //@}
 
 private:
@@ -75,6 +75,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
+    tools::Resolver< kernel::TacticalLine_ABC >* resolver_;
     QLabel* entityLabel_;
     const kernel::TacticalLine_ABC* potential_;
     const kernel::TacticalLine_ABC* selected_;

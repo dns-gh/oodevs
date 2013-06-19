@@ -56,6 +56,9 @@ public:
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const ::gui::Viewport_ABC& viewport, ::gui::GlTools_ABC& tools ) const;
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual void Visit( const actions::parameters::Lima& param );
+    virtual void Visit( const actions::parameters::Location& param );
+    virtual void Visit( const actions::parameters::DateTime& param );
     //@}
 
 public slots:
@@ -78,6 +81,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
+    tools::Resolver< kernel::TacticalLine_ABC >* resolver_;
     const QDateTime currentDate_;
     const kernel::TacticalLine_ABC* clickedLine_;
     const kernel::TacticalLine_ABC* selectedLine_;

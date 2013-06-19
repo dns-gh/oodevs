@@ -22,6 +22,7 @@ namespace kernel
     class ObjectKnowledgeConverter_ABC;
     class OrderParameter;
     class OrderType;
+    class TacticalLine_ABC;
     class Time_ABC;
     class StaticModel;
 }
@@ -58,7 +59,7 @@ public:
     //@{
              InterfaceBuilder( kernel::Controllers& controllers, ::gui::ParametersLayer& layer, const kernel::StaticModel& staticModel,
                                kernel::AgentKnowledgeConverter_ABC* knowledgeConverter = 0, kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter = 0,
-                               const kernel::Time_ABC* simulation = 0 );
+                               const kernel::Time_ABC* simulation = 0, tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver = 0 );
     virtual ~InterfaceBuilder();
     //@}
 
@@ -76,6 +77,7 @@ public:
     virtual kernel::Controllers& GetControllers() const;
     virtual kernel::AgentKnowledgeConverter_ABC* GetAgentKnowledgeConverter() const;
     virtual kernel::ObjectKnowledgeConverter_ABC* GetObjectKnowledgeConverter() const;
+    virtual tools::Resolver< kernel::TacticalLine_ABC >* GetTacticalLineResolver() const;
     virtual const QDateTime GetCurrentDateTime() const;
     virtual const kernel::StaticModel& GetStaticModel() const;
     //@}
@@ -112,6 +114,7 @@ private:
     kernel::AgentKnowledgeConverter_ABC*   knowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC*  objectKnowledgeConverter_;
     const kernel::Time_ABC*                simulation_;
+    tools::Resolver< kernel::TacticalLine_ABC >* tacticalLineResolver_;
 
     actions::gui::MissionInterface*        missionInterface_;
     QObject*                               parentObject_;
