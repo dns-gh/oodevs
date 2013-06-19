@@ -11,6 +11,7 @@
 #include "LimitsModel.h"
 #include "TacticalLine_ABC.h"
 #include "TacticalLineFactory.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -47,7 +48,7 @@ void LimitsModel::Purge()
 // -----------------------------------------------------------------------------
 void LimitsModel::Create( const sword::LimitCreation& message )
 {
-    TacticalLine_ABC* line = factory_.Create( message );
+    kernel::TacticalLine_ABC* line = factory_.Create( message );
     Register( message.id().id(), *line );
 }
 
@@ -57,7 +58,7 @@ void LimitsModel::Create( const sword::LimitCreation& message )
 // -----------------------------------------------------------------------------
 void LimitsModel::Create( const sword::PhaseLineCreation& message )
 {
-    TacticalLine_ABC* line = factory_.Create( message );
+    kernel::TacticalLine_ABC* line = factory_.Create( message );
     Register( message.id().id(), *line );
 }
 
@@ -67,7 +68,7 @@ void LimitsModel::Create( const sword::PhaseLineCreation& message )
 // -----------------------------------------------------------------------------
 void LimitsModel::DeleteLimit( unsigned long id )
 {
-    TacticalLine_ABC* line = Find( id );
+    kernel::TacticalLine_ABC* line = Find( id );
     Remove( id );
     delete line;
 }
@@ -78,7 +79,7 @@ void LimitsModel::DeleteLimit( unsigned long id )
 // -----------------------------------------------------------------------------
 void LimitsModel::DeleteLima( unsigned long id )
 {
-    TacticalLine_ABC* line = Find( id );
+    kernel::TacticalLine_ABC* line = Find( id );
     Remove( id );
     delete line;
 }

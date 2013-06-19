@@ -11,6 +11,12 @@
 #define __LimitsModel_h_
 
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
+
+namespace kernel
+{
+    class TacticalLine_ABC;
+}
 
 namespace sword
 {
@@ -18,7 +24,6 @@ namespace sword
     class PhaseLineCreation;
 }
 
-class TacticalLine_ABC;
 class TacticalLineFactory;
 
 // =============================================================================
@@ -27,7 +32,8 @@ class TacticalLineFactory;
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class LimitsModel : public tools::Resolver< TacticalLine_ABC >
+class LimitsModel : public tools::Resolver< kernel::TacticalLine_ABC >
+                  , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,13 +50,6 @@ public:
     void DeleteLimit( unsigned long id );
     void DeleteLima( unsigned long id );
     void Purge();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    LimitsModel( const LimitsModel& );            //!< Copy constructor
-    LimitsModel& operator=( const LimitsModel& ); //!< Assignment operator
     //@}
 
 private:
