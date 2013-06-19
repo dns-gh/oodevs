@@ -75,7 +75,6 @@ signals:
     //! @name Signals
     //@{
     void CreateEvent( const timeline::Event& );
-    void CreateInstantOrder( const EventAction& );
     //@}
 
 public slots:

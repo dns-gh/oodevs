@@ -2294,6 +2294,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Add to planning</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Planned mission start date</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NoteDialog</name>

@@ -75,6 +75,7 @@ class MissionPanel : public gui::RichDockWidget
                    , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
+                   , public kernel::ContextMenuObserver_ABC< QDateTime >
                    , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT
@@ -109,6 +110,7 @@ private slots:
     virtual void closeEvent( QCloseEvent* pEvent );
     void OnPlanningChecked( int state );
     void OnPlannedMission( const actions::Action_ABC& action, timeline::Event* event ) const;
+    void OnPlanningDateClicked();
     //@}
 
 signals:
@@ -123,6 +125,7 @@ private:
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     virtual void NotifyModeChanged( E_Modes newMode, bool useDefault, bool firstChangeToSavedMode );
 
@@ -160,6 +163,7 @@ private:
     const kernel::Profile_ABC& profile_;
     std::auto_ptr< CommandPublisher > commandPublisher_;
     const kernel::Time_ABC& simulation_;
+    QDateTime selectedDateTime_;
 
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
     const tools::ExerciseConfig& config_;

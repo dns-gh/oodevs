@@ -16,6 +16,7 @@
 #include "actions/Action_ABC.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Time_ABC.h"
 #include "ENT/ENT_Tr.h"
@@ -31,9 +32,9 @@
 // Name: TimelineFilteredViewWidget constructor
 // Created: ABR 2013-05-28
 // -----------------------------------------------------------------------------
-TimelineFilteredViewWidget::TimelineFilteredViewWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, EventsModel& eventsModel, EventDialog& eventDialog, timeline::Configuration& cfg, int viewNumber, const QStringList& filters )
+TimelineFilteredViewWidget::TimelineFilteredViewWidget( QWidget* parent, kernel::ActionController& actionController, const kernel::Time_ABC& simulation, EventsModel& eventsModel, EventDialog& eventDialog, timeline::Configuration& cfg, int viewNumber, const QStringList& filters )
     : QWidget( parent )
-    , controllers_( controllers )
+    , actionController_( actionController )
     , simulation_( simulation )
     , eventsModel_( eventsModel )
     , eventDialog_( eventDialog )
@@ -42,6 +43,8 @@ TimelineFilteredViewWidget::TimelineFilteredViewWidget( QWidget* parent, kernel:
     , server_( 0 )
     , cfg_( new timeline::Configuration( cfg ) )
     , viewNumber_( viewNumber )
+    , creationSignalMapper_( 0 )
+    , dummySignalMapper_( 0 )
 {
     setObjectName( QString( "timeline-filteredview-widget-%1" ).arg( viewNumber ) );
     mainLayout_ = new QVBoxLayout( this );
@@ -52,6 +55,7 @@ TimelineFilteredViewWidget::TimelineFilteredViewWidget( QWidget* parent, kernel:
     connect( toolBar_, SIGNAL( FilterSelectionChanged( const QStringList& ) ), this, SLOT( OnFilterSelectionChanged( const QStringList& ) ) );
     connect( toolBar_, SIGNAL( AddNewFilteredView( const QStringList& ) ), this, SIGNAL( AddNewFilteredView( const QStringList& ) ) );
     connect( toolBar_, SIGNAL( RemoveCurrentFilteredView() ), this, SIGNAL( RemoveCurrentFilteredView() ) );
+    actionController_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +64,7 @@ TimelineFilteredViewWidget::TimelineFilteredViewWidget( QWidget* parent, kernel:
 // -----------------------------------------------------------------------------
 TimelineFilteredViewWidget::~TimelineFilteredViewWidget()
 {
-    // NOTHING
+    actionController_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +154,6 @@ Event& TimelineFilteredViewWidget::GetOrCreateEvent( const timeline::Event& even
 // -----------------------------------------------------------------------------
 void TimelineFilteredViewWidget::CreateEvent( const timeline::Event& event )
 {
-    assert( !event.uuid.empty() );
     creationRequestedEvents_.push_back( event.uuid );
     emit CreateEventSignal( event );
 }
@@ -171,7 +174,7 @@ void TimelineFilteredViewWidget::EditEvent( const timeline::Event& event )
 // -----------------------------------------------------------------------------
 void TimelineFilteredViewWidget::DeleteEvent( const std::string& uuid )
 {
-    controllers_.actions_.DeselectAll();
+    actionController_.DeselectAll();
     deletionRequestedEvents_.push_back( uuid );
     emit DeleteEventSignal( uuid );
 }
@@ -237,10 +240,10 @@ void TimelineFilteredViewWidget::OnSelectedEvent( boost::shared_ptr< timeline::E
         Event& gamingEvent = GetOrCreateEvent( *event );
         if( gamingEvent.GetType() == eEventTypes_Order )
             if( const actions::Action_ABC* action = static_cast< EventAction& >( gamingEvent ).GetAction() )
-                action->Select( controllers_.actions_ );
+                action->Select( actionController_ );
     }
     else if( hadSelection )
-        controllers_.actions_.DeselectAll();
+        actionController_.DeselectAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -252,7 +255,7 @@ void TimelineFilteredViewWidget::OnActivatedEvent( const timeline::Event& event 
     Event& gamingEvent = GetOrCreateEvent( event );
     if( gamingEvent.GetType() == eEventTypes_Order )
         if( const actions::Action_ABC* action = static_cast< EventAction& >( gamingEvent ).GetAction() )
-            action->Select( controllers_.actions_ );
+            action->Select( actionController_ );
     eventDialog_.Edit( gamingEvent );
 }
 
@@ -260,51 +263,102 @@ void TimelineFilteredViewWidget::OnActivatedEvent( const timeline::Event& event 
 // Name: TimelineFilteredViewWidget::OnContextMenuEvent
 // Created: ABR 2013-05-24
 // -----------------------------------------------------------------------------
-void TimelineFilteredViewWidget::OnContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& /* time */ ) // $$$$ ABR 2013-06-13: Do Something with this time
+void TimelineFilteredViewWidget::OnContextMenuEvent( boost::shared_ptr< timeline::Event > event, const std::string& time )
 {
-    QMenu menu;
+    selectedDateTime_ = QDateTime::fromString( QString::fromStdString( time ), EVENT_DATE_FORMAT );
+    contextMenuEvent_ = event;
     if( event )
-    {
-        const QString editText = tr( "Edit" );
-        const QString deleteText = tr( "Delete" );
-        menu.addAction( editText );
-        menu.addAction( deleteText );
-        if( QAction* resultingAction = menu.exec( QCursor::pos() ) )
-        {
-            if( event && resultingAction->text() == editText )
-                OnActivatedEvent( *event );
-            else if( event && resultingAction->text() == deleteText )
-                DeleteEvent( event->uuid );
-        }
-    }
+        actionController_.ContextMenu( *event, QCursor::pos() );
     else
-    {
-        QMenu createMenu, dummyMenu;
-        createMenu.setTitle( tr( "Create an event" ) );
-        dummyMenu.setTitle( "Create dummy event" );
-        for( int i = 0; i < eNbrEventTypes; ++i )
-        {
-            if( i != eEventTypes_Report )
-                createMenu.addAction( QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ) );
-            dummyMenu.addAction( QString( "Dummy " )+ QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ) );
-        }
-        menu.addMenu( &createMenu );
-        menu.addMenu( &dummyMenu );
-        if( QAction* resultingAction = menu.exec( QCursor::pos() ) )
-        {
-            QString text = resultingAction->text();
-            QBool isDummy = text.contains( "Dummy " );
-            if( isDummy )
-                text.remove( "Dummy " );
+        actionController_.ContextMenu( selectedDateTime_, QCursor::pos() );
+}
 
-            E_EventTypes type = ENT_Tr::ConvertToEventType( text.toStdString() );
-            assert( type >= 0 && type < eNbrEventTypes );
-            if( isDummy )
-                CreateDummyEvent( type );
-            else
-                eventDialog_.Create( type );
-        }
+// -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::NotifyContextMenu
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void TimelineFilteredViewWidget::NotifyContextMenu( const timeline::Event& /* event */, kernel::ContextMenu& menu )
+{
+    menu.InsertItem( "Command", tr( "Edit" ), this, SLOT( OnEditClicked() ) );
+    menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDeleteClicked() ) );
+}
+
+namespace
+{
+    void AddToMenu( kernel::ContextMenu& menu, QSignalMapper* mapper, const QString& label, int mapping )
+    {
+        QAction* action = new QAction( label, &menu );
+        QObject::connect( action, SIGNAL( triggered() ), mapper, SLOT( map() ) );
+        mapper->setMapping( action, mapping );
+        menu.InsertAction( "Command", action );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::NotifyContextMenu
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void TimelineFilteredViewWidget::NotifyContextMenu( const QDateTime& /* dateTime */, kernel::ContextMenu& menu )
+{
+    delete creationSignalMapper_;
+    creationSignalMapper_ = new QSignalMapper( this );
+    connect( creationSignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnCreateClicked( int ) ) );
+
+    delete dummySignalMapper_;
+    dummySignalMapper_ = new QSignalMapper( this );
+    connect( dummySignalMapper_, SIGNAL( mapped( int ) ), this, SLOT( OnCreateDummyClicked( int ) ) );
+
+    kernel::ContextMenu* createMenu = new kernel::ContextMenu( &menu );
+    kernel::ContextMenu* dummyMenu = new kernel::ContextMenu( &menu );
+    for( int i = 0; i < eNbrEventTypes; ++i )
+    {
+        if( i != eEventTypes_Report )
+            AddToMenu( *createMenu, creationSignalMapper_, QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ), i );
+        AddToMenu( *dummyMenu, dummySignalMapper_, QString( "Dummy " ) + QString::fromStdString( ENT_Tr::ConvertFromEventType( static_cast< E_EventTypes >( i ) ) ), i );
+    }
+
+    menu.InsertItem( "Command", tr( "Create an event" ), createMenu );
+    menu.InsertItem( "Command", "Create dummy event", dummyMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::OnEditClicked
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void TimelineFilteredViewWidget::OnEditClicked()
+{
+    if( contextMenuEvent_ )
+        OnActivatedEvent( *contextMenuEvent_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::OnDeleteClicked
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void TimelineFilteredViewWidget::OnDeleteClicked()
+{
+    if( contextMenuEvent_ )
+        DeleteEvent( contextMenuEvent_->uuid );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::OnCreateClicked
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void TimelineFilteredViewWidget::OnCreateClicked( int type )
+{
+    assert( type >= 0 && type < eNbrEventTypes );
+    eventDialog_.Create( static_cast< E_EventTypes >( type ), selectedDateTime_ ) ;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineFilteredViewWidget::OnCreateDummyClicked
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void TimelineFilteredViewWidget::OnCreateDummyClicked( int type )
+{
+    assert( type >= 0 && type < eNbrEventTypes );
+    CreateDummyEvent( static_cast< E_EventTypes >( type ) );
 }
 
 // -----------------------------------------------------------------------------

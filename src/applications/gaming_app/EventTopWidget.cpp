@@ -10,7 +10,9 @@
 #include "gaming_app_pch.h"
 #include "EventTopWidget.h"
 #include "moc_EventTopWidget.cpp"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Time_ABC.h"
+#include "clients_kernel/ContextMenu.h"
 #include "clients_gui/RichDateTimeEdit.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/Event.h"
@@ -31,9 +33,10 @@ namespace
 // Name: EventTopWidget constructor
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-EventTopWidget::EventTopWidget( const kernel::Time_ABC& simulation )
+EventTopWidget::EventTopWidget( const kernel::Time_ABC& simulation, kernel::ActionController& actionController )
     : EventWidget_ABC()
     , simulation_( simulation )
+    , actionController_( actionController )
 {
     // Header
     QFont font( "Arial", 12, QFont::Bold );
@@ -67,6 +70,8 @@ EventTopWidget::EventTopWidget( const kernel::Time_ABC& simulation )
     toolbar->addWidget( Wrap( toolbar, endDateTimeEdit_ ) );
     mainLayout_->addWidget( header );
     mainLayout_->addWidget( toolbar );
+
+    actionController_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +80,7 @@ EventTopWidget::EventTopWidget( const kernel::Time_ABC& simulation )
 // -----------------------------------------------------------------------------
 EventTopWidget::~EventTopWidget()
 {
-    // NOTHING
+    actionController_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,4 +142,46 @@ void EventTopWidget::OnHasEndTimeChanged( int state )
     endDateTimeEdit_->setEnabled( hasEndTime );
     if( hasEndTime )
         endDateTimeEdit_->setDateTime( beginDateTimeEdit_->dateTime() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTopWidget::NotifyContextMenu
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void EventTopWidget::NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu )
+{
+    selectedDateTime_ = dateTime;
+    if( !isVisible() )
+        return;
+    menu.InsertItem( "Parameter", tr( "Start date" ), this, SLOT( OnBeginDateTimeSelected() ) );
+    if( endDateTimeEdit_->isVisible() && dateTime.secsTo( beginDateTimeEdit_->dateTime() ) < 0 )
+        menu.InsertItem( "Parameter", tr( "End date" ), this, SLOT( OnEndDateTimeSelected() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTopWidget::OnBeginDateTimeSelected
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void EventTopWidget::OnBeginDateTimeSelected()
+{
+    beginDateTimeEdit_->setDateTime( selectedDateTime_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTopWidget::OnEndDateTimeSelected
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void EventTopWidget::OnEndDateTimeSelected()
+{
+    hasEndDateTimeCheckbox_->setCheckState( Qt::Checked );
+    endDateTimeEdit_->setDateTime( selectedDateTime_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventTopWidget::SetBeginDateTime
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void EventTopWidget::SetBeginDateTime( const QDateTime& dateTime )
+{
+    beginDateTimeEdit_->setDateTime( dateTime );
 }

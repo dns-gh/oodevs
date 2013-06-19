@@ -92,7 +92,7 @@ private:
     virtual void Draw( gui::Viewport_ABC& viewport );
     //@}
 
-    //! @name Obersvers implementation
+    //! @name Observers implementation
     //@{
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );

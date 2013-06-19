@@ -76,7 +76,7 @@ public:
 
     //! @name Operations
     //@{
-    void Create( E_EventTypes type );
+    void Create( E_EventTypes type, const QDateTime& dateTime );
     void Edit( const Event& event );
     void Draw( gui::Viewport_ABC& viewport );
     //@}
@@ -102,7 +102,7 @@ signals:
     //@{
     void CreateEvent( const timeline::Event& );
     void EditEvent( const timeline::Event& );
-    void CreateInstantOrder( const EventAction& );
+    void BeginDateChanged( const QDateTime& );
     //@}
 
 private slots:

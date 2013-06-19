@@ -229,6 +229,17 @@ void MissionPanel::NotifyContextMenu( const Population_ABC& entity, ContextMenu&
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionPanel::NotifyContextMenu
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void MissionPanel::NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu )
+{
+    selectedDateTime_ = dateTime;
+    if( isVisible() )
+        menu.InsertItem( "Parameter", tr( "Planned mission start date" ), this, SLOT( OnPlanningDateClicked() ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionPanel::NotifyDeleted
 // Created: SBO 2008-08-12
 // -----------------------------------------------------------------------------
@@ -625,5 +636,15 @@ void MissionPanel::OnPlannedMission( const actions::Action_ABC& action, timeline
     action.Publish( timelinePublisher_, 0 );
     event.action.payload = timelinePublisher_.GetPayload();
     emit CreateEvent( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionPanel::OnPlanningDateClicked
+// Created: ABR 2013-06-19
+// -----------------------------------------------------------------------------
+void MissionPanel::OnPlanningDateClicked()
+{
+    planningCheckBox_->setCheckState( Qt::Checked );
+    planningDateTimeEdit_->setDateTime( selectedDateTime_ );
 }
 

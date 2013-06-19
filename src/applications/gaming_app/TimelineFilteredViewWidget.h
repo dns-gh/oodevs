@@ -11,10 +11,12 @@
 #define __TimelineFilteredViewWidget_h_
 
 #include "ENT/ENT_Enums_Gen.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 
 namespace kernel
 {
-    class Controllers;
+    class ContextMenu;
+    class ActionController;
     class Time_ABC;
 }
 
@@ -38,13 +40,16 @@ class EventsModel;
 // Created: ABR 2013-05-28
 // =============================================================================
 class TimelineFilteredViewWidget : public QWidget
+                                 , public tools::Observer_ABC
+                                 , public kernel::ContextMenuObserver_ABC< timeline::Event >
+                                 , public kernel::ContextMenuObserver_ABC< QDateTime >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineFilteredViewWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, EventsModel& model, EventDialog& eventDialog, timeline::Configuration& cfg, int viewNumber, const QStringList& filters );
+             TimelineFilteredViewWidget( QWidget* parent, kernel::ActionController& actionController, const kernel::Time_ABC& simulation, EventsModel& model, EventDialog& eventDialog, timeline::Configuration& cfg, int viewNumber, const QStringList& filters );
     virtual ~TimelineFilteredViewWidget();
     //@}
 
@@ -61,6 +66,9 @@ private:
     //@{
     void CreateDummyEvent( E_EventTypes type ); // $$$$ ABR 2013-05-24: Test method
     Event& GetOrCreateEvent( const timeline::Event& event );
+
+    virtual void NotifyContextMenu( const timeline::Event& event, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const QDateTime& dateTime, kernel::ContextMenu& menu );
     //@}
 
 signals:
@@ -91,6 +99,11 @@ private slots:
     void OnKeyUp( int key );
 
     void OnFilterSelectionChanged( const QStringList& );
+
+    void OnEditClicked();
+    void OnDeleteClicked();
+    void OnCreateClicked( int );
+    void OnCreateDummyClicked( int );
     //@}
 
 private:
@@ -102,12 +115,16 @@ private:
     QWidget* timelineWidget_;
     QVBoxLayout* mainLayout_;
     const kernel::Time_ABC& simulation_;
-    kernel::Controllers& controllers_;
+    kernel::ActionController& actionController_;
     EventsModel& eventsModel_;
 
     std::auto_ptr< timeline::Server_ABC > server_;
     std::auto_ptr< timeline::Configuration > cfg_;
     boost::shared_ptr< timeline::Event > selected_;
+    boost::shared_ptr< timeline::Event > contextMenuEvent_;
+    QDateTime selectedDateTime_;
+    QSignalMapper* creationSignalMapper_;
+    QSignalMapper* dummySignalMapper_;
 
     std::vector< std::string > creationRequestedEvents_;
     std::vector< std::string > editionRequestedEvents_;

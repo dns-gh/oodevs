@@ -59,9 +59,10 @@ EventDialog::EventDialog( QWidget* parent, kernel::Controllers& controllers, Mod
     setMinimumWidth( 600 );
     setMinimumHeight( 600 );
 
-    topWidget_ = new EventTopWidget( simulation_ );
+    topWidget_ = new EventTopWidget( simulation_, controllers.actions_ );
     bottomWidget_ = new EventBottomWidget();
 
+    connect( this, SIGNAL( BeginDateChanged() ), topWidget_, SLOT( OnBeginDateChanged()() ) );
     connect( bottomWidget_, SIGNAL( Trigger() ),        this, SLOT( OnTrigger() ) );
     connect( bottomWidget_, SIGNAL( CreateReminder() ), this, SLOT( OnCreateReminder() ) );
     connect( bottomWidget_, SIGNAL( Discard() ),        this, SLOT( OnDiscard() ) );
@@ -106,7 +107,7 @@ EventDialog::~EventDialog()
 // Name: EventDialog::Create
 // Created: ABR 2013-05-30
 // -----------------------------------------------------------------------------
-void EventDialog::Create( E_EventTypes type )
+void EventDialog::Create( E_EventTypes type, const QDateTime& dateTime )
 {
     setCaption( creationCaption_ );
     editing_ = false;
@@ -114,6 +115,8 @@ void EventDialog::Create( E_EventTypes type )
     SetEventType( type );
     Purge();
     Fill();
+    if( dateTime.isValid() )
+        emit BeginDateChanged( dateTime );
     show();
 }
 
