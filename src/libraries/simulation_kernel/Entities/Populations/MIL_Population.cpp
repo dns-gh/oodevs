@@ -1226,7 +1226,7 @@ void MIL_Population::OnReceiveMsgDestroyAll()
 void MIL_Population::OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameters expected" );
+        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
     const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
     if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_enumeration() )
         throw MASA_BADPARAM_UNIT( "parameters[0] must be a Quantity" );
@@ -1269,20 +1269,29 @@ namespace
 void MIL_Population::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 4 )
-        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "invalid parameters count, 4 parameters expected" );
     const sword::MissionParameter& healthyParam = msg.parameters().elem( 0 );
     const sword::MissionParameter& woundedParam = msg.parameters().elem( 1 );
     const sword::MissionParameter& contaminatedParam = msg.parameters().elem( 2 );
     const sword::MissionParameter& deadParam = msg.parameters().elem( 3 );
-    if( healthyParam.value_size() != 1 || !healthyParam.value().Get( 0 ).has_quantity() ||
-        woundedParam.value_size() != 1 || !woundedParam.value().Get( 0 ).has_quantity() ||
-        contaminatedParam.value_size() != 1 || !contaminatedParam.value().Get( 0 ).has_quantity() ||
-        deadParam.value_size() != 1 || !deadParam.value().Get( 0 ).has_quantity() )
-        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
+
+    if( healthyParam.value_size() != 1 || !healthyParam.value().Get( 0 ).has_quantity() )
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be a Quantity" );
+
+    if( woundedParam.value_size() != 1 || !woundedParam.value().Get( 0 ).has_quantity() )
+        throw MASA_BADPARAM_UNIT( "parameters[1] must be a Quantity" );
+
+    if( contaminatedParam.value_size() != 1 || !contaminatedParam.value().Get( 0 ).has_quantity() )
+        throw MASA_BADPARAM_UNIT( "parameters[2] must be a Quantity" );
+
+    if( deadParam.value_size() != 1 || !deadParam.value().Get( 0 ).has_quantity() )
+        throw MASA_BADPARAM_UNIT( "parameters[3] must be a Quantity" );
+
     unsigned int healthy = healthyParam.value().Get( 0 ).quantity();
     unsigned int wounded = woundedParam.value().Get( 0 ).quantity();
     unsigned int contaminated = contaminatedParam.value().Get( 0 ).quantity();
     unsigned int dead = deadParam.value().Get( 0 ).quantity();
+
     ChangeComposition( healthy, wounded, contaminated, dead );
 }
 
@@ -1365,7 +1374,7 @@ double MIL_Population::ComputeUrbanBlocDestruction( MIL_UrbanObject_ABC* pUrbanO
 void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameters expected" );
+        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
 
     const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
     if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_quantity() )
@@ -1795,7 +1804,7 @@ MT_Vector2D MIL_Population::GetFlowHeadPosition()
 void MIL_Population::OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameters expected" );
+        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
 
     const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
     if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_acharstr() )
