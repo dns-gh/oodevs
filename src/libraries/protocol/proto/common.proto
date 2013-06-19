@@ -2021,6 +2021,8 @@ message UnitMagicAction {
         //! An extension change magic action
         change_extension                  = 37;
         //! Change critical intelligence magic action
+        //! The tasker must be an unit identifier.
+        //! parameters[0], ACharStr: critical intelligence text.
         change_critical_intelligence      = 38;
         //! An equipment transfer magic action
         transfer_equipment                = 39;
