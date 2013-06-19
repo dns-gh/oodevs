@@ -1061,9 +1061,9 @@ E_LogFuneralHandlingStatus ENT_Tr::ConvertToLogFuneralHandlingStatus( const std:
 // Name: ENT_Tr::ConvertToDemolitionTargetType
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_DemolitionTargetType ENT_Tr::ConvertToDemolitionTargetType( const std::string& strName )
+E_DemolitionTargetType ENT_Tr::ConvertToDemolitionTargetType( const std::string& strName, E_Conversion mode /* = eToSim */ )
 {
-    return ENT_Tr::FindInConverter( DemolitionTargetTypeConverter_, strName );
+    return ENT_Tr::FindInConverter( DemolitionTargetTypeConverter_, strName, mode );
 }
 
 //-----------------------------------------------------------------------------

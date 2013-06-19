@@ -70,7 +70,9 @@ public:
     virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void Handle( kernel::Location_ABC& location );
     virtual void OnMenuClick();
-    virtual void Visit( const BaseParameter& param );
+    virtual void Visit( const actions::parameters::Point& param );
+    virtual void Visit( const actions::parameters::Polygon& param );
+    virtual void Visit( const actions::parameters::Location& param );
     //@}
 
 private:
@@ -78,6 +80,7 @@ private:
     //@{
     void InternalOnMenuClick();
     virtual bool InternalCheckValidity() const;
+    void InternalVisit( const actions::parameters::Location& param );
     //@}
 
 protected:

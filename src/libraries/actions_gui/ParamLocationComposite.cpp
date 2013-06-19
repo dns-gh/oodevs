@@ -80,9 +80,9 @@ ParamLocationComposite::~ParamLocationComposite()
 // Name: ParamLocationComposite::AddElement
 // Created: ABR 2012-01-09
 // -----------------------------------------------------------------------------
-Param_ABC* ParamLocationComposite::AddElement( const std::string& type, const std::string& name /*= ""*/ )
+Param_ABC* ParamLocationComposite::AddElement( const std::string& type, const std::string& name /* = "" */, bool forceNotOptional /* = false */ )
 {
-    kernel::OrderParameter orderParam( name.empty() ? GetName().toStdString() : name, type, IsOptional() );
+    kernel::OrderParameter orderParam( name.empty() ? GetName().toStdString() : name, type, forceNotOptional ? false : IsOptional() );
     Param_ABC* param = &builder_.BuildOne( orderParam, false );
     param->SetType( type );
     params_.push_back( param );

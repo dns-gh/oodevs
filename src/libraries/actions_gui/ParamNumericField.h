@@ -37,8 +37,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Show();
-    virtual void Hide();
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     void SetLimits( NumericType min, NumericType max );

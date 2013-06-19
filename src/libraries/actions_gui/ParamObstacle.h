@@ -70,6 +70,15 @@ public:
     virtual void NotifyChanged( Param_ABC& param );
 
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    virtual void Visit( const actions::parameters::EngineerConstruction& param );
+
+    virtual void Visit( const actions::parameters::Automat& param );
+    virtual void Visit( const actions::parameters::Bool& param );
+    virtual void Visit( const actions::parameters::Location& param );
+    virtual void Visit( const actions::parameters::Numeric& param );
+    virtual void Visit( const actions::parameters::ObstacleType& param );
+    virtual void Visit( const actions::parameters::Quantity& param );
+    virtual void Visit( const actions::parameters::String& param );
     //@}
 
 signals:

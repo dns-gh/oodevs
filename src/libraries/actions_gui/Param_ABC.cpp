@@ -432,3 +432,12 @@ void Param_ABC::SetEnabled( bool enabled )
     if( group_ )
         group_->setEnabled( enabled );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::Purge
+// Created: ABR 2013-06-18
+// -----------------------------------------------------------------------------
+void Param_ABC::Purge()
+{
+    // NOTHING
+}

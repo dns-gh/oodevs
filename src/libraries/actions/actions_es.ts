@@ -93,6 +93,26 @@
         <source>Lodging</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Obstacle type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activation time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>
@@ -116,21 +136,6 @@
     <name>AtlasNature</name>
     <message>
         <source>Not set</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>EngineerConstruction</name>
-    <message>
-        <source>Altitude modifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation type="unfinished">Densidad</translation>
-    </message>
-    <message>
-        <source>Lodging</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -186,14 +191,6 @@
         <source>Resource</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Construction location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ParameterList</name>
@@ -214,17 +211,6 @@
     </message>
     <message>
         <source>Object Destruction</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui::ObstaclePrototype_ABC</name>
-    <message>
-        <source>Activity time:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Activation time:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

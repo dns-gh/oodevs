@@ -154,5 +154,16 @@ bool Parameter< T >::IsInRange() const
     std::size_t nElements = elements_.size();
     return parameter_.MinOccurs() <= nElements && parameter_.MaxOccurs() >= nElements;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Parameter::GetOrderParameter
+// Created: ABR 2013-06-18
+// -----------------------------------------------------------------------------
+template< typename T >
+const kernel::OrderParameter& Parameter< T >::GetOrderParameter() const
+{
+    return parameter_;
+}
+
     }
 }

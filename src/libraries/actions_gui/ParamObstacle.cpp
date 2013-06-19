@@ -22,14 +22,20 @@
 #include "ParamStringField.h"
 #include "ParamTime.h"
 #include "actions/Action_ABC.h"
+#include "actions/Automat.h"
+#include "actions/Bool.h"
 #include "actions/EngineerConstruction.h"
+#include "actions/Location.h"
 #include "actions/ObstacleType.h"
+#include "actions/Quantity.h"
+#include "actions/String.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Units.h"
+#include "ENT/ENT_Tr.h"
 #include "tools/Resolver.h"
 
 using namespace actions::gui;
@@ -47,29 +53,34 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     , typeCombo_  ( 0 )
     , obstacleTypeCombo_( 0 )
 {
-    location_ = static_cast< ParamLocation* >( AddElement( "location", tr( "Construction location" ).toStdString() ) );
-    density_ = static_cast< ParamFloat* >( &builder.BuildOne( kernel::OrderParameter( tr( "Density per 100 square meter" ).toStdString(), "float", true ), false ) );
-    tc2_ = static_cast< ParamAutomat* >( AddElement( "automat", tr( "TC2" ).toStdString() ) );
+    SetRecursive( true );
+
+    location_ = static_cast< ParamLocation* >( AddElement( "location", tr( "Construction location" ).toStdString(), true ) );
+    density_ = static_cast< ParamFloat* >( &builder.BuildOne( kernel::OrderParameter( tr( "Density per 100 square meter" ).toStdString(), "float", false ), false ) );
+    tc2_ = static_cast< ParamAutomat* >( AddElement( "automat", tr( "TC2" ).toStdString(), true ) );
     kernel::OrderParameter activityTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toStdString(), "integer", true );
-    activityTimeParameter.SetKeyName( "ActivityTime" );
     activityTime_ = static_cast< ParamNumericField< int >* >( &builder.BuildOne( activityTimeParameter, false ) );
     kernel::OrderParameter activationTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toStdString(), "integer", true );
-    activationTimeParameter.SetKeyName( "ActivationTime" );
     activationTime_ = static_cast< ParamNumericField< int >* >( &builder.BuildOne( activationTimeParameter, false ) );
     activityTime_->SetSuffix( kernel::Units::seconds.AsString() );
     activationTime_->SetSuffix( kernel::Units::seconds.AsString() );
 
     name_ = static_cast< ParamStringField* >( &builder.BuildOne( kernel::OrderParameter( tr( "Name" ).toStdString(), "string", true ), false ) );
-    timeLimit_          = static_cast< ParamTime* >     ( AddElement( "time",       tr( "Time limit" ).toStdString() ) );
-    mining_             = static_cast< ParamBool* >     ( AddElement( "boolean",    tr( "Obstacle mining" ).toStdString() ) );
-    altitudeModifier_   = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Altitude modifier" ).toStdString() ) );
-    lodging_            = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Lodging" ).toStdString() ) );
+    timeLimit_          = static_cast< ParamTime* >     ( AddElement( "time",       tr( "Time limit" ).toStdString(), true ) );
+    mining_             = static_cast< ParamBool* >     ( AddElement( "boolean",    tr( "Obstacle mining" ).toStdString(), true ) );
+    altitudeModifier_   = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Altitude modifier" ).toStdString(), true ) );
+    lodging_            = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Lodging" ).toStdString(), true ) );
 
-    density_            ->SetKeyName( "density" );
-    altitudeModifier_   ->SetKeyName( "altitude_modifier" );
-    timeLimit_          ->SetKeyName( "time_limit" );
-    mining_             ->SetKeyName( "obstacle_mining" );
-    lodging_            ->SetKeyName( "lodging" );
+    tc2_             ->SetKeyName( "tc2" );
+    location_        ->SetKeyName( "location" );
+    name_            ->SetKeyName( "name" );
+    activityTime_    ->SetKeyName( "activitytime" );
+    activationTime_  ->SetKeyName( "activationtime" );
+    density_         ->SetKeyName( "density" );
+    altitudeModifier_->SetKeyName( "altitude_modifier" );
+    timeLimit_       ->SetKeyName( "time_limit" );
+    mining_          ->SetKeyName( "obstacle_mining" );
+    lodging_         ->SetKeyName( "lodging" );
 
     altitudeModifier_->SetLimit( 0, std::numeric_limits< int >::max() );
     altitudeModifier_->SetSuffix( kernel::Units::meters.AsString() );
@@ -264,7 +275,7 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
     const kernel::ObjectType* type = typeCombo_->GetValue();
     if( !type )
         return;
-    if( IsChecked() )
+    if( Param_ABC::IsChecked() )
     {
         std::auto_ptr< actions::parameters::EngineerConstruction > param( new actions::parameters::EngineerConstruction( parameter_, *type ) );
         if( type->HasBuildableDensity() )
@@ -302,66 +313,60 @@ void ParamObstacle::Draw( const geometry::Point2f& point, const ::gui::Viewport_
     location_->Draw( point, viewport, tools );
 }
 
+namespace
+{
+    template< typename T >
+    void HideAndRemoveFromController( T& param )
+    {
+        param.Purge();
+        param.SetVisible( false );
+        param.RemoveFromController();
+    }
+
+    template< typename T >
+    void ShowAndAddToControllerIfNeeded( T& param, kernel::ActionController& controller, const kernel::ObjectType& type, bool (kernel::ObjectType::* has_field)() const )
+    {
+        if( (type.*has_field)() )
+        {
+            param.RegisterIn( controller );
+            param.SetVisible( true );
+        }
+    }
+
+}
+
 // -----------------------------------------------------------------------------
 // Name: ParamObstacle::OnTypeChanged
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
 void ParamObstacle::OnTypeChanged()
 {
-    density_->Hide();
-    tc2_->Purge();
-    tc2_->RemoveFromController();
-    tc2_->Hide();
-    activityTime_->Hide();
-    activationTime_->Hide();
-    altitudeModifier_->RemoveFromController();
-    altitudeModifier_->Hide();
-    timeLimit_->RemoveFromController();
-    timeLimit_->Hide();
-    mining_->RemoveFromController();
-    mining_->Hide();
-    lodging_->RemoveFromController();
-    lodging_->Hide();
+    HideAndRemoveFromController( *location_ );
+    HideAndRemoveFromController( *density_ );
+    HideAndRemoveFromController( *tc2_ );
+    HideAndRemoveFromController( *activityTime_ );
+    HideAndRemoveFromController( *activationTime_ );
+    HideAndRemoveFromController( *altitudeModifier_ );
+    HideAndRemoveFromController( *timeLimit_ );
+    HideAndRemoveFromController( *mining_ );
+    HideAndRemoveFromController( *lodging_ );
 
     const kernel::ObjectType* type = typeCombo_->GetValue();
     if( !type )
         return;
-    if( type->HasBuildableDensity() )
-        density_->Show();
-    if( type->HasLogistic() )
-    {
-        tc2_->RegisterIn( controller_ );
-        tc2_->Show();
-    }
-    if( type->CanBeReservedObstacle() )
-    {
-        activityTime_->Show();
-        activationTime_->Show();
-    }
-    if( type->HasAltitudeModifierCapacity() )
-    {
-        altitudeModifier_->RegisterIn( controller_ );
-        altitudeModifier_->Show();
-    }
-    if( type->HasTimeLimitedCapacity() )
-    {
-        timeLimit_->RegisterIn( controller_ );
-        timeLimit_->Show();
-    }
-    if( type->CanBeValorized() )
-    {
-        mining_->RegisterIn( controller_ );
-        mining_->Show();
-    }
-    if( type->HasLodgingCapacity() )
-    {
-        lodging_->RegisterIn( controller_ );
-        lodging_->Show();
-    }
 
-    location_->RemoveFromController();
+    ShowAndAddToControllerIfNeeded( *density_,          controller_, *type, &kernel::ObjectType::HasBuildableDensity );
+    ShowAndAddToControllerIfNeeded( *tc2_,              controller_, *type, &kernel::ObjectType::HasLogistic );
+    ShowAndAddToControllerIfNeeded( *activityTime_,     controller_, *type, &kernel::ObjectType::CanBeReservedObstacle );
+    ShowAndAddToControllerIfNeeded( *activationTime_,   controller_, *type, &kernel::ObjectType::CanBeReservedObstacle );
+    ShowAndAddToControllerIfNeeded( *altitudeModifier_, controller_, *type, &kernel::ObjectType::HasAltitudeModifierCapacity );
+    ShowAndAddToControllerIfNeeded( *timeLimit_,        controller_, *type, &kernel::ObjectType::HasTimeLimitedCapacity );
+    ShowAndAddToControllerIfNeeded( *mining_,           controller_, *type, &kernel::ObjectType::CanBeValorized );
+    ShowAndAddToControllerIfNeeded( *lodging_,          controller_, *type, &kernel::ObjectType::HasLodgingCapacity );
+
     location_->SetShapeFilter( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
     location_->RegisterIn( controller_ );
+    location_->SetVisible( true );
     emit ToggleReservable( type->CanBeReservedObstacle() );
 }
 
@@ -375,3 +380,99 @@ kernel::ContextMenu::T_MenuVariant ParamObstacle::CreateMenu( kernel::ContextMen
         return internalMenu_;
     return ParamLocationComposite::CreateMenu( menu );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::Visit
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+void ParamObstacle::Visit( const actions::parameters::EngineerConstruction& param )
+{
+    ActivateOptionalIfNeeded( param );
+    assert( typeCombo_ != 0 );
+    if( const kernel::ObjectType* type = objectTypes_.tools::StringResolver< kernel::ObjectType >::Find( param.GetValue() ) )
+    {
+        typeCombo_->SetCurrentItem( type );
+        OnTypeChanged();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::Visit
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+void ParamObstacle::Visit( const actions::parameters::Automat& param )
+{
+    assert( tc2_ != 0 );
+    param.Accept( *tc2_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::Visit
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+void ParamObstacle::Visit( const actions::parameters::Bool& param )
+{
+    assert( mining_ != 0 );
+    param.Accept( *mining_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::Visit
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+void ParamObstacle::Visit( const actions::parameters::Location& param )
+{
+    assert( location_ != 0 );
+    param.Accept( *location_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::Visit
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+void ParamObstacle::Visit( const actions::parameters::Numeric& param )
+{
+    assert( density_ != 0 && activityTime_ != 0 && activationTime_ != 0 );
+    if( param.GetKeyName() == density_->GetKeyName() )
+        param.Accept( *density_ );
+    else if( param.GetKeyName() == activityTime_->GetKeyName() )
+        param.Accept( *activityTime_ );
+    else if( param.GetKeyName() == activationTime_->GetKeyName() )
+        param.Accept( *activationTime_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::Visit
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+void ParamObstacle::Visit( const actions::parameters::ObstacleType& param )
+{
+    assert( obstacleTypeCombo_ != 0 );
+    obstacleTypeCombo_->SetCurrentItem( static_cast< unsigned int >( ENT_Tr::ConvertToDemolitionTargetType( param.GetValue().toStdString(), ENT_Tr::eToTr ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::Visit
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+void ParamObstacle::Visit( const actions::parameters::Quantity& param )
+{
+    assert( altitudeModifier_ != 0 && lodging_ != 0 && timeLimit_ != 0 );
+    if( param.GetKeyName() == altitudeModifier_->GetKeyName() )
+        param.Accept( *altitudeModifier_ );
+    else if( param.GetKeyName() == lodging_->GetKeyName() )
+        param.Accept( *lodging_ );
+    else if( param.GetKeyName() == timeLimit_->GetKeyName() )
+        param.Accept( *timeLimit_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::Visit
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+void ParamObstacle::Visit( const actions::parameters::String& param )
+{
+    assert( name_ != 0 );
+    param.Accept( *name_ );
+}
+

@@ -94,6 +94,10 @@ public:
     virtual bool InternalCheckValidity() const;
     virtual void CommitTo( actions::ParameterContainer_ABC& ) const = 0;
     virtual void SetEntity( const kernel::Entity_ABC* entity );
+
+    virtual void Purge();
+    virtual void SetVisible( bool visible ) { if( group_ ) group_->setVisible( visible ); }
+    virtual bool IsVisible() const { return ( group_ ) ? group_->isVisible() : false; }
     //@}
 
     //! @name Accessors

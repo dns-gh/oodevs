@@ -93,6 +93,26 @@
         <source>Lodging</source>
         <translation type="unfinished">السكن</translation>
     </message>
+    <message>
+        <source>Obstacle type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction location</source>
+        <translation type="unfinished">موقع البناء</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
+    </message>
+    <message>
+        <source>Activation time:</source>
+        <translation type="unfinished">وقت التنشيط:</translation>
+    </message>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished">وقت النشاط:</translation>
+    </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>
@@ -117,21 +137,6 @@
     <message>
         <source>Not set</source>
         <translation type="unfinished">لم يتم تعيين</translation>
-    </message>
-</context>
-<context>
-    <name>EngineerConstruction</name>
-    <message>
-        <source>Altitude modifier</source>
-        <translation type="unfinished">تغيير الارتفاع</translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation type="unfinished">الكثافة</translation>
-    </message>
-    <message>
-        <source>Lodging</source>
-        <translation type="unfinished">السكن</translation>
     </message>
 </context>
 <context>
@@ -163,10 +168,6 @@
         <translation type="unfinished">القيمة</translation>
     </message>
     <message>
-        <source>Construction location</source>
-        <translation type="unfinished">موقع البناء</translation>
-    </message>
-    <message>
         <source>Location</source>
         <translation type="unfinished">موقع</translation>
     </message>
@@ -190,10 +191,6 @@
         <source>Resource</source>
         <translation type="unfinished">الموارد</translation>
     </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished">الاسم</translation>
-    </message>
 </context>
 <context>
     <name>ParameterList</name>
@@ -215,17 +212,6 @@
     <message>
         <source>Object Destruction</source>
         <translation type="unfinished">تدمير الكائن</translation>
-    </message>
-</context>
-<context>
-    <name>gui::ObstaclePrototype_ABC</name>
-    <message>
-        <source>Activity time:</source>
-        <translation type="unfinished">وقت النشاط:</translation>
-    </message>
-    <message>
-        <source>Activation time:</source>
-        <translation type="unfinished">وقت التنشيط:</translation>
     </message>
 </context>
 </TS>

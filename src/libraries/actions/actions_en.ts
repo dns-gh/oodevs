@@ -93,6 +93,26 @@
         <source>Lodging</source>
         <translation>Lodging</translation>
     </message>
+    <message>
+        <source>Obstacle type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction location</source>
+        <translation type="unfinished">Construction location</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Name</translation>
+    </message>
+    <message>
+        <source>Activation time:</source>
+        <translation type="unfinished">Activation time:</translation>
+    </message>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished">Activity time:</translation>
+    </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>
@@ -117,21 +137,6 @@
     <message>
         <source>Not set</source>
         <translation>Not set</translation>
-    </message>
-</context>
-<context>
-    <name>EngineerConstruction</name>
-    <message>
-        <source>Altitude modifier</source>
-        <translation>Altitude modifier</translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation>Density</translation>
-    </message>
-    <message>
-        <source>Lodging</source>
-        <translation type="unfinished">Lodging</translation>
     </message>
 </context>
 <context>
@@ -163,10 +168,6 @@
         <translation>Value</translation>
     </message>
     <message>
-        <source>Construction location</source>
-        <translation>Construction location</translation>
-    </message>
-    <message>
         <source>Location</source>
         <translation>Location</translation>
     </message>
@@ -190,10 +191,6 @@
         <source>Resource</source>
         <translation>Resource</translation>
     </message>
-    <message>
-        <source>Name</source>
-        <translation>Name</translation>
-    </message>
 </context>
 <context>
     <name>ParameterList</name>
@@ -215,17 +212,6 @@
     <message>
         <source>Object Destruction</source>
         <translation>Object Destruction</translation>
-    </message>
-</context>
-<context>
-    <name>gui::ObstaclePrototype_ABC</name>
-    <message>
-        <source>Activity time:</source>
-        <translation>Activity time:</translation>
-    </message>
-    <message>
-        <source>Activation time:</source>
-        <translation>Activation time:</translation>
     </message>
 </context>
 </TS>

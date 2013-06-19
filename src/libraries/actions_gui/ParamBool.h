@@ -46,8 +46,6 @@ public:
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     virtual void Visit( const actions::parameters::Bool& param );
     void SetValue( bool value );
-    virtual void Show() { if( group_ ) group_->show(); }
-    virtual void Hide() { if( group_ ) group_->hide(); }
     //@}
 
 private slots:

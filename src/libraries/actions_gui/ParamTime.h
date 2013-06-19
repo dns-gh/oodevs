@@ -40,8 +40,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Show() { if( group_ ) group_->show(); }
-    virtual void Hide() { if( group_ ) group_->hide(); }
     virtual QWidget* BuildInterface( const QString& objectName, QWidget* parent );
     virtual bool InternalCheckValidity() const;
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;

@@ -89,7 +89,7 @@ public:
     static E_LogSupplyHandlingStatus ConvertToLogSupplyHandlingStatus( const std::string& );
     static E_LogMedicalHandlingStatus ConvertToLogMedicalHandlingStatus( const std::string& );
     static E_LogFuneralHandlingStatus ConvertToLogFuneralHandlingStatus( const std::string& );
-    static E_DemolitionTargetType ConvertToDemolitionTargetType( const std::string& );
+    static E_DemolitionTargetType ConvertToDemolitionTargetType( const std::string&, E_Conversion = eToSim );
     static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
     static E_Location ConvertToLocation( const std::string& );
     static E_CrossingType ConvertToCrossingType( const std::string& );

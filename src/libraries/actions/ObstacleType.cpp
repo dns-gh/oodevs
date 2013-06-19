@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "ObstacleType.h"
+#include "ParameterVisitor_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -72,4 +73,13 @@ void ObstacleType::CommitTo( T_Setter setter ) const
 std::string ObstacleType::SerializeType() const
 {
     return "obstacletype";
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleType::Accept
+// Created: ABR 2013-06-17
+// -----------------------------------------------------------------------------
+void ObstacleType::Accept( ParameterVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
 }

@@ -47,7 +47,7 @@ public:
     //! @name Operations
     //@{
     virtual void CreateInternalMenu( kernel::ContextMenu& mainMenu );
-    Param_ABC* AddElement( const std::string& type, const std::string& name = "" );
+    Param_ABC* AddElement( const std::string& type, const std::string& name = "", bool forceNotOptional = false );
     void Purge();
     virtual int GetIndex( Param_ABC* param ) const;
     virtual void SetParentList( ListParameterBase* parentList );

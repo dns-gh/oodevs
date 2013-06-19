@@ -87,7 +87,7 @@ public:
 
     //! @name Operations
     //@{
-    void Purge();
+    virtual void Purge();
     void SetPotential( const ConcreteEntity& entity );
     void CommitTo( int& message ) const;
     void CommitTo( actions::parameters::Entity< ConcreteEntity >& parameter ) const;

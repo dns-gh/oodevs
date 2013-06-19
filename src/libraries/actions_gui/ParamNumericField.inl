@@ -101,28 +101,6 @@ void ParamNumericField< NumericType >::CommitTo( actions::ParameterContainer_ABC
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamNumericField::Show
-// Created: SBO 2007-03-13
-// -----------------------------------------------------------------------------
-template< typename NumericType >
-void ParamNumericField< NumericType >::Show()
-{
-    if( group_ )
-        group_->show();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamNumericField::Hide
-// Created: SBO 2007-03-13
-// -----------------------------------------------------------------------------
-template< typename NumericType >
-void ParamNumericField< NumericType >::Hide()
-{
-    if( group_ )
-        group_->hide();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ParamNumericField::Visit
 // Created: ABR 2013-06-12
 // -----------------------------------------------------------------------------

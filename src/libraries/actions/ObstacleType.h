@@ -47,6 +47,7 @@ public:
     //! @name Operations
     //@{
     void CommitTo( T_Setter setter ) const;
+    virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 
 private:

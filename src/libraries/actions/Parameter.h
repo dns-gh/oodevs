@@ -49,6 +49,7 @@ public:
     void SetValue( const T& value );
     const T& GetValue() const;
     bool IsInRange() const;
+    const kernel::OrderParameter& GetOrderParameter() const;
     //@}
 
 private:

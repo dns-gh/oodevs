@@ -161,11 +161,11 @@ void ParamLocation_ABC< BaseParameter >::CommitTo( actions::ParameterContainer_A
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamLocation_ABC::Visit
+// Name: ParamLocation_ABC::InternalVisit
 // Created: ABR 2013-06-14
 // -----------------------------------------------------------------------------
 template< typename BaseParameter >
-void ParamLocation_ABC< BaseParameter >::Visit( const BaseParameter& param )
+void ParamLocation_ABC< BaseParameter >::InternalVisit( const actions::parameters::Location& param )
 {
     ActivateOptionalIfNeeded( param );
 
@@ -185,4 +185,34 @@ void ParamLocation_ABC< BaseParameter >::Visit( const BaseParameter& param )
     const T_PointVector& points = param.GetPoints();
     for( auto it = points.begin(); it != points.end(); ++it )
         location_->AddPoint( *it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation_ABC::Visit
+// Created: ABR 2013-06-18
+// -----------------------------------------------------------------------------
+template< typename BaseParameter >
+void ParamLocation_ABC< BaseParameter >::Visit( const actions::parameters::Point& param )
+{
+    InternalVisit( param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation_ABC::Visit
+// Created: ABR 2013-06-18
+// -----------------------------------------------------------------------------
+template< typename BaseParameter >
+void ParamLocation_ABC< BaseParameter >::Visit( const actions::parameters::Polygon& param )
+{
+    InternalVisit( param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation_ABC::Visit
+// Created: ABR 2013-06-18
+// -----------------------------------------------------------------------------
+template< typename BaseParameter >
+void ParamLocation_ABC< BaseParameter >::Visit( const actions::parameters::Location& param )
+{
+    InternalVisit( param );
 }

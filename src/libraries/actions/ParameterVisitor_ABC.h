@@ -37,6 +37,7 @@ namespace actions
         class MedicalPriorities;
         class Numeric;
         class ObjectKnowledge;
+        class ObstacleType;
         class Path;
         class PathPoint;
         class Point;
@@ -74,6 +75,10 @@ public:
 
     //! @name Accesors
     //@{
+    void SetRecursive( bool recursive )
+    {
+        recursiveVisit_ = recursive;
+    }
     bool IsRecursive()
     {
         return recursiveVisit_;
@@ -104,6 +109,7 @@ public:
     virtual void Visit( const parameters::MedicalPriorities&     ) {}
     virtual void Visit( const parameters::Numeric&               ) {}
     virtual void Visit( const parameters::ObjectKnowledge&       ) {}
+    virtual void Visit( const parameters::ObstacleType&          ) {}
     virtual void Visit( const parameters::Path&                  ) {}
     virtual void Visit( const parameters::PathPoint&             ) {}
     virtual void Visit( const parameters::Point&                 ) {}

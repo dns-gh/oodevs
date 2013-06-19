@@ -93,6 +93,26 @@
         <source>Lodging</source>
         <translation>Hébergement</translation>
     </message>
+    <message>
+        <source>Obstacle type</source>
+        <translation>Type d'obstacle</translation>
+    </message>
+    <message>
+        <source>Construction location</source>
+        <translation>Position de la construction</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Activation time:</source>
+        <translation>Délai avant activation :</translation>
+    </message>
+    <message>
+        <source>Activity time:</source>
+        <translation>Temps d&apos;activité:</translation>
+    </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>
@@ -117,21 +137,6 @@
     <message>
         <source>Not set</source>
         <translation>Non défini</translation>
-    </message>
-</context>
-<context>
-    <name>EngineerConstruction</name>
-    <message>
-        <source>Altitude modifier</source>
-        <translation>Modificateur d&apos;altitude</translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation>Densité</translation>
-    </message>
-    <message>
-        <source>Lodging</source>
-        <translation type="unfinished">Hébergement</translation>
     </message>
 </context>
 <context>
@@ -186,14 +191,6 @@
         <source>Resource</source>
         <translation>Ressource</translation>
     </message>
-    <message>
-        <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
-        <source>Construction location</source>
-        <translation>Position de la construction</translation>
-    </message>
 </context>
 <context>
     <name>ParameterList</name>
@@ -215,17 +212,6 @@
     <message>
         <source>Object Destruction</source>
         <translation>Destruction d&apos;objet</translation>
-    </message>
-</context>
-<context>
-    <name>gui::ObstaclePrototype_ABC</name>
-    <message>
-        <source>Activity time:</source>
-        <translation>Temps d&apos;activité:</translation>
-    </message>
-    <message>
-        <source>Activation time:</source>
-        <translation>Délai avant activation :</translation>
     </message>
 </context>
 </TS>
