@@ -70,6 +70,8 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
     ::new( population )MIL_Population( *pType);
 }
 
+#define MASA_BADPARAM_UNIT( name ) MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter, name )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population constructor
 // Created: NLD 2005-09-28
@@ -1363,10 +1365,12 @@ double MIL_Population::ComputeUrbanBlocDestruction( MIL_UrbanObject_ABC* pUrbanO
 void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() )
-        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameters expected" );
+
     const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get( 0 ).has_quantity() )
-        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be a Quantity" );
+
     rArmedIndividuals_ = 0.01 * parametre.value().Get( 0 ).quantity();
     rNewArmedIndividuals_ = rArmedIndividuals_;
     armedIndividualsChanged_ = true;
