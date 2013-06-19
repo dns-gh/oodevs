@@ -997,6 +997,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichBaseObject.cpp">
       <Filter>Source Files\RichObjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.cpp">
+      <Filter>Source Files\RichObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -2077,6 +2080,9 @@
       <Filter>Source Files</Filter>
     </Qt_file_Mocing>
     <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\RichBaseObject.h">
+      <Filter>Source Files\RichObjects</Filter>
+    </Qt_file_Mocing>
+    <Qt_file_Mocing Include="..\..\src\libraries\clients_gui\RichDateTimeEdit.h">
       <Filter>Source Files\RichObjects</Filter>
     </Qt_file_Mocing>
   </ItemGroup>

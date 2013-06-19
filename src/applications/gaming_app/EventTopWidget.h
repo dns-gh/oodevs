@@ -12,6 +12,11 @@
 
 #include "EventWidget_ABC.h"
 
+namespace gui
+{
+    class RichDateTimeEdit;
+}
+
 namespace kernel
 {
     class Time_ABC;
@@ -56,9 +61,9 @@ private:
     QLabel* title_;
     QLabel* source_;
 
-    QDateTimeEdit* beginDateTimeEdit_;
+    gui::RichDateTimeEdit* beginDateTimeEdit_;
     QCheckBox* hasEndDateTimeCheckbox_;
-    QDateTimeEdit* endDateTimeEdit_;
+    gui::RichDateTimeEdit* endDateTimeEdit_;
     //@}
 };
 

@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    void Warn( int msec = 3000 );
+    virtual void Warn( int msec = 3000 );
     virtual QPalette CreatePalette() const;
     //@}
 

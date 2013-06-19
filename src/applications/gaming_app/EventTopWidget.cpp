@@ -11,6 +11,7 @@
 #include "EventTopWidget.h"
 #include "moc_EventTopWidget.cpp"
 #include "clients_kernel/Time_ABC.h"
+#include "clients_gui/RichDateTimeEdit.h"
 #include "ENT/ENT_Tr.h"
 #include "gaming/Event.h"
 #include "timeline/api.h"
@@ -49,14 +50,10 @@ EventTopWidget::EventTopWidget( const kernel::Time_ABC& simulation )
 
     // Date time
     QToolBar* toolbar = new QToolBar();
-    beginDateTimeEdit_ = new QDateTimeEdit();
-    beginDateTimeEdit_->setCalendarPopup( true );
-    beginDateTimeEdit_->setTimeSpec( Qt::UTC );
+    beginDateTimeEdit_ = new gui::RichDateTimeEdit( "begin-date" );
     hasEndDateTimeCheckbox_ = new QCheckBox();
     hasEndDateTimeCheckbox_->setText( tr( "End date" ) );
-    endDateTimeEdit_ = new QDateTimeEdit();
-    endDateTimeEdit_->setCalendarPopup( true );
-    endDateTimeEdit_->setTimeSpec( Qt::UTC );
+    endDateTimeEdit_ = new gui::RichDateTimeEdit( "end-date" );
     connect( beginDateTimeEdit_, SIGNAL( dateTimeChanged( const QDateTime& ) ), this, SLOT( OnBeginDateTimeChanged( const QDateTime& ) ) );
     connect( hasEndDateTimeCheckbox_, SIGNAL( stateChanged( int ) ), this, SLOT( OnHasEndTimeChanged( int ) ) );
 
