@@ -1958,6 +1958,11 @@ message UnitMagicAction {
         //! No parameters
         crowd_total_destruction           = 14;
         //! A crowd change health state magic action
+        //! The tasker must be a crowd identifier
+        //! parameters[0], Quantity: healthy number.
+        //! parameters[1], Quantity: wounded number.
+        //! parameters[2], Quantity: contaminated number.
+        //! parameters[3], Quantity: dead number.
         crowd_change_health_state         = 15;
         //! A crowd change attitude magic action
         //! The tasker must be a crowd identifier
