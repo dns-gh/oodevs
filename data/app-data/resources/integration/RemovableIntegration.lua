@@ -8,6 +8,14 @@ integration.isMined = function( object )
     return DEC_ConnaissanceObjet_EstValorise( object.source ) == eTristate_True and true or false
 end
 
+--- Return if the unit is 100% mined
+-- @param knowledge on an object
+-- @author NMI
+-- @release 2013-06-19
+integration.isFullyMined = function( object )
+    return DEC_ObjectKnowledge_IsFullMined( object.source ) == eTristate_True and true or false
+end
+
 --- Return if the unit has the capacity to demine the selected object
 -- @param knowledge on an object
 -- @author DDA
