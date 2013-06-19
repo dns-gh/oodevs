@@ -228,7 +228,7 @@ namespace
         sword::UnitMagicAction msg;
         msg.mutable_tasker()->CopyFrom( ack.tasker() );
         msg.set_type( ack.type() );
-        msg.mutable_parameters()->CopyFrom( ack.result() );
+        msg.mutable_parameters()->CopyFrom( ack.parameters() );
         msg.set_name( ack.name() );
         return msg;
     }
