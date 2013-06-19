@@ -184,12 +184,14 @@ message UnitMagicActionAck {
     optional string                  error_msg  = 3;
     //! Action results, depends on the action type and outcome.
     optional MissionParameters       result     = 4;
+     //! Action parameters, copied from UnitMagicAction
+    optional MissionParameters       parameters = 5;    
     //! The tasker @todo remove unit id and use one tasker only
-    optional Tasker                  tasker     = 5;
+    optional Tasker                  tasker     = 6;
     //! The magic action type
-    optional UnitMagicAction.Type    type       = 6;
+    optional UnitMagicAction.Type    type       = 7;
     //! optional name
-    optional string                  name       = 7;
+    optional string                  name       = 8;
 }
 
 /** @struct MagicActionAck

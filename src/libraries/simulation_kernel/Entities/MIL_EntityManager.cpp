@@ -1127,7 +1127,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
     ack().mutable_unit()->set_id( id );
     ack().set_error_code( UnitActionAck::no_error );
     ack().set_error_msg( "" );
-    ack().mutable_result()->CopyFrom( message.parameters() );
+    ack().mutable_parameters()->CopyFrom( message.parameters() );
     ack().mutable_tasker()->CopyFrom( message.tasker() );
     ack().set_type( message.type() );
     ack().set_name( message.name() );
