@@ -1953,14 +1953,22 @@ message UnitMagicAction {
         //! A create fire order magic action
         create_fire_order                 = 13;
         //! A crowd total destruction magic action
+        //! Kill all humans in a crowd
+        //! The tasker must be a crowd identifier
+        //! No parameters
         crowd_total_destruction           = 14;
         //! A crowd change health state magic action
         crowd_change_health_state         = 15;
         //! A crowd change attitude magic action
+        //! The tasker must be a crowd identifier
+        //! parameters[0], EnumCrowdAttitude: peaceful, agitated,
+        //!    agitated, agressive
         crowd_change_attitude             = 16;
         //! A crowd change affinities magic action
         crowd_change_affinities           = 17;
         //! A crowd change armed individuals magic action
+        //! The tasker must be a crowd identifier
+        //! parameters[0], Quantity: armed individuals percentage
         crowd_change_armed_individuals    = 18;
         //! A change knowledge group magic action
         change_knowledge_group            = 19;
