@@ -101,6 +101,7 @@ bool ADN_Connector_Combo< T >::RemItemPrivate( void* item )
         return false;
 
     pCombo_->removeItem(ndx);
+    ADN_App::GetMainWindow()->setWindowModified( true );
     return true;
 }
 

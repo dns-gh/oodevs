@@ -194,6 +194,7 @@ bool ADN_TypePtr_InVector_ABC< T >::RemItemPrivate( void* item )
         return false;
     if( pData_ == item )
         InvalidatePrivate( item );
+    ADN_App::GetMainWindow()->setWindowModified( true );
     return true;
 }
 

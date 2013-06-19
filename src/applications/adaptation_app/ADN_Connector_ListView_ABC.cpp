@@ -98,6 +98,7 @@ bool ADN_Connector_ListView_ABC::RemItemPrivate( void* item )
     ADN_StandardItem *pItem = list_.FindItem( item );
     if( pItem )
         list_.TakeItem( pItem );
+    ADN_App::GetMainWindow()->setWindowModified( true );
     return true;
 }
 

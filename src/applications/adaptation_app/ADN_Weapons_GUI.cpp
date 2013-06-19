@@ -74,6 +74,7 @@ public:
     bool RemItemPrivate( void* pItem )
     {
         graphData_.DeleteData( pItem );
+        ADN_App::GetMainWindow()->setWindowModified( true );
         return true;
     }
 
@@ -155,6 +156,7 @@ public:
             return false;
         // Unregister and destroy it.
         graph_.UnregisterPlotData( *pPlotData, true );
+        ADN_App::GetMainWindow()->setWindowModified( true );
         return true;
     }
 

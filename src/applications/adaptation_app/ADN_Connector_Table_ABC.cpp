@@ -110,6 +110,8 @@ bool ADN_Connector_Table_ABC::RemItemPrivate( void* pItem )
 
     // Remove it from the table (which can be user sorted, and thus not match the order of vData_
     tab_.RemoveItem( pItem );
+    
+    ADN_App::GetMainWindow()->setWindowModified( true );
     return true;
 }
 
