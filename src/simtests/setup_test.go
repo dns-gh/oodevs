@@ -107,6 +107,7 @@ func createAutomat(c *C, client *swapi.Client) *swapi.Automat {
 
 	automat, err := client.CreateAutomat(formation.Id, 0, AutomatType, kg.Id)
 	c.Assert(err, IsNil)
+	c.Assert(automat, NotNil)
 	return automat
 }
 
