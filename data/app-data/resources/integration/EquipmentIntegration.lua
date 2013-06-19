@@ -790,8 +790,11 @@ integration.getUnitPC = function( self )
     return CreateKnowledge( integration.ontology.types.agent, DEC_Pion_PionPC() )
 end
 
-integration.isLogisticTypeUnit = function( )
-    local typePion = DEC_Pion_GetMilPionType( myself )
+integration.isLogisticTypeUnit = function( platoon )
+    if platoon == nil then
+        platoon = myself
+    end
+    local typePion = DEC_Pion_GetMilPionType( platoon )
     if typePion == "Pion LOG TC2"
       or typePion == "Pion LOG BLD Sante"
       or typePion == "Pion LOG BLD Maintenance"
