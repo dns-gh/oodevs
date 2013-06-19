@@ -110,6 +110,10 @@ integration.hasCapacityGenObject = function( capacity )
     return DEC_GenObject_HasCapacity( capacity )
 end
 
+integration.hasCapacityKnowledgeObject = function( object, capacity )
+    return DEC_ObjectKnowledge_HasCapacity( object, capacity )
+end
+
 integration.getKnowledgeObjectType = function( object )
     return DEC_ConnaissanceObjet_Type( object )
 end
