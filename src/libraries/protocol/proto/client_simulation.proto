@@ -66,6 +66,8 @@ message UnitCreationRequest {
         //! Kill all humans in a crowd
         //! The tasker must reference the crowd to destroy
         //! No parameters
+        //! The tasker must be a crowd identifier
+        //! parameters[0], Quantity: armed individuals percentage
 /** @struct KnowledgeMagicAction
     @brief A knowledge magic action request
     @todo no corresponding ack message ?
