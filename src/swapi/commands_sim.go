@@ -393,6 +393,7 @@ func (c *Client) CreateCrowd(partyId, formationId uint32, crowdType string,
 			},
 		},
 	}
+
 	var created *Crowd
 	handler := func(msg *sword.SimToClient_Content) error {
 		if reply := msg.GetCrowdCreation(); reply != nil {
@@ -605,20 +606,24 @@ func defaultUnitMagicHandler(msg *sword.SimToClient_Content) error {
 	return nil
 }
 
-func (c *Client) TeleportUnit(unitId uint32, location Point) error {
-	msg := SwordMessage{
+func createMagicActionMessage(params *sword.MissionParameters, unitId uint32,
+	magicAction *sword.UnitMagicAction_Type) SwordMessage {
+	return SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker: makeUnitTasker(unitId),
-					Type:   sword.UnitMagicAction_move_to.Enum(),
-					Parameters: MakeParameters(
-						MakePointParam(location),
-					),
+					Tasker:     makeUnitTasker(unitId),
+					Type:       magicAction,
+					Parameters: params,
 				},
 			},
 		},
 	}
+}
+
+func (c *Client) TeleportUnit(unitId uint32, location Point) error {
+	msg := createMagicActionMessage(MakeParameters(MakePointParam(location)), unitId,
+		sword.UnitMagicAction_move_to.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
@@ -699,17 +704,8 @@ func (c *Client) CreateFireOnLocation(params *sword.MissionParameters) error {
 }
 
 func (c *Client) SendTotalDestruction(crowdId uint32) error {
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     makeUnitTasker(crowdId),
-					Type:       sword.UnitMagicAction_crowd_total_destruction.Enum(),
-					Parameters: MakeParameters(),
-				},
-			},
-		},
-	}
+	msg := createMagicActionMessage(MakeParameters(), crowdId,
+		sword.UnitMagicAction_crowd_total_destruction.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
@@ -719,17 +715,19 @@ func (c *Client) SendChangeArmedIndividuals(crowdId uint32, armedIndividuals int
 	if armedIndividuals != 0 {
 		params = MakeParameters(MakeQuantity(armedIndividuals))
 	}
-	msg := SwordMessage{
-		ClientToSimulation: &sword.ClientToSim{
-			Message: &sword.ClientToSim_Content{
-				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     makeUnitTasker(crowdId),
-					Type:       sword.UnitMagicAction_crowd_change_armed_individuals.Enum(),
-					Parameters: params,
-				},
-			},
-		},
+	msg := createMagicActionMessage(params, crowdId,
+		sword.UnitMagicAction_crowd_change_armed_individuals.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) SendChangeCriticalIntelligence(crowdId uint32, criticalIntelligence string) error {
+	params := MakeParameters()
+	if criticalIntelligence != "" {
+		params = MakeParameters(MakeString(criticalIntelligence))
 	}
+	msg := createMagicActionMessage(params, crowdId,
+		sword.UnitMagicAction_change_critical_intelligence.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }

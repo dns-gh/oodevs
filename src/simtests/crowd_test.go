@@ -68,7 +68,7 @@ func (s *TestSuite) TestCrowdChangeArmedIndividuals(c *C) {
 
 	// Check default armed individuals proportion(set in physical database)
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
-		return data.FindCrowd(crowd.Id).ArmedIndividuals == float32(0.1)
+		return data.FindCrowd(crowd.Id).ArmedIndividuals == 0.1
 	})
 
 	// Error : missing parameter
@@ -88,5 +88,28 @@ func (s *TestSuite) TestCrowdChangeArmedIndividuals(c *C) {
 	// Check armed individuals proportion
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return data.FindCrowd(crowd.Id).ArmedIndividuals == 0.5
+	})
+}
+
+func (s *TestSuite) TestCrowdChangeCriticalIntelligence(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	crowd := CreateCrowd(c, client)
+
+	// Check empty critical intelligence
+	c.Assert(crowd.CriticalIntelligence, Equals, "")
+
+	// Error : missing parameter
+	err := client.SendChangeCriticalIntelligence(crowd.Id, "")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Change critical intelligence
+	err = client.SendChangeCriticalIntelligence(crowd.Id, "critical")
+	c.Assert(err, IsNil)
+
+	// Check critical intelligence
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return data.FindCrowd(crowd.Id).CriticalIntelligence == "critical"
 	})
 }
