@@ -47,14 +47,15 @@ type Population struct {
 }
 
 type Crowd struct {
-	Id               uint32
-	PartyId          uint32
-	Name             string
-	Healthy          int32
-	Wounded          int32
-	Dead             int32
-	Contaminated     int32
-	ArmedIndividuals float32
+	Id                   uint32
+	PartyId              uint32
+	Name                 string
+	Healthy              int32
+	Wounded              int32
+	Dead                 int32
+	Contaminated         int32
+	ArmedIndividuals     float32
+	CriticalIntelligence string
 }
 
 func NewCrowd(id, partyId uint32, name string) *Crowd {

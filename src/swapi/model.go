@@ -206,6 +206,9 @@ func (model *Model) update(msg *SwordMessage) {
 				// XXX report error here
 				return
 			}
+			if mm.CriticalIntelligence != nil {
+				crowd.CriticalIntelligence = *mm.CriticalIntelligence
+			}
 			if mm.Healthy != nil {
 				crowd.Healthy = *mm.Healthy
 			}
