@@ -104,6 +104,8 @@ public:
         eRC_DecesBlessePendantHospitalisation = 202,
         eRC_TerrainDifficile = 207,
         eRC_PlusDeCarburant = 208,
+        eRC_DebutNeutralisation = 210,
+        eRC_FinNeutralisation = 211,
         eRC_PriseAPartieParPopulation = 225,
         eRC_DebutInterventionFaceAPopulation = 239,
         eRC_PopulationVictimeAffrontements = 240,

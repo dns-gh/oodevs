@@ -337,6 +337,7 @@ private:
     bool bExternalMustChange_;
     bool bTransportHasChanged_;
     bool bIsLoaded_;
+    bool bUnderIndirectFire_;
     bool bNeutralized_;
 
     // Maintenance

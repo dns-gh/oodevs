@@ -106,13 +106,6 @@ local emptyTable = emptyTable
             Activate( self.activations.ACT_RC, nRefugies, { eRC_PresencePopulation, } )
         end
 
-        if( myself:DEC_Agent_EstNeutralise() ) then
-            Activate( self.activations.ACT_Warning, 1, { eRC_DebutNeutralisation, } )
-            --Activate( self.activations.ACT_RC, 1, { eRC_PrisSousTirArtillerie, } )
-        else
-            Activate( self.activations.ACT_Warning, 1, { eRC_FinNeutralisation, } )
-        end
-
         self.rDist = self.rDist or 0
         self.repObjet = self.repObjet or nil
 --[[//-----------------------------------------------------------------------------

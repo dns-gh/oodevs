@@ -109,6 +109,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes()
     , bExternalMustChange_        ( false )
     , bTransportHasChanged_       ( false )
     , bIsLoaded_                  ( false )
+    , bUnderIndirectFire_         ( false )
     , bNeutralized_               ( false )
     , nTickRcMaintenanceQuerySent_( 0 )
 {
@@ -131,6 +132,7 @@ PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool in
     , bExternalMustChange_        ( false )
     , bTransportHasChanged_       ( false )
     , bIsLoaded_                  ( false )
+    , bUnderIndirectFire_         ( false )
     , bNeutralized_               ( false )
     , nTickRcMaintenanceQuerySent_( 0 )
 {
@@ -248,6 +250,7 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const unsigned int )
          & maintenanceComposanteStates_
          & nTickRcMaintenanceQuerySent_
          & bIsLoaded_
+         & bUnderIndirectFire_
          & bNeutralized_;
 }
 
@@ -560,6 +563,11 @@ void PHY_RolePion_Composantes::Update( bool /*bIsDead*/ )
         pion_->Apply( &component::ComponentsChangedNotificationHandler_ABC::NotifyComponentHasChanged );
         pion_->Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         pion_->Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+    }
+    if( bNeutralized_ && !IsNeutralized() )
+    {
+        bNeutralized_ = false;
+        MIL_Report::PostEvent( *pion_, MIL_Report::eRC_FinNeutralisation );
     }
     UpdateOperationalStates();
     UpdateMajorComposante();
@@ -987,8 +995,11 @@ void PHY_RolePion_Composantes::ApplyPopulationFire( PHY_Composante_ABC& compTarg
 void PHY_RolePion_Composantes::Neutralize()
 {
     const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    if( !IsNeutralized() )
+        MIL_Report::PostEvent( *pion_, MIL_Report::eRC_DebutNeutralisation );
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         nNeutralizationEndTimeStep_ = std::max( nNeutralizationEndTimeStep_, nCurrentTimeStep + ( **it ).GetNeutralizationTime() );
+    bUnderIndirectFire_ = true;
     bNeutralized_ = true;
 }
 
@@ -2055,7 +2066,7 @@ void PHY_RolePion_Composantes::ChangeHumanSize( unsigned long equipmentTypeId, u
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Composantes::IsUnderIndirectFire()
 {
-    return bNeutralized_;
+    return bUnderIndirectFire_;
 }
 
 // -----------------------------------------------------------------------------
@@ -2064,7 +2075,7 @@ bool PHY_RolePion_Composantes::IsUnderIndirectFire()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ResetUnderIndirectFire()
 {
-    bNeutralized_ = false;
+    bUnderIndirectFire_ = false;
 }
 
 // -----------------------------------------------------------------------------
