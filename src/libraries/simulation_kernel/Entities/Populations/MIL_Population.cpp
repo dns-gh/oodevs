@@ -1364,14 +1364,14 @@ double MIL_Population::ComputeUrbanBlocDestruction( MIL_UrbanObject_ABC* pUrbanO
 // -----------------------------------------------------------------------------
 void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicAction& msg )
 {
-    if( !msg.has_parameters() )
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
         throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameters expected" );
 
-    const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
-    if( parametre.value_size() != 1 || !parametre.value().Get( 0 ).has_quantity() )
+    const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
+    if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_quantity() )
         throw MASA_BADPARAM_UNIT( "parameters[0] must be a Quantity" );
 
-    rArmedIndividuals_ = 0.01 * parametre.value().Get( 0 ).quantity();
+    rArmedIndividuals_ = 0.01 * parameter.value().Get( 0 ).quantity();
     rNewArmedIndividuals_ = rArmedIndividuals_;
     armedIndividualsChanged_ = true;
 }
