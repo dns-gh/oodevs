@@ -113,3 +113,35 @@ func (s *TestSuite) TestCrowdChangeCriticalIntelligence(c *C) {
 		return data.FindCrowd(crowd.Id).CriticalIntelligence == "critical"
 	})
 }
+
+func (s *TestSuite) TestCrowdChangeHealthState(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	healthy, wounded, contaminated, dead := int32(10), int32(11), int32(0), int32(12)
+
+	crowd := CreateCrowd(c, client)
+
+	// Check human composition
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckHumans(healthy, wounded, dead, contaminated, data.FindCrowd(crowd.Id))
+	})
+
+	// Error : negative parameter
+	err := client.SendChangeHealthState(crowd.Id, -2, -5, contaminated, -1 )
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Error : all parameters are null
+	err = client.SendChangeHealthState(crowd.Id, 0, 0, 0, 0)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Change human composition
+	healthy, wounded, contaminated, dead = int32(23), int32(22), int32(21), int32(51)
+	err = client.SendChangeHealthState(crowd.Id, healthy, wounded, contaminated, dead)
+	c.Assert(err, IsNil)
+
+	// Check new humans composition
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckHumans(healthy, wounded, dead, contaminated, data.FindCrowd(crowd.Id))
+	})
+}
+

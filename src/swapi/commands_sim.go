@@ -731,3 +731,14 @@ func (c *Client) SendChangeCriticalIntelligence(crowdId uint32, criticalIntellig
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) SendChangeHealthState(crowdId uint32, healthy, wounded, contaminated, dead int32) error {
+	params := MakeParameters(MakeQuantity(healthy),
+		MakeQuantity(wounded),
+		MakeQuantity(contaminated),
+		MakeQuantity(dead))
+	msg := createMagicActionMessage(params, crowdId,
+		sword.UnitMagicAction_crowd_change_health_state.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
