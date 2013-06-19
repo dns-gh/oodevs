@@ -1225,14 +1225,14 @@ void MIL_Population::OnReceiveMsgDestroyAll()
 // -----------------------------------------------------------------------------
 void MIL_Population::OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& msg )
 {
-    if( !msg.has_parameters() )
-        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
-    const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
-    if( parametre.value_size() != 1 || !parametre.value().Get(0).has_enumeration() )
-        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
-    const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( parametre.value().Get(0).enumeration() );
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
+        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameters expected" );
+    const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
+    if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_enumeration() )
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be a Quantity" );
+    const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( parameter.value().Get( 0 ).enumeration() );
     if( !pAttitude )
-        throw MASA_EXCEPTION_ASN( sword::CrowdMagicActionAck::ErrorCode, sword::CrowdMagicActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be an attitude identifier" );
     for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         ( **it ).SetAttitude( *pAttitude );
     for( auto it = flows_.begin(); it != flows_.end(); ++it )
