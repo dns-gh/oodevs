@@ -302,13 +302,34 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PathWalker::SetBlockedByObject
+// Created: LDC 2013-06-19
+// -----------------------------------------------------------------------------
+void DEC_PathWalker::SetBlockedByObject( MIL_Object_ABC& object, CIT_MoveStepSet itCurMoveStep )
+{
+    static const double rDistanceBeforeBlockingObject = TER_World::GetWorld().GetWeldValue();
+
+    rCurrentSpeed_ = 0;
+    MT_Vector2D oldPosition = vNewPos_;
+    vNewPos_ = itCurMoveStep->vPos_;
+    do
+    {
+        vNewPos_ -= vNewDir_ * rDistanceBeforeBlockingObject;
+    }
+    while( object.IsInside( vNewPos_ ) || object.IsOnBorder( vNewPos_ ) );
+    if( itCurMoveStep->vPos_.Distance( oldPosition ) < itCurMoveStep->vPos_.Distance( vNewPos_ ) )
+        vNewPos_ = oldPosition;
+
+    movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: FOIREUX
+    pathSet_ = eBlockedByObject;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PathWalker::TryToMoveToNextStep
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, double& rTimeRemaining, bool bFirstMove )
 {
-    static const double rDistanceBeforeBlockingObject = TER_World::GetWorld().GetWeldValue();
-    
     // Prise en compte des objets ponctuels se trouvant sur le 'move step'
     for( auto itObject = itCurMoveStep->ponctualObjectsOnSet_.begin(); itObject != itCurMoveStep->ponctualObjectsOnSet_.end(); ++itObject )
     {
@@ -321,15 +342,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                 movingEntity_.NotifyMovingInsideObject( object );
                 if( rSpeedWithinObject == 0. )
                 {
-                    rCurrentSpeed_ = 0;
-                    vNewPos_ = itCurMoveStep->vPos_;
-                    do
-                    {
-                        vNewPos_ -= vNewDir_ * rDistanceBeforeBlockingObject;
-                    } while( object.IsInside( vNewPos_ ) || object.IsOnBorder( vNewPos_ ) );
-
-                    movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07:
-                    pathSet_ = eBlockedByObject;
+                    SetBlockedByObject( object, itCurMoveStep );
                     return false;
                 }
             }
@@ -347,15 +360,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
             rMaxSpeedForStep = std::min( rMaxSpeedForStep, movingEntity_.GetSpeedWithReinforcement( environment_, object) );
             if( rMaxSpeedForStep == 0. )
             {
-                rCurrentSpeed_ = 0;
-                vNewPos_ = itCurMoveStep->vPos_;
-                do
-                {
-                    vNewPos_ -= vNewDir_ * rDistanceBeforeBlockingObject;
-                } while( object.IsInside( vNewPos_ ) || object.IsOnBorder( vNewPos_ ) );
-
-                movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: FOIREUX
-                pathSet_ = eBlockedByObject;
+                SetBlockedByObject( object, itCurMoveStep );
                 return false;
             }
         }

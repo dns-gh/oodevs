@@ -134,6 +134,7 @@ private:
     E_ReturnCode SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath );
     void SetCurrentPathPoint( DEC_PathResult& path );
     void CheckPathNotification();
+    void SetBlockedByObject( MIL_Object_ABC& object, CIT_MoveStepSet itCurMoveStep );
      //@}
 
 private:
