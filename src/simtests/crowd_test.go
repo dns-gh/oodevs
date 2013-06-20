@@ -72,17 +72,17 @@ func (s *TestSuite) TestCrowdChangeArmedIndividuals(c *C) {
 	})
 
 	// Error : missing parameter
-	err := client.SendChangeArmedIndividuals(crowd.Id, 0)
+	err := client.ChangeArmedIndividuals(crowd.Id, 0)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Error : Armed individuals must be a percentage between 0 and 100
-	err = client.SendChangeArmedIndividuals(crowd.Id, 200)
+	err = client.ChangeArmedIndividuals(crowd.Id, 200)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
-	err = client.SendChangeArmedIndividuals(crowd.Id, -2)
+	err = client.ChangeArmedIndividuals(crowd.Id, -2)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Change Armed individuals
-	err = client.SendChangeArmedIndividuals(crowd.Id, 50)
+	err = client.ChangeArmedIndividuals(crowd.Id, 50)
 	c.Assert(err, IsNil)
 
 	// Check armed individuals proportion
@@ -101,11 +101,11 @@ func (s *TestSuite) TestCrowdChangeCriticalIntelligence(c *C) {
 	c.Assert(crowd.CriticalIntelligence, Equals, "")
 
 	// Error : missing parameter
-	err := client.SendChangeCriticalIntelligence(crowd.Id, "")
+	err := client.ChangeCriticalIntelligence(crowd.Id, "")
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Change critical intelligence
-	err = client.SendChangeCriticalIntelligence(crowd.Id, "critical")
+	err = client.ChangeCriticalIntelligence(crowd.Id, "critical")
 	c.Assert(err, IsNil)
 
 	// Check critical intelligence
@@ -127,16 +127,16 @@ func (s *TestSuite) TestCrowdChangeHealthState(c *C) {
 	})
 
 	// Error : negative parameter
-	err := client.SendChangeHealthState(crowd.Id, -2, -5, contaminated, -1)
+	err := client.ChangeHealthState(crowd.Id, -2, -5, contaminated, -1)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Error : all parameters are null
-	err = client.SendChangeHealthState(crowd.Id, 0, 0, 0, 0)
+	err = client.ChangeHealthState(crowd.Id, 0, 0, 0, 0)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Change human composition
 	healthy, wounded, contaminated, dead = int32(23), int32(22), int32(21), int32(51)
-	err = client.SendChangeHealthState(crowd.Id, healthy, wounded, contaminated, dead)
+	err = client.ChangeHealthState(crowd.Id, healthy, wounded, contaminated, dead)
 	c.Assert(err, IsNil)
 
 	// Check new humans composition
@@ -154,17 +154,17 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 	c.Assert(len(crowd.Adhesions), Equals, 0)
 
 	// Error : missing parameter
-	err := client.SendChangeAdhesions(crowd.Id, map[uint32]float32{})
+	err := client.ChangeAdhesions(crowd.Id, map[uint32]float32{})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Error : adhesion must be between -1 and 1
 	adhesions := map[uint32]float32{0: 1.1, 1: 5.2}
-	err = client.SendChangeAdhesions(crowd.Id, adhesions)
+	err = client.ChangeAdhesions(crowd.Id, adhesions)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Change crowd adhesions
 	adhesions = map[uint32]float32{0: 0.7, 1: -0.5}
-	err = client.SendChangeAdhesions(crowd.Id, adhesions)
+	err = client.ChangeAdhesions(crowd.Id, adhesions)
 	c.Assert(err, IsNil)
 
 	// Check new adhesions
@@ -176,7 +176,7 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 	c.Assert(adhesions, DeepEquals, newAdhesions)
 
 	// No change adhesions if new adhesions are invalid
-	err = client.SendChangeAdhesions(crowd.Id,
+	err = client.ChangeAdhesions(crowd.Id,
 		map[uint32]float32{0: -1.1, 1: -5.2})
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
@@ -190,14 +190,14 @@ func (s *TestSuite) TestCrowdReloadBrain(c *C) {
 	crowd := CreateCrowd(c, client)
 
 	// Error : missing parameter
-	err := client.SendReloadBrain(crowd.Id, "")
+	err := client.ReloadBrain(crowd.Id, "")
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Error : invalid model
-	err = client.SendReloadBrain(crowd.Id, "invalid")
+	err = client.ReloadBrain(crowd.Id, "invalid")
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Reload crowd decisional model
-	err = client.SendReloadBrain(crowd.Id, "Rioters")
+	err = client.ReloadBrain(crowd.Id, "Rioters")
 	c.Assert(err, IsNil)
 }

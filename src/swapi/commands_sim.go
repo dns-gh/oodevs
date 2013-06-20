@@ -710,7 +710,7 @@ func (c *Client) SendTotalDestruction(crowdId uint32) error {
 	return <-c.postSimRequest(msg, handler)
 }
 
-func (c *Client) SendChangeArmedIndividuals(crowdId uint32, armedIndividuals int32) error {
+func (c *Client) ChangeArmedIndividuals(crowdId uint32, armedIndividuals int32) error {
 	params := MakeParameters()
 	if armedIndividuals != 0 {
 		params = MakeParameters(MakeQuantity(armedIndividuals))
@@ -721,7 +721,7 @@ func (c *Client) SendChangeArmedIndividuals(crowdId uint32, armedIndividuals int
 	return <-c.postSimRequest(msg, handler)
 }
 
-func (c *Client) SendChangeCriticalIntelligence(crowdId uint32, criticalIntelligence string) error {
+func (c *Client) ChangeCriticalIntelligence(crowdId uint32, criticalIntelligence string) error {
 	params := MakeParameters()
 	if criticalIntelligence != "" {
 		params = MakeParameters(MakeString(criticalIntelligence))
@@ -732,7 +732,7 @@ func (c *Client) SendChangeCriticalIntelligence(crowdId uint32, criticalIntellig
 	return <-c.postSimRequest(msg, handler)
 }
 
-func (c *Client) SendChangeHealthState(crowdId uint32, healthy, wounded, contaminated, dead int32) error {
+func (c *Client) ChangeHealthState(crowdId uint32, healthy, wounded, contaminated, dead int32) error {
 	params := MakeParameters(MakeQuantity(healthy),
 		MakeQuantity(wounded),
 		MakeQuantity(contaminated),
@@ -743,7 +743,7 @@ func (c *Client) SendChangeHealthState(crowdId uint32, healthy, wounded, contami
 	return <-c.postSimRequest(msg, handler)
 }
 
-func (c *Client) SendChangeAdhesions(crowdId uint32, adhesions map[uint32]float32) error {
+func (c *Client) ChangeAdhesions(crowdId uint32, adhesions map[uint32]float32) error {
 	params := MakeParameters()
 	if len(adhesions) != 0 {
 		params = MakeParameters(MakeAdhesions(adhesions))
@@ -754,7 +754,7 @@ func (c *Client) SendChangeAdhesions(crowdId uint32, adhesions map[uint32]float3
 	return <-c.postSimRequest(msg, handler)
 }
 
-func (c *Client) SendReloadBrain(crowdId uint32, model string) error {
+func (c *Client) ReloadBrain(crowdId uint32, model string) error {
 	params := MakeParameters()
 	if model != "" {
 		params = MakeParameters(MakeString(model))
