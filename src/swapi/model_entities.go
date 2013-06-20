@@ -69,6 +69,7 @@ type Crowd struct {
 	CriticalIntelligence string
 	Adhesions            map[uint32]float32
 	CrowdElements        map[uint32]*CrowdElement
+	Extensions           map[string]string
 }
 
 func NewCrowd(id, partyId uint32, name string) *Crowd {
@@ -78,6 +79,7 @@ func NewCrowd(id, partyId uint32, name string) *Crowd {
 		Name:          name,
 		Adhesions:     map[uint32]float32{},
 		CrowdElements: map[uint32]*CrowdElement{},
+		Extensions:    map[string]string{},
 	}
 }
 

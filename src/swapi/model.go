@@ -229,6 +229,12 @@ func (model *Model) update(msg *SwordMessage) {
 					crowd.Adhesions[value.GetParty().GetId()] = value.GetValue()
 				}
 			}
+			if mm.Extension != nil {
+				for i := 0; i < len(mm.Extension.Entries); i++ {
+					entry := mm.Extension.Entries[i]
+					crowd.Extensions[entry.GetName()] = entry.GetValue()
+				}
+			}
 		} else if mm := m.GetCrowdFlowCreation(); mm != nil {
 			if d.addCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
 				// XXX report error here
