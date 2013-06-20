@@ -46,6 +46,11 @@ type Population struct {
 	Name    string
 }
 
+type CrowdElement struct {
+		Id       uint32
+		attitude uint32
+}
+
 type Crowd struct {
 	Id                   uint32
 	PartyId              uint32
@@ -57,14 +62,16 @@ type Crowd struct {
 	ArmedIndividuals     float32
 	CriticalIntelligence string
 	Adhesions            map[uint32]float32
+	CrowdElements        map[uint32]*CrowdElement
 }
 
 func NewCrowd(id, partyId uint32, name string) *Crowd {
 	return &Crowd{
-		Id:        id,
-		PartyId:   partyId,
-		Name:      name,
-		Adhesions: map[uint32]float32{},
+		Id:            id,
+		PartyId:       partyId,
+		Name:          name,
+		Adhesions:     map[uint32]float32{},
+		CrowdElements: map[uint32]*CrowdElement{},
 	}
 }
 
@@ -306,6 +313,26 @@ func (model *ModelData) FindCrowd(crowdId uint32) *Crowd {
 		}
 	}
 	return nil
+}
+
+func (model *ModelData) addCrowdElement(crowdId, elementId uint32) bool {
+	if crowd := model.FindCrowd(crowdId); crowd != nil {
+		if element := crowd.CrowdElements[elementId]; element == nil {
+			crowd.CrowdElements[ elementId ] = &CrowdElement{ elementId, 0 }
+			return true
+		}
+	}
+	return false
+}
+
+func (model *ModelData) removeCrowdElement(crowdId, elementId uint32) bool {
+	if crowd := model.FindCrowd(crowdId); crowd != nil {
+		if element := crowd.CrowdElements[elementId]; element != nil {
+			delete(crowd.CrowdElements, elementId)
+			return true
+		}
+	}
+	return false
 }
 
 func (model *ModelData) addUnit(unit *Unit) bool {

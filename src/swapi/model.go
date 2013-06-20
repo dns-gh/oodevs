@@ -229,7 +229,25 @@ func (model *Model) update(msg *SwordMessage) {
 					crowd.Adhesions[value.GetParty().GetId()] = value.GetValue()
 				}
 			}
-		} else if mm := m.GetPopulationCreation(); mm != nil {
+		} else if mm := m.GetCrowdFlowCreation(); mm != nil {
+			if d.addCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
+				// XXX report error here
+				return
+			}
+		} else if mm := m.GetCrowdFlowDestruction(); mm != nil {
+			if d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
+				return
+			}
+		}else if mm := m.GetCrowdConcentrationCreation(); mm != nil {
+			if d.addCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
+				// XXX report error here
+				return
+			}
+		} else if mm := m.GetCrowdConcentrationDestruction(); mm != nil {
+			if d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
+				return
+			}
+		}else if mm := m.GetPopulationCreation(); mm != nil {
 			population := &Population{
 				mm.GetId().GetId(),
 				mm.GetParty().GetId(),
