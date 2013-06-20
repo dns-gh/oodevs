@@ -201,3 +201,33 @@ func (s *TestSuite) TestCrowdReloadBrain(c *C) {
 	err = client.ReloadBrain(crowd.Id, "Rioters")
 	c.Assert(err, IsNil)
 }
+
+func (s *TestSuite) TestCrowdElements(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	crowd := CreateCrowd(c, client)
+
+	// Initial crowd has a concentration
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.FindCrowd(crowd.Id).CrowdElements) == 1
+	})
+
+	// Send moveTo mission on the crowd
+	to := swapi.Point{X: -15.8193, Y: 28.3456}
+	params := swapi.MakeParameters(swapi.MakePointParam(to))
+	err := client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
+	c.Assert(err, IsNil)
+
+	// Check crowd begin its movement, a flow is created
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.FindCrowd(crowd.Id).CrowdElements) == 2
+	})
+
+	// Reset movement, the flow is destroyed.
+	err = client.TeleportCrowd(crowd.Id, to)
+	c.Assert(err, IsNil)
+
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.FindCrowd(crowd.Id).CrowdElements) == 1
+	})
+}

@@ -35,6 +35,14 @@ func makeUnitTasker(unitId uint32) *sword.Tasker {
 	}
 }
 
+func makeCrowdTasker(crowdId uint32) *sword.Tasker {
+	return &sword.Tasker{
+		Crowd: &sword.CrowdId{
+			Id: proto.Uint32(crowdId),
+		},
+	}
+}
+
 func GetUnitMagicActionAck(msg *sword.UnitMagicActionAck) (uint32, error) {
 	// Wait for the final UnitMagicActionAck
 	code := msg.GetErrorCode()
@@ -606,13 +614,13 @@ func defaultUnitMagicHandler(msg *sword.SimToClient_Content) error {
 	return nil
 }
 
-func createMagicActionMessage(params *sword.MissionParameters, unitId uint32,
+func createMagicActionMessage(params *sword.MissionParameters, tasker *sword.Tasker,
 	magicAction *sword.UnitMagicAction_Type) SwordMessage {
 	return SwordMessage{
 		ClientToSimulation: &sword.ClientToSim{
 			Message: &sword.ClientToSim_Content{
 				UnitMagicAction: &sword.UnitMagicAction{
-					Tasker:     makeUnitTasker(unitId),
+					Tasker:     tasker,
 					Type:       magicAction,
 					Parameters: params,
 				},
@@ -622,7 +630,14 @@ func createMagicActionMessage(params *sword.MissionParameters, unitId uint32,
 }
 
 func (c *Client) TeleportUnit(unitId uint32, location Point) error {
-	msg := createMagicActionMessage(MakeParameters(MakePointParam(location)), unitId,
+	msg := createMagicActionMessage(MakeParameters(MakePointParam(location)), makeUnitTasker(unitId),
+		sword.UnitMagicAction_move_to.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
+
+func (c *Client) TeleportCrowd(crowdId uint32, location Point) error {
+	msg := createMagicActionMessage(MakeParameters(MakePointParam(location)), makeCrowdTasker(crowdId),
 		sword.UnitMagicAction_move_to.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
@@ -704,7 +719,7 @@ func (c *Client) CreateFireOnLocation(params *sword.MissionParameters) error {
 }
 
 func (c *Client) SendTotalDestruction(crowdId uint32) error {
-	msg := createMagicActionMessage(MakeParameters(), crowdId,
+	msg := createMagicActionMessage(MakeParameters(), makeUnitTasker(crowdId),
 		sword.UnitMagicAction_crowd_total_destruction.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
@@ -715,7 +730,7 @@ func (c *Client) ChangeArmedIndividuals(crowdId uint32, armedIndividuals int32) 
 	if armedIndividuals != 0 {
 		params = MakeParameters(MakeQuantity(armedIndividuals))
 	}
-	msg := createMagicActionMessage(params, crowdId,
+	msg := createMagicActionMessage(params, makeUnitTasker(crowdId),
 		sword.UnitMagicAction_crowd_change_armed_individuals.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
@@ -726,7 +741,7 @@ func (c *Client) ChangeCriticalIntelligence(crowdId uint32, criticalIntelligence
 	if criticalIntelligence != "" {
 		params = MakeParameters(MakeString(criticalIntelligence))
 	}
-	msg := createMagicActionMessage(params, crowdId,
+	msg := createMagicActionMessage(params, makeUnitTasker(crowdId),
 		sword.UnitMagicAction_change_critical_intelligence.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
@@ -737,7 +752,7 @@ func (c *Client) ChangeHealthState(crowdId uint32, healthy, wounded, contaminate
 		MakeQuantity(wounded),
 		MakeQuantity(contaminated),
 		MakeQuantity(dead))
-	msg := createMagicActionMessage(params, crowdId,
+	msg := createMagicActionMessage(params, makeUnitTasker(crowdId),
 		sword.UnitMagicAction_crowd_change_health_state.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
@@ -748,7 +763,7 @@ func (c *Client) ChangeAdhesions(crowdId uint32, adhesions map[uint32]float32) e
 	if len(adhesions) != 0 {
 		params = MakeParameters(MakeAdhesions(adhesions))
 	}
-	msg := createMagicActionMessage(params, crowdId,
+	msg := createMagicActionMessage(params, makeUnitTasker(crowdId),
 		sword.UnitMagicAction_crowd_change_affinities.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
@@ -759,7 +774,7 @@ func (c *Client) ReloadBrain(crowdId uint32, model string) error {
 	if model != "" {
 		params = MakeParameters(MakeString(model))
 	}
-	msg := createMagicActionMessage(params, crowdId,
+	msg := createMagicActionMessage(params, makeUnitTasker(crowdId),
 		sword.UnitMagicAction_reload_brain.Enum())
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
