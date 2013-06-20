@@ -37,7 +37,6 @@
         </resources>
       </buildable>
     </constructor>
-    <interact-with-enemy enemy="true" neutral="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -55,7 +54,6 @@
         </resources>
       </buildable>
     </constructor>
-    <interact-with-enemy enemy="true" neutral="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -444,4 +442,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="3610127466" -->
+<!-- signature="1807427370" -->
