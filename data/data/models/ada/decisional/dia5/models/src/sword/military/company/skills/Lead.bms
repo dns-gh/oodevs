@@ -104,6 +104,8 @@ connections = { skill.links.supportManager, skill.links.coordinationManager, ski
 done = function( self ) end,
 
 create = function( self )
+        myself.stopFrago = false
+           
         integration.initializeListenFrontElement()
         myself.newTask = false
         self.parameters = myself.taskParams
@@ -260,7 +262,7 @@ activate = function( self )
         return
     end
     
-    if not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
+    if not myself.stopFrago and not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
         Activate( skill.nodes.RC, 1, { RC = eRC_NoPEInAutomat } )
     end
 end,

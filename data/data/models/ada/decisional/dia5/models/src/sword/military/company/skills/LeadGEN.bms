@@ -250,6 +250,7 @@ connections = { skill.links.supportManager, skill.links.coordinationManager, ski
 done = function( self ) end,
 
 create = function( self )
+        myself.stopFrago = false
         integration.initializeListenFrontElement()
         myself.newTask = false
         myself.leadData = {}
@@ -402,7 +403,7 @@ activate = function( self )
     
     -- Gestion du SE (car les objectifs ne sont plus les mêmes)
     Activate( skill.links.AssignSETask, 1, { SE = pionsSE, tasks = self.params.supportTasks, parameters = self.parameters, companyTask = self.companyTask })
-    if not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
+    if not myself.stopFrago and not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
         Activate( skill.nodes.RC, 1, { RC = eRC_NoPEInAutomat } )
     end
 end,

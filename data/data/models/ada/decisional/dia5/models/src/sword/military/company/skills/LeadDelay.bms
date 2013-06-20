@@ -109,6 +109,7 @@ connections = { skill.links.manageFragOrder, skill.links.coordinationManager, sk
     done = function( self ) end,
 
 create = function( self )
+        myself.stopFrago = false
         integration.initializeListenFrontElement()
         local Activate = Activate
         self.parameters = myself.taskParams
@@ -253,7 +254,7 @@ create = function( self )
       -- Gestion du SE (car les objectifs ne sont plus les mêmes)
       local tasksForSE = self.params.supportTasks..";"..self.params.defaultTask
       Activate( skill.links.AssignSETask, 1, { SE = pionsSE, tasks = tasksForSE, parameters = self.parameters, companyTask = self.companyTask })
-      if not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
+      if not myself.stopFrago and not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
         Activate( skill.nodes.RC, 1, { RC = eRC_NoPEInAutomat } )
       end
     end,

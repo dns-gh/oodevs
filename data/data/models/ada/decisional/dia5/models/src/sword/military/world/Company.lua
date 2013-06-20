@@ -76,6 +76,10 @@ masalife.brain.communication.setMessageTreatment( "disponibleDrone",
     function( content, sender )
     meKnowledge.availableDrone = content 
     end )
+masalife.brain.communication.setMessageTreatment( "TaskStopped",
+    function( content, sender )
+    myself.stopFrago = true
+    end )
     
 -- -------------------------------------------------------------------------------- 
 -- Predicates

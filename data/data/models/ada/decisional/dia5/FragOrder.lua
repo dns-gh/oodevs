@@ -181,7 +181,8 @@ integration.startFragOrderTask = function( self )
             integration.stopMission( )
             local automat = integration.GetSuperiorKnowledge( meKnowledge )
             if automat then
-              integration.SendMessage( "TaskDone", automat, { element = myself }, { type = "dynamic" } ) -- need to advice skill lead
+            integration.SendMessage( "TaskDone", automat, { element = myself }, { type = "dynamic" } ) -- need to advice skill lead
+            integration.SendMessage( "TaskStopped", automat, { element = myself }, { type = "dynamic" } ) -- need to advice skill lead
             end
         end
     end
