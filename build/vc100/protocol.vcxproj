@@ -151,26 +151,27 @@
     <ClInclude Include="..\..\src\libraries\protocol\XmlWriters.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\libraries\protocol\AarToClient.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\AdminToLauncher.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\AuthenticationToClient.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\ClientToAar.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\ClientToAuthentication.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\ClientToMessenger.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\ClientToReplay.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\ClientToSimulation.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\Common.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\DispatcherToClient.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\DispatcherToSimulation.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\Helpers.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\LauncherToAdmin.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\MessengerToClient.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\ReplayToClient.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\RightsHelper.cpp" />
-    <ClCompile Include="..\..\src\libraries\protocol\SimulationToClient.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\Version.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\XmlReaders.cpp" />
     <ClCompile Include="..\..\src\libraries\protocol\XmlWriters.cpp" />
+    <ClCompile Include="protocol\AarToClient.cpp" />
+    <ClCompile Include="protocol\AdminToLauncher.cpp" />
+    <ClCompile Include="protocol\AuthenticationToClient.cpp" />
+    <ClCompile Include="protocol\ClientToAar.cpp" />
+    <ClCompile Include="protocol\ClientToAuthentication.cpp" />
+    <ClCompile Include="protocol\ClientToMessenger.cpp" />
+    <ClCompile Include="protocol\ClientToReplay.cpp" />
+    <ClCompile Include="protocol\ClientToSimulation.cpp" />
+    <ClCompile Include="protocol\Common.cpp" />
+    <ClCompile Include="protocol\DispatcherToClient.cpp" />
+    <ClCompile Include="protocol\DispatcherToSimulation.cpp" />
+    <ClCompile Include="protocol\LauncherToAdmin.cpp" />
+    <ClCompile Include="protocol\MessengerToClient.cpp" />
+    <ClCompile Include="protocol\ReplayToClient.cpp" />
+    <ClCompile Include="protocol\SimulationToClient.cpp" />
+    <ClCompile Include="protocol\Version.pb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\protocol\proto\aar_client.proto">

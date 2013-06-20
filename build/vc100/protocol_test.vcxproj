@@ -126,7 +126,6 @@
     <ClCompile Include="..\..\src\tests\protocol_test\EncodingTest.cpp" />
     <ClCompile Include="..\..\src\tests\protocol_test\HelpersTest.cpp" />
     <ClCompile Include="..\..\src\tests\protocol_test\MessageHelpers.cpp" />
-    <ClCompile Include="..\..\src\tests\protocol_test\Protocol.cpp" />
     <ClCompile Include="..\..\src\tests\protocol_test\protocol_test_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -136,6 +135,7 @@
     <ClCompile Include="..\..\src\tests\protocol_test\SerializationTest.cpp" />
     <ClCompile Include="..\..\src\tests\protocol_test\VersionTest.cpp" />
     <ClCompile Include="..\..\src\tests\protocol_test\XmlTest.cpp" />
+    <ClCompile Include="protocol_test\Protocol.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\protocol_test\MessageHelpers.h" />
