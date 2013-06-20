@@ -790,3 +790,14 @@ func (c *Client) ChangeExtensions(crowdId uint32, extensions *map[string]string)
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) ChangeAttitude(crowdId uint32, attitude int32) error {
+	params := MakeParameters()
+	if attitude != 0 {
+		params = MakeParameters(MakeEnumeration(attitude))
+	}
+	msg := createMagicActionMessage(params, makeUnitTasker(crowdId),
+		sword.UnitMagicAction_crowd_change_attitude.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}

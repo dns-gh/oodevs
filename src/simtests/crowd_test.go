@@ -269,3 +269,70 @@ func (s *TestSuite) TestCrowdChangeExtensions(c *C) {
 	c.Assert(map[string]string{"name1": "value1", "name2": "value3"},
 		DeepEquals, newExtensions)
 }
+
+func CheckAttitude(crowd *swapi.Crowd, attitude int32) bool {
+	for _, v := range crowd.CrowdElements {
+		if v.Attitude != attitude {
+			return false
+		}
+	}
+	return true
+}
+
+const (
+	// Attitude enumeration
+	Peaceful = int32(0)
+	Agitated = int32(1)
+	Excited  = int32(2)
+)
+
+func (s *TestSuite) TestCrowdChangeAttitude(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	crowd := CreateCrowd(c, client)
+
+	// Wait crowd update
+	client.Model.WaitTicks(1)
+
+	// Check attitude is peaceful
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckAttitude(data.FindCrowd(crowd.Id), Peaceful)
+	})
+
+	// Error : missing parameter
+	err := client.ChangeAttitude(crowd.Id, 0)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Error : invalid attitude
+	err = client.ChangeAttitude(crowd.Id, 12345)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Change attitude(agitated)
+	err = client.ChangeAttitude(crowd.Id, Agitated)
+	c.Assert(err, IsNil)
+
+	// Check attitude is agitated
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckAttitude(data.FindCrowd(crowd.Id), Agitated)
+	})
+
+	// Send moveTo mission on the crowd
+	to := swapi.Point{X: -15.8193, Y: 28.3456}
+	params := swapi.MakeParameters(swapi.MakePointParam(to))
+	err = client.SendCrowdOrder(crowd.Id, MissionMoveCrowdId, params)
+	c.Assert(err, IsNil)
+
+	// Check crowd begin its movement, a flow is created
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.FindCrowd(crowd.Id).CrowdElements) == 2
+	})
+
+	// Change attitude(excited)
+	err = client.ChangeAttitude(crowd.Id, Excited)
+	c.Assert(err, IsNil)
+
+	// Check flow and concentation have an excited attitude
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return CheckAttitude(data.FindCrowd(crowd.Id), Excited)
+	})
+}
