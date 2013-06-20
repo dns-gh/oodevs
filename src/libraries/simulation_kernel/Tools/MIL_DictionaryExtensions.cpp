@@ -134,10 +134,13 @@ void MIL_DictionaryExtensions::save( MIL_CheckPointOutArchive& file, const unsig
 void MIL_DictionaryExtensions::OnReceiveMsgChangeExtensions( const sword::UnitMagicAction& msg )
 {
     if( msg.type() != sword::UnitMagicAction::change_extension || !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+            "invalid parameters count, one parameter expected" );
     const google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list = msg.parameters().elem( 0 ).value();
     if( list.size() != 1 || !list.Get( 0 ).has_extensionlist() )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter,
+            "parameters[0] must be an ExtensionList" );
+
     const sword::Extension& extensions = list.Get( 0 ).extensionlist();
     hasChanged_ = false;
     for( int i = 0; i < extensions.entries().size(); ++i )
