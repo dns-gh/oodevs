@@ -753,3 +753,14 @@ func (c *Client) SendChangeAdhesions(crowdId uint32, adhesions map[uint32]float3
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) SendReloadBrain(crowdId uint32, model string) error {
+	params := MakeParameters()
+	if model != "" {
+		params = MakeParameters(MakeString(model))
+	}
+	msg := createMagicActionMessage(params, crowdId,
+		sword.UnitMagicAction_reload_brain.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}

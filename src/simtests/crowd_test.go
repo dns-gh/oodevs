@@ -183,3 +183,21 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 	newAdhesions = client.Model.GetData().FindCrowd(crowd.Id).Adhesions
 	c.Assert(adhesions, DeepEquals, newAdhesions)
 }
+
+func (s *TestSuite) TestCrowdReloadBrain(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	crowd := CreateCrowd(c, client)
+
+	// Error : missing parameter
+	err := client.SendReloadBrain(crowd.Id, "")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Error : invalid model
+	err = client.SendReloadBrain(crowd.Id, "invalid")
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Reload crowd decisional model
+	err = client.SendReloadBrain(crowd.Id, "Rioters")
+	c.Assert(err, IsNil)
+}
