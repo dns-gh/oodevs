@@ -222,7 +222,7 @@ private:
     void OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& asn );
     void OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicAction& asn );
     void OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& asn );
-    void OnReloadBrain( const sword::MissionParameters& msg );
+    void OnReloadBrain( const sword::UnitMagicAction& msg );
     //@}
 
     //! @name Helpers

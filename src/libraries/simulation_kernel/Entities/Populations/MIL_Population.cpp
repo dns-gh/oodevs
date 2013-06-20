@@ -1162,7 +1162,7 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
         OnReceiveCriticalIntelligence( msg );
         break;
     case sword::UnitMagicAction::reload_brain:
-        OnReloadBrain( msg.parameters() );
+        OnReloadBrain( msg );
         break;
     default:
         throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode,
@@ -1818,20 +1818,26 @@ void MIL_Population::OnReceiveCriticalIntelligence( const sword::UnitMagicAction
 // Name: MIL_AgentPion::OnReloadBrain
 // Created: AHC 2010-01-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReloadBrain( const sword::MissionParameters& msg )
+void MIL_Population::OnReloadBrain( const sword::UnitMagicAction& msg )
 {
     CancelAllActions();
     bool modelChanged = false;
-    if( msg.elem_size() == 1 && msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value( 0 ).has_acharstr() )
-    {
-        const std::string model = msg.elem( 0 ).value( 0 ).acharstr();
-        const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( model );
-        if( !pModel )
-            throw MASA_EXCEPTION_ASN( sword::UnitActionAck_ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-        modelChanged = ( &GetRole< DEC_PopulationDecision >().GetModel() != pModel );
-        if( modelChanged )
-            GetRole< DEC_PopulationDecision >().SetModel( *pModel );
-    }
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
+         throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
+
+    const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
+    if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_acharstr() )
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be a Acharstr" );
+
+    const std::string model = parameter.value( 0 ).acharstr();
+    const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( model );
+    if( !pModel )
+        throw MASA_BADPARAM_UNIT( "Unknown decisional model" );
+
+    modelChanged = ( &GetRole< DEC_PopulationDecision >().GetModel() != pModel );
+    if( modelChanged )
+        GetRole< DEC_PopulationDecision >().SetModel( *pModel );
+
     GetDecision().Reload( !modelChanged );
     orderManager_.CancelMission();
 }
