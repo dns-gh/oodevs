@@ -238,7 +238,7 @@ func (model *Model) update(msg *SwordMessage) {
 			if d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
 				return
 			}
-		}else if mm := m.GetCrowdConcentrationCreation(); mm != nil {
+		} else if mm := m.GetCrowdConcentrationCreation(); mm != nil {
 			if d.addCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
 				// XXX report error here
 				return
@@ -247,7 +247,7 @@ func (model *Model) update(msg *SwordMessage) {
 			if d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
 				return
 			}
-		}else if mm := m.GetPopulationCreation(); mm != nil {
+		} else if mm := m.GetPopulationCreation(); mm != nil {
 			population := &Population{
 				mm.GetId().GetId(),
 				mm.GetParty().GetId(),

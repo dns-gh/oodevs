@@ -99,8 +99,8 @@ func MakeAdhesions(adhesions map[uint32]float32) *sword.MissionParameter {
 	list := []*sword.MissionParameter_Value{}
 	for k, v := range adhesions {
 		party := []*sword.MissionParameter_Value{
-			{ Identifier: proto.Uint32(k) },
-			{ AReal: proto.Float32(v) },
+			{Identifier: proto.Uint32(k)},
+			{AReal: proto.Float32(v)},
 		}
 		list = append(list, &sword.MissionParameter_Value{
 			List: party,

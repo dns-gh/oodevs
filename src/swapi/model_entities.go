@@ -47,8 +47,8 @@ type Population struct {
 }
 
 type CrowdElement struct {
-		Id       uint32
-		attitude uint32
+	Id       uint32
+	attitude uint32
 }
 
 type Crowd struct {
