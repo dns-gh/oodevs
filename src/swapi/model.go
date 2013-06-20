@@ -244,6 +244,18 @@ func (model *Model) update(msg *SwordMessage) {
 			if d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetFlow().GetId()) {
 				return
 			}
+		} else if mm := m.GetCrowdFlowUpdate(); mm != nil {
+			crowd := d.FindCrowd(mm.GetCrowd().GetId())
+			if crowd == nil {
+				// XXX report error here
+				return
+			}
+			element := crowd.CrowdElements[mm.GetFlow().GetId()]
+			if element == nil {
+				// XXX report error here
+				return
+			}
+			element.Attitude = int32(mm.GetAttitude())
 		} else if mm := m.GetCrowdConcentrationCreation(); mm != nil {
 			if d.addCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
 				// XXX report error here
@@ -253,6 +265,18 @@ func (model *Model) update(msg *SwordMessage) {
 			if d.removeCrowdElement(mm.GetCrowd().GetId(), mm.GetConcentration().GetId()) {
 				return
 			}
+		} else if mm := m.GetCrowdConcentrationUpdate(); mm != nil {
+			crowd := d.FindCrowd(mm.GetCrowd().GetId())
+			if crowd == nil {
+				// XXX report error here
+				return
+			}
+			element := crowd.CrowdElements[mm.GetConcentration().GetId()]
+			if element == nil {
+				// XXX report error here
+				return
+			}
+			element.Attitude = int32(mm.GetAttitude())
 		} else if mm := m.GetPopulationCreation(); mm != nil {
 			population := &Population{
 				mm.GetId().GetId(),
