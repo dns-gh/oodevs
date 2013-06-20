@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-#pragma warning( disable: 4724 )
-
 #include "gaming_app_pch.h"
 #include "MissionPanel.h"
 #include "moc_MissionPanel.cpp"
@@ -62,7 +60,10 @@
 #include "tools/ExerciseConfig.h"
 
 #include <boost/lexical_cast.hpp>
+#pragma warning( push )
+#pragma warning( disable : 4724 )
 #include <boost/uuid/random_generator.hpp>
+#pragma warning( pop )
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace kernel;

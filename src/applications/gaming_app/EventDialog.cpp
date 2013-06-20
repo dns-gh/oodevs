@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-#pragma warning( disable: 4724 )
-
 #include "gaming_app_pch.h"
 #include "EventDialog.h"
 #include "moc_EventDialog.cpp"
@@ -33,7 +31,10 @@
 #include "timeline/api.h"
 
 #include <boost/lexical_cast.hpp>
+#pragma warning( push )
+#pragma warning( disable : 4724 )
 #include <boost/uuid/random_generator.hpp>
+#pragma warning( pop )
 #include <boost/uuid/uuid_io.hpp>
 
 // -----------------------------------------------------------------------------
