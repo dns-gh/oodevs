@@ -12,7 +12,6 @@
 #pragma warning( push, 0 )
 #endif
 #include "proto/controls.pb.h"
-#include "proto/controls.pb.cc"
 #ifdef _MSC_VER
 #pragma warning( pop )
 #endif
