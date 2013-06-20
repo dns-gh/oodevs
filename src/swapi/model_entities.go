@@ -48,7 +48,7 @@ type Population struct {
 
 type CrowdElement struct {
 	Id       uint32
-	attitude uint32
+	Attitude uint32
 }
 
 func NewCrowdElement(id uint32) *CrowdElement {
