@@ -1176,17 +1176,14 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
 // -----------------------------------------------------------------------------
 void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::UnitMagicAction& asn )
 {
-    if( asn.type() != sword::UnitMagicAction::move_to )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    const sword::MissionParameter& parametre = asn.parameters().elem( 0 );
-    if( parametre.value_size() != 1 || !parametre.value().Get(0).has_point() )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
-    const sword::Point& point = parametre.value().Get(0).point();
-    if( point.location().type() != sword::Location::point
-        || point.location().coordinates().elem_size() != 1 )
-        throw MASA_EXCEPTION_ASN( sword::UnitActionAck::ErrorCode, sword::UnitActionAck::error_invalid_parameter );
+        throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
+    const sword::MissionParameter& parameter = asn.parameters().elem( 0 );
+    if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_point() )
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be a Point" );
+    const sword::Point& point = parameter.value().Get( 0 ).point();
+    if( point.location().type() != sword::Location::point || point.location().coordinates().elem_size() != 1 )
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be a point type with one coordinate" );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
    // merge all concentrations into new
