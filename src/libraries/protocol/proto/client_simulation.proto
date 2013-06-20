@@ -201,6 +201,7 @@ message MagicAction {
         //! parameters[10], Identifier, optional: the identifier of a
         //!   local weather to update. If not passed, a local weather is
         //!   created instead.
+        //! result[0], Identifier: on success, created local weather identifier.
         local_weather                      = 1;
         //! A local weather destruction magic action
         local_weather_destruction          = 2;

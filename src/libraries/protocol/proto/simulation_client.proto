@@ -214,9 +214,11 @@ message MagicActionAck {
     }
     //! Reason for the failure of the magic action execution operation
     //! @see ErrorCode
-    required ErrorCode error_code = 1;
-    //! The weather identifier
-    optional WeatherId weather    = 2;    
+    required ErrorCode error_code     = 1;
+    //! Deprecated attribute
+    optional WeatherId weather        = 2;    
+    //! Action results, depends on the action type and outcome.
+    optional MissionParameters result = 3;
 }
 
 /** @struct ObjectMagicActionAck

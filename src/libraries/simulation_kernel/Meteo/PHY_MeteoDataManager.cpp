@@ -150,7 +150,11 @@ namespace
         ack().set_error_code( id ? sword::MagicActionAck::no_error
                                  : sword::MagicActionAck::error_invalid_parameter );
         if( id )
+        {
+            ack().mutable_result()->add_elem()->add_value()->set_identifier( id );
+            // Published in 5.2, deprecated
             ack().mutable_weather()->set_id( id );
+        }
         auto& pub = NET_Publisher_ABC::Publisher();
         ack.Send( pub, context, client );
         client::ControlLocalWeatherAck().Send( pub, context, client ); ///< deprecated
