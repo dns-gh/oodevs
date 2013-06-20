@@ -127,7 +127,7 @@ func (s *TestSuite) TestCrowdChangeHealthState(c *C) {
 	})
 
 	// Error : negative parameter
-	err := client.SendChangeHealthState(crowd.Id, -2, -5, contaminated, -1 )
+	err := client.SendChangeHealthState(crowd.Id, -2, -5, contaminated, -1)
 	c.Assert(err, ErrorMatches, "error_invalid_parameter")
 
 	// Error : all parameters are null
@@ -145,3 +145,41 @@ func (s *TestSuite) TestCrowdChangeHealthState(c *C) {
 	})
 }
 
+func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	crowd := CreateCrowd(c, client)
+
+	// By default, adhesions are empty.
+	c.Assert(len(crowd.Adhesions), Equals, 0)
+
+	// Error : missing parameter
+	err := client.SendChangeAdhesions(crowd.Id, map[uint32]float32{})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Error : adhesion must be between -1 and 1
+	adhesions := map[uint32]float32{0: 1.1, 1: 5.2}
+	err = client.SendChangeAdhesions(crowd.Id, adhesions)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Change crowd adhesions
+	adhesions = map[uint32]float32{0: 0.7, 1: -0.5}
+	err = client.SendChangeAdhesions(crowd.Id, adhesions)
+	c.Assert(err, IsNil)
+
+	// Check new adhesions
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.FindCrowd(crowd.Id).Adhesions) != 0
+	})
+
+	newAdhesions := client.Model.GetData().FindCrowd(crowd.Id).Adhesions
+	c.Assert(adhesions, DeepEquals, newAdhesions)
+
+	// No change adhesions if new adhesions are invalid
+	err = client.SendChangeAdhesions(crowd.Id,
+		map[uint32]float32{0: -1.1, 1: -5.2})
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	newAdhesions = client.Model.GetData().FindCrowd(crowd.Id).Adhesions
+	c.Assert(adhesions, DeepEquals, newAdhesions)
+}

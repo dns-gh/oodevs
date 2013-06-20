@@ -742,3 +742,14 @@ func (c *Client) SendChangeHealthState(crowdId uint32, healthy, wounded, contami
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) SendChangeAdhesions(crowdId uint32, adhesions map[uint32]float32) error {
+	params := MakeParameters()
+	if len(adhesions) != 0 {
+		params = MakeParameters(MakeAdhesions(adhesions))
+	}
+	msg := createMagicActionMessage(params, crowdId,
+		sword.UnitMagicAction_crowd_change_affinities.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
