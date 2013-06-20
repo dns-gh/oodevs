@@ -94,7 +94,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
     , bHasDoneMagicMove_          ( false )
-    , criticalIntelligenceChanged_( false )
+    , criticalIntelligenceChanged_( true )
     , armedIndividualsChanged_    ( true )
     , isDamagingUrbanBlock_       ( false )
     , isDemonstrating_            ( false )
@@ -148,7 +148,7 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
     , bHasDoneMagicMove_          ( false )
-    , criticalIntelligenceChanged_( false )
+    , criticalIntelligenceChanged_( true )
     , armedIndividualsChanged_    ( true )
     , isDamagingUrbanBlock_       ( false )
     , isDemonstrating_            ( false )
@@ -181,7 +181,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     , rOverloadedPionMaxSpeed_    ( 0. )
     , bBlinded_                   ( false )
     , bHasDoneMagicMove_          ( false )
-    , criticalIntelligenceChanged_( false )
+    , criticalIntelligenceChanged_( true )
     , armedIndividualsChanged_    ( true )
     , isDamagingUrbanBlock_       ( false )
     , isDemonstrating_            ( false )
@@ -1454,7 +1454,7 @@ void MIL_Population::UpdateNetwork()
             client::CrowdUpdate asnMsg;
             asnMsg().mutable_crowd()->set_id( nID_ );
             GetRole< DEC_PopulationDecision >().SendChangedState( asnMsg );
-            if( criticalIntelligenceChanged_ )
+            if( criticalIntelligenceChanged_ && !criticalIntelligence_.empty() )
                 asnMsg().set_critical_intelligence( criticalIntelligence_ );
             if( armedIndividualsChanged_ )
                 asnMsg().set_armed_individuals( static_cast< float >( rArmedIndividuals_ ) );
