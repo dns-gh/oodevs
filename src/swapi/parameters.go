@@ -109,6 +109,21 @@ func MakeAdhesions(adhesions map[uint32]float32) *sword.MissionParameter {
 	return MakeParameter(list...)
 }
 
+func MakeExtensions(extensions *map[string]string) *sword.MissionParameter {
+	list := []*sword.Extension_Entry{}
+	for k, v := range *extensions {
+		extension := &sword.Extension_Entry{
+			Name:  proto.String(k),
+			Value: proto.String(v),
+		}
+		list = append(list, extension)
+	}
+	value := &sword.Extension{
+		Entries: list,
+	}
+	return MakeParameter(&sword.MissionParameter_Value{ExtensionList: value})
+}
+
 func ReadPoint(value *sword.CoordLatLong) Point {
 	if value == nil {
 		return Point{}

@@ -150,7 +150,7 @@ func (s *TestSuite) TestCrowdChangeAdhesions(c *C) {
 	defer sim.Stop()
 	crowd := CreateCrowd(c, client)
 
-	// By default, adhesions are empty.
+	// By default, adhesions are empty
 	c.Assert(len(crowd.Adhesions), Equals, 0)
 
 	// Error : missing parameter
@@ -223,11 +223,49 @@ func (s *TestSuite) TestCrowdElements(c *C) {
 		return len(data.FindCrowd(crowd.Id).CrowdElements) == 2
 	})
 
-	// Reset movement, the flow is destroyed.
+	// Reset movement, the flow is destroyed
 	err = client.TeleportCrowd(crowd.Id, to)
 	c.Assert(err, IsNil)
 
 	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
 		return len(data.FindCrowd(crowd.Id).CrowdElements) == 1
 	})
+}
+
+func (s *TestSuite) TestCrowdChangeExtensions(c *C) {
+	sim, client := connectAllUserAndWait(c, ExCrossroadSmallOrbat)
+	defer sim.Stop()
+	crowd := CreateCrowd(c, client)
+
+	// By default, adhesions are empty.
+	c.Assert(len(crowd.Extensions), Equals, 0)
+
+	// Error : missing parameter
+	err := client.ChangeExtensions(crowd.Id, nil)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// Fill new extensions
+	extensions := map[string]string{"name1": "value1", "name2": "value2"}
+	err = client.ChangeExtensions(crowd.Id, &extensions)
+	c.Assert(err, IsNil)
+
+	// Check new extensions
+	waitCondition(c, client.Model, func(data *swapi.ModelData) bool {
+		return len(data.FindCrowd(crowd.Id).Extensions) != 0
+	})
+
+	data := client.Model.GetData()
+	newExtensions := data.FindCrowd(crowd.Id).Extensions
+	c.Assert(extensions, DeepEquals, newExtensions)
+
+	// Change extension
+	err = client.ChangeExtensions(crowd.Id,
+		&map[string]string{"name2": "value3"})
+	c.Assert(err, IsNil)
+
+	client.Model.WaitTicks(2)
+	data = client.Model.GetData()
+	newExtensions = data.FindCrowd(crowd.Id).Extensions
+	c.Assert(map[string]string{"name1": "value1", "name2": "value3"},
+		DeepEquals, newExtensions)
 }

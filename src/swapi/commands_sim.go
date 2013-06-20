@@ -779,3 +779,14 @@ func (c *Client) ReloadBrain(crowdId uint32, model string) error {
 	handler := defaultUnitMagicHandler
 	return <-c.postSimRequest(msg, handler)
 }
+
+func (c *Client) ChangeExtensions(crowdId uint32, extensions *map[string]string) error {
+	params := MakeParameters()
+	if extensions != nil {
+		params = MakeParameters(MakeExtensions(extensions))
+	}
+	msg := createMagicActionMessage(params, makeUnitTasker(crowdId),
+		sword.UnitMagicAction_change_extension.Enum())
+	handler := defaultUnitMagicHandler
+	return <-c.postSimRequest(msg, handler)
+}
