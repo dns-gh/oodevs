@@ -655,7 +655,11 @@ func (c *Client) CreateLocalWeather(local *LocalWeather) (*LocalWeather, error) 
 		if code != sword.MagicActionAck_no_error {
 			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
 		}
-		id = reply.GetWeather().GetId()
+		value := GetParameterValue(reply.GetResult(), 0)
+		if value == nil {
+			return invalid("result", reply.GetResult())
+		}
+		id = value.GetIdentifier()
 		return nil
 	}
 	err := <-c.postSimRequest(msg, handler)
