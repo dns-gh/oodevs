@@ -69,11 +69,7 @@ rootnode
             return
         end
 
-        if self.params.entities == NIL then
-            self.positions = sword.military.queries.tactical.getAvoidingArea[ "execute" ]( { objects = self.obstacles } )
-        else
-            self.positions = sword.military.queries.tactical.getPositionsToBypass[ "execute" ]( { elementsToBypass = self.obstacles } )
-        end
+        self.positions = sword.military.queries.tactical.getPositionsToBypass[ "execute" ]( { elementsToBypass = self.obstacles } )
 
         -- CR on physical capability --> need reinforcement or recompletion
         if self.report then
