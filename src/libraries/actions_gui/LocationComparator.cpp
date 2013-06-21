@@ -60,8 +60,15 @@ void LocationComparator::VisitLines( const T_PointVector& points )
     hasMatched_ = false;
     if( points_.size() == points.size() )
     {
-        hasMatched_ = true;
-        for( std::size_t i = 0; hasMatched_ && i < points_.size(); ++i )
-            hasMatched_ = hasMatched_ && Nearby( points_[ i ], points[ i ] );
+        std::vector< size_t > matchedPoint_;
+        for( std::size_t i = 0; i < points_.size(); ++i )
+            for( std::size_t j = 0; j < points_.size(); ++j )
+                if( std::find( matchedPoint_.begin(), matchedPoint_.end(), j ) == matchedPoint_.end() )
+                    if( Nearby( points_[ i ], points[ j ] ) )
+                    {
+                        matchedPoint_.push_back( j );
+                        break;
+                    }
+        hasMatched_ = matchedPoint_.size() == points_.size();
     }
 }
