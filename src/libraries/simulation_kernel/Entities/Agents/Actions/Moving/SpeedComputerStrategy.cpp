@@ -81,9 +81,7 @@ SpeedComputerStrategy::~SpeedComputerStrategy()
 // -----------------------------------------------------------------------------
 double SpeedComputerStrategy::ApplyOnComponent( const PHY_ComposantePion& comp ) const
 {
-    if( comp.CanMove() )
-        return compFunctor_( comp );
-    return 0;
+    return compFunctor_( comp );
 }
 
 // -----------------------------------------------------------------------------
