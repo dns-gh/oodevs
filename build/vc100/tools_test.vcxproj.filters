@@ -55,9 +55,6 @@
     <ClCompile Include="..\..\src\tests\tools_test\EnvHelpersTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\tools_test\ProtobufSerializationTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\tools_test\MockRealFileLoaderObserver.h">

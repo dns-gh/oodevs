@@ -35,7 +35,6 @@
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"
 #include <boost/bind.hpp>
-#include <tools/ProtobufSerialization.h>
 
 // -----------------------------------------------------------------------------
 // Name: TimelineFilteredViewWidget constructor
@@ -432,7 +431,7 @@ void TimelineFilteredViewWidget::CreateDummyEvent( E_EventTypes type )
         sword::CoordLatLong* latLong = location->mutable_coordinates()->add_elem();
         latLong->set_latitude( 30.632128244641702 );
         latLong->set_longitude( 28.976535107619295 );
-        action.payload = tools::ProtoToBinary( msg );
+        msg.SerializePartialToString( &action.payload );
     }
     else if( type == eEventTypes_SupervisorAction )
     {
@@ -445,7 +444,7 @@ void TimelineFilteredViewWidget::CreateDummyEvent( E_EventTypes type )
         sword::CoordLatLong* latLong = location->mutable_coordinates()->add_elem();
         latLong->set_latitude( 30.632128244641702 );
         latLong->set_longitude( 28.976535107619295 );
-        action.payload = tools::ProtoToBinary( msg );
+        msg.SerializePartialToString( &action.payload );
     }
 
     // Event

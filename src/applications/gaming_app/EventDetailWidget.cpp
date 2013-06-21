@@ -12,7 +12,6 @@
 #include "gaming/Event.h"
 #include "protocol/Protocol.h"
 #include "timeline/api.h"
-#include <tools/ProtobufSerialization.h>
 #include <tools/Base64Converters.h>
 
 // -----------------------------------------------------------------------------
@@ -99,9 +98,17 @@ void EventDetailWidget::Fill( const Event& event )
     {
         payloadBase64_->setText( QString::fromStdString( tools::BinaryToBase64( timelineEvent.action.payload ) ) );
         if( timelineEvent.action.target == CREATE_EVENT_TARGET( EVENT_ORDER_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
-            payloadString_->setText( QString::fromStdString( tools::BinaryToProto< sword::ClientToSim >( timelineEvent.action.payload ).DebugString() ) );
+        {
+            sword::ClientToSim msg;
+            msg.ParsePartialFromString( timelineEvent.action.payload );
+            payloadString_->setText( QString::fromStdString( msg.DebugString() ) );
+        }
         else if ( timelineEvent.action.target == CREATE_EVENT_TARGET( EVENT_REPORT_PROTOCOL, EVENT_SIMULATION_SERVICE ) )
-            payloadString_->setText( QString::fromStdString( tools::BinaryToProto< sword::SimToClient >( timelineEvent.action.payload ).DebugString() ) );
+        {
+            sword::SimToClient msg;
+            msg.ParsePartialFromString( timelineEvent.action.payload );
+            payloadString_->setText( QString::fromStdString( msg.DebugString() ) );
+        }
         else
             payloadString_->setText( QString::fromStdString( timelineEvent.action.payload ) );
     }

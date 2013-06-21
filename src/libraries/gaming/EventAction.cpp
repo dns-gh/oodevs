@@ -16,7 +16,6 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "protocol/Protocol.h"
 #include "timeline/api.h"
-#include <tools/ProtobufSerialization.h>
 
 // -----------------------------------------------------------------------------
 // Name: EventAction constructor
@@ -76,7 +75,8 @@ void EventAction::Update( const timeline::Event& event )
         return;
     bool wasSelected_ = action_ && controllers_.actions_.IsSelected( action_ );
     Purge();
-    sword::ClientToSim msg = tools::BinaryToProto< sword::ClientToSim >( event.action.payload );
+    sword::ClientToSim msg;
+    msg.ParsePartialFromString( event.action.payload );
     if( msg.has_message() )
     {
         if( msg.message().has_unit_order() )
