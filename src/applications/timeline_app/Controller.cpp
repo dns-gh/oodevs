@@ -234,13 +234,13 @@ void Controller::OnGetEvents( const timeline::Events& events, const timeline::Er
 
     QDialog dialog( &main_ );
     dialog.setMinimumSize( 400, 500 );
-    QVBoxLayout* layout = new QVBoxLayout( &dialog );
-    QListWidget* list = new QListWidget();
-    layout->addWidget( list );
+    QVBoxLayout layout( &dialog );
+    QListWidget list;
+    layout.addWidget( &list );
     int i = 0;
     for( auto it = events.begin(); it != events.end(); ++it )
     {
-        list->addItem( QString( "Event %1: %2: %3" ).arg( i++ ).arg( it->name.c_str() ).arg( it->uuid.c_str() ) );
+        list.addItem( QString( "Event %1: %2: %3" ).arg( i++ ).arg( it->name.c_str() ).arg( it->uuid.c_str() ) );
     }
     dialog.exec();
 }
