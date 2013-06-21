@@ -36,6 +36,14 @@ func MakeParameter(args ...*sword.MissionParameter_Value) *sword.MissionParamete
 	return reply
 }
 
+func MakeList(args ...*sword.MissionParameter) *sword.MissionParameter_Value {
+	replyValue := &sword.MissionParameter_Value{}
+	for _, arg := range args {
+		replyValue.List = append(replyValue.List, GetFirstValue(arg))
+	}
+	return replyValue
+}
+
 func MakeEmpty() *sword.MissionParameter {
 	return MakeParameter()
 }
@@ -202,16 +210,21 @@ func GetTime(value *sword.DateTime) (time.Time, error) {
 	return time.Parse(BoostTimeLayout, value.GetData())
 }
 
+func GetFirstValue(param *sword.MissionParameter) *sword.MissionParameter_Value {
+	values := param.GetValue()
+	if values != nil && len(values) > 0 {
+		return values[0]
+	}
+	return nil
+}
+
 // Return the first value of the index-th parameter of params, or nil.
 func GetParameterValue(params *sword.MissionParameters,
 	index int) *sword.MissionParameter_Value {
 
 	elems := params.GetElem()
 	if elems != nil && len(elems) > index {
-		values := elems[index].GetValue()
-		if values != nil && len(values) > 0 {
-			return values[0]
-		}
+		return GetFirstValue(elems[index])
 	}
 	return nil
 }

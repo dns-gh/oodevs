@@ -15,6 +15,9 @@
                 <point location="28RDS1935236317"/>
               </footprint>
               <color alpha="0.705882" blue="80" green="80" red="80"/>
+              <resources>
+                <node resource-type="Running Water"/>
+              </resources>
             </urban-object>
           </urban-objects>
         </urban-object>

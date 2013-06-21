@@ -124,3 +124,44 @@ func (s *TestSuite) TestFireOrderCreation(c *C) {
 	err = client.CreateFireOnLocation(point, ResourceTypeWithIndirectFire, 2)
 	c.Assert(err, IsNil)
 }
+
+func (s *TestSuite) TestResourceNetworkChange(c *C) {
+	sim, client := connectAndWaitModel(c, "admin", "", ExCrossroadSmallOrbat)
+	defer sim.Stop()
+
+	// error: invalid parameters count, 2 parameters expected
+	params := swapi.MakeParameters()
+	err := client.ChangeResourceNetworkTest(params)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// error: first parameter must be a location or an identifier
+	params = swapi.MakeParameters(
+		swapi.MakeNullValue(),
+		swapi.MakeNullValue())
+	err = client.ChangeResourceNetworkTest(params)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// error: first parameter must be a valid identifier
+	params.Elem[0] = swapi.MakeIdentifier(uint32(1000))
+	err = client.ChangeResourceNetworkTest(params)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// first parameter with a valid identifier
+	params.Elem[0] = swapi.MakeIdentifier(uint32(21))
+	err = client.ChangeResourceNetworkTest(params)
+	c.Assert(err, IsNil)
+
+	// error: second parameter must be a list with valid resource names
+	params.Elem[1] = swapi.MakeParameter(
+		swapi.MakeList(swapi.MakeString("Running Water")),
+		swapi.MakeList(swapi.MakeString("invalid resource name")))
+	err = client.ChangeResourceNetworkTest(params)
+	c.Assert(err, ErrorMatches, "error_invalid_parameter")
+
+	// second parameter with valid resource names
+	params.Elem[1] = swapi.MakeParameter(
+		swapi.MakeList(swapi.MakeString("Running Water")),
+		swapi.MakeList(swapi.MakeString("Natural Gas")))
+	err = client.ChangeResourceNetworkTest(params)
+	c.Assert(err, IsNil)
+}

@@ -707,3 +707,28 @@ func (c *Client) CreateFireOnLocation(location Point, ammoType uint32, salvoCoun
 		MakeFloat(float32(salvoCount)))
 	return c.CreateFireOnLocationTest(params)
 }
+
+func (c *Client) ChangeResourceNetworkTest(params *sword.MissionParameters) error {
+	msg := SwordMessage{
+		ClientToSimulation: &sword.ClientToSim{
+			Message: &sword.ClientToSim_Content{
+				MagicAction: &sword.MagicAction{
+					Type:       sword.MagicAction_change_resource_network_properties.Enum(),
+					Parameters: params,
+				},
+			},
+		},
+	}
+	handler := func(msg *sword.SimToClient_Content) error {
+		reply := msg.GetMagicActionAck()
+		if reply == nil {
+			return unexpected(msg)
+		}
+		code := reply.GetErrorCode()
+		if code != sword.MagicActionAck_no_error {
+			return nameof(sword.MagicActionAck_ErrorCode_name, int32(code))
+		}
+		return nil
+	}
+	return <-c.postSimRequest(msg, handler)
+}
