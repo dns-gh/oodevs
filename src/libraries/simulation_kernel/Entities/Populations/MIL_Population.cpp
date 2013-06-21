@@ -1226,10 +1226,10 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& m
         throw MASA_BADPARAM_UNIT( "invalid parameters count, one parameter expected" );
     const sword::MissionParameter& parameter = msg.parameters().elem( 0 );
     if( parameter.value_size() != 1 || !parameter.value().Get( 0 ).has_enumeration() )
-        throw MASA_BADPARAM_UNIT( "parameters[0] must be a Quantity" );
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be an attitude Enumeration" );
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( parameter.value().Get( 0 ).enumeration() );
     if( !pAttitude )
-        throw MASA_BADPARAM_UNIT( "parameters[0] must be an attitude identifier" );
+        throw MASA_BADPARAM_UNIT( "parameters[0] must be an attitude Enumeration" );
     for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         ( **it ).SetAttitude( *pAttitude );
     for( auto it = flows_.begin(); it != flows_.end(); ++it )
